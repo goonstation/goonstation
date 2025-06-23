@@ -1,4 +1,21 @@
 
+(t)sun jun 22 25
+(u)RubberRats
+(p)23922
+(e)🆕💅🤖|C-Feature, C-QoL, A-Silicons
+(+)Cyborgs and AIs now show pronouns on examine.
+(u)glowbold
+(p)23224
+(e)🎨⚖🔄🤖|C-Sprites, C-Balance, C-Rework, A-Silicons
+(*)Cyborgs completely out of power or with no cell can talk/hear, but their radios, equipment, and hotkeys will not work.
+(+)Killswitches and lockdowns have dedicated status effects.
+(u)LorrMaster
+(p)23737
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Throwing an EMAG at things will now emag them.
+(u)glowbold
+(*)The number of late-join special jobs is influenced by server population.
+(+)Sous-chef is now a random job.
 (t)sat jun 21 25
 (u)cringe
 (p)23231

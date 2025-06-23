@@ -1211,51 +1211,6 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_head = list(/obj/item/clothing/head/sea_captain/comm_officer_hat)
 	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/device/flash)
 
-/datum/job/special/radioshowhost
-	name = "Radio Show Host"
-	wages = PAY_TRADESMAN
-	linkcolor = CIVILIAN_LINK_COLOR
-	access_string = "Radio Show Host"
-#ifdef MAP_OVERRIDE_OSHAN
-	limit = 1
-	special_spawn_location = null
-#elif defined(MAP_OVERRIDE_NADIR)
-	limit = 1
-	special_spawn_location = null
-#else
-	limit = 1
-	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
-#endif
-	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
-	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
-	slot_card = /obj/item/card/id/civilian
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_belt = list(/obj/item/device/pda2)
-	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/coffee)
-	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
-	alt_names = list("Radio Show Host", "Talk Show Host")
-	change_name_on_spawn = TRUE
-	wiki_link = "https://wiki.ss13.co/Radio_Host"
-
-/datum/job/special/souschef
-	name = "Sous-Chef"
-	limit = 1
-	request_limit = 2
-	request_cost = PAY_DOCTORATE * 4
-	wages = PAY_UNTRAINED
-	trait_list = list("training_chef")
-	access_string = "Sous-Chef"
-	requires_supervisor_job = "Chef"
-	slot_belt = list(/obj/item/device/pda2/chef)
-	slot_jump = list(/obj/item/clothing/under/misc/souschef)
-	slot_foot = list(/obj/item/clothing/shoes/chef)
-	slot_head = list(/obj/item/clothing/head/souschefhat)
-	slot_suit = list(/obj/item/clothing/suit/apron)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	wiki_link = "https://wiki.ss13.co/Chef"
-
 /datum/job/special/stowaway
 	name = "Stowaway"
 	limit = 0 // set in New()
@@ -1379,10 +1334,53 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 	New()
 		..()
-		if (prob(40))
-			limit = 1
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
+
+/datum/job/special/random/radioshowhost
+	name = "Radio Show Host"
+	wages = PAY_TRADESMAN
+	request_cost = PAY_DOCTORATE * 4
+	access_string = "Radio Show Host"
+#ifdef MAP_OVERRIDE_OSHAN
+	special_spawn_location = null
+	linkcolor = CIVILIAN_LINK_COLOR
+	limit = 1
+#elif defined(MAP_OVERRIDE_NADIR)
+	special_spawn_location = null
+	linkcolor = CIVILIAN_LINK_COLOR
+	limit = 1
+#else
+	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
+#endif
+	request_limit = 1 // limited workspace
+	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
+	slot_eyes = list(/obj/item/clothing/glasses/regular)
+	slot_jump = list(/obj/item/clothing/under/shirt_pants)
+	slot_card = /obj/item/card/id/civilian
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/satchel)
+	slot_belt = list(/obj/item/device/pda2)
+	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/coffee)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
+	alt_names = list("Radio Show Host", "Talk Show Host")
+	change_name_on_spawn = TRUE
+	wiki_link = "https://wiki.ss13.co/Radio_Host"
+
+/datum/job/special/random/souschef
+	name = "Sous-Chef"
+	request_cost = PAY_DOCTORATE * 4
+	wages = PAY_UNTRAINED
+	trait_list = list("training_chef")
+	access_string = "Sous-Chef"
+	requires_supervisor_job = "Chef"
+	slot_belt = list(/obj/item/device/pda2/chef)
+	slot_jump = list(/obj/item/clothing/under/misc/souschef)
+	slot_foot = list(/obj/item/clothing/shoes/chef)
+	slot_head = list(/obj/item/clothing/head/souschefhat)
+	slot_suit = list(/obj/item/clothing/suit/apron)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	wiki_link = "https://wiki.ss13.co/Chef"
 
 /datum/job/special/random/hall_monitor
 	name = "Hall Monitor"
