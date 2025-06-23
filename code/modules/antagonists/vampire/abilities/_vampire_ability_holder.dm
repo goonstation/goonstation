@@ -192,11 +192,11 @@
 			src.last_power = 1
 
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire)
-			if(src.owner?.mind && !(src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.pseudo || src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.vr))
-				src.addAbility(/datum/targetable/vampire/enthrall)
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)
 			src.last_power = 2
+			if(src.owner?.mind && !(src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.pseudo || src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.vr))
+				src.addAbility(/datum/targetable/vampire/enthrall)
 			src.addAbility(/datum/targetable/vampire/call_spirit_bats)
 
 		if (src.last_power == 2 && src.vamp_blood >= src.level3)
