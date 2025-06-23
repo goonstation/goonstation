@@ -101,6 +101,10 @@ TYPEINFO(/obj/machinery/phone)
 	STOP_TRACKING
 	. = ..()
 
+/obj/machinery/phone/was_deconstructed_to_frame(mob/user)
+	src.hang_up()
+	. = ..()
+
 /obj/machinery/phone/get_desc()
 	if (!isnull(src.phone_id))
 		return " There is a small label on the phone that reads \"[src.phone_id]\"."

@@ -2549,7 +2549,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if(M.get_brain_damage() < 60 || killer)
+				if(M.get_brain_damage() < BRAIN_DAMAGE_MAJOR || killer)
 					M.take_brain_damage(2 * mult)
 
 			killer

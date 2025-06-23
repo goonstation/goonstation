@@ -468,17 +468,9 @@ TYPEINFO(/obj/item/tank/jetpack)
 	var/on = FALSE
 
 	// base_icon_state is used when updating the jetpack's icon, with "1" or "0" appended depending on if the jetpack is on or not
-	// jetpacks have special behavior on Manta, hence the overrides here
-	#if defined(MAP_OVERRIDE_MANTA)
-	icon_state = "jetpack_mag0"
-	item_state = "jetpack_mag"
-	c_flags = IS_JETPACK | ONBACK
-	var/base_icon_state = "jetpack_mag"
-	#else
 	icon_state = "jetpack0"
 	item_state = "jetpack"
 	var/base_icon_state = "jetpack"
-	#endif
 
 	New()
 		..()
@@ -500,11 +492,6 @@ TYPEINFO(/obj/item/tank/jetpack)
 		return
 
 	proc/allow_thrust(num, mob/user)
-		#if defined(MAP_OVERRIDE_MANTA)
-		if (MagneticTether != 1)
-			return 0
-		#endif
-
 		if (!(src.on))
 			return 0
 		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
