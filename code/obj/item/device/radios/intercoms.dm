@@ -111,7 +111,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			"maptext_css_values" = list("color" = "#CC3FCC"),
 			"relay_flags" = SAY_RELAY_RADIO,
 		)
-		src.say("AI override engaged!", flags = 0, message_params = message_params)
+		src.say("AI override engaged!", message_params = message_params)
 		src.show_speech_bubble(image('icons/mob/mob.dmi', "ai"))
 
 		SPAWN(1 MINUTE)
