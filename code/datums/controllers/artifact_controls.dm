@@ -658,7 +658,6 @@ var/datum/artifact_controller/artifact_controls
 	name = "lattice"
 	max_sprites = 1
 	scramblechance = 0
-	nofx = TRUE
 	activation_sounds = list('sound/machines/ArtifactLat1.ogg', 'sound/machines/ArtifactLat2.ogg', 'sound/machines/ArtifactLat3.ogg')
 	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Lattice_1.ogg',
 		'sound/musical_instruments/artifact/Artifact_Lattice_2.ogg',
