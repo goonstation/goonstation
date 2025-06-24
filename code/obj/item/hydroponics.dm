@@ -19,7 +19,7 @@ TYPEINFO(/obj/item/saw)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
-	item_state = "c_saw"
+	item_state = "c_saw-D"
 	var/base_state = "c_saw"
 	var/active = 0
 	hit_type = DAMAGE_CUT
@@ -141,7 +141,7 @@ TYPEINFO(/obj/item/saw/syndie)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
-	item_state = "c_saw_s"
+	item_state = "c_saw_s-D"
 	base_state = "c_saw_s"
 	tool_flags = TOOL_SAWING | TOOL_CHOPPING //fucks up doors. fuck doors
 	active = 0
