@@ -250,6 +250,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/item_dispenser/idcarddispenser/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "iZ" = (

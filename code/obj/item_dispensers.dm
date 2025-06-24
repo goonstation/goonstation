@@ -54,20 +54,25 @@
 				boutput(user, SPAN_ALERT("The timer says that you must wait [round(( last_dispense_time + dispense_rate-TIME)/10)] second(s) before the next item is ready!"))
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
-			src.amount--
-			last_dispense_time = TIME 	//gotta go before the UpdateIcon
-			src.UpdateIcon()
-			var/obj/item/I = new src.withdraw_type
-			boutput(user, SPAN_NOTICE("You take \the [I] from \the [src]. [display_amount ? "There's [src.amount] left.": null ]"))
-			user.put_in_hand_or_drop(I)
-
-			//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used. - kyle
-			if (dispense_rate > 0 && (last_dispense_time + dispense_rate > TIME))
-				SPAWN(dispense_rate)
-					UpdateIcon()
+			var/obj/vended = src.vend_item(user)
+			boutput(user, SPAN_NOTICE("You take \the [vended] from \the [src]. [display_amount ? "There's [src.amount] left.": null ]"))
 		else
 			boutput(user, SPAN_ALERT("There's nothing in \the [src] to take!"))
 			return 1
+
+	proc/vend_item(mob/user)
+		src.amount--
+		last_dispense_time = TIME 	//gotta go before the UpdateIcon
+		src.UpdateIcon()
+		var/obj/item/I = new src.withdraw_type(src.loc)
+		if(user)
+			user.put_in_hand_or_drop(I)
+
+		//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used. - kyle
+		if (dispense_rate > 0 && (last_dispense_time + dispense_rate > TIME))
+			SPAWN(dispense_rate)
+				UpdateIcon()
+		return I
 
 	update_icon()
 		if (src.amount <= 0)
@@ -131,6 +136,55 @@
 	attack_hand(mob/user)
 		if(!..())
 			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 25, 1)
+
+/obj/item_dispenser/idcarddispenser/syndicate
+	name = "\improper Syndicate ID card dispenser"
+	desc = "A dispenser that dispenses syndicate brand IDs to recognised operatives. It can be refilled with paper."
+	icon_state = "dispenser_id_syndie"
+	filled_icon_state = "dispenser_id_syndie"
+	// The two variables below could probably be replaced with something more available due to how similar they are to nukeop names
+	/// List of operative codenames indexed by the mind that owns them
+	var/static/operative_codenames = list()
+	/// List of unused codenames
+	var/static/available_codenames = list()
+
+	attack_hand(mob/user)
+		if(!istrainedsyndie(user))
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+			boutput(user, SPAN_ALERT("[src] doesn't recognise you!"))
+			return
+		if(!ishuman(user))
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+			boutput(user, SPAN_ALERT("Only humans can use [src]!"))
+			return
+		. = ..()
+
+	vend_item(mob/user)
+		. = ..()
+		var/obj/item/card/id/vended_card = .
+		vended_card.icon_state = "id_syndie"
+		vended_card.assignment = "Syndicate Operative"
+		vended_card.registered = src.get_operative_codename(user)
+		vended_card.pronouns = user.get_pronouns()
+		vended_card.update_name()
+		vended_card.access = list(access_maint_tunnels, access_syndicate_shuttle)
+
+	proc/get_operative_codename(mob/user)
+		var/target_mind = user?.mind
+		if(!target_mind)
+			return "Agent Braindead"
+		if(!src.available_codenames || !length(src.available_codenames))
+			var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons", "arthurian")
+			src.available_codenames = strings("agent_callsigns.txt", pick(callsign_pool_keys))
+		if(isnukeop(user))
+			return user.real_name //Yeah the infil can DNA scramble but a syndicate brand ID is no help to them they already get an agent card
+		if(src.operative_codenames[target_mind])
+			return src.operative_codenames[target_mind]
+		var/codename = pick(src.available_codenames)
+		src.available_codenames -= codename
+		var/full_name = "Agent [codename]"
+		src.operative_codenames[user] = full_name
+		return full_name
 
 /obj/item_dispenser/icedispenser
 	name = "ice dispenser"

@@ -599,6 +599,7 @@
 	},
 /area/listeningpost/barracks)
 "Ad" = (
+/obj/item_dispenser/idcarddispenser/syndicate,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},

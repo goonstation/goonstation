@@ -963,6 +963,7 @@
 	pixel_y = 10
 	},
 /obj/item/pinpointer/disk,
+/obj/item_dispenser/idcarddispenser/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "RH" = (

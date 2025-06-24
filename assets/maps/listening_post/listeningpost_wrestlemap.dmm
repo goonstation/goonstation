@@ -822,6 +822,7 @@
 /obj/table/wood/auto,
 /obj/machinery/cell_charger,
 /obj/item/cigpacket,
+/obj/item_dispenser/idcarddispenser/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
 "ZT" = (
