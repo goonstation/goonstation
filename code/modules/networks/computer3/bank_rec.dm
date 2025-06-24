@@ -723,7 +723,9 @@
 			src.log_wrapper("Issued bonus of [src.bonus_amount][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to team [src.teams[src.bonus_team]].")
 			command_announcement(
 				"Bonus of [src.bonus_amount][CREDIT_SIGN] issued to all [src.teams[src.bonus_team]] staff.<br>Reason: [inputText]",
-				"Payroll Announcement by [src.authenticated] ([src.account.assignment])"
+				"Payroll Announcement by [src.authenticated] ([src.account.assignment])",
+				'sound/misc/bingbong.ogg',
+				alert_origin=ALERT_DEPARTMENT
 			)
 			global.wagesystem.station_budget -= bonus_total
 			global.wagesystem.last_issued_bonus_time = world.time
