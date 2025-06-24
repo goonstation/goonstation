@@ -13,6 +13,8 @@
 	var/cannot_be_stored = FALSE
 	var/move_triggered = 0
 	var/object_flags = 0
+	/// if this object can be used with high brain damage
+	var/usable_with_brain_damage = FALSE
 
 	animate_movement = 2
 //	desc = SPAN_ALERT("HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???")
@@ -453,3 +455,15 @@
 		src.was_deconstructed_to_frame(user)
 		F.RegisterSignal(src, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 	return F
+
+/// check if the mob has high enough brain damage that they can't use this
+/obj/proc/brain_dmg_check(mob/user)
+	if (src.usable_with_brain_damage)
+		return
+	if (!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if (!H.traitHolder.getTrait("training_medical") && H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
+		boutput(user, SPAN_ALERT("You don't have enough concentration to use \the [src]!"))
+		return TRUE
+	return

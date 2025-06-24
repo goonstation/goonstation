@@ -177,6 +177,8 @@
 	return src.Attackhand(user)
 
 /obj/machinery/attack_hand(mob/user)
+	if (src.brain_dmg_check(user))
+		return TRUE
 	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1
@@ -184,13 +186,7 @@
 		return 1
 	if(!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1
-
 	if (user)
-		if (ishuman(user))
-			if(user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || prob(user.get_brain_damage()))
-				boutput(user, SPAN_ALERT("You are too dazed to use [src] properly."))
-				return 1
-
 		src.add_fingerprint(user)
 		interact_particle(user,src)
 	return 0

@@ -33,6 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	netnum = -1		// set so that APCs aren't found as powernet nodes
 	text = ""
+	usable_with_brain_damage = FALSE
 	var/area/area
 	var/areastring = null
 	var/autoname_on_spawn = 0 // Area.name
@@ -568,6 +569,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/attack_hand(mob/user)
 	if (!can_act(user))
+		return
+	if (src.brain_dmg_check(user))
 		return
 
 	add_fingerprint(user)
