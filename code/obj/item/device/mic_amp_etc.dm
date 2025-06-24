@@ -9,8 +9,6 @@ TYPEINFO(/obj/item/device/microphone)
 	icon_state = "mic"
 	item_state = "mic"
 
-	HELP_MESSAGE_OVERRIDE("Use in-hand to turn on or off. If on, speech will play through any nearby loudspeakers.")
-
 	var/max_font = 8
 	var/font_amp = 4
 	var/on = 0
@@ -24,8 +22,8 @@ TYPEINFO(/obj/item/device/microphone)
 		tooltip_rebuild = 1
 		user.show_text("You switch [src] [src.on ? "on" : "off"].")
 		if (src.on && prob(5))
-			if (locate(/obj/loudspeaker) in range(2, user))
-				for_by_tcl(S, /obj/loudspeaker)
+			if (locate(/obj/machinery/loudspeaker) in range(2, user))
+				for_by_tcl(S, /obj/machinery/loudspeaker)
 					if(!IN_RANGE(S, user, 7)) continue
 					S.visible_message(SPAN_ALERT("[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
@@ -87,10 +85,10 @@ TYPEINFO(/obj/mic_stand)
 		else
 			src.icon_state = "micstand-empty"
 
-TYPEINFO(/obj/loudspeaker)
+TYPEINFO(/obj/machinery/loudspeaker)
 	mats = 15
 
-/obj/loudspeaker
+/obj/machinery/loudspeaker
 	name = "loudspeaker"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "loudspeaker"
@@ -99,65 +97,46 @@ TYPEINFO(/obj/loudspeaker)
 	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
-	HELP_MESSAGE_OVERRIDE("Speech into nearby microphones will be played over this loudspeaker.<br>If damaged, use a <b>screwdriver</b> to repair.")
-
-/obj/loudspeaker/New()
+/obj/machinery/loudspeaker/New()
 	. = ..()
 	START_TRACKING
-	src.AddComponent(/datum/component/obj_projectile_damage)
+	src.UnsubscribeProcess()
 
-/obj/loudspeaker/disposing()
+/obj/machinery/loudspeaker/disposing()
 	. = ..()
 	STOP_TRACKING
 
-/obj/loudspeaker/updateHealth(prevHealth)
-	if (src._health > 0)
-		var/health_pct = src._health / src._max_health
-		var/prev_pct = prevHealth / src._max_health
-		if (health_pct <= 0.25 && prev_pct > 0.25)
-			src.visible_message("[src] [pick("crackles", "buzzes")] woefully!!")
-			playsound(src, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/machines/glitch4.ogg', 'sound/machines/glitch5.ogg'), 30, TRUE)
-			animate_shake(src,5,rand(3,8),rand(3,8))
-		else if (health_pct <= 0.5 && prev_pct > 0.5)
-			src.visible_message("[src] [pick("warbles", "fizzes")] weakly!")
-			playsound(src, 'sound/machines/romhack3.ogg', 60, TRUE)
-			animate_shake(src,3,rand(2,4),rand(2,4))
+/obj/machinery/loudspeaker/set_broken()
 	. = ..()
+	if(.) return
+	src.SubscribeToProcess()
+	AddComponent(/datum/component/equipment_fault/elecflash, tool_flags = TOOL_SCREWING | TOOL_WIRING | TOOL_SOLDERING)
+	src.visible_message(SPAN_ALERT("[src] sparks and pops, shorting out!"))
+	playsound(src, 'sound/effects/screech_tone.ogg', 70, 2, pitch=0.5)
 
-/obj/loudspeaker/onDestroy()
-	var/obj/decal/cleanable/gib = make_cleanable(/obj/decal/cleanable/machine_debris, src.loc)
-	gib.streak_cleanable()
-	playsound(src, 'sound/impact_sounds/locker_break.ogg', 80, TRUE)
+/obj/machinery/loudspeaker/ex_act(severity)
 	. = ..()
-
-/obj/loudspeaker/attackby(obj/item/I, mob/user)
-	if (isscrewingtool(I))
-		if (src._health < src._max_health)
-			src.visible_message(SPAN_NOTICE("[user] begins repairing [src]."))
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(repair), list(user), I.icon, I.icon_state, null,\
-					INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
-		else
-			boutput(user, SPAN_NOTICE("[src] seems fully repaired!"))
+	if(QDELETED(src))
 		return
+	switch(severity)
+		if (2)
+			src.set_broken()
+		if (3)
+			if (prob(50))
+				src.set_broken()
+
+/obj/machinery/loudspeaker/process(mult)
 	. = ..()
-	user.lastattacked = get_weakref(src)
-	attack_particle(user,src)
-	hit_twitch(src)
-	if (I.hitsound)
-		playsound(src.loc, I.hitsound, 50, 1)
-	if (I.force)
-		var/damage = I.force
-		damage /= 3
-		if (user.is_hulk())
-			damage *= 4
-		if (iscarbon(user))
-			var/mob/living/carbon/C = user
-			if (C.bioHolder && C.bioHolder.HasEffect("strong"))
-				damage *= 2
-		if (damage >= 1)
-			src.changeHealth(-damage)
+	if (!(src.status & BROKEN))
+		src.UnsubscribeProcess()
 
-
-/obj/loudspeaker/proc/repair(user)
-		src.visible_message(SPAN_NOTICE("[user] repairs some of the damage on [src]!"))
-		src.changeHealth(15)
+/obj/machinery/loudspeaker/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (src.is_broken())
+				if (prob(P.power * P.proj_data?.ks_ratio))
+					src.gib(src.loc)
+					qdel(src)
+			else if (prob(P.power))
+				src.set_broken()

@@ -513,7 +513,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "aeV" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -8540,7 +8540,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
 "cvD" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "cvG" = (
@@ -11460,7 +11460,7 @@
 	},
 /area/station/science/teleporter)
 "dpU" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
@@ -13108,7 +13108,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library/reading1)
 "dSy" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -16380,7 +16380,7 @@
 	dir = 8;
 	pixel_x = -8
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
@@ -23346,7 +23346,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "hdj" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "hdo" = (
@@ -24636,7 +24636,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "hwN" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -26560,7 +26560,7 @@
 	dir = 2;
 	layer = 2.8
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/railing/cyan,
 /turf/simulated/floor/wood/eight{
 	dir = 1
@@ -39290,7 +39290,7 @@
 /turf/simulated/floor/black,
 /area/station/security/visitation)
 "lXm" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/carpet/red/fancy/narrow/east,
 /area/station/crew_quarters/cafeteria)
 "lXp" = (
@@ -42635,7 +42635,7 @@
 /obj/decal/stage_edge{
 	layer = 2.8
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -50229,7 +50229,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "pvF" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -57524,7 +57524,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "rHC" = (
@@ -57998,7 +57998,7 @@
 	dir = 6;
 	icon_state = "check1"
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/small/sticky,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker2{

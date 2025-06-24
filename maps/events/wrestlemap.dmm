@@ -962,7 +962,7 @@
 /turf/simulated/grass,
 /area/station/garden/owlery)
 "asI" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/research_outpost/protest)
@@ -12219,7 +12219,7 @@
 /area/station/crew_quarters/stockex)
 "fsu" = (
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/plating,
 /area/research_outpost/protest)
 "fsQ" = (
@@ -27988,7 +27988,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
 "muC" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/incandescent/greenish{
 	dir = 1;
 	pixel_y = 21
@@ -34496,7 +34496,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "pnZ" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/wood,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -35869,7 +35869,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/processing)
 "pXb" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/greenblack/corner{
 	dir = 1
@@ -41377,7 +41377,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "suU" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/decoration/clock{
 	pixel_y = 30
 	},
@@ -41970,7 +41970,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "sLh" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/market{
 	name = "Seating Area"

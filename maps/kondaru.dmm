@@ -5504,7 +5504,7 @@
 /area/station/engine/storage)
 "auY" = (
 /obj/table/wood/auto,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/news_office)
 "auZ" = (
@@ -6519,7 +6519,7 @@
 	pixel_y = 21
 	},
 /obj/table/wood/auto,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/news_office)
 "azx" = (
@@ -6848,7 +6848,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "aAA" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -12759,7 +12759,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/crew_quarters/cafeteria)
 "bai" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
@@ -18840,7 +18840,7 @@
 /area/station/hallway/primary/south)
 "bCl" = (
 /obj/table/reinforced/auto,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bCm" = (
@@ -22123,7 +22123,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bNG" = (
@@ -51773,7 +51773,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sCV" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "sDQ" = (

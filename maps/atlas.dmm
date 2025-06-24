@@ -1749,7 +1749,7 @@
 "aiz" = (
 /obj/table/wood/auto,
 /obj/item/matchbook,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"

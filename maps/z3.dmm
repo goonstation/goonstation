@@ -1243,7 +1243,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/loudspeaker{
+/obj/machinery/loudspeaker{
 	layer = 4;
 	pixel_y = -6
 	},
@@ -1260,7 +1260,7 @@
 /area/space)
 "adS" = (
 /obj/table/wood/auto,
-/obj/loudspeaker{
+/obj/machinery/loudspeaker{
 	layer = 4;
 	pixel_y = -6
 	},
