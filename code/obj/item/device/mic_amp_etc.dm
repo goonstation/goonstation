@@ -97,9 +97,12 @@ TYPEINFO(/obj/machinery/loudspeaker)
 	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
+	HELP_MESSAGE_OVERRIDE("Speech into nearby microphones will be played over this loudspeaker.<br>If damaged, use a <b>soldering iron</b> to repair.")
+
 /obj/machinery/loudspeaker/New()
 	. = ..()
 	START_TRACKING
+	src.AddComponent(/datum/component/obj_projectile_damage)
 	src.UnsubscribeProcess()
 
 /obj/machinery/loudspeaker/disposing()
@@ -110,7 +113,7 @@ TYPEINFO(/obj/machinery/loudspeaker)
 	. = ..()
 	if(.) return
 	src.SubscribeToProcess()
-	AddComponent(/datum/component/equipment_fault/elecflash, tool_flags = TOOL_SCREWING | TOOL_WIRING | TOOL_SOLDERING)
+	AddComponent(/datum/component/equipment_fault/elecflash, tool_flags = TOOL_SCREWING | TOOL_WIRING | TOOL_SNIPPING)
 	src.visible_message(SPAN_ALERT("[src] sparks and pops, shorting out!"))
 	playsound(src, 'sound/effects/screech_tone.ogg', 70, 2, pitch=0.5)
 
@@ -120,23 +123,16 @@ TYPEINFO(/obj/machinery/loudspeaker)
 		return
 	switch(severity)
 		if (2)
-			src.set_broken()
+			changeHealth(rand(-25, -35))
 		if (3)
-			if (prob(50))
-				src.set_broken()
+			changeHealth(rand(-5, -15))
 
 /obj/machinery/loudspeaker/process(mult)
 	. = ..()
 	if (!(src.status & BROKEN))
 		src.UnsubscribeProcess()
 
-/obj/machinery/loudspeaker/bullet_act(obj/projectile/P)
+/obj/machinery/loudspeaker/changeHealth(change)
 	. = ..()
-	switch (P.proj_data.damage_type)
-		if (D_KINETIC, D_PIERCING, D_SLASHING)
-			if (src.is_broken())
-				if (prob(P.power * P.proj_data?.ks_ratio))
-					src.gib(src.loc)
-					qdel(src)
-			else if (prob(P.power))
-				src.set_broken()
+	if(prob(100*(src._health/src._max_health)))
+		src.set_broken()
