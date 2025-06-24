@@ -546,7 +546,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else
 					boutput(user, SPAN_ALERT("No items were loaded from the satchel!"))
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				src.update_static_data_for_all_viewers()
 				tgui_process.update_uis(src)
 		else ..()

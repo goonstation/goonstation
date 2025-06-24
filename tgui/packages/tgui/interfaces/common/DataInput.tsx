@@ -115,7 +115,7 @@ const DataInputListEntry = (props) => {
           selected={item === value}
           color="transparent"
           onClick={() =>
-            act('modify_value', {
+            act('modify_list_value', {
               name: name,
               value: item,
               type: type,

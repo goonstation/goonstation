@@ -1,5 +1,6 @@
 /datum/speech_module/output/spoken/audio_log
 	id = SPEECH_OUTPUT_SPOKEN_AUDIO_LOG
+	send_to_global = FALSE //shut uppp
 
 /datum/speech_module/output/spoken/audio_log/format(datum/say_message/message)
 	var/obj/item/device/audio_log/audio_log = message.speaker

@@ -19410,7 +19410,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "bqq" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -19419,7 +19421,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "bqs" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "bqt" = (
@@ -19938,7 +19942,8 @@
 /area/station/routing/eva)
 "btv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
@@ -20730,7 +20735,8 @@
 /area/station/engine/combustion_chamber)
 "bxJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
+	dir = 10;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
@@ -30431,35 +30437,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
-"cjn" = (
-/obj/table/reinforced/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/clipboard{
-	pixel_x = -7
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 15;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/dropper{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay)
 "cjp" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -35820,7 +35797,6 @@
 /area/station/routing/sortingRoom)
 "cOb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 5
 	},
 /turf/simulated/floor/grey,
@@ -37148,20 +37124,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"dJb" = (
-/obj/table/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/plant/apple{
-	pixel_x = -2;
-	pixel_y = 3
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 9;
-	pixel_y = 11
-	},
-/obj/decal/stage_edge,
-/turf/simulated/floor/wood/two,
-/area/station/medical/staff)
 "dJf" = (
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -38731,7 +38693,8 @@
 /area/station/turret_protected/Zeta)
 "eJV" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	level = 2
+	level = 2;
+	can_rupture = 0
 	},
 /obj/machinery/meter,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -40114,33 +40077,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"fKR" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/window/westright{
-	dir = 1;
-	name = "Pharmacy"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/item/paper_bin{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/pen{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay)
 "fLo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/staff)
@@ -42874,6 +42810,35 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"hPd" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 15;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 3
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay)
 "hPO" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -45049,6 +45014,25 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"jEa" = (
+/obj/table/auto,
+/obj/item/plate{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 6
+	},
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "jEu" = (
 /obj/mesh/catwalk{
 	dir = 6
@@ -48156,6 +48140,36 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
+"maO" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/window/westright{
+	dir = 1;
+	name = "Pharmacy"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/stamp{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/mapping_helper/access/medical,
+/obj/item/clipboard{
+	pixel_x = -7
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay)
 "mbq" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -48478,7 +48492,9 @@
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
 "mqz" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -52981,7 +52997,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "pwM" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -53354,7 +53372,8 @@
 /area/space)
 "pKI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -53473,7 +53492,8 @@
 /area/station/engine/storage)
 "pTf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -56062,7 +56082,6 @@
 /area/station/garden/owlery)
 "rSs" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 6
 	},
 /turf/simulated/floor/red,
@@ -59231,6 +59250,29 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
+"ucY" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -22;
+	pixel_y = 31
+	},
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "udc" = (
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
@@ -60201,7 +60243,9 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "uKI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "uKK" = (
@@ -63410,29 +63454,6 @@
 	dir = 10
 	},
 /area/station/hydroponics/bay)
-"xdL" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/obj/machinery/activation_button/flusher_button{
-	id = "ranch_flusher";
-	name = "Kitchen Chute Activation Button";
-	pixel_x = -22;
-	pixel_y = 31
-	},
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/wood/seven,
-/area/station/ranch)
 "xdS" = (
 /obj/mesh/grille/steel,
 /obj/lattice{
@@ -99910,7 +99931,7 @@ ntA
 cfC
 cgU
 chZ
-cjn
+hPd
 cmd
 cme
 cnk
@@ -99926,7 +99947,7 @@ dkF
 vgk
 qSm
 mwV
-dJb
+jEa
 ubz
 sfo
 sfo
@@ -100212,7 +100233,7 @@ cCl
 cfC
 cgU
 cia
-fKR
+maO
 mrY
 bVR
 cnl
@@ -124276,7 +124297,7 @@ adC
 adC
 aii
 atW
-xdL
+ucY
 sNp
 vBo
 arh

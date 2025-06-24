@@ -133,6 +133,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	burning_image.icon_state = null
 
 	src.old_canmove = src.canmove
+	src.real_name = src.name
 
 	if(!isnull(src.custom_organHolder_type))
 		src.organHolder = new src.custom_organHolder_type(src, custom_brain_type)
@@ -511,7 +512,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
+			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity) && ismob(I))
 			var/mob/M = I
@@ -833,7 +834,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/handHolder/HH = hands[t_hand]
 		if (HH.item || !HH.can_hold_items)
 			return 0
-		if(istype(HH.limb, /datum/limb/small_critter))
+		if(istype(HH.limb, /datum/limb/small_critter) && HH.limb.exempt == FALSE)
 			var/datum/limb/small_critter/L = HH.limb
 			if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 				return 0
@@ -847,7 +848,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/handHolder/HH = hands[active_hand]
 		if (HH.item || !HH.can_hold_items)
 			return 0
-		if(istype(HH.limb, /datum/limb/small_critter))
+		if(istype(HH.limb, /datum/limb/small_critter) && HH.limb.exempt == FALSE)
 			var/datum/limb/small_critter/L = HH.limb
 			if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 				return 0
@@ -1099,6 +1100,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/message = specific_emotes(act, param, voluntary)
 	var/m_type = specific_emote_type(act)
 	var/custom = 0 //Sorry, gotta make this for chat groupings.
+	var/used_name = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3 ? "Something" : src
+
 	if (!message)
 		switch (lowertext(act))
 			if ("salute","bow","hug","wave","glare","stare","look","leer","nod")
@@ -1118,36 +1121,36 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 						if (param)
 							switch(act)
 								if ("bow","wave","nod")
-									message = "<B>[src]</B> [act]s to [param]."
+									message = "<B>[used_name]</B> [act]s to [param]."
 									maptext_out = "<I>[act]s to [M]</I>"
 								if ("glare","stare","look","leer")
-									message = "<B>[src]</B> [act]s at [param]."
+									message = "<B>[used_name]</B> [act]s at [param]."
 									maptext_out = "<I>[act]s at [M]</I>"
 								else
-									message = "<B>[src]</B> [act]s [param]."
+									message = "<B>[used_name]</B> [act]s [param]."
 									maptext_out = "<I>[act]s [M]</I>"
 						else
 							switch(act)
 								if ("hug")
-									message = "<B>[src]</b> [act]s itself."
+									message = "<B>[used_name]</b> [act]s itself."
 									maptext_out = "<I>[act]s itself</I>"
 								else
-									message = "<B>[src]</b> [act]s."
+									message = "<B>[used_name]</b> [act]s."
 									maptext_out = "<I>[act]s [M]</I>"
 					else
-						message = "<B>[src]</B> struggles to move."
-						maptext_out = "<I>[src] struggles to move</I>"
+						message = "<B>[used_name]</B> struggles to move."
+						maptext_out = "<I>[used_name] struggles to move</I>"
 					m_type = 1
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				if (src.emote_check(voluntary, 10))
-					message = "<B>[src]</B> [act]s."
+					message = "<B>[used_name]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
 					m_type = 1
 			if ("gasp","cough","laugh","giggle","sigh")
 				// basic hearable single-word emotes
 				if (src.emote_check(voluntary, 10))
-					message = "<B>[src]</B> [act]s."
+					message = "<B>[used_name]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
 					m_type = 2
 			if ("customv")
@@ -1155,7 +1158,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					param = input("Choose an emote to display.")
 					if(!param) return
 				param = html_encode(sanitize(param))
-				message = "<b>[src]</b> [param]"
+				message = "<b>[used_name]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
@@ -1164,7 +1167,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					param = input("Choose an emote to display.")
 					if(!param) return
 				param = html_encode(sanitize(param))
-				message = "<b>[src]</b> [param]"
+				message = "<b>[used_name]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 2
@@ -1172,7 +1175,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				if (!param)
 					return
 				param = html_encode(sanitize(param))
-				message = "<b>[src]</b> [param]"
+				message = "<b>[used_name]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
@@ -1182,7 +1185,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 					else
-						message = "<b>[src]</B> does a flip!"
+						message = "<b>[used_name]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
 
 	if (!message)
@@ -1471,9 +1474,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			src.toggle_throw_mode()
 		if ("walk")
 			if (src.m_intent == "run")
-				src.m_intent = "walk"
+				src.set_m_intent("walk")
 			else
-				src.m_intent = "run"
+				src.set_m_intent("run")
 			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		else
@@ -1556,6 +1559,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		ai.disable()
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
+
+/mob/living/critter/remove_pulling()
+	. = ..()
+	src.hud?.update_pulling()
 
 /mob/living/critter/proc/admincmd_attack()
 	set name = "Start Attacking"

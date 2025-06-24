@@ -22,7 +22,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "incubator"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/my_egg = null
 	var/incubate_count = 0
 	var/image/egg_overlay = null
@@ -96,7 +96,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 			if ((user.loc == T && user.equipped() == W))
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> disassembles [src]"),SPAN_NOTICE("You disassemble [src]"))
 				var/obj/chicken_nesting_box/N = new /obj/chicken_nesting_box(get_turf(src))
-				N.anchored = 1
+				N.anchored = ANCHORED
 				new /obj/item/incubator_parts(get_turf(src))
 				qdel(src)
 			return
@@ -179,7 +179,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "feed_grinder"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/work_cycle = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/obj/item/reagent_containers/food/current_food = null
@@ -208,7 +208,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				for(var/obj/item/O in S.contents)
 					src.add_item(O)
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 
@@ -587,7 +587,7 @@ TYPEINFO(/obj/chicken_nesting_box)
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "box"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER
 
 	attackby(obj/item/W, mob/user)

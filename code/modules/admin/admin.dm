@@ -2580,10 +2580,10 @@ var/global/noir = 0
 							if (tgui_alert(usr,"Do you wish to give everyone brain damage?", "Confirmation", list("Yes", "No")) != "Yes")
 								return
 							for (var/mob/living/carbon/human/H in mobs)
-								if (H.get_brain_damage() < 60)
+								if (H.get_brain_damage() < BRAIN_DAMAGE_MAJOR)
 									if (H.client)
 										H.show_text("<B>You suddenly feel stupid.</B>","red")
-									H.take_brain_damage(min(60 - H.get_brain_damage(), 60)) // 100+ brain damage is lethal.
+									H.take_brain_damage(min(BRAIN_DAMAGE_MAJOR - H.get_brain_damage(), BRAIN_DAMAGE_MAJOR)) // 100+ brain damage is lethal.
 									LAGCHECK(LAG_LOW)
 								else
 									continue
@@ -2662,6 +2662,18 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] disabled the safeties on all station airlocks.")
 								logTheThing(LOG_ADMIN, usr, "disabled the safeties on all station airlocks.")
 								logTheThing(LOG_DIARY, usr, "disabled the safeties on all station airlocks.", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
+
+					if ("detonate_all_pdas")
+						if (src.level >= LEVEL_PA)
+							if (antagonists[ROLE_SPY_THIEF] && length(antagonists[ROLE_SPY_THIEF]))
+								if(tgui_alert(usr, "There are active spy-thieves!", "Antagonist Warning", list("OK", "Oops misclick")) != "OK")
+									return
+							if (tgui_alert(usr, "Really blow up everyone's PDAs?", "BOOM BOOM BOOM BOOM?", list("Yes", "Oops misclick")) == "Yes")
+								for_by_tcl(pda, /obj/item/device/pda2)
+									pda.explode()
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -3419,8 +3431,6 @@ var/global/noir = 0
 						src.owner:debug_variables(mining_controls)
 					if("mapsettings")
 						src.owner:debug_variables(map_settings)
-					if("ghostnotifications")
-						src.owner:debug_variables(ghost_notifier)
 					if("overlays")
 						overlaytest()
 					if("overlaysrem")
@@ -3911,7 +3921,6 @@ var/global/noir = 0
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=datacore'>Data Core</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=miningcontrols'>Mining Controls</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=mapsettings'>Map Settings</A> |
-					<A href='byond://?src=\ref[src];action=secretsdebug;type=ghostnotifications'>Ghost Notifications</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=overlays'>Overlays</A>
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=world'>World</A> |
@@ -4006,6 +4015,7 @@ var/global/noir = 0
 					<A href='byond://?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
 					<A href='byond://?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
 					<A href='byond://?src=\ref[src];action=secretsfun;type=airlock_safety'>Disable all airlock's safeties.</A><BR>
+					<A href='byond://?src=\ref[src];action=secretsfun;type=detonate_all_pdas'>Detonate all PDAs</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='byond://?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>

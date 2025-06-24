@@ -358,7 +358,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 			dir_out_char = "W"
 
 
-	if (operating == CONVEYOR_STOPPED || operating == CONVEYOR_FORWARD)
+	if (operating == null || operating == CONVEYOR_STOPPED || operating == CONVEYOR_FORWARD)
 		new_icon += dir_in_char + dir_out_char
 	else if (operating == CONVEYOR_REVERSE)
 		new_icon += dir_out_char + dir_in_char

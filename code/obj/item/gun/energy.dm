@@ -1331,7 +1331,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
 				user.put_in_hand_or_drop(heldItem)
 				heldItem = null
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			else
 				boutput(user, "The gun does not contain anything.")
 		else
@@ -1346,7 +1346,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			user.u_equip(I)
 			I.dropped(user)
 			boutput(user, "You insert \the [heldItem.name] into the gun's gripper.")
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -1503,7 +1503,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				boutput(M, SPAN_ALERT("[src] has accepted the DNA string. You are now the owner!"))
 				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 
 	proc/change_mode(var/mob/M, var/text, var/sound = TRUE)
 		switch(text)
@@ -1541,7 +1541,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				if (sound)
 					playsound(M, 'sound/vox/hot.ogg', 50)
 				src.toggle_recoil(TRUE)
-			if ("assault","highpower", "bigshot")
+			if ("assault","high power", "bigshot")
 				set_current_projectile(projectiles["assault"])
 				current_projectile.cost = 170
 				item_state = "lawg-bigshot"

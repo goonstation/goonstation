@@ -60,21 +60,23 @@ export const Radio = () => {
                 {!!data.hasMicrophone && (
                   <LabeledList.Item label="Microphone">
                     <Button.Checkbox
-                      checked={data.broadcasting}
-                      onClick={() => act('toggle-broadcasting')}
+                      checked={data.microphoneEnabled}
+                      onClick={() => act('toggle-microphone')}
                     >
-                      {data.broadcasting ? 'Engaged' : 'Disengaged'}
+                      {data.microphoneEnabled ? 'Engaged' : 'Disengaged'}
                     </Button.Checkbox>
                   </LabeledList.Item>
                 )}
-                <LabeledList.Item label="Speaker">
-                  <Button.Checkbox
-                    checked={data.listening}
-                    onClick={() => act('toggle-listening')}
-                  >
-                    {data.listening ? 'Engaged' : 'Disengaged'}
-                  </Button.Checkbox>
-                </LabeledList.Item>
+                {!!data.hasSpeaker && (
+                  <LabeledList.Item label="Speaker">
+                    <Button.Checkbox
+                      checked={data.speakerEnabled}
+                      onClick={() => act('toggle-speaker')}
+                    >
+                      {data.speakerEnabled ? 'Engaged' : 'Disengaged'}
+                    </Button.Checkbox>
+                  </LabeledList.Item>
+                )}
                 <LabeledList.Item label="Frequency">
                   <Stack align="center">
                     <Stack.Item>
