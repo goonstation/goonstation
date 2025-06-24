@@ -97,7 +97,7 @@ TYPEINFO(/obj/machinery/loudspeaker)
 	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
-	HELP_MESSAGE_OVERRIDE("Speech into nearby microphones will be played over this loudspeaker.<br>If damaged, use a <b>soldering iron</b> to repair.")
+	HELP_MESSAGE_OVERRIDE("Speech into nearby microphones will be played over this loudspeaker.")
 
 /obj/machinery/loudspeaker/New()
 	. = ..()
