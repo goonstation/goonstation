@@ -2269,7 +2269,7 @@
 					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
 						dab_id?.brain_damage_count += 10
-						if(src.get_brain_damage() > 60)
+						if(src.get_brain_damage() > BRAIN_DAMAGE_MAJOR)
 							src.show_text(SPAN_ALERT("Your head hurts!"))
 					if(locate(/obj/item/bible) in src.loc)
 						if(H.limbs.l_arm)
