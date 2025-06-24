@@ -337,7 +337,7 @@ const encodedLengthBinarySearch = (haystack: string[], length: number) => {
 
 const chunkSplitter = {
   [Symbol.split]: (string: string) => {
-    const charSeq = string[Symbol.iterator]().toArray();
+    const charSeq = Array.from(string[Symbol.iterator]());
     const length = charSeq.length;
     let chunks: string[] = [];
     let startIndex = 0;

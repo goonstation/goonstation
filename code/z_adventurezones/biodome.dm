@@ -400,7 +400,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 			if (istype(O, /obj/machinery/vehicle) && !src.no_fly_zone)
 				var/obj/machinery/vehicle/V = O
-				if(istype(V.movement_controller, /datum/movement_controller/pod) && V.engine?.active)
+				if(istype(V.movement_controller, /datum/movement_controller/pod) && V.get_part(POD_PART_ENGINE)?.active)
 					return
 
 			if (isliving(O))
@@ -1066,6 +1066,7 @@ SYNDICATE DRONE FACTORY AREAS
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

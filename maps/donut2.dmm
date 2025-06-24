@@ -15816,7 +15816,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/table/reinforced/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "cwM" = (
 /obj/machinery/light_switch/south,
@@ -26351,7 +26351,7 @@
 /obj/machinery/light/small/floor,
 /obj/mapping_helper/firedoor_spawn,
 /obj/table/reinforced/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "iNJ" = (
 /obj/table/wood/auto,
@@ -34015,7 +34015,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "nnN" = (
 /obj/cable{
@@ -43013,7 +43013,7 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/access/bar,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/catering)
 "ssc" = (
 /obj/cable{
@@ -45742,7 +45742,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/table/reinforced/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "tXu" = (
 /obj/machinery/atmospherics/binary/valve{
