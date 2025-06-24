@@ -48,7 +48,10 @@ TYPEINFO(/obj/item/saw)
 	active
 		active = 1
 		force = 12
+		icon_state = "c_saw"
+		item_state = "c_saw-A"
 		arm_icon = "chainsaw-A"
+
 
 		New()
 			..()
@@ -56,9 +59,6 @@ TYPEINFO(/obj/item/saw)
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			if (src)
-				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)
 		return
 
