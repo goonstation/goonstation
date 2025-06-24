@@ -347,7 +347,7 @@ TYPEINFO(/obj/item/saw/elimbinator)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_s"
-	item_state = "c_saw_s"
+	item_state = "c_saw_s-A"
 	base_state = "c_saw_s"
 	hit_type = DAMAGE_CUT
 	active = 1
