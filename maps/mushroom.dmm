@@ -14737,25 +14737,6 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
-"ecS" = (
-/obj/item/paper_bin{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/stamp{
-	pixel_y = 1
-	},
-/obj/item/pen{
-	pixel_x = 4
-	},
-/obj/item/clipboard{
-	pixel_y = 3
-	},
-/obj/table/auto,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "ecT" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
@@ -24454,18 +24435,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
-"mnZ" = (
-/obj/table/auto,
-/obj/machinery/light/incandescent,
-/obj/item/robodefibrillator,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical,
-/turf/simulated/floor/bluewhite{
-	dir = 6
-	},
-/area/station/medical/medbay)
 "moy" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 1
@@ -27031,6 +27000,29 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
+"oqp" = (
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/item/stamp{
+	pixel_y = 1
+	},
+/obj/item/pen{
+	pixel_x = 4
+	},
+/obj/item/clipboard{
+	pixel_y = 3;
+	pixel_x = 10
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
+/obj/table/auto,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "oqD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36249,11 +36241,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"uOo" = (
-/obj/table/wood/auto,
-/obj/machinery/loudspeaker,
-/turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary)
 "uOv" = (
 /obj/cable{
 	icon_state = "4-6"
@@ -36295,6 +36282,11 @@
 	icon_state = "fgreen3"
 	},
 /area/station/bridge)
+"uQS" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/specialroom/chapel,
+/area/station/chapel/sanctuary)
 "uRe" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -36921,6 +36913,21 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"vor" = (
+/obj/item/robodefibrillator,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/mask/surgical,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 8
+	},
+/obj/table/auto,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/station/medical/medbay)
 "voE" = (
 /turf/simulated/floor{
 	icon_state = "L1";
@@ -88758,7 +88765,7 @@ aBS
 aCs
 aDv
 piA
-uOo
+uQS
 whg
 aEY
 aEv
@@ -95448,7 +95455,7 @@ cxV
 vGD
 txb
 esb
-ecS
+oqp
 odZ
 oGN
 olZ
@@ -97258,7 +97265,7 @@ vZE
 dxC
 jNn
 aPQ
-mnZ
+vor
 kvV
 dgF
 spP

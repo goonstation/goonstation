@@ -187,7 +187,7 @@
 
 	if (user)
 		if (ishuman(user))
-			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
+			if(user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || prob(user.get_brain_damage()))
 				boutput(user, SPAN_ALERT("You are too dazed to use [src] properly."))
 				return 1
 
@@ -237,6 +237,7 @@
 /obj/machinery/was_deconstructed_to_frame(mob/user)
 	. = ..()
 	src.power_change()
+	tgui_process.close_uis(src)
 
 /obj/machinery/was_built_from_frame(mob/user, newly_built)
 	. = ..()

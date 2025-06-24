@@ -397,7 +397,7 @@ TYPEINFO(/obj/stool/wooden)
 		return TRUE
 
 	proc/unbuckle_mob(var/mob/M as mob, var/mob/user as mob)
-		if (M.buckled && !user.restrained())
+		if (M.buckled && !user.restrained() && !is_incapacitated(user))
 			if (allow_unbuckle)
 				if (M != user)
 					user.visible_message(SPAN_NOTICE("<b>[M]</b> is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
@@ -682,7 +682,7 @@ TYPEINFO(/obj/stool/chair)
 
 			if (M.buckled && M != chair_chump)
 				if (allow_unbuckle)
-					if(user.restrained())
+					if(user.restrained() || is_incapacitated(user))
 						return
 					if (M != user)
 						user.visible_message(SPAN_NOTICE("<b>[M]</b> is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
@@ -719,6 +719,7 @@ TYPEINFO(/obj/stool/chair)
 				C.icon_state = "folded_[src.icon_state]"
 				C.item_state = C.icon_state
 
+			C.forensic_holder = src.forensic_holder
 			qdel(src)
 		else
 			src.rotate()
@@ -984,6 +985,7 @@ TYPEINFO(/obj/item/chair/folded)
 		C.setMaterial(src.material)
 	if (src.c_color)
 		C.icon_state = src.c_color
+	C.forensic_holder = src.forensic_holder
 	C.set_dir(user.dir)
 	ON_COOLDOWN(user, "chair_stand", 1 SECOND)
 	boutput(user, "You unfold [C].")

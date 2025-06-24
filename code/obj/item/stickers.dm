@@ -170,7 +170,7 @@
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			boutput(user, SPAN_NOTICE("You stamp \the [src]."))
 			return
 
@@ -199,7 +199,7 @@
 				else
 					src.icon_state = "postit-writing"
 			src.words += "[src.words ? "<br>" : ""][t]"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			pen.in_use = 0
 			src.add_fingerprint(user)
 			return
@@ -604,7 +604,7 @@
 /obj/item/device/radio/spy
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
-	initial_speaker_enabled = FALSE
+	has_speaker = FALSE
 	hardened = FALSE
 
 /obj/item/device/radio/spy/det_only
@@ -661,7 +661,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	attackby(obj/item/W, mob/user, params)
 		if (src.attached)
 			src.attached.Attackby(W, user)
-			user.lastattacked = user
+			user.lastattacked = get_weakref(user)
 		else
 			. = ..()
 

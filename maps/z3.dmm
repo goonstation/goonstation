@@ -1237,38 +1237,12 @@
 	dir = 1
 	},
 /area/radiostation/hallway)
-"adQ" = (
-/obj/table/wood/auto,
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/machinery/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "adR" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
 /area/space)
-"adS" = (
-/obj/table/wood/auto,
-/obj/machinery/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "adV" = (
 /obj/effects/background_objects/domus_dei,
 /turf/space,
@@ -5353,6 +5327,21 @@
 /obj/decal/cleanable/flockdrone_debris/fluid,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
+"aDt" = (
+/obj/table/wood/auto,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/loudspeaker{
+	layer = 4;
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "aDy" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/abandonedoutpostthing)
@@ -7060,10 +7049,6 @@
 	name = "GLOMAR Salvager";
 	dir = 4
 	},
-/turf/simulated/floor/plating/scorched,
-/area/salvage_trader)
-"aKW" = (
-/obj/marker/supplymarker,
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
 "aKX" = (
@@ -22039,6 +22024,17 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
+"rBa" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker{
+	layer = 4;
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "rBu" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
@@ -24582,6 +24578,14 @@
 	dir = 1
 	},
 /area/radiostation/hallway)
+"xJu" = (
+/obj/marker/supplymarker,
+/obj/fakeobject/teleport_pad{
+	desc = "It doesn't look like this is working."
+	},
+/obj/marker/salvager_teleport,
+/turf/simulated/floor/plating/scorched,
+/area/salvage_trader)
 "xKR" = (
 /obj/fakeobject/pipe{
 	desc = "It won't budge.";
@@ -73890,7 +73894,7 @@ aJN
 aKX
 aKx
 aKG
-aKW
+xJu
 aLf
 aJN
 aIz
@@ -107889,7 +107893,7 @@ hnB
 oSY
 adx
 adK
-adQ
+aDt
 aem
 aeD
 adg
@@ -108493,7 +108497,7 @@ vMM
 adw
 adx
 adK
-adS
+rBa
 aeo
 aeF
 adg

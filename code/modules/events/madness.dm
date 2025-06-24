@@ -1,6 +1,6 @@
 //Lovingly Adapted from sleeper agent code
 /datum/random_event/major/antag/madness
-	name = "Megafauna Madness"
+	name = "Broken Madness"
 #ifdef MAP_OVERRIDE_NEON
 	disabled = FALSE
 #else

@@ -240,7 +240,15 @@
 		ASSERT(src.name)
 		..()
 
-	proc/preventAddTrait(mob/owner, var/resolved_role)
+	/// Returns TRUE if a trait should NOT be added to a mob.
+	proc/preventAddTrait(mob/owner, resolved_role)
+		if (resolved_role == "tutorial")
+			for (var/trait_cateogry in src.category)
+				if (trait_cateogry == "species")
+					return FALSE
+				if (trait_cateogry == "language")
+					return FALSE
+			return TRUE
 		. = FALSE
 
 	proc/onAdd(var/mob/owner)
@@ -1180,7 +1188,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		var/mob/living/carbon/human/H = owner
 		var/cyber_rejected = FALSE
 		for (var/obj/item/parts/P in list(H.limbs.l_arm, H.limbs.r_arm, H.limbs.l_leg, H.limbs.r_leg))
-			if (P.kind_of_limb & LIMB_ROBOT)
+			if (isrobolimb(P))
 				boutput(H, SPAN_ALERT("Your body is incompatible with [P] and rejects it!"))
 				P.sever()
 				cyber_rejected = TRUE
@@ -1286,6 +1294,27 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "clutz"
 	points = 2
 	afterlife_blacklisted = TRUE
+
+/datum/trait/butterfingers
+	name = "Butterfingers"
+	desc = "You have difficulty keeping hold of things."
+	id = "butterfingers"
+	icon_state = "butterfingers"
+	points = 2
+	afterlife_blacklisted = TRUE
+
+	onLife(var/mob/owner, var/mult)
+		if(!can_act(owner) || !istype(owner))
+			return
+		if(!probmult(10))
+			return
+		var/obj/item/target_item = owner.equipped() //prioritise actively held items
+		if(!target_item)
+			target_item = owner.find_type_in_hand(/obj/item)
+		if(!target_item || target_item.cant_drop)
+			return
+		owner.drop_item(target_item)
+		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> accidentally drops [target_item]!"))
 
 /datum/trait/leftfeet
 	name = "Two left feet"
@@ -1472,6 +1501,11 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = 0
 	category = list("body", "nohair","nowig")
 	icon_state = "hair"
+
+	preventAddTrait(mob/owner, resolved_role)
+		. = ..()
+		if (resolved_role == "tutorial")
+			. = FALSE
 
 	onAdd(mob/owner)
 		owner.bioHolder.AddEffect("hair_growth", innate = TRUE)
