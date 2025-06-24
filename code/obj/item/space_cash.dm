@@ -270,7 +270,7 @@
 		set_amt(amt)
 
 	set_amt(amt = 1)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		src.amount = amt
 		src.UpdateStackAppearance()
 

@@ -607,10 +607,10 @@
 	bin_type = /obj/item/sticker/postit/artifact_paper
 
 	update()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /obj/item/paper_bin/proc/update()
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	src.icon_state = "paper_bin[(src.amount_left || locate(bin_type, src)) ? "1" : null]"
 	return
 

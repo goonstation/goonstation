@@ -24471,7 +24471,7 @@
 "rwG" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
-/area/station/science/chemistry)
+/area/station/maintenance/west)
 "rwU" = (
 /obj/strip_door,
 /obj/machinery/door/poddoor/pyro{

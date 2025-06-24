@@ -4,8 +4,6 @@
 
 	#if defined(MAP_OVERRIDE_OSHAN)
 	var/image_url = "images/titlecards/oshan_titlecard.png"
-	#elif defined(MAP_OVERRIDE_MANTA)
-	var/image_url = "images/titlecards/manta_titlecard.png"
 	#elif defined(MAP_OVERRIDE_POD_WARS)
 	var/image_url = "images/titlecards/podwars.png"
 	#else
@@ -155,10 +153,6 @@ proc/get_global_tip()
 		icon_state = "title_oshan"
 		name = "Oshan Laboratory"
 		desc = "An underwater laboratory on the planet Abzu."
-	#elif defined(MAP_OVERRIDE_MANTA)
-		icon_state = "title_manta"
-		name = "The NSS Manta"
-		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
 	#endif
 	#if defined(REVERSED_MAP)
 		transform = list(-1, 0, 0, 0, 1, 0)

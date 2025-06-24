@@ -1792,7 +1792,7 @@ Other Goonstation servers:[serverList]</span>"})
 	name = "admin spacebux store setup object"
 	desc = "An admin can click on this to set stuff up."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "DONGS"
 	var/tmp/set_up = FALSE

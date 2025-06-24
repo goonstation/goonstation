@@ -322,8 +322,6 @@
 				continue // Only Continue as Captain, as non-captain command staff appear both in the command section and their departmental section
 			else
 				Command.Add(entry)
-				if(rank == "Communications Officer")
-					continue
 
 		if((rank in security_jobs) || (rank in security_gimmicks))
 			if(rank in command_jobs)

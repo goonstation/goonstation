@@ -542,7 +542,7 @@
 
 #if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
 		src.verbs += /client/proc/cmd_rp_rules
-		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 			src.cmd_rp_rules()
 #endif
 
@@ -951,7 +951,7 @@ var/global/curr_day = null
 	set category = "Commands"
 
 	var/cant_interact_time = null
-	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 		cant_interact_time = 15 SECONDS
 
 	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
