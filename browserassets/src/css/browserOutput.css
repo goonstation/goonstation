@@ -12,8 +12,8 @@ body {
 }
 body {
   background: #fff;
-  font-family:
-    'Helvetica Neue', Helvetica, Arial, sans-serif, 'Twemoji', 'Segoe UI Emoji';
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Twemoji',
+    'Segoe UI Emoji';
   font-size: 12px;
   line-height: 1.4;
   overflow-x: hidden;
@@ -674,6 +674,143 @@ h2.alert {
   display: inline-block;
 }
 
+/* COMMAND ALERTS */
+.command_alert {
+  color: #000;
+  margin: 0px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Twemoji',
+    'Segoe UI Emoji';
+}
+div.command_alert {
+  border: 2px solid;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+h1.command_alert {
+  font-weight: bold;
+  font-size: 130%;
+  border: 0px;
+  text-align: center;
+  padding: 0.2em 0.5em;
+}
+h2.command_alert {
+  font-weight: bold;
+  font-size: 110%;
+  border: 0px;
+  border-left-width: 2px;
+  border-right-width: 2px;
+  border-bottom-width: 1px;
+  padding: 0.2em 0.5em;
+}
+p.command_alert {
+  padding: 0.2em 0.5em;
+}
+
+div.ageneral {
+  border-color: #5676ad;
+}
+h1.ageneral {
+  background-color: #5676ad;
+}
+h2.ageneral {
+  background-color: #7090c7;
+}
+
+div.aanomaly {
+  border-color: #9f5ecf;
+}
+h1.aanomaly {
+  background-color: #9f5ecf;
+}
+h2.aanomaly {
+  background-color: #b877e8;
+}
+
+div.aweather {
+  border-color: #b544d5;
+}
+h1.aweather {
+  background-color: #b544d5;
+}
+h2.aweather {
+  background-color: #cf5eef;
+}
+
+div.astation {
+  border-color: #c8714c;
+}
+h1.astation {
+  background-color: #c8714c;
+}
+h2.astation {
+  background-color: #e28b66;
+}
+
+div.awatchful {
+  border-color: #9b56f4;
+}
+h1.awatchful {
+  background-color: #9b56f4;
+}
+h2.awatchful {
+  background-color: #b570ff;
+}
+
+div.aegeria {
+  border-color: #c64d50;
+}
+h1.aegeria {
+  background-color: #c64d50;
+}
+h2.aegeria {
+  background-color: #df6669;
+}
+
+div.acomm {
+  border-color: #8080b0;
+}
+h1.acomm {
+  background-color: #8080b0;
+}
+h2.acomm {
+  background-color: #9999c9;
+}
+
+div.adept {
+  border-color: #669696;
+}
+h1.adept {
+  background-color: #669696;
+}
+h2.adept {
+  background-color: #80b0b0;
+}
+
+div.aclown {
+  border-color: #b35080;
+}
+h1.aclown {
+  background-color: #ff9ccc;
+  font-family: 'Comic Sans MS';
+}
+h2.aclown {
+  background-color: #ffb6e6;
+  font-family: 'Comic Sans MS';
+}
+p.aclown {
+  font-family: 'Comic Sans MS';
+}
+
+div.asyn {
+  border-color: #c95454;
+}
+h1.asyn {
+  background-color: #e36e6e;
+}
+h2.asyn {
+  background-color: #e36e6e;
+}
+
 .rstandard {
   color: #008000;
 }
@@ -1088,6 +1225,110 @@ body.theme-dark .fatalError {
 }
 body.theme-dark .connectionClosed.restored {
   background: green;
+}
+
+body.theme-dark .command_alert {
+  color: #fff;
+}
+
+body.theme-dark div.ageneral {
+  border-color: #23437a;
+}
+body.theme-dark h1.ageneral {
+  background-color: #23437a;
+}
+body.theme-dark h2.ageneral {
+  background-color: #3d5d94;
+}
+
+body.theme-dark div.aanomaly {
+  border-color: #6c2b9c;
+}
+body.theme-dark h1.aanomaly {
+  background-color: #6c2b9c;
+}
+body.theme-dark h2.aanomaly {
+  background-color: #8544b5;
+}
+
+body.theme-dark div.aweather {
+  border-color: #8211a2;
+}
+body.theme-dark h1.aweather {
+  background-color: #8211a2;
+}
+body.theme-dark h2.aweather {
+  background-color: #9c2bbc;
+}
+
+body.theme-dark div.astation {
+  border-color: #953e19;
+}
+body.theme-dark h1.astation {
+  background-color: #953e19;
+}
+body.theme-dark h2.astation {
+  background-color: #af5833;
+}
+
+body.theme-dark div.awatchful {
+  border-color: #6823c1;
+}
+body.theme-dark h1.awatchful {
+  background-color: #6823c1;
+}
+body.theme-dark h2.awatchful {
+  background-color: #823ddb;
+}
+
+body.theme-dark div.aegeria {
+  border-color: #ac3336;
+}
+body.theme-dark h1.aegeria {
+  background-color: #ac3336;
+}
+body.theme-dark h2.aegeria {
+  background-color: #c64d50;
+}
+
+body.theme-dark div.acomm {
+  border-color: #4d4d7d;
+}
+body.theme-dark h1.acomm {
+  background-color: #4d4d7d;
+}
+body.theme-dark h2.acomm {
+  background-color: #666696;
+}
+
+body.theme-dark div.adept {
+  border-color: #336363;
+}
+body.theme-dark h1.adept {
+  background-color: #336363;
+}
+body.theme-dark h2.adept {
+  background-color: #4d7d7d;
+}
+
+body.theme-dark div.aclown {
+  border-color: #ff9ccc;
+}
+body.theme-dark h1.aclown {
+  background-color: #993666;
+}
+body.theme-dark h2.aclown {
+  background-color: #b35080;
+}
+
+body.theme-dark div.asyn {
+  border-color: #962121;
+}
+body.theme-dark h1.asyn {
+  background-color: #b03b3b;
+}
+body.theme-dark h2.asyn {
+  background-color: #b03b3b;
 }
 
 body.theme-dark .rstandard {
