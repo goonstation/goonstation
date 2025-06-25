@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 				return output
 			else
 				considered_type = type2parent(considered_type)
-		return
+		return list()
 
 	proc/cooking_power() //used to find cook amounts on
 		return cooktime/10
