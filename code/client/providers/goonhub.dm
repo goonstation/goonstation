@@ -4,6 +4,7 @@
 	can_logout = TRUE
 	var/window_id = "goonhubauth"
 	var/timeout = 4 MINUTES
+	var/authenticating = FALSE
 
 /datum/client_auth_provider/goonhub/New(client/owner)
 	. = ..()
@@ -24,16 +25,18 @@
 		"}, forceScroll=TRUE)
 
 	SPAWN(src.timeout / 2)
-		src.timeout_warning(src.timeout / 2)
+		if (src.owner) src.timeout_warning(src.timeout / 2)
 
 	SPAWN(src.timeout - src.timeout / 4)
-		src.timeout_warning(src.timeout / 4)
+		if (src.owner) src.timeout_warning(src.timeout / 4)
 
 	SPAWN(src.timeout)
-		src.on_timeout()
+		if (src.owner) src.on_timeout()
 
 /datum/client_auth_provider/goonhub/Topic(href, href_list)
 	if (href_list["authenticated"])
+		if (src.authenticating || src.authenticated) return
+		src.authenticating = TRUE
 		var/list/user = json_decode(href_list["user"])
 		src.verify_auth(user["session"])
 	if (href_list["logout"])
@@ -81,6 +84,7 @@
 		var/datum/apiModel/VerifyAuthResource/verification = apiHandler.queryAPI(verifyAuth)
 		src.on_auth(verification)
 	catch
+		src.authenticating = FALSE
 		src.show_ui()
 		return FALSE
 
@@ -129,6 +133,7 @@
 		</div>
 		"}, forceScroll=TRUE)
 
+	src.authenticating = FALSE
 	. = ..()
 
 // /datum/client_auth_provider/goonhub/on_auth_failed()
@@ -173,7 +178,7 @@
 			"titlebar" = TRUE,
 			"can-resize" = TRUE,
 			"is-visible" = TRUE,
-			"on-close" = ".on-goonhub-auth-close [route]",
+			// "on-close" = ".on-goonhub-auth-close [route]",
 		)))
 
 /// A way to open the login window, just in case
@@ -187,10 +192,10 @@
 		provider.show_ui()
 
 /// Reopen the login window if the user somehow manages to close it
-/client/proc/on_goonhub_auth_close(route as text)
-	set name = ".on-goonhub-auth-close"
-	set hidden = TRUE
-	if (src.authenticated) return
-	if (istype(src.client_auth_provider, /datum/client_auth_provider/goonhub))
-		var/datum/client_auth_provider/goonhub/provider = src.client_auth_provider
-		provider.show_ui(route)
+// /client/proc/on_goonhub_auth_close(route as text)
+// 	set name = ".on-goonhub-auth-close"
+// 	set hidden = TRUE
+// 	if (src.authenticated) return
+// 	if (istype(src.client_auth_provider, /datum/client_auth_provider/goonhub))
+// 		var/datum/client_auth_provider/goonhub/provider = src.client_auth_provider
+// 		provider.show_ui(route)

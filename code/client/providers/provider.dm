@@ -12,16 +12,16 @@
 /datum/client_auth_provider/proc/on_auth()
 	SHOULD_CALL_PARENT(TRUE)
 	src.authenticated = TRUE
-	if (src.can_logout) winset(src.owner, "menu.auth_logout", "is-disabled=false")
+	if (src.can_logout && src.owner) winset(src.owner, "menu.auth_logout", "is-disabled=false")
 	logTheThing(LOG_DEBUG, src.owner, "authenticated via [src.name]")
-	src.owner.on_auth()
+	src.owner?.on_auth()
 
 /datum/client_auth_provider/proc/on_auth_failed()
 	SHOULD_CALL_PARENT(TRUE)
 	src.authenticated = FALSE
-	if (src.can_logout) winset(src.owner, "menu.auth_logout", "is-disabled=true")
+	if (src.can_logout && src.owner) winset(src.owner, "menu.auth_logout", "is-disabled=true")
 	logTheThing(LOG_DEBUG, src.owner, "failed to authenticate via [src.name]")
-	src.owner.on_auth_failed()
+	src.owner?.on_auth_failed()
 
 /datum/client_auth_provider/proc/logout()
 	SHOULD_CALL_PARENT(TRUE)
@@ -29,6 +29,6 @@
 /datum/client_auth_provider/proc/on_logout()
 	SHOULD_CALL_PARENT(TRUE)
 	src.authenticated = FALSE
-	winset(src.owner, "menu.auth_logout", "is-disabled=true")
+	if (src.owner) winset(src.owner, "menu.auth_logout", "is-disabled=true")
 	logTheThing(LOG_DEBUG, src.owner, "logged out via [src.name]")
-	src.owner.on_logout()
+	src.owner?.on_logout()

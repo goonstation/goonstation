@@ -347,9 +347,9 @@ var/global/game_force_started = FALSE
 			try
 				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
 			catch (var/exception/e)
-				logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
-				logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
-				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_ADMIN, null, "The automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_DIARY, null, "The automated map switch vote couldn't run because: [e.name]", "admin")
+				message_admins("The automated map switch vote couldn't run because: [e.name]")
 
 /datum/controller/gameticker
 	proc/distribute_jobs()
