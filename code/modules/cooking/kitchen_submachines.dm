@@ -611,7 +611,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					amtload++
 				S.UpdateIcon()
 				boutput(user, SPAN_NOTICE("[amtload] items loaded from satchel!"))
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 			return
 		else
 			var/proceed = 0

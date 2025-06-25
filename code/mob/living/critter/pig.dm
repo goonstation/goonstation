@@ -1,6 +1,5 @@
 /mob/living/critter/small_animal/pig
 	name = "space pig"
-	real_name = "space pig"
 	desc = "A pig. In space."
 	icon_state = "pig"
 	icon_state_dead = "pig-dead"
@@ -60,7 +59,6 @@
 
 /mob/living/critter/small_animal/pig/feral_hog
 	name = "feral hog"
-	real_name = "feral hog"
 	desc = "A feral hog. In space."
 	health_brute = 35
 	health_burn = 35
