@@ -383,13 +383,13 @@ h1.alert, h2.alert {color: #000000;}
 /* COMMAND ALERTS */
 .command_alert {color: #000; margin:0px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji"}
 div.command_alert {border: 2px solid; margin-top: 0.5em; margin-bottom: 0.5em}
-h1.command_alert {font-weight: bold; font-size: 150%; border: 0px; text-align: center; padding: 0.2em 0.5em}
-h2.command_alert {font-weight: bold; font-size: 120%; border-bottom: 4px solid ;padding: 0.2em 0.5em}
+h1.command_alert {font-weight: bold; font-size: 120%; border: 0px; text-align: center; padding: 0.2em 0.5em}
+h2.command_alert {font-weight: bold; font-size: 130%; border-bottom: 4px solid ;padding: 0.2em 0.5em}
 p.command_alert {padding: 0.4em 0.7em}
 
-div.ageneral {border-color: #5676AD}
-h1.ageneral {background-color: #5676AD}
-h2.ageneral {background-color: #7090C7; border-color: #5676AD}
+div.ageneral {border-color: #86869D}
+h1.ageneral {background-color: #86869D}
+h2.ageneral {background-color: #A6A6BD; border-color: #86869D}
 
 div.aanomaly {border-color: #9F5ECF}
 h1.aanomaly {background-color: #9F5ECF}
@@ -601,9 +601,9 @@ body.theme-dark .connectionClosed.restored {background: green;}
 
 body.theme-dark .command_alert {color: #fff;}
 
-body.theme-dark div.ageneral {border-color: #23437A;}
-body.theme-dark h1.ageneral  {background-color: #23437A;}
-body.theme-dark h2.ageneral  {background-color: #3D5D94; border-color: #23437A;}
+body.theme-dark div.ageneral {border-color: #434353;}
+body.theme-dark h1.ageneral  {background-color: #434353;}
+body.theme-dark h2.ageneral  {background-color: #535363; border-color: #434353;}
 
 body.theme-dark div.aanomaly {border-color: #6C2B9C;}
 body.theme-dark h1.aanomaly {background-color: #6C2B9C;}
