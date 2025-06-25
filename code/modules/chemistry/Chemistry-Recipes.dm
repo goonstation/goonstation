@@ -4029,6 +4029,25 @@
 		result_amount = 3
 		mix_phrase = "The mixture gives off a harsh odor."
 
+	gun_infusion
+		name = "Phytoballistic Infusate"
+		id = "gun_infusion"
+		result = "gun_infusion"
+		/*
+		The recipe is meant to encourage quintissential botany practices
+		- Botany's association with chemicals can best be described as "mass production", hence the quantities.
+		- Blackpowder is both a bullet chemical and a chem that is historically mass produced with the help of ingredients from botany.
+		- CLF3 is another weaponisable botany chem, but it also adds splice-requirements to the recipe.
+		- Plasma is the sci-fi space-magic chem that makes any of this even quasi-believable.
+		- Guns are made of metal.
+		- Gun distillate adds the still as part of the process.
+		- Temperature basically forces the use of Cryostylane, since this can only be made in something like a chem barrel.
+		*/
+		required_reagents = list("blackpowder" = 100, "infernite" = 100, "plasma" = 10, "iron" = 10, "gun_distillate" = 1)
+		max_temperature = 250
+		result_amount = 1
+		mix_phrase = "The mixture crystalises and then collapses in on itself, leaving behind small amount of gunmetal-grey sludge."
+
 	copper_nitrate
 		name = "Copper Nitrate"
 		id = "copper_nitrate"
