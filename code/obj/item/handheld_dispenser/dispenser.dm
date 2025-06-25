@@ -206,7 +206,10 @@
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = TRUE
-	qdel(target)
+	if (istype(target, /obj/machinery/atmospherics))
+		qdel(target)
+	else
+		target.onDestroy()
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
@@ -526,6 +529,13 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 					return NORTH|SOUTH
 				if(EAST, WEST)
 					return EAST|WEST
+		glass
+			name = "See-through fluid pipe"
+			path = /obj/fluid_pipe/straight/see_fluid/overfloor
+			icon_state = "fluidpipeglass"
+			cost = 2
+			desc = "A mere fluid pipe. Now with glass!"
+
 	bent
 		name = "Bent fluid pipe"
 		path = /obj/fluid_pipe/elbow/overfloor
@@ -570,6 +580,25 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 		get_directions(dir)
 			return NORTH|SOUTH|EAST|WEST
 
+	tank
+		name = "Fluid tank"
+		path = /obj/fluid_pipe/fluid_tank
+		cost = 6
+		icon = 'icons/obj/fluidpipes/fluid_tank.dmi'
+		icon_state = "tank"
+		desc = "A very large tank capable of holding 1000 units"
+
+		get_directions(dir)
+			return dir
+
+		glass
+			name = "See-through fluid tank"
+			path = /obj/fluid_pipe/fluid_tank/see_fluid
+			cost = 7
+			desc = "A very large tank capable of holding 1000 units. This one has a glass view!"
+			icon_state = "tank-view"
+
+
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine)
 /datum/pipe_recipe/fluid/machine
@@ -592,6 +621,12 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		path = /obj/machinery/fluid_pipe_machinery/unary/hand_pump
 		icon_state = "handpump"
 		desc = "Pumps out up to 100 units of fluid manually."
+
+	nullifier
+		name = "Nullifier"
+		path = /obj/machinery/fluid_pipe_machinery/unary/nullifier
+		icon_state = "nullifier"
+		desc = "Disappears up to 50 unit."
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/binary)
 /datum/pipe_recipe/fluid/machine/binary

@@ -1,6 +1,7 @@
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery)
 /obj/machinery/fluid_pipe_machinery
 	icon = 'icons/obj/fluidpipes/fluid_pipe.dmi'
+	desc = "Does cool things to fluids."
 	processing_tier = PROCESSING_QUARTER
 	anchored = ANCHORED
 	plane = PLANE_FLOOR
@@ -63,12 +64,28 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary)
 /obj/machinery/fluid_pipe_machinery/unary/nullifier
 	name = "Nullifier"
 	icon_state = "nullifier"
-	var/removalrate = 100
+	desc = "You're not really sure where the fluids go, but it probably doesn't matter."
+
+	var/pullrate = 50
 
 /obj/machinery/fluid_pipe_machinery/unary/nullifier/process()
-	if(src.network)
-		qdel(src.pull_from_network(src.network, src.removalrate))
+	if(!src.network) return
+	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
+	src.use_power(100 WATTS * fluid?.total_volume, ENVIRON)
+	qdel(fluid)
 
+/obj/machinery/fluid_pipe_machinery/unary/input
+	name = "Port"
+	desc = "Allows pouring in fluids."
+	icon_state = "port"
+	flags = NOSPLASH | OPENCONTAINER
+
+/obj/machinery/fluid_pipe_machinery/unary/input/initialize()
+	..()
+	src.reagents = src.network?.reagents || new(0)
+
+/obj/machinery/fluid_pipe_machinery/unary/input/get_chemical_effect_position()
+	return 0
 
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 /obj/machinery/fluid_pipe_machinery/unary/drain
@@ -159,6 +176,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 	var/turf/simulated/T = get_turf(src)
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
 	fluid?.trans_to(T, fluid.total_volume)
+	qdel(fluid)
 
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 /obj/machinery/fluid_pipe_machinery/binary
@@ -197,6 +215,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 
 /obj/machinery/fluid_pipe_machinery/binary/pump
 	name = "Fluid Pump"
+	desc = "Moves fluids from one network to another at up to 200 units per pump."
 	icon_state = "pump0"
 	var/on = FALSE
 	var/pumprate = 200
@@ -242,6 +261,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 
 /obj/machinery/fluid_pipe_machinery/binary/valve
 	name = "Fluid Valve"
+	desc = "Connects fluid networks."
 	icon_state = "valve0"
 	var/on = FALSE
 
@@ -271,6 +291,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 	if(src.network1 && src.network2)
 		src.network1.merge_network(src.network2)
 
+/obj/machinery/fluid_pipe_machinery/binary/valve/disposing()
+	src.on = FALSE
+	src.network1.rebuild_network_force()
+	..()
 
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/trinary)
 /obj/machinery/fluid_pipe_machinery/trinary
@@ -324,6 +348,8 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/trinary)
 
 /obj/machinery/fluid_pipe_machinery/trinary/filter
 	name = "Reagent Filter"
+	desc = "Filters out a specific reagent."
+	HELP_MESSAGE_OVERRIDE("Can be loaded with a <b>beaker</b>, which must contain at least 1 unit of a reagent. The most plentiful reagent is chosen for filtering.")
 	icon_state = "filter0"
 	flags = NOSPLASH
 	var/pullrate = 200
@@ -339,7 +365,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/trinary)
 
 	var/reagent_to_filter = B.reagents.get_master_reagent_id()
 	if(!B.reagents.has_reagent(reagent_to_filter, 1))
-		boutput(user, "[B] doesn't have enough of any reagent.")
+		boutput(user, "[B] doesn't have enough of any reagent!")
 		return
 	user.u_equip(B)
 	src.beaker = B
@@ -370,4 +396,5 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/trinary)
 		filtered.trans_to_direct(removed, filtered.total_volume)
 	if(!src.push_to_network(src.network3, removed))
 		src.push_to_network(src.network1, removed)
+	FLICK("filtering", src)
 

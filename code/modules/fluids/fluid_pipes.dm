@@ -191,8 +191,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 /datum/flow_network/disposing()
 	src.reagents.fluid_network = null
-	qdel(src.reagents)
-	src.reagents = null
+	QDEL_NULL(src.reagents)
 	..()
 
 /// Accepts a pipe to merge with.
@@ -255,6 +254,18 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 		return
 	src.awaiting_removal = TRUE
 	UNTIL(!explosions.exploding) //not best but fine for explosions
+	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
+		pipe.network = null
+	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
+		pipe.refresh_connections(src.reagents.remove_any_to(src.reagents.total_volume * (pipe.capacity/src.reagents.maximum_volume)))
+		src.reagents.maximum_volume -= pipe.capacity
+	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in src.machines)
+		machine.refresh_network(src)
+	src.awaiting_removal = FALSE
+	qdel(src)
+
+/// Refreshes all machines and pipes and removes ourself. Does not delay during explosions.
+/datum/flow_network/proc/rebuild_network_force()
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
 		pipe.network = null
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
