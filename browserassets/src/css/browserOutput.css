@@ -688,32 +688,30 @@ div.command_alert {
 }
 h1.command_alert {
   font-weight: bold;
-  font-size: 130%;
+  font-size: 120%;
   border: 0px;
   text-align: center;
   padding: 0.2em 0.5em;
 }
 h2.command_alert {
   font-weight: bold;
-  font-size: 110%;
-  border: 0px;
-  border-left-width: 2px;
-  border-right-width: 2px;
-  border-bottom-width: 1px;
+  font-size: 130%;
+  border-bottom: 4px solid;
   padding: 0.2em 0.5em;
 }
 p.command_alert {
-  padding: 0.2em 0.5em;
+  padding: 0.4em 0.7em;
 }
 
 div.ageneral {
-  border-color: #5676ad;
+  border-color: #86869d;
 }
 h1.ageneral {
-  background-color: #5676ad;
+  background-color: #86869d;
 }
 h2.ageneral {
-  background-color: #7090c7;
+  background-color: #a6a6bd;
+  border-color: #86869d;
 }
 
 div.aanomaly {
@@ -724,6 +722,7 @@ h1.aanomaly {
 }
 h2.aanomaly {
   background-color: #b877e8;
+  border-color: #9f5ecf;
 }
 
 div.aweather {
@@ -734,6 +733,7 @@ h1.aweather {
 }
 h2.aweather {
   background-color: #cf5eef;
+  border-color: #b544d5;
 }
 
 div.astation {
@@ -744,6 +744,7 @@ h1.astation {
 }
 h2.astation {
   background-color: #e28b66;
+  border-color: #c8714c;
 }
 
 div.awatchful {
@@ -754,6 +755,7 @@ h1.awatchful {
 }
 h2.awatchful {
   background-color: #b570ff;
+  border-color: #9b56f4;
 }
 
 div.aegeria {
@@ -764,6 +766,7 @@ h1.aegeria {
 }
 h2.aegeria {
   background-color: #df6669;
+  border-color: #c64d50;
 }
 
 div.acomm {
@@ -774,6 +777,7 @@ h1.acomm {
 }
 h2.acomm {
   background-color: #9999c9;
+  border-color: #8080b0;
 }
 
 div.adept {
@@ -784,6 +788,7 @@ h1.adept {
 }
 h2.adept {
   background-color: #80b0b0;
+  border-color: #669696;
 }
 
 div.aclown {
@@ -795,6 +800,7 @@ h1.aclown {
 }
 h2.aclown {
   background-color: #ffb6e6;
+  border-color: #b35080;
   font-family: 'Comic Sans MS';
 }
 p.aclown {
@@ -809,6 +815,7 @@ h1.asyn {
 }
 h2.asyn {
   background-color: #e36e6e;
+  border-color: #c95454;
 }
 
 .rstandard {
@@ -1232,13 +1239,14 @@ body.theme-dark .command_alert {
 }
 
 body.theme-dark div.ageneral {
-  border-color: #23437a;
+  border-color: #434353;
 }
 body.theme-dark h1.ageneral {
-  background-color: #23437a;
+  background-color: #434353;
 }
 body.theme-dark h2.ageneral {
-  background-color: #3d5d94;
+  background-color: #535363;
+  border-color: #434353;
 }
 
 body.theme-dark div.aanomaly {
@@ -1249,6 +1257,7 @@ body.theme-dark h1.aanomaly {
 }
 body.theme-dark h2.aanomaly {
   background-color: #8544b5;
+  border-color: #6c2b9c;
 }
 
 body.theme-dark div.aweather {
@@ -1259,6 +1268,7 @@ body.theme-dark h1.aweather {
 }
 body.theme-dark h2.aweather {
   background-color: #9c2bbc;
+  border-color: #8211a2;
 }
 
 body.theme-dark div.astation {
@@ -1269,6 +1279,7 @@ body.theme-dark h1.astation {
 }
 body.theme-dark h2.astation {
   background-color: #af5833;
+  border-color: #953e19;
 }
 
 body.theme-dark div.awatchful {
@@ -1279,6 +1290,7 @@ body.theme-dark h1.awatchful {
 }
 body.theme-dark h2.awatchful {
   background-color: #823ddb;
+  border-color: #6823c1;
 }
 
 body.theme-dark div.aegeria {
@@ -1289,6 +1301,7 @@ body.theme-dark h1.aegeria {
 }
 body.theme-dark h2.aegeria {
   background-color: #c64d50;
+  border-color: #ac3336;
 }
 
 body.theme-dark div.acomm {
@@ -1299,6 +1312,7 @@ body.theme-dark h1.acomm {
 }
 body.theme-dark h2.acomm {
   background-color: #666696;
+  border-color: #4d4d7d;
 }
 
 body.theme-dark div.adept {
@@ -1309,6 +1323,7 @@ body.theme-dark h1.adept {
 }
 body.theme-dark h2.adept {
   background-color: #4d7d7d;
+  border-color: #336363;
 }
 
 body.theme-dark div.aclown {
@@ -1319,6 +1334,7 @@ body.theme-dark h1.aclown {
 }
 body.theme-dark h2.aclown {
   background-color: #b35080;
+  border-color: #ff9ccc;
 }
 
 body.theme-dark div.asyn {
@@ -1329,6 +1345,7 @@ body.theme-dark h1.asyn {
 }
 body.theme-dark h2.asyn {
   background-color: #b03b3b;
+  border-color: #962121;
 }
 
 body.theme-dark .rstandard {
