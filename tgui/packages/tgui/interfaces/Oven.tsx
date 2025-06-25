@@ -26,8 +26,7 @@ interface OvenData {
   heat: string;
   working: BooleanLike;
   heldItems;
-  recipe_icons: string[];
-  recipe_names: string[];
+  recipe_ingredients;
   output_icon: string;
   output_name: string;
   cook_time: string;
@@ -40,8 +39,7 @@ export const Oven = () => {
     heldItems,
     time,
     heat,
-    recipe_icons,
-    recipe_names,
+    recipe_ingredients,
     output_icon,
     output_name,
     cook_time,
@@ -148,9 +146,12 @@ export const Oven = () => {
                       <Stack vertical>
                         <Stack.Item>
                           <ProductList showImage>
-                            {recipe_icons.map((item, index) => (
-                              <ProductList.Item key={index} image={item}>
-                                {recipe_names[index]}
+                            {recipe_ingredients.map((ingredient, index) => (
+                              <ProductList.Item
+                                key={index}
+                                image={ingredient.icon}
+                              >
+                                {ingredient.name}
                               </ProductList.Item>
                             ))}
                           </ProductList>

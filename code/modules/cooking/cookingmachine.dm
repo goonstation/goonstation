@@ -259,8 +259,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 	var/icon_active = "oven_bake"
 
 	//these are for recipe previews
-	var/list/possible_recipe_icons = list()
-	var/list/possible_recipe_names = list()
+	var/list/possible_recipe_ingredients = list()
 	var/output_icon
 	var/output_name
 	var/output_time
@@ -286,8 +285,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 		. += list(
 			"time" = src.cooktime/10,//it's in SECONDS now
 			"heat" = src.heat,
-			"recipe_icons" = src.possible_recipe_icons,
-			"recipe_names" = src.possible_recipe_names,
+			"recipe_ingredients" = src.possible_recipe_ingredients,
 			"output_icon" = src.output_icon,
 			"output_name" = src.output_name,
 			"cook_time" = src.output_time
@@ -316,8 +314,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 				usr.Browse(recipe_html, "window=recipes;size=500x700")
 
 	proc/get_recipes()
-		src.possible_recipe_icons = list()
-		src.possible_recipe_names = list()
+		src.possible_recipe_ingredients = list()
 		src.output_icon = null
 		src.output_name = null
 		src.output_time = null
@@ -327,9 +324,11 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 			return
 
 		for(var/I in possible.ingredients)
+			var/list/newIngredient = list()
 			var/atom/item_path = I
-			src.possible_recipe_icons += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
-			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
+			newIngredient["icon"] += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			newIngredient["name"] += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
+			possible_recipe_ingredients += list(newIngredient)
 
 		if (ispath(possible.output))
 			var/atom/item_path = possible.getVariant(src)
