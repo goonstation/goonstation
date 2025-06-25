@@ -627,6 +627,11 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		path = /obj/machinery/fluid_pipe_machinery/unary/nullifier
 		icon_state = "nullifier"
 		desc = "Disappears up to 50 unit."
+	port
+		name = "Port"
+		path = /obj/machinery/fluid_pipe_machinery/unary/input
+		icon_state = "port"
+		desc = "Allows pouring in fluids into the network directly and connecting glass plumbing."
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/binary)
 /datum/pipe_recipe/fluid/machine/binary
