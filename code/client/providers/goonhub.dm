@@ -40,7 +40,8 @@
 		if (src.authenticating || src.authenticated) return
 		src.authenticating = TRUE
 		var/list/user = json_decode(href_list["user"])
-		src.verify_auth(user["session"])
+		var/datum/apiModel/VerifyAuthResource/verification = src.verify_auth(user["session"])
+		if (verification) src.on_auth(verification)
 	if (href_list["logout"])
 		src.on_logout()
 
@@ -86,42 +87,37 @@
 		roundId || null
 	)
 
-	var/error = FALSE
-	var/datum/apiModel/VerifyAuthResource/verification
 	try
-		verification = apiHandler.queryAPI(verifyAuth)
-	catch (var/exception/eOne)
-		var/datum/apiModel/Error/errorModel = eOne.name
-		error = errorModel.message
-
-	try
-		src.on_auth(verification)
-	catch (var/exception/eTwo)
-		error = eTwo.name
-
-	if (error)
-		var/logMsg = "Failed to verify auth for [src.owner] because: [error]"
-		logTheThing(LOG_ADMIN, null, logMsg)
-		logTheThing(LOG_DIARY, null, logMsg, "admin")
+		var/datum/apiModel/VerifyAuthResource/verification = apiHandler.queryAPI(verifyAuth)
+		return verification
+	catch (var/exception/e)
+		var/datum/apiModel/Error/errorModel = e.name
+		logTheThing(LOG_ADMIN, null, "Failed to verify auth for [src.owner] because: [errorModel.message]", "admin")
 		src.authenticating = FALSE
-		src.show_ui()
+		src.show_ui("logout?redirect=game-auth/login")
 		return FALSE
-
-	return TRUE
 
 /datum/client_auth_provider/goonhub/on_auth(datum/apiModel/VerifyAuthResource/verification)
 	world.log << "/datum/client_auth_provider/goonhub/on_auth for [src.owner]"
 	winshow(src.owner, src.window_id, FALSE)
 	src.owner.verbs -= list(/client/proc/open_goonhub_auth)
 
+	var/old_key = src.owner.key
 	src.owner.client_auth_intent.player_id = verification.player_id
 	src.owner.ckey = verification.ckey
 	src.owner.key = verification.key || verification.ckey
 
 	var/mob/old_mob = src.owner.mob
-	var/mob/new_player/new_mob = new()
-	old_mob.last_client = null
-	new_mob.key = src.owner.key
+	var/mob/target_mob
+	for (var/mob/M in mobs)
+		if (M.key == src.owner.key)
+			target_mob = M
+			break
+
+	if (!target_mob) target_mob = new /mob/new_player()
+	if (old_mob != target_mob) old_mob.last_client = null
+	if (target_mob.name == old_key) target_mob.name = src.owner.key
+	target_mob.key = src.owner.key
 
 	if (verification.is_admin && verification.admin_rank)
 		src.owner.client_auth_intent.admin = TRUE
