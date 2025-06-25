@@ -8,7 +8,7 @@
 
 /datum/client_auth_provider/goonhub/New(client/owner)
 	. = ..()
-	src.owner.verbs += list(/client/proc/open_goonhub_auth, /client/proc/on_goonhub_auth_close)
+	src.owner.verbs += list(/client/proc/open_goonhub_auth)
 	src.show_ui()
 
 	boutput(src.owner, {"
