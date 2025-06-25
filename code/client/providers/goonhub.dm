@@ -8,6 +8,7 @@
 
 /datum/client_auth_provider/goonhub/New(client/owner)
 	. = ..()
+	world.log << "/datum/client_auth_provider/goonhub/New for [src.owner]"
 	src.owner.verbs += list(/client/proc/open_goonhub_auth)
 	src.show_ui()
 
@@ -34,6 +35,7 @@
 		if (src.owner) src.on_timeout()
 
 /datum/client_auth_provider/goonhub/Topic(href, href_list)
+	world.log << "/datum/client_auth_provider/goonhub/Topic for [src.owner] with href [href]"
 	if (href_list["authenticated"])
 		if (src.authenticating || src.authenticated) return
 		src.authenticating = TRUE
@@ -44,6 +46,7 @@
 
 /datum/client_auth_provider/goonhub/proc/timeout_warning(remaining_time)
 	if (src.authenticated) return
+	world.log << "/datum/client_auth_provider/goonhub/timeout_warning for [src.owner]"
 	boutput(src.owner, {"
 		<div style='border: 2px solid orange; margin: 0.5em 0;'>
 			<div style="color: black; background: #ffd07b; font-weight: bold; border-bottom: 1px solid orange; text-align: center; padding: 0.2em 0.5em;">
@@ -57,6 +60,7 @@
 
 /datum/client_auth_provider/goonhub/proc/on_timeout()
 	if (src.authenticated) return
+	world.log << "/datum/client_auth_provider/goonhub/on_timeout for [src.owner]"
 	boutput(src.owner, {"
 		<div style='border: 2px solid red; margin: 0.5em 0;'>
 			<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
@@ -70,6 +74,7 @@
 	src.on_auth_failed()
 
 /datum/client_auth_provider/goonhub/proc/verify_auth(session)
+	world.log << "/datum/client_auth_provider/goonhub/verify_auth for [src.owner]"
 	var/datum/apiRoute/gameauth/verify/verifyAuth = new
 	verifyAuth.buildBody(
 		session,
@@ -89,6 +94,7 @@
 		return FALSE
 
 /datum/client_auth_provider/goonhub/on_auth(datum/apiModel/VerifyAuthResource/verification)
+	world.log << "/datum/client_auth_provider/goonhub/on_auth for [src.owner]"
 	winshow(src.owner, src.window_id, FALSE)
 	src.owner.verbs -= list(/client/proc/open_goonhub_auth)
 
@@ -141,15 +147,18 @@
 // 	. = ..()
 
 /datum/client_auth_provider/goonhub/logout()
+	world.log << "/datum/client_auth_provider/goonhub/logout for [src.owner]"
 	. = ..()
 	src.show_ui("logout")
 
 /datum/client_auth_provider/goonhub/on_logout()
+	world.log << "/datum/client_auth_provider/goonhub/on_logout for [src.owner]"
 	winshow(src.owner, src.window_id, FALSE)
 	. = ..()
 
 /// Show the login window
 /datum/client_auth_provider/goonhub/proc/show_ui(route = "login")
+	world.log << "/datum/client_auth_provider/goonhub/show_ui for [src.owner] with route [route]"
 	var/html = grabResource("html/goonhub_auth.html")
 	html = replacetext(html, "{ref}", "\ref[src]")
 	html = replacetext(html, "{goonhub_url}", config.goonhub_url)
@@ -186,6 +195,7 @@
 	set name = "Goonhub Auth"
 	set category = "Commands"
 	set desc = "Open the Goonhub auth window"
+	world.log << "/client/proc/open_goonhub_auth for [src]"
 	if (src.authenticated) return
 	if (istype(src.client_auth_provider, /datum/client_auth_provider/goonhub))
 		var/datum/client_auth_provider/goonhub/provider = src.client_auth_provider

@@ -207,6 +207,7 @@
 *********************************/
 
 /client/New()
+	world.log << "Client/New New connection from [src.ckey] from [src.address] via [src.connection]"
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
 	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
 	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
@@ -248,6 +249,7 @@
 
 
 /client/proc/post_auth()
+	world.log << "Client/post_auth for [src]"
 	src.authenticated = TRUE
 
 	global.pre_auth_clients -= src
