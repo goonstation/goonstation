@@ -123,7 +123,7 @@
 		else
 			var/obj/fluid_pipe/fluidthingy
 			for(var/obj/device in target)
-				if(!istype(device, /obj/fluid_pipe) || !istype(device, /obj/machinery/fluid_pipe_machinery))
+				if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_pipe_machinery))
 					continue
 				fluidthingy = device
 				if((fluidthingy.initialize_directions & directs))
