@@ -111,17 +111,17 @@
 	effect_quality = STATUS_QUALITY_NEUTRAL
 	var/active = 0
 
+	onAdd(optional)
+		. = ..()
+		RegisterSignal(owner, COMSIG_ATTACKHAND, PROC_REF(handsignal))
+		RegisterSignal(owner, COMSIG_ATTACKBY, PROC_REF(itemsignal))
+
 	onUpdate(timePassed)
 		var/mob/M = null
 		if(ismob(owner))
 			M = owner
 		else
 			return ..(timePassed)
-		if (!src.active)
-			src.name = "Waiting to wrestle!"
-			return
-		else
-			src.name = "Wrestling!"
 		if (M.health <= 0 | !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
 			M.delStatus("wrestler")
 
@@ -130,20 +130,37 @@
 		var/mob/M = null
 		if(ismob(owner))
 			M = owner
-			if (M.health > 0)
-				return
+			UnregisterSignal(M, COMSIG_ATTACKHAND)
+			UnregisterSignal(M, COMSIG_ATTACKBY)
+			if (M.health <= 0 && src.active)
+				SPAWN(0)
+					playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)
+				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+				M.make_dizzy(140)
+				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
+				M.setStatus("resting", INFINITE_STATUS)
+				SPAWN(10 SECONDS)
+					M.UpdateOverlays(null, "dizzy")
 
-			SPAWN(0)
-				playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)
-			playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-			M.make_dizzy(140)
-			M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
-			M.setStatus("resting", INFINITE_STATUS)
-			SPAWN(10 SECONDS)
-				M.UpdateOverlays(null, "dizzy")
+	proc/handsignal(mob/attacker, mob/user) // wrapper procs, looks stinky?
+		var/datum/statusEffect/wrestler/statusAttacked = attacker.hasStatus("wrestler")
+		var/datum/statusEffect/wrestler/statusUser = user.hasStatus("wrestler")
+		if (!statusAttacked.active && statusUser.active)
+			src.toggle_active(owner)
+
+	proc/itemsignal(obj/item, mob/attacker, mob/user)
+		var/datum/statusEffect/wrestler/statusAttacked = attacker.hasStatus("wrestler")
+		var/datum/statusEffect/wrestler/statusUser = user.hasStatus("wrestler")
+		if (!statusAttacked.active && statusUser.active)
+			src.toggle_active(owner)
 
 	proc/toggle_active(mob/user)
-		src.active = !src.active
+		if (!src.active)
+			src.active = 1
+			src.name = "Wrestling!"
+		else
+			src.active = 0
+			src.name = "Waiting to wrestle!"
 		src.icon_state = "wrestling[src.active]"
 
 
