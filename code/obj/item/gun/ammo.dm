@@ -1835,3 +1835,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 					overlays += "burst_laspistol-100"
 			return
 
+/obj/item/ammo/bullets/produce_gun_ammo
+	name = "Organic bullets"
+	desc = "A collection of organic, hard, nobbly bits of plant-material."
+	ammo_type = new/datum/projectile/bullet/organic_pellet
+	icon_state = "flintlock_ammo_pouch"
+	max_amount = 8
+	ammo_cat = AMMO_FLINTLOCK

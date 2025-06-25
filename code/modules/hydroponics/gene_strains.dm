@@ -49,6 +49,15 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 		if (gene_pool)
 			return TRUE
 
+	/// This proc is called whenever the plant is harvested. Override it to manipulate harvesting data before crops are generated.
+	proc/manipulate_harvest_data(datum/HYPharvesting_data/h_data)
+		return
+
+	/// This proc is called whenever the plant is harvested. Override and return a type to change what the current harvest produces.
+	/// Returning null will just result in the harvest failing.
+	proc/override_crop(datum/HYPharvesting_data/h_data)
+		return FALSE
+
 /datum/plant_gene_strain/temporary_splice_stabilizer
 	name = "Temporary Spliceability"
 	desc = "This seed was stabilized using advanced technology to be spliced once and won't be able to be spliced afterwards."
@@ -365,3 +374,21 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	name = "Inhibited Potential"
 	desc = "Produce harvested from this plant won't contain special dangerous chemicals"
 	var/list/reagents_to_remove = list("ghostchilijuice", "potassium", "lithium")
+
+/datum/plant_gene_strain/gun_genome
+	name = "Kinetically-Expressive Genome"
+	desc = "This seed's genes have been altered to grow produce which is far less useful, but far more kinetically potent"
+
+	override_crop(datum/HYPharvesting_data/h_data)
+		var/obj/item/crop = h_data.pot.pick_type(h_data.getitem)
+		if (!ispath(crop, /obj/item)) // only override items
+			return FALSE
+		return /obj/item/gun/kinetic/produce
+
+	manipulate_harvest_data(datum/HYPharvesting_data/h_data)
+		h_data.cropcount = ceil(h_data.cropcount * 0.15)
+		h_data.dont_rename_crop = TRUE
+		// Hacky solution to extractables not being able to proliferate because seeds can't be extracted from guns.
+		// I think the actual solution should be to make extractables componentised so that the guns *can* be extracted, but that's a whole thing.
+		if (ispath(h_data.pot.pick_type(h_data.pot.fetch_actual_crop()), /obj/item/reagent_containers/food/snacks/plant))
+			h_data.growing.force_seed_on_harvest = 1

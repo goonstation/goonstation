@@ -276,6 +276,10 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.potency++
 				if (DNA.endurance < 0)
 					DNA.endurance++
+			if ("gun_infusion")
+				HYPaddCommut(DNA,/datum/plant_gene_strain/gun_genome)
+				S.charges = 1
+
 		for (var/datum/plantmutation/mutation in src.mutations)
 			if (reagent in mutation.infusion_reagents)
 				if (HYPmutationcheck_full(DNA, mutation) && prob(mutation.infusion_chance))

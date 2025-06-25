@@ -653,6 +653,20 @@ TYPEINFO(/obj/item/plantanalyzer)
 	initial_volume = 250
 	initial_reagents = list("saltpetre"=50, "ammonia"=50, "potash"=50, "poo"=50, "space_fungus"=50)
 
+/obj/item/reagent_containers/glass/bottle/gun_infusion
+	name = "Weaponisation Infusilisation Catalysant"
+	desc = "A highly experimental plant-infusion serum designed for mass production of ballistic weaponry."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "phial"
+	amount_per_transfer_from_this = 10
+	fluid_overlay_states = 5
+	initial_volume = 10
+	container_style = "phial"
+
+	New()
+		..()
+		reagents.add_reagent("gun_infusion", 10)
+
 /obj/item/reagent_containers/glass/water_pipe
 	name = "water pipe"
 	icon = 'icons/obj/items/chemistry_glassware.dmi'

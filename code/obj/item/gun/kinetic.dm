@@ -3625,3 +3625,84 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	alter_projectile(obj/projectile/P)
 		. = ..()
 		P.proj_data.shot_sound = 'sound/weapons/long_barrel.ogg'
+
+/obj/item/gun/kinetic/produce
+	name = "Banana-shaped gun"
+	icon = 'icons/obj/foodNdrink/food_produce.dmi'
+	icon_state = "banana"
+	desc = "This banana looks like it has a trigger."
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "banana"
+	default_magazine = /obj/item/ammo/bullets/produce_gun_ammo
+	shoot_delay = 9
+	recoil_strength = 10
+	recoil_max = 60
+	rand_pos = TRUE
+	// Variables for grown guns. These are separate so the gun can be spawned in with more middling values otherwise.
+	//
+	/// The base damage used if the gun was grown
+	var/base_damage = 6
+	/// The base shoot delay if the gun was grown
+	var/base_shoot_delay = 18
+	/// The base recoil strength if the gun was grown
+	var/base_recoil_strength = 20
+	/// The base recoil max if the gun was grown
+	var/base_recoil_max = 120
+	/// The number of bullets this starts with if grown
+	var/base_ammo_count = 2
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/organic_pellet)
+		..()
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status, var/datum/HYPharvesting_data/h_data)
+		var/original_crop = h_data.pot.fetch_actual_crop()
+		var/obj/item/crop = harvested_plantpot.pick_type(original_crop)
+		if (!crop)
+			return src
+		// Have to create an instance of the base crop just to set its dna so we can pull the info from that. Without doing this, mutations like the
+		// rock-plants and money tree don't work right
+		var/obj/item/temp_item = new crop
+		temp_item.HYPsetup_DNA(passed_genes, harvested_plantpot, origin_plant, quality_status, h_data)
+
+		src.name = temp_item.name + "-shaped gun"
+		src.desc = "This [temp_item.name] has a trigger."
+		// Use the base crop's sprites
+		src.icon = temp_item.icon
+		src.icon_state = temp_item.icon_state
+		// use the base crop's inhands if applicable
+		if (temp_item.inhand_image_icon && temp_item.item_state)
+			src.set_new_inhand_image_icon(temp_item.inhand_image_icon)
+			src.item_state = temp_item.item_state
+		else
+			src.set_new_inhand_image_icon('icons/mob/inhand/hand_guns.dmi')
+			src.item_state = "gun"
+
+		src.force = temp_item.force
+		// Increase the gun's ammo by the yield
+		src.ammo.amount_left = max(1, base_ammo_count + floor(passed_genes.harvests * 0.03))
+		// Increase the bullet's damage by the potency
+		src.current_projectile.damage = max(1, base_damage + floor(passed_genes.potency * 0.05))
+		// Combine both speed stats into one modifier, and then use it to reduce the shoot delay.
+		// The trailing points just ensures no division by 0 if genes go into the negative.
+		var/delay_modifier = (passed_genes.growtime + passed_genes.harvtime) * 0.5
+		src.shoot_delay = max(src.base_shoot_delay / (1.0001 + (delay_modifier/100)), 2)
+		// Reduce the gun's recoil by the lifespan
+		src.recoil_strength = src.base_recoil_strength / (1.0001 + (passed_genes.harvests/50 ))
+		src.recoil_max = src.base_recoil_max / (1.0001 + (passed_genes.harvests/50))
+		// Increase armour-piercing by the endurance.
+		src.current_projectile.armor_ignored = passed_genes.endurance * 0.0015
+		// Jumbo stuff gets some buffs and more punchy cosmetics
+		if (quality_status == "jumbo")
+			src.ammo.amount_left += 3
+			src.current_projectile.damage += 4
+			src.current_projectile.shot_sound = 'sound/weapons/9x19NATO.ogg'
+			src.current_projectile.icon_state = "sniper_bullet"
+		// This seems to be necessary to make make the damage update properly
+		src.current_projectile.generate_stats()
+		UpdateIcon()
+		qdel(temp_item)
+		return src
+
+

@@ -1074,6 +1074,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Spooky!"
 	planttype = /datum/plant/fruit/pumpkin
 	icon_state = "pumpkin"
+	item_state = "pumpkin"
 	edible = FALSE
 	food_color = "#CC6600"
 	validforhat = 1

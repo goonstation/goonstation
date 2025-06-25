@@ -3194,6 +3194,22 @@ datum
 				if (DNA.cropsize > 1)
 					growth_tick.cropsize_bonus -= 0.24
 
+		gun_infusion
+			name = "Phytoballistic Infusate"
+			id = "gun_infusion"
+			description = "A largely untested compound which can be infused into plants to imbue them with ballistic properties."
+			fluid_r = 129
+			fluid_g = 133
+			fluid_b = 137
+
+		gun_distillate
+			name = "Gun Distillate"
+			id = "gun_distillate"
+			description = "The distilled essence of ranged weaponry."
+			fluid_r = 141
+			fluid_g = 145
+			fluid_b = 141
+
 		///////////////////////////
 		/// BODILY FLUIDS /////////
 		///////////////////////////

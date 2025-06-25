@@ -2484,3 +2484,10 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 3, 0, TRUE)
+
+/datum/projectile/bullet/organic_pellet
+	name = "organic pellet"
+	damage = 12
+	shot_sound = 'sound/weapons/smg_shot.ogg'
+	casing = /obj/item/casing/small
+	impact_image_state = "bullethole-small"

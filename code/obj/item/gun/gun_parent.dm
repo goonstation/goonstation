@@ -21,6 +21,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	hide_attack = 2 //Point blanking... gross
 	pickup_sfx = 'sound/items/pickup_gun.ogg'
 	inventory_counter_enabled = 1
+	brew_result = list("gun_distillate" = 10)
 	var/scope_enabled = 0
 
 	var/suppress_fire_msg = 0
