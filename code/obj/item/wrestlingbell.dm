@@ -81,6 +81,11 @@
 				src.put_back_hammer()
 				return
 			else if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
+				var/turf/floor = get_turf(src)
+				for (var/mob/mob in floor.loc)
+					var/datum/statusEffect/wrestler/status = mob.hasStatus("wrestler")
+					if (status)
+						status.toggle_active()
 				playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 
 	/// snap back if too far away
@@ -101,9 +106,10 @@
 	id = "wrestler"
 	name = "Wrestling!"
 	desc = "You're in the ring, break a leg!"
-	icon_state = "wrestling"
+	icon_state = "wrestling0"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
+	var/active = 0
 
 	onUpdate(timePassed)
 		var/mob/M = null
@@ -111,7 +117,11 @@
 			M = owner
 		else
 			return ..(timePassed)
-
+		if (!src.active)
+			src.name = "Waiting to wrestle!"
+			return
+		else
+			src.name = "Wrestling!"
 		if (M.health <= 0 | !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
 			M.delStatus("wrestler")
 
@@ -131,6 +141,12 @@
 			M.setStatus("resting", INFINITE_STATUS)
 			SPAWN(10 SECONDS)
 				M.UpdateOverlays(null, "dizzy")
+
+	proc/toggle_active(mob/user)
+		src.active = !src.active
+		src.icon_state = "wrestling[src.active]"
+
+
 
 
 
