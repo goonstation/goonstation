@@ -509,7 +509,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
 		src.punch_damage_modifier += 3
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		qdel(W)
 	else
 		return ..()

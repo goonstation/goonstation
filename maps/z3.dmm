@@ -7064,6 +7064,10 @@
 /area/salvage_trader)
 "aKW" = (
 /obj/marker/supplymarker,
+/obj/fakeobject/teleport_pad{
+	desc = "It doesn't look like this is working."
+	},
+/obj/marker/salvager_teleport,
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
 "aKX" = (

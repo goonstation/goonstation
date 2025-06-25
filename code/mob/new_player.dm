@@ -297,6 +297,22 @@ TYPEINFO(/mob/new_player)
 				global.latespawning.unlock()
 				return
 			JOB.assigned++
+			if (JOB.player_requested || JOB == job_controls.priority_job)
+				SPAWN(0) // don't pause late spawning for this
+					var/limit_reached = JOB.limit <= JOB.assigned
+					var/list/req_prio = list()
+					if (JOB.player_requested)
+						req_prio += "requested"
+					if (JOB == job_controls.priority_job)
+						req_prio += "priority"
+					var/message = "RoleControl notification: [english_list(req_prio, "")] role [JOB.name] hired[limit_reached ? " (limit reached, clearing [english_list(req_prio, "")] status)" : ""]"
+					if (JOB.player_requested && limit_reached)
+						JOB.player_requested = FALSE
+					if (JOB == job_controls.priority_job && limit_reached)
+						job_controls.priority_job = null
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="COMMAND-MAILBOT", "group"=list(MGD_COMMAND), "sender"="00000000", "message"=message)
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 			if (JOB.counts_as)
 				var/datum/job/other = find_job_in_controller_by_string(JOB.counts_as)
 				other.assigned++
@@ -689,6 +705,9 @@ a.latejoin-card:hover {
 			// is this ever actually off? ?????
 			if (job_controls.allow_special_jobs)
 				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
+
+				for(var/datum/job/daily/J in job_controls.special_jobs)
+					dat += LateJoinLink(J)
 
 				for(var/datum/job/special/J in job_controls.special_jobs)
 					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)

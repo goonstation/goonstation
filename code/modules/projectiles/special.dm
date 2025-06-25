@@ -211,7 +211,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
 		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
 		FC.internal_speed = rand(speed_min,speed_max)
-		FC.travelled = rand(0,dissipation_variance)
+		var/dissipation_ratio = (FC.internal_speed-speed_min) / (speed_max-speed_min)
+		FC.travelled = dissipation_variance * (1-dissipation_ratio)
 		FC.launch()
 		FC.spread = P.spread + dissipation_variance
 /datum/projectile/special/spreader/buckshot_burst/plasglass
@@ -232,13 +233,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 7
+	pellets_to_fire = 12
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
-	speed_min = 28
-	spread_angle_variance = 30
-	dissipation_variance = 40
+	speed_min = 20
+	spread_angle_variance = 20
+	dissipation_variance = 96
 
 /datum/projectile/special/spreader/buckshot_burst/scrap
 	spread_projectile_type = /datum/projectile/bullet/improvscrap
@@ -261,10 +262,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 3
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	speed_max = 30
-	speed_min = 20
+	speed_max = 40
+	speed_min = 30
 	spread_angle_variance = 25
-	dissipation_variance = 40
+	dissipation_variance = 20
 
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
@@ -793,6 +794,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		src.starting_turf = get_turf(P)
 		src.eye_glider = new(get_turf(P))
 		src.eye_glider.flags |= UNCRUSHABLE
+		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
+		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		src.eye_glider.anchored = ANCHORED_ALWAYS
 		for (var/mob/M in P.contents)
 			if(M.client)
@@ -921,9 +924,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	goes_through_walls = 1
 
-	var/radius = 1.4
+	/// how many degrees of rotation are added per process tick
 	var/ang_inc = 15
-
 
 	on_launch(var/obj/projectile/P)
 		..()
@@ -940,6 +942,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				P.special_data["orbit_angle"] -= 360
 
 			var/atom/target = P.targets[1]
+			if (istype(target.loc, /obj/dummy/spell_batpoof))
+				target = target.loc
+
+			if (!isturf(target.loc))
+				P.special_data["diss_count"] += 1
+				if (P.special_data["diss_count"] > 40)
+					P.die()
+				return 1
 
 			//var/ang_between = get_angle(target,P)
 			var/tx = target.x + cos(P.special_data["orbit_angle"])
@@ -948,6 +958,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			desired_x = (tx - P.x)
 			desired_y = (ty - P.y)
 
+			P.special_data["diss_count"] = 0
 			.= 1
 		else
 			P.special_data["diss_count"] += 1

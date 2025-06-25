@@ -24,7 +24,8 @@
 			"reinforced" = !BE.curable_by_mutadone,
 			"boosted" = (BE.power == 2), //it's a multiplier...
 			"synced" = BE.safety,
-			"cooldown" = BE.cooldown))
+			"cooldown" = BE.cooldown,
+			"is_power" = istype(BE, /datum/bioEffect/power)))
 	. = list(
 		"target_name" = target_mob,
 		"bioEffects" = bioEffects,
@@ -56,6 +57,9 @@
 			var/new_cooldown = round(text2num(params["value"]))
 			BE.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
 			. = TRUE
+		if ("resetCooldown")
+			var/datum/bioEffect/power/power = BE
+			power.ability.last_cast = 0
 		if ("toggleBoosted")
 			var/old_power = BE.power
 			BE.power = BE.power == 1 ? 2 : 1

@@ -208,7 +208,7 @@ proc/filter_trait_hats(var/type)
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			light.enable()
 			c_flags |= SPACEWEAR
 			processing_items |= src
@@ -216,7 +216,7 @@ proc/filter_trait_hats(var/type)
 			src.firesource = FALSE
 			src.force = 3
 			c_flags &= ~SPACEWEAR
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
 			light.disable()

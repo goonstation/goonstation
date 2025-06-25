@@ -18,9 +18,10 @@
 	var/departurealert = "$NAME the $JOB has entered cryogenic storage."
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
 	var/sound_volume = 100
-	var/override_font = null
 	///Override for where this says it's coming from
 	var/area_name = null
+	/// Determines colors for alert text
+	var/alert_origin = ALERT_COMMAND
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -135,11 +136,7 @@
 
 		var/area/A = get_area(src)
 		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
-		if (override_font )
-			message = "<font face = '[override_font]'> [message] </font>"
-			header = "<font face = '[override_font]'> [header] </font>"
-
-		command_announcement(message, header, msg_sound, volume = src.sound_volume)
+		command_announcement(message, header, msg_sound, volume = src.sound_volume, alert_origin = src.alert_origin)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
 
@@ -258,6 +255,7 @@
 		sound_to_play = 'sound/misc/bingbong.ogg'
 		sound_volume = 70
 		circuit_type = /obj/item/circuitboard/announcement/cargo
+		alert_origin = ALERT_DEPARTMENT
 
 	catering
 		req_access = list(access_bar, access_kitchen)
@@ -266,6 +264,7 @@
 		sound_to_play = 'sound/misc/bingbong.ogg'
 		sound_volume = 70 //a little less earsplitting
 		circuit_type = /obj/item/circuitboard/announcement/catering
+		alert_origin = ALERT_DEPARTMENT
 
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -282,6 +281,7 @@
 	area_name = "Syndicate"
 	req_access = list(access_syndicate_shuttle)
 	circuit_type = /obj/item/circuitboard/announcement/syndicate
+	alert_origin = ALERT_SYNDICATE
 
 	commander
 		area_name = null
@@ -299,9 +299,9 @@
 	circuit_type = /obj/item/circuitboard/announcement/clown
 	var/emagged = FALSE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
-	override_font = "Comic Sans MS"
 	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."
 	sound_volume = 50
+	alert_origin = ALERT_CLOWN
 
 	send_message(mob/user, message)
 		. = ..()

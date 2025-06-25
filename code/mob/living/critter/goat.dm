@@ -12,7 +12,6 @@
 
 /mob/living/critter/small_animal/goat
 	name = "space goat"
-	real_name = "space goat"
 	desc = "A four-legged, mostly harmless type of goat. Known to frequently lick claretine deposits for sodium intake."
 	hand_count = 2
 	icon_state = "goat"

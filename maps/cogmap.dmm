@@ -19410,7 +19410,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "bqq" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -19419,7 +19421,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "bqs" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "bqt" = (
@@ -19938,7 +19942,8 @@
 /area/station/routing/eva)
 "btv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
@@ -20730,7 +20735,8 @@
 /area/station/engine/combustion_chamber)
 "bxJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
+	dir = 10;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
@@ -35791,7 +35797,6 @@
 /area/station/routing/sortingRoom)
 "cOb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 5
 	},
 /turf/simulated/floor/grey,
@@ -38688,7 +38693,8 @@
 /area/station/turret_protected/Zeta)
 "eJV" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	level = 2
+	level = 2;
+	can_rupture = 0
 	},
 /obj/machinery/meter,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -48486,7 +48492,9 @@
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
 "mqz" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -52989,7 +52997,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "pwM" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -53362,7 +53372,8 @@
 /area/space)
 "pKI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -53481,7 +53492,8 @@
 /area/station/engine/storage)
 "pTf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -56070,7 +56082,6 @@
 /area/station/garden/owlery)
 "rSs" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 6
 	},
 /turf/simulated/floor/red,
@@ -60232,7 +60243,9 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "uKI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "uKK" = (
