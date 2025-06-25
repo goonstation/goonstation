@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 	var/power_active ///power usage while active
 	var/max_contents //max amount of items allowed inside
 	var/cooktime //time it takes to cook something. on ovens this is adjustable
-	var/list/datum/cookingrecipe/possible_recipes //list of all recipes that can possibly be cooked from the contained ingredients
+	var/list/datum/cookingrecipe/possible_recipes = list()//list of all recipes that can possibly be cooked from the contained ingredients
 	var/list/to_remove = list() //items being used in the current recipe
 	var/list/allowed = list(/obj/item)
 	var/working = FALSE
@@ -94,6 +94,31 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 		src.power_usage = 0
 		UnsubscribeProcess()
 		return
+
+	ui_data(mob/user)
+		var/heldItems = list()
+		var/index = 1
+		for(var/obj/item/I in src.contents)
+			var/itemData = list()
+			itemData["name"] = I.name
+			itemData["index"] = index
+			itemData["iconData"] = get_item_icon(I)
+			heldItems += list(itemData)
+			index += 1
+		. = list("working" = src.working, "heldItems" = heldItems)
+
+	proc/get_item_icon(var/obj/item/target)
+		var/static/base64_preview_cache = list()
+		var/original_name = initial(target.name)
+		. = base64_preview_cache[original_name]
+
+		if(isnull(.))
+			var/icon/result = getFlatIcon(target, no_anim=TRUE)
+			if(result)
+				. = icon2base64(result)
+			else
+				. = ""
+			base64_preview_cache[original_name] = .
 
 	proc/get_valid_recipe()
 		for (var/datum/cookingrecipe/R in src.possible_recipes)
@@ -254,13 +279,11 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 			ui.open()
 
 	ui_data(mob/user)
+		. = ..()
 		src.get_recipes()
-		. = list(
+		. += list(
 			"time" = src.cooktime/10,//it's in SECONDS now
 			"heat" = src.heat,
-			"cooking" = src.working,
-			"content_icons" = src.get_content_icons(),
-			"content_names" = src.get_content_names(),
 			"recipe_icons" = src.possible_recipe_icons,
 			"recipe_names" = src.possible_recipe_names,
 			"output_icon" = src.output_icon,
@@ -289,22 +312,6 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 					src.eject_item(thing_to_eject)
 			if ("open_recipe_book")
 				usr.Browse(recipe_html, "window=recipes;size=500x700")
-
-	proc/get_content_icons()
-		if (!length(src.contents))
-			return
-		var/list/contained = list()
-		for (var/obj/item/I in src.contents)
-			contained += icon2base64(getFlatIcon(I), "chef_oven-\ref[src]")
-		return contained
-
-	proc/get_content_names()
-		if (!length(src.contents))
-			return
-		var/list/contained = list()
-		for (var/obj/item/I in src.contents)
-			contained += I.name
-		return contained
 
 	proc/get_recipes()
 		src.possible_recipe_icons = list()
@@ -426,31 +433,6 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 
 	ui_static_data(mob/user)
 		. = list("maxItems" = src.max_contents)
-
-	ui_data(mob/user)
-		var/mixerContents = list()
-		var/index = 1
-		for(var/obj/item/I in src.contents)
-			var/itemData = list()
-			itemData["name"] = I.name
-			itemData["index"] = index
-			itemData["iconData"] = get_item_icon(I)
-			mixerContents += list(itemData)
-			index += 1
-		. = list("working" = src.working, "mixerContents" = mixerContents)
-
-	proc/get_item_icon(var/obj/item/target)
-		var/static/base64_preview_cache = list()
-		var/original_name = initial(target.name)
-		. = base64_preview_cache[original_name]
-
-		if(isnull(.))
-			var/icon/result = getFlatIcon(target, no_anim=TRUE)
-			if(result)
-				. = icon2base64(result)
-			else
-				. = ""
-			base64_preview_cache[original_name] = .
 
 	ui_act(action, params)
 		. = ..()

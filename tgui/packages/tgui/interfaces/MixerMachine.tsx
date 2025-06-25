@@ -48,13 +48,13 @@ export const MixerItem = (props) => {
 
 interface MixerMachineData {
   maxItems;
-  mixerContents;
+  heldItems;
   working;
 }
 
 export const MixerMachine = () => {
   const { data, act } = useBackend<MixerMachineData>();
-  const items = data.mixerContents;
+  const items = data.heldItems;
   return (
     <Window title="Kitchen Helper" width={500} height={220}>
       <Window.Content>
