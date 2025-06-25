@@ -90,7 +90,7 @@
 
 /datum/client_auth_provider/goonhub/on_auth(datum/apiModel/VerifyAuthResource/verification)
 	winshow(src.owner, src.window_id, FALSE)
-	src.owner.verbs -= list(/client/proc/open_goonhub_auth, /client/proc/on_goonhub_auth_close)
+	src.owner.verbs -= list(/client/proc/open_goonhub_auth)
 
 	src.owner.client_auth_intent.player_id = verification.player_id
 	src.owner.ckey = verification.ckey
