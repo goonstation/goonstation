@@ -85,13 +85,29 @@
 		src.owner.byond_build,
 		roundId || null
 	)
+
+	var/error = FALSE
+	var/datum/apiModel/VerifyAuthResource/verification
 	try
-		var/datum/apiModel/VerifyAuthResource/verification = apiHandler.queryAPI(verifyAuth)
+		verification = apiHandler.queryAPI(verifyAuth)
+	catch (var/exception/eOne)
+		var/datum/apiModel/Error/errorModel = eOne.name
+		error = errorModel.message
+
+	try
 		src.on_auth(verification)
-	catch
+	catch (var/exception/eTwo)
+		error = eTwo.name
+
+	if (error)
+		var/logMsg = "Failed to verify auth for [src.owner] because: [error]"
+		logTheThing(LOG_ADMIN, null, logMsg)
+		logTheThing(LOG_DIARY, null, logMsg, "admin")
 		src.authenticating = FALSE
 		src.show_ui()
 		return FALSE
+
+	return TRUE
 
 /datum/client_auth_provider/goonhub/on_auth(datum/apiModel/VerifyAuthResource/verification)
 	world.log << "/datum/client_auth_provider/goonhub/on_auth for [src.owner]"
