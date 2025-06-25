@@ -173,7 +173,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 				considered_type = type2parent(considered_type)
 		return list()
 
-	proc/cooking_power() //used to find cook amounts on
+	proc/cooking_power() //used to find cook amounts for things that use those (mostly the oven)
 		return cooktime/10
 
 	proc/start_cook()
