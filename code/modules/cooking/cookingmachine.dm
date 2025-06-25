@@ -14,10 +14,11 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 
 	var/power_active ///power usage while active
 	var/max_contents //max amount of items allowed inside
-	var/cooktime //time it takes to cook something. on ovens this is adjustable
+	var/cooktime ///time it takes to cook something. on ovens this is adjustable
+	var/list/allowed = list(/obj/item)
+	var/makes_slop = TRUE ///if TRUE, failed recipes make ????
 	var/list/datum/cookingrecipe/possible_recipes = list()//list of all recipes that can possibly be cooked from the contained ingredients
 	var/list/to_remove = list() //items being used in the current recipe
-	var/list/allowed = list(/obj/item)
 	var/working = FALSE
 	var/time_finish
 
@@ -82,7 +83,8 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			return
 
 		var/obj/item/F = src.finish_cook()
-		F.set_loc(src.loc)
+		if(F)
+			F.set_loc(src.loc)
 
 		src.handle_leftovers()
 
@@ -224,7 +226,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 
 			// the case where there are no valid recipies is handled below in the outer context
 			// (namely it replaces them with yuck)
-		if (isnull(output))
+		if (src.makes_slop && isnull(output))
 			output = new /obj/item/reagent_containers/food/snacks/yuck
 			output.quality = rand(-5, 1) //small chance of being actually edible
 		// this only happens if the output is a yuck item, either from an
@@ -411,6 +413,7 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 	max_contents = 4
 	cooktime = 2 SECONDS
 	allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
+	makes_slop = FALSE
 
 	var/image/blender_off
 	var/image/blender_powered
