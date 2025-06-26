@@ -2361,6 +2361,35 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 
+/datum/bioEffect/power/project_voice
+	name = "Project Voice"
+	desc = "Allows the subject to create voice resembling sound waves at a target location."
+	id = "project_voice"
+	msgGain = "You feel in tune with sound."
+	msgLose = "You feel out of tune with sound."
+	cooldown = 10 SECONDS
+	ability_path = /datum/targetable/geneticsAbility/ventriloquism
+
+/datum/targetable/geneticsAbility/ventriloquism
+	name = "Project Voice"
+	desc = "Project a voice at a target location."
+	icon_state = "speech"
+
+	cast(atom/target)
+		if (..())
+			return TRUE
+		if (ismob(target))
+			boutput(src.owner, SPAN_ALERT("You can't target living creatures!"))
+			return TRUE
+		if (GET_DIST(src.owner, target) > 7)
+			boutput(src.owner, SPAN_ALERT("That is too far away!"))
+			return TRUE
+
+		var/to_say = tgui_input_text(src.owner, "What would you like this thing to say?", "Project Voice")
+		if (!to_say)
+			return TRUE
+		target.say(to_say)
+
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter
 	id = "critter_do_not_use"
