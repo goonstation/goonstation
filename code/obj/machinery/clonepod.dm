@@ -283,9 +283,14 @@ TYPEINFO(/obj/machinery/clonepod)
 			for (var/i in 1 to rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1))))
 				if (generation)
 					defects.add_random_cloner_defect()
+				else if (src.occupant.traitHolder.hasTrait("defect_prone"))
+					defects.add_random_cloner_defect()
 				else
 					// First cloning can't get major defects
 					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
+
+		if (src.occupant.traitHolder.hasTrait("defect_prone"))
+			defects.add_random_cloner_defect()
 
 		src.mess = FALSE
 		var/is_puritan = FALSE
