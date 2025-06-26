@@ -147,7 +147,7 @@
 	if (isfile(file))
 		fileText = file2text(file)
 	if (fileText && findtext(fileText, "{{resource"))
-		var/regex/R = new("\\{\\{resource\\(\"(.*?)\"\\)\\}\\}", "ig")
+		var/regex/R = new("\\{\\{resource\\(\[\"']?(.*?)\[\"']?\\)\\}\\}", "ig")
 		fileText = R.Replace(fileText, /proc/resource) // This line specifically is /very/ slow
 
 	return fileText

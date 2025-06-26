@@ -18,10 +18,7 @@
 	// returnSaveFile returns the file rather than writing it
 	// used for cloud saves
 	savefile_save(key, profileNum = 1, returnSavefile = 0)
-		if (key)
-			if (IsGuestKey(key))
-				return 0
-		else if (!returnSavefile) // if we don't have a user and we're trying to write it, it isn't going to work
+		if (!key && !returnSavefile) // if we don't have a user and we're trying to write it, it isn't going to work
 			CRASH("Tried to write a preferences savefile with no user specified.")
 
 		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
@@ -154,9 +151,6 @@
 		if (user) // bypass these checks if we're loading from a savefile and don't have a user
 			if (!isclient(user))
 				CRASH("[user] isnt a client. please give me a client. please. i beg you.")
-
-			if (IsGuestKey(user.key))
-				return 0
 
 		var/savefile/F
 		var/path
@@ -456,9 +450,6 @@
 
 	//This might be a bad way of doing it IDK
 	savefile_get_profile_name(client/user, var/profileNum = 1)
-		if (IsGuestKey(user.key))
-			return 0
-
 		LAGCHECK(LAG_REALTIME)
 
 		var/path = savefile_path(user.ckey)
@@ -484,11 +475,7 @@
 
 	/// Load a character profile from the cloud.
 	cloudsave_load(client/user, name)
-		if (user)
-			if (IsGuestKey(user.key))
-				return FALSE
-
-		var/cloudSaveData = user.player.cloudSaves.getSave(name)
+		var/cloudSaveData = user.player?.cloudSaves.getSave(name)
 
 		var/savefile/save = new
 		save.ImportText( "/", cloudSaveData )
@@ -496,14 +483,10 @@
 
 	/// Save a character profile to the cloud.
 	cloudsave_save(client/user, name)
-		if (user)
-			if (IsGuestKey( user.key ))
-				return FALSE
-
 		var/savefile/save = src.savefile_save(user.ckey, 1, 1)
 		var/exported = save.ExportText()
 
-		return user.player.cloudSaves.putSave(name, exported)
+		return user.player?.cloudSaves.putSave(name, exported)
 
 	cloudsave_delete(client/user, name)
-		return user.player.cloudSaves.deleteSave(name)
+		return user.player?.cloudSaves.deleteSave(name)

@@ -59,21 +59,12 @@
 	/// Newbee Tutorial
 	var/datum/tutorial_base/regional/newbee/tutorial = null
 
-	/// sets up vars, caches player stats, adds by_type list entry for this datum
+	/// starts setup, adds by_type list entry for this datum
 	New(key)
 		..()
 		START_TRACKING
-		src.key = key
-		src.ckey = ckey(key)
-		src.tag = "player-[src.ckey]"
+		src.setup(key)
 		src.cloudSaves = new /datum/cloudSaves(src)
-
-		if (ckey(src.key) in mentors)
-			src.mentor = 1
-
-		if (src.key) //just a safety check!
-			src.cache_round_stats()
-		src.last_death_time = world.timeofday
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
@@ -82,6 +73,15 @@
 			src.client.player = null
 			src.client = null
 		..()
+
+	/// sets up vars, caches player stats
+	proc/setup(key)
+		src.key = key
+		src.ckey = ckey(key)
+		src.tag = "player-[src.ckey]"
+		if (src.ckey in mentors) src.mentor = 1
+		src.cache_round_stats()
+		src.last_death_time = world.timeofday
 
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()
@@ -114,6 +114,9 @@
 
 	/// blocking version of cache_round_stats, queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats_blocking()
+		if (!src.ckey || !src.client?.authenticated)
+			return FALSE
+
 		var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 		try
 			var/datum/apiRoute/players/stats/get/getPlayerStats = new

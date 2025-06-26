@@ -278,10 +278,10 @@
 	for (var/client/C in clients)
 		if (C.ckey == from_ckey)
 			// The source player has all their saves moved
-			C.player.cloudSaves.saves = list()
+			C.player?.cloudSaves.saves = list()
 		if (C.ckey == to_ckey)
 			// Trigger a re-fetch on the target so they can get their new saves right away
-			C.player.cloudSaves.fetch()
+			C.player?.cloudSaves.fetch()
 
 	return TRUE
 #endif

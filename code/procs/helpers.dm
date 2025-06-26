@@ -602,6 +602,15 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 /proc/IsGuestKey(key)
 	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
+/**
+ * Returns true if the given client is a local client
+ */
+/proc/IsLocalClient(client/C)
+	#ifdef LIVE_SERVER
+	. = FALSE
+	#else
+	. = !C.address || C.address == world.host || C.address == "127.0.0.1"
+	#endif
 
 /**
  * Returns f, ensured that it's a valid frequency
