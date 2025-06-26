@@ -144,12 +144,6 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
-/datum/clothingbooth_grouping/long_sleeved_shirt
-	item_paths = list(/datum/clothingbooth_item/w_uniform/long_sleeved_shirt)
-	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/casual,
-	)
-
 /datum/clothingbooth_grouping/maid
 	item_paths = list(/datum/clothingbooth_item/w_uniform/maid)
 	grouping_tags = list(
