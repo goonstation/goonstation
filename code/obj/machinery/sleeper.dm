@@ -262,7 +262,7 @@ TYPEINFO(/obj/machinery/sleeper)
 	var/med_stabilizer = "saline" // Basic med that will always be injected.
 	var/med_crit = "ephedrine" // If < -25 health.
 	var/med_oxy = "salbutamol" // If > +15 OXY.
-	var/med_tox = "charcoal" // If > +15 TOX.
+	var/med_tox = "anti_rad" // If > +15 TOX.
 
 	var/emagged = 0
 	var/list/med_emag = list("sulfonal", "toxin", "mercury") // Picked at random per injection.

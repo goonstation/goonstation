@@ -210,7 +210,7 @@
 
 /obj/item/reagent_containers/glass/bottle/antitoxin
 	name = "bottle (charcoal)"
-	desc = "A small bottle of charcoal, a general purpose antitoxin."
+	desc = "A small bottle of charcoal, a patient-safe chemical neutralizer with mild organ restoration properties."
 	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "charcoal"

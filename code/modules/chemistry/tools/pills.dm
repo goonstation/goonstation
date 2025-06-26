@@ -346,6 +346,7 @@
 	New()
 		..()
 		reagents.add_reagent("charcoal", 20)
+		reagents.add_reagent("anti_rad", 20)
 
 /obj/item/reagent_containers/pill/vr/salicylic_acid
 	name = "analgesic pill"
