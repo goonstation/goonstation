@@ -1,6 +1,11 @@
 
 (t)thu jun 26 25
 (u)Cheekybrdy
+(p)23282
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Ixworth and ageinium feed are now available in locked loot crates.
+(+)Added a new secret chem "Deageinium".
+(u)Cheekybrdy
 (p)23106
 (e)🆕📦|C-Feature, A-Game-Objects
 (*)Power eggs can now be found in safes, but are infertile and cannot be used in a incubator.
