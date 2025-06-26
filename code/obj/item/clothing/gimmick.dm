@@ -2084,8 +2084,15 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "A motionless pigeon plushie that attaches to shoulders. It looks like something is sticking out of it."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_HAIR_LAYER2
 	icon_state = "pigeon"
 	item_state = "pigeon"
+
+	equipped(mob/user)
+		if (ishuman(user))
+			var/mob/living/carbon/human/human = user
+			src.wear_image.pixel_y = human.mutantrace.head_offset
+		..()
 
 	attack_self (mob/user as mob)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
@@ -2098,9 +2105,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 		user.update_inhands()
 		return
 
-
 // Goku
-
 /obj/item/clothing/under/gimmick/goku
 	name = "anime martial artist costume"
 	desc = "Sturdy karate gi intended for only the toughest martial artists out there. If only you actually practiced!"

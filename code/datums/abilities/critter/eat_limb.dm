@@ -21,7 +21,7 @@
 		if (stomach_abil?.inside)
 			return TRUE
 		if (ishuman(target) || istype(target, /obj/item/parts/human_parts))
-			boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [target]!</b>"))
+			src.holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] starts to gnaw at [target]!</b>"))
 		else
 			return
 		actions.start(new/datum/action/bar/icon/eat_limb(target, holder.owner), holder.owner)

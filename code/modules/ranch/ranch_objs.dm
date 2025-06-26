@@ -36,7 +36,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 #ifdef SECRETS_ENABLED
 		src.egg_overlay_secret = image('+secret/icons/obj/chickens_secret.dmi', src, "incubator-egg")
 #endif
-		src.egg_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-egg")
+		src.egg_overlay = image('icons/mob/ranch/chickens.dmi', src, "incubator-egg")
 		src.lights_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-lights")
 		processing_items |= src
 
@@ -208,7 +208,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				for(var/obj/item/O in S.contents)
 					src.add_item(O)
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 
