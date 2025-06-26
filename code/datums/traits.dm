@@ -1170,18 +1170,14 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/defect_prone
 	name = "Defect Prone"
-	desc = "You are significantly more likely to have defects upon cloning."
+	desc = "You gain more cloning defects than normal."
 	id = "defect_prone"
 	icon_state = "defect_prone"
 	points = 1
 	category = list("cloner_stuff")
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Fragmentary Cloning"
-	disability_desc = "Genetic structure more likely to result in defects upon cloning."
-
-	onAdd(var/mob/owner)
-		. = ..()
-		owner.bioHolder.clone_generation += 1
+	disability_desc = "Genetic structure significantly more likely to result in defects upon cloning."
 
 /datum/trait/cyber_incompatible
 	name = "Cyber-Incompatible"
