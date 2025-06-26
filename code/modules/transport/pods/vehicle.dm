@@ -1143,7 +1143,15 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		var/was_seen_boarding = FALSE
+		if (istype(V, /obj/machinery/vehicle/tank/car)) // you can drive pods drunk, but not cars. space law.
+			was_seen_boarding = seen_by_camera(owner)
+
 		V.finish_board_pod(owner)
+
+		if (was_seen_boarding && V.pilot == owner && ishuman(owner) && owner.hasStatus("drunk"))
+			var/mob/living/carbon/human/H = owner
+			H.apply_automated_arrest("DUI.", "Drove while inebriated.", requires_camera_seen = FALSE)
 
 /datum/action/bar/icon/eject_pod
 	duration = 50
@@ -1976,18 +1984,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	New()
 		..()
 		src.install_part(null, new /obj/item/shipcomponent/locomotion/wheels(src), POD_PART_LOCOMOTION, FALSE)
-
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
-		if (!ishuman(pilot) || !pilot.statusEffects)
-			return ..(lifeform_inside_me, breath_request, mult)
-
-		for (var/effect in pilot.statusEffects)
-			if (istype(effect, /datum/statusEffect/drunk))
-				var/mob/living/carbon/human/H = pilot
-				H.apply_automated_arrest("DUI.")
-				break
-
-		return ..(lifeform_inside_me, breath_request, mult)
 
 	//Colours
 	black
