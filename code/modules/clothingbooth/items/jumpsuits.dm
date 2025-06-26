@@ -152,9 +152,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/little_dress)
 		swatch_background_color = "#c8193a"
 		item_path = /obj/item/clothing/under/misc/dress/red
 
-/datum/clothingbooth_item/w_uniform/long_sleeved_shirt
-	item_path = /obj/item/clothing/suit/lshirt
-
 /datum/clothingbooth_item/w_uniform/maid
 	cost = PAY_TRADESMAN/3
 	item_path = /obj/item/clothing/under/gimmick/maid
