@@ -1560,7 +1560,7 @@ datum
 		medical/charcoal
 			name = "charcoal"
 			id = "charcoal"
-			description = "Activated charcoal helps to absorb toxins."
+			description = "Activated charcoal helps to neutralize chemicals in the bloodstream."
 			reagent_state = SOLID
 			fluid_r = 0
 			fluid_b = 0
@@ -1572,7 +1572,6 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(50))
 					flush(holder, 1 * mult)
-				M.HealDamage("All", 0, 0, 1.5 * mult)
 
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
