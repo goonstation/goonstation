@@ -46,6 +46,12 @@ TYPEINFO(/obj/item/card/emag)
 	attack()	//Fucking attack messages up in this joint.
 		return
 
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		..()
+		if(!hit_atom || !thr)
+			return
+		hit_atom.emag_act(thr.user, src)
+
 /obj/item/card/emag/attack_self(mob/user as mob)
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return

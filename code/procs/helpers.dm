@@ -359,6 +359,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
+///Strip out weird illegal characters that TGUI discards anyway, see `\improper` and other Byond lunacy
+/proc/strip_illegal_characters(text)
+	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
+	return whitelistedWords.Replace("[text]", "")
+
 ///Cleans up data passed in from network packets for display so it doesn't mess with formatting
 /proc/tidy_net_data(var/t)
 	. = isnum(t) ? t : strip_html(t)
@@ -2448,6 +2453,10 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
+		M.hasStatus("lockdown_robot") || \
+		M.hasStatus("lockdown_ai") || \
+		M.hasStatus("no_power_robot") || \
+		M.hasStatus("no_cell_robot") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup

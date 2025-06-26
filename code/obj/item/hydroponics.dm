@@ -19,7 +19,7 @@ TYPEINFO(/obj/item/saw)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
-	item_state = "c_saw"
+	item_state = "c_saw-D"
 	var/base_state = "c_saw"
 	var/active = 0
 	hit_type = DAMAGE_CUT
@@ -48,7 +48,10 @@ TYPEINFO(/obj/item/saw)
 	active
 		active = 1
 		force = 12
+		icon_state = "c_saw"
+		item_state = "c_saw-A"
 		arm_icon = "chainsaw-A"
+
 
 		New()
 			..()
@@ -56,9 +59,6 @@ TYPEINFO(/obj/item/saw)
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			if (src)
-				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)
 		return
 
@@ -112,7 +112,7 @@ TYPEINFO(/obj/item/saw)
 			boutput(user, SPAN_NOTICE("[src] is now off."))
 			src.force = off_force
 			src.hitsound = initial(src.hitsound)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		user.set_body_icon_dirty()
 		src.UpdateIcon()
 		user.update_inhands()
@@ -141,7 +141,7 @@ TYPEINFO(/obj/item/saw/syndie)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
-	item_state = "c_saw_s"
+	item_state = "c_saw_s-D"
 	base_state = "c_saw_s"
 	tool_flags = TOOL_SAWING | TOOL_CHOPPING //fucks up doors. fuck doors
 	active = 0
@@ -347,7 +347,7 @@ TYPEINFO(/obj/item/saw/elimbinator)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_s"
-	item_state = "c_saw_s"
+	item_state = "c_saw_s-A"
 	base_state = "c_saw_s"
 	hit_type = DAMAGE_CUT
 	active = 1

@@ -553,12 +553,16 @@
 				src.left_eye = new /obj/item/organ/eye/synth(src.donor, src)
 			else
 				src.left_eye = new /obj/item/organ/eye/left(src.donor, src)
+			if (src.head)
+				src.head.left_eye = left_eye
 			organ_list["left_eye"] = left_eye
 		if (!src.right_eye)
 			if (prob(2) || all_synth)
 				src.right_eye = new /obj/item/organ/eye/synth(src.donor, src)
 			else
 				src.right_eye = new /obj/item/organ/eye/right(src.donor, src)
+			if (src.head)
+				src.head.right_eye = right_eye
 			organ_list["right_eye"] = right_eye
 
 		if (!src.chest)

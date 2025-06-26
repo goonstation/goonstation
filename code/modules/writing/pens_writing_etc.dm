@@ -283,7 +283,7 @@
 			src.change_mode(new_mode, user)
 
 	proc/change_mode(var/new_mode, var/mob/holder)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		switch (new_mode)
 			if ("pen")
 				src.penmode = "pen"
@@ -767,22 +767,24 @@
 	name = "chalk"
 	desc = "A stick of rock and dye that reminds you of your childhood. Don't get too carried away!"
 	icon_state = "chalk-9"
-	color = "#333333"
+	color = "#ffffff"
 	font = "Comic Sans MS"
+	var/true_color
 	var/chalk_health = 10 //10 uses before it snaps
 
 	random
-		var/picked_color
 		New()
+			src.true_color = random_color()
+			src.assign_color(src.true_color)
 			..()
-			src.assign_color(src.picked_color)
 
-		reset_color()
-			src.assign_color(src.picked_color)
+	New()
+		..()
+		src.true_color = src.color
 
 	proc/assign_color(var/color)
 		if(isnull(color))
-			color = "#ffffff"
+			src.color = "#ffffff"
 		src.color = color
 		src.font_color = src.color
 		src.color_name = hex2color_name(color)
@@ -813,7 +815,7 @@
 			src.icon_state = "chalk-[src.chalk_health]"
 
 	reset_color()
-		src.assign_color(initial(src.color))
+		src.assign_color(src.true_color)
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob)
 		..()
@@ -901,7 +903,7 @@
 		if(!user.literate)
 			boutput(user, SPAN_ALERT("You don't know how to write."))
 			return
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		var/holder = src.loc
 		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
 		if(str)
@@ -1228,7 +1230,7 @@
 
 		if(href_list["action"] == "retrieve")
 			usr.put_in_hand_or_drop(src.contents[text2num(href_list["id"])], usr)
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			usr.visible_message("[usr] takes something out of the folder.")
 		else if(href_list["action"] == "peek")
 			var/obj/item/I = src.contents[text2num(href_list["id"])]
@@ -1262,7 +1264,7 @@
 			user.drop_item()
 		W.set_loc(src)
 		src.amount++
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /* =============== BOOKLETS =============== */
 

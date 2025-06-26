@@ -7113,7 +7113,6 @@
 /area/station/maintenance/inner/central)
 "aOO" = (
 /obj/machinery/light/small/sticky,
-/obj/blind_switch/area/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aOP" = (
@@ -17304,7 +17303,12 @@
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
 /obj/machinery/vending/security,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "dpc" = (
@@ -23649,9 +23653,6 @@
 	},
 /area/station/quartermaster/office)
 "hje" = (
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
 /obj/item/device/radio/intercom/detnet/security{
 	dir = 8
 	},
@@ -31762,7 +31763,6 @@
 	tag = ""
 	},
 /obj/landmark/start/job/medical_doctor,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/station/medical/staff)
 "lZI" = (

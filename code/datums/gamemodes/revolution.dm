@@ -155,7 +155,7 @@
 	for(var/mob/living/carbon/human/player in mobs)
 		if(player.mind && !isdead(player))
 			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director","Communications Officer"))
+			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director"))
 				heads += player.mind
 
 	if(length(heads) < 1)
@@ -170,7 +170,7 @@
 	for(var/mob/player in mobs)
 		if(player.mind)
 			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director","Communications Officer"))
+			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director"))
 				heads += player.mind
 
 	return heads

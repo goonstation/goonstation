@@ -158,7 +158,7 @@
 			user.put_in_hand_or_drop(S)
 			if(caps_amt != -1)
 				caps_amt--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 		UpdateIcon()
 	else
 		return ..()

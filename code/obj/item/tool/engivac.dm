@@ -153,18 +153,18 @@
 			collect_buildmats = !collect_buildmats
 			boutput(user, SPAN_NOTICE("\The [name] will now [collect_buildmats ? "collect" : "leave"] building materials."))
 			rebuild_collection_list()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 		if ("Toggle collecting debris")
 			collect_debris = !collect_debris
 			boutput(user, SPAN_NOTICE("\The [name] will now [collect_debris ? "collect" : "leave"] debris."))
 			rebuild_collection_list()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 		if ("Toggle floor tile auto-placement")
 			placing_tiles = !placing_tiles
 			boutput(user, SPAN_NOTICE("\The [name]'s tile auto-placement has been [placing_tiles ? "enabled" : "disabled"]."))
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 		if ("Remove Toolbox")
 			user.put_in_hand_or_drop(held_toolbox)
@@ -187,7 +187,7 @@
 	if (!current_stack)
 		if (!scan_for_floortiles()) //...and I'm all out of tiles
 			placing_tiles = FALSE
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			boutput(M, SPAN_ALERT("\The [name] does not have any floor tiles left, and deactivates auto-placing."))
 			return
