@@ -1430,6 +1430,12 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "guardscoat"
+	item_state = "guardscoat"
+	coat_style = "guardscoat"
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 	setupProperties()
 		..()
