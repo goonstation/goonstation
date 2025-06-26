@@ -559,6 +559,19 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		else
 			. = ..()
 
+	loot_age
+		name = "Dehab Mortality Feed"
+		desc = "A hand-knitted bag of feed which somehow creaks, it has a small label mentioning rapid ageing."
+		feed_flags = list("clockwork")
+		food_color = "#a0c0c0"
+		initial_reagents = list("ageinium", 40)
+
+	loot_antiage // for mining crates
+		name = "Ambrosia Immortality Feed"
+		desc = "A commercial feed bag plastered with adverts on anti-ageing effects."
+		feed_flags = list("ageless", "chicken_egg")
+		food_color = "#DDBB00"
+
 /obj/decal/cleanable/ranch_feed
 	name = "feed"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
