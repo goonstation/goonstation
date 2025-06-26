@@ -3642,6 +3642,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	//
 	/// The base damage used if the gun was grown
 	var/base_damage = 6
+	/// Damage per point of potency
+	var/potency_damage_multi = 0.05
 	/// The base shoot delay if the gun was grown
 	var/base_shoot_delay = 18
 	/// The base recoil strength if the gun was grown
@@ -3650,6 +3652,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/base_recoil_max = 120
 	/// The number of bullets this starts with if grown
 	var/base_ammo_count = 2
+	/// Ammo per point of yield
+	var/ammo_multi = 0.05
+	/// Ammo pierce multiplier per point of endurance
+	var/armour_pierce_multi = 0.0015
+
 
 	New()
 		ammo = new default_magazine
@@ -3681,9 +3688,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		src.force = temp_item.force
 		// Increase the gun's ammo by the yield
-		src.ammo.amount_left = max(1, base_ammo_count + floor(passed_genes.harvests * 0.03))
+		src.ammo.amount_left = max(1, base_ammo_count + floor(passed_genes.harvests * ammo_multi))
 		// Increase the bullet's damage by the potency
-		src.current_projectile.damage = max(1, base_damage + floor(passed_genes.potency * 0.05))
+		src.current_projectile.damage = max(1, base_damage + floor(passed_genes.potency * potency_damage_multi))
 		// Combine both speed stats into one modifier, and then use it to reduce the shoot delay.
 		// The trailing points just ensures no division by 0 if genes go into the negative.
 		var/delay_modifier = (passed_genes.growtime + passed_genes.harvtime) * 0.5
@@ -3692,7 +3699,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.recoil_strength = src.base_recoil_strength / (1.0001 + (passed_genes.harvests/50 ))
 		src.recoil_max = src.base_recoil_max / (1.0001 + (passed_genes.harvests/50))
 		// Increase armour-piercing by the endurance.
-		src.current_projectile.armor_ignored = passed_genes.endurance * 0.0015
+		src.current_projectile.armor_ignored = passed_genes.endurance * armour_pierce_multi
 		// Jumbo stuff gets some buffs and more punchy cosmetics
 		if (quality_status == "jumbo")
 			src.ammo.amount_left += 3
