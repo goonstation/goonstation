@@ -384,7 +384,7 @@ h1.alert, h2.alert {color: #000000;}
 .command_alert {color: #000; margin:0px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji"}
 div.command_alert {border: 2px solid; margin-top: 0.5em; margin-bottom: 0.5em}
 h1.command_alert {font-weight: bold; font-size: 120%; border: 0px; text-align: center; padding: 0.2em 0.5em}
-h2.command_alert {font-weight: bold; font-size: 130%; border-bottom: 4px solid ;padding: 0.2em 0.5em}
+h2.command_alert {font-weight: bold; font-size: 130%; border-bottom: 2px solid ;padding: 0.2em 0.5em}
 p.command_alert {padding: 0.4em 0.7em}
 
 div.ageneral {border-color: #86869D}
