@@ -1,5 +1,9 @@
 
 (t)thu jun 26 25
+(u)SnugglyCactus
+(p)23919
+(e)🎨👽|C-Sprites, A-Mutantraces
+(+)Added ghost sprites for nearly every mutantrace. Go monkey mode in the afterlife!
 (u)Cheekybrdy
 (p)23282
 (e)🆕🌱|C-Feature, A-Hydroponics
