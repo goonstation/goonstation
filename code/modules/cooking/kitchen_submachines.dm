@@ -563,8 +563,8 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/sandwich/monkey(src)
 			src.recipes += new /datum/cookingrecipe/oven/sandwich/synth(src)
 			src.recipes += new /datum/cookingrecipe/oven/sandwich/cheese(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/peanutbutter(src)
 			src.recipes += new /datum/cookingrecipe/oven/sandwich/peanutbutter_honey(src)
+			src.recipes += new /datum/cookingrecipe/oven/sandwich/peanutbutter(src)
 			src.recipes += new /datum/cookingrecipe/oven/sandwich/blt(src)
 			src.recipes += new /datum/cookingrecipe/oven/sandwich/custom(src)
 			src.recipes += new /datum/cookingrecipe/oven/mapo_tofu(src)
@@ -582,6 +582,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/burger/aburgination(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/baconator(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/butterburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/cheeseburger/monkey(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/cheeseburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/wcheeseburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/tikiburger(src)
@@ -758,6 +759,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
 			src.recipes += new /datum/cookingrecipe/oven/brownie_batch(src)
 			src.recipes += new /datum/cookingrecipe/oven/rice_bowl(src)
+			src.recipes += new /datum/cookingrecipe/oven/flan(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
@@ -1224,7 +1226,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					amtload++
 				S.UpdateIcon()
 				boutput(user, SPAN_NOTICE("[amtload] items loaded from satchel!"))
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 			return
 		else
 			var/proceed = 0

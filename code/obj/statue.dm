@@ -188,6 +188,8 @@
 			return
 
 		var/mob/living/L = src.mob_inside
+		if (!L.organHolder)
+			return
 		for (var/organ in src.organs_to_drop)
 			var/turf/T = get_turf(src)
 			var/obj/item/organ/O = L.organHolder.drop_organ(organ, T)

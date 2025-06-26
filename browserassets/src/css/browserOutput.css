@@ -352,6 +352,7 @@ wbr:after {
 .hivesay {color: #663500;}
 .thrallsay {color: white; background-color: #580283;}
 .thrallsay .vamp.name {color: #ff0000;}
+.wraithsay {color: #5C00E6; background-color: #FFC8C8;}
 .kudzusay {color: white; background-color: #566B44;}
 .crabsay {color: white; background-color: #6A1D1D;}
 .crabsay a {color: #6464ff;}
@@ -378,6 +379,54 @@ h1.alert, h2.alert {color: #000000;}
 .lawupdate {color: #6464ff}
 .monospace {font-family: monospace;}
 .helpmsg {color: #417c81; border: 1px solid #417c81; padding: 2px; margin: 2px 0; display: inline-block;}
+
+/* COMMAND ALERTS */
+.command_alert {color: #000; margin:0px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji"}
+div.command_alert {border: 2px solid; margin-top: 0.5em; margin-bottom: 0.5em}
+h1.command_alert {font-weight: bold; font-size: 120%; border: 0px; text-align: center; padding: 0.2em 0.5em}
+h2.command_alert {font-weight: bold; font-size: 130%; border-bottom: 4px solid ;padding: 0.2em 0.5em}
+p.command_alert {padding: 0.4em 0.7em}
+
+div.ageneral {border-color: #86869D}
+h1.ageneral {background-color: #86869D}
+h2.ageneral {background-color: #A6A6BD; border-color: #86869D}
+
+div.aanomaly {border-color: #9F5ECF}
+h1.aanomaly {background-color: #9F5ECF}
+h2.aanomaly {background-color: #B877E8; border-color: #9F5ECF}
+
+div.aweather {border-color:#B544D5}
+h1.aweather {background-color:#B544D5}
+h2.aweather {background-color:#CF5EEF; border-color: #B544D5}
+
+div.astation {border-color:#C8714C}
+h1.astation {background-color:#C8714C}
+h2.astation {background-color:#E28B66; border-color: #C8714C}
+
+div.awatchful {border-color:#9B56F4}
+h1.awatchful {background-color:#9B56F4}
+h2.awatchful {background-color:#B570FF; border-color: #9B56F4}
+
+div.aegeria {border-color:#C64D50}
+h1.aegeria {background-color:#C64D50}
+h2.aegeria {background-color:#DF6669; border-color: #C64D50}
+
+div.acomm {border-color:#8080B0}
+h1.acomm {background-color:#8080B0}
+h2.acomm {background-color:#9999C9; border-color: #8080B0}
+
+div.adept {border-color:#669696}
+h1.adept {background-color:#669696}
+h2.adept {background-color:#80B0B0; border-color: #669696}
+
+div.aclown {border-color: #B35080}
+h1.aclown {background-color: #FF9CCC; font-family: "Comic Sans MS"}
+h2.aclown {background-color: #FFB6E6; border-color: #B35080; font-family: "Comic Sans MS"}
+p.aclown {font-family: "Comic Sans MS"}
+
+div.asyn {border-color: #C95454}
+h1.asyn {background-color: #E36E6E}
+h2.asyn {background-color: #E36E6E; border-color: #C95454}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}
@@ -524,6 +573,7 @@ body.theme-dark .bugsay {color: #EA5D17;}
 body.theme-dark .deadsay {color: #b27eff;}
 body.theme-dark .hivesay {color: #e2a059;}
 body.theme-dark .thrallsay {color: white; background-color: #6f00a7;}
+body.theme-dark .wraithsay {color: #b27eff; background-color: #640000;}
 body.theme-dark .kudzusay {color: #111; background-color: #7B8F68;}
 body.theme-dark .crabsay {color: #111; background-color: #AC3232;}
 body.theme-dark .crabsay a {color: #0000ff;}
@@ -548,6 +598,48 @@ body.theme-dark .helpmsg {color: #98bdc2; border: 1px solid #98bdc2;}
 body.theme-dark .connectionClosed {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .connectionClosed.restored {background: green;}
+
+body.theme-dark .command_alert {color: #fff;}
+
+body.theme-dark div.ageneral {border-color: #434353;}
+body.theme-dark h1.ageneral  {background-color: #434353;}
+body.theme-dark h2.ageneral  {background-color: #535363; border-color: #434353;}
+
+body.theme-dark div.aanomaly {border-color: #6C2B9C;}
+body.theme-dark h1.aanomaly {background-color: #6C2B9C;}
+body.theme-dark h2.aanomaly {background-color: #8544B5;border-color: #6C2B9C;}
+
+body.theme-dark div.aweather {border-color:#8211A2}
+body.theme-dark h1.aweather {background-color:#8211A2}
+body.theme-dark h2.aweather {background-color:#9C2BBC;border-color:#8211A2}
+
+body.theme-dark div.astation {border-color:#953E19}
+body.theme-dark h1.astation {background-color:#953E19}
+body.theme-dark h2.astation {background-color:#AF5833;border-color:#953E19}
+
+body.theme-dark div.awatchful {border-color:#6823C1}
+body.theme-dark h1.awatchful {background-color:#6823C1}
+body.theme-dark h2.awatchful {background-color:#823DDB;border-color:#6823C1}
+
+body.theme-dark div.aegeria {border-color:#AC3336}
+body.theme-dark h1.aegeria {background-color:#AC3336}
+body.theme-dark h2.aegeria {background-color:#C64D50;border-color:#AC3336}
+
+body.theme-dark div.acomm {border-color:#4D4D7D}
+body.theme-dark h1.acomm {background-color:#4D4D7D}
+body.theme-dark h2.acomm {background-color:#666696;border-color:#4D4D7D}
+
+body.theme-dark div.adept {border-color:#336363}
+body.theme-dark h1.adept {background-color:#336363}
+body.theme-dark h2.adept {background-color:#4D7D7D;border-color:#336363}
+
+body.theme-dark div.aclown {border-color: #FF9CCC}
+body.theme-dark h1.aclown {background-color: #993666}
+body.theme-dark h2.aclown {background-color: #B35080;border-color: #FF9CCC}
+
+body.theme-dark div.asyn {border-color: #962121}
+body.theme-dark h1.asyn {background-color: #B03B3B;}
+body.theme-dark h2.asyn {background-color: #B03B3B;border-color: #962121}
 
 body.theme-dark .rstandard {color: #3fcc3f;}
 body.theme-dark .rintercom {color: #81f7ff;}

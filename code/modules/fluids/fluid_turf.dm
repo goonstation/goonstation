@@ -84,6 +84,12 @@
 		src.name = ocean_name
 		#endif
 
+	remove_air(amount)
+		return null
+
+	assume_air(datum/gas_mixture/giver)
+		new /obj/bubble(src, giver)
+
 //space/fluid/ReplaceWith() this is for future ctrl Fs
 	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = NORTH, force = 0)
 		.= ..(what, keep_old_material, handle_air)

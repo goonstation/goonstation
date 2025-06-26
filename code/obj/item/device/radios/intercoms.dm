@@ -19,6 +19,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	hardened = 0
 	use_speech_bubble = TRUE
 	forced_maptext = TRUE
+	speaker_range = 7
 
 	HELP_MESSAGE_OVERRIDE("Stand next to an intercom and use the prefix <B> :in </B> to speak directly into it.")
 
@@ -81,9 +82,10 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	. = ..()
 
 /obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
-	..()
+	if(..())
+		return
 
-	if (!isAI(user))
+	if (!isAI(user)) // this is AI only
 		return
 
 	if (!isAIeye(user))

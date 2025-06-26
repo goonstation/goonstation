@@ -111,7 +111,7 @@
 		return
 	if (user_mind.assigned_role)
 		var/datum/job/Job = find_job_in_controller_by_string(user_mind.assigned_role)
-		if(Job.wiki_link)
+		if(Job?.wiki_link)
 			. = Job.wiki_link
 	if (user_mind.is_antagonist())
 		for (var/datum/antagonist/antagonist_role in user_mind.antagonists)

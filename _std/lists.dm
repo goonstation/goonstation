@@ -112,6 +112,15 @@
 	for(var/key in key_list)
 		. |= key_list[key]
 
+///Flattens a keyed list into just its keys, discarding values
+/proc/flatten_list_to_keys(list/key_list)
+	RETURN_TYPE(/list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= key
+
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)
 	RETURN_TYPE(/alist)

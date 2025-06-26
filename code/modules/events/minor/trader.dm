@@ -30,8 +30,6 @@
 			shuttle = pick("left","right","left","right","diner"); // just making the diner docking a little less common.
 #if defined(MAP_OVERRIDE_OSHAN)
 		var/docked_where = shuttle == "diner" ? "sea diner" : "station";
-#elif defined(MAP_OVERRIDE_MANTA)
-		var/docked_where = shuttle == "diner" ? "sea diner" : "station";
 #elif defined(MAP_OVERRIDE_NADIR)
 		var/docked_where = shuttle == "diner" ? "underdiner" : "station";
 #else
