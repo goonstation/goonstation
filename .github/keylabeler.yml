@@ -93,16 +93,20 @@ labelMappings:
     "[TRAIT]": a-traits
 # Department
     "[COMMAND]": d-command
+    "[SEC]": d-security
     "[SECURITY]": d-security
+    "[FOOD]": d-catering
     "[CATERING]": d-catering
     "[CHEM]": d-chemistry
     "[CHEMISTRY]": d-chemistry
     "[HYDRO]": d-hydroponics
     "[HYDROPONICS]": d-hydroponics
     "[MEDICAL]": d-medical
+    "[SCI]": d-science
     "[SCIENCE]": d-science
     "[SILICONS]": d-silicons
     "[BORGS]": d-silicons
+    "[ENGINE]": d-engineering
     "[ENGINEERING]": d-engineering
     "[LOGISTICS]": d-logistics
     "[SUPPLY]": d-logistics
