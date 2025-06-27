@@ -62,7 +62,7 @@
 					handset_offset_x = -4
 					handset_offset_y = -4
 					handset_offset_x = -4
-	var/datum/lineResult/result = drawLineImg(src.parent, target, src.cord_line, src.cord_cap, src.parent_atom.pixel_x + src.base_offset_x, src.parent_atom.pixel_y + src.base_offset_y, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH_NO_CLIP, applyTransform = FALSE)
+	var/datum/lineResult/result = drawLineImg(src.parent, get_turf(target), src.cord_line, src.cord_cap, src.parent_atom.pixel_x + src.base_offset_x, src.parent_atom.pixel_y + src.base_offset_y, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH_NO_CLIP, applyTransform = FALSE)
 	result.lineImage.layer = src.parent_atom.layer+0.01
 	if (src.cord)
 		var/animate_time = 0.2 SECONDS //just default to something sane if we don't know the glide size
