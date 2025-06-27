@@ -564,3 +564,4 @@
 		H.changeStatus("knockdown", 6 * mult SECONDS)
 		H.losebreath+=20 * mult
 		H.take_oxygen_deprivation(20 * mult)
+		H.organHolder?.damage_organ(tox=mult, organ="heart")
