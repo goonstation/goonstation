@@ -632,6 +632,11 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		path = /obj/machinery/fluid_pipe_machinery/unary/input
 		icon_state = "port"
 		desc = "Allows pouring in fluids into the network directly and connecting glass plumbing."
+	dispenser
+		name = "Dispenser"
+		path = /obj/machinery/fluid_pipe_machinery/unary/dispenser
+		icon_state = "dispenser"
+		desc = "Capable of printing patches, vials, and pills."
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/binary)
 /datum/pipe_recipe/fluid/machine/binary
