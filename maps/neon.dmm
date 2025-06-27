@@ -8844,11 +8844,11 @@
 	},
 /obj/item/clothing/glasses/healthgoggles{
 	pixel_x = 7;
-	pixel_y = 7
+	pixel_y = 3
 	},
 /obj/item/clothing/glasses/healthgoggles{
 	pixel_x = -5;
-	pixel_y = 7
+	pixel_y = 3
 	},
 /obj/item/robodefibrillator,
 /obj/item_dispenser/latex_gloves{
@@ -30563,6 +30563,12 @@
 /obj/machinery/navbeacon/mule/engineering_north/east,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
+"vKk" = (
+/obj/machinery/computer/card{
+	dir = 1
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/cargo)
 "vLe" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -91811,7 +91817,7 @@ wXY
 iwJ
 pnv
 dFK
-dFK
+vKk
 yjM
 tlt
 hrg
