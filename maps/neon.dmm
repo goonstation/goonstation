@@ -7607,9 +7607,7 @@
 	},
 /area/station/hallway/primary/north)
 "fpR" = (
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
@@ -9813,6 +9811,7 @@
 /area/tech_outpost)
 "gRJ" = (
 /obj/machinery/disposal_pipedispenser,
+/obj/marker/supplymarker,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "gRV" = (
@@ -30528,6 +30527,7 @@
 /area/station/bridge)
 "vJu" = (
 /obj/machinery/light/incandescent/warm,
+/obj/marker/supplymarker,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "vJG" = (
