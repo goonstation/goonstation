@@ -92,8 +92,6 @@ TYPEINFO(/obj/machinery/phone)
 	START_TRACKING
 
 /obj/machinery/phone/disposing()
-	if (src.answered)
-		src.RemoveComponent(/datum/component/cord)
 	if (src.linked)
 		src.linked.linked = null
 		src.linked = null
