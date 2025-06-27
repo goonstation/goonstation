@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery)
 /// Accepts an input network and an ideal amount of fluid to pull from network.
 /// Returns a reagents datum containing a scaled amount of fluid linear to fullness of network or null if no fluid in network. Quantized to QUANTIZATION_UNITS units.
 /obj/machinery/fluid_pipe_machinery/proc/pull_from_network(datum/flow_network/network, maximum = 100)
-	return network.reagents.remove_any_to(max(MINIMUM_REAGENT_MOVED, round(maximum * (network.reagents.total_volume / network.reagents.maximum_volume), QUANTIZATION_UNITS)))
+	return network.reagents.remove_any_to(max(MINIMUM_REAGENT_MOVED, round(maximum * (network.reagents.total_volume / network.reagents.maximum_volume), QUANTIZATION_UNITS)), TRUE)
 
 /// Accepts an input network and the reagents datum to add to the network.
 /// Returns TRUE on complete addition to network and deletion of reagents datum. Returns FALSE if reagents remaining and reagents not deleted.
@@ -178,6 +178,83 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 	fluid?.trans_to(T, fluid.total_volume)
 	qdel(fluid)
 
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser
+	name = "Dispenser"
+	icon_state = "dispenser"
+	desc = "Dispenses patches, pills, and vials when filled to the set amount or when prompted."
+	HELP_MESSAGE_OVERRIDE("You can use a <b>multitool</b> to modify its settings.")
+	var/automatic = TRUE
+	var/max = 50
+	var/min = 1
+	var/amount = 50
+	var/itemtodispense = "pills"
+	var/static/list/itemlist = list("patches", "pills", "vials")
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser/proc/dispense()
+	if (src.reagents.total_volume < src.amount)
+		return
+
+	switch(src.itemtodispense)
+		if("pills")
+			var/obj/item/reagent_containers/pill/P = new(get_turf(src))
+			src.reagents.trans_to(P, src.amount)
+			P.pixel_y = 8
+			src.visible_message("[src] ejects a pill.")
+		if("vials")
+			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src))
+			src.reagents.trans_to(V, src.amount)
+			V.pixel_y = 8
+			src.visible_message("[src] ejects a vial.")
+		if("patches")
+			var/obj/item/reagent_containers/patch/P = new(get_turf(src))
+			src.reagents.trans_to(P, src.amount)
+			P.pixel_y = 8
+			src.visible_message("[src] ejects a patch.")
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser/proc/set_amount(var/datum/mechanicsMessage/input)
+	var/newamount = text2num_safe(input.signal)
+	if (!newamount)
+		return
+	src.amount = round(clamp(newamount, src.min, src.max), QUANTIZATION_UNITS)
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser/proc/set_amount_manual(obj/item/W, mob/user)
+	var/inp = tgui_input_number(user, "Please enter dispense amount (Will round to [QUANTIZATION_UNITS]):", "Dispense Amount", src.amount, src.max, src.min)
+	if (!inp) return
+	src.amount = round(inp, QUANTIZATION_UNITS)
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser/proc/set_type(obj/item/W, mob/user)
+	var/inp = tgui_input_list(user, "Select a type to output.", "Dispense Type", src.itemlist)
+	src.itemtodispense = (inp in src.itemlist) ? inp : src.itemtodispense
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser/proc/set_automatic(obj/item/W, mob/user)
+	src.automatic = !src.automatic
+	boutput(user, SPAN_NOTICE("Automatic mode is now set to [src.automatic ? "true" : "false"]."))
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser/New()
+	..()
+	src.create_reagents(src.max)
+	AddComponent(/datum/component/mechanics_holder)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispense now", PROC_REF(dispense))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Dispense Amount", PROC_REF(set_amount_manual))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Dispense Type", PROC_REF(set_type))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Automatic dispensing", PROC_REF(set_automatic))
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser/get_desc()
+		. += "<br>[SPAN_NOTICE("Automatic: [src.automatic ? "true" : "false"]. Dispense Amount: [src.amount]. Dispensing: [src.itemtodispense]")]"
+
+/obj/machinery/fluid_pipe_machinery/unary/dispenser/process()
+	if (!src.network) return
+	var/datum/reagents/fluid = src.pull_from_network(src.network, src.max)
+	fluid.trans_to(src, src.max)
+	src.push_to_network(src.network, fluid)
+	src.reagents.handle_reactions()
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[src.reagents.total_volume]")
+	if (!src.automatic)
+		return
+	src.dispense()
+
+
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 /obj/machinery/fluid_pipe_machinery/binary
 	var/datum/flow_network/network1
@@ -222,6 +299,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 
 /obj/machinery/fluid_pipe_machinery/binary/pump/New()
 	..()
+	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activate))
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", PROC_REF(deactivate))
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggle))
