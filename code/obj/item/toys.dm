@@ -82,13 +82,14 @@
 	stamina_crit_chance = 1
 	var/cooldown = 0
 	var/say_message = "Order, order in the court!"
+	var/gavel_sound = 'sound/items/gavel.ogg'
 
 /obj/item/toy/judge_block/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/toy/judge_gavel))
 		if(cooldown > world.time)
 			return
 		else
-			playsound(loc, 'sound/items/gavel.ogg', 75, TRUE)
+			playsound(src.loc, src.gavel_sound, 75, TRUE)
 			user.say(src.say_message)
 			cooldown = world.time + 40
 			return
