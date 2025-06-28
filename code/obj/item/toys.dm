@@ -119,7 +119,7 @@
 		var/mob/living/carbon/human/H = user
 		if (H.mind && H.mind.assigned_role == "Clown")
 			if (target == user)
-				user.visible_message("[H] shows off [src]!")
+				src.AttackSelf(user) //Showoff...
 				return
 			if(ON_COOLDOWN(target, "clown_diploma", 30 SECONDS))
 				user.visible_message("[H] waves the diploma at [target]!")
@@ -131,6 +131,12 @@
 			..()
 	else
 		..()
+
+/obj/item/toy/diploma/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
+	playsound(user, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+	actions.start(new /datum/action/show_item(user, src, "diploma", 5, 3), user)
 
 /obj/item/toy/gooncode
 	name = "gooncode hard disk drive"
