@@ -69,7 +69,8 @@
 	if (!wearing_football_gear())
 		boutput(src, SPAN_ALERT("You need to wear more football gear first! It just wouldn't be safe."))
 		return
-
+	if (src.buckled)
+		src.buckled.unbuckle()
 	var/obj/item/clothing/suit/armor/football/S = src.wear_suit
 	if (S.in_rush) return
 	S.in_rush = 1
@@ -81,8 +82,7 @@
 		if (!S.in_rush)
 			break
 		S.in_rush = i
-		T = get_step(T, charge_dir)
-		src.Move(T)
+		step(src, charge_dir)
 		sleep(0.1 SECONDS)
 
 	S.in_rush = 0
