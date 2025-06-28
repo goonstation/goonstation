@@ -98,7 +98,7 @@
 
 		// Remove existing sticky header if present.
 		var existingSticky = document.getElementById(
-			containerId + "-sticky-header",
+			containerId + "-sticky-header"
 		);
 		if (existingSticky) {
 			existingSticky.parentNode.removeChild(existingSticky);
@@ -287,7 +287,7 @@
 			var sortingState = { column: index, direction: newDir };
 			localStorage.setItem(
 				"tableSorting_" + table.parentNode.id,
-				JSON.stringify(sortingState),
+				JSON.stringify(sortingState)
 			);
 		}
 		updateStickyHeaderState(table, table.parentNode.id);

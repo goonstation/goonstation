@@ -1,6 +1,5 @@
 /mob/living/critter/lion
 	name = "lion"
-	real_name = "lion"
 	desc = "Oh christ"
 	density = 1
 	custom_gib_handler = /proc/gibs
@@ -73,7 +72,6 @@
 
 /mob/living/critter/lion/strong // Stronger one for admin stuff / one off spawns
 	name = "alpha lion"
-	real_name = "alpha lion"
 	desc = "Oh christ, this lion looks very buff..."
 	health_brute = 40
 	health_brute_vuln = 0.8

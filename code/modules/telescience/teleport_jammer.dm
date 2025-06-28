@@ -4,8 +4,8 @@ TYPEINFO(/obj/machinery/telejam)
 /obj/machinery/telejam
 	name = "teleportation jammer"
 	desc = "Generates a force field interferes with teleportation devices."
-	icon = 'icons/obj/meteor_shield.dmi'
-	icon_state = "shieldgen"
+	icon = 'icons/obj/shield_gen.dmi'
+	icon_state = "meteor_gen"
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
@@ -25,9 +25,9 @@ TYPEINFO(/obj/machinery/telejam)
 		PCEL = new /obj/item/cell/supercell(src)
 		PCEL.charge = PCEL.maxcharge
 
-		src.display_active = image('icons/obj/meteor_shield.dmi', "")
-		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
-		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
+		src.display_active = image('icons/obj/shield_gen.dmi', "")
+		src.display_battery = image('icons/obj/shield_gen.dmi', "")
+		src.display_panel = image('icons/obj/shield_gen.dmi', "")
 
 		..()
 

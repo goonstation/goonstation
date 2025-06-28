@@ -317,7 +317,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			return 0
 
 /obj/deployable_turret/pod_wars/nt/activated
-	anchored=1
+	anchored=ANCHORED
 	active=1
 	deconstructable = FALSE
 
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			return 0
 
 /obj/deployable_turret/pod_wars/sy/activated
-	anchored=1
+	anchored=ANCHORED
 	active=1
 	deconstructable = FALSE
 	north

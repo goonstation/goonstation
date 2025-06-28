@@ -447,11 +447,7 @@ TYPEINFO(/area)
 			//if ("AI Satellite Core") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg') // same as above
 			if ("The Blind Pig") sound_fx_1 = pick('sound/ambience/spooky/TheBlindPig.ogg','sound/ambience/spooky/TheBlindPig2.ogg')
 			if ("M. Fortuna's House of Fortune") sound_fx_1 = 'sound/ambience/spooky/MFortuna.ogg'
-			#ifdef SUBMARINE_MAP
-			else sound_fx_1 = pick(ambience_submarine)
-			#else
 			else sound_fx_1 = pick(ambience_general)
-			#endif
 
 	proc/add_light(var/obj/machinery/light/L)
 		if (!light_manager)
@@ -1326,9 +1322,6 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Derelict Space Station"
 	icon_state = "derelict"
 	occlude_foreground_parallax_layers = TRUE
-#ifdef SUBMARINE_MAP
-	force_fullbright = 1
-#endif
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -1337,9 +1330,6 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Derelict Diner"
 	icon_state = "derelict"
 	occlude_foreground_parallax_layers = TRUE
-#ifdef SUBMARINE_MAP
-	force_fullbright = 1
-#endif
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -1897,11 +1887,7 @@ TYPEINFO(/area/station)
 	minimaps_to_render_on = MAP_ALL
 	occlude_foreground_parallax_layers = TRUE
 	var/tmp/initial_structure_value = 0
-#ifdef MOVING_SUB_MAP
-	filler_turf = "/turf/space/fluid/manta"
-#else
 	filler_turf = null
-#endif
 
 	New()
 		..()
@@ -2419,10 +2405,6 @@ ABSTRACT_TYPE(/area/station/mining)
 	icon_state = "bridge"
 	sound_environment = 4
 	station_map_colour = MAPC_COMMAND
-#ifdef SUBMARINE_MAP
-	sound_group = "bridge"
-	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
-#endif
 
 /area/station/bridge/united_command //currently only on atlas - ET
     name = "United Command"
@@ -4533,19 +4515,11 @@ Don't try and do this in the editor nerd. ~Warc
 	do_not_irradiate = FALSE
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
 	var/initial_structure_value = 0
-#ifdef MOVING_SUB_MAP
-	filler_turf = "/turf/space/fluid/manta"
-
-	New()
-		..()
-		initial_structure_value = calculate_structure_value()
-#else
 	filler_turf = null
 
 	New()
 		..()
 		initial_structure_value = calculate_structure_value()
-#endif
 
 /area/station2/atmos
 	name = "Atmospherics"
@@ -4779,10 +4753,6 @@ area/station/hallway/starboardupperhallway
 	name = "Bridge"
 	icon_state = "bridge"
 	sound_environment = 4
-#ifdef SUBMARINE_MAP
-	sound_group = "bridge"
-	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
-#endif
 
 /area/station2/captain //Three below this one are because Manta uses specific ambience on the bridge
 	name = "Captain's Office"

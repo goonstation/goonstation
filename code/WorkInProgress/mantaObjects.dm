@@ -1302,53 +1302,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			command_alert("The Magnetic tether has been successfully repaired. Magnetic attachment points are online once again.", "Magnetic Tether Repaired", alert_origin = ALERT_STATION)
 			return
 
-#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
-/datum/random_event/special/mantacommsdown
-	name = "Communications Malfunction"
-
-	event_effect(var/source)
-		..()
-		if (random_events.announce_events)
-			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction", alert_origin = ALERT_STATION)
-			playsound_global(world, 'sound/effects/commsdown.ogg', 100)
-			sleep(rand(80,100))
-			signal_loss += 100
-			sleep(rand(4800,6000))
-			signal_loss -= 100
-
-			if (random_events.announce_events)
-				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored", alert_origin = ALERT_STATION)
-			else
-				message_admins(SPAN_INTERNAL("Manta Comms event ceasing."))
-
-
-/datum/random_event/major/electricmalfunction
-	name = "Electrical Malfunction"
-
-	event_effect()
-		..()
-		var/obj/machinery/junctionbox/J = pick(by_type[/obj/machinery/junctionbox])
-		if (J.broken)
-			return
-		J.Breakdown()
-		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction", alert_origin = ALERT_STATION)
-
-/datum/random_event/special/namepending
-	name = "Name Pending"
-
-	event_effect()
-		..()
-		var/list/eligible = by_type[/obj/machinery/mantapropulsion].Copy()
-		for(var/i=0, i<3, i++)
-			var/obj/machinery/mantapropulsion/big/P = pick(eligible)
-			P.Breakdown()
-			eligible.Remove(P)
-			sleep(1 SECOND)
-
-		new /obj/effect/boommarker(pick_landmark(LANDMARK_BIGBOOM))
-#endif
-
-
 //-------------------------------------------- MANTA COMPATIBLE AREAS HERE --------------------------------------------
 //Also ugh, duplicate code.
 

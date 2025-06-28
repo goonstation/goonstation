@@ -1496,13 +1496,13 @@
 
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
-		return 0
+		return FALSE
 	if (src.equipped() && istype(src.equipped(), /obj/item/magtractor))
 		var/obj/item/magtractor/M = src.equipped()
 		if (M.pickupItem(I, src))
 			actions.start(new/datum/action/magPickerHold(M), src)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 	if (I.two_handed) //MARKER1
 		if (!src.can_hold_two_handed())
 			return FALSE
@@ -1510,7 +1510,7 @@
 		src.r_hand = I
 		I.pickup(src)
 		if(QDELETED(I))
-			return 0
+			return FALSE
 		I.add_fingerprint(src)
 		I.set_loc(src)
 		src.update_inhands()
@@ -1521,47 +1521,43 @@
 			hud.set_visible(hud.twohandl, 1)
 			hud.set_visible(hud.twohandr, 1)
 
-		return 1
+		return TRUE
 	else
 		if (isnull(hand))
 			if (src.put_in_hand(I, src.hand))
-				return 1
+				return TRUE
 			if (src.put_in_hand(I, !src.hand))
-				return 1
-			return 0
+				return TRUE
 		else
 			if (hand)
 				if (!src.l_hand)
 					if (I == src.r_hand && I.cant_self_remove)
-						return 0
+						return FALSE
 					if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
-						return 0
+						return FALSE
 					src.l_hand = I
 					I.pickup(src)
 					if(QDELETED(I))
-						return 0
+						return FALSE
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
 					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
-					return 1
-				else
-					return 0
+					return TRUE
 			else
 				if (!src.r_hand)
 					if (I == src.l_hand && I.cant_self_remove)
-						return 0
+						return FALSE
 					if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
-						return 0
+						return FALSE
 					src.r_hand = I
 					I.pickup(src)
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
 					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
-					return 1
-				else
-					return 0
+					return TRUE
+		return FALSE
 
 /**
 Attempts to put an item in the hand of a mob, if not possible then stow it, then by default delete the item.
@@ -2053,6 +2049,10 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.organHolder.heart.op_stage = 0
 	if (src.organHolder.brain)
 		src.organHolder.brain.op_stage = 0
+	if (src.organHolder.head && isskeleton(src))
+		var/datum/mutantrace/skeleton/S = src.mutantrace
+		S.set_head(src.organHolder.head)
+		S.head_moved() // update tracking
 
 	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
 		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())

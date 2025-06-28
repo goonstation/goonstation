@@ -34,6 +34,7 @@
 
 		src.reply_wait = -1
 
+		menu = MENU_MAIN
 		src.print_shuttle_status()
 		src.print_intro_text()
 

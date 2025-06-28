@@ -282,7 +282,7 @@
 		if (src.amount_left < 0)
 			src.amount_left = 0
 		inventory_counter?.update_number(src.amount_left)
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
