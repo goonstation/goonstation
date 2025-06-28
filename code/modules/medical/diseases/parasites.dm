@@ -80,7 +80,7 @@
 				return
 
 /datum/ailment/parasite/cluwnespider
-	name = "Unidentified Hilarity Body"
+	name = "Spider Eggs"
 	max_stages = 5
 	stage_prob = 5
 	affected_species = list("Human", "Monkey")
