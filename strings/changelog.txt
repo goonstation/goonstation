@@ -1,4 +1,6 @@
-
+(t)fri jun 27 25
+(u)LeahTheTech
+(+)Torpedos can now be detonated by shooting them as well as hitting them.
 (t)thu jun 26 25
 (u)SnugglyCactus
 (p)23919
