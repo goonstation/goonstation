@@ -1,3 +1,9 @@
+
+(t)sat jun 28 25
+(u)JORJ949
+(p)23935
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Fixed packet sender programs always being out of range.
 (t)fri jun 27 25
 (u)LeahTheTech
 (+)Torpedos can now be detonated by shooting them as well as hitting them.
