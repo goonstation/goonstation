@@ -754,7 +754,7 @@
 		random_brute_damage(target, damage)
 		target.UpdateDamageIcon()
 
-	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] for [damage] damage at [log_loc(user)].")
 	return
 
 /////////////////////////////////////////////////////// attackResult datum ////////////////////////////////////////
@@ -879,7 +879,7 @@
 		if (!(suppress & SUPPRESS_LOGS))
 			if (!length(logs))
 				if (!istype(src, /datum/attackResults/disarm))
-					logs = list("punches [constructTarget(target,"combat")]")
+					logs = list("punches [constructTarget(target,"combat")] for [src.damage] damage")
 
 //Pod wars friendly fire check
 #if defined(MAP_OVERRIDE_POD_WARS)

@@ -867,7 +867,7 @@
 			M.set_icon_state("[M.prefix]-remove")
 		else
 			M.set_icon_state("[M.prefix]-[M.setting]")
-		M.tooltip_rebuild = 1
+		M.tooltip_rebuild = TRUE
 
 /datum/contextAction/lamp_manufacturer/col_page_1/to_page_2
 	name = "Page 2"
@@ -1371,7 +1371,7 @@
 	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
 		if(!can_act(user) || !in_interact_range(rcd, user))
 			return FALSE
-		return rcd in user
+		return rcd in user.equipped_list()
 
 	deconstruct
 		name = "Deconstruct"

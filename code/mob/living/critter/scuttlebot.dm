@@ -22,6 +22,7 @@
 	health_burn = 25
 	health_burn_vuln = 0.2
 	var/is_inspector = FALSE
+	var/mail_glasses = FALSE
 	var/obj/item/clothing/head/det_hat/linked_hat = null
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
@@ -31,8 +32,12 @@
 		src.spawn_goggles()
 
 	proc/spawn_goggles()
-		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
-		R.connected_scuttlebot = src
+		if(!mail_glasses)
+			var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
+			R.connected_scuttlebot = src
+		else
+			var/obj/item/clothing/glasses/scuttlebot_vr/mail/R = new /obj/item/clothing/glasses/scuttlebot_vr/mail(src.loc)
+			R.connected_scuttlebot = src
 
 	setup_hands()
 		..()
@@ -123,6 +128,32 @@
 						/datum/targetable/critter/control_owner)
 
 	setup_hands()
+
+/mob/living/critter/robotic/scuttlebot/mail
+	name = "\improper CARR13R P1G30N"
+	desc = "A pigeon that must've escaped from the ranch and been trained to deliver mail... wait why is 8G labeled on its leg?"
+	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
+	icon_state = "pigeon"
+	mail_glasses = TRUE
+	speech_verb_say = "tweets"
+	speech_verb_exclaim = "twoots"
+	speech_verb_ask = "tweets curiously"
+	var/obj/item/clothing/suit/pigeon/linked_pigeon = null
+
+	add_abilities = list(/datum/targetable/critter/control_owner/mail)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/mail
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "claw"
+		HH.limb_name = "claws"
+
+	make_inspector()
+		return
+
 
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 

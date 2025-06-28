@@ -105,7 +105,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		var/mob/living/carbon/human/H = user
 		if (isdead(H)) //No need to call for dead people!
 			return 0
-		if (H.get_brain_damage() >= 60)
+		if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 			// No text spam, please. Bumped() is called more than once by some doors, though.
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.

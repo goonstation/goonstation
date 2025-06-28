@@ -331,7 +331,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 		// Handle hear sounds.
 		if (src.hear_sound && !src.received_module.say_channel.suppress_hear_sound)
-			mob_listener.playsound_local_not_inworld(src.hear_sound, 55, 0.01, flags = SOUND_IGNORE_SPACE)
+			mob_listener.playsound_local_not_inworld(src.hear_sound, 55, 0.01, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS)
 
 	// If the speaker to display is null, use the real name of the speaker instead.
 	if (isnull(src.speaker_to_display))

@@ -207,7 +207,7 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	else
 		src.grenade_time += src.interval_grenade_time
 	boutput(user, SPAN_NOTICE("You set [src] to detonate in [src.grenade_time / (1 SECOND)] seconds."))
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	return TRUE
 
 
@@ -315,7 +315,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass), PROC_REF(chem_grenade_filling), TRUE)
 	// unsecured grenade + wrench -> disassembling of the grenade
 	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 
 /// chem grenade filling proc
 /obj/item/chem_grenade/custom/proc/chem_grenade_filling(var/atom/to_combine_atom, var/mob/user)
@@ -353,7 +353,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.icon_state = "grenade-chem3"
 	src.desc = "A chemical grenade. Use it to unleash chemicals over whoever you see fit."
 	src.stage = 2
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	//Since we changed the state, remove all assembly components and add the next state ones
 	src.RemoveComponentsOfType(/datum/component/assembly)
 	// completed grenade + screwdriver -> adjusting of the arming time
@@ -379,7 +379,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.grenade_time = src.grenade_time_standard
 	//Since we changed the state, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	return TRUE
 
 

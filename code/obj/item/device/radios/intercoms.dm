@@ -82,9 +82,10 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	. = ..()
 
 /obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
-	..()
+	if(..())
+		return
 
-	if (!isAI(user))
+	if (!isAI(user)) // this is AI only
 		return
 
 	if (!isAIeye(user))

@@ -133,6 +133,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	burning_image.icon_state = null
 
 	src.old_canmove = src.canmove
+	src.real_name = src.name
 
 	if(!isnull(src.custom_organHolder_type))
 		src.organHolder = new src.custom_organHolder_type(src, custom_brain_type)
@@ -833,7 +834,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/handHolder/HH = hands[t_hand]
 		if (HH.item || !HH.can_hold_items)
 			return 0
-		if(istype(HH.limb, /datum/limb/small_critter))
+		if(istype(HH.limb, /datum/limb/small_critter) && HH.limb.exempt == FALSE)
 			var/datum/limb/small_critter/L = HH.limb
 			if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 				return 0
@@ -847,7 +848,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/handHolder/HH = hands[active_hand]
 		if (HH.item || !HH.can_hold_items)
 			return 0
-		if(istype(HH.limb, /datum/limb/small_critter))
+		if(istype(HH.limb, /datum/limb/small_critter) && HH.limb.exempt == FALSE)
 			var/datum/limb/small_critter/L = HH.limb
 			if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 				return 0

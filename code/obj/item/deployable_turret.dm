@@ -400,7 +400,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		deployer.turret_health = src.health // NO FREE REPAIRS, ASSHOLES
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
-		deployer.tooltip_rebuild = 1
+		deployer.tooltip_rebuild = TRUE
 		qdel(src)
 		return deployer
 

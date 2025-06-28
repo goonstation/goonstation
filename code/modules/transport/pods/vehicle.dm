@@ -1606,10 +1606,12 @@
 		return
 	sec_part.Use(usr)
 
-/obj/machinery/vehicle/proc/open_hangar()
+/obj/machinery/vehicle/proc/toggle_hangar_door(var/pass)
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
-	if(comms)
-		comms.rc_ship.open_hangar(usr)
+	if(!comms)
+		return
+	comms.rc_ship.toggle_hangar_door(usr, pass)
+
 
 /obj/machinery/vehicle/proc/return_to_station()
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)

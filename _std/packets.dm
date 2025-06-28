@@ -5,6 +5,7 @@ proc/check_for_radio_jammers(atom/source)
 	. = FALSE
 	for (var/atom/A as anything in by_cat[TR_CAT_RADIO_JAMMERS])
 		if (IN_RANGE(source, A, RADIO_JAMMER_RANGE))
+			SEND_SIGNAL(A, COMSIG_SIGNAL_JAMMED)
 			return TRUE
 
 #define MAKE_DEFAULT_RADIO_PACKET_COMPONENT(net_id, conn_id, freq) src._AddComponent(list( \

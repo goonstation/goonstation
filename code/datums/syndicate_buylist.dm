@@ -998,7 +998,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 6
 	vr_allowed = FALSE
 	desc = "A barrel of bloodthirsty apes. Careful!"
-	br_allowed = TRUE
 	job = list("Staff Assistant","Test Subject","Geneticist","Pathologist")
 
 /datum/syndicate_buylist/traitor/mindhack_module
