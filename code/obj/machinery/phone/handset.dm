@@ -1,7 +1,7 @@
 TYPEINFO(/obj/item/phone_handset)
 	start_listen_effects = list(LISTEN_EFFECT_HANDSET)
 	start_listen_modifiers = list(LISTEN_MODIFIER_PHONE)
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
