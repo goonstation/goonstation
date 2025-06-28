@@ -77,7 +77,6 @@
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 0.4, 0 , 2)
 
 	var/charge_dir = src.dir
-	var/turf/T = get_turf(src)
 	for(var/i=1, i<20, i++)
 		if (!S.in_rush)
 			break
