@@ -4045,7 +4045,7 @@
 		*/
 		required_reagents = list("blackpowder" = 200, "booster_enzyme" = 100, "plasma" = 10, "iron" = 10, "gun_distillate" = 1)
 		max_temperature = 250
-		result_amount = 1
+		result_amount = 3
 		mix_phrase = "The mixture crystalises and then collapses in on itself, leaving behind small amount of gunmetal-grey sludge."
 
 	copper_nitrate
