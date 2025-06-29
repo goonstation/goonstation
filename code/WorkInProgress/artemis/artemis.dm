@@ -662,7 +662,7 @@
 		tele_man.addManualEvent(eventType=/datum/telescope_event/artemis, active=TRUE)
 
 		var/sound_to_play = "sound/misc/announcement_1.ogg"
-		command_announcement(replacetext(command_report, "\n", "<br>"), "Priority Broadcast Received", sound_to_play, do_sanitize=0);
+		command_announcement(replacetext(command_report, "\n", "<br>"), "Priority Broadcast Received", sound_to_play, do_sanitize=0, alert_origin=ALERT_GENERAL);
 		return
 
 

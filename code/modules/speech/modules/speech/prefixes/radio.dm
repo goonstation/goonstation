@@ -30,6 +30,7 @@
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
+	message.can_relay = FALSE
 
 /datum/speech_module/prefix/postmodifier/radio/get_prefix_choices()
 	var/obj/item/device/radio/radio

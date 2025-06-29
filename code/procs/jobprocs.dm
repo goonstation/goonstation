@@ -695,6 +695,7 @@ Equip items from body traits.
 	if (trinket)
 		src.trinket = get_weakref(trinket)
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
+		trinket.real_name = trinket.name
 		trinket.quality = rand(5,80)
 		trinkets_to_equip += trinket
 
@@ -702,6 +703,7 @@ Equip items from body traits.
 	if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
 		var/obj/item/device/light/zippo/smoker_zippo = new(src)
 		smoker_zippo.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [smoker_zippo.name]"
+		smoker_zippo.real_name = smoker_zippo.name
 		smoker_zippo.quality = rand(5,80)
 		trinkets_to_equip += smoker_zippo
 

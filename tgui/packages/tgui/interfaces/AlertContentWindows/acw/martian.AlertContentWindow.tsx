@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Being a Martian 101!',
-  content: (
+const MartianContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a martian infiltrator!</h1>
 
@@ -54,5 +53,10 @@ export const acw: AlertContentWindow = {
         Good luck, and remember that mentorhelp and adminhelp still exist!
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Being a Martian 101!',
+  component: MartianContentWindow,
 };

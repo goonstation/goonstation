@@ -549,7 +549,18 @@
 		src.health -= power * 3
 		checkhealth()
 
-	get_desc()
+	get_desc(dist, mob/user)
+		. = ..()
+		var/list/visible_parts = list()
+		var/obj/item/shipcomponent/engine/engine = src.get_part(POD_PART_ENGINE)
+		if (istype(engine))
+			visible_parts += "[engine.name]"
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
+		if (istype(main_weapon))
+			visible_parts += "[main_weapon.name]"
+		if (length(visible_parts))
+			. += "It looks like it has [english_list(visible_parts)] installed."
+
 		if (src.keyed > 0)
 			var/t = strings("descriptors.txt", "keyed")
 			var/t_ind = clamp(round(keyed/10), 0, 10)
