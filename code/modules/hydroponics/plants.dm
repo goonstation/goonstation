@@ -278,6 +278,7 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.endurance++
 			if ("gun_infusion")
 				HYPaddCommut(DNA,/datum/plant_gene_strain/gun_genome)
+				HYPaddCommut(DNA,/datum/plant_gene_strain/seedless)
 				S.charges = 1
 
 		for (var/datum/plantmutation/mutation in src.mutations)

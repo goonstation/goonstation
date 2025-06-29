@@ -377,7 +377,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 
 /datum/plant_gene_strain/gun_genome
 	name = "Kinetically-Expressive Genome"
-	desc = "Produce harvested from this plant will be smaller and much more ballistically capable, but the plant cannot propogate."
+	desc = "Produce harvested from this plant will be smaller and much more ballistically capable, but its lifespan is extremely limited."
 
 	override_crop(datum/HYPharvesting_data/h_data)
 		var/obj/item/crop = h_data.pot.pick_type(h_data.getitem)
@@ -387,7 +387,6 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 
 	manipulate_harvest_data(datum/HYPharvesting_data/h_data)
 		h_data.dont_rename_crop = TRUE
-		h_data.growing.force_seed_on_harvest = -1
 		// Setting harvests to 1 means multi-harvest plants are guaranteed to die after a harvest, unless another gene strain interferes.
 		// I don't want to preemptively counteract stuff like immortal unless necessary, that'd be no fun.
 		h_data.pot.harvests = 1
