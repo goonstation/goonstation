@@ -94,11 +94,11 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if(ismobcritter(target))
-			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))
-				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
-				return 0
 			if(!target.has_genetics())
-				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this genetic structure.</B>"))
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this creature's genetic structure.</B>"))
+				return 0
+			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))
+				boutput(M, SPAN_ALERT("<B>More research is required to support this body type.</B>"))
 				return 0
 		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
