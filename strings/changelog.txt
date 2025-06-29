@@ -1,4 +1,7 @@
 
+(t)sun jun 29 25
+(u)glowbold
+(+)Examining pods and submarines show you their installed engine and weapon.
 (t)sat jun 28 25
 (u)JORJ949
 (p)23935
