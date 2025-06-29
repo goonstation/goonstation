@@ -16,14 +16,14 @@
 		var/mult = get_multiplier()
 
 		if (brain_dmg >= BRAIN_DAMAGE_MAJOR)
-			if (probmult(8))
-				H.vomit()
+			if (probmult(30))
+				H.nauseate(1)
 
 			if (probmult(5))
 				H.changeStatus("blinded", rand(10, 25) SECONDS)
 		else if (brain_dmg >= BRAIN_DAMAGE_MODERATE)
-			if (probmult(4))
-				H.vomit()
+			if (probmult(15))
+				H.nauseate(1)
 
 		if (brain_dmg >= BRAIN_DAMAGE_MODERATE && probmult(5))
 			boutput(H, SPAN_ALERT(pick(src.head_messages)))
