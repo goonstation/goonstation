@@ -1,3 +1,41 @@
+
+(t)sun jun 29 25
+(u)Lyy
+(p)23495
+(e)🆕🚗|C-Feature, A-Vehicles
+(*)Driving a car while drunk now automatically marks you for arrest.
+(u)Cheekybrdy
+(p)23510
+(e)🆕💊|C-Feature, A-Medical
+(+)Cluwne chicken eggs now do horrifying things when ingested.
+(u)glowbold
+(+)Examining pods and submarines show you their installed engine and weapon.
+(t)sat jun 28 25
+(u)JORJ949
+(p)23935
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Fixed packet sender programs always being out of range.
+(t)fri jun 27 25
+(u)LeahTheTech
+(+)Torpedos can now be detonated by shooting them as well as hitting them.
+(t)thu jun 26 25
+(u)SnugglyCactus
+(p)23919
+(e)🎨👽|C-Sprites, A-Mutantraces
+(+)Added ghost sprites for nearly every mutantrace. Go monkey mode in the afterlife!
+(u)Cheekybrdy
+(p)23282
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Ixworth and ageinium feed are now available in locked loot crates.
+(+)Added a new secret chem "Deageinium".
+(u)Cheekybrdy
+(p)23106
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Power eggs can now be found in safes, but are infertile and cannot be used in a incubator.
+(u)Lazuli1
+(p)23744
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added a new dress, the tea party dress, to the clothing booth.
 (t)tue jun 24 25
 (u)DisturbHerb & glowbold
 (+)Announcements appear in a colored box based on where the announcement originated.

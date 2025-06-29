@@ -112,10 +112,16 @@
 	onAttach(mob/to_whom)
 		..()
 		RegisterSignal(to_whom, COMSIG_MOB_FLIP, PROC_REF(launch_bat_orbiters))
+		to_whom.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = ref(src))
+		to_whom.ensure_listen_tree().AddListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = ref(src))
 
 	onRemove(mob/from_who)
 		..()
 		UnregisterSignal(from_who, COMSIG_MOB_FLIP)
+
+		if (from_who)
+			from_who.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = ref(src))
+			from_who.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = ref(src))
 
 	onLife(var/mult = 1)
 		..()
