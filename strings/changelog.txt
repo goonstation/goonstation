@@ -1,5 +1,12 @@
 
 (t)sun jun 29 25
+(u)glowbold
+(p)23923
+(e)🆕⚖🔄📄🧛|C-Feature, C-Balance, C-Rework, A-UI, A-Gamemodes
+(*)Vampires unlock a Spirit Bat ability at 150 blood. It is a weaker version of the Frost Bat ability.
+(*)Vampires with orbiting bats can point at a mob to send a bat towards them.
+(*)Vampires with orbiting bats can flip to send all bats towards nearby mobs.
+(*)Vampire glare is significantly quieter.
 (u)Lyy
 (p)23495
 (e)🆕🚗|C-Feature, A-Vehicles
