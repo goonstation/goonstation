@@ -136,6 +136,7 @@
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return
 	playsound(user, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+	user.visible_message("[user] shows off [his_or_her(user)] very real diploma!", "You show off your illustrious, hard-earned diploma!")
 	actions.start(new /datum/action/show_item(user, src, "diploma", 5, 3), user)
 
 /obj/item/toy/gooncode
