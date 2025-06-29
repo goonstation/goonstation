@@ -4039,11 +4039,11 @@
 		- Blackpowder is both a bullet chemical and a chem that is traditionally mass produced with the help of ingredients sourced from botany.
 		- Booster enzyme adds splice-requirements to the recipe, and acts as the 'organic' interface.
 		- Plasma is the sci-fi space-magic chem that makes any of this even quasi-believable.
-		- Guns are made of metal, there should be metal in there somewhere.
+		- Extensive research into the first paragraph on Wikipedia suggests bullets are often made from copper.
 		- Gun distillate adds the still as part of the process.
 		- Temperature basically forces the use of Cryostylane, since this can only be made in something like a chem barrel.
 		*/
-		required_reagents = list("blackpowder" = 200, "booster_enzyme" = 100, "plasma" = 10, "iron" = 10, "gun_distillate" = 1)
+		required_reagents = list("blackpowder" = 200, "booster_enzyme" = 100, "plasma" = 10, "copper" = 10, "gun_distillate" = 1)
 		max_temperature = 250
 		result_amount = 3
 		mix_phrase = "The mixture crystalises and then collapses in on itself, leaving behind small amount of gunmetal-grey sludge."
