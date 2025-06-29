@@ -198,7 +198,6 @@
 					H.change_eye_blurry(10 , 50)
 					if(probmult(6)) H.changeStatus("drowsy", 15 SECONDS)
 					if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
-
 			if (ishuman(M))
 				var/mob/living/carbon/human/HH = M
 				if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle

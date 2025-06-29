@@ -28,6 +28,7 @@ var/list/admin_verbs = list(
 		/client/proc/dsay,
 		/client/proc/flocksay,
 		/client/proc/hivesay,
+		/client/proc/intrudersay,
 		/client/proc/kudzusay,
 		/client/proc/marsay,
 		/client/proc/silisay,
@@ -1229,6 +1230,8 @@ var/list/fun_images = list()
 		if (mind.remove_antagonist(ROLE_FLOCKMIND))
 			send_to_arrival_shuttle = TRUE
 		if (mind.remove_antagonist(ROLE_FLOCKTRACE))
+			send_to_arrival_shuttle = TRUE
+		if (mind.remove_antagonist(ROLE_MINDEATER))
 			send_to_arrival_shuttle = TRUE
 	M = mind.current
 	if (isAI(M))
