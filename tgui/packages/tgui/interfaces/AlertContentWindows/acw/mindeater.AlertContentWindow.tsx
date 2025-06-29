@@ -9,9 +9,8 @@ import { Image } from 'tgui-core/components';
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Mindeater Basics',
-  content: (
+const MindeaterContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a Mindeater!</h1>
       <Image
@@ -53,5 +52,10 @@ export const acw: AlertContentWindow = {
       </p>
       <p>This is a work in progress antag and will not be found on the wiki.</p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'MindeaterBasics',
+  component: MindeaterContentWindow,
 };
