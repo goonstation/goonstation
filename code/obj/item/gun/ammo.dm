@@ -1605,7 +1605,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		src.ammo_type.projectile_speed = src.ammo_type.projectile_speed + (proj_speed_modifier * proj_speed_multi)
 
 		if (quality_status == "jumbo")
-			src.ammo_type.damage += 10
+			src.ammo_type.damage *= 1.3
 			src.ammo_type.shot_sound = 'sound/weapons/9x19NATO.ogg'
 		// This seems to be necessary to make make the damage update properly
 		src.ammo_type.generate_stats()
