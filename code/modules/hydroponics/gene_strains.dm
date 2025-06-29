@@ -377,18 +377,18 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 
 /datum/plant_gene_strain/gun_genome
 	name = "Kinetically-Expressive Genome"
-	desc = "This seed's genes have been altered to grow produce which is far less useful, but far more kinetically potent"
+	desc = "Produce harvested from this plant will be smaller and much more ballistically capable, but the plant cannot propogate."
 
 	override_crop(datum/HYPharvesting_data/h_data)
 		var/obj/item/crop = h_data.pot.pick_type(h_data.getitem)
 		if (!ispath(crop, /obj/item)) // only override items
 			return FALSE
-		return /obj/item/gun/kinetic/produce
+		return /obj/item/ammo/bullets/produce
 
 	manipulate_harvest_data(datum/HYPharvesting_data/h_data)
-		h_data.cropcount = ceil(h_data.cropcount * 0.15)
 		h_data.dont_rename_crop = TRUE
-		// Hacky solution to extractables not being able to proliferate because seeds can't be extracted from guns.
-		// I think the actual solution should be to make extractables componentised so that the guns *can* be extracted, but that's a whole thing.
-		if (ispath(h_data.pot.pick_type(h_data.pot.fetch_actual_crop()), /obj/item/reagent_containers/food/snacks/plant))
-			h_data.growing.force_seed_on_harvest = 1
+		h_data.growing.force_seed_on_harvest = -1
+		// Setting harvests to 1 means multi-harvest plants are guaranteed to die after a harvest, unless another gene strain interferes.
+		// I don't want to preemptively counteract stuff like immortal unless necessary, that'd be no fun.
+		h_data.pot.harvests = 1
+		h_data.extra_harvest_chance = -999

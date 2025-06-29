@@ -915,6 +915,13 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return current_reagent ? current_reagent.volume : 0
 
+	/// Returns an associative list of the current reagent's IDs and their quantities
+	proc/get_all_reagent_ids()
+		var/list/newlist = list()
+		for (var/reagent in reagent_list)
+			newlist[reagent] = reagent_list[reagent].volume
+		return newlist
+
 	proc/get_dispersal()
 		if (!total_volume)
 			return 0

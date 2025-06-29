@@ -695,6 +695,8 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	var/casing = null
 	var/reagent_payload = null
+	var/maximum_reagent_payload = 15	// The maximum capacity of the reagent container created to hold the reagent payload.
+										// When reagent_payload is not a list this is also the amount of the reagent that gets added.
 	var/forensic_ID = null
 	var/precalculated = 1
 
@@ -1074,8 +1076,12 @@ ABSTRACT_TYPE(/datum/projectile)
 		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
 
 	if (DATA.reagent_payload)
-		P.create_reagents(15)
-		P.reagents.add_reagent(DATA.reagent_payload, 15)
+		P.create_reagents(DATA.maximum_reagent_payload)
+		if (islist(DATA.reagent_payload))
+			for(var/reagent in DATA.reagent_payload)
+				P.reagents.add_reagent(reagent, DATA.reagent_payload[reagent])
+		else
+			P.reagents.add_reagent(DATA.reagent_payload, DATA.maximum_reagent_payload)
 
 	return P
 

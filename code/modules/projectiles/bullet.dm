@@ -2485,9 +2485,24 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 3, 0, TRUE)
 
-/datum/projectile/bullet/organic_pellet
+/datum/projectile/bullet/produce
 	name = "organic pellet"
 	damage = 12
 	shot_sound = 'sound/weapons/smg_shot.ogg'
-	casing = /obj/item/casing/small
+	casing = null
 	impact_image_state = "bullethole-small"
+	scale = 0.5
+	dissipation_rate = 10
+	maximum_reagent_payload = 1000
+	projectile_speed = 20
+	implanted = /obj/item/implant/projectile/produce
+
+	tick(var/obj/projectile/O)
+		O.transform = O.transform.Turn(83)
+		return
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		var/mob/living/target = hit
+		if (target && target.reagents && O.reagents)
+			O.reagents.reaction(target, TOUCH)
+		return
