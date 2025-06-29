@@ -2308,7 +2308,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 
 /datum/job/special/syndicate/weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
-	slot_poc2 = list() //And also no ammo.
+	slot_poc1 = list() //And also no ammo.
 
 //Specialist operatives using nukie class gear
 ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)

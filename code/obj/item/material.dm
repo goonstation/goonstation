@@ -642,8 +642,8 @@
 	name = "yuranite"
 	desc = "Yuranite, an ore of uranium. Best to stay away from it without proper radiactive protection."
 	icon = 'icons/obj/items/materials/materials.dmi'
-	material_name = "Uranium"
-	default_material = "uranium"
+	material_name = "Yuranite"
+	default_material = "yuranite"
 
 	update_icon()
 		src.icon_state = "ore$$yuranite"
