@@ -759,6 +759,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
 			src.recipes += new /datum/cookingrecipe/oven/brownie_batch(src)
 			src.recipes += new /datum/cookingrecipe/oven/rice_bowl(src)
+			src.recipes += new /datum/cookingrecipe/oven/flan(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
@@ -1234,7 +1235,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					amtload++
 				S.UpdateIcon()
 				boutput(user, SPAN_NOTICE("[amtload] items loaded from satchel!"))
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 			return
 		else
 			var/proceed = 0

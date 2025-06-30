@@ -323,15 +323,17 @@ TYPEINFO(/obj/submachine/claw_machine)
 	throw_range = 10
 
 /obj/item/toy/plush/small/stress_ball/attack_self(mob/user as mob)
-	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Fidget", "Say"))
-	if (!menuchoice)
+	animate_door_squeeze(src) //squish
+	if (ON_COOLDOWN(src, "squish", 1 SECOND))
 		return
-	if (menuchoice == "Fidget")
-		animate_door_squeeze(src) //squish
-		user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."))
-		boutput(user, SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")]."))
-	else if (menuchoice == "Say")
-		src.say_something(user)
+
+	if (prob(50) && isliving(user))
+		var/mob/living/stressed_person = user
+		if (stressed_person.blood_volume > 500 && !ON_COOLDOWN(src, "lower_blood_pressure", 10 SECONDS))
+			stressed_person.blood_volume -= rand(3,7)
+			boutput(user, SPAN_NOTICE(pick("Your head hurts a little less.", "You breathe a little easier.", "The pain in your chest lessens.")))
+
+	user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."), "You squeeze [src]. <br> [SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].")]", group = "stress_ball")
 
 /obj/item/toy/plush/small/deneb
 	name = "Deneb the swan"

@@ -412,7 +412,7 @@ TYPEINFO(/obj/stove)
 			else if (L.my_soup)
 				if(L.my_soup == src.my_soup)
 					src.total_wclass++
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 					L.my_soup = null
 					L.UpdateOverlays(null, "fluid")
 					user.visible_message("[user] empties [L] into [src].", "You empty [L] into [src]")
@@ -420,7 +420,7 @@ TYPEINFO(/obj/stove)
 					boutput(user,SPAN_ALERT("<b>You can't mix soups! That'd be ridiculous!"))
 			else
 				src.total_wclass--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				L.my_soup = src.my_soup
 				L.add_soup_overlay(fluid_icon.color)
 				if(src.total_wclass <= 0)
@@ -448,7 +448,7 @@ TYPEINFO(/obj/stove)
 					if(src.my_soup)
 						usr.visible_message(SPAN_ALERT("[usr] dumps the soup out of [src] and onto [T]!"))
 						src.total_wclass = 0
-						tooltip_rebuild = 1
+						tooltip_rebuild = TRUE
 						src.my_soup = null
 						src.on_reagent_change()
 						return
@@ -470,7 +470,7 @@ TYPEINFO(/obj/stove)
 		..()
 
 	proc/update_wclass_total()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		src.total_wclass = 0
 		for(var/obj/item/I in src.contents)
 			src.total_wclass += I.w_class

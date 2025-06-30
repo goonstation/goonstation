@@ -1388,6 +1388,15 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/pie/fish
 	category = "Pies"
 
+/datum/cookingrecipe/mixer/raw_flan
+	ingredients = list(\
+		/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
+		/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
+		/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
+		/obj/item/reagent_containers/food/drinks/milk = 1)
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/ingredient/raw_flan
+
 /datum/cookingrecipe/mixer/custard
 	ingredients = list(\
 	/obj/item/reagent_containers/food/drinks/milk = 1,
@@ -2195,3 +2204,8 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/katsu_curry
+
+/datum/cookingrecipe/oven/flan
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/raw_flan = 1)
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/flan

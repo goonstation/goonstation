@@ -1,6 +1,5 @@
 /mob/living/critter/bear
 	name = "space bear"
-	real_name = "space bear"
 	desc = "WOORGHHH"
 	icon = 'icons/mob/critter/humanoid/bear.dmi'
 	icon_state = "abear"
@@ -134,7 +133,6 @@
 
 /mob/living/critter/bear/care
 	name = "space carebear"
-	real_name = "space carebear"
 	desc = "I love you!"
 	icon_state = "carebear"
 	icon_state_dead = "carebear-dead"
@@ -143,4 +141,5 @@
 	New()
 		..()
 		src.name = pick("Lovealot Bear", "Stuffums", "World Destroyer", "Pookie", "Colonel Sanders", "Hugbeast", "Lovely Bear", "HUG ME", "Empathy Bear", "Steve", "Mr. Pants", "wonk")
+		src.real_name = src.name
 

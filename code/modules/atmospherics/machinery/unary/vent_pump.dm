@@ -33,11 +33,16 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
-	if (src.on)
-		src.turn_on()
 	if(src.frequency)
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
+
+/obj/machinery/atmospherics/unary/vent_pump/initialize()
+	..()
+	if(src.on)
+		src.turn_on()
+	else
+		src.turn_off()
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/turn_on()
 	src.on = TRUE
@@ -138,7 +143,10 @@
 			. = TRUE
 
 		if("power_toggle")
-			src.on = !src.on
+			if (src.on)
+				src.turn_off()
+			else
+				src.turn_on()
 			. = TRUE
 
 		if("set_direction")
@@ -219,8 +227,6 @@
 			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
 		icon_state = "[hide_pipe ? "h" : "" ]off"
-		if (src.on)
-			src.turn_off()
 
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 

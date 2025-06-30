@@ -1307,3 +1307,22 @@ client/proc/toggle_ghost_respawns()
 		change_ghost_invisibility(INVIS_GHOST)
 		message_admins("[key_name(usr)] made ghosts invisible.")
 	logTheThing(LOG_ADMIN, usr, "toggled ghost (in)visibility")
+
+/client/proc/toggle_tutorial_enabled()
+	set name = "Toggle Tutorial Enabled"
+	set desc = "Toggle whether people can start the tutorial"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	global.newbee_tutorial_enabled = !global.newbee_tutorial_enabled
+
+	logTheThing(LOG_ADMIN, usr, "[global.newbee_tutorial_enabled ? "enabled" : "disabled"] the tutorial.")
+	message_admins("[key_name(usr)] [global.newbee_tutorial_enabled ? "enabled" : "disabled"] the tutorial.")
+
+	for (var/mob/new_player/player in mobs)
+		if (!global.newbee_tutorial_enabled)
+			if (player.ready_tutorial == TRUE)
+				boutput(player, SPAN_ALERT("An administrator has disabled the tutorial for this round!"))
+			player.ready_tutorial = FALSE
+		player.update_joinmenu()

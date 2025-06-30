@@ -112,7 +112,12 @@
 		tier = 2
 	cluwne
 		egg_props_path = /datum/chicken_egg_props/cluwne
+
 		tier = 2
+
+		New()
+			. = ..()
+			src.reagents.add_reagent("painbow_eggs",10)
 	raptor
 		egg_props_path = /datum/chicken_egg_props/raptor
 		tier = 2

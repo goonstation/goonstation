@@ -22,7 +22,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "incubator"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/my_egg = null
 	var/incubate_count = 0
 	var/image/egg_overlay = null
@@ -36,7 +36,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 #ifdef SECRETS_ENABLED
 		src.egg_overlay_secret = image('+secret/icons/obj/chickens_secret.dmi', src, "incubator-egg")
 #endif
-		src.egg_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-egg")
+		src.egg_overlay = image('icons/mob/ranch/chickens.dmi', src, "incubator-egg")
 		src.lights_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-lights")
 		processing_items |= src
 
@@ -96,7 +96,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 			if ((user.loc == T && user.equipped() == W))
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> disassembles [src]"),SPAN_NOTICE("You disassemble [src]"))
 				var/obj/chicken_nesting_box/N = new /obj/chicken_nesting_box(get_turf(src))
-				N.anchored = 1
+				N.anchored = ANCHORED
 				new /obj/item/incubator_parts(get_turf(src))
 				qdel(src)
 			return
@@ -106,6 +106,9 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 				boutput(user, SPAN_ALERT("<b>There's already an egg in there!</b>"))
 			else
 				var/obj/item/reagent_containers/food/snacks/ingredient/egg/E = W
+				if (E.infertile)
+					boutput(user, SPAN_ALERT("<b>This egg is infertile and cannot be used!</b>"))
+					return
 				user.u_equip(E)
 				E.set_loc(src)
 				my_egg = E
@@ -179,7 +182,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "feed_grinder"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/work_cycle = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/obj/item/reagent_containers/food/current_food = null
@@ -208,7 +211,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				for(var/obj/item/O in S.contents)
 					src.add_item(O)
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 
@@ -556,6 +559,19 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		else
 			. = ..()
 
+	loot_age
+		name = "Dehab Mortality Feed"
+		desc = "A hand-knitted bag of feed which somehow creaks, it has a small label mentioning rapid ageing."
+		feed_flags = list("clockwork")
+		food_color = "#a0c0c0"
+		initial_reagents = list("ageinium", 40)
+
+	loot_antiage // for mining crates
+		name = "Ambrosia Immortality Feed"
+		desc = "A commercial feed bag plastered with adverts on anti-ageing effects."
+		feed_flags = list("ageless", "chicken_egg")
+		food_color = "#DDBB00"
+
 /obj/decal/cleanable/ranch_feed
 	name = "feed"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
@@ -587,7 +603,7 @@ TYPEINFO(/obj/chicken_nesting_box)
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "box"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER
 
 	attackby(obj/item/W, mob/user)

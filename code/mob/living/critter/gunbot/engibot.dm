@@ -1,9 +1,8 @@
 /mob/living/critter/robotic/gunbot/engineerbot
 	name = "Syndicate MULTI Unit"
-	real_name = "Syndicate MULTI Unit"
 	icon_state = "engineerbot"
 	base_icon_state = "engineerbot"
-	desc = "An engnieering unit, you can somehow feel that it's angry at you."
+	desc = "An engineering unit, you can somehow feel that it's angry at you."
 	health_brute = 20
 	health_burn = 10
 	health_burn_vuln = 0.8

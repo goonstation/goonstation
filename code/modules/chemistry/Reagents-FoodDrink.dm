@@ -46,7 +46,7 @@ datum
 				if (severity == 1) //lesser
 					M.stuttering += 1
 					if(effect <= 1)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches [his_or_her(M)] gut!"))
 						M.emote("scream")
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 3)
@@ -62,7 +62,7 @@ datum
 				else if (severity == 2) // greater
 					if(effect <= 5)
 						M.visible_message(pick(SPAN_ALERT("<b>[M.name]</b> jerks bolt upright, then collapses!"),
-							SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!")))
+							SPAN_ALERT("<b>[M.name]</b> suddenly cluches [his_or_her(M)] gut!")))
 						M.setStatusMin("knockdown", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
@@ -1601,8 +1601,7 @@ datum
 			taste = list("rich", "fruity")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if(M.bodytemperature < 400)
-					M.bodytemperature = min(M.bodytemperature+(5 * mult),400)
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = 400 KELVIN)
 				..()
 			requires_produce = TRUE
 
@@ -1750,8 +1749,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -2099,8 +2097,7 @@ datum
 			requires_produce = TRUE
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (M.bodytemperature < (T0C + 40))
-					M.bodytemperature += 5 * mult
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = T0C + 40)
 				..()
 
 		fooddrink/alcoholic/ironbrew
@@ -2319,14 +2316,13 @@ datum
 						M.emote(pick("choke","gasp","cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 						M.take_oxygen_deprivation(rand(0,10) * mult)
-						M.bodytemperature += rand(5,20) * mult
+						M.changeBodyTemp(rand(5,20) KELVIN * mult)
 				else
 					if(prob(10) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
 						M.emote(pick("cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 				M.stuttering += rand(0,2)
-				M.bodytemperature += rand(0,3) * mult
-
+				M.changeBodyTemp(rand(0,3) KELVIN * mult)
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2390,9 +2386,9 @@ datum
 				if(prob(25))
 					M.emote(pick("choke","gasp"))
 					M.take_oxygen_deprivation(rand(0,10) * mult)
-					M.bodytemperature += rand(0,7) * mult
+					M.changeBodyTemp(rand(0,7) KELVIN * mult)
 				M.stuttering += rand(0,2)
-				M.bodytemperature += rand(0,3) * mult
+				M.changeBodyTemp(rand(0,3) KELVIN * mult)
 				if(probmult(10))
 					M.emote(pick("cough"))
 
@@ -2428,8 +2424,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.changeStatus("drowsy", -10 SECONDS)
-				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = M.base_body_temp)
 				..()
 				return
 
@@ -2450,8 +2445,7 @@ datum
 					var/mob/living/carbon/human/H = M
 					if (H.sims)
 						H.sims.affectMotive("Bladder", (-0.05 * mult))
-				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = M.base_body_temp)
 				..(M, mult)
 				return
 
@@ -2560,8 +2554,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if (M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
 
 		fooddrink/caffeinated/coffee/fresh
 			name = "freshly brewed coffee"
@@ -2601,7 +2594,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if(M.get_brain_damage() < 60 || killer)
+				if(M.get_brain_damage() < BRAIN_DAMAGE_MAJOR || killer)
 					M.take_brain_damage(2 * mult)
 
 			killer
@@ -2768,8 +2761,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -2808,8 +2800,7 @@ datum
 			serving_temp = HOT_SERVING
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
 				M.reagents.add_reagent("sugar", 2 * src.calculate_depletion_rate(M, mult))
 				if (ispug(M) || istype(M, /mob/living/critter/small_animal/dog))
 					M.changeStatus("poisoned", 8 SECONDS * mult)
@@ -3541,8 +3532,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 

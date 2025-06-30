@@ -249,7 +249,7 @@
 			return 1
 		if(prob(25))
 			var/obj/critter/gunbot/drone/buzzdrone/naniteswarm/N = new /obj/critter/gunbot/drone/buzzdrone/naniteswarm (AST)
-			N.set_loc(AST)
+			N.set_loc(get_turf(AST))
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!AST)

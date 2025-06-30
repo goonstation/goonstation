@@ -13,7 +13,6 @@ TYPEINFO(/mob/living/critter/crunched)
 
 /mob/living/critter/crunched
 	name = "transposed scientist"
-	real_name = "transposed scientist"
 	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
 	icon = 'icons/mob/critter/humanoid/crunched.dmi'
 	icon_state = "crunched"
@@ -117,7 +116,6 @@ TYPEINFO(/mob/living/critter/shade)
 
 /mob/living/critter/shade
 	name = "darkness"
-	real_name = "darkness"
 	desc = "Oh god."
 	icon = 'icons/mob/critter/humanoid/shade.dmi'
 	icon_state = "shade"
@@ -275,7 +273,6 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 
 /mob/living/critter/robotic/repairbot
 	name = "strange robot"
-	real_name = "strange robot"
 	desc = "It looks like some sort of floating repair bot or something?"
 	icon = 'icons/mob/critter/robotic/ancient/repairbot.dmi'
 	icon_state = "ancient_repairbot"
@@ -380,7 +377,6 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 
 /mob/living/critter/robotic/repairbot/security
 	name = "strange robot"
-	real_name = "strange robot"
 	desc = "A Security Robot, something seems a bit off."
 	icon_state = "ancient_guardbot"
 	health_brute = 15
@@ -390,7 +386,6 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 
 /mob/living/critter/robotic/repairbot/helldrone
 	name = "weird machine"
-	real_name = "strange robot"
 	desc = "A machine, of some sort. It's probably off."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "drone_service_bot_off"
@@ -430,7 +425,6 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 ////////////// Town guards ////////////////
 /mob/living/critter/townguard
 	name = "town guard"
-	real_name = "town guard"
 	desc = "An angry man dressed in medieval armor."
 	icon = 'icons/mob/critter/humanoid/town_guard.dmi'
 	icon_state = "townguard"
@@ -538,7 +532,6 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 ////////////// Blobman ////////////////
 /mob/living/critter/blobman
 	name = "mutant"
-	real_name = "mutant"
 	desc = "Some sort of horrific, pulsating blob of flesh."
 	icon_state = "blobman"
 	icon_state_dead = "blobman-dead"
@@ -580,13 +573,14 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 			return TRUE
 
 /mob/living/critter/blobman/meat
-	real_name = "meaty martha"
+	real_name = "meaty martha" //keeping this because it made me laugh. Overridden by New() anyway
 	death_text = null
 	ai_attacks_per_ability = 3
 
 	New()
 		..()
 		src.name = "[pick("grody", "clotty", "greasy", "meaty", "fleshy", "vile", "chunky", "putrid")] [pick("nugget", "bloblet", "pustule", "corpuscle", "viscera")]"
+		src.real_name = src.name
 		src.icon_state = pick("meaty_mouth", "polyp", "goop")
 
 	critter_ability_attack(var/target) // Kinda hacky
