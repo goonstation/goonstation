@@ -1554,7 +1554,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	cook_destructable = TRUE
 
 	var/base_damage = 1
-	var/damage_multi = 0.1
+	var/damage_multi = 0.23
 	var/armour_pierce_multi = 0.0015
 	var/base_dissipation_rate = 5.5
 	var/proj_speed_multi = 0.03
