@@ -2392,9 +2392,26 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (..())
 			return 1
 
-		if (ishuman(owner)) // Straight outta the devilish fiddle
-			boutput(owner, "Use the 'Return to corpse' ability to come back when your ready! 20 Seconds till automatic recall.")
-			owner.ghostize()
+		if (ishuman(owner))
+			owner.changeStatus("ghost_walk_effect", 30 SECONDS)
+
+/datum/targetable/geneticsAbility/ghost_walk_return // Return ability, on the ghost
+	name = "Spectral Anchor"
+	desc = "Return to your body."
+	icon_state = "ghost_ascend"
+	needs_hands = FALSE
+	targeted = FALSE
+
+	cast()
+		if (..())
+			return 1
+
+		if (istype(owner, /mob/living/intangible/art_curser_displaced_soul/gene))
+			var/mob/living/intangible/art_curser_displaced_soul/gene/G = owner
+			boutput(owner, "You return to your body!")
+			for(var/datum/statusEffect/art_curse/displaced_soul/gene/GE in G.statusEffects)
+				GE.original_body.delStatus("ghost_walk_effect")
+
 
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter

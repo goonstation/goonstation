@@ -147,8 +147,11 @@
 /turf/unsimulated/floor/longtile,
 /area/wrecknsspolaris)
 "bt" = (
-/turf/unsimulated/wall/auto/reinforced,
-/area/wrecknsspolaris)
+/obj/cable/green{
+	icon_state = "0-2"
+	},
+/turf/unsimulated/wall/auto/supernorn,
+/area/cult_base/acolyte)
 "bu" = (
 /turf/simulated/floor/stairs,
 /area/wrecknsspolaris)
@@ -3185,8 +3188,9 @@
 /area/cult_base/initate)
 "mj" = (
 /obj/table/wood/auto,
-/obj/item/gun/kinetic/silenced_22,
 /obj/machinery/light/small/floor/greenish,
+/obj/item/gun/kinetic/webley,
+/obj/item/ammo/bullets/webley,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "mk" = (
@@ -3697,7 +3701,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "uO" = (
-/turf/unsimulated/wall/auto/reinforced,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/cult_base/leader)
 "uU" = (
 /obj/item/raw_material/rock,
@@ -6661,7 +6665,7 @@ br
 br
 fv
 dn
-bt
+br
 br
 br
 br
@@ -28973,7 +28977,7 @@ gW
 (80,1,1) = {"
 ab
 ur
-Vd
+bt
 HY
 av
 Av

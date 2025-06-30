@@ -453,3 +453,10 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 
 	MouseDrop_T()
 		return
+
+/mob/living/intangible/art_curser_displaced_soul/gene // For ghost walk gene
+
+	New()
+		..()
+		src.abilityHolder = new /datum/abilityHolder/composite(src)
+		src.addAbility(/datum/targetable/geneticsAbility/ghost_walk_return)
