@@ -433,20 +433,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aby" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 100;
-	id = "qm_dock_out"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
-"abz" = (
-/obj/machinery/launcher_loader/west{
-	id = "qm_dock_out"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "abA" = (
 /turf/space/fluid/warp_z5/edge,
 /area/space)
@@ -25716,14 +25702,6 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"bTi" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "bTk" = (
 /obj/tug_cart,
 /turf/simulated/floor/plating/random,
@@ -34141,6 +34119,19 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"gJd" = (
+/obj/machinery/loudspeaker{
+	layer = 4;
+	pixel_y = -6
+	},
+/obj/table/wood/auto,
+/obj/item/storage/box/record/radio/host{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/storage/box/record/radio/host,
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/lab)
 "gJy" = (
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/item/ammo/bullets/tranq_darts,
@@ -35270,6 +35261,12 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"iwi" = (
+/obj/machinery/launcher_loader/west{
+	id = "qm_dock_out"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "iwt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40503,19 +40500,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/bar,
 /area/evilreaver/bar)
-"pdH" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/obj/table/wood/auto,
-/obj/item/storage/box/record/radio/host{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/storage/box/record/radio/host,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "pfe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -42504,6 +42488,14 @@
 "rSv" = (
 /turf/simulated/wall/auto/asteroid,
 /area/sunken_asteroid)
+"rSG" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 100;
+	id = "qm_dock_out"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "rSO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -43072,6 +43064,14 @@
 	},
 /turf/space/fluid,
 /area/evilreaver)
+"sGg" = (
+/obj/machinery/loudspeaker{
+	layer = 4;
+	pixel_y = -6
+	},
+/obj/table/wood/auto,
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/lab)
 "sGx" = (
 /obj/machinery/computer/tetris,
 /turf/simulated/floor/carpet/arcade,
@@ -76683,7 +76683,7 @@ bJw
 bJw
 bMO
 bJw
-aby
+rSG
 bJw
 bJw
 fRj
@@ -76985,7 +76985,7 @@ bJx
 bJx
 bMO
 qrW
-abz
+iwi
 bJx
 bJx
 aNw
@@ -107490,7 +107490,7 @@ bKd
 bKd
 bRb
 bRa
-bTi
+sGg
 bUw
 bVv
 cfv
@@ -108094,7 +108094,7 @@ bMK
 bQf
 bRa
 bRa
-pdH
+gJd
 bWq
 bVx
 bRa

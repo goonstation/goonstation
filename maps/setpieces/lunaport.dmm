@@ -23112,7 +23112,7 @@
 	})
 "uKG" = (
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/terrazzo/black,
 /area/moon/underground{
 	ambient_light = "#441111"

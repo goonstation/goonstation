@@ -4327,14 +4327,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"aAo" = (
-/obj/loudspeaker,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
-/turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
 "aAq" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -5360,6 +5352,10 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"aEY" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "aFd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7111,10 +7107,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"aOO" = (
-/obj/machinery/light/small/sticky,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aOP" = (
 /obj/stool/chair{
 	dir = 4
@@ -17299,18 +17291,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"doU" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
-/obj/machinery/vending/security,
-/obj/machinery/light_switch/west{
-	pixel_y = -4
-	},
-/obj/blind_switch/area/west{
-	pixel_y = 5
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "dpc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -19497,14 +19477,6 @@
 	dir = 1
 	},
 /area/station/hangar/main)
-"eFV" = (
-/obj/loudspeaker,
-/obj/shrub{
-	dir = 6
-	},
-/obj/decal/cleanable/leaves,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "eGj" = (
 /obj/item/crowbar,
 /obj/cable{
@@ -19954,6 +19926,14 @@
 /obj/machinery/sheet_extruder,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
+"eVc" = (
+/obj/machinery/loudspeaker,
+/obj/shrub{
+	dir = 6
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "eVj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -20435,14 +20415,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"fjr" = (
-/obj/loudspeaker,
-/obj/shrub{
-	dir = 6
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "fjy" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -23652,13 +23624,6 @@
 	dir = 5
 	},
 /area/station/quartermaster/office)
-"hje" = (
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
-/obj/storage/cart/forensic/detective,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "hjz" = (
 /obj/machinery/light/small/floor,
 /obj/disposalpipe/segment{
@@ -29841,14 +29806,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/corner,
 /area/station/hallway/primary/south)
-"kUu" = (
-/obj/loudspeaker,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "kUY" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -34446,6 +34403,18 @@
 	dir = 8
 	},
 /area/station/science/artifact)
+"nBd" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/obj/machinery/vending/security,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "nBm" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -35483,6 +35452,14 @@
 	dir = 4
 	},
 /area/station/hangar/arrivals)
+"ohA" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "ohC" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg{
@@ -38296,6 +38273,18 @@
 	dir = 8
 	},
 /area/station/hangar/arrivals)
+"pEM" = (
+/obj/machinery/light/incandescent,
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 8;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	tag = "icon-plant (NORTH)"
+	},
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "pFc" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/conveyor/NS{
@@ -40194,10 +40183,6 @@
 /obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
-"qIv" = (
-/obj/loudspeaker,
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "qII" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/jazz)
@@ -44403,6 +44388,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"tjv" = (
+/obj/machinery/loudspeaker,
+/obj/shrub{
+	dir = 6
+	},
+/obj/decal/cleanable/leaves,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "tjO" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -48390,6 +48383,14 @@
 	dir = 4
 	},
 /area/station/janitor/office)
+"vyD" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "vyP" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -49243,6 +49244,13 @@
 /obj/stool/chair,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
+"vZk" = (
+/obj/item/device/radio/intercom/detnet/security{
+	dir = 8
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "vZm" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 4
@@ -49282,6 +49290,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"vZO" = (
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "vZP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52637,18 +52649,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"yjK" = (
-/obj/machinery/light/incandescent,
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 8;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	tag = "icon-plant (NORTH)"
-	},
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "yjL" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -73443,7 +73443,7 @@ teF
 ovE
 ouJ
 bjo
-eFV
+tjv
 eBC
 dXv
 qjC
@@ -76166,7 +76166,7 @@ bvu
 qrs
 wQE
 wxc
-fjr
+eVc
 btx
 bAF
 bAI
@@ -89407,7 +89407,7 @@ hMH
 qCk
 lQh
 obN
-yjK
+pEM
 aOm
 gIJ
 aUm
@@ -90892,7 +90892,7 @@ qKY
 awG
 vWV
 axu
-aAo
+ohA
 fwf
 azh
 azn
@@ -91222,7 +91222,7 @@ lWw
 lWw
 aTa
 djq
-qIv
+aEY
 aPr
 azU
 mmb
@@ -91520,7 +91520,7 @@ nYq
 aUn
 aUn
 pQH
-kUu
+vyD
 aPr
 aPr
 aPr
@@ -93328,7 +93328,7 @@ dab
 vKc
 wkZ
 nns
-aOO
+vZO
 dSK
 aQg
 evx
@@ -94237,7 +94237,7 @@ cqb
 hHK
 isv
 aQh
-doU
+nBd
 aRG
 qMS
 pvT
@@ -95142,7 +95142,7 @@ wkZ
 aOi
 lbT
 inl
-hje
+vZk
 aQR
 aRG
 aRK

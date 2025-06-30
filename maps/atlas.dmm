@@ -1746,15 +1746,6 @@
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
-"aiz" = (
-/obj/table/wood/auto,
-/obj/item/matchbook,
-/obj/loudspeaker,
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "aiA" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
 /obj/landmark/antagonist/blob,
@@ -9699,6 +9690,15 @@
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"dkU" = (
+/obj/table/wood/auto,
+/obj/item/matchbook,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "dlb" = (
 /obj/machinery/recharger/wall/sticky,
 /obj/storage/secure/closet/security/equipment,
@@ -80894,7 +80894,7 @@ aen
 afO
 ahi
 gsT
-aiz
+dkU
 ajJ
 aku
 akG
