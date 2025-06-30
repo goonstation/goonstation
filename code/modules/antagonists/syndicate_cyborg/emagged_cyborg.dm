@@ -17,7 +17,7 @@
 		src.owner.remove_antagonist(ROLE_SYNDICATE_ROBOT)
 
 		var/mob/living/silicon/cyborg = src.owner.current
-		cyborg.law_rack_connection = null
+		cyborg.lawset_connection = null
 		cyborg.emagged = TRUE
 		cyborg.show_laws()
 
@@ -26,7 +26,7 @@
 			return FALSE
 
 		var/mob/living/silicon/cyborg = src.owner.current
-		cyborg.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
+		cyborg.lawset_connection = ticker?.ai_law_rack_manager?.default_ai_rack.lawset
 		cyborg.emagged = FALSE
 		cyborg.show_laws()
 

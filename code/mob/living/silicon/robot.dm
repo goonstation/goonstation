@@ -120,6 +120,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (frame)
 			src.freemodule = frame.freemodule
 			src.frame_material = frame.material
+			src.lawset_connection = frame.internal_lawset
 			if(HAS_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG))
 				APPLY_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG, "borg")
 		if (starter && !(src.dependent || src.shell))
@@ -295,6 +296,8 @@ TYPEINFO(/mob/living/silicon/robot)
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
+			if(!src.lawset_connection.host_rack) //this might be a bad idea
+				frame.internal_lawset = lawset_connection
 			if(HAS_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG))
 				APPLY_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG, "borg")
 
@@ -737,19 +740,28 @@ TYPEINFO(/mob/living/silicon/robot)
 			. += "[src.name] does not appear to have a module installed.<br>"
 
 		if(issilicon(user) || isAI(user))
-			var/lr = null
+			var/ls = null
 			if(isAIeye(user))
 				var/mob/living/intangible/aieye/E = user
-				lr =  E.mainframe?.law_rack_connection
+				ls =  E.mainframe?.lawset_connection
 			else
 				var/mob/living/silicon/S = user
-				lr =  S.law_rack_connection
-			if(src.law_rack_connection != lr && !src.syndicate)
+				ls =  S.lawset_connection
+			if(src.lawset_connection != ls && !src.syndicate)
 				. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 			else
 				. += "[src.name] follows the same laws you do.<br>"
 
-		. += SPAN_NOTICE("*---------*")
+		. += SPAN_NOTICE("*---------*<br>")
+		if(HAS_ATOM_PROPERTY(user, PROP_MOB_LAW_VISION))
+			var/law_output = null
+			if(!lawset_connection)
+				law_output = "They do not have any laws!"
+			else
+				law_output = lawset_connection.host_rack ? "They are connected to rack ID [lawset_connection.host_rack.unique_id].<br>" : "They are not connected to a law rack.<br>"
+				law_output += "Their laws are:<br>" + lawset_connection.format_for_display()
+			. += "[SPAN_HINT(law_output)]"
+
 
 	choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 		var/newname
@@ -1004,7 +1016,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message(SPAN_ALERT("<b>[src]</b> buzzes oddly!"))
-				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
+				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.lawset_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 				update_appearance()
 				return 1
@@ -1096,10 +1108,10 @@ TYPEINFO(/mob/living/silicon/robot)
 				boutput(user,"You need to use this on the AI core directly!")
 				return
 
-			if(!src.law_rack_connection)
+			if(!src.lawset_connection.host_rack)
 				boutput(src,"[src.name] is not connected to a law rack")
 			else
-				var/area/A = get_area(src.law_rack_connection)
+				var/area/A = get_area(src.lawset_connection.host_rack)
 				boutput(user, "[src.name] is connected to a law rack at [A.name].")
 
 			if(!linker.linked_rack)
@@ -1108,10 +1120,10 @@ TYPEINFO(/mob/living/silicon/robot)
 			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
 				if(src.emagged || src.syndicate)
 					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing(LOG_STATION, src, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
+					logTheThing(LOG_STATION, src, "[constructName(user)] tried to connect [src] to the rack [constructName(src.lawset_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
 					elecflash(src,power=2)
 					return
-				if(src.law_rack_connection)
+				if(src.lawset_connection.host_rack)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
 						src.set_law_rack(linker.linked_rack, user)
@@ -1864,10 +1876,10 @@ TYPEINFO(/mob/living/silicon/robot)
 		else
 			who = src
 			boutput(who, "<b>Obey these laws:</b>")
-		if(src.dependent && src?.mainframe?.law_rack_connection)
-			src.mainframe.law_rack_connection.show_laws(who)
-		else if(!src.dependent && src.law_rack_connection)
-			src.law_rack_connection.show_laws(who)
+		if(src.dependent && src?.mainframe?.lawset_connection)
+			src.mainframe.lawset_connection.show_laws(who)
+		else if(!src.dependent && src.lawset_connection)
+			src.lawset_connection.show_laws(who)
 		else
 			boutput(src,"You have no laws!")
 		return
@@ -2277,15 +2289,15 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		var/laws = null
 		if(src.dependent) //are you a shell?
-			if(!src?.mainframe?.law_rack_connection)
+			if(!src?.mainframe?.lawset_connection)
 				boutput(src, "You have no laws!")
 				return
-			laws = src.mainframe.law_rack_connection.format_for_irc()
+			laws = src.mainframe.lawset_connection.format_for_irc()
 		else
-			if(!src.law_rack_connection)
+			if(!src.lawset_connection)
 				boutput(src, "You have no laws!")
 				return
-			laws = src.law_rack_connection.format_for_irc()
+			laws = src.lawset_connection.format_for_irc()
 
 		logTheThing(LOG_SAY, usr, "states all their current laws.")
 		for (var/number in laws)
