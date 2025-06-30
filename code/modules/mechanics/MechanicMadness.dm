@@ -2945,7 +2945,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 			return
 		LIGHT_UP_HOUSING
 		// To prevent feedback loops, messages spoken by sound synthesisers are forbidden from being relayed.
-		src.say("[input.signal]", flags = 0, message_params = list("can_relay" = FALSE))
+		src.say("[input.signal]", message_params = list("can_relay" = FALSE))
 
 	update_icon()
 		icon_state = "comp_synth"
