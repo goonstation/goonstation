@@ -22,6 +22,7 @@
 	examine_hint = "It is covered in very conspicuous markings."
 	// general vars
 	var/chosen_curse
+	var/affects_multiple = TRUE
 	var/list/active_cursees = list()
 	var/static/list/durations = \
 		list(BLOOD_CURSE = null, AGING_CURSE = null, NIGHTMARE_CURSE = null, MAZE_CURSE = null, DISP_CURSE = 2 MINUTES, LIGHT_CURSE = 3 MINUTES)
@@ -39,6 +40,8 @@
 	New()
 		..()
 		src.chosen_curse = pick(BLOOD_CURSE, AGING_CURSE, NIGHTMARE_CURSE, MAZE_CURSE, DISP_CURSE, LIGHT_CURSE)
+		if(chosen_curse == BLOOD_CURSE || chosen_curse == AGING_CURSE)
+			affects_multiple = FALSE
 
 	effect_touch(obj/O, mob/living/user)
 		. = ..()
@@ -60,9 +63,10 @@
 
 		logTheThing(LOG_STATION, O, "Curser artifact with effect [src.chosen_curse] activated at [log_loc(O)] by [key_name(user)]")
 
-		for (var/mob/living/carbon/human/H in range(5, O))
-			if (H != user && !isdead(H))
-				curse_candidates += H
+		if(src.affects_multiple)
+			for (var/mob/living/carbon/human/H in range(5, O))
+				if (H != user && !isdead(H))
+					curse_candidates += H
 
 		for (var/i = 1 to min(length(curse_candidates), rand(2, 5)))
 			var/candidate = pick(curse_candidates)
