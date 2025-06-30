@@ -71,7 +71,7 @@
 /turf/space,
 /area/listeningpost/landing_bay)
 "bP" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 5
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -315,7 +315,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
@@ -349,7 +349,7 @@
 	},
 /area/listeningpost/syndicate_teleporter)
 "se" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 9
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -419,7 +419,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 10
 	},
 /turf/simulated/floor/engine{
@@ -506,7 +506,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 6
 	},
 /turf/simulated/floor/engine{

@@ -4779,12 +4779,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"ats" = (
-/obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "att" = (
 /obj/fireworksbox,
 /obj/loudspeaker,
@@ -5472,20 +5466,6 @@
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
-/area/station/crew_quarters/fitness)
-"avT" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avU" = (
 /turf/simulated/floor/specialroom/gym,
@@ -19409,23 +19389,6 @@
 "bqp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
-"bqq" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
-/obj/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	name = "VACUUM AREA"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/engine)
-"bqs" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/engine)
 "bqt" = (
 /obj/machinery/r_door_control{
 	id = "hangar_engine"
@@ -19940,13 +19903,6 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/eva)
-"btv" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4;
-	can_rupture = 0
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/hotloop)
 "btw" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -20733,13 +20689,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"bxJ" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	can_rupture = 0
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/hotloop)
 "bxS" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/status_display{
@@ -35795,12 +35744,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/sortingRoom)
-"cOb" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5
-	},
-/turf/simulated/floor/grey,
-/area/station/engine/inner)
 "cOx" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Kitchen"
@@ -38173,6 +38116,17 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
+"eut" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/obj/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	name = "VACUUM AREA"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/engine)
 "euC" = (
 /obj/machinery/atmospherics/unary/tank{
 	dir = 4
@@ -38691,14 +38645,6 @@
 /obj/machinery/computer/robotics,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
-"eJV" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2;
-	can_rupture = 0
-	},
-/obj/machinery/meter,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/hotloop)
 "eKc" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -38808,6 +38754,15 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"ePm" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	can_rupture = 0
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/coldloop)
 "ePw" = (
 /obj/machinery/computer/barcode,
 /obj/item/device/radio/intercom/cargo{
@@ -40107,6 +40062,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"fLG" = (
+/obj/table/reinforced/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "fMv" = (
 /obj/machinery/computer/cloning,
 /obj/item/paper/Cloning,
@@ -40995,6 +40956,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
+"gxi" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/hotloop)
 "gxM" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -41594,6 +41561,12 @@
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
+"gUo" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "gUN" = (
 /obj/landmark/pest,
 /obj/disposalpipe/segment/morgue{
@@ -43393,6 +43366,14 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
+"ikx" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	level = 2;
+	can_rupture = 0
+	},
+/obj/machinery/meter,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/hotloop)
 "ikP" = (
 /obj/disposalpipe/segment,
 /obj/mesh/catwalk,
@@ -43997,6 +43978,13 @@
 	dir = 9
 	},
 /area/space)
+"iOK" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10;
+	can_rupture = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/hotloop)
 "iPj" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6
@@ -47603,6 +47591,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/research)
+"lDZ" = (
+/obj/railing/wrestling{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lED" = (
 /obj/storage/crate{
 	desc = "Wow! Crate may or may not still contain bottles.";
@@ -48491,20 +48493,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"mqz" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/hangar/engine)
 "mqN" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -52996,16 +52984,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"pwM" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/hangar/engine)
 "pwS" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -53208,6 +53186,12 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
+"pEV" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/engine)
 "pFu" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/cable{
@@ -53370,15 +53354,6 @@
 	},
 /turf/space,
 /area/space)
-"pKI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4;
-	can_rupture = 0
-	},
-/obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/engine/coldloop)
 "pLh" = (
 /mob/living/critter/small_animal/cockroach,
 /obj/cable{
@@ -53490,17 +53465,6 @@
 "pTb" = (
 /turf/simulated/floor,
 /area/station/engine/storage)
-"pTf" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4;
-	can_rupture = 0
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/engine/coldloop)
 "pTo" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -56027,6 +55991,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
+"rOQ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
 "rPq" = (
 /obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellow/side,
@@ -56080,12 +56054,6 @@
 	density = 0
 	},
 /area/station/garden/owlery)
-"rSs" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
-	},
-/turf/simulated/floor/red,
-/area/station/engine/hotloop)
 "rSw" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -57638,6 +57606,17 @@
 /obj/landmark/start/job/geneticist,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
+"sSA" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	can_rupture = 0
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/coldloop)
 "sSV" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro{
@@ -60106,6 +60085,13 @@
 	dir = 4
 	},
 /area/station/engine/ptl)
+"uDC" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4;
+	can_rupture = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/hotloop)
 "uDE" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -60242,12 +60228,6 @@
 /obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/security/main)
-"uKI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/hotloop)
 "uKK" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -62836,6 +62816,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
+"wEq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
 "wEO" = (
 /obj/table/auto,
 /obj/item/football{
@@ -63625,6 +63619,12 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
+"xjz" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/turf/simulated/floor/red,
+/area/station/engine/hotloop)
 "xjC" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -109260,7 +109260,7 @@ bwM
 bwW
 qva
 uJG
-rSs
+xjz
 gRG
 gni
 ykS
@@ -109809,7 +109809,7 @@ aqJ
 akT
 akT
 auH
-avT
+lDZ
 axm
 ayH
 aAl
@@ -110162,9 +110162,9 @@ bqk
 bqk
 bqk
 eWJ
-btv
-bxJ
-uKI
+uDC
+iOK
+gxi
 gGM
 qCl
 pTo
@@ -110411,7 +110411,7 @@ aoi
 apt
 aqI
 akT
-ats
+fLG
 auI
 fxi
 aoa
@@ -110766,11 +110766,11 @@ pXn
 pPk
 bqm
 bqk
-bxJ
-uKI
-uKI
+iOK
+gxi
+gxi
 fpJ
-eJV
+ikx
 bqk
 iIP
 iEJ
@@ -112572,10 +112572,10 @@ rMs
 ljM
 aZs
 bpQ
-bqq
+eut
 hbl
 hbl
-pwM
+rOQ
 mzL
 xop
 jrH
@@ -113176,10 +113176,10 @@ nVK
 tBV
 aaq
 jZI
-bqs
+pEV
 uJb
 xXF
-mqz
+wEq
 rIp
 muj
 hJP
@@ -113785,7 +113785,7 @@ qVe
 xkc
 bqp
 iBz
-cOb
+gUo
 rEo
 adC
 adC
@@ -115000,9 +115000,9 @@ bsS
 bsS
 bsS
 bsS
-pTf
+sSA
 eMB
-pKI
+ePm
 bBN
 dIr
 bBN

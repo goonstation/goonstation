@@ -474,24 +474,6 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon_state = "ecigrefill"
 	flags = TABLEPASS
 
-/obj/item/wrestlingbell
-	name = "Wrestling bell"
-	desc = "A bell used to signal the start of a wrestling match"
-	anchored = ANCHORED
-	density = 1
-	icon = 'icons/obj/wrestlingbell.dmi'
-	icon_state = "wrestlingbell"
-	object_flags = NO_BLOCK_TABLE
-	deconstruct_flags = DECON_WRENCH
-	var/last_ring = 0
-
-	attack_hand(mob/user)
-		if(last_ring + 20 >= world.time)
-			return
-		else
-			last_ring = world.time
-			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-
 /obj/item/trophy
 	name = "trophy"
 	desc = "You're winner! You did it! You did the thing! Good job!"

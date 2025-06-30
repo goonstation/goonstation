@@ -433,20 +433,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aby" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 100;
-	id = "qm_dock_out"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
-"abz" = (
-/obj/machinery/launcher_loader/west{
-	id = "qm_dock_out"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "abA" = (
 /turf/space/fluid/warp_z5/edge,
 /area/space)
@@ -18586,16 +18572,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"btI" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "btJ" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -29284,17 +29260,6 @@
 "cgl" = (
 /turf/space/fluid/warp_z5,
 /area/space)
-"cgo" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table,
-/obj/item/wrestlingbell,
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "cgp" = (
 /obj/rack,
 /obj/item/bballbasket,
@@ -30785,6 +30750,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
+"cKg" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 100;
+	id = "qm_dock_out"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "cKm" = (
 /obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/engine,
@@ -34652,6 +34625,16 @@
 /obj/item/seed/alien,
 /turf/simulated/floor/grass,
 /area/spacehabitat/owlery)
+"hvT" = (
+/obj/railing/wrestling{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "hwl" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "QM"
@@ -37481,6 +37464,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"ltS" = (
+/obj/machinery/launcher_loader/west{
+	id = "qm_dock_out"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "ltZ" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -46682,6 +46671,17 @@
 /obj/submachine/GTM,
 /turf/simulated/wall/auto/asteroid,
 /area/spacehabitat/owlery)
+"xJc" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table,
+/obj/machinery/wrestlingbell,
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "xJL" = (
 /obj/machinery/door/airlock/pyro/alt{
 	id = "med_bathroom"
@@ -76683,7 +76683,7 @@ bJw
 bJw
 bMO
 bJw
-aby
+cKg
 bJw
 bJw
 fRj
@@ -76985,7 +76985,7 @@ bJx
 bJx
 bMO
 qrW
-abz
+ltS
 bJx
 bJx
 aNw
@@ -79676,7 +79676,7 @@ pXl
 boZ
 bpF
 bqv
-cgo
+xJc
 brS
 bsC
 mRh
@@ -80284,7 +80284,7 @@ bra
 brT
 hKO
 bsD
-btI
+hvT
 bKO
 mst
 buL
