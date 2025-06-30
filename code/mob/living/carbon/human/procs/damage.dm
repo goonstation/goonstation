@@ -387,6 +387,11 @@
 					if(prob(20))
 						make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
 					qdel(P)
+				else if (tox > 30 && prob(tox) && !disallow_limb_loss)
+					src.visible_message(SPAN_ALERT("[src.name]'s [initial(P.name)] turns to sludge!"))
+					P.remove(FALSE)
+					make_cleanable(/obj/decal/cleanable/molten_item{name="gooey green mass";color="#00AA00"}, get_turf(src))
+					qdel(P)
 
 	// roll a quick death roll if you're already really beat up
 	// same as the standard death rolls, but an additional penalty percentage is added, based on damage taken:

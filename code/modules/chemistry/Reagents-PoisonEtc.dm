@@ -203,6 +203,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 50
+			target_organs = list("liver", "left_kidney", "right_kidney")
 			var/damage_counter = 0
 
 			on_mob_life(mob/M, mult = 1)
@@ -216,6 +217,11 @@ datum
 				if (!istype(M)) return
 				M.take_toxin_damage(damage_counter)
 				logTheThing(LOG_COMBAT, M, "took [damage_counter] TOX damage from amanitin.")
+
+				if (isliving(M))
+					var/mob/living/target_mob = M
+					target_mob.organHolder?.damage_organs(tox=damage_counter, organs=src.target_organs)
+
 				damage_counter = 0
 
 
@@ -251,11 +257,15 @@ datum
 			fluid_b = 160
 			transparency = 80
 			depletion_rate = 0.05
+			target_organs = list("left_lung", "right_lung")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
 				M.losebreath += 5 * mult
+				if (isliving(M))
+					var/mob/living/target_mob = M
+					target_mob.organHolder?.damage_organs(tox=2*mult, organs=target_organs)
 				..()
 				return
 
@@ -336,7 +346,7 @@ datum
 						else if (probmult(8))
 							M.emote(pick("drool","pale", "gasp"))
 					if (11 to INFINITY)
-						M.setStatusMin("stunned", 4 SECONDS * mult)
+						M.setStatusMin("paralysis", 4 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 						if (probmult(20) && !M.stat)
 							M.emote(pick("drool", "faint", "pale", "gasp", "collapse"))
@@ -467,19 +477,23 @@ datum
 			fluid_b = 240
 			transparency = 215
 			depletion_rate = 0.2
+			target_organs = list("stomach")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (!M.nutrition && prob(60))
+				if (!M.nutrition && probmult(60))
 					switch(rand(1,2))
 						if (1)
 							boutput(M, SPAN_ALERT("You feel hungry..."))
 						if (2)
 							M.take_toxin_damage(1 * mult)
 							boutput(M, SPAN_ALERT("Your stomach grumbles painfully!"))
+							if (isliving(M))
+								var/mob/living/target_mob = M
+								target_mob.organHolder?.damage_organs(tox=mult, organs=src.target_organs)
 
-				else if (prob(60))
+				else if (probmult(60))
 					var/fat_to_burn = max(round(M.nutrition/100,1) * mult, 5)
 					M.nutrition = max(M.nutrition-fat_to_burn,0)
 				..()
@@ -500,6 +514,7 @@ datum
 			fluid_b = 192
 			transparency = 255
 			threshold = THRESHOLD_INIT
+			target_organs = list("heart")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -516,16 +531,19 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 
 				if (!M) M = holder.my_atom
-				if (prob(33))
+				if (probmult(33))
 					M.take_toxin_damage(rand(5,25) * mult)
-				if (prob(33))
+					if (isliving(M))
+						var/mob/living/target_mob = M
+						target_mob.organHolder?.damage_organs(tox=5*mult, organs=target_organs)
+				if (probmult(33))
 					boutput(M, SPAN_ALERT("You feel horribly weak."))
 					M.setStatusMin("stunned", 3 SECONDS * mult)
-				if (prob(10))
+				if (probmult(10))
 					boutput(M, SPAN_ALERT("You cannot breathe!"))
 					M.take_oxygen_deprivation(10 * mult)
 					M.losebreath += (1 * mult)
-				if (prob(10))
+				if (probmult(10))
 					boutput(M, SPAN_ALERT("Your chest is burning with pain!"))
 					M.take_oxygen_deprivation(10 * mult)
 					M.losebreath += (1 * mult)
@@ -795,6 +813,7 @@ datum
 			fluid_b = 200
 			transparency = 255
 			threshold = THRESHOLD_INIT
+			target_organs = list("spleen", "heart")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -816,15 +835,29 @@ datum
 					//M.stunned ++
 				else if (holder.get_reagent_amount(src.id) >= 25 && prob(holder.get_reagent_amount(src.id)*0.15))
 					boutput(M, SPAN_ALERT("Your chest feels [pick("weird","uncomfortable","nasty","gross","odd","unusual","warm")]!"))
-					M.take_toxin_damage(rand(1,2 * mult))
+					M.take_toxin_damage(rand(1,2) * mult)
+					if (isliving(M))
+						var/mob/living/target_mob = M
+						target_mob.organHolder?.damage_organs(tox=rand(1,2)*mult, organs=src.target_organs)
 					if (probmult(1))
-						M.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1) // path, name, strain, bypass resist
+						switch(rand(1,2))
+							if(1)
+								M.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1)
+							if(2)
+								M.contract_disease(/datum/ailment/malady/bloodclot, null, null, 1)
 				else if (holder.get_reagent_amount(src.id) >= 45 && prob(holder.get_reagent_amount(src.id)*0.08))
 					boutput(M, SPAN_ALERT("Your chest [pick("hurts","stings","aches","burns")]!"))
 					M.take_toxin_damage(rand(2,4) * mult)
+					if (isliving(M))
+						var/mob/living/target_mob = M
+						target_mob.organHolder?.damage_organs(tox=rand(2,4)*mult, organs=src.target_organs)
 					M.setStatusMin("stunned", 2 SECONDS * mult)
 					if (probmult(5))
-						M.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1) // path, name, strain, bypass resist
+						switch(rand(1,2))
+							if(1)
+								M.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1)
+							if(2)
+								M.contract_disease(/datum/ailment/malady/bloodclot, null, null, 1)
 				else if (holder.get_reagent_amount(src.id) >= 150 && prob(holder.get_reagent_amount(src.id)*0.01))
 					boutput(M, SPAN_ALERT("Your chest is burning with pain!"))
 					//M.losebreath += (1 * mult) //heartfailure handles this just fine
