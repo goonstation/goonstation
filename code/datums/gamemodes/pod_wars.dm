@@ -40,6 +40,7 @@ var/list/pw_rewards_tier3 = null
 	escape_possible = 0
 	var/list/frequencies_used = list()
 	var/list/control_points = list()		//list of /datum/control_point
+	var/list/dominatetracker = list()
 	var/datum/pw_stats_manager/stats_manager
 
 	var/datum/pod_wars_team/team_NT
@@ -439,6 +440,48 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 			our_team.first_commander_death = 1
 			src.playsound_to_team(our_team, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies{ALTS}.ogg", sound_type=PW_COMMANDER_DIES)
 	enemy_team.change_points(1)
+
+	var/ourname = "<span class='[(get_pod_wars_team_num(M) == TEAM_NANOTRASEN) ? "rcommand" : "rsyndicate"]'>[M.real_name]</span>"
+	if (world.time - M.lastattackertime > 10 SECONDS)
+		if (M.suiciding)
+			boutput(world, "<div class='command_alert ageneral'>[ourname] <b>bid farewell, cruel world!</b></div>")
+			return
+		boutput(world, "<div class='command_alert ageneral'>[ourname] <b>perished!</b></div>")
+	else
+		var/mob/attacker = M.lastattacker?.deref()
+		if (!attacker || attacker == M)
+			if (M.suiciding || attacker == M)
+				boutput(world, "<div class='command_alert ageneral'>[ourname] <b>bid farewell, cruel world!</b></div>")
+				return
+			boutput(world, "<div class='command_alert ageneral'>[ourname] <b>perished!</b></div>")
+			return
+		var/attackername = "<span class='[(get_pod_wars_team_num(attacker) == TEAM_NANOTRASEN) ? "rcommand" : "rsyndicate"]'>[attacker.real_name]</span>"
+		if (M.suiciding)
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>finished off</b> [ourname]</div>")
+		else
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>killed</b> [ourname]</div>")
+
+		if (src.dominatetracker[M.mind] && src.dominatetracker[M.mind][attacker.mind] >= 4)
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>got REVENGE on</b> [ourname]</div>")
+			src.dominatetracker[M.mind][attacker.mind] = 0
+			playsound_global(list(attacker.mind.get_player().client), 'sound/misc/podwars/revenge.ogg', 100)
+			get_image_group("nemesis[ref(M.mind)]").remove_mind(attacker.mind)
+			return
+
+		if (isnull(src.dominatetracker[attacker.mind]))
+			src.dominatetracker[attacker.mind] = list()
+		src.dominatetracker[attacker.mind][M.mind] += 1
+		if (src.dominatetracker[attacker.mind][M.mind] == 4)
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>is DOMINATING</b> [ourname]</div>")
+			playsound_global(list(M.mind.get_player().client), 'sound/misc/podwars/nemesis.ogg', 100)
+			playsound_global(list(attacker.mind.get_player().client), 'sound/misc/podwars/dominating.ogg', 100)
+
+			var/datum/client_image_group/nemesis = get_image_group("nemesis[ref(attacker.mind)]")
+			if (!nemesis.minds_with_associated_mob_image[attacker.mind])
+				var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = "nemesis")
+				antag_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+				nemesis.add_mind_mob_overlay(attacker.mind, antag_icon)
+			nemesis.add_mind(M.mind)
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
