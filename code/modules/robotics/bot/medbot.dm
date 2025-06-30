@@ -526,7 +526,7 @@
 		return 1
 
 	for(var/datum/ailment_data/disease/am in C.ailments)
-		if((am.stage > 1) || (am.spread == "Airborne"))
+		if((am.stage > 1) || (am.spread == AILMENT_SPREAD_AIRBORNE))
 			if (!C.reagents.has_reagent(src.treatment_virus))
 				return 1 //STOP DISEASE FOREVER
 
