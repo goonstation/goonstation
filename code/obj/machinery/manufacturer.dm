@@ -31,6 +31,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	density = TRUE
 	anchored = ANCHORED
 	power_usage = 200
+	usable_with_brain_damage = FALSE
 
 	/// req_access is used to lock out specific features and not limit deconstruction therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
@@ -563,6 +564,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
+		if (src.brain_dmg_check(user))
+			return
 		src.ui_interact(user)
 
 	proc/is_electrified()
