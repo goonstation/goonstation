@@ -3331,9 +3331,8 @@
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "cGq" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -5432,9 +5431,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "dWe" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -13651,9 +13649,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/bridge)
 "jGp" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/camera{
@@ -27778,9 +27775,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "tOi" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -28102,7 +28098,7 @@
 	name = "Communication Mast Shield Control";
 	pixel_y = 24
 	},
-/obj/machinery/computer3/terminal/zeta,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -30346,7 +30342,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "vDN" = (
-/obj/machinery/computer3/terminal/zeta,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -31819,9 +31815,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "wyd" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
 	},
 /obj/machinery/power/data_terminal,
 /obj/decal/poster/wallsign/warning3{
