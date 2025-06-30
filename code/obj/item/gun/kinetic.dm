@@ -157,6 +157,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						user.visible_message("<span class='alert'>[user] loads some ammo into [src].</span>", "<span class='alert'>You load [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.tooltip_rebuild = TRUE
 					src.logme_temp(user, src, b)
+					return
+				if(AMMO_RELOAD_JAMMED)
+					user.show_text("The ammo is jammed! You'll have to dump it by firing it all.", "red")
 
 		else
 			..()
@@ -208,7 +211,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
-
+		else if (src.ammo?.jammy_ammo && src.ammo.amount_left > 0)
+			// If we're here then the ammo is jammy and the gun hasn't got enough ammo to shoot. To make sure it's not bricked,
+			// make it explode and clear out.
+			if(prob(20))
+				var/turf/T = get_turf(src)
+				explosion(src, T,-1,-1,-1,1, range_cutoff_fraction = -1, turf_safe = TRUE)
+				src.ammo.amount_left = 0
 		if (fire_animation)
 			if(src.ammo?.amount_left >= 1)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
@@ -3625,3 +3634,5 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	alter_projectile(obj/projectile/P)
 		. = ..()
 		P.proj_data.shot_sound = 'sound/weapons/long_barrel.ogg'
+
+
