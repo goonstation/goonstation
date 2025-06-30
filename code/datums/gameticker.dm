@@ -425,7 +425,6 @@ var/global/game_force_started = FALSE
 				if (!(player.mind in ticker.minds))
 					if (periodic_check == 1)
 						logTheThing(LOG_DEBUG, player, "<b>Gameticker fallback:</b> re-added player to ticker.minds.")
-
 					else
 						logTheThing(LOG_DEBUG, player, "<b>Gameticker setup:</b> added player to ticker.minds. [player.mind.on_ticker_add_log()]")
 					ticker.minds.Add(player.mind)
