@@ -586,7 +586,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 		cost = 6
 		icon = 'icons/obj/fluidpipes/fluid_tank.dmi'
 		icon_state = "tank"
-		desc = "A very large tank capable of holding 1000 units"
+		desc = "A very large tank capable of holding 4000 units"
 
 		get_directions(dir)
 			return dir
@@ -595,7 +595,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 			name = "See-through fluid tank"
 			path = /obj/fluid_pipe/fluid_tank/see_fluid
 			cost = 7
-			desc = "A very large tank capable of holding 1000 units. This one has a glass view!"
+			desc = "A very large tank capable of holding 4000 units. This one has a glass view!"
 			icon_state = "tank-view"
 
 

@@ -199,17 +199,14 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 		if("pills")
 			var/obj/item/reagent_containers/pill/P = new(get_turf(src))
 			src.reagents.trans_to(P, src.amount)
-			P.pixel_y = 8
 			src.visible_message("[src] ejects a pill.")
 		if("vials")
 			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src))
 			src.reagents.trans_to(V, src.amount)
-			V.pixel_y = 8
 			src.visible_message("[src] ejects a vial.")
 		if("patches")
 			var/obj/item/reagent_containers/patch/P = new(get_turf(src))
 			src.reagents.trans_to(P, src.amount)
-			P.pixel_y = 8
 			src.visible_message("[src] ejects a patch.")
 
 /obj/machinery/fluid_pipe_machinery/unary/dispenser/proc/set_amount(var/datum/mechanicsMessage/input)
@@ -253,6 +250,20 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 	if (!src.automatic)
 		return
 	src.dispense()
+
+/obj/machinery/fluid_pipe_machinery/unary/node
+	name = "Node"
+	desc = "Used for connecting non-fluid machinery to fluid pipes, YOU SHOULDNT SEE THIS"
+	invisibility = INVIS_ALWAYS
+
+/obj/machinery/fluid_pipe_machinery/unary/node/ex_act()
+	return
+
+/obj/machinery/fluid_pipe_machinery/unary/node/meteorhit()
+	return
+
+/obj/machinery/fluid_pipe_machinery/unary/node/updateHealth()
+	return
 
 
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
