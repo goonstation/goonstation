@@ -79,6 +79,7 @@
 			var/mob/living/critter/mimic/mimic = src.user
 			mimic.stop_hiding()
 			mimic.last_disturbed = INFINITY
+			mimic.use_stunned_icon = FALSE
 
 	onUpdate()
 		..()
@@ -94,6 +95,7 @@
 		if (istype(src.user, /mob/living/critter/mimic))
 			var/mob/living/critter/mimic/antag_spawn/mimic = src.user
 			mimic.last_disturbed = 1 SECONDS
+			mimic.use_stunned_icon = TRUE
 		if (ishuman(src.target))
 			var/mob/living/carbon/human/human = src.target
 			src.user.transform = null
