@@ -327,6 +327,10 @@
 		burn *= 2
 		//tox *= 2
 
+	if (src.hasStatus("humiliated"))
+		brute *= 3
+		burn *= 3
+
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
 

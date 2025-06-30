@@ -558,6 +558,39 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	src.playsound_to_team(winner, "sound/voice/pod_wars_voices/{PWTN}Win{ALTS}.ogg", sound_type=PW_WIN)
 	src.playsound_to_team(loser, "sound/voice/pod_wars_voices/{PWTN}Lose{ALTS}.ogg", sound_type=PW_LOSE)
+	for (var/datum/mind/mind as anything in loser.members)
+		var/mob/living/carbon/human/H = mind.current
+		if (!ishuman(H))
+			continue
+		H.setStatusMin("humiliated", INFINITY)
+		H.sever_limb("l_arm")
+		H.sever_limb("r_arm")
+
+	for (var/datum/mind/mind as anything in winner.members)
+		var/mob/living/carbon/human/H = mind.current
+		if (!ishuman(H))
+			continue
+		H.setStatusMin("victorious", INFINITY)
+		var/obj/item/card/id/idcard = H.get_id()
+		if (!idcard)
+			var/obj/item/implant/access/implant = locate(/obj/item/implant/access) in H
+			if (!implant) continue
+			idcard = implant.access
+
+		idcard.access |= list(access_syndicate_shuttle, access_heads)
+
+
+
+	if(winner == team_NT) //putting this in a seperate code block for cleanliness
+		for (var/obj/deployable_turret/pod_wars/sy/turret in world)
+			new/obj/effects/explosion/tiny_baby(get_turf(turret))
+			robogibs(get_turf(turret))
+			qdel(turret)
+	else if(winner == team_SY)
+		for (var/obj/deployable_turret/pod_wars/nt/turret in world)
+			new/obj/effects/explosion/tiny_baby(get_turf(turret))
+			robogibs(get_turf(turret))
+			qdel(turret)
 
 	// output the player stats on its own popup.
 	stats_manager.display_HTML_to_clients()
