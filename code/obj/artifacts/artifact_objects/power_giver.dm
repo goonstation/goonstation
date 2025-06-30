@@ -15,6 +15,8 @@
 	activ_text = "begins glowing with an eerie light!"
 	deact_text = "falls dark and quiet."
 	react_xray = list(10,90,80,10,"NONE")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_ANY
+	combine_effect_priority = ARTIFACT_COMBINATION_TOUCHED
 	var/power_granted = null
 	var/power_time = 0
 	var/recharge_time = 300
