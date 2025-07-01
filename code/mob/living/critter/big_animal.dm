@@ -95,13 +95,15 @@
 	health_brute_vuln = 0.6
 	health_burn = 300
 	health_burn_vuln = 1
-	can_disarm = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/ranged
 	is_npc = TRUE
-	add_abilities = list(/datum/targetable/critter/slam)
+	add_abilities = list(/datum/targetable/critter/slam,
+		/datum/targetable/wraithAbility/command/cultist,
+		/datum/targetable/critter/psyblast,
+		/datum/targetable/critter/teleport)
 	has_genes = TRUE
 
 	New()
@@ -129,6 +131,17 @@
 
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam)
+		var/datum/targetable/critter/telekinesis = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/command/cultist)
+		var/datum/targetable/critter/psyblast = src.abilityHolder.getAbility(/datum/targetable/critter/psyblast/scale)
+		var/datum/targetable/critter/teleport = src.abilityHolder.getAbility(/datum/targetable/critter/teleport)
 		if (!slam.disabled && slam.cooldowncheck() && prob(40))
 			slam.handleCast(target)
 			return TRUE
+		if (!telekinesis.disabled && telekinesis.cooldowncheck() && prob(10))
+			telekinesis.handleCast(target.loc)
+			return TRUE
+		if (!psyblast.disabled && psyblast.cooldowncheck() && !teleport.disabled && teleport.cooldowncheck() && prob(10))
+			psyblast.handleCast(target)
+			teleport.handleCast(target)
+			return TRUE
+

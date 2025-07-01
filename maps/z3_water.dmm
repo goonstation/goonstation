@@ -58,7 +58,9 @@
 	color = null;
 	name = "water fountain"
 	},
-/obj/machinery/power/apc/autoname_south/nopoweralert,
+/obj/machinery/power/apc/autoname_south/nopoweralert{
+	circuit_disabled = 1
+	},
 /obj/cable/green{
 	icon_state = "0-8"
 	},
@@ -3483,10 +3485,6 @@
 	dir = 8
 	},
 /area/cult_base/leader)
-"qA" = (
-/mob/living/critter/aquatic/fish/jellyfish,
-/turf/space/fluid/noexplosion,
-/area/cult_base/leader/outdoors)
 "qL" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/unsimulated/floor,
@@ -3690,7 +3688,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/small/sticky/greenish,
-/obj/mapping_helper/mob_spawn/corpse/human/cultist/acolyte,
+/obj/mapping_helper/mob_spawn/corpse/human/cultist/leader,
 /turf/unsimulated/floor/specialroom/freezer/blue,
 /area/cult_base/acolyte/bedrooms)
 "uG" = (
@@ -3810,6 +3808,12 @@
 /obj/decal/cleanable/tomatosplat,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"xU" = (
+/obj/cable/green{
+	icon_state = "4-8"
+	},
+/turf/space,
+/area/space)
 "xW" = (
 /obj/cable/green{
 	icon_state = "1-4"
@@ -3923,6 +3927,12 @@
 "zK" = (
 /obj/railing/purple/reinforced{
 	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/cult_base/leader)
+"zM" = (
+/obj/shrub/dead{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/cult_base/leader)
@@ -4077,9 +4087,9 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "CT" = (
-/obj/item/weldingtool,
-/turf/space/fluid/noexplosion,
-/area/cult_base)
+/obj/shrub/dead,
+/turf/unsimulated/floor/grime,
+/area/cult_base/initate)
 "CX" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/green,
@@ -4136,6 +4146,10 @@
 	},
 /turf/unsimulated/floor,
 /area/cult_base/leader)
+"Eb" = (
+/obj/item/weldingtool,
+/turf/space/fluid/noexplosion,
+/area/cult_base)
 "Ee" = (
 /obj/decal/cleanable/blood/gibs/core,
 /turf/space/fluid/noexplosion,
@@ -4570,12 +4584,6 @@
 /obj/item/organ/brain,
 /turf/space/fluid/noexplosion,
 /area/cult_base)
-"NQ" = (
-/obj/shrub/dead{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/cult_base/leader)
 "NX" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable/green{
@@ -4675,10 +4683,6 @@
 /obj/item/material_piece/plasmacoral,
 /turf/space/fluid/noexplosion,
 /area/cult_base/leader/outdoors)
-"PP" = (
-/obj/shrub/dead,
-/turf/unsimulated/floor/grime,
-/area/cult_base/initate)
 "PV" = (
 /obj/machinery/light/small/sticky/greenish{
 	dir = 4
@@ -4765,6 +4769,10 @@
 /mob/living/critter/aquatic/fish/butterfly/spotted,
 /turf/space/fluid/noexplosion,
 /area/cult_base/acolyte/outdoors)
+"Sh" = (
+/mob/living/critter/aquatic/fish/jellyfish,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "Sk" = (
 /obj/npc/trader/martian,
 /turf/unsimulated/floor/martian,
@@ -4839,7 +4847,7 @@
 /area/evilreaver/security)
 "TS" = (
 /obj/item/storage/toilet,
-/mob/living/critter/human/cultist/acolyte/pistol/key2,
+/mob/living/critter/human/cultist/imposter/pistol/key2,
 /turf/unsimulated/floor/specialroom/freezer/blue,
 /area/cult_base/acolyte/bedrooms)
 "TX" = (
@@ -5083,17 +5091,12 @@
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "Zg" = (
-/obj/machinery/power/apc/autoname_north/nopoweralert{
-	environ = 2;
-	equipment = 2;
-	lighting = 2;
-	locked = 0;
-	operating = 0;
-	start_charge = 23
-	},
 /obj/stool,
 /obj/cable/green{
 	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_north/nopoweralert{
+	circuit_disabled = 1
 	},
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
@@ -18458,7 +18461,7 @@ gW
 gW
 gW
 gW
-gW
+xU
 gW
 gW
 gW
@@ -24778,7 +24781,7 @@ WQ
 WQ
 EA
 EA
-PP
+CT
 WQ
 WQ
 WQ
@@ -27479,7 +27482,7 @@ BO
 BO
 BO
 qR
-CT
+Eb
 ws
 ws
 ws
@@ -32629,7 +32632,7 @@ HW
 HW
 HW
 HW
-NQ
+zM
 uO
 uO
 Yj
@@ -33536,7 +33539,7 @@ BA
 jW
 HW
 OO
-qA
+Sh
 yW
 yW
 yW

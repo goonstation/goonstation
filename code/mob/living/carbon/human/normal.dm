@@ -54,10 +54,6 @@
 			..()
 			src.equip_if_possible(new /obj/item/clothing/suit/cultist, SLOT_WEAR_SUIT)
 
-		key2
-			New()
-				..()
-				src.equip_if_possible(new /obj/item/cult_sigil, SLOT_L_STORE)
 	leader
 		New()
 			..()
@@ -67,6 +63,19 @@
 			New()
 				..()
 				src.equip_if_possible(new /obj/item/cult_sigil_pt1, SLOT_L_STORE)
+
+/mob/living/carbon/human/normal/cultist_imposter
+	New()
+		..()
+		src.equip_new_if_possible(/obj/item/clothing/mask/hastur, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/yellow, SLOT_W_UNIFORM)
+		src.equip_if_possible(new /obj/item/clothing/shoes/orange, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/suit/cultist/hastur, SLOT_WEAR_SUIT)
+
+	key2
+		New()
+			..()
+			src.equip_if_possible(new /obj/item/cult_sigil, SLOT_L_STORE)
 
 /mob/living/carbon/human/normal/captain
 	New()

@@ -391,11 +391,6 @@
 			..()
 			src.corpse.equip_new_if_possible(/obj/item/clothing/suit/cultist, SLOT_WEAR_SUIT)
 
-		key2
-			setup()
-				..()
-				src.corpse.equip_new_if_possible(/obj/item/cult_sigil, SLOT_L_STORE)
-
 	leader
 		setup()
 			..()
@@ -411,6 +406,22 @@
 			setup()
 				..()
 				src.corpse.equip_new_if_possible(/obj/item/cult_sigil_pt3, SLOT_L_STORE)
+
+/obj/mapping_helper/mob_spawn/corpse/human/cultist_imposter // For the hastur guy
+	spawn_type = /mob/living/carbon/human/normal
+	decomp_stage = DECOMP_STAGE_BLOATED
+
+	setup()
+		..()
+		src.corpse.equip_new_if_possible(/obj/item/clothing/mask/hastur, SLOT_WEAR_MASK)
+		src.corpse.equip_new_if_possible(/obj/item/clothing/under/color/yellow, SLOT_W_UNIFORM)
+		src.corpse.equip_if_possible(new /obj/item/clothing/shoes/orange, SLOT_SHOES)
+		src.corpse.equip_new_if_possible(/obj/item/clothing/suit/cultist/hastur, SLOT_WEAR_SUIT)
+
+	key2
+		setup()
+			..()
+			src.corpse.equip_new_if_possible(/obj/item/cult_sigil, SLOT_L_STORE)
 
 //////////////////////// Critter corpses ////////////////////////
 
