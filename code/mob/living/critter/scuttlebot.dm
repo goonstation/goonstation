@@ -5,6 +5,7 @@
 	icon_state = "scuttlebot"
 	flags = TABLEPASS | DOORPASS
 	hand_count = 1
+	density = FALSE
 	can_help = TRUE
 	can_throw = TRUE
 	can_grab = FALSE
