@@ -460,5 +460,5 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 
 	New()
 		..()
-		src.abilityHolder = new /datum/abilityHolder/generic(src)
-		src.addAbility(/datum/targetable/geneticsAbility/ghost_walk_return)
+		src.abilityHolder = new /datum/abilityHolder/gimmick(src)
+		src.addAbility(/datum/targetable/gimmick/ghost_walk_return)

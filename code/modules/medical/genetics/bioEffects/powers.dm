@@ -2395,20 +2395,22 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (ishuman(owner))
 			owner.changeStatus("ghost_walk_effect", 30 SECONDS)
 
-/datum/targetable/geneticsAbility/ghost_walk_return // Return ability, on the ghost
+/datum/targetable/gimmick/ghost_walk_return // Return ability, on the ghost
 	name = "Spectral Anchor"
 	desc = "Return to your body."
+	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "ghost_ascend"
 	targeted = FALSE
+	var/datum/statusEffect/art_curse/displaced_soul/gene/GeneBuff
 
 	cast()
 		if (..())
 			return 1
 
 		if (istype(holder.owner, /mob/living/intangible/art_curser_displaced_soul/gene))
-			var/datum/statusEffect/art_curse/displaced_soul/gene/GE = holder.owner.hasStatus("ghost_walk_soul")
+			GeneBuff = holder.owner.hasStatus("ghost_walk_soul")
 			boutput(holder.owner, "You return to your body!")
-			GE.original_body.delStatus("ghost_walk_effect")
+			GeneBuff.original_body.delStatus("ghost_walk_effect")
 
 
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
