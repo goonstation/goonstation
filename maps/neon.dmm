@@ -3331,9 +3331,8 @@
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "cGq" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -5432,9 +5431,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "dWe" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -7607,9 +7605,7 @@
 	},
 /area/station/hallway/primary/north)
 "fpR" = (
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
@@ -8844,11 +8840,11 @@
 	},
 /obj/item/clothing/glasses/healthgoggles{
 	pixel_x = 7;
-	pixel_y = 7
+	pixel_y = 3
 	},
 /obj/item/clothing/glasses/healthgoggles{
 	pixel_x = -5;
-	pixel_y = 7
+	pixel_y = 3
 	},
 /obj/item/robodefibrillator,
 /obj/item_dispenser/latex_gloves{
@@ -9813,6 +9809,7 @@
 /area/tech_outpost)
 "gRJ" = (
 /obj/machinery/disposal_pipedispenser,
+/obj/marker/supplymarker,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "gRV" = (
@@ -13652,9 +13649,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/bridge)
 "jGp" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/camera{
@@ -26193,9 +26189,16 @@
 /area/station/crew_quarters/barber_shop)
 "sKW" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/cryo,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = -4
+	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/paper/cryo{
+	pixel_y = 6;
+	pixel_x = 4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -27772,9 +27775,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "tOi" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -28096,7 +28098,7 @@
 	name = "Communication Mast Shield Control";
 	pixel_y = 24
 	},
-/obj/machinery/computer3/terminal/zeta,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -30340,7 +30342,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "vDN" = (
-/obj/machinery/computer3/terminal/zeta,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -30528,6 +30530,7 @@
 /area/station/bridge)
 "vJu" = (
 /obj/machinery/light/incandescent/warm,
+/obj/marker/supplymarker,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "vJG" = (
@@ -30563,6 +30566,12 @@
 /obj/machinery/navbeacon/mule/engineering_north/east,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
+"vKk" = (
+/obj/machinery/computer/card{
+	dir = 1
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/cargo)
 "vLe" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -31806,9 +31815,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "wyd" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
 	},
 /obj/machinery/power/data_terminal,
 /obj/decal/poster/wallsign/warning3{
@@ -91811,7 +91819,7 @@ wXY
 iwJ
 pnv
 dFK
-dFK
+vKk
 yjM
 tlt
 hrg

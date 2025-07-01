@@ -192,7 +192,7 @@ TYPEINFO(/obj/machinery/navbeacon)
 
 	attackby(var/obj/item/I, var/mob/user)
 		var/turf/T = loc
-		if (T.intact)
+		if (T.intact && !istype(T, /turf/space))
 			return		// prevent intraction when T-scanner revealed
 
 		if (isscrewingtool(I))

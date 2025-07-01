@@ -72354,8 +72354,8 @@
 /area/station/science/lab)
 "vjS" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/submachine/poster_creator,
 /obj/machinery/firealarm/north,
+/obj/machinery/computer/card,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},

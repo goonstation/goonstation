@@ -232,6 +232,9 @@
 				icon_state = "dwaine2"
 				base_icon_state = "dwaine2"
 
+			os_loaded
+				setup_os_string = "ZETA_MAINFRAME"
+
 
 	luggable //A portable(!!) computer 3. Cards cannot be exchanged.
 		name = "portable computer"
