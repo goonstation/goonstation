@@ -3323,6 +3323,7 @@
 			id = "ghost_walk_effect"
 			duration = 30
 			cursetype = "ghost_walk_soul"
+			desc = "Your body is vacant with the soul wandering." // Shouldn't be seen by the user, but ghosts could I guess.
 			soul = /mob/living/intangible/art_curser_displaced_soul/gene
 			gene = TRUE
 

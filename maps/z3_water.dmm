@@ -58,6 +58,10 @@
 	color = null;
 	name = "water fountain"
 	},
+/obj/machinery/power/apc/autoname_south/nopoweralert,
+/obj/cable/green{
+	icon_state = "0-8"
+	},
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "aW" = (
@@ -3190,7 +3194,6 @@
 /obj/table/wood/auto,
 /obj/machinery/light/small/floor/greenish,
 /obj/item/gun/kinetic/webley,
-/obj/item/ammo/bullets/webley,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "mk" = (
@@ -3305,14 +3308,6 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "nU" = (
-/obj/machinery/power/apc/autoname_north/nopoweralert{
-	environ = 2;
-	equipment = 2;
-	lighting = 2;
-	locked = 0;
-	operating = 0;
-	start_charge = 23
-	},
 /obj/machinery/power/furnace,
 /obj/cable/green{
 	icon_state = "0-2"
@@ -3488,6 +3483,10 @@
 	dir = 8
 	},
 /area/cult_base/leader)
+"qA" = (
+/mob/living/critter/aquatic/fish/jellyfish,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "qL" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/unsimulated/floor,
@@ -4078,11 +4077,9 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "CT" = (
-/obj/cable/green{
-	icon_state = "2-8"
-	},
-/turf/unsimulated/floor,
-/area/cult_base/acolyte)
+/obj/item/weldingtool,
+/turf/space/fluid/noexplosion,
+/area/cult_base)
 "CX" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/green,
@@ -4573,6 +4570,12 @@
 /obj/item/organ/brain,
 /turf/space/fluid/noexplosion,
 /area/cult_base)
+"NQ" = (
+/obj/shrub/dead{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "NX" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable/green{
@@ -4672,6 +4675,10 @@
 /obj/item/material_piece/plasmacoral,
 /turf/space/fluid/noexplosion,
 /area/cult_base/leader/outdoors)
+"PP" = (
+/obj/shrub/dead,
+/turf/unsimulated/floor/grime,
+/area/cult_base/initate)
 "PV" = (
 /obj/machinery/light/small/sticky/greenish{
 	dir = 4
@@ -4749,7 +4756,9 @@
 /obj/decal/cleanable/ranch_feed,
 /obj/decal/cleanable/ranch_feed,
 /obj/decal/cleanable/ranch_feed,
-/mob/living/critter/small_animal/ranch_base/chicken/purple/ai_controlled,
+/mob/living/critter/small_animal/ranch_base/chicken/purple/ai_controlled{
+	faction = list("deepcult")
+	},
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "Sb" = (
@@ -24769,7 +24778,7 @@ WQ
 WQ
 EA
 EA
-EA
+PP
 WQ
 WQ
 WQ
@@ -27470,7 +27479,7 @@ BO
 BO
 BO
 qR
-ws
+CT
 ws
 ws
 ws
@@ -31097,7 +31106,7 @@ JC
 LV
 CZ
 kc
-CT
+Lu
 oF
 Wu
 Wu
@@ -31399,7 +31408,7 @@ Mg
 LV
 CZ
 CZ
-CZ
+aG
 Vd
 Vd
 Vd
@@ -32620,7 +32629,7 @@ HW
 HW
 HW
 HW
-HW
+NQ
 uO
 uO
 Yj
@@ -33527,7 +33536,7 @@ BA
 jW
 HW
 OO
-yW
+qA
 yW
 yW
 yW

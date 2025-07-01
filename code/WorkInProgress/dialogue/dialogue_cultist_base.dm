@@ -336,6 +336,8 @@
 
 	proc/lever_hv(mob/user)
 		for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
+			for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
+				arcFlashTurf(C, R.loc, 50, 50)
 			new /mob/living/critter/void_scale(R.loc)
 		for(var/atom/movable/mysterious_beast/B in (range(7)))
 			qdel(B)
@@ -354,6 +356,8 @@
 			new /obj/item/siren_orb(R.loc)
 		for(var/atom/movable/mysterious_beast/B in (range(7)))
 			qdel(B)
+		for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
+			animate_little_spark(C)
 		shake_camera(user, 4, 4)
 		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
 		D.dir = 4

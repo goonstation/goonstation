@@ -2399,18 +2399,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Spectral Anchor"
 	desc = "Return to your body."
 	icon_state = "ghost_ascend"
-	needs_hands = FALSE
 	targeted = FALSE
 
 	cast()
 		if (..())
 			return 1
 
-		if (istype(owner, /mob/living/intangible/art_curser_displaced_soul/gene))
-			var/mob/living/intangible/art_curser_displaced_soul/gene/G = owner
-			boutput(owner, "You return to your body!")
-			for(var/datum/statusEffect/art_curse/displaced_soul/gene/GE in G.statusEffects)
-				GE.original_body.delStatus("ghost_walk_effect")
+		if (istype(holder.owner, /mob/living/intangible/art_curser_displaced_soul/gene))
+			var/datum/statusEffect/art_curse/displaced_soul/gene/GE = holder.owner.hasStatus("ghost_walk_soul")
+			boutput(holder.owner, "You return to your body!")
+			GE.original_body.delStatus("ghost_walk_effect")
 
 
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
@@ -2418,7 +2416,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 	id = "critter_do_not_use"
 
 /datum/bioEffect/power/critter/peck
-	name = "Aviornis Rostriformis "
+	name = "Aviornis Rostriformis"
 	desc = "Generates a hardened keratin area between the mouth and nose."
 	id = "beak_peck"
 	msgGain = "You feel your mouth and nose become more difficult to move."
