@@ -2867,11 +2867,11 @@
 		src.heatTracker = null
 		qdel(heatTracker)
 
-	/// Look for & remember players in this gang's sight range
+	/// Look for & remember players in this tag's sight range
 	proc/find_players()
 		for(var/mob/M in range(GANG_TAG_SIGHT_RANGE, src.loc))
 			if (IN_EUCLIDEAN_RANGE(src,M,GANG_TAG_SIGHT_RANGE))
-				if(M.client && isalive(M))
+				if(M.client && isalive(M) && !isganger(M))
 					mobs[M] = TRUE //remember mob
 
 	/// Adds heat to this tag based upon how many mobs it's remembered. Then forgets all mobs it's seen and cools down.
