@@ -16,10 +16,18 @@ var/global/list/modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 var/global/list/dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
 /// Assoc. list of dirs like `"[NORTH]" = "NORTH"`, useful for screen_loc
 var/global/list/dirvalues = list("[NORTH]" = "NORTH", "[SOUTH]" = "SOUTH", "[EAST]" = "EAST", "[WEST]" = "WEST", "[NORTHEAST]" = "NORTHEAST", "[SOUTHEAST]" = "SOUTHEAST", "[SOUTHWEST]" = "SOUTHWEST", "[NORTHWEST]" = "NORTHWEST")
-
+//var/global/list/reverse_dirs = list(NORTH = SOUTH, SOUTH = NORTH, EAST = WEST, WEST = EAST, NORTHEAST = SOUTHWEST, SOUTHEAST = NORTHWEST, SOUTHWEST = NORTHWEST, NORTHWEST = SOUTHEAST)
 /// Returns the lowercase english word for a direction (num)
 /proc/dir_to_dirname(dir)
 	return lowertext(global.dirvalues["[dir]"])
+
+/// Gets the reverse direction of the direction given. SOUTH returns NORTH, SOUTHEAST returns NORTHWEST, etc.
+/proc/reverse_dir(dir)
+    if(dir & (NORTH|SOUTH))
+        dir ^= (NORTH|SOUTH)
+    if(dir & (EAST|WEST))
+        dir ^= (EAST|WEST)
+    return dir
 
 /// Returns the direction (num) of a given lowercase english direction
 proc/dirname_to_dir(dirname)

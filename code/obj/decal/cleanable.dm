@@ -993,6 +993,15 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "juice_tomato"
 
+/obj/decal/cleanable/bananasplat
+	name = "smeared banana flesh"
+	desc = "As you gaze upon this unceremoniously tenebrous sight the fleeting wind seems to stir upon your ears. It whispers \"shenanigans\"."
+	icon = 'icons/obj/decals/blood/blood.dmi'
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	color = "#fef2c2"
+	slippery = 10
+
 /obj/decal/cleanable/eggsplat
 	name = "smashed egg"
 	desc = "Chickens will be none too pleased about this."

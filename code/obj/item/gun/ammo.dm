@@ -1568,7 +1568,9 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		// rock-plants and money tree don't work right
 		var/obj/item/temp_item = new crop
 		temp_item.HYPsetup_DNA(passed_genes, harvested_plantpot, origin_plant, quality_status, h_data)
-
+		// use the unique bullet type of the plant, if any
+		if (h_data.growing.bullet)
+			ammo_type = new h_data.growing.bullet
 		src.reagents = new/datum/reagents(10)
 		HYPadd_harvest_reagents(src, h_data.growing, h_data.DNA)
 		src.ammo_type.reagent_payload = src.reagents.get_all_reagent_ids()

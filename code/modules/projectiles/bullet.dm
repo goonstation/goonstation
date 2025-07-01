@@ -2496,13 +2496,60 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	maximum_reagent_payload = 1000
 	projectile_speed = 20
 	implanted = /obj/item/implant/projectile/produce
+	var/obj/decal/hit_decal
+
+	// TODO, move this somewhere so it's more generic
+	proc/randomize_edge_offset(atom/target, dir, max_variation = 8)
+		var/pixel_x = 0
+		var/pixel_y = 0
+		var/edge_offset = 13
+
+		if(dir & NORTH)
+			pixel_y = edge_offset
+		else if(dir & SOUTH)
+			pixel_y = -edge_offset
+
+		if(dir & EAST)
+			pixel_x = edge_offset
+		else if(dir & WEST)
+			pixel_x = -edge_offset
+
+		if(dir & (NORTH|SOUTH))
+			pixel_x += rand(-max_variation, max_variation)
+		else if(dir & (EAST|WEST))
+			pixel_y += rand(-max_variation, max_variation)
+		else
+			pixel_x += rand(-max_variation, max_variation) * 0.7
+			pixel_y += rand(-max_variation, max_variation) * 0.7
+
+		pixel_x = clamp(pixel_x, -edge_offset, edge_offset)
+		pixel_y = clamp(pixel_y, -edge_offset, edge_offset)
+
+		target.pixel_x = pixel_x
+		target.pixel_y = pixel_y
 
 	tick(var/obj/projectile/O)
 		O.transform = O.transform.Turn(83)
 		return
 
 	on_hit(atom/hit, angle, obj/projectile/O)
+		..()
 		var/mob/living/target = hit
 		if (target && target.reagents && O.reagents)
 			O.reagents.reaction(target, TOUCH)
-		return
+		if (hit_decal)
+			var/turf/turf = get_turf(hit)
+			var/obj/decal/new_decal = new hit_decal
+			new_decal.set_loc(turf)
+			new_decal.setup(turf)
+
+	banana
+		hit_decal = /obj/decal/cleanable/bananasplat
+		on_hit(atom/hit, angle, obj/projectile/O)
+			..()
+			var/obj/peel = new /obj/item/bananapeel
+			var/turf/turf = get_turf(hit)
+			if (!ismob(hit))
+				turf = get_step(hit, reverse_dir(angle))
+				randomize_edge_offset(peel, angle)
+			peel.set_loc(turf)
