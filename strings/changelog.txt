@@ -1,7 +1,7 @@
 
 (t)mon jun 30 25
 (u)LeahTheTech
-(+)Gunbots now have unique speach sounds.
+(+)Gunbots now have unique speech sounds.
 (u)JORJ949
 (p)23989
 (e)🆕🔨|C-Feature, A-Player-Actions
