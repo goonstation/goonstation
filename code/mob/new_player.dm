@@ -255,6 +255,7 @@ TYPEINFO(/mob/new_player)
 						else
 							S.job = "Cyborg"
 							S.mind.assigned_role = "Cyborg"
+						S.traitHolder.removeTrait("cyber_incompatible")
 						S.mind.join_time = world.time
 						logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
 						ticker.minds += S.mind
