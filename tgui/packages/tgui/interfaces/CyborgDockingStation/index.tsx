@@ -29,7 +29,7 @@ export const CyborgDockingStation = () => {
   return (
     <Window
       width={500}
-      height={640}
+      height={530}
       title="Cyborg Docking Station"
       theme={
         conversion_chamber && occupant?.kind === 'human'
@@ -45,7 +45,7 @@ export const CyborgDockingStation = () => {
             viewerIsRobot={!!viewer_is_robot}
           />
         )}
-        <Stack>
+        <Stack fill>
           <Stack.Item>
             <Tabs vertical width="100px">
               <Tabs.Tab

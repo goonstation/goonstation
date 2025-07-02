@@ -60,7 +60,7 @@ export const TeleConsole = () => {
 
   return (
     <Window theme="ntos" width={410} height={515}>
-      <Window.Content textAlign="center">
+      <Window.Content scrollable textAlign="center">
         <Stack vertical fill>
           <Stack.Item>
             <Tabs>

@@ -42,44 +42,46 @@ export const SuppliesSection = () => {
     act('cell-install', { cellRef });
   const handleEjectCell = (cellRef: string) => act('cell-eject', { cellRef });
   return (
-    <Section title="Supplies">
-      <LabeledList>
-        <LabeledList.Item label="Welding Fuel">{fuel}</LabeledList.Item>
-        <LabeledList.Item label="Wire Cabling">{cabling}</LabeledList.Item>
-        <LabeledList.Item label="Self Service">
-          <Button.Checkbox
-            tooltip="Toggle self-service."
-            checked={allow_self_service}
-            disabled={viewer_is_robot}
-            onClick={handleToggleSelfService}
-          >
-            {allow_self_service ? 'Enabled' : 'Disabled'}
-          </Button.Checkbox>
-        </LabeledList.Item>
-      </LabeledList>
-      <StandardAvailableSection
-        items={modules}
-        onInstall={handleInstallModule}
-        onEject={handleEjectModule}
-        title="Modules"
-      />
-      <StandardAvailableSection
-        items={upgrades}
-        onInstall={handleInstallUpgrade}
-        onEject={handleEjectUpgrade}
-        title="Upgrades"
-      />
-      <AvailableCellsSection
-        items={cells}
-        onInstall={handleInstallCell}
-        onEject={handleEjectCell}
-      />
-      <StandardAvailableSection
-        items={clothes}
-        onInstall={handleInstallClothing}
-        onEject={handleEjectClothing}
-        title="Upgrades"
-      />
-    </Section>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Section title="Supplies">
+        <LabeledList>
+          <LabeledList.Item label="Welding Fuel">{fuel}</LabeledList.Item>
+          <LabeledList.Item label="Wire Cabling">{cabling}</LabeledList.Item>
+          <LabeledList.Item label="Self Service">
+            <Button.Checkbox
+              tooltip="Toggle self-service."
+              checked={allow_self_service}
+              disabled={viewer_is_robot}
+              onClick={handleToggleSelfService}
+            >
+              {allow_self_service ? 'Enabled' : 'Disabled'}
+            </Button.Checkbox>
+          </LabeledList.Item>
+        </LabeledList>
+        <StandardAvailableSection
+          items={modules}
+          onInstall={handleInstallModule}
+          onEject={handleEjectModule}
+          title="Modules"
+        />
+        <StandardAvailableSection
+          items={upgrades}
+          onInstall={handleInstallUpgrade}
+          onEject={handleEjectUpgrade}
+          title="Upgrades"
+        />
+        <AvailableCellsSection
+          items={cells}
+          onInstall={handleInstallCell}
+          onEject={handleEjectCell}
+        />
+        <StandardAvailableSection
+          items={clothes}
+          onInstall={handleInstallClothing}
+          onEject={handleEjectClothing}
+          title="Clothing"
+        />
+      </Section>
+    </div>
   );
 };

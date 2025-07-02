@@ -22,7 +22,7 @@ export const LongRangeTeleporter = () => {
 
   return (
     <Window theme={syndicate ? 'syndicate' : 'ntos'} width={390} height={380}>
-      <Window.Content>
+      <Window.Content scrollable>
         <Section title="Destinations">
           <LabeledList>
             {destinations.length ? (

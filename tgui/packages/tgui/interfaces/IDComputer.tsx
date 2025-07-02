@@ -58,24 +58,33 @@ export const DeptBox = (props) => {
                 </Button>
               )}
               {isCustomRank && (
-                <>
-                  {job}
-                  <Button
-                    icon="save"
-                    tooltip="Save"
-                    onClick={() => act('save', { save: index + 1 })}
-                    pl="10px"
-                    mx="0.2rem"
-                  />
-                  <Button
-                    icon="check"
-                    tooltip="Apply"
-                    onClick={() => act('apply', { apply: index + 1 })}
-                    pl="10px"
-                    mx="0.2rem"
-                    mr="1rem"
-                  />
-                </>
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    gap: '1rem',
+                    alignItems: 'center',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <span>{job}</span>
+                  <div
+                    style={{
+                      display: 'flex',
+                      gap: '0.25rem',
+                    }}
+                  >
+                    <Button
+                      icon="save"
+                      tooltip="Save"
+                      onClick={() => act('save', { save: index + 1 })}
+                    />
+                    <Button
+                      icon="check"
+                      tooltip="Apply"
+                      onClick={() => act('apply', { apply: index + 1 })}
+                    />
+                  </div>
+                </div>
               )}
             </>
           );

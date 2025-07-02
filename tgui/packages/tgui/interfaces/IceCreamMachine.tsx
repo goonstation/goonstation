@@ -52,7 +52,7 @@ export const StandardFlavors = () => {
               ', 1)'
             }
             name="circle"
-            pt={1}
+            mr={1}
             style={{ textShadow: '0 0 3px #000' }}
           />
           {flavor.name}
