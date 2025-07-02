@@ -42,7 +42,7 @@ export const SuppliesSection = () => {
     act('cell-install', { cellRef });
   const handleEjectCell = (cellRef: string) => act('cell-eject', { cellRef });
   return (
-    <Section title="Supplies" style={{ height: '100%' }}>
+    <Section title="Supplies">
       <LabeledList>
         <LabeledList.Item label="Welding Fuel">{fuel}</LabeledList.Item>
         <LabeledList.Item label="Wire Cabling">{cabling}</LabeledList.Item>

@@ -22,7 +22,7 @@ export const OccupantSection = () => {
   const handleEjectOccupant = () => act('occupant-eject');
   const handleRenameOccupant = () => act('occupant-rename');
   return (
-    <Section title="Occupant" style={{ height: '100%' }}>
+    <Section title="Occupant">
       <Stack>
         <Stack.Item grow={1}>
           {hasOccupant ? (

@@ -45,7 +45,7 @@ export const CyborgDockingStation = () => {
             viewerIsRobot={!!viewer_is_robot}
           />
         )}
-        <Stack fill>
+        <Stack>
           <Stack.Item>
             <Tabs vertical width="100px">
               <Tabs.Tab
