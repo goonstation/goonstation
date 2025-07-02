@@ -404,6 +404,7 @@
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
 	icon_state = "satchel"
+	item_state = "satchel"
 	wear_layer = MOB_BACK_LAYER_SATCHEL // satchels show over the tail of lizards normally, they should be BEHIND the tail
 	satchel_variant = null
 
@@ -487,19 +488,23 @@
 	name = "Captain's Satchel"
 	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 	icon_state = "capsatchel"
+	item_state = "capsatchel"
 
 	blue
 		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capsatchel_blue"
+		item_state = "capsatchel_blue"
 
 	red
 		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capsatchel_red"
+		item_state = "capsatchel_red"
 
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's shoulder."
 	icon_state = "satchel_medic"
+	item_state = "satchel_medic"
 
 /obj/item/storage/backpack/satchel/security
 	name = "security satchel"
