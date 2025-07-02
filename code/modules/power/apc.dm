@@ -26,7 +26,6 @@ TYPEINFO(/obj/machinery/power/apc)
 		var/area/A = get_area(T)
 		return A.area_apc == null
 
-
 ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
 
 /obj/machinery/power/apc
