@@ -1,8 +1,15 @@
 /obj/item/artifact/agitator
 	name = "artifact agitator"
 	associated_datum = /datum/artifact/agitator
+	var/use_cd
+
+	New()
+		..()
+		src.use_cd = rand(30, 60) SECONDS
 
 	afterattack(atom/target, mob/user, reach, params)
+		if (!src.ArtifactSanityCheck())
+			return
 		var/datum/artifact/agitator/src_art = src.artifact
 		if (!src_art.activated)
 			return ..()
@@ -12,7 +19,7 @@
 		if (!O.artifact.activated)
 			return ..()
 		. = ..()
-		if (ON_COOLDOWN(src, "artifact_agitation", rand(30, 180) SECONDS))
+		if (ON_COOLDOWN(src, "artifact_agitation", src.use_cd))
 			boutput(user, SPAN_NOTICE("[src] doesn't seem to do anything. Hm."))
 			return
 
@@ -22,6 +29,8 @@
 			if (prob(5))
 				for (var/i in 1 to rand(1, 3))
 					O.ArtifactDevelopFault(100)
+				boutput(user, SPAN_ALERT("[src] burns your hand! Fuck that hurt!"))
+				user.TakeDamage("All", burn = rand(1, 10))
 			else
 				O.ArtifactDevelopFault(100)
 		else
@@ -32,6 +41,15 @@
 				fault.trigger_prob *= 10
 
 		playsound(get_turf(src), pick(src_art.artitype.activation_sounds), 30, TRUE)
+		boutput(user, SPAN_ALERT("[src] suddenly darkens, then returns to its regular color."))
+		animate(src, 1 SECOND, color = "#000000")
+		SPAWN(4 SECONDS)
+			animate(src, 1 SECOND, color = null)
+		SPAWN(src.use_cd)
+			if (QDELETED(src))
+				return
+			var/turf/T = get_turf(src)
+			T.visible_message(SPAN_ALERT("[src] vibrates alarmingly!"))
 
 /datum/artifact/agitator
 	associated_object = /obj/item/artifact/agitator
