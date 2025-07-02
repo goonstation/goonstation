@@ -15,20 +15,22 @@
 			var/list/art_faults = list()
 			for (var/datum/artifact_fault/fault in O.artifact.faults)
 				art_faults += fault.type_name
-			src.say("Analysis results:")
-			sleep(0.1 SECONDS)
-			src.say("Origin disguised: [O.artifact.disguised ? "Yes" : "No"]")
-			sleep(0.1 SECONDS)
-			src.say("Activation method: [art.trigger_names_assoc[activating_trigger.type]]")
-			sleep(0.1 SECONDS)
-			src.say("Faults: [length(art_faults) ? english_list(art_faults) : "None"]")
-			sleep(0.1 SECONDS)
-			//src.say("Artifacts combined: [length(O.combined_artifacts) || 0]"))
+			SPAWN(0)
+				src.say("Analysis results:")
+				sleep(0.1 SECONDS)
+				src.say("Origin disguised: [O.artifact.disguised ? "Yes" : "No"]")
+				sleep(0.1 SECONDS)
+				src.say("Activation method: [art.trigger_names_assoc[activating_trigger.type]]")
+				sleep(0.1 SECONDS)
+				src.say("Faults: [length(art_faults) ? english_list(art_faults) : "None"]")
+				sleep(0.1 SECONDS)
+				//src.say("Artifacts combined: [length(O.combined_artifacts) || 0]"))
 		else
 			if ("\ref[O]" in art.scanned_artifacts)
-				for (var/str in art.scanned_artifacts["\ref[O]"])
-					src.say(str)
-					sleep(0.1 SECONDS)
+				SPAWN(0)
+					for (var/str in art.scanned_artifacts["\ref[O]"])
+						src.say(str)
+						sleep(0.1 SECONDS)
 			else
 				if (length(O.artifact.triggers))
 					var/datum/artifact_trigger/activating_trigger = O.artifact.triggers[1]
@@ -44,9 +46,10 @@
 				else
 					art.scanned_artifacts["\ref[O]"] = list("Analysis results:",
 						"Possible activation methods: None")
-				for (var/str in art.scanned_artifacts["\ref[O]"])
-					src.say(str)
-					sleep(0.1 SECONDS)
+				SPAWN(0)
+					for (var/str in art.scanned_artifacts["\ref[O]"])
+						src.say(str)
+						sleep(0.1 SECONDS)
 
 /datum/artifact/archivist
 	associated_object = /obj/item/artifact/archivist
