@@ -1062,6 +1062,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_launch(var/obj/projectile/P)
 		..()
 		P.collide_with_other_projectiles = 1
+		P.alpha = 200
 
 	on_hit(atom/hit, direction, var/obj/projectile/P)
 		..()
