@@ -3161,13 +3161,13 @@ datum
 				if (ishuman(M) && volume > 25)
 					var/mob/living/carbon/human/H = M
 					if (H.limbs?.l_arm?.kind_of_limb & LIMB_PLANT)
-						M.TakeDamage("l_arm", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN, disallow_limb_loss=FALSE)
+						M.TakeDamage("l_arm", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
 					if (H.limbs?.r_arm?.kind_of_limb & LIMB_PLANT)
-						M.TakeDamage("r_arm", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN, disallow_limb_loss=FALSE)
+						M.TakeDamage("r_arm", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
 					if (H.limbs?.l_leg?.kind_of_limb & LIMB_PLANT)
-						M.TakeDamage("l_leg", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN, disallow_limb_loss=FALSE)
+						M.TakeDamage("l_leg", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
 					if (H.limbs?.r_leg?.kind_of_limb & LIMB_PLANT)
-						M.TakeDamage("r_leg", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN, disallow_limb_loss=FALSE)
+						M.TakeDamage("r_leg", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
