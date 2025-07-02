@@ -322,6 +322,7 @@
 	density = 1
 	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
+	var/cutoff = FALSE
 
 	New()
 		dialogue = new/datum/dialogueMaster/controlpc(src)
@@ -335,7 +336,14 @@
 	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
+	show_dialogue()
+		if(cutoff)
+			return
+		else
+			..()
+
 	proc/lever_hv(mob/user)
+		cutoff = TRUE
 		for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
 			for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
 				arcFlashTurf(C, R.loc, 50, 50)
@@ -353,6 +361,7 @@
 		qdel(src)
 
 	proc/lever_lv(mob/user)
+		cutoff = TRUE
 		for(var/obj/decoration/ritual/R in(range(7)))
 			new /obj/item/siren_orb(R.loc)
 		for(var/atom/movable/mysterious_beast/B in (range(7)))
