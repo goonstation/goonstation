@@ -24,10 +24,10 @@ TYPEINFO(/obj/decorative_pot)
 						var/obj/item/gardentrowel/trowel = weapon
 						if(!trowel.holding_plant)
 								return
-						if (holding_plant)
+						if (src.holding_plant)
 								// This probably introduces more bugs than it fixes.
 								src.ClearAllOverlays()
-						holding_plant = TRUE
+						src.holding_plant = TRUE
 						src.UpdateOverlays(trowel.create_plant_image(),"plant")
 						src.UpdateOverlays(trowel.create_plant_overlay_image(), "plantoverlay")
 						trowel.genes.mutation?.HYPpotted_proc_M(src, trowel.grow_level)
