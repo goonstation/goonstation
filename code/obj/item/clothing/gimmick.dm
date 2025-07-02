@@ -849,6 +849,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty ultramarine backpack"
 	desc = "How is this janky piece of shit supposed to work anyway?"
 	icon_state = "um_back"
+	satchel_variant = null
 
 /obj/item/clothing/suit/power/noisemarine
 	name = "cardboard noise marine armor"
@@ -865,6 +866,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty noise marine backpack"
 	desc = "Shame this doesn't have real loudspeakers built into it."
 	icon_state = "nm_back"
+	satchel_variant = null
 
 TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	mat_appearances_to_ignore = list("jean")
