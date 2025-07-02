@@ -7,6 +7,7 @@ TYPEINFO(/obj/decorative_pot)
 		icon_state = "plantpot"
 		anchored = UNANCHORED
 		density = 1
+		var/holding_plant = FALSE
 
 		attackby(obj/item/weapon, mob/user)
 				if((iswrenchingtool(weapon)) || isscrewingtool(weapon))
@@ -20,18 +21,18 @@ TYPEINFO(/obj/decorative_pot)
 								src.anchored = UNANCHORED
 						return
 				else if(istype(weapon,/obj/item/gardentrowel))
-						var/obj/item/gardentrowel/t = weapon
-						if(!t.plantyboi)
+						var/obj/item/gardentrowel/trowel = weapon
+						if(!trowel.holding_plant)
 								return
-						src.UpdateOverlays(t.plantyboi,"plant")
-						src.UpdateOverlays(t.plantyboi_plantoverlay, "plantoverlay")
-						t.plantyboi = null
-						t.plantyboi_plantoverlay = null
-						t.icon_state = "trowel"
+						if (holding_plant)
+								// This probably introduces more bugs than it fixes.
+								src.ClearAllOverlays()
+						holding_plant = TRUE
+						src.UpdateOverlays(trowel.create_plant_image(),"plant")
+						src.UpdateOverlays(trowel.create_plant_overlay_image(), "plantoverlay")
+						trowel.genes.mutation?.HYPpotted_proc_M(src, trowel.grow_level)
+						trowel.empty_trowel()
 						playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
-						t.genes.mutation?.HYPpotted_proc_M(src, t.grow_level)
-						qdel(t.genes)
-						t.genes = null
 						return
 				if(istype(weapon,/obj/item/seed))
 						boutput(user, "It's an empty pot, there's nowhere to plant the seed! Maybe you need to use a trowel and place an existing plant into it?")
