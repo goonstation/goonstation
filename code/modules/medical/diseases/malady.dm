@@ -278,6 +278,8 @@
 				if (probmult(5))
 					affected_mob.take_oxygen_deprivation(rand(1,2))
 				if (probmult(5))
+					affected_mob?.organHolder.damage_organ(tox=2*mult, organ="heart")
+				if (probmult(5))
 					affected_mob.emote(pick("twitch", "groan", "gasp"))
 				if (probmult(1))
 					affected_mob.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
