@@ -312,8 +312,8 @@
 		type = src.deconstructed_thing.type
 	var/typeinfo/datum/type_typeinfo = get_type_typeinfo(type)
 	if(!istype(type_typeinfo, /typeinfo/atom/movable))
-		boutput(user, SPAN_ALERT("How did that even get into the [src]?! You can't build that from a frame! Call a coder!"))
-		return FALSE
+		// can_build is only defined on subtypes of /typeinfo/atom/movable, if other types need can_build implementation add a stub proc and more handling here
+		return TRUE
 	var/typeinfo/atom/movable/AM_typeinfo = type_typeinfo
 	return AM_typeinfo.can_build(T)
 
