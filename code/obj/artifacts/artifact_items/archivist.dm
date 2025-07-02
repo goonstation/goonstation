@@ -3,7 +3,7 @@
 	associated_datum = /datum/artifact/archivist
 
 	afterattack(atom/target, mob/user, reach, params)
-		var/datum/artifact/compass/art = src.artifact
+		var/datum/artifact/archivist/art = src.artifact
 		if (!art.activated)
 			return ..()
 		. = ..()
