@@ -46,7 +46,3 @@
 			holder.owner.say("PSYBLAST!", flags = SAYFLAG_IGNORE_STAMINA)
 			return 0
 
-	scale
-		castcheck()
-			return 1
-

@@ -105,6 +105,7 @@
 		/datum/targetable/critter/psyblast,
 		/datum/targetable/critter/teleport)
 	has_genes = TRUE
+	var/telerange = 7
 
 	New()
 		..()
@@ -132,7 +133,7 @@
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam)
 		var/datum/targetable/critter/telekinesis = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/command/cultist)
-		var/datum/targetable/critter/psyblast = src.abilityHolder.getAbility(/datum/targetable/critter/psyblast/scale)
+		var/datum/targetable/critter/blast = src.abilityHolder.getAbility(/datum/targetable/critter/psyblast)
 		var/datum/targetable/critter/teleport = src.abilityHolder.getAbility(/datum/targetable/critter/teleport)
 		if (!slam.disabled && slam.cooldowncheck() && prob(40))
 			slam.handleCast(target)
@@ -140,8 +141,14 @@
 		if (!telekinesis.disabled && telekinesis.cooldowncheck() && prob(10))
 			telekinesis.handleCast(target.loc)
 			return TRUE
-		if (!psyblast.disabled && psyblast.cooldowncheck() && !teleport.disabled && teleport.cooldowncheck() && prob(10))
-			psyblast.handleCast(target)
-			teleport.handleCast(target)
-			return TRUE
+		if (!blast.disabled && blast.cooldowncheck() && prob(50))
+			blast.handleCast(target)
+			. = TRUE
+			if(!teleport.disabled && teleport.cooldowncheck())
+				var/list/randomturfs = new/list()
+				for(var/turf/T in orange(src, telerange))
+					if(istype(T, /turf/space) || T.density)
+						continue
+					randomturfs.Add(T)
+				teleport.handleCast(pick(randomturfs))
 
