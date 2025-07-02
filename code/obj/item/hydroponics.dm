@@ -488,23 +488,13 @@ TYPEINFO(/obj/item/plantanalyzer)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	afterattack(obj/target as obj, mob/user as mob)
-		if(!istype(target, /obj/machinery/plantpot))
+		if (istype(target, /obj/decorative_pot))
+			handle_planting(target)
 			return
-		var/obj/machinery/plantpot/pot = target
-		if(!pot.current)
+		if(istype(target, /obj/machinery/plantpot))
+			handle_unearthing(target, user)
 			return
-		var/datum/plant/p = pot.current
-		if(p.growthmode == "weed")
-			user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!",SPAN_ALERT("The [p.name] is too strong for you traveller..."))
-			return
-		if (!handle_icon_setup(pot))
-			return
-		src.genes = pot.plantgenes
-		src.grow_level = pot.grow_level
-		src.icon_state = "trowel_full"
-		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
-		holding_plant = TRUE
-		pot.HYPdestroyplant()
+		..()
 
 	proc/handle_icon_setup(var/obj/machinery/plantpot/pot)
 		var/image/overlay_image = pot.GetOverlayImage("plant")
@@ -520,6 +510,30 @@ TYPEINFO(/obj/item/plantanalyzer)
 				plantoverlay_icon_state = null
 			return TRUE
 		return FALSE
+
+	proc/handle_unearthing(var/obj/machinery/plantpot/pot, mob/user)
+		if(!pot.current)
+			return
+		var/datum/plant/p = pot.current
+		if(p.growthmode == "weed")
+			user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!",SPAN_ALERT("The [p.name] is too strong for you traveller..."))
+			return
+		if (!handle_icon_setup(pot))
+			return
+		src.genes = pot.plantgenes
+		src.grow_level = pot.grow_level
+		src.icon_state = "trowel_full"
+		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
+		holding_plant = TRUE
+		pot.HYPdestroyplant()
+
+	proc/handle_planting(obj/decorative_pot/pot)
+		if (!holding_plant)
+			return
+		pot.insert_plant(create_plant_image(), create_plant_overlay_image(), genes, grow_level)
+		src.empty_trowel()
+		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
+
 
 	/// Disposes all the trowel's contents and resets its icon state
 	proc/empty_trowel()

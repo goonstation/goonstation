@@ -20,21 +20,17 @@ TYPEINFO(/obj/decorative_pot)
 								playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 								src.anchored = UNANCHORED
 						return
-				else if(istype(weapon,/obj/item/gardentrowel))
-						var/obj/item/gardentrowel/trowel = weapon
-						if(!trowel.holding_plant)
-								return
-						if (src.holding_plant)
-								// This probably introduces more bugs than it fixes.
-								src.ClearAllOverlays()
-						src.holding_plant = TRUE
-						src.UpdateOverlays(trowel.create_plant_image(),"plant")
-						src.UpdateOverlays(trowel.create_plant_overlay_image(), "plantoverlay")
-						trowel.genes.mutation?.HYPpotted_proc_M(src, trowel.grow_level)
-						trowel.empty_trowel()
-						playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
-						return
 				if(istype(weapon,/obj/item/seed))
 						boutput(user, "It's an empty pot, there's nowhere to plant the seed! Maybe you need to use a trowel and place an existing plant into it?")
 				else
 						..()
+
+		/// Inserts a new plant into the pot, overriding any previous.
+		proc/insert_plant(var/image/plant_image, var/image/plant_overlay_image, var/datum/plantgenes/genes, var/grow_level)
+				if (src.holding_plant)
+						// This probably introduces more bugs than it fixes.
+						src.ClearAllOverlays()
+				src.holding_plant = TRUE
+				src.UpdateOverlays(plant_image,"plant")
+				src.UpdateOverlays(plant_overlay_image, "plantoverlay")
+				genes.mutation?.HYPpotted_proc_M(src, grow_level)
