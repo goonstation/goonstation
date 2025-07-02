@@ -5047,6 +5047,16 @@
 		mix_phrase = "The solution makes a little 'chirp' noise and settles."
 		hidden = TRUE
 
+	painbow_eggs
+		name = "painbow eggs"
+		id = "painbow_eggs"
+		result = "painbow_eggs"
+		required_reagents = list("painbow fluid" = 1, "spiders" = 2, "helium" = 1)
+		result_amount = 1
+		mix_phrase = "The painbow and the spider concoct into a horrific mix."
+		hidden = TRUE
+		mix_sound = 'sound/musical_instruments/Boathorn_1.ogg'
+
 	mewtini
 		name = "Mewtini"
 		id = "mewtini"

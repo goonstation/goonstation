@@ -9,10 +9,8 @@ import { Image } from 'tgui-core/components';
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Flockmind Basics',
-  theme: 'flock',
-  content: (
+const FlockmindContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a Flockmind!</h1>
       <Image
@@ -48,5 +46,11 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Flockmind">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Flockmind Basics',
+  theme: 'flock',
+  component: FlockmindContentWindow,
 };

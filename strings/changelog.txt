@@ -1,3 +1,42 @@
+
+(t)mon jun 30 25
+(u)LeahTheTech
+(+)Gunbots now have unique speech sounds.
+(u)JORJ949
+(p)23989
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Admins and Mentors now have OOC icons you can hover over to see their rank (instead of just knowing purple = mentor).
+(u)CalliopeSoups
+(p)23910
+(e)⚖🐁|C-Balance, A-Critters
+(+)Mimic's eat limb ability now has you latch onto your victim.
+(t)sun jun 29 25
+(u)JORJ949
+(p)23975
+(e)🆕🎨🔨📦|C-Feature, C-Sprites, A-Player-Actions, A-Game-Objects
+(*)Educated clowns can now show off their diploma like you can security badges!
+(u)glowbold
+(p)23923
+(e)🆕⚖🔄📄🧛|C-Feature, C-Balance, C-Rework, A-UI, A-Gamemodes
+(*)Vampires unlock a Spirit Bat ability at 150 blood. It is a weaker version of the Frost Bat ability.
+(*)Vampires with orbiting bats can point at a mob to send a bat towards them.
+(*)Vampires with orbiting bats can flip to send all bats towards nearby mobs.
+(*)Vampire glare is significantly quieter.
+(u)Lyy
+(p)23495
+(e)🆕🚗|C-Feature, A-Vehicles
+(*)Driving a car while drunk now automatically marks you for arrest.
+(u)Cheekybrdy
+(p)23510
+(e)🆕💊|C-Feature, A-Medical
+(+)Cluwne chicken eggs now do horrifying things when ingested.
+(u)glowbold
+(+)Examining pods and submarines show you their installed engine and weapon.
+(t)sat jun 28 25
+(u)JORJ949
+(p)23935
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Fixed packet sender programs always being out of range.
 (t)fri jun 27 25
 (u)LeahTheTech
 (+)Torpedos can now be detonated by shooting them as well as hitting them.
