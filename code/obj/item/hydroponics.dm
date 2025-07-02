@@ -511,10 +511,10 @@ TYPEINFO(/obj/item/plantanalyzer)
 		if(overlay_image)
 			plant_icon = overlay_image.icon
 			plant_icon_state = overlay_image.icon_state
-			var/plantoverlay_image = pot.GetOverlayImage("plantoverlay")
+			var/image/plantoverlay_image = pot.GetOverlayImage("plantoverlay")
 			if(plantoverlay_image)
-				plantoverlay_icon = overlay_image.icon
-				plantoverlay_icon_state = overlay_image.icon_state
+				plantoverlay_icon = plantoverlay_image.icon
+				plantoverlay_icon_state = plantoverlay_image.icon_state
 			else
 				plantoverlay_icon = null
 				plantoverlay_icon_state = null
