@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goonstation Nuclear Reactor Simulator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0d1a26;
+            --secondary: #1a2b3c;
+            --accent: #2ecc71;
+            --fuel: #e74c3c;
+            --control: #3498db;
+            --heat: #f39c12;
+            --gas: #1abc9c;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #2ecc71;
+            --text: #ecf0f1;
+            --graph-bg: rgba(26, 43, 60, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), #0a1520);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(10, 25, 47, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.1);
+        }
+
+        h1 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 2.8rem;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: rgba(10, 25, 47, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel-title {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .reactor-grid-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .grid-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .size-control {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #2c3e50;
+            background: rgba(26, 43, 60, 0.8);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+        }
+
+        .control-rod-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        #control-rod {
+            flex: 1;
+        }
+
+        #rod-value {
+            min-width: 50px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #generate-grid {
+            width: 100%;
+            padding: 15px;
+        }
+
+        .reactor-core {
+            background: rgba(15, 30, 47, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .grid {
+            display: grid;
+            gap: 8px;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .cell {
+            background: #1a2b3c;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2c3e50;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .cell:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+        }
+
+        .cell.selected {
+            border: 3px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .cell.fuel { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .cell.control { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .cell.heat { background: linear-gradient(135deg, #f1c40f, #f39c12); }
+        .cell.gas { background: linear-gradient(135deg, #1abc9c, #16a085); }
+        .cell.empty { background: #1a2b3c; }
+
+        .cell-type {
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 2px 5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .cell-material {
+            font-size: 0.65rem;
+            text-align: center;
+            padding: 0 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .cell-temp {
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            font-size: 0.6rem;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .cell-radioactivity {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            font-size: 0.6rem;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .config-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .component-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .component-type {
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            background: rgba(26, 43, 60, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .component-type:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .component-type.selected {
+            border: 2px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .component-type.fuel { border-left: 4px solid var(--fuel); }
+        .component-type.control { border-left: 4px solid var(--control); }
+        .component-type.heat { border-left: 4px solid var(--warning); }
+        .component-type.gas { border-left: 4px solid var(--success); }
+
+        .material-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(15, 30, 47, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .material-item {
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            background: rgba(26, 43, 60, 0.8);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .material-item:hover {
+            background: rgba(31, 58, 85, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .material-item.selected {
+            border: 2px solid white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .material-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .material-props {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.8rem;
+        }
+
+        .prop {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .simulation-panel {
+            grid-column: 1 / -1;
+        }
+
+        .btn-calculate {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            width: 100%;
+            padding: 18px;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+        }
+
+        .graph-container {
+            background: var(--graph-bg);
+            border-radius: 10px;
+            padding: 20px;
+            height: 400px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: rgba(15, 30, 47, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .result-label {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .progress-container {
+            margin-top: auto;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: #1a2b3c;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .progress {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        .progress-power { background: linear-gradient(90deg, #3498db, #2ecc71); }
+        .progress-temp { background: linear-gradient(90deg, #f1c40f, #e74c3c); }
+        .progress-rad { background: linear-gradient(90deg, #9b59b6, #e74c3c); }
+        .progress-eff { background: linear-gradient(90deg, #2ecc71, #f1c40f); }
+
+        .recommendations {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(15, 30, 47, 0.7);
+            border-radius: 10px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .recommendations h3 {
+            color: var(--warning);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendation-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .recommendation-item {
+            background: rgba(26, 43, 60, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .recommendation-item i {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .danger { color: var(--danger); }
+        .warning { color: var(--warning); }
+        .success { color: var(--success); }
+
+        .key-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .metric-card {
+            background: rgba(15, 30, 47, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .metric-card h4 {
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .metric-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .half-life {
+            color: var(--warning);
+        }
+
+        .radiation-level {
+            color: var(--danger);
+        }
+
+        .coolant-efficiency {
+            color: var(--success);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d1a26;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2ecc71;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #27ae60;
+        }
+
+        /* Animation for reactor pulse */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(231, 76, 60, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); }
+        }
+
+        .cell.fuel.active {
+            animation: pulse 2s infinite;
+        }
+
+        .graph-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .graph-btn {
+            padding: 8px 15px;
+            background: rgba(26, 43, 60, 0.8);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            border-radius: 5px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .graph-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .graph-btn:hover {
+            background: rgba(46, 204, 113, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Goonstation Nuclear Reactor Simulator</h1>
+            <p class="subtitle">Model NTBMK Nuclear Reactor - Configure components and materials to optimize power output and prevent meltdown</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="panel reactor-grid-container">
+                <h2 class="panel-title"><i class="icon">⚛️</i> Reactor Core Configuration</h2>
+
+                <div class="grid-controls">
+                    <div class="size-control">
+                        <label for="grid-width">Grid Width (1-7)</label>
+                        <select id="grid-width">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7" selected>7</option>
+                        </select>
+                    </div>
+                    <div class="size-control">
+                        <label for="grid-height">Grid Height (1-7)</label>
+                        <select id="grid-height">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7" selected>7</option>
+                        </select>
+                    </div>
+                    <div class="size-control">
+                        <label for="control-rod">Control Rod Insertion Level</label>
+                        <div class="control-rod-container">
+                            <input type="range" id="control-rod" min="0" max="100" value="100">
+                            <span id="rod-value">100%</span>
+                        </div>
+                    </div>
+                    <div class="size-control">
+                        <label>Coolant Type</label>
+                        <select id="coolant-type">
+                            <option value="CO2">CO₂ (Stable)</option>
+                            <option value="N2O">N₂O (Moderate)</option>
+                            <option value="Plasma">Plasma (High Risk)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generate-grid">
+                    <i class="icon">🔄</i> Generate Reactor Grid
+                </button>
+
+                <div class="reactor-core">
+                    <div class="grid" id="reactor-core"></div>
+                </div>
+            </div>
+
+            <div class="panel config-panel">
+                <h2 class="panel-title"><i class="icon">⚙️</i> Component Configuration</h2>
+
+                <div>
+                    <h3>Select Component Type</h3>
+                    <div class="component-types">
+                        <div class="component-type fuel" data-type="fuel">
+                            <div>Fuel Rod</div>
+                            <div class="info">Generates neutrons</div>
+                        </div>
+                        <div class="component-type control" data-type="control">
+                            <div>Control Rod</div>
+                            <div class="info">Absorbs neutrons</div>
+                        </div>
+                        <div class="component-type heat" data-type="heat">
+                            <div>Heat Exchanger</div>
+                            <div class="info">Transfers heat</div>
+                        </div>
+                        <div class="component-type gas" data-type="gas">
+                            <div>Gas Channel</div>
+                            <div class="info">Coolant flow</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>Select Material</h3>
+                    <div class="material-list" id="material-list">
+                        <!-- Materials will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel simulation-panel">
+                <h2 class="panel-title"><i class="icon">📊</i> Reactor Performance Simulation</h2>
+
+                <button class="btn-calculate" id="calculate">
+                    <i class="icon">🚀</i> Run Reactor Simulation (1-100 min)
+                </button>
+
+                <div class="graph-controls">
+                    <button class="graph-btn active" data-metric="power">Power</button>
+                    <button class="graph-btn" data-metric="temp">Temperature</button>
+                    <button class="graph-btn" data-metric="rad">Radiation</button>
+                    <button class="graph-btn" data-metric="efficiency">Efficiency</button>
+                </div>
+
+                <div class="graph-container">
+                    <canvas id="performance-graph"></canvas>
+                </div>
+
+                <div class="key-metrics">
+                    <div class="metric-card">
+                        <h4>Peak Power Generation</h4>
+                        <div class="metric-value" id="peak-power">0 MW</div>
+                        <div>At time: <span id="peak-power-time">0 min</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Peak Core Temperature</h4>
+                        <div class="metric-value" id="peak-temp">293 K</div>
+                        <div>At time: <span id="peak-temp-time">0 min</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Fuel Half-life</h4>
+                        <div class="metric-value half-life" id="half-life">0 min</div>
+                        <div>Time to 50% efficiency</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Peak Radiation</h4>
+                        <div class="metric-value radiation-level" id="peak-rad">0 rads</div>
+                        <div>At time: <span id="peak-rad-time">0 min</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2 class="panel-title"><i class="icon">📝</i> Simulation Results & Recommendations</h2>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Power Generation</h3>
+                    <div class="result-value" id="power-output">0 MW</div>
+                    <div class="result-label">Current Output</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress progress-power" id="power-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="result-label">Stability: <span id="power-stability">High</span></div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Core Temperature</h3>
+                    <div class="result-value" id="temperature">293 K</div>
+                    <div class="result-label">Current Temperature</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress progress-temp" id="temp-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="result-label">Status: <span id="temp-status">Normal</span></div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Radiation Level</h3>
+                    <div class="result-value" id="radiation">0 rads</div>
+                    <div class="result-label">Containment Field</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress progress-rad" id="rad-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="result-label">Safety: <span id="rad-safety">Optimal</span></div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Fuel Efficiency</h3>
+                    <div class="result-value" id="efficiency">100%</div>
+                    <div class="result-label">Current Efficiency</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress progress-eff" id="eff-bar" style="width: 100%"></div>
+                        </div>
+                        <div class="result-label">Half-life: <span id="half-life-display">0 min</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <h3><i class="icon">⚠️</i> Reactor Recommendations</h3>
+                <div class="recommendation-list" id="recommendations">
+                    <div class="recommendation-item">
+                        <i class="danger">⚠️</i>
+                        <div>Configure reactor components to see recommendations for optimal performance and safety</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced material database with properties
+        const materials = {
+            // Base Metals
+            "steel": { thermal: 6, density: 4, hard: 6, radioactive: 0, decayRate: 0.0001 },
+            "mauxite": { thermal: 6, density: 4, hard: 3, radioactive: 0, decayRate: 0.0001 },
+            "copper": { thermal: 6, density: 2, hard: 1, radioactive: 0, decayRate: 0.0001 },
+            "pharosium": { thermal: 6, density: 2, hard: 2, radioactive: 0.1, decayRate: 0.0002 },
+            "cobryl": { thermal: 6, density: 4, hard: 2, radioactive: 0.3, decayRate: 0.0003 },
+            "syreline": { thermal: 6, density: 1, hard: 2, radioactive: 0.2, decayRate: 0.00015 },
+            "silver": { thermal: 6, density: 4, hard: 2, radioactive: 0.1, decayRate: 0.0001 },
+            "gold": { thermal: 7, density: 6, hard: 2, radioactive: 0.05, decayRate: 0.00005 },
+            "electrum": { thermal: 6, density: 4, hard: 1, radioactive: 0.08, decayRate: 0.00007 },
+            "bohrum": { thermal: 6, density: 6, hard: 5, radioactive: 0.4, decayRate: 0.0005 },
+
+            // Advanced Materials
+            "plasteel": { thermal: 6, density: 7, hard: 3, radioactive: 0.2, decayRate: 0.0002 },
+            "plasmaglass": { thermal: 3, density: 3, hard: 7, radioactive: 1.5, decayRate: 0.001 },
+            "uqill": { thermal: 3, density: 8, hard: 4, radioactive: 0.6, decayRate: 0.0006 },
+            "cerenkite": { thermal: 6, density: 4, hard: 2, radioactive: 5.0, decayRate: 0.005 },
+            "erebite": { thermal: 3, density: 7, hard: 3, radioactive: 8.0, decayRate: 0.008 },
+            "plutonium": { thermal: 6, density: 8, hard: 7, radioactive: 3.0, decayRate: 0.003 },
+            "neutronium": { thermal: 6, density: 9, hard: 3, radioactive: 0, decayRate: 0.00001 },
+
+            // Organic Materials
+            "flesh": { thermal: 5, density: 3, hard: 1, radioactive: 0.1, decayRate: 0.0003 },
+            "viscerite": { thermal: 5, density: 4, hard: 1, radioactive: 0.4, decayRate: 0.0004 },
+            "bone": { thermal: 5, density: 3, hard: 5, radioactive: 0.05, decayRate: 0.0002 },
+            "chitin": { thermal: 5, density: 2, hard: 6, radioactive: 0.1, decayRate: 0.0001 },
+            "beewool": { thermal: 7, density: 2, hard: 2, radioactive: 0.01, decayRate: 0.00005 },
+            "spidersilk": { thermal: 4, density: 6, hard: 1, radioactive: 0.02, decayRate: 0.0001 },
+            "carbonfiber": { thermal: 9, density: 4, hard: 4, radioactive: 0.01, decayRate: 0.00005 },
+
+            // Misc
+            "glass": { thermal: 3, density: 2, hard: 3, radioactive: 0, decayRate: 0.00001 },
+            "rock": { thermal: 4, density: 2, hard: 2, radioactive: 0.05, decayRate: 0.0001 },
+            "ice": { thermal: 3, density: 1, hard: 2, radioactive: 0, decayRate: 0.00001 },
+            "glowstick": { thermal: 3, density: 3, hard: 3, radioactive: 1.0, decayRate: 0.001 }
+        };
+
+        // Component types with base properties
+        const componentTypes = {
+            "fuel": {
+                name: "Fuel Rod",
+                neutronCrossSection: 1.0,
+                thermalCrossSection: 10,
+                thermalMass: 420000,
+                color: "fuel"
+            },
+            "control": {
+                name: "Control Rod",
+                neutronCrossSection: 1.0,
+                thermalCrossSection: 10,
+                thermalMass: 420000,
+                color: "control"
+            },
+            "heat": {
+                name: "Heat Exchanger",
+                neutronCrossSection: 0.1,
+                thermalCrossSection: 25,
+                thermalMass: 105000,
+                color: "heat"
+            },
+            "gas": {
+                name: "Gas Channel",
+                neutronCrossSection: 0.1,
+                thermalCrossSection: 15,
+                thermalMass: 21000,
+                color: "gas"
+            }
+        };
+
+        // Reactor state
+        const reactor = {
+            width: 7,
+            height: 7,
+            grid: [],
+            selectedCell: null,
+            selectedComponent: "fuel",
+            rodInsertion: 100,
+            simulationData: null,
+            coolantType: "CO2"
+        };
+
+        // Chart instance
+        let performanceChart = null;
+        let currentMetric = "power";
+
+        // Initialize the app
+        function init() {
+            generateGrid(7, 7);
+            populateMaterials();
+            setupEventListeners();
+            setupDefaultGrid();
+        }
+
+        // Set up default grid from nuclearreactor.dm
+        function setupDefaultGrid() {
+            if (reactor.width !== 7 || reactor.height !== 7) return;
+
+            // Gas channels
+            setCell(2, 0, "gas", "steel");
+            setCell(2, 2, "gas", "steel");
+            setCell(2, 4, "gas", "steel");
+            setCell(2, 6, "gas", "steel");
+            setCell(4, 0, "gas", "steel");
+            setCell(4, 2, "gas", "steel");
+            setCell(4, 4, "gas", "steel");
+            setCell(4, 6, "gas", "steel");
+
+            // Heat exchangers
+            setCell(2, 1, "heat", "steel");
+            setCell(2, 3, "heat", "steel");
+            setCell(2, 5, "heat", "steel");
+            setCell(4, 1, "heat", "steel");
+            setCell(4, 3, "heat", "steel");
+            setCell(4, 5, "heat", "steel");
+            setCell(3, 0, "heat", "steel");
+            setCell(3, 6, "heat", "steel");
+
+            // Control rods
+            setCell(3, 2, "control", "bohrum");
+            setCell(3, 4, "control", "bohrum");
+        }
+
+        // Set cell with type and material
+        function setCell(x, y, type, material) {
+            const index = y * reactor.width + x;
+            if (index >= 0 && index < reactor.grid.length) {
+                reactor.grid[index].type = type;
+                reactor.grid[index].material = material;
+                updateCellDisplay(x, y);
+            }
+        }
+
+        // Generate the reactor grid
+        function generateGrid(width, height) {
+            reactor.width = width;
+            reactor.height = height;
+            reactor.grid = [];
+
+            const gridElement = document.getElementById('reactor-core');
+            gridElement.innerHTML = '';
+            gridElement.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell empty';
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+                    cell.innerHTML = `
+                        <div class="cell-type">Empty</div>
+                        <div class="cell-material">Select material</div>
+                        <div class="cell-temp">293K</div>
+                        <div class="cell-radioactivity">0 rad</div>
+                    `;
+                    cell.addEventListener('click', () => selectCell(x, y));
+                    gridElement.appendChild(cell);
+
+                    // Initialize grid state
+                    reactor.grid.push({
+                        x, y,
+                        type: "empty",
+                        material: null,
+                        temperature: 293,
+                        radioactivity: 0,
+                        efficiency: 100
+                    });
+                }
+            }
+        }
+
+        // Update cell display
+        function updateCellDisplay(x, y) {
+            const cellElement = document.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
+            const cellData = reactor.grid.find(cell => cell.x === x && cell.y === y);
+
+            if (cellElement && cellData) {
+                const compType = componentTypes[cellData.type] || {name: "Empty", color: "empty"};
+                cellElement.className = `cell ${compType.color}`;
+                cellElement.querySelector('.cell-type').textContent = compType.name;
+
+                if (cellData.material) {
+                    const materialProps = materials[cellData.material] || {};
+                    cellElement.querySelector('.cell-material').textContent =
+                        cellData.material.charAt(0).toUpperCase() + cellData.material.slice(1);
+                    cellElement.querySelector('.cell-radioactivity').textContent =
+                        `${materialProps.radioactive || 0} rad`;
+                } else {
+                    cellElement.querySelector('.cell-material').textContent = 'Select material';
+                    cellElement.querySelector('.cell-radioactivity').textContent = '0 rad';
+                }
+            }
+        }
+
+        // Populate materials list
+        function populateMaterials() {
+            const materialList = document.getElementById('material-list');
+            materialList.innerHTML = '';
+
+            for (const [material, props] of Object.entries(materials)) {
+                const materialItem = document.createElement('div');
+                materialItem.className = 'material-item';
+                materialItem.dataset.material = material;
+                materialItem.innerHTML = `
+                    <div class="material-name">${material.charAt(0).toUpperCase() + material.slice(1)}</div>
+                    <div class="material-props">
+                        <span class="prop">RAD: ${props.radioactive}</span>
+                        <span class="prop">D: ${props.density}</span>
+                        <span class="prop">H: ${props.hard}</span>
+                    </div>
+                `;
+                materialItem.addEventListener('click', () => selectMaterial(material));
+                materialList.appendChild(materialItem);
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Grid generation
+            document.getElementById('generate-grid').addEventListener('click', () => {
+                const width = parseInt(document.getElementById('grid-width').value);
+                const height = parseInt(document.getElementById('grid-height').value);
+                generateGrid(width, height);
+                if (width === 7 && height === 7) setupDefaultGrid();
+            });
+
+            // Control rod
+            const controlRod = document.getElementById('control-rod');
+            const rodValue = document.getElementById('rod-value');
+            controlRod.addEventListener('input', () => {
+                rodValue.textContent = `${controlRod.value}%`;
+                reactor.rodInsertion = parseInt(controlRod.value);
+            });
+
+            // Coolant type
+            document.getElementById('coolant-type').addEventListener('change', (e) => {
+                reactor.coolantType = e.target.value;
+            });
+
+            // Component type selection
+            document.querySelectorAll('.component-type').forEach(el => {
+                el.addEventListener('click', () => {
+                    document.querySelectorAll('.component-type').forEach(e => e.classList.remove('selected'));
+                    el.classList.add('selected');
+                    reactor.selectedComponent = el.dataset.type;
+                    if (reactor.selectedCell !== null) {
+                        updateSelectedCell();
+                    }
+                });
+            });
+
+            // Graph controls
+            document.querySelectorAll('.graph-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.graph-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentMetric = btn.dataset.metric;
+                    if (reactor.simulationData) {
+                        renderPerformanceChart();
+                    }
+                });
+            });
+
+            // Calculate button
+            document.getElementById('calculate').addEventListener('click', runSimulation);
+
+            // Set default selections
+            document.querySelector('.component-type[data-type="fuel"]').classList.add('selected');
+        }
+
+        // Select a cell in the grid
+        function selectCell(x, y) {
+            // Clear previous selection
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('selected');
+            });
+
+            // Find cell element and grid data
+            const cellElement = document.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
+            const cellData = reactor.grid.find(cell => cell.x === x && cell.y === y);
+
+            if (cellElement && cellData) {
+                cellElement.classList.add('selected');
+                reactor.selectedCell = cellData;
+
+                // Update material list selection
+                document.querySelectorAll('.material-item').forEach(el => {
+                    el.classList.remove('selected');
+                    if (el.dataset.material === cellData.material) {
+                        el.classList.add('selected');
+                    }
+                });
+            }
+        }
+
+        // Select a material
+        function selectMaterial(material) {
+            if (reactor.selectedCell) {
+                reactor.selectedCell.material = material;
+                updateSelectedCell();
+
+                // Update UI
+                document.querySelectorAll('.material-item').forEach(el => {
+                    el.classList.remove('selected');
+                    if (el.dataset.material === material) {
+                        el.classList.add('selected');
+                    }
+                });
+            }
+        }
+
+        // Update the selected cell display
+        function updateSelectedCell() {
+            const cell = reactor.selectedCell;
+            if (!cell) return;
+
+            const cellElement = document.querySelector(`.cell[data-x="${cell.x}"][data-y="${cell.y}"]`);
+            if (!cellElement) return;
+
+            // Update cell type
+            cell.type = reactor.selectedComponent;
+            const compType = componentTypes[reactor.selectedComponent];
+
+            // Update UI
+            cellElement.className = `cell ${compType.color} selected`;
+            cellElement.querySelector('.cell-type').textContent = compType.name;
+
+            if (cell.material) {
+                const materialProps = materials[cell.material] || {};
+                cellElement.querySelector('.cell-material').textContent =
+                    cell.material.charAt(0).toUpperCase() + cell.material.slice(1);
+                cellElement.querySelector('.cell-radioactivity').textContent =
+                    `${materialProps.radioactive || 0} rad`;
+            } else {
+                cellElement.querySelector('.cell-material').textContent = 'Select material';
+                cellElement.querySelector('.cell-radioactivity').textContent = '0 rad';
+            }
+        }
+
+        // Run the reactor simulation (1-100 minutes)
+        function runSimulation() {
+            // Reset previous chart
+            if (performanceChart) {
+                performanceChart.destroy();
+            }
+
+            // Get all components
+            const fuelRods = reactor.grid.filter(cell => cell.type === 'fuel' && cell.material);
+            const controlRods = reactor.grid.filter(cell => cell.type === 'control');
+            const heatExchangers = reactor.grid.filter(cell => cell.type === 'heat');
+            const gasChannels = reactor.grid.filter(cell => cell.type === 'gas');
+
+            // Coolant efficiency factor
+            const coolantEfficiency = {
+                "CO2": 1.0,
+                "N2O": 1.2,
+                "Plasma": 1.5
+            }[reactor.coolantType] || 1.0;
+
+            // Initialize simulation data
+            reactor.simulationData = {
+                time: [],
+                power: [],
+                temperature: [],
+                radiation: [],
+                efficiency: [],
+                rodInsertion: reactor.rodInsertion,
+                fuelRodCount: fuelRods.length,
+                controlRodCount: controlRods.length,
+                heatExchangerCount: heatExchangers.length,
+                gasChannelCount: gasChannels.length
+            };
+
+            // Calculate initial fuel properties
+            let totalRadioactivity = 0;
+            let totalDecayRate = 0;
+            let maxRadioactivity = 0;
+
+            fuelRods.forEach(rod => {
+                const materialProps = materials[rod.material] || {};
+                rod.initialRadioactivity = materialProps.radioactive || 0;
+                rod.currentRadioactivity = rod.initialRadioactivity;
+                rod.decayRate = materialProps.decayRate || 0.0001;
+                rod.efficiency = 100;
+
+                totalRadioactivity += rod.initialRadioactivity;
+                totalDecayRate += rod.decayRate;
+                if (rod.initialRadioactivity > maxRadioactivity) {
+                    maxRadioactivity = rod.initialRadioactivity;
+                }
+            });
+
+            // Physics-based power calculation
+            const basePower = fuelRods.length * 15;
+            const maxPower = basePower * 1.5;
+
+            // Run simulation for 100 minutes
+            for (let t = 0; t <= 100; t++) {
+                let totalPower = 0;
+                let totalRadiation = 0;
+                let totalTemp = 293;
+                let avgEfficiency = 0;
+
+                // Update fuel rods
+                fuelRods.forEach(rod => {
+                    // Radioactive decay
+                    rod.currentRadioactivity = rod.initialRadioactivity * Math.exp(-rod.decayRate * t);
+                    rod.efficiency = (rod.currentRadioactivity / rod.initialRadioactivity) * 100;
+
+                    // Power contribution (physics-based)
+                    let powerContribution = basePower * (rod.currentRadioactivity / rod.initialRadioactivity);
+
+                    // Control rod effect
+                    const rodEffect = (100 - reactor.rodInsertion) / 100;
+                    powerContribution *= (0.6 + (0.4 * rodEffect));
+
+                    totalPower += powerContribution;
+                    avgEfficiency += rod.efficiency;
+
+                    // Radiation (physics-based)
+                    const radiationContribution = rod.currentRadioactivity * 5;
+                    totalRadiation += radiationContribution;
+
+                    // Heat generation
+                    totalTemp += 150 * (rod.currentRadioactivity / rod.initialRadioactivity);
+                });
+
+                // Apply cooling effects (physics-based)
+                totalTemp -= heatExchangers.length * 40;
+                totalTemp -= gasChannels.length * 60 * coolantEfficiency;
+
+                // Add power from gas channels
+                totalPower += gasChannels.length * 5 * coolantEfficiency;
+
+                // Ensure values are within limits
+                totalTemp = Math.max(293, Math.min(3000, totalTemp));
+                totalRadiation = Math.min(1000, totalRadiation);
+                totalPower = Math.min(maxPower, totalPower);
+
+                // Calculate average efficiency
+                avgEfficiency = fuelRods.length > 0 ? avgEfficiency / fuelRods.length : 0;
+
+                // Store data
+                reactor.simulationData.time.push(t);
+                reactor.simulationData.power.push(totalPower);
+                reactor.simulationData.temperature.push(totalTemp);
+                reactor.simulationData.radiation.push(totalRadiation);
+                reactor.simulationData.efficiency.push(avgEfficiency);
+            }
+
+            // Find peak values
+            const peakPower = Math.max(...reactor.simulationData.power);
+            const peakPowerTime = reactor.simulationData.time[
+                reactor.simulationData.power.indexOf(peakPower)
+            ];
+
+            const peakTemp = Math.max(...reactor.simulationData.temperature);
+            const peakTempTime = reactor.simulationData.time[
+                reactor.simulationData.temperature.indexOf(peakTemp)
+            ];
+
+            const peakRad = Math.max(...reactor.simulationData.radiation);
+            const peakRadTime = reactor.simulationData.time[
+                reactor.simulationData.radiation.indexOf(peakRad)
+            ];
+
+            // Find half-life time (when efficiency reaches 50%)
+            let halfLifeTime = 100;
+            for (let i = 0; i < reactor.simulationData.efficiency.length; i++) {
+                if (reactor.simulationData.efficiency[i] <= 50) {
+                    halfLifeTime = reactor.simulationData.time[i];
+                    break;
+                }
+            }
+
+            // Update UI with peak values
+            document.getElementById('peak-power').textContent = peakPower.toFixed(1) + ' MW';
+            document.getElementById('peak-power-time').textContent = peakPowerTime + ' min';
+            document.getElementById('peak-temp').textContent = peakTemp.toFixed(0) + ' K';
+            document.getElementById('peak-temp-time').textContent = peakTempTime + ' min';
+            document.getElementById('peak-rad').textContent = peakRad.toFixed(1) + ' rads';
+            document.getElementById('peak-rad-time').textContent = peakRadTime + ' min';
+            document.getElementById('half-life').textContent = halfLifeTime + ' min';
+            document.getElementById('half-life-display').textContent = halfLifeTime + ' min';
+
+            // Update current values (last simulation step)
+            const lastIndex = reactor.simulationData.time.length - 1;
+            document.getElementById('power-output').textContent =
+                reactor.simulationData.power[lastIndex].toFixed(1) + ' MW';
+            document.getElementById('temperature').textContent =
+                reactor.simulationData.temperature[lastIndex].toFixed(0) + ' K';
+            document.getElementById('radiation').textContent =
+                reactor.simulationData.radiation[lastIndex].toFixed(1) + ' rads';
+            document.getElementById('efficiency').textContent =
+                reactor.simulationData.efficiency[lastIndex].toFixed(0) + '%';
+
+            // Update progress bars
+            document.getElementById('power-bar').style.width =
+                (reactor.simulationData.power[lastIndex] / maxPower * 100) + '%';
+            document.getElementById('temp-bar').style.width =
+                ((reactor.simulationData.temperature[lastIndex] - 293) / (3000 - 293) * 100) + '%';
+            document.getElementById('rad-bar').style.width =
+                (reactor.simulationData.radiation[lastIndex] / 1000 * 100) + '%';
+            document.getElementById('eff-bar').style.width =
+                reactor.simulationData.efficiency[lastIndex] + '%';
+
+            // Update status indicators
+            document.getElementById('power-stability').textContent =
+                reactor.simulationData.power[lastIndex] > (maxPower * 0.8) ? 'High' :
+                reactor.simulationData.power[lastIndex] > (maxPower * 0.5) ? 'Stable' : 'Low';
+            document.getElementById('temp-status').textContent =
+                reactor.simulationData.temperature[lastIndex] > 2000 ? 'Critical' :
+                reactor.simulationData.temperature[lastIndex] > 1200 ? 'High' :
+                reactor.simulationData.temperature[lastIndex] > 800 ? 'Elevated' : 'Normal';
+            document.getElementById('rad-safety').textContent =
+                reactor.simulationData.radiation[lastIndex] > 700 ? 'Danger' :
+                reactor.simulationData.radiation[lastIndex] > 400 ? 'Warning' :
+                reactor.simulationData.radiation[lastIndex] > 200 ? 'Moderate' : 'Optimal';
+
+            // Generate recommendations based on simulation
+            generateRecommendations();
+
+            // Render performance chart
+            renderPerformanceChart();
+        }
+
+        // Generate recommendations based on simulation results
+        function generateRecommendations() {
+            const recContainer = document.getElementById('recommendations');
+            recContainer.innerHTML = '';
+
+            const fuelRods = reactor.grid.filter(cell => cell.type === 'fuel' && cell.material);
+            const controlRods = reactor.grid.filter(cell => cell.type === 'control');
+            const heatExchangers = reactor.grid.filter(cell => cell.type === 'heat');
+            const gasChannels = reactor.grid.filter(cell => cell.type === 'gas');
+
+            // Check for critical issues
+            if (reactor.simulationData.temperature[reactor.simulationData.temperature.length-1] > 2000) {
+                recContainer.innerHTML += `
+                    <div class="recommendation-item">
+                        <i class="danger">☢️</i>
+                        <div><span class="danger">CRITICAL TEMPERATURE</span> detected.
+                        Add more heat exchangers and gas channels immediately to prevent meltdown.</div>
+                    </div>
+                `;
+            }
+
+            if (reactor.simulationData.radiation[reactor.simulationData.radiation.length-1] > 700) {
+                recContainer.innerHTML += `
+                    <div class="recommendation-item">
+                        <i class="danger">☢️</i>
+                        <div><span class="danger">RADIATION LEVELS EXCEEDED SAFETY LIMITS</span>.
+                        Increase control rod insertion to ${Math.min(100, reactor.rodInsertion + 20)}% or add more control rods.</div>
+                    </div>
+                `;
+            }
+
+            // Check for optimization opportunities
+            if (reactor.simulationData.power[reactor.simulationData.power.length-1] < 50 && fuelRods.length > 2) {
+                recContainer.innerHTML += `
+                    <div class="recommendation-item">
+                        <i class="warning">⚠️</i>
+                        <div><span class="warning">LOW POWER OUTPUT</span> detected. Consider using more radioactive materials like Cerenkite or Plutonium for fuel rods.</div>
+                    </div>
+                `;
+            }
+
+            if (heatExchangers.length + gasChannels.length < fuelRods.length / 2) {
+                recContainer.innerHTML += `
+                    <div class="recommendation-item">
+                        <i class="warning">⚠️</i>
+                        <div><span class="warning">INSUFFICIENT COOLING</span> for the number of fuel rods. Add at least ${Math.ceil(fuelRods.length/2) - heatExchangers.length - gasChannels.length} more cooling components.</div>
+                    </div>
+                `;
+            }
+
+            // Fuel efficiency recommendations
+            const halfLife = reactor.simulationData.halfLife;
+            if (halfLife < 50 && fuelRods.length > 0) {
+                recContainer.innerHTML += `
+                    <div class="recommendation-item">
+                        <i class="warning">⚠️</i>
+                        <div><span class="warning">SHORT FUEL HALF-LIFE</span> (${halfLife} min). Consider using more stable materials like Neutronium or Gold for longer operation.</div>
+                    </div>
+                `;
+            }
+
+            // Coolant recommendation
+            if (reactor.coolantType !== "Plasma" && reactor.simulationData.temperature[reactor.simulationData.temperature.length-1] > 1500) {
+                recContainer.innerHTML += `
+                    <div class="recommendation-item">
+                        <i class="warning">⚠️</i>
+                        <div><span class="warning">INEFFICIENT COOLANT</span>. Switch to Plasma coolant for better heat transfer.</div>
+                    </div>
+                `;
+            }
+
+            // Check if no issues were found
+            if (recContainer.innerHTML === '') {
+                recContainer.innerHTML = `
+                    <div class="recommendation-item">
+                        <i class="success">✅</i>
+                        <div><span class="success">REACTOR PERFORMANCE OPTIMAL</span> - Current configuration meets all safety and efficiency standards.</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Render the performance chart
+        function renderPerformanceChart() {
+            if (!reactor.simulationData) return;
+
+            const ctx = document.getElementById('performance-graph').getContext('2d');
+
+            // Get the data for the selected metric
+            let data = [];
+            let label = '';
+            let color = '';
+
+            switch(currentMetric) {
+                case "power":
+                    data = reactor.simulationData.power;
+                    label = 'Power (MW)';
+                    color = '#3498db';
+                    break;
+                case "temp":
+                    data = reactor.simulationData.temperature;
+                    label = 'Temperature (K)';
+                    color = '#e74c3c';
+                    break;
+                case "rad":
+                    data = reactor.simulationData.radiation;
+                    label = 'Radiation (rads)';
+                    color = '#9b59b6';
+                    break;
+                case "efficiency":
+                    data = reactor.simulationData.efficiency;
+                    label = 'Efficiency (%)';
+                    color = '#2ecc71';
+                    break;
+            }
+
+            performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: reactor.simulationData.time,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        borderColor: color,
+                        backgroundColor: color.replace(')', ', 0.2)').replace('rgb', 'rgba'),
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time (minutes)',
+                                color: '#7f8c8d'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#7f8c8d',
+                                maxTicksLimit: 10
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: label,
+                                color: '#7f8c8d'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#7f8c8d'
+                            },
+                            suggestedMin: Math.min(...data) * 0.9,
+                            suggestedMax: Math.max(...data) * 1.1
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ecf0f1'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(10, 25, 47, 0.9)',
+                            titleColor: '#ecf0f1',
+                            bodyColor: '#ecf0f1',
+                            borderColor: color,
+                            borderWidth: 1,
+                            callbacks: {
+                                title: () => '',
+                                label: (context) => {
+                                    return `${label}: ${context.parsed.y.toFixed(1)} at ${context.parsed.x} min`;
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+        }
+
+        // Initialize the application
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
