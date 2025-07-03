@@ -336,6 +336,7 @@
 			return FALSE
 		if(istype(W, /obj/item/storage/mechanics/housing_handheld))
 			src.attack_hand()
+			return FALSE
 		. = ..()
 
 	attack_hand(mob/user)
