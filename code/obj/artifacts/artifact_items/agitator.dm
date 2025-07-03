@@ -19,7 +19,7 @@
 		if (!O.artifact.activated)
 			return ..()
 		. = ..()
-		if (ON_COOLDOWN(src, "artifact_agitation", src.use_cd))
+		if (O.artifact.artitype.name == "lattice" || ON_COOLDOWN(src, "artifact_agitation", src.use_cd)) // lattice doesn't develop faults
 			boutput(user, SPAN_NOTICE("[src] doesn't seem to do anything. Hm."))
 			return
 
@@ -55,7 +55,7 @@
 	associated_object = /obj/item/artifact/agitator
 	type_name = "Agitator"
 	type_size = ARTIFACT_SIZE_MEDIUM
-	rarity_weight = 200
-	validtypes = list("precursor")
+	rarity_weight = 250
+	validtypes = list("lattice")
 	react_xray = list(9, 55, 95, 8, "ANOMALOUS")
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
