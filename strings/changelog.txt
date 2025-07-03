@@ -1,4 +1,9 @@
 
+(t)thu jul 03 25
+(u)FlameArrow57 & Croissant_Man1
+(p)23539
+(e)🆕🎨🔬|C-Feature, C-Sprites, A-Science
+(*)Added a new Lattice artifact origin. Activator keys will only appear under this origin.
 (t)mon jun 30 25
 (u)LeahTheTech
 (+)Gunbots now have unique speech sounds.
