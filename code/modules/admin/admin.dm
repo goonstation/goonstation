@@ -353,7 +353,7 @@ var/global/noir = 0
 						if(!call_reason)
 							return
 						if (emergency_shuttle.incall())
-							command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+							command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", alert_origin=ALERT_COMMAND)
 							logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
 							logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 							message_admins(SPAN_INTERNAL("[key_name(usr)] called the Emergency Shuttle to the station."))
@@ -368,13 +368,13 @@ var/global/noir = 0
 								if(!call_reason)
 									call_reason = "No reason given."
 								if (emergency_shuttle.incall())
-									command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+									command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", alert_origin=ALERT_COMMAND)
 									logTheThing(LOG_ADMIN, usr, "called the Emergency Shuttle (reason: [call_reason])")
 									logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 									message_admins(SPAN_INTERNAL("[key_name(usr)] called the Emergency Shuttle to the station"))
 							if(1)
 								emergency_shuttle.recall()
-								boutput(world, SPAN_NOTICE("<B>Alert: The shuttle is going back!</B>"))
+								command_announcement("[SPAN_ALERT("Alert: The shuttle is going back!")]", "Emergency Shuttle Recall", alert_origin=ALERT_COMMAND)
 								logTheThing(LOG_ADMIN, usr, "sent the Emergency Shuttle back")
 								logTheThing(LOG_DIARY, usr, "sent the Emergency Shuttle back", "admin")
 								message_admins(SPAN_INTERNAL("[key_name(usr)] recalled the Emergency Shuttle"))
@@ -2580,10 +2580,10 @@ var/global/noir = 0
 							if (tgui_alert(usr,"Do you wish to give everyone brain damage?", "Confirmation", list("Yes", "No")) != "Yes")
 								return
 							for (var/mob/living/carbon/human/H in mobs)
-								if (H.get_brain_damage() < 60)
+								if (H.get_brain_damage() < BRAIN_DAMAGE_MAJOR)
 									if (H.client)
 										H.show_text("<B>You suddenly feel stupid.</B>","red")
-									H.take_brain_damage(min(60 - H.get_brain_damage(), 60)) // 100+ brain damage is lethal.
+									H.take_brain_damage(min(BRAIN_DAMAGE_MAJOR - H.get_brain_damage(), BRAIN_DAMAGE_MAJOR)) // 100+ brain damage is lethal.
 									LAGCHECK(LAG_LOW)
 								else
 									continue

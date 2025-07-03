@@ -1086,7 +1086,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			stamina_damage = 15
 			stamina_cost = 15
 			stamina_crit_chance = 50
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			if (src.shatter >= rand(2,12))
 				var/turf/U = user.loc

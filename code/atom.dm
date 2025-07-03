@@ -475,6 +475,11 @@ TYPEINFO(/atom/movable)
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
 
+	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
+	/// if an object type can be built somewhere, before instantiating the object itself.
+	proc/can_build(turf/T)
+		return TRUE
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/tmp/turf/last_turf = 0

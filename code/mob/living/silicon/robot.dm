@@ -1,6 +1,4 @@
-#define ROBOT_BATTERY_DISTRESS_INACTIVE 0
-#define ROBOT_BATTERY_DISTRESS_ACTIVE 1
-#define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+/// Wireless charge amount provided by Nimbus-class interdictor
 #define ROBOT_BATTERY_WIRELESS_CHARGERATE 50
 
 /datum/robot_cosmetic
@@ -63,8 +61,6 @@ TYPEINFO(/mob/living/silicon/robot)
 	var/opened = 0
 	var/wiresexposed = 0
 	var/brainexposed = 0
-	var/batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
-	var/next_batteryDistressBoop = 0
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
@@ -697,7 +693,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (isghostdrone(user))
 			return
 		. += "[SPAN_NOTICE("*---------*")]<br>"
-		. += "[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")]<br>"
+		. += "[SPAN_NOTICE("This is [bicon(src)] <B>[src.name] ([src.get_pronouns()])!</B>.")]<br>"
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
@@ -730,7 +726,10 @@ TYPEINFO(/mob/living/silicon/robot)
 			. += "[SPAN_ALERT("[src.name] doesn't seem to be responding.")]<br>"
 
 		. += "The cover is [opened ? "open" : "closed"].<br>"
-		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]<br>"
+		if (src.cell)
+			. += "The power cell display reads: [round(cell.percent())]%<br>"
+		else
+			. += "[SPAN_ALERT("<b>[src.name] does not have a cell installed!</b>")]<br>"
 
 		if (src.module)
 			. += "[src.name] has a [src.module.name] installed.<br>"
@@ -979,6 +978,18 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (E?.throwing) //imprecise, you're not neatly sliding it down their interface, you're just lobbing it at their arm
+			var/list/arms = list()
+			if (src.part_arm_l)
+				arms += src.part_arm_l
+			if (src.part_arm_r)
+				arms += src.part_arm_r
+			if (!length(arms))
+				return
+			var/obj/item/parts/robot_parts/arm/arm = pick(arms)
+			arm.emag_act(user, E)
+			return
+
 		if(isshell(src) || src.part_head.ai_interface)
 			boutput(user, SPAN_ALERT("Emagging an AI shell wouldn't work, [his_or_her(src)] laws can't be overwritten!"))
 			return 0 //emags don't do anything to AI shells
@@ -1974,7 +1985,6 @@ TYPEINFO(/mob/living/silicon/robot)
 				upgrade.upgrade_deactivate(src)
 			else
 				upgrade.upgrade_activate(src)
-				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
 		if (upgrade?.borg_overlay)
 			src.update_appearance()
@@ -2515,8 +2525,6 @@ TYPEINFO(/mob/living/silicon/robot)
 
 			if (power_use_tally < 0) power_use_tally = 0
 
-
-
 			return power_use_tally
 		else return 0
 
@@ -2537,22 +2545,10 @@ TYPEINFO(/mob/living/silicon/robot)
 		..()
 		if (src.cell)
 			if(src.cell.charge <= 0)
-				if (isalive(src))
-					sleep(0)
-					src.lastgasp()
-				setunconscious(src)
-				for (var/obj/item/roboupgrade/R in src.contents)
-					if (R.activated)
-						R.upgrade_deactivate(src)
-			else if (src.cell.charge <= 100)
-				src.module_active = null
-
-				uneq_slot(1)
-				uneq_slot(2)
-				uneq_slot(3)
+				src.setStatus("no_power_robot", INFINITE_STATUS)
+			else if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
+				src.setStatus("low_power_robot", INFINITE_STATUS)
 				src.cell.use(1)
-				for (var/obj/item/roboupgrade/R in src.contents)
-					if (R.activated) R.upgrade_deactivate(src)
 			else
 				var/efficient = 0
 				var/fix = 0
@@ -2607,17 +2603,8 @@ TYPEINFO(/mob/living/silicon/robot)
 				if (fix)
 					HealDamage("All", 6, 6)
 
-			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
-				batteryDistress() // Execute distress mode
-			else if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
-				clearBatteryDistress() // Exit distress mode
-
 		else
-			if (isalive(src))
-				sleep(0)
-				src.lastgasp()
-			setunconscious(src)
-			batteryDistress() // No battery. Execute distress mode
+			src.setStatus("no_cell_robot", INFINITE_STATUS)
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -2640,13 +2627,14 @@ TYPEINFO(/mob/living/silicon/robot)
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
-			if (ROBOT_DEATH_MOD_NONE)	//normal death and gib
+			if (ROBOT_DEATH_MOD_NONE)
 				message = "CONTACT LOST: [src] in [myarea]"
-			if (ROBOT_DEATH_MOD_SUICIDE) //suicide
+			if (ROBOT_DEATH_MOD_SUICIDE)
 				message = "SELF-TERMINATION DETECTED: [src] in [myarea]"
-			if (ROBOT_DEATH_MOD_KILLSWITCH) //killswitch
+			if (ROBOT_DEATH_MOD_KILLSWITCH)
 				message = "KILLSWITCH ACTIVATED: [src] in [myarea]"
-			else	//Someone passed us an unkown modifier
+			else	//Someone passed us an unknown modifier
+				logTheThing(LOG_DEBUG, src, "death alert was passed an unknown cyborg death modifier")
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
 		if (message)
@@ -2670,19 +2658,6 @@ TYPEINFO(/mob/living/silicon/robot)
 				mainframe.return_to(src)
 		else
 			death()
-
-	process_killswitch()
-		if(killswitch)
-			if(killswitch_at <= TIME)
-				if(src.client)
-					boutput(src, SPAN_ALERT("<B>Killswitch Activated!</B>"))
-				killswitch = 0
-				logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
-
-				// Pop the head ompartment open and eject the brain
-				src.eject_brain(fling = TRUE)
-				src.update_appearance()
-				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 	proc/internal_paint_part(var/image/part_image, var/list/color_matrix)
 		var/image/paint = image(part_image.icon, part_image.icon_state, layer=part_image.layer)
@@ -3203,28 +3178,9 @@ TYPEINFO(/mob/living/silicon/robot)
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
 
-/mob/living/silicon/robot/var/image/i_batterydistress
-
-/mob/living/silicon/robot/proc/batteryDistress()
-	if (!src.i_batterydistress) // we only need to build i_batterydistress once
-		src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
-		src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
-
-	if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
-		AddOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
-		src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
-		src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
-	else if(world.time >= src.next_batteryDistressBoop)
-		src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
-		playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
-
 /mob/living/silicon/robot/set_a_intent(intent)
 	. = ..()
 	src.hud?.update_intent()
-
-/mob/living/silicon/robot/proc/clearBatteryDistress()
-	src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
-	ClearSpecificOverlays("batterydistress")
 
 /mob/living/silicon/robot/verb/open_nearest_door()
 	set category = "Robot Commands"
@@ -3640,7 +3596,159 @@ TYPEINFO(/mob/living/silicon/robot)
 	..()
 	src.hud?.update_pulling()
 
+/datum/statusEffect/low_power/robot
+	id = "low_power_robot"
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down due to low power!</b>"))
+		src.robot.hud.update_upgrades()
+
+
+	onUpdate(timePassed)
+		. = ..()
+		if (isnull(src.robot.cell))
+			src.remove_self()
+			src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
+		else if (src.robot.cell.charge == 0)
+			src.remove_self()
+			src.robot.setStatus("no_power_robot", INFINITE_STATUS)
+		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+		else
+			src.robot.module_active = null
+			src.robot.uneq_all()
+			for (var/obj/item/roboupgrade/R in robot.contents)
+				if (R.activated)
+					R.upgrade_deactivate(robot)
+
+/datum/statusEffect/no_power/robot
+	id = "no_power_robot"
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+		src.robot.radio?.bricked = TRUE
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down due to no power!</b>"))
+		src.robot.hud.update_upgrades()
+		APPLY_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
+
+	onUpdate(timePassed)
+		. = ..()
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		src.robot.radio?.bricked = TRUE
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
+		src.robot.hud.update_upgrades()
+		if (isnull(src.robot.cell))
+			if (!src.robot.hasStatus("no_cell_robot"))
+				src.remove_self()
+				src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
+		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+		else if (src.robot.cell.charge > 0)
+			src.remove_self()
+			src.robot.setStatus("low_power_robot")
+
+	onRemove()
+		. = ..()
+		src.robot.radio?.bricked = FALSE
+		REMOVE_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
+
+/datum/statusEffect/no_power/robot/no_cell
+	id = "no_cell_robot"
+	name = "No Power Cell"
+	desc = "You have no power cell installed!"
+	icon_state = "no_power"
+	power_alarm_sound = 'sound/machines/found.ogg'
+
+	onAdd(optional)
+		. = ..()
+		var/image/distress = src.owner.SafeGetOverlayImage("battery_missing", 'icons/mob/robots_decor.dmi', "battery-missing", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.owner.ClearSpecificOverlays("battery_distress")
+		src.owner.UpdateOverlays(distress, "battery_missing")
+
+	onUpdate(timePassed)
+		. = ..()
+		if (!isnull(src.silicon.cell) && src.owner)
+			src.remove_self()
+
+	onRemove()
+		. = ..()
+		src.owner.ClearSpecificOverlays("battery_missing")
+
+/datum/statusEffect/lockdown/robot
+	id = "lockdown_robot"
+	maxDuration = 2 MINUTES
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in src.robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(src.robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down by the equipment lockdown!</b>"))
+		src.robot.hud.update_upgrades()
+
+	onUpdate(timePassed)
+		. = ..()
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in src.robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(src.robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down by the equipment lockdown!</b>"))
+		src.robot.hud.update_upgrades()
+
+	onRemove()
+		. = ..()
+		src.robot = null
+
+/datum/statusEffect/killswitch/robot
+	id = "killswitch_robot"
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	do_killswitch()
+		. = ..()
+		// Pop the head compartment open and eject the brain
+		var/mob/living/silicon/robot/robot = src.owner
+		robot.eject_brain(fling = TRUE)
+		robot.update_appearance()
+		robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
+
 #undef can_step_sfx
-#undef ROBOT_BATTERY_DISTRESS_INACTIVE
-#undef ROBOT_BATTERY_DISTRESS_ACTIVE
-#undef ROBOT_BATTERY_DISTRESS_THRESHOLD

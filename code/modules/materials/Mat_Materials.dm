@@ -1949,9 +1949,9 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
 
-/datum/material/metal/uranium
-	mat_id = "uranium"
-	name = "uranium"
+/datum/material/metal/yuranite
+	mat_id = "yuranite"
+	name = "yuranite"
 	desc = "Deadly uranium, often used for weapons of mass destruction."
 	color = "#e6ff01"
 

@@ -187,7 +187,7 @@
 
 	if (user)
 		if (ishuman(user))
-			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
+			if(user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || prob(user.get_brain_damage()))
 				boutput(user, SPAN_ALERT("You are too dazed to use [src] properly."))
 				return 1
 
