@@ -150,7 +150,13 @@ export const AlertModal = () => {
                 overflowY="auto"
                 maxHeight="100%"
               >
-                {typedContentWindow ? typedContentWindow.content : message}
+                {(() => {
+                  if (!typedContentWindow) {
+                    return message;
+                  }
+                  const { component: Component } = typedContentWindow;
+                  return <Component />;
+                })()}
               </Box>
             </Stack.Item>
             <Stack.Item>

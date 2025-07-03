@@ -417,7 +417,11 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 		else
 			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
 	else if(target == world)
-		clients = global.clients
+		clients = list()
+		for (var/client/C in global.clients)
+			if (istype(C.mob, /mob/living/carbon/human/tutorial))
+				continue
+			clients += C
 	else if(isnum(target))
 		clients = list()
 		for(var/client/client as anything in global.clients)
@@ -812,6 +816,7 @@ proc/narrator_mode_sound_file(sound_file)
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
 		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
+		"cyborg_distorted" = sound('sound/misc/talk/cyborg_distorted.ogg'),	"cyborg_distorted!" = sound('sound/misc/talk/cyborg_exclaim_distorted.ogg'),"cyborg_distorted?" = sound('sound/misc/talk/cyborg_ask_distorted.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
 

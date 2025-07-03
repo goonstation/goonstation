@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/space_phoenix)
 				if (isrobot(L) || isintangible(L))
 					continue
 				L.changeStatus("shivering", 10 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
-				L.bodytemperature -= 10
+				L.changeBodyTemp(-10 KELVIN)
 				if (L.bodytemperature <= 255.372) // 0 degrees fahrenheit
 					var/obj/icecube/block = new /obj/icecube(L.loc, L)
 					block.anchored = TRUE
@@ -313,7 +313,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/space_phoenix)
 			return
 
 		src.target.changeStatus("shivering", 2 SECONDS * (1 - 0.75 * target.get_cold_protection() / 100), TRUE)
-		src.target.bodytemperature -= 15
+		src.target.changeBodyTemp(-15 KELVIN)
 		if (src.target.bodytemperature <= 227.59) // -50 degrees fahrenheit
 			src.target.TakeDamage("All", burn = 10)
 		playsound(get_turf(target), "sound/misc/phoenix/phoenix_tod_[rand(1, 4)].ogg", 50, TRUE)
@@ -445,8 +445,8 @@ ABSTRACT_TYPE(/obj/space_phoenix_ice_wall)
 		if (isweldingtool(I) && I:welding)
 			user.visible_message(SPAN_ALERT("[user] melts [src]!"), SPAN_ALERT("You melt [src]!"))
 			qdel(src)
-		else if (istype(I, /obj/item/shovel) || istype(I, /obj/item/slag_shovel) || istype(I, /obj/item/mining_tool/powered/shovel))
-			user.visible_message(SPAN_ALERT("[user] shovels [src]!"), SPAN_ALERT("You shovel [src]!"))
+		else if (isdiggingtool(I))
+			user.visible_message(SPAN_ALERT("[user] digs into [src]!"), SPAN_ALERT("You digs into [src]!"))
 			qdel(src)
 		else if (I.force)
 			if (I.force >= 20)

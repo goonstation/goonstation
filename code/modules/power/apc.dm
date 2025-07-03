@@ -21,6 +21,11 @@ var/zapLimiter = 0
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
 
+	/// Only allow building an APC in an area if no APC currently is powering the area.
+	can_build(turf/T)
+		var/area/A = get_area(T)
+		return A.area_apc == null
+
 ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
 
 /obj/machinery/power/apc
@@ -301,8 +306,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 		if (cell)
 			// if opened, update overlays for cell
-			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			AddOverlays(I_cell, "cell")
+			var/image/i_cell
+			if(cell.artifact)
+				i_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.artifact.artiappear.name]")
+			else
+				i_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
+			AddOverlays(i_cell, "cell")
 
 	else if(emagged)
 		icon_state = "apcemag"
@@ -1599,9 +1608,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/receive_silicon_hotkey(var/mob/user)
-	..()
-
-	if (!isAI(user) && !issilicon(user))
+	if(..())
 		return
 
 	if (user.client.check_key(KEY_OPEN))

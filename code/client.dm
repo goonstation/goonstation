@@ -22,9 +22,6 @@
 	var/player_mode_asay = 0
 	var/player_mode_ahelp = 0
 	var/player_mode_mhelp = 0
-	var/only_local_looc = 0
-	var/deadchatoff = 0
-	var/mute_ghost_radio = FALSE
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
@@ -322,9 +319,10 @@
 
 	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
-		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
-		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
+		var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
+		var/banUrl = "<a href='[goonhub_href("/admin/bans/[ban.id]", TRUE)]'>[ban.id]</a>"
+		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [ban.id], IP: [src.address], CID: [src.computer_id])")
+		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [ban.id], IP: [src.address], CID: [src.computer_id])", "access")
 		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
 		var/banstring = {"
 							<!doctype html>
@@ -494,8 +492,8 @@
 		// check client version validity
 		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download")
+			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the latest 515 version (at the bottom of the page).", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download/build/515")
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			tgui_process.close_user_uis(src.mob)
@@ -503,7 +501,7 @@
 			return
 		if (src.byond_version >= 517)
 			if (tgui_alert(src, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download")
+				src << link("https://www.byond.com/download/build/515")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -545,7 +543,7 @@
 
 #if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
 		src.verbs += /client/proc/cmd_rp_rules
-		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 			src.cmd_rp_rules()
 #endif
 
@@ -920,6 +918,10 @@ var/global/curr_day = null
 	return 0
 
 /client/proc/setJoinDate()
+#ifndef LIVE_SERVER
+	UNLINT(return) //shut uppp
+#endif
+
 	joined_date = ""
 
 	// Get join date from BYOND members page
@@ -946,11 +948,11 @@ var/global/curr_day = null
 
 #ifdef RP_MODE
 /client/proc/cmd_rp_rules()
-	set name = "RP Rules"
+	set name = "Rules - RP"
 	set category = "Commands"
 
 	var/cant_interact_time = null
-	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 		cant_interact_time = 15 SECONDS
 
 	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
@@ -1212,6 +1214,21 @@ var/global/curr_day = null
 	if (!src.ckey)
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
+
+/client/proc/desuss_zap(source, datum/say_message/message)
+	if (!forced_desussification)
+		return
+
+	if (!phrase_log.is_sussy(message.original_content))
+		return
+
+	arcFlash(message.speaker, message.speaker, forced_desussification)
+	if (issilicon(message.speaker))
+		var/mob/M = message.speaker
+		M.apply_flash(20, knockdown = 2, stamina_damage = 20, disorient_time = 3)
+
+	if (forced_desussification_worse)
+		forced_desussification *= 1.1
 
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)

@@ -58,6 +58,7 @@
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
 			setup_starting_peripheral2 = /obj/item/peripheral/sound_card
 			setup_starting_program = /datum/computer/file/terminal_program/email
+			object_flags = NO_BLOCK_TABLE
 
 			personel_alt
 				icon_state = "old_alt"
@@ -230,6 +231,9 @@
 				icon = 'icons/obj/computerpanel.dmi'
 				icon_state = "dwaine2"
 				base_icon_state = "dwaine2"
+
+			os_loaded
+				setup_os_string = "ZETA_MAINFRAME"
 
 
 	luggable //A portable(!!) computer 3. Cards cannot be exchanged.

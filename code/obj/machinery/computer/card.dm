@@ -21,7 +21,7 @@
 	var/list/supply_access_list = list(access_cargo, access_supply_console, access_mining, access_mining_outpost)
 	var/list/research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics, access_pathology)
-	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
+	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket, access_fine_small, access_fine_large)
 	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser, access_money)
 	var/list/allowed_access_list
 	var/departmentcomp = FALSE
@@ -241,7 +241,7 @@
 		)
 
 		.["icons"] = list(
-			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id")),
+			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id_basic")),
 			list(style = "civilian", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
 			list(style = "engineering", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
 			list(style = "research", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
@@ -655,7 +655,7 @@
 	supply_access_list = list(access_cargo)
 	medical_access_list = list(access_medical)
 	research_access_list = list(access_research, access_chemistry, access_researchfoyer)
-	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit)
+	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket, access_fine_small, access_fine_large)
 	command_access_list = list(access_eva)
 
 #undef ID_COMPUTER_DEPARTMENT_ENGINEERING

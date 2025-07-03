@@ -83,7 +83,7 @@ var/global/game_force_started = FALSE
 				// hey boo the rounds starting and you didnt ready up
 				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
-					if (!P.ready)
+					if (!P.ready_play && !P.ready_tutorial)
 						targets += P
 				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
 				did_reminder = TRUE
@@ -175,6 +175,22 @@ var/global/game_force_started = FALSE
 	else
 		src.mode.announce()
 
+	// setup initial special random jobs based on roundstart count of players
+	var/latejoin_job_count = clamp(ceil(src.roundstart_player_count(FALSE) / 7), 5, 15)
+	var/list/datum/job/latejoin_jobs = list()
+	for (var/datum/job/J in global.job_controls.special_jobs)
+		if (istype(J, /datum/job/special/random))
+			latejoin_jobs += J
+	var/count = 0
+	while(count < latejoin_job_count && length(latejoin_jobs))
+		var/datum/job/J = pick(latejoin_jobs)
+		latejoin_jobs -= J
+		if (J.limit >= 1)
+			continue
+		J.limit = 1
+		count++
+	logTheThing(LOG_DEBUG, null, "Dynamic latejoin scaling added [latejoin_job_count] random jobs")
+
 	logTheThing(LOG_DEBUG, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
 	message_admins("Chosen game mode: [mode] ([master_mode]).")
 
@@ -182,16 +198,16 @@ var/global/game_force_started = FALSE
 	participationRecorder.setHold()
 
 #ifdef RP_MODE
-	looc_allowed = 1
+	global.toggle_looc_allowed(TRUE)
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
-	ooc_allowed = 0
+	global.toggle_ooc_allowed(FALSE)
 	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
 	if (istype(src.mode, /datum/game_mode/construction))
-		looc_allowed = 1
+		global.toggle_looc_allowed(TRUE)
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	else
-		ooc_allowed = 0
+		global.toggle_ooc_allowed(FALSE)
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #endif
 #ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
@@ -201,7 +217,7 @@ var/global/game_force_started = FALSE
 		if (!istype(C.mob,/mob/new_player))
 			continue
 		var/mob/new_player/P = C.mob
-		if (P.ready)
+		if (P.ready_play)
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
@@ -272,12 +288,7 @@ var/global/game_force_started = FALSE
 
 		for(var/mob/new_player/lobby_player in mobs)
 			if(lobby_player.client)
-				if(lobby_player.client.antag_tokens > 0)
-					winset(lobby_player, "joinmenu", "size=240x200")
-					winset(lobby_player, "joinmenu.observe", "pos=18,136")
-					winset(lobby_player, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=false")
-				winset(lobby_player, "joinmenu.button_joingame", "is-disabled=false;is-visible=true")
-				winset(lobby_player, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
+				lobby_player.update_joinmenu()
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"
@@ -325,13 +336,13 @@ var/global/game_force_started = FALSE
 	for (var/client/C in global.clients)
 		var/mob/new_player/mob = C.mob
 		if (istype(mob))
-			if (mob.ready)
+			if (mob.ready_play)
 				readied_count++
 			else
 				unreadied_count++
 	var/total = readied_count + (unreadied_count/2)
 	if (loud)
-		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+		logTheThing(LOG_GAMEMODE, null, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
 	return total
 
 //Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
@@ -354,6 +365,7 @@ var/global/game_force_started = FALSE
 
 	proc/create_characters()
 		// SHOULD_NOT_SLEEP(TRUE)
+		var/tutorial_offset = 0.2 SECONDS
 		for (var/mob/new_player/player in mobs)
 #ifdef TWITCH_BOT_ALLOWED
 			if (player.twitch_bill_spawn)
@@ -361,7 +373,7 @@ var/global/game_force_started = FALSE
 				continue
 #endif
 
-			if (player.ready)
+			if (player.ready_play)
 				var/datum/player/P
 				if (player.mind)
 					P = player.mind.get_player()
@@ -398,6 +410,11 @@ var/global/game_force_started = FALSE
 						player.client.use_antag_token()	//Removes a token from the player
 					player.create_character()
 					qdel(player)
+			else if (player.ready_tutorial)
+				boutput(player, SPAN_ALERT("Spawning the tutorial area in [ceil(tutorial_offset/10)] second[s_es(ceil(tutorial_offset/10))]."))
+				SPAWN(tutorial_offset)
+					player.play_tutorial()
+				tutorial_offset += 0.2 SECONDS
 
 	proc/add_minds(var/periodic_check = 0)
 		// SHOULD_NOT_SLEEP(TRUE)
@@ -469,20 +486,34 @@ var/global/game_force_started = FALSE
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				// adjust the counter up or down and keep it within the set boundaries
-				if (world.cpu >= TICKLAG_CPU_MAX)
-					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
-						highCpuCount++
-				else if (world.cpu <= TICKLAG_CPU_MIN)
-					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
-						highCpuCount--
+				// Pre-compute the next lower tick-lag and what CPU would look like
+				var/next_lower_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
+				var/pred_cpu_low = world.cpu * (world.tick_lag / next_lower_tick_lag)
+				var/pred_map_low = world.map_cpu * (world.tick_lag / next_lower_tick_lag)
 
-				if (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+				// CPU counters
+				var/cpu_over_high = (world.cpu >= TICKLAG_CPU_MAX)
+				var/cpu_over_predicted = ((pred_cpu_low >= TICKLAG_CPU_MAX) && (highCpuCount < 0))
+				var/cpu_low = (((world.cpu <= TICKLAG_CPU_MIN) && (pred_cpu_low < TICKLAG_CPU_MAX)) || ((world.cpu <= TICKLAG_CPU_MIN) && (highCpuCount > 0)))
+
+				if (cpu_over_high || cpu_over_predicted)
+					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
+						++highCpuCount
+				else if (cpu_low)
+					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						--highCpuCount
+
+				// Map-CPU counters
+				var/map_over_high = (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+				var/map_over_predicted = ((pred_map_low >= TICKLAG_MAPCPU_MAX) && (highMapCpuCount < 0))
+				var/map_low = (((world.map_cpu <= TICKLAG_MAPCPU_MIN) && (pred_map_low < TICKLAG_MAPCPU_MAX)) || ((world.map_cpu <= TICKLAG_MAPCPU_MIN) && (highMapCpuCount > 0)))
+
+				if (map_over_high || map_over_predicted)
 					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
-						highMapCpuCount++
-				else if (world.map_cpu <= TICKLAG_MAPCPU_MIN)
+						++highMapCpuCount
+				else if (map_low)
 					if (highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
-						highMapCpuCount--
+						--highMapCpuCount
 
 				// adjust the tick_lag, if needed
 				var/dilated_tick_lag
@@ -532,10 +563,8 @@ var/global/game_force_started = FALSE
 				for(var/client/client in global.clients)
 					image_group.add_client(client)
 
-			// i feel like this should probably be a proc call somewhere instead but w/e
-			if (!ooc_allowed)
-				ooc_allowed = 1
-				boutput(world, "<B>OOC is now enabled.</B>")
+			global.toggle_ooc_allowed(TRUE)
+			boutput(world, "<B>OOC is now enabled.</B>")
 
 			SPAWN(5 SECONDS)
 				//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] game-ending spawn happening")
@@ -936,9 +965,10 @@ var/global/game_force_started = FALSE
 					E.show_inspector_report()
 					E.addAbility(/datum/targetable/inspector_report)
 				SPAWN(0)
-					E.mind.personal_summary.generate_xp(E.key)
-					E.mind.personal_summary.ui_interact(E)
-					E.addAbility(/datum/targetable/personal_summary)
+					if (E.mind?.personal_summary)
+						E.mind?.personal_summary.generate_xp(E.key)
+						E.mind?.personal_summary.ui_interact(E)
+						E.addAbility(/datum/targetable/personal_summary)
 
 	logTheThing(LOG_DEBUG, null, "Did credits")
 

@@ -7,6 +7,9 @@
 	var/hud_state = "blank"
 	icon_state= "sec_system"
 
+	get_install_slot()
+		return POD_PART_SECONDARY
+
 	proc/Use(mob/user as mob)
 		boutput(user, "[ship.ship_message("No special function for this ship!")]")
 		return
@@ -863,11 +866,12 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	var/configure_mode = 0 //If true, entering a valid code sets that as the code.
 	var/can_reset = TRUE //! Can you reset the code for this lock?
 
+	get_install_slot()
+		return POD_PART_LOCK
+
 	disposing()
 		if (ship)
 			ship.locked = 0
-			ship.lock = null
-
 		..()
 
 	deactivate()
@@ -1347,7 +1351,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is missing."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
 			core_inserted = TRUE
@@ -1355,7 +1359,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 			set_icon_state("SRS")
 			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 
 ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
@@ -1439,6 +1443,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	name = "Inferno Trailblazer"
 	desc = "A totally RADICAL plasma igniter for your ship! Leave behind the COOLEST flames in the Frontier! Manufacturer is not responsible for deaths this device may cause."
 	hud_state = "trailblazer"
+	icon_state = "trailblazer"
 	f_active = TRUE
 
 	Use()
@@ -1461,6 +1466,12 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	f_active = TRUE
 	var/obj/item/shipcomponent/mainweapon/loaded_wep = null
 
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		if(istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			vehicle.install_part(user, src, POD_PART_SECONDARY)
+
 	Use(mob/user)
 		src.activate(user)
 
@@ -1473,35 +1484,34 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 		if (!.)
 			return
 
-		if (!src.loaded_wep && !src.ship.m_w_system)
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.ship.get_part(POD_PART_MAIN_WEAPON)
+		if (!src.loaded_wep && !main_weapon)
 			return
 
-		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd"))
-			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd")) / 10, 1)
+		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || main_weapon && GET_COOLDOWN(main_weapon, "weapon_swap_cd"))
+			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(main_weapon, "weapon_swap_cd")) / 10, 1)
 			boutput(src.ship.pilot, "[src.ship.ship_message("[src.ship]'s weapons are too hot to swap out! [swap_cd] seconds left.")]")
 			return
 
 		for (var/mob/M in src.ship)
-			if (src.loaded_wep && src.ship.m_w_system)
-				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
-			else if (src.ship.m_w_system)
-				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out.")]")
+			if (src.loaded_wep && main_weapon)
+				boutput(M, "[src.ship.ship_message("[main_weapon] has been swapped out for [src.loaded_wep].")]")
+			else if (main_weapon)
+				boutput(M, "[src.ship.ship_message("[main_weapon] has been swapped out.")]")
 				src.ship.UpdateOverlays(null, "mainweapon") //todo: make pod components actually clean up their own overlays
 			else
 				boutput(M, "[src.ship.ship_message("[src.loaded_wep] has been swapped in.")]")
 
-		var/obj/item/shipcomponent/mainweapon/weapon = src.ship?.m_w_system
-		if (istype(weapon))
-			src.ship.eject_part(weapon, FALSE)
-			src.ship.null_part(weapon)
+		var/currently_active = main_weapon.active
+		if(main_weapon)
+			src.ship.eject_part(null, POD_PART_MAIN_WEAPON)
 		var/obj/item/shipcomponent/mainweapon/stored_weapon = src.loaded_wep
 		if (stored_weapon)
-			stored_weapon.ship = src.ship // prevents a bug in activate()
-			src.ship.Install(stored_weapon, FALSE)
+			src.ship.install_part(null, stored_weapon, POD_PART_MAIN_WEAPON, currently_active)
 			src.loaded_wep = null
 			src.UpdateIcon()
-		if (istype(weapon))
-			src.loaded_wep = weapon
+		if (istype(main_weapon))
+			src.loaded_wep = main_weapon
 			src.loaded_wep.set_loc(src)
 			src.UpdateIcon()
 

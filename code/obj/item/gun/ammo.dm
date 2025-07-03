@@ -282,7 +282,7 @@
 		if (src.amount_left < 0)
 			src.amount_left = 0
 		inventory_counter?.update_number(src.amount_left)
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
@@ -466,6 +466,19 @@
 	ammo_type = new/datum/projectile/bullet/rifle_3006
 	icon_state = "rifle_clip-4"
 	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_RIFLE_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip"
+	icon_empty = "rifle_clip_empty"
+
+/obj/item/ammo/bullets/rifle_3006/single
+	sname = ".308 AP"
+	name = ".308 rifle magazine"
+	desc = "An old stripper clip of .308 bullets, ready to rip through whatever they hit."
+	ammo_type = new/datum/projectile/bullet/rifle_3006
+	icon_state = "rifle_clip-1"
+	amount_left = 1
 	max_amount = 4
 	ammo_cat = AMMO_RIFLE_308
 	icon_dynamic = 1

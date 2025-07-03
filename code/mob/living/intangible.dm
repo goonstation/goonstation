@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/intangible)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/living/intangible
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
@@ -24,12 +27,12 @@
 		return
 	can_strip()
 		return 0
+	can_eat()
+		return FALSE
 	can_use_hands()
 		return 0
 	is_active()
 		return 0
-	say_understands(var/other)
-		return 1
 	Cross(atom/movable/mover)
 		return 1
 

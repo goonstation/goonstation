@@ -2,6 +2,7 @@
 	id = ROLE_CHANGELING
 	display_name = "changeling"
 	antagonist_icon = "changeling"
+	wiki_link = "https://wiki.ss13.co/Changeling"
 
 	/// The ability holder of this changeling, containing their respective abilities. This is also used for tracking absorbtions, at the moment.
 	var/datum/abilityHolder/changeling/ability_holder
@@ -36,7 +37,6 @@
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/eyespider)
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/legworm)
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/buttcrab)
-		src.ability_holder.addAbility(/datum/targetable/changeling/hivesay)
 		src.ability_holder.addAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.addAbility(/datum/targetable/changeling/give_control)
 
@@ -65,7 +65,6 @@
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/eyespider)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/legworm)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/buttcrab)
-		src.ability_holder.removeAbility(/datum/targetable/changeling/hivesay)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/give_control)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/changeling)

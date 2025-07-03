@@ -173,9 +173,6 @@ proc/get_prefab_tags()
 #if defined(MAP_OVERRIDE_NADIR)
 		wanted_tags |= PREFAB_NADIR
 #endif
-#if defined(MAP_OVERRIDE_MANTA)
-		wanted_tags |= PREFAB_MANTA | PREFAB_NADIR_UNSAFE
-#endif
 	else
 		wanted_tags |= PREFAB_SPACE
 	return wanted_tags

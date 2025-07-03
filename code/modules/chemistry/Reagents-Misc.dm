@@ -719,8 +719,8 @@ datum
 					return
 
 				var/colorize
-				if (istype(O,/obj/machinery/atmospherics/pipe/simple))
-					var/obj/machinery/atmospherics/pipe/simple/P = O
+				if (istype(O,/obj/machinery/atmospherics/pipe))
+					var/obj/machinery/atmospherics/pipe/P = O
 
 					if(P.can_rupture)
 						var/max_reinforcement = 1e9
@@ -1124,8 +1124,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (M.bodytemperature > 0 && !M.hasStatus("burning"))
-					M.bodytemperature = max(M.bodytemperature-(10 * mult),0)
+				if(!M.hasStatus("burning"))
+					M.changeBodyTemp(-10 KELVIN * mult)
 				..()
 				return
 
@@ -1429,6 +1429,30 @@ datum
 						H.bioHolder.age += 1 * mult
 					if (probmult(10))
 						boutput(H, SPAN_ALERT("You feel [pick("old", "strange", "frail", "peculiar", "odd")]."))
+					if (probmult(4))
+						H.emote("scream")
+				..()
+				return
+
+		deageinium
+			name = "deageinium"
+			id = "deageinium"
+			description = "An over-energetic jelly that writhes with youthful excitement."
+			reagent_state = LIQUID
+			fluid_r = 89
+			fluid_g = 242
+			fluid_b = 140
+			transparency = 128
+			viscosity = 0.8
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if(prob(30) && istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					H.bioHolder.age = max(M.bioHolder.age - round(1 * mult), 18)
+					if (probmult(10))
+						boutput(H, SPAN_ALERT("You feel [pick("young", "energetic", "inexperienced", "tempermental", "odd")]."))
 					if (probmult(4))
 						H.emote("scream")
 				..()
@@ -1943,6 +1967,7 @@ datum
 						return
 					var/obj/item/pen/crayon/chalk/W = new(T)
 					chalk_color = holder.get_average_rgb()
+					W.true_color = chalk_color
 					W.assign_color(chalk_color)
 
 		shark_dna

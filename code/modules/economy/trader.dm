@@ -34,7 +34,6 @@
 	var/list/failed_purchase_dialogue = null
 	var/pickupdialogue = null
 	var/pickupdialoguefailure = null
-	var/list/trader_area = null
 	var/doing_a_thing = 0
 	var/log_trades = TRUE
 
@@ -71,7 +70,6 @@
 
 	New()
 		dialogue = new/datum/dialogueMaster/traderGeneric(src)
-		src.trader_area = get_area(src)
 		..()
 
 	anger()
@@ -455,7 +453,7 @@
 		var/pickedloc = 0
 		var/found = 0
 
-		var/list/area_turfs = get_area_turfs(trader_area)
+		var/list/area_turfs = get_area_turfs(get_area(src))
 		if (!area_turfs || !length(area_turfs))
 			area_turfs = get_area_turfs( get_area(src) )
 
@@ -1259,6 +1257,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/costume/jester(src)
 		src.goods_sell += new /datum/commodity/costume/blorbosuit(src)
+		src.goods_sell += new /datum/commodity/costume/chompskysuit(src)
 		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
 		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
 		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)
