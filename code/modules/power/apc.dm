@@ -21,6 +21,11 @@ var/zapLimiter = 0
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
 
+	/// Only allow building an APC in an area if no APC currently is powering the area.
+	can_build(turf/T)
+		var/area/A = get_area(T)
+		return A.area_apc == null
+
 ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
 
 /obj/machinery/power/apc

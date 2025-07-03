@@ -1154,7 +1154,15 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		var/was_seen_boarding = FALSE
+		if (istype(V, /obj/machinery/vehicle/tank/car)) // you can drive pods drunk, but not cars. space law.
+			was_seen_boarding = seen_by_camera(owner)
+
 		V.finish_board_pod(owner)
+
+		if (was_seen_boarding && V.pilot == owner && ishuman(owner) && owner.hasStatus("drunk"))
+			var/mob/living/carbon/human/H = owner
+			H.apply_automated_arrest("DUI.", "Drove while inebriated.", requires_camera_seen = FALSE)
 
 /datum/action/bar/icon/eject_pod
 	duration = 50
