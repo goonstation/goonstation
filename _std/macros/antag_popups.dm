@@ -127,6 +127,9 @@
 	* @param set_last_popup whether to modify the mob's last_antag_popup entry (used for the admin display)
 	*/
 	proc/show_antag_popup(var/popup_name, var/set_last_popup = TRUE)
+		#ifdef NO_ANTAG_POPUPS_I_DONT_CARE
+		return
+		#endif
 		if (set_last_popup)
 			src.last_antag_popup = popup_name
 		get_singleton(/datum/antagPopups).show_popup(src, popup_name)
