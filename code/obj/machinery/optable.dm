@@ -5,6 +5,7 @@ TYPEINFO(/obj/machinery/optable)
 	name = "Operating Table"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
+	layer = OBJ_LAYER - 0.1
 	pass_unstable = TRUE
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
@@ -74,8 +75,6 @@ TYPEINFO(/obj/machinery/optable)
 
 /obj/machinery/optable/attackby(obj/item/W, mob/user)
 	if (issilicon(user)) return
-	if (istype(W, /obj/item/electronics/scanner)) return // hack
-	if (istype(W, /obj/item/deconstructor)) return //deconstruct_flags
 	if (istype(W, /obj/item/grab))
 		if(ismob(W:affecting))
 			var/mob/M = W:affecting

@@ -1,13 +1,12 @@
 /mob/living/critter/small_animal/pig
 	name = "space pig"
-	real_name = "space pig"
 	desc = "A pig. In space."
 	icon_state = "pig"
 	icon_state_dead = "pig-dead"
 	density = TRUE
-	speechverb_say = "oinks"
-	speechverb_exclaim = "squeals"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	speech_verb_say = "oinks"
+	speech_verb_exclaim = "squeals"
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	name_the_meat = FALSE
 	var/feral = FALSE
 
@@ -60,7 +59,6 @@
 
 /mob/living/critter/small_animal/pig/feral_hog
 	name = "feral hog"
-	real_name = "feral hog"
 	desc = "A feral hog. In space."
 	health_brute = 35
 	health_burn = 35
@@ -83,3 +81,13 @@
 		limb.borg_damage_bonus = 5
 		limb.human_desorient_duration = 0
 		limb.human_stam_damage = 20
+
+/mob/living/critter/small_animal/pig/flying
+	icon_state = "pig-fly"
+	ai_type = /datum/aiHolder/pig_flying
+
+	New(loc)
+		..()
+		src.flags |= TABLEPASS
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		animate_bumble(src)

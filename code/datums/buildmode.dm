@@ -432,10 +432,16 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 
 var/image/buildmodeBlink = image('icons/effects/effects.dmi',"empdisable")//guH GUH GURGLE
+var/buildmodeBlinkCounter = 0
+var/buildmodeBlinkTick = 0
 /proc/blink(var/turf/T)
 	if (!T)
 		return
-
+	if(TIME != buildmodeBlinkTick)
+		if(buildmodeBlinkCounter++ > 100) return
+	else
+		buildmodeBlinkTick = TIME
+		buildmodeBlinkCounter = 0
 	SPAWN(0)//WHY DOUBLE SPAWN AND NEW IMAGE EVERY BLINK IT MAKES SOMEPOTATO SAD
 
 		T.overlays += buildmodeBlink

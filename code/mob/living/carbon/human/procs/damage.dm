@@ -42,6 +42,7 @@
 							if (P.forensic_ID)
 								implanted.forensic_ID = P.forensic_ID
 							src.implant += implanted
+							implanted.forensic_holder = P.forensic_holder // Give projectile forensics to the implanted bullet
 							if (P.proj_data.material)
 								implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 60)
@@ -74,6 +75,7 @@
 						src.implant += implanted
 						if (P.forensic_ID)
 							implanted.forensic_ID = P.forensic_ID
+						implanted.forensic_holder = P.forensic_holder
 						if (P.proj_data.material)
 							implanted.setMaterial(P.proj_data.material)
 						implanted.implanted(src, null, 100)
@@ -127,6 +129,7 @@
 							implanted.owner = src
 							if (P.forensic_ID)
 								implanted.forensic_ID = P.forensic_ID
+							implanted.forensic_holder = P.forensic_holder
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)
 	return 1
@@ -171,7 +174,7 @@
 	var/reduction = 0
 	var/shielded = 0
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		reduction += 2
 		shielded = 1
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some blast!</b>"))
@@ -224,7 +227,7 @@
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 
 	var/modifier = power / 20
@@ -243,7 +246,7 @@
 
 	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	var/list/zones = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
@@ -326,6 +329,10 @@
 
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
+
+	brute *= 1 - GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_BRUTE_REDUCTION) / 100
+	burn *= 1 - GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_BURN_REDUCTION) / 100
+	tox *= 1 - GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_TOX_REDUCTION) / 100
 
 	if(src.mutantrace) //HOW
 		var/typemult
@@ -474,18 +481,18 @@
 		if (src.organHolder)
 			var/datum/organHolder/O = src.organHolder
 			if (side == "right")
-				if (O.right_eye)
+				if (O.right_eye?.provides_sight)
 					O.right_eye.brute_dam = max(0, O.right_eye.brute_dam + amount)
 			else if (side == "left")
-				if (O.left_eye)
+				if (O.left_eye?.provides_sight)
 					O.left_eye.brute_dam = max(0, O.left_eye.brute_dam + amount)
 			else
-				if (O.right_eye && O.left_eye)
+				if (O.right_eye?.provides_sight && O.left_eye?.provides_sight)
 					O.right_eye.brute_dam = max(0, O.right_eye.brute_dam + (amount/2))
 					O.left_eye.brute_dam = max(0, O.left_eye.brute_dam + (amount/2))
-				else if (O.right_eye)
+				else if (O.right_eye?.provides_sight)
 					O.right_eye.brute_dam = max(0, O.right_eye.brute_dam + amount)
-				else if (O.left_eye)
+				else if (O.left_eye?.provides_sight)
 					O.left_eye.brute_dam = max(0, O.left_eye.brute_dam + amount)
 		else
 			src.eye_damage = max(0, src.eye_damage + amount)
@@ -524,7 +531,8 @@
 
 				if (prob(eye_dam - 25 + 1))
 					src.show_text("You go blind!", "red")
-					src.bioHolder.AddEffect("blind")
+					src.organHolder?.left_eye?.take_damage(100)
+					src.organHolder?.right_eye?.take_damage(100)
 				else
 					src.change_eye_blurry(rand(12,16))
 

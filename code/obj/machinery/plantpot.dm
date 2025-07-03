@@ -27,7 +27,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	density = 1
 	event_handler_flags = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
-	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS|FPRINT
+	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	power_usage = 25
@@ -183,7 +183,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	return output
 
 
-/obj/machinery/plantpot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/plantpot/EnteredProximity(atom/movable/AM)
 	if(!src.current || src.dead)
 		return
 	src.current?.ProximityProc(src, AM)
@@ -267,6 +267,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			// If there's no mutation we just use the base special proc, obviously!
 			growing.HYPspecial_proc(src)
+
+	if(src.current == null) //synthcats can just get up and walk away. check for that
+		return
 
 	// Have we lost all health or growth, or used up all available harvests? If so, this plant
 	// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
@@ -436,7 +439,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					if(growing.HYPattacked_proc(src,user,W)) return
 
 			if(src.dead)
-				src.visible_message(SPAN_ALERT("[src] is is destroyed by [user.name]'s [W]!"))
+				src.visible_message(SPAN_ALERT("[src] is destroyed by [user.name]'s [W.name]!"))
 				src.HYPdestroyplant()
 				return
 			else
@@ -450,15 +453,19 @@ TYPEINFO(/obj/machinery/plantpot)
 			boutput(user, SPAN_ALERT("Something is already in that tray."))
 			return
 		user.visible_message(SPAN_NOTICE("[user] plants a seed in the [src]."))
-		user.u_equip(SEED)
-		SEED.set_loc(src)
 		if(SEED.planttype)
 			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] (reagents: [json_encode(HYPget_assoc_reagents(SEED.planttype, SEED.plantgenes))]) seed at [log_loc(src)].")
 			src.HYPnewplant(SEED)
+			SEED.charges--
+			if (SEED.charges < 1)
+				user.u_equip(SEED)
+				qdel(SEED)
+			else SEED.inventory_counter.update_number(SEED.charges)
 			if(!(user in src.contributors))
 				src.contributors += user
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
+			user.u_equip(SEED)
 			qdel(SEED)
 		return
 
@@ -476,7 +483,6 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			SEED = new /obj/item/seed
 		SEED.generic_seed_setup(SP.selected, FALSE)
-		SEED.set_loc(src)
 		if(SEED.planttype)
 			src.HYPnewplant(SEED)
 			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)] using the seedplanter.")
@@ -484,7 +490,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				src.contributors += user
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
-			qdel(SEED)
+		qdel(SEED)
 
 	else if(istype(W, /obj/item/reagent_containers/glass/) && W.is_open_container(FALSE))
 		// Not just watering cans - any kind of glass can be used to pour stuff in.
@@ -863,17 +869,13 @@ TYPEINFO(/obj/machinery/plantpot)
 	// This proc is where the harvesting actually happens. Again it shouldn't need tweaking
 	// with since i've tried to account for most special circumstances that might come up.
 	if(!user) return
-	var/satchelpick = 0
 	if(SA)
 		if(length(SA.contents) >= SA.maxitems)
 			boutput(user, SPAN_ALERT("Your satchel is already full! Free some space up first."))
 			return
 		else
-			satchelpick = input(user, "What do you want to harvest into the satchel?", "[src.name]", 0) in list("Everything","Produce Only","Seeds Only","Never Mind")
-			if(!HYPcheck_if_harvestable() || satchelpick == "Never Mind")
+			if(!HYPcheck_if_harvestable())
 				return
-			if(satchelpick == "Everything")
-				satchelpick = null
 	// it's okay if we don't have a satchel at all since it'll just harvest by hand instead
 	var/datum/plant/growing = src.current
 	var/datum/plantgenes/DNA = src.plantgenes
@@ -1095,8 +1097,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
 				// Same shit again. This isn't so much the crop as it is giving you seeds
 				// incase you couldn't get them otherwise, though.
-				HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src)
 				seedcount++
+
+		if (seedcount > 0) HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src, seedcount)
 
 		// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
 		// This is only reached if you actually got anything harvested.
@@ -1131,8 +1134,6 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		// At this point all the harvested items are inside the plant pot, and this is the
 		// part where we decide where they're going and get them out.
-		var/seeds_only = satchelpick == "Seeds Only"
-		var/produce_only = satchelpick == "Produce Only"
 		if(SA)
 			// If we're putting stuff in a satchel, this is where we do it.
 			for(var/obj/item/I in src.contents)
@@ -1140,15 +1141,13 @@ TYPEINFO(/obj/machinery/plantpot)
 					boutput(user, SPAN_ALERT("Your satchel is full! You dump the rest on the floor."))
 					break
 				if(istype(I,/obj/item/seed/))
-					if(SA.check_valid_content(I) && (!satchelpick || seeds_only))
-						I.set_loc(SA)
-						I.add_fingerprint(user)
+					continue
 				else
-					if(SA.check_valid_content(I) && (!satchelpick || produce_only))
+					if(SA.check_valid_content(I))
 						I.set_loc(SA)
 						I.add_fingerprint(user)
 			SA.UpdateIcon()
-			SA.tooltip_rebuild = 1
+			SA.tooltip_rebuild = TRUE
 
 		// if the satchel got filled up this will dump any unharvested items on the floor
 		// if we're harvesting by hand it'll just default to this anyway! truly magical~
@@ -1233,7 +1232,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		// plant's starting health.
 
 	if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
-		setup_use_proximity()
+		src.AddComponent(/datum/component/proximity)
 
 	src.health += SEED.planttype.endurance + SDNA?.get_effective_value("endurance")
 	// Add the plant's total endurance score to the health.
@@ -1270,10 +1269,9 @@ TYPEINFO(/obj/machinery/plantpot)
 	// Copy over all genes, strains and mutations from the seed.
 
 	// Finally set the harvests, make sure we always have at least one harvest,
-	// then get rid of the seed, mutate the genes a little and update the pot sprite.
+	// mutate the genes a little and update the pot sprite.
 	if(growing.harvestable) src.harvests = growing.harvests + DNA?.get_effective_value("harvests")
 	if(src.harvests < 1) src.harvests = 1
-	qdel(SEED)
 	if (!SEED.dont_mutate)
 		src.HYPmutateplant(1)
 	src.post_alert(list("event" = "new", "plant" = src.current.name))
@@ -1298,7 +1296,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.health_warning = 0
 	src.harvest_warning = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()// If there's no plant here, there doesn't need to be a check
+	src.RemoveComponentsOfType(/datum/component/proximity) // If there's no plant here, there doesn't need to be a check
 	src.update_name()
 	//we also get rid of the current plantgrowth_tick, since there is no plant to access it
 	qdel(src.current_tick)
@@ -1321,7 +1319,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	src.generation = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()
+	src.RemoveComponentsOfType(/datum/component/proximity)
 	src.update_name()
 	src.post_alert(list("event" = "cleared"))
 	//we also get rid of the current plantgrowth_tick, since there is no plant to access it
@@ -1465,7 +1463,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
 	anchored = ANCHORED
-	deconstruct_flags = 0
+	deconstruct_flags = DECON_NONE
 	icon_state = null
 	power_usage = 0
 	growth_rate = 1

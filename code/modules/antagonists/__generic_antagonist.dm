@@ -1,4 +1,5 @@
 /datum/antagonist/generic
+	popup_name_override = "traitorgeneric"
 	succinct_end_of_round_antagonist_entry = TRUE
 	display_name = "generic antagonist"
 	var/grouped_name
@@ -10,12 +11,6 @@
 			src.display_name = display_name
 
 		. = ..()
-
-	do_popup(override)
-		if (!override)
-			override = "traitorgeneric"
-
-		..(override)
 
 /datum/antagonist/generic/antagonist_critter
 	id = ROLE_ANTAGONIST_CRITTER

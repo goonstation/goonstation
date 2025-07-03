@@ -1,7 +1,6 @@
 ABSTRACT_TYPE(/mob/living/critter/vending)
 /mob/living/critter/vending
 	name = "snack machine"
-	real_name = "snack machine"
 	desc = "Tasty treats for crewman eats."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "snack"
@@ -12,11 +11,11 @@ ABSTRACT_TYPE(/mob/living/critter/vending)
 	can_grab = 0
 	can_disarm = 0
 	blood_id = "oil"
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	metabolizes = 0
 	stepsound = 'sound/impact_sounds/Metal_Clang_3.ogg'
 	var/limb_name = "snack dispenser"
@@ -89,7 +88,6 @@ ABSTRACT_TYPE(/mob/living/critter/vending)
 
 /mob/living/critter/vending/snack
 	name = "snack machine"
-	real_name = "snack machine"
 	desc = "Tasty treats for crewman eats."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "snack"
@@ -98,7 +96,6 @@ ABSTRACT_TYPE(/mob/living/critter/vending)
 
 /mob/living/critter/vending/ice_cream
 	name = "Ice Cream Dispenser"
-	real_name = "Ice Cream Dispenser"
 	desc = "A machine designed to dispense space ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "ice_creamer0"
@@ -107,7 +104,6 @@ ABSTRACT_TYPE(/mob/living/critter/vending)
 
 /mob/living/critter/vending/monkey_organ
 	name = "ValuChimp"
-	real_name = "ValuChimp"
 	desc = "More fun than a barrel of monkeys! Monkeys may or may not be synthflesh replicas, may or may not contain partially-hydrogenated banana oil."
 	icon_state = "monkey"
 	limb_type = /datum/limb/gun/spawner/organ_dispenser
@@ -130,7 +126,6 @@ ABSTRACT_TYPE(/mob/living/critter/vending)
 
 /mob/living/critter/vending/smes
 	name = "power storage unit"
-	real_name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "smes"

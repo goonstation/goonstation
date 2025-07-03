@@ -99,7 +99,7 @@
 /area/noGenerate)
 "fd" = (
 /obj/decal/cleanable/vomit,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/simulated/floor/carpet/purple/standard/edge/east,
 /area/prefab/crashed_hop_shuttle)
 "go" = (
@@ -245,7 +245,7 @@
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "pa" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
@@ -349,7 +349,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/prefab/crashed_hop_shuttle)
 "uZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/lattice,
 /turf/variableTurf/floor,
 /area/noGenerate)
@@ -602,7 +602,7 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/noGenerate)
 "Lh" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
@@ -804,7 +804,7 @@
 	},
 /area/prefab/crashed_hop_shuttle)
 "Yu" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},

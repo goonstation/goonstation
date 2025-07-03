@@ -89,7 +89,7 @@ Thus, the two variables affect pump operation are set in New():
 	signal.source = src
 
 	signal.data["tag"] = src.id
-	signal.data["netid"] = src.net_id
+	signal.data["sender"] = src.net_id
 	signal.data["device"] = "AGP"
 	signal.data["power"] = src.on ? "on" : "off"
 	signal.data["min_output"] = MIN_PRESSURE
@@ -103,7 +103,7 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/binary/pump/receive_signal(datum/signal/signal)
-	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["address_1"] == src.net_id)))
 		if(signal.data["command"] != "broadcast_status")
 			return FALSE
 
@@ -150,7 +150,7 @@ Thus, the two variables affect pump operation are set in New():
 		var/turf/intact = get_turf(src)
 		intact = intact.intact
 		var/hide_pipe = CHECKHIDEPIPE(src)
-		flick("[hide_pipe ? "h" : "" ]alert", src)
+		FLICK("[hide_pipe ? "h" : "" ]alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)

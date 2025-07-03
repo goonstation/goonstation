@@ -15,6 +15,8 @@ TYPEINFO(/obj/storage/closet)
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
 	material_amt = 0.2
+	///Will this locker auto-close when someone is flung into it
+	var/auto_close = TRUE
 
 	New()
 		. = ..()
@@ -43,9 +45,6 @@ TYPEINFO(/obj/storage/closet)
 		return
 
 	proc/take_damage(var/amount, var/obj/projectile/P)
-		if (!P)
-			message_admins("P Gone")
-			return
 		if (!isnum(amount) || amount <= 0)
 			return
 		src._health -= amount
@@ -81,13 +80,24 @@ TYPEINFO(/obj/storage/closet)
 
 	Crossed(atom/movable/AM)
 		. = ..()
-		if (src.open && ismob(AM) && AM.throwing)
+		if (src.auto_close && src.open && ismob(AM) && AM.throwing)
 			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
 			AM.throw_impact(src, thr)
 			AM.throwing = FALSE
 			AM.changeStatus("knockdown", 1 SECOND)
 			AM.set_loc(src.loc)
 			src.close()
+
+	get_help_message(dist, mob/user)
+		if (src.open)
+			. = " You can use a <b>wrench</b> to dismantle the closet. [src.can_leghole && !src.legholes ? "You can use a <b>welding tool</b> to cut foot holes in the bottom. " : ""]"
+		else
+			if (src.welded)
+				. += " You can use a <b>welding tool</b> to remove the weld and allow it to open."
+			else
+				. += " You can use a <b>welding tool</b> to weld it shut and prevent it being opened."
+			if (src.can_flip_bust)
+				. += " Anyone locked inside can <b>flip</b> to try to break out."
 
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
@@ -112,9 +122,9 @@ TYPEINFO(/obj/storage/closet)
 			if (prob(2))
 				new /obj/item/clothing/mask/gas/emergency(src)
 			for (var/i=rand(2,3), i>0, i--)
-				new /obj/item/tank/emergency_oxygen(src)
+				new /obj/item/tank/pocket/oxygen(src)
 				if (prob(40))
-					new /obj/item/tank/mini_oxygen(src)
+					new /obj/item/tank/mini/oxygen(src)
 				if (prob(40))
 					new /obj/item/clothing/mask/breath(src)
 
@@ -180,6 +190,8 @@ TYPEINFO(/obj/storage/closet/coffin)
 	open_sound = 'sound/misc/coffin_open.ogg'
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
+	auto_close = FALSE
+	can_leghole = FALSE
 
 	wood
 		icon_closed = "woodcoffin"
@@ -219,11 +231,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(
 	/obj/item/clothing/mask/breath,
 	/obj/item/clothing/under/misc/syndicate,
-#if defined(MAP_OVERRIDE_MANTA)
 	/obj/item/tank/jetpack/syndicate,
-#else
-	/obj/item/tank/jetpack,
-#endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
 	/obj/item/clothing/head/helmet/space/santahat/noslow,
@@ -242,7 +250,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(/obj/item/storage/box/handcuff_kit,
 	/obj/item/storage/box/flashbang_kit,
 	/obj/item/pinpointer/nuke = 5,
-	/obj/item/device/pda2/syndicate)
+	/obj/item/device/pda2/syndicate/nuclear)
 
 /obj/storage/closet/syndicate/malf
 	desc = "Gear preperations closet."
@@ -442,7 +450,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
 
-	close(var/entangleLogic)
+	close(var/entangleLogic, mob/user)
 		if (!src.open)
 			return 0
 		if (!src.can_close())
@@ -521,7 +529,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 						I.set_loc(src)
 					amtload++
 				W:UpdateIcon()
-				W.tooltip_rebuild = 1
+				W.tooltip_rebuild = TRUE
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else

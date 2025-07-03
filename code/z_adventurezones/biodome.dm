@@ -400,12 +400,12 @@ SYNDICATE DRONE FACTORY AREAS
 
 			if (istype(O, /obj/machinery/vehicle) && !src.no_fly_zone)
 				var/obj/machinery/vehicle/V = O
-				if(istype(V.movement_controller, /datum/movement_controller/pod) && V.engine?.active)
+				if(istype(V.movement_controller, /datum/movement_controller/pod) && V.get_part(POD_PART_ENGINE)?.active)
 					return
 
 			if (isliving(O))
 				var/mob/living/M = O
-				if(M.isFlying && !src.no_fly_zone)
+				if(HAS_ATOM_PROPERTY(M, PROP_ATOM_FLOATING) && !src.no_fly_zone)
 					return
 				if (M.mind?.damned)
 					melt_away(M)
@@ -493,14 +493,14 @@ SYNDICATE DRONE FACTORY AREAS
 							R.emote("scream")
 							playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 							R.changeStatus("stunned", 10 SECONDS)
-							R.part_leg_r.holder = null
+							R.part_leg_r?.holder = null
 							qdel(R.part_leg_r)
 							if (R.part_leg_r.slot == "leg_both")
 								R.part_leg_l = null
 								R.update_bodypart("l_leg")
 							R.part_leg_r = null
 							R.update_bodypart("r_leg")
-							R.part_leg_l.holder = null
+							R.part_leg_l?.holder = null
 							qdel(R.part_leg_l)
 							if (R.part_leg_l.slot == "leg_both")
 								R.part_leg_r = null
@@ -776,7 +776,7 @@ SYNDICATE DRONE FACTORY AREAS
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "whip"
 	item_state = "c_tube"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
 	New()
@@ -801,7 +801,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if (!viewable_atoms.Find(target_r))
 			return
 
-		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
+		var/list/affected = drawLineObj(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
 
 		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 
@@ -902,10 +902,10 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/dat = ""
 		dat += "<b>There's several runes inscribed here ...</b><BR><BR>"
-		dat += "<A href='?src=\ref[src];north=1'>Touch the first rune</A><BR>"
-		dat += "<A href='?src=\ref[src];east=1'>Touch the second rune</A><BR>"
-		dat += "<A href='?src=\ref[src];south=1'>Touch the third rune</A><BR>"
-		dat += "<A href='?src=\ref[src];west=1'>Touch the fourth rune</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];north=1'>Touch the first rune</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];east=1'>Touch the second rune</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];south=1'>Touch the third rune</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];west=1'>Touch the fourth rune</A><BR>"
 
 		src.add_dialog(usr)
 		usr.Browse("[dat]", "window=rtab;size=400x300")
@@ -977,7 +977,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "death"
 	item_state = "death"
 	// stole some shit from the welder's apron
-	flags = FPRINT | TABLEPASS | SPACEWEAR
+	flags = TABLEPASS | SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	fire_resist = T0C+5200
 	protective_temperature = 1000
@@ -1066,6 +1066,7 @@ SYNDICATE DRONE FACTORY AREAS
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 
@@ -1137,7 +1138,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	var/datum/light/light
 
@@ -1166,7 +1167,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "powder"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -1509,7 +1510,7 @@ var/satellite_crash_event_status = -1
 
 		var/area/drone/zone/drone_zone = locate()
 		if (istype(drone_zone))
-			var/obj/decal/fakeobjects/teleport_pad/pad = locate() in drone_zone.contents
+			var/obj/fakeobject/teleport_pad/pad = locate() in drone_zone.contents
 			if (istype(pad))
 				portal.target = get_turf(pad)
 			else

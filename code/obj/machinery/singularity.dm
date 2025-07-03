@@ -52,6 +52,8 @@ proc/singularity_containment_check(turf/center)
 TYPEINFO(/obj/machinery/the_singularitygen)
 	mats = 250
 
+ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
+
 /obj/machinery/the_singularitygen
 	name = "Gravitational Singularity Generator"
 	desc = "An Odd Device which produces a Black Hole when set up."
@@ -60,11 +62,14 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	anchored = UNANCHORED // so it can be moved around out of crates
 	density = 1
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
+	var/activating = FALSE
 
 	HELP_MESSAGE_OVERRIDE({"Automatically creates a singularity when all surrounding containment fields are active.\
 							Can be anchored/unanchored with a <b>wrench</b>"})
 
 /obj/machinery/the_singularitygen/process()
+	if (src.activating)
+		return
 	var/max_radius = singularity_containment_check(get_turf(src))
 	if(isnull(max_radius))
 		return
@@ -77,12 +82,19 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 		src.visible_message(SPAN_NOTICE("[src] refuses to activate in this place. Odd."))
 		qdel(src)
 
+	src.activate(max_radius)
+
+/obj/machinery/the_singularitygen/proc/activate(max_radius = null)
+	src.activating = TRUE
+	var/turf/T = get_turf(src)
 	playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 3, flags=SOUND_IGNORE_SPACE)
-	if (src.bhole)
-		new /obj/bhole(T, 3000)
-	else
-		new /obj/machinery/the_singularity(T, 100,,max_radius)
-	qdel(src)
+	src.icon_state = "TheSingGenOhNo"
+	SPAWN(7 SECONDS)
+		if (src.bhole)
+			new /obj/bhole(T, 3000)
+		else
+			new /obj/machinery/the_singularity(T, 100,,max_radius)
+		qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
@@ -116,7 +128,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
-	flags = FPRINT // no fluid submerge images and we also don't need tgui interactability
+	flags = 0 // no fluid submerge images and we also don't need tgui interactability
 
 
 	pixel_x = -16
@@ -143,6 +155,10 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/gib_mobs = 0 //! if it should call gib on mobs
 	var/list/obj/succ_cache
 
+	/// Targeted turf when loose
+	var/turf/target_turf
+	/// How many steps we'll continue to walk towards the target turf before rerolling
+	var/target_turf_counter = 0
 
 #ifdef SINGULARITY_TIME
 /*
@@ -212,7 +228,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (active == 1)
 		move()
-		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
+		SPAWN(2 SECONDS) // slowing this baby down a little -drsingh // smoother movement
 			move()
 
 			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
@@ -271,15 +287,65 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 
 	if (selfmove)
-		var/dir = pick(cardinal)
+		var/list/vector = src.calc_direction()
+		var/next_dir = pick(alldirs)
 
+		if (src.target_turf_counter <= 0)
+			if (prob(20)) // drift towards a random station turf for a few steps
+				src.target_turf = get_random_station_turf()
+				src.target_turf_counter = rand(radius,radius*2)
+		else
+			if (!src.target_turf)
+				src.target_turf = get_random_station_turf()
+			src.target_turf_counter--
+			next_dir = get_dir_accurate(src, src.target_turf)
+
+		var/vector_length = (vector[1] ** 2 + vector[2] ** 2) ** (1/2)
+		if (prob(vector_length * 400)) //scale the chance to move in the direction of resultant force by the strength of that force
+			var/angle = arctan(vector[2], vector[1])
+			next_dir = angle2dir(angle)
+
+		// don't cross containment fields
 		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
-			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
+			var/turf/checkloc = get_ranged_target_turf(src.get_center(), next_dir, dist)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
 
-		step(src, dir)
+		step(src, next_dir)
 
+///Returns a 2D vector representing the resultant force acting on the singulo by all gravity wells, scaled by their distance
+/obj/machinery/the_singularity/proc/calc_direction()
+	var/list/total_vector = list(0,0) //if only we had vector primitives...
+	var/turf/singulo_turf = get_turf(src)
+	//unfortunately these are two unrelated types that both have special behaviour so this is going to get messy
+	for(var/atom/movable/magnet as anything in by_cat[TR_CAT_SINGULO_MAGNETS])
+		var/turf/magnet_turf = get_turf(magnet)
+		if (magnet_turf.z != singulo_turf.z)
+			continue
+
+		var/sign = -1 //default to pull
+		if (istype(magnet, /obj/machinery/artifact))
+			var/obj/machinery/artifact/artifact = magnet
+			var/datum/artifact/gravity_well_generator/artifact_datum = artifact.artifact
+			if (istype(artifact_datum) && !artifact_datum.activated)
+				continue
+			if (artifact_datum.gravity_type == 1)
+				sign = 1 //push
+		if (istype(magnet, /obj/gravity_well_generator))
+			var/obj/gravity_well_generator/generator = magnet
+			if (!generator.active)
+				continue
+
+		//our actual offset from this magnet
+		var/list/vector = list(0,0)
+		vector[1] = ((singulo_turf.x - magnet_turf.x) * sign)
+		vector[2] = ((singulo_turf.y - magnet_turf.y) * sign)
+		//no need to root, we can reuse the squared value (I'm basically a doom programmer)
+		var/length_squared = (vector[1] ** 2) + (vector[2] ** 2)
+		//inverse square law I guess? gravity is radial
+		total_vector[1] += vector[1] * 1/length_squared
+		total_vector[2] += vector[2] * 1/length_squared
+	return total_vector
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
@@ -412,7 +478,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	else if (isturf(A))
 		var/turf/T = A
-		if (T.turf_flags & IS_TYPE_SIMULATED)
+		if (issimulatedturf(T))
 			if (istype(T, /turf/simulated/floor))
 				T.ReplaceWithSpace()
 				gain += 2
@@ -433,6 +499,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return ..()
 	else
 		return ..()
+
+/obj/machinery/the_singularity/proc/shrink()
+	radius--
+	SafeScaleAnim((radius-0.5)/(radius+0.5),(radius-0.5)/(radius+0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
+	grav_pull = min((radius+1)*3, grav_pull)
 
 /obj/machinery/the_singularity/proc/grow()
 	if(radius<maxradius)
@@ -465,7 +536,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/the_singularity/proc/Toxmob()
-	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	for (var/mob/living/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		M.take_radiation_dose(clamp(0.2 SIEVERTS*(radius+1), 0, 2 SIEVERTS))
 		M.show_text("You feel odd.", "red")
 
@@ -492,8 +563,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (prob(70))
 			continue
 
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
-			if (T.turf_flags & IS_TYPE_SIMULATED)
+		if (T && !istype(T, /turf/space) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
+			if (issimulatedturf(T))
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
 					if (!F.broken)
@@ -556,6 +627,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	density = 1
 	req_access = list(access_engineering_engine)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	appearance_flags = KEEP_TOGETHER
 	var/Varedit_start = 0
 	var/Varpower = 0
 	var/active = 0
@@ -672,6 +744,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		if(Varpower == 0)
 			if(src.power <= 0)
 				src.visible_message(SPAN_ALERT("The [src.name] shuts down due to lack of power!"))
+				playsound(src, 'sound/machines/shielddown.ogg', 50, TRUE)
 				icon_state = "Field_Gen"
 				src.set_active(0)
 				src.cleanup(NORTH)
@@ -681,6 +754,16 @@ TYPEINFO(/obj/machinery/field_generator)
 				for(var/dir in cardinal)
 					src.UpdateOverlays(null, "field_start_[dir]")
 					src.UpdateOverlays(null, "field_end_[dir]")
+				return
+
+	if (src.active >= 1 && src.power <= 40)
+		if (!ON_COOLDOWN(src, "power_alarm", 20 SECONDS + rand(-5 SECONDS, 5 SECONDS))) //stupid rand just to make the alarms go off at slightly different times and not stack up
+			playsound(src, 'sound/machines/pod_alarm.ogg', 50, FALSE, pitch = 0.6 + (power/40) * 0.4)
+			src.visible_message(SPAN_ALERT("The [src.name] emits a low power warning alarm!"))
+		if (!src.GetOverlayImage("amber"))
+			src.UpdateOverlays(image(src.icon, "FieldGen_amber", FLOAT_LAYER - 1), "amber")
+	else
+		src.UpdateOverlays(null, "amber")
 
 /obj/machinery/field_generator/proc/setup_field(var/NSEW = 0)
 	var/turf/T = src.loc
@@ -750,7 +833,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		return
 	if(P.proj_data.damage_type == D_ENERGY)
 		src.power += P.power
-		flick("Field_Gen_Flash", src)
+		FLICK("Field_Gen_Flash", src)
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
@@ -923,6 +1006,9 @@ TYPEINFO(/obj/machinery/field_generator)
 	Varedit_start = TRUE
 	power = 50
 
+/obj/machinery/field_generator/does_impact_particles(kinetic_impact)
+	return kinetic_impact
+
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 
 /obj/machinery/containment_field
@@ -1080,6 +1166,7 @@ TYPEINFO(/obj/machinery/emitter)
 	var/shot_number = 0
 	var/state = UNWRENCHED
 	var/locked = 1
+	var/emagged = FALSE
 	//Remote control stuff
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -1146,6 +1233,9 @@ TYPEINFO(/obj/machinery/emitter)
 	..()
 
 /obj/machinery/emitter/attack_ai(mob/user as mob)
+	if (src.emagged)
+		boutput(user, SPAN_NOTICE("Unable to interface with [src]!"))
+		return
 	if(state == WELDED)
 		if(src.active==1)
 			if(tgui_alert(user, "Turn off the emitter?","Switch",list("Yes","No")) == "Yes")
@@ -1294,7 +1384,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-	if(!src.link || !target_id)
+	if(!src.link || src.emagged || !target_id)
 		return
 
 	var/datum/signal/signal = get_free_signal()
@@ -1313,7 +1403,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //What do we do with an incoming command?
 /obj/machinery/emitter/receive_signal(datum/signal/signal)
-	if(!src.link)
+	if(!src.link || src.emagged)
 		return
 	if(!signal || !src.net_id || signal.encryption)
 		return
@@ -1349,6 +1439,16 @@ TYPEINFO(/obj/machinery/emitter)
 		icon_state = "Emitter"
 
 	return
+
+/obj/machinery/emitter/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		boutput(user, SPAN_ALERT("\The [src] shorts out its remote connectivity controls!"))
+		src.emagged = TRUE
+
+/obj/machinery/emitter/demag(mob/user)
+	. = ..()
+	if (src.emagged)
+		src.emagged = FALSE
 
 /obj/machinery/emitter/assault
 	name = "prototype assault emitter"
@@ -1653,7 +1753,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 			power_a = power_p*power_s*50
 			src.lastpower = power_a
 			add_avail(power_a)
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[power_a]&powerfmt=[engineering_notation(power_a)]W")
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(power_a), 50)]&powerfmt=[engineering_notation(power_a)]W")
 			..()
 	else
 		var/power_a = 0
@@ -1884,8 +1984,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
-		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
-		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
+		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='byond://?src=\ref[];tp=-30'>-</A> <A href='byond://?src=\ref[];tp=-1'>-</A> <A href='byond://?src=\ref[];tp=1'>+</A> <A href='byond://?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='byond://?src=\ref[];time=0'>Timing</A>", src) : text("<A href='byond://?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
+		dat += "<BR><BR><A href='byond://?src=\ref[src];close=1'>Close</A>"
 		*/
 		user.Browse(src.get_interface(), "window=timer")
 		onclose(user, "timer")
@@ -2051,28 +2151,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 
 							<tr>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=-30">
+									<a href="byond://?src=\ref[src];action=timer;tp=-30">
 										<div class="button timer_b">
 											--
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=-1">
+									<a href="byond://?src=\ref[src];action=timer;tp=-1">
 										<div class="button timer_b">
 											-
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=1">
+									<a href="byond://?src=\ref[src];action=timer;tp=1">
 										<div class="button timer_b">
 											+
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=30">
+									<a href="byond://?src=\ref[src];action=timer;tp=30">
 										<div class="button timer_b">
 											++
 										</div>
@@ -2081,14 +2181,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 							</tr>
 							<tr>
 								<td colspan=2>
-									<a href="?src=\ref[src];action=trigger;spec=abort">
+									<a href="byond://?src=\ref[src];action=trigger;spec=abort">
 										<div class="button" id="abort">
 											Abort
 										</div>
 									</a>
 								</td>
 								<td colspan=2>
-									<a href="?src=\ref[src];action=trigger;spec=prime">
+									<a href="byond://?src=\ref[src];action=trigger;spec=prime">
 										<div class="button" id="prime">
 											Prime
 										</div>

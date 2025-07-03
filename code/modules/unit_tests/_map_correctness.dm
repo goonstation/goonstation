@@ -20,6 +20,7 @@ proc/check_map_correctness()
 	#endif
 	check_turf_underlays()
 	check_mass_drivers()
+	check_stacked_tables()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -193,7 +194,7 @@ proc/check_mass_drivers()
 
 proc/check_missing_material()
 	var/list/missing = list()
-	for_by_tcl(grille, /obj/grille)
+	for_by_tcl(grille, /obj/mesh/grille)
 		if (isnull(grille.material))
 			missing += "[grille] [grille.type] on [grille.x], [grille.y], [grille.z] in [get_area(grille)]"
 	if(length(missing))
@@ -215,6 +216,17 @@ proc/check_turf_underlays()
 		if(T.underlays.len && !istypes(T, whitelist_types))
 			log_msg += "Turf [T] [T.type] on [T.x], [T.y], [T.z] in [T.loc] has underlays, likely due to duplicate turfs in the map.\n"
 	if(log_msg)
+		CRASH(log_msg)
+
+proc/check_stacked_tables()
+	var/log_msg
+	for_by_tcl(table, /obj/table)
+		var/turf/T = table.loc
+		for (var/obj/table/other in T)
+			if (table != other)
+				log_msg += "Stacked tables [table] and [other] at [T.x], [T.y], [T.z] in [loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"].\n"
+				continue // we found one dupe, bail
+	if (log_msg)
 		CRASH(log_msg)
 
 #endif

@@ -5,8 +5,7 @@
 	affected_species = list("Human")
 	cluwne
 		cure_flags = CURE_CUSTOM
-		cure_desc = "Decursing"
-		reagentcure = list("water_holy")
+		cure_desc = "Decursing" // Bible
 
 /datum/ailment/disability/clumsy/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())

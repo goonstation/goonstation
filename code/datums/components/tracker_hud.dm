@@ -100,3 +100,9 @@
 
 /datum/component/tracker_hud/gang
 	color = "#5a6edd"
+
+/datum/component/tracker_hud/vampire
+	color = "#ff0000ff"
+
+/datum/component/tracker_hud/dead_drop
+	color = "#ad1400"

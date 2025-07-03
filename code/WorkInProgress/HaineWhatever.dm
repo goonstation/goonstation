@@ -105,10 +105,11 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
-		if (user.zone_sel.selecting == "head")
-			target.emote("sneeze")
-		else
-			target.emote(pick("giggle", "laugh"))
+		if (isalive(target))
+			if (user.zone_sel.selecting == "head")
+				target.emote("sneeze")
+			else
+				target.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -996,7 +997,7 @@ TYPEINFO(/obj/submachine/blackjack)
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
-		playsound(src.loc, "swoosh", 50, 1)
+		playsound(src.loc, 'sound/effects/swoosh.ogg', 50, 1)
 		if (usr)
 			usr.say("MOON TIARA ACTION!")
 		return ..(target)
@@ -1017,6 +1018,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	name = "gloves"
 	desc = "Long white gloves with red bands on them."
 	icon_state = "sailormoon"
+	fingertip_color = "#f3f3f3"
 
 /obj/item/clothing/shoes/sailormoon
 	name = "boots"
@@ -1062,7 +1064,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	icon_state = "moonstick"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "moonstick"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 2
 	w_class = W_CLASS_SMALL
@@ -1113,8 +1115,8 @@ TYPEINFO(/obj/submachine/blackjack)
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customization_first = new /datum/customization_style/hair/gimmick/sailor_moon
-	AH.customization_first_color = "#FFD700"
+	AH.customizations["hair_bottom"].style =  new /datum/customization_style/hair/gimmick/sailor_moon
+	AH.customizations["hair_bottom"].color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder
 
@@ -1150,7 +1152,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	icon_state = "null_scalpel"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
@@ -1409,7 +1411,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	var/bangfired = FALSE // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 
@@ -1573,7 +1575,7 @@ TYPEINFO(/obj/item/space_thing)
 	desc = "Some kinda thing, from space. In space. A space thing."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "thing"
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT | TABLEPASS
 	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
@@ -1793,7 +1795,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2 //add
-		zero.customization_third_color = "#08BFC2"
+		zero.customizations["hair_top"].color = "#08BFC2"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1807,7 +1809,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customization_third_color = "#FFFFFF"
+		zero.customizations["hair_top"].color = "#FFFFFF"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1821,7 +1823,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customization_third_color = "#C20B08"
+		zero.customizations["hair_top"].color = "#C20B08"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1900,7 +1902,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 			M.emote(pick("grin", "smirk", "nod", "laugh", "chuckle", "scream"))
 /*		if(prob(6))
 			boutput(M, SPAN_ALERT("<b>You feel warm.</b>"))
-			M.bodytemperature += rand(1,10)
+			M.changeBodyTemp(rand(1,10) KELVIN)
 		if(prob(4))
 			boutput(M, SPAN_ALERT("<b>You feel kinda awful!</b>"))
 			M.take_toxin_damage(1)
@@ -1924,7 +1926,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))
 			else if (effect <= 4)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"), SPAN_ALERT("<b>Did it get way fucking hotter in here?</b>"))
-				M.bodytemperature += rand(10,30)
+				M.changeBodyTemp(rand(10,30) KELVIN)
 				M.brainloss++
 				M.take_toxin_damage(1)
 			else if (effect <= 7)
@@ -1938,7 +1940,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine_major_od)
 			if (effect <= 2)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> is sweating like a pig!"), SPAN_ALERT("<b>Fuck, someone turn on the AC!</b>"))
-				M.bodytemperature += rand(20,100)
+				M.changeBodyTemp(rand(20,100) KELVIN)
 				M.take_toxin_damage(5)
 			else if (effect <= 4)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> starts freaking the fuck out!"), SPAN_ALERT("<b>Holy shit, what the fuck was that?!</b>"))

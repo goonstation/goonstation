@@ -27,6 +27,7 @@ TYPEINFO(/datum/component/bloodflick)
 	UnregisterSignal(parent, COMSIG_ITEM_TWIRLED)
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_POST)
 	UnregisterSignal(parent, COMSIG_ATOM_CLEANED)
+	src.weapon = null
 	..()
 
 /datum/component/bloodflick/proc/flickblood()
@@ -38,10 +39,13 @@ TYPEINFO(/datum/component/bloodflick)
 	// if there's wet blood on it, flick it off
 	if (src.haswet)
 		src.haswet = FALSE
-		make_cleanable(/obj/decal/cleanable/blood, get_turf(src.parent))
-		playsound(src.weapon.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
+		var/turf/our_floor = get_turf(src.weapon)
+		if (!our_floor)
+			return
+		make_cleanable(/obj/decal/cleanable/blood, our_floor)
+		playsound(our_floor, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
 		SPAWN(1 DECI SECOND) // so that the twirl emote message appears first (in theory)
-			boutput(SPAN_NOTICE("Blood splatters onto the floor!")) 
+			our_floor?.visible_message(SPAN_NOTICE("Blood splatters onto the floor!"), SPAN_NOTICE("You hear a splatter!"), "bloodsplat")
 
 /// applies wet blood to the knife and starts the blood drying countdown
 /datum/component/bloodflick/proc/wetten()

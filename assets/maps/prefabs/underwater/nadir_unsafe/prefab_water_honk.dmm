@@ -109,7 +109,7 @@
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
 "aA" = (
-/obj/decal/fakeobjects/oven,
+/obj/fakeobject/oven,
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
 "aB" = (
@@ -835,7 +835,7 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "db" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /obj/decal/ballpit,
 /obj/decal/cleanable/slime,
 /turf/unsimulated/floor/ballpit,

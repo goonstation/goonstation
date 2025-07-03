@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
- em {
+@use 'sass:map';
+@use 'sass:color';
+
+em {
   font-style: normal;
   font-weight: bold;
 }
@@ -86,13 +89,13 @@ a.popt {
   color: #333;
 }
 
-.popup input[type=text]:hover,
-.popup input[type=text]:active,
-.popup input[type=text]:focus {
+.popup input[type='text']:hover,
+.popup input[type='text']:active,
+.popup input[type='text']:focus {
   border-color: green;
 }
 
-.popup input[type=submit] {
+.popup input[type='submit'] {
   padding: 5px 10px;
   background: #999;
   color: #ddd;
@@ -101,9 +104,9 @@ a.popt {
   font-weight: bold;
 }
 
-.popup input[type=submit]:hover,
-.popup input[type=submit]:focus,
-.popup input[type=submit]:active {
+.popup input[type='submit']:hover,
+.popup input[type='submit']:focus,
+.popup input[type='submit']:active {
   background: #aaa;
   cursor: pointer;
 }
@@ -128,7 +131,7 @@ a.popt {
   text-align: center;
 }
 
-.highlightPopup input[type=text] {
+.highlightPopup input[type='text'] {
   display: block;
   width: 215px;
   text-align: left;
@@ -136,17 +139,14 @@ a.popt {
 }
 
 .highlightPopup input.highlightColor {
-  background-color: #FFFF00;
+  background-color: #ffff00;
 }
 
 .highlightPopup input.highlightTermSubmit {
   margin-top: 5px;
 }
 
-
-
 /* ADMIN CONTEXT MENU */
-
 
 .contextMenu {
   background-color: #ddd;
@@ -166,10 +166,7 @@ a.popt {
   background-color: #ccc;
 }
 
-
-
 /* ADMIN FILTER MESSAGES MENU */
-
 
 .filterMessages {
   padding: 5px;
@@ -193,21 +190,13 @@ a.popt {
   margin-top: -2px;
 }
 
-
-
-
 /*****************************************
 *
 * OUTPUT ACTUALLY RELATED TO MESSAGES
 *
 ******************************************/
 
-
-
-
-
 /* MOTD */
-
 
 .motd {
   color: #a4bad6;
@@ -233,10 +222,7 @@ a.popt {
   color: #a4bad6;
 }
 
-
-
 /* ADD HERE FOR BOLD */
-
 
 .bold,
 .name,
@@ -250,30 +236,31 @@ a.popt {
   font-weight: bold;
 }
 
-
-
 /* ADD HERE FOR ITALIC */
 
-
-.italic, .italics, .emote {
+.italic,
+.italics {
   font-style: italic;
 }
 
-
-
 /* OUTPUT COLORS */
-
 
 .highlight {
   background: yellow;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #a4bad6;
   font-family: Georgia, Verdana, sans-serif;
 }
 
-h1.alert, h2.alert {
+h1.alert,
+h2.alert {
   color: #a4bad6;
 }
 
@@ -311,7 +298,11 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say,
+.emote,
+.infoplain,
+.oocplain,
+.warningplain {
 }
 
 .deadsay {
@@ -326,9 +317,13 @@ em {
   color: #00ff00;
 }
 
-.binarysay a:active, .binarysay a:visited {
+.binarysay a:active,
+.binarysay a:visited {
   color: #88ff88;
 }
+
+/* RADIO COLORS */
+/* IF YOU CHANGE THIS KEEP IT IN SYNC WITH TGUI CONSTANTS */
 
 .radio {
   color: #1ecc43;
@@ -366,6 +361,10 @@ em {
   color: #8f4a4b;
 }
 
+.gangradio {
+  color: #ac2ea1;
+}
+
 .centcomradio {
   color: #2681a5;
 }
@@ -375,11 +374,19 @@ em {
 }
 
 .redteamradio {
-  color: #ff4444;
+  color: #ff4444 !important;
 }
 
 .blueteamradio {
-  color: #3434fd;
+  color: #3434fd !important;
+}
+
+.greenteamradio {
+  color: #34fd34 !important;
+}
+
+.yellowteamradio {
+  color: #fdfd34 !important;
 }
 
 .yell {
@@ -390,14 +397,15 @@ em {
   color: #d82020;
 }
 
-.emote {
-  font-style: italic;
-}
-
 .userdanger {
   color: #c51e1e;
   font-weight: bold;
   font-size: 185%;
+}
+
+.bolddanger {
+  color: #c51e1e;
+  font-weight: bold;
 }
 
 .danger {
@@ -410,7 +418,7 @@ em {
 }
 
 .alertwarning {
-  color: #FF0000;
+  color: #ff0000;
   font-weight: bold;
 }
 
@@ -428,6 +436,34 @@ em {
 .boldannounce {
   color: #c51e1e;
   font-weight: bold;
+}
+
+.minorannounce {
+  color: #c51e1e;
+  font-weight: bold;
+  font-size: 185%;
+}
+
+.minoralert {
+  color: #a4bad6;
+  font-size: 125%;
+}
+
+.priorityannounce {
+  color: #a4bad6;
+  font-weight: bold;
+  font-size: 225%;
+}
+
+.prioritytitle {
+  color: #6685f5;
+  font-weight: bold;
+  font-size: 185%;
+}
+
+.priorityalert {
+  color: #c51e1e;
+  font-size: 140%;
 }
 
 .greenannounce {
@@ -449,14 +485,29 @@ em {
 
 .tinynotice {
   color: #6685f5;
+  font-size: 85%;
+}
+
+.tinynoticeital {
+  color: #6685f5;
   font-style: italic;
   font-size: 85%;
 }
 
 .smallnotice {
   color: #6685f5;
+  font-size: 90%;
+}
+
+.smallnoticeital {
+  color: #6685f5;
   font-style: italic;
   font-size: 90%;
+}
+
+.bolditalic {
+  font-style: italic;
+  font-weight: bold;
 }
 
 .boldnotice {
@@ -492,8 +543,12 @@ em {
   color: #059223;
 }
 
+.grey {
+  color: #838383;
+}
+
 .red {
-  color: #FF0000;
+  color: #ff0000;
 }
 
 .blue {
@@ -504,28 +559,43 @@ em {
   color: #059223;
 }
 
+.boldnicegreen {
+  color: #059223;
+  font-weight: bold;
+}
+
+.blob {
+  color: #ee4000;
+}
+
+.blobannounce {
+  color: #556b2f;
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .cult {
   color: #973e3b;
 }
 
-.cultitalic {
+.cult_italic {
   color: #973e3b;
   font-style: italic;
 }
 
-.cultbold {
+.cult_bold {
   color: #973e3b;
   font-style: italic;
   font-weight: bold;
 }
 
-.cultboldtalic {
+.cult_bold_italic {
   color: #973e3b;
   font-weight: bold;
   font-size: 185%;
 }
 
-.cultlarge {
+.cult_large {
   color: #973e3b;
   font-weight: bold;
   font-size: 185%;
@@ -544,7 +614,7 @@ em {
 }
 
 .colossus {
-  color: #7F282A;
+  color: #7f282a;
   font-size: 310%;
 }
 
@@ -628,15 +698,27 @@ em {
 }
 
 .alertsyndie {
-  color: #FF0000;
+  color: #ff0000;
   font-size: 185%;
   font-weight: bold;
 }
 
-.spider {
+.spiderbroodmother {
   color: #8800ff;
   font-weight: bold;
   font-size: 185%;
+}
+
+.spiderbreacher {
+  color: #e8b670;
+  font-weight: bold;
+  font-size: 140%;
+}
+
+.spiderscout {
+  color: #231d98;
+  font-weight: bold;
+  font-size: 120%;
 }
 
 .interface {
@@ -644,20 +726,30 @@ em {
 }
 
 .sans {
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 .papyrus {
-  font-family: "Papyrus", cursive, sans-serif;
+  font-family: 'Papyrus', cursive, sans-serif;
 }
 
 .robot {
-  font-family: "Courier New", cursive, sans-serif;
+  font-family: 'Courier New', cursive, sans-serif;
+}
+
+.tape_recorder {
+  color: #ff0000;
+  font-family: 'Courier New', cursive, sans-serif;
 }
 
 .command_headset {
   font-weight: bold;
   font-size: 160%;
+}
+
+.soapbox {
+  font-weight: bold;
+  font-size: 135%;
 }
 
 .small {
@@ -689,18 +781,18 @@ em {
 .clown {
   color: #ff70c1;
   font-size: 160%;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
   font-weight: bold;
 }
 
 .singing {
-  font-family: "Trebuchet MS", cursive, sans-serif;
+  font-family: 'Trebuchet MS', cursive, sans-serif;
   font-style: italic;
 }
 
 .his_grace {
-  color: #15D512;
-  font-family: "Courier New", cursive, sans-serif;
+  color: #15d512;
+  font-family: 'Courier New', cursive, sans-serif;
   font-style: italic;
 }
 
@@ -758,6 +850,14 @@ em {
   width: auto;
 }
 
+.bigicon {
+  font-size: 2.5em;
+}
+
+.hugeicon {
+  font-size: 5em;
+}
+
 .memo {
   color: #638500;
   text-align: center;
@@ -781,7 +881,7 @@ em {
 }
 
 .slime {
-  color: #00CED1;
+  color: #00ced1;
 }
 
 .drone {
@@ -793,23 +893,21 @@ em {
 }
 
 .swarmer {
-  color: #2C75FF;
+  color: #2c75ff;
 }
 
 .resonate {
-  color: #298F85;
+  color: #298f85;
 }
 
-.monkeyhive {
-  color: #a56408;
+.upside_down {
+  display: inline;
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
 }
 
-.monkeylead {
-  color: #af6805;
-  font-size: 80%;
-}
-
-.connectionClosed, .fatalError {
+.connectionClosed,
+.fatalError {
   background: red;
   color: white;
   padding: 5px;
@@ -824,10 +922,7 @@ em {
   font-weight: bold;
 }
 
-
-
 /* HELPER CLASSES */
-
 
 .text-normal {
   font-weight: normal;
@@ -849,4 +944,188 @@ em {
 
 .ml-3 {
   margin-left: 3em;
+}
+
+.examine_block {
+  background: #1b1c1e;
+  border: 1px solid #a4bad6;
+  margin: 0.5em;
+  padding: 0.5em 0.75em;
+}
+
+.tooltip {
+  font-style: italic;
+  border-bottom: 1px dashed #fff;
+}
+
+$alert-stripe-colors: (
+  'default': #00283a,
+  'green': #003d00,
+  'blue': #00283a,
+  'pink': #30001b,
+  'yellow': #574a00,
+  'orange': #593400,
+  'red': #420000,
+  'purple': #2c0030,
+  'grey': #252525,
+);
+
+$alert-stripe-alternate-colors: (
+  'default': #003045,
+  'green': #004700,
+  'blue': #003045,
+  'pink': #400025,
+  'yellow': #4d4100,
+  'orange': #6b4200,
+  'red': #520000,
+  'purple': #38003d,
+  'grey': #292929,
+);
+
+$alert-major-header-colors: (
+  'default': #33d5ff,
+  'green': #00ff80,
+  'blue': #33d5ff,
+  'pink': #ff5297,
+  'yellow': #fff4e0,
+  'orange': #feefe7,
+  'red': #ff5297,
+  'purple': #c7a1f7,
+  'grey': #ff5297,
+);
+
+$alert-subheader-header-colors: (
+  'default': #ff5297,
+  'green': #ff85b5,
+  'blue': #ff5297,
+  'pink': #33d5ff,
+  'yellow': #33d5ff,
+  'orange': #33d5ff,
+  'red': #33d5ff,
+  'purple': #33d5ff,
+  'grey': #33d5ff,
+);
+
+$border-width: 4;
+
+$border-width-px: $border-width * 1px;
+
+.major_announcement_title {
+  font-size: 175%;
+  padding: 0rem 0.5rem;
+  line-height: 100%;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+}
+
+.subheader_announcement_text {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  padding-top: 0.25rem;
+  line-height: 100%;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: 125%;
+}
+
+.major_announcement_text {
+  color: #eaeaea;
+  background-color: #131313;
+  font-weight: bold;
+  font-size: 100%;
+  text-align: left;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.minor_announcement_title {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  padding-top: 0;
+  line-height: 100%;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: 150%;
+}
+
+.minor_announcement_text {
+  background-color: #202020;
+  color: #eaeaea;
+  padding: 0.5rem 0.5rem;
+  text-align: left;
+  font-size: 100%;
+}
+
+.announcement_header {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_alert {
+  background: #4d4100;
+  border: 1px solid #cca300;
+  margin: 0.5em;
+  padding: 0.5em 0.5em 0.5em 0.2em;
+  color: #ffffff;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_announcement_text {
+  color: #cca300;
+  padding: 0.5em 0 0 0.35em;
+  display: flex;
+  flex-direction: column;
+}
+
+@each $color-name, $color-value in $alert-stripe-colors {
+  .chat_alert_#{$color-name} {
+    color: #ffffff;
+    padding: 0.5rem 0.5rem;
+    box-shadow: none;
+    font-weight: bold;
+    margin: 1rem 0 1rem 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-image: repeating-linear-gradient(
+      -45deg,
+      map.get($alert-stripe-alternate-colors, $color-name),
+      map.get($alert-stripe-alternate-colors, $color-name) 10px,
+      $color-value 10px,
+      $color-value 20px
+    );
+    border-image-slice: $border-width fill;
+    border-width: $border-width-px;
+    border-image-width: $border-width-px;
+    border-image-outset: 0 0 0 0;
+    border-image-repeat: repeat repeat;
+    border-style: solid;
+  }
+
+  .chat_alert_#{$color-name} .major_announcement_title {
+    color: map.get($alert-major-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .minor_announcement_title {
+    color: map.get($alert-major-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .subheader_announcement_text {
+    color: map.get($alert-subheader-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .minor_announcement_text {
+    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+  }
+
+  .chat_alert_#{$color-name} .major_announcement_text {
+    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+  }
 }

@@ -42,7 +42,7 @@
 /area/noGenerate)
 "j" = (
 /obj/machinery/portableowl/attached{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/spacehabitat)

@@ -2,7 +2,7 @@
 	name = "artifact teleport wand"
 	artifact = 1
 	associated_datum = /datum/artifact/telewand
-	flags =  FPRINT | CONDUCT | EXTRADELAY
+	flags =  CONDUCT | EXTRADELAY
 
 	// this is necessary so that this returns null
 	// else afterattack will not be called when out of range

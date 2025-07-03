@@ -151,6 +151,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.verbs += /mob/living/silicon/ai/verb/rename_self
+	O.verbs += /mob/living/silicon/ai/verb/go_offline
 	O.job = "AI"
 
 	SPAWN(0)
@@ -171,19 +172,25 @@
 
 /mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE, delete_original=TRUE)
 	var/mob/living/critter/newmob = new critter_type()
-	if(ghost_spawned)
-		newmob.ghost_spawned = ghost_spawned
+	if (ghost_spawned || newmob.ghost_spawned)
+		newmob.ghost_spawned = TRUE
+
+		newmob.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
+		newmob.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_SILICONCHAT)
+
 		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
 			newmob.name_prefix("ethereal")
+			newmob.job = "Ethereal Critter" // for observer menu
 			newmob.name_suffix("[rand(10,99)][rand(10,99)]")
 			newmob.UpdateName()
+
 	if (!T || !isturf(T))
 		T = get_turf(src)
 	newmob.set_loc(T)
 	newmob.gender = src.gender
 	if (src.bioHolder)
 		var/datum/bioHolder/original = new/datum/bioHolder(newmob)
-		original.CopyOther(src.bioHolder)
+		original.CopyOther(src.bioHolder, copyPool=FALSE, copyActiveEffects=FALSE)
 		qdel(newmob.bioHolder)
 		newmob.bioHolder = original
 
@@ -510,7 +517,8 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 
 	C.mind.assigned_role = "Animal"
-	C.say_language = "animal"
+	C.say_language = LANGUAGE_ANIMAL
+	C.ensure_listen_tree().AddKnownLanguage(LANGUAGE_ANIMAL)
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE
@@ -553,7 +561,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor, spawnpoint, ghost_spawned=TRUE)
 
 	C.mind.assigned_role = "Animal"
-	C.say_language = "animal"
+	C.say_language = LANGUAGE_ANIMAL
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE
@@ -619,6 +627,8 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
+	newbody.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_DEADCHAT)
+	newbody.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
 
 	// preserve your original role;
 	// gives "???" if not an observer and not assigned a role,
@@ -636,10 +646,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	if (newbody.traitHolder && newbody.traitHolder.hasTrait("bald"))
 		newbody.stow_in_available(newbody.create_wig())
-		newbody.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		newbody.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		newbody.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		newbody.update_colorful_parts()
 
 	// No contact between the living and the dead.
 	var/obj/to_del = newbody.ears
@@ -685,7 +691,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
-	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+	newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 	newbody.set_clothing_icon_dirty()
 
 	announce_ghost_afterlife(src.key, "<b>[src.name]</b> is visiting the Afterlife Bar.")

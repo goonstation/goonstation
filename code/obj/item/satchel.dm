@@ -3,10 +3,12 @@
 	desc = "A leather satchel for holding things."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
+	item_state = "satchel"
 	c_flags = ONBELT
 	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	soundproofing = 20
 	var/maxitems = 50
 	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	var/list/allowed = null
@@ -47,7 +49,7 @@
 			if (length(src.contents) == src.maxitems)
 				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			boutput(user, SPAN_ALERT("[src] is full!"))
 
@@ -60,7 +62,7 @@
 				I.add_fingerprint(user)
 			boutput(user, SPAN_NOTICE("You empty out [src]."))
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else ..()
 
 	attack_hand(mob/user)
@@ -92,7 +94,7 @@
 					SPAN_NOTICE("You take \a [getItem.name] from [src]."))
 					user.put_in_hand_or_drop(getItem)
 					src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return ..(user)
 
 	proc/search_through(mob/user as mob)
@@ -172,7 +174,14 @@
 			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
 		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
 		src.UpdateIcon()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
+
+	// Don't dump the satchel onto the table if using drag-and-drop to dump out other contents.
+	should_place_on(obj/target, params)
+		if (istype(target, /obj/table) && islist(params) && params["dragged"] && length(src.contents) > 0)
+			return FALSE
+		. = ..()
+
 
 	proc/split_stack_into_satchel(var/obj/item/item_to_split, mob/user)
 		// This proc splits an object with multiple stacks and stuff it into the satchel until either
@@ -245,7 +254,7 @@
 		name = "produce satchel"
 		desc = "A leather satchel for carrying around crops and seeds."
 		icon_state = "hydrosatchel"
-
+		item_state = "hydrosatchel"
 		itemstring = "items of produce"
 
 		New()
@@ -272,14 +281,23 @@
 					(inserted_seed.plantgenes.mutation?.type == template_seed.plantgenes.mutation?.type)
 
 		large
+			name = "large produce satchel"
 			desc = "A leather satchel for carrying around crops and seeds. This one happens to be <em>really</em> big."
+			icon_state = "hydrosatchel-large"
 			maxitems = 200
+
+		compressed
+			name = "spatially-compressed produce satchel"
+			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding crops and seeds."
+			icon_state = "hydrosatchel-compressed"
+			maxitems = 1000
 
 
 	mining
 		name = "mining satchel"
 		desc = "A leather satchel for holding various ores."
 		icon_state = "miningsatchel"
+		item_state = "miningsatchel"
 		itemstring = "ores"
 
 		New()
@@ -289,22 +307,37 @@
 		large
 			name = "large mining satchel"
 			desc = "A leather satchel for holding various ores. This one's pretty big."
+			icon_state = "miningsatchel-large"
 			maxitems = 100
 
 		compressed
 			name = "spatially-compressed mining satchel"
 			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding ores."
+			icon_state = "miningsatchel-compressed"
 			maxitems = 500
 
 	mail
 		name = "mail bag"
 		desc = "A leather bag for holding mail. It's totally not just a produce/mining satchel!"
 		icon_state = "mailsatchel"
+		item_state = "mailsatchel"
 		itemstring = "mail"
 
 		New()
 			..()
 			allowed = list(/obj/item/random_mail)
+
+		large
+			name = "large mail satchel"
+			desc = "A leather satchel for carrying around mail. This one happens to be <em>really</em> big."
+			icon_state = "mailsatchel-large"
+			maxitems = 100
+
+		compressed
+			name = "spatially-compressed mail satchel"
+			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding mail."
+			icon_state = "mailsatchel-compressed"
+			maxitems = 250
 
 	figurines
 		name = "figurine case"
@@ -363,5 +396,5 @@
 			var/obj/item/toy/figure/F = new()
 			F.set_loc(src)
 			src.UpdateIcon()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 

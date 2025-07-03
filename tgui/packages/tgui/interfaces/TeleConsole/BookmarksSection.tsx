@@ -7,8 +7,9 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
-import { useLocalState } from '../../backend';
-import { Button, Input, LabeledList, Section } from '../../components';
+import { useState } from 'react';
+import { Button, Input, LabeledList, Section } from 'tgui-core/components';
+
 import { TeleConsoleData } from './types';
 import { formatCoordinates } from './util';
 
@@ -21,8 +22,15 @@ type BookmarksSectionProps = Pick<TeleConsoleData, 'bookmarks'> & {
 };
 
 export const BookmarksSection = (props: BookmarksSectionProps, context) => {
-  const { bookmarks, maxBookmarks, onAddBookmark, onDeleteBookmark, onRestoreBookmark, targetCoords } = props;
-  const [newBookmarkName, setNewBookmarkName] = useLocalState(context, 'newBookmarkName', '');
+  const {
+    bookmarks,
+    maxBookmarks,
+    onAddBookmark,
+    onDeleteBookmark,
+    onRestoreBookmark,
+    targetCoords,
+  } = props;
+  const [newBookmarkName, setNewBookmarkName] = useState('');
   const handleAddBookmark = (name: string) => {
     onAddBookmark(name);
     setNewBookmarkName('');
@@ -35,19 +43,35 @@ export const BookmarksSection = (props: BookmarksSectionProps, context) => {
             <LabeledList.Item
               key={bookmark.nameRef}
               label={formatCoordinates(bookmark.x, bookmark.y, bookmark.z)}
-              buttons={<Button icon="trash" color="red" onClick={() => onDeleteBookmark(bookmark.nameRef)} />}>
-              <Button icon="bookmark" onClick={() => onRestoreBookmark(bookmark.nameRef)}>
+              buttons={
+                <Button
+                  icon="trash"
+                  color="red"
+                  onClick={() => onDeleteBookmark(bookmark.nameRef)}
+                />
+              }
+            >
+              <Button
+                icon="bookmark"
+                onClick={() => onRestoreBookmark(bookmark.nameRef)}
+              >
                 {decodeHtmlEntities(bookmark.name)}
               </Button>
             </LabeledList.Item>
           );
         })}
-        {/* eslint-disable-next-line sonarjs/no-inverted-boolean-check */ }
+        {/* eslint-disable-next-line sonarjs/no-inverted-boolean-check */}
         {!!(bookmarks.length < maxBookmarks) && (
           <LabeledList.Item
             key="new"
             label={formatCoordinates(...targetCoords)}
-            buttons={<Button icon="plus" onClick={() => handleAddBookmark(newBookmarkName)} />}>
+            buttons={
+              <Button
+                icon="plus"
+                onClick={() => handleAddBookmark(newBookmarkName)}
+              />
+            }
+          >
             <Input
               width="100%"
               value={newBookmarkName}

@@ -11,7 +11,7 @@ on:
 jobs:
   lint:
     name: Run Linters
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4
@@ -23,11 +23,11 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 
@@ -38,6 +38,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
@@ -70,10 +71,14 @@ jobs:
 
   odlint:
     name: Lint with OpenDream
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.0.100
       - uses: actions/checkout@v4
-      - uses: robinraju/release-downloader@v1.9
+      - uses: robinraju/release-downloader@v1.11
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"
@@ -83,7 +88,7 @@ jobs:
 
   compile:
     name: Compile
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4
@@ -91,8 +96,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -122,7 +127,7 @@ jobs:
 
   compile_full:
     name: "Compile and Lint with Secret Submodule"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
@@ -134,8 +139,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -154,11 +159,11 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 

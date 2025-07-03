@@ -6,7 +6,7 @@
 * It does NOT catch reference bugs
 */
 
-var/global/list/runtimeDetails = list()
+var/global/list/runtimeDetails = null
 var/global/runtime_count = 0
 var/global/blame_for_runtimes = FALSE
 
@@ -15,8 +15,10 @@ var/global/blame_for_runtimes = FALSE
 	var/invalid = !istype(E) //what the fuck is this byond
 	runtime_count++
 
+	if (!runtimeDetails) CRASH("runtimeDetails list not initialized, how the fuck did this happen?")
+
 	//Save the runtime into our persistent, uh, "storage"
-	runtimeDetails["[runtimeDetails.len + 1]"] = list(
+	runtimeDetails["[length(runtimeDetails) + 1]"] = list(
 		"name" = !invalid ? E.name : E,
 		"file" = !invalid ? E.file : "",
 		"line" = !invalid ? E.line : "",
@@ -61,8 +63,8 @@ var/global/blame_for_runtimes = FALSE
 
 	if (!cdn)
 		var/list/viewerResources = list(
-			"browserassets/js/runtimeViewer.js",
-			"browserassets/css/runtimeViewer.css"
+			"browserassets/src/js/runtimeViewer.js",
+			"browserassets/src/css/runtimeViewer.css"
 		)
 		src.loadResourcesFromList(viewerResources)
 

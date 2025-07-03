@@ -6,23 +6,52 @@
  * @license MIT
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Flex, Icon, Section, Stack, Tabs } from '../../components';
-import { Window } from '../../layouts';
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
+
 import { capitalize } from '../../../common/string';
+import { useBackend } from '../../backend';
+import { Window } from '../../layouts';
 import { Allowed, ChemRequestReceiverData, RequestData } from './type';
 
 interface ChemRequestProps extends RequestData {
   interactable: Allowed;
 }
 
-const ChemRequest = (props: ChemRequestProps, context) => {
-  const { act } = useBackend(context);
-  const { name, id, reagent_name, reagent_color, volume, notes, area, state, interactable, age } = props;
+const ChemRequest = (props: ChemRequestProps) => {
+  const { act } = useBackend();
+  const {
+    name,
+    id,
+    reagent_name,
+    reagent_color,
+    volume,
+    notes,
+    area,
+    state,
+    interactable,
+    age,
+  } = props;
   const color_string = reagent_color
-    ? 'rgba(' + reagent_color[0] + ',' + reagent_color[1] + ', ' + reagent_color[2] + ', 1)'
+    ? 'rgba(' +
+      reagent_color[0] +
+      ',' +
+      reagent_color[1] +
+      ', ' +
+      reagent_color[2] +
+      ', 1)'
     : undefined;
-  const resolvedReagentName = reagent_name ? capitalize(reagent_name) : '(Unknown)';
+  const resolvedReagentName = reagent_name
+    ? capitalize(reagent_name)
+    : '(Unknown)';
   return (
     <Section>
       <Flex direction="column" height={10}>
@@ -36,7 +65,7 @@ const ChemRequest = (props: ChemRequestProps, context) => {
                   name={'circle'}
                   pt={1}
                   style={{
-                    'text-shadow': '0 0 3px #000',
+                    textShadow: '0 0 3px #000',
                   }}
                   mr={1}
                 />
@@ -60,7 +89,8 @@ const ChemRequest = (props: ChemRequestProps, context) => {
                   icon="ban"
                   onClick={() => {
                     act('deny', { id: id });
-                  }}>
+                  }}
+                >
                   Deny
                 </Button>
                 <Button
@@ -70,13 +100,17 @@ const ChemRequest = (props: ChemRequestProps, context) => {
                   icon="check"
                   onClick={() => {
                     act('fulfil', { id: id });
-                  }}>
+                  }}
+                >
                   Mark as fulfilled
                 </Button>
               </>
             )}
             {state !== 'pending' && (
-              <Box align="center" backgroundColor={state === 'denied' ? 'red' : 'green'}>
+              <Box
+                align="center"
+                backgroundColor={state === 'denied' ? 'red' : 'green'}
+              >
                 {capitalize(state)}
               </Box>
             )}
@@ -87,9 +121,9 @@ const ChemRequest = (props: ChemRequestProps, context) => {
   );
 };
 
-export const ChemRequestReceiver = (props, context) => {
-  const { act, data } = useBackend<ChemRequestReceiverData>(context);
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
+export const ChemRequestReceiver = () => {
+  const { data } = useBackend<ChemRequestReceiverData>();
+  const [tabIndex, setTabIndex] = useState(1);
   const { requests, allowed } = data;
   let request_index = 0;
   return (
@@ -105,9 +139,17 @@ export const ChemRequestReceiver = (props, context) => {
         </Tabs>
         <Stack wrap="wrap">
           {requests.map((request) => {
-            if ((request.state === 'pending' && tabIndex === 1) || (request.state !== 'pending' && tabIndex === 2)) {
+            if (
+              (request.state === 'pending' && tabIndex === 1) ||
+              (request.state !== 'pending' && tabIndex === 2)
+            ) {
               return (
-                <Stack.Item py={1} width={23} key={request.id} ml={request_index++ === 0 ? 1 : undefined}>
+                <Stack.Item
+                  py={1}
+                  width={23}
+                  key={request.id}
+                  ml={request_index++ === 0 ? 1 : undefined}
+                >
                   <ChemRequest interactable={allowed} {...request} />
                 </Stack.Item>
               );

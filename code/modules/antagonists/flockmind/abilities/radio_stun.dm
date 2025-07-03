@@ -15,7 +15,7 @@
 		if(M.ear_disability)
 			continue
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
-		if(istype(R) && R.listening) // working and toggled on
+		if(istype(R) && R.speaker_enabled) // working and toggled on
 			targets += M
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
@@ -28,3 +28,6 @@
 	else
 		boutput(holder.get_controlling_mob(), SPAN_ALERT("No targets in range with active radio headsets."))
 		return TRUE
+
+/datum/targetable/flockmindAbility/radioStun/logCast(atom/target)
+	return

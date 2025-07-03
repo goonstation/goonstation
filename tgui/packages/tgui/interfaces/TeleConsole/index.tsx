@@ -6,14 +6,15 @@
  * @license ISC
  */
 
+import { Button, Icon, Section, Stack, Tabs } from 'tgui-core/components';
+
 import { useBackend, useSharedState } from '../../backend';
-import { Button, Icon, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { BookmarksSection } from './BookmarksSection';
 import { ConnectionSection } from './ConnectionSection';
 import { CoordinatesSection } from './CoordinatesSection';
-import { LongRangeSection } from './LongRangeSection';
 import { DiskSection } from './DiskSection';
+import { LongRangeSection } from './LongRangeSection';
 import type { TeleConsoleData } from './types';
 import { formatReadout } from './util';
 
@@ -22,24 +23,40 @@ const Tab = {
   LongRange: 'lrt',
 };
 
-export const TeleConsole = (_props, context) => {
-  const { act, data } = useBackend<TeleConsoleData>(context);
-  const [tab, setTab] = useSharedState(context, 'tab', Tab.Local);
-  const { xTarget, yTarget, zTarget, hostId, bookmarks,
-    readout, isPanelOpen, padNum, maxBookmarks, disk, destinations } = data;
+export const TeleConsole = () => {
+  const { act, data } = useBackend<TeleConsoleData>();
+  const [tab, setTab] = useSharedState('tab', Tab.Local);
+  const {
+    xTarget,
+    yTarget,
+    zTarget,
+    hostId,
+    bookmarks,
+    readout,
+    isPanelOpen,
+    padNum,
+    maxBookmarks,
+    disk,
+    destinations,
+  } = data;
   const isConnectedToHost = !!hostId;
 
-  const handleAddBookmark = (name: string) => act('addbookmark', { value: name });
-  const handleDeleteBookmark = (ref: string) => act('deletebookmark', { value: ref });
-  const handleRestoreBookmark = (ref: string) => act('restorebookmark', { value: ref });
-  const handleLongRangeSend = (name: string) => act("lrt_send", { name: name });
-  const handleLongRangeReceive = (name: string) => act("lrt_receive", { name: name });
-  const handleLongRangePortal = (name: string) => act('lrt_portal', { name: name });
+  const handleAddBookmark = (name: string) =>
+    act('addbookmark', { value: name });
+  const handleDeleteBookmark = (ref: string) =>
+    act('deletebookmark', { value: ref });
+  const handleRestoreBookmark = (ref: string) =>
+    act('restorebookmark', { value: ref });
+  const handleLongRangeSend = (name: string) => act('lrt_send', { name: name });
+  const handleLongRangeReceive = (name: string) =>
+    act('lrt_receive', { name: name });
+  const handleLongRangePortal = (name: string) =>
+    act('lrt_portal', { name: name });
   const handleResetConnect = () => act('reconnect', { value: 2 });
   const handleRetryConnect = () => act('reconnect', { value: 1 });
   const handleCyclePad = () => act('setpad');
-  const handleScanDisk = () => act("scan_disk");
-  const handleEjectDisk = () => act("eject_disk");
+  const handleScanDisk = () => act('scan_disk');
+  const handleEjectDisk = () => act('eject_disk');
 
   return (
     <Window theme="ntos" width={410} height={515}>
@@ -64,22 +81,37 @@ export const TeleConsole = (_props, context) => {
             </Tabs>
           </Stack.Item>
 
-          {(tab===Tab.Local) && (
+          {tab === Tab.Local && (
             <Stack.Item>
               <Section>
                 <CoordinatesSection />
                 <Section>
-                  <Button icon="sign-out-alt" onClick={() => act('send')} disabled={!isConnectedToHost}>
+                  <Button
+                    icon="sign-out-alt"
+                    onClick={() => act('send')}
+                    disabled={!isConnectedToHost}
+                  >
                     Send
                   </Button>
-                  <Button icon="sign-in-alt" onClick={() => act('receive')} disabled={!isConnectedToHost}>
+                  <Button
+                    icon="sign-in-alt"
+                    onClick={() => act('receive')}
+                    disabled={!isConnectedToHost}
+                  >
                     Receive
                   </Button>
-                  <Button onClick={() => act('portal')} disabled={!isConnectedToHost}>
+                  <Button
+                    onClick={() => act('portal')}
+                    disabled={!isConnectedToHost}
+                  >
                     <Icon name="ring" rotation={90} />
                     Toggle Portal
                   </Button>
-                  <Button icon="magnifying-glass" onClick={() => act('scan')} disabled={!isConnectedToHost}>
+                  <Button
+                    icon="magnifying-glass"
+                    onClick={() => act('scan')}
+                    disabled={!isConnectedToHost}
+                  >
                     Scan
                   </Button>
                 </Section>
@@ -103,7 +135,7 @@ export const TeleConsole = (_props, context) => {
               </Section>
             </Stack.Item>
           )}
-          {(tab===Tab.LongRange) && (
+          {tab === Tab.LongRange && (
             <Stack.Item>
               <Section>
                 <LongRangeSection

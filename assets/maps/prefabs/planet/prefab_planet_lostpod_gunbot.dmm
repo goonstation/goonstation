@@ -3,9 +3,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "A" = (
-/obj/decal/fakeobject/crashed_arrivals{
-	dir = 1
-	},
+/obj/fakeobject/crashed_arrivals,
 /turf/space,
 /area/allowGenerate)
 "K" = (

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../colors.scss';
+@use '../colors';
 
 $fg-map: colors.$fg-map !default;
 $bg-map: colors.$bg-map !default;
@@ -11,6 +11,17 @@ $bg-map: colors.$bg-map !default;
 @each $color-name, $color-value in $fg-map {
   .color-#{$color-name} {
     color: $color-value !important;
+  }
+
+  // |GOONSTATION-ADD|
+  @keyframes blink-to-#{$color-name} {
+    50% {
+      color: $color-value;
+    }
+  }
+
+  .color-#{$color-name}--blinking {
+    animation: blink-to-#{$color-name} 2s steps(1, end) infinite;
   }
 }
 

@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { Flex, Image } from '..';
+import { Flex, Image } from 'tgui-core/components';
 
 interface ItemListProps {
   items: ItemListItemProps[];
@@ -19,10 +19,7 @@ interface ItemListItemProps {
 }
 
 export const ItemList = (props: ItemListProps) => {
-  const {
-    items,
-    nothing_text = 'Nothing',
-  } = props;
+  const { items, nothing_text = 'Nothing' } = props;
 
   // `items` is either an empty array or an array of `{ name: 'item name', icon: 'base64image' }`.
   if (items === undefined || items.length === 0) {
@@ -30,10 +27,7 @@ export const ItemList = (props: ItemListProps) => {
   }
 
   return items.map((item, index, arr) => (
-    <Flex
-      inline
-      align="center"
-      key={index}>
+    <Flex inline align="center" key={index}>
       {!!item.iconBase64 && (
         <Flex.Item>
           <Image
@@ -43,9 +37,7 @@ export const ItemList = (props: ItemListProps) => {
           />
         </Flex.Item>
       )}
-      <Flex.Item
-        pr={1}
-        pl={0.5}>
+      <Flex.Item pr={1} pl={0.5}>
         {item.name}
         {`${index === arr.length - 1 ? '' : `, ${index === arr.length - 2 ? 'and ' : ''}`}`}
       </Flex.Item>

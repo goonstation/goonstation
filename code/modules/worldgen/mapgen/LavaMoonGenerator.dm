@@ -202,18 +202,12 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check(flags)
 
 	for(var/turf/unsimulated/floor/lava/L in turfs)
 		L.update_neighbors()
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check(flags)
 
 ///for the mapgen mountains, temp until we get something better
 /turf/simulated/wall/auto/asteroid/mountain/lavamoon

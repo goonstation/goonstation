@@ -40,14 +40,13 @@ var/global
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
-	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
-	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
 	list/donator_ckeys = list()
 	list/online_donator_ckeys = list()
 	list/mobs = list()
 	list/ai_mobs = list()
 	list/processing_items = list()
+	list/processing_mechanics = list()
 	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
@@ -91,11 +90,12 @@ var/global
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
-	list/spacePushList = list()
 	/// All the accessible areas on the station in one convenient place
-	list/station_areas = list()
+	list/area/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = FALSE
+	/// Areas built anew belong to a single unconnected zone, which gives its turfs over to other expandable areas when contacting them
+	area/unconnected_zone/unconnected_zone = new
 
 	/// Contains objects in ID-based switched object groups, such as blinds and their switches
 	list/switched_objs = list()
@@ -273,8 +273,6 @@ var/global
 	game_start_delayed = 0
 	game_end_delayed = 0
 	game_end_delayer = null
-	ooc_allowed = 1
-	looc_allowed = 1
 	dooc_allowed = 1
 	player_capa = 1
 	player_cap = 55
@@ -282,7 +280,6 @@ var/global
 	/// specifies if pcap kick messages show display to admins in chat
 	pcap_kick_messages = TRUE
 	traitor_scaling = 1
-	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
 	debug_mixed_forced_flock = 0
@@ -310,6 +307,7 @@ var/global
 
 	outpost_destroyed = 0
 	signal_loss = 0
+	solar_gen_rate = DEFAULT_SOLARGENRATE
 	fart_attack = 0
 	blowout = 0
 	farty_party = 0
@@ -359,7 +357,6 @@ var/global
 		LOG_VEHICLE		=	list(),
 		LOG_GAMEMODE	=	list(),
 		LOG_SIGNALERS	=	list(),
-		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
 		LOG_CHEMISTRY	=	list(),
 	)
@@ -386,7 +383,9 @@ var/global
 	datum/configuration/config = null
 	datum/sun/sun = null
 
+	datum/changelog/legacy_changelog = null
 	datum/changelog/changelog = null
+	datum/admin_changelog/legacy_admin_changelog = null
 	datum/admin_changelog/admin_changelog = null
 
 	list/datum/powernet/powernets = null
@@ -461,6 +460,7 @@ var/global
 	list/localResources = list()
 	list/cachedResources = list()
 	cdn = "" //Contains link to CDN as specified in the config (if not locally testing)
+	list/cdnManifest = list()
 	disableResourceCache = 0
 
 	// for translating a zone_sel's id to its name
@@ -477,9 +477,12 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "\
+		[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful","Treason")]\
+		[pick("-"," ")]\
+		[pick("Credits","Bux","Tokens","Cash","Dollars","Crystals","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees","Coins")]"
 
-	list/valid_modes = list("secret","action","intrigue","random") // Other modes added by build_valid_game_modes()
+	list/valid_modes = list("secret","action","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
 
@@ -495,6 +498,8 @@ var/global
 
 	list/allowed_favorite_ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter) - list(
 		/obj/item/reagent_containers/food/snacks/burger/humanburger,
+		/obj/item/reagent_containers/food/snacks/burger/plague,
+		/obj/item/reagent_containers/food/snacks/burger/burgle,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
 		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
 		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
@@ -530,7 +535,9 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
-	list/protected_frequencies = list(R_FREQ_SYNDICATE)
+	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD, R_FREQ_SALVAGER)
+	///base movedelay threshold for slipping
+	base_slip_delay = BASE_SPEED_SUSTAINED
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

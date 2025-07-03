@@ -67,6 +67,7 @@
 			if(!read_user_field("name"))
 				write_user_field("name", useracc.user_name)
 			useracc.user_file.fields["curpath"] = "/home/usr[read_user_field("name")]"
+			useracc.base_shell_instance = src
 
 		if (!script_iteration)
 			message_user("[read_user_field("name")]@DWAINE - [time2text(world.realtime, "hh:mm MM/DD/53")]|nType \"help\" for command listing.", "multiline")
@@ -223,11 +224,11 @@
 							echo_text = pipetemp
 
 						var/add_newline = TRUE
-						if (command_list[1] == "-n")
-							add_newline = FALSE
-							command_list.Cut(1,2)
 
 						if(istype(command_list) && (length(command_list) > 0))
+							if (command_list[1] == "-n")
+								add_newline = FALSE
+								command_list.Cut(1,2)
 							echo_text += jointext(command_list, " ")
 
 						if (piping && piped_list.len && (ckey(piped_list[1]) != "break") )
@@ -495,7 +496,7 @@
 
 				pipetemp = ""
 				var/datum/computer/file/mainframe_program/toRun = signal_program(1, siglist)
-				if (istype(toRun))
+				if (istype(toRun) && !QDELETED(toRun))
 					scriptprocess = toRun.progid
 
 				//qdel(siglist)

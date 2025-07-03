@@ -13,17 +13,34 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
-import { cleanupByondUIs } from './components/ByondUi';
+
 import { setupDrag } from './drag';
+import { globalEvents } from './events';
 import { focusMap, hasWindowFocus } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
 
 const logger = createLogger('backend');
 
+export let globalStore;
+
+export const setGlobalStore = (store) => {
+  globalStore = store;
+};
+
 export const backendUpdate = createAction('backend/update');
 export const backendSetSharedState = createAction('backend/setSharedState');
 export const backendSuspendStart = createAction('backend/suspendStart');
+export const backendCreatePayloadQueue = createAction(
+  'backend/createPayloadQueue',
+);
+export const backendDequeuePayloadQueue = createAction(
+  'backend/dequeuePayloadQueue',
+);
+export const backendRemovePayloadQueue = createAction(
+  'backend/removePayloadQueue',
+);
+export const nextPayloadChunk = createAction('nextPayloadChunk');
 
 export const backendSuspendSuccess = () => ({
   type: 'backend/suspendSuccess',
@@ -36,6 +53,7 @@ const initialState = {
   config: {},
   data: {},
   shared: {},
+  outgoingPayloadQueues: {} as Record<string, string[]>,
   // Start as suspended
   suspended: Date.now(),
   suspending: false,
@@ -63,8 +81,7 @@ export const backendReducer = (state = initialState, action) => {
         const value = payload.shared[key];
         if (value === '') {
           shared[key] = undefined;
-        }
-        else {
+        } else {
           shared[key] = JSON.parse(value);
         }
       }
@@ -113,15 +130,55 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
+  if (type === 'backend/createPayloadQueue') {
+    const { id, chunks } = payload;
+    const { outgoingPayloadQueues } = state;
+    return {
+      ...state,
+      outgoingPayloadQueues: {
+        ...outgoingPayloadQueues,
+        [id]: chunks,
+      },
+    };
+  }
+
+  if (type === 'backend/dequeuePayloadQueue') {
+    const { id } = payload;
+    const { outgoingPayloadQueues } = state;
+    const { [id]: targetQueue, ...otherQueues } = outgoingPayloadQueues;
+    const [_, ...rest] = targetQueue;
+    return {
+      ...state,
+      outgoingPayloadQueues: rest.length
+        ? {
+            ...otherQueues,
+            [id]: rest,
+          }
+        : otherQueues,
+    };
+  }
+
+  if (type === 'backend/removePayloadQueue') {
+    const { id } = payload;
+    const { outgoingPayloadQueues } = state;
+    const { [id]: _, ...otherQueues } = outgoingPayloadQueues;
+    return {
+      ...state,
+      outgoingPayloadQueues: otherQueues,
+    };
+  }
+
   return state;
 };
 
-export const backendMiddleware = store => {
+export const backendMiddleware = (store) => {
   let fancyState;
   let suspendInterval;
 
-  return next => action => {
-    const { suspended } = selectBackend(store.getState());
+  return (next) => (action) => {
+    const { suspended, outgoingPayloadQueues } = selectBackend(
+      store.getState(),
+    );
     const { type, payload } = action;
 
     if (type === 'update') {
@@ -135,19 +192,31 @@ export const backendMiddleware = store => {
     }
 
     if (type === 'ping') {
-      sendMessage({
-        type: 'pingReply',
-      });
+      Byond.sendMessage('ping/reply');
       return;
     }
 
+    if (type === 'byond/mousedown') {
+      globalEvents.emit('byond/mousedown');
+    }
+
+    if (type === 'byond/mouseup') {
+      globalEvents.emit('byond/mouseup');
+    }
+
+    if (type === 'byond/ctrldown') {
+      globalEvents.emit('byond/ctrldown');
+    }
+
+    if (type === 'byond/ctrlup') {
+      globalEvents.emit('byond/ctrlup');
+    }
+
     if (type === 'backend/suspendStart' && !suspendInterval) {
-      logger.log(`suspending (${window.__windowId__})`);
+      logger.log(`suspending (${Byond.windowId})`);
       // Keep sending suspend messages until it succeeds.
       // It may fail multiple times due to topic rate limiting.
-      const suspendFn = () => sendMessage({
-        type: 'suspend',
-      });
+      const suspendFn = () => Byond.sendMessage('suspend');
       suspendFn();
       suspendInterval = setInterval(suspendFn, 2000);
     }
@@ -156,11 +225,12 @@ export const backendMiddleware = store => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
-      Byond.winset(window.__windowId__, {
+      Byond.winset(Byond.windowId, {
         'is-visible': false,
       });
-      cleanupByondUIs();
-      setImmediate(() => { if (hasWindowFocus()) focusMap(); });
+      setTimeout(() => {
+        if (hasWindowFocus()) focusMap();
+      });
     }
 
     if (type === 'backend/update') {
@@ -173,7 +243,7 @@ export const backendMiddleware = store => {
       else if (fancyState !== fancy) {
         logger.log('changing fancy mode to', fancy);
         fancyState = fancy;
-        Byond.winset(window.__windowId__, {
+        Byond.winset(Byond.windowId, {
           titlebar: !fancy,
           'can-resize': !fancy,
         });
@@ -190,45 +260,103 @@ export const backendMiddleware = store => {
       setupDrag();
       // We schedule this for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
-      setImmediate(() => {
+      setTimeout(() => {
         perf.mark('resume/start');
         // Doublecheck if we are not re-suspended.
         const { suspended } = selectBackend(store.getState());
         if (suspended) {
           return;
         }
-        Byond.winset(window.__windowId__, {
+        Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
         perf.mark('resume/finish');
         if (process.env.NODE_ENV !== 'production') {
-          logger.log('visible in',
-            perf.measure('render/finish', 'resume/finish'));
+          logger.log(
+            'visible in',
+            perf.measure('render/finish', 'resume/finish'),
+          );
         }
       });
     }
 
+    if (type === 'oversizePayloadResponse') {
+      const { allow } = payload;
+      if (allow) {
+        store.dispatch(nextPayloadChunk(payload));
+      } else {
+        store.dispatch(backendRemovePayloadQueue(payload));
+      }
+    }
+
+    if (type === 'acknowlegePayloadChunk') {
+      store.dispatch(backendDequeuePayloadQueue(payload));
+      store.dispatch(nextPayloadChunk(payload));
+    }
+
+    if (type === 'nextPayloadChunk') {
+      const { id } = payload;
+      const chunk = outgoingPayloadQueues[id][0];
+      Byond.sendMessage('payloadChunk', {
+        id,
+        chunk,
+      });
+    }
     return next(action);
   };
 };
 
-/**
- * Sends a message to /datum/tgui_window.
- */
-export const sendMessage = (message: any = {}) => {
-  const { payload, ...rest } = message;
-  const data: any = {
-    // Message identifying header
-    tgui: 1,
-    window_id: window.__windowId__,
-    // Message body
-    ...rest,
-  };
-  // JSON-encode the payload
-  if (payload !== null && payload !== undefined) {
-    data.payload = JSON.stringify(payload);
+const encodedLengthBinarySearch = (haystack: string[], length: number) => {
+  const haystackLength = haystack.length;
+  let high = haystackLength - 1;
+  let low = 0;
+  let mid = 0;
+  while (low < high) {
+    mid = Math.round((low + high) / 2);
+    const substringLength = encodeURIComponent(
+      haystack.slice(0, mid).join(''),
+    ).length;
+    if (substringLength === length) {
+      break;
+    }
+    if (substringLength < length) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
   }
-  Byond.topic(data);
+  return mid;
+};
+
+const chunkSplitter = {
+  [Symbol.split]: (string: string) => {
+    const charSeq = Array.from(string[Symbol.iterator]());
+    const length = charSeq.length;
+    let chunks: string[] = [];
+    let startIndex = 0;
+    let endIndex = 1024;
+    while (startIndex < length) {
+      const cut = charSeq.slice(
+        startIndex,
+        endIndex < length ? endIndex : undefined,
+      );
+      const cutString = cut.join('');
+      if (encodeURIComponent(cutString).length > 1024) {
+        const splitIndex = startIndex + encodedLengthBinarySearch(cut, 1024);
+        chunks.push(
+          charSeq
+            .slice(startIndex, splitIndex < length ? splitIndex : undefined)
+            .join(''),
+        );
+        startIndex = splitIndex;
+      } else {
+        chunks.push(cutString);
+        startIndex = endIndex;
+      }
+      endIndex = startIndex + 1024;
+    }
+    return chunks;
+  },
 };
 
 /**
@@ -237,6 +365,7 @@ export const sendMessage = (message: any = {}) => {
  */
 export const sendAct = (action: string, payload: object = {}) => {
   // Validate that payload is an object
+  // prettier-ignore
   const isObject = typeof payload === 'object'
     && payload !== null
     && !Array.isArray(payload);
@@ -244,55 +373,80 @@ export const sendAct = (action: string, payload: object = {}) => {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
   }
-  sendMessage({
-    type: 'act/' + action,
-    payload,
-  });
+  if (Byond.BYOND_MAJOR >= '516') {
+    const stringifiedPayload = JSON.stringify(payload);
+    const urlSize = Object.entries({
+      type: 'act/' + action,
+      payload: stringifiedPayload,
+      tgui: 1,
+      windowId: Byond.windowId,
+    }).reduce(
+      (url, [key, value], i) =>
+        url +
+        `${i > 0 ? '&' : '?'}${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+      '',
+    ).length;
+    if (urlSize > 2048) {
+      let chunks: string[] = stringifiedPayload.split(chunkSplitter);
+      const id = `${Date.now()}`;
+      globalStore?.dispatch(backendCreatePayloadQueue({ id, chunks }));
+      Byond.sendMessage('oversizedPayloadRequest', {
+        type: 'act/' + action,
+        id,
+        chunkCount: chunks.length,
+      });
+      return;
+    }
+  }
+  Byond.sendMessage('act/' + action, payload);
 };
+
+export type WindowMode = 'light' | 'dark'; // |GOONSTATION-ADD|
 
 type BackendState<TData> = {
   config: {
-    title: string,
-    status: number,
-    interface: string,
+    title: string;
+    status: number;
+    interface: string;
+    refreshing: boolean;
     window: {
-      key: string,
-      size: [number, number],
-      fancy: boolean,
-      locked: boolean,
-    },
+      key: string;
+      size: [number, number];
+      fancy: boolean;
+      mode: WindowMode; // |GOONSTATION-ADD|
+      locked: boolean;
+    };
     client: {
-      ckey: string,
-      address: string,
-      computer_id: string,
-    },
+      ckey: string;
+      address: string;
+      computer_id: string;
+    };
     user: {
-      name: string,
-      observer: number,
-    },
-  },
-  data: TData,
-  shared: Record<string, any>,
-  suspending: boolean,
-  suspended: boolean,
-}
+      name: string;
+      observer: number;
+    };
+  };
+  data: TData;
+  shared: Record<string, any>;
+  outgoingPayloadQueues: Record<string, any[]>;
+  suspending: boolean;
+  suspended: boolean;
+};
 
 /**
  * Selects a backend-related slice of Redux state
  */
-export const selectBackend = <TData>(state: any): BackendState<TData> => (
-  state.backend || {}
-);
+export const selectBackend = <TData>(state: any): BackendState<TData> =>
+  state.backend || {};
 
 /**
- * A React hook (sort of) for getting tgui state and related functions.
+ * Get data from tgui backend.
  *
- * This is supposed to be replaced with a real React Hook, which can only
- * be used in functional components.
+ * Includes the `act` function for performing DM actions.
  */
-export const useBackend = <TData>(context: any) => {
-  const { store } = context;
-  const state = selectBackend<TData>(store.getState());
+export const useBackend = <TData>() => {
+  const state: BackendState<TData> = globalStore?.getState()?.backend;
+
   return {
     ...state,
     act: sendAct,
@@ -312,29 +466,31 @@ type StateWithSetter<T> = [T, (nextState: T) => void];
  * the UI.
  *
  * It is a lot more performant than `setSharedState`.
+ *
+ * @param context React context.
+ * @param key Key which uniquely identifies this state in Redux store.
+ * @param initialState Initializes your global variable with this value.
+ * @deprecated Use useState and useEffect when you can. Pass the state as a prop.
  */
 export const useLocalState = <T>(
-  context: any,
   key: string,
   initialState: T,
 ): StateWithSetter<T> => {
-  const { store } = context;
-  const state = selectBackend(store.getState());
-  const sharedStates = state.shared ?? {};
-  const sharedState = (key in sharedStates)
-    ? sharedStates[key]
-    : initialState;
+  const state = globalStore?.getState()?.backend;
+  const sharedStates = state?.shared ?? {};
+  const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
     sharedState,
-    nextState => {
-      store.dispatch(backendSetSharedState({
-        key,
-        nextState: (
-          typeof nextState === 'function'
-            ? nextState(sharedState)
-            : nextState
-        ),
-      }));
+    (nextState) => {
+      globalStore.dispatch(
+        backendSetSharedState({
+          key,
+          nextState:
+            typeof nextState === 'function'
+              ? nextState(sharedState)
+              : nextState,
+        }),
+      );
     },
   ];
 };
@@ -348,30 +504,39 @@ export const useLocalState = <T>(
  * clients that observe this UI.
  *
  * This makes creation of observable s
+ *
+ * @param context React context.
+ * @param key Key which uniquely identifies this state in Redux store.
+ * @param initialState Initializes your global variable with this value.
  */
 export const useSharedState = <T>(
-  context: any,
   key: string,
   initialState: T,
 ): StateWithSetter<T> => {
-  const { store } = context;
-  const state = selectBackend(store.getState());
-  const sharedStates = state.shared ?? {};
-  const sharedState = (key in sharedStates)
-    ? sharedStates[key]
-    : initialState;
+  const state = globalStore?.getState()?.backend;
+  const sharedStates = state?.shared ?? {};
+  const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
     sharedState,
-    nextState => {
-      sendMessage({
+    (nextState) => {
+      Byond.sendMessage({
         type: 'setSharedState',
         key,
-        value: JSON.stringify(
-          typeof nextState === 'function'
-            ? nextState(sharedState)
-            : nextState
-        ) || '',
+        value:
+          JSON.stringify(
+            typeof nextState === 'function'
+              ? nextState(sharedState)
+              : nextState,
+          ) || '',
       });
     },
   ];
+};
+
+export const useDispatch = () => {
+  return globalStore.dispatch;
+};
+
+export const useSelector = (selector: (state: any) => any) => {
+  return selector(globalStore?.getState());
 };

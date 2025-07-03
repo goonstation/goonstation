@@ -47,7 +47,7 @@
 						boutput(user, SPAN_NOTICE("You need more paper!"))
 						return
 					src.amount -= a_used
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 					user.drop_item()
 					qdel(W)
 					var/obj/item/clothing/head/apprentice/A = new /obj/item/clothing/head/apprentice(src.loc)
@@ -68,7 +68,7 @@
 				return
 			else
 				src.amount -= a_used
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				user.drop_item()
 				var/obj/item/gift/G = W.gift_wrap(src.style)
 				G.add_fingerprint(user)
@@ -101,7 +101,7 @@
 			var/obj/spresent/present = new /obj/spresent (target.loc)
 			present.icon_state = "strange-[src.style]"
 			src.amount -= 2
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			target.set_loc(present)
 		else
@@ -136,11 +136,8 @@
 
 	user.u_equip(src)
 	user.put_in_hand_or_drop(src.gift)
-	if(istype(src.gift, /obj/item/mousetrap))
-		var/obj/item/mousetrap/MT = src.gift
-		if(MT.armed)
-			modify_christmas_cheer(-4)
-			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
+	if (SEND_SIGNAL(src.gift, COMSIG_ITEM_STORAGE_INTERACTION, user))
+		modify_christmas_cheer(-4)
 
 
 	modify_christmas_cheer(2)
@@ -172,7 +169,6 @@
 						/obj/item/storage/belt/wrestling)
 
 	festive
-		EPHEMERAL_XMAS
 		icon_state = "gift2-g"
 		attack_self(mob/M as mob)
 			if (!islist(giftpaths) || !length(giftpaths))
@@ -247,7 +243,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/old_grenade/spawner/banana,
 	/obj/item/old_grenade/spawner/cheese_sandwich,
 	/obj/item/old_grenade/spawner/banana_corndog,
-	/obj/item/gimmickbomb/butt,
+	/obj/item/assembly/time_ignite_butt,
 	/obj/item/instrument/bikehorn,
 	/obj/item/instrument/bikehorn/dramatic,
 	/obj/item/instrument/bikehorn/airhorn,
@@ -316,6 +312,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/clothing/shoes/moon,
 	/obj/item/clothing/suit/armor/sneaking_suit/costume,
 	/obj/item/clothing/suit/hoodie,
+	/obj/item/clothing/suit/hoodie/large,
 	/obj/item/clothing/suit/robuddy,
 	/obj/item/clothing/suit/scarf,
 	/obj/item/clothing/under/gimmick/rainbow,

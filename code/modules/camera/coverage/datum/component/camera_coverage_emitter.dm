@@ -19,7 +19,8 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 	if (length(src.coverage))
 		// Remove ourselves from the turfs and update their aiImage directly, we dont need to do any fancy checks here.
 		for (var/turf/T as anything in src.coverage)
-			T.camera_coverage_emitters -= src
+			if(islist(T.camera_coverage_emitters))
+				T.camera_coverage_emitters -= src
 	camera_coverage_controller.update_turfs(src.coverage)
 	src.coverage = null
 

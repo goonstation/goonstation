@@ -5,10 +5,10 @@
  * @license ISC
  */
 
-@use '../base.scss';
-@use '../colors.scss';
+@use '../base';
+@use '../colors';
 
-$neutral: #AAAAAA !default;
+$neutral: #aaaaaa !default;
 $hot: #f2711c !default;
 $cold: #2185d0 !default;
 
@@ -38,9 +38,7 @@ $cold: #2185d0 !default;
   }
 }
 
-
 .ChemHeater {
-
   &__TemperatureNumber {
     transition: color 500ms ease-out;
   }

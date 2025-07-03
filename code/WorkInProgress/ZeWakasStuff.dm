@@ -2,7 +2,7 @@
  * 90 101 87 97 107 97 39 115 83 116 117 102 102
  */
 
-//foo 49: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat tgui guh mord map
+//foo 50: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat tgui guh mord map
 
 
 /* 514 checklist
@@ -27,6 +27,29 @@ basic sound end example sound.params
 sound time adjustment, SOUND_UPDATE offset var, query with query
 atoms can be rendered by reference in browser
 */
+
+// find lagging shitters
+// for\(var/([\w/]*)\)
+
+// /client/verb/grab_all_lists()
+//     set category = "Debug"
+//     set name = "Get all lists"
+
+//     var/list/all_lists_heap = list("No length" = 0)
+//     var/list/all_lists_joined = list()
+//     for(var/list/thing)
+//         if(!length(thing))
+//             all_lists_heap["No length"]++
+//         else if(all_lists_heap["[thing[1]]"])
+//             all_lists_heap["[thing[1]]"]++
+//         else
+//             all_lists_heap["[thing[1]]"] += 1
+
+//     sortList(all_lists_heap, cmp = GLOBAL_PROC_REF(cmp_numeric_asc), associative = TRUE)
+
+//     for(var/thing in all_lists_heap)
+//         all_lists_joined += "<br>[thing], count: [all_lists_heap[thing]]</br>\n"
+//     usr << browse(all_lists_joined.Join(), "window=listlog")
 
 
 // playsound\(([^,]*), "(sound/[^\[]+)"
@@ -58,7 +81,7 @@ atoms can be rendered by reference in browser
 	desc = "Some bright green grass on the ground."
 	icon_state = "grass"
 
-/obj/decal/fakeobjects/greekgrass
+/obj/fakeobject/greekgrass
 	name = "grass"
 	icon = 'icons/turf/adventure_gannets.dmi'
 	icon_state = "grass"
@@ -73,11 +96,14 @@ atoms can be rendered by reference in browser
 	name = "beach"
 	desc = "A very strange beach, almost artificial somehow."
 	icon_state = "sand"
+	can_dig = TRUE
 
 	curve
 		icon_state = "beach-curve"
+		can_dig = FALSE
 	bodge //yes, i needed this
 		icon_state = "island-1"
+		can_dig = FALSE
 
 /turf/unsimulated/greek/water
 	name = "water"
@@ -137,7 +163,7 @@ atoms can be rendered by reference in browser
 	bullet_act()
 		return
 
-/obj/decal/fakeobjects/rockpile //small rock pile decor
+/obj/fakeobject/rockpile //small rock pile decor
 	name = "rock pile"
 	desc = "Some rocks that tumbled off of the cliff walls."
 	icon = 'icons/turf/adventure_gannets.dmi'
@@ -242,5 +268,9 @@ atoms can be rendered by reference in browser
 	desc = "Oh wow, you finally found the end of the rainbow."
 	icon_state = "rainbow"
 
+
+/proc/zewakadownloadshit(mob/M)
+	var/mob/user = usr || M
+	user << ftp(file("data/missing_inhand_item_states.txt"))
 
 //th3*vqoE

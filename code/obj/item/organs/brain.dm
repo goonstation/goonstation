@@ -18,8 +18,11 @@
 	default_material = "greymatter"
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
+	/// is this brain cyber incompatible?
+	var/cyber_incompatible = FALSE
+
 	disposing()
-		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.ckey]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""][log_loc(src)]. Brain last touched by [src.fingerprintslast].")
+		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.ckey]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""] [log_loc(src)]. Brain last touched by [src.fingerprintslast].")
 
 		if (owner && owner.brain == src)
 			owner.brain = null

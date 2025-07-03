@@ -2,7 +2,6 @@
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
-
 $background-dimness: 0.75 !default;
 
 .Dimmer {
@@ -22,6 +21,7 @@ $background-dimness: 0.75 !default;
   z-index: 1;
 }
 
+// |GOONSTATION-ADD|
 .Dimmer--full {
   position: fixed;
   top: 32px;

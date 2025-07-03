@@ -27,6 +27,10 @@
 			var/obj/machinery/power/apc/APC = src.master
 			if (APC.terminal == src)
 				APC.terminal = null
+		if (istype(src.master, /obj/machinery/power/smes))
+			var/obj/machinery/power/smes/SMES = src.master
+			if (SMES.terminal == src)
+				SMES.terminal = null
 	..()
 
 /obj/machinery/power/terminal/hide(var/i)
@@ -125,6 +129,11 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 	proc
 		post_signal(obj/source, datum/signal/signal)
 			if(!src.powernet || !signal)
+				return
+
+			var/sender = signal.data["sender"]
+			//block any packet asking every device to send a ping back, trivial amplification attack that can seriously lag the server
+			if (sender == "ping")
 				return
 
 			if(source != src.master || !DATA_TERMINAL_IS_VALID_MASTER(src, src.master))

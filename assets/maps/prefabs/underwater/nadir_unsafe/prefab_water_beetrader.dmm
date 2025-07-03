@@ -72,10 +72,7 @@
 /area/bee_trader)
 "h" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta";
+/obj/machinery/computer/television/public{
 	pixel_x = 0;
 	pixel_y = 4
 	},
@@ -165,7 +162,7 @@
 /turf/simulated/floor/white,
 /area/bee_trader)
 "u" = (
-/obj/npc/trader/bee{
+/obj/npc/trader/bee/sea{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -194,7 +191,7 @@
 /turf/simulated/floor/white,
 /area/bee_trader)
 "A" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/marker/supplymarker,
 /turf/simulated/floor{
 	icon_state = "hive"
@@ -260,7 +257,7 @@
 	},
 /area/bee_trader)
 "J" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An older biopod for the creation of space bee eggs.";

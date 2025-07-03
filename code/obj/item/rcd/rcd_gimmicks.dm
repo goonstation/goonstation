@@ -12,7 +12,7 @@
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10
@@ -28,7 +28,7 @@
 	icon_state = "bad_rcd0"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10

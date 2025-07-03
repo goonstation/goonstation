@@ -183,7 +183,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aD" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aE" = (
@@ -238,12 +238,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "aM" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	desc = "An outdated method of power delivery.";
 	dir = 6;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects/teleport_pad{
+/obj/fakeobject/teleport_pad{
 	layer = 3
 	},
 /obj/decal/cleanable/dirt,
@@ -253,7 +253,7 @@
 	},
 /area/janitor_setpiece)
 "aN" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	desc = "An outdated method of power delivery.";
 	dir = 9;
 	name = "power conduit"
@@ -271,7 +271,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aP" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A mainframe computer. It's pretty big! Should it be blue like that?";

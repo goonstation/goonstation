@@ -11,7 +11,7 @@ TYPEINFO(/obj/item/magtractor)
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -92,6 +92,8 @@ TYPEINFO(/obj/item/magtractor)
 
 	afterattack(atom/A, mob/user as mob)
 		if (!A) return 0
+
+		if (!can_act(user)) return 0
 
 		if (!src.holding)
 			if (!isitem(A)) return 0

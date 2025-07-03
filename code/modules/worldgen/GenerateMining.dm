@@ -20,12 +20,19 @@ TYPEINFO(/turf/variableTurf)
 		if(source.z == planetZLevel)
 			return // noop
 		if (map_currently_underwater)
-			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			if (source.z == Z_LEVEL_STATION)
+				#ifdef MAP_OVERRIDE_NADIR
+				source.ReplaceWith(/turf/space/fluid/acid)
+				#else
+				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+				#endif
+			else
+				source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
 			source.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 
-/turf/variableTurf/floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
+/turf/variableTurf/floor //Replaced with map appropriate floor tile for current z-level (fluid on underwater, asteroid floor on others)
 	name = "variable floor"
 	icon_state = "floor"
 
@@ -35,12 +42,19 @@ TYPEINFO(/turf/variableTurf/floor)
 		if(gen && gen.floor_turf_type)
 			source.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
 		else if (map_currently_underwater)
-			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			if (source.z == Z_LEVEL_STATION)
+				#ifdef MAP_OVERRIDE_NADIR
+				source.ReplaceWith(/turf/space/fluid/acid)
+				#else
+				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+				#endif
+			else
+				source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
 			source.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 
-/turf/variableTurf/wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
+/turf/variableTurf/wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps)
 	name = "variable wall"
 	icon_state = "wall"
 
@@ -53,7 +67,7 @@ TYPEINFO(/turf/variableTurf/wall)
 			source.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 
-/turf/variableTurf/clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
+/turf/variableTurf/clear //Replaced with map appropriate clear tile for mining level (fluid floor on underwater maps, space on other maps)
 	name = "variable clear"
 	icon_state = "clear"
 
@@ -64,7 +78,14 @@ TYPEINFO(/turf/variableTurf/clear)
 		if(gen && gen.clear_turf_type) // If planet mapgen doesn't replace it use the generators clear type
 			source.ReplaceWith(gen.clear_turf_type, FALSE, TRUE, FALSE, TRUE)
 		else if (map_currently_underwater)
-			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			if (source.z == Z_LEVEL_STATION)
+				#ifdef MAP_OVERRIDE_NADIR
+				source.ReplaceWith(/turf/space/fluid/acid)
+				#else
+				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+				#endif
+			else
+				source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
 			source.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
@@ -181,7 +202,6 @@ TYPEINFO(/turf/variableTurf/clear)
 				var/turf/T = locate(min_x+x-1,min_y+y-1,z_level)
 				if(map[map_x][map_y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate) || isgenplanet(T)) )
 					var/turf/simulated/wall/auto/asteroid/N = T.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
-					N.quality = rand(-101,101)
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
@@ -259,7 +279,6 @@ TYPEINFO(/turf/variableTurf/clear)
 		#endif
 		for(var/i in 0 to numAsteroidSeed-1)
 			var/turf/X = pick(miningZ)
-			var/quality = rand(-101,101)
 
 			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate) && !isgenplanet(X)))
 				X = pick(miningZ)
@@ -301,7 +320,6 @@ TYPEINFO(/turf/variableTurf/clear)
 				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate) || isgenplanet(T))
 					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
-					AST.quality = quality
 				LAGCHECK_IF_LIVE(LAG_INIT)
 
 			if(prob(15))
@@ -394,6 +412,13 @@ TYPEINFO(/turf/variableTurf/clear)
 	hotspot_controller.generate_map()
 
 var/global/datum/bioluminescent_algae/bioluminescent_algae
+proc/algae_controller()
+	RETURN_TYPE(/datum/bioluminescent_algae)
+	if (!global.bioluminescent_algae)
+		global.bioluminescent_algae = new()
+		global.bioluminescent_algae.setup()
+	return global.bioluminescent_algae
+
 /datum/bioluminescent_algae
 	/// our randomized seed values
 	var/list/seeds
@@ -418,12 +443,12 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 		seeds["value"] = rand(0, 50000)
 		seeds["salinity"] = rand(0, 50000)
 
-	proc/get_color(atom/A)
+	proc/get_color(atom/A, force = FALSE)
 		var/drift_x = (A.x + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 
 		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
-		if (salinity > coverage) // no algae for you :(
+		if (salinity > coverage && !force) // no algae for you :(
 			return
 		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
 		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))
@@ -434,3 +459,23 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 		color_vals = hsv2rgblist(hue_multiplier * 360, (saturation_multiplier * 25) + 60, (value_multiplier * 15) + 85)
 		color_vals += color_alpha
 		return color_vals
+
+	proc/algae_wall(atom/wall, force = FALSE) //it could be a window I guess idk
+		var/list/color_vals = src.get_color(wall, force)
+		if (length(color_vals))
+			var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+			var/mask_state = null
+			if (istype(wall, /turf/simulated/wall/auto/asteroid))
+				mask_state = wall.icon_state
+			else if (istype(wall, /turf/simulated/wall/auto))
+				var/typeinfo/turf/simulated/wall/auto/typinfo = wall.get_typeinfo()
+				var/connectdir = wall.get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, typinfo.connect_across_areas, typinfo.connect_diagonal)
+				mask_state = "asteroid-[connectdir]"
+			else if (istype(wall, /obj/window/auto)) //windows are different because of course they are
+				var/obj/window/auto/window = wall
+				mask_state = "asteroid-[window.connectdir]"
+			if (mask_state)
+				algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[mask_state]"))
+			wall.AddOverlays(algea, "glow_algae")
+			wall.add_medium_light("glow_algae", color_vals)

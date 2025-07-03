@@ -101,7 +101,7 @@
 		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
-		var/dat = {SPAN_ALERT("Planet Composition:</b>")}
+		var/dat = SPAN_ALERT("Planet Composition:</b>")
 
 		var/turf_total = 0
 		var/list/biome_distribution = list("Jungle"=0, "Grassland"=0, "Desert"=0, "Mountains"=0, "Water"=0, "Other"=0)
@@ -230,7 +230,7 @@
 		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
-		var/dat = {SPAN_ALERT("<b>Home sweet home.  For some definition of sweet and some definition of home.</b>")}
+		var/dat = SPAN_ALERT("<b>Home sweet home.  For some definition of sweet and some definition of home.</b>")
 
 		pilot << browse("<HEAD><TITLE>[station_name()]</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
 
@@ -301,7 +301,7 @@
 		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
-		var/dat = {SPAN_ALERT("<b>Hot Hot Hot Hot Hot Hot</b>")}
+		var/dat = SPAN_ALERT("<b>Hot Hot Hot Hot Hot Hot</b>")
 
 		pilot << browse("<HEAD><TITLE>Star</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
 
@@ -413,7 +413,7 @@
 		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
-		var/dat = {SPAN_ALERT("<b>Oh... look... a black hole.  Neat!</b>")}
+		var/dat = SPAN_ALERT("<b>Oh... look... a black hole.  Neat!</b>")
 
 		pilot << browse("<HEAD><TITLE>Star</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
 
@@ -499,7 +499,7 @@
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/datum/galactic_object/asteroid/M = master
-		var/dat = {SPAN_ALERT("<b>Softest of Rocks</b>")}
+		var/dat = SPAN_ALERT("<b>Softest of Rocks</b>")
 
 		// TODO Action-Bar for Mining Scan.... ???
 		if(!M.encounter_generated)
@@ -584,7 +584,7 @@
 		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
-		var/dat = {SPAN_ALERT("<b>DON'T <i>FUCKING</i> TOUCH ME.</b>")}
+		var/dat = SPAN_ALERT("<b>DON'T <i>FUCKING</i> TOUCH ME.</b>")
 
 		pilot << browse("<HEAD><TITLE>HEY FUCKWAD!</TITLE></HEAD><TT>[dat]</TT>", "window=fixme_planet")
 
@@ -633,7 +633,7 @@
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		boutput(pilot,"fuck")
-		flick("arjuna_thruster_back_l",ship)
+		FLICK("arjuna_thruster_back_l",ship)
 		return
 
 /obj/background_star/galactic_object/large/eyesenhower_ship
@@ -646,7 +646,7 @@
 		if(!istype(E))
 			return
 		if(!E.intro_played)
-			flick("eh_intro",src.my_map_body)
+			FLICK("eh_intro",src.my_map_body)
 			E.intro_played = 1
 			src.my_map_body.icon_state = "eh_idle_open"
 

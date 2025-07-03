@@ -1,4 +1,4 @@
-/obj/decal/fakeobjects/nuclear_reactor_destroyed
+/obj/fakeobject/nuclear_reactor_destroyed
 	name = "Molten Reactor Core"
 	desc = "A molten nuclear reactor core. It's still burning and smoking. Some engineers are gonna get fired for this."
 	icon = 'icons/misc/nuclearreactor.dmi'
@@ -45,7 +45,7 @@
 		. = ..()
 		src._light_turf?.remove_medium_light("reactor_destroyed_light")
 
-/obj/decal/fakeobjects/turbine_destroyed
+/obj/fakeobject/turbine_destroyed
 	name = "Destroyed Gas Turbine"
 	desc = "A large turbine used for generating power using hot gas. It seems to be utterly destroyed."
 	icon = 'icons/obj/large/96x160.dmi'

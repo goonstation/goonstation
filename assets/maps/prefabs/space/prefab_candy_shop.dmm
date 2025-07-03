@@ -203,7 +203,7 @@
 /obj/neon_lining{
 	dir = 8
 	},
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	desc = "Definitely not a barber pole, nope, nuh-uh.";
 	name = "Spinning Candy Cane Pole";
 	pixel_x = -28
@@ -274,7 +274,6 @@
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
 "we" = (
-/obj/table/wood/round/auto,
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/bagel{
 	rand_pos = 0
@@ -395,7 +394,7 @@
 /turf/simulated/wall/auto/reinforced/jen/cyan,
 /area/prefab/candy_shop)
 "Df" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a confectioner.";
 	name = "Carlisle"
 	},
@@ -525,7 +524,7 @@
 	dir = 4;
 	lining_color = "pink"
 	},
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	desc = "Definitely not a barber pole, nope, nuh-uh.";
 	name = "Spinning Candy Cane Pole";
 	pixel_x = 28

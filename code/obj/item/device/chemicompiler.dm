@@ -2,11 +2,11 @@
  * Chemicompiler
  * v1.0 By volundr 9/24/14
  * This device is a programmable chemistry mixing and heating device.
- * The javascript code to run the frontend is in browserassets/js/chemicompiler.min.js
- *   which is minified javascript from browserassets/js/chemicompiler.js
+ * The javascript code to run the frontend is in browserassets/src/js/chemicompiler.min.js
+ *   which is minified javascript from browserassets/src/js/chemicompiler.js
  *   If you make changes to the uncompressed javascript, you'll need to install node.js,
  *   and run `npm install -g uglify-js`
- *   then run `uglifyjs browserassets/js/chemicompiler.js -c > browserassets/js/chemicompiler.min.js` to rebuild the compressed version.
+ *   then run `uglifyjs browserassets/src/js/chemicompiler.js -c > browserassets/src/js/chemicompiler.min.js` to rebuild the compressed version.
  */
 /datum/chemicompiler_core/portableCore
 	maxReservoir = 6
@@ -29,14 +29,24 @@
 		processing_items -= src
 
 	attack_self(mob/user as mob)
-		executor.panel()
+		ui_interact(user)
 
-	proc/topicPermissionCheck(action)
-		if(src.loc != usr)
-			return 0
-		if(executor.core.running)
-			return action in list("getUIState", "reportError", "abortCode")
-		return 1
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemiCompiler", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = executor.get_ui_data()
+		.["theme"] = "syndicate"
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+
+		return executor.execute_ui_act(action, params)
 
 	process()
 		. = ..()

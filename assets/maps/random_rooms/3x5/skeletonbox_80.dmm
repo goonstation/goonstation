@@ -3,7 +3,7 @@
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "e" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "g" = (

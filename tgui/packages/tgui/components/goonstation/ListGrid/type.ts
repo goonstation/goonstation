@@ -1,23 +1,29 @@
-import type { InfernoNode } from 'inferno';
+import type { ReactNode } from 'react';
 
 export type RowId = string;
 
 interface ValuedColumnConfig<T extends object, V> {
   getValue: (data: T) => V;
-  renderContents?: (options: { data: T; rowId: RowId; value: V }) => InfernoNode;
+  renderContents?: (options: {
+    data: T;
+    rowId: RowId;
+    value: V | unknown;
+  }) => ReactNode;
 }
 type ValuelessColumnConfig<T extends object> = {
-  renderContents: (options: { data: T; rowId: RowId }) => InfernoNode;
+  renderContents: (options: { data: T; rowId: RowId }) => ReactNode;
 };
-type ValueColumnConfig<T extends object, V> = ValuedColumnConfig<T, V> | ValuelessColumnConfig<T>;
+type ValueColumnConfig<T extends object, V> =
+  | ValuedColumnConfig<T, V>
+  | ValuelessColumnConfig<T>;
 
 export const isValuedColumnConfig = <T extends object, V>(
-  config: ValueColumnConfig<T, V>
+  config: ValueColumnConfig<T, V>,
 ): config is ValuedColumnConfig<T, V> => 'getValue' in config;
 
 interface CoreColumnConfig<T extends object> {
   id: string;
-  getValueTooltip?: (data: T) => InfernoNode;
+  getValueTooltip?: (data: T) => ReactNode;
   header: string;
 }
 

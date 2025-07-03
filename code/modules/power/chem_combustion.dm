@@ -16,7 +16,7 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 	icon_state = "chemportgen0"
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
+	flags = FLUID_SUBMERGE | NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = FALSE
@@ -228,13 +228,13 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		Floor Bolts: [src.anchored ? "Anchored" : "Unanchored"] <BR>
 		Power Output: [src.active && src.last_output ? src.last_output : 0]W<BR><BR>
 		<b>Controls:</b><BR>
-		<A href='?src=\ref[src];engine=1'>Engine: [src.active ? "Stop" : "Start"]</A><BR>
-		<A href='?src=\ref[src];packet=1'>Wireless Control: [src.packet_control ? "Disable" : "Enable"]</A><BR>
-		<A href='?src=\ref[src];fuel=1'>[src.fuel_tank ? "Eject [src.fuel_tank.name]" : "Connect Fuel Tank"]</A><BR>
-		<A href='?src=\ref[src];inlet=1'>[src.inlet_tank ? "Eject [src.inlet_tank.name]" : "Connect Gas Tank"]</A><BR><BR>
+		<A href='byond://?src=\ref[src];engine=1'>Engine: [src.active ? "Stop" : "Start"]</A><BR>
+		<A href='byond://?src=\ref[src];packet=1'>Wireless Control: [src.packet_control ? "Disable" : "Enable"]</A><BR>
+		<A href='byond://?src=\ref[src];fuel=1'>[src.fuel_tank ? "Eject [src.fuel_tank.name]" : "Connect Fuel Tank"]</A><BR>
+		<A href='byond://?src=\ref[src];inlet=1'>[src.inlet_tank ? "Eject [src.inlet_tank.name]" : "Connect Gas Tank"]</A><BR><BR>
 		<b>Mix:</b><BR>
-		Fuel: <A href='?src=\ref[src];fuel_inlet=-0.10'>\<\<</A> <A href='?src=\ref[src];fuel_inlet=-0.01'>\<</A> [fuel_inlet * 100]% <A href='?src=\ref[src];fuel_inlet=0.01'>\></A> <A href='?src=\ref[src];fuel_inlet=0.1'>\>\></A><BR>
-		Air: <A href='?src=\ref[src];air_inlet=-0.10'>\<\<</A> <A href='?src=\ref[src];air_inlet=-0.01'>\<</A> [atmos_inlet * 100]% <A href='?src=\ref[src];air_inlet=0.01'>\></A> <A href='?src=\ref[src];air_inlet=0.1'>\>\></A>
+		Fuel: <A href='byond://?src=\ref[src];fuel_inlet=-0.10'>\<\<</A> <A href='byond://?src=\ref[src];fuel_inlet=-0.01'>\<</A> [fuel_inlet * 100]% <A href='byond://?src=\ref[src];fuel_inlet=0.01'>\></A> <A href='byond://?src=\ref[src];fuel_inlet=0.1'>\>\></A><BR>
+		Air: <A href='byond://?src=\ref[src];air_inlet=-0.10'>\<\<</A> <A href='byond://?src=\ref[src];air_inlet=-0.01'>\<</A> [atmos_inlet * 100]% <A href='byond://?src=\ref[src];air_inlet=0.01'>\></A> <A href='byond://?src=\ref[src];air_inlet=0.1'>\>\></A>
 		"}
 
 		if (user.client.tooltipHolder)

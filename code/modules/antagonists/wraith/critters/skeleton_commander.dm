@@ -14,6 +14,8 @@
 	health_brute_vuln = 0.7
 	health_burn = 90
 	health_burn_vuln = 0.3
+	can_bleed = FALSE
+	name_generator_path = /datum/wraith_name_generator/wraith_summon/commander
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 
@@ -70,6 +72,7 @@
 		HH.can_range_attack = 1
 
 /datum/limb/halberd
+	can_beat_up_robots = TRUE
 	attack_range(atom/target, var/mob/user, params)
 		switch (user.a_intent)
 			if (INTENT_HELP)
@@ -172,4 +175,4 @@
 		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_3.ogg"
 		msgs.damage_type = DAMAGE_STAB
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)

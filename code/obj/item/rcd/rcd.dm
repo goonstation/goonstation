@@ -18,7 +18,7 @@ TYPEINFO(/obj/item/rcd)
 	anchored = UNANCHORED
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10
@@ -175,7 +175,7 @@ TYPEINFO(/obj/item/rcd)
 					src.matter += R.matter
 					R.matter = 0
 					qdel(R)
-				R.tooltip_rebuild = 1
+				R.tooltip_rebuild = TRUE
 				src.UpdateIcon()
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
@@ -224,6 +224,7 @@ TYPEINFO(/obj/item/rcd)
 		var/turf/simulated/floor/T = A.ReplaceWithFloor()
 		T.inherit_area()
 		T.setMaterial(getMaterial(material_name))
+		T.default_material = getMaterial(material_name)
 		return
 
 	proc/handle_build_wall(turf/A, mob/user)
@@ -256,17 +257,7 @@ TYPEINFO(/obj/item/rcd)
 		qdel(A)
 
 	proc/handle_floors_and_walls(atom/A, mob/user)
-		if (istype(A, /obj/lattice) || istype(A, /turf/space))
-			if (istype(A, /obj/lattice))
-				var/turf/L = get_turf(A)
-				if (!istype(L, /turf/space))
-					return
-				A = L
-
-			src.do_rcd_action(user, A, "building a floor", matter_create_floor, time_create_floor, PROC_REF(handle_build_floor), src)
-			return
-
-		if (istype(A, /turf/simulated/floor))
+		if (istype(A, /turf/simulated/floor) || istype(A, /turf/simulated/space_phoenix_ice_tunnel))
 			src.do_rcd_action(user, A, "building a wall", matter_create_wall, time_create_wall, PROC_REF(handle_build_wall), src)
 			return
 
@@ -281,6 +272,16 @@ TYPEINFO(/obj/item/rcd)
 		if (istype(A, /obj/structure/girder) && !istype(A, /obj/structure/girder/displaced))
 			src.do_rcd_action(user, A, "turning \the [A] into a wall", matter_create_wall_girder, time_create_wall_girder, PROC_REF(handle_convert_girder_to_wall), src)
 			return
+
+		if (istype(A, /obj/lattice) || istype(A, /turf))
+			var/turf/T = A
+			if (istype(A, /obj/lattice))
+				var/turf/L = get_turf(A)
+				A = L
+				T = L
+			if (T.can_build)
+				src.do_rcd_action(user, A, "building a floor", matter_create_floor, time_create_floor, PROC_REF(handle_build_floor), src)
+				return
 
 	proc/do_unreinforce_wall(turf/target, mob/user)
 		PROTECTED_PROC(TRUE)
@@ -330,7 +331,13 @@ TYPEINFO(/obj/item/rcd)
 			src.do_rcd_action(user, A, "deconstructing \the [A]", matter_remove_wall, time_remove_wall, PROC_REF(do_deconstruct_wall), src)
 			return
 
-		if (istype(A, /turf/simulated/floor))
+		if (istype(A, /turf/simulated/floor) || istype(A, /turf/simulated/space_phoenix_ice_tunnel))
+			var/turf/simulated/floor/T = A
+			if(istype(T) && T.intact)
+				var/datum/material/mat = istext(T.default_material) ? getMaterial(T.default_material) : T.default_material
+				if(length(restricted_materials) && !(mat?.getID() in restricted_materials))
+					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
+					return
 			src.do_rcd_action(user, A, "removing \the [A]", matter_remove_floor, time_remove_floor, PROC_REF(do_delete_floor), src)
 			return
 
@@ -409,8 +416,8 @@ TYPEINFO(/obj/item/rcd)
 	proc/handle_windows(atom/A, mob/user)
 		PRIVATE_PROC(TRUE)
 
-		if (istype(A, /turf/simulated/floor) || istype(A, /obj/grille/))
-			if (istype(A, /obj/grille/))
+		if (istype(A, /turf/simulated/floor) || istype(A, /obj/mesh/grille/))
+			if (istype(A, /obj/mesh/grille/))
 				// You can do this with normal windows. So now you can do it with RCD windows. Honke.
 				A = get_turf(A)
 				if (!istype(A, /turf/simulated/floor))
@@ -448,8 +455,10 @@ TYPEINFO(/obj/item/rcd)
 				return
 
 			if (RCD_MODE_DECONSTRUCT)
-				if (restricted_materials && !(A.material?.getID() in restricted_materials))
+				if (length(restricted_materials) && !(A.material?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
+					return
+				if (istype(A, /turf/simulated/wall/auto/feather/strong))
 					return
 
 				handle_deconstruct(A, user)
@@ -481,7 +490,7 @@ TYPEINFO(/obj/item/rcd)
 					user_limb_is_missing = TRUE
 
 			if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
-				user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims themselves! </b> "))
+				user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims [himself_or_herself(user)]! </b> "))
 				random_brute_damage(user, 35)
 				Huser.changeStatus("knockdown", 3 SECONDS)
 				take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
@@ -493,7 +502,7 @@ TYPEINFO(/obj/item/rcd)
 					surgery_target = Huser.limbs.vars[user.zone_sel.selecting]
 					surgery_target.remove()
 					qdel(surgery_target)
-				user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> "))
+				user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes [his_or_her(user)] own [surgery_target]! </b> "))
 				random_brute_damage(user, 25)
 				take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
 			playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
@@ -574,8 +583,8 @@ TYPEINFO(/obj/item/rcd)
 		T.set_dir(user.dir)
 		for (var/obj/window/auto/O in orange(1,T))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,T))
-			G.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,T))
+			M.UpdateIcon()
 		for (var/turf/simulated/wall/auto/W in orange(1,T))
 			W.UpdateIcon()
 		for (var/turf/simulated/wall/false_wall/F in orange(1,T))
@@ -644,7 +653,7 @@ TYPEINFO(/obj/item/rcd)
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		switch (round((src.matter / src.max_matter) * 100)) //is the round() necessary? yell at me if it isnt
 			if (10 to 34)
 				ammo_amt = 1

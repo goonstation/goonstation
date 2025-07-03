@@ -1,8 +1,8 @@
 /obj/indestructible/shuttle_corner{icon='icons/turf/walls_martian.dmi'} : /obj/indestructible/shuttle_corner{@OLD;icon='icons/turf/walls/martian.dmi'}
 /obj/indestructible/shuttle_corner{icon='icons/turf/walls_iomoon.dmi'} : /obj/indestructible/shuttle_corner{@OLD;icon='icons/turf/walls/silicate.dmi'}
 /obj/indestructible/shuttle_corner{icon='icons/turf/walls_hospital.dmi'} : /obj/indestructible/shuttle_corner{@OLD;icon='icons/turf/walls/asteroid_dark.dmi'}
-/obj/decal/fakeobjects{icon='icons/turf/walls_iomoon.dmi'} : /obj/decal/fakeobjects{@OLD;icon='icons/turf/walls/ancient_smooth.dmi'}
-/obj/decal/fakeobjects{icon='icons/turf/walls_icemoon.dmi'} : /obj/decal/fakeobjects{@OLD;icon='icons/turf/walls/percursor.dmi'}
+/obj/fakeobject{icon='icons/turf/walls_iomoon.dmi'} : /obj/fakeobject{@OLD;icon='icons/turf/walls/ancient_smooth.dmi'}
+/obj/fakeobject{icon='icons/turf/walls_icemoon.dmi'} : /obj/fakeobject{@OLD;icon='icons/turf/walls/percursor.dmi'}
 /turf/simulated/wall/false_wall{icon='icons/turf/walls_supernorn_smooth.dmi'} : /turf/simulated/wall/false_wall{@OLD;icon='icons/turf/walls/supernorn/smooth.dmi'}
 /turf/simulated/wall/false_wall/reinforced{icon='icons/turf/walls_supernorn_smooth.dmi'} : /turf/simulated/wall/false_wall/reinforced{@OLD;icon='icons/turf/walls/supernorn/smooth.dmi'}
 /turf/simulated/wall/false_wall/hive{icon='icons/turf/walls_beehive.dmi'} : /turf/simulated/wall/false_wall/hive{@OLD;icon='icons/turf/walls/beehive.dmi'}

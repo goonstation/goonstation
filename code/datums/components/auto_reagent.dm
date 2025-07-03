@@ -4,6 +4,7 @@ TYPEINFO(/datum/component/auto_reagent)
 		ARG_INFO("reagent_id", DATA_INPUT_TEXT, "Reagent to overflow/produce"),
 		ARG_INFO("units", DATA_INPUT_NUM, "Units to produce per cycle", 10),
 		ARG_INFO("overflowing", DATA_INPUT_BOOL, "Should overflow?", FALSE),
+		ARG_INFO("turf_react", DATA_INPUT_BOOL, "Should do turf reactions when overflowing?", TRUE)
 	)
 /datum/component/auto_reagent
 	dupe_mode = COMPONENT_DUPE_ALLOWED //! but like probably don't do multiple ones with overflowing=TRUE, ok???
@@ -12,14 +13,16 @@ TYPEINFO(/datum/component/auto_reagent)
 	/// Number of reagents to produce per item process
 	var/units = 10
 	var/overflowing = FALSE
+	var/turf_react = TRUE
 
-	Initialize(reagent_id=null, units=10, overflowing=FALSE)
+	Initialize(reagent_id=null, units=10, overflowing=FALSE, turf_react=TRUE)
 		if(!istype(parent,/atom))
 			return COMPONENT_INCOMPATIBLE
 		. = ..()
 		src.reagent_id = reagent_id
 		src.units = units
 		src.overflowing = overflowing
+		src.turf_react = turf_react
 
 		if(!istext(src.reagent_id) || isnull(reagents_cache[src.reagent_id]))
 			return COMPONENT_INCOMPATIBLE
@@ -55,15 +58,16 @@ TYPEINFO(/datum/component/auto_reagent)
 				var/mob/M = PA.loc
 				if(prob(50))
 					M.visible_message("Something from [M] spills onto [PA.loc].","Your [PA] overflows and spills onto the ground.")
-				R.trans_to(T, R.total_volume)
 			else if(ismob(parent))
 				var/mob/M = parent
 				if(prob(33))
 					M.visible_message("Something leaks from [PA] onto [T].","You leak onto the ground...")
-				R.trans_to(T, R.total_volume)
 			else if(isturf(PA.loc))
 				if(prob(10))
 					PA.visible_message("[PA] spills onto [PA.loc].","You hear the sound of liquid hitting the ground.")
+			if (src.turf_react)
+				R.reaction(T, TOUCH)
+			else
 				R.trans_to(T, R.total_volume)
 
 	/// Adds a line to examine text to indicate it is overflowing

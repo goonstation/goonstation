@@ -261,7 +261,7 @@
 		icon_empty = "patchbox-med-empty"
 		var/icon_color = "patchbox-med-coloring"
 		var/image/box_color
-		flags = FPRINT | TABLEPASS | EXTRADELAY
+		flags = TABLEPASS | EXTRADELAY
 
 		proc/build_overlay(var/datum/color/average = null) //ChemMasters provide average for medical boxes
 			var/obj/item/reagent_containers/patch/temp = src.take_from()
@@ -472,13 +472,13 @@
 		if (myItem)
 			if (src.item_amount >= 1)
 				src.item_amount--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			src.UpdateIcon()
 			return myItem
 		else if (src.item_amount != 0) // should be either a positive number or -1
 			if (src.item_amount >= 1)
 				src.item_amount--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			var/obj/item/newItem = new src.contained_item(src)
 			src.UpdateIcon()
 			return newItem
@@ -505,7 +505,7 @@
 				return 0
 			if (src.item_amount != -1)
 				src.item_amount ++
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			src.UpdateIcon()
 			if (user && show_messages)
 				boutput(user, "You stuff [I] into [src].")

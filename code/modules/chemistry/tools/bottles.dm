@@ -12,7 +12,7 @@
 	initial_volume = 30
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	object_flags = NO_GHOSTCRITTER
 	fluid_overlay_states = 6
 
@@ -249,6 +249,13 @@
 	icon_state = "bottle_2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "cyanide"
+
+/obj/item/reagent_containers/glass/bottle/cytotoxin
+	name = "cytotoxin bottle"
+	desc = "A small bottle of cytotoxin, a potent poison originating from lifeforms around the frontier system."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "cytotoxin"
 
 /obj/item/reagent_containers/glass/bottle/fluorosurfactant
 	name = "fluorosurfactant bottle"

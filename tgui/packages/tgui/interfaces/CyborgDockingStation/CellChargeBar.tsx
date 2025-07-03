@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { ProgressBar, Tooltip } from '../../components';
+import { ProgressBar, Tooltip } from 'tgui-core/components';
+
 import type { PowerCellData } from './type';
 
 interface CellChargeBarProps {
@@ -17,11 +18,19 @@ export const CellChargeBar = (props: CellChargeBarProps) => {
   const { cell } = props;
   const charge = cell.current / cell.max;
   return (
-    <Tooltip position="bottom" content={Math.floor(cell.current) + '/' + cell.max}>
+    <Tooltip
+      position="bottom"
+      content={Math.floor(cell.current) + '/' + cell.max}
+    >
       <ProgressBar
         position="relative"
         value={charge}
-        ranges={{ good: [0.5, Infinity], average: [0.25, 0.5], bad: [-Infinity, 0.25] }}>
+        ranges={{
+          good: [0.5, Infinity],
+          average: [0.25, 0.5],
+          bad: [-Infinity, 0.25],
+        }}
+      >
         {Math.floor(charge * 100)}%
       </ProgressBar>
     </Tooltip>

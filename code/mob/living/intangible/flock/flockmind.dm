@@ -1,6 +1,13 @@
 /////////////////
 // FLOCKMIND MOB
 /////////////////
+TYPEINFO(/mob/living/intangible/flock/flockmind)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_RADIO_DISTORTED, LISTEN_INPUT_SILICONCHAT_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_FLOCKMIND, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/intangible/flock/flockmind
 	name = "Flockmind"
 	real_name = "Flockmind"
@@ -13,6 +20,9 @@
 	var/max_respawns = 1
 
 	var/datum/tutorial_base/regional/flock/tutorial = null
+
+	default_speech_output_channel = SAY_CHANNEL_FLOCK
+	say_language = LANGUAGE_FEATHER
 
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
@@ -82,11 +92,11 @@
 	src.flock.stats.peak_compute = max(src.flock.stats.peak_compute, src.flock.total_compute())
 	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
 		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
-			boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b>"))
+			src.flock.system_say_source.say("Sentience pause detected. Preparing promotion routines.", atom_listeners_override = list(src))
 		if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
 			var/list/traces = src.flock.getActiveTraces()
 			if (length(traces))
-				boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.\]</b>"))
+				src.flock.system_say_source.say("Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.", atom_listeners_override = list(src))
 				var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
 				chosen_trace.promoteToFlockmind(FALSE)
 			src.afk_counter = 0
@@ -157,7 +167,7 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = FALSE
-	flick("flockmind-death", src)
+	FLICK("flockmind-death", src)
 	src.ghostize()
 	spawn(2 SECONDS) // wait for the animation to finish
 		qdel(src)
@@ -215,31 +225,4 @@
 		picked = picked.ghostize() //apparently corpses were being deleted here?
 
 	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.flock.flockmind_mind))
-		logTheThing(LOG_DEBUG, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")
-
-// old code for flocktrace respawns
-/datum/ghost_notification/respawn/flockdrone
-	respawn_explanation = "flockmind partition"
-	icon = 'icons/misc/featherzone.dmi'
-	icon_state = "flocktrace"
-
-/mob/living/intangible/flock/flockmind/proc/receive_ghosts(var/list/ghosts)
-	if(!ghosts || length(ghosts) <= 0)
-		boutput(src, SPAN_ALERT("Unable to partition, please try again later."))
-		return
-	var/list/valid_ghosts = list()
-	for(var/mob/dead/observer/O in ghosts)
-		if(O?.client)
-			valid_ghosts |= O
-	if(length(valid_ghosts) <= 0)
-		SPAWN(1 SECOND)
-			boutput(src, SPAN_ALERT("Unable to partition, please try again later."))
-		return
-	// pick a random ghost
-	var/mob/dead/observer/winner = valid_ghosts[rand(1, valid_ghosts.len)]
-	if(winner) // probably a paranoid check
-		winner.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, master = src.mind)
-		var/mob/living/trace = winner.mind.current
-		message_admins("[key_name(src)] made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
-		logTheThing(LOG_ADMIN, src, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
-		flock_speak(null, "Trace partition \[ [trace.real_name] \] has been instantiated.", src.flock)
+		logTheThing(LOG_DEBUG, null, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")

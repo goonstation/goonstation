@@ -3,8 +3,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
-	opacity = 0;
-	req_access_txt = null
+	opacity = 0
 	},
 /obj/mapping_helper/access/medical,
 /turf/unsimulated/floor/red,
@@ -37,7 +36,7 @@
 	},
 /area/shuttle/escape/centcom)
 "dQ" = (
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 4
 	},
 /turf/simulated/shuttle/wall{
@@ -180,8 +179,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
-	opacity = 0;
-	req_access_txt = null
+	opacity = 0
 	},
 /obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/red,
@@ -190,8 +188,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
-	opacity = 0;
-	req_access_txt = null
+	opacity = 0
 	},
 /obj/mapping_helper/access/security,
 /turf/unsimulated/floor/red,
@@ -340,7 +337,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "LM" = (
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 4
 	},
 /turf/simulated/shuttle/wall{
@@ -388,7 +385,7 @@
 /turf/unsimulated/floor/redblack/corner,
 /area/shuttle/escape/centcom)
 "Pz" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 8
 	},
 /turf/simulated/shuttle/wall{

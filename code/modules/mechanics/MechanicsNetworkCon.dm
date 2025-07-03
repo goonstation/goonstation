@@ -46,12 +46,12 @@
 	proc/toggleSelfOnly(obj/item/W as obj, mob/user as mob)
 		self_only = !self_only
 		boutput(user, "[self_only ? "Now only processing messages addressed at us.":"Now processing all messages received."]")
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 	proc/toggleMainframeReg(obj/item/W as obj, mob/user as mob)
 		register = !register
 		boutput(user, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 	secure()
 		var/turf/T = get_turf(src)
@@ -115,10 +115,9 @@
 		//command=term_message&data=command=trigger&data=yoursignal&adress_1=targetId&sender=senderId
 
 	proc/sendRaw(var/datum/signal/S)
-		var/dataStr = ""//list2params(S.data)  Using list2params() will result in weird glitches if the data already contains a set of params, like in terminal comms
-		for(var/i in S.data)
-			dataStr += "[i][isnull(S.data[i]) ? ";" : "=[S.data[i]];"]"
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, dataStr, S.data_file?.copy_file())
+		for(var/i in S.data) //Normalize the text before we sanitize it again with list2params
+			S.data[i] = html_decode(S.data[i])
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, list2params(S.data), S.data_file?.copy_file())
 		animate_flash_color_fill(src,"#00AA00",1, 1)
 		return
 

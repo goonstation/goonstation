@@ -162,5 +162,5 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	endurance = 1
 	genome = 7
 	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/quality/inferior)
-	assoc_reagents = list("grease")
+	assoc_reagents = list("grease", "milk")
 	mutations = list(/datum/plantmutation/soy/soylent)

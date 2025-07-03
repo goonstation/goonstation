@@ -14,13 +14,13 @@
 	else
 		return 0
 
-/mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+/mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0, var/mob/victim = null)
 	if (!isvampire(src) && !isvampiricthrall(src))
 		return
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
-		AH.change_vampire_blood(change, total_blood, set_null)
+		AH.change_vampire_blood(change, total_blood, set_null, victim)
 	else
 		var/datum/abilityHolder/vampiric_thrall/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if(AHZ && istype(AHZ) && !total_blood)
@@ -69,8 +69,9 @@
 	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	var/vamp_blood = 0
 	points = 0 // Replaces the old vamp_blood_remaining var.
-	var/vamp_blood_tracking = 1
 	var/mob/vamp_isbiting = null
+	///For blood tracking
+	var/mob/last_victim = null
 #ifdef BONUS_POINTS
 	vamp_blood = 99999
 	points = 99999
@@ -87,14 +88,15 @@
 	// might deduct something from vamp_blood, though it shouldn't happen on a regular basis.
 	var/last_power = 0
 	var/level1 = 5
-	var/level2 = 300
-	var/level3 = 600
-	var/level4 = 900
-	var/level5 = 1400
-	var/level6 = 1800 // Full power.
+	var/level2 = 150
+	var/level3 = 300
+	var/level4 = 600
+	var/level5 = 900
+	var/level6 = 1400
+	var/level7 = 1800 // Full power.
 
 	var/list/thralls = list()
-	var/turf/coffin_turf = 0
+	var/turf/coffin_turf = null
 
 	//contains the reference to the coffin if we're currently travelling to it, otherwise null
 	var/obj/storage/closet/coffin/vampire/the_coffin = null
@@ -111,10 +113,18 @@
 	onAttach(mob/to_whom)
 		..()
 		RegisterSignal(to_whom, COMSIG_MOB_FLIP, PROC_REF(launch_bat_orbiters))
+		RegisterSignal(to_whom, COMSIG_MOB_POINT, PROC_REF(targeted_bat_orbiters))
+		to_whom.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = ref(src))
+		to_whom.ensure_listen_tree().AddListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = ref(src))
 
 	onRemove(mob/from_who)
 		..()
 		UnregisterSignal(from_who, COMSIG_MOB_FLIP)
+		UnregisterSignal(from_who, COMSIG_MOB_POINT)
+
+		if (from_who)
+			from_who.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = ref(src))
+			from_who.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = ref(src))
 
 	onLife(var/mult = 1)
 		..()
@@ -131,14 +141,20 @@
 					owner_human.update_face()
 					owner_human.update_body()
 			else
-				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
+				if (ishuman(owner))
+					changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
 			//var/obj/storage/closet/coffin/C = newloc
 			the_coffin = null
 
-	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = FALSE, var/mob/victim = null)
+		if (victim)
+			if (src.last_victim != victim)
+				src.last_victim = victim
+				var/datum/targetable/vampire/blood_tracking/tracker = src.getAbility(/datum/targetable/vampire/blood_tracking)
+				tracker?.update_target(victim)
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
@@ -157,7 +173,7 @@
 			if (set_null)
 				src.points = 0
 			else
-				src.points = max(src.points + change, 0)
+				src.points = clamp(src.points + change, 0, src.vamp_blood)
 
 			if (change > 0 && ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
@@ -171,24 +187,6 @@
 		else
 			return src.points
 
-	proc/blood_tracking_output(var/deduct = 0)
-		if (!src.owner || !ismob(src.owner))
-			return
-
-		if (!istype(src, /datum/abilityHolder/vampire))
-			return
-
-		if (!src.vamp_blood_tracking)
-			return
-
-		if (deduct > 1)
-			boutput(src.owner, SPAN_NOTICE("You used [deduct] units of blood, and have [src.points - deduct] remaining."))
-
-		else
-			boutput(src.owner, SPAN_NOTICE("You have accumulated [src.vamp_blood] units of blood and [src.points] left to use."))
-
-		return
-
 	proc/check_for_unlocks()
 		if (!src.owner || !ismob(src.owner))
 			return
@@ -200,11 +198,15 @@
 			src.last_power = 1
 
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire)
-			src.addAbility(/datum/targetable/vampire/enthrall)
-			src.addAbility(/datum/targetable/vampire/speak_thrall)
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)
 			src.last_power = 2
+			if(src.owner?.mind && !(src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.pseudo || src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.vr))
+				src.addAbility(/datum/targetable/vampire/enthrall)
+			src.addAbility(/datum/targetable/vampire/call_spirit_bats)
+
+		if (src.last_power == 2 && src.vamp_blood >= src.level3)
+			src.last_power = 3
 
 			src.has_thermal = 1
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_THERMALVISION_MK2, src)
@@ -213,27 +215,28 @@
 			src.addAbility(/datum/targetable/vampire/mark_coffin)
 			src.addAbility(/datum/targetable/vampire/coffin_escape)
 
-		if (src.last_power == 2 && src.vamp_blood >= src.level3)
-			src.last_power = 3
-
-			src.addAbility(/datum/targetable/vampire/call_bats)
-			src.addAbility(/datum/targetable/vampire/vampire_scream)
-
 		if (src.last_power == 3 && src.vamp_blood >= src.level4)
 			src.last_power = 4
+
+			src.removeAbility(/datum/targetable/vampire/call_spirit_bats)
+			src.addAbility(/datum/targetable/vampire/call_frost_bats)
+			src.addAbility(/datum/targetable/vampire/vampire_scream)
+
+		if (src.last_power == 4 && src.vamp_blood >= src.level5)
+			src.last_power = 5
 
 			src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
 			src.addAbility(/datum/targetable/vampire/plague_touch)
 
-		if (src.last_power == 4 && src.vamp_blood >= src.level5)
-			src.last_power = 5
+		if (src.last_power == 5 && src.vamp_blood >= src.level6)
+			src.last_power = 6
 
 			src.removeAbility(/datum/targetable/vampire/vampire_scream)
 			src.addAbility(/datum/targetable/vampire/vampire_scream/mk2)
 
-		if (src.last_power == 5 && src.vamp_blood >= src.level6)
-			src.last_power = 6
+		if (src.last_power == 6 && src.vamp_blood >= src.level7)
+			src.last_power = 7
 
 			src.has_xray = 1
 			src.has_fullpower = 1
@@ -248,31 +251,13 @@
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)
 		src.removeAbility(/datum/targetable/vampire/coffin_escape)
 		src.removeAbility(/datum/targetable/vampire/enthrall)
-		src.removeAbility(/datum/targetable/vampire/speak_thrall)
-		src.removeAbility(/datum/targetable/vampire/call_bats)
+		src.removeAbility(/datum/targetable/vampire/call_spirit_bats)
+		src.removeAbility(/datum/targetable/vampire/call_frost_bats)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream/mk2)
 		src.removeAbility(/datum/targetable/vampire/plague_touch)
 
 		src.updateButtons()
-
-	proc/transmit_thrall_msg(var/message,var/mob/sender)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-		if (!message)
-			return
-
-		if (dd_hasprefix(message, "*"))
-			return
-
-		logTheThing(LOG_DIARY, sender, "(GHOULSPEAK): [message]", "ghoulsay")
-		logTheThing(LOG_SAY, sender, "(GHOULSPEAK): [message]")
-
-		if (sender.client && sender.client.ismuted())
-			boutput(sender, "You are currently muted and may not speak.")
-			return
-
-		sender.say_thrall(message, src)
 
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
@@ -325,7 +310,7 @@
 
 ///////////////////////////////////////////// Vampire spell parent //////////////////////////////////////////////////
 
-// If you change the blood cost, cooldown etc of an ability, don't forget to update vampireTips.html too!
+// If you change the blood cost, cooldown etc of an ability, don't forget to update `vampire.AlertContentWindow.tsx` too!
 
 // Notes:
 // - If an ability isn't available from the beginning, add an unlock_message to notify the player of unlocks.
@@ -350,8 +335,8 @@
 
 	onAttach(var/datum/abilityHolder/H)
 		..() // Start_on_cooldown check.
-		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
+		if (src.unlock_message && src.holder && src.holder.owner && (ismob(src.holder.owner) || ismobcritter(src.holder.owner)))
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>")) // vamp teg is not a mob but uses this
 		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)

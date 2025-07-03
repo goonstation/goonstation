@@ -98,7 +98,7 @@
 		) = 100,
 		list(new /datum/eventSpawnedCritter(
 			name = "gunbots",
-			critter_types = list(/mob/living/critter/robotic/gunbot/strong),
+			critter_types = list(/mob/living/critter/robotic/gunbot/strong, /mob/living/critter/robotic/gunbot/meleebot/strong),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -247,6 +247,7 @@
 					new /obj/item/implant/access/infinite/assistant(M.current)
 					if (src.custom_spawn_turf)
 						M.current.set_loc(src.custom_spawn_turf)
+					message_ghosts("The antag critter <b>[picked_critter]</b> have spawned.") //noloc4antagspawns
 					M.add_generic_antagonist(ROLE_ANTAGONIST_CRITTER, "[M.current.real_name]", source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 				candidates -= M
 

@@ -40,7 +40,7 @@
 /area/noGenerate)
 "g" = (
 /obj/warp_beacon/miningasteroidbelt,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "h" = (

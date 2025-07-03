@@ -23,21 +23,16 @@
 
 
 
+TYPEINFO(/obj/item/device/speechtotext)
+	start_listen_effects = list(LISTEN_EFFECT_PROTOTYPE_MAPTEXT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+
 /obj/item/device/speechtotext
 	name = "prototype flying chat device"
 	desc = "This is a microphone that was a prototype of the floating chat that pali added. It doesn't work that great, but hey."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
-
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
-
-	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		new /obj/maptext_junk/speech(M, msg = messages[1])
-
 
 /obj/maptext_junk
 	mouse_opacity = 0
@@ -249,7 +244,6 @@
 	icon_state = "voting_box"
 	density = 1
 	event_handler_flags = NO_MOUSEDROP_QOL
-	flags = FPRINT
 	anchored = ANCHORED
 	desc = "Funds further renovations for the afterlife. You can put the fruits / vegetables / minerals / bombs you grew into this (click this with them or click-drag them onto it)."
 	var/total_score = 0
@@ -502,7 +496,7 @@
 	icon_state = "clowkey"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY
@@ -943,12 +937,12 @@
 			if (!src.monitored_proc)
 				// no proc to check.
 				return 0
-			if (src.monitored_var && !istype(src.monitored[monitored_var], /datum))
+			if (src.monitored_var && !istype(src.monitored.vars[monitored_var], /datum))
 				// If we're calling a proc on a var it better be something we can call a proc on
 				return 0
 
 			// So what ARE we calling this proc on then?
-			src.effective_callee = (src.monitored_var ? src.monitored[src.monitored_var] : src.monitored)
+			src.effective_callee = (src.monitored_var ? src.monitored.vars[src.monitored_var] : src.monitored)
 
 			if (!hascall(src.effective_callee, monitored_proc))
 				// does it have this proc?
@@ -1248,9 +1242,9 @@
 			update_delay = 1
 
 			get_value()
-				if (!src.monitored["stats"]["lastdeath"])
+				if (!src.monitored.vars["stats"]["lastdeath"])
 					return "None... yet</span>"
-				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
+				return "[src.monitored.vars["stats"]["lastdeath"]["name"]]</span><br>[src.monitored.vars["stats"]["lastdeath"]["whereText"]]"
 
 
 
@@ -1365,7 +1359,7 @@
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
 
 		the_literal_server
-			var/obj/decal/fakeobjects/the_server = null
+			var/obj/fakeobject/the_server = null
 			var/is_smoking = 0
 
 			New()
@@ -1452,9 +1446,8 @@
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
-New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" class="ol" target="_blank">Click here for a tutorial!</a>
-Ask mentors for help with <strong>F3</strong>
-Contact admins with <strong>F1</strong>
+Have gameplay questions? Ask mentors with \[F3]!
+Have rules questions? Message admins with \[F1].
 Read the rules, don't grief, and have fun!</div>"}
 
 
@@ -1542,9 +1535,8 @@ Read the rules, don't grief, and have fun!</div>"}
 				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][!isnull(server.player_count) ? " ([server.player_count] players)" : " (restarting now)"]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
-New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
-Have questions? Ask mentors with \[F3]!
-Need an admin? Message us with \[F1].
+Have gameplay questions? Ask mentors with \[F3]!
+Have rules questions? Message admins with \[F1].
 
 Other Goonstation servers:[serverList]</span>"})
 
@@ -1836,7 +1828,7 @@ Other Goonstation Nightshade servers:[serverList]</span>"})
 	name = "admin spacebux store setup object"
 	desc = "An admin can click on this to set stuff up."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "DONGS"
 	var/tmp/set_up = FALSE

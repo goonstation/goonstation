@@ -10,16 +10,14 @@
 /world
 	mob = /mob/new_player
 
-	#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
-	turf = /turf/space/fluid/manta
-	#elif defined(UNDERWATER_MAP)
+	#ifdef UNDERWATER_MAP
 	turf = /turf/space/fluid
 	#else
 	turf = /turf/space
 	#endif
 
 	area = /area/space
-	movement_mode = TILE_MOVEMENT_MODE
+	movement_mode = TILE_MOVEMENT_MODE //Touching this will almost certainly break all glides. DO NOT TOUCH THIS unless you are willing to shoulder an absolute mountain of work.
 
 	view = "15x15"
 

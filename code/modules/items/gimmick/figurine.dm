@@ -132,7 +132,7 @@
 			if (src.icon_state != "fig-shelterfrog-dead")
 				make_cleanable(/obj/decal/cleanable/blood,get_turf(src))
 				src.icon_state = "fig-shelterfrog-dead"
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		return 0
 
 	attack_self(mob/user as mob)
@@ -1065,6 +1065,38 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Harper Costache"
 		icon_state = "harpercostache"
 		ckey = "gibusgame"
+	lazybones123
+		name = "\improper Normal Human"
+		icon_state = "normalhuman"
+		ckey = "lazybones123"
+	emeraldcrow
+		name = "\improper Caitlin"
+		icon_state = "caitlin"
+		ckey = "emeraldcrow"
+	kikimofo
+		name = "\improper Kiki Kolana"
+		icon_state = "kikikolana"
+		ckey = "kikimofo"
+	fffootloose
+		name = "\improper Leeland Ponds"
+		icon_state = "leelandponds"
+		ckey = "fffootloose"
+	tamedevil
+		name = "\improper Vaughn Guy"
+		icon_state = "vaughnguy"
+		ckey = "tamedevil"
+	laticauda
+		name = "\improper Tommy Guillaume"
+		icon_state = "tommyguillaume"
+		ckey = "laticauda"
+	brainrot
+		name = "\improper Latte Cappuccino"
+		icon_state = "lattecappuccino"
+		ckey = "brainrot"
+	outbackcatgirl
+		name = "\improper Catherine McFluffums"
+		icon_state = "catherinemcfluffums"
+		ckey = "outbackcatgirl"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -1120,13 +1152,15 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	icon_state = "machine1"
 	icon_panel = "machine-panel"
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
+	var/base_icon_state = "machine1"
 	var/image/capsule_image = null
 
 	create_products(restocked)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 35, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)
-		src.icon_state = "machine[rand(1,6)]"
+		src.base_icon_state = "machine[rand(1,6)]"
+		src.icon_state = src.base_icon_state
 		src.capsule_image = image(src.icon, "m_caps26")
 		src.UpdateOverlays(src.capsule_image, "capsules")
 
@@ -1136,6 +1170,31 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			var/datum/data/vending_product/R = src.product_list[1]
 			src.capsule_image.icon_state = "m_caps[R.product_amount]"
 			src.UpdateOverlays(src.capsule_image, "capsules")
+
+	set_broken()
+		. = ..()
+		if (.) return
+		if (src.fallen)
+			src.icon_state = "[src.base_icon_state]-fallen-broken"
+		else
+			src.icon_state = "[src.base_icon_state]-broken"
+
+	fall()
+		..()
+		src.capsule_image.pixel_x = src.pixel_x - 4
+		src.capsule_image.pixel_y = src.pixel_y - 8
+		src.UpdateOverlays(src.capsule_image, "capsules")
+		if (src.status & BROKEN)
+			src.icon_state = "[src.base_icon_state]-fallen-broken"
+		else
+			src.icon_state = "[src.base_icon_state]-fallen"
+
+	right()
+		..()
+		src.capsule_image.pixel_x = src.pixel_x
+		src.capsule_image.pixel_y = src.pixel_y
+		src.UpdateOverlays(src.capsule_image, "capsules")
+		src.icon_state = src.base_icon_state
 
 	powered()
 		return

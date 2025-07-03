@@ -42,12 +42,17 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
+//#define DISABLE_DEVFILE // Don't load things defined in '__build.local.dm'. Use if you have some breaking changes in there or whatnot
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define I_MEAN_ALL_ACCESS // Captain level ID's have EVERY access
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
 //#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
+//#define I_WANNA_BE_THE_JOB "IMCODER" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
+//#define BANISH_PREGAME_HTML // Prevents the HTML titlescreen from loading. Useful if you experience debilitating lag due to it.
+//#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -66,12 +71,14 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
+//#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
+//#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT // Stops lights from breaking or burning out when spawning or turning on/off
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
 //------------- PROFILING OPTIONS -------------//
 
-//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
+// #define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
 
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
@@ -107,8 +114,8 @@ o+`        `-` ``..-:yooos-..----------..`
 // Makes the delete queue go through every single datum in the game when a hard del happens
 // It gets reported to the debug log. This process takes about 4 minutes per hard deletion
 // (during that time the server will be frozen).
-//#define LOG_HARD_DELETE_REFERENCES
-//#define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+// #define LOG_HARD_DELETE_REFERENCES
+// #define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
@@ -124,7 +131,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CONSTRUCTION // Construction mode
 //#define MAP_OVERRIDE_POD_WARS     // 500x500 Pod Wars map
 //#define MAP_OVERRIDE_EVENT        // Misc. event maps
-//#define MAP_OVERRIDE_PAMGOC       // ilaP yB ,1 pamgoC (pamgoc by pali)
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
@@ -133,30 +139,22 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
-//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
 //#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
+//#define MAP_OVERRIDE_NEON					// Neon by Sord
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
-//#define MAP_OVERRIDE_DESTINY      // NSS Destiny (Originally for RP servers only)
-//#define MAP_OVERRIDE_HORIZON      // NSS Horizon, by Warcrimes
+//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
-//#define MAP_OVERRIDE_TRUNKMAP     // Updated Devstation/Ovary/Trunkmap
-//#define MAP_OVERRIDE_DENSITY      // Density (smallest map)
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
-//#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
-//#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
-//#define MAP_OVERRIDE_ICARUS       // Icarus by Kubius
-//#define MAP_OVERRIDE_GEHENNA      // A WIP map by Warcrimes (DO NOT USE)
-
 
 //------------ Unit Test Framework ------------//
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
+//#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions // Only run tests of these types - comma separated list of types
 
 #ifdef CI_RUNTIME_CHECKING
 #define CHECK_MORE_RUNTIMES 1
@@ -193,6 +191,8 @@ o+`        `-` ``..-:yooos-..----------..`
 #define QUICK_MOB_DELETION
 #define SHUT_UP_ABOUT_MY_PAY
 #define FUCK_OFF_WITH_THE_MAIL
+#define GHOSTDRONES_ON_STRIKE
+#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
@@ -222,7 +222,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
-#define BUILD_TIME_MONTH 01
+#define BUILD_TIME_MONTH 03
 #define BUILD_TIME_DAY 13
 #define BUILD_TIME_HOUR 18
 #define BUILD_TIME_MINUTE 31

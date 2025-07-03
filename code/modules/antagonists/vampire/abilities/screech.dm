@@ -19,7 +19,6 @@
 			return 1
 
 		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
 
 		if (!M)
 			return 1
@@ -27,7 +26,6 @@
 		if (M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
 			boutput(M, SPAN_ALERT("How do you expect this to work? You're muzzled!"))
 			M.visible_message(SPAN_ALERT("<b>[M]</b> makes a loud noise."))
-			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
 
 		. = ..()
@@ -79,7 +77,6 @@
 
 		sonic_attack_environmental_effect(M, 2, list("light", "window", "r_window"))
 
-		if (istype(H)) H.blood_tracking_output(src.pointCost)
 		logTheThing(LOG_COMBAT, M, "uses chiropteran screech at [log_loc(M)].")
 		return 0
 

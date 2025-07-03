@@ -5,12 +5,12 @@
  * @license MIT
  */
 
-export type Product = {
+interface ProductData {
   name: string;
   img: string;
   amount: number;
 }
 
 export interface ChemChuteData {
-  productList: Product[]
+  productList: ProductData[];
 }

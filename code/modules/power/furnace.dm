@@ -2,8 +2,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 	mats = 20
 
 /obj/machinery/power/furnace
-	name = "Zaojun-2 5kW Furnace"
-	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
+	name = "Zaojun-2 20kW Furnace"
+	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 20 kilowatt thermocouple. \
+	A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
 	anchored = ANCHORED
 	density = 1
@@ -132,7 +133,8 @@ TYPEINFO(/obj/machinery/power/furnace)
 				if (crate.spawn_contents && crate.make_my_stuff()) //Ensure contents have been spawned properly
 					crate.spawn_contents = null
 
-				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
+				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), \
+				SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
 				for (var/obj/item/I in crate.contents)
 					load_into_furnace(I, 1, user)
 					if (src.fuel >= src.maxfuel)
@@ -316,6 +318,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 		src.user.visible_message(SPAN_ALERT("[src.user] starts to shove [src.victim] into the furnace!"))
 		logTheThing(LOG_COMBAT, src.user, "attempted to force [constructTarget(src.victim,"combat")] into a furnace at [log_loc(src.furnace)].")
 		message_admins("[key_name(src.user)] is trying to force [key_name(src.victim)] into a furnace at [log_loc(src.furnace)].")
+		message_ghosts("<b>[src.victim]</b> is being shoved in a furnace at [log_loc(src.furnace, ghostjump = TRUE)]!")
 
 	onUpdate()
 		..()

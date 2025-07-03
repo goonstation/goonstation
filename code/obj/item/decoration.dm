@@ -1,7 +1,6 @@
 
 /obj/item/decoration
 	icon = 'icons/obj/decoration.dmi'
-	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_SMALL
 
 /obj/item/decoration/flower_vase
@@ -17,6 +16,12 @@
 
 	vase7
 		icon_state = "vase7"
+
+	fleurdaffodil //commissioned sprite for Janantilles's office, please don't use this mappers
+		name = "daffodil vase"
+		desc = "A ribboned vase with a lovely daffodil. The tag says it's from S.F."
+		icon = 'icons/misc/janstuff.dmi'
+		icon_state = "fleur-daffodil"
 
 /obj/item/decoration/ashtray
 	name = "ashtray"
@@ -78,8 +83,23 @@
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 20
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		user.drop_item()
 		src.throw_at(target, throw_range, throw_speed)
+
+/obj/item/decoration/quill
+	name = "red quill"
+	desc = "A bright red quill sitting in an inkpot."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "quill"
+	w_class = W_CLASS_TINY
+
+/obj/item/decoration/knightbook
+	name = "The Complete Ballad of Sir Edward Landgrave Ludvigsen de La Moeau von Braunschbank-Albrechtsberger V"
+	desc = "An out of print book with a knight's helmet displayed on the cover. Seems to be a collector's edition. The back reads: The entire translated and abridged trilogy of Sir Edward and his exploits. This book contains tales from 'The Chilvaric Travels of Sir Edward Landgrave Ludvigsen V', 'Estoire de Chevalier Edouard de La Moeau', 'Edward von Braunschbank-Albrechtsberger V der fahrender Ritter' and more..."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "knightbook"
+	w_class = W_CLASS_SMALL
+

@@ -12,20 +12,8 @@
 			return
 
 		if (alert(usr, "Random reagent?", "Random reagent?", "Yes", "No") == "No")
-			var/list/L = list()
-			var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-			if(searchFor)
-				for(var/R in concrete_typesof(/datum/reagent))
-					if(findtext("[R]", searchFor)) L += R
-			else
-				L = concrete_typesof(/datum/reagent)
-
-			if(length(L) == 1)
-				reagent_type = L[1]
-			else if(length(L) > 1)
-				reagent_type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-			else
-				usr.show_text("No reagents matching that name", "red")
+			src.reagent_type = pick_reagent(src)?.type
+			if (!src.reagent_type)
 				return
 
 		amount = input(usr,"Amount:","Amount",2000) as null|num

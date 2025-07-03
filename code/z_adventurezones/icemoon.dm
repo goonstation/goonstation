@@ -59,7 +59,7 @@ Contents:
 
 	New()
 		..()
-		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6")]"
+		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6","ice7","ice8","ice9","ice10")]"
 
 /turf/unsimulated/floor/arctic/snow/lake
 	name = "frozen lake"
@@ -68,6 +68,13 @@ Contents:
 	icon_state = "poolwaterfloor"
 	fullbright = 0
 
+/turf/unsimulated/floor/auto/arctic_lake
+	name = "frozen lake"
+	desc = "You can see the lake bubbling away under the ice. Neat."
+	icon = 'icons/turf/arctic_lake.dmi'
+	icon_state = "lake"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
+	icon_state_edge = "lake_edge"
 
 /turf/unsimulated/floor/arctic/plating
 	name = "plating"

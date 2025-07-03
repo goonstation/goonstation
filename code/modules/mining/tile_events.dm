@@ -34,8 +34,54 @@
 			return
 		var/obj/item/I = new gem_type
 		I.set_loc(AST)
-		I.quality = AST.quality + rand(-50,50)
-		I.name = "[getGemQualityName(I.quality)] [I.name]"
+
+/datum/ore/event/rare_metal
+	analysis_string = "Unusual metal deposit detected."
+	excavation_string = "Something metallic tumbles out of the collapsing rock!"
+	scan_decal = "scan-rare_metal"
+	var/static/list/metals_to_pick = list(/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/iridium = 100,
+
+										  /obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/plutonium = 50,
+										  /obj/item/raw_material/veranium = 25,
+										  /obj/item/raw_material/yuranite = 25
+										 )
+
+	onExcavate(turf/simulated/wall/auto/asteroid/AST)
+		if (..())
+			return
+		var/metal_to_drop = weighted_pick(src.metals_to_pick)
+		for (var/i in 1 to rand(1, 3))
+			new metal_to_drop(AST)
+
+/datum/ore/event/geode
+	analysis_string = "Large crystalline formations detected."
+	excavation_string = "A geode was unearthed!"
+	scan_decal = "scan-object"
+	weight = 200 //let's make these pretty common for now
+	///weighted lists of geode types to pick from
+	var/static/list/fluid_geode_types = list()
+	var/static/list/crystal_geode_types = list()
+
+	onExcavate(turf/simulated/wall/auto/asteroid/AST)
+		if (..())
+			return
+		//horrible weighted caching zone
+		if (!length(src.fluid_geode_types))
+			for (var/obj/geode/type as anything in concrete_typesof(/obj/geode/fluid))
+				src.fluid_geode_types[type] = initial(type.weight)
+		if (!length(src.crystal_geode_types))
+			for (var/obj/geode/type as anything in concrete_typesof(/obj/geode/crystal))
+				src.crystal_geode_types[type] = initial(type.weight)
+
+		var/geode_type = null
+		if (prob(30)) //make fluid geodes always a bit rarer since they're more niche
+			if (prob(50)) //hardcoded oil chance so the weight stays high as more fluid geodes are added
+				geode_type = /obj/geode/fluid/oil
+			else
+				geode_type = weighted_pick(src.fluid_geode_types)
+		else
+			geode_type = weighted_pick(src.crystal_geode_types)
+		new geode_type(AST)
 
 /datum/ore/event/gem/molitz_b
 	analysis_string = "Small unusual crystalline deposit detected."

@@ -40,15 +40,10 @@
 		src.changeStatus(id, bite_time)
 
 
-/mob/living/vomit(var/nutrition=0, var/specialType=null)
-	..()
-	return src.organHolder?.stomach?.vomit()
-
-
 /datum/statusEffect/simplehot/foodBrute
 	id = "food_brute"
 	name = "Food HoT (Brute)"
-	icon_state = "foodbuff"
+	icon_state = "hot_brute"
 	exclusiveGroup = "Food"
 	heal_brute = 0.26
 	maxDuration = 6000
@@ -63,7 +58,7 @@
 /datum/statusEffect/simplehot/foodTox
 	id = "food_tox"
 	name = "Food HoT (Toxin)"
-	icon_state = "foodbuff"
+	icon_state = "hot_tox"
 	exclusiveGroup = "Food"
 	heal_tox = 0.26
 	maxDuration = 6000
@@ -79,7 +74,7 @@
 /datum/statusEffect/simplehot/foodBurn
 	id = "food_burn"
 	name = "Food HoT (Burn)"
-	icon_state = "foodbuff"
+	icon_state = "hot_burn"
 	exclusiveGroup = "Food"
 	heal_burn = 0.26
 	maxDuration = 6000
@@ -95,7 +90,7 @@
 /datum/statusEffect/simplehot/foodAll
 	id = "food_all"
 	name = "Food HoT (All)"
-	icon_state = "foodbuff"
+	icon_state = "hot_all"
 	exclusiveGroup = "Food"
 	heal_burn = 0.086
 	heal_tox = 0.086
@@ -132,9 +127,7 @@
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
-			if (M.bodytemperature > M.base_body_temp + 3)
-				for(var/i in 1 to times)
-					M.bodytemperature -= 2
+			M.changeBodyTemp(-2 KELVIN * times, min_temp = M.base_body_temp + 3)
 
 /datum/statusEffect/foodwarm
 	id = "food_warm"
@@ -157,9 +150,7 @@
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
-			if (M.bodytemperature < M.base_body_temp + 8)
-				for(var/i in 1 to times)
-					M.bodytemperature += 6
+			M.changeBodyTemp(6 KELVIN * times, max_temp = M.base_body_temp + 8)
 
 /datum/statusEffect/staminaregen/food
 	id = "food_refreshed"
@@ -217,7 +208,6 @@
 	id = "food_hp_up"
 	name = "Food (HP++)"
 	desc = ""
-	icon_state = "foodbuff"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -250,7 +240,7 @@
 	id = "food_deep_fart"
 	name = "Food (Gassy)"
 	desc = "You feel gassy."
-	icon_state = "foodbuff"
+	visible = FALSE
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -262,7 +252,7 @@
 	id = "food_deep_burp"
 	name = "Food (Gross Burps)"
 	desc = "Your stomach feels gassy."
-	icon_state = "foodbuff"
+	visible = FALSE
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -274,7 +264,7 @@
 	id = "food_cateyes"
 	name = "Food (Night Vision)"
 	desc = "Your vision feels improved."
-	icon_state = "foodbuff"
+	icon_state = "cateyes"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -286,7 +276,7 @@
 	id = "food_fireburp"
 	name = "Food (Fire Burps)"
 	desc = "Your stomach is flaming hot!"
-	icon_state = "foodbuff"
+	icon_state = "fireburp"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -340,7 +330,7 @@
 	id = "food_explosion_resist"
 	name = "Food (Sturdy)"
 	desc = "Your joints feel sturdy, as if they are more resistant to popping off. Uh."
-	icon_state = "foodbuff"
+	icon_state = "explosion_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -364,7 +354,7 @@
 	id = "food_disease_resist"
 	name = "Food (Cleanse)"
 	desc = "You are more resistant to disease."
-	icon_state = "foodbuff"
+	icon_state = "disease_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -376,7 +366,7 @@
 	id = "food_rad_resist"
 	name = "Food (Rad-Wick)"
 	desc = "You are more resistant to radiation."
-	icon_state = "foodbuff"
+	icon_state = "rad_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -412,13 +402,29 @@
 	id = "food_bad_breath"
 	name = "Food (Bad Breath)"
 	desc = "You have extremely smelly breath."
-	icon_state = "foodbuff"
+	icon_state = "badbreath"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
 
 	getChefHint()
 		. = "Gives the consumer an absolutely terrible breath smell."
+
+	onAdd()
+		. = ..()
+		RegisterSignal(owner, COMSIG_ATOM_SAY, PROC_REF(smell_breath))
+
+	onRemove()
+		UnregisterSignal(owner,COMSIG_ATOM_SAY)
+		. = ..()
+
+	proc/smell_breath()
+		for (var/mob/living/L in oview(2, owner))
+			if (prob(50))
+				continue
+
+			boutput(L, SPAN_ALERT("Good lord, [owner]'s breath smells bad!"))
+			L.nauseate(1)
 
 /datum/statusEffect/slimy
 	id = "food_slimy"
@@ -436,7 +442,7 @@
 	id = "food_sweaty"
 	name = "Food (Sweaty)"
 	desc = "You feel sweaty!"
-	icon_state = "foodbuff"
+	icon_state = "sweaty"
 	exclusiveGroup = "Food"
 	maxDuration = 3000
 	unique = 1

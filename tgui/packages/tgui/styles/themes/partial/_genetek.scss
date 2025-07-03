@@ -8,41 +8,48 @@
 
 $genetek: #1b676b !default;
 
-@use '../../colors.scss' with (
+@use '../../colors' with (
   $primary: color.scale($genetek, $lightness: +25%),
   $label: #bfcc90,
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
-@use '../../base.scss' with (
-  $color-bg: color.scale($genetek, $lightness: -45%),
+@use '../../base' with (
+  $color-bg: color.scale($genetek, $lightness: -45%)
 );
 
 @mixin genetek-theme-buttons {
-  @include meta.load-css('../../components/Button.scss', $with: (
-    'color-default': $genetek,
-    'color-transparent-text': rgba(234, 253, 230, 0.75),
-  ));
+  @include meta.load-css(
+    '../../components/Button.scss',
+    $with: (
+      'color-default': $genetek,
+      'color-transparent-text': rgba(234, 253, 230, 0.75)
+    )
+  );
 }
 
 @mixin genetek-theme {
   // Components
-  @include meta.load-css('../../components/ProgressBar.scss', $with: (
-    'color-default-fill': $genetek,
-    'background-color': rgba(0, 0, 0, 0.5),
-  ));
+  @include meta.load-css(
+    '../../components/ProgressBar.scss',
+    $with: (
+      'color-default-fill': $genetek,
+      'background-color': rgba(0, 0, 0, 0.5)
+    )
+  );
   @include meta.load-css('../../components/Section.scss');
 
   // Layouts
   @include meta.load-css('../../layouts/Layout.scss');
   @include meta.load-css('../../layouts/Window.scss');
-  @include meta.load-css('../../layouts/TitleBar.scss', $with: (
-    'background-color': color.scale($genetek, $lightness: -25%),
-  ));
+  @include meta.load-css(
+    '../../layouts/TitleBar.scss',
+    $with: ('background-color': color.scale($genetek, $lightness: -25%))
+  );
 
   .Layout__content {
     background-position-x: -60%;
-    background-image: url('../../assets/bg-genetek.svg');
+    background-image: url('../../assets/bg-genetek.svg') !important;
   }
 
   .color-label {

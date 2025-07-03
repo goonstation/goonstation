@@ -85,8 +85,6 @@
 #define OVERLOAD_PLAYERCOUNT 120
 /// when pcount is above this number on round start, increase ticklag to SEMIOVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define SEMIOVERLOAD_PLAYERCOUNT 85
-/// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
-#define OSHAN_LIGHT_OVERLOAD 18
 /// whenn pcount is >= this number, slow Life() processing a bit
 #define SLOW_LIFE_PLAYERCOUNT 85
 /// whenn pcount is >= this number, slow Life() processing a lot

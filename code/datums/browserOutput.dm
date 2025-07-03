@@ -91,16 +91,14 @@ var/global
 		//For local-testing fallback
 		if (!cdn)
 			var/list/chatResources = list(
-				"browserassets/vendor/js/jquery.min.js",
-				"browserassets/js/errorHandler.js",
-				//"browserassets/vendor/js/array.generics.min.js",
-				//"browserassets/vendor/js/anchorme.js",
-				"browserassets/js/browserOutput.js",
-				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.ttf",
-				"browserassets/css/fonts/fontawesome-webfont.woff",
-				"browserassets/vendor/css/font-awesome.css",
-				"browserassets/css/browserOutput.css"
+				"browserassets/src/vendor/js/jquery.min.js",
+				"browserassets/src/js/errorHandler.js",
+				"browserassets/src/js/browserOutput.js",
+				"browserassets/src/css/fonts/fontawesome-webfont.eot",
+				"browserassets/src/css/fonts/fontawesome-webfont.ttf",
+				"browserassets/src/css/fonts/fontawesome-webfont.woff",
+				"browserassets/src/vendor/css/font-awesome.css",
+				"browserassets/src/css/browserOutput.css"
 			)
 			src.owner.loadResourcesFromList(chatResources)
 
@@ -293,9 +291,9 @@ var/global
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", data)
 
-/datum/chatOutput/proc/playMusic(url, volume)
+/datum/chatOutput/proc/playMusic(url, volume, fromTopic = FALSE)
 	if (!url || !volume) return
-	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100))
+	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100, "fromTopic" = fromTopic))
 	data = url_encode(data)
 
 	ehjax.send(src.owner, "browseroutput", data)
@@ -342,7 +340,7 @@ var/global
 	return copytext(partial[2], 3, -5)
 
 
-/proc/bicon(obj)
+/proc/bicon(obj, scale = 1)
 
 	var/baseData
 	if (isicon(obj))
@@ -388,8 +386,11 @@ var/global
 				return
 
 			baseData = icon2base64(icon, iconKey)
-
-		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon' src='data:image/png;base64,[baseData]' />"
+		//kind of hacky, remove when we don't need to support 515 anymore
+		var/pixelation_mode = usr?.client?.byond_version >= 516 ? "image-rendering: pixelated" : "-ms-interpolation-mode: nearest-neighbor"
+		var/width = scale == 1 ? "" : " width: [world.icon_size * scale]px;"
+		var/height = scale == 1 ? "" :  "height: [world.icon_size * scale]px;"
+		return "<img style='position: relative; left: -1px; bottom: -3px;[width][height] [pixelation_mode]' class='icon' src='data:image/png;base64,[baseData]' />"
 
 /proc/boutput(target = null, message = "", group = "", forceScroll=FALSE)
 	if (isnull(target))
@@ -399,6 +400,8 @@ var/global
 
 	if (target == world)
 		for (var/client/C in clients)
+			if (istype(C.mob, /mob/living/carbon/human/tutorial))
+				continue
 			boutput(C, message, group, forceScroll)
 		return
 
@@ -425,9 +428,7 @@ var/global
 		C = target
 	else if (ismob(target))
 		var/mob/M = target
-		if (M.boutput_relay_mob)
-			boutput(M.boutput_relay_mob, message, group, forceScroll)
-		else if(istype(M, /mob/living/silicon/ai))
+		if(istype(M, /mob/living/silicon/ai))
 			var/mob/living/silicon/ai/AI = M
 			if(AI.deployed_to_eyecam)
 				C = AI.eyecam?.client
@@ -436,6 +437,8 @@ var/global
 	else if (ismind(target) && target:current)
 		C = target:current:client
 	else
+		if (ismobcritter(target) || istype(target, /obj/machinery/bot/)) // These act like clients a lot through logic, and get tons of messages.
+			return
 		CRASH("boutput called with incorrect target [target]")
 
 	if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)

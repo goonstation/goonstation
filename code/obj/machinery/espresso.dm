@@ -11,14 +11,14 @@ TYPEINFO(/obj/machinery/espresso_machine)
 	icon_state = "espresso_machine"
 	density = 1
 	anchored = ANCHORED
-	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/cupslimit = 2
 	var/cupsinside = 0
 	var/top_on = 1 //screwed on or screwed off
 	var/cup_name = "espresso cup"
-	var/image/image_top = null
 	var/image/image_cup = null
 	var/list/drink_options = list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
 
@@ -173,13 +173,6 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		else
 			src.image_cup = null
 		src.UpdateOverlays(src.image_cup, "cup")
-
-		if (src.top_on == 1)
-			if (!src.image_top)
-				src.image_top = image(src.icon, icon_state = "coffeetopoverlay")
-			src.UpdateOverlays(src.image_top, "top")
-		else
-			src.UpdateOverlays(null, "top")
 		return
 
 /* ===================================================== */
@@ -197,7 +190,8 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	icon_state = "coffeemaker-gen"
 	density = 1
 	anchored = ANCHORED
-	flags = FPRINT | NOSPLASH
+	flags = NOSPLASH
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/carafe_name = "coffee carafe"
 	var/image/image_top = null

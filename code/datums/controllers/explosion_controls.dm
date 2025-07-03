@@ -10,12 +10,12 @@ var/datum/explosion_controller/explosions
 	var/kaboom_ready = FALSE
 	var/next_turf_safe = FALSE
 
-	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1)
+	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation_multiplier = 0)
 		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
 		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
 			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
 				SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
-		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction)
+		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction, flash_radiation_multiplier)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -65,15 +65,20 @@ var/datum/explosion_controller/explosions
 			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * STACKED_EXPLOSION_DIMISHING_RETURNS_SCALING))
 			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
+			// Determine power of explosion. 1 is strongest, 3 is weakest. Also factors in the literal power p
+			/// This is a very old variable which essentially determines how devastating an explosion should be to a mob.
+			var/ex_act_power
 			if (p >= 6)
-				for (var/mob/M in T)
-					M.ex_act(1, explosion?.last_touched, p, explosion)
+				ex_act_power = 1
 			else if (p > 3)
-				for (var/mob/M in T)
-					M.ex_act(2, explosion?.last_touched, p, explosion)
+				ex_act_power = 2
 			else
-				for (var/mob/M in T)
-					M.ex_act(3, explosion?.last_touched, p, explosion)
+				ex_act_power = 3
+
+			for(var/mob/M in T)
+				M.ex_act(ex_act_power, explosion?.last_touched, p, explosion)
+				if (M && explosion?.flash_radiation_multiplier)
+					M.take_radiation_dose(explosion.flash_radiation_multiplier * p)
 
 		LAGCHECK(LAG_HIGH)
 
@@ -168,9 +173,10 @@ var/datum/explosion_controller/explosions
 	var/user
 	var/turf_safe
 	var/range_cutoff_fraction
+	var/flash_radiation_multiplier //! Number (0-1) related to power which determines how devastating the radioactive component of the explosion is, at all
 	var/last_touched = "*null*"
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1)
+	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation_multiplier=0)
 		..()
 		src.source = source
 		src.epicenter = epicenter
@@ -181,14 +187,21 @@ var/datum/explosion_controller/explosions
 		src.user = user
 		src.turf_safe = turf_safe
 		src.range_cutoff_fraction = range_cutoff_fraction
+		src.flash_radiation_multiplier = flash_radiation_multiplier
 
 	proc/logMe(var/power)
 		if(istype(src.source))
 			//I do not give a flying FUCK about what goes on in the colosseum and sims. =I
 			var/area/A = get_area(epicenter)
 			if(!A.dont_log_combat)
-				// Cannot read null.name
-				var/logmsg = "[turf_safe ? "Turf-safe e" : "E"]xplosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+				var/list/log_attributes = list()
+				var/radioactive_power_info = ""
+				if(src.flash_radiation_multiplier)
+					log_attributes += "radioactive"
+				if (src.turf_safe)
+					log_attributes += "turf-safe"
+					radioactive_power_info = " and radioactive power [src.flash_radiation_multiplier] "
+				var/logmsg = "Explosion [length(log_attributes) > 0 ? "([jointext(log_attributes, ",")]) " : ""]with power [power][radioactive_power_info] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
 				var/mob/M = null
 				if(ismob(user))
 					M = user
@@ -210,7 +223,7 @@ var/datum/explosion_controller/explosions
 
 				playsound(C.mob, explosions.distant_sound, 70, 0)
 
-		playsound(epicenter.loc, "explosion", 100, 1, round(power, 1) )
+		playsound(epicenter, "explosion", 100, 1, round(power, 1) )
 		if(power > 10)
 			var/datum/effects/system/explosion/E = new/datum/effects/system/explosion()
 			E.set_up(epicenter)

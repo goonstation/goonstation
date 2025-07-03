@@ -1,6 +1,5 @@
 /mob/living/critter/brullbar
 	name = "brullbar"
-	real_name = "brullbar"
 	desc = "Oh god."
 	density = 1
 	icon = 'icons/mob/critter/humanoid/brullbar.dmi'
@@ -163,7 +162,7 @@
 		if (prob(30))
 			src.visible_message(SPAN_ALERT("<b>[src] devours [target]! Holy shit!</b>"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			if (ishuman(target)) new /obj/decal/fakeobjects/skeleton(target.loc)
+			if (ishuman(target)) new /obj/fakeobject/skeleton(target.loc)
 			target.ghostize()
 			target.gib()
 			return
@@ -218,7 +217,6 @@
 
 /mob/living/critter/brullbar/king
 	name = "brullbar king"
-	real_name = "brullbar king"
 	desc = "You should run."
 	icon_state = "brullbarking"
 	icon_state_dead = "brullbarking-dead"

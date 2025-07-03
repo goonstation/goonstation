@@ -66,7 +66,6 @@
 	var/brain_data = null
 	// var/heart_data = null		//Moving this to organ_data for now. -kyle
 	var/reagent_data = null
-	var/pathogen_data = null
 	var/disease_data = null
 	var/implant_data = null
 	var/organ_data = null
@@ -119,10 +118,10 @@
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff++
 						continue
-					if (I.scan_category == "not_shown")
+					if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
 						continue
-					if (I.scan_category != "syndicate")
-						if (I.scan_category != "unknown")
+					if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
+						if (I.scan_category != IMPLANT_SCAN_CATEGORY_UNKNOWN)
 							implant_list[capitalize(I.name)]++
 						else
 							implant_list["Unknown implant"]++
@@ -148,21 +147,20 @@
 
 		if (ishuman)
 			var/mob/living/carbon/human/H = M
-			if (H.pathogens.len)
-				pathogen_data = SPAN_ALERT("Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.")
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					pathogen_data += "<br>&emsp;[SPAN_ALERT("Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].")]."
-					if (P.in_remission)
-						pathogen_data += "<br>&emsp;&emsp;[SPAN_ALERT("It appears to be in remission.")]."
 
 			if (H.get_organ("brain"))
-				if (H.get_brain_damage() >= 100)
+				if (H.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 					brain_data = SPAN_ALERT("Subject is braindead.")
-				else if (H.get_brain_damage() >= 60)
-					brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-				else if (H.get_brain_damage() >= 10)
-					brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+					brain_data = SPAN_ALERT("Severe brain damage detected. Subject unable to function.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
+					brain_data = SPAN_ALERT("Major brain damage detected. Impaired functioning present.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MODERATE)
+					brain_data = SPAN_ALERT("Moderate brain damage detected. Subject unable to function well.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
+					brain_data = SPAN_ALERT("Minor brain damage detected.")
+				else if (H.get_brain_damage() > 0)
+					brain_data = SPAN_ALERT("Brain synapse function may be disrupted.")
 			else
 				brain_data = SPAN_ALERT("Subject has no brain.")
 
@@ -225,11 +223,11 @@
 				reagent_data = SPAN_NOTICE("Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.")
 
 	if (!ishuman) // vOv
-		if (M.get_brain_damage() >= 100)
+		if (M.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 			brain_data = SPAN_ALERT("Subject is braindead.")
-		else if (M.get_brain_damage() >= 60)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 			brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-		else if (M.get_brain_damage() >= 10)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
 			brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
 
 	if (M.interesting)
@@ -248,7 +246,6 @@
 	[implant_data ? "<br>[implant_data]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
-	[pathogen_data ? "<br>[pathogen_data]" : null]\
 	[disease_data ? "[disease_data]" : null]\
 	[interesting_data ? "<br><i>Historical analysis:</i>[SPAN_NOTICE(" [interesting_data]")]" : null]\
 	"
@@ -341,7 +338,7 @@
 		return "<b class='alert'>ERROR: NO SUBJECT DETECTED</b>"
 	if (visible)
 		animate_scanning(M, "#9eee80")
-	if (!ishuman(M))
+	if (!M.has_genetics())
 		return "<b class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</b>"
 	var/mob/living/carbon/human/H = M
 	var/list/data = list()
@@ -372,11 +369,12 @@
 	else if (!length(GP.activeDnaKnown))
 		data += "-- None --"
 
-	if (length(H.cloner_defects.active_cloner_defects))
-		data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
-		for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
-			data += "<b class='alert'>[defect.name]</b>"
-			data += "<i class='alert'>[defect.desc]</i>"
+	if(istype(H))
+		if (length(H.cloner_defects.active_cloner_defects))
+			data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
+			for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
+				data += "<b class='alert'>[defect.name]</b>"
+				data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
 /// Returns the datacore general record, or null if none found
@@ -409,7 +407,7 @@
 		return
 
 	R["bioHolder.bloodType"] = M.bioHolder.bloodType
-	R["cdi_d"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
+	R["cdi"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
 	if (M.ailments.len)
 		R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
 	else
@@ -428,22 +426,6 @@
 	var/brute = round(M.get_brute_damage())
 
 	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
-
-
-// output a health pop-up overhead thing to the client
-/proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
-	if (C.client && !C.client.preferences?.flying_chat_hidden)
-
-		var/image/chat_maptext/chat_text = null
-		var/popup_text = scan_health_generate_text(M)
-
-		chat_text = make_chat_maptext(M, popup_text, force = 1)
-		if(chat_text)
-			chat_text.measure(C.client)
-			for(var/image/chat_maptext/I in C.chat_text.lines)
-				if(I != chat_text)
-					I.bump_up(chat_text.measured_height)
-			chat_text.show_to(C.client)
 
 /proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)
@@ -488,6 +470,9 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/F = A
 		reagents = F.group.reagents
+	else if (istype(A, /obj/item/assembly))
+		var/obj/item/assembly/checked_assembly = A
+		reagents = checked_assembly.get_first_component_reagents()
 	else if (istype(A, /obj/machinery/clonepod))
 		var/obj/machinery/clonepod/P = A
 		if(P.occupant)
@@ -529,6 +514,23 @@
 			data += "<br>[scan_reagents(gas, show_temp, visible, medical, admin)]"
 
 	return data
+
+/proc/get_ethanol_equivalent(mob/user, datum/reagents/R)
+	var/eth_eq = 0
+	var/should_we_output = FALSE //looks bad if we output this when it's just ethanol in there
+	if(!istype(R))
+		return
+	for (var/current_id in R.reagent_list)
+		var/datum/reagent/current_reagent = R.reagent_list[current_id]
+		if (istype(current_reagent, /datum/reagent/fooddrink/alcoholic))
+			var/datum/reagent/fooddrink/alcoholic/alch_reagent = current_reagent
+			eth_eq += alch_reagent.alch_strength * alch_reagent.volume
+			should_we_output = TRUE
+		if (current_reagent.id == "ethanol")
+			eth_eq += current_reagent.volume
+	if (should_we_output == FALSE)
+		eth_eq = 0
+	return eth_eq
 
 // Should make it easier to maintain the detective's scanner and PDA program (Convair880).
 /proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0)
@@ -732,7 +734,7 @@
 	if(visible)
 		animate_scanning(A, "#00a0ff", alpha_hex = "32")
 
-	var/datum/gas_mixture/check_me = A.return_air()
+	var/datum/gas_mixture/check_me = A.return_air(direct = TRUE)
 	var/pressure = null
 	var/total_moles = null
 
@@ -770,9 +772,11 @@
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [round(check_me.temperature)] K<br>\
-			Volume: [check_me.volume] L<br>\
-			[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
+			Temperature: [round(check_me.temperature)] K<br>"
+			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
+			if (!istype(A, /obj/bubble))
+				data += "Volume: [check_me.volume] L<br>"
+			data +=	"[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf

@@ -23,7 +23,7 @@
 
 /obj/machinery/atmospherics/trinary/manifold_valve/update_icon(animation)
 	if(animation)
-		flick("valve[src.divert][!src.divert]",src)
+		FLICK("valve[src.divert][!src.divert]",src)
 		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 	else
 		src.icon_state = "manifold_valve[src.divert]"

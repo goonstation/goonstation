@@ -1,5 +1,9 @@
 // This file is for premade paper/pamphlet things
 
+//the size of the paper includes the 32px wide bar at the top, so we need to account for that here if we want the image to fit exactly
+#define IMAGE_OFFSET_X 0 //x one kept just in case and because I like symmetry :)
+#define IMAGE_OFFSET_Y 32
+
 /obj/item/paper/alchemy
 	name = "'Chemistry Information'"
 
@@ -38,7 +42,7 @@
 	<li>Teleportation scroll</li><dd><i>- Allows instant teleportation to an area of your choice. The scroll has four charges. Don't lose it though, or you can't get back to the shuttle without knowing the <b><i>teleport</b></i> spell, or dying while <b><i>soulguard</b></i> is active!</i></dd>
 	<li>Spellbook</li><dd><i>- This is your personal spellbook that gives you access to the Wizarding Archives, allowing you to choose 4 spells with which to complete your objectives. The spellbook only works for you, and can be discarded after its uses are expended.</i></dd>
 	<br><br><br><hr>Spells every wizard starts with:<br><br>
-	<li>Magic missile (20 seconds)</li><dd><i>- This spell fires several slow-moving projectiles at nearby targets. If they hit a target, it is stunned and takes minor damage.</i></dd>
+	<li>Magic missile (25 seconds)</li><dd><i>- This spell fires several slow-moving projectiles at nearby targets. If they hit a target, it is stunned and takes minor damage.</i></dd>
 	<li>Phase shift (30 seconds)</li><dd><i>- This spell briefly turns your form ethereal, allowing you to pass invisibly through anything.</i></dd>
 	<li>Clairvoyance (60 seconds)</li><dd><i>- This spell will tell you the location of those you target with it. It will also inform you if they are hiding inside something, or are dead.</i></dd>
 	<br><br><br>Click the question mark in your <b>spellbook</b> to learn more about certain spells.<br>Recommended loadout for beginners: <b><i>ice burst, blink, shocking touch, blind</i></b>
@@ -91,6 +95,13 @@
 /obj/item/paper/cargo_instructions
 	name = "'Cargo Bay Setup Instructions'"
 	info = "In order to properly set up the cargo computer, both the incoming and outgoing supply pads must be directly or diagonally adjacent to the computer."
+
+/obj/item/paper/efif_disclaimer
+	name = "'EFIF-1 Operational Disclaimer'"
+	info = {"Congratulations on your new EFIF-1 Construction System!<BR>\n<BR>\n
+	Operational modes and EZ Sheet Loading may be accessed from the "EFIF-1 Construction System" entry in your pod's computer console.<BR>\n<BR>\n
+	Please be aware that non-repair assembly of walls and standard floors may obstruct your pod's clearance, and should be constructed with caution.<BR>\n<BR>\n
+	<B>LOAD ONLY STANDARD, NON-REINFORCED NT-SPEC STEEL SHEETS. EFIF-1 IS CALIBRATED FOR NT-SPEC STEEL. EFIF-1 DOES NOT AND SHOULD NOT ACCEPT OTHER METALS.</B>"}
 
 /obj/item/paper/courtroom
 	name = "'A Crash Course in Legal SOP on SS13'"
@@ -594,7 +605,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<tr>
 	<td><b>"Execute" / "Exterminate"</b></td>
 	<td>30 PU</td>
-	<td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
+	<td>Turn your Lawbringer™ into your favourite sidearm with these only slightly radioactive blaster rounds!</td>
 	</tr>
 	<tr>
 	<td><b>"Hotshot" / "Incendiary"</b></td>
@@ -612,9 +623,9 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 	</tr>
 	<tr>
-	<td><b>"Bigshot" / "High Explosive" / "HE"</b></td>
+	<td><b>"Bigshot" / "High Power" / "Assault"</b></td>
 	<td>170 PU</td>
-	<td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
+	<td>You'll be the talk of the station when you bust down a wall with one of these high power assault lasers! May cause small fires and molten metal puddles.</td>
 	</tr>
 	<tr>
 	<td><b>"Clownshot" / "Clown"</b></td>
@@ -641,27 +652,29 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Mushroom Station postcard"
 	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
 	icon_state = "postcard-mushroom"
-	sizex = 1066
-	sizey = 735
+	sizex = 174 + IMAGE_OFFSET_X
+	sizey = 247 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/mushroom_station.png")
 
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
 	icon_state = "botany_guide"
-	sizex = 970
-	sizey = 690
+	sizex = 965 + IMAGE_OFFSET_X
+	sizey = 682 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/pocket_guides/botanyguide.png")
 
 /obj/item/paper/ranch_guide
 	name = "Ranch Field Guide"
@@ -669,23 +682,26 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "ranch_guide"
 	sizex = 1100
 	sizey = 800
+	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
+		//ranch guide actually needs to be scaled down, so we just let it do its own styling here
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
 
 /obj/item/paper/siphon_guide
 	name = "Harmonic Siphon Brief"
 	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
 	icon_state = "postcard-owlery"
-	sizex = 1229 //pls
-	sizey = 650
+	sizex = 1192 + IMAGE_OFFSET_X
+	sizey = 600 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 	New()
 		..()
-		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/siphonguide.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/pocket_guides/siphonguide.png")
 
 /obj/item/paper/iou
 	name = "IOU"
@@ -870,13 +886,15 @@ proc/spawn_kitchen_note()
 	icon_state = "businesscard"
 	desc = "A generic looking business card, offering printing services for more business cards."
 
-	sizex = 640
-	sizey = 400
+	sizex = 600 + IMAGE_OFFSET_X
+	sizey = 346 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+		//note that the margin styling here does not work, I'm just leaving it here to indicate that there is indeed a problem with the margins that someone smarter than me should fix
+		info = PAPER_IMAGE_RENDER("images/arts/business_blank.png")
 
 
 /obj/item/paper/businesscard/banjo
@@ -886,7 +904,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_banjo.png")
 
 
 /obj/item/paper/businesscard/biteylou
@@ -897,7 +915,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_biteylou.png")
 
 
 /obj/item/paper/businesscard/bonktek
@@ -907,17 +925,17 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_bonktek.png")
 
 /obj/item/paper/businesscard/clowntown
 	name = "business card - Clown Town"
-	icon_state = "businesscard"
-	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
-	color = "blue"
+	icon_state = "businesscard-clowntown"
+	desc = "A business card for the Clown Town Autonomous Collective."
+	sizey = 341 + IMAGE_OFFSET_Y
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_clowntown.png")
 
 /obj/item/paper/businesscard/cosmicacres
 	name = "business card - Cosmic Acres"
@@ -926,7 +944,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_cosmicacres.png")
 
 /obj/item/paper/businesscard/ezekian
 	name = "business card - Ezekian Veterinary Clinic"
@@ -936,7 +954,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_ezekian.png")
 
 /obj/item/paper/businesscard/gragg1
 	name = "business card - Amantes Mini Golf"
@@ -945,7 +963,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_gragg1.png")
 
 /obj/item/paper/businesscard/gragg2
 	name = "business card - Amantes Rock Shop"
@@ -954,17 +972,16 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_gragg2.png")
 
 /obj/item/paper/businesscard/josh
 	name = "business card - Josh"
-	icon_state = "businesscard"
+	icon_state = "businesscard-josh"
 	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-	color = "green"
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_josh.png")
 
 /obj/item/paper/businesscard/lawyers
 	name = "business card - Hogge & Wylde"
@@ -973,16 +990,16 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_law.png")
 
 /obj/item/paper/businesscard/hemera_rcd
 	name = "info card - Rapid Construction Device"
-	icon_state = "businesscard-alt"
+	icon_state = "businesscard-hemera"
 	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_RCD.png")
 
 
 /obj/item/paper/businesscard/skulls
@@ -992,7 +1009,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_skulls.png")
 
 /obj/item/paper/businesscard/taxi
 	name = "business card - Old Fortuna Taxi Company"
@@ -1002,17 +1019,48 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_taxi.png")
 
 /obj/item/paper/businesscard/vurdulak
 	name = "business card - Emporium Vurdulak"
-	icon_state = "businesscard"
+	icon_state = "businesscard-vurdulak"
 	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-	color = "purple"
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_vurdulak.png")
+
+/obj/item/paper/businesscard/seneca
+	name = "business card - Seneca Falls"
+	desc = "A dog-eared blue and gold business card from a staff recruitment agency."
+	icon_state = "businesscard-seneca"
+	//slightly smaller because a staffie left it in their pocket and it shrunk in the wash and also cog can't get the original resolution right now
+	sizex = 408 + IMAGE_OFFSET_X
+	sizey = 233 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_seneca.png")
+
+/obj/item/paper/businesscard/cans
+	name = "business card - Dented Cans"
+	desc = "A dodgy looking flyer for what you hope is a scrap metal business."
+	sizey = 345 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
+
+/obj/item/paper/businesscard/mabinogi
+	name = "business card - Mabinogi"
+	desc = "A sleek red and black business card for the Mabinogi Firearms Company."
+	icon_state = "businesscard-mabinogi"
+	sizey = 343 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_mabinogi.png")
+
 
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
@@ -1160,6 +1208,31 @@ proc/spawn_kitchen_note()
 	You know where to find us larry, bring the money, 100,000 credits.
 	"}
 
+/obj/item/paper/radshuttle
+	name = "bloody note"
+	desc = "The bottom half of this paper is soaked in blood."
+	icon_state = "paper_caution_bloody"
+	info = {"<span style="color:red;font-family:Lucida Handwriting;">
+	ten souls aboard<br>
+	no food, no water, no medkids, the worst toilet in the universe,<br>
+	all crammed into the space of the crew lounge.<br><br>
+
+	Donnovan keeps looking at the engine compartment - hes scared.<br>
+	seats by the back are blistering hot; the front is witch-tit cold.<br>
+	probably has something to do with why people are throwing up so much.<br><br>
+
+	this shuttle was a damn garbage scow ten hours ago! I dont deserve this! <br>
+	I just had a bad performance review for the month! <br>
+	station transfer my ass!<br>
+	this whole damn thing is a detroit pink slip for ten people!<br><br>
+
+	the others killed the security guard to to vent their anger,<br>
+	another guy got beat so bad he crawled out the airlock.<br><br>
+
+	Tonio is playing us farewell on that weird mouth organ. bless the man.<br>
+	they took all my space cash before we left.<br>
+	so I gave him my old lucky coin for a tip.<br>"}
+
 /obj/item/paper/labdrawertips
 	name = "stern lab safety warning"
 	icon_state = "paper"
@@ -1171,3 +1244,315 @@ proc/spawn_kitchen_note()
 	handle with the same hand that holds your beloved
 	napalm-phlogiston-thermite """hell mix."""
 	"}
+
+/obj/item/paper/watchful_eye
+	name = "MEMO: Deployment Notice"
+	icon_state = "paper_caution_bloody"
+	info ={"
+	TO: WATCHFUL-EYE SENSOR ARRAY MAINTENANCE <br>
+	FROM: OUTPOST OMICRON, NANOTRASEN-THINKTRONIC JOINT PROJECT <br>
+	SUBJECT: SCHEDULED MAINTAINENCE <br>
+	MESSAGE: <br>
+	Reports show that one of the satellites in the array is acting up.
+	The eye clusters there are allegedly behaving oddly, reporting
+	false events, and there are rumours that someone has recalibrated
+	them to track individuals instead of Typhon. Please investigate the
+	source of the anomalous readings and let us know whether to decommission
+	that satellite. The previous team didn't return, so proceed with caution.
+	<br>
+
+	We can still operate the array with only 15 out of the 30 satellites,
+	due to safety (redundancy) policy. Still, we'd rather keep as many
+	satellites in operation as we can. If the problem can be repaired, do so.
+
+	<br> <br>
+	Signed, <br>
+	The office of Commodore Roland Yee
+	"}
+
+/obj/item/paper/watchful_eye/rev
+	name = "Plan of attack."
+	icon_state = "paper_singed"
+	info ={"
+	Steps: <br>
+	1. assume control of eye sat 13. murder optional but probably required. implant <br>
+	the maintainence crew tooo so we can ask them how it works.<br>
+	2. hack the sensors to track non revs. figure it out when we get there with maint crew.<br>
+	3. await further instuctions <br> <br>
+
+	PS: turns out the eyes are ACTUAL eyes. Like weird space eyes?? no one told us that!!<br>
+	How do you hack an eye?? <br> <br>
+
+	PSS: we hacked the eye. hell yeah. okay technically we just hacked the satellite and <br>
+	made the eye point at certain things but that's good enough for me. management can <br>
+	do it themselves if they want it done properly. Fight me.<br>
+	"}
+
+/obj/item/paper/marionette_implant_readme
+	name = "marionette implant readme"
+	icon_state = "paper"
+	info ={"
+	<i>Once you're done reading these instructions, you may activate the provided self-destruct function by using them in your hand.</i>
+
+	<h3>Summary</h3>
+	<p>Congratulations on your purchase of our proprietary synaptic marionette implant!
+	With these simple instructions, you'll be having the competition dancing to your tune in no time.</p>
+
+	<h3>Control Remote</h3>
+	<p>You should have received a control remote for easy convenience of using this implant.
+	Using it will bring up a convenient interface capable of sending and receiving data from any linked implants.
+	<u>You must use the implanter on the remote (or vice-versa) to link the two together.</u></p>
+
+	<p>Once implanted into a target, simply use the remote to your heart's content! There is a short cooldown period between activations.</p>
+
+	<p>The remote is programmed to interpret response signals sent by activated implants. If the activation triggered an effect successfully, the
+	remote will bloop; if it failed -- whether due to the implantee being dead or the conditions for the effect not being met -- then the remote will
+	rumble. Only the person holding the remote (hopefully you) and anyone sharing a space with them can hear these bloops and grumbles,
+	although the button presses that come from actually using it are audible to anyone within a few tiles!</p>
+
+	<p>When using a remote, the implant's passkey is not required. You don't need this value unless you plan to use packet control, detailed below.</p>
+
+	<h3>Heat</h3>
+	<p>Be wary that <u>each activation of an implant will cause heat buildup that may destroy it.</u> The components are delicate and are not built for
+	repeated short-term stress. Heat will dissipate slowly over time. Heat will build up upon activation even if the conditions for the provided
+	action are not met.</p>
+
+	<h3>Packets</h3>
+	<p>The provided remote should allow for easy and convenient use of any number of marionette implants. For power users, however, the implants are
+	<b>fully compatible with wireless packets.</b> The implanter should list the frequency and network address of the contained implant,
+	as well as a unique <b>passkey</b> that must be provided in the signal under the <code>passkey</code> parameter to authorize most signals.</p>
+
+	<p>Packet functions are as follows. Commands marked with an asterisk function in dead bodies, so long as they're still fresh.</p>
+	<ul>
+	<li><b>ping</b> - Prompts the implant to send a signal containing information about its status. Passkey not required.
+	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field. Max 45 characters.</li>
+	<li><b>emote</b> - As <b>say</b>, but with an emote instead. Many emotes can't be replicated with this function, including but not limited to deathgasps,
+	fainting, and tripping.</li>
+	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field.
+	These must be cardinals. You can use the full word, or just an abbreviation: <code>EAST</code> and <code>E</code> both work, for instance. Notably,
+	this command will function even if the implantee is dead, as long as they haven't decomposed.</li>
+	<li><b>shock</b> or <b>zap</b> - Shocks the implantee, disorienting them and draining stamina. This generates high heat.</li>
+	<li><b>drop</b> or <b>release</b> - The implantee will release a held item from their hands.
+	<li><b>use</b> or <b>activate</b> - The implantee will activate any item held in their hands.
+	</ul>
+	<p>To reiterate: when using packets to control an implant, you <b>must</b> provide the implant's unique passkey with the <code>passkey</code>
+	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it, because there's
+	no way to retrieve it once the implant is applied.</p>
+
+	<p>Each time the implant is triggered, it will send a signal with the <code>activate</code> command to the device that activated it. If the activation was a success,
+	the <code>stack</code> parameter will be empty; on a failure, it will provide an error code, detailed below.</p>
+
+	<h4>Error Codes</h4>
+	<ul>
+	<li><code>TARG_DEAD</code> means that the implantee is deceased.</li>
+	<li><code>TARG_NULL</code> means that the implant isn't inside a creature.</li>
+	<li><code>INVALID</code> means that the command is invalid, or that the conditions for triggering the provided command were not met.</li>
+	<li><code>BADPASS</code> means that the provided passkey is incorrect.</li>
+	</ul></p>
+	"}
+
+	attack_self(mob/user)
+		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Read", "Self-Destruct"))
+		if (choice == "Read")
+			src.examine(user)
+		else
+			var/turf/T = get_turf(src)
+			new /obj/effect/supplyexplosion (T)
+			playsound(T, 'sound/effects/ExplosionFirey.ogg', 50, TRUE)
+			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
+			qdel(src)
+
+/obj/item/paper/xg_tapes
+	name = "XIANG|GIESEL Onboarding Course"
+	desc = "A cover sheet meant to accompany a set of corporate training materials."
+	icon_state = "paper_burned"
+	sizex = 718 + IMAGE_OFFSET_X
+	sizey = 1023 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = PAPER_IMAGE_RENDER("images/arts/xg_tapes.png")
+
+#undef IMAGE_OFFSET_X
+#undef IMAGE_OFFSET_Y
+
+/obj/item/paper/wanderpoem
+	name = "A freshly written poem"
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "paper-red"
+	info = {"
+	<span style="color:red;font-family:Lucida Handwriting;">
+	<p> Winter arrived. <p> <br>
+	<p>Winter arrived years ago, <p> <br>
+	<p>its frost creeping into that well churned soil. <p> <br>
+	<p>My world grew silent as the crystalline cold silenced the birds, <p> <br>
+	<p>made fallow the fields. <p> <br>
+	<p>Is winter not what one would wish for when aggrieved by that summer of sweltering hysteria. <p> <br>
+	<p>Those that bound me to then had wilted into the soil, their flowers turning to drifting dust. <p> <br>
+	<p>The fields of chance further grew only that which could harm me, <p> <br>
+	<p>the cacophonous cries surrounding served only to create doubt where none could be left. <p> <br>
+	<p>Quietus came and offered its hand to me, <p> <br>
+	<p>I took it. <p> <br> <br>
+
+	<p>Its hand froze all in perfect peace, <p> <br>
+	<p>I looked out into a world of pure white. <p> <br>
+	<p>In contradiction, I embraced this death with one hand, <p> <br>
+	<p>yet could not tear another from the only warmth that remained. <p> <br>
+	<p>That dithering flame wandered among the kindling I had set for it, <p> <br>
+	<p>it leaped to and fro from precious branch to branch. <p> <br>
+	<p>I came to understand more of myself then, <p> <br>
+	<p>I understood that this part of myself could not be excised. <p> <br>
+	<p>Peace was more than an end, <p> <br>
+	<p>more than the winter of a soul. <p> <br>
+	<p>Spring came, <p> <br>
+	<p>spring came at last. <p> <br>
+	"}
+
+/obj/item/paper/packets
+	name = "Frequency reference sheet"
+	New()
+		..()
+		info = {"
+			<h2>Nanotrasen wireless technology data reference sheet 8.2</h2>
+			<table>
+				<tr>
+					<th>Category</th>
+					<th>Frequency</th>
+				</tr>
+
+			<tr><td>PDAs</td><td>[format_frequency(FREQ_PDA)]kHz</td></tr>
+			<tr><td>Gas pumps</td><td>[format_frequency(FREQ_PUMP_CONTROL)]kHz</td></tr>
+			<tr><td>Airlocks</td><td>[format_frequency(FREQ_AIRLOCK)]kHz</td></tr>
+			<tr><td>Designated free frequency</td><td>[format_frequency(FREQ_FREE)]kHz</td></tr>
+			<tr><td>Bot navbeacons</td><td>[format_frequency(FREQ_NAVBEACON)]kHz</td></tr>
+			<tr><td>Secure storage</td><td>[format_frequency(FREQ_SECURE_STORAGE)]kHz</td></tr>
+			<tr><td>Fire and air alarms</td><td>[format_frequency(FREQ_ALARM)]kHz</td></tr>
+			<tr><td>Hydroponics trays</td><td>[format_frequency(FREQ_HYDRO)]kHz</td></tr>
+			<tr><td>Harmonic siphon</td><td>[format_frequency(FREQ_HARMONIC_SIPHON)]kHz</td></tr>
+			<tr><td>Transception interlink</td><td>[format_frequency(FREQ_TRANSCEPTION_SYS)]kHz</td></tr>
+			<tr><td>Status displays</td><td>[format_frequency(FREQ_STATUS_DISPLAY)]kHz</td></tr>
+			<tr><td>Bot control</td><td>[format_frequency(FREQ_BOT_CONTROL)]kHz</td></tr>
+			<tr><td>GPS</td><td>[format_frequency(FREQ_GPS)]kHz</td></tr>
+			<tr><td>Ruckingenur kit</td><td>[format_frequency(FREQ_RUCK)]kHz</td></tr>
+			<tr><td>Guardbuddies</td><td>[format_frequency(FREQ_BUDDY)]kHz</td></tr>
+			<tr><td>Tourbot navbeacons</td><td>[format_frequency(FREQ_TOUR_NAVBEACON)]kHz</td></tr>
+			<tr><td>Signalers</td><td>[format_frequency(FREQ_SIGNALER)]kHz</td></tr>
+			<tr><td>Pod door controls</td><td>[format_frequency(FREQ_DOOR_CONTROL)]kHz</td></tr>
+			<tr><td>Mail chutes</td><td>[format_frequency(FREQ_MAIL_CHUTE)]kHz</td></tr>
+			<tr><td>Air alarm control</td><td>[format_frequency(FREQ_AIR_ALARM_CONTROL)]kHz</td></tr>
+			<tr><td>Tracking implants</td><td>[format_frequency(FREQ_TRACKING_IMPLANT)]kHz</td></tr>
+			<tr><td>Power systems</td><td>[format_frequency(FREQ_POWER_SYSTEMS)]kHz</td></tr>
+			<tr><td>Armory authorization \[RESTRICTED\]</td><td>[format_frequency(FREQ_ARMORY)]kHz</td></tr>
+			</table>
+			<br><br>
+			<i>Intelligent data ordering system proprietary, copyright of Nanotrasen (2053)</i>
+		"}
+
+//TODO: maybe a stamp for the classified thing?
+//also apparently W3schools lied to me and there is no websafe handwriting font, so these just default to Times >:(
+/obj/item/paper/pipebombs
+	name = "\improper Terra cell improvised explosive manual"
+	icon_state = "paper_burned"
+	var/detonating = FALSE
+
+	New()
+		. = ..()
+		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(turf_changed))
+		info = {"
+		<h2>\[FOR TERRA EYES ONLY\]</h2>
+		<b>Warning: this paper will self destruct if removed from listening outpost [rand(1,19)][pick("A", "B", "θ")].</b><br><br>
+		The pipebomb is the workhorse of the syndicate infiltrator on a budget. The... highly explosive workhorse.<br><br>
+		<b>Step 1:</b> Form three metal sheets into a pipe frame.<br>
+		<b>Step 2:</b> Weld them up nice and tight. Eye protection is <strike>recommended</strike> <span style="color:red;font-family:Brush Script MT;">for NERDS.</span><br>
+		<b>Step 3:</b> Add your payload. A lot of mundane things can produce some surprisingly nasty effects when shoved into a pipebomb so creativity is recommended. Here's a list of the more "effective" options:
+		<ul>
+			<li>Glass shards and metal scrap: Yeah take a guess what these do. Simple but effective at hurting people.</li>
+			<li>Glowsticks: splashes victims with a little boiling radium. Nasty.</li>
+			<li>Cloth: deadens the explosion, making it five times less powerful. Sounds useless but sometimes you want the attention to be on the other things you've stuck in your pipebomb.</li>
+			<li>Detached human butts: ██████ ███ █████, ██ ████ █████ -<span style="color:blue;font-family:Gochi Hand;">what the FUCK? NO! WHY WOULD YOU DO THAT??</span></li>
+			<li>Telecrystals: Hemera scientists will tell you blowing up telecrystals can lead to "catastrophically unstable telepositional events". Sounds like fun!</li>
+			<li>RCD cartridges: randomly punches holes in the floor and builds grilles out of compressed matter.</li>
+			<li>Wires and power cells: putting both wire and a cell in your bomb will cause high voltage arcs from the point of detonation.</li>
+			<li>Plasmastone: releases a substantial amount of plasma gas upon detonation. <span style="font-family:Brush Script MT;">NB: this isn't very useful if you just blew a hole in the hull - maybe try combining with cloth?</span></li>
+		</ul>
+		Remember you can usually only fit three items total into a pipe frame.<br>
+		<b>Step 4:</b> Pour something flammable into the frame. Generally the more angrily it burns the bigger the boom you'll make.<br>
+		<b>Step 5:</b> Tangle some wires around it. Don't worry about wiring diagrams, this thing only has to work <i>once.</i><br>
+		<b>FINAL STEP:</b> Attach a detonator. The gold standard is a timer/igniter assembly, but anything stuck to an igniter will make it go boom. <b>Make sure to secure the assembly to your bomb with a screwdriver!</b><br><br>
+
+		Good luck, agent. Try not to blow the bloody doors off the listening post this time.
+		"}
+
+	proc/turf_changed(atom/thing, turf/old_turf, turf/new_turf)
+		if (!src.detonating && !istype(new_turf?.loc, /area/listeningpost))
+			src.detonating = TRUE
+			visible_message(SPAN_ALERT("The paper starts to beep. Huh??"))
+			SPAWN(-1)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 0.9)
+				sleep(1 SECOND)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 1.2)
+				sleep(1 SECOND)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 1.4)
+				sleep(1 SECOND)
+				src.blowthefuckup(0.5)
+	disposing()
+		. = ..()
+		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
+
+/obj/item/paper/zombie_mining_magnet
+	name = "blood stained note"
+	info = {"i was used as bait. whatever you do don't trust N"}
+
+/obj/item/paper/flock_mining_magnet
+	name = "gnesis covered note"
+	info = {"day 1<br>
+	they trapped me here... my memory is foggy and it's so hard to think, all i hear is radio chatter and weird noises... something about a signal.
+	and- and an overwhelming feeling of homesickness, longing for a world ive never seen and can't remember.<br>
+	it's in my head. it's so loud. the geneticists let me hear radios. GOD i wish they hadn't...<br><br>
+	day 3<br>
+	i'm starving now. i'm going to die here aren't i? some memories came drifting back through the pain though. i'm a researcher. i thought i could study them
+	but somehow they- they looked back, saw me through the twisted lens of a radio antenna. then the Signal was in my head, screaming and tearing through my thoughts<br>
+	most of my tools are.. are liquid now but i was left with my backup RCD. unfortunately it doesn't work on these walls. i don't know what to do<br><br>
+	day 4<br>
+	in a brief moment of madness or lucidity i tried introducing some of the teal goo to my rcd out of desperation. the rcd is clearly
+	altered, but in a way i do not understand. it still won't work on the walls but it thrums with power and a purpose i can almost grasp. fuck.<br><br>
+	day 7? 10?<br>
+	i have no food. i've had no choice but to drink the teal goo for hydration. it tastes of paint and static. the radio chatter is louder now, drowning out my vision... all i can think
+	about is the Signal. the Homeworld. the Intruder. i can feel their fear.<br><br>
+	day 13<br>
+	the signal  it calls to me  it will set me free"}
+
+/obj/item/paper/current_turbines
+	name = "NT40 current turbine operating manual"
+	icon_state = "turbine_book"
+	New()
+		. = ..()
+		info = {"
+			<h2>Standard startup procedure</h2>
+			<b>Step 1:</b> Operate the turbine base to extend the turbine into the current. Do NOT over-extend the shaft. If you do, see "I fucked up" section 1.
+			<br>
+			<b>Step 2:</b> If necessary, add more shaft segments onto the reverse side of the turbine base and carefully secure them with a wrench.
+			<h2><s>"I fucked up"</s> Troubleshooting</h2>
+			<h3>Section 1: Overextension (AKA: it's whirring angrily and I'm scared)</h3>
+			If the turbine base emits an angry, pathetic or judgemental whirring sound then you have over-extended the turbine shaft. In this event, simply slide another shaft into the reverse side of the turbine base and anchor it in place with a wrench. The wrench can be used on either the shaft or the turbine base to secure it.
+			<h3>Section 2: Lost in the current</h3>
+			If at any time you manage to lose your state of the art NT40 turbine by unsecuring it inside the current, the standard procedure is to run after it like an idiot. If that fails and it falls in the trench then you will need to fabricate another one at your nearest Nanotrasen™ Engineering Specialist Manufacturer. All attempts to winch the heavy turbine out of the trench are now prohibited following safety incident NDR-23b.
+			<h3>Section 3: Safety</h3>
+			All user contact with the blades of a spinning turbine is prohibited and may result in a fine of up to 400[CREDIT_SIGN], the loss of 1-4 limbs, or death.
+		"}
+
+/obj/item/paper/syndicate_mining_magnet_1
+	name = "syndicate leadership memo"
+	info = {"<h2>Attention Syndicate outpost-62 members:<br></h2>
+	You've been stationed in this concealed outpost inside an artificial comet inbound for listening post 6678 in approximately one half (1/2) of a year.
+	You are to observe Nanotrasen facilities through Nanotrasen occupied space along the way and record your findings. Please help yourself to the
+	given amenities for enjoyment during your stay. Provided is 100k credits in bullion and cash to acquire asset Omicron upon arrival. You are to return
+	back using the comet.<br><br>Repeat, REPEAT, do not use the provided goods for any reason other than to acquire asset Omicron."}
+
+/obj/item/paper/syndicate_mining_magnet_2
+	name = "stern note"
+	info = {"so um. i spent all of our money that we were told not to spend, only after reading our leadership's note. we are so fucked. anyways, i
+	went out for a short bit and will be back in a day's time.<br><br>no, you are the one who is fucked. i'm out of here."}

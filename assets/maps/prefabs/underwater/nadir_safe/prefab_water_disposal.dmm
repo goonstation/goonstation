@@ -1,40 +1,30 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "b" = (
 /turf/variableTurf/clear,
 /area/space)
 "c" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "d" = (
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "e" = (
 /obj/machinery/drainage,
 /obj/item/clothing/suit/space/engineer/april_fools,
 /obj/item/clothing/head/helmet/space/engineer/april_fools,
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "f" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "g" = (
 /obj/machinery/manufacturer/robotics,
 /obj/disposalpipe/segment{
@@ -42,18 +32,14 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "h" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "i" = (
 /obj/item/cell/cerenkite/charged,
 /obj/disposalpipe/segment{
@@ -61,63 +47,45 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "j" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "k" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "l" = (
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "m" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "n" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "o" = (
 /obj/item/secbot_assembly,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "p" = (
 /obj/item/bananapeel,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "q" = (
 /obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "r" = (
 /obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
@@ -125,16 +93,12 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "s" = (
 /obj/landmark/spawner/artifact,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "t" = (
 /obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
@@ -142,9 +106,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "u" = (
 /obj/machinery/bot/secbot{
 	control_freq = 0
@@ -155,114 +117,82 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "v" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "w" = (
 /obj/machinery/bot/secbot{
 	control_freq = 0
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "x" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "y" = (
 /obj/item/cell/charged,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "z" = (
 /obj/machinery/neosmelter,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "A" = (
 /obj/disposalpipe/segment,
 /obj/item/clothing/suit/space/industrial,
 /obj/item/sea_ladder,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "B" = (
 /obj/item/cell/charged,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "C" = (
 /obj/table,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "D" = (
 /obj/npc/trader/robot/robuddy/salvage,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "E" = (
 /obj/machinery/manufacturer/mechanic,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "F" = (
 /obj/machinery/manufacturer/general,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "G" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "H" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "I" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "J" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "K" = (
 /obj/item/ore_scoop,
 /obj/disposalpipe/segment{
@@ -270,9 +200,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "L" = (
 /obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
@@ -283,9 +211,7 @@
 	identifier = "W8ST"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 
 (1,1,1) = {"
 b

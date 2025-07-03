@@ -178,7 +178,9 @@ datum/v_space
 
 	proc/create_Vcharacter(var/mob/user, var/network_device, var/network, turf/B)
 		var/mob/living/carbon/human/virtual/virtual_character
-
+		var/ghost_name = 0
+		if(isobserver(user) && !isAIeye(user))
+			ghost_name = user.real_name
 		if (inactive_bodies.len)
 			virtual_character = inactive_bodies[1]
 			inactive_bodies -= virtual_character
@@ -187,7 +189,7 @@ datum/v_space
 				inactive_bodies -= virtual_character
 			virtual_character.full_heal()
 		else
-			virtual_character = new(B)
+			virtual_character = new(B, ghost_name)
 
 		virtual_character.network_device = network_device
 		virtual_character.body = user
@@ -228,13 +230,13 @@ datum/v_space
 		character.pin = user.pin
 		character.bioHolder.bloodType = user.bioHolder.bloodType
 		character.bioHolder.mobAppearance.e_color = user.bioHolder.mobAppearance.e_color
-		character.bioHolder.mobAppearance.customization_first_color = user.bioHolder.mobAppearance.customization_first_color
-		character.bioHolder.mobAppearance.customization_second_color = user.bioHolder.mobAppearance.customization_second_color
-		character.bioHolder.mobAppearance.customization_third_color = user.bioHolder.mobAppearance.customization_third_color
+		character.bioHolder.mobAppearance.customizations["hair_bottom"].color = user.bioHolder.mobAppearance.customizations["hair_bottom"].color
+		character.bioHolder.mobAppearance.customizations["hair_middle"].color = user.bioHolder.mobAppearance.customizations["hair_middle"].color
+		character.bioHolder.mobAppearance.customizations["hair_top"].color = user.bioHolder.mobAppearance.customizations["hair_top"].color
 		character.bioHolder.mobAppearance.s_tone = user.bioHolder.mobAppearance.s_tone
-		character.bioHolder.mobAppearance.customization_first = user.bioHolder.mobAppearance.customization_first
-		character.bioHolder.mobAppearance.customization_second = user.bioHolder.mobAppearance.customization_second
-		character.bioHolder.mobAppearance.customization_third = user.bioHolder.mobAppearance.customization_third
+		character.bioHolder.mobAppearance.customizations["hair_bottom"].style =  user.bioHolder.mobAppearance.customizations["hair_bottom"].style
+		character.bioHolder.mobAppearance.customizations["hair_middle"].style =  user.bioHolder.mobAppearance.customizations["hair_middle"].style
+		character.bioHolder.mobAppearance.customizations["hair_top"].style =  user.bioHolder.mobAppearance.customizations["hair_top"].style
 
 		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
 		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color
@@ -249,18 +251,18 @@ datum/v_space
 		var/datum/appearanceHolder/AH = character.bioHolder.mobAppearance
 		if (!AH)
 			AH = new
-		if (AH.customization_first_color == null)
-			AH.customization_first_color = "#101010"
-		if (AH.customization_first == null)
-			AH.customization_first = new /datum/customization_style/none
-		if (AH.customization_second_color == null)
-			AH.customization_second_color = "#101010"
-		if (AH.customization_second == null)
-			AH.customization_second = new /datum/customization_style/none
-		if (AH.customization_third_color == null)
-			AH.customization_third_color = "#101010"
-		if (AH.customization_third == null)
-			AH.customization_third = new /datum/customization_style/none
+		if (AH.customizations["hair_bottom"].color == null)
+			AH.customizations["hair_bottom"].color = "#101010"
+		if (AH.customizations["hair_bottom"].style == null)
+			AH.customizations["hair_bottom"].style =  new /datum/customization_style/none
+		if (AH.customizations["hair_middle"].color == null)
+			AH.customizations["hair_middle"].color = "#101010"
+		if (AH.customizations["hair_middle"].style == null)
+			AH.customizations["hair_middle"].style =  new /datum/customization_style/none
+		if (AH.customizations["hair_top"].color == null)
+			AH.customizations["hair_top"].color = "#101010"
+		if (AH.customizations["hair_top"].style == null)
+			AH.customizations["hair_top"].style =  new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)

@@ -12,7 +12,7 @@
 	icon_state = "emerg_inj-orange"
 	initial_volume = 10
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/empty = 0
@@ -39,7 +39,7 @@
 		else
 			src.icon_state = "emerg_inj-[src.label]0"
 			src.fluid_image = image(src.fluid_image, "emerg_inj-fluid-flick")
-			flick("emerg_inj-[src.label]-flick", src)
+			FLICK("emerg_inj-[src.label]-flick", src)
 		UpdateOverlays(src.fluid_image, "fluid")
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -345,3 +345,39 @@
 	label = "bigblue"
 	initial_volume = 90
 	amount_per_transfer_from_this = 15
+
+
+///// Speciality Injectors
+///// These shouldn't really be seen in a normal round
+
+/obj/item/reagent_containers/emergency_injector/bloodbak
+	name = "BLOOD-BAK auto-injector"
+	desc = "A two-use auto-injector containing filgrastim, proconvertin and saline-glucose to help regain lost blood and stop bleeding."
+	initial_reagents = list("filgrastim" = 10, "proconvertin" = 20, "saline" = 20)
+	label = "red"
+	initial_volume = 50
+	amount_per_transfer_from_this = 25
+
+/obj/item/reagent_containers/emergency_injector/qwikheal
+	name = "QWIK-HEAL auto-injector"
+	desc = "A two-use auto-injector containing omnizine, salbutamol, and epinephrine to quickly get back into the battle."
+	initial_reagents = list("omnizine" = 20, "salbutamol" = 20, "epinephrine" = 20)
+	label = "blue"
+	initial_volume = 60
+	amount_per_transfer_from_this = 30
+
+/obj/item/reagent_containers/emergency_injector/painstop
+	name = "PAIN-STOP auto-injector"
+	desc = "A two-use auto-injector containing salicylic acid, and synaptizine to help stop pain. WARNING: Two uses in short time span may cause overdose."
+	initial_reagents = list("salicylic_acid" = 30, "synaptizine" = 20)
+	label = "green"
+	initial_volume = 50
+	amount_per_transfer_from_this = 25
+
+/obj/item/reagent_containers/emergency_injector/bringbak
+	name = "BRING-BAK auto-injector"
+	desc = "A single-use auto-injector containing atropine, mannitol, saline, epinephrine, and salbutamol to stabilize a soldier in critical condition. WARNING: Causes disorentation."
+	initial_reagents = list("atropine" =10 , "mannitol" =10 , "saline" =10 , "epinephrine" =10 , "salbutamol" =10)
+	label = "white"
+	initial_volume = 50
+	amount_per_transfer_from_this = 50

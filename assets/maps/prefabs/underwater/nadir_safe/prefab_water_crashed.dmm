@@ -24,7 +24,7 @@
 /area/station/turret_protected/sea_crashed)
 "ag" = (
 /obj/item/raw_material/shard,
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ah" = (
@@ -59,7 +59,7 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "ap" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -92,7 +92,7 @@
 /area/station/turret_protected/sea_crashed)
 "ax" = (
 /obj/item/raw_material/scrap_metal,
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ay" = (
@@ -120,7 +120,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "aE" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -170,7 +170,7 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aR" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7";
@@ -189,7 +189,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "aT" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -200,7 +200,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/sea_crashed)
 "aU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -217,7 +217,7 @@
 /area/station/turret_protected/sea_crashed)
 "aW" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -239,7 +239,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/turret_protected/sea_crashed)
 "ba" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 4;
 	icon_state = "firex";
 	pixel_x = -24
@@ -254,7 +254,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "bc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -294,7 +294,7 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "bi" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -316,7 +316,7 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "bl" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -340,7 +340,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/sea_crashed)
 "bp" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/sea_crashed)
 "bq" = (
@@ -356,7 +356,7 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "bs" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 10;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -372,7 +372,7 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "bv" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	pixel_x = 0;
 	pixel_y = 24
 	},
@@ -466,7 +466,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -481,7 +481,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
 "bX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This is the central node of the MNX-12/777 superminicomputer that managed Lunaport for decades.";
@@ -493,7 +493,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
 "bZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -544,7 +544,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/station/turret_protected/sea_crashed)
 "cj" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This appears to be a control panel for that big microwave array thing?  It doesn't seem to work.";
 	icon = 'icons/obj/computer.dmi';
@@ -583,7 +583,7 @@
 /turf/simulated/floor/red/side,
 /area/station/turret_protected/sea_crashed)
 "ct" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An emergency stop button.  I guess it has stopped working.  What an emergency HA HA HA HA HAaaaaaa";
 	icon = 'icons/misc/worlds.dmi';
@@ -637,7 +637,7 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cz" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "snack-broken";
@@ -646,7 +646,7 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cA" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -682,7 +682,7 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cF" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -734,7 +734,7 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "cN" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -777,7 +777,7 @@
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
 "cU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -830,7 +830,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "da" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -855,7 +855,7 @@
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
 "dd" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -880,7 +880,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -928,7 +928,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/sea_crashed)
 "dp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
@@ -945,7 +945,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dr" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -960,7 +960,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dt" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -970,7 +970,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "du" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 8;
 	icon_state = "firex";
 	pixel_x = -24
@@ -982,7 +982,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -999,7 +999,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dy" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -1012,7 +1012,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dz" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -1020,7 +1020,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -1033,7 +1033,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dA" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -1043,7 +1043,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (EAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -1051,7 +1051,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -1063,7 +1063,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dB" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1072,7 +1072,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -1084,7 +1084,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1097,7 +1097,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dD" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1109,7 +1109,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dE" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -1129,7 +1129,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dG" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -1141,7 +1141,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dH" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1150,7 +1150,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -1167,7 +1167,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "dJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -1176,7 +1176,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1185,7 +1185,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -1197,7 +1197,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -1206,7 +1206,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1215,7 +1215,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1280,7 +1280,7 @@
 /turf/variableTurf/floor,
 /area/station/turret_protected/sea_crashed)
 "ee" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/variableTurf/clear,
 /area/station/turret_protected/sea_crashed)
 "pO" = (

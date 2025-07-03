@@ -1,13 +1,14 @@
 /obj/railing
 	name = "railing"
 	desc = "Two sets of bars shooting onward with the sole goal of blocking you off. They can't stop you from vaulting over them though!"
+	HELP_MESSAGE_OVERRIDE("")
 	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "railing"
 	layer = OBJ_LAYER
 	color = "#ffffff"
-	flags = FPRINT | USEDELAY | ON_BORDER
+	flags = USEDELAY | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
@@ -58,6 +59,16 @@
 				R.setMaterial(M)
 		qdel(src)
 
+	get_help_message(dist, mob/user)
+		. = ..()
+		if (src.broken)
+			. += "You can use a <b>welding tool</b> to remove this broken railing."
+		else
+			if (src.is_reinforced)
+				. += "You can use <b>wirecutters</b> to remove the reinforcement from this railing, or a <b>welding tool</b> to deconstruct it."
+			else
+				. += "You can use <b>metal rods</b> to reinforce this railing, or a <b>welding tool</b> to deconstruct it."
+
 	ex_act(severity)
 		switch(severity)
 			if(1)
@@ -86,7 +97,7 @@
 	New()
 		..()
 		if(src.is_reinforced)
-			src.flags |= ALWAYS_SOLID_FLUID
+			src.flags |= FLUID_DENSE
 		layerify()
 
 	Turn()
@@ -98,6 +109,8 @@
 			return 0
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
 			return 1
+		if (O.throwing)
+			return 1
 		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
@@ -105,6 +118,8 @@
 	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
 			. = 1
+		if (O.throwing)
+			return 1
 		// Second part prevents two same-dir, unanchored railings from infinitely looping and either crashing the server or breaking throwing when they try to cross
 		else if ((src.dir & get_dir(O.loc, O.movement_newloc)) && !(isobj(O) && (O:object_flags & HAS_DIRECTIONAL_BLOCKING) && (O.dir & src.dir)))
 			. = 0
@@ -128,7 +143,7 @@
 				user.show_text("You cut off the reinforcement on [src].", "blue")
 				src.icon_state = "railing"
 				src.is_reinforced = 0
-				src.flags &= !ALWAYS_SOLID_FLUID
+				src.flags &= !FLUID_DENSE
 				var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
 				R.amount = 1
 				if(src.material)
@@ -138,6 +153,11 @@
 					R.setMaterial(M)
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
+		else if (ispryingtool(W))
+			if(src.anchored)
+				boutput(user, SPAN_NOTICE("\The [src] must be unfastened to rotate!"))
+			else
+				src.set_dir(turn(src.dir, -90))
 		else if (istype(W,/obj/item/rods))
 			if(!src.is_reinforced && can_reinforce)
 				var/obj/item/rods/R = W
@@ -145,7 +165,7 @@
 					user.show_text("You reinforce [src] with the rods.", "blue")
 					src.is_reinforced = 1
 					src.icon_state = "railing-reinforced"
-					src.flags |= ALWAYS_SOLID_FLUID
+					src.flags |= FLUID_DENSE
 			else
 				user.show_text("[src] is already reinforced!", "red")
 

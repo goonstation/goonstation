@@ -39,6 +39,7 @@
 		if (src)
 			src.camera = new /obj/item/camera(src)
 			src.icon_state = "cambot[src.on]"
+			src.AddComponent(/datum/component/proximity)
 
 /obj/machinery/bot/cambot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -52,10 +53,20 @@
 
 		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		playsound(src, 'sound/weapons/flash.ogg', 50, TRUE)
-		flick("cambot-spark", src)
+		FLICK("cambot-spark", src)
 		src.emagged = 1
 		return 1
 	return 0
+
+/obj/machinery/bot/cambot/attackby(obj/item/W, mob/user) //guh
+	. = ..()
+	switch(W.hit_type)
+		if (DAMAGE_BURN)
+			src.health -= W.force * 0.75
+		else
+			src.health -= W.force * 0.5
+	if (src.health <= 0)
+		src.explode()
 
 /obj/machinery/bot/cambot/demag(var/mob/user)
 	if (!src.emagged)
@@ -195,7 +206,7 @@
 	return
 
 /// Gotta catch those driveby moments
-/obj/machinery/bot/cambot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/bot/cambot/EnteredProximity(atom/movable/AM)
 	if(!on || stunned || src.last_shot + src.shot_cooldown <= TIME || (src.idle && TIME < src.idle + src.idle_delay))
 		return
 

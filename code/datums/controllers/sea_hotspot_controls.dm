@@ -39,8 +39,8 @@
 
 	#ifdef UNDERWATER_MAP
 	var/list/map_colors = list(
-		empty = rgb(0, 0, 50),
-		solid = rgb(0, 0, 255),
+		empty = rgb(0, 0, 255),
+		solid = rgb(0, 0, 50),
 		station = rgb(255, 153, 58),
 		other = rgb(120, 200, 120))
 	#else
@@ -56,25 +56,28 @@
 			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
+			var/size_mult = 2
 			for (var/x in 1 to world.maxx)
 				for (var/y in 1 to world.maxy)
 					var/turf/T = locate(x,y,MINING_Z)
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
-						turf_color = "empty"
+						continue
 					else
 						if (T.loc && istype(T.loc, /area/shuttle/sea_elevator) || istype(T.loc, /area/mining) || istype(T.loc, /area/prefab/sea_mining) || istype(T.loc, /area/station/solar/small_backup3))
 							turf_color = "station"
 						else
 							turf_color = "other"
 
-					map.DrawBox(map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
+					var/mx = x * size_mult - 1
+					var/my = y * size_mult - 1
+					map.DrawBox(map_colors[turf_color], mx, my, mx + 1, my + 1)
 
 			for (var/beacon in by_type[/obj/warp_beacon])
 				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
 					var/turf/T = get_turf(beacon)
-					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
+					map.DrawBox(map_colors["station"], T.x * size_mult - 3, T.y * size_mult - 3, T.x * size_mult + 2, T.y * size_mult + 2)
 
 			Z_LOG_DEBUG("Mining Map", "Map generation complete")
 			generate_map_html()
@@ -116,6 +119,7 @@
 			width: 600px;
 			overflow: hidden;
 			margin: 0 auto;
+			background-color: [map_colors["empty"]]
 		}
 		#map img {
 			position: absolute;
@@ -464,6 +468,9 @@
 
 
 
+TYPEINFO(/obj/item/heat_dowsing)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/item/heat_dowsing
 	name = "dowsing rod"
 	icon = 'icons/obj/sealab_power.dmi'
@@ -480,8 +487,19 @@
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 1
+
+	speech_verb_say = "beeps"
+
+	use_speech_bubble = TRUE
+	speech_bubble_icon_say = "20"
+	speech_bubble_icon_ask = null
+	speech_bubble_icon_exclaim = null
+	speech_bubble_icon_sing = null
+	speech_bubble_icon_sing_bad = null
+
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	//two_handed = 1
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+//	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/static/dowse_dist_fuzz = 3
 	var/static/speak_interval = 8 // speak every [x] process ticks (machine loop targets about 1 tick per 2 seconds)
 	var/speak_count = 8
@@ -566,25 +584,15 @@
 				if (placed)
 					placed = 0
 
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"")), 2)
-
+					src.speech_bubble_icon_say = "[val]"
+					src.say("Estimated distance to centre: [val]", flags = SAYFLAG_NO_MAPTEXT)
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 						if (true_center > 1)
-							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"")), 2)
-
+							src.say("[true_center] centres have been located!", flags = SAYFLAG_NO_MAPTEXT)
 						else
-							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"True center has been located!\"")), 2)
-
-
-				speech_bubble.icon_state = "[val]"
-				AddOverlays(speech_bubble, "speech_bubble")
-				SPAWN(1.5 SECONDS)
-					ClearSpecificOverlays("speech_bubble")
+							src.say("True centre has been located!", flags = SAYFLAG_NO_MAPTEXT)
 
 	attackby(var/obj/item/I, var/mob/M)
 		if (ispryingtool(I))
@@ -640,15 +648,13 @@
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype_exact(src, /turf/space/fluid))
-		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
+		if(isdiggingtool(W))
+			if (istype(W,/obj/item/mining_tool/powered/shovel))
+				var/obj/item/mining_tool/powered/shovel/PS = W
+				if (PS.is_on)
+					actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+					return
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-			return
-		else if (istype(W,/obj/item/mining_tool/powered/shovel))
-			var/obj/item/mining_tool/powered/shovel/PS = W
-			if (PS.is_on)
-				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
-			else
-				actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 			return
 	..()
 
@@ -685,14 +691,14 @@
 			var/obj/item/vent_capture_unbuilt/V = W
 			V.build(user,src.loc)
 			return
-		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
-			actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
-		else if (istype(W,/obj/item/mining_tool/powered/shovel))
-			var/obj/item/mining_tool/powered/shovel/PS = W
-			if (PS.is_on)
-				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src.loc), user)
-			else
-				actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
+		if(isdiggingtool(W))
+			if (istype(W,/obj/item/mining_tool/powered/shovel))
+				var/obj/item/mining_tool/powered/shovel/PS = W
+				if (PS.is_on)
+					actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+					return
+			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
+			return
 		..()
 
 #define VENT_GENFACTOR 300
@@ -710,7 +716,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W,/obj/item/electronics/soldering) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
+		if (issolderingtool(W) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
 			build(user,src.loc)
 			return
 		..()
@@ -775,7 +781,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			update_capture()
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W,/obj/item/electronics/soldering) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
+		if (issolderingtool(W) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
 			actions.start(new/datum/action/bar/icon/unbuild_vent_capture(src), user)
 			return
 		..()
@@ -828,7 +834,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			add_avail(sgen)
 			total_gen += sgen
 		last_gen = sgen
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[last_gen]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(last_gen), 50)]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
 
 	get_desc(dist)
 		if (!built)
@@ -851,6 +857,8 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 
 TYPEINFO(/obj/machinery/power/stomper)
 	mats = 8
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/power/stomper
 	name = "stomper unit"
@@ -860,6 +868,10 @@ TYPEINFO(/obj/machinery/power/stomper)
 	density = 1
 	anchored = UNANCHORED
 	status = REQ_PHYSICAL_ACCESS
+	event_handler_flags = IMMUNE_OCEAN_PUSH
+
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	speech_verb_say = "beeps"
 
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4
@@ -873,7 +885,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
-	flags = FPRINT
+	flags = 0 // override FLUID_SUBMERGE and TGUI_INTERACTIVE
 
 	var/mode_toggle = 0
 	var/set_anchor = 1
@@ -896,8 +908,8 @@ TYPEINFO(/obj/machinery/power/stomper)
 		src.emagged = TRUE
 		power_up_realtime = 10
 		set_anchor = 0
-		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"")), 2)
+
+		src.say("Safety restrictions disabled.")
 		return TRUE
 
 	update_icon()
@@ -942,8 +954,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 		mode_toggle = !mode_toggle
 
-		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"")), 2)
+		src.say("Stomp mode : [mode_toggle ? "automatic" : "single"].")
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -987,7 +998,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 		on = 0
 		UpdateIcon()
-		flick("stomper2",src)
+		FLICK("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
 			SPAWN(0.4 SECONDS)
@@ -996,16 +1007,15 @@ TYPEINFO(/obj/machinery/power/stomper)
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
+				src.say("Hotspot pinned.")
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/mob/M in src.loc)
-			if (isliving(M))
+			if (isliving(M) && !isintangible(M))
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("knockdown", 1 SECOND)
-				INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
+				INVOKE_ASYNC(M, TYPE_PROC_REF(/atom, emote), "scream")
 				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))
@@ -1096,11 +1106,10 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 				if (BOUNDS_DIST(src, H.center.turf()) == 0)
 					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
-					for (var/mob/O in hearers(jumper, null))
-						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
+					src.the_item.say("Hotspot pinned.", flags = SAYFLAG_IGNORE_POSITION)
 
 			for (var/mob/M in get_turf(src))
-				if (isliving(M) && M != jumper)
+				if (isliving(M) && !isintangible(M) && M != jumper)
 					random_brute_damage(M, src.stomp_damage, TRUE)
 					M.changeStatus("knockdown", 1 SECOND)
 					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)

@@ -73,7 +73,7 @@ change the direction of created objects.<br>
 				switch(cinematic)
 					if("Telepad")
 						var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
-						var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
+						var/obj/fakeobject/teleport_pad/pad = new /obj/fakeobject/teleport_pad
 						swirl.mouse_opacity = 0
 						pad.mouse_opacity = 0
 						pad.loc = Q
@@ -84,11 +84,11 @@ change the direction of created objects.<br>
 						animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
 						SPAWN(0.7 SECONDS)
 							swirl.loc = Q
-							flick("portswirl", swirl)
+							FLICK("portswirl", swirl)
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))
-								A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
+								A = Q.ReplaceWith(objpath, 0, 1, 1, force=1)
 							else
 								A = new objpath(Q)
 
@@ -107,7 +107,7 @@ change the direction of created objects.<br>
 					if("Fancy and Inefficient yet Laggy Telepad")
 						SPAWN(cnt/10)
 							var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
-							var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
+							var/obj/fakeobject/teleport_pad/pad = new /obj/fakeobject/teleport_pad
 							swirl.mouse_opacity = 0
 							pad.mouse_opacity = 0
 							pad.loc = Q
@@ -118,11 +118,11 @@ change the direction of created objects.<br>
 							animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
 							sleep(0.7 SECONDS)
 							swirl.loc = Q
-							flick("portswirl", swirl)
+							FLICK("portswirl", swirl)
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))
-								A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
+								A = Q.ReplaceWith(objpath, 0, 1, 1, force=1)
 							else
 								A = new objpath(Q)
 
@@ -142,7 +142,7 @@ change the direction of created objects.<br>
 					if("Blink")
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
+							A = Q.ReplaceWith(objpath, 0, 1, 1, force=1)
 						else
 							A = new objpath(Q)
 
@@ -169,7 +169,7 @@ change the direction of created objects.<br>
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
+							A = Q.ReplaceWith(objpath, 0, 1, 1, force=1)
 						else
 							A = new objpath(Q)
 

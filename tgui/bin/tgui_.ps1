@@ -20,7 +20,7 @@ function Throw-On-Native-Failure {
 $basedir = Split-Path $MyInvocation.MyCommand.Path
 $basedir = Resolve-Path "$($basedir)\.."
 $rootdir = Resolve-Path "$($basedir)\.."
-$targetdir = Resolve-Path "$($rootdir)\browserassets\tgui"
+$targetdir = Resolve-Path "$($rootdir)\browserassets\src\tgui"
 Set-Location $basedir
 [Environment]::CurrentDirectory = $basedir
 
@@ -50,40 +50,46 @@ function task-webpack {
 
 ## Runs a development server
 function task-dev-server {
-  yarn node --experimental-modules "packages/tgui-dev-server/index.js" @Args
+  yarn run tgui:dev @Args
+}
+
+## Runs benchmarking tests
+function task-bench {
+  yarn run webpack-cli --env TGUI_BENCH=1
+  yarn node "packages/tgui-bench/index.js"
+  Stop-Process -processname "iexplore"
+  Stop-Process -processname "ielowutil"
 }
 
 ## Run a linter through all packages
 function task-lint {
   yarn run tsc
   Write-Output "tgui: type check passed"
-  yarn run eslint packages --ext ".js,.cjs,.ts,.tsx" @Args
+  yarn run tgui:eslint @Args
   Write-Output "tgui: eslint check passed"
-}
-
-## Installs merge drivers and git hooks
-function task-install-git-hooks() {
-  Set-Location $basedir
-  $git_root = "$(git rev-parse --show-toplevel)"
-  Set-Location $git_root
-  $git_base_dir = Resolve-Path -Path "$basedir" -Relative
-  $git_base_dir = "${git_base_dir}".replace("\", "/")
-  Set-Location $basedir
-  git config --replace-all merge.tgui-merge-bundle.driver "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
-  Write-Output "tgui: Merge drivers have been successfully installed!"
+  yarn run tgui:prettier @Args
+  Write-Output "tgui: prettier check passed"
 }
 
 function task-test {
-  yarn run jest
+  yarn run tgui:test
+}
+
+function task-test-ci {
+  yarn run tgui:test-ci
+}
+
+function task-sonar {
+  yarn run tgui:sonar
 }
 
 ## Mr. Proper
 function task-clean {
-  Remove-Quiet -Recurse -Force ../browserassets/tgui/.tmp
-  Remove-Quiet -Force ../browserassets/tgui/*.map
-  Remove-Quiet -Force ../browserassets/tgui/*.chunk.*
-  Remove-Quiet -Force ../browserassets/tgui/*.bundle.*
-  Remove-Quiet -Force ../browserassets/tgui/*.hot-update.*
+  Remove-Quiet -Recurse -Force ../browserassets/src/tgui/.tmp
+  Remove-Quiet -Force ../browserassets/src/tgui/*.map
+  Remove-Quiet -Force ../browserassets/src/tgui/*.chunk.*
+  Remove-Quiet -Force ../browserassets/src/tgui/*.bundle.*
+  Remove-Quiet -Force ../browserassets/src/tgui/*.hot-update.*
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
@@ -106,7 +112,7 @@ function task-clean {
 
 ## Validates current build against the build stored in git
 function task-validate-build {
-  $diff = git diff --text ../browserassets/tgui/*
+  $diff = git diff --text ../browserassets/src/tgui/*
   if ($diff) {
     Write-Output "Error: our build differs from the build committed into git."
     Write-Output "Please rebuild tgui."
@@ -126,11 +132,6 @@ function task-install-git-hooks () {
 ## --------------------------------------------------------
 
 if ($Args.Length -gt 0) {
-  if ($Args[0] -eq "--clean") {
-    task-clean
-    exit 0
-  }
-
   if ($Args[0] -eq "--install-git-hooks") {
     task-install-git-hooks
     exit 0
@@ -143,6 +144,13 @@ if ($Args.Length -gt 0) {
     exit 0
   }
 
+    if ($Args[0] -eq "--bench") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-bench @Rest
+    exit 0
+  }
+
   if ($Args[0] -eq "--lint") {
     $Rest = $Args | Select-Object -Skip 1
     task-install
@@ -150,24 +158,24 @@ if ($Args.Length -gt 0) {
     exit 0
   }
 
-  if ($Args[0] -eq "--lint-harder") {
-    $Rest = $Args | Select-Object -Skip 1
-    task-install
-    task-lint -c ".eslintrc-harder.yml" @Rest
-    exit 0
-  }
-
-  if ($Args[0] -eq "--fix") {
-    $Rest = $Args | Select-Object -Skip 1
-    task-install
-    task-lint --fix @Rest
-    exit 0
-  }
-
   if ($Args[0] -eq "--test") {
     $Rest = $Args | Select-Object -Skip 1
     task-install
     task-test @Rest
+    exit 0
+  }
+
+  if ($Args[0] -eq "--test-ci") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-test-ci @Rest
+    exit 0
+  }
+
+  if ($Args[0] -eq "--sonar") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-sonar @Rest
     exit 0
   }
 
@@ -181,6 +189,22 @@ if ($Args.Length -gt 0) {
   ## Hook install
   if ($Args[0] -eq "--install-git-hooks") {
     task-install-git-hooks
+    exit 0
+  }
+
+  if ($Args[0] -eq "--clean") {
+    task-clean
+    exit 0
+  }
+
+  if ($Args[0] -eq "--ci") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-clean
+    task-install
+    task-test-ci
+    task-lint @Rest
+    task-webpack --mode=production
+    task-validate-build
     exit 0
   }
 }

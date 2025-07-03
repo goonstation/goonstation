@@ -5,9 +5,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
-	override_attack_hand = 0
 	var/skin_tone = "#FFFFFF"
 	/// which part of the person or robot suit does it go on???????
 	var/slot = null
@@ -29,6 +27,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/no_icon = FALSE
 	/// is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
 	var/skintoned = TRUE
+	/// fingertip_color
+	var/fingertip_color = null
 
 	// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
 	/// The icon of this overlay
@@ -96,6 +96,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/kind_of_limb
 	/// Can we roll this limb as a random limb?
 	var/random_limb_blacklisted = FALSE
+	/// Can break cuffs/shackles instantly if both limbs have this set. Has to be this high because limb pathing is a fuck.
+	var/breaks_cuffs = FALSE
 
 	New(atom/new_holder)
 		..()
@@ -195,10 +197,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 			H.set_body_icon_dirty()
 			H.UpdateDamageIcon()
 			if (src.slot == "l_arm")
-				H.drop_from_slot(H.l_hand)
+				H.drop_from_slot(H.l_hand, force_drop=TRUE)
 				H.hud.update_hands()
 			else if (src.slot == "r_arm")
-				H.drop_from_slot(H.r_hand)
+				H.drop_from_slot(H.r_hand, force_drop=TRUE)
 				H.hud.update_hands()
 
 		else if(remove_object)
@@ -208,7 +210,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.holder = null
 		return object
 
-	proc/sever(var/mob/user)
+	proc/sever(var/mob/user, var/setDir=TRUE)
 		if (!src.holder) // fix for Cannot read null.loc, hopefully - haine
 			if (remove_object)
 				src.remove_object = null
@@ -231,32 +233,33 @@ ABSTRACT_TYPE(/obj/item/parts)
 			remove_stage = 3
 
 		object.set_loc(src.holder.loc)
-		var/direction = src.holder.dir
 
 		//https://forum.ss13.co/showthread.php?tid=1774
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
-		holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
+		if (setDir)
+			var/direction = src.holder.dir
+			switch(direction)
+				if(NORTH)
+					direction = WEST
+				if(EAST)
+					direction = NORTH
+				if(SOUTH)
+					direction = EAST
+				if(WEST)
+					direction = SOUTH
 
-		switch(direction)
-			if(NORTH)
-				direction = WEST
-			if(EAST)
-				direction = NORTH
-			if(SOUTH)
-				direction = EAST
-			if(WEST)
-				direction = SOUTH
+			if(side != "left")
+				direction = turn(direction,180)
 
-		if(side != "left")
-			direction = turn(direction,180)
+			if (isitem(object))
+				object.streak_object(direction, src.streak_decal)
 
-		if (isitem(object))
-			object.streak_object(direction, src.streak_decal)
+			if(prob(60))
+				INVOKE_ASYNC(holder, TYPE_PROC_REF(/atom, emote), "scream")
 
-		if(prob(60))
-			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
+			holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
@@ -379,6 +382,12 @@ ABSTRACT_TYPE(/obj/item/parts)
 	///Called every life tick when attached to a mob
 	proc/on_life(datum/controller/process/mobs/parent)
 		return
+
+	/// Fingertip color, used to tint overlays
+	proc/get_fingertip_color()
+		if (src.skintoned)
+			return src.skin_tone
+		return src.fingertip_color
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination

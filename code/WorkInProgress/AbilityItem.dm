@@ -136,7 +136,15 @@
 
 	execute_ability()
 		var/obj/item/clothing/suit/W = the_item
-		W.AttackSelf(the_mob)
+		if (!W.hooded)
+			if (W.can_wear_hood())
+				W.AttackSelf(the_mob)
+				W.on_toggle_hood()
+			else
+				boutput(the_mob, SPAN_ALERT("You're already wearing something on your head!"))
+		else
+			W.AttackSelf(the_mob)
+			W.on_toggle_hood()
 		..()
 
 /obj/ability_button/magboot_toggle
@@ -152,10 +160,11 @@
 			return
 
 		if(W.magnetic)
-			W.deactivate()
+			W.deactivate(the_mob)
 			boutput(the_mob, "[SPAN_HINT("You power off your magnetic boots.")]<br>[SPAN_HINT("You are no longer anchored to the floor.")]", group = "magbootsoff")
 		else
-			W.activate()
+			if (!W.activate(the_mob))
+				return
 			boutput(the_mob, "[SPAN_HINT("You power on your magnetic boots.")]<br>[SPAN_SUCCESS("You are now firmly anchored to the floor, and cannot be moved by pushing or teleportation.")]", \
 				group = "magbootson")
 		the_mob.update_equipped_modifiers()
@@ -216,7 +225,7 @@
 		if( the_mob.buckled )
 			SPAWN(0)
 				the_mob.emote("scream")
-				the_mob:canmove = 0
+				the_mob.canmove = 0
 				for(var/i=0, i<30, i++)
 					if(!the_mob)
 						return
@@ -225,16 +234,18 @@
 					the_mob.pixel_y = rand(-5,5)
 					if (!the_mob.buckled) //Runtime fix: Cannot read null.anchored
 						the_mob.gib()
-					if(!the_mob.buckled:anchored)
-						step(the_mob.buckled, pick(cardinal))
-					if(i>10)
-						the_mob:update_burning(10)
-						if(prob(30))
-							the_mob.emote("scream")
-						sleep(0.1 SECONDS)
+						return // you MUST ride it out
 					else
-						the_mob:update_burning(1)
-						sleep(0.3 SECONDS)
+						if(!the_mob.buckled:anchored)
+							step(the_mob.buckled, pick(cardinal))
+						if(i>10)
+							the_mob:update_burning(10)
+							if(prob(30))
+								the_mob.emote("scream")
+							sleep(0.1 SECONDS)
+						else
+							the_mob:update_burning(1)
+							sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
 				logTheThing(LOG_COMBAT, the_mob, "was gibbed by rocket shoes at [log_loc(the_mob)].")
 				the_mob.gib()
@@ -338,7 +349,7 @@
 		if (the_item.temp_flags & IS_LIMB_ITEM)
 			boutput(usr, SPAN_ALERT("The saw is already attached as an arm."))
 			return
-		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
+		switch (tgui_alert(usr, "Which arm would you like to replace with [the_item]?", "Replace Arm", list("Left", "Right", "Cancel"), theme = "syndicate"))
 			if ("Cancel")
 				return
 			if ("Right")
@@ -809,6 +820,7 @@
 			the_mob.item_abilities |= AB
 			the_mob.need_update_item_abilities = 1
 			the_mob.update_item_abilities()
+		AB.post_attach()
 
 
 
@@ -948,6 +960,9 @@
 			sleep(src.cooldown)
 			src.on_cooldown()
 
+	proc/post_attach()
+		return
+
 /obj/ability_button/toggle_bandana
 	name = "Toggle bandana"
 	icon_state = "bandana_down"
@@ -971,4 +986,18 @@
 		bandana.icon_state = "[initial(bandana.icon_state)][bandana.is_pulled_down ? "_down" : ""]"
 		if (H.wear_mask == bandana)
 			H.update_clothing()
+		..()
+
+
+/obj/ability_button/toggle_scope
+	name = "Toggle Scope"
+	icon_state = "scope_off"
+
+	execute_ability()
+		var/datum/component/holdertargeting/sniper_scope/scope = the_item.GetComponent(/datum/component/holdertargeting/sniper_scope)
+		SEND_SIGNAL(the_item, COMSIG_SCOPE_ENABLED, the_mob, !scope.enabled)
+		if (scope.enabled)
+			icon_state = "scope_on"
+		else
+			icon_state = "scope_off"
 		..()

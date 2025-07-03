@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		qdel(src)
 
 /obj/item/preassembled_frame_box/putt
@@ -110,7 +111,10 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	var/datum/action/bar/icon/callback/action_bar
 
 	if (I)
-		action_bar = new /datum/action/bar/icon/callback(user, src, src.step_build_time, \
+		var/duration = src.step_build_time
+		if (user?.traitHolder?.hasTrait("training_engineer") || istype(ticker?.mode, /datum/game_mode/pod_wars))
+			duration /= 2
+		action_bar = new /datum/action/bar/icon/callback(user, src, duration, \
 			/obj/structure/preassembeled_vehicleframe/proc/step_wrench_1, \
 			list(user), I.icon, I.icon_state, null, null)
 		action_bar.maximum_range = 2
@@ -271,6 +275,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 		O = new src.armor_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
 			src.removeMaterial()
@@ -279,6 +284,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	logTheThing(LOG_STATION, user, "deconstructs [src] in [get_area(user)] ([log_loc(user)])")
 	O.fingerprints = src.fingerprints
 	O.fingerprints_full = src.fingerprints_full
+	O.forensic_holder = src.forensic_holder
 	qdel(src)
 
 

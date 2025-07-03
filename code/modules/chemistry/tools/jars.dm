@@ -295,7 +295,7 @@ proc/load_intraround_jars()
 	return new/obj/item/reagent_containers/food/snacks/pickle_holder/paper(loc, src)
 
 /obj/item/reagent_containers/food/snacks/pickle_holder/paper
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | TGUI_INTERACTIVE
+	flags = TABLEPASS | SUPPRESSATTACK | TGUI_INTERACTIVE
 	var/sizex
 	var/sizey
 	var/info
@@ -399,6 +399,8 @@ proc/load_intraround_jars()
 			T = region.turf_at(region.width - 1, y)
 			T.warptarget = exit
 
-	return_air()
+	return_air(direct = FALSE)
+		if (direct)
+			return null
 		var/turf/T = get_turf(src)
 		return T?.return_air()

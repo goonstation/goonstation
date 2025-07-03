@@ -913,7 +913,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name = "Holo Rose"
 	iconmod = "HoloRose"
 	dont_rename_crop = TRUE
-	crop = /obj/item/plant/flower/rose/holorose
+	crop = /obj/item/clothing/head/flower/rose/holorose
 	chance = 0
 	infusion_reagents = list("luminol")
 

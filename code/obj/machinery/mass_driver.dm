@@ -19,7 +19,7 @@
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, src.dir)
 	for(var/atom/movable/O in src.loc)
-		if(O.anchored || isobserver(O) || isintangible(O) || HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING)) continue
+		if(O.anchored || HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING)) continue
 		O_limit++
 		if(O_limit >= 20)
 			for(var/mob/M in hearers(src, null))
@@ -27,5 +27,5 @@
 			break
 		use_power(500)
 		O.throw_at(target, drive_range * src.power, src.power)
-	flick("mass_driver1", src)
+	FLICK("mass_driver1", src)
 	return

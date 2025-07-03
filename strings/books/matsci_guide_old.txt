@@ -99,11 +99,6 @@
 	<br>Higher is better.
 	<br>
 	<br>
-	<br><B>Quality:</B>
-	<br>Determines the quality of items made using this.
-	<br>This can have many different effect but higher is always better.
-	<br>
-	<br>
 	<br><B>Durability:</B>
 	<br>How durable objects made from this are.
 	<br>More durability means that the objects can take more damage.

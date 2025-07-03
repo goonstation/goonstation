@@ -56,8 +56,6 @@
 #include "nadir.dm"
 
 // non rotation maps
-#elif defined(MAP_OVERRIDE_MANTA)
-#include "manta.dm"
 
 #elif defined(MAP_OVERRIDE_DESTINY)
 #include "destiny.dm"
@@ -89,14 +87,11 @@
 #elif defined(MAP_OVERRIDE_FLEET)
 #include "fleet.dm"
 
-#elif defined(MAP_OVERRIDE_ICARUS)
-#include "icarus.dm"
-
-#elif defined(MAP_OVERRIDE_GEHENNA)
-#include "gehenna.dm"
-
 #elif defined(MAP_OVERRIDE_DEVTEST)
 #include "devtest.dm"
+
+#elif defined(MAP_OVERRIDE_NEON)
+#include "neon.dm"
 
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"

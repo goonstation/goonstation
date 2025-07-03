@@ -1,25 +1,31 @@
 /**
  * @file
  * @copyright 2024
- * @author Romayne (https://github.com/MeggalBozale)
- * @license ISC
+ * @author Romayne (https://github.com/MyNameIsRomayne)
+ * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
-import { Button, LabeledList, Section, Slider, Stack } from "../../../components";
-import { BooleanLike } from "common/react";
+import { BooleanLike } from 'common/react';
+import {
+  Button,
+  LabeledList,
+  Section,
+  Slider,
+  Stack,
+} from 'tgui-core/components';
 
 type ManufacturerSettingsProps = {
   repeat: BooleanLike;
   hacked: BooleanLike;
   speed: number;
   max_speed_normal: number;
-  max_speed_hacked:number;
+  max_speed_hacked: number;
   mode: 'working' | 'halt' | 'ready';
-  actionSetSpeed: (speed:number) => void;
-  actionRepeat: () => void;
+  onSpeedSet: (speed: number) => void;
+  onRepeatToggle: () => void;
 };
 
-export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
+export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
   const {
     repeat,
     hacked,
@@ -27,34 +33,33 @@ export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
     max_speed_normal,
     max_speed_hacked,
     mode,
-    actionSetSpeed,
-    actionRepeat,
+    onSpeedSet,
+    onRepeatToggle,
   } = props;
 
   const max_speed = hacked ? max_speed_hacked : max_speed_normal;
 
   return (
     <Stack.Item>
-      <Section
-        textAlign="center"
-        title="Fabricator Settings"
-      >
+      <Section textAlign="center" title="Fabricator Settings">
         <LabeledList>
           <LabeledList.Item
             label="Repeat"
-            buttons={<Button icon="repeat" onClick={() => actionRepeat()}>Toggle Repeat</Button>}
+            buttons={
+              <Button icon="repeat" onClick={onRepeatToggle}>
+                Toggle Repeat
+              </Button>
+            }
             textAlign="center"
           >
-            {repeat ? "On" : "Off"}
+            {repeat ? 'On' : 'Off'}
           </LabeledList.Item>
-          <LabeledList.Item
-            label="Speed"
-          >
+          <LabeledList.Item label="Speed">
             <Stack>
               <Stack.Item>
                 <Button
                   icon="angle-double-left"
-                  onClick={() => actionSetSpeed(1)}
+                  onClick={() => onSpeedSet(1)}
                 />
               </Stack.Item>
               <Stack.Item grow>
@@ -64,14 +69,13 @@ export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
                   maxValue={max_speed}
                   step={1}
                   stepPixelSize={50}
-                  disabled={mode === "working"}
-                  onChange={(_e: any, value: number) => actionSetSpeed(value)}
+                  onChange={(_e: any, value: number) => onSpeedSet(value)}
                 />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   icon="angle-double-right"
-                  onClick={() => actionSetSpeed(max_speed)}
+                  onClick={() => onSpeedSet(max_speed)}
                 />
               </Stack.Item>
             </Stack>

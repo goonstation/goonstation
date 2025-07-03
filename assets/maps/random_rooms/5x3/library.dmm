@@ -3,14 +3,14 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/wood/six,
 /area/dmm_suite/clear_area)
 "h" = (
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/wood/six,
 /area/dmm_suite/clear_area)
 "m" = (
@@ -54,7 +54,7 @@
 /obj/stool/chair/comfy/yellow{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/wood/six,
 /area/dmm_suite/clear_area)
 

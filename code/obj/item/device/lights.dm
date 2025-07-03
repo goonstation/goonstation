@@ -52,7 +52,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	icon_off = "flight0"
 	var/icon_broken = "flightbroken"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	m_amt = 50
 	g_amt = 20
@@ -129,6 +129,44 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
+
+ADMIN_INTERACT_PROCS(/obj/item/device/light/lantern, proc/toggle)
+
+/obj/item/device/light/lantern
+	name = "lantern"
+	desc = "An electric lantern for lighting up the area close by."
+	icon_state = "lantern-off"
+	item_state = "lantern-off"
+	w_class = W_CLASS_SMALL
+	flags = TABLEPASS | CONDUCT
+	c_flags = ONBELT
+	m_amt = 50
+	g_amt = 20
+	col_r = 0.9
+	col_g = 0.8
+	col_b = 0.7
+	brightness = 0.8
+	abilities = list(/obj/ability_button/flashlight_toggle)
+
+	attack_self(mob/user)
+		src.toggle(user, TRUE)
+
+	proc/toggle(var/mob/user, activated_inhand = FALSE)
+		src.on = !src.on
+		playsound(src, 'sound/items/penclick.ogg', 30, TRUE)
+		if (src.on)
+			src.icon_state = "lantern-on"
+			src.item_state = "lantern-on"
+			src.light.enable(TRUE)
+		else
+			src.icon_state = "lantern-off"
+			src.item_state = "lantern-off"
+			src.light.disable(TRUE)
+		user.update_inhands()
+
+		if (activated_inhand)
+			var/obj/ability_button/flashlight_toggle/flashlight_button = locate(/obj/ability_button/flashlight_toggle) in src.ability_buttons
+			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 
 ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 /obj/item/device/light/glowstick // fuck yeah space rave
@@ -360,7 +398,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
 			if (temperature > (T0C + 430))
-				src.visible_message(SPAN_ALERT(" [src] ignites!"), group = "candle_ignite")
+				src.visible_message(SPAN_ALERT("[src] ignites!"), group = "candle_ignite")
 				src.light()
 
 	process()
@@ -413,7 +451,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 
 /obj/item/device/light/candle/spooky/summon
 	New()
-		flick("candle-summon", src)
+		FLICK("candle-summon", src)
 		..()
 
 /obj/item/device/light/candle/haunted
@@ -520,12 +558,12 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				"metal" = 4)
 /obj/item/device/light/floodlight
 	name = "floodlight"
-	desc = "A floodlight that can illuminate a large area. It can be wrenched to activate it."
+	desc = "A floodlight that can illuminate a large area."
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "floodlight_item"
 	w_class = W_CLASS_BULKY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	rand_pos = FALSE
 	m_amt = 50
 	g_amt = 20
@@ -619,11 +657,11 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (!src.anchored)
-				src.visible_message(SPAN_NOTICE("[user] starts unwrenching \the [src]."))
+				src.visible_message(SPAN_NOTICE("[user] starts wrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(anchor), list(user), src.icon, src.icon_state,\
 					SPAN_NOTICE("[user] finishes wrenching \the [src]."), null)
 			else if(movable)
-				src.visible_message(SPAN_NOTICE("[user] starts wrenching \the [src]."))
+				src.visible_message(SPAN_NOTICE("[user] starts unwrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(unanchor), list(user), src.icon, src.icon_state,\
 					SPAN_NOTICE("[user] finishes unwrenching \the [src]."), null)
 		else if (ispryingtool(W))
@@ -667,6 +705,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	get_desc()
 		. = ..() + "\n"
+		if (src.movable)
+			. +=  " It can be wrenched to activate it."
 		if (isnull(cell))
 			. += " It has no APC-sized cell installed."
 		else
@@ -752,7 +792,6 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 	icon_state = "roadflare"
 	w_class = W_CLASS_SMALL
 	throwforce = 1
-	flags = FPRINT | TABLEPASS
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -852,7 +891,9 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 				if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
 					return ..()
 				var/mob/living/carbon/human/H = target
-				if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
+				if (is_special)
+					return ..()
+				else if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
 					src.cautery_surgery(H, user, 5, src.on)
 					return ..()
 				else

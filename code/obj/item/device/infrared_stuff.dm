@@ -17,7 +17,7 @@ TYPEINFO(/obj/item/device/infra)
 	icon_state = "infrared0"
 	var/state = 0
 	var/visible = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
@@ -32,7 +32,7 @@ TYPEINFO(/obj/item/device/infra_sensor)
 	desc = "Scans for infrared beams in the vicinity."
 	icon_state = "infra_sensor"
 	var/passive = 1
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	item_state = "electronic"
 	m_amt = 150
 
@@ -66,7 +66,7 @@ TYPEINFO(/obj/item/device/infra_sensor)
 
 /obj/item/device/infra_sensor/attack_self(mob/user as mob)
 	src.add_dialog(user)
-	var/dat = text("<TT><B>Infrared Sensor</B><BR><br><B>Passive Emitter</B>: []<BR><br><B>Active Emitter</B>: <A href='?src=\ref[];active=0'>Burst Fire</A><br></TT>", (src.passive ? text("<A href='?src=\ref[];passive=0'>On</A>", src) : text("<A href='?src=\ref[];passive=1'>Off</A>", src)), src)
+	var/dat = text("<TT><B>Infrared Sensor</B><BR><br><B>Passive Emitter</B>: []<BR><br><B>Active Emitter</B>: <A href='byond://?src=\ref[];active=0'>Burst Fire</A><br></TT>", (src.passive ? text("<A href='byond://?src=\ref[];passive=0'>On</A>", src) : text("<A href='byond://?src=\ref[];passive=1'>Off</A>", src)), src)
 	user.Browse(dat, "window=infra_sensor")
 	onclose(user, "infra_sensor")
 	return
@@ -169,7 +169,7 @@ TYPEINFO(/obj/item/device/infra_sensor)
 
 /obj/item/device/infra/attack_self(mob/user as mob)
 	src.add_dialog(user)
-	var/dat = text("<TT><B>Infrared Laser</B><br><B>Status</B>: []<BR><br><B>Visibility</B>: []<BR><br></TT>", (src.state ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))
+	var/dat = text("<TT><B>Infrared Laser</B><br><B>Status</B>: []<BR><br><B>Visibility</B>: []<BR><br></TT>", (src.state ? text("<A href='byond://?src=\ref[];state=0'>On</A>", src) : text("<A href='byond://?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='byond://?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='byond://?src=\ref[];visible=1'>Invisible</A>", src)))
 	user.Browse(dat, "window=infra")
 	onclose(user, "infra")
 	return
@@ -245,9 +245,9 @@ TYPEINFO(/obj/item/device/infra_sensor)
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/device/infra/part2 = null
 	status = null
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 
-/obj/item/assembly/rad_infra/c_state(n)
+/obj/item/assembly/rad_infra/proc/c_state(n)
 	src.icon_state = text("infrared-radio[]", n)
 	return
 /*

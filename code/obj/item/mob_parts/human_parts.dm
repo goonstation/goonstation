@@ -3,7 +3,7 @@
 	icon = 'icons/obj/items/human_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "arm-left"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	var/mob/living/original_holder = null
 	var/datum/appearanceHolder/holder_ahol
@@ -16,6 +16,7 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = FALSE
+	var/mimic_edible = TRUE
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
@@ -241,11 +242,11 @@
 			if(istype(AH_piece, /datum/appearanceHolder))
 				switch(src.severed_overlay_1_color)
 					if(CUST_1)
-						colorheck = AH_piece.customization_first_color
+						colorheck = AH_piece.customizations["hair_bottom"].color
 					if(CUST_2)
-						colorheck = AH_piece.customization_second_color
+						colorheck = AH_piece.customizations["hair_middle"].color
 					if(CUST_3)
-						colorheck = AH_piece.customization_third_color
+						colorheck = AH_piece.customizations["hair_top"].color
 					if (SKIN_TONE)
 						colorheck = src.skin_tone
 					else
@@ -269,11 +270,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.limb_overlay_1_color)
 				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customization_first_color
+					colorlimb_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customization_second_color
+					colorlimb_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customization_third_color
+					colorlimb_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorlimb_heck = src.skin_tone
 				else
@@ -282,11 +283,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.handfoot_overlay_1_color)
 				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customization_first_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customization_second_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customization_third_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorhandfoot_heck = src.skin_tone
 				else
@@ -306,7 +307,6 @@
 /obj/item/parts/human_parts/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A human arm."
-	override_attack_hand = 0 //to hit with an item instead of hand when used empty handed
 	can_hold_items = 1
 	var/rebelliousness = 0
 	var/strangling = FALSE
@@ -400,6 +400,7 @@
 	desc = "A human leg, pretty important for mobility."
 	object_flags = NO_ARM_ATTACH
 	var/rebelliousness = 0
+	var/datum/fluid_group/last_fluid_group = null //! Used to tell when the fluid has changed to reduce absorbtion message spam
 
 	on_holder_examine()
 		if (src.show_on_examine)
@@ -422,6 +423,47 @@
 			boutput(holder, SPAN_ALERT("<b>Your [src.name] won't do what you tell it to!</b>"))
 			if (holder.misstep_chance < 20)
 				holder.change_misstep_chance(20)
+
+	/// Used by synth legs to absorb reagents from fluids
+	proc/fluid_absorbtion(var/absorbtion_rate)
+		if(!src.holder)
+			return
+		var/turf/T = get_turf(src.holder)
+		if(!T.active_liquid?.group?.reagents)
+			src.last_fluid_group = null
+			return
+		if(!ishuman(src.holder))
+			return
+		var/mob/living/carbon/human/H = src.holder
+		if(!H.shoes && !H.wear_suit?.check_for_covered("both legs"))
+			// Do not apply chemprot if legs aren't covered
+			if(prob(30))
+				absorb_reagents(T.active_liquid.group, absorbtion_rate)
+			return
+		if(T.active_liquid.my_depth_level < 2)
+			return // Fluid not deep enough to absorb through shoes/suit
+
+		// Less likely to absorb based on chem protection
+		var/chem_prot = clamp(GET_ATOM_PROPERTY(H, PROP_MOB_CHEMPROT), 0, 40)
+		if(chem_prot >= 40)
+			return
+		var/absorb_prob = (30 - (chem_prot / 2))
+		if(!prob(absorb_prob))
+			return
+		absorb_reagents(T.active_liquid.group, absorbtion_rate)
+
+	proc/absorb_reagents(var/datum/fluid_group/fluids, var/absorbtion_rate)
+		var/datum/reagents/R = fluids.reagents
+		if(!R.total_volume)
+			return
+		R.reaction(src.holder, INGEST, clamp(R.total_volume, CHEM_EPSILON, min(absorbtion_rate, (src.holder.reagents?.maximum_volume - src.holder.reagents?.total_volume))))
+		R.trans_to(src.holder, min(R.total_volume, absorbtion_rate))
+		playsound(src.holder.loc,'sound/items/drink.ogg', rand(10,20), 1)
+		eat_twitch(src.holder)
+		if(fluids != src.last_fluid_group)
+			var/tasteMessage = SPAN_NOTICE("[R.get_taste_string(src.holder)]")
+			src.holder.visible_message(SPAN_NOTICE("[src.holder]'s [src] begins to absorb the fluid from [src]."),"[SPAN_NOTICE("You begin to absorb the fluid from [src].")]\n[tasteMessage]", group = "[src.holder]_drink_messages")
+			src.last_fluid_group = fluids
 
 /obj/item/parts/human_parts/leg/left
 	name = "left leg"
@@ -452,13 +494,13 @@
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
-	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
 	partlistPart = null
 	no_icon = TRUE
 	skintoned = FALSE
+	mimic_edible = FALSE
 	var/special_icons = 'icons/mob/human.dmi'
 	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
@@ -515,7 +557,6 @@
 			//if(I.over_clothes) handlistPart += "l_arm_[I.arm_icon]"
 			//else partlistPart += "l_arm_[I.arm_icon]"
 			handlistPart += "l_arm_[I.arm_icon]"
-			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
 			if (I.cant_drop)
@@ -531,7 +572,7 @@
 
 			handimage = I.inhand_image
 			var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
-			if(!(state in icon_states(I.inhand_image_icon)))
+			if(!(state in get_icon_states(I.inhand_image_icon)))
 				state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
 			handimage.icon_state = state
 
@@ -566,13 +607,13 @@
 			remove_object = null
 
 	getHandIconState()
-		if (handlistPart && !(handlistPart in icon_states(special_icons)))
+		if (handlistPart && !(handlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
 
 	getPartIconState()
-		if (partlistPart && !(partlistPart in icon_states(special_icons)))
+		if (partlistPart && !(partlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
@@ -600,13 +641,13 @@
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil // what streaks everywhere when it's cut off?
 	streak_descriptor = "oily" //bloody, oily, etc
-	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
 	partlistPart = null
 	no_icon = TRUE
 	skintoned = FALSE
+	mimic_edible = FALSE
 	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
 	var/image/handimage = 0
@@ -646,7 +687,6 @@
 			//if(I.over_clothes) handlistPart += "r_arm_[I.arm_icon]"
 			//else partlistPart += "r_arm_[I.arm_icon]"
 			handlistPart += "r_arm_[I.arm_icon]"
-			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
 			if (I.cant_drop)
@@ -662,7 +702,7 @@
 
 			handimage = I.inhand_image
 			var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
-			if(!(state in icon_states(I.inhand_image_icon)))
+			if(!(state in get_icon_states(I.inhand_image_icon)))
 				state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
 
 			handimage.pixel_y = H.mutantrace.hand_offset + 6
@@ -694,13 +734,13 @@
 			qdel(remove_object)
 
 	getHandIconState()
-		if (handlistPart && !(handlistPart in icon_states(special_icons)))
+		if (handlistPart && !(handlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
 
 	getPartIconState()
-		if (partlistPart && !(partlistPart in icon_states(special_icons)))
+		if (partlistPart && !(partlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
@@ -729,7 +769,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "l_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -756,7 +795,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "r_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -783,7 +821,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
-	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_left"
 	show_on_examine = TRUE
@@ -803,7 +840,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
-	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_right"
 	show_on_examine = TRUE
@@ -825,7 +861,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bearly"
-	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "l_hand_bear"
 	partIconModifier = "bear"
@@ -848,7 +883,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bearly"
-	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "r_hand_bear"
 	partIconModifier = "bear"
@@ -876,6 +910,7 @@
 	/// Plants are pretty unnatural
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -896,6 +931,7 @@
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -922,6 +958,11 @@
 			set_loc(holder)
 		..()
 
+	on_life()
+		. = ..()
+		src.fluid_absorbtion(5)
+
+
 /obj/item/parts/human_parts/leg/right/synth
 	name = "synthetic right leg"
 	desc = "A right leg. Looks like a rope composed of vines. And tofu??"
@@ -942,6 +983,9 @@
 			set_loc(holder)
 		..()
 
+	on_life()
+		. = ..()
+		src.fluid_absorbtion(5)
 
 /obj/item/parts/human_parts/arm/left/synth/bloom
 	desc = "A left arm. Looks like a rope composed of vines. There's some little flowers on it."
@@ -976,7 +1020,6 @@
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "l_hand_abomination"
 	partIconModifier = "abomination"
@@ -1016,7 +1059,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "r_hand_abomination"
 	partIconModifier = "abomination"
@@ -1055,15 +1097,14 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = FALSE
-	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = TRUE
 	streak_descriptor = "undeadly"
-	override_attack_hand = 1
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1078,14 +1119,13 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = FALSE
-	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = TRUE
 	streak_descriptor = "undeadly"
-	override_attack_hand = 1
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1101,7 +1141,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "l_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -1123,7 +1162,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "r_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -1645,6 +1683,7 @@
 	partIcon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
+	fingertip_color = "#895d37"
 
 	sever(mob/user)
 		. = ..()
@@ -1685,7 +1724,6 @@
 	handlistPart = "hand_left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	show_on_examine = TRUE
 
@@ -1703,7 +1741,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	handlistPart = "hand_right"
 	show_on_examine = TRUE
@@ -1770,6 +1807,7 @@
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
+	fingertip_color = "#aa9987"
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
@@ -1821,6 +1859,7 @@
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
 	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
+	fingertip_color = "#745136"
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
@@ -1987,6 +2026,10 @@
 	easy_attach = TRUE
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
 
+	on_life()
+		. = ..()
+		src.fluid_absorbtion(5)
+
 	New()
 		limb_overlay_1_state = "[src.slot]_kudzu"
 		handfoot_overlay_1_state = "[src.handlistPart]_kudzu"
@@ -2049,7 +2092,6 @@
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_left"
 	show_on_examine = TRUE
@@ -2068,7 +2110,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_right"
 	show_on_examine = TRUE

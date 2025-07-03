@@ -11,7 +11,7 @@ You'll need several things:
 
 ## How 2 Do It
 
-1. Compile the game with `#define TRACY_PROFILER_HOOK`.
+1. Compile the game with `#define TRACY_PROFILER_HOOK`. Or, use the `Toggle-Tracy-Profiling` verb on actual live.
 2. Have prof.dll/so in the game directory.
 3. Run the game.
 4. The game will produce `.utracy` files inside `data/profiler/` that you'll need. They will be quite large. Expect up to 30GB.

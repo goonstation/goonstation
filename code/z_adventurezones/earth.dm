@@ -20,7 +20,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "purple"
 	requires_power = 0
 	sound_environment = 4
-	teleport_blocked = 2
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 	skip_sims = 1
 	sims_score = 25
 	sound_group = "centcom"
@@ -47,6 +47,12 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "nothing_earth"
 	//force_fullbright = 1
 	ambient_light = CENTCOM_LIGHT
+
+/area/meadow
+	name = "Meadow"
+	icon_state = "nothing_earth"
+	ambient_light = CENTCOM_LIGHT
+	sanctuary = TRUE
 
 /area/centcom/gallery
 	name = "NT Art Gallery"
@@ -94,6 +100,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	cal
 		ckey = "mexicat"
 		name = "Office of Cal"
+		active = 2
 	cogwerks
 		ckey = "drcogwerks"
 		name = "Office of Cogwerks"
@@ -136,6 +143,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	gibbed
 		ckey = "gibbed"
 		name = "Office of Rick"
+	glowbold
+		ckey = "glowbold"
+		name = "Office of Glowbold"
 	grayshift
 		ckey = "grayshift"
 		name = "Office of Grayshift"
@@ -241,6 +251,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	tarmunora
 		ckey = "tarmunora"
 		name = "Office of yass"
+		active = 2
 	tterc
 		ckey = "tterc"
 		name = "Office of Caroline Audibert"
@@ -253,6 +264,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	walpvrgis
 		ckey = "walpvrgis"
 		name = "Office of Walpvrgis"
+	wander
+		ckey = "rogerclementine"
+		name = "Office of Wander"
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"
@@ -295,7 +309,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 /area/retentioncenter/teleblocked
 	name = "NT Retention Center (teleblocked)"
 	icon_state = "death"
-	teleport_blocked = 2
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 
 /area/retentioncenter/depot
 	name = "NT Retention Center (depot)"

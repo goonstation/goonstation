@@ -28,3 +28,14 @@
 	desc = "A box containing an implanting tool and five access implant cases. The implanter can remove the implants from their cases and inject them into a subject, granting them accesses defined by an ID computer."
 	spawn_contents = list(/obj/item/implantcase/access = 6,\
 	/obj/item/implanter)
+
+/obj/item/storage/box/marionetteimp_kit
+	name = "marionette implant kit"
+	desc = "Contains one marionette implant and the peripherals required to use it."
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/remote/marionette_implant, /obj/item/paper/marionette_implant_readme)
+
+	New(loc, flag_that_prevents_the_box_from_having_its_free_implanter)
+		..()
+		if (!flag_that_prevents_the_box_from_having_its_free_implanter)
+			src.storage.add_contents(new /obj/item/implanter/marionette)

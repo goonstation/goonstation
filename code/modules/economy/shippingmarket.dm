@@ -1,6 +1,5 @@
 #define SUPPLY_OPEN_TIME (1 SECOND) //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME (15 SECONDS) //Time it takes to close supply door in seconds.
-#define SHIPPING_MARKET_SHIFT_BASELINE_DURATION (7.5 MINUTES) //Baseline time between market shifts; 7:30 +/- 2:30 = 5 ~ 10 minutes
 /// The full explosion-power-to-credits conversion formula. Also used in smallprogs.dm
 #define PRESSURE_CRYSTAL_VALUATION(power) power ** 1.1 * 100
 /// The number of peak points on the pressure crystal graph offering bonus credits
@@ -72,9 +71,6 @@
 				qdel(C)
 
 
-		SPAWN(300)
-			market_shift()
-
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
 		/datum/trader/vurdalak,/datum/trader/buford)
 
@@ -93,25 +89,23 @@
 
 		update_shipping_data()
 
-		time_between_shifts = SHIPPING_MARKET_SHIFT_BASELINE_DURATION
-		time_until_shift = time_between_shifts + rand(-150, 150) SECONDS
+		//set up pressure crystal market peaks
+		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
+			var/value = rand(1, 230)
+			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
 
+	proc/init()
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
 			spawnpoint = T
 			break
 
 		var/turf/target
-		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
 			target = T
 			break
 
 		src.launch_distance = get_dist(spawnpoint, target)
-
-		//set up pressure crystal market peaks
-		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
-			var/value = rand(1, 230)
-			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -151,27 +145,17 @@
 		return picked_contract
 
 	proc/timeleft()
-		var/timeleft = src.time_until_shift - TIME
+		return max(0, src.time_until_shift - TIME)
 
-		if(timeleft <= 0)
-			src.time_until_shift = TIME + time_between_shifts + rand(-90,90) SECONDS
-			market_shift()
-			return 0
-
-		return timeleft
-
-	// Returns the time, in MM:SS format
+	/// Returns the time in MM:SS format
 	proc/get_market_timeleft()
 		var/timeleft = src.timeleft() / 10
 		if(timeleft)
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	proc/market_shift()
-		#ifndef FUCK_OFF_WITH_THE_MAIL
-		var/time_since_previous = (TIME - last_market_update)
-		#endif
-		last_market_update = TIME
-		elapsed_shifts += 1
+		src.last_market_update = TIME
+		src.elapsed_shifts += 1
 
 		// Chance of a commodity being hot. Sometimes the market is on fire.
 		// Sometimes it is not. They still have to have a positive value roll,
@@ -263,7 +247,7 @@
 					T.hidden = 0
 					T.current_message = pick(T.dialogue_greet)
 					T.patience = rand(T.base_patience[1],T.base_patience[2])
-					T.set_up_goods()
+					T.set_up_goods(FALSE)
 			else
 				if (prob(T.chance_leave))
 					T.hidden = 1
@@ -297,7 +281,7 @@
 		#ifndef FUCK_OFF_WITH_THE_MAIL
 		if (src.elapsed_shifts % 2 == 0) //every other shift
 			SPAWN(0)
-				src.generate_mail(time_since_previous)
+				src.generate_mail()
 		#endif
 
 		SPAWN(5 SECONDS)
@@ -316,8 +300,7 @@
 			update_shipping_data()
 			update_buy_prices()
 
-	proc/generate_mail(time_since_previous)
-		var/adjustment = max(time_since_previous, 2 MINUTES)
+	proc/generate_mail()
 		var/alive_players = 0
 		var/target_percentage = 0.375
 		for(var/datum/job/civilian/mail_courier/J in job_controls.staple_jobs)
@@ -334,8 +317,8 @@
 		// so, 3 / 8 = 37.5% of players should get mail
 		// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 25)
 		// readjusting upwards slightly as the mail delivery rate was cut
-		var/mail_amount = ceil(alive_players * (target_percentage * (adjustment / SHIPPING_MARKET_SHIFT_BASELINE_DURATION)))
-		logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
+		var/mail_amount = ceil(alive_players * target_percentage)
+		logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail.")
 		mail_amount = min(mail_amount, 100) // no more infinite ~~nuggets~~ mail, please
 		if (alive_players >= 1)
 			var/obj/storage/crate/mail/mail_crate = new
@@ -416,7 +399,7 @@
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
 		price *= randfloat(0.9, 1.3)
-		price = round(price, 5)
+		price = round(price, 4)
 
 		// track score
 		if(pap)
@@ -555,6 +538,11 @@
 		value = round(value)
 		if (sell && value > 0)
 			src.pressure_crystal_sales["[pc.pressure]"] = value
+			var/datum/signal/pdaSignal = get_free_signal() // tell sciv
+			var/message = "Notification: [value] credits earned from outgoing pressure crystal at [pc.pressure] kiloblast. "
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"=message)
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
 		return value
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
@@ -605,6 +593,7 @@
 						if(AID_CONTRACT) src.aid_contracts_active--
 						if(SCI_CONTRACT) src.sci_contracts_active--
 					duckets += contract.payout
+					contract.count += 1
 					if(length(contract.item_rewarders))
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()
@@ -654,6 +643,7 @@
 			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
 			wagesystem.shipping_budget += share_NT
 			account["current_money"] += share_seller
+			logTheThing(LOG_STATION, null, "Cargo sale split [share_seller] credits to [scan.registered], whoever that is.")
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
@@ -663,16 +653,26 @@
 
 	//NADIR: Transception antenna cargo I/O
 #ifdef MAP_OVERRIDE_NADIR
-	proc/receive_crate(atom/movable/shipped_thing)
+	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
 
-		pending_crates.Add(shipped_thing)
+		if(force)
+			var/obj/machinery/transception_pad/toRecv = pick(by_type[/obj/machinery/transception_pad])
+			var/turf/T = get_turf(toRecv) || get_turf(pick_landmark(LANDMARK_LATEJOIN)) //AAAAA
+			shipped_thing.set_loc(T)
+			if(get_turf(toRecv))
+				showswirl(get_turf(toRecv))
 
-		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+
+		else
+			pending_crates.Add(shipped_thing)
+
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 #else
-	proc/receive_crate(atom/movable/shipped_thing)
+	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -680,15 +680,19 @@
 			break
 
 		var/turf/target
-		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
 			target = T
 			break
 
 		if (!spawnpoint)
+			if(force)
+				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
 			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
 			return
 
 		if (!target)
+			if(force)
+				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
 			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
@@ -712,7 +716,9 @@
 #endif
 
 	proc/get_path_to_market()
-		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
+		var/list/bounds = list()
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
+			bounds += T
 		bounds += get_area_turfs(/area/supply/sell_point)
 		bounds += get_area_turfs(/area/supply/spawn_point)
 		var/min_x = INFINITY
@@ -731,7 +737,8 @@
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
 			computer.update_static_data()
-
+		for_by_tcl(barcoder, /obj/item/portable_barcoder)
+			barcoder.update_destinations()
 
 // Debugging and admin verbs (mostly coder)
 

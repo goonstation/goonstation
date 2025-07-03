@@ -6,12 +6,9 @@
  * @license MIT
  */
 
-import { SFC } from 'inferno';
+import { Button, LabeledList } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import {
-  Button,
-  LabeledList,
-} from '../../components';
 import type { ApcData, ApcWireCutData } from './types';
 
 enum WireColor {
@@ -22,27 +19,51 @@ enum WireColor {
 }
 
 interface WireColorConfig {
-  id: WireColor,
+  id: WireColor;
   name: string;
   color: string;
   getIsCut: (data: ApcWireCutData) => boolean;
 }
 
 const wireColorConfigs: WireColorConfig[] = [
-  { id: WireColor.Orange, name: 'Orange', color: 'orange', getIsCut: ({ orange_cut }) => !!orange_cut },
-  { id: WireColor.DarkRed, name: 'Dark red', color: 'darkred', getIsCut: ({ dark_red_cut }) => !!dark_red_cut },
-  { id: WireColor.White, name: 'White', color: 'white', getIsCut: ({ white_cut }) => !!white_cut },
-  { id: WireColor.Yellow, name: 'Yellow', color: 'yellow', getIsCut: ({ yellow_cut }) => !!yellow_cut },
+  {
+    id: WireColor.Orange,
+    name: 'Orange',
+    color: 'orange',
+    getIsCut: ({ orange_cut }) => !!orange_cut,
+  },
+  {
+    id: WireColor.DarkRed,
+    name: 'Dark red',
+    color: 'darkred',
+    getIsCut: ({ dark_red_cut }) => !!dark_red_cut,
+  },
+  {
+    id: WireColor.White,
+    name: 'White',
+    color: 'white',
+    getIsCut: ({ white_cut }) => !!white_cut,
+  },
+  {
+    id: WireColor.Yellow,
+    name: 'Yellow',
+    color: 'yellow',
+    getIsCut: ({ yellow_cut }) => !!yellow_cut,
+  },
 ];
 
-export const WireList = (_props, context) => {
-  const { act, data } = useBackend<ApcData>(context);
+export const WireList = () => {
+  const { act, data } = useBackend<ApcData>();
 
   // #region event handlers
-  const handleMend = (wireColor: WireColor) => act('onMendWire', { wire: wireColor });
-  const handleCut = (wireColor: WireColor) => act('onCutWire', { wire: wireColor });
-  const handlePulse = (wireColor: WireColor) => act('onPulseWire', { wire: wireColor });
-  const handleBite = (wireColor: WireColor) => act('onBiteWire', { wire: wireColor });
+  const handleMend = (wireColor: WireColor) =>
+    act('onMendWire', { wire: wireColor });
+  const handleCut = (wireColor: WireColor) =>
+    act('onCutWire', { wire: wireColor });
+  const handlePulse = (wireColor: WireColor) =>
+    act('onPulseWire', { wire: wireColor });
+  const handleBite = (wireColor: WireColor) =>
+    act('onBiteWire', { wire: wireColor });
   // #endregion
 
   return (
@@ -73,16 +94,24 @@ interface WireProps {
   onPulse: () => void;
 }
 
-export const WireListItem: SFC<WireProps> = (props) => {
+export const WireListItem = (props: WireProps) => {
   const { color, isCut, name, onBite, onCut, onMend, onPulse } = props;
 
   const actions = isCut ? (
-    <Button content="Mend" onClick={onMend} selected />
+    <Button onClick={onMend} selected>
+      Mend
+    </Button>
   ) : (
     <>
-      <Button icon="cut" onClick={onCut}>Cut</Button>
-      <Button icon="bolt" onClick={onPulse}>Pulse</Button>
-      <Button icon="tooth" onClick={onBite}>Bite</Button>
+      <Button icon="cut" onClick={onCut}>
+        Cut
+      </Button>
+      <Button icon="bolt" onClick={onPulse}>
+        Pulse
+      </Button>
+      <Button icon="tooth" onClick={onBite}>
+        Bite
+      </Button>
     </>
   );
 

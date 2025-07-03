@@ -62,7 +62,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 // FLOCK FAKEOBJECT PARENT
 ///////////////////////////
 
-/obj/decal/fakeobjects/flock
+/obj/fakeobject/flock
 	icon = 'icons/misc/featherzone.dmi'
 	anchored = ANCHORED
 	density = 1
@@ -70,18 +70,18 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 /////////
 // WING
 /////////
-/obj/decal/fakeobjects/flock/wing
+/obj/fakeobject/flock/wing
 	icon = 'icons/misc/featherzone-96x96.dmi'
 	icon_state = "wing"
 	name = "sparking blade"
 	desc = "It looks very fragile from here. And dangerously live. Best not get too close."
 
-/obj/decal/fakeobjects/flock/wing/broken
+/obj/fakeobject/flock/wing/broken
 	icon_state = "wing-broken"
 	name = "jagged blade"
 	desc = "Looks incredibly sharp. It'll probably tear your hand to shreds if you try touching it."
 
-/obj/decal/fakeobjects/flock/wing/destroyed
+/obj/fakeobject/flock/wing/destroyed
 	icon_state = "wing-destroyed"
 	name = "razor-sharp shrapnel"
 	desc = "Looks incredibly sharp. It'll probably tear your hand to shreds if you try touching it."
@@ -89,18 +89,18 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 ///////////
 // ANTENNA
 ///////////
-/obj/decal/fakeobjects/flock/antenna
+/obj/fakeobject/flock/antenna
 	icon_state = "antenna"
 	name = "fibrous pole"
 	desc = "Huh. Weird."
 
-/obj/decal/fakeobjects/flock/antenna/not_dense
+/obj/fakeobject/flock/antenna/not_dense
 	density = FALSE
 
-/obj/decal/fakeobjects/flock/antenna/end
+/obj/fakeobject/flock/antenna/end
 	icon_state = "antenna-end"
 
-/obj/decal/fakeobjects/flock/antenna/broken
+/obj/fakeobject/flock/antenna/broken
 	icon_state = "antenna-broken-1"
 	desc = "Huh. Looks busted."
 	random_icon_states = list("antenna-broken-1", "antenna-broken-2")
@@ -108,7 +108,9 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 ///////////////////
 // TELEPORT MARKER
 ///////////////////
-/obj/decal/fakeobjects/flock/telepad
+/obj/fakeobject/flock/telepad
+	plane = PLANE_NOSHADOW_BELOW
+	layer = FLOOR_EQUIP_LAYER1
 	icon_state = "telemarker"
 	name = "glowing marker"
 	desc = "I got nothin'."
@@ -270,7 +272,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 		src.icon_state = "totem"
 		src.visible_message("<b>[src.name] calms down.</b>")
 		src.desc = "[src] looks a bit annoyed."
-		src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		src.temp = "[src.name] has calmed down.<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 		src.angry = 0
 
 /obj/npc/trader/flock/death()
@@ -333,6 +335,10 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 ///////////////////////
 // FLOCKTRADER SCREEN
 ///////////////////////
+TYPEINFO(/obj/flock_screen)
+	start_speech_modifiers = list(SPEECH_MODIFIER_FLOCK_GRADIENT)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/flock_screen
 	icon = 'icons/misc/featherzone-64x32.dmi'
 	icon_state = "screen-off"
@@ -340,6 +346,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	desc = "Huh."
 	density = 1
 	anchored = ANCHORED
+	speech_verb_say = "beeps"
 	var/obj/npc/trader/flock/trader
 
 /obj/flock_screen/proc/show_icon(var/state)
@@ -350,11 +357,6 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	icon_state = "screen-[state]"
 	sleep(4 SECONDS)
 	icon_state = "screen-off"
-
-/obj/flock_screen/proc/say(var/message)
-	if(!message)
-		return
-	src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[gradientText("#3cb5a3", "#124e43", message)]\""))
 
 ////////////////////////////////
 // FLOCKTRADER DONATE RECLAIMER

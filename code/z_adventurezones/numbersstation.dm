@@ -15,6 +15,7 @@ var/global/shut_up_about_the_fucking_numbers_station = 1
 /area/spyshack
 	name = "Space Shack"
 	icon_state = "yellow"
+	lightswitch = FALSE
 
 /obj/item/paper/mission_outline
 	name = "gibberish note"
@@ -233,7 +234,7 @@ Nanotrasen, Inc.<br>
 	/obj/item/reagent_containers/emergency_injector/random,/obj/item/reagent_containers/emergency_injector/random,
 	/obj/item/reagent_containers/food/drinks/bottle/hobo_wine)
 
-
+var/global/datum/numbers_station/lincolnshire = null
 
 /datum/numbers_station // This is not a physical entity!
 	var/name = "Space Lincolnshire"
@@ -255,13 +256,12 @@ Nanotrasen, Inc.<br>
 		else
 			next_play = play_interval
 		next_warning = next_play - 300
-		SPAWN(20 SECONDS)
-			try
-				var/datum/apiRoute/numbersstation/get/getNumbers = new
-				var/datum/apiModel/NumbersStationPasswordResource/numbersStationPassword = apiHandler.queryAPI(getNumbers)
-				lincolnshire_numbers(numbersStationPassword.numbers)
-			catch
-				// pass
+		try
+			var/datum/apiRoute/numbersstation/get/getNumbers = new
+			var/datum/apiModel/NumbersStationPasswordResource/numbersStationPassword = apiHandler.queryAPI(getNumbers)
+			lincolnshire_numbers(numbersStationPassword.numbers)
+		catch
+			// pass
 
 	proc/gather_listeners()
 		listeners = list()
@@ -407,8 +407,6 @@ Nanotrasen, Inc.<br>
 		ogg = get_vox_by_string(sones)
 		if (ogg)
 			broadcast_sound(ogg)
-
-var/global/datum/numbers_station/lincolnshire = new
 
 /proc/debug_lincolnshire()
 	lincolnshire.next_warning = 0

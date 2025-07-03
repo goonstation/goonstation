@@ -3,7 +3,6 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 	name = "artifact parts"
 	icon = 'icons/obj/artifacts/artifactLimbs.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	skintoned = FALSE
 	decomp_affected = FALSE
@@ -167,6 +166,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/eldritch)
 /obj/item/parts/artifact_parts/arm/eldritch
 	limb_type = /datum/limb/eldritch
 	artifact_type = "eldritch"
+	fingertip_color = "#803872"
 
 	left
 		name = "eldritch left arm"
@@ -219,6 +219,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/martian)
 /obj/item/parts/artifact_parts/arm/martian
 	artifact_type = "martian"
 	update_with_clothing = TRUE
+	fingertip_color = "#72924f"
 
 	on_attach()
 		if (!..())
@@ -272,6 +273,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/precursor)
 /obj/item/parts/artifact_parts/arm/precursor
 	artifact_type = "precursor"
 	update_with_clothing = TRUE
+	fingertip_color = "#A5BDC5"
 
 	on_attach()
 		if (!..())
@@ -405,7 +407,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 			return TRUE
 
 		var/atom/tentacle_end = new /obj/martian_tentacle_end_dummy(get_turf(target))
-		var/list/tentacles = DrawLine(holder.owner, tentacle_end, /obj/line_obj/martian_tentacle, 'icons/obj/artifacts/artifactLimbs.dmi', "tentacle-whole", TRUE, TRUE, "tentacle-half-start", "tentacle-half-end")
+		var/list/tentacles = drawLineObj(holder.owner, tentacle_end, /obj/line_obj/martian_tentacle, 'icons/obj/artifacts/artifactLimbs.dmi', "tentacle-whole", TRUE, TRUE, "tentacle-half-start", "tentacle-half-end")
 
 		var/found_target = FALSE
 		var/done_early = FALSE

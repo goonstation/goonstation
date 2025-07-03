@@ -14,7 +14,7 @@ TYPEINFO(/turf/simulated/wall)
 	density = 1
 	gas_impermeable = 1
 	pathable = 1
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	text = "<font color=#aaa>#"
 	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
 	default_material = "steel"
@@ -32,6 +32,8 @@ TYPEINFO(/turf/simulated/wall)
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 10)
 
+		for(var/obj/decal/cleanable/clean in src)
+			clean.plane = PLANE_FLOOR
 		src.selftilenotify() // displace fluid
 
 		#ifdef XMAS
@@ -236,7 +238,7 @@ TYPEINFO(/turf/simulated/wall)
 	return
 
 /turf/simulated/wall/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
+	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti)  || istype(W, /obj/item/gang_flyer))
 		return
 
 	if (istype(W, /obj/item/pen))
@@ -335,7 +337,7 @@ TYPEINFO(/turf/simulated/wall)
 		return
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
+	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti) || istype(W, /obj/item/gang_flyer))
 		return
 
 	if (istype(W, /obj/item/pen))

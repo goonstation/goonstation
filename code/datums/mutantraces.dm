@@ -13,22 +13,24 @@ TYPEINFO(/datum/mutantrace)
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
-	///The icon states of the above icon, cached because byond is bad
-	var/icon_states
 TYPEINFO_NEW(/datum/mutantrace) ///Load all the clothing override icons, should call parent AFTER populating `clothing_icons`
 	..()
 	for (var/category in src.clothing_icons)
 		src.clothing_icon_states[category] = icon_states(src.clothing_icons[category])
-	src.icon_states = icon_states(src.icon)
 
 ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
-	var/name = null				// used for identification in diseases, clothing, etc
+	/// used for identification in diseases, clothing, etc
+	var/name = null
+
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
-	var/race_mutation = null
+	var/datum/bioEffect/mutantrace/race_mutation = null
+
 	/// The mutant's own appearanceholder, modified to suit our target appearance
 	var/datum/appearanceHolder/AH
-	/// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+
+	// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+	// ^ ??????? AH.original?
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -36,6 +38,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/override_skintone = 1
 	var/override_attack = FALSE		 // set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
 								// but they must explicitly specify if they're overriding via this var
+	var/mutantrace_speech_modifier
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
 	/** Mutant Appearance Flags - used to modify how the mob is drawn
@@ -75,10 +78,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/human_compatible = TRUE
 	/// if FALSE, can only wear clothes if listed in [/obj/item/clothing/var/compatible_species]
 	var/uses_human_clothes = TRUE
-	/// if TRUE, only understood by others of this mutantrace
-	var/exclusive_language = FALSE
-	/// overrides normal voice message if defined (and others don't understand us, ofc)
-	var/voice_message = null
 	var/voice_name = "human"
 	/// Should robots arrest these by default?
 	var/jerk = FALSE
@@ -243,13 +242,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/apply_clothing_filters(var/obj/item/worn)
 		. = null
 
-	proc/say_filter(var/message)
-		return message
-
 	proc/say_verb()
 		return null
 
-	proc/emote(var/act)
+	/// Mutant race emote overrides. Called before main emote processing.
+	///
+	/// It can return either a single text value, which will be the emote's chat message,
+	/// or it can return a list of two items, the first being chat message, the second being map text.
+	///
+	/// If it returns a message, no other emote processing occurs.
+	proc/emote(act, voluntary=FALSE)
 		return null
 
 	// custom attacks, should return attack_hand by default or bad things will happen!!
@@ -277,6 +279,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		if (!needs_oxy)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
+
+		if (src.override_language)
+			M.say_language = src.override_language
+
+		if (src.mutantrace_speech_modifier)
+			M.ensure_speech_tree().AddSpeechModifier(src.mutantrace_speech_modifier)
+
+		M.ensure_listen_tree()
+		for (var/language_id in src.understood_languages)
+			M.listen_tree.AddKnownLanguage(language_id)
 
 		src.blood_color_original = M.bioHolder?.bloodColor // We prioritise bioHolder here since coloring blood later does
 		if (isnull(src.blood_color_original))
@@ -351,6 +363,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if (needs_oxy)
 				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_BREATHLESS, src.type)
 
+			if (src.override_language)
+				src.mob.say_language = initial(src.mob.say_language)
+
+			if (src.mutantrace_speech_modifier)
+				src.mob.ensure_speech_tree().RemoveSpeechModifier(src.mutantrace_speech_modifier)
+
+			src.mob.ensure_listen_tree()
+			for (var/language_id in src.understood_languages)
+				src.mob.listen_tree.RemoveKnownLanguage(language_id)
+
 			if (src.blood_color_changed)
 				mob.blood_color = src.blood_color_original
 				mob.bioHolder?.bloodColor = src.blood_color_original
@@ -399,6 +421,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.set_clothing_icon_dirty()
 			src.mob = null
 
+		src.AH = null
 		..()
 
 	proc/AppearanceSetter(var/mob/living/carbon/human/H, var/mode as text)
@@ -406,9 +429,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return // please dont call set_mutantrace on a non-human non-appearanceholder
 
 		AH.mob_appearance_flags = src.mutant_appearance_flags
-		AH.customization_first_offset_y = src.head_offset
-		AH.customization_second_offset_y = src.head_offset
-		AH.customization_third_offset_y = src.head_offset
+		AH.customizations["hair_bottom"].offset_y = src.head_offset
+		AH.customizations["hair_middle"].offset_y = src.head_offset
+		AH.customizations["hair_top"].offset_y = src.head_offset
 
 		var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
 		if(typeinfo.special_styles)
@@ -452,17 +475,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.mob_arm_offset = src.arm_offset
 
 		if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-			AH.customization_first_color = fix_colors(AH.customization_first_color)
-			AH.customization_second_color = fix_colors(AH.customization_second_color)
-			AH.customization_third_color = fix_colors(AH.customization_third_color)
+			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
+			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 
 		AH.s_tone_original = AH.s_tone
 		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
-			AH.s_tone = AH.customization_first_color
+			AH.s_tone = AH.customizations["hair_bottom"].color
 		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
-			AH.s_tone = AH.customization_second_color
+			AH.s_tone = AH.customizations["hair_middle"].color
 		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
-			AH.s_tone = AH.customization_third_color
+			AH.s_tone = AH.customizations["hair_top"].color
 		else
 			AH.s_tone = AH.s_tone_original
 
@@ -602,7 +625,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return
 		var/datum/bioEffect/mutantrace/mr = src.race_mutation
 		if(!H.bioHolder.HasEffect(initial(mr.id)))
-			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
+			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1, scannable=TRUE)
 
 	/// Copies over female variants of mutant heads and organs
 	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)
@@ -692,6 +715,8 @@ TYPEINFO(/datum/mutantrace/blob)
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
 
+	ghost_icon_state = "ghost-blob"
+
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
 
@@ -701,6 +726,7 @@ TYPEINFO(/datum/mutantrace/flubber)
 	name = "flubber"
 	mutant_folder = 'icons/mob/flubber.dmi'
 	icon_state = "flubber"
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_FLUBBER
 	uses_human_clothes = 0
 	head_offset = -7
 	voice_override = "bloop"
@@ -723,9 +749,6 @@ TYPEINFO(/datum/mutantrace/flubber)
 		playsound(src.mob, "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
 		animate(src.mob, time = 1, pixel_y = 16, easing = ELASTIC_EASING)
 		animate(time = 1, pixel_y = 0, easing = ELASTIC_EASING)
-
-	say_filter(var/message)
-		return pick("Wooo!!", "Whopeee!!", "Boing!!", "Čapaš!!")
 
 	onLife(var/mult = 1)
 		if (!isdead(src.mob))
@@ -792,8 +815,6 @@ TYPEINFO(/datum/mutantrace/virtual)
 	name = "grey"
 	icon_state = "grey"
 	voice_name = "grey"
-	voice_message = "hums"
-	exclusive_language = 1
 	jerk = TRUE
 	blood_color = "#000000"
 
@@ -802,15 +823,13 @@ TYPEINFO(/datum/mutantrace/virtual)
 		src.mob.see_in_dark = SEE_DARK_FULL
 		src.mob.see_invisible = INVIS_CLOAK
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
-				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
+			if (src.mob.emote_check(voluntary, 3 SECONDS))
+				message = "<B>[used_name]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
 				playsound(src.mob, 'sound/voice/screams/Psychic_Scream_1.ogg', 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -829,6 +848,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	override_attack = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS | HAS_LONG_NOSE)
 	voice_override = "lizard"
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_LIZARD
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
 	eye_state = "eyes_lizard"
@@ -879,18 +899,6 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
 		src.mob.see_invisible = INVIS_INFRA
 
-	proc/letter_s_replacement(match, s, letter_after)
-		if(is_lowercase_letter(s))
-			return stutter("ss") + letter_after
-		else if(is_lowercase_letter(letter_after))
-			return capitalize(stutter("ss")) + letter_after
-		else
-			return stutter("SS") + letter_after
-
-	say_filter(var/message)
-		var/static/regex/s_regex = regex(@"(s)(.?)", "ig")
-		. = s_regex.Replace(message, /datum/mutantrace/lizard/proc/letter_s_replacement)
-
 	disposing()
 		if(ishuman(src.mob))
 			var/mob/living/carbon/human/L = src.mob
@@ -912,6 +920,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	human_compatible = FALSE
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
 	jerk = TRUE
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_ZOMBIE
 	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
@@ -936,6 +945,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			M.is_zombie = 1
 			M.max_health += 100
 			M.health = max(M.max_health, M.health)
+			M.can_bleed = FALSE
 
 			if (strain == 1)
 				make_bubs(M)
@@ -962,7 +972,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			SPAWN(rand(4, 30))
 				M.emote("scream")
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
-			M.show_antag_popup("zombie")
+			M.show_antag_popup(ROLE_ZOMBIE)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -991,6 +1001,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 	disposing()
 		if (ishuman(src.mob))
+			src.mob.can_bleed = TRUE
 			src.mob.remove_stam_mod_max("zombie")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
 		..()
@@ -1003,18 +1014,13 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 		src.mob.see_in_dark = SEE_DARK_FULL
 		src.mob.see_invisible = INVIS_NONE
 
-	say_filter(var/message)
-		return pick("Urgh...", "Brains...", "Hungry...", "Kill...")
-
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
-				message = "<B>[src.mob]</B> moans!"
+			if (src.mob.emote_check(voluntary, 3 SECONDS))
+				message = "<B>[used_name]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -1085,15 +1091,13 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
-				message = "<B>[src.mob]</B> moans!"
+			if (src.mob.emote_check(voluntary, 3 SECONDS))
+				message = "<B>[used_name]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -1137,21 +1141,34 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			src.mob.mob_flags &= ~IS_BONEY
 		. = ..()
 
-	proc/set_head(var/obj/item/organ/head/head)
+	proc/head_moved(removed = FALSE)
+		if (isnull(src.head_tracker))
+			return
+
+		if (removed)
+			src.mob.set_eye(src.head_tracker)
+			src.mob.ensure_speech_tree().update_speaker_origin(src.head_tracker)
+			src.mob.ensure_listen_tree().update_listener_origin(src.head_tracker)
+
+		else
+			src.mob.set_eye(null)
+			src.mob.ensure_speech_tree().update_speaker_origin(src.mob)
+			src.mob.ensure_listen_tree().update_listener_origin(src.mob)
+
+	proc/set_head(obj/item/organ/head/head)
 		// if the head was previous linked to someone else
-		if (isskeleton(head?.linked_human) && head?.linked_human != src.mob)
-			var/mob/living/carbon/human/H = head.linked_human
-			var/datum/mutantrace/skeleton/S = H.mutantrace
-			if (H.eye == head)
-				H.set_eye(null)
-			S.head_tracker = null
-			boutput(H, SPAN_ALERT("<b>You feel as if your head has been repossessed by another!</b>"))
-		// if we were previously linked to another head
-		if (src.head_tracker)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_CREATE_TYPING)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_REMOVE_TYPING)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
-			src.head_tracker.linked_human = null
+		if (isnull(head))
+			src.mob.set_eye(null)
+
+		if (isskeleton(head?.linked_human) && (src.mob != head.linked_human))
+			var/datum/mutantrace/skeleton/S = head.linked_human.mutantrace
+			S.set_head(null)
+			boutput(head.linked_human, SPAN_ALERT("<b>You feel as if your head has been repossessed by another!</b>"))
+			head.linked_human = null
+
+		if ((head != head_tracker) && !isnull(head_tracker))
+			head_tracker.linked_human = null
+
 		head_tracker = head
 		if (src.head_tracker)
 			head_tracker.linked_human = src.mob
@@ -1162,51 +1179,36 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(src.mob.loc)
 			var/obj/item/I
-			//this should be done in like, a loop but by god the only way to do that is with vars[]
-			I = src.mob.limbs.l_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.l_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.organHolder.drop_organ("head")
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
+			I = src.mob.organHolder.drop_organ("head", src.mob)
+			I.loc = get_turf(src.mob)
+			var/list/limbs = list()
+			limbs += src.mob.limbs.l_arm?.remove(FALSE)
+			limbs += src.mob.limbs.r_arm?.remove(FALSE)
+			limbs += src.mob.limbs.l_leg?.remove(FALSE)
+			limbs += src.mob.limbs.r_leg?.remove(FALSE)
+
+			for (var/obj/limb in limbs) // You do not know my pain.
+				limb.throw_return = FALSE
+				ThrowRandom(limb, rand(2,3), 1)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
 			if(H)
 				H.brain = src.mob.organHolder?.drop_organ("brain", H)
+				ThrowRandom(H, 1)
 			else
 				qdel(src.mob.organHolder?.drop_organ("brain", null)) //perish
 
 			for(var/i in 1 to rand(2, 5))
 				I = new/obj/item/material_piece/bone(src.mob.loc)
-				I?.pixel_x += rand(-8, 8)
-				I?.pixel_y += rand(-8, 8)
+				ThrowRandom(I, 1)
 
 			src.mob.dump_contents_chance = 100
-			var/list/organlist = list()
-			for(var/idx in src.mob.organHolder.organ_list)
-				organlist += src.mob.organHolder.organ_list[idx]
-			for(var/obj/item/C in src.mob.list_ejectables())
-				if(!(C in organlist))
-					C.set_loc(src.mob.loc)
-					C.pixel_x += rand(-8, 8)
-					C.pixel_y += rand(-8, 8)
 
 			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
 			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
-			var/mob/dead/observer/newmob = src.mob.ghostize()
-			newmob?.corpse = null
 
-			return MUTRACE_ONDEATH_DEFER_DELETE
+			return MUTRACE_ONDEATH_NOTHING
 
 /obj/item/joint_wax
 	name = "joint wax"
@@ -1258,6 +1260,7 @@ TYPEINFO(/datum/mutantrace/abomination)
 	human_compatible = 0
 	uses_human_clothes = 0
 	jerk = TRUE
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_ABOMINATION
 	brutevuln = 0.2
 	override_attack = 0
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/abomination
@@ -1328,29 +1331,22 @@ TYPEINFO(/datum/mutantrace/abomination)
 						src.mob.show_text("<I><B>We cannot maintain this form much longer!</B></I>", "red")
 		return
 
-	say_filter(var/message)
-		return pick("We are one...", "Join with us...", "Sssssss...")
-
 	say_verb()
 		return "screeches"
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		switch (act)
 			if ("scream")
-				if (src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
-					message = SPAN_ALERT("<B>[src.mob] screeches!</B>")
+				if (src.mob.emote_check(voluntary, 3 SECONDS))
+					message = SPAN_ALERT("<B>[used_name] screeches!</B>")
 					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emote_allowed = 1
 		return message
 
 /datum/mutantrace/abomination/admin //This will not revert to human form
+	mutantrace_speech_modifier = null
 	drains_dna_on_life = 0
-
-	say_filter(var/message)
-		return message // let admin shamblers talk, for fun
 
 /datum/mutantrace/abomination/admin/weak //This also does not get any of the OnLife effects
 	ruff_tuff_and_ultrabuff = 0
@@ -1457,26 +1453,18 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 	say_verb()
 		return "snarls"
 
-	say_filter(var/message)
-		return message
-
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		switch(act)
 			if("howl", "scream")
-				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
-					message = SPAN_ALERT("<B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B>")
+				if (src.mob.emote_check(voluntary, 3 SECONDS))
+					message = SPAN_ALERT("<B>[used_name] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B>")
 					playsound(src.mob, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(3 SECONDS)
-						src.mob?.emote_allowed = 1
 			if("burp")
-				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
-					message = "<B>[src.mob]</B> belches."
+				if (src.mob.emote_check(voluntary, 1 SECONDS))
+					message = "<B>[used_name]</B> belches."
 					playsound(src.mob, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(1 SECOND)
-						src.mob?.emote_allowed = 1
 		return message
 
 	/// Has a chance to snap at mobs that try to pet them.
@@ -1552,6 +1540,8 @@ TYPEINFO(/datum/mutantrace/ithillid)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "gills"
 
+	ghost_icon_state = "ghost-squid"
+
 	say_verb()
 		return "glubs"
 
@@ -1583,12 +1573,10 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 	human_compatible = TRUE
 	special_head = HEAD_MONKEY
 	special_head_state = "head"
-	exclusive_language = 1
-	voice_message = "chimpers"
 	voice_name = "monkey"
-	override_language = "monkey"
+	override_language = LANGUAGE_MONKEY
 	override_attack = FALSE
-	understood_languages = list("english")
+	understood_languages = list(LANGUAGE_MONKEY, LANGUAGE_ENGLISH)
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
@@ -1600,6 +1588,8 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "fur"
 	override_limb_icons = TRUE
+
+	ghost_icon_state = "ghost-monkey"
 
 	on_attach(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1621,81 +1611,82 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 	emote(var/act, var/voluntary)
 		. = null
 		var/muzzled = istype(src.mob.wear_mask, /obj/item/clothing/mask/muzzle)
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		switch(act)
 			if("scratch")
 				if (!src.mob.restrained())
-					. = "<B>[src.mob.name]</B> scratches."
+					. = "<B>[used_name]</B> scratches."
 			if("whimper")
 				if (!muzzled)
-					. = "<B>[src.mob.name]</B> whimpers."
+					. = "<B>[used_name]</B> whimpers."
 			if("yawn")
 				if (!muzzled)
-					. = "<b>[src.mob.name]</B> yawns."
+					. = "<b>[used_name]</B> yawns."
 			if("roar")
 				if (!muzzled)
-					. = "<B>[src.mob.name]</B> roars."
+					. = "<B>[used_name]</B> roars."
 			if("tail")
-				. = "<B>[src.mob.name]</B> waves [his_or_her(src.mob)] tail."
+				. = "<B>[used_name]</B> waves [his_or_her(src.mob)] tail."
 			if("paw")
 				if (!src.mob.restrained())
-					. = "<B>[src.mob.name]</B> flails [his_or_her(src.mob)] paw."
+					. = "<B>[used_name]</B> flails [his_or_her(src.mob)] paw."
 			if("scretch")
 				if (!muzzled)
-					. = "<B>[src.mob.name]</B> scretches."
+					. = "<B>[used_name]</B> scretches."
 			if("sulk")
-				. = "<B>[src.mob.name]</B> sulks down sadly."
+				. = "<B>[used_name]</B> sulks down sadly."
 			if("roll")
 				if (!src.mob.restrained())
-					. = "<B>[src.name]</B> rolls."
+					. = "<B>[used_name]</B> rolls."
 			if("gnarl")
 				if (!muzzled)
-					. = "<B>[src.mob]</B> gnarls and shows [his_or_her(src.mob)] teeth.."
+					. = "<B>[used_name]</B> gnarls and shows [his_or_her(src.mob)] teeth.."
 			if("jump")
-				. = "<B>[src.mob.name]</B> jumps!"
+				. = "<B>[used_name]</B> jumps!"
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
-					. = "<B>[src.mob]</B> screams!"
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
+					. = "<B>[used_name]</B> screams!"
 					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
 				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
-					if (!src.mob.emote_check(voluntary, 10))
+					if (!src.mob.emote_check(voluntary, 1 SECOND))
 						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in src.mob.loc)
 						if(M == src.mob || !M.lying)
 							continue
-						. = SPAN_ALERT("<B>[src.mob]</B> farts in [M]'s face!")
+						. = SPAN_ALERT("<B>[used_name]</B> farts in [M]'s face!")
 						fart_on_other = 1
 						break
 					if(!fart_on_other)
 						switch(rand(1, 27))
-							if(1) . = "<B>[src.mob]</B> farts. It smells like... bananas. Huh."
-							if(2) . = "<B>[src.mob]</B> goes apeshit! Or at least smells like it."
-							if(3) . = "<B>[src.mob]</B> releases an unbelievably foul fart."
-							if(4) . = "<B>[src.mob]</B> chimpers out of its ass."
-							if(5) . = "<B>[src.mob]</B> farts and looks incredibly amused about it."
-							if(6) . = "<B>[src.mob]</B> unleashes the king kong of farts!"
-							if(7) . = "<B>[src.mob]</B> farts and does a silly little dance."
-							if(8) . = "<B>[src.mob]</B> farts gloriously."
-							if(9) . = "<B>[src.mob]</B> plays the song of its people. With farts."
-							if(10) . = "<B>[src.mob]</B> screeches loudly and wildly flails its arms in a poor attempt to conceal a fart."
-							if(11) . = "<B>[src.mob]</B> clenches and bares its teeth, but only manages a sad squeaky little fart."
-							if(12) . = "<B>[src.mob]</B> unleashes a chain of farts by beating its chest."
-							if(13) . = "<B>[src.mob]</B> farts so hard a bunch of fur flies off its ass."
-							if(14) . = "<B>[src.mob]</B> does an impression of a baboon by farting until its ass turns red."
-							if(15) . = "<B>[src.mob]</B> farts out a choking, hideous stench!"
-							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterical laughter."
-							if(17) . = "<B>[src.mob]</B> farts megalomaniacally."
-							if(18) . = "<B>[src.mob]</B> rips a floor-rattling fart. Damn."
-							if(19) . = "<B>[src.mob]</B> farts. What a damn dirty ape!"
-							if(20) . = "<B>[src.mob]</B> farts. It smells like a nuclear engine. Not that you know what that smells like."
-							if(21) . = "<B>[src.mob]</B> performs a complex monkey divining ritual. By farting."
-							if(22) . = "<B>[src.mob]</B> farts out the smell of the jungle. The jungle smells gross as hell apparently."
-							if(23) . = "<B>[src.mob]</B> farts up a methane monsoon!"
-							if(24) . = "<B>[src.mob]</B> unleashes an utterly rancid stink from its ass."
-							if(25) . = "<B>[src.mob]</B> makes a big goofy grin and farts loudly."
-							if(26) . = "<B>[src.mob]</B> hovers off the ground for a moment using a powerful fart."
-							if(27) . = "<B>[src.mob]</B> plays drums on its ass while farting."
+							if(1) . = "<B>[used_name]</B> farts. It smells like... bananas. Huh."
+							if(2) . = "<B>[used_name]</B> goes apeshit! Or at least smells like it."
+							if(3) . = "<B>[used_name]</B> releases an unbelievably foul fart."
+							if(4) . = "<B>[used_name]</B> chimpers out of its ass."
+							if(5) . = "<B>[used_name]</B> farts and looks incredibly amused about it."
+							if(6) . = "<B>[used_name]</B> unleashes the king kong of farts!"
+							if(7) . = "<B>[used_name]</B> farts and does a silly little dance."
+							if(8) . = "<B>[used_name]</B> farts gloriously."
+							if(9) . = "<B>[used_name]</B> plays the song of its people. With farts."
+							if(10) . = "<B>[used_name]</B> screeches loudly and wildly flails its arms in a poor attempt to conceal a fart."
+							if(11) . = "<B>[used_name]</B> clenches and bares its teeth, but only manages a sad squeaky little fart."
+							if(12) . = "<B>[used_name]</B> unleashes a chain of farts by beating its chest."
+							if(13) . = "<B>[used_name]</B> farts so hard a bunch of fur flies off its ass."
+							if(14) . = "<B>[used_name]</B> does an impression of a baboon by farting until its ass turns red."
+							if(15) . = "<B>[used_name]</B> farts out a choking, hideous stench!"
+							if(16) . = "<B>[used_name]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterical laughter."
+							if(17) . = "<B>[used_name]</B> farts megalomaniacally."
+							if(18) . = "<B>[used_name]</B> rips a floor-rattling fart. Damn."
+							if(19) . = "<B>[used_name]</B> farts. What a damn dirty ape!"
+							if(20) . = "<B>[used_name]</B> farts. It smells like a nuclear engine. Not that you know what that smells like."
+							if(21) . = "<B>[used_name]</B> performs a complex monkey divining ritual. By farting."
+							if(22) . = "<B>[used_name]</B> farts out the smell of the jungle. The jungle smells gross as hell apparently."
+							if(23) . = "<B>[used_name]</B> farts up a methane monsoon!"
+							if(24) . = "<B>[used_name]</B> unleashes an utterly rancid stink from its ass."
+							if(25) . = "<B>[used_name]</B> makes a big goofy grin and farts loudly."
+							if(26) . = "<B>[used_name]</B> hovers off the ground for a moment using a powerful fart."
+							if(27) . = "<B>[used_name]</B> plays drums on its ass while farting."
 					playsound(src.mob.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
 					src.mob.remove_stamina(STAMINA_DEFAULT_FART_COST)
@@ -1730,7 +1721,9 @@ TYPEINFO(/datum/mutantrace/seamonkey)
 	body_offset = -9
 	human_compatible = 0
 	uses_human_clothes = 0
-	override_language = "martian"
+	override_language = LANGUAGE_MARTIAN
+
+	ghost_icon_state = "ghost-martian"
 
 /datum/mutantrace/stupidbaby
 	name = "stupid alien baby"
@@ -1759,7 +1752,7 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 	human_compatible = 1
 	uses_human_clothes = 1
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
-	dna_mutagen_banned = FALSE
+	dna_mutagen_banned = TRUE
 
 
 	on_attach()
@@ -1788,6 +1781,10 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 				src.mob.make_jittery(1000)
 				sleep(rand(40, 120))
 				src.mob.gib()
+
+	disposing()
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+		. = ..()
 
 // some new simple gimmick junk
 
@@ -1843,6 +1840,8 @@ TYPEINFO(/datum/mutantrace/roach)
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+		OTHER_START_TRACKING_CAT(M, TR_CAT_BUGS)
+		M.bioHolder.AddEffect("skitter", do_stability = FALSE, scannable = FALSE, innate = TRUE)
 
 	say_verb()
 		return "clicks"
@@ -1855,7 +1854,9 @@ TYPEINFO(/datum/mutantrace/roach)
 		if(ishuman(src.mob))
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		if(src.mob)
+			src.mob.bioHolder.RemoveEffect("skitter")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
+			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
 		. = ..()
 
 TYPEINFO(/datum/mutantrace/cat)
@@ -1921,6 +1922,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	aquatic = 1
 	voice_name = "amphibian"
 	jerk = FALSE
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3
@@ -1935,11 +1937,10 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#22EE99"
 
+	ghost_icon_state = "ghost-amphibian"
+
 	say_verb()
 		return "croaks"
-
-	say_filter(var/message)
-		return replacetext(message, "r", stutter("rrr"))
 
 	on_attach(var/mob/living/carbon/human/M)
 		..()
@@ -1958,25 +1959,20 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			src.mob.bioHolder.RemoveEffect("accent_chav")
 		..()
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		switch (act)
 			if ("scream","howl","laugh")
-				if (src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
-					message = SPAN_ALERT("<B>[src.mob] makes an awful noise!</B>")
+				if (src.mob.emote_check(voluntary, 3 SECONDS))
+					message = SPAN_ALERT("<B>[used_name] makes an awful noise!</B>")
 					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emote_allowed = 1
 					return message
 
 			if("burp","fart","gasp")
-				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
-					message = "<B>[src.mob]</B> croaks."
+				if (src.mob.emote_check(voluntary, 1 SECOND))
+					message = "<B>[used_name]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(1 SECOND)
-						if (src.mob) src.mob.emote_allowed = 1
 					return message
 			else ..()
 
@@ -1997,6 +1993,8 @@ TYPEINFO(/datum/mutantrace/amphibian/shelter)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#91b978"
 
+	ghost_icon_state = "ghost-shelterfrog"
+
 TYPEINFO(/datum/mutantrace/kudzu)
 	icon = 'icons/mob/kudzu.dmi'
 /datum/mutantrace/kudzu
@@ -2008,7 +2006,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	jerk = TRUE //Not really, but NT doesn't really like treehuggers
 	aquatic = 1
 	needs_oxy = 0 //get their nutrients from the kudzu
-	understood_languages = list("english", "kudzu")
+	understood_languages = list(LANGUAGE_ENGLISH)
 	movement_modifier = /datum/movement_modifier/kudzu
 	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
@@ -2047,7 +2045,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 		/datum/targetable/kudzu/seed,
 		/datum/targetable/kudzu/heal_other,
 		/datum/targetable/kudzu/stealth,
-		/datum/targetable/kudzu/kudzusay,
 		/datum/targetable/kudzu/vine_appendage
 	)
 
@@ -2067,14 +2064,25 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
+				H.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
+				H.ensure_listen_tree().AddListenInput(LISTEN_INPUT_KUDZUCHAT)
 
+				if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/ch = H.abilityHolder
+					ch.addHolder(/datum/abilityHolder/kudzu)
 
 	disposing()
 		if(ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
+
+			H.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
+			H.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_KUDZUCHAT)
+
 		return ..()
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)
@@ -2084,30 +2092,38 @@ TYPEINFO(/datum/mutantrace/kudzu)
 		src.mob.sight |= SEE_OBJS
 		src.mob.see_in_dark = SEE_DARK_FULL
 */
+	sight_modifier()
+		if (src.mob.client)
+			src.mob.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+			// src.mob
 	//Should figure out what I'm doing with this and the onLife in the abilityHolder one day. I'm thinking, maybe move it all to the abilityholder, but idk, composites are weird.
 	onLife(var/mult = 1)
-		if (!src.mob.abilityHolder)
-			src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
+		// if (!src.mob.abilityHolder)
+		// 	src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
+		var/datum/abilityHolder/kudzu/KAH = src.mob.get_ability_holder(/datum/abilityHolder/kudzu)
+		if (!istype(KAH))
+			KAH = src.mob.abilityHolder
 
-		var/datum/abilityHolder/kudzu/KAH = src.mob.abilityHolder
-		var/round_mult = max(1, round((mult)))
+		var/round_mult = max(2, round((mult)))
 		var/turf/T = get_turf(src.mob)
 		//if on kudzu, get nutrients for later use. If at max nutrients. Then heal self.
 		if (T && T.temp_flags & HAS_KUDZU)
 			if (KAH.points < KAH.MAX_POINTS)
-				KAH.points += round_mult
-			else
-				//at max points, so heal
-				src.mob.take_toxin_damage(-round_mult)
-				src.mob.HealDamage("All", round_mult, round_mult)
-				if (prob(7) && src.mob.find_ailment_by_type(/datum/ailment/malady/flatline))
-					src.mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
-					src.mob.cure_disease_by_path(/datum/ailment/malady/flatline)
+				// KAH.points += round_mult
+				KAH.addPoints(round_mult, /datum/abilityHolder/kudzu)
+
+			//ALWAYS HEAL ON KUDZU TILES
+			src.mob.take_toxin_damage(-round_mult)
+			src.mob.HealDamage("All", round_mult, round_mult)
+			if (prob(7) && src.mob.find_ailment_by_type(/datum/ailment/malady/flatline))
+				src.mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+				src.mob.cure_disease_by_path(/datum/ailment/malady/flatline)
 
 		else
 			//nutrients for a bit of grace period
 			if (KAH.points > 0)
-				KAH.points -= 10
+				// KAH.points -= 10
+				KAH.addPoints(-10, /datum/abilityHolder/kudzu)
 			else
 				//do effects from not being on kudzu here.
 				src.mob.take_toxin_damage(2 * round_mult)
@@ -2115,7 +2131,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				// random_brute_damage(src.mob, 2 * mult)
 				if (prob(30))
 					src.mob.changeStatus("knockdown", 3 SECONDS)
-
 		return
 
 /obj/effect/rt/cow_distorts
@@ -2146,6 +2161,7 @@ TYPEINFO(/datum/mutantrace/cow)
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_COW
 	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/cow
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow,
@@ -2183,6 +2199,8 @@ TYPEINFO(/datum/mutantrace/cow)
 	var/obj/effect/rt/cow_backpack_mask/mask_backpack = new
 
 	on_attach(var/mob/living/carbon/human/H)
+		if(prob(0.1))
+			src.blood_id = pick("chocolate_milk", "strawberry_milk", "super_milk", "banana_milk", "blue_milk")
 		..()
 		if(ishuman(src.mob))
 			src.mob.update_face()
@@ -2241,19 +2259,14 @@ TYPEINFO(/datum/mutantrace/cow)
 
 		return output
 
-	say_filter(var/message)
-		.= replacetext(message, "cow", "human")
-		var/replace_lowercase = replacetextEx(., "m", stutter("mm"))
-		var/replace_uppercase = replacetextEx(replace_lowercase, "M", stutter("MM"))
-		return replace_uppercase
-
 	emote(var/act, var/voluntary)
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		switch(act)
 			if ("scream")
 				if (src.mob.bioHolder.HasEffect("mute"))
 					return // use muted scream emote handling
-				if (src.mob.emote_check(voluntary, 50))
-					. = "<B>[src.mob]</B> moos!"
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
+					. = "<B>[used_name]</B> moos!"
 					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
 				if (src.mob.emote_check(voluntary))
@@ -2268,6 +2281,7 @@ TYPEINFO(/datum/mutantrace/cow)
 	proc/release_milk() //copy pasted some piss code, im sorry
 		var/obj/item/storage/toilet/toilet = locate() in src.mob.loc
 		var/obj/item/reagent_containers/glass/beaker = locate() in src.mob.loc
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 
 		var/can_output = 0
 		if (ishuman(src.mob))
@@ -2276,25 +2290,25 @@ TYPEINFO(/datum/mutantrace/cow)
 				can_output = 1
 
 		if (!can_output)
-			.= "<B>[src.mob]</B> strains, but fails to output milk!"
+			.= "<B>[used_name]</B> strains, but fails to output milk!"
 		else if (toilet && (src.mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in src.mob.loc)
-				.= "<B>[src.mob]</B> dispenses milk into the toilet. What a waste."
+				.= "<B>[used_name]</B> dispenses milk into the toilet. What a waste."
 				T.clogged += 0.1
 				break
 		else if (beaker)
-			.= pick("<B>[src.mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[src.mob]</B> takes aim and dispenses milk into the beaker!", "<B>[src.mob]</B> fills the beaker with milk!")
+			.= pick("<B>[used_name]</B> takes aim and dispenses some milk into the beaker.", "<B>[used_name]</B> takes aim and dispenses milk into the beaker!", "<B>[used_name]</B> fills the beaker with milk!")
 			transfer_blood(src.mob, beaker, 10)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container(TRUE))
-				.= (SPAN_ALERT("<B>[src.mob] dispenses milk into [milk_target].</B>"))
+				.= (SPAN_ALERT("<B>[used_name] dispenses milk into [milk_target].</B>"))
 				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return
 
 			// possibly change the text colour to the gray emote text
-			.= (pick("<B>[src.mob]</B> milk fall out.", "<B>[src.mob]</B> makes a milk puddle on the floor."))
+			.= (pick("<B>[used_name]</B> milk fall out.", "<B>[used_name]</B> makes a milk puddle on the floor."))
 
 			var/turf/T = get_turf(src.mob)
 			bleed(src.mob, 10, 3, T)
@@ -2312,6 +2326,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	human_compatible = TRUE
 	override_attack = 0
 	voice_override = "pug"
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_PUG
 	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/pug
 	mutant_organs = list("tail" = /obj/item/organ/tail/pug,
@@ -2356,11 +2371,8 @@ TYPEINFO(/datum/mutantrace/pug)
 	say_verb()
 		return "barks"
 
-	say_filter(var/message)
-		. = replacetext(message, "rough", "ruff")
-		. = replacetext(., "pog", "pug")
-
 	emote(var/act, var/voluntary)
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		switch(act)
 			if ("sleuth")
 				if (src.mob.emote_check(voluntary, 5 SECONDS))
@@ -2368,7 +2380,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					playsound(src.mob, "sound/voice/screams/[voice_override].ogg", 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					. = list("<B>[src.mob]</B> growls!", "<I>growls</I>")
+					. = list("<B>[used_name]</B> growls!", "<I>growls</I>")
 			if ("sneeze")
 				if (src.mob.emote_check(voluntary, 2 SECONDS))
 					. = src.sneeze()
@@ -2381,7 +2393,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			if ("wheeze")
 				if (src.mob.emote_check(voluntary, 2 SECONDS))
 					playsound(src.mob, 'sound/voice/pug_wheeze.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					. = list("<B>[src.mob]</B> wheezes.", "<I>wheezes</I>")
+					. = list("<B>[used_name]</B> wheezes.", "<I>wheezes</I>")
 			else
 				. = ..()
 
@@ -2392,45 +2404,41 @@ TYPEINFO(/datum/mutantrace/pug)
 		var/atom/A = tgui_input_list(src.mob, "What would you like to sleuth?", "Sleuthing", src.mob.get_targets(1, "both"), 20 SECONDS)
 		if (!A)
 			return
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		var/adjective = pick("astutely", "discerningly", "intently")
-		. = list("<B>[src.mob]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
-		if (ismob(A))
-			var/mob/living/M = A
-			if (M.mind)
-				boutput(src.mob, SPAN_NOTICE("[M] smells like a [M.mind?.color]."))
-				return
-		var/list/L = A.fingerprints_full
-		if (!length(L))
-			boutput(src.mob, SPAN_NOTICE("Smells like \a [A], alright."))
-			return
-		var/list/print = L[pick(L)]
-		var/color = print["color"]
-		if (!color)
-			boutput(src.mob, SPAN_NOTICE("Smells like \a [A], alright."))
-			return
-		var/timestamp = print["timestamp"]
-		var/intensity = "faintly"
-		if (TIME < timestamp + 3 MINUTES)
-			intensity = "strongly"
-		else if (TIME < timestamp + 10 MINUTES)
-			intensity = "kind"
-		boutput(src.mob, SPAN_NOTICE("\The [A] smells [intensity] of a [color]."))
+		var/adjective = pick("astutely", "discerningly", "intently", "casually", "doggedly", "intriguingly")
+		. = list("<B>[used_name]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
+
+		var/sleuth_text = ""
+		if (isliving(A))
+			var/mob/living/L = A
+			if (L.mind?.color)
+				sleuth_text = SPAN_NOTICE("<li>[L] mostly smells like \a [L.mind.color.id].</li>")
+		if(A.forensic_holder)
+			var/datum/forensic_group/basic_list/sleuth/sleuth_group = A.forensic_holder.get_group(FORENSIC_GROUP_SLEUTH)
+			if(istype(sleuth_group))
+				sleuth_text += sleuth_group.get_sleuth_text(A, FALSE)
+		if(!sleuth_text)
+			sleuth_text = SPAN_NOTICE("Smells like \a [A], alright.")
+		boutput(src.mob, sleuth_text)
 
 	proc/sneeze()
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		playsound(src.mob, 'sound/voice/pug_sneeze.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src.mob]</B> sneezes.", "<I>sneezes</I>")
+		. = list("<B>[used_name]</B> sneezes.", "<I>sneezes</I>")
 		animate(src.mob, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 		animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
 		animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
 
 	proc/sniff()
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src.mob]</B> sniffs.", "<I>sniffs</I>")
+		. = list("<B>[used_name]</B> sniffs.", "<I>sniffs</I>")
 
 	proc/snore()
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		playsound(src.mob, 'sound/voice/snore.ogg', rand(5,10) * 10, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src.mob]</B> snores.", "<I>snores</I>")
+		. = list("<B>[used_name]</B> snores.", "<I>snores</I>")
 		src.mob.AddOverlays(snore_bubble, "snore_bubble")
 		SPAWN(1.5 SECONDS)
 			src.mob.ClearSpecificOverlays("snore_bubble")
@@ -2439,8 +2447,9 @@ TYPEINFO(/datum/mutantrace/pug)
 		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
 		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !(istype(item, /obj/item/parts) || istype(item, /obj/item/material_piece/bone))))
 			return
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		src.mob.throw_at(get_turf(item), 1, 1)
-		src.mob.visible_message(SPAN_ALERT("[src.mob] staggers."))
+		src.mob.visible_message(SPAN_ALERT("[used_name] staggers."))
 		src.mob.emote("woof")
 
 /datum/mutantrace/chicken
@@ -2455,11 +2464,12 @@ TYPEINFO(/datum/mutantrace/pug)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_PARTIAL_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 
-	emote(var/act, var/voluntary)
+	emote(act, voluntary)
+		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
 		switch(act)
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
-					. = "<B>[src.mob]</B> BWAHCAWCKs!"
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
+					. = "<B>[used_name]</B> BWAHCAWCKs!"
 					playsound(src.mob, 'sound/voice/screams/chicken_bawk.ogg', 50, 0, 0, src.mob.get_age_pitch())
 
 /datum/mutantrace/cyberman
@@ -2509,6 +2519,16 @@ TYPEINFO(/datum/mutantrace/pug)
 			new /obj/item/implant/robotalk(H)
 			SPAWN(1 SECOND)
 				H.update_colorful_parts()
+
+///Returns whether the given mutantrace type is safe to randomly mutate people into.
+proc/safe_mutantrace_filter(type)
+	var/datum/mutantrace/mutrace = type
+	return !initial(mutrace.dna_mutagen_banned)
+
+///Returns whether the given mutantrace type is safe to randomly mutate people into, but only the ones that don't occur in genepools.
+proc/safe_mutantrace_nogenepool_filter(type)
+	var/datum/mutantrace/mutrace = type
+	return !initial(mutrace.dna_mutagen_banned) && mutrace.race_mutation && !mutrace.race_mutation.occur_in_genepools
 
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R

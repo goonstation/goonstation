@@ -38,6 +38,13 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
+/proc/capitalize_each_word(t as text)
+	var/list/split = splittext(t, " ")
+	var/list/words = list()
+	for (var/word in split)
+		words += capitalize(word)
+	return list2text(words, " ")
+
 /// Returns true if the given string has a vowel
 /proc/isVowel(var/t as text)
 	return findtextEx(lowertext(t), "aeiouåäö") > 0
@@ -163,6 +170,8 @@ proc/pluralize(word)
 	else
 		. += "s"
 
+proc/list2text(L, d = "")
+	return jointext(L, d)
 
 
 // DM simultaneously makes cursed shit like this work...
@@ -175,3 +184,4 @@ var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
   * Removes the special data inserted via use of \improper etc in strings
   */
 #define stripTextMacros(text) replacetext(text, regexTextMacro, "")
+

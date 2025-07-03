@@ -335,11 +335,11 @@ datum
 					var/mob/living/carbon/human/H = M
 					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
 					var/hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_first = new hair_type
+					H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new hair_type
 					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_second = new hair_type
+					H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new hair_type
 					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_third = new hair_type
+					H.bioHolder.mobAppearance.customizations["hair_top"].style =  new hair_type
 					H.update_colorful_parts()
 					boutput(H, SPAN_NOTICE("Your scalp feels itchy!"))
 				..()
@@ -363,11 +363,11 @@ datum
 				if (ishuman(M))
 					var/somethingchanged = 0
 					var/mob/living/carbon/human/H = M
-					if (H.bioHolder.mobAppearance.customization_first.id != "80s")
-						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/eighties
+					if (H.bioHolder.mobAppearance.customizations["hair_bottom"].style.id != "80s")
+						H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/eighties
 						somethingchanged = 1
-					if (H.gender == MALE && H.bioHolder.mobAppearance.customization_second.id != "longbeard")
-						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/longbeard
+					if (H.gender == MALE && H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
+						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/longbeard
 						somethingchanged = 1
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
 						somethingchanged = 1
@@ -606,7 +606,7 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/list/hotspots = list()
-				for (var/obj/hotspot/hotspot in target)
+				for (var/atom/movable/hotspot/hotspot in target)
 					hotspots += hotspot
 				if (length(hotspots))
 					if (istype(target, /turf/simulated))
@@ -618,7 +618,7 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					for (var/obj/hotspot/hotspot as anything in hotspots)
+					for (var/atom/movable/hotspot/hotspot as anything in hotspots)
 						qdel(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
@@ -719,8 +719,8 @@ datum
 					return
 
 				var/colorize
-				if (istype(O,/obj/machinery/atmospherics/pipe/simple))
-					var/obj/machinery/atmospherics/pipe/simple/P = O
+				if (istype(O,/obj/machinery/atmospherics/pipe))
+					var/obj/machinery/atmospherics/pipe/P = O
 
 					if(P.can_rupture)
 						var/max_reinforcement = 1e9
@@ -887,7 +887,7 @@ datum
 					volume = min(volume, src.volume / (2 + 3 / length(covered)))
 				if(volume < 5)
 					return
-				O.AddComponent(/datum/component/glue_ready, volume * 20 SECONDS, 5 SECONDS)
+				O.AddComponent(/datum/component/glue_ready, null, clamp(volume/4, 3, 15) SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
 					T.visible_message(SPAN_NOTICE("\The [O] is coated in a layer of glue!"))
@@ -958,19 +958,11 @@ datum
 				..()
 				return
 
-			proc/unglue_attached_to(atom/A)
-				var/atom/Aloc = isturf(A) ? A : A.loc
-				for(var/atom/movable/AM in Aloc)
-					var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
-					// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
-					if(glued_comp?.glued_to == A && !isnull(glued_comp.glue_removal_time))
-						qdel(glued_comp)
-
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if (method == TOUCH)
 					remove_stickers(M, raw_volume)
-				unglue_attached_to(M)
+				M.unglue_attached_to()
 
 			reaction_obj(var/obj/O, var/volume)
 				remove_stickers(O, volume)
@@ -980,11 +972,11 @@ datum
 				var/datum/component/glue_ready/glue_ready_comp = O.GetComponent(/datum/component/glue_ready)
 				if(glue_ready_comp)
 					qdel(glue_ready_comp)
-				unglue_attached_to(O)
+				O.unglue_attached_to()
 
 			reaction_turf(var/turf/T, var/volume)
 				remove_stickers(T, volume)
-				unglue_attached_to(T)
+				T.unglue_attached_to()
 
 			proc/remove_stickers(var/atom/target, var/volume)
 				var/can_remove_amt = volume / 10
@@ -1078,18 +1070,6 @@ datum
 			hygiene_value = -0.5
 			viscosity = 0.55
 
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-				. = ..()
-				if (method == INGEST)
-					var/ranchance = rand(1,10)
-					if (ranchance == 1)
-						boutput(M, SPAN_ALERT("You feel very sick."))
-						M.reagents.add_reagent("toxin", rand(1,5))
-					else if (ranchance <= 5)
-						boutput(M, SPAN_ALERT("That tasted absolutely FOUL."))
-						M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
-					else boutput(M, SPAN_ALERT("Yuck!"))
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.endurance_bonus += 0.5
@@ -1144,8 +1124,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (M.bodytemperature > 0 && !M.hasStatus("burning"))
-					M.bodytemperature = max(M.bodytemperature-(10 * mult),0)
+				if(!M.hasStatus("burning"))
+					M.changeBodyTemp(-10 KELVIN * mult)
 				..()
 				return
 
@@ -1158,7 +1138,7 @@ datum
 							B.dispose()
 
 				var/list/hotspots = list()
-				for (var/obj/hotspot/hotspot in target)
+				for (var/atom/movable/hotspot/hotspot in target)
 					hotspots += hotspot
 				if (length(hotspots))
 					if (istype(target, /turf/simulated))
@@ -1170,7 +1150,7 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					for (var/obj/hotspot/hotspot as anything in hotspots)
+					for (var/atom/movable/hotspot/hotspot as anything in hotspots)
 						qdel(hotspot)
 
 				return
@@ -1192,7 +1172,7 @@ datum
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						var/amt = min(1 * mult, 20-check_amount)
+						var/amt = min(1 * src.calculate_depletion_rate(M, mult), 20-check_amount)
 						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt, temp_new = holder.total_temperature + 20)
 						holder.add_reagent("enzymatic_leftovers", amt/2, temp_new = holder.total_temperature + 20)
 				..()
@@ -1237,23 +1217,22 @@ datum
 			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
-				if (volume >= 5)
-					for (var/obj/decal/bloodtrace/B in T)
-						B.invisibility = INVIS_NONE
+				for (var/obj/decal/bloodtrace/B in T)
+					B.invisibility = INVIS_NONE
+					SPAWN(30 SECONDS)
+						B?.invisibility = INVIS_ALWAYS
+				for (var/obj/item/I in T)
+					if (I.get_forensic_trace("bDNA"))
+						var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
+						blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
+						blood_overlay.color = "#3399FF"
+						blood_overlay.alpha = 100
+						blood_overlay.blend_mode = BLEND_INSET_OVERLAY
+						I.appearance_flags |= KEEP_TOGETHER
+						I.UpdateOverlays(blood_overlay, "blood_traces")
 						SPAWN(30 SECONDS)
-							B?.invisibility = INVIS_ALWAYS
-					for (var/obj/item/I in T)
-						if (I.get_forensic_trace("bDNA"))
-							var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
-							blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
-							blood_overlay.color = "#3399FF"
-							blood_overlay.alpha = 100
-							blood_overlay.blend_mode = BLEND_INSET_OVERLAY
-							I.appearance_flags |= KEEP_TOGETHER
-							I.UpdateOverlays(blood_overlay, "blood_traces")
-							SPAWN(30 SECONDS)
-								I?.appearance_flags &= ~KEEP_TOGETHER
-								I?.UpdateOverlays(null, "blood_traces")
+							I?.appearance_flags &= ~KEEP_TOGETHER
+							I?.UpdateOverlays(null, "blood_traces")
 
 		oil
 			name = "oil"
@@ -1267,6 +1246,7 @@ datum
 			hygiene_value = -1.5
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.13
+			volatility = 1
 			minimum_reaction_temperature = T0C + 200
 			var/min_req_fluid = 0.25 //at least 1/4 of the fluid needs to be oil for it to ignite
 
@@ -1296,7 +1276,7 @@ datum
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
 						else if (ishuman(M))
 							var/mob/living/carbon/human/H = M
-							if (!H.mutantrace.aquaphobic)
+							if (!H.mutantrace?.aquaphobic)
 								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
@@ -1343,6 +1323,11 @@ datum
 						M.changeStatus("paralysis", 3 SECONDS * mult)
 						M.changeStatus("muted", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
+					#ifdef COMSIG_MOB_FAKE_DEATH
+					SEND_SIGNAL(M, COMSIG_MOB_FAKE_DEATH)
+					#endif
+					if (deathConfettiActive)
+						M.deathConfetti()
 					M.setStatusMin("paralysis", 3 SECONDS * mult)
 					M.setStatusMin("muted", 3 SECONDS * mult)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
@@ -1373,6 +1358,11 @@ datum
 					if (10 to 18)
 						M.setStatus("drowsy", 20 SECONDS)
 				if (counter >= 19 && !fakedeathed)
+					#ifdef COMSIG_MOB_FAKE_DEATH
+					SEND_SIGNAL(M, COMSIG_MOB_FAKE_DEATH)
+					#endif
+					if (deathConfettiActive)
+						M.deathConfetti()
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
@@ -1439,6 +1429,30 @@ datum
 						H.bioHolder.age += 1 * mult
 					if (probmult(10))
 						boutput(H, SPAN_ALERT("You feel [pick("old", "strange", "frail", "peculiar", "odd")]."))
+					if (probmult(4))
+						H.emote("scream")
+				..()
+				return
+
+		deageinium
+			name = "deageinium"
+			id = "deageinium"
+			description = "An over-energetic jelly that writhes with youthful excitement."
+			reagent_state = LIQUID
+			fluid_r = 89
+			fluid_g = 242
+			fluid_b = 140
+			transparency = 128
+			viscosity = 0.8
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if(prob(30) && istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					H.bioHolder.age = max(M.bioHolder.age - round(1 * mult), 18)
+					if (probmult(10))
+						boutput(H, SPAN_ALERT("You feel [pick("young", "energetic", "inexperienced", "tempermental", "odd")]."))
 					if (probmult(4))
 						H.emote("scream")
 				..()
@@ -1530,14 +1544,13 @@ datum
 
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+					M.reagents.add_reagent("histamine", rand(25, 50) * src.calculate_depletion_rate(M, mult))
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 10)
-					if (probmult(8))
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
+					if (probmult(30))
+						M.nauseate(1)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 
@@ -1572,14 +1585,13 @@ datum
 					M = holder.my_atom
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+					M.reagents.add_reagent("histamine", rand(25, 50) * src.calculate_depletion_rate(M, mult))
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 20)
-					if (probmult(8))
-						M.visible_message(SPAN_ALERT("[M] hoots all over [himself_or_herself(M)]."), SPAN_ALERT("You hoot all over yourself!"))
-						M.vomit()
+					if (probmult(30))
+						M.nauseate(1)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 				else if (probmult(4))
@@ -1673,7 +1685,7 @@ datum
 						var/amt = min(volume/100,1)
 						src.holder.remove_reagent("sewage",amt)
 						M.reagents.add_reagent("sewage",amt)
-						src.reaction_mob(M,INGEST,amt)
+						src.reaction_mob(M,INGEST,amt,null,amt)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1681,6 +1693,7 @@ datum
 				if (prob(7))
 					M.emote(pick("twitch","drool","moan"))
 					M.take_toxin_damage(1 * mult)
+					M.nauseate(2)
 				..()
 				return
 
@@ -1700,6 +1713,8 @@ datum
 				. = ..()
 				if(volume < 1)
 					return
+				if(isghostcritter(M) || issmallanimal(M))
+					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "ants_scream", 10 SECONDS)) //lets make it less spammy
@@ -1711,6 +1726,8 @@ datum
 				random_brute_damage(M, 4)
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				if(isghostcritter(M) || issmallanimal(M))
+					return
 				if (!M) M = holder.my_atom
 				random_brute_damage(M, 2 * mult)
 				..()
@@ -1775,33 +1792,35 @@ datum
 				if (!M) M = holder.my_atom
 				if(istype(M, /mob/living/critter/spider))
 					return
-				var/turf/T = get_turf(M)
 				if (prob(50))
 					random_brute_damage(M, 1 * mult)
 				else if (prob(10))
 					random_brute_damage(M, 2 * mult)
 					M.emote(pick("twitch", "twitch_s", "grumble"))
-					M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under their skin", "their skin")]!"),\
+					M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under [his_or_her(M)] skin", "[his_or_her(M)] skin")]!"),\
 					SPAN_ALERT("<b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b>"))
 				else if (prob(10))
 					random_brute_damage(M, 5 * mult)
 					M.emote("twitch")
 					M.setStatusMin("knockdown", 2 SECONDS * mult)
-					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at their own skin!"),\
+					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
-				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
-					if (!locate(/obj/decal/cleanable/vomit) in T)
-						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
-						random_brute_damage(M, rand(4))
-						M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]"),\
-						SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b>"))
-						if (prob(33))
-							if (prob(5))
-								new /mob/living/critter/spider/baby(M)
-							else
-								new /mob/living/critter/spider/baby/nice(M)
+
+				if (prob(30))
+					M.nauseate(2)
+
 				..()
 				return
+
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/spider)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/spider)
 
 		hugs
 			name = "pure hugs"
@@ -1948,6 +1967,7 @@ datum
 						return
 					var/obj/item/pen/crayon/chalk/W = new(T)
 					chalk_color = holder.get_average_rgb()
+					W.true_color = chalk_color
 					W.assign_color(chalk_color)
 
 		shark_dna
@@ -2206,7 +2226,7 @@ datum
 				return
 
 			proc/replace_organ(var/mob/living/carbon/human/H)
-				var/organ_name = pick("stomach", "pancreas", "liver", "spleen", "left_lung", "right_lung", "left_kidney", "right_kidney", "appendix")
+				var/organ_name = pick(non_vital_organ_strings)
 				var/obj/item/organ/organ = H.get_organ(organ_name)
 				if (istype(organ, /obj/item/organ/flock_crystal))
 					return
@@ -2456,7 +2476,7 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control [his_or_her(M)] legs!"))
 						M.change_misstep_chance(33 * mult)
 						M.setStatusMin("knockdown", 3 SECONDS * mult)
 					else if (effect <= 4)
@@ -2639,7 +2659,7 @@ datum
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				M.reagents.add_reagent("water", severity * mult)
+				M.reagents.add_reagent("water", severity * 2.5 * src.calculate_depletion_rate(M, mult))
 
 		transparium
 			name = "transparium"
@@ -2854,7 +2874,7 @@ datum
 					boutput(M, SPAN_ALERT("<b>So itchy!</b>"))
 					random_brute_damage(M, 2 * mult)
 				if (prob(1))
-					M.reagents.add_reagent("histamine", 1 * mult)
+					M.reagents.add_reagent("histamine", 10 * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
@@ -3193,7 +3213,6 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.growth_rate += 2.4
-				growth_tick.growth_rate += 2.4
 				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
 				if (DNA.cropsize > 1)
@@ -3213,8 +3232,6 @@ datum
 			fluid_g = 0
 			transparency = 255
 			value = 2
-			var/list/pathogens = list()
-			var/pathogens_processed = 0
 			var/congealed = FALSE //! if this blood came from a pill, stops vampires getting points from it
 			hygiene_value = -2
 			hunger_value = 0.068
@@ -3242,7 +3259,7 @@ datum
 							blood.blood_DNA = bioHolder.Uid
 						blood.reagents.add_reagent(src.id, volume, src.data)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, paramslist = 0)
 				. = ..()
 				if (!volume_passed) return
 				if (!ishuman(M)) return
@@ -3267,34 +3284,16 @@ datum
 								if (prob(33))
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
-								M.change_vampire_blood(bloodget, 1) // vamp_blood
-								M.change_vampire_blood(bloodget, 0) // vamp_blood_remaining
-								V.blood_tracking_output()
+								var/datum/bioHolder/unlinked/bioHolder = src.data
+								M.change_vampire_blood(bloodget, 0, victim = bioHolder?.weak_owner?.deref()) // vamp_blood_remaining
 								V.check_for_unlocks()
-								holder.del_reagent(src.id)
+								if("digestion" in paramslist)
+									holder.del_reagent(src.id)
 								return 0
 				return 1
 
 			// fluid todo : Hey we should have a reaction_obj that applies blood overlay
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				// Let's assume that blood immediately mixes with the bloodstream of the mob.
-				if (!pathogens_processed) //Only process pathogens once
-					pathogens_processed = 1
-					for (var/uid in src.pathogens)
-						var/datum/pathogen/P = src.pathogens[uid]
-						logTheThing(LOG_PATHOLOGY, M, "metabolizing [src] containing pathogen [P].")
-						M.infected(P)
-				..()
-
-/* this begs the question how bloodbags worked at all if this was a thing
-				if (holder.has_reagent("dna_mutagen")) //If there's stable mutagen in the mix and it doesn't have data we gotta give it a chance to get some
-					var/datum/reagent/SM = holder.get_reagent("dna_mutagen")
-					if (SM.data) holder.del_reagent(src.id)
-				else
-					holder.del_reagent(src.id)
-				return
-*/
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
 				if (growing.growthmode == "carnivore")
@@ -3305,21 +3304,6 @@ datum
 				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
 					var/datum/reagent/blood/blood = target.get_reagent("blood")
 					blood.congealed = TRUE
-				var/list/source_pathogens = source.aggregate_pathogens()
-				var/list/target_pathogens = target.aggregate_pathogens()
-				var/target_changed = 0
-				for (var/uid in source_pathogens)
-					if (!(uid in target_pathogens))
-						target_pathogens += uid
-						target_pathogens[uid] = source_pathogens[uid]
-						target_changed = 1
-				if (target_changed)
-					for (var/reagent_id in pathogen_controller.pathogen_affected_reagents)
-						if (target.has_reagent(reagent_id))
-							var/datum/reagent/blood/B = target.get_reagent(reagent_id)
-							if (!istype(B))
-								continue
-							B.pathogens = target_pathogens
 
 		blood/bloodc
 			id = "bloodc"
@@ -3333,6 +3317,11 @@ datum
 					if (holder.my_atom)
 						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
 							boutput(O, SPAN_ALERT("The blood tries to climb out of [holder.my_atom] before sizzling away!"))
+						// Real world changeling tests should only happen in containers at a slow pace
+						if (!ON_COOLDOWN(global, "bloodc_logging", 4 SECONDS))
+							var/datum/bioHolder/bioHolder = src.data
+							if(bioHolder && bioHolder.ownerName)
+								logTheThing(LOG_COMBAT, bioHolder.ownerName, "Changeling blood reaction in [holder.my_atom] at [log_loc(holder.my_atom)]")
 					else
 						for(var/turf/t in covered)
 							for (var/mob/O in AIviewers(t, null))
@@ -3596,7 +3585,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.reagents.add_reagent("cholesterol", 1 * mult)
+				M.reagents.add_reagent("cholesterol", 2.5 * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
@@ -4007,7 +3996,7 @@ datum
 			transparency = 255
 
 			reaction_turf(var/turf/T, var/volume)
-				if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (volume >= 1))
+				if (!(istype(T, /turf/space)) && (volume >= 1))
 					if (!T.messy || !locate(/obj/decal/cleanable/sakura) in T)
 						make_cleanable(/obj/decal/cleanable/sakura,T)
 
@@ -4247,7 +4236,7 @@ datum
 		while (!disposed)
 			if (BOUNDS_DIST(src, src.deathtarget) == 0)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message(SPAN_ALERT("<B>[src]</B> flips up, over and behind [deathtarget] and punches them in the groin before rolling under the floortiles!"), 1)
+					O.show_message(SPAN_ALERT("<B>[src]</B> flips up, over and behind [deathtarget] and punches [him_or_her(deathtarget)] in the groin before rolling under the floortiles!"), 1)
 
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)

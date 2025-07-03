@@ -5,32 +5,38 @@
 	chance_leave = 45
 	chance_arrive = 66
 
-	max_goods_buy = 5
-	max_goods_sell = 4
+	base_goods_buy = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/generic/anyore,
+			/datum/commodity/trader/generic/herbs,
+			/datum/commodity/trader/generic/anyfood,
+			/datum/commodity/trader/generic/shipcomponents,
+			/datum/commodity/trader/generic/jumpsuits,
+			/datum/commodity/trader/generic/furniture,
+			/datum/commodity/trader/generic/shoes,
+			/datum/commodity/trader/generic/instruments,
+			/datum/commodity/trader/generic/utensils
+		),
+		TRADER_RARITY_UNCOMMON = list(),
+		TRADER_RARITY_RARE = list()
+	)
 
-	base_goods_buy = list(/datum/commodity/trader/generic/anyore,
-	/datum/commodity/trader/generic/herbs,
-	/datum/commodity/trader/generic/anyfood,
-	/datum/commodity/trader/generic/shipcomponents,
-	/datum/commodity/trader/generic/jumpsuits,
-	/datum/commodity/trader/generic/furniture,
-	/datum/commodity/trader/generic/pens)
-	base_goods_sell = list(/datum/commodity/trader/generic/sheetmetal,
-	/datum/commodity/trader/generic/rcd_ammo,
-	/datum/commodity/trader/generic/fabric,
-	/datum/commodity/trader/generic/telecrystal,
-	/datum/commodity/trader/generic/glowstick,
-	/datum/commodity/trader/generic/gasmask,
-	/datum/commodity/trader/generic/monkey,
-	/datum/commodity/trader/ringtone_dogs)
-	/*
-	/datum/commodity/trader/synthmodule/bacteria,
-	/datum/commodity/trader/synthmodule/virii,
-	/datum/commodity/trader/synthmodule/parasite,
-	/datum/commodity/trader/synthmodule/fungi,
-	/datum/commodity/trader/synthmodule/gmcell,
-	/datum/commodity/trader/synthmodule/upgrader)
-	*/
+	base_goods_sell = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/generic/sheetmetal,
+			/datum/commodity/trader/generic/fabric,
+			/datum/commodity/trader/generic/glowstick,
+			/datum/commodity/trader/generic/monkey,
+			/datum/commodity/trader/ringtone_dogs
+		),
+		TRADER_RARITY_UNCOMMON = list(
+			/datum/commodity/trader/generic/gasmask,
+			/datum/commodity/trader/generic/rcd_ammo,
+			/datum/commodity/trader/generic/telecrystal,
+		),
+		TRADER_RARITY_RARE = list()
+	)
+
 	New()
 		..()
 		var/pickfirstname = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer","Sketchy","100%","Sassy","Zesty")
@@ -99,54 +105,6 @@
 	possible_names = list("We found a few stowaway monkeys on our ship. Feel free to take them off our hands.",
 	"We seem to have a simian situation, and are selling them for a cheap price.")
 
-/datum/commodity/trader/synthmodule
-	comname = "Synth-O-Matic module"
-	comtype = /obj/item/synthmodule
-	desc = "A synth-o-matic module."
-	price_boundary = list(PAY_IMPORTANT, PAY_EMBEZZLED)
-	possible_names = list("We have some Synth-O-Matic upgrades for sale.",
-	"We recently salvaged a couple of Synth-O-Matic machines, and we cannot make use of these spare parts.")
-
-/datum/commodity/trader/synthmodule/vaccine
-	comname = "Synth-O-Matic vaccine module"
-	comtype = /obj/item/synthmodule/vaccine
-
-/datum/commodity/trader/synthmodule/upgrader
-	comname = "Synth-O-Matic efficiency module"
-	comtype = /obj/item/synthmodule/upgrader
-
-/datum/commodity/trader/synthmodule/assistant
-	comname = "Synth-O-Matic assistant module"
-	comtype = /obj/item/synthmodule/assistant
-
-/datum/commodity/trader/synthmodule/synthesizer
-	comname = "Synth-O-Matic synthesizer module"
-	comtype = /obj/item/synthmodule/synthesizer
-
-/datum/commodity/trader/synthmodule/virii
-	comname = "Synth-O-Matic virus module"
-	comtype = /obj/item/synthmodule/virii
-
-/datum/commodity/trader/synthmodule/bacteria
-	comname = "Synth-O-Matic bacterium module"
-	comtype = /obj/item/synthmodule/bacteria
-
-/datum/commodity/trader/synthmodule/fungi
-	comname = "Synth-O-Matic fungus module"
-	comtype = /obj/item/synthmodule/fungi
-
-/datum/commodity/trader/synthmodule/parasite
-	comname = "Synth-O-Matic parasite module"
-	comtype = /obj/item/synthmodule/parasite
-
-/datum/commodity/trader/synthmodule/gmcell
-	comname = "Synth-O-Matic great mutatis cell module"
-	comtype = /obj/item/synthmodule/gmcell
-
-/datum/commodity/trader/synthmodule/radiation
-	comname = "Synth-O-Matic irradiation module"
-	comtype = /obj/item/synthmodule/radiation
-
 /datum/commodity/trader/speedmodule
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/speedyclone
@@ -180,7 +138,7 @@
 
 /datum/commodity/trader/generic/anyore
 	comname = "Ore"
-	comtype = /obj/item/raw_material/
+	comtype = /obj/item/raw_material
 	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
 	possible_names = list("I'm looking to buy any kind of ore you might have.",
 	"Our ore supplies are critically low - I'll buy any kind of ore for this price.")
@@ -214,17 +172,30 @@
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
 
+/datum/commodity/trader/generic/shoes
+	comname = "Shoes"
+	comtype = /obj/item/clothing/shoes
+	price_boundary = list(PAY_UNTRAINED/3,PAY_UNTRAINED)
+	possible_names = list("We're had a run-in with a rather unsavory type, and need new shoes.",
+	"We need any shoes you can spare. Don't ask.")
 
 /datum/commodity/trader/generic/furniture
 	comname = "Furniture Parts"
-	comtype = /obj/item/furniture_parts/
+	comtype = /obj/item/furniture_parts
 	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
 	possible_names = list("We need some more furniture to spice up our ship.",
 	"We're building a new lounge, and we need whatever furniture you have.")
 
-/datum/commodity/trader/generic/pens
-	comname = "Writing Utensils"
-	comtype = /obj/item/pen
-	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
-	possible_names = list("We can't take notes! Send us something to write with, and make it snappy.",
-	"Our crew's been really starved creatively. Give us something we can doodle with.")
+/datum/commodity/trader/generic/instruments
+	comname = "Instruments"
+	comtype = /obj/item/instrument
+	price_boundary = list(PAY_UNTRAINED/2, PAY_UNTRAINED)
+	possible_names = list("We need some instruments to 'increase' staff morale.",
+	"The captain's latest team-building exercise requires a large number of instruments.")
+
+/datum/commodity/trader/generic/utensils
+	comname = "Kitchen Utensils"
+	comtype = /obj/item/kitchen/utensil
+	price_boundary = list(PAY_UNTRAINED/3, PAY_UNTRAINED)
+	possible_names = list("Our staff require kitchen utensils to eat our chef's food.",
+	"We need some kitchen utensils to prepare for a feast.")

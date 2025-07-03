@@ -26,3 +26,7 @@
 		if(!ON_COOLDOWN(src, "playsound", 1 SECOND))
 			owner.playsound_local(get_turf(owner), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
 		SEND_SIGNAL(I, COMSIG_MOB_GEIGER_TICK, stage)
+
+/// generate the stage of gieger clicks from a given value in Sieverts
+proc/geiger_stage(Sv)
+	return min(max(round(Sv * 10),1),5)

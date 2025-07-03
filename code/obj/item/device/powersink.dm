@@ -13,7 +13,7 @@ TYPEINFO(/obj/item/device/powersink)
 	icon_state = "powersink0"
 	item_state = "electronic"
 	w_class = W_CLASS_BULKY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
@@ -40,6 +40,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (isscrewingtool(I))
+			src.add_fingerprint(user)
 			if(mode == POWERSINK_OFF)
 				var/turf/T = loc
 				if(isturf(T) && !T.intact)
@@ -51,6 +52,7 @@ TYPEINFO(/obj/item/device/powersink)
 						anchored = ANCHORED
 						mode = POWERSINK_CLAMPED
 						boutput(user, "You attach the device to the cable.")
+						message_ghosts("<b>[src]</b> has been activated at [log_loc(src, ghostjump=TRUE)].")
 						for(var/mob/M in AIviewers(user))
 							if(M == user) continue
 							boutput(M, "[user] attaches the power sink to the cable.")

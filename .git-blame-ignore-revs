@@ -1,0 +1,12 @@
+# Ignores big formatting commits when checking blame.
+# To make use of this file by default, run 'git config blame.ignoreRevsFile .git-blame-ignore-revs'
+# in the project folder
+
+# oxipng
+61906c560f450db93f4ef9b520fa22213ff3327d
+# optivorbis
+0c11a46275f493f295d6d05d1aa5fad1d935efb4
+# prefabs to tgm
+435fc66bd05456a1093d3d9be205c85db2188471
+# main tgm conversion
+a321646d9066b824fe08dddc7387b0e500da026e

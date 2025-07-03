@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
-@use '../colors.scss';
+@use '../base';
+@use '../colors';
 
 $color-default: colors.fg(colors.$label) !default;
 

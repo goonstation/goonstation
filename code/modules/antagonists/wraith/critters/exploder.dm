@@ -4,7 +4,7 @@
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "rot_hulk"
 	density = TRUE
-	speechverb_say = "moans"
+	speech_verb_say = "moans"
 	hand_count = 2
 	can_throw = TRUE
 	can_grab = TRUE
@@ -69,7 +69,8 @@
 					continue
 				else
 					boutput(M, SPAN_ALERT("You are sprayed with disgusting rotting flesh! You're pretty sure some of it got in your mouth."))
-			M.emote("scream")
+			if (isalive(M) && !isintangible(M))
+				M.emote("scream")
 			M.take_toxin_damage(25)
 			if (M.reagents)
 				M.reagents.add_reagent("miasma", 20, null, T0C)
@@ -99,25 +100,6 @@
 	else
 		state["area"] = "???"
 	return state
-
-
-/mob/living/critter/exploder/say(message, involuntary = 0)	//Should probably remove this
-	if(isdead(src) && src.is_npc)
-		return
-	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	..(message)
-
-	if (involuntary || message == "" || stat)
-		return
-	if (dd_hasprefix(message, "*"))
-		return
-
-	var/prefixAndMessage = separate_radio_prefix_and_message(message)
-	message = prefixAndMessage[2]
-
-	if(!src.is_npc)
-		message = gradientText("#3cb5a3", "#124e43", message)
 
 /mob/living/critter/exploder/strong	//Summoned by rot hulk if we find a big pile of filth
 	name = "Huge plague-ridden goliath"

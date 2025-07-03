@@ -30,7 +30,7 @@ root_dir="$(dirname "$(tgui-realpath "${0}")")/../.."
 root_dir="$(tgui-realpath "${root_dir}")"
 ## Find a canonical path to build target folder
 target_dir_name="tgui"
-target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/${target_dir_name}"
+target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/src/${target_dir_name}"
 target_dir="$(tgui-realpath "${target_dir}")"
 
 ## Fall back to running Yarn from the repo
@@ -62,31 +62,43 @@ task-webpack() {
 ## Runs a development server
 task-dev-server() {
   cd "${base_dir}"
-  yarn node --experimental-modules packages/tgui-dev-server/index.js "${@}"
+  yarn run tgui:dev "${@}"
 }
 
-## Run a linter through all packages
+## Run a linter through all packages & fix
 task-lint() {
   cd "${base_dir}"
   yarn run tsc
   echo "tgui: type check passed"
-  yarn run eslint packages --ext .js,.cjs,.ts,.tsx "${@}"
+  yarn run tgui:eslint "${@}"
   echo "tgui: eslint check passed"
+  yarn run tgui:prettier "${@}"
+  echo "tgui: prettier check passed"
 }
 
 task-test() {
   cd "${base_dir}"
-  yarn run jest
+  yarn run tgui:test
+}
+
+task-test-ci() {
+  cd "${base_dir}"
+  yarn run tgui:test-ci
+}
+
+task-sonar() {
+  cd "${base_dir}"
+  yarn run tgui:sonar
 }
 
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
-  rm -rf ../browserassets/tgui/.tmp
-  rm -f ../browserassets/tgui/*.map
-  rm -f ../browserassets/tgui/*.chunk.*
-  rm -f ../browserassets/tgui/*.bundle.*
-  rm -f ../browserassets/tgui/*.hot-update.*
+  rm -rf ../browserassets/src/tgui/.tmp
+  rm -f ../browserassets/src/tgui/*.map
+  rm -f ../browserassets/src/tgui/*.chunk.*
+  rm -f ../browserassets/src/tgui/*.bundle.*
+  rm -f ../browserassets/src/tgui/*.hot-update.*
   ## Yarn artifacts
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
@@ -168,6 +180,7 @@ if [[ ${1} == "--ci" ]]; then
   shift 1
   task-clean
   task-install
+  task-test-ci
   task-lint "${@}"
   task-webpack --mode=production
   task-validate-build
@@ -193,24 +206,24 @@ if [[ ${1} == '--lint' ]]; then
   exit 0
 fi
 
-if [[ ${1} == '--lint-harder' ]]; then
-  shift 1
-  task-install
-  task-lint -c .eslintrc-harder.yml "${@}"
-  exit 0
-fi
-
-if [[ ${1} == '--fix' ]]; then
-  shift 1
-  task-install
-  task-lint --fix "${@}"
-  exit 0
-fi
-
 if [[ ${1} == '--test' ]]; then
   shift 1
   task-install
   task-test "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--test-ci' ]]; then
+  shift 1
+  task-install
+  task-test-ci "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--sonar' ]]; then
+  shift 1
+  task-install
+  task-sonar "${@}"
   exit 0
 fi
 
@@ -231,7 +244,7 @@ fi
 ## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
-  task-lint --fix
+  task-lint
   task-webpack --mode=production
   exit 0
 fi

@@ -73,7 +73,6 @@
 /area/station/engine/core)
 "eq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 6
 	},
 /obj/machinery/meter{
@@ -98,15 +97,15 @@
 /area/station/engine/core)
 "eN" = (
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot loop inlet valve"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -163,7 +162,7 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop auxillary west"
+	name = "cold auxillary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -178,15 +177,15 @@
 /area/station/engine/core)
 "iC" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop outlet valve"
+	name = "cold outlet valve";
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "iO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop auxillary west"
+	name = "hot auxillary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -210,7 +209,6 @@
 /area/station/engine/core)
 "lQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 10
 	},
 /obj/machinery/meter{
@@ -262,7 +260,7 @@
 /area/station/engine/core)
 "pc" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "outlet purge valve"
+	name = "hot purge valve"
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
@@ -337,7 +335,6 @@
 /area/station/engine/inner)
 "vv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 9
 	},
 /obj/cable{
@@ -349,9 +346,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "vN" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
 	req_access = null
@@ -388,7 +383,7 @@
 "wQ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop inlet valve"
+	name = "cold inlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
@@ -418,9 +413,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "yZ" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
 	req_access = null
@@ -491,7 +484,6 @@
 /area/station/engine/inner)
 "Cv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 1
 	},
 /obj/machinery/power/stats_meter{
@@ -562,12 +554,12 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop inlet valve"
-	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -621,7 +613,7 @@
 /area/station/engine/core)
 "OQ" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "outlet purge valve"
+	name = "cold purge valve"
 	},
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -631,7 +623,7 @@
 "PX" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop inlet valve"
+	name = "hot inlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
@@ -663,7 +655,6 @@
 	pixel_y = 20
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 10
 	},
 /obj/cable{
@@ -681,7 +672,7 @@
 "WR" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop outlet valve"
+	name = "hot outlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -701,7 +692,6 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 6
 	},
 /obj/cable{

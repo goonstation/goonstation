@@ -99,7 +99,7 @@
 /obj/warp_beacon/New()
 	..()
 	START_TRACKING
-	AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE | MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE, "portal")
+	AddComponent(/datum/component/minimap_marker/minimap, MAP_SYNDICATE | MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE, "portal")
 
 /obj/warp_beacon/disposing()
 	..()
@@ -286,7 +286,7 @@
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 			if(3)
-				if (istype(I, /obj/item/electronics/soldering))
+				if (issolderingtool(I))
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 
 /datum/action/bar/icon/warp_beacon_assembly

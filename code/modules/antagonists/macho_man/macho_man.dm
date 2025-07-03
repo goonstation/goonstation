@@ -3,6 +3,7 @@
 	display_name = "macho man"
 	antagonist_icon = "wrestler"
 	mob_path = /mob/living/carbon/human/machoman
+	has_info_popup = FALSE
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current

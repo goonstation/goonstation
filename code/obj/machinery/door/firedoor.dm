@@ -58,6 +58,10 @@ TYPEINFO(/obj/machinery/door/firedoor)
 			FALSE \
 		)
 
+		var/obj/machinery/door/airlock/pyro/glass/windoor/mydoor = locate(/obj/machinery/door/airlock/pyro/glass/windoor) in src.loc
+		if(istype(mydoor))
+			src.layer = EFFECTS_LAYER_UNDER_3 // windoors have altered layers
+
 /obj/machinery/door/firedoor/proc/set_open()
 	if(!blocked)
 		if(operating)
@@ -106,7 +110,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 	src.add_fingerprint(user)
 	if (!ispryingtool(C))
 		if (src.density)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 			if (C)
@@ -178,26 +182,29 @@ TYPEINFO(/obj/machinery/door/firedoor)
 	return (dir != get_dir(src,target))
 
 /obj/machinery/door/firedoor/border_only/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
+	if (!air_master) return 0
 
 	var/turf/simulated/source = loc
-	var/turf/simulated/destination = get_step(source,dir)
+	var/turf/simulated/target = get_step(source,dir)
 
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild |= source.parent
+	if (need_rebuild)
+		if (istype(source)) // Rebuild resp. update nearby group geometry.
+			if (source.parent)
+				air_master.groups_to_rebuild[source.parent] = null
 			else
-				air_master.tiles_to_update |= source
-		if(istype(destination))
-			if(destination.parent)
-				air_master.groups_to_rebuild |= destination.parent
-			else
-				air_master.tiles_to_update |= destination
+				air_master.tiles_to_update[source] = null
 
+		if (istype(target))
+			if (target.parent)
+				air_master.groups_to_rebuild[target.parent] = null
+			else
+				air_master.tiles_to_update[target] = null
 	else
-		if(istype(source)) air_master.tiles_to_update |= source
-		if(istype(destination)) air_master.tiles_to_update |= destination
+		if (istype(source)) air_master.tiles_to_update[source] = null
+		if (istype(target)) air_master.tiles_to_update[target] = null
+
+	if (istype(source))
+		source.selftilenotify() //for fluids
 
 	return 1
 

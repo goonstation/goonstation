@@ -19,7 +19,7 @@ TYPEINFO(/obj/item/saw)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
-	item_state = "c_saw"
+	item_state = "c_saw-D"
 	var/base_state = "c_saw"
 	var/active = 0
 	hit_type = DAMAGE_CUT
@@ -31,14 +31,13 @@ TYPEINFO(/obj/item/saw)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
 	leaves_slash_wound = TRUE
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
-	override_attack_hand = 1
 	can_hold_items = 0
 	stamina_damage = 30
 	stamina_cost = 15
@@ -49,7 +48,10 @@ TYPEINFO(/obj/item/saw)
 	active
 		active = 1
 		force = 12
+		icon_state = "c_saw"
+		item_state = "c_saw-A"
 		arm_icon = "chainsaw-A"
+
 
 		New()
 			..()
@@ -57,9 +59,6 @@ TYPEINFO(/obj/item/saw)
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			if (src)
-				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)
 		return
 
@@ -84,12 +83,12 @@ TYPEINFO(/obj/item/saw)
 
 		if (src.active)
 
-			user.lastattacked = target
-			target.lastattacker = user
+			user.lastattacked = get_weakref(target)
+			target.lastattacker = get_weakref(user)
 			target.lastattackertime = world.time
 
 			if (ishuman(target))
-				if (ishuman(user) && saw_surgery(target,user))
+				if (ishuman(user) && (!is_special && saw_surgery(target,user)))
 					take_bleeding_damage(target, user, 2, DAMAGE_CUT)
 					return
 				else if (!isdead(target))
@@ -113,7 +112,7 @@ TYPEINFO(/obj/item/saw)
 			boutput(user, SPAN_NOTICE("[src] is now off."))
 			src.force = off_force
 			src.hitsound = initial(src.hitsound)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		user.set_body_icon_dirty()
 		src.UpdateIcon()
 		user.update_inhands()
@@ -142,7 +141,7 @@ TYPEINFO(/obj/item/saw/syndie)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
-	item_state = "c_saw_s"
+	item_state = "c_saw_s-D"
 	base_state = "c_saw_s"
 	tool_flags = TOOL_SAWING | TOOL_CHOPPING //fucks up doors. fuck doors
 	active = 0
@@ -306,7 +305,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.l_arm.sever()
-				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+				H.visible_message("[H] chainsaws [his_or_her(H)] own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
@@ -314,7 +313,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.r_arm.sever()
-				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+				H.visible_message("[H] chainsaws [his_or_her(H)] own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
 			H.limbs.r_arm = new_arm
 		if (!new_arm) return //who knows
@@ -348,7 +347,7 @@ TYPEINFO(/obj/item/saw/elimbinator)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_s"
-	item_state = "c_saw_s"
+	item_state = "c_saw_s-A"
 	base_state = "c_saw_s"
 	hit_type = DAMAGE_CUT
 	active = 1
@@ -457,10 +456,10 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "garden trowel"
 	desc = "A tool to uproot plants and transfer them to decorative pots"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "trowel"
 
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
@@ -498,6 +497,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 					plantyboi = pot.GetOverlayImage("plant")
 					plantyboi.pixel_x = 2
 					src.icon_state = "trowel_full"
+					playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
 					if(pot.GetOverlayImage("plantoverlay"))
 						plantyboi_plantoverlay = pot.GetOverlayImage("plantoverlay")
 						plantyboi_plantoverlay.pixel_x = 2
@@ -640,6 +640,30 @@ TYPEINFO(/obj/item/plantanalyzer)
 	New()
 		..()
 		reagents.add_reagent("mutadone", 40)
+
+/obj/item/reagent_containers/glass/bottle/oldcoot
+	name = "Ageinium Poultry Formula"
+	desc = "A mildew-encrusted bottle with labeling boasting aging effects and early retirement."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 40
+
+	New()
+		..()
+		reagents.add_reagent("ageinium", 40)
+
+/obj/item/reagent_containers/glass/bottle/younggun
+	name = "Deageinium Poultry Formula"
+	desc = "An angsty bottle with labeling describing youth and fitness."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 40
+
+	New()
+		..()
+		reagents.add_reagent("deageinium", 40)
 
 /obj/item/reagent_containers/glass/happyplant
 	name = "Happy Plant Mixture"

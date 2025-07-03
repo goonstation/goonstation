@@ -1,6 +1,7 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
 
 /obj/item/bible
+	var/static/datum/forensic_holder/bible_forensics = new() // Each bible shares the same forensics, because why not?
 	name = "bible"
 	desc = "A holy scripture of some sort or another. Someone seems to have hollowed it out for hiding things in."
 	icon = 'icons/obj/items/storage.dmi'
@@ -10,7 +11,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
 	var/heal_amt = 5
@@ -24,6 +24,7 @@
 		ritualComponent.autoActive = 1
 		#endif
 		BLOCK_SETUP(BLOCK_BOOK)
+		src.forensic_holder = bible_forensics
 
 	disposing()
 		..()

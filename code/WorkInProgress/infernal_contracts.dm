@@ -13,7 +13,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 		return 0
 	to_buff.force = (initial(to_buff.force)) + total_souls_value
 	to_buff.throwforce = (initial(to_buff.throwforce)) + total_souls_value //these were originally capped at 30, but that seemed arbitrary and pointless in hindsight
-	to_buff.tooltip_rebuild = 1
+	to_buff.tooltip_rebuild = TRUE
 	return 1
 
 /proc/souladjust(var/to_adjust as num)
@@ -245,7 +245,7 @@ proc/is_weak_rollable_contract(type)
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS| CONDUCT | NOSPLASH
 	color = "#FF0000"
 	force = 15
 	throwforce = 15
@@ -364,7 +364,7 @@ END GUIDE
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
 	var/uses = 4
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -415,7 +415,7 @@ END GUIDE
 	proc/updateuses(var/mob/user as mob, var/mob/badguy as mob)
 		if (src.limiteduse == 1)
 			src.used++
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			SPAWN(0)
 				if (src.used >= src.contractlines)
 					src.vanish(user, badguy)

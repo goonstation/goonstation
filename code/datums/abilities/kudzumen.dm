@@ -44,7 +44,7 @@
 	regenRate = 0
 	tabName = "kudzu"
 	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
-	points = 0
+	points = 50
 	pointName = "nutrients"
 	var/stealthed = 0
 	var/atom/movable/screen/kudzu/meter/nutrients_meter = null
@@ -176,7 +176,7 @@
 	icon_state = "guide"
 	targeted = 1
 	target_anything = 1
-	cooldown = 1 SECOND
+	cooldown = 0
 	pointCost = 2
 	max_range = 2
 
@@ -251,7 +251,7 @@
 		src.health -= dmg
 		if (src.health < 1)
 			qdel (src)
-		user.lastattacked  = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 
@@ -324,29 +324,6 @@
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
 				H.changeStatus("knockdown", -3 SECONDS)
 		return
-
-/datum/targetable/kudzu/kudzusay
-	name = "Speak Kudzu"
-	desc = "Speak to your collective consciousness."
-	icon_state = "kudzu-say"
-	cooldown = 0
-	pointCost = 0
-	targeted = 0
-	target_anything = 0
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	can_cast_anytime = 1
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
-		if (!message)
-			return
-		logTheThing(LOG_SAY, holder.owner, "[message]")
-		.= holder.owner.say_kudzu(message, holder)
-
-		return 0
 
 /datum/targetable/kudzu/seed
 	name = "Manipulate Seed"
@@ -582,6 +559,7 @@
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
 
+
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
 		if (usr.client.tooltipHolder && control == "mapwindow.map")
@@ -680,7 +658,7 @@
 	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 50

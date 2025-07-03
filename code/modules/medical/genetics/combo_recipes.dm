@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/geneticsrecipe)
 /datum/geneticsrecipe
 	var/list/required_effects = list()
 	var/result = null
@@ -39,6 +40,10 @@
 /datum/geneticsrecipe/rad_resist // Discovered
 	required_effects = list("radioactive","glowy")
 	result = /datum/bioEffect/rad_resist
+
+/datum/geneticsrecipe/elec_resist
+	required_effects = list("colorshift","glowy")
+	result = /datum/bioEffect/elecres
 
 /datum/geneticsrecipe/alch_resist
 	required_effects = list("drunk","detox")
@@ -164,7 +169,7 @@
 
 /datum/geneticsrecipe/cryokinesis
 	required_effects = list("chime_snaps","fire_resist")
-	result = /datum/bioEffect/power
+	result = /datum/bioEffect/power/cryokinesis
 
 /datum/geneticsrecipe/adrenaline
 	required_effects = list("detox","strong")
@@ -337,3 +342,7 @@
 /datum/geneticsrecipe/reversed_sounds
 	required_effects = list("slow_sounds","fast_sounds")
 	result = /datum/bioEffect/reversedSounds
+
+/datum/geneticsrecipe/radioactive_farts
+	required_effects = list("radioactive","farty")
+	result = /datum/bioEffect/radioactive_farts

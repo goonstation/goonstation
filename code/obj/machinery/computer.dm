@@ -20,7 +20,9 @@
 
 	///Set to TRUE to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
 	var/can_reconnect = FALSE
+	///The related circuit board type for replacement/repairs
 	var/obj/item/circuitboard/circuit_type = null
+
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
@@ -51,22 +53,23 @@
 			src.Attackhand(user)
 
 	get_help_message(dist, mob/user)
-		. = "You can use a <b>screwdriver</b> to unscrew the screen"
+		if (src.circuit_type)
+			. = "Use a <b>screwdriver</b> to unscrew the screen."
 		if (src.can_reconnect)
-			. += ",\nor a <b>multitool</b> to re-scan for equipment."
-		else
-			. += "."
+			if (.)
+				.+= "\n"
+			. += "Use a <b>multitool</b> to re-scan for equipment."
 
 	proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 		var/obj/computerframe/A = new /obj/computerframe(src.loc)
 		if (src.status & BROKEN)
-			user.show_text("The broken glass falls out.", "blue")
+			user?.show_text("The broken glass falls out.", "blue")
 			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(src.loc)
 			A.state = 3
 			A.icon_state = "3"
 		else
-			user.show_text("You disconnect the monitor.", "blue")
+			user?.show_text("You disconnect the monitor.", "blue")
 			A.state = 4
 			A.icon_state = "4"
 		var/obj/item/circuitboard/M = new src.circuit_type(A)
@@ -94,19 +97,6 @@
 	icon = 'airtunnelcomputer.dmi'
 	icon_state = "console00"
 */
-
-/obj/machinery/computer/general_alert
-	name = "general alert computer"
-	icon_state = "alert:0"
-	circuit_type = /obj/item/circuitboard/general_alert
-	var/list/priority_alarms = list()
-	var/list/minor_alarms = list()
-	var/receive_frequency = FREQ_ALARM
-	var/respond_frequency = FREQ_PDA
-
-/obj/machinery/computer/hangar
-	name = "Hangar"
-	icon_state = "teleport"
 
 /obj/machinery/computer/New()
 	..()
@@ -159,8 +149,10 @@
 		set_broken()
 		src.set_density(0)
 
+/obj/machinery/computer/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/computer/power_change()
-	//if(!istype(src,/obj/machinery/computer/security/telescreen))
 	if(status & BROKEN)
 		icon_state = "[src.base_icon_state]b"
 		light.disable()
@@ -202,11 +194,20 @@
 		src.AddOverlays(screen_image, "screen_image")
 	. = ..()
 
-/obj/machinery/computer/proc/set_broken()
-	if (status & BROKEN) return
+/obj/machinery/computer/set_broken()
+	. = ..()
+	if (.) return
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, src)
 	smoke.start()
-	icon_state = "[src.base_icon_state]b"
-	light.disable()
-	status |= BROKEN
+
+/obj/machinery/computer/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (prob(P.power))
+				if (status & BROKEN)
+					playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 50, TRUE)
+					src.unscrew_monitor()
+				else
+					src.set_broken()

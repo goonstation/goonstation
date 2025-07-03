@@ -49,7 +49,7 @@ proc/get_all_gangs()
 			gang = gang_member_antagonist_role.gang
 
 		else
-			return FALSE
+			return null
 
 	return gang
 
@@ -89,5 +89,4 @@ proc/get_all_gangs()
 			"Chief Engineer",
 			"Research Director",
 			"Medical Director",
-			"Communications Officer",
 			)

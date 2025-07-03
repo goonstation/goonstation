@@ -13,7 +13,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
-	flags = FPRINT | NOSPLASH | FLUID_SUBMERGE
+	flags = NOSPLASH | FLUID_SUBMERGE
 	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
@@ -47,6 +47,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	var/emagged = 0
 	var/jiggled = 0
 	var/legholes = 0
+	var/can_leghole = TRUE
 	var/flip_health = 3
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
@@ -83,6 +84,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						A.set_loc(src)
 
 	disposing()
+		if(src.vis_controller)
+			qdel(src.vis_controller)
+			src.vis_controller = null
 		STOP_TRACKING
 		..()
 
@@ -91,16 +95,23 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!islist(src.spawn_contents))
 			return 0
 
-		var/i = 0
+		var/i = 1
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
-			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
-				amt = abs(spawn_contents[thing])
-			do
-				var/atom/A = new thing(src)
-				A.layer += 0.00001 * i
-				i++
-			while (--amt > 0)
+			if(!istext(thing)) //cannot use ispath for reasons BYOND comprehension
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					amt = abs(spawn_contents[thing])
+				do
+					var/atom/A = new thing(src)
+					A.layer += 0.00001 * i
+					i++
+				while (--amt > 0)
+			else if (thing in reagents_cache)
+				var/turf/T = get_turf(src)
+				var/vol = 1
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					vol = abs(spawn_contents[thing])
+				T.fluid_react_single(thing, vol)
 
 	proc/get_welding_positions()
 		var/start
@@ -162,10 +173,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	update_icon()
 
 		if (src.open)
-			flick(src.opening_anim,src)
+			FLICK(src.opening_anim,src)
 			src.icon_state = src.icon_opened
 		else if (!src.open)
-			flick(src.closing_anim,src)
+			FLICK(src.closing_anim,src)
 			src.icon_state = src.icon_closed
 
 		if (src.welded)
@@ -207,7 +218,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 		src.last_relaymove_time = world.time
 
-		if (istype(get_turf(src), /turf/space))
+		if (istype(get_turf(src), /turf/space) || !get_turf(src))
 			if (!istype(get_turf(src), /turf/space/fluid))
 				return
 
@@ -230,7 +241,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
-					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
+					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>", group = "storage_thud")
 				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 				var/shakes = 5
 				while (shakes > 0)
@@ -305,6 +316,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						src._health = src._max_health
 						src.visible_message(SPAN_ALERT("[user] repairs [src] with [I]."))
 					else if (!src.is_short && !src.legholes)
+						if (!src.can_leghole)
+							boutput(user, SPAN_ALERT("You can't cut holes in that!"))
+							return
 						if (!weldingtool.try_weld(user, 1))
 							return
 						src.legholes = 1
@@ -402,7 +416,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		src.pried_open = TRUE
 		src.locked = FALSE
 		src.open = TRUE
-		src.dump_contents(user)
+		src.dump_direct_contents(user)
 		src.UpdateIcon()
 		p_class = initial(p_class)
 
@@ -542,6 +556,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
 						continue
+					if (QDELETED(thing))
+						continue
 					if (thing.anchored)
 						continue
 					if (thing in user)
@@ -614,7 +630,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
 			return 0
-		if (istype(A, /obj/decal/fakeobjects/skeleton)) // uuuuuuugh
+		if (istype(A, /obj/fakeobject/skeleton)) // uuuuuuugh
 			return 1
 		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage) || istype(A, /obj/tug_cart)))
 			return 0
@@ -626,7 +642,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!src.can_open())
 			return 0
 		else
-			flick(src.opening_anim,src)
+			FLICK(src.opening_anim,src)
 
 		if(entangled && !entangleLogic && !entangled.can_close())
 			visible_message(SPAN_ALERT("It won't budge!"))
@@ -639,9 +655,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				AM.set_loc(src.open ? src.loc : src)
 
 		if (user)
-			src.dump_contents(user)
+			src.dump_direct_contents(user)
 		else
-			src.dump_contents()
+			src.dump_direct_contents()
 		if (!is_short)
 			src.set_density(0)
 		src.open = 1
@@ -650,8 +666,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		playsound(src.loc, src.open_sound, volume, 1, -3)
 		return 1
 
-	proc/close(var/entangleLogic)
-		flick(src.closing_anim,src)
+	proc/close(var/entangleLogic, var/mob/user)
+		FLICK(src.closing_anim,src)
 		if (!src.open)
 			return 0
 		if (src._health <= 0)
@@ -758,7 +774,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!src.intact_frame)
 			return 0
 
-	proc/dump_contents(var/mob/user)
+	proc/dump_direct_contents(mob/user)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
 			spawn_contents = null
 
@@ -767,17 +783,25 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in src)
 			if (!(O in vis_controller?.vis_items))
 				O.set_loc(newloc)
-			if(istype(O,/obj/item/mousetrap))
-				var/obj/item/mousetrap/our_trap = O
-				if(our_trap.armed && user)
-					INVOKE_ASYNC(our_trap, TYPE_PROC_REF(/obj/item/mousetrap, triggered), user)
+			if(user)
+				SEND_SIGNAL(O, COMSIG_ITEM_STORAGE_INTERACTION, user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
 
+	proc/dump_vis_contents()
+		if (src.vis_controller && length(src.vis_controller.vis_items))
+			for (var/atom/movable/AM in src.vis_controller.vis_items)
+				AM.set_loc(src.loc)
+			src.vis_controller.vis_items = list()
+
+	proc/dump_contents(mob/user)
+		src.dump_direct_contents(user)
+		src.dump_vis_contents()
+
 	proc/toggle(var/mob/user)
 		if (src.open)
-			return src.close()
+			return src.close(user=user)
 		return src.open(user=user)
 
 	proc/unlock()
@@ -839,8 +863,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				for (var/obj/item/I in M)
 					if (istype(I, /obj/item/implant))
 						I.set_loc(meatcube)
-
-					I.set_loc(src)
+					else
+						I.set_loc(src)
 
 			src.locked = FALSE
 
@@ -861,7 +885,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (usr.stat || !usr.can_use_hands() || isAI(usr) || !can_reach(usr, src))
 			return
 
-		return toggle()
+		return toggle(usr)
 
 	verb/move_inside()
 		set src in oview(1)

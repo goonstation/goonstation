@@ -3,6 +3,7 @@
 	display_name = "head revolutionary"
 	antagonist_icon = "rev_head"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/revolution
+	wiki_link = "https://wiki.ss13.co/Revolutionary"
 
 	var/static/list/datum/mind/heads_of_staff
 	/// A list of items that this head revolutionary has purchased using their uplink.
@@ -128,13 +129,14 @@
 	get_statistics()
 		var/list/purchased_items = list()
 		for (var/datum/syndicate_buylist/purchased_item as anything in src.purchased_items)
-			var/obj/item_type = initial(purchased_item.item)
-			purchased_items += list(
-				list(
-					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-					"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+			if(length(purchased_item.items) > 0)
+				var/obj/item_type = initial(purchased_item.items[1])
+				purchased_items += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"name" = "[purchased_item[1].name] ([purchased_item[1].cost] TC)",
+					)
 				)
-			)
 
 		return list(
 			list(

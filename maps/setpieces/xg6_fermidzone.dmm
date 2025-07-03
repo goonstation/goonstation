@@ -64,7 +64,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "as" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
@@ -196,6 +196,18 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"aR" = (
+/obj/machinery/computer/announcement/syndicate/commander{
+	dir = 4;
+	name = "Shen Kuo Observatory Announcement Console"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "aS" = (
 /obj/machinery/recharger/wall{
 	pixel_y = 24
@@ -238,7 +250,7 @@
 	pixel_x = 12;
 	pixel_y = 20
 	},
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /turf/unsimulated/floor/shiny/white,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -330,7 +342,7 @@
 	dir = 8;
 	pixel_x = -8
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -364,7 +376,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -376,7 +388,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "by" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/power/furnace{
 	pixel_y = 6
 	},
@@ -411,7 +423,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "bC" = (
-/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/obj/fakeobject/safehouse/airhandlingunit,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -506,7 +518,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ca" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "A tank.  For storing water.";
 	dir = 8;
@@ -571,7 +583,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "co" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It is not working.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pump.dmi';
@@ -609,7 +621,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -621,7 +633,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "cz" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
@@ -657,7 +669,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "cN" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/cell_charger{
 	name = "Jingshén cell charger"
 	},
@@ -736,10 +748,10 @@
 	pixel_y = 16;
 	tag = ""
 	},
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	density = 1;
 	desc = "She's honked her last honk.";
 	icon_state = "skeleton_s";
@@ -765,7 +777,7 @@
 /obj/storage/closet/mauxite{
 	pixel_y = 16
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
@@ -839,7 +851,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "dx" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Her suit has been totally compromised.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "burntnerd";
@@ -910,7 +922,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -1070,7 +1082,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "eD" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 6
 	},
@@ -1085,7 +1097,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "eG" = (
-/obj/decal/fakeobjects/robotarm{
+/obj/fakeobject/robotarm{
 	pixel_x = -27
 	},
 /turf/unsimulated/floor/engine/glow/blue,
@@ -1093,10 +1105,10 @@
 	name = "Reactor Core"
 	})
 "eH" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/unsimulated/floor/plating{
@@ -1233,7 +1245,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ff" = (
-/obj/decal/fakeobjects/mantacontainer/upwards{
+/obj/fakeobject/mantacontainer/upwards{
 	name = "Hafgan ore container"
 	},
 /obj/decal/tile_edge/check/orange{
@@ -1296,8 +1308,8 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ft" = (
-/obj/grille/steel,
-/obj/decal/fakeobjects/pipe{
+/obj/mesh/grille/steel,
+/obj/fakeobject/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map"
@@ -1353,7 +1365,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "fG" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	desc = "A pipe.";
 	name = "pipe"
@@ -1427,8 +1439,8 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "fW" = (
-/obj/grille/steel,
-/obj/decal/fakeobjects/pipe{
+/obj/mesh/grille/steel,
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
@@ -1450,13 +1462,13 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "gd" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
 "gl" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
@@ -1496,13 +1508,13 @@
 /obj/decoration/junctionbox/junctionbox2{
 	pixel_y = 27
 	},
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /obj/reagent_dispensers/cleanable/ants,
 /obj/cable/conduit,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The gnawed remains of a facilities worker.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -1516,7 +1528,7 @@
 	})
 "gw" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Naught but bones and a nametag left.";
 	name = "facilities manager"
 	},
@@ -1649,7 +1661,7 @@
 	})
 "gU" = (
 /obj/table/mauxite/auto,
-/obj/decal/fakeobjects/recordplayer,
+/obj/fakeobject/recordplayer,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -1714,7 +1726,7 @@
 	pixel_y = 16;
 	tag = ""
 	},
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /mob/living/critter/fermid{
@@ -1879,7 +1891,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "hP" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
@@ -1921,17 +1933,6 @@
 	},
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"ic" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/black/side{
-	dir = 1
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -2100,6 +2101,15 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"iE" = (
+/obj/machinery/computer/television/small{
+	pixel_y = 10
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/sanitary/white,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "iI" = (
 /obj/table/mauxite/auto,
 /obj/item/card/id/owlmaint{
@@ -2182,7 +2192,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "iZ" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating{
@@ -2206,7 +2216,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/small/frostedred,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. The bones are badly degraded.";
 	name = "chewed-up skeleton"
 	},
@@ -2266,7 +2276,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "jo" = (
-/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/obj/fakeobject/safehouse/airhandlingunit,
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
@@ -2417,7 +2427,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "jS" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
@@ -2446,7 +2456,7 @@
 	pixel_x = 12;
 	pixel_y = 20
 	},
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"
@@ -2456,7 +2466,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "jW" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	desc = "A pipe.";
 	dir = 4;
@@ -2525,7 +2535,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "kl" = (
-/obj/decal/fakeobjects/safehouse/airfilter{
+/obj/fakeobject/safehouse/airfilter{
 	pixel_x = -4
 	},
 /obj/railing/yellow/reinforced{
@@ -2657,7 +2667,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "kK" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/emitter{
 	name = "Báoshén Emitter";
 	pixel_y = 2
@@ -2729,7 +2739,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "lh" = (
-/obj/decal/fakeobjects/console_randompc{
+/obj/fakeobject/console_randompc{
 	icon_state = "gannets_machine31";
 	pixel_y = 12
 	},
@@ -2747,7 +2757,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ll" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -2793,13 +2803,13 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "lu" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /turf/unsimulated/floor/minitiles/black,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
 "lv" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/power/smes/smart{
 	pixel_y = 6
 	},
@@ -2894,7 +2904,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "lR" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow{
+/obj/fakeobject/mantacontainer/upwards/yellow{
 	color = "green";
 	name = "trash container"
 	},
@@ -2903,7 +2913,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "lS" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 1;
 	icon_state = "alt_propulsion"
 	},
@@ -2949,7 +2959,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "me" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
@@ -2986,7 +2996,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "mq" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "yellow";
 	desc = "It is working.";
 	dir = 8;
@@ -3055,7 +3065,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "mM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -3095,7 +3105,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "mU" = (
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"
@@ -3188,7 +3198,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "no" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/unsimulated/floor/plating{
@@ -3250,7 +3260,7 @@
 	})
 "nC" = (
 /obj/table/mauxite/auto,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
@@ -3283,6 +3293,14 @@
 	pixel_x = -12
 	},
 /turf/unsimulated/floor/carpet/grime,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"nM" = (
+/obj/machinery/light/small,
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -3338,7 +3356,7 @@
 	},
 /obj/cable/conduit,
 /obj/reagent_dispensers/cleanable/ants,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. The bones are badly degraded.";
 	name = "chewed-up skeleton"
 	},
@@ -3388,7 +3406,7 @@
 	icon_state = "line1";
 	tag = "icon-line1 (NORTH)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -3413,7 +3431,7 @@
 	})
 "op" = (
 /obj/table/reinforced/industrial/auto,
-/obj/decal/fakeobjects/beacon{
+/obj/fakeobject/beacon{
 	pixel_y = 5
 	},
 /obj/item/organ/eye/cyber/nightvision,
@@ -3450,10 +3468,10 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ov" = (
-/obj/decal/fakeobjects/Laundry/drying{
+/obj/fakeobject/Laundry/drying{
 	pixel_x = 8
 	},
-/obj/decal/fakeobjects/Laundry/open{
+/obj/fakeobject/Laundry/open{
 	pixel_x = -8
 	},
 /turf/unsimulated/floor/sanitary/blue,
@@ -3493,17 +3511,6 @@
 /obj/item/casing/deagle,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"oA" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/yellowblack{
-	dir = 1
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -3573,7 +3580,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "oP" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow,
+/obj/fakeobject/mantacontainer/upwards/yellow,
 /obj/decal/tile_edge/check/orange{
 	icon_state = "check1"
 	},
@@ -3728,7 +3735,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -3879,7 +3886,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "pK" = (
-/obj/decal/fakeobjects/mule_xl{
+/obj/fakeobject/mule_xl{
 	anchored = 1;
 	dir = 1;
 	pixel_x = 0
@@ -4036,7 +4043,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "qw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4080,7 +4087,7 @@
 	})
 "qB" = (
 /obj/railing/yellow/reinforced,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -4109,17 +4116,6 @@
 /turf/unsimulated/floor/stairs/dark{
 	dir = 4
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"qG" = (
-/obj/machinery/light/small{
-	dir = 1;
-	status = 2
-	},
-/obj/table/reinforced/auto,
-/obj/towelbin,
-/turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -4227,7 +4223,7 @@
 	})
 "rh" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -4301,7 +4297,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "rz" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It is not working.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pump.dmi';
@@ -4458,7 +4454,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "sk" = (
-/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/obj/fakeobject/safehouse/airhandlingunit,
 /obj/railing/yellow/reinforced{
 	dir = 8
 	},
@@ -4488,7 +4484,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "sp" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/power/furnace/thermo{
 	pixel_y = 6
 	},
@@ -4557,7 +4553,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "sx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
@@ -4607,7 +4603,7 @@
 	})
 "sG" = (
 /obj/reagent_dispensers/cleanable/ants,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "He hasn't got a leg to stand on.";
 	dir = 4;
 	icon = 'icons/misc/hstation.dmi';
@@ -4666,7 +4662,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "sS" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. The bones are badly degraded.";
 	name = "chewed-up skeleton"
 	},
@@ -4803,7 +4799,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "tw" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The gnawed remains of a facilities worker.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -4906,7 +4902,7 @@
 "tN" = (
 /obj/decal/tile_edge/check/grey,
 /obj/decal/tile_edge/check/blue,
-/obj/decal/fakeobjects/sealedsleeper,
+/obj/fakeobject/sealedsleeper,
 /turf/simulated/floor,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -5052,7 +5048,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "uu" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_x = 15;
 	pixel_y = 8
 	},
@@ -5078,7 +5074,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ux" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/unsimulated/floor/shiny/white,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -5257,11 +5253,11 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "vn" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. The bones are badly degraded.";
 	name = "Ulf Moritz"
 	},
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -5641,7 +5637,7 @@
 	dir = 4;
 	pixel_x = 8
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -5877,7 +5873,7 @@
 /turf/space,
 /area/space)
 "xY" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "50% of a rotten corpse.";
 	dir = 8;
 	icon = 'icons/misc/hstation.dmi';
@@ -5899,7 +5895,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "yc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -5927,7 +5923,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "yf" = (
-/obj/decal/fakeobjects/pcb,
+/obj/fakeobject/pcb,
 /turf/unsimulated/floor/shiny,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -5997,7 +5993,7 @@
 /obj/cable/conduit{
 	dir = 10
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The gnawed remains of a facilities worker.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -6265,7 +6261,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "zt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
 	name = "pipe"
@@ -6379,7 +6375,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Ae" = (
-/obj/decal/fakeobjects/operatorconsole{
+/obj/fakeobject/operatorconsole{
 	pixel_y = -5
 	},
 /turf/unsimulated/floor/shiny/white,
@@ -6407,7 +6403,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Aj" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /turf/unsimulated/floor/engine,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -6454,7 +6450,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "A tank.  For storing air.";
 	dir = 8;
@@ -6464,6 +6460,22 @@
 	tag = ""
 	},
 /turf/unsimulated/floor/industrial,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"Ay" = (
+/obj/machinery/computer/camera_viewer/telescreen{
+	layer = 30;
+	name = "Conference Room Display";
+	camera_networks = list("XG6");
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/fakeobject/safehouse/mechcomp_cabinet{
+	desc = "An equipment rack for various AV devices. ";
+	name = "AV rack"
+	},
+/turf/unsimulated/floor/carpet/red/standard/edge/east,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -6837,7 +6849,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "BJ" = (
-/obj/decal/fakeobjects/safehouse/airfilter,
+/obj/fakeobject/safehouse/airfilter,
 /obj/railing/yellow/reinforced{
 	dir = 8
 	},
@@ -6846,7 +6858,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "BL" = (
-/obj/decal/fakeobjects/safehouse/airfilter,
+/obj/fakeobject/safehouse/airfilter,
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
@@ -6908,24 +6920,15 @@
 	dir = 1;
 	pixel_y = 10
 	},
-/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/obj/fakeobject/safehouse/airhandlingunit,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"BZ" = (
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 10
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/sanitary/white,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "Cf" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_x = 15;
 	pixel_y = 8
 	},
@@ -7026,7 +7029,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Cx" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "She seems to have bled out from her injuries.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -7179,7 +7182,7 @@
 	pixel_y = 32
 	},
 /obj/cable/conduit,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The gnawed remains of a facilities worker.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -7239,7 +7242,7 @@
 	})
 "Dz" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -7314,7 +7317,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "DO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor/plating,
 /area/solarium{
@@ -7463,7 +7466,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "EE" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/power/smes{
 	pixel_y = 7
 	},
@@ -7574,12 +7577,12 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Fd" = (
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "She's been gnawed to hell and back.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -7707,7 +7710,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "FA" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /obj/map/light/secretblue{
 	brightness = 3
 	},
@@ -7739,7 +7742,7 @@
 	})
 "FF" = (
 /obj/reagent_dispensers/cleanable/ants,
-/obj/decal/fakeobjects/safehouse/airfilter,
+/obj/fakeobject/safehouse/airfilter,
 /obj/railing/yellow/reinforced{
 	dir = 8
 	},
@@ -7811,6 +7814,17 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"FR" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "FT" = (
 /obj/railing/yellow/reinforced{
 	dir = 4
@@ -7846,7 +7860,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "FX" = (
-/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/obj/fakeobject/safehouse/airhandlingunit,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -7859,10 +7873,10 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Gm" = (
-/obj/decal/fakeobjects/Laundry/washing{
+/obj/fakeobject/Laundry/washing{
 	pixel_x = -8
 	},
-/obj/decal/fakeobjects/Laundry/open{
+/obj/fakeobject/Laundry/open{
 	pixel_x = 8
 	},
 /turf/unsimulated/floor/sanitary/blue,
@@ -7983,7 +7997,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "GH" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -8054,14 +8068,6 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Hf" = (
-/obj/machinery/light/small,
-/obj/table/reinforced/auto,
-/obj/towelbin,
-/turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -8182,7 +8188,7 @@
 	name = "Otto Mettwurst's identification card (Business Manager)";
 	registered = "Jurgen Muller"
 	},
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"
@@ -8234,7 +8240,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 8
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -8275,7 +8281,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "HU" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /mob/living/critter/fermid/worker,
@@ -8289,7 +8295,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -8304,7 +8310,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "HX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -8397,7 +8403,7 @@
 	})
 "Iu" = (
 /obj/reagent_dispensers/cleanable/ants,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The gnawed remains of a facilities worker.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -8472,7 +8478,7 @@
 /obj/cable/conduit{
 	dir = 4
 	},
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -8532,7 +8538,7 @@
 	pixel_x = -12
 	},
 /obj/surgery_tray/kitchen_island,
-/obj/decal/fakeobjects/chefbot{
+/obj/fakeobject/chefbot{
 	pixel_y = 11
 	},
 /turf/unsimulated/floor/wood/three,
@@ -8540,7 +8546,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Jy" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -8694,7 +8700,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Kh" = (
-/obj/decal/fakeobjects/robot,
+/obj/fakeobject/robot,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
@@ -8763,7 +8769,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Kt" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 1;
 	icon_state = "alt_propulsion"
 	},
@@ -8960,7 +8966,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Ll" = (
-/obj/machinery/microscope{
+/obj/fakeobject/microscope{
 	pixel_y = 5
 	},
 /obj/table/reinforced/chemistry/auto/chemstorage,
@@ -9078,7 +9084,7 @@
 	})
 "LD" = (
 /obj/disposalpipe/segment,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
 	name = "pipe"
@@ -9105,7 +9111,7 @@
 /mob/living/critter/fermid{
 	health_burn_vuln = 0.35
 	},
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -9366,7 +9372,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -9408,7 +9414,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "MI" = (
-/obj/decal/fakeobjects/tapedeck,
+/obj/fakeobject/tapedeck,
 /turf/unsimulated/floor/shiny,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -9422,7 +9428,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "MO" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/power/solar{
 	pixel_y = 8
 	},
@@ -9644,8 +9650,8 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "NB" = (
-/obj/grille/steel,
-/obj/decal/fakeobjects/pipe{
+/obj/mesh/grille/steel,
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
@@ -9720,7 +9726,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "NQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
@@ -9743,7 +9749,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -9775,7 +9781,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "NX" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "For science...";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "burntnerd";
@@ -9956,7 +9962,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "OJ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "yellow";
 	desc = "It is working.";
 	dir = 4;
@@ -9993,7 +9999,7 @@
 	})
 "OQ" = (
 /obj/map/light/green,
-/obj/decal/fakeobjects/core{
+/obj/fakeobject/core{
 	desc = "An actinide reactor designed by Giesel Radiofabrik, a popular alternative to plasma power for ships, stations and ground installations.";
 	icon = 'icons/obj/machines/nuclear64x32.dmi';
 	icon_state = "norm2";
@@ -10205,20 +10211,6 @@
 "PM" = (
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 9
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"PN" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	icon_state = "datasec";
-	name = "Shen Kuo Observatory Announcement Console";
-	req_access_txt = "76"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/redblack{
-	dir = 4
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -10561,7 +10553,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"
@@ -10583,7 +10575,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Rz" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The gnawed remains of a facilities worker.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -10769,7 +10761,7 @@
 /obj/cable/conduit{
 	dir = 4
 	},
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"
@@ -10817,13 +10809,13 @@
 	dir = 1;
 	pixel_y = 10
 	},
-/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/obj/fakeobject/safehouse/airhandlingunit,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Su" = (
-/obj/decal/fakeobjects/nuclearcomputertest{
+/obj/fakeobject/nuclearcomputertest{
 	desc = "It's locked down in a low-power configuration.";
 	name = "Emanium-class Reactor Console"
 	},
@@ -10842,7 +10834,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Sx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
@@ -10937,7 +10929,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ST" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "Some sort of circulator.";
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -10966,7 +10958,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "SV" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "A tank.  For storing water.";
 	dir = 4;
@@ -11094,7 +11086,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/robot/security{
+/obj/fakeobject/robot/security{
 	desc = "A Security Robot. It seems to have been out of battery for a very long time.";
 	name = "Hat Rack";
 	pixel_y = 1
@@ -11120,6 +11112,17 @@
 	})
 "TD" = (
 /turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"TE" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/yellowblack{
 	dir = 1
 	},
 /area/solarium{
@@ -11188,13 +11191,13 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "TR" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "An electromagnetic clamping mechanism for hauling large cargo containers.";
 	dir = 4;
 	name = "mag-clamps";
 	pixel_x = -20
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "An electromagnetic clamping mechanism for hauling large cargo containers.";
 	dir = 8;
 	name = "mag-clamps";
@@ -11384,7 +11387,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "UM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -11464,7 +11467,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "UW" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow{
+/obj/fakeobject/mantacontainer/upwards/yellow{
 	desc = "This one is bolted, locked, and welded shut from the inside.";
 	dir = 4;
 	interesting = "You detect faint signs of life within the container.";
@@ -11504,8 +11507,19 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"Vf" = (
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/turf/unsimulated/floor/sanitary,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "Vg" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /obj/cable/conduit,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
@@ -11610,7 +11624,7 @@
 	})
 "Vy" = (
 /obj/machinery/light/small/cool,
-/obj/decal/fakeobjects/tapedeck,
+/obj/fakeobject/tapedeck,
 /turf/unsimulated/floor/shiny,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -11637,7 +11651,7 @@
 	})
 "VH" = (
 /obj/reagent_dispensers/cleanable/ants,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. The bones are badly degraded.";
 	name = "chewed-up skeleton"
 	},
@@ -11647,7 +11661,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "VI" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -11695,7 +11709,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "VT" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/microwave{
 	name = "Huoshén Microwave Oven";
 	pixel_y = 2
@@ -11728,7 +11742,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Wh" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/power/tracker{
 	pixel_y = 6
 	},
@@ -11815,7 +11829,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Wq" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/power/rtg{
 	pixel_y = 6
 	},
@@ -11837,6 +11851,15 @@
 /turf/unsimulated/floor/black/corner{
 	dir = 1
 	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"Ws" = (
+/obj/machinery/computer/television/small{
+	pixel_y = 10
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/black,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -11932,7 +11955,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "WV" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -12062,15 +12085,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"XM" = (
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 10
-	},
-/obj/table/wood/auto,
-/turf/unsimulated/floor/black,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "XN" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
@@ -12100,7 +12114,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "XR" = (
-/obj/decal/fakeobjects/robot,
+/obj/fakeobject/robot,
 /turf/unsimulated/floor/industrial,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -12151,7 +12165,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "XZ" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -12257,7 +12271,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Yt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "Some sort of circulator.";
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -12299,22 +12313,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"YB" = (
-/obj/machinery/computer/security/telescreen{
-	layer = 30;
-	name = "Conference Room Display";
-	network = "XG65";
-	pixel_x = -8;
-	pixel_y = 1
-	},
-/obj/decal/fakeobjects/safehouse/mechcomp_cabinet{
-	desc = "An equipment rack for various AV devices. ";
-	name = "AV rack"
-	},
-/turf/unsimulated/floor/carpet/red/standard/edge/east,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "YE" = (
 /obj/decal/cleanable/blood/drip,
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
@@ -12338,7 +12336,7 @@
 	icon_state = "drip5"
 	},
 /obj/item/device/light/flashlight/penlight,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The gnawed remains of a facilities worker.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -12405,7 +12403,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "YY" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/centrifuge_nuclear{
 	pixel_y = 6
 	},
@@ -13328,13 +13326,13 @@ Yf
 In
 In
 Yf
-qG
+Vf
 Mc
 Nn
 Mc
 Nn
 Mc
-Hf
+nM
 Yf
 In
 In
@@ -14294,7 +14292,7 @@ WP
 vz
 mw
 mw
-BZ
+iE
 pg
 nP
 HW
@@ -14331,7 +14329,7 @@ MZ
 Va
 Va
 LB
-PN
+aR
 ZP
 RT
 qw
@@ -14488,7 +14486,7 @@ Yf
 IA
 WH
 wu
-ic
+FR
 RT
 VY
 aW
@@ -14520,7 +14518,7 @@ In
 In
 Yf
 ZN
-YB
+Ay
 za
 ZZ
 ZZ
@@ -14690,7 +14688,7 @@ zY
 Mh
 Yf
 ep
-XM
+Ws
 Pj
 Wf
 aV
@@ -16909,7 +16907,7 @@ Yf
 eU
 JR
 Ng
-oA
+TE
 Yf
 Bz
 sP

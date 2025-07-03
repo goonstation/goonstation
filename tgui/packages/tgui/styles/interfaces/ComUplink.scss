@@ -5,8 +5,8 @@
  * @license MIT
  */
 
-@use '../colors.scss';
-@use '../components/Button.scss';
+@use '../colors';
+@use '../components/Button';
 
 $categories: (
   'Main': colors.$red,

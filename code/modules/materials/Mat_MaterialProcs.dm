@@ -302,8 +302,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
 			entering.visible_message(SPAN_ALERT("[entering] is warped away!"))
-			playsound(owner.loc, "warp", 50)
-			boutput(entering, SPAN_ALERT("You suddenly teleport..."))
+			playsound(T, "warp", 50)
+			if(ismob(entering))
+				boutput(entering, SPAN_ALERT("You suddenly teleport..."))
 			entering.set_loc(.)
 		return
 
@@ -373,10 +374,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.air.merge(payload)
 			location.material.setProperty("plasma_offgas", total_plasma)
 
-/datum/materialProc/plasmastone_on_hit
-	execute(var/atom/owner)
-		owner.material.triggerTemp(locate(owner))
-
 /datum/materialProc/molitz_temp
 	max_generations = 1
 
@@ -433,7 +430,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
-		molitz.setProperty("molitz_bubbles", iterations-1)
+		owner.material.setProperty("molitz_bubbles", iterations-1)
 
 
 /datum/materialProc/molitz_temp/agent_b
@@ -554,12 +551,29 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/mob/M, var/obj/item/I, mult)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
-			if (C.bodytemperature > 0)
-				C.bodytemperature -= 2
+			C.changeBodyTemp(-2 KELVIN)
 			if (C.bodytemperature > T0C && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
+
+/datum/materialProc/ice_melt
+	desc = "It would melt when exposed to heat."
+
+	execute(var/atom/owner, var/temp)
+		if(temp < T0C) return // less than reaction temp
+
+		var/turf/T = get_turf(owner)
+
+		// Make a water puddle and chunks
+		if (istype(T))
+			if (!istype(owner, /obj/item/raw_material))
+				var/obj/item/raw_material/ice/cube = new /obj/item/raw_material/ice(T)
+				cube.set_loc(T)
+			make_cleanable(/obj/decal/cleanable/water, T)
+			owner.visible_message(SPAN_NOTICE("[owner] melts, dissolving into water."))
+			playsound(owner, 'sound/misc/drain_glug.ogg', 50, TRUE, 5)
+			qdel(owner)
 
 /datum/materialProc/soulsteel_entered
 	execute(var/obj/item/owner, var/atom/movable/entering)
@@ -576,7 +590,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				var/mob/living/object/OB = new/mob/living/object(owner.loc, owner, mobenter)
 				OB.health = 8
 				OB.max_health = 8
-				OB.canspeak = 0
+				OB.can_use_say = FALSE
 				OB.show_antag_popup("soulsteel")
 
 /datum/materialProc/reflective_onbullet
@@ -778,3 +792,41 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
 		else
 			I.material.removeProperty("n_radioactive")
+
+/datum/materialProc/shock_life
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
+			return
+		if (istype(L))
+			L.shock(I, src.wattage, "All", 1, FALSE)
+
+/datum/materialProc/arcflash_life
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_arcflash", rand(cd_min, cd_max)))
+			return
+		if (!istype(L))
+			return
+		if (!isturf(L.loc) || prob(10))
+			L.shock(I, src.wattage, "All", 1.5, TRUE)
+		else
+			arcFlashTurf(L, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), src.wattage, 100)

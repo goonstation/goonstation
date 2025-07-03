@@ -7,8 +7,14 @@
 			if (winexists(src, "changes") && winget(src, "changes", "is-visible") == "true")
 				src.Browse(null, "window=changes")
 			else
-				var/changelogHtml = grabResource("html/changelog.html")
-				var/data = changelog:html
+				var/changelogHtml
+				var/data
+				if (byond_version >= 516)
+					changelogHtml = grabResource("html/changelog.html")
+					data = changelog.html
+				else
+					changelogHtml = grabResource("html/legacy_changelog.html")
+					data = legacy_changelog.html
 				var/fontcssdata = {"
 				<style type="text/css">
 				@font-face {
@@ -22,7 +28,10 @@
 				"}
 				changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 				changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-				src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
+				if (byond_version >= 516)
+					message_modal(src, changelogHtml, "Changelog", width = 500, height = 650, sanitize = FALSE)
+				else
+					src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
 				src.changes = 1
 
 		bugreport()
@@ -63,17 +72,14 @@
 			set name = "Wiki"
 			set desc = "Open the Wiki in your browser"
 			set hidden = 1
-			src << link("http://wiki.ss13.co")
+			src << link(generate_ingame_wiki_link(src))
 
 		map()
 			set category = "Commands"
 			set name = "Map"
 			set desc = "Open an interactive map in your browser"
 			set hidden = 1
-			if (map_settings)
-				src << link(goonhub_href(map_settings.goonhub_map))
-			else
-				src << link(goonhub_href("/maps/cogmap"))
+			src << link(generate_ingame_map_link(src))
 
 		forum()
 			set category = "Commands"
@@ -85,3 +91,29 @@
 	proc
 		set_macro(name)
 			winset(src, "mainwindow", "macro=\"[name]\"")
+
+/proc/generate_ingame_map_link(client/our_user)
+	. = "/maps/cogmap"
+	if (map_settings)
+		. = map_settings.goonhub_map
+	. = goonhub_href(.)
+	var/turf/T = get_turf(our_user.mob)
+	if (!T || T.z != Z_LEVEL_STATION && T.z != Z_LEVEL_DEBRIS) //no maps for weird z levels or nullspace
+		return .
+	. += "?sx=[T.x]&sy=[T.y]&zoom=0"
+	if (T.z == Z_LEVEL_DEBRIS)
+		. += "&layer=debris"
+
+/proc/generate_ingame_wiki_link(client/our_user)
+	. = "https://wiki.ss13.co/"
+	var/datum/mind/user_mind = our_user.mob.mind
+	if(!user_mind)
+		return
+	if (user_mind.assigned_role)
+		var/datum/job/Job = find_job_in_controller_by_string(user_mind.assigned_role)
+		if(Job?.wiki_link)
+			. = Job.wiki_link
+	if (user_mind.is_antagonist())
+		for (var/datum/antagonist/antagonist_role in user_mind.antagonists)
+			if(antagonist_role.wiki_link)
+				. = antagonist_role.wiki_link //Keep going until you get the most recent antag (its probably the one you want the page for)

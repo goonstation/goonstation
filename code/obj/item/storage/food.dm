@@ -140,7 +140,7 @@
 			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path(src)
 			src.storage.add_contents(newcandy)
 			if (prob(5))
-				newcandy.razor_blade = 1
+				newcandy.has_razor_blade = TRUE
 
 /obj/item/storage/box/popsicles
 	name = "popsicles"

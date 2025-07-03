@@ -15,7 +15,6 @@
 			return 1
 
 		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
 
 		if (!M || !target || !ismob(target))
 			return 1
@@ -39,7 +38,6 @@
 		if (!M.sight_check(1))
 			boutput(M, SPAN_ALERT("How do you expect this to work? You can't use your eyes right now."))
 			M.visible_message(SPAN_ALERT("What was that? There's something odd about [M]'s eyes."))
-			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 1
 
 		. = ..()
@@ -47,9 +45,6 @@
 		boutput(M, SPAN_ALERT("You have to stand still..."))
 
 		actions.start(new/datum/action/bar/icon/vamp_hypno(M,target,src), M)
-
-		if (istype(H) && src.pointCost)
-			H.blood_tracking_output(src.pointCost)
 
 		if (isliving(target))
 			target:was_harmed(M, special = "vamp")

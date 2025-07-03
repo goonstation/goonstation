@@ -411,7 +411,7 @@
 /turf/simulated/floor,
 /area/space)
 "bx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/yellow{
@@ -747,7 +747,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "dd" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/white{
@@ -1249,7 +1249,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/space)
 "fq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
@@ -1351,7 +1351,7 @@
 /turf/simulated/floor/carpet/purple/standard/junction/sw_n,
 /area/space)
 "fJ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/yellow,
 /area/space)
 "fK" = (
@@ -1442,7 +1442,7 @@
 	},
 /area/space)
 "gg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/blue{
@@ -2014,7 +2014,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "ik" = (
@@ -2065,7 +2065,7 @@
 	},
 /area/space)
 "iA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable,
@@ -2233,7 +2233,7 @@
 /turf/simulated/floor/carpet/red/standard/narrow/T_west,
 /area/space)
 "jf" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/yellow{
@@ -2361,7 +2361,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "jG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/yellow{
@@ -2479,7 +2479,7 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/northsouth,
 /area/space)
 "kc" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable{
@@ -2497,7 +2497,7 @@
 /turf/simulated/wall/auto/supernorn/wood,
 /area/space)
 "ke" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{
@@ -2553,7 +2553,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "kj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/blue{
@@ -2786,7 +2786,7 @@
 	},
 /area/space)
 "lc" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{
@@ -3024,7 +3024,7 @@
 	},
 /area/space)
 "mg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable{
@@ -3425,7 +3425,7 @@
 /turf/simulated/floor,
 /area/space)
 "nx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/yellow,
@@ -3517,7 +3517,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se_triple,
 /area/space)
 "nP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/yellow{
@@ -3641,7 +3641,7 @@
 /turf/simulated/floor,
 /area/space)
 "ot" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable/yellow{
@@ -3866,7 +3866,7 @@
 	},
 /area/space)
 "pf" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/blue{
@@ -3935,7 +3935,7 @@
 /turf/simulated/floor,
 /area/space)
 "pu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable{
@@ -4089,7 +4089,7 @@
 /turf/simulated/floor,
 /area/space)
 "qi" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor,
 /area/space)
 "ql" = (
@@ -4478,7 +4478,7 @@
 	},
 /area/space)
 "rH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/white,
@@ -4530,7 +4530,7 @@
 /turf/simulated/floor,
 /area/space)
 "rS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/blue{
@@ -4570,7 +4570,7 @@
 /turf/simulated/floor,
 /area/space)
 "sa" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/yellow{
@@ -4587,7 +4587,7 @@
 	},
 /area/space)
 "sb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/yellow{
@@ -4702,7 +4702,7 @@
 /turf/simulated/floor,
 /area/space)
 "sy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable/yellow{
@@ -4793,7 +4793,7 @@
 /turf/simulated/floor/carpet/purple/fancy/innercorner/sw_triple,
 /area/space)
 "sL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/yellow{
@@ -5248,7 +5248,7 @@
 /turf/simulated/floor/carpet/purple/standard/innercorner/se_triple,
 /area/space)
 "uL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/white{
@@ -5330,7 +5330,7 @@
 /turf/simulated/floor,
 /area/space)
 "vd" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/white{
@@ -5580,7 +5580,7 @@
 	},
 /area/space)
 "wt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/white{
@@ -5596,7 +5596,7 @@
 	},
 /area/space)
 "wv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/white{
@@ -5716,7 +5716,7 @@
 	},
 /area/space)
 "wX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/white{
@@ -5786,7 +5786,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "xn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable/blue{
@@ -5977,7 +5977,7 @@
 /turf/simulated/floor/carpet/purple/standard/narrow/north,
 /area/space)
 "xU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/yellow{
@@ -6018,7 +6018,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "xZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/yellow{
@@ -6064,7 +6064,7 @@
 /turf/simulated/floor/carpet/purple/standard/junction/se_n,
 /area/space)
 "yg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/blue{
@@ -6119,7 +6119,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -6221,7 +6221,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "yI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/blue{
@@ -6398,7 +6398,7 @@
 /turf/simulated/floor,
 /area/space)
 "zl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable/white{
@@ -6640,7 +6640,7 @@
 	},
 /area/space)
 "Ah" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/white{
@@ -6803,7 +6803,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "AW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable/blue{
@@ -6833,7 +6833,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "Bc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/white{
 	icon_state = "1-2"
 	},
@@ -6897,7 +6897,7 @@
 	},
 /area/space)
 "Bw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/blue,
@@ -7152,7 +7152,7 @@
 /turf/simulated/floor/carpet/blue,
 /area/space)
 "Cy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/yellow{
@@ -7177,7 +7177,7 @@
 	},
 /area/space)
 "CB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/white{
@@ -7269,7 +7269,7 @@
 /turf/simulated/floor,
 /area/space)
 "CP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/blue{
@@ -7745,7 +7745,7 @@
 	},
 /area/space)
 "Fk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/yellow{
@@ -8093,7 +8093,7 @@
 /turf/simulated/floor,
 /area/space)
 "GC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/blue{
@@ -8360,7 +8360,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "HI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/yellow{
@@ -8496,7 +8496,7 @@
 	},
 /area/space)
 "Ip" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/blue{
@@ -8602,7 +8602,7 @@
 	},
 /area/space)
 "IR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable{
@@ -8648,7 +8648,7 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_north,
 /area/space)
 "IX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable{
@@ -8758,7 +8758,7 @@
 /turf/simulated/floor/carpet/blue/standard/junction/ne_w,
 /area/space)
 "Jx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable{
@@ -8934,7 +8934,7 @@
 /turf/simulated/floor,
 /area/space)
 "Kb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/blue{
@@ -9088,7 +9088,7 @@
 	},
 /area/space)
 "KH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -9103,7 +9103,7 @@
 	},
 /area/space)
 "KI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable{
@@ -9350,7 +9350,7 @@
 	},
 /area/space)
 "LI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/yellow{
@@ -9762,7 +9762,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/space)
 "Nn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/blue{
@@ -9825,7 +9825,7 @@
 	},
 /area/space)
 "NB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/white{
@@ -10316,7 +10316,7 @@
 /turf/simulated/floor/carpet/blue/decal/innercross,
 /area/space)
 "PD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/blue{
@@ -10636,7 +10636,7 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/sw,
 /area/space)
 "QF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -10664,7 +10664,7 @@
 	},
 /area/space)
 "QI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{
@@ -10731,7 +10731,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "QM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/white{
@@ -10967,7 +10967,7 @@
 	},
 /area/space)
 "RF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -11218,7 +11218,7 @@
 	},
 /area/space)
 "Sz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/yellow,
@@ -11254,7 +11254,7 @@
 	},
 /area/space)
 "SG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/white{
@@ -11485,7 +11485,7 @@
 /turf/simulated/floor,
 /area/space)
 "TG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable{
@@ -11545,7 +11545,7 @@
 	},
 /area/space)
 "TO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/white{
@@ -11660,7 +11660,7 @@
 	},
 /area/space)
 "Um" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/white{
@@ -11688,7 +11688,7 @@
 /turf/simulated/floor/airless/red,
 /area/space)
 "Uq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable/white{
@@ -11840,7 +11840,7 @@
 	},
 /area/space)
 "Ve" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/blue{
@@ -11934,7 +11934,7 @@
 /turf/simulated/floor,
 /area/space)
 "Vy" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /turf/simulated/floor,
 /area/space)
 "Vz" = (
@@ -12310,7 +12310,7 @@
 /turf/simulated/floor,
 /area/space)
 "WH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable{
@@ -12880,7 +12880,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "Zh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/white{
@@ -12986,7 +12986,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "Zw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/blue{
@@ -13019,7 +13019,7 @@
 	},
 /area/space)
 "ZB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -13106,7 +13106,7 @@
 /turf/simulated/floor,
 /area/space)
 "ZU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{

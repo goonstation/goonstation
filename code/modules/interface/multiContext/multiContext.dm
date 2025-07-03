@@ -42,13 +42,20 @@
 		buttons.Add(B)
 
 	if (customContextLayout)
-		customContextLayout.showButtons(buttons,target)
+		customContextLayout.showButtons(buttons, target, src)
 	else if(target.contextLayout)
-		target.contextLayout.showButtons(buttons,target)
+		target.contextLayout.showButtons(buttons, target, src)
 	else
-		contextLayout.showButtons(buttons,target)
+		contextLayout.showButtons(buttons, target, src)
 
 	contextButtons = buttons
+
+/// Check if an atom is the target of a context action on this mob
+/mob/proc/isContextActionTarget(var/atom/subject)
+	for(var/atom/movable/screen/contextButton/button in src.contextButtons)
+		if(button.target == subject)
+			return TRUE
+	return FALSE
 
 /mob/proc/contextActionsOnMove()
 	src.closeContextActions(TRUE)
@@ -205,7 +212,7 @@
 			SPAWN(0)
 				action.execute(target, user)
 			if (action.flick_on_click)
-				flick(action.flick_on_click, src)
+				FLICK(action.flick_on_click, src)
 			if (action.close_clicked)
 				user.closeContextActions()
 

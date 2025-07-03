@@ -115,7 +115,7 @@
 						var/obj/minion = new src.mob_type(chosen_turf)
 						if (ismobcritter(minion))
 							var/mob/living/critter/C = minion
-							C.faction |= FACTION_WRAITH
+							LAZYLISTADDUNIQUE(C.faction, FACTION_WRAITH)
 						src.critter_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)
@@ -126,7 +126,7 @@
 	attackby(obj/item/P as obj, mob/living/user as mob)
 		src._health -= P.force
 		attack_particle(user,src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)

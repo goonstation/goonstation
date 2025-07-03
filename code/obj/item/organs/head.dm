@@ -75,8 +75,6 @@
 				src.donor.set_eye(null)
 		else
 			src.UpdateIcon(/*makeshitup*/ 1)
-		if (!src.chat_text)
-			src.chat_text = new(null, src)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
@@ -87,10 +85,7 @@
 		if (src.linked_human)
 			if (isskeleton(src.linked_human))
 				var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
-				S.head_tracker = null
-			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
+				S.set_head(null)
 		if (holder)
 			holder.head = null
 		if (donor_original?.eye == src)
@@ -106,7 +101,6 @@
 		wear_mask = null
 		glasses = null
 		linked_human = null
-		chat_text = null
 
 		..()
 
@@ -196,21 +190,21 @@
 			src.head_image_eyes_L = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 			src.head_image_eyes_R = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 
-		if (AHead.customization_first.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customization_first_color
-		else if (AHead.customization_second.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customization_second_color
-		else if (AHead.customization_third.id == "hetcroL")
-			src.head_image_eyes_L.color = AHead.customization_third_color
+		if (AHead.customizations["hair_bottom"].style.id == "hetcroL")
+			src.head_image_eyes_L.color = AHead.customizations["hair_bottom"].color
+		else if (AHead.customizations["hair_middle"].style.id == "hetcroL")
+			src.head_image_eyes_L.color = AHead.customizations["hair_middle"].color
+		else if (AHead.customizations["hair_top"].style.id == "hetcroL")
+			src.head_image_eyes_L.color = AHead.customizations["hair_top"].color
 		else
 			src.head_image_eyes_L.color = AHead.e_color
 
-		if (AHead.customization_first.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customization_first_color
-		else if (AHead.customization_second.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customization_second_color
-		else if (AHead.customization_third.id == "hetcroR")
-			src.head_image_eyes_R.color = AHead.customization_third_color
+		if (AHead.customizations["hair_bottom"].style.id == "hetcroR")
+			src.head_image_eyes_R.color = AHead.customizations["hair_bottom"].color
+		else if (AHead.customizations["hair_middle"].style.id == "hetcroR")
+			src.head_image_eyes_R.color = AHead.customizations["hair_middle"].color
+		else if (AHead.customizations["hair_top"].style.id == "hetcroR")
+			src.head_image_eyes_R.color = AHead.customizations["hair_top"].color
 		else
 			src.head_image_eyes_R.color = AHead.e_color
 
@@ -230,13 +224,13 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		src.head_image_cust_one = image(icon = AHead.customization_first.icon, icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
-		src.head_image_cust_two = image(icon = AHead.customization_second.icon, icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
-		src.head_image_cust_three = image(icon = AHead.customization_third.icon, icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
+		src.head_image_cust_one = image(icon = AHead.customizations["hair_bottom"].style.icon, icon_state = AHead.customizations["hair_bottom"].style.id, layer = AHead.customizations["hair_bottom"].style.default_layer)
+		src.head_image_cust_two = image(icon = AHead.customizations["hair_middle"].style.icon, icon_state = AHead.customizations["hair_middle"].style.id, layer = AHead.customizations["hair_middle"].style.default_layer)
+		src.head_image_cust_three = image(icon = AHead.customizations["hair_top"].style.icon, icon_state = AHead.customizations["hair_top"].style.id, layer = AHead.customizations["hair_top"].style.default_layer)
 
-		src.head_image_cust_one.color = AHead.customization_first_color
-		src.head_image_cust_two.color = AHead.customization_second_color
-		src.head_image_cust_three.color = AHead.customization_third_color
+		src.head_image_cust_one.color = AHead.customizations["hair_bottom"].color
+		src.head_image_cust_two.color = AHead.customizations["hair_middle"].color
+		src.head_image_cust_three.color = AHead.customizations["hair_top"].color
 
 		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, layer = AHead.special_hair_1_layer)
 		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, layer = AHead.special_hair_2_layer)
@@ -245,31 +239,31 @@
 		var/colorheck = "#FFFFFF"
 		switch(AHead.special_hair_1_color_ref)
 			if(CUST_1)
-				colorheck = AHead.customization_first_color
+				colorheck = AHead.customizations["hair_bottom"].color
 			if(CUST_2)
-				colorheck = AHead.customization_second_color
+				colorheck = AHead.customizations["hair_middle"].color
 			if(CUST_3)
-				colorheck = AHead.customization_third_color
+				colorheck = AHead.customizations["hair_top"].color
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_one.color = colorheck
 		switch(AHead.special_hair_2_color_ref)
 			if(CUST_1)
-				colorheck = AHead.customization_first_color
+				colorheck = AHead.customizations["hair_bottom"].color
 			if(CUST_2)
-				colorheck = AHead.customization_second_color
+				colorheck = AHead.customizations["hair_middle"].color
 			if(CUST_3)
-				colorheck = AHead.customization_third_color
+				colorheck = AHead.customizations["hair_top"].color
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_two.color = colorheck
 		switch(AHead.special_hair_3_color_ref)
 			if(CUST_1)
-				colorheck = AHead.customization_first_color
+				colorheck = AHead.customizations["hair_bottom"].color
 			if(CUST_2)
-				colorheck = AHead.customization_second_color
+				colorheck = AHead.customizations["hair_middle"].color
 			if(CUST_3)
-				colorheck = AHead.customization_third_color
+				colorheck = AHead.customizations["hair_top"].color
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_three.color = colorheck
@@ -357,18 +351,9 @@
 		// we will move the head's appearance onto its new owner's mobappearance and then update its appearance reference to that
 		src.donor.bioHolder.mobAppearance.CopyOtherHeadAppearance(currentHeadAppearanceOwner)
 		src.donor_appearance = src.donor.bioHolder.mobAppearance
-	on_removal()
-		src.transplanted = 1
-		if (src.linked_human && (src.donor == src.linked_human))
-		 	// if we're typing, attempt to seamlessly transfer it
-			if (src.linked_human.has_typing_indicator && isskeleton(src.linked_human))
-				src.linked_human.remove_typing_indicator()
-				src.linked_human.has_typing_indicator = TRUE // proc above removes it
-				src.create_typing_indicator()
 
-			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, PROC_REF(create_typing_indicator))
-			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, PROC_REF(remove_typing_indicator))
-			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, PROC_REF(speech_bubble))
+	on_removal()
+		src.transplanted = TRUE
 		. = ..()
 
 	///Taking items off a head
@@ -533,10 +518,10 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
 
-		if (src.linked_human && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
-			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
+		if (isskeleton(src.linked_human) && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
+			var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
+			S.set_head(null)
+
 		var/mob/living/carbon/human/H = M
 		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0

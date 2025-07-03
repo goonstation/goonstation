@@ -30,6 +30,10 @@
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
 		src.update_access_from_txt()
+#ifdef CHECK_MORE_RUNTIMES
+		if (src.req_access && !islist(src.req_access))
+			stack_trace("[src] ([src.type]) initialized at \[[src.x], [src.y], [src.z]\] with non-list req_access >:(")
+#endif
 
 	Move(NewLoc, direct)
 		if(usr==0) usr = null
@@ -106,7 +110,6 @@
 			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
-			quality = src.material.getQuality()
 			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
 				set_opacity(0)
 			else if(initial(src.opacity) && !src.opacity && src.material.getAlpha() > MATERIAL_ALPHA_OPACITY)
@@ -196,8 +199,8 @@
 		else
 			return null
 
-	return_air()
-		if (loc)
+	return_air(direct = FALSE)
+		if (loc && !direct)
 			return loc.return_air()
 		else
 			return null
@@ -217,10 +220,14 @@
 		else
 			return null
 
-	proc/initialize()
+	proc/initialize(player_caused_init) // Did a player cause the init of this object? Currently needed so atmos knows whether or not to call its neighbors, avoiding infinite loops.
+
 
 	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
 		return FALSE
+
+	clamp_act(mob/clamper, obj/item/clamp)
+		return src.shatter_chemically()
 
 	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in
 		return 7 //default is up a bit since most objects are centered
@@ -269,69 +276,13 @@
 	deserialize_postprocess()
 		return
 
-/obj/bedsheetbin
-	name = "linen bin"
-	desc = "A bin for containing bedsheets."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23
-	anchored = ANCHORED
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/suit/bedsheet))
-			qdel(W)
-			src.amount++
-		return
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/clothing/suit/bedsheet(src.loc)
-			if (src.amount <= 0)
-				src.icon_state = "bedbin0"
-		else
-			boutput(user, SPAN_ALERT("There's no bedsheets left in [src]!"))
-
-	get_desc()
-		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
-
-/obj/towelbin
-	name = "towel bin"
-	desc = "A bin for containing towels."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23
-	anchored = ANCHORED
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/under/towel))
-			qdel(W)
-			src.amount++
-		return
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/clothing/under/towel(src.loc)
-			if (src.amount <= 0)
-				src.icon_state = "bedbin0"
-		else
-			boutput(user, SPAN_ALERT("There's no towels left in [src]!"))
-
-	get_desc()
-		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
-
 /obj/overlay
 	name = "overlay"
 	anchored = ANCHORED
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 	density = 0
 
 	updateHealth()
@@ -378,7 +329,7 @@
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
 		message_admins("[key_name(usr)] replaced [O] ([log_loc(O)]) with an explosive replica.")
 		logTheThing(LOG_ADMIN, usr, "replaced [O] ([log_loc(O)]) with an explosive replica.")
-		var/obj/replica = new /obj/item/card/id/captains_spare/explosive(O.loc)
+		var/obj/replica = new /obj/item/card/id/gold/captains_spare/explosive(O.loc)
 		replica.icon = O.icon
 		replica.icon_state = O.icon_state
 		replica.name = O.name
@@ -392,9 +343,10 @@
 		replica.set_dir(O.dir)
 		qdel(O)
 
-/obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
+/obj/proc/place_on(obj/item/W as obj, mob/user as mob, params, imprecise = FALSE)
 	. = FALSE
-	if (W && !isghostdrone(user)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
+	if (!islist(params)) params = params2list(params)
+	if (W && !isghostdrone(user) && W.should_place_on(src, params)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
 		var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
 		dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 		if (user)
@@ -404,16 +356,23 @@
 		if(W.dir != dirbuffer)
 			W.set_dir(dirbuffer)
 		W.set_loc(src.loc)
-		if (islist(params) && params["icon-y"] && params["icon-x"])
+		if (imprecise) // place item imprecisely by randomising offset
+			W.pixel_x = rand(-10, 10) // offsets avoid the edges just for niceness
+			W.pixel_y = rand(-10, 10)
+		else if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
-		if(W.layer < src.layer)
+		if(W.layer <= src.layer)
 			W.layer = src.layer + 0.1
 		. = TRUE
 
 /obj/proc/receive_silicon_hotkey(var/mob/user)
 	//A wee stub to handle other objects implementing the AI keys
 	//DEBUG_MESSAGE("[src] got a silicon hotkey from [user], containing: [user.client.check_key(KEY_OPEN) ? "KEY_OPEN" : ""] [user.client.check_key(KEY_BOLT) ? "KEY_BOLT" : ""] [user.client.check_key(KEY_SHOCK) ? "KEY_SHOCK" : ""]")
+	if (!isAI(user) && !issilicon(user))
+		return TRUE
+	if (!can_act(user))
+		return TRUE
 	return 0
 
 /obj/proc/mob_flip_inside(var/mob/user)
@@ -445,32 +404,6 @@
 	replacer.disguise_as(src)
 	qdel(src)
 
-
-ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
-/obj/proc/admin_command_obj_speak()
-	set name = "Object Speak"
-	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
-	if (msg)
-		src.obj_speak(msg)
-
-/obj/proc/obj_speak(message)
-	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
-
-	var/list/mob/targets = null
-	var/mob/holder = src
-	while(holder && !istype(holder))
-		holder = holder.loc
-	ENSURE_TYPE(holder)
-	if(!holder)
-		targets = hearers(src, null)
-	else
-		targets = list(holder)
-		chat_text.plane = PLANE_HUD
-		chat_text.layer = 999
-
-	for(var/mob/O in targets)
-		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)
-
 /obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
 	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
 		var/mob/dead/observer/O = viewer
@@ -487,3 +420,36 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
 			. += "[pick(numbersAndLetters)]"
 	while(. in forensic_IDs)
+
+/obj/proc/become_frame(mob/user, flatpack = FALSE)
+	// Prevent glue based frame exploits
+	src.unglue_attached_to()
+	var/turf/target_loc = get_turf(src)
+	var/obj/item/electronics/frame/F = null
+	if (flatpack)
+		F = new /obj/item/electronics/frame/flatpack(target_loc)
+	else
+		F = new(target_loc)
+	F.forensic_holder = src.forensic_holder // keep forensic evidence when deconstructed
+	F.name = "[src.name] frame"
+	if(src.deconstruct_flags & DECON_DESTRUCT)
+		F.store_type = src.type
+		qdel(src)
+	else
+		F.deconstructed_thing = src
+		if(ismob(src.loc))
+			var/mob/M = src.loc
+			M.u_equip(src)
+		src.set_loc(F)
+	// move frame to the location after object is gone, so crushers do not crusher themselves
+	F.viewstat = 2
+	F.secured = 2
+	if (flatpack)
+		F.icon_state = "dbox_alt"
+	else
+		F.icon_state = "dbox_big"
+	F.w_class = W_CLASS_BULKY
+	if(!QDELETED(src))
+		src.was_deconstructed_to_frame(user)
+		F.RegisterSignal(src, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
+	return F

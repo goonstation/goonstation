@@ -77,6 +77,7 @@
 			all_origin_names += O.name
 		appearance = artifact_controls.get_origin_from_string(pick(all_origin_names))
 
+	A.artiappear = appearance
 	var/name1 = pick(appearance.adjectives)
 	var/name2 = "thingy"
 	if (isitem(src))
@@ -132,7 +133,7 @@
 		trigger_amount--
 		selection = pick(valid_triggers)
 		if (ispath(selection))
-			var/datum/artifact_trigger/AT = new selection
+			var/datum/artifact_trigger/AT = new selection(src)
 			A.triggers += AT
 			valid_triggers -= selection
 
@@ -162,6 +163,16 @@
 	else
 		A.show_fx(src)
 	A.effect_activate(src)
+	for (var/mob/living/L in range(5, src))
+		for(var/datum/objective/objective in L.mind?.objectives)
+			if (istype(objective, /datum/objective/crew/scientist/artifact))
+				var/datum/objective/crew/scientist/artifact/art_obj = objective
+				art_obj.artifacts_activated++
+				break
+			if (istype(objective, /datum/objective/crew/researchdirector/artifact))
+				var/datum/objective/crew/researchdirector/artifact/art_obj = objective
+				art_obj.artifacts_activated++
+				break
 
 /obj/proc/ArtifactDeactivated()
 	if (!src.ArtifactSanityCheck())

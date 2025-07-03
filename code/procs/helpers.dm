@@ -94,7 +94,7 @@ var/global/obj/fuckyou/flashDummy
 	O.set_loc(target)
 	playsound(target, 'sound/effects/elec_bigzap.ogg', volume, 1)
 
-	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+	var/list/affected = drawLineObj(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/Q in affected)
 		SPAWN(0.6 SECONDS) qdel(Q)
@@ -124,7 +124,7 @@ var/global/obj/fuckyou/flashDummy
 		O.set_loc(target)
 		target_r = O
 	if(wattage && isliving(target)) //Grilles can reroute arcflashes
-		for(var/obj/grille/L in range(target,1)) // check for nearby grilles
+		for(var/obj/mesh/grille/L in range(target,1)) // check for nearby grilles
 			var/arcprob = L.material?.getProperty("electrical") >= 6 ? 60 : 30
 			if(!L.ruined && L.anchored)
 				if (prob(arcprob) && L.get_connection()) // hopefully half the default is low enough
@@ -134,7 +134,7 @@ var/global/obj/fuckyou/flashDummy
 
 	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, TRUE)
 
-	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+	var/list/affected = drawLineObj(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
 		SPAWN(0.6 SECONDS) qdel(O)
@@ -142,9 +142,9 @@ var/global/obj/fuckyou/flashDummy
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", stun_coeff, 1)
 	if (isobj(target))
-		if(wattage && istype(target, /obj/grille))
-			var/obj/grille/G = target
-			G.lightningrod(wattage)
+		if(wattage && istype(target, /obj/mesh/grille))
+			var/obj/mesh/grille/G = target
+			G.on_arcflash(wattage)
 	var/elecflashpower = 0
 	if (wattage > 12000)
 		elecflashpower = 6
@@ -359,6 +359,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
+///Strip out weird illegal characters that TGUI discards anyway, see `\improper` and other Byond lunacy
+/proc/strip_illegal_characters(text)
+	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
+	return whitelistedWords.Replace("[text]", "")
+
 ///Cleans up data passed in from network packets for display so it doesn't mess with formatting
 /proc/tidy_net_data(var/t)
 	. = isnum(t) ? t : strip_html(t)
@@ -418,25 +423,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	var/start = length(text) - length(suffix)
 	if(start)
 		. = findtext(text, suffix, start, null) //was findtextEx
-
-/**
- * Given a message, returns a list containing the radio prefix and the message,
- * so that the message can be manipulated seperately in various functions.
- */
-/proc/separate_radio_prefix_and_message(var/message)
-	var/prefix = null
-
-	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-		prefix = copytext(message, 1, 4)
-		message = copytext(message, 4)
-	else if (dd_hasprefix(message, ":"))
-		prefix = copytext(message, 1, 3)
-		message = copytext(message, 3)
-	else if (dd_hasprefix(message, ";"))
-		prefix = ";"
-		message = copytext(message, 2)
-
-	return list(prefix, message)
 
 /proc/dd_centertext(message, length)
 	. = length(message)
@@ -671,12 +657,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	for(var/mob/living/silicon/ghostdrone/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/zoldorf/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/intangible/seanceghost/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
 
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
@@ -842,11 +822,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 
 		// Note diagonal directions won't usually be accurate
 	if(direction & NORTH)
-		target = locate(target.x, world.maxy-1, target.z)
+		target = locate(target.x, world.maxy, target.z)
 	if(direction & SOUTH)
 		target = locate(target.x, 1, target.z)
 	if(direction & EAST)
-		target = locate(world.maxx-1, target.y, target.z)
+		target = locate(world.maxx, target.y, target.z)
 	if(direction & WEST)
 		target = locate(1, target.y, target.z)
 
@@ -996,14 +976,18 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		chars[i] = "*"
 	return sanitize(jointext(chars, ""))
 
-/proc/stutter(n)
-	var/te = html_decode(n)
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		var/n_letter = copytext(te, p, p + 1)
+/proc/stutter(text)
+	text = html_decode(text)
+	var/output = ""
+	var/length = length(text)
+	var/pos = null
+	pos = 1
+	while(pos <= length)
+		var/n_letter = copytext(text, pos, pos + 1)
+		if (text2num(n_letter))
+			output += n_letter
+			pos++
+			continue
 		if (prob(80))
 			if (prob(10))
 				n_letter = "[n_letter][n_letter][n_letter][n_letter]"
@@ -1015,9 +999,9 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 						n_letter = n_letter
 					else
 						n_letter = "[n_letter][n_letter]"
-		t = "[t][n_letter]"
-		p++
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+		output = "[output][n_letter]"
+		pos++
+	return copytext(sanitize(output), 1, MAX_MESSAGE_LEN)
 
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
 	if(!M || !M.client)
@@ -1122,14 +1106,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		if(SOUTHWEST)
 			return "southwest"
 
-// Marquesas: added an extra parameter to fix issue with changeling.
-// Unfortunately, it has to be this extra parameter, otherwise the spawn(0) in the mob say will
-// cause the mob's name to revert from the one it acquired for mimic voice.
-/atom/proc/hear_talk(mob/M as mob, text, real_name, lang_id)
-	if (src.open_to_sound)
-		for(var/obj/O in src)
-			O.hear_talk(M,text,real_name, lang_id)
-
 /**
  * Returns true if given value is a hex value
  */
@@ -1221,7 +1197,7 @@ proc/outermost_movable(atom/movable/target)
 				var/mob/living/carbon/human/H = A
 				if (H.organHolder.head?.head_type == HEAD_SKELETON) // do they have their head
 					. += A
-			else
+			else if(!isAIeye(A)) // AI camera eyes can't hear
 				. += A
 		if (isobj(A) || ismob(A))
 			if (istype(A, /obj/item/organ/head))	//Skeletons can hear from their heads!
@@ -1254,6 +1230,8 @@ proc/outermost_movable(atom/movable/target)
 	if(T?.vistarget)
 		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
 		. |= all_hearers(range, T.vistarget)
+	for (var/turf/listener as anything in T?.listening_turfs)
+		. |= all_hearers(range, listener)
 
 	for(var/atom/movable/screen/viewport_handler/viewport_handler in T?.vis_locs)
 		if(viewport_handler.listens)
@@ -1375,7 +1353,7 @@ proc/outermost_movable(atom/movable/target)
 	else if(ghostjump)
 		text += "<a href='byond://winset?command=.ghostjump [x] [y] [z]' title='Jump to Coords'>[x],[y],[z]</a>"
 	else
-		text += "<a href='?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
+		text += "<a href='byond://?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
 	return text
 
 // hi I'm haine -throws more crap onto the pile-
@@ -1578,7 +1556,7 @@ proc/formatTimeText(var/timeValue as num)
 /proc/antag_token_list() //List of all players redeeming antagonist tokens
 	var/list/token_list = list()
 	for(var/mob/new_player/player in mobs)
-		if((player.client) && (player.ready) && ((player.client.using_antag_token)))
+		if((player.client) && (player.ready_play) && ((player.client.using_antag_token)))
 			token_list += player.mind
 	if (!token_list.len)
 		return 0
@@ -1786,7 +1764,7 @@ proc/countJob(rank)
 					candidates |= M
 					continue
 				SPAWN(0) // Don't lock up the entire proc.
-					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
+					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 					boutput(M.current, text_chat_alert)
 					var/list/ghost_button_prompts = list("Yes", "No", "Stop these")
 					var/response = tgui_alert(M.current, text_alert, "Respawn", ghost_button_prompts, (ghost_timestamp + confirmation_spawn - TIME), autofocus = FALSE)
@@ -1902,6 +1880,8 @@ proc/countJob(rank)
 
 		if (istype(G, /mob/dead/target_observer))
 			var/mob/dead/target_observer/TO = G
+			if (!TO.is_respawnable)
+				return 0
 			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
 				the_ghost = TO.ghost
 
@@ -1927,11 +1907,13 @@ proc/countJob(rank)
 				if (L.nodamage)
 					. = TRUE
 			else
-				if (L.nodamage || L.spellshield)
+				if (L.nodamage || L.hasStatus("spellshield"))
 					. = TRUE
 		if (source && istype(source, /obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
+				if (!ON_COOLDOWN(H, "matrix_sound_effect", 1 SECOND))
+					H.playsound_local(H, 'sound/effects/graffiti_hit.ogg', 40, pitch = 0.8)
 				. = TRUE
 
 /**
@@ -2020,12 +2002,13 @@ proc/countJob(rank)
 //A global cooldown on this so it doesnt destroy the external server
 var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
-/proc/dectalk(msg)
+///dectalk SAYS its default volume is 5 but it seems to actually be more like 100
+/proc/dectalk(msg, volume = 80)
 	if (!msg) return 0
 	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
-
+		msg = "\[:volume set [volume]\][msg]"
 		var/datum/apiModel/DectalkPlayResource/playDectalkResource
 		try
 			var/datum/apiRoute/dectalk/play/playDectalk = new
@@ -2207,7 +2190,7 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 			if (!strip)
 				special = SPAN_ALERT("[special]")
 
-			role += " \[[special]]"
+			role += " \[[special]\]"
 
 	else
 		role += M.job
@@ -2232,33 +2215,48 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 	return FALSE
 
-/// Returns span with a color gradient between two given colors of given message
-proc/gradientText(var/color1, var/color2, message)
-	var/color1hex = hex2num(copytext(color1, 2))
-	var/color2hex = hex2num(copytext(color2, 2))
-	var/r1 = (color1hex >> 16) & 0xFF
-	var/g1 = (color1hex >> 8) & 0xFF
-	var/b1 = color1hex & 0xFF
-	var/dr = ((color2hex >> 16) & 0xFF)- r1
-	var/dg = ((color2hex >> 8) & 0xFF) - g1
-	var/db = (color2hex & 0xFF) - b1
-	var/list/result = new/list()
-	var/n = rand(0,10)/10.0 // what a shitty name for a variable
+/// Repeat a gradient between two colors across text.
+/// Note: This is inaccurate because its a linear transformation, but human eyes do not perceive color this way.
+/proc/gradientText(color_1, color_2, message)
+	var/list/color_list_1 = rgb2num(color_1)
+	var/list/color_list_2 = rgb2num(color_2)
+
+	var/r1 = color_list_1[1]
+	var/g1 = color_list_1[2]
+	var/b1 = color_list_1[3]
+
+	// The difference in value between each color part
+	var/delta_r = color_list_2[1] - r1
+	var/delta_g = color_list_2[2] - g1
+	var/delta_b = color_list_2[3] - b1
+
+	var/list/result = list()
+
+	// Start at a random point between the two, in increments of 0.1
+	var/coeff = rand(0,10) / 10.0
 	var/dir = prob(50) ? -1 : 1
-	for(var/i=1, i<=length(message), i += 3)
-		n += dir * 0.2
+
+	for(var/i in 1 to length(message) step 3)
+		coeff += dir * 0.2
+		// 20% chance to start going in the opposite direction
 		if(prob(20))
-			dir = dir/abs(dir) * -1
-		if(n < 0)
-			n = 0
+			dir = -dir
+
+		// Wrap back around
+		if(coeff < 0)
+			coeff = 0
 			dir = 1
-		if(n > 1)
-			n = 1
+
+		else if(coeff > 1)
+			coeff = 1
 			dir = -1
-		var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
-		var/chars = copytext(message, i, i+3)
+
+		var/col = rgb(r1 + delta_r*coeff, g1 + delta_g*coeff, b1 + delta_b*coeff)
+		var/chars = copytext(message, i, i + 3)
 		result += "<span style='color:[col]'>[chars]</span>"
-	. = result.Join()
+
+	. = jointext(result, "")
+
 
 /**
  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
@@ -2455,6 +2453,10 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
+		M.hasStatus("lockdown_robot") || \
+		M.hasStatus("lockdown_ai") || \
+		M.hasStatus("no_power_robot") || \
+		M.hasStatus("no_cell_robot") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
@@ -2537,6 +2539,18 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		. += point - prev
 		prev = point
 
+/**Replaces tokens in an input string with a desired replacement token from a text file. Primarily used for accents and similar speech modifiers.
+ * Tokens are separated by whitespace.
+*/
+/proc/find_replace_in_string(input, text_file_path = "language/pirate.txt")
+	var/list/tokens = splittext(input, regex("\\b", "i"))
+	var/list/modded_tokens = list()
+	for (var/token in tokens)
+		var/replacement = strings(text_file_path, lowertext(token), 1)
+		if (replacement)
+			token = replacetext(token, lowertext(token), replacement)
+		modded_tokens += token
+	. = jointext(modded_tokens, "")
 
 /// Returns the sum of densities of all atoms in the given turf including the turf itself
 proc/total_density(turf/T)
@@ -2558,37 +2572,15 @@ proc/total_cross(turf/T, atom/movable/mover)
 // Used to send a message to all ghosts when something Interesting has happened
 // Any message sent to this should just be a funny comment on something logged elsewhere,
 // so they probably don't need to be logged here again (e.g. death alerts)
-proc/message_ghosts(var/message, show_wraith = FALSE)
-	if (!message)
-		return
 
-	var/rendered = SPAN_DEADSAY("[message]")
-	for (var/client/C)
-		if (C.deadchatoff) continue
-		if (!C.mob) continue
-		var/mob/M = C.mob
-		if (istype(M, /mob/new_player)) continue
+var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
 
-		// If an admin, show message
-		if (M.try_render_chat_to_admin(C, rendered))
-			// admin saw message, no need to continue tests
-			continue
+/proc/message_ghosts(message, show_wraith = FALSE)
+	var/list/mob/living/intangible/wraith/wraiths = list()
+	for (var/datum/antagonist/antagonist_datum as anything in global.get_all_antagonists(ROLE_WRAITH))
+		wraiths[antagonist_datum.owner.current] = TRUE
 
-		// Skip forced-observers (hivemind, etc)
-		if (istype(M, /mob/dead/target_observer))
-			var/mob/dead/target_observer/tobserver = M
-			if(!tobserver.is_respawnable)
-				continue
-
-		// Skip the wraith if show_wraith is off or they have deadchat off
-		if (iswraith(M))
-			var/mob/living/intangible/wraith/the_wraith = M
-			if (!show_wraith || !the_wraith.hearghosts)
-				continue
-
-		// Otherwise, output to ghosts
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
-			boutput(M, rendered)
+	global.deadchat_announcer.say(message, flags = SAYFLAG_IGNORE_HTML, message_params = list("atom_listeners_to_be_excluded" = wraiths))
 
 /// Find a client based on ckey
 /proc/find_client(ckey)
@@ -2618,7 +2610,7 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 
 		if (breathable)
 			var/turf/simulated/T = container.loc
-			if(istype(T) && (T.air?.oxygen <= (MOLES_O2STANDARD - 1) || T.air?.temperature <= T0C || T.air?.temperature >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
+			if(!istype(T) || (T.air?.oxygen <= (MOLES_O2STANDARD - 1) || T.air?.temperature <= T0C || T.air?.temperature >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
 				continue
 
 		if (no_others)
@@ -2714,3 +2706,71 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 			y_max--
 	}
 	return y_max
+
+/// Returns an html input and a script which allows to toggle elements of a certain class visible or hidden depending what filter the user types in the input.
+proc/search_snippet(var/inputStyle = "", var/inputPlaceholder = "filter packages", var/toggledClass = "supply-package")
+	. = {"<input type="text" id="searchSnippetFilter" style="[inputStyle]" placeholder="[inputPlaceholder]">
+		<script>
+			document.querySelector('#searchSnippetFilter').addEventListener('input', function(event) {
+				var re = new RegExp(event.target.value, "i");
+				rowList = document.querySelectorAll('.[toggledClass]');
+
+				for (var i = 0; i < rowList.length; i++) {
+					rowList\[i\].style.display = rowList\[i\].innerText.match(re) ? '' : 'none';
+				}
+			});
+		</script>"}
+
+//stolen from katana code, turns out blackbody color is quite universal!
+proc/blackbody_color(temperature)
+	var/input = temperature / 100
+
+	var/red
+	if (input <= 66)
+		red = 255
+	else
+		red = input - 60
+		red = 329.698727446 * (red ** -0.1332047592)
+	red = clamp(red, 0, 255)
+
+	var/green
+	if (input <= 66)
+		green = max(0.001, input)
+		green = 99.4708025861 * log(green) - 161.1195681661
+	else
+		green = input - 60
+		green = 288.1221695283 * (green ** -0.0755148492)
+	green = clamp(green, 0, 255)
+
+	var/blue
+	if (input >= 66)
+		blue = 255
+	else
+		if (input <= 19)
+			blue = 0
+		else
+			blue = input - 10
+			blue = 138.5177312231 * log(blue) - 305.0447927307
+	blue = clamp(blue, 0, 255)
+
+	return rgb(red, green, blue)
+
+proc/pick_reagent(mob/user)
+	RETURN_TYPE(/datum/reagent)
+	var/list/reagents_list = list()
+	var/searchFor = input(user, "Look for a part of the reagent ID (or leave blank for all)", "Add reagent") as null|text
+	if(searchFor)
+		for(var/id in global.reagents_cache)
+			if(findtext("[id]", searchFor))
+				reagents_list += id
+	else
+		reagents_list = reagents_cache //you really asked for the 500+ IDs I guess
+
+	if(length(reagents_list) == 1)
+		return global.reagents_cache[reagents_list[1]]
+	else if(length(reagents_list) > 1)
+		var/id = input(user,"Select Reagent:","Reagents",null) as null|anything in reagents_list
+		return global.reagents_cache[id]
+	else
+		user.show_text("No reagents matching that name", "red")
+		return null

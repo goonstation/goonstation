@@ -27,6 +27,10 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 
 			C << output("[data]", "[window]:[callbackName]")
 
+		sendAll(list/targets, window, data)
+			for (var/client/C in targets)
+				src.send(C, window, data)
+
 		/**
 			* Calls a proc from a javascript source and callsback with any data
 			*

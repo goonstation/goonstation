@@ -56,6 +56,7 @@
 		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/device/gps, // Let's them assist with telesci
 		/obj/item/extinguisher/large/cyborg,
+		/obj/item/places_pipes/research,
 		/obj/item/hand_labeler,
 		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/pen/omni,
@@ -118,7 +119,7 @@
 		/obj/item/weldingtool,
 		/obj/item/rcd,
 		/obj/item/deconstructor/borg,
-		#ifdef MAP_OVERRIDE_OSHAN
+		#ifdef HOTSPOTS_ENABLED
 			/obj/item/mining_tool/powered/shovel,
 		#endif
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
@@ -126,7 +127,7 @@
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
-		#ifdef MAP_OVERRIDE_OSHAN
+		#ifdef HOTSPOTS_ENABLED
 			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
 		#endif
 		/obj/item/device/t_scanner,
@@ -146,7 +147,7 @@
 		/obj/item/device/reagentscanner,
 		/obj/item/device/light/flashlight,
 		/obj/item/tool/omnitool/silicon,
-		/obj/item/robodefibrillator,
+		/obj/item/robodefibrillator/cyborg,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
@@ -181,7 +182,7 @@
 		/obj/item/oreprospector,
 		/obj/item/device/appraisal,
 		/obj/item/device/matanalyzer,
-		// TODO: make barcode machine
+		/obj/item/portable_barcoder,
 		// TODO: make versatile satchel (same as civilian module's satchel)
 		// TODO: make cargo transporter (i.e. atmosporter, but allow single crate instead of canisters)
 	)

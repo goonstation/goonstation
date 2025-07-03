@@ -6,30 +6,33 @@
  * @license ISC
  */
 
-import { Stack, Tabs } from '../../components';
+import { Stack, Tabs } from 'tgui-core/components';
+
 import { Window } from '../../layouts';
 import { BanList } from './BanList/BanList';
 import { JobBanList } from './JobBanList';
 import { BanPanelTab } from './type';
 import { useBanPanelBackend } from './useBanPanelBackend';
 
-export const BanPanel = (_props, context) => {
-  const { action, data } = useBanPanelBackend(context);
+export const BanPanel = () => {
+  const { action, data } = useBanPanelBackend();
   const { current_tab } = data;
   return (
-    <Window width={1100} height={640} title="Ban Panel" className="BanPanel">
-      <Window.Content>
+    <Window width={1100} height={640} title="Ban Panel">
+      <Window.Content className="BanPanel">
         <Stack fill vertical>
           <Stack.Item>
             <Tabs>
               <Tabs.Tab
                 onClick={() => action.setTab(BanPanelTab.BanList)}
-                selected={current_tab === BanPanelTab.BanList}>
+                selected={current_tab === BanPanelTab.BanList}
+              >
                 Ban List
               </Tabs.Tab>
               <Tabs.Tab
                 onClick={() => action.setTab(BanPanelTab.JobBanList)}
-                selected={current_tab === BanPanelTab.JobBanList}>
+                selected={current_tab === BanPanelTab.JobBanList}
+              >
                 Job Ban List
               </Tabs.Tab>
             </Tabs>

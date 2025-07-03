@@ -50,7 +50,7 @@
 				if (O == M) continue
 				if (O == target) continue
 				if (O.opacity) continue
-				if (istype(O, /obj/window) || istype(O, /obj/grille))
+				if (istype(O, /obj/window) || istype(O, /obj/mesh/grille))
 					continue
 				else
 					surface = O
@@ -111,14 +111,15 @@
 			target.force_laydown_standup()
 
 			M.pixel_y = 0
-			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]drop wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
-
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""][name] wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		else
 			if (M)
 				M.pixel_y = 0
 
 		return 0
 
+	logCast(atom/target)
+		return
 
 /datum/targetable/wrestler/drop/fake
 	fake = 1

@@ -11,8 +11,8 @@
 	pixel_x = -11;
 	pixel_y = 18
 	},
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/skeleton,
+/obj/fakeobject/lightbulb_broken,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "l" = (
@@ -41,7 +41,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "A" = (
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)

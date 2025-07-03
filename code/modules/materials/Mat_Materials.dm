@@ -61,8 +61,6 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/color = "#FFFFFF"
 	/// The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
 	VAR_PROTECTED/alpha = 255
-	/// The 'quality' of the material
-	VAR_PROTECTED/quality = 0
 
 	/// The actual value of edibility. Changes internally and sets [/datum/material/var/edible].
 	VAR_PROTECTED/edible_exact = 0
@@ -124,9 +122,6 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/getValue()
 		return src.value
-
-	proc/getQuality()
-		return src.quality
 
 	proc/usesSpecialNaming()
 		return src.special_naming
@@ -190,11 +185,6 @@ ABSTRACT_TYPE(/datum/material)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
 		src.canMix = mix
-
-	proc/setQuality(var/quality)
-		if(!src.mutable)
-			CRASH("Attempted to mutate an immutatble material!")
-		src.quality = quality
 
 	//mutability procs
 
@@ -282,7 +272,7 @@ ABSTRACT_TYPE(/datum/material)
 	//material procs
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
-		for(var/datum/material_property/P in properties)
+		for(var/datum/material_property/P as anything in properties)
 			if(P.id == property)
 				switch(type)
 					if(VALUE_CURRENT)
@@ -296,28 +286,28 @@ ABSTRACT_TYPE(/datum/material)
 	proc/removeProperty(var/property)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutable material!")
-		for(var/datum/material_property/P in properties)
+		for(var/datum/material_property/P as anything in properties)
 			if(P.id == property)
 				P.onRemoved(src)
 				properties.Remove(P)
 				return
 		return
 
-	proc/adjustProperty(var/property, var/value)
+	proc/adjustProperty(property_id, value)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutable material!")
-		for(var/datum/material_property/P in properties)
-			if(P.id == property)
+		for(var/datum/material_property/P as anything in properties)
+			if(P.id == property_id)
 				src.properties[P] = clamp(properties[P]+value, P.min_value, P.max_value)
 				P.onValueChanged(src, properties[P])
 				return
 		return
 
-	proc/setProperty(var/property, var/value)
+	proc/setProperty(property_id, value)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutable material!")
-		for(var/datum/material_property/P in properties)
-			if(P.id == property)
+		for(var/datum/material_property/P as anything in properties)
+			if(P.id == property_id)
 				src.properties[P] = clamp(value, P.min_value, P.max_value)
 				P.onValueChanged(src, src.properties[P])
 				return
@@ -326,17 +316,17 @@ ABSTRACT_TYPE(/datum/material)
 			buildMaterialPropertyCache()
 
 		//if it's not already in .properties, add it and trigger onadd
-		for(var/datum/material_property/P in materialProps)
-			if(P.id == property)
+		for(var/datum/material_property/P as anything in materialProps)
+			if(P.id == property_id)
 				properties.Add(P)
 				P.onAdded(src, value)
 				src.properties[P] = clamp(value, P.min_value, P.max_value)
 				P.onValueChanged(src, src.properties[P])
 		return
 
-	proc/hasProperty(var/property)
-		for(var/datum/material_property/P in properties)
-			if(P.id == property)
+	proc/hasProperty(property_id)
+		for(var/datum/material_property/P as anything in properties)
+			if(P.id == property_id)
 				return 1
 		return 0
 
@@ -476,7 +466,6 @@ ABSTRACT_TYPE(/datum/material)
 		if(isnull(mat1) || isnull(mat2))
 			return
 		var/left_bias = 1 - bias
-		src.quality = round(mat1.quality * left_bias + mat2.quality * bias)
 
 		src.prefixes = (mat1.prefixes | mat2.prefixes)
 		src.suffixes = (mat1.suffixes | mat2.suffixes)
@@ -559,7 +548,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 /datum/material/metal/rock
 	mat_id = "rock"
-	name = "rock"
+	name = "stone"
 	desc = "Near useless asteroid rock with some traces of random metals."
 	color = "#ACACAC"
 	texture = "rock"
@@ -577,7 +566,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "electrum"
 	desc = "Highly conductive alloy of gold and silver."
 	color = "#44ACAC"
-	quality = 5
 
 	New()
 		..()
@@ -585,6 +573,35 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("hard", 1)
 
+
+/datum/material/metal/veranium
+	mat_id = "veranium"
+	name = "veranium"
+	desc = "It looks to be sparking."
+	color = "#8effdd"
+
+	New()
+		..()
+		setProperty("electrical", 4)
+		setProperty("thermal", 1)
+		setProperty("density", 4)
+		setProperty("chemical", 2)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+
+/datum/material/metal/voltite
+	mat_id = "voltite"
+	name = "voltite"
+	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
+	color = "#389fff"
+
+	New()
+		..()
+		setProperty("electrical", 9)
+		setProperty("density", 4)
+		setProperty("thermal", 1)
+		setProperty("hard", 1)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
 
 /datum/material/metal/steel
 	mat_id = "steel"
@@ -677,7 +694,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "syreline"
 	desc = "Syreline is an extremely valuable and coveted metal."
 	color = "#FAF5D4"
-	quality = 30
 
 	New()
 		..()
@@ -695,7 +711,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "gold"
 	desc = "A somewhat valuable and conductive metal."
 	color = "#F5BE18"
-	quality = 30
 
 	New()
 		..()
@@ -715,7 +730,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "silver"
 	desc = "A slightly valuable and conductive metal."
 	color = "#C1D1D2"
-	quality = 5
 
 	New()
 		..()
@@ -764,7 +778,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "slag"
 	desc = "A by-product left over after material has been processed."
 	color = "#26170F"
-	quality = -50
 
 	New()
 		..()
@@ -794,7 +807,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
-	quality = 60
 
 	New()
 		..()
@@ -808,7 +820,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "negativematter"
 	name = "negative matter"
 	desc = "It seems to repel matter."
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+	color = COLOR_MATRIX_INVERSE
 
 	New()
 		..()
@@ -947,7 +959,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
-		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone_on_hit())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
 
 
 /datum/material/crystal/plasmaglass
@@ -968,8 +980,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	name = "quartz"
 	desc = "Quartz is somewhat valuable but not particularly useful."
 	color = "#BBBBBB"
-	alpha = 220
-	quality = 50
+	alpha = 180
 	var/gem_tier = 3
 
 	New()
@@ -997,7 +1008,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		mat_id = "diamond"
 		name = "diamond"
 		color = "#FFFFFF"
-		quality = 100
 		gem_tier = 1
 
 	onyx
@@ -1009,7 +1019,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		mat_id = "ruby"
 		name = "ruby"
 		color = "#D00000"
-		quality = 100
 		gem_tier = 1
 
 	rose_quartz
@@ -1021,21 +1030,18 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		mat_id = "jasper"
 		name = "jasper"
 		color = "#FF7A21"
-		quality = 75
 		gem_tier = 2
 
 	garnet
 		mat_id = "garnet"
 		name = "garnet"
 		color = "#DB8412"
-		quality = 75
 		gem_tier = 2
 
 	topaz
 		mat_id = "topaz"
 		name = "topaz"
 		color = "#EBB028"
-		quality = 100
 		gem_tier = 1
 
 	citrine
@@ -1047,14 +1053,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		mat_id = "peridot"
 		name = "peridot"
 		color = "#9CC748"
-		quality = 75
 		gem_tier = 2
 
 	emerald
 		mat_id = "emerald"
 		name = "emerald"
 		color = "#3AB818"
-		quality = 100
 		gem_tier = 1
 
 	jade
@@ -1066,7 +1070,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		mat_id = "malachite"
 		name = "malachite"
 		color = "#1DF091"
-		quality = 75
 		gem_tier = 2
 
 	aquamarine
@@ -1078,14 +1081,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		mat_id = "sapphire"
 		name = "sapphire"
 		color = "#2789F2"
-		quality = 100
 		gem_tier = 1
 
 	lapis
 		mat_id = "lapislazuli"
 		name = "lapis lazuli"
 		color = "#1719BD"
-		quality = 75
 		gem_tier = 2
 
 	iolite
@@ -1097,14 +1098,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		mat_id = "amethyst"
 		name = "amethyst"
 		color = "#BD0FDB"
-		quality = 100
 		gem_tier = 1
 
 	alexandrite
 		mat_id = "alexandrite"
 		name = "alexandrite"
 		color = "#EB2FA9"
-		quality = 75
 		gem_tier = 2
 
 /datum/material/crystal/uqill //Ancients
@@ -1181,7 +1180,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	New()
 		..()
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
-		quality = rand(-50, 100)
 		alpha = rand(20, 255)
 		setProperty("density", rand(1, 8))
 		setProperty("hard", rand(1, 8))
@@ -1196,7 +1194,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "An extremely rare jewel."
 	color = "#B5E0FF"
 	alpha = 80
-	quality = 45
 	value = 1000
 
 	New()
@@ -1223,13 +1220,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/ice_melt())
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
 ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
-	quality = 50
 	alpha = 100
 	value = 650
 
@@ -1277,7 +1274,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 /datum/material/organic
 	color = "#555555"
 	alpha 				   = 255
-	quality				   = 0
 
 	New()
 		. = ..()
@@ -1291,7 +1287,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "The material of the feared giant space amoeba."
 	color = "#44cc44"
 	alpha = 180
-	quality = 2
 	texture = "bubbles"
 	texture_blend = BLEND_ADD
 
@@ -1565,6 +1560,25 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 5)
 
+/datum/material/organic/plasmacoral
+	mat_id = "plasmacoral"
+	name = "plasma coral"
+	desc = "Strange coral seemingly infused with plasmastone. Appears naturally."
+	color = "#A114FF"
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 1)
+		setProperty("hard", 2)
+		setProperty("electrical", 5)
+		setProperty("radioactive", 1) // less spicy in coral/wall form
+		setProperty("flammable", 8)
+		setProperty("plasma_offgas", 10)
+
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
 
 /datum/material/organic/ectoplasm
 	mat_id = "ectoplasm"
@@ -1582,7 +1596,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 ABSTRACT_TYPE(/datum/material/fabric)
 /datum/material/fabric
-	quality				   = 5
 
 	New()
 		. = ..()
@@ -1778,19 +1791,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("thermal", 9)
 		setProperty("electrical", 7)
 
-/datum/material/metal/censorium
-	mat_id = "censorium"
-	name = "censorium"
-	desc = "A charred rock. Doesn't do much."
-	color = "#948686"
-
-	New()
-		..()
-		setProperty("flammable", 2)
-		setProperty("density", 2)
-		setProperty("hard", 2)
-		setProperty("thermal", 1)
-
 /datum/material/fabric/hauntium
 	mat_id = "hauntium"
 	name = "hauntium"
@@ -1937,10 +1937,8 @@ ABSTRACT_TYPE(/datum/material/rubber)
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
 	name = "plutonium 239"
-	canMix = 0 //Can not be easily modified.
 	desc = "Weapons grade refined plutonium."
 	color = "#230e4d"
-	quality = 60
 
 	New()
 		..()
@@ -1951,6 +1949,36 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
 
+/datum/material/metal/yuranite
+	mat_id = "yuranite"
+	name = "yuranite"
+	desc = "Deadly uranium, often used for weapons of mass destruction."
+	color = "#e6ff01"
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 7)
+		setProperty("hard", 5)
+		setProperty("n_radioactive", 3)
+		setProperty("radioactive", 4)
+		setProperty("thermal", 3)
+		setProperty("electrical", 4)
+
+/datum/material/metal/neutrite
+	mat_id = "neutrite"
+	name = "neutrite"
+	desc = "A metal right on the brink of instability, waiting for something to push it past its limit."
+	color = "#7898ca"
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 7)
+		setProperty("hard", 2)
+		setProperty("electrical", 5)
+		setProperty("n_radioactive", 5)
+
 /// Material for bundles of glowsticks as fuel rods
 /datum/material/metal/glowstick
 	mat_id = "glowstick"
@@ -1959,7 +1987,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	desc = "It's just a bunch of glowsticks stuck together. How is this an ingot?"
 	color = "#00e618"
 	alpha = 200
-	quality = 60
 
 	New()
 		..()

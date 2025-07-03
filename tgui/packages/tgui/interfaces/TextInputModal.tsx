@@ -1,71 +1,99 @@
-/**
- * @file
- * @copyright 2022
- * @author jlsnow301 (https://github.com/jlsnow301)
- * @license ISC
- */
+import { isEscape, KEY } from 'common/keys';
+import { KeyboardEvent, useState } from 'react';
+import { Box, Section, Stack, TextArea } from 'tgui-core/components';
 
-import { Loader } from './common/Loader';
-import { InputButtons, Validator } from './common/InputButtons';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Input, Section, Stack, TextArea } from '../components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
- type TextInputData = {
-   max_length: number;
-   message: string;
-   multiline: boolean;
-   placeholder: string;
-   timeout: number;
-   title: string;
-   allowEmpty: boolean;
-   theme: string;
- };
+type TextInputData = {
+  large_buttons: boolean;
+  max_length: number;
+  message: string;
+  multiline: boolean;
+  placeholder: string;
+  timeout: number;
+  title: string;
+  theme: string | null;
+};
 
-export const TextInputModal = (_, context) => {
-  const { data } = useBackend<TextInputData>(context);
+export const sanitizeMultiline = (toSanitize: string) => {
+  return toSanitize.replace(/(\n|\r\n){3,}/, '\n\n');
+};
+
+export const removeAllSkiplines = (toSanitize: string) => {
+  return toSanitize.replace(/[\r\n]+/, '');
+};
+
+export const TextInputModal = () => {
+  const { act, data } = useBackend<TextInputData>();
   const {
+    large_buttons,
     max_length,
-    message,
+    message = '',
     multiline,
-    placeholder,
+    placeholder = '',
     timeout,
     title,
-    allowEmpty,
     theme,
   } = data;
-  const [input, setInput] = useLocalState(context, 'input', placeholder);
-  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
-    context,
-    'inputIsValid',
-    { isValid: allowEmpty || !!message, error: null }
-  );
-  const onType = (event) => {
-    event.preventDefault();
-    const target = event.target;
-    setInputIsValid(validateInput(target.value, max_length, allowEmpty));
-    setInput(target.value);
+
+  const [input, setInput] = useState(placeholder || '');
+  const onType = (value: string) => {
+    if (value === input) {
+      return;
+    }
+    const sanitizedInput = multiline
+      ? sanitizeMultiline(value)
+      : removeAllSkiplines(value);
+    setInput(sanitizedInput);
   };
+
+  const visualMultiline = multiline || input.length >= 30;
   // Dynamically changes the window height based on the message.
-  const windowHeight
-     = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
+  const windowHeight =
+    135 +
+    (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
+    (visualMultiline ? 75 : 0) +
+    (message.length && large_buttons ? 5 : 0);
 
   return (
-    <Window title={title} width={325} height={windowHeight} theme={theme || 'nanotrasen'}>
+    <Window
+      title={title}
+      width={325}
+      height={windowHeight}
+      theme={theme ?? 'nanotrasen'}
+    >
       {timeout && <Loader value={timeout} />}
-      <Window.Content>
+      <Window.Content
+        onKeyDown={(event) => {
+          if (
+            event.key === KEY.Enter &&
+            (!visualMultiline || !event.shiftKey)
+          ) {
+            act('submit', { entry: input });
+          }
+          if (isEscape(event.key)) {
+            act('cancel');
+          }
+        }}
+      >
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
               <Box color="label">{message}</Box>
             </Stack.Item>
-            <InputArea
-              input={input}
-              inputIsValid={inputIsValid}
-              onType={onType}
-            />
-            <Stack.Item pl={5} pr={5}>
-              <InputButtons input={input} inputIsValid={inputIsValid} />
+            <Stack.Item grow>
+              <InputArea key={title} input={input} onType={onType} />
+            </Stack.Item>
+            <Stack.Item>
+              <InputButtons
+                input={input}
+                message={
+                  max_length ? `${input.length}/${max_length}` : undefined
+                } // We don't want '7/null'
+              />
             </Stack.Item>
           </Stack>
         </Section>
@@ -75,52 +103,34 @@ export const TextInputModal = (_, context) => {
 };
 
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
-  const { multiline } = data;
-  const { input, inputIsValid, onType } = props;
+const InputArea = (props: {
+  input: string;
+  onType: (value: string) => void;
+}) => {
+  const { act, data } = useBackend<TextInputData>();
+  const { max_length, multiline } = data;
+  const { input, onType } = props;
 
-  if (!multiline) {
-    return (
-      <Stack.Item>
-        <Input
-          autoFocus
-          fluid
-          onInput={(event) => onType(event)}
-          onEnter={() => {
-            if (inputIsValid) {
-              act('submit', { entry: input });
-            }
-          }}
-          placeholder="Type something..."
-          value={input}
-        />
-      </Stack.Item>
-    );
-  } else {
-    return (
-      <Stack.Item grow>
-        <TextArea
-          autoFocus
-          height="100%"
-          onInput={(event) => onType(event)}
-          onEnter={() => {
-            act('submit', { entry: input });
-          }}
-          placeholder="Type something..."
-          value={input}
-        />
-      </Stack.Item>
-    );
-  }
-};
+  const visualMultiline = multiline || input.length >= 30;
 
-/** Helper functions */
-const validateInput = (input, max_length, allowEmpty) => {
-  if (!!max_length && input.length > max_length) {
-    return { isValid: false, error: `Too long!` };
-  } else if (input.length === 0 && !allowEmpty) {
-    return { isValid: false, error: null };
-  }
-  return { isValid: true, error: null };
+  return (
+    <TextArea
+      autoFocus
+      autoSelect
+      height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
+      maxLength={max_length}
+      onEscape={() => act('cancel')}
+      onEnter={(event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (visualMultiline && event.shiftKey) {
+          return;
+        }
+        event.preventDefault();
+        act('submit', { entry: input });
+      }}
+      onChange={(_, value) => onType(value)}
+      onInput={(_, value) => onType(value)}
+      placeholder="Type something..."
+      value={input}
+    />
+  );
 };

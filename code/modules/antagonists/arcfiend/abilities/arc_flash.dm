@@ -15,12 +15,20 @@
 	/// Max number of additional mobs to chain to.
 	var/chain_count = 2
 
+	tryCast(atom/target, params)
+		if (target == src.holder.owner)
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!ismob(target))
+			boutput(src.holder.owner, SPAN_ALERT("You can only cast this on mobs!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!IN_RANGE(src.holder.owner, target, (WIDE_TILE_WIDTH / 2)))
+			boutput(src.holder.owner, SPAN_ALERT("That is too far away!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		return ..()
+
 	cast(atom/target)
 		. = ..()
-		if (!ismob(target) || target == src.holder.owner || !IN_RANGE(src.holder.owner, target, (WIDE_TILE_WIDTH / 2)))
-			return TRUE
 		arcFlash(src.holder.owner, target, src.wattage)
-		logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 
 		var/list/exempt_targets = list(src.holder.owner, target)
 		var/mob/chain_source = target

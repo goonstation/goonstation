@@ -709,7 +709,7 @@
 		var/base_speed = 5
 
 		if(engine)
-			base_speed = (1.5 * engine.speedmod)
+			base_speed = 1.5 // speed modification by equipped engine not implemented - feel free to change
 
 		var/adjustment = (1 - (power_movement / 100)) * base_speed
 		base_speed += adjustment
@@ -1303,8 +1303,9 @@
 	remove_air(amount)
 		return src.loc.remove_air(amount)
 
-	return_air()
-		return src.loc.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc.return_air()
 
 	bullet_act(var/obj/projectile/P)
 		for(var/atom/A in src)

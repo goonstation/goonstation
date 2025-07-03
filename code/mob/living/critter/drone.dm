@@ -1,6 +1,5 @@
 /mob/living/critter/robotic/drone
 	name = "drone"
-	real_name = "drone"
 	var/drone_designation = "SC"
 	var/num_max = 999
 	desc = "An armed and automated Syndicate scout drone."
@@ -14,11 +13,11 @@
 	can_disarm = 0
 	blood_id = "oil"
 	var/dying = 0
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	metabolizes = 0
 	var/list/loot_table = list()
 	var/smashes_shit = 1
@@ -29,7 +28,8 @@
 	New()
 		..()
 		setup_loot_table()
-		name = "[initial(name)] [drone_designation]-[rand(num_max)]"
+		src.name = "[initial(name)] [drone_designation]-[rand(num_max)]"
+		src.real_name = src.name
 
 	bump(atom/movable/AM)
 		if(smashes_shit)
@@ -40,8 +40,8 @@
 					var/obj/window/W = AM
 					W.health = 0
 					W.smash()
-				else if(istype(AM,/obj/grille))
-					var/obj/grille/G = AM
+				else if(istype(AM,/obj/mesh/grille))
+					var/obj/mesh/grille/G = AM
 					G.damage_blunt(30)
 				else if(istype(AM, /obj/table))
 					AM.meteorhit()

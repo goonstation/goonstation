@@ -1,3 +1,7 @@
+TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
+	mats = list("cobryl" = 100,
+				"crystal" = 50,
+				"energy_high" = 20)
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryogenic healing pod"
 	desc = "A glass tube full of a strange fluid that uses supercooled oxygen and cryoxadone to rapidly heal patients."
@@ -7,6 +11,7 @@
 	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	power_usage = 50 WATTS
 	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
@@ -135,8 +140,13 @@
 		if ("reagent_scan_active")
 			src.reagent_scan_active = !src.reagent_scan_active
 		if ("defib")
+			var/area/A = get_area(src)
+			if (!A.powered(EQUIP))
+				boutput(usr, SPAN_ALERT("There's no local power to prime [src.defib]!"))
+				return FALSE
 			if(!ON_COOLDOWN(src.defib, "defib_cooldown", 10 SECONDS))
 				src.defib.setStatus("defib_charged", 3 SECONDS)
+			src.use_power(src.defib.cost)
 			src.defib.attack(src.occupant, usr)
 		if ("eject_occupant")
 			src.go_out()
@@ -255,7 +265,7 @@
 			boutput(user, SPAN_ALERT("The beaker in [src] is full."))
 			return
 		var/transferred = I.reagents.trans_to(src.beaker, 5)
-		src.visible_message(SPAN_ALERT("<B>[user] injects [transferred] into [src].</B>"))
+		src.visible_message(SPAN_ALERT("<B>[user] injects [transferred] units into [src]'s beaker.</B>"))
 		src.beaker.on_reagent_change()
 		return
 	else if (istype(I, /obj/item/device/analyzer/healthanalyzer_upgrade))
@@ -271,13 +281,17 @@
 			return
 	else if (istype(I, /obj/item/robodefibrillator))
 		if (src.defib)
-			boutput(user, SPAN_ALERT("[src] already has a Defibrillator installed."))
+			boutput(user, SPAN_ALERT("[src] already has a defibrillator installed."))
 		else
 			if (I.cant_drop)
 				boutput(user, SPAN_ALERT("You can't put that in [src] while it's attached to you!"))
 				return
+			var/obj/item/robodefibrillator/defibrillator = I
+			if(!istype_exact(defibrillator, /obj/item/robodefibrillator))
+				boutput(user, SPAN_ALERT("You can't install [defibrillator] into [src]!"))
+				return
 			src.defib = I
-			boutput(user, SPAN_NOTICE("Defibrillator installed into [src]."))
+			boutput(user, SPAN_NOTICE("[defibrillator] installed into [src]."))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(I)
 			I.set_loc(src)
@@ -285,13 +299,15 @@
 			src.UpdateIcon()
 	else if (iswrenchingtool(I))
 		if (!src.defib)
-			boutput(user, SPAN_ALERT("[src] does not have a Defibrillator installed."))
+			boutput(user, SPAN_ALERT("[src] does not have a defibrillator installed."))
 		else
 			src.defib.set_loc(src.loc)
 			src.defib = null
 			src.UpdateIcon()
-			src.visible_message(SPAN_ALERT("[user] removes the Defibrillator from [src]."))
+			src.visible_message(SPAN_ALERT("[user] removes the defibrillator from [src]."))
 			playsound(src.loc , 'sound/items/Ratchet.ogg', 50, 1)
+			src.build_icon()
+			src.UpdateIcon()
 	else if (istype(I, /obj/item/device/analyzer/healthanalyzer))
 		if (!src.occupant)
 			boutput(user, SPAN_NOTICE("This Cryo Cell is empty!"))
@@ -300,6 +316,11 @@
 			I.attack(src.occupant, user)
 
 	tgui_process.update_uis(src)
+
+/obj/machinery/atmospherics/unary/cryo_cell/was_built_from_frame(mob/user, newly_built)
+	..()
+	src.initialize_directions = src.dir
+	src.initialize(TRUE)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/insert_beaker(var/obj/item/reagent_containers/glass/I, var/mob/user)
 	if (!can_act(user))
@@ -341,13 +362,11 @@
 	else
 		src.light.disable()
 		src.icon_state = "celltop-p"
-	if(src.node)
-		src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", 1, pixel_y=-32), "bottom")
-	else
-		src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom", 1, pixel_y=-32), "bottom")
+	src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", 1, pixel_y= -32), "bottom")
+	src.UpdateOverlays(src.SafeGetOverlayImage("pipes", 'icons/obj/Cryogenic2.dmi', "cryo_pipes", 2, pixel_y = -32), "pipes")
 	src.pixel_y = 32
 	if(src.defib)
-		src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-on", 2, pixel_y=-32), "defib")
+		src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-on", 3, pixel_y=-32), "defib")
 	else
 		src.UpdateOverlays(null, "defib")
 
@@ -357,8 +376,8 @@
 	if(ishuman(src.occupant))
 		if(isdead(src.occupant))
 			return
-		src.occupant.bodytemperature += 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
-		src.occupant.bodytemperature = max(src.occupant.bodytemperature, src.air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		var/temp_change = 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
+		src.occupant.changeBodyTemp(temp_change, src.air_contents.temperature, src.air_contents.temperature)
 		src.occupant.changeStatus("burning", -10 SECONDS)
 		var/mob/living/carbon/human/H = null
 		if (ishuman(occupant))
@@ -394,7 +413,8 @@
 		return
 	var/remove_amount = TOTAL_MOLES(src.air_contents)/100
 	var/datum/gas_mixture/expel_gas = air_contents.remove(remove_amount)
-	expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
+	if (expel_gas.temperature < T20C)
+		expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
