@@ -21,6 +21,7 @@
 	var/gas_amount_growth = 5 MOLES
 	var/temp_text = "lukewarm"
 	examine_hint = "It is covered in very conspicuous markings."
+	combine_flags = ARTIFACT_COMBINES_INTO_ANY | ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	post_setup()
 		. = ..()

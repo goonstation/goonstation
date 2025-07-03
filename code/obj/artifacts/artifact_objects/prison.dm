@@ -14,6 +14,7 @@
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	react_xray = list(15,90,90,11,"HOLLOW")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/mob/living/prisoner = null
 	var/living = FALSE
 	var/imprison_time = 0

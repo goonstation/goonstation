@@ -10,6 +10,10 @@
 	var/deconstruct_flags = DECON_NONE
 
 	var/datum/artifact/artifact = null
+	/// artifacts combined into this one
+	var/list/combined_artifacts = null
+	/// if this artifact is combined in another, this var is the parent artifact holding it
+	var/parent_artifact = null
 	var/cannot_be_stored = FALSE
 	var/move_triggered = 0
 	var/object_flags = 0

@@ -16,6 +16,7 @@
 	var/converting = FALSE
 	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 	examine_hint = "It looks vaguely foreboding."
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/escapable = TRUE //Can you be dragged out to cancel the borgifying
 	var/loops_per_conversion_step //Number of 0.4 second loops per 'step'- on each step a robolimb is added, and if all 4 limbs are robotic, they're borged
 

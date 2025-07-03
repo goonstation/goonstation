@@ -10,6 +10,7 @@
 	max_triggers = 3
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(15,90,90,11,"NONE")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/field_radius = 0
 	var/field_time = 0
 	var/max_alpha = 255

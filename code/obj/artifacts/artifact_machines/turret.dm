@@ -21,6 +21,7 @@
 	activ_text = "uncovers an array of guns!"
 	deact_text = "retracts the guns back into itself and falls quiet!"
 	react_xray = list(9,40,80,8,"SEGMENTED")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/cycles_without_target = 0
 	var/cycles_until_shutdown = 10
 	var/capricious = 0

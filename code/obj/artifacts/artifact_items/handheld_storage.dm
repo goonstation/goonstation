@@ -122,6 +122,7 @@
 		/datum/artifact_trigger/cold)
 	type_size = ARTIFACT_SIZE_MEDIUM
 	react_xray = list(5, 91, 97, 11, "HOLLOW")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	effect_activate(obj/O)
 		if (..())

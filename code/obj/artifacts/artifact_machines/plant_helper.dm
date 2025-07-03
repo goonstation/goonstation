@@ -13,6 +13,7 @@
 	activ_text = "begins to radiate a strange energy field!"
 	deact_text = "shuts down, causing the energy field to vanish!"
 	react_xray = list(9,45,85,11,"ORGANIC")
+	combine_flags = ARTIFACT_COMBINES_INTO_ANY | ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/field_radius = 7
 	var/list/helpers = list("water") // make it a bit more modular
 

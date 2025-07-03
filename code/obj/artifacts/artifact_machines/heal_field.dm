@@ -17,6 +17,7 @@
 	activ_text = "begins to radiate a strange energy field!"
 	deact_text = "shuts down, causing the energy field to vanish!"
 	react_xray = list(12,70,90,11,"COMPLEX")
+	combine_flags = ARTIFACT_COMBINES_INTO_ANY | ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/field_radius = 7
 	var/field_type = ART_HEALING
 	var/field_strength = 2
