@@ -27,9 +27,11 @@ TYPEINFO(/atom)
 	/// This atom's speech module tree. Lazy loaded on the first `say()` call.
 	var/tmp/datum/speech_module_tree/speech_tree = null
 
-	// Listen Variables:
-	/// Whether objects inside of this atom should be able to hear messages that could be heard by this atom.
+	// Soundproofing Variables:
+	/// Whether this atom should allow messages to pass from its loc to its contents and vice versa.
 	var/open_to_sound = TRUE
+	/// Determines how greatly this atom affects the styling of a message spoken inside of it. See `LISTEN_INPUT_EARS`.
+	var/soundproofing = 5
 
 	// Speech Output Variables:
 	/// The default channel that this atom will attempt to send unprefixed say messages to.
