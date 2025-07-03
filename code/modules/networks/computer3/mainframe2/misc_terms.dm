@@ -4253,6 +4253,13 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 							if (A.artitype.name == "eldritch" && prob(6))
 								src.sensed[5] = "ERROR"
 
+							if (length(A.associated_object.combined_artifacts))
+								src.sensed[1] = "???"
+								src.sensed[2] = "???"
+								src.sensed[3] = "???"
+								src.sensed[4] = "UNDETERMINABLE"
+								src.sensed[5] = "COMBINED"
+
 							M.ArtifactStimulus("radiate", src.radstrength)
 
 						else

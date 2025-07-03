@@ -28,7 +28,7 @@
 			return
 		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
-				if (istext(O.artifact.examine_hint))
+				if (istext(O.artifact.examine_hint) && !findtext(., O.artifact.examine_hint))
 					. += SPAN_ARTHINT(O.artifact.examine_hint)
 
 	UpdateName()

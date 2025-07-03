@@ -3,7 +3,7 @@
 ABSTRACT_TYPE(/datum/artifact/)
 /datum/artifact
 	/// the actual /obj type that is the artifact for this datum
-	var/associated_object = null
+	var/obj/associated_object = null
 	/// a weighted commonness, the higher it is the more often the artifact will appear
 	/// at 0 it should not appear randomly at all
 	var/rarity_weight = 0
@@ -113,6 +113,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
 
+	/// if the artifact can be loaded into the combiner when active
+	var/can_combine_when_active = TRUE
 	/// what this artifact combines with
 	var/combine_flags = ARTIFACT_DOES_NOT_COMBINE
 	/// when used in a combination effect, priority in which this artifact's effect is used
