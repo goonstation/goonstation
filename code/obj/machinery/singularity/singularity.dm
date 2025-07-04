@@ -17,8 +17,8 @@ proc/singularity_containment_check(turf/center)
 				found_field = TRUE
 				break
 			// in case people make really big singulo cages using multiple generators we want to count an singularity_contained generator as a containment field too
-			for(var/obj/machinery/field_generator/gen in T)
-				if(gen.singularity_contained && gen.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
+			for(var/obj/machinery/field_generator/field_generator in T)
+				if(field_generator.active && field_generator.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
 					found_field = TRUE
 					min_dist = min(min_dist, i)
 					break
@@ -237,7 +237,7 @@ maximum_radius: Sets the initial radius of the singularity.
 				sign = 1 //push
 		if (istype(magnet, /obj/gravity_well_generator))
 			var/obj/gravity_well_generator/generator = magnet
-			if (!generator.singularity_contained)
+			if (!generator.active)
 				continue
 
 		//our actual offset from this magnet
