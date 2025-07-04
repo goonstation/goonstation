@@ -112,15 +112,15 @@ maximum_radius: Sets the initial maximum size of the singularity.
 
 	if (src.duration_to_live)//If its a temp singularity IE: an event
 		// This is the first time we are processing this temporary singularity, mark down when it spawned!
-		if (worldtime_spawned == 0)
+		if (src.worldtime_spawned == 0)
 			src.worldtime_spawned = world.time
 			return
 		if ((src.worldtime_spawned + src.duration_to_live) <= world.time)
-			qdel (src)
+			qdel(src)
 
 	if (src.die_over_time)
 		if (src.stored_energy <= 0) // Singularity dies if its out of stored energy
-			qdel (src)
+			qdel(src)
 		else
 			src.stored_energy -= 15
 
@@ -128,42 +128,42 @@ maximum_radius: Sets the initial maximum size of the singularity.
 	if (prob(20))//Chance for it to run a special event
 		event()
 
-	if (singularity_contained == 1)
+	if (src.singularity_contained == 1)
 		move()
 		SPAWN(2 SECONDS) // slowing this baby down a little -drsingh // smoother movement
 			move()
 
 			var/recapture_prob = clamp(25-(size**2) , 0, 25)
-			if(prob(recapture_prob))
+			if (prob(recapture_prob))
 				var/check_max_radius = singularity_containment_check(get_turf(src))
-				if(!isnull(check_max_radius) && check_max_radius >= size)
+				if (!isnull(check_max_radius) && check_max_radius >= src.size)
 					src.singularity_contained = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
-					max_size = check_max_radius
+					src.max_size = check_max_radius
 					logTheThing(LOG_STATION, null, "[src] has been contained (at max_size [max_size]) at [log_loc(src)]")
 					message_admins("[src] has been contained (at max_size [max_size]) at [log_loc(src)]")
 
 	else
 		var/check_max_radius = singularity_containment_check(get_turf(src))
-		if(isnull(check_max_radius) || check_max_radius < size)
+		if (isnull(check_max_radius) || check_max_radius < src.size)
 			src.singularity_contained = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
-			max_size = INFINITY
+			src.max_size = INFINITY
 			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
 			message_ghosts("<b>[src]</b> has become loose at [log_loc(src, ghostjump=TRUE)].")
 
-
 /obj/machinery/the_singularity/emp_act()
 	return // No action required this should be the one doing the EMPing
+
+#define MAX_AFFECTED_ATOMS_PER_TURF 30 //! Prevents lag from eating an overwhelming amount of items on one turf
 
 /obj/machinery/the_singularity/proc/eat()
 
 	var/turf/sing_center = src.get_center()
-	for (var/turf/T in range(gravity_pull_radius, sing_center))
-		var/max_affected_atoms_per_turf = 30
-		for(var/atom/A in list(T) + T.contents)
-			if (max_affected_atoms_per_turf-- <= 0)
+	for (var/turf/T in range(src.gravity_pull_radius, sing_center))
+		for (var/atom/A in list(T) + T.contents)
+			if (MAX_AFFECTED_ATOMS_PER_TURF-- <= 0)
 				break
 
 			if (A == src)
@@ -172,30 +172,33 @@ maximum_radius: Sets the initial maximum size of the singularity.
 			if (A.event_handler_flags & IMMUNE_SINGULARITY)
 				continue
 
-			if (!singularity_contained)
+			if (!src.singularity_contained)
 				if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 					continue
 
-			if(IN_EUCLIDEAN_RANGE(sing_center, A, size+0.5))
+			if(IN_EUCLIDEAN_RANGE(sing_center, A, src.size + 0.5))
 				src.Bumped(A)
+
 			else if (istype(A, /atom/movable))
 				var/atom/movable/AM = A
 				if (!AM.anchored)
 					step_towards(AM, src)
+
+#undef MAX_AFFECTED_ATOMS_PER_TURF
 
 /obj/machinery/the_singularity/proc/move()
 	// if we're inside something (e.g posessed mob) dont move
 	if (!isturf(src.loc))
 		return
 
-	if (self_move)
+	if (src.self_move)
 		var/list/vector = src.calc_direction()
 		var/next_dir = pick(alldirs)
 
 		if (src.target_turf_counter <= 0)
 			if (prob(20)) // drift towards a random station turf for a few steps
 				src.target_turf = get_random_station_turf()
-				src.target_turf_counter = rand(size,size*2)
+				src.target_turf_counter = rand(src.size, src.size*2)
 		else
 			if (!src.target_turf)
 				src.target_turf = get_random_station_turf()
@@ -208,7 +211,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 			next_dir = angle2dir(angle)
 
 		// don't cross containment fields
-		for (var/dist = max(0,size-1), dist <= size+1, dist++)
+		for (var/dist = max(0, (src.size - 1)), dist <= (src.size + 1), dist++)
 			var/turf/checkloc = get_ranged_target_turf(src.get_center(), next_dir, dist)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
@@ -220,7 +223,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 	var/list/total_vector = list(0,0) //if only we had vector primitives...
 	var/turf/singulo_turf = get_turf(src)
 	//unfortunately these are two unrelated types that both have special behaviour so this is going to get messy
-	for(var/atom/movable/magnet as anything in by_cat[TR_CAT_SINGULO_MAGNETS])
+	for (var/atom/movable/magnet as anything in by_cat[TR_CAT_SINGULO_MAGNETS])
 		var/turf/magnet_turf = get_turf(magnet)
 		if (magnet_turf.z != singulo_turf.z)
 			continue
@@ -256,11 +259,12 @@ maximum_radius: Sets the initial maximum size of the singularity.
 		new /obj/bhole(T,rand(100,300))
 
 /obj/machinery/the_singularity/Bumped(atom/A)
-	if(istype(A, /obj/dummy))
+	if (istype(A, /obj/dummy))
 		return
 
 	if (A.event_handler_flags & IMMUNE_SINGULARITY)
 		return
+
 	if (!singularity_contained)
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
@@ -273,13 +277,13 @@ maximum_radius: Sets the initial maximum size of the singularity.
 	var/gain = 0
 
 	if(!no_visuals)
-		num_absorbed++
-		if(src.spaget_count < 25 && !katamari_mode)
+		src.num_absorbed++
+		if(src.spaget_count < 25 && !src.katamari_mode)
 			src.spaget_count++
-			animate_spaghettification(A, src, 15 SECONDS, right_spinning)
+			animate_spaghettification(A, src, 15 SECONDS, src.right_spinning)
 			SPAWN(16 SECONDS)
 				src.spaget_count-- //this is fine, it doesn't need to be tick perfect
-		else if(katamari_mode)
+		else if(src.katamari_mode)
 			var/obj/dummy/kat_overlay = new()
 			kat_overlay.appearance = A.appearance
 			kat_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE | RESET_TRANSFORM
@@ -369,7 +373,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 			qdel(A)
 		else
 			var/obj/O = A
-			succ_cache[A.type] += 1
+			src.succ_cache[A.type] += 1
 			gain += 10/succ_cache[A.type]
 			for(var/atom/other_food in A)
 				src.consume_atom(other_food, no_visuals = TRUE)
@@ -403,15 +407,15 @@ maximum_radius: Sets the initial maximum size of the singularity.
 		return ..()
 
 /obj/machinery/the_singularity/proc/shrink()
-	size--
-	SafeScaleAnim((size-0.5)/(size+0.5),(size-0.5)/(size+0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
-	gravity_pull_radius = min((size+1)*3, gravity_pull_radius)
+	src.size--
+	SafeScaleAnim((src.size-0.5)/(src.size+0.5),(src.size-0.5)/(src.size+0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
+	src.gravity_pull_radius = min((src.size+1)*3, src.gravity_pull_radius)
 
 /obj/machinery/the_singularity/proc/grow()
-	if(size<max_size)
-		size++
-		SafeScaleAnim((size+0.5)/(size-0.5),(size+0.5)/(size-0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
-		gravity_pull_radius = max(gravity_pull_radius, size)
+	if (src.size < src.max_size)
+		src.size++
+		SafeScaleAnim((src.size+0.5)/(src.size-0.5),(src.size+0.5)/(src.size-0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
+		src.gravity_pull_radius = max(src.gravity_pull_radius, src.size)
 
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
@@ -423,7 +427,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 /////////////////////////////////////////////Controls which "event" is called
 /obj/machinery/the_singularity/proc/event()
 	var/numb = rand(1,3)
-	if(prob(25 / max(size, 1)))
+	if(prob(25 / max(src.size, 1)))
 		grow()
 	switch (numb)
 		if (1)//Eats the turfs around it
@@ -436,14 +440,13 @@ maximum_radius: Sets the initial maximum size of the singularity.
 			Mezzer()
 			return
 
-
 /obj/machinery/the_singularity/proc/Toxmob()
-	for (var/mob/living/M in hearers(size*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
-		M.take_radiation_dose(clamp(0.2 SIEVERTS*(size+1), 0, 2 SIEVERTS))
+	for (var/mob/living/M in hearers(src.size*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+		M.take_radiation_dose(clamp(0.2 SIEVERTS*(src.size+1), 0, 2 SIEVERTS))
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
-	for (var/mob/living/carbon/M in hearers(size*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	for (var/mob/living/carbon/M in hearers(src.size*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder?.HasEffect("blind") || H.blinded)
@@ -461,11 +464,11 @@ maximum_radius: Sets the initial maximum size of the singularity.
 
 /obj/machinery/the_singularity/proc/BHolerip()
 	var/turf/sing_center = src.get_center()
-	for (var/turf/T in orange(size+EVENT_GROWTH+0.5, sing_center))
+	for (var/turf/T in orange(src.size+EVENT_GROWTH+0.5, sing_center))
 		if (prob(70))
 			continue
 
-		if (T && !istype(T, /turf/space) && (IN_EUCLIDEAN_RANGE(sing_center, T, size+EVENT_GROWTH+0.5)))
+		if (T && !istype(T, /turf/space) && (IN_EUCLIDEAN_RANGE(sing_center, T, src.size+EVENT_GROWTH+0.5)))
 			if (issimulatedturf(T))
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
