@@ -55,7 +55,7 @@
 	associated_object = /obj/item/artifact/agitator
 	type_name = "Agitator"
 	type_size = ARTIFACT_SIZE_MEDIUM
-	rarity_weight = 250
+	rarity_weight = 350
 	validtypes = list("lattice")
 	react_xray = list(9, 55, 95, 8, "ANOMALOUS")
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
