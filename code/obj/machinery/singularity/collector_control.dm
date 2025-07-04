@@ -119,7 +119,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 		if(length(S))
 			overlays += image('icons/obj/singularity.dmi', "cu sing")
 			for(var/obj/machinery/the_singularity/singularity in S)
-				if(!singularity.singularity_contained)
+				if(!singularity.contained)
 					overlays += image('icons/obj/singularity.dmi', "cu conterr")
 					break
 	else
