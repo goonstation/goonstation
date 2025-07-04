@@ -878,7 +878,7 @@
 				user.put_in_hand_or_drop(W)
 				if (src.match_amt != -1)
 					src.match_amt --
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 			src.UpdateIcon()
 		else
 			return ..()

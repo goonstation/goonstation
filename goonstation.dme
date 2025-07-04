@@ -1946,6 +1946,7 @@
 #include "code\modules\speech\modules\speech\outputs\spoken\audio_log.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\device.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\flockmind.dm"
+#include "code\modules\speech\modules\speech\outputs\spoken\hivemind.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\local.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\radio.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\sound_card.dm"

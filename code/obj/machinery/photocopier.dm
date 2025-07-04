@@ -544,7 +544,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			P.set_loc(F)
 			F.amount++
 		F.is_virtual = TRUE
-		F.tooltip_rebuild = 1
+		F.tooltip_rebuild = TRUE
 		return F
 	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper into the copier here
 		if (istype(w, /obj/item/paper))
@@ -749,7 +749,7 @@ TYPEINFO(/obj/machinery/photocopier)
 	proc/scan_butt(var/obj/item/clothing/head/butt/B, var/mob/user)
 		scan_setup(B, user)
 		src.icon_state = "buttt"
-		boutput(user, "You slap the ass (hot) on the scan bed, close the lid, and press start...")
+		boutput(user, "You put [B] on the scan bed, close the lid, and press start...")
 		effects_scanning(B)
 		src.print_type = "butt"
 
@@ -775,7 +775,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	proc/scan_id_data(var/obj/item/card/id/I, var/mob/user)
 		scan_setup(I, user)
-		if(I.icon_state == "gold")
+		if(I.icon_state == "id_gold")
 			src.icon_state = "scan_id_gold"
 		else
 			src.icon_state = "scan_id"
@@ -808,6 +808,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["stamps"] = null
 		src.print_info["form_fields"] = list()
 		src.print_info["field_counter"] = 1
+		src.print_info["icon"] = 'icons/obj/writing.dmi'
 		src.print_info["icon_state"] = "paper_blank"
 		src.print_info["sizex"] = 0
 		src.print_info["sizey"] = 0

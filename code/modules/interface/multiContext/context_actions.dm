@@ -867,7 +867,7 @@
 			M.set_icon_state("[M.prefix]-remove")
 		else
 			M.set_icon_state("[M.prefix]-[M.setting]")
-		M.tooltip_rebuild = 1
+		M.tooltip_rebuild = TRUE
 
 /datum/contextAction/lamp_manufacturer/col_page_1/to_page_2
 	name = "Page 2"

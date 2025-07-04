@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Changeling Tips',
-  content: (
+const ChangelingContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a changeling!</h1>
       <img
@@ -116,5 +115,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Changeling">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Changeling Tips',
+  component: ChangelingContentWindow,
 };

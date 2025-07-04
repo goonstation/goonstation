@@ -189,7 +189,7 @@ var/datum/job/priority_job = null
 		for (var/mob/new_player/M in mobs)
 			potential_new_hires += M
 		for (var/mob/who in potential_new_hires)
-			who.playsound_local_not_inworld(who, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+			who.playsound_local_not_inworld('sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 			boutput(who, message)
 
 

@@ -836,7 +836,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
-			I.tooltip_rebuild = 1
+			I.tooltip_rebuild = TRUE
 		setProperty("I_disorient_resist", 20)
 
 	disposing()
@@ -846,7 +846,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
-			I.tooltip_rebuild = 1
+			I.tooltip_rebuild = TRUE
 			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
 		else
 			if (assailant)

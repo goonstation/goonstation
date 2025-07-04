@@ -225,4 +225,4 @@ TYPEINFO(/mob/living/intangible/flock/flockmind)
 		picked = picked.ghostize() //apparently corpses were being deleted here?
 
 	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.flock.flockmind_mind))
-		logTheThing(LOG_DEBUG, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")
+		logTheThing(LOG_DEBUG, null, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")

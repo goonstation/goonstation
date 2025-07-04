@@ -97,7 +97,7 @@
 					src.dropped(user)
 				if (length(manipulated_satchel.contents) == manipulated_satchel.maxitems)
 					boutput(user, SPAN_NOTICE("[W] is now full!"))
-				manipulated_satchel.tooltip_rebuild = 1
+				manipulated_satchel.tooltip_rebuild = TRUE
 				manipulated_satchel.UpdateIcon()
 			else
 				boutput(user, SPAN_ALERT("[manipulated_satchel] is full!"))
@@ -642,8 +642,8 @@
 	name = "yuranite"
 	desc = "Yuranite, an ore of uranium. Best to stay away from it without proper radiactive protection."
 	icon = 'icons/obj/items/materials/materials.dmi'
-	material_name = "Uranium"
-	default_material = "uranium"
+	material_name = "Yuranite"
+	default_material = "yuranite"
 
 	update_icon()
 		src.icon_state = "ore$$yuranite"

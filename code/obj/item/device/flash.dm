@@ -320,7 +320,7 @@ TYPEINFO(/obj/item/device/flash)
 	user.show_text("There seems to be something preventing [M] from revolting.", "red")
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	if (prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
 		boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))

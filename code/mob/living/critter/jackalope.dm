@@ -12,7 +12,6 @@
 
 /mob/living/critter/small_animal/jackalope
 	name = "jackalope"
-	real_name = "jackalope"
 	desc = "A rabbit-like creature with two elongated antlers. Skittish and harmless, this animal has been rumored to exist for centuries."
 	hand_count = 2
 	icon_state = "jackalope"
