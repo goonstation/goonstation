@@ -16,9 +16,9 @@ proc/singularity_containment_check(turf/center)
 				min_dist = min(min_dist, i)
 				found_field = TRUE
 				break
-			// in case people make really big singulo cages using multiple generators we want to count an active generator as a containment field too
+			// in case people make really big singulo cages using multiple generators we want to count an singularity_contained generator as a containment field too
 			for(var/obj/machinery/field_generator/gen in T)
-				if(gen.active && gen.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
+				if(gen.singularity_contained && gen.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
 					found_field = TRUE
 					min_dist = min(min_dist, i)
 					break
@@ -33,17 +33,17 @@ proc/singularity_containment_check(turf/center)
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "whole"
 	anchored = ANCHORED
-	density = 1
+	density = TRUE
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
 	flags = 0 // no fluid submerge images and we also don't need tgui interactability
 	pixel_x = -16
 	pixel_y = -16
-	var/active = FALSE //! determines if the singularity is contained
-	var/energy = 10
-	var/Dtime = null
-	var/Wtime = 0
-	var/dieot = FALSE
+	var/singularity_contained = FALSE //! Value which stores whether it is currently under containment
+	var/stored_energy = 10 //! Amount of energy the singularity has absorbed from objects. If at or below 0, the singularity dissapears
+	var/duration_to_live = null //! The amount of time in seconds the singularity will live for before expiring, in seconds. If null, it lives forever.
+	var/worldtime_spawned = null //! The world.time that this singularity was spawned. Used to keep track of time to live for event singularities
+	var/die_over_time = FALSE
 	var/selfmove = TRUE
 	var/grav_pull = 6
 	var/radius = 0 //! the variable used for all calculations involving size.this is the current size
@@ -61,26 +61,30 @@ proc/singularity_containment_check(turf/center)
 	var/target_turf_counter = 0 //! How many steps we'll continue to walk towards the target turf before rerolling
 
 #ifdef SINGULARITY_TIME
+
 /*
 hello I've lost my remaining sanity by dredging this code from the depths of hell where it was cast eons before I arrived in this place
 for some reason I brought it back and tried to clean it up a bit and I regret everything but it's too late now I can't put it back please forgive me
 - haine
 */
-/obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
+
+/*
+starting_energy: The amount of energy the singularity will start with. Indirectly related to the size and with death over time (decay)
+seconds_to_live: Relevant with event singularities, this is the time (in seconds) the singularity will be around before being qdel'd
+maximum_radius: Sets the initial radius of the singularity.
+*/
+/obj/machinery/the_singularity/New(loc, var/starting_energy = 100, var/seconds_to_live = null, var/maximum_radius = 2)
 	START_TRACKING
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-	src.energy = E
-	maxradius = rad
+	src.stored_energy = starting_energy
+	src.maxradius = maximum_radius
 	succ_cache = list()
-	if(maxradius<2)
-		radius = maxradius
-	else
-		radius = 2
+	src.radius = min(src.maxradius, src.radius) // Reduce the starting radius if the initial radius is set lower than the maximum radius
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
 	grav_pull = (radius+1)*3
 	event()
-	if (Ti)
-		src.Dtime = Ti
+	if (seconds_to_live)
+		src.duration_to_live = seconds_to_live
 	right_spinning = prob(50)
 
 	var/offset = rand(1000)
@@ -108,25 +112,25 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		qdel(src)
 	eat()
 
-	if (src.Dtime)//If its a temp singularity IE: an event
-		if (Wtime != 0)
-			if ((src.Wtime + src.Dtime) <= world.time)
-				src.Wtime = 0
-				qdel (src)
-		else
-			src.Wtime = world.time
+	if (src.duration_to_live)//If its a temp singularity IE: an event
+		// This is the first time we are processing this temporary singularity, mark down when it spawned!
+		if (worldtime_spawned == 0)
+			src.worldtime_spawned = world.time
+			return
+		if ((src.worldtime_spawned + src.duration_to_live) <= world.time)
+			qdel (src)
 
-	if (dieot)
-		if (energy <= 0)//slowly dies over time
+	if (src.die_over_time)
+		if (src.stored_energy <= 0) // Singularity dies if its out of stored energy
 			qdel (src)
 		else
-			energy -= 15
+			src.stored_energy -= 15
 
 
 	if (prob(20))//Chance for it to run a special event
 		event()
 
-	if (active == 1)
+	if (singularity_contained == 1)
 		move()
 		SPAWN(2 SECONDS) // slowing this baby down a little -drsingh // smoother movement
 			move()
@@ -135,7 +139,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(prob(recapture_prob))
 				var/check_max_radius = singularity_containment_check(get_turf(src))
 				if(!isnull(check_max_radius) && check_max_radius >= radius)
-					src.active = FALSE
+					src.singularity_contained = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = check_max_radius
 					logTheThing(LOG_STATION, null, "[src] has been contained (at maxradius [maxradius]) at [log_loc(src)]")
@@ -144,7 +148,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else
 		var/check_max_radius = singularity_containment_check(get_turf(src))
 		if(isnull(check_max_radius) || check_max_radius < radius)
-			src.active = TRUE
+			src.singularity_contained = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
 			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
@@ -170,7 +174,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (A.event_handler_flags & IMMUNE_SINGULARITY)
 				continue
 
-			if (!active)
+			if (!singularity_contained)
 				if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 					continue
 
@@ -233,7 +237,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				sign = 1 //push
 		if (istype(magnet, /obj/gravity_well_generator))
 			var/obj/gravity_well_generator/generator = magnet
-			if (!generator.active)
+			if (!generator.singularity_contained)
 				continue
 
 		//our actual offset from this magnet
@@ -259,7 +263,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (A.event_handler_flags & IMMUNE_SINGULARITY)
 		return
-	if (!active)
+	if (!singularity_contained)
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
 
@@ -385,7 +389,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			else
 				T.ReplaceWithFloor()
 
-	src.energy += gain
+	src.stored_energy += gain
 
 /obj/machinery/the_singularity/proc/get_center()
 	return src.loc
