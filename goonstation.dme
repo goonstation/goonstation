@@ -38,6 +38,7 @@
 #endif
 
 // BEGIN_INCLUDE
+#include "_std\defines\singularity.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -2609,6 +2610,14 @@
 #include "code\obj\machinery\shield_generators\meteor_shield.dm"
 #include "code\obj\machinery\shield_generators\portable_shield_generator.dm"
 #include "code\obj\machinery\shield_generators\shield_generator.dm"
+#include "code\obj\machinery\singularity\collector_array.dm"
+#include "code\obj\machinery\singularity\collector_control.dm"
+#include "code\obj\machinery\singularity\containment_field.dm"
+#include "code\obj\machinery\singularity\emitter.dm"
+#include "code\obj\machinery\singularity\field_generator.dm"
+#include "code\obj\machinery\singularity\singularity.dm"
+#include "code\obj\machinery\singularity\singularity_bomb.dm"
+#include "code\obj\machinery\singularity\singularity_generator.dm"
 #include "code\obj\map\light.dm"
 #include "code\obj\nuclearreactor\centrifuge.dm"
 #include "code\obj\nuclearreactor\destroyed_reactor.dm"
