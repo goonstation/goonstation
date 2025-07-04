@@ -530,7 +530,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	proc/handle_planting(obj/decorative_pot/pot)
 		if (!holding_plant)
 			return
-		pot.insert_plant(create_plant_image(), create_plant_overlay_image(), genes, grow_level)
+		pot.insert_plant(image(src.plant_icon, src.plant_icon_state), image(src.plantoverlay_icon, src.plantoverlay_icon_state), genes, grow_level)
 		src.empty_trowel()
 		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
 
@@ -546,23 +546,6 @@ TYPEINFO(/obj/item/plantanalyzer)
 		qdel(src.genes)
 		src.genes = null
 
-	/// Creates and returns an image for the "plantoverlay" held by this trowel
-	proc/create_plant_image()
-		if (!plant_icon)
-			return null
-		var/image/plantyboi = image(src.plant_icon, src.plant_icon_state)
-		plantyboi.pixel_x = 2
-		return plantyboi
-
-	/// Creates and returns an image for the "plant" overlay held by this trowel
-	proc/create_plant_overlay_image()
-		if (!plantoverlay_icon)
-			return null
-		var/image/plantyboi_overlay = image(src.plantoverlay_icon, src.plantoverlay_icon_state)
-		plantyboi_overlay.pixel_x = 2
-		return plantyboi_overlay
-
-		//check if target is a plant pot to paste in the cosmetic plant overlay
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
 /obj/item/reagent_containers/glass/wateringcan
