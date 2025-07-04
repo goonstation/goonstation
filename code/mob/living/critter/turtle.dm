@@ -5,7 +5,6 @@
 
 /mob/living/critter/small_animal/turtle
 	name = "turtle"
-	real_name = "turtle"
 	desc = "A turtle. They are noble creatures of the land and sea."
 	icon = 'icons/mob/critter/nonhuman/turtle.dmi'
 	icon_state = "turtle"

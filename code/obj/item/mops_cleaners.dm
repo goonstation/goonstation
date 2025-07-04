@@ -822,7 +822,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			boutput(user, SPAN_NOTICE("You remove \the [removed_things[1]] from \the [src]"))
 		else
 			boutput(user, SPAN_NOTICE("You remove \the [removed_things[1]] and \the [removed_things[2]] from \the [src]"))
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 
 	attack_hand(mob/user)
 		if(!(src.loc == user && user.find_in_hand(src)))
@@ -852,7 +852,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
 			boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 			return
 		else if(istype(target, /obj/machinery/disposal))
 			var/obj/machinery/disposal/disposal = target
@@ -860,14 +860,14 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				for(var/obj/item/I in src.trashbag.storage.get_contents())
 					I.set_loc(disposal)
 				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
-				src.tooltip_rebuild = 1
+				src.tooltip_rebuild = TRUE
 				disposal.update()
 				return
 		else if(istype(target, /obj/submachine/chef_sink))
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 				src.bucket.reagents.clear_reagents()
-				src.tooltip_rebuild = 1
+				src.tooltip_rebuild = TRUE
 			else
 				boutput(user, SPAN_NOTICE("[src]'s bucket is empty."))
 			return
@@ -875,7 +875,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 				src.bucket.transfer_all_reagents(target, user)
-				src.tooltip_rebuild = 1
+				src.tooltip_rebuild = TRUE
 			else
 				boutput(user, SPAN_NOTICE("[src]'s bucket is empty."))
 			return
@@ -947,7 +947,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 							boutput(user, SPAN_NOTICE("[src]'s [src.trashbag] is now full."))
 							break
 
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 		. |= success
 
 	attackby(obj/item/W, mob/user, params, is_special=0)
@@ -965,7 +965,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				user.put_in_hand_or_drop(old_trashbag)
 			user.u_equip(W)
 			W.dropped(user)
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
 				boutput(user, SPAN_NOTICE("You insert \the [W] into \the [src]."))
@@ -980,7 +980,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				user.put_in_hand_or_drop(old_bucket)
 			user.u_equip(W)
 			W.dropped(user)
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 		else
 			. = ..()
 

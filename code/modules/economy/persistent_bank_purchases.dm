@@ -83,6 +83,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			equip_success = 1
 			var/obj/I = new path(H.loc)
 			I.name = "[H.real_name][pick_string("trinkets.txt", "modifiers")] [I.name]"
+			I.real_name = I.name
 			I.quality = rand(5,80)
 			var/equipped = 0
 			if (H.back?.storage && H.equip_if_possible(I, SLOT_IN_BACKPACK))
