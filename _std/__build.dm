@@ -73,6 +73,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
 //#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
 //#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT // Stops lights from breaking or burning out when spawning or turning on/off
+//#define NO_ANTAG_POPUPS_I_DONT_CARE // Stops antag popups from coming up at the start of every game
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -193,6 +194,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define FUCK_OFF_WITH_THE_MAIL
 #define GHOSTDRONES_ON_STRIKE
 #define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
+#define NO_ANTAG_POPUPS_I_DONT_CARE
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
