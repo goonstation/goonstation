@@ -36,25 +36,25 @@ proc/singularity_containment_check(turf/center)
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
-	flags = 0 //! no fluid submerge images and we also don't need tgui interactability
+	flags = 0 // no fluid submerge images and we also don't need tgui interactability
 	pixel_x = -16
 	pixel_y = -16
-	var/active = 0 //! determines if the singularity is contained
+	var/active = FALSE //! determines if the singularity is contained
 	var/energy = 10
 	var/Dtime = null
 	var/Wtime = 0
-	var/dieot = 0
-	var/selfmove = 1
+	var/dieot = FALSE
+	var/selfmove = TRUE
 	var/grav_pull = 6
 	var/radius = 0 //! the variable used for all calculations involving size.this is the current size
 	var/maxradius = INFINITY //! the maximum size the singularity can grow to
 	var/restricted_z_allowed = FALSE
-	var/right_spinning //! boolean for the spaghettification animation spin direction
+	var/right_spinning = FALSE //! boolean for the spaghettification animation spin direction
 	var/spaget_count = 0 //! Count for rate-limiting the spaghettification effect
 	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
 	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
 	var/num_absorbed_players = 0 //! number of players absorbed
-	var/gib_mobs = 0 //! if it should call gib on mobs
+	var/gib_mobs = FALSE //! if it should call gib on mobs
 	var/list/obj/succ_cache
 
 	var/turf/target_turf //! Targeted turf when loose
