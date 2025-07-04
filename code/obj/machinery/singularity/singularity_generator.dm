@@ -43,7 +43,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
 		else
-			new /obj/machinery/the_singularity(T, 100,,max_radius)
+			new /obj/machinery/the_singularity(T, 100, null, max_radius)
 		qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
