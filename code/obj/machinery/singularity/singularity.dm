@@ -48,15 +48,14 @@ proc/singularity_containment_check(turf/center)
 	var/gravity_pull_radius = 6 //! The initial size, in tiles, that the singularity will pull objects within. Changes with size
 	var/size = 0 //! the variable used for all calculations involving size.this is the current size
 	var/max_size = INFINITY //! the maximum size the singularity can grow to. Overriden on init to a sensible value
-	var/restricted_z_allowed = FALSE
+	var/restricted_z_allowed = FALSE //! Whether to annihilate this singularity if it is spawned on restricted z-levels. You can probably guess why
 	var/right_spinning = FALSE //! boolean for the spaghettification animation spin direction
 	var/spaget_count = 0 //! Count for rate-limiting the spaghettification effect
 	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
 	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
 	var/num_absorbed_players = 0 //! number of players absorbed
 	var/gib_mobs = FALSE //! if it should call gib on mobs
-	var/list/obj/succ_cache
-
+	var/list/datum/succ_cache //! A list of object types consumed by the singularity, used to remember what it ate for diminishing returns on energy.
 	var/turf/target_turf //! Targeted turf when loose
 	var/target_turf_counter = 0 //! How many steps we'll continue to walk towards the target turf before rerolling
 
