@@ -162,8 +162,9 @@ maximum_radius: Sets the initial maximum size of the singularity.
 
 	var/turf/sing_center = src.get_center()
 	for (var/turf/T in range(src.gravity_pull_radius, sing_center))
+		var/affected_atoms = 0
 		for (var/atom/A in list(T) + T.contents)
-			if (MAX_AFFECTED_ATOMS_PER_TURF-- <= 0)
+			if (affected_atoms++ >= MAX_AFFECTED_ATOMS_PER_TURF)
 				break
 
 			if (A == src)
