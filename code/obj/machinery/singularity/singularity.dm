@@ -16,7 +16,7 @@ proc/singularity_containment_check(turf/center)
 				min_dist = min(min_dist, i)
 				found_field = TRUE
 				break
-			// in case people make really big singulo cages using multiple generators we want to count an singularity_contained generator as a containment field too
+			// in case people make really big singulo cages using multiple generators we want to count an contained generator as a containment field too
 			for(var/obj/machinery/field_generator/field_generator in T)
 				if(field_generator.active && field_generator.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
 					found_field = TRUE
@@ -39,7 +39,7 @@ proc/singularity_containment_check(turf/center)
 	flags = 0 // no fluid submerge images and we also don't need tgui interactability
 	pixel_x = -16
 	pixel_y = -16
-	var/singularity_contained = FALSE //! Value which stores whether it is currently under containment
+	var/contained = FALSE //! Value which stores whether it is currently under containment
 	var/stored_energy = 10 //! Amount of energy the singularity has absorbed from objects. If at or below 0, the singularity dissapears
 	var/duration_to_live = null //! The amount of time in seconds the singularity will live for before expiring, in seconds. If null, it lives forever.
 	var/worldtime_spawned = null //! The world.time that this singularity was spawned. Used to keep track of time to live for event singularities
@@ -128,7 +128,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 	if (prob(20))//Chance for it to run a special event
 		event()
 
-	if (src.singularity_contained == 1)
+	if (src.contained == 1)
 		move()
 		SPAWN(2 SECONDS) // slowing this baby down a little -drsingh // smoother movement
 			move()
@@ -137,7 +137,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 			if (prob(recapture_prob))
 				var/check_max_radius = singularity_containment_check(get_turf(src))
 				if (!isnull(check_max_radius) && check_max_radius >= src.size)
-					src.singularity_contained = FALSE
+					src.contained = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					src.max_size = check_max_radius
 					logTheThing(LOG_STATION, null, "[src] has been contained (at max_size [max_size]) at [log_loc(src)]")
@@ -146,7 +146,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 	else
 		var/check_max_radius = singularity_containment_check(get_turf(src))
 		if (isnull(check_max_radius) || check_max_radius < src.size)
-			src.singularity_contained = TRUE
+			src.contained = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			src.max_size = INFINITY
 			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
@@ -172,7 +172,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 			if (A.event_handler_flags & IMMUNE_SINGULARITY)
 				continue
 
-			if (!src.singularity_contained)
+			if (!src.contained)
 				if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 					continue
 
@@ -265,7 +265,7 @@ maximum_radius: Sets the initial maximum size of the singularity.
 	if (A.event_handler_flags & IMMUNE_SINGULARITY)
 		return
 
-	if (!singularity_contained)
+	if (!contained)
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
 
