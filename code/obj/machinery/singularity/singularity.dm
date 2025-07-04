@@ -49,7 +49,7 @@ proc/singularity_containment_check(turf/center)
 	var/size = 0 //! the variable used for all calculations involving size.this is the current size
 	var/max_size = INFINITY //! the maximum size the singularity can grow to. Overriden on init to a sensible value
 	var/restricted_z_allowed = FALSE //! Whether to annihilate this singularity if it is spawned on restricted z-levels. You can probably guess why
-	var/right_spinning = FALSE //! boolean for the spaghettification animation spin direction
+	var/right_spinning = null //! boolean for the spaghettification animation spin direction
 	var/spaget_count = 0 //! Count for rate-limiting the spaghettification effect
 	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
 	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
@@ -77,14 +77,13 @@ maximum_radius: Sets the initial maximum size of the singularity.
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.stored_energy = starting_energy
 	src.max_size = maximum_radius
-	succ_cache = list()
+	src.succ_cache = list()
 	src.size = min(src.max_size, src.size) // Reduce the starting size if the initial size is set lower than the maximum size
 	SafeScale((size+1)/3.0,(size+1)/3.0)
-	gravity_pull_radius = (size+1)*3
+	src.gravity_pull_radius = (size+1)*3
 	event()
-	if (seconds_to_live)
-		src.duration_to_live = seconds_to_live
-	right_spinning = prob(50)
+	src.duration_to_live = seconds_to_live
+	src.right_spinning = prob(50)
 
 	var/offset = rand(1000)
 	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.2, color="#c0c", x=0, y=0))
