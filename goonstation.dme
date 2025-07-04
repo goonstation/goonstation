@@ -2559,7 +2559,6 @@
 #include "code\obj\machinery\secscanner.dm"
 #include "code\obj\machinery\shipalert.dm"
 #include "code\obj\machinery\shower.dm"
-#include "code\obj\machinery\singularity.dm"
 #include "code\obj\machinery\sleeper.dm"
 #include "code\obj\machinery\spaceheater.dm"
 #include "code\obj\machinery\status_display.dm"
