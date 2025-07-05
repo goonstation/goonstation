@@ -8,7 +8,8 @@ import htmlmin from 'gulp-htmlmin';
 import postcss from 'gulp-postcss';
 import babel from 'gulp-babel';
 import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
+import postcssClean from 'postcss-clean';
+import postcssSimpleVars from 'postcss-simple-vars';
 import rename from 'gulp-rename';
 import { isText } from 'istextorbinary';
 import vinyl from 'vinyl';
@@ -208,7 +209,8 @@ function html(cb) {
 function css(cb) {
   return src(sources.styles, { nocase: true, ignore: ignoreSources })
     .pipe(macroReplacer())
-    .pipe(postcss([autoprefixer(), cssnano()]))
+    .pipe(postcss([postcssSimpleVars(), autoprefixer()]))
+    .pipe(postcss([postcssClean()]))
     .pipe(rename(hashRenamer))
     .pipe(dest(dirs.dest + '/css'));
 }
@@ -252,6 +254,11 @@ function copy(cb) {
     .pipe(dest(dirs.dest));
 }
 
+function dev(cb) {
+  fs.copyFileSync(`${dirs.dest}/manifest.json`, '../cdn-manifest.json');
+  cb();
+}
+
 export const tguiManifest = series(clean, generateTguiManifest);
 
 tguiManifest.displayName = 'tgui:manifest';
@@ -262,6 +269,7 @@ export const build = series(
   manifest,
   parallel(html, css, javascript),
   copy
+  // dev
 );
 
 build.description = 'Build CDN Assets';

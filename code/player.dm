@@ -16,6 +16,8 @@
 	var/shamecubed = 0
 	/// have we cached player stats from the api
 	var/cached_round_stats = FALSE
+	/// have we fetched round stats from the api?
+	var/fetched_round_stats = FALSE
 	/// how many rounds (total) theyve declared ready and joined, null with to differentiate between not set and no participation
 	VAR_PRIVATE/rounds_participated = null
 	/// how many rounds (rp only) theyve declared ready and joined, null with to differentiate between not set and no participation
@@ -63,8 +65,8 @@
 	New(key)
 		..()
 		START_TRACKING
-		src.setup(key)
 		src.cloudSaves = new /datum/cloudSaves(src)
+		src.setup(key)
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
@@ -79,9 +81,12 @@
 		src.key = key
 		src.ckey = ckey(key)
 		src.tag = "player-[src.ckey]"
-		if (src.ckey in mentors) src.mentor = 1
+		if (src.ckey in mentors) src.mentor = TRUE
 		src.cache_round_stats()
 		src.last_death_time = world.timeofday
+
+		SPAWN(0)
+			src.cloudSaves.fetch()
 
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()
@@ -123,6 +128,7 @@
 			getPlayerStats.queryParams = list("ckey" = src.ckey)
 			playerStats = apiHandler.queryAPI(getPlayerStats)
 		catch
+			src.fetched_round_stats = TRUE
 			return FALSE
 
 		src.rounds_participated_rp = text2num(playerStats.played_rp)
@@ -131,6 +137,7 @@
 		src.rounds_seen = text2num(playerStats.connected) + src.rounds_seen_rp //the API counts these separately, but we want a combined number
 		src.last_seen = playerStats.latest_connection?.created_at
 		src.cached_round_stats = TRUE
+		src.fetched_round_stats = TRUE
 		return TRUE
 
 	proc/load_antag_tokens()

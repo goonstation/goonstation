@@ -50,7 +50,7 @@
 			var/datum/http_request/request = new()
 			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]", "", "")
 			request.begin_async()
-			UNTIL(request.is_complete())
+			UNTIL(request.is_complete(), 10 SECONDS)
 			var/datum/http_response/response = request.into_response()
 
 			if (response.errored || !response.body || response.status_code != 200)

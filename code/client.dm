@@ -226,9 +226,8 @@
 	if (config.rsc) src.preload_rsc = config.rsc
 
 	// Assign custom interface datums
-	if (!isnewplayer(src.mob)) src.loadResources()
+	src.loadResources()
 	src.initSizeHelpers()
-	src.chatOutput.start()
 	src.tooltipHolder = new /datum/tooltipHolder(src)
 	src.tooltipHolder.clearOld()
 
@@ -238,8 +237,11 @@
 	// Creates or assigns the client's mob
 	. = ..()
 
+	if (isnewplayer(src.mob))
+		var/mob/new_player/new_player = src.mob
+		new_player.blocked_from_joining = TRUE
+
 	src.initialize_interface()
-	winset(src, null, "rpanewindow.left=infowindow")
 
 	if (byond_version >= 516)
 		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
@@ -250,14 +252,18 @@
 
 /client/proc/post_auth()
 	world.log << "Client/post_auth for [src]"
-	src.authenticated = TRUE
+	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
+	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
+	src.authenticated = TRUE
+	src.chatOutput.start()
 	global.pre_auth_clients -= src
 	global.clients += src
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
-	src.player.setup(src.key)
 	src.player.id = src.client_auth_intent.player_id || 0
+	src.player.record_login()
+	src.player.setup(src.key)
 
 	if (isnewplayer(src.mob))
 		var/mob/new_player/new_player = src.mob
@@ -268,15 +274,11 @@
 
 	if (!isnull(src.mob) && !isnewplayer(src.mob)) src.player.log_join_time()
 
-	// Record a login, sets player.id, which is used by almost every future API call for a player
-	// So we need to do this early, and outside of a spawn
-	src.player.record_login()
-
 	if (join_motd) boutput(src, "<div class='motd'>[join_motd]</div>")
 
-	if (src.holder)
+	if (isadmin(src))
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-	else if (player.mentor)
+	else if (src.is_mentor())
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		src.verbs += /client/proc/toggle_mentorhelps
 
@@ -303,10 +305,6 @@
 
 	src.reputations = new(src)
 
-	if (browse_item_initial_done)
-		SPAWN(0)
-			sendItemIcons(src)
-
 	// fixing locked ability holders
 	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
 	ability_holder?.locked = FALSE
@@ -320,9 +318,6 @@
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
 
-	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
-	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
-
 	if (config.log_access)
 		src.ip_cid_conflict_check()
 
@@ -332,19 +327,19 @@
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 
 	SPAWN(0) // to not lock up spawning process
+		Z_LOG_DEBUG("Client/New", "[src.ckey] - spawn stuff")
+		if (global.browse_item_initial_done) sendItemIcons(src)
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 		updateXpRewards()
 
-	SPAWN(3 SECONDS)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 		var/is_newbie = 0
 #endif
-		// new player logic, moving some of the preferences handling procs from new_player.Login
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
 
+		// new player logic, moving some of the preferences handling procs from new_player.Login
 		if (!preferences)
 			preferences = new
-		if (istype(src.mob, /mob/new_player))
+		if (isnewplayer(src.mob))
 			Z_LOG_DEBUG("Client/New", "[src.ckey] - new player crap")
 
 			//Load the preferences up here instead.
@@ -366,11 +361,10 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
 				if (!cdn)
-					//src << browse_rsc(file("browserassets/src/images/changelog/postcardsmall.jpg"))
 					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
 				changes()
 
-			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
+			if (isadmin(src) && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
 				admin_changes()
 #endif
 		else
@@ -380,31 +374,12 @@
 			src.antag_tokens = src.player?.get_antag_tokens()
 			load_persistent_bank()
 
-#ifdef LIVE_SERVER
-		// check client version validity
-		if (src.byond_version < 515 || src.byond_build < 1633)
-			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the latest 515 version (at the bottom of the page).", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/build/515")
-			// kick out of date clients
-			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
-			tgui_process.close_user_uis(src.mob)
-			del(src)
-			return
-		if (src.byond_version >= 517)
-			if (tgui_alert(src, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/build/515")
-#endif
-
 		setJoinDate()
 
 		if (winget(src, null, "hwmode") != "true")
 			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")
 
 		ircbot.event("login", src.key)
-		//Cloud data
-		if (!src.player?.cloudSaves.loaded)
-			src.player?.cloudSaves.fetch()
 		src.antag_tokens = src.player?.get_antag_tokens()
 		src.load_persistent_bank()
 		var/decoded = src.player?.cloudSaves.getData("audio_volume")
@@ -427,14 +402,13 @@
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
-
-		if(istype(src.mob, /mob/new_player))
-			var/mob/new_player/M = src.mob
-			M.new_player_panel() // update if tokens available
+			if (isnewplayer(src.mob))
+				var/mob/new_player/M = src.mob
+				M.new_player_panel() // update if tokens available
 
 #if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
 		src.verbs += /client/proc/cmd_rp_rules
-		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
+		if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 			src.cmd_rp_rules()
 #endif
 
@@ -922,6 +896,8 @@
 
 	dark_screenflash = winget( src, "menu.toggle_dark_screenflashes", "is-checked") == "true"
 
+	winset(src, null, "rpanewindow.left=infowindow")
+
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
 	var/static/list/list/cid_to_ckeys = list()
@@ -971,8 +947,7 @@
 
 
 /client/proc/init_admin()
-	// TODO: debug, uncomment
-	// if (IsLocalClient(src)) admins[src.ckey] = "Host"
+	if (IsLocalClient(src)) admins[src.ckey] = "Host"
 	if (admins.Find(src.ckey) && !src.holder)
 		src.make_admin()
 		return 1
@@ -1175,7 +1150,7 @@ var/global/curr_day = null
 	var/datum/http_request/request = new()
 	request.prepare(RUSTG_HTTP_METHOD_GET, "http://byond.com/members/[src.ckey]?format=text", "", "")
 	request.begin_async()
-	UNTIL(request.is_complete())
+	UNTIL(request.is_complete(), 10 SECONDS)
 	var/datum/http_response/response = request.into_response()
 
 	if (response.errored || !response.body)
@@ -1199,7 +1174,7 @@ var/global/curr_day = null
 	set category = "Commands"
 
 	var/cant_interact_time = null
-	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
+	if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 		cant_interact_time = 15 SECONDS
 
 	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
@@ -1916,6 +1891,10 @@ browseb.background-color=[_SKIN_BG];\
 browseb.text-color=[_SKIN_TEXT];\
 infob.background-color=[_SKIN_BG];\
 infob.text-color=[_SKIN_TEXT];\
+outputwindow.background-color=[_SKIN_BG];\
+outputwindow.text-color=[_SKIN_TEXT];\
+browserwindow.background-color=[_SKIN_BG];\
+browserwindow.text-color=[_SKIN_TEXT];\
 menub.background-color=[_SKIN_BG];\
 menub.text-color=[_SKIN_TEXT];\
 bugreportb.background-color=[_SKIN_BG];\

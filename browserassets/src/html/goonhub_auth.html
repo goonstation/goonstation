@@ -1,55 +1,50 @@
 <!doctype html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="color-scheme" content="dark" />
+    <title>Goonhub Auth</title>
+    <link rel="stylesheet" href="{{resource('css/goonhub_auth.css')}}" />
+  </head>
 
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Goonhub Auth</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <body>
+    <div class="content-wrapper">
+      <div id="top">
+        <img
+          src="{{resource('images/welcome_logo_light.png')}}"
+          alt="Goonstation Logo"
+          width="495"
+          height="115"
+          class="logo"
+        />
+      </div>
 
-    html,
-    body {
-      height: 100%;
-    }
+      <div id="auth-place">
+        <div class="spinner"></div>
+        <div class="error">
+          You failed to authenticate in time and have been disconnected. Please
+          try again.
+        </div>
+      </div>
 
-    body {
-      margin: 0;
-      padding: 0;
-      background: #303030;
-    }
+      <div id="bottom">
+        <!-- Countdown Slider -->
+        <div id="countdown-container">
+          <div id="countdown-label"></div>
+          <div id="countdown-slider-bg">
+            <div id="countdown-slider-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-  </style>
-</head>
-
-<body>
-  <iframe src="{goonhub_url}/game-auth/{route}"></iframe>
-  <script>
-    (function () {
-      var ref = '{ref}';
-
-      window.addEventListener('message', function (event) {
-        if (event.origin !== '{goonhub_url}') {
-          return;
-        }
-
-        if (event.data.type === 'authenticated') {
-          window.location =
-            'byond://?src=' +
-            ref +
-            ';authenticated=1;user=' +
-            encodeURIComponent(JSON.stringify(event.data.user));
-        } else if (event.data.type === 'logout') {
-          window.location = 'byond://?src=' + ref + ';logout=1';
-        }
-      });
-    })();
-  </script>
-</body>
+    <script>
+      window.GH_TIMEOUT = parseInt('{timeout}');
+    </script>
+    <script
+      type="text/javascript"
+      src="{{resource('js/goonhub_auth.js')}}"
+    ></script>
+  </body>
+</html>

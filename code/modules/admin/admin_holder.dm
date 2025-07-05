@@ -258,9 +258,8 @@
 
 	proc/load_admin_prefs()
 		var/list/AP
-		if (!owner.player?.cloudSaves.loaded)
-			owner.player?.cloudSaves.fetch()
 
+		UNTIL(owner.player?.cloudSaves.loaded, 10 SECONDS)
 		var/json_data = owner.player?.cloudSaves.getData("admin_preferences")
 		if (json_data)
 			AP = json_decode(json_data)

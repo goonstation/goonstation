@@ -24,7 +24,6 @@
 	src.owner?.on_auth_failed()
 
 /datum/client_auth_provider/proc/logout()
-	SHOULD_CALL_PARENT(TRUE)
 
 /datum/client_auth_provider/proc/on_logout()
 	SHOULD_CALL_PARENT(TRUE)
@@ -32,3 +31,5 @@
 	if (src.owner) winset(src.owner, "menu.auth_logout", "is-disabled=true")
 	logTheThing(LOG_DEBUG, src.owner, "logged out via [src.name]")
 	src.owner?.on_logout()
+
+/datum/client_auth_provider/proc/post_auth()

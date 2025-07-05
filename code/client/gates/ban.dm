@@ -2,14 +2,14 @@
 	check(client/C)
 		if (IsLocalClient(C)) return TRUE
 
-		var/list/checkBan = bansHandler.check(C.ckey, C.computer_id, C.address, C.client_auth_intent.player_id)
+		var/list/checkBan = bansHandler.check(C.client_auth_intent.ckey, C.computer_id, C.address, C.client_auth_intent.player_id)
 		if (!checkBan) return TRUE
 
 		SPAWN(-1)
 			var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
-			logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(C,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [C.address], CID: [C.computer_id])")
-			logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(C,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [C.address], CID: [C.computer_id])", "access")
-			if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?C=%admin_ref%;action=notes;target=[C.ckey]'>[C]</a> - Banned (ID: [banUrl], IP: [C.address], CID: [C.computer_id])"))
+			logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(C,"diary")] - Banned (ID: [checkBan["ban"]["id"]], CKEY: [C.client_auth_intent.ckey], IP: [C.address], CID: [C.computer_id])")
+			logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(C,"diary")] - Banned (ID: [checkBan["ban"]["id"]], CKEY: [C.client_auth_intent.ckey], IP: [C.address], CID: [C.computer_id])", "access")
+			if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?C=%admin_ref%;action=notes;target=[C.ckey]'>[C]</a> - Banned (ID: [banUrl], CKEY: [C.client_auth_intent.ckey], IP: [C.address], CID: [C.computer_id])"))
 
 			C.Browse({"
 				<!doctype html>

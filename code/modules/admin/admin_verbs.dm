@@ -471,7 +471,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggleIrcbotDebug,
 		/datum/admins/proc/toggle_bone_system,
 		/client/proc/cmd_randomize_handwriting,
-		// /client/proc/wireTest,
+		/client/proc/wireTest,
 		/client/proc/toggleResourceCache,
 		/client/proc/debugResourceCache,
 		/client/proc/debug_profiler,

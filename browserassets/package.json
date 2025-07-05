@@ -19,7 +19,6 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
     "autoprefixer": "^10.4.20",
-    "cssnano": "^7.0.6",
     "del": "^7.1.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.5",
@@ -32,6 +31,8 @@
     "gulp-uglify-es": "^3.0.0",
     "istextorbinary": "^9.5.0",
     "postcss": "^8.4.47",
+    "postcss-clean": "1.2.0",
+    "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.5.3"
   },
   "browserslist": [

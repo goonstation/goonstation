@@ -21,7 +21,7 @@ TYPEINFO(/mob/new_player)
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
 	/// indicates if a player is currently barred from joining the game
-	var/blocked_from_joining = TRUE
+	var/blocked_from_joining = FALSE
 
 	var/my_own_roundstart_tip = null //! by default everyone sees the get_global_tip() tip, but if they press the button to refresh they get their own
 
@@ -77,14 +77,12 @@ TYPEINFO(/mob/new_player)
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
 
-
 		// byond members get a special join message :]
 		if (src.client?.IsByondMember())
 			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
 			var/num = rand(1,16)
 			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(num in msgs_which_are_gifs) ? "gif" : "jpg"]")
 			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
-
 
 		if (src.ckey && !adminspawned)
 			if ("[src.ckey]" in spawned_in_keys)
@@ -113,7 +111,7 @@ TYPEINFO(/mob/new_player)
 					qdel(src)
 
 			else
-				spawned_in_keys += "[src.ckey]"
+				if (src.client.authenticated) spawned_in_keys += "[src.ckey]"
 				for (var/sound in global.dj_panel.preloaded_sounds)
 					src.client << load_resource(sound, -1)
 

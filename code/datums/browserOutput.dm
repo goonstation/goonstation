@@ -103,6 +103,7 @@ var/global
 			src.owner.loadResourcesFromList(chatResources)
 
 		src.owner << browse(grabResource("html/browserOutput.html"), "window=browseroutput")
+		winshow(src.owner, "browseroutput", TRUE)
 
 		if (src.loadAttempts < 5) //To a max of 5 load attempts
 			SPAWN(20 SECONDS) //20 seconds
@@ -147,7 +148,7 @@ var/global
 /// Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()
 	//Fix for Cannot read null.ckey (how!?)
-	if (!src.owner) return
+	if (!src.owner || !src.owner.authenticated) return
 
 	//Get dem deets
 	var/list/deets = list("clientData" = list())
@@ -159,7 +160,7 @@ var/global
 
 /// Called by client, sent data to investigate (cookie history so far)
 /datum/chatOutput/proc/analyzeClientData(cookie = "")
-	if (!cookie) return
+	if (!cookie || !src.owner.authenticated) return
 	if (cookie != "none")
 		// Hotfix patch, credit to https://github.com/yogstation13/Yogstation/pull/9951
 		var/regex/json_decode_crasher = regex("^\\s*(\[\\\[\\{\\}\\\]]\\s*){5,}")
@@ -183,8 +184,12 @@ var/global
 			var/list/checkBan = null
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
 				var/list/row = src.connectionHistory[i]
-				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
-					return
+				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"]))
+					// Passed malformed history object
+					continue
+				if (row["ckey"] == src.owner.ckey && row["ip"] == src.owner.address && row["compid"] == src.owner.computer_id)
+					// Skip checking own data (as the player is logged in and thus already passed a ban check)
+					continue
 				checkBan = bansHandler.check(row["ckey"], row["compid"], row["ip"])
 				if (checkBan)
 					found = row
