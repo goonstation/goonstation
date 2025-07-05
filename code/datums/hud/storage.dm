@@ -125,6 +125,8 @@
 
 		return "[x],[y]"
 
+#define MAX_INVENTORY_WIDTH 7 //! Maximum width of an inventory before it begins to wrap around.
+
 //idk if i can even use the params of mousedrop for this
 /*
 	mouse_drop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
@@ -133,68 +135,120 @@
 			I.mouse_drop(over_object, src_location, over_location, over_control, params)
 */
 	proc/update(mob/user = usr)
-		var/list/hud_contents = src.master.get_hud_contents()
-		var/num_contents = src.master.get_visible_slots()
-
-		var x = 1
-		var y = 1 + num_contents
-		var sx = 1
-		var sy = num_contents + 1
-		var/turfd = 0
-
-		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
-			x = 7
-			y = 8
-			sx = (num_contents + 1) / 2
-			sy = 2
-
-			turfd = 1
-
-		if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
-			x = 11 - round(num_contents / 2)
-			y = 3
-			sx = num_contents + 1
-			sy = 1
-
-			if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
-				x = 8
-				y = 8
-				sx = (num_contents + 1) / 2
-				sy = 2
-
 		if (!boxes)
 			return
 
+		var/list/hud_contents = src.master.get_hud_contents()
 		var/icon/hud_style = hud_style_selection[get_hud_style(user)]
+		var/num_contents = src.master.get_visible_slots()
+		var/num_contents_per_row = min(num_contents, MAX_INVENTORY_WIDTH) + 1 // or column if you are on goonhud i fuckin guess. +1 for close 'x'
+
+		// The initialization here assumes a goonhud layout, where the inventory is organized from the top-left corner, top to bottom.
+		var/pos_x  //! The initial position relative to the bottomleft portion of the grid (1,1)
+		var/pos_y  //! The initial position relative to the bottomleft portion of the grid (1,1)
+		var/size_x //! The size over the x-axis (x 'tiles')
+		var/size_y //! The size over the y-axis (y 'tiles')
+
 		if (isicon(hud_style) && boxes.icon != hud_style)
 			boxes.icon = hud_style
 
-		var/pixel_y_adjust = 0
-		if (user && user.client && user.client.tg_layout && !turfd)
-			pixel_y_adjust = -16
+		// ??? Mystery fucko code part 1 start
+		var/turfd = FALSE //! 10 brownie points if you can replace this comment with what this variable is supposed to mean
+		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
+			pos_x = 7
+			pos_y = 8
+			size_x = (num_contents + 1) / 2
+			size_y = 2
+			turfd = TRUE
+		// ??? Mystery fucko code part 1 end
 
-		boxes.screen_loc = "[x],[y]:[pixel_y_adjust] to [x+sx-1],[y-sy+1]:[pixel_y_adjust]"
-		if (!close)
-			src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
-		close.screen_loc = "[x+sx-1]:[pixel_y_adjust],[y-sy+1]:[pixel_y_adjust]"
+		if (user && user.client?.tg_layout)
+			// TG HUD layout is horizontal, which completely changes implemetation. Thus it is handled here
+			var/pixel_y_adjust = 0
+			pos_x = 11 - (num_contents_per_row / 2)
+			pos_y = 3
+			size_x = num_contents_per_row
+			size_y = ceil(num_contents / MAX_INVENTORY_WIDTH)
+			// ??? Mystery fucko code part 2 start
+			if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
+				CRASH("no")
+				// pos_x = 8
+				// pos_y = 8
+				// size_x = (num_contents_per_row + 1) / 2
+				// size_y = 2
+			else if (user && user.client)
+				pixel_y_adjust = -16
+			// ??? Mystery fucko code part 2 end
 
-		if (!turfd)
-			if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
-				boxes.screen_loc = "[x-1],[y]:[pixel_y_adjust] to [x+sx-2],[y-sy+1]:[pixel_y_adjust]"
-				close.screen_loc = "[x-1],[y-sy+1]:[pixel_y_adjust]"
+			var/left = pos_x - 1
+			var/right = pos_x + size_x-2
+			var/top = pos_y + size_y-1
+			var/bottom = pos_y
+			boxes.screen_loc = "CENTER-[num_contents_per_row/2],[bottom]:[pixel_y_adjust] to CENTER+[num_contents_per_row/2 - 1],[top]:[pixel_y_adjust]"
+			if (!close)
+				src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
+			close.screen_loc = "CENTER+[num_contents_per_row/2 - 1/2]:[pixel_y_adjust],[top]:[pixel_y_adjust]"
 
-		src.obj_locs = list()
-		var/i = 0
-		for (var/obj/item/I as anything in hud_contents)
-			if (!(I in src.objects)) // ugh
-				add_object(I, HUD_LAYER+1)
-			var/obj_loc = "[x+(i%sx)],[y-round(i/sx)]" //no pixel coords cause that makes click detection harder above
-			var/final_loc = "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"
-			I.screen_loc = do_hud_offset_thing(I, final_loc)
-			src.obj_locs[obj_loc] = I
-			i++
-		empty_obj_loc =  "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"
-		master.linked_item?.UpdateIcon()
+			// ??? Mystery fucko code part 3 start
+			if (turfd)
+				CRASH("no")
+				// if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
+				// 	boxes.screen_loc = "[left],[bottom]:[pixel_y_adjust] to [right],[top]:[pixel_y_adjust]"
+				// 	close.screen_loc = "[right],[bottom]:[pixel_y_adjust]"
+			// ??? Mystery fucko code part 3 end
+
+			src.obj_locs = list()
+			var/i = 0
+			var/num_items_per_row = num_contents_per_row - 1
+			for (var/obj/item/I as anything in hud_contents)
+				if (!(I in src.objects)) // ugh
+					add_object(I, HUD_LAYER+1)
+				var/obj_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]" //no pixel coords cause that makes click detection harder above
+				var/final_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
+				I.screen_loc = do_hud_offset_thing(I, final_loc)
+				src.obj_locs[obj_loc] = I
+				i++
+			empty_obj_loc =  "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
+			master.linked_item?.UpdateIcon()
+
+		else
+			// Goon HUD layout is vertical, implementation is here.
+			pos_x = 1
+			pos_y = num_contents_per_row + 1
+			size_x = ceil(num_contents / MAX_INVENTORY_WIDTH)
+			size_y = num_contents_per_row + 1
+			// ??? Mystery fucko code start
+			if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
+				pos_x = 8
+				pos_y = 8
+				size_x = (num_contents + 1) / 2
+				size_y = 2
+			// ??? Mystery fucko code end
+
+			boxes.screen_loc = "[pos_x],[pos_y]:[0] to [pos_x+size_x-1],[pos_y-size_y+1]:[0]"
+			if (!close)
+				src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
+			close.screen_loc = "[pos_x+size_x-1]:[0],[pos_y-size_y+1]:[0]"
+
+			// ??? Mystery fucko code part 3 start
+			if (!turfd)
+				if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
+					boxes.screen_loc = "[pos_x-1],[pos_y]:[0] to [pos_x+size_x-2],[pos_y+size_y-1]:[0]"
+					close.screen_loc = "[pos_x-1],[pos_y-size_y+1]:[0]"
+			// ??? Mystery fucko code part 3 end
+
+			src.obj_locs = list()
+			var/i = 0
+			for (var/obj/item/I as anything in hud_contents)
+				if (!(I in src.objects)) // ugh
+					add_object(I, HUD_LAYER+1)
+				var/obj_loc = "[pos_x+(i%size_x)],[pos_y-round(i/size_x)]" //no pixel coords cause that makes click detection harder above
+				var/final_loc = "[pos_x+(i%size_x)],[pos_y-round(i/size_x)]:[0]"
+				I.screen_loc = do_hud_offset_thing(I, final_loc)
+				src.obj_locs[obj_loc] = I
+				i++
+			empty_obj_loc =  "[pos_x+(i%size_x)],[pos_y-round(i/size_x)]:[0]"
+			master.linked_item?.UpdateIcon()
 
 	proc/add_item(obj/item/I, mob/user = usr)
 		update(user)
