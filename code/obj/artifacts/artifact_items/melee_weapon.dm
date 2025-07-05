@@ -33,8 +33,6 @@
 			return
 		if (!isliving(user) || !isliving(target))
 			return
-		if (!src.activated)
-			return
 		user.visible_message(SPAN_ALERT("<b>[user.name]</b> attacks [target.name] with [O]!"))
 		O.ArtifactFaultUsed(user)
 		O.ArtifactFaultUsed(target)

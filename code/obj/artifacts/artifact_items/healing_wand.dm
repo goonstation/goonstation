@@ -38,8 +38,6 @@
 			return
 		if (!user)
 			return
-		if (!src.activated)
-			return
 		if (target == user && !src.canhealself)
 			boutput(user, SPAN_ALERT("The artifact makes a strange fizzling noise, but nothing else happens."))
 			return
