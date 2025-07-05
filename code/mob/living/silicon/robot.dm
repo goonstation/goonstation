@@ -1540,7 +1540,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					src.part_head.ai_interface = null
 					src.shell = 0
 
-					if (src.module.radio_type)
+					if (src.module?.radio_type)
 						src.update_radio(src.module.radio_type)
 					else
 						src.update_radio(/obj/item/device/radio/headset)

@@ -37,3 +37,4 @@
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
+	message.can_relay = FALSE

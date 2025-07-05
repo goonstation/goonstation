@@ -92,6 +92,9 @@
 		egg_props_path = /datum/chicken_egg_props/honk
 	cluwne
 		egg_props_path = /datum/chicken_egg_props/cluwne
+		New()
+			. = ..()
+			src.reagents.add_reagent("painbow_eggs",10)
 	raptor
 		egg_props_path = /datum/chicken_egg_props/raptor
 	plant

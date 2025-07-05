@@ -1013,6 +1013,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
+		M.traitHolder.removeTrait("cyber_incompatible")
 		return M.AIize()
 
 /datum/job/civilian/cyborg
@@ -1036,6 +1037,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		var/mob/living/silicon/S = M.Robotize_MK2()
 		APPLY_ATOM_PROPERTY(S, PROP_ATOM_ROUNDSTART_BORG, "borg")
+		S.traitHolder.removeTrait("cyber_incompatible")
 		return S
 
 // Special Cases

@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 			announcement += " Central Command has prohibited further recalls."
 		else
 			announcement += " Please recall the shuttle to extend the shift."
-		command_alert(announcement,"Shift Shuttle Update")
+		command_alert(announcement,"Shift Shuttle Update", alert_origin=ALERT_GENERAL)
 		shuttle_last_auto_call = ticker.round_elapsed_ticks
 		if (!shuttle_initial_auto_call_done)
 			shuttle_initial_auto_call_done = 1

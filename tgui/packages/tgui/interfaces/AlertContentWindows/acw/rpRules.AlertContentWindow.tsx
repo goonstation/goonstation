@@ -8,11 +8,8 @@ import { Section } from 'tgui-core/components';
 
 import type { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  width: 800,
-  height: 600,
-  title: 'Goonstation RP Server Guidelines and Rules',
-  content: (
+const RpRulesContentWindow = () => {
+  return (
     <Section title="Welcome to Goonstation!">
       The roleplay servers use our main rules and unique roleplay rules listed
       below. If you do not agree to this second set of rules, please play on our
@@ -86,5 +83,12 @@ export const acw: AlertContentWindow = {
         administration about the RP rules or core rules.
       </Section>
     </Section>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  width: 800,
+  height: 600,
+  title: 'Goonstation RP Server Guidelines and Rules',
+  component: RpRulesContentWindow,
 };
