@@ -1645,7 +1645,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 //This proc handles any manipulation that happens due to plantstats
 //This proc returns the item in question. This is needed to enable a switcheroo with new, randomed items e.g. glowstick tree
-/obj/item/proc/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+/obj/item/proc/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status, var/datum/HYPharvesting_data/h_data)
 	return src
 
 /obj/item/proc/HY_set_species()
@@ -1801,6 +1801,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.inhand_image.color = src.inhand_color
 	src.inhand_image.pixel_x = 0
 	src.inhand_image.pixel_y = hand_offset
+
+/// Sets a new inhand_image_icon
+/obj/item/proc/set_new_inhand_image_icon(new_inhand_image_icon)
+	src.inhand_image_icon = new_inhand_image_icon
+	// inhand_image doesn't update unless it's forced
+	src.inhand_image = null
 
 /// Move item to turf, and snap its pixel offsets to a grid of the input size.
 /obj/item/proc/place_to_turf_by_grid(mob/user, params, turf/target, grid = 2, centered = 1, offsetx = 0, offsety = 0)
