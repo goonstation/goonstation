@@ -233,19 +233,19 @@ This is because if one 'square' element was used to cover the entire space, you 
 				var/right_cluster_slots = num_contents - left_cluster_slots // Will always range from 1 to MAX_INVENTORY_WIDTH
 				if (isnull(src.boxes_top))
 					src.boxes_top = src.get_background_cluster()
-				src.boxes_top.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1],[right_cluster_slots-1]"
+				src.boxes_top.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1],[right_cluster_slots]"
 
 			if (!src.close_button)
 				src.close_button = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
-			src.close_button.screen_loc = "[pos_x-1],[pos_y-1]"
+			src.close_button.screen_loc = "[pos_x],[pos_y]"
 
 			src.obj_locs = list()
 			var/i = 1
 			for (var/obj/item/I as anything in hud_contents)
 				if (!(I in src.objects)) // ugh
 					add_object(I, HUD_LAYER+1)
-				var/obj_loc = "[pos_x+round(i/contents_per_column)],[pos_y-(i%contents_per_column)]" //no pixel coords cause that makes click detection harder above
-				var/final_loc = "[pos_x+round(i/contents_per_column)],[pos_y-(i%contents_per_column)]"
+				var/obj_loc = "[pos_x+round(i/contents_per_column)],[pos_y+(i%contents_per_column)]" //no pixel coords cause that makes click detection harder above
+				var/final_loc = "[pos_x+round(i/contents_per_column)],[pos_y+(i%contents_per_column)]"
 				I.screen_loc = do_hud_offset_thing(I, final_loc)
 				src.obj_locs[obj_loc] = I
 				i++
@@ -261,3 +261,4 @@ This is because if one 'square' element was used to cover the entire space, you 
 
 #undef MAX_INVENTORY_WIDTH
 #undef ABS_SCREEN_CENTER_X
+#undef PIXEL_Y_ADJUST
