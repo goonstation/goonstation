@@ -152,11 +152,6 @@
 /*
 Updates a storage inventory which is being seen by a player/mob. The layout is dependent on the HUD option (TG/Goon).
 
-Here's some helpful images in case you're unsure what either is meant to look like:
-
-image_tg_inventory.png
-image_goon_inventory.png
-
 Both inventories will always have the 'close' button in the bottom-left corner.
 
 The individual inventory 'background' slots are an illusion, the sprite itself is a repeating tile on one UI element. Moreover, the objects are just
