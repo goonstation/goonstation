@@ -43,7 +43,7 @@
 			return
 		if (recharge_time > 0)
 			recharging = 1
-		T.visible_message("<b>[O]</b> emits a wave of energy!")
+		T.visible_message("<b>[O.get_uppermost_artifact()]</b> emits a wave of energy!")
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			C.HealDamage("All", heal_amt, heal_amt)
@@ -58,4 +58,4 @@
 				boutput(C, SPAN_NOTICE("Waves of soothing energy wash over you, making you feel refreshed and healthy."))
 		SPAWN(recharge_time)
 			recharging = 0
-			T.visible_message("<b>[O]</b> becomes energized.")
+			T.visible_message("<b>[O.get_uppermost_artifact()]</b> becomes energized.")

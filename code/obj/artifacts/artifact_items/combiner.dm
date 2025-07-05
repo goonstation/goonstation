@@ -15,6 +15,11 @@
 			return
 		if (!O.artifact || !O.artifact.activated)
 			return
+		if (O.anchored != UNANCHORED)
+			var/turf/T = get_turf(src)
+			T.visible_message(SPAN_NOTICE("[src] glows yellow momentarily."))
+			playsound(T, 'sound/items/lattice_combiner_error.ogg', 50, TRUE)
+			return
 		if (!src.loaded_art)
 			src.load_art(target)
 			return

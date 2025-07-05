@@ -53,21 +53,23 @@
 				if(!attached)
 					boutput(user, "No exposed cable here to attach to.")
 				else
-					O.anchored = ANCHORED
+					var/obj/p_art = O.get_uppermost_artifact()
+					p_art.anchored = ANCHORED
 					mode = 2
-					boutput(user, "[O] connects itself to the cable. Weird.")
+					boutput(user, "[O.get_uppermost_artifact()] connects itself to the cable. Weird.")
 					playsound(O, 'sound/effects/ship_charge.ogg', 75, TRUE)
 					logTheThing(LOG_STATION, user, "connected power generator artifact [O] at [log_loc(O)].")
 					var/obj/machinery/artifact/power_gen/L = O
 					if (L.light)
 						L.light.enable()
 			else
-				boutput(user, "[O] must be placed over a cable to attach to it.")
+				boutput(user, "[O.get_uppermost_artifact()] must be placed over a cable to attach to it.")
 		else
-			O.anchored = UNANCHORED
+			var/obj/p_art = O.get_uppermost_artifact()
+			p_art.anchored = UNANCHORED
 			mode = 0
 			attached = 0
-			boutput(user, "[O] disconnects itself from the cable.")
+			boutput(user, "[O.get_uppermost_artifact()] disconnects itself from the cable.")
 			playsound(O, 'sound/effects/shielddown2.ogg', 75, TRUE, 0, 2)
 			logTheThing(LOG_STATION, user, "discconnected power generator artifact [O] at [log_loc(O)].")
 			var/obj/machinery/artifact/power_gen/L = O
@@ -86,10 +88,10 @@
 				if (prob(10))
 					playsound(O, 'sound/effects/screech2.ogg', 75, TRUE)
 					fireflash(O, rand(1,min(5,gen_level)), chemfire = CHEM_FIRE_RED)
-					O.visible_message(SPAN_ALERT("[O] erupts in flame!"))
+					O.visible_message(SPAN_ALERT("[O.get_uppermost_artifact()] erupts in flame!"))
 				if (prob(5))
 					playsound(O, 'sound/effects/screech2.ogg', 75, TRUE)
-					O.visible_message(SPAN_ALERT("[O] rumbles!"))
+					O.visible_message(SPAN_ALERT("[O.get_uppermost_artifact()] rumbles!"))
 					for (var/mob/M in range(min(5,gen_level),T))
 						shake_camera(M, 5, 8)
 						M.changeStatus("knockdown", 3 SECONDS)
@@ -101,7 +103,7 @@
 							W.smash()
 				if (prob(5))
 					playsound(O, 'sound/effects/screech2.ogg', 75, TRUE)
-					O.visible_message(SPAN_ALERT("[O] sparks violently!"))
+					O.visible_message(SPAN_ALERT("[O.get_uppermost_artifact()] sparks violently!"))
 					for (var/mob/M in view(min(5,gen_level),T))
 						if (M.invisibility >= INVIS_AI_EYE) continue
 						arcFlash(O, M, gen_rate/2)

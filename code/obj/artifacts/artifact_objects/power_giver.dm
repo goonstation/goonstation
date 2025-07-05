@@ -43,11 +43,11 @@
 			return
 		if (user.bioHolder && ready)
 			var/turf/T = get_turf(O)
-			T.visible_message("<b>[O]</b> envelops [user] in a strange light!")
+			T.visible_message("<b>[O.get_uppermost_artifact()]</b> envelops [user] in a strange light!")
 			user.bioHolder.AddEffect(power_granted,0,power_time)
 			O.ArtifactFaultUsed(user)
 			if (recharge_time > 0)
 				ready = 0
 				SPAWN(recharge_time)
-					T.visible_message("<b>[O]</b> begins to glow again.")
+					T.visible_message("<b>[O.get_uppermost_artifact()]</b> begins to glow again.")
 					ready = 1

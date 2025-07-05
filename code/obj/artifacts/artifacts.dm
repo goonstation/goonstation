@@ -49,10 +49,12 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
+		var/str
 		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
-				if (istext(O.artifact.examine_hint) && !findtext(., O.artifact.examine_hint))
-					. += SPAN_ARTHINT(O.artifact.examine_hint)
+				if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
+					str += SPAN_ARTHINT(O.artifact.examine_hint)
+		. += str
 
 	ex_act(severity)
 		switch(severity)
@@ -137,10 +139,12 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
+		var/str
 		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
-				if (istext(O.artifact.examine_hint) && !findtext(., O.artifact.examine_hint))
-					. += SPAN_ARTHINT(O.artifact.examine_hint)
+				if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
+					str += SPAN_ARTHINT(O.artifact.examine_hint)
+		. += str
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -243,10 +247,12 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
+		var/str
 		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
-				if (istext(O.artifact.examine_hint) && !findtext(., O.artifact.examine_hint))
-					. += SPAN_ARTHINT(O.artifact.examine_hint)
+				if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
+					str += SPAN_ARTHINT(O.artifact.examine_hint)
+		. += str
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"

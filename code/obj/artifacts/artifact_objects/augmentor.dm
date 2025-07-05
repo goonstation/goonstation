@@ -103,7 +103,7 @@
 		if(working)
 			return
 		if(recharging)
-			boutput(user, "<b>[O]</b> doesn't react to your touch.")
+			boutput(user, "<b>[O.get_uppermost_artifact()]</b> doesn't react to your touch.")
 			return
 		var/turf/T = get_turf(O)
 
@@ -114,11 +114,11 @@
 			var/part_loc = augment.get_part_target(H, augment_location)
 			if(!part_loc || (limited_use && uses[H.bioHolder.uid_hash] == max_uses))
 				// you're already perfect, limbwise
-				boutput(H, "<b>[O]</b> twitches slightly, then returns to a ready position.")
+				boutput(H, "<b>[O.get_uppermost_artifact()]</b> twitches slightly, then returns to a ready position.")
 				return
 
 			working = 1
-			T.visible_message(SPAN_ALERT("<b>[O]</b> suddenly lashes out at [H.name] with a flurry of sharp implements!"))
+			T.visible_message(SPAN_ALERT("<b>[O.get_uppermost_artifact()]</b> suddenly lashes out at [H.name] with a flurry of sharp implements!"))
 			H.changeStatus("unconscious", 4 SECONDS)
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
 			random_brute_damage(user, 10)
@@ -148,7 +148,7 @@
 					replace_action = pick("inserts something else where it was", "places something else inside", "shoves something else in their body")
 					ArtifactLogs(user, null, O, "touched by [H.real_name]", "given organ [part] as [part_loc]", 0)
 
-				T.visible_message(SPAN_ALERT("<b>[O]</b> [remove_action] [H.name]'s [organ_names[part_loc]], pulls it inside and [replace_action]! [pick("", "Holy fuck!", "It looks incredibly painful!")]"))
+				T.visible_message(SPAN_ALERT("<b>[O.get_uppermost_artifact()]</b> [remove_action] [H.name]'s [organ_names[part_loc]], pulls it inside and [replace_action]! [pick("", "Holy fuck!", "It looks incredibly painful!")]"))
 
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
 			boutput(H, SPAN_ALERT("<b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b>"))
@@ -158,14 +158,14 @@
 			O.ArtifactFaultUsed(H)
 			if (limited_use)
 				uses[H.bioHolder.uid_hash]++
-			T.visible_message("<b>[O]</b> withdraws its instruments and slams shut.")
+			T.visible_message("<b>[O.get_uppermost_artifact()]</b> withdraws its instruments and slams shut.")
 			working = 0
 			recharging = 1
 			SPAWN(recharge_time)
 			recharging = 0
-			T.visible_message("<b>[O]</b> opens itself up again.")
+			T.visible_message("<b>[O.get_uppermost_artifact()]</b> opens itself up again.")
 		else
-			boutput(user, "<b>[O]</b> doesn't react to your touch.")
+			boutput(user, "<b>[O.get_uppermost_artifact()]</b> doesn't react to your touch.")
 
 
 

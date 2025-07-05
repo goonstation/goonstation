@@ -35,11 +35,11 @@
 		var/mob/living/carbon/human/H = user
 
 		if (!ready)
-			boutput(H, "<b>[O]</b> shifts slightly but remains inactive.")
+			boutput(H, "<b>[O.get_uppermost_artifact()]</b> shifts slightly but remains inactive.")
 			return
 
 		if (H.bioHolder.uid_hash in fingerprintsImp)
-			boutput(H, "<b>[O]</b> stays still.")
+			boutput(H, "<b>[O.get_uppermost_artifact()]</b> stays still.")
 			return
 
 		fingerprintsImp += H.bioHolder.uid_hash
@@ -61,7 +61,7 @@
 
 		var/turf/T = get_turf(O)
 		playsound(T, 'sound/machines/click.ogg', 90, TRUE)
-		T.visible_message("<b>[O]</b> shoots a small object into [H]!")
+		T.visible_message("<b>[O.get_uppermost_artifact()]</b> shoots a small object into [H]!")
 
 		ready = FALSE
 

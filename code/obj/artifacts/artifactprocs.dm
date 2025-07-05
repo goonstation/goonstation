@@ -156,7 +156,7 @@
 		playsound(src.loc, A.activ_sound, 100, 1)
 	if (A.activ_text)
 		var/turf/T = get_turf(src)
-		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
+		if (T) T.visible_message("<b>[src.get_uppermost_artifact()] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"

@@ -56,7 +56,7 @@
 			return
 		if (user.reagents && length(injection_reagents) > 0)
 			var/turf/T = get_turf(O)
-			T.visible_message("<b>[O]</b> jabs [user] with a needle and injects something!")
+			T.visible_message("<b>[O.get_uppermost_artifact()]</b> jabs [user] with a needle and injects something!")
 			for (var/X in injection_reagents)
 				ArtifactLogs(user, null, O, "touched by [user.real_name]", "injecting [X]", 0) // Added (Convair880).
 				user.reagents.add_reagent(X,injection_amount)
