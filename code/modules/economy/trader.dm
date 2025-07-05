@@ -785,10 +785,16 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 /obj/npc/trader/random/contraband
 	commercetype = /datum/commodity/contraband
 	descriptions = list("legitimate goods", "perfectly legitimate goods", "extremely legitimate goods")
+	illegal = TRUE
 
 	New()
 		src.possible_icon_states = list("big_spide[pick("","-red","-blue","-green")]")
 		..()
+		// Prevent non-syndies from purchasing syndicate radio access.
+		for(var/datum/commodity/commodity in src.goods_sell)
+			if(istype(commodity, /datum/commodity/contraband/syndicate_headset))
+				src.goods_sell -= commodity
+				src.goods_illegal |= commodity
 
 //actually this just seems to be robotics upgrades and scrap metal?
 // /obj/npc/trader/random/salvage
