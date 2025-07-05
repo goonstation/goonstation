@@ -1,14 +1,13 @@
 /datum/ailment/disease/rat_plague
 	name = "Rat Plague"
 	max_stages = 4
-	spread = "Non-Contagious"
-	cure_flags = CURE_CUSTOM
+	spread = AILMENT_SPREAD_NONCONTAGIOUS
+	cure_flags = CURE_MEDICINE
 	cure_desc = "Mercury"
-	reagentcure = list("mercury")
+	reagentcure = list("mercury"=8)
 	associated_reagent = "rat_spit"
-	stage_prob = 6
+	stage_advance_prob = 6
 	affected_species = list("Human")
-
 
 /datum/ailment/disease/rat_plague/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())

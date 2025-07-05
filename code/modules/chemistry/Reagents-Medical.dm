@@ -54,9 +54,6 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if (virus.cure_flags & CURE_ANTIBIOTICS)
-						virus.state = "Remissive"
 				if(M.hasStatus("poisoned"))
 					M.changeStatus("poisoned", -10 SECONDS * mult)
 				..()
@@ -225,13 +222,6 @@ datum
 				if(!M) M = holder.my_atom
 				if(probmult(8))
 					M.emote(pick("smile","giggle","yawn"))
-				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if(probmult(25) && istype(virus.master,/datum/ailment/disease/cold))
-						M.cure_disease(virus)
-					if(probmult(25) && istype(virus.master,/datum/ailment/disease/flu))
-						M.cure_disease(virus)
-					if(probmult(25) && istype(virus.master,/datum/ailment/disease/food_poisoning))
-						M.cure_disease(virus)
 				..()
 				return
 
@@ -811,10 +801,6 @@ datum
 					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(M.hasStatus("broken_madness"))
 					M.changeStatus("broken_madness", -5 SECONDS * mult)
-				if(probmult(5))
-					for(var/datum/ailment_data/disease/virus in M.ailments)
-						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))
-							M.cure_disease(virus)
 				if(prob(20)) M.take_brain_damage(1 * mult)
 				if(probmult(50)) M.changeStatus("drowsy", 10 SECONDS)
 				if(probmult(10)) M.emote("drool")
