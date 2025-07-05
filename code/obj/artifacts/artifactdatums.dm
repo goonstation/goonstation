@@ -113,6 +113,11 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
 
+	/// what this artifact combines with
+	var/combine_flags = ARTIFACT_DOES_NOT_COMBINE
+	/// when used in a combination effect, priority in which this artifact's effect is used
+	var/combine_effect_priority = ARTIFACT_COMBINATION_PASSIVE
+
 	/// gets called after the artifact basics (origin, appearance, object, etc) are all set up, so the type can modify it further
 	proc/post_setup()
 		SHOULD_CALL_PARENT(TRUE)
