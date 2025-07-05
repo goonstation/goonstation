@@ -1406,7 +1406,6 @@ var/global/curr_day = null
 		for (var/datum/hud/storage/S in H.huds)
 			S.update(H)
 
-
 /client/verb/set_tg_layout()
 	set hidden = 1
 	set name = "set-tg-layout"
