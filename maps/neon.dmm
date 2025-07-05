@@ -2730,6 +2730,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"chy" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "ciz" = (
 /obj/stool/chair/dining/wood{
 	dir = 1
@@ -6736,6 +6740,17 @@
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"eOk" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "qmdockout"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "eOO" = (
 /obj/machinery/atmospherics/unary/vent,
 /turf/simulated/floor/plating,
@@ -7732,6 +7747,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central)
+"fuc" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker{
+	layer = 4;
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
 "fuh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22002,17 +22025,6 @@
 	icon_state = "floor"
 	},
 /area/station/crewquarters/cryotron)
-"pLu" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "qmdockout"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "pLx" = (
 /obj/machinery/door/airlock/pyro/weapons/secure{
 	dir = 4
@@ -24464,10 +24476,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/north)
-"rwG" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "rwU" = (
 /obj/strip_door,
 /obj/machinery/door/poddoor/pyro{
@@ -25397,14 +25405,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"sdZ" = (
-/obj/table/wood/auto,
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
 "seb" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 8
@@ -26949,16 +26949,6 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
-"tkB" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/launcher_loader/east{
-	id = "qmdockout"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "tkN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31845,6 +31835,16 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"wyK" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/launcher_loader/east{
+	id = "qmdockout"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "wyP" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -72211,7 +72211,7 @@ jOL
 jOL
 jOL
 dLu
-rwG
+chy
 qav
 qav
 xTo
@@ -93608,7 +93608,7 @@ qpn
 qpn
 qpn
 dFl
-tkB
+wyK
 wZe
 lUj
 fcB
@@ -93910,7 +93910,7 @@ qpn
 qpn
 qpn
 dFl
-pLu
+eOk
 jaJ
 lUj
 nTQ
@@ -97477,7 +97477,7 @@ pJo
 xjN
 dQP
 wSX
-sdZ
+fuc
 vYT
 aar
 eaj
@@ -98081,7 +98081,7 @@ pJo
 eoh
 dQP
 dQP
-sdZ
+fuc
 wPz
 dQP
 dQP
