@@ -66,7 +66,7 @@ const ProductListItem = (props: ProductListItemProps) => {
   return (
     <Table.Row className="candystripe">
       {showImage && (
-        <Table.Cell collapsing verticalAlign="middle">
+        <Table.Cell collapsing verticalAlign="middle" textAlign="center" px={1}>
           {image && <Image src={`data:image/png;base64,${image}`} />}
         </Table.Cell>
       )}
