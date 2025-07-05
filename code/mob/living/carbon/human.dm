@@ -1650,15 +1650,9 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			else if (istype(src.wear_id,/obj/item/clothing/lanyard)) // Lanyards
 				if (src.wear_id.storage.check_can_hold(I))
 					src.wear_id.storage.add_contents(I)
-			else if (istype(src.wear_id,/obj/item/device/pda2) and istype(I,/obj/item/card/id)) // pdas
-				// this is kind of dumb but with how PDA code works, it wont insert the ID until its registered.
+			else if (istype(src.wear_id,/obj/item/device/pda2) && istype(I,/obj/item/card/id)) // pdas
 				var/obj/item/device/pda2/pda = src.wear_id
-				pda.attackby(I, src)
-				// if it's still not registered something else went wrong. give up NOW
-				if (!pda.owner)
-					return
-				// and just to be clear if we're here it registered but didn't insert the card, so we just need to try once more
-				pda.attackby(I, src)
+				pda.insert_id_card(I, src)
 		if (SLOT_EARS)
 			if (!src.ears && src.organHolder && src.organHolder.head)
 				src.ears = I
