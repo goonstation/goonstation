@@ -55,8 +55,8 @@
 		src.loaded_art = null
 		var/turf/T = get_turf(src)
 		playsound(T, pick(src.artifact.artitype.activation_sounds), 20, TRUE)
-		T.visible_message(SPAN_NOTICE("The folded [to_merge] fuses into [receiver]!"))
-		if (length(receiver.combined_artifacts) > 1)
+		T.visible_message(SPAN_NOTICE("[to_merge] fuses into [receiver]!"))
+		if (findtext(receiver.name, "fused"))
 			return
 		receiver.name_prefix("fused")
 		receiver.UpdateName()
