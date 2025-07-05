@@ -13,7 +13,7 @@
   width: calc(100% + 1em);
   border-collapse: collapse;
   border-spacing: 0;
-  margin: -0.25em -0.5em;
+  margin: -0.25em 0;
   margin-bottom: 0;
   padding: 0;
 }
@@ -29,7 +29,8 @@
 .LabeledList__cell {
   display: table-cell;
   margin: 0;
-  padding: 0.25em 0.5em;
+  padding: 0.25em;
+  padding-right: 1em;
   border: 0;
   text-align: left;
 }
