@@ -1653,6 +1653,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			else if (istype(src.wear_id,/obj/item/device/pda2) && istype(I,/obj/item/card/id)) // pdas
 				var/obj/item/device/pda2/pda = src.wear_id
 				pda.insert_id_card(I, src)
+				equipped = (pda.ID_card == I)
 		if (SLOT_EARS)
 			if (!src.ears && src.organHolder && src.organHolder.head)
 				src.ears = I
