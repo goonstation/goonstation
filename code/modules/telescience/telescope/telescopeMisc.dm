@@ -287,6 +287,9 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			respawn_decal.icon_state = "nanites-dead-reform"
 			respawn_decal.layer = MOB_LAYER + 1
 			respawn_decal.plane = PLANE_DEFAULT
+			SPAWN(4.7 SECONDS)
+				flick("nanites-reform", respawn_decal)
+
 			SPAWN(5 SECONDS)
 				var/obj/critter/gunbot/drone/buzzdrone/naniteswarm/swarm  = new(T)
 				swarm.generation = current_generation + 1
