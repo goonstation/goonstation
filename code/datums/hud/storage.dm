@@ -174,11 +174,11 @@ This is because if one 'square' element was used to cover the entire space, you 
 		src.update_box_icons(user)
 
 		var/tg_layout = user.client?.tg_layout //! TRUE if the user has a TG layout, FALSE if the user has a Goon layout
-		var/list/hud_contents = src.master.get_hud_contents() //! This is a list of all the things stored inside this container
+		// var/list/hud_contents = src.master.get_hud_contents() //! This is a list of all the things stored inside this container
 		var/max_slots = src.master.get_visible_slots() //! Total amount of storage capacity for this inventory.
 		var/slots_per_group = min(max_slots+1, MAX_GROUP_SIZE) //! The max amount of slots in a group, with +1 for inventories 0-7 for the 'x'
 		var/groups = ceil((max_slots + 1) / slots_per_group) //! The size over the y-axis (y 'tiles'). [+1 to account for close button]
-		var/pixel_y_adjust = tg_layout ? PIXEL_Y_ADJUST ? 0 //! TG layouts need to be shifted up a few px to account for the UI below
+		var/pixel_y_adjust = tg_layout ? PIXEL_Y_ADJUST : 0 //! TG layouts need to be shifted up a few px to account for the UI below
 		var/pos_x = tg_layout ? (ABS_SCREEN_CENTER_X - 1/2 - slots_per_group/2) : 1 //! The leftmost starting position for the inventory
 		var/pos_y = tg_layout ? 2 : 1 //! The bottommost starting position for the inventory
 		var/width = tg_layout ? (pos_x + slots_per_group-1) : (pos_y + groups-1-(groups>1?1:0)) //! Width which is accurate for either goon/tg layout
@@ -188,28 +188,31 @@ This is because if one 'square' element was used to cover the entire space, you 
 
 		// Only setup secondary group if its needed
 		if (groups > 1)
-			var/left_cluster_slots = ((groups-2)*MAX_GROUP_SIZE) + (MAX_GROUP_SIZE-1) // Middle row storage slots + Bottom row storage slots
-			var/right_cluster_slots = max_slots - left_cluster_slots // Will always range from 1 to MAX_GROUP_SIZE
+			var/primary_cluster_slots = ((groups-2)*MAX_GROUP_SIZE) + (MAX_GROUP_SIZE-1) // Middle row storage slots + Bottom row storage slots
+			var/secondary_cluster_slots = max_slots - primary_cluster_slots // Will always range from 1 to MAX_GROUP_SIZE
 			if (isnull(src.secondary_group))
 				src.secondary_group = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
-			var/
-			src.secondary_group.screen_loc = "[pos_x],[pos_y+groups-1]:[pixel_y_adjust] to [pos_x+right_cluster_slots-1],[pos_y+groups-1]:[pixel_y_adjust]"
+			var/start_x = tg_layout ? pos_x : (pos_x+groups)
+			var/start_y = tg_layout ? (pos_y+groups-1) : pos_y
+			var/end_x = tg_layout ? start_x + secondary_cluster_slots - 1 : start_x
+			var/end_y = tg_layout ? start_y : start_y + secondary_cluster_slots - 1
+			src.secondary_group.screen_loc = "[start_x],[start_y]:[pixel_y_adjust] to [end_x],[end_y]:[pixel_y_adjust]"
 
-		close_button.screen_loc = "[pos_x-1/2]:[pixel_y_adjust],[pos_y]:[pixel_y_adjust]"
+		close_button.screen_loc = "[pos_x-(tg_layout ? 1/2 : 0)]:[pixel_y_adjust],[pos_y]:[pixel_y_adjust]"
 
-		src.obj_locs = list()
-		var/i = 1 // start at 1 to skip x on first row
-		var/num_items_per_row = slots_per_group
-		for (var/obj/item/I as anything in hud_contents)
-			if (!(I in src.objects)) // ugh
-				add_object(I, HUD_LAYER+1)
-			var/obj_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]" //no pixel coords cause that makes click detection harder above
-			var/final_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
-			I.screen_loc = do_hud_offset_thing(I, final_loc)
-			src.obj_locs[obj_loc] = I
-			i++
-		empty_obj_loc =  "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
-		master.linked_item?.UpdateIcon()
+		// src.obj_locs = list()
+		// var/i = 1 // start at 1 to skip x on first row
+		// var/num_items_per_row = slots_per_group
+		// for (var/obj/item/I as anything in hud_contents)
+		// 	if (!(I in src.objects)) // ugh
+		// 		add_object(I, HUD_LAYER+1)
+		// 	var/obj_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]" //no pixel coords cause that makes click detection harder above
+		// 	var/final_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
+		// 	I.screen_loc = do_hud_offset_thing(I, final_loc)
+		// 	src.obj_locs[obj_loc] = I
+		// 	i++
+		// empty_obj_loc =  "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
+		// master.linked_item?.UpdateIcon()
 		/*
 		else // goon layout
 			var/list/hud_contents = src.master.get_hud_contents()				//! This is a list of all the items stored inside the container
@@ -225,11 +228,11 @@ This is because if one 'square' element was used to cover the entire space, you 
 			src.primary_group.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1-(width>1?1:0)],[pos_y+height-1]"
 
 			if (width > 1)
-				var/left_cluster_slots = ((width-2)*MAX_GROUP_SIZE) + (MAX_GROUP_SIZE-1) // Middle row storage slots + Bottom row storage slots
-				var/right_cluster_slots = num_contents - left_cluster_slots // Will always range from 1 to MAX_GROUP_SIZE
+				var/primary_cluster_slots = ((width-2)*MAX_GROUP_SIZE) + (MAX_GROUP_SIZE-1) // Middle row storage slots + Bottom row storage slots
+				var/secondary_cluster_slots = num_contents - primary_cluster_slots // Will always range from 1 to MAX_GROUP_SIZE
 				if (isnull(src.secondary_group))
 					src.secondary_group = src.get_background_cluster()
-				src.secondary_group.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1],[right_cluster_slots]"
+				src.secondary_group.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1],[secondary_cluster_slots]"
 
 			if (!src.close_button)
 				src.close_button = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
