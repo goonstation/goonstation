@@ -249,7 +249,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 				I.screen_loc = do_hud_offset_thing(I, final_loc)
 				src.obj_locs[obj_loc] = I
 				i++
-			empty_obj_loc =  "[pos_x+round(i/contents_per_column)],[pos_y-(i%contents_per_column)]"
+			empty_obj_loc = "[pos_x+round(i/contents_per_column)],[pos_y+(i%contents_per_column)]"
 			master.linked_item?.UpdateIcon()
 
 	proc/add_item(obj/item/I, mob/user = usr)
