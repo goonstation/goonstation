@@ -10,6 +10,7 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = UNANCHORED
+	var/rc_flags = RC_SCALE | RC_SPECTRO
 	flags = FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
@@ -27,7 +28,7 @@
 
 	get_desc(dist, mob/user)
 		if (dist <= 2 && reagents)
-			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_SCALE)]")]"
+			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,src.rc_flags)]")]"
 
 	proc/smash()
 		var/turf/T = get_turf(src)
@@ -272,7 +273,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	get_desc(dist, mob/user)
 		. += "There's [cup_amount] paper cup[s_es(src.cup_amount)] in [src]'s cup dispenser."
 		if (dist <= 2 && reagents)
-			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_SCALE)]")]"
+			. += "<br>[SPAN_NOTICE("[reagents.get_description(user, src.rc_flags)]")]"
 
 	attackby(obj/W, mob/user)
 		if (has_tank)
@@ -436,6 +437,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
+	rc_flags = RC_SCALE | RC_SPECTRO | RC_VISIBLE
 	flags = FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience

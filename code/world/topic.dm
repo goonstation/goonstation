@@ -973,8 +973,8 @@
 				else
 					msg = "Compilation of [attemptedMap] succeeded!"
 
-				logTheThing("admin", null, null, msg)
-				logTheThing("diary", null, null, msg, "admin")
+				logTheThing(LOG_ADMIN, null, msg)
+				logTheThing(LOG_DIARY, null, msg, "admin")
 				message_admins(msg)
 				ircmsg["msg"] = msg
 

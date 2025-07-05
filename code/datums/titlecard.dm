@@ -12,22 +12,23 @@
 	var/is_game_mode = FALSE
 	var/add_html = ""
 	var/overlay_image_url = null
+	var/pixelated = TRUE
 
 	heisenbee
 		image_url = "images/titlecards/heisenbee_titlecard.png"
 		add_html = {"<a href="https://www.deviantart.com/alexbluebird" target="_blank" style="position:absolute;bottom:3px;right:3px;color:white;opacity:0.7;">by AlexBlueBird</a>"}
+		pixelated = FALSE
 
 	hehe
 		image_url = "images/titlecards/hehe_titlecard.png"
 
-	s
-		image_url = "images/titlecards/s_titlecard.png"
-
 	nightshade
 		image_url = "images/titlecards/nightshade2024_titlecard.png"
+		pixelated = FALSE
 
 	nightshade_2
 		image_url = "images/titlecards/nightshade2024_titlecard2.png"
+		pixelated = FALSE
 
 	disaster
 		overlay_image_url = "images/titlecards/disaster_titlecard.gif"
@@ -75,7 +76,6 @@
 				var/mob/new_player/new_player = C.mob
 				new_player.pregameBrowserLoaded = TRUE
 	pregameHTML = last_pregame_html
-#endif
 
 /datum/titlecard/proc/set_maptext(id, text)
 	maptext_areas[id] = text

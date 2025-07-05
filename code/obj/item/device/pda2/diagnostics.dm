@@ -630,7 +630,7 @@
 		else if (href_list["button"])
 			SPAWN( 0 )
 				var/datum/signal/signal = get_free_signal()
-				signal.source = src
+				signal.source = src.master
 
 				var/list/buttonc = buttons[href_list["code"]] // get a list of "key list, value list" using the buttons name as index
 

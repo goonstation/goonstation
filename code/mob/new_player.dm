@@ -247,7 +247,17 @@ TYPEINFO(/mob/new_player)
 						else if (S.syndicate)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-						S.job = "Cyborg"
+						if (isAI(S))
+							S.job = "AI"
+							S.mind.assigned_role = "AI"
+						else
+							S.job = "Cyborg"
+							S.mind.assigned_role = "Cyborg"
+						S.traitHolder.removeTrait("cyber_incompatible")
+						S.mind.join_time = world.time
+						logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
+						ticker.minds += S.mind
+
 						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						S.apply_roundstart_events()
 						S.show_laws()
@@ -455,7 +465,6 @@ TYPEINFO(/mob/new_player)
 
 			if (ticker && character.mind)
 				character.mind.join_time = world.time
-				//ticker.implant_skull_key() // This also checks if a key has been implanted already or not. If not then it'll implant a random sucker with a key.
 				if (!(character.mind in ticker.minds))
 					logTheThing(LOG_DEBUG, character, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
 					ticker.minds += character.mind
@@ -760,6 +769,9 @@ a.latejoin-card:hover {
 	proc/create_character(var/datum/job/J, var/allow_late_antagonist = 0)
 		if (!src || !src.mind || !src.client)
 			return null
+#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+		src.client.preferences.savefile_load(src.client)
+#endif
 		if (!J)
 			J = find_job_in_controller_by_string(src.mind.assigned_role)
 

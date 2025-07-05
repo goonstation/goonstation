@@ -28,9 +28,11 @@
 			ooc_class = "gfart"
 		else
 			ooc_class = "admin"
+			ooc_icon = "Admin"
 
 	else if (mob_speaker.client.is_mentor() && !mob_speaker.client.stealth)
 		ooc_class = "mentor"
+		ooc_icon = "Mentor"
 
 	else if (mob_speaker.client.player.is_newbee)
 		ooc_class = "newbee"

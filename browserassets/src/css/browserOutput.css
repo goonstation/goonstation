@@ -696,7 +696,7 @@ h1.command_alert {
 h2.command_alert {
   font-weight: bold;
   font-size: 130%;
-  border-bottom: 4px solid;
+  border-bottom: 2px solid;
   padding: 0.2em 0.5em;
 }
 p.command_alert {
@@ -850,6 +850,9 @@ h2.asyn {
 }
 .rsyndicate {
   color: #962121;
+}
+.rsalvager {
+  color: #a18146;
 }
 .rintercomai {
   color: #39397d;
@@ -1380,6 +1383,9 @@ body.theme-dark .rcivilian {
 }
 body.theme-dark .rsyndicate {
   color: #cf5757;
+}
+body.theme-dark .rsalvager {
+  color: #a18146;
 }
 body.theme-dark .rintercomai {
   color: #7f7fe2;
