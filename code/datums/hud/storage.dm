@@ -155,7 +155,7 @@
 		if (user && user.client?.tg_layout)
 			// TG HUD layout is horizontal, which completely changes implemetation. Thus it is handled here
 			var/pixel_y_adjust = 0
-			pos_x = 11 - (num_contents_per_row / 2)
+			pos_x = num_contents_per_row / 2
 			pos_y = 3
 			size_x = num_contents_per_row
 			size_y = ceil(num_contents / MAX_INVENTORY_WIDTH)
@@ -164,10 +164,10 @@
 			var/right = pos_x + size_x-2
 			var/top = pos_y + size_y-1
 			var/bottom = pos_y
-			boxes.screen_loc = "CENTER-[num_contents_per_row/2],[bottom]:[pixel_y_adjust] to CENTER+[num_contents_per_row/2 - 1],[top]:[pixel_y_adjust]"
+			boxes.screen_loc = "CENTER-[pos_x],[bottom]:[pixel_y_adjust] to CENTER+[pos_x - 1],[top]:[pixel_y_adjust]"
 			if (!close)
 				src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
-			close.screen_loc = "CENTER+[num_contents_per_row/2 - 1/2]:[pixel_y_adjust],[top]:[pixel_y_adjust]"
+			close.screen_loc = "CENTER+[pos_x]:[pixel_y_adjust],[top]:[pixel_y_adjust]"
 
 			src.obj_locs = list()
 			var/i = 0
