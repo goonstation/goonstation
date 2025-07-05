@@ -152,16 +152,6 @@
 		if (isicon(hud_style) && boxes.icon != hud_style)
 			boxes.icon = hud_style
 
-		// ??? Mystery fucko code part 1 start
-		var/turfd = FALSE //! 10 brownie points if you can replace this comment with what this variable is supposed to mean
-		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
-			pos_x = 7
-			pos_y = 8
-			size_x = (num_contents + 1) / 2
-			size_y = 2
-			turfd = TRUE
-		// ??? Mystery fucko code part 1 end
-
 		if (user && user.client?.tg_layout)
 			// TG HUD layout is horizontal, which completely changes implemetation. Thus it is handled here
 			var/pixel_y_adjust = 0
@@ -169,16 +159,6 @@
 			pos_y = 3
 			size_x = num_contents_per_row
 			size_y = ceil(num_contents / MAX_INVENTORY_WIDTH)
-			// ??? Mystery fucko code part 2 start
-			if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
-				CRASH("no")
-				// pos_x = 8
-				// pos_y = 8
-				// size_x = (num_contents_per_row + 1) / 2
-				// size_y = 2
-			else if (user && user.client)
-				pixel_y_adjust = -16
-			// ??? Mystery fucko code part 2 end
 
 			var/left = pos_x - 1
 			var/right = pos_x + size_x-2
@@ -188,14 +168,6 @@
 			if (!close)
 				src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
 			close.screen_loc = "CENTER+[num_contents_per_row/2 - 1/2]:[pixel_y_adjust],[top]:[pixel_y_adjust]"
-
-			// ??? Mystery fucko code part 3 start
-			if (turfd)
-				CRASH("no")
-				// if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
-				// 	boxes.screen_loc = "[left],[bottom]:[pixel_y_adjust] to [right],[top]:[pixel_y_adjust]"
-				// 	close.screen_loc = "[right],[bottom]:[pixel_y_adjust]"
-			// ??? Mystery fucko code part 3 end
 
 			src.obj_locs = list()
 			var/i = 0
@@ -217,25 +189,11 @@
 			pos_y = num_contents_per_row + 1
 			size_x = ceil(num_contents / MAX_INVENTORY_WIDTH)
 			size_y = num_contents_per_row + 1
-			// ??? Mystery fucko code start
-			if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
-				pos_x = 8
-				pos_y = 8
-				size_x = (num_contents + 1) / 2
-				size_y = 2
-			// ??? Mystery fucko code end
 
 			boxes.screen_loc = "[pos_x],[pos_y]:[0] to [pos_x+size_x-1],[pos_y-size_y+1]:[0]"
 			if (!close)
 				src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
 			close.screen_loc = "[pos_x+size_x-1]:[0],[pos_y-size_y+1]:[0]"
-
-			// ??? Mystery fucko code part 3 start
-			if (!turfd)
-				if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
-					boxes.screen_loc = "[pos_x-1],[pos_y]:[0] to [pos_x+size_x-2],[pos_y+size_y-1]:[0]"
-					close.screen_loc = "[pos_x-1],[pos_y-size_y+1]:[0]"
-			// ??? Mystery fucko code part 3 end
 
 			src.obj_locs = list()
 			var/i = 0
