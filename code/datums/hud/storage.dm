@@ -192,7 +192,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 			var/secondary_cluster_slots = max_slots - primary_cluster_slots // Will always range from 1 to MAX_GROUP_SIZE
 			if (isnull(src.secondary_group))
 				src.secondary_group = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
-			var/start_x = tg_layout ? pos_x : (pos_x+groups)
+			var/start_x = tg_layout ? pos_x : (pos_x+groups-1)
 			var/start_y = tg_layout ? (pos_y+groups-1) : pos_y
 			var/end_x = tg_layout ? start_x + secondary_cluster_slots - 1 : start_x
 			var/end_y = tg_layout ? start_y : start_y + secondary_cluster_slots - 1
