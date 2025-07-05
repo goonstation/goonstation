@@ -9,6 +9,12 @@
 
 	buildBody(
 		server_id,
-		ckey
+		ckey,
+		key,
+		ip,
+		comp_id,
+		byond_major,
+		byond_minor,
+		round_id
 	)
 		. = ..(args)

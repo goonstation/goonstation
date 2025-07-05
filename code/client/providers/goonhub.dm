@@ -34,7 +34,16 @@
 /datum/client_auth_provider/goonhub/proc/begin_auth()
 	world.log << "/datum/client_auth_provider/goonhub/begin_auth for [src.owner]"
 	var/datum/apiRoute/gameauth/begin/beginAuth = new
-	beginAuth.buildBody(config.server_id, src.owner.ckey)
+	beginAuth.buildBody(
+		config.server_id,
+		src.owner.ckey,
+		src.owner.key,
+		src.owner.address ? src.owner.address : "127.0.0.1", // fallback for local dev
+		src.owner.computer_id,
+		src.owner.byond_version,
+		src.owner.byond_build,
+		roundId
+	)
 	try
 		var/datum/apiModel/BeginAuthResource/begin = apiHandler.queryAPI(beginAuth)
 		src.token = begin.token
@@ -121,9 +130,7 @@
 /datum/client_auth_provider/goonhub/proc/show_wrapper()
 	world.log << "/datum/client_auth_provider/goonhub/show_wrapper for [src.owner]"
 	var/html = grabResource("html/goonhub_auth.html")
-	// var/html = parseAssetLinks(file("browserassets/src/html/goonhub_auth.html"))
 	html = replacetext(html, "{ref}", "\ref[src]")
-	// html = replacetext(html, "{goonhub_url}", config.goonhub_url)
 	html = replacetext(html, "{timeout}", src.timeout / 10)
 
 	if (!cdn)
@@ -151,7 +158,6 @@
 /datum/client_auth_provider/goonhub/proc/show_external(route = "login")
 	world.log << "/datum/client_auth_provider/goonhub/show_external for [src.owner] with route [route]"
 	var/url = "[config.goonhub_url]/game-auth/[route]?ref=\ref[src]"
-	if (src.owner.byond_version <= 515) url += "&legacy=1"
 	if (route == "login") url += "&token=[src.token]"
 	winset(src.owner, "authexternal", list2params(list(
 		"parent" = "mainwindow",
@@ -161,7 +167,7 @@
 		"is-visible" = route != "logout",
 	)))
 	src.owner << browse(
-		{"<html><head><meta http-equiv="refresh" content="0; url=[url]" /></head></html>"},
+		{"<html style="background-color: #0f0f0f;"><head><meta http-equiv="refresh" content="0; url=[url]" /></head></html>"},
 		"window=mainwindow.authexternal;size=1x1"
 	)
 
