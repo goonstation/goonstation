@@ -39,24 +39,12 @@
 		is_game_mode = TRUE
 
 /datum/titlecard/proc/set_pregame_html()
-#if defined(BANISH_PREGAME_HTML)
-	var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
-	if(T)
-		T = locate(T.x + 3, T.y, T.z)
-		if (locate(/obj/titlecard) in T) return
-		new /obj/titlecard(T)
-	return
-#else
 	var/html = grabResource("html/pregame.html")
+	html = replacetext(html, "<!--main_img-->", {"<img id="main-img" src="[resource(src.image_url)]" style="[src.pixelated ? "image-rendering: pixelated;" : ""]">"})
 
-	var/overlay_settings = ""
-	if (isnull(src.overlay_image_url))
-		overlay_settings = "display: none;"
-	else
-		overlay_settings = "background-image: url('[resource(src.overlay_image_url)]');"
+	if (!isnull(src.overlay_image_url))
+		html = replacetext(html, "<!--overlay_img-->", {"<img id="olay-img" src="[resource(src.overlay_image_url)]">"})
 
-	html = replacetext(html, "/*{image_url}*/", "background-image: url('[resource(src.image_url)]');")
-	html = replacetext(html, "/*{overlay_settings}*/", overlay_settings)
 	html = replacetext(html, "<!--add_html-->", src.add_html)
 	last_pregame_html = html
 
