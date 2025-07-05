@@ -2146,7 +2146,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	on_hit(atom/hit, dirflag)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
-			if (S.radius > 3)
+			if (S.size > 3)
 				S.target_turf_counter = 0
 				S.shrink()
 				new /obj/effects/magicspark(S.loc)
