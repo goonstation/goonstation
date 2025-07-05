@@ -1316,6 +1316,11 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.try_grab(target, user)
 			return
 
+	if (src.artifact)
+		if (src.ArtifactSanityCheck())
+			src.ArtifactAttackMob(target, user)
+			return
+
 	def_zone = target.get_def_zone(user, def_zone)
 	var/hit_area = parse_zone(def_zone)
 
