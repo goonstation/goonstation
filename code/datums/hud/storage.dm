@@ -178,25 +178,23 @@ This is because if one 'square' element was used to cover the entire space, you 
 		src.update_box_icons(user)
 
 		if (tg_layout)
-			var/list/hud_contents = src.master.get_hud_contents()				//! This is a list of all the items stored inside the container
-			var/num_contents = src.master.get_visible_slots()					//! Total amount of storage capacity for the inventory.
-			var/contents_per_row = min(num_contents+1, MAX_INVENTORY_WIDTH)	//! Amount of items shown in a row at the most. +1 for 1st row as exit button takes a slot
-			var/width = contents_per_row									//! The size over the x-axis (x 'tiles')
-			var/pos_x = ABS_SCREEN_CENTER_X - 1/2 - width/2
-			var/pos_y = 2														//! The initial position relative to the bottomleft portion of the grid (1,1)
-			var/height = ceil((num_contents + 1) / contents_per_row)		//! The size over the y-axis (y 'tiles'). [+1 to account for close button]
-
+			var/list/hud_contents = src.master.get_hud_contents()		//! This is a list of all the things stored inside this container
+			var/max_slots = src.master.get_visible_slots()				//! Total amount of storage capacity for this inventory.
+			var/slots_per_group = min(max_slots+1, MAX_INVENTORY_WIDTH)	//! The max amount of slots in a group, with +1 for inventories 0-7 for the 'x'
+			var/pos_x = ABS_SCREEN_CENTER_X - 1/2 - slots_per_group/2	//! The leftmost starting position for the inventory
+			var/pos_y = 2												//! The bottommost starting position for the inventory
+			var/groups = ceil((max_slots + 1) / slots_per_group)		//! The size over the y-axis (y 'tiles'). [+1 to account for close button]
 
 			// There is an additional -1 to the top-right corner because otherwise the screen_loc will think we want more boxes in each direction than needed
-			// the ternary at the end of pos_y+height-1-(height>1?1:0) just means that we don't go to the usual max height so as not to block the top row obj
-			src.boxes_bottom.screen_loc = "[pos_x],[pos_y]:[PIXEL_Y_ADJUST] to [pos_x+width-1],[pos_y+height-1-(height>1?1:0)]:[PIXEL_Y_ADJUST]"
+			// the ternary at the end of pos_y+groups-1-(groups>1?1:0) just means that we don't go to the usual max groups so as not to block the top row obj
+			src.boxes_bottom.screen_loc = "[pos_x],[pos_y]:[PIXEL_Y_ADJUST] to [pos_x+slots_per_group-1],[pos_y+groups-1-(groups>1?1:0)]:[PIXEL_Y_ADJUST]"
 
-			if (height > 1)
-				var/left_cluster_slots = ((height-2)*MAX_INVENTORY_WIDTH) + (MAX_INVENTORY_WIDTH-1) // Middle row storage slots + Bottom row storage slots
-				var/right_cluster_slots = num_contents - left_cluster_slots // Will always range from 1 to MAX_INVENTORY_WIDTH
+			if (groups > 1)
+				var/left_cluster_slots = ((groups-2)*MAX_INVENTORY_WIDTH) + (MAX_INVENTORY_WIDTH-1) // Middle row storage slots + Bottom row storage slots
+				var/right_cluster_slots = max_slots - left_cluster_slots // Will always range from 1 to MAX_INVENTORY_WIDTH
 				if (isnull(src.boxes_top))
 					src.boxes_top = src.get_background_cluster()
-				src.boxes_top.screen_loc = "[pos_x],[pos_y+height-1]:[PIXEL_Y_ADJUST] to [pos_x+right_cluster_slots-1],[pos_y+height-1]:[PIXEL_Y_ADJUST]"
+				src.boxes_top.screen_loc = "[pos_x],[pos_y+groups-1]:[PIXEL_Y_ADJUST] to [pos_x+right_cluster_slots-1],[pos_y+groups-1]:[PIXEL_Y_ADJUST]"
 
 			if (!close_button)
 				src.close_button = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
@@ -204,7 +202,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 
 			src.obj_locs = list()
 			var/i = 1 // start at 1 to skip x on first row
-			var/num_items_per_row = contents_per_row
+			var/num_items_per_row = slots_per_group
 			for (var/obj/item/I as anything in hud_contents)
 				if (!(I in src.objects)) // ugh
 					add_object(I, HUD_LAYER+1)
