@@ -1547,6 +1547,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	spawn_contents = list()
 	check_wclass = TRUE
 	can_hold = list(/obj/item/storage/belt/chameleon)
+	satchel_variant = null //Set and then unset in convert_to_satchel, but should remain null as we don't know what we're disguised as.
 
 	New()
 		..()
@@ -1622,6 +1623,27 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
+
+	//Needs special casing to first figure out which bag we're disguised as, then call parent when we've figured out which satchel we need to be
+	convert_to_satchel(name_base_item)
+		var/list/bag_types = concrete_typesof(/obj/item/storage/backpack)
+		for (var/obj/item/storage/backpack/bag as anything in bag_types)
+			if((bag::icon_state == src.icon_state) && (bag::icon == src.icon))
+				src.satchel_variant = bag::satchel_variant
+		. = ..(name_base_item)
+		//Make sure to add the new satchel disguise to our list if it isn't already there
+		for(var/datum/chameleon_backpack_pattern/check_pattern in src.clothing_choices)
+			if(check_pattern.name == src.name)
+				return .
+		var/datum/chameleon_backpack_pattern/P = new /datum/chameleon_backpack_pattern(src)
+		P.name = src.name
+		P.desc = src.desc
+		P.icon_state = src.icon_state
+		P.item_state = src.item_state
+		P.sprite_item = src.icon
+		P.sprite_worn = src.wear_image_icon
+		P.sprite_hand = src.inhand_image_icon
+		src.clothing_choices += P
 
 	verb/change()
 		set name = "Change Appearance"
