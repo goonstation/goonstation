@@ -174,7 +174,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 		src.update_box_icons(user)
 
 		var/tg_layout = user.client?.tg_layout //! TRUE if the user has a TG layout, FALSE if the user has a Goon layout
-		// var/list/hud_contents = src.master.get_hud_contents() //! This is a list of all the things stored inside this container
+		var/list/hud_contents = src.master.get_hud_contents() //! This is a list of all the things stored inside this container
 		var/max_slots = src.master.get_visible_slots() //! Total amount of storage capacity for this inventory.
 		var/slots_per_group = min(max_slots+1, MAX_GROUP_SIZE) //! The max amount of slots in a group, with +1 for inventories 0-7 for the 'x'
 		var/groups = ceil((max_slots + 1) / slots_per_group) //! The size over the y-axis (y 'tiles'). [+1 to account for close button]
@@ -200,57 +200,24 @@ This is because if one 'square' element was used to cover the entire space, you 
 
 		close_button.screen_loc = "[pos_x-(tg_layout ? 1/2 : 0)]:[pixel_y_adjust],[pos_y]:[pixel_y_adjust]"
 
-		// src.obj_locs = list()
-		// var/i = 1 // start at 1 to skip x on first row
-		// var/num_items_per_row = slots_per_group
-		// for (var/obj/item/I as anything in hud_contents)
-		// 	if (!(I in src.objects)) // ugh
-		// 		add_object(I, HUD_LAYER+1)
-		// 	var/obj_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]" //no pixel coords cause that makes click detection harder above
-		// 	var/final_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
-		// 	I.screen_loc = do_hud_offset_thing(I, final_loc)
-		// 	src.obj_locs[obj_loc] = I
-		// 	i++
-		// empty_obj_loc =  "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
-		// master.linked_item?.UpdateIcon()
-		/*
-		else // goon layout
-			var/list/hud_contents = src.master.get_hud_contents()				//! This is a list of all the items stored inside the container
-			var/num_contents = src.master.get_visible_slots()					//! Total amount of storage capacity for the inventory.
-			var/contents_per_column = min(num_contents+1, MAX_GROUP_SIZE)	//! Amount of items shown in a row at the most. +1 for 1st row as exit button takes a slot
-			var/height = contents_per_column									//! The size over the y-axis (y 'tiles')
-			var/width = ceil((num_contents + 1) / contents_per_column)			//! The size over the x-axis (x 'tiles') [+1 to account for close button]
-			var/pos_x = 1
-			var/pos_y = 1
-
-			// There is an additional -1 to the top-right corner because otherwise the screen_loc will think we want more boxes in each direction than needed
-			// the ternary at the end of pos_y+height-1-(height>1?1:0) just means that we don't go to the usual max height so as not to block the top row obj
-			src.primary_group.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1-(width>1?1:0)],[pos_y+height-1]"
-
-			if (width > 1)
-				var/primary_cluster_slots = ((width-2)*MAX_GROUP_SIZE) + (MAX_GROUP_SIZE-1) // Middle row storage slots + Bottom row storage slots
-				var/secondary_cluster_slots = num_contents - primary_cluster_slots // Will always range from 1 to MAX_GROUP_SIZE
-				if (isnull(src.secondary_group))
-					src.secondary_group = src.get_background_cluster()
-				src.secondary_group.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1],[secondary_cluster_slots]"
-
-			if (!src.close_button)
-				src.close_button = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
-			src.close_button.screen_loc = "[pos_x],[pos_y]"
-
-			src.obj_locs = list()
-			var/i = 1
-			for (var/obj/item/I as anything in hud_contents)
-				if (!(I in src.objects)) // ugh
-					add_object(I, HUD_LAYER+1)
-				var/obj_loc = "[pos_x+round(i/contents_per_column)],[pos_y+(i%contents_per_column)]" //no pixel coords cause that makes click detection harder above
-				var/final_loc = "[pos_x+round(i/contents_per_column)],[pos_y+(i%contents_per_column)]"
-				I.screen_loc = do_hud_offset_thing(I, final_loc)
-				src.obj_locs[obj_loc] = I
-				i++
-			empty_obj_loc = "[pos_x+round(i/contents_per_column)],[pos_y+(i%contents_per_column)]"
-			master.linked_item?.UpdateIcon()
-		*/
+		src.obj_locs = list()
+		var/i = 1 // start at 1 to skip x on first group
+		var/offset_x
+		var/offset_y
+		for (var/obj/item/I as anything in hud_contents)
+			if (!(I in src.objects)) // ugh
+				add_object(I, HUD_LAYER+1)
+			offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
+			offset_y = tg_layout ? round(i/slots_per_group) : (i%slots_per_group)
+			var/obj_loc = "[pos_x+offset_x],[pos_y+offset_y]" //no pixel coords cause that makes click detection harder above
+			var/final_loc = "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
+			I.screen_loc = do_hud_offset_thing(I, final_loc)
+			src.obj_locs[obj_loc] = I
+			i++
+		offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
+		offset_y = tg_layout ? round(i/slots_per_group) : (i%slots_per_group)
+		empty_obj_loc =  "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
+		master.linked_item?.UpdateIcon()
 
 	proc/add_item(obj/item/I, mob/user = usr)
 		update(user)
