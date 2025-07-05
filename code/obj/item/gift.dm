@@ -47,7 +47,7 @@
 						boutput(user, SPAN_NOTICE("You need more paper!"))
 						return
 					src.amount -= a_used
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 					user.drop_item()
 					qdel(W)
 					var/obj/item/clothing/head/apprentice/A = new /obj/item/clothing/head/apprentice(src.loc)
@@ -68,7 +68,7 @@
 				return
 			else
 				src.amount -= a_used
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				user.drop_item()
 				var/obj/item/gift/G = W.gift_wrap(src.style)
 				G.add_fingerprint(user)
@@ -101,7 +101,7 @@
 			var/obj/spresent/present = new /obj/spresent (target.loc)
 			present.icon_state = "strange-[src.style]"
 			src.amount -= 2
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			target.set_loc(present)
 		else

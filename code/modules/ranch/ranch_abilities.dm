@@ -103,7 +103,7 @@
 				A.icon_state = "magicm"
 				A.icon = 'icons/obj/wizard.dmi'
 				A.name = "a magic missile"
-				A.anchored = 0
+				A.anchored = UNANCHORED
 				A.set_density(0)
 				A.layer = EFFECTS_LAYER_1
 				A.flags |= TABLEPASS
@@ -115,7 +115,7 @@
 					B.icon_state = "magicmd"
 					B.icon = 'icons/obj/wizard.dmi'
 					B.name = "trail"
-					B.anchored = 1
+					B.anchored = ANCHORED
 					B.set_density(0)
 					B.layer = EFFECTS_LAYER_BASE
 					SPAWN(0.5 SECONDS)
@@ -159,7 +159,7 @@
 				A.icon_state = "icem"
 				A.icon = 'icons/obj/wizard.dmi'
 				A.name = "ice bolt"
-				A.anchored = 0
+				A.anchored = UNANCHORED
 				A.set_density(0)
 				A.layer = MOB_EFFECT_LAYER
 				//A.sd_SetLuminosity(3)
@@ -243,7 +243,7 @@
 	desc = null
 	icon = null
 	icon_state = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING

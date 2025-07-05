@@ -1077,8 +1077,6 @@ TYPEINFO(/mob/living)
 			playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.8)
 		sustained_moves = 0
 
-
-
 /mob/living/movement_delay(var/atom/move_target = 0, running = 0)
 	var/base_speed = BASE_SPEED
 	if (sustained_moves >= SUSTAINED_RUN_REQ)

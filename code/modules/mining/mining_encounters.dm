@@ -345,7 +345,7 @@ ABSTRACT_TYPE(/datum/mining_encounter/oneshot)
 
 		var/dmm_suite/asset_loader = new
 		asset_loader.read_map(file2text("assets/maps/mining_magnet/flock.dmm"), target.x, target.y, target.z)
-/* this is busted
+
 /datum/mining_encounter/oneshot/syndicate
 	name = "Blocked Signal"
 	rarity_tier = 3
@@ -356,7 +356,7 @@ ABSTRACT_TYPE(/datum/mining_encounter/oneshot)
 
 		var/dmm_suite/asset_loader = new
 		asset_loader.read_map(file2text("assets/maps/mining_magnet/syndicate.dmm"), target.x, target.y, target.z)
-*/
+
 /////////////TELESCOPE ENCOUNTERS BELOW
 
 /datum/mining_encounter/tel_miraclium

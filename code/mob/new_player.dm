@@ -249,7 +249,17 @@ TYPEINFO(/mob/new_player)
 						else if (S.syndicate)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-						S.job = "Cyborg"
+						if (isAI(S))
+							S.job = "AI"
+							S.mind.assigned_role = "AI"
+						else
+							S.job = "Cyborg"
+							S.mind.assigned_role = "Cyborg"
+						S.traitHolder.removeTrait("cyber_incompatible")
+						S.mind.join_time = world.time
+						logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
+						ticker.minds += S.mind
+
 						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						S.apply_roundstart_events()
 						S.show_laws()
@@ -300,6 +310,22 @@ TYPEINFO(/mob/new_player)
 				global.latespawning.unlock()
 				return
 			JOB.assigned++
+			if (JOB.player_requested || JOB == job_controls.priority_job)
+				SPAWN(0) // don't pause late spawning for this
+					var/limit_reached = JOB.limit <= JOB.assigned
+					var/list/req_prio = list()
+					if (JOB.player_requested)
+						req_prio += "requested"
+					if (JOB == job_controls.priority_job)
+						req_prio += "priority"
+					var/message = "RoleControl notification: [english_list(req_prio, "")] role [JOB.name] hired[limit_reached ? " (limit reached, clearing [english_list(req_prio, "")] status)" : ""]"
+					if (JOB.player_requested && limit_reached)
+						JOB.player_requested = FALSE
+					if (JOB == job_controls.priority_job && limit_reached)
+						job_controls.priority_job = null
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="COMMAND-MAILBOT", "group"=list(MGD_COMMAND), "sender"="00000000", "message"=message)
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 			if (JOB.counts_as)
 				var/datum/job/other = find_job_in_controller_by_string(JOB.counts_as)
 				other.assigned++
@@ -441,7 +467,6 @@ TYPEINFO(/mob/new_player)
 
 			if (ticker && character.mind)
 				character.mind.join_time = world.time
-				//ticker.implant_skull_key() // This also checks if a key has been implanted already or not. If not then it'll implant a random sucker with a key.
 				if (!(character.mind in ticker.minds))
 					logTheThing(LOG_DEBUG, character, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
 					ticker.minds += character.mind
@@ -693,6 +718,9 @@ a.latejoin-card:hover {
 			if (job_controls.allow_special_jobs)
 				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
 
+				for(var/datum/job/daily/J in job_controls.special_jobs)
+					dat += LateJoinLink(J)
+
 				for(var/datum/job/special/J in job_controls.special_jobs)
 					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
 					dat += LateJoinLink(J)
@@ -743,6 +771,9 @@ a.latejoin-card:hover {
 	proc/create_character(var/datum/job/J, var/allow_late_antagonist = 0)
 		if (!src || !src.mind || !src.client)
 			return null
+#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+		src.client.preferences.savefile_load(src.client)
+#endif
 		if (!J)
 			J = find_job_in_controller_by_string(src.mind.assigned_role)
 

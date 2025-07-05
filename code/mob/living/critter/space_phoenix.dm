@@ -3,7 +3,6 @@ TYPEINFO(/mob)
 
 /mob/living/critter/space_phoenix
 	name = "space phoenix"
-	real_name = "space phoenix"
 	desc = "A majestic bird from outer space, sailing the solar winds. Until Space Station 13 came along, that is."
 	icon = 'icons/mob/critter/nonhuman/spacephoenix.dmi'
 	icon_state = "spacephoenix"

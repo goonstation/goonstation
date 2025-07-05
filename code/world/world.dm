@@ -10,9 +10,7 @@
 /world
 	mob = /mob/new_player
 
-	#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
-	turf = /turf/space/fluid/manta
-	#elif defined(UNDERWATER_MAP)
+	#ifdef UNDERWATER_MAP
 	turf = /turf/space/fluid
 	#else
 	turf = /turf/space

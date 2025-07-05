@@ -6,6 +6,7 @@ var/datum/job_controller/job_controls
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
 	var/datum/job/created/job_creator = null
+	var/datum/job/priority_job = null
 
 	var/loaded_save = 0
 	var/last_client = null
@@ -38,7 +39,9 @@ var/datum/job_controller/job_controls
 			if (initial(variety_job_path.day) == time2text(world.realtime,"Day"))
 				src.staple_jobs += new variety_job_path(src)
 			else
-				src.hidden_jobs += new variety_job_path(src)
+				var/datum/job/not_daily_job = new variety_job_path(src)
+				not_daily_job.limit = 0
+				src.special_jobs += not_daily_job
 
 		for (var/datum/job/J in src.staple_jobs)
 			// Cull any of those nasty null jobs from the category heads
@@ -1075,9 +1078,6 @@ var/datum/job_controller/job_controls
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
 	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
-	#ifndef MAP_OVERRIDE_MANTA
-	excluded_strings += "Communications Officer"
-	#endif
 	if (string in excluded_strings)
 		return null
 	var/list/results = list()
@@ -1085,7 +1085,7 @@ var/datum/job_controller/job_controls
 		if (latejoin_only)
 			if (J.no_late_join)
 				continue
-			if (J.limit == 0)
+			if (J.limit == 0 && J.request_limit == 0)
 				continue
 		if (J.match_to_string(string, case_sensitive))
 			results += J
@@ -1094,7 +1094,7 @@ var/datum/job_controller/job_controls
 			if (latejoin_only)
 				if (J.no_late_join)
 					continue
-				if (J.limit == 0)
+				if (J.limit == 0 && J.request_limit == 0)
 					continue
 			if (J.match_to_string(string, case_sensitive))
 				results += J

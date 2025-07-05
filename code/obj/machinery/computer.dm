@@ -70,6 +70,7 @@
 			A.icon_state = "3"
 		else
 			user?.show_text("You disconnect the monitor.", "blue")
+			logTheThing(LOG_STATION, user, "disassembles [src] [log_loc(src)]")
 			A.state = 4
 			A.icon_state = "4"
 		var/obj/item/circuitboard/M = new src.circuit_type(A)

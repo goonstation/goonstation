@@ -619,7 +619,7 @@
 		src.rarity = max(src.rarity, round((currentench+incr+1)/2) + 2)
 	else
 		src.rarity = initial(src.rarity)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	src.UpdateName()
 	return currentench + incr
 

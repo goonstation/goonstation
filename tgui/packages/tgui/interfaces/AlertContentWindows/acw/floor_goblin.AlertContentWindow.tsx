@@ -9,10 +9,8 @@ import { Box, Image } from 'tgui-core/components';
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Floor Goblin Tips',
-  height: 630,
-  content: (
+const FloorGoblinContentWindow = () => {
+  return (
     <>
       <Box as="h1" textAlign="center" fontSize={2.5}>
         You are a Floor goblin!
@@ -31,5 +29,11 @@ export const acw: AlertContentWindow = {
         style={{ display: 'block' }}
       />
     </>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Floor Goblin Tips',
+  height: 630,
+  component: FloorGoblinContentWindow,
 };

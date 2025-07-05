@@ -23,6 +23,15 @@
 	onAttach(mob/to_whom)
 		. = ..()
 		RegisterSignal(to_whom, COMSIG_MOB_DEATH, PROC_REF(on_death))
+		to_whom.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
+		to_whom.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
+
+	onRemove(mob/from_who)
+		. = ..()
+
+		if (from_who)
+			from_who.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
+			from_who.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
 
 	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
@@ -148,7 +157,7 @@
 		else
 			//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
 			body.emote("deathgasp", dead_check = FALSE)
-			body.visible_message(SPAN_ALERT("<B>[src]</B> head starts to shift around!"))
+			body.visible_message(SPAN_ALERT("<B>[body]</B>'s head starts to shift around!"))
 			body.show_text("<b>We begin to grow a headspider...</b>", "blue")
 			var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(body) //we spawn the headspider inside this dude immediately.
 			HS.RegisterSignal(body, COMSIG_PARENT_PRE_DISPOSING, TYPE_PROC_REF(/mob/living/critter/changeling/headspider, remove)) //if this dude gets grindered or cremated or whatever, we go with it

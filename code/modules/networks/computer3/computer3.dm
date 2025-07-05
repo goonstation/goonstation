@@ -232,6 +232,9 @@
 				icon_state = "dwaine2"
 				base_icon_state = "dwaine2"
 
+			os_loaded
+				setup_os_string = "ZETA_MAINFRAME"
+
 
 	luggable //A portable(!!) computer 3. Cards cannot be exchanged.
 		name = "portable computer"
@@ -620,6 +623,7 @@
 		A.icon_state = "3"
 	else
 		user?.show_text("You disconnect the monitor.", "blue")
+		logTheThing(LOG_STATION, user, "disassembles [src] [log_loc(src)]")
 		A.state = 4
 		A.icon_state = "4"
 
