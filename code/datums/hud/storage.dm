@@ -1,6 +1,8 @@
 
 #define MAX_INVENTORY_WIDTH 8 //! Maximum width of an inventory before it begins to wrap around. This is -1 for the first row, as the exit button takes a slot.
 #define ABS_SCREEN_CENTER_X 11.5 //! The center of the screen on the x-axis for everyone. Absolutely messes up with other screen sizes than standard though
+#define PIXEL_Y_ADJUST 16 //! Amount of pixels to move the UI up on TG layouts. Prevents it from overlapping with the rest of the inventory UI
+
 /datum/hud/storage
 	var/atom/movable/screen/hud/boxes_bottom = null //! The bottom grid of boxes. Used with boxes_top to make the UI
 	var/atom/movable/screen/hud/boxes_top = null //! The top row of boxes. Used with boxes_bottom to make the UI
@@ -171,74 +173,84 @@ This is because if one 'square' element was used to cover the entire space, you 
 		if (isnull(user))
 			return
 
-		var/list/hud_contents = src.master.get_hud_contents()				//! This is a list of all the items stored inside the container
-		var/num_contents = src.master.get_visible_slots()					//! Total amount of storage capacity for the inventory.
-		var/num_contents_per_row = min(num_contents, MAX_INVENTORY_WIDTH)	//! Amount of items shown in a row at the most. 1 shorter for 1st row as exit button takes a slot
 		var/tg_layout = user.client?.tg_layout								//! TRUE if the user has a TG layout, FALSE if the user has a Goon layout
-		var/pixel_y_adjust = tg_layout ? 16 : 0								//! Slight y-adjustment for TG UIs, none for Goon UIs. Used to have a gap between inventory and usual UI
-		var/width = num_contents_per_row									//! The size over the x-axis (x 'tiles')
-		var/pos_x = ABS_SCREEN_CENTER_X - 1/2 - width/2
-		var/pos_y = 2														//! The initial position relative to the bottomleft portion of the grid (1,1)
-		var/height = ceil((num_contents + 1) / num_contents_per_row)		//! The size over the y-axis (y 'tiles'). [+1 to account for close button]
-		var/center = user.getScreenParams()
+
 		src.update_box_icons(user)
 
-		src.boxes_bottom.screen_loc = "CENTER-[width/2],[pos_y]:[pixel_y_adjust] to CENTER+[width/2-1],[pos_y+height-2]:[pixel_y_adjust]"
+		if (tg_layout)
+			var/list/hud_contents = src.master.get_hud_contents()				//! This is a list of all the items stored inside the container
+			var/num_contents = src.master.get_visible_slots()					//! Total amount of storage capacity for the inventory.
+			var/contents_per_row = min(num_contents+1, MAX_INVENTORY_WIDTH)	//! Amount of items shown in a row at the most. +1 for 1st row as exit button takes a slot
+			var/width = contents_per_row									//! The size over the x-axis (x 'tiles')
+			var/pos_x = ABS_SCREEN_CENTER_X - 1/2 - width/2
+			var/pos_y = 2														//! The initial position relative to the bottomleft portion of the grid (1,1)
+			var/height = ceil((num_contents + 1) / contents_per_row)		//! The size over the y-axis (y 'tiles'). [+1 to account for close button]
 
-		if (height > 1)
-			var/bottom_cluster_slots = ((height-2)*MAX_INVENTORY_WIDTH) + (MAX_INVENTORY_WIDTH-1) // Middle row storage slots + Bottom row storage slots
-			var/top_cluster_slots = num_contents - bottom_cluster_slots // Will always range from 0 to MAX_INVENTORY_WIDTH
-			if (top_cluster_slots > 0)
+
+			// There is an additional -1 to the top-right corner because otherwise the screen_loc will think we want more boxes in each direction than needed
+			// the ternary at the end of pos_y+height-1-(height>1?1:0) just means that we don't go to the usual max height so as not to block the top row obj
+			src.boxes_bottom.screen_loc = "[pos_x],[pos_y]:[PIXEL_Y_ADJUST] to [pos_x+width-1],[pos_y+height-1-(height>1?1:0)]:[PIXEL_Y_ADJUST]"
+
+			if (height > 1)
+				var/left_cluster_slots = ((height-2)*MAX_INVENTORY_WIDTH) + (MAX_INVENTORY_WIDTH-1) // Middle row storage slots + Bottom row storage slots
+				var/right_cluster_slots = num_contents - left_cluster_slots // Will always range from 1 to MAX_INVENTORY_WIDTH
 				if (isnull(src.boxes_top))
 					src.boxes_top = src.get_background_cluster()
-				src.boxes_top.screen_loc = "[pos_x],[pos_y+height]:[pixel_y_adjust] to [pos_x-(MAX_INVENTORY_WIDTH-top_cluster_slots)],[pos_y+height]:[pixel_y_adjust]"
+				src.boxes_top.screen_loc = "[pos_x],[pos_y+height-1]:[PIXEL_Y_ADJUST] to [pos_x+right_cluster_slots-1],[pos_y+height-1]:[PIXEL_Y_ADJUST]"
 
-		if (!close_button)
-			src.close_button = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
-		close_button.screen_loc = "[pos_x+1/2]:[pixel_y_adjust],[pos_y]:[pixel_y_adjust]"
-
-		// src.obj_locs = list()
-		// var/i = 0
-		// var/num_items_per_row = num_contents_per_row - 1
-		// for (var/obj/item/I as anything in hud_contents)
-		// 	if (!(I in src.objects)) // ugh
-		// 		add_object(I, HUD_LAYER+1)
-		// 	var/obj_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]" //no pixel coords cause that makes click detection harder above
-		// 	var/final_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
-		// 	I.screen_loc = do_hud_offset_thing(I, final_loc)
-		// 	src.obj_locs[obj_loc] = I
-		// 	i++
-		// empty_obj_loc =  "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[pixel_y_adjust]"
-		// master.linked_item?.UpdateIcon()
-
-		/*
-		if (user && user.client?.tg_layout)
-			pass
-		else
-			// Goon HUD layout is vertical, implementation is here.
-			pos_x = 1
-			pos_y = num_contents_per_row + 1
-			size_x = ceil(num_contents / MAX_INVENTORY_WIDTH)
-			size_y = num_contents_per_row + 1
-
-			boxes.screen_loc = "[pos_x],[pos_y]:[0] to [pos_x+size_x-1],[pos_y-size_y+1]:[0]"
-			if (!close)
-				src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
-			close.screen_loc = "[pos_x+size_x-1]:[0],[pos_y-size_y+1]:[0]"
+			if (!close_button)
+				src.close_button = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
+			close_button.screen_loc = "[pos_x-1/2]:[PIXEL_Y_ADJUST],[pos_y]:[PIXEL_Y_ADJUST]"
 
 			src.obj_locs = list()
-			var/i = 0
+			var/i = 1 // start at 1 to skip x on first row
+			var/num_items_per_row = contents_per_row
 			for (var/obj/item/I as anything in hud_contents)
 				if (!(I in src.objects)) // ugh
 					add_object(I, HUD_LAYER+1)
-				var/obj_loc = "[pos_x+(i%size_x)],[pos_y-round(i/size_x)]" //no pixel coords cause that makes click detection harder above
-				var/final_loc = "[pos_x+(i%size_x)],[pos_y-round(i/size_x)]:[0]"
+				var/obj_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]" //no pixel coords cause that makes click detection harder above
+				var/final_loc = "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[PIXEL_Y_ADJUST]"
 				I.screen_loc = do_hud_offset_thing(I, final_loc)
 				src.obj_locs[obj_loc] = I
 				i++
-			empty_obj_loc =  "[pos_x+(i%size_x)],[pos_y-round(i/size_x)]:[0]"
+			empty_obj_loc =  "[pos_x+(i%num_items_per_row)],[pos_y+round(i/num_items_per_row)]:[PIXEL_Y_ADJUST]"
 			master.linked_item?.UpdateIcon()
-		*/
+		else // goon layout
+			var/list/hud_contents = src.master.get_hud_contents()				//! This is a list of all the items stored inside the container
+			var/num_contents = src.master.get_visible_slots()					//! Total amount of storage capacity for the inventory.
+			var/contents_per_column = min(num_contents+1, MAX_INVENTORY_WIDTH)	//! Amount of items shown in a row at the most. +1 for 1st row as exit button takes a slot
+			var/height = contents_per_column									//! The size over the y-axis (y 'tiles')
+			var/width = ceil((num_contents + 1) / contents_per_column)			//! The size over the x-axis (x 'tiles') [+1 to account for close button]
+			var/pos_x = 1
+			var/pos_y = 1
+
+			// There is an additional -1 to the top-right corner because otherwise the screen_loc will think we want more boxes in each direction than needed
+			// the ternary at the end of pos_y+height-1-(height>1?1:0) just means that we don't go to the usual max height so as not to block the top row obj
+			src.boxes_bottom.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1-(width>1?1:0)],[pos_y+height-1]"
+
+			if (width > 1)
+				var/left_cluster_slots = ((width-2)*MAX_INVENTORY_WIDTH) + (MAX_INVENTORY_WIDTH-1) // Middle row storage slots + Bottom row storage slots
+				var/right_cluster_slots = num_contents - left_cluster_slots // Will always range from 1 to MAX_INVENTORY_WIDTH
+				if (isnull(src.boxes_top))
+					src.boxes_top = src.get_background_cluster()
+				src.boxes_top.screen_loc = "[pos_x],[pos_y] to [pos_x+width-1],[right_cluster_slots-1]"
+
+			if (!src.close_button)
+				src.close_button = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
+			src.close_button.screen_loc = "[pos_x-1],[pos_y-1]"
+
+			src.obj_locs = list()
+			var/i = 1
+			for (var/obj/item/I as anything in hud_contents)
+				if (!(I in src.objects)) // ugh
+					add_object(I, HUD_LAYER+1)
+				var/obj_loc = "[pos_x+round(i/contents_per_column)],[pos_y-(i%contents_per_column)]" //no pixel coords cause that makes click detection harder above
+				var/final_loc = "[pos_x+round(i/contents_per_column)],[pos_y-(i%contents_per_column)]"
+				I.screen_loc = do_hud_offset_thing(I, final_loc)
+				src.obj_locs[obj_loc] = I
+				i++
+			empty_obj_loc =  "[pos_x+round(i/contents_per_column)],[pos_y-(i%contents_per_column)]"
+			master.linked_item?.UpdateIcon()
 
 	proc/add_item(obj/item/I, mob/user = usr)
 		update(user)
