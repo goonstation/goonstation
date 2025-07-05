@@ -7,6 +7,7 @@ TYPEINFO(/obj/decorative_pot)
 		icon_state = "plantpot"
 		anchored = UNANCHORED
 		density = 1
+		var/holding_plant = FALSE
 
 		attackby(obj/item/weapon, mob/user)
 				if((iswrenchingtool(weapon)) || isscrewingtool(weapon))
@@ -19,21 +20,25 @@ TYPEINFO(/obj/decorative_pot)
 								playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 								src.anchored = UNANCHORED
 						return
-				else if(istype(weapon,/obj/item/gardentrowel))
-						var/obj/item/gardentrowel/t = weapon
-						if(!t.plantyboi)
+				if (istype(weapon, /obj/item/gardentrowel)) // prevent attack message with a filled trowel
+						var/obj/item/gardentrowel/trowel = weapon
+						if (trowel.holding_plant)
 								return
-						src.UpdateOverlays(t.plantyboi,"plant")
-						src.UpdateOverlays(t.plantyboi_plantoverlay, "plantoverlay")
-						t.plantyboi = null
-						t.plantyboi_plantoverlay = null
-						t.icon_state = "trowel"
-						playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
-						t.genes.mutation?.HYPpotted_proc_M(src, t.grow_level)
-						qdel(t.genes)
-						t.genes = null
-						return
 				if(istype(weapon,/obj/item/seed))
 						boutput(user, "It's an empty pot, there's nowhere to plant the seed! Maybe you need to use a trowel and place an existing plant into it?")
 				else
 						..()
+
+		/// Inserts a new plant into the pot, overriding any previous.
+		proc/insert_plant(var/image/plant_image, var/image/plant_overlay_image, var/datum/plantgenes/genes, var/grow_level)
+				if (src.holding_plant)
+						// This probably introduces more bugs than it fixes.
+						src.ClearAllOverlays()
+				src.holding_plant = TRUE
+				if (plant_image)
+						plant_image.pixel_x = 2
+						src.UpdateOverlays(plant_image,"plant")
+				if (plant_overlay_image)
+						plant_overlay_image.pixel_x = 2
+						src.UpdateOverlays(plant_overlay_image, "plantoverlay")
+				genes.mutation?.HYPpotted_proc_M(src, grow_level)
