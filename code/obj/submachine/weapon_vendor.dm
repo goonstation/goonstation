@@ -202,7 +202,6 @@
 		materiel_stock += new/datum/materiel/storage/belt
 		materiel_stock += new/datum/materiel/storage/satchel
 */
-		materiel_stock += new/datum/materiel/utility/belt
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
@@ -211,7 +210,6 @@
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
 		materiel_stock += new/datum/materiel/utility/beartraps
-		materiel_stock += new/datum/materiel/utility/miscpouch
 		materiel_stock += new/datum/materiel/utility/sawflies
 
 	accepted_token()
@@ -629,10 +627,6 @@
 	category = "Storage"
 	description = "An ordinary 6 slot messenger bag in menacing red and black."
 */
-/datum/materiel/utility/belt
-	name = "Tactical Espionage Belt"
-	path = /obj/item/storage/fanny/syndie/large
-	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/utility/knife
 	name = "Combat Knife"
@@ -675,11 +669,6 @@
 	name = "Beartraps"
 	path = /obj/item/storage/beartrap_pouch
 	description = "A pouch of 4 pressure sensitive beartraps used to snare and maim unexpecting victims entering your target area."
-
-/datum/materiel/utility/miscpouch
-	name = "High capacity tactical pouch"
-	path = /obj/item/storage/pouch/highcap
-	description = "A 6-slot pouch for carrying multiple different ammunitions at once"
 
 /datum/materiel/utility/sawflies
 	name = "Sawfly pouch"

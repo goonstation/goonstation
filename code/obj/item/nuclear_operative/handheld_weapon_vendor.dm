@@ -109,7 +109,6 @@
 		materiel_stock += new/datum/materiel/loadout/knight
 		materiel_stock += new/datum/materiel/loadout/custom
 
-		materiel_stock += new/datum/materiel/utility/belt
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
