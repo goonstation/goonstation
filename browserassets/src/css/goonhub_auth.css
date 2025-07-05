@@ -1,3 +1,4 @@
+/* Discord login page shows a mobile view below 500px */
 $externalWidth: 480px;
 $externalHeight: 500px;
 
@@ -44,7 +45,7 @@ body::before {
 .content-wrapper {
   position: relative;
   display: inline-flex;
-  min-height: 100vh;
+  height: 100vh;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
@@ -57,16 +58,6 @@ body::before {
   margin: 0 auto 0;
   margin-top: 4vh; /* IE compat */
   margin-top: clamp(1rem, 4vh, 3rem);
-}
-
-.intro {
-  margin: 0 auto;
-  text-align: center;
-  font-weight: 600;
-  font-size: 0.9em;
-}
-body.timedout .intro {
-  display: none;
 }
 
 #auth-place {
@@ -101,6 +92,7 @@ body.timedout .intro {
 
 #auth-place .error {
   display: none;
+  max-width: 100%;
   background: rgba(255, 0, 0, 0.3);
   padding: 1.5rem;
   text-align: center;
