@@ -379,6 +379,13 @@
 	src.ArtifactHitWith(W, user)
 	return 1
 
+/obj/proc/ArtifactAfterAttack(atom/target, mob/user, reach, params)
+	if (!src.ArtifactSanityCheck())
+		return
+	var/datum/artifact/art = src.artifact
+	if (art.activated)
+		art.effect_click_tile(src, user, get_turf(target))
+
 #define FAULT_RESULT_INVALID 2 // artifact can't do faults
 #define FAULT_RESULT_STOP	1		 // we gotta stop, artifact was destroyed or deactivated
 #define FAULT_RESULT_SUCCESS 0 // everything's cool!

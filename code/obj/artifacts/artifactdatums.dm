@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 		return 0
 
 	/// What the artifact does after you clicked some tile with it when activated.
-	/// Basically like afterattack() for activated artifacts.
+	/// Acts like a ranged afterattack() for activated artifacts.
 	proc/effect_click_tile(var/obj/O,var/mob/living/user,var/turf/T)
 		if (!O || !user || !T)
 			return 1
