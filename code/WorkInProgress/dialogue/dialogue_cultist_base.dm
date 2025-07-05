@@ -336,7 +336,7 @@
 	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	show_dialogue()
+	showdialogue()
 		if(cutoff)
 			return
 		else
