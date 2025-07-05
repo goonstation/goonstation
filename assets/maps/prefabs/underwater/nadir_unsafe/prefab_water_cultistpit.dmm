@@ -1,0 +1,180 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/polarispit/cult/pitwall,
+/area/noGenerate)
+"b" = (
+/obj/plasma_coral/bulbous,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"c" = (
+/obj/bubble_vent/oxygen,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"f" = (
+/obj/map/light/void,
+/turf/unsimulated/floor/polarispit/cult,
+/area/noGenerate)
+"g" = (
+/turf/unsimulated/floor/polarispit/cult,
+/area/noGenerate)
+"l" = (
+/obj/item/tank/mini/oxygen/empty,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"n" = (
+/obj/item/clothing/mask/breath,
+/obj/dialogueobj/cultistcorpse_1,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"C" = (
+/obj/ladder{
+	id = "cultcentre";
+	layer = 2;
+	pixel_y = 18
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"E" = (
+/obj/map/light/void,
+/turf/unsimulated/floor/polarispit/cult/pitwall,
+/area/noGenerate)
+"G" = (
+/obj/item/device/gps{
+	distress = 1;
+	identifier = "D#3P_S0S"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"H" = (
+/obj/plasma_coral/branching,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"O" = (
+/obj/plasma_coral/coralfingers,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"V" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+
+(1,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(2,1,1) = {"
+V
+c
+V
+V
+V
+V
+V
+V
+H
+V
+"}
+(3,1,1) = {"
+V
+V
+V
+a
+f
+g
+g
+V
+V
+V
+"}
+(4,1,1) = {"
+O
+V
+a
+g
+g
+g
+f
+g
+V
+V
+"}
+(5,1,1) = {"
+V
+V
+E
+g
+f
+g
+g
+f
+V
+V
+"}
+(6,1,1) = {"
+V
+V
+a
+g
+g
+g
+g
+C
+n
+V
+"}
+(7,1,1) = {"
+V
+V
+V
+a
+g
+f
+g
+G
+l
+V
+"}
+(8,1,1) = {"
+V
+V
+V
+V
+E
+g
+V
+V
+V
+V
+"}
+(9,1,1) = {"
+V
+b
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(10,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
