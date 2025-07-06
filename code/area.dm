@@ -1931,6 +1931,23 @@ TYPEINFO(/area/station/maintenance)
 	workplace = 1
 	do_not_irradiate = TRUE
 	station_map_colour = MAPC_MAINTENANCE
+	var/maint_critters
+	var/max_maint_critters = 5
+	var/static/list/allowed_maint_critters = list(/mob/living/critter/small_animal/mouse = 100,
+												  /mob/living/critter/small_animal/cockroach = 100)
+
+	New()
+		..()
+		maint_critters = list()
+
+	proc/spawn_maint_critter(turf/T)
+		var/critter_type = weighted_pick(src.allowed_maint_critters)
+		var/mob/living/critter/C = new critter_type(T)
+		src.maint_critters += C
+		RegisterSignal(C, COMSIG_MOB_DEATH, PROC_REF(process_critter_death))
+
+	proc/process_critter_death(mob/M)
+		src.maint_critters -= M
 
 /area/station/maintenance/northwest
 	name = "North West Maintenance"
