@@ -1316,7 +1316,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.try_grab(target, user)
 			return
 
-	if (src.artifact)
+	if (src.artifact?.activated)
 		src.artifact.effect_melee_attack(src, user, target)
 		return
 
