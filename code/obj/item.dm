@@ -1317,9 +1317,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			return
 
 	if (src.artifact)
-		if (src.ArtifactSanityCheck())
-			src.ArtifactAttackMob(target, user)
-			return
+		src.artifact.effect_melee_attack(src, user, target)
+		return
 
 	def_zone = target.get_def_zone(user, def_zone)
 	var/hit_area = parse_zone(def_zone)
