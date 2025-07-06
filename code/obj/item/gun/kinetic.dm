@@ -123,8 +123,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					user.show_text("You can't reload this gun.", "red")
 					return
 				if(AMMO_RELOAD_INCOMPATIBLE)
-					user.show_text("This ammo won't fit!", "red")
-					return
+					if(istype(src, /obj/item/gun/kinetic/dart_rifle))
+						user.show_text("[src] can only accept tranquilizer darts!", "red")
+						return
+					else
+						user.show_text("This ammo won't fit!", "red")
+						return
 				if(AMMO_RELOAD_SOURCE_EMPTY)
 					user.show_text("There's no ammo left in [b.name].", "red")
 					return
@@ -829,7 +833,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/dart_rifle
 	name = "tranquilizer rifle"
-	desc = "A veterinary tranquilizer rifle chambered in .308 caliber."
+	desc = "A veterinary tranquilizer rifle chambered in .308 caliber. This rifle can only accept .308 tranquilizer darts."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
