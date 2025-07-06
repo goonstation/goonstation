@@ -167,8 +167,6 @@ This is because if one 'square' element was used to cover the entire space, you 
 		if (isnull(user))
 			return
 
-		src.update_box_icons(user)
-
 		var/tg_layout = user.client?.tg_layout //! TRUE if the user has a TG layout, FALSE if the user has a Goon layout
 		var/list/hud_contents = src.master.get_hud_contents() //! This is a list of all the things stored inside this container
 		var/max_slots = src.master.get_visible_slots() //! Total amount of storage capacity for this inventory.
@@ -214,6 +212,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 		offset_y = tg_layout ? round(i/slots_per_group) : (i%slots_per_group)
 		empty_obj_loc =  "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 		master.linked_item?.UpdateIcon()
+		src.update_box_icons(user)
 
 	proc/add_item(obj/item/I, mob/user = usr)
 		update(user)
