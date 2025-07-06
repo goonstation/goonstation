@@ -1,4 +1,6 @@
-
+(t)sun jul 06 25
+(u)LeahTheTech
+(+)The way "power" type machines interact with wires has been tweaked slightly. They will no longer interact with wires running directly underneath them, instead requiring wires running directly into the machine or terminating underneath it. This shouldn't affect anything but report if it does. Hopefully this will fix some of the harder to explain hotwires!
 (t)thu jul 03 25
 (u)FlameArrow57 & Croissant_Man1
 (p)23539
