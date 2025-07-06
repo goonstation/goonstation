@@ -29,8 +29,9 @@
 		src.primary_group = null
 		src.secondary_group = null
 		src.close_button.dispose()
-		src.obj_locs.len = 0
-		src.obj_locs = null
+		if (!isnull(src.obj_locs))
+			src.obj_locs.len = 0
+			src.obj_locs = null
 		..()
 
 	clear_master()
