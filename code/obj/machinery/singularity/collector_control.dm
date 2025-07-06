@@ -142,7 +142,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 
 			for(var/obj/machinery/the_singularity/singularity in S)
 				if(singularity && !QDELETED(singularity))
-					power_s += singularity.stored_energy*max((singularity.size**2),1)/4
+					power_s += singularity.stored_energy*max((singularity.radius**2),1)/4
 			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
@@ -170,7 +170,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 		var/power_p = 0
 		for(var/obj/machinery/the_singularity/singularity in S)
 			if(singularity && !QDELETED(singularity))
-				power_s += singularity.stored_energy*((singularity.size*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
+				power_s += singularity.stored_energy*((singularity.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
 		power_p += 50
 		power_a = power_p*power_s*50
 		src.lastpower = power_a
