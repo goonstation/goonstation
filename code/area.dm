@@ -1934,7 +1934,8 @@ TYPEINFO(/area/station/maintenance)
 	var/maint_critters
 	var/max_maint_critters = 5
 	var/static/list/allowed_maint_critters = list(/mob/living/critter/small_animal/mouse = 100,
-												  /mob/living/critter/small_animal/cockroach = 100)
+												  /mob/living/critter/small_animal/cockroach = 100,
+												  /mob/living/critter/small_animal/mouse/rat = 25)
 
 	New()
 		..()
