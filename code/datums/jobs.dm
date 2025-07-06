@@ -913,6 +913,33 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/reagent_containers/glass/bucket, /obj/item/lamp_manufacturer/organic)
 	wiki_link = "https://wiki.ss13.co/Janitor"
 
+/datum/job/civilian/journalist
+	name = "Journalist"
+	wages = PAY_UNTRAINED
+	limit = 1
+	slot_jump = list(/obj/item/clothing/under/suit/red)
+	slot_head = list(/obj/item/clothing/head/fedora)
+	slot_lhan = list(/obj/item/storage/briefcase)
+	slot_poc1 = list(/obj/item/camera)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	items_in_backpack = list(/obj/item/camera_film/large)
+	wiki_link = "https://wiki.ss13.co/Jobs#Gimmick_Jobs" // needs a wiki page.
+
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+
+		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
+		if (B && istype(B))
+			B.storage.add_contents(new /obj/item/device/camera_viewer/public(B))
+			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera(B))
+			B.storage.add_contents(new /obj/item/device/audio_log(B))
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
+
+		return
+
 /datum/job/civilian/chaplain
 	name = "Chaplain"
 	limit = 1
@@ -1601,32 +1628,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_glov = list(/obj/item/clothing/gloves/boxing)
 	items_in_backpack = list(/obj/item/football,/obj/item/football,/obj/item/basketball,/obj/item/basketball)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
-
-/datum/job/special/random/journalist
-	name = "Journalist"
-	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/suit/red)
-	slot_head = list(/obj/item/clothing/head/fedora)
-	slot_lhan = list(/obj/item/storage/briefcase)
-	slot_poc1 = list(/obj/item/camera)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	items_in_backpack = list(/obj/item/camera_film/large)
-	special_spawn_location = LANDMARK_JOURNALIST_SPAWN
-	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-
-		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
-		if (B && istype(B))
-			B.storage.add_contents(new /obj/item/device/camera_viewer/public(B))
-			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera(B))
-			B.storage.add_contents(new /obj/item/device/audio_log(B))
-			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
-
-		return
 
 /datum/job/special/random/beekeeper
 	name = "Apiculturist"
