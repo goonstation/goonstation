@@ -23,9 +23,6 @@ TYPEINFO(/obj/machinery/field_generator)
 	var/max_power = 100
 	var/state = UNWRENCHED
 	var/steps = 0
-	var/last_check = 0
-	var/check_delay = 10
-	var/recalc = 0
 	var/locked = 1
 	//Remote control stuff
 	var/net_id = null
