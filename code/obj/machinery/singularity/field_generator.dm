@@ -5,7 +5,7 @@
 
 TYPEINFO(/obj/machinery/field_generator)
 	mats = 14
-
+//
 /obj/machinery/field_generator
 	name = "Field Generator"
 	desc = "Projects an energy field when active"
