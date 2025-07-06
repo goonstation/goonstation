@@ -309,6 +309,7 @@
 				shoot_projectile_relay_pixel_spread(src, src.ammo_type, src, rand(-32, 32), rand(-32, 32), 360)
 				if(src.delete_on_reload && src.amount_left <= 0)
 					qdel(src)
+					return
 				if (prob(30) && src.use(1)) //small chance to do two per tick
 					sleep(0.3 SECONDS)
 					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
