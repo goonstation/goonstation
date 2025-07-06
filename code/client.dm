@@ -1403,6 +1403,8 @@ var/global/curr_day = null
 		if(H.sims)
 			H.sims.add_hud()
 		H.update_equipment_screen_loc()
+		for (var/datum/hud/storage/S in H.huds)
+			S.update(H)
 
 /client/verb/set_tg_layout()
 	set hidden = 1
