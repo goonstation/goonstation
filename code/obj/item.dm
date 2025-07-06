@@ -1068,8 +1068,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	set waitfor = 0
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
-	if (src.artifact)
-		src.ArtifactAfterAttack(target, user, reach, params)
+	if (src.artifact?.activated)
+		src.artifact.effect_click_tile(src, user, get_turf(target))
 	return
 
 /obj/item/dummy/ex_act()
