@@ -121,17 +121,11 @@
 			y = px
 			px = temp
 
-		//ddumb hack for offset storage
-		var/turfd = (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible))
-
-		var/pixel_y_adjust = 0
-		if (user && user.client && user.client.tg_layout && !turfd)
-			pixel_y_adjust = 1
-
-		if (pixel_y_adjust && text2num(py) > 16)
-			y = text2num(y) + 1
-			py = text2num(py) - 16
-		//end dumb hack
+		// tg layout is shifted up by some pixel amount, thus clicked location must be offset too in order to be accurate
+		// (it will think the user clicked PIXEL_Y_ADJUST higher/lower than they really did)
+		if (user && user.client && user.client.tg_layout)
+			if (text2num(py) <= PIXEL_Y_ADJUST)
+				y = "[text2num(y)-1]"
 
 		return "[x],[y]"
 
