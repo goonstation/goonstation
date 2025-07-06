@@ -1,5 +1,5 @@
 
-#define MAX_GROUP_SIZE 8 //! Maximum width of an inventory before it begins to wrap around. This is -1 for the first row, as the exit button takes a slot.
+#define MAX_GROUP_SIZE 8 //! Maximum slots of an inventory group before it begins to wrap around. This is -1 for the first row, as the exit button takes a slot.
 #define ABS_SCREEN_CENTER_X 11.5 //! The center of the screen on the x-axis for everyone. Absolutely messes up with other screen sizes than standard though
 #define PIXEL_Y_ADJUST 16 //! Amount of pixels to move the UI up on TG layouts. Prevents it from overlapping with the rest of the inventory UI
 
@@ -18,7 +18,7 @@
 		..()
 		src.master = master
 		src.primary_group = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
-		// top cluster only init'd when needed
+		// secondary cluster only init'd when needed
 		src.close_button = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
 		src.selection_highlight = create_screen("sel", "sel", 'icons/mob/hud_human_new.dmi', "sel", null, HUD_LAYER+1.2)
 		if(src.master)
