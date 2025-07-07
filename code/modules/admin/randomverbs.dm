@@ -3162,7 +3162,7 @@ var/global/force_radio_maptext = FALSE
 					return
 				// pick ur flavor
 				nuke_type = get_one_match(/obj/machinery/nuclearbomb, /obj/machinery/nuclearbomb)
-				if (isnull(nuke_type))
+				if (isnull(nuke_type) || !nuke_type)
 					return
 				nuke = new nuke_type
 				nuke.set_loc(AM)
