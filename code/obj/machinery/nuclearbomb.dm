@@ -115,8 +115,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 				var/atom/movable/mob_or_objcritter = bomb_or_decoy.loc
 				mob_or_objcritter.maptext = maptext
 				mob_or_objcritter.maptext_y = mob_or_objcritter.bound_height/2
-				mob_or_objcritter.maptext_width = 64 // no wrapping pls
-				mob_or_objcritter.maptext_x = -1 * mob_or_objcritter.maptext_width/4
 			else
 				bomb_or_decoy.maptext = maptext
 
