@@ -123,12 +123,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					user.show_text("You can't reload this gun.", "red")
 					return
 				if(AMMO_RELOAD_INCOMPATIBLE)
-					if(istype(src, /obj/item/gun/kinetic/dart_rifle))
-						user.show_text("[src] can only accept tranquilizer darts!", "red")
-						return
-					else
-						user.show_text("This ammo won't fit!", "red")
-						return
+					user.show_text("This ammo won't fit!", "red")
+					return
 				if(AMMO_RELOAD_SOURCE_EMPTY)
 					user.show_text("There's no ammo left in [b.name].", "red")
 					return
@@ -855,6 +851,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart)
+		..()
+
+	// Clearer description for invalid dart rifle ammo.
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		if(!istype(b, default_magazine))
+			user.show_text("[src] can only accept .308 tranquilizer darts!", "red")
+			return
 		..()
 
 //9mm/0.355
