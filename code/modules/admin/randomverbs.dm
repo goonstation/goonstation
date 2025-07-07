@@ -3124,9 +3124,9 @@ var/global/force_radio_maptext = FALSE
 	var/explosion_size
 
 	if (holder && src.holder.level >= LEVEL_ADMIN)
-		switch(alert(usr,"Search through all clients or trying to place a nuke in something funny?","Victim chooser 2000","Pick by player","Pick by reference","clown"))
+		switch (alert(usr,"Search through all clients or trying to place a nuke in something funny?","Victim chooser 2000","Pick by player","Pick by reference","clown"))
 			// Choose our victim
-			if("Pick by player")
+			if ("Pick by player")
 				// gotta make a player pool now dangit.
 				var/list/player_pool = list()
 				for (var/mob/M in mobs)
@@ -3134,9 +3134,9 @@ var/global/force_radio_maptext = FALSE
 						continue
 					player_pool += M
 				AM = tgui_input_list(usr, "Pick a player from the following list:","All active players",player_pool)
-			if("Pick by reference")
+			if ("Pick by reference")
 				AM = pick_ref(usr)
-			if("clown") // probably a popular choice so might as well. also create player pool first in case clown pool is empty
+			if ("clown") // probably a popular choice so might as well. also create player pool first in case clown pool is empty
 				var/list/player_pool = list()
 				var/list/clown_pool = list()
 				for (var/mob/M in mobs)
@@ -3151,25 +3151,29 @@ var/global/force_radio_maptext = FALSE
 						AM = tgui_input_list(usr,"Pick a normal person I guess (or next in chain of clowns)","backup clown list of clown people",player_pool)
 					else
 						AM = tgui_input_list(usr,"Pick from the following clowns (there are more than one! woah!)","Pick from local space circus",clown_pool)
-		if(isnull(AM))
+		if (isnull(AM))
 			boutput(usr,SPAN_ALERT("Nothing was able to be chosen. Aborting."))
 			return
-		switch(alert(usr,"THIS WILL PLACE AND ARM A NUCLEAR BOMB INSIDE [AM.name]. That being said, do it anyway?","SERIOUSLY?","Yes","No"))
-			if("No")
+		switch (alert(usr,"THIS WILL PLACE AND ARM A NUCLEAR BOMB INSIDE [AM.name]. That being said, do it anyway?","SERIOUSLY?","Yes","No"))
+			if ("No")
 				return
-			if("Yes")
+			if ("Yes")
+				if (isnull(AM)) // in case deleted mid prompting
+					return
 				// pick ur flavor
 				nuke_type = get_one_match(/obj/machinery/nuclearbomb, /obj/machinery/nuclearbomb)
+				if (isnull(nuke_type))
+					return
 				nuke = new nuke_type
 				nuke.set_loc(AM)
 				explosion_size = nuke.boom_size
 				// how much to BO:OM
-				switch(alert(usr,"How would you like to customize the explosion?","PICK YOUR FIGHTER","Custom Explosion","Round-Ending","Default"))
-					if("Custom Explosion")
+				switch (alert(usr,"How would you like to customize the explosion?","PICK YOUR FIGHTER","Custom Explosion","Round-Ending","Default"))
+					if ("Custom Explosion")
 						explosion_size = tgui_input_number(usr, "Select the explosion power (Leave at 250 if you dont really know)", "How much boom?", 250, 5000, 0)
-					if("Round-Ending")
+					if ("Round-Ending")
 						explosion_size = "nuke"
-					if("Default")
+					if ("Default")
 						explosion_size = nuke.boom_size
 				if (explosion_size == "nuke")
 					// this will SERIOUSLY fuck things up. make extra dextra sure
@@ -3181,20 +3185,20 @@ var/global/force_radio_maptext = FALSE
 				// how much until DO:OM
 				var/acceptable_time = FALSE
 				var/times_admin_indecisive = 0
-				while(acceptable_time == FALSE && times_admin_indecisive < 5)
+				while (acceptable_time == FALSE && times_admin_indecisive < 5)
 					detonation_time_seconds = tgui_input_number(usr, "How many seconds until the nuke explodes? (Defaults to nuke default time)", "DO:OM", nuke.timer_default/10, 60 MINUTES, 0) SECONDS
 					// only difference between if/else is how sternly we are trying to make sure we prevent someone setting it to 5, and not reading its in seconds not minutes
 					if (detonation_time_seconds < 30 SECONDS)
 						switch(alert(usr,"WARNING: YOU ENTERED [detonation_time_seconds/10] SECOND(S). THESE ARE NOT MINUTES. ARE YOU REALLY SURE?", "Caution!","Yeah!!","WAIT NO!!"))
-							if("Yeah!!")
+							if ("Yeah!!")
 								acceptable_time = TRUE
-							if("WAIT NO!!")
+							if ("WAIT NO!!")
 								times_admin_indecisive++
 					else
-						switch(alert(usr,"You entered [detonation_time_seconds/10] second(s). Are you sure?","Just checking! :)","Yep","No"))
-							if("Yep")
+						switch (alert(usr,"You entered [detonation_time_seconds/10] second(s). Are you sure?","Just checking! :)","Yep","No"))
+							if ("Yep")
 								acceptable_time = TRUE
-							if("No")
+							if ("No")
 								times_admin_indecisive++
 				if (times_admin_indecisive >= 5)
 					message_admins("Aborting arm_nuke_inside because [key_name(usr)] couldn't decide on a time in time. Oh well!")
