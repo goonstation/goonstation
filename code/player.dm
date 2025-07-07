@@ -101,7 +101,8 @@
 				src.client.computer_id,
 				src.client.byond_version,
 				src.client.byond_build,
-				roundId
+				roundId,
+				config.server_id
 			)
 			playerResponse = apiHandler.queryAPI(playerLogin)
 		catch (var/exception/e)
@@ -111,6 +112,7 @@
 			return
 
 		src.id = playerResponse.id
+		assign_goonhub_abilities(src.client.ckey, playerResponse.ToList())
 
 	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()

@@ -5,6 +5,9 @@
 /datum/client_auth_provider/byond/New(client/owner)
 	. = ..()
 
+	src.owner.client_auth_intent.ckey = src.owner.ckey
+	src.owner.client_auth_intent.key = src.owner.key
+
 	if (admins.Find(src.owner.ckey))
 		src.owner.client_auth_intent.admin = TRUE
 		src.owner.client_auth_intent.admin_rank = admins[src.owner.ckey]
@@ -20,5 +23,3 @@
 
 	if (bypassCapCkeys.Find(src.owner.ckey))
 		src.owner.client_auth_intent.can_bypass_cap = TRUE
-
-	src.on_auth()

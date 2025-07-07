@@ -107,3 +107,21 @@ var/global/list/bypassCapCkeys = list()
 /proc/load_playercap_bypass()
 	bypassCapCkeys += load_config_list("config/allow_thru_cap.txt")
 	logDiary("Bypass Cap ckeys: [jointext(bypassCapCkeys, ", ")]")
+
+/proc/assign_goonhub_abilities(ckey, abilities)
+	if (!ckey || !abilities) return
+
+	if (abilities["is_admin"] && abilities["admin_rank"] && !admins[ckey])
+		admins[ckey] = abilities["admin_rank"]
+
+	if (abilities["is_mentor"] && !(ckey in mentors))
+		mentors += ckey
+
+	if (abilities["is_hos"] && !(ckey in NT))
+		NT += ckey
+
+	if (abilities["is_whitelisted"] && !(ckey in whitelistCkeys))
+		whitelistCkeys += ckey
+
+	if (abilities["can_bypass_cap"] && !(ckey in bypassCapCkeys))
+		bypassCapCkeys += ckey

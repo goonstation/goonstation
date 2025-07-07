@@ -1,6 +1,8 @@
 (function () {
   const authPlace = document.getElementById('auth-place');
+  const errorMessage = document.getElementById('error-message');
   const dpr = window.devicePixelRatio;
+  const manualResize = !window.ResizeObserver;
   document.documentElement.style.setProperty('--dpr', dpr);
 
   function positionExternal() {
@@ -16,6 +18,19 @@
       box.top * dpr;
   }
 
+  if (!manualResize) {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === authPlace) {
+          positionExternal();
+        }
+      }
+    });
+    resizeObserver.observe(authPlace);
+  } else {
+    window.addEventListener('resize', positionExternal);
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       positionExternal();
@@ -24,13 +39,26 @@
     positionExternal();
   }
 
-  window.addEventListener('resize', positionExternal);
-
-  window.onTimeout = function () {
-    document.body.classList.add('timedout');
-    window.location =
-      'byond://winset?id=mainwindow.authexternal;is-visible=false';
+  window.GoonhubAuth = {
+    onTimeout() {
+      document.body.classList.add('timed-out', 'has-error');
+      errorMessage.textContent =
+        'You failed to authenticate in time and have been disconnected. Please reconnect and try again.';
+      window.location =
+        'byond://winset?id=mainwindow.authexternal;is-visible=false';
+    },
+    onError(error) {
+      document.body.classList.add('has-error');
+      errorMessage.textContent =
+        error || 'An unknown error occurred. Please reconnect and try again.';
+      window.location =
+        'byond://winset?id=mainwindow.authexternal;is-visible=false';
+    },
   };
+
+  document.getElementById('reconnect').addEventListener('click', () => {
+    window.location = 'byond://winset?reset=true;command=.reconnect';
+  });
 
   // Countdown slider
   const countdownLabel = document.getElementById('countdown-label');
@@ -78,7 +106,10 @@
       countdownLabel.textContent = `${secLeft} seconds remaining`;
       countdownLabel.style.background = rgbToStr(color, 0.3);
       countdownLabel.style.borderColor = rgbToStr(color, 0.6);
-      countdownLabel.classList.add('is-active');
+      if (!countdownLabel.classList.contains('is-active')) {
+        countdownLabel.classList.add('is-active');
+        if (manualResize) positionExternal();
+      }
     }
 
     if (msLeft > 0) {

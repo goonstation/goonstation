@@ -7,32 +7,44 @@
 
 /datum/client_auth_provider/goonhub/New(client/owner)
 	. = ..()
-	world.log << "/datum/client_auth_provider/goonhub/New for [src.owner]"
 	src.owner.verbs += list(/client/proc/open_goonhub_auth)
 	src.hide_ui()
 	src.show_wrapper()
 	if (src.begin_auth())
 		src.show_external("login")
 	else
-		// TODO: error handling
-		world.log << "/datum/client_auth_provider/goonhub/New for [src.owner] failed to begin auth"
+		logTheThing(LOG_ADMIN, null, "Failed to begin auth for [src.owner]", "admin")
+		src.on_error("Failed to load login window. Please reconnect and try again.")
+		return
 
 	SPAWN(src.timeout)
 		src.on_timeout()
 
 /datum/client_auth_provider/goonhub/Topic(href, href_list)
-	world.log << "/datum/client_auth_provider/goonhub/Topic for [src.owner] with href [href]"
 	if (href_list["logout"])
 		src.on_logout()
 
+/datum/client_auth_provider/goonhub/proc/on_error(error)
+	src.owner << output(list2params(list(error)), "mainwindow.authwrapper:GoonhubAuth.onError")
+
+/**
+	* On timeout
+	*
+	* Called when the auth process times out
+	*/
 /datum/client_auth_provider/goonhub/proc/on_timeout()
 	if (!src.owner || src.authenticated) return
-	world.log << "/datum/client_auth_provider/goonhub/on_timeout for [src.owner]"
-	src.owner << output(null, "mainwindow.authwrapper:onTimeout")
+	src.owner << output(null, "mainwindow.authwrapper:GoonhubAuth.onTimeout")
 	src.on_auth_failed()
 
+/**
+	* Begin auth
+	*
+	* Begins the auth process for the client
+	*
+	* Returns TRUE if the auth process was successful, FALSE otherwise
+	*/
 /datum/client_auth_provider/goonhub/proc/begin_auth()
-	world.log << "/datum/client_auth_provider/goonhub/begin_auth for [src.owner]"
 	var/datum/apiRoute/gameauth/begin/beginAuth = new
 	beginAuth.buildBody(
 		config.server_id,
@@ -53,15 +65,21 @@
 		logTheThing(LOG_ADMIN, null, "Failed to begin auth for [src.owner] because: [errorModel.message]", "admin")
 		return FALSE
 
-// Called in world/Topic "auth_callback" route
+/**
+	* On auth
+	*
+	* Called in world/Topic "auth_callback" route
+	*
+	* Arguments:
+	* * verification (string) - The verification data
+	*/
 /datum/client_auth_provider/goonhub/on_auth(verification)
-	world.log << "/datum/client_auth_provider/goonhub/on_auth for [src.owner]"
 	src.token = "" // Token consumed
 	try
 		verification = json_decode(verification)
 	catch (var/exception/e)
-		// TODO: error handling for the user
 		logTheThing(LOG_ADMIN, null, "Failed to decode auth data for [src.owner] because: [e]", "admin")
+		src.on_error("Failed to verify your account. Please reconnect and try again.")
 		return
 
 	src.owner.verbs -= list(/client/proc/open_goonhub_auth)
@@ -69,27 +87,14 @@
 	src.owner.client_auth_intent.ckey = verification["ckey"]
 	src.owner.client_auth_intent.key = verification["key"] || verification["ckey"]
 	src.owner.client_auth_intent.player_id = verification["player_id"]
+	src.owner.client_auth_intent.admin = verification["is_admin"]
+	src.owner.client_auth_intent.admin_rank = verification["admin_rank"]
+	src.owner.client_auth_intent.mentor = verification["is_mentor"]
+	src.owner.client_auth_intent.hos = verification["is_hos"]
+	src.owner.client_auth_intent.whitelisted = verification["is_whitelisted"]
+	src.owner.client_auth_intent.can_bypass_cap = verification["can_bypass_cap"]
 
-	if (verification["is_admin"] && verification["admin_rank"])
-		src.owner.client_auth_intent.admin = TRUE
-		src.owner.client_auth_intent.admin_rank = verification["admin_rank"]
-		admins[verification["ckey"]] = verification["admin_rank"]
-
-	if (verification["is_mentor"])
-		src.owner.client_auth_intent.mentor = TRUE
-		mentors += verification["ckey"]
-
-	if (verification["is_hos"])
-		src.owner.client_auth_intent.hos = TRUE
-		NT += verification["ckey"]
-
-	if (verification["is_whitelisted"])
-		src.owner.client_auth_intent.whitelisted = TRUE
-		whitelistCkeys += verification["ckey"]
-
-	if (verification["can_bypass_cap"])
-		src.owner.client_auth_intent.can_bypass_cap = TRUE
-		bypassCapCkeys += verification["ckey"]
+	assign_goonhub_abilities(verification["ckey"], verification)
 
 	boutput(src.owner, {"
 		<div style='border: 2px solid green; margin: 0.5em 0;'>
@@ -105,7 +110,6 @@
 	. = ..()
 
 /datum/client_auth_provider/goonhub/post_auth()
-	world.log << "/datum/client_auth_provider/goonhub/post_auth for [src.owner]"
 	src.owner.key = src.owner.client_auth_intent.key
 
 	if (isnewplayer(src.owner.mob))
@@ -118,17 +122,19 @@
 	src.hide_ui()
 
 /datum/client_auth_provider/goonhub/logout()
-	world.log << "/datum/client_auth_provider/goonhub/logout for [src.owner]"
 	. = ..()
 	src.show_external("logout")
 
 /datum/client_auth_provider/goonhub/on_logout()
-	world.log << "/datum/client_auth_provider/goonhub/on_logout for [src.owner]"
 	src.hide_ui()
 	. = ..()
 
+/**
+	* Show wrapper
+	*
+	* Shows the wrapper UI for the auth process
+	*/
 /datum/client_auth_provider/goonhub/proc/show_wrapper()
-	world.log << "/datum/client_auth_provider/goonhub/show_wrapper for [src.owner]"
 	var/html = grabResource("html/goonhub_auth.html")
 	html = replacetext(html, "{ref}", "\ref[src]")
 	html = replacetext(html, "{timeout}", src.timeout / 10)
@@ -154,14 +160,21 @@
 
 	src.owner << browse(html, "window=mainwindow.authwrapper")
 
-/// Show the external auth page
+/**
+	* Show external
+	*
+	* Shows the external auth page
+	*
+	* Arguments:
+	* * route (string) - The route to show
+	*/
 /datum/client_auth_provider/goonhub/proc/show_external(route = "login")
-	world.log << "/datum/client_auth_provider/goonhub/show_external for [src.owner] with route [route]"
 	var/url = "[config.goonhub_url]/game-auth/[route]?ref=\ref[src]"
 	if (route == "login") url += "&token=[src.token]"
 	winset(src.owner, "authexternal", list2params(list(
 		"parent" = "mainwindow",
 		"type" = "browser",
+		"pos" = "0,0",
 		"size" = "1x1",
 		"background-color" = "#0f0f0f",
 		"is-visible" = route != "logout",
@@ -177,12 +190,15 @@
 	if (winexists(src.owner, "mainwindow.authexternal"))
 		winset(src.owner, "mainwindow.authexternal", "parent=none")
 
-/// A way to open the login window, just in case
+/**
+	* Open goonhub auth
+	*
+	* A way to open the login window, just in case
+  */
 /client/proc/open_goonhub_auth()
 	set name = "Goonhub Auth"
 	set category = "Commands"
 	set desc = "Open the Goonhub auth window"
-	world.log << "/client/proc/open_goonhub_auth for [src]"
 	if (src.authenticated) return
 	if (istype(src.client_auth_provider, /datum/client_auth_provider/goonhub))
 		var/datum/client_auth_provider/goonhub/provider = src.client_auth_provider

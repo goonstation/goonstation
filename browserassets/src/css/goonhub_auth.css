@@ -1,6 +1,5 @@
 /* Discord login page shows a mobile view below 500px */
-$externalWidth: 480px;
-$externalHeight: 500px;
+$externalWidth: 490px;
 
 * {
   box-sizing: border-box;
@@ -48,9 +47,12 @@ body::before {
   height: 100vh;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 2rem;
+  padding: 1rem;
   background: #0f0f0f;
+}
+
+#top {
+  margin-bottom: 1.5rem;
 }
 
 .logo {
@@ -67,6 +69,7 @@ body::before {
   justify-content: center;
   position: relative;
   flex-grow: 1;
+  margin: 0 1rem;
   width: $externalWidth; /* IE compat */
   width: calc($externalWidth * var(--dpr-inverse));
 }
@@ -94,16 +97,42 @@ body::before {
   display: none;
   max-width: 100%;
   background: rgba(255, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  border-radius: 3px;
   padding: 1.5rem;
   text-align: center;
   font-size: 1.1em;
 }
 
-body.timedout #auth-place .spinner {
+#error-message {
+  margin-bottom: 1.5rem;
+}
+
+#reconnect {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.25);
+  border: 0;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#reconnect:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+body.has-error #auth-place .spinner {
   display: none;
 }
-body.timedout #auth-place .error {
+body.has-error #auth-place .error {
   display: block;
+}
+
+#bottom {
+  margin-top: 1rem;
 }
 
 /* Countdown Slider Styles */
@@ -112,7 +141,7 @@ body.timedout #auth-place .error {
   width: calc($externalWidth * var(--dpr-inverse));
   margin: 0.5rem auto 0 auto;
 }
-body.timedout #countdown-container {
+body.timed-out #countdown-container {
   display: none;
 }
 

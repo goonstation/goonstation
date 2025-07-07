@@ -55,7 +55,6 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  * It is used to authenticate the client and set the client's auth intent.
  */
 /client/proc/auth()
-	world.log << "/client/proc/auth for [src]"
 	src.client_auth_intent = new()
 
 	for (var/datum/client_auth_gate/gate in pre_auth_gates)
@@ -74,7 +73,6 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  */
 /client/proc/on_auth()
 	SHOULD_CALL_PARENT(TRUE)
-	world.log << "/client/proc/on_auth for [src]"
 
 	for (var/datum/client_auth_gate/gate in post_auth_gates)
 		if (!gate.check(src))
@@ -91,7 +89,6 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  */
 /client/proc/on_auth_failed()
 	SHOULD_CALL_PARENT(TRUE)
-	world.log << "/client/proc/on_auth_failed for [src]"
 
 	if (istype(src?.mob, /mob/new_player))
 		var/mob/new_player/new_player = src.mob
@@ -107,7 +104,6 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  */
 /client/proc/on_logout()
 	SHOULD_CALL_PARENT(TRUE)
-	world.log << "/client/proc/on_logout for [src]"
 
 	boutput(src, {"
 		<div style='border: 2px solid green; margin: 0.5em 0;'>
@@ -129,6 +125,5 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 /client/verb/auth_logout()
 	set name = ".authlogout"
 	set hidden = TRUE
-	world.log << "/client/verb/auth_logout for [src]"
 	if (src.client_auth_provider.can_logout)
 		src.client_auth_provider.logout()

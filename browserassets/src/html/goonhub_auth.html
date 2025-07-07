@@ -23,13 +23,12 @@
       <div id="auth-place">
         <div class="spinner"></div>
         <div class="error">
-          You failed to authenticate in time and have been disconnected. Please
-          try again.
+          <div id="error-message"></div>
+          <button type="button" id="reconnect">Reconnect</button>
         </div>
       </div>
 
       <div id="bottom">
-        <!-- Countdown Slider -->
         <div id="countdown-container">
           <div id="countdown-label"></div>
           <div id="countdown-slider-bg">
