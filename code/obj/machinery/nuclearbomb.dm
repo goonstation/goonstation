@@ -111,7 +111,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		var/maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[timer_string]</span>"
 		for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
-			if(ismob(bomb_or_decoy.loc) || iscritter(bomb_or_decoy.loc))
+			if(istype(bomb_or_decoy.loc, /atom/movable))
 				var/atom/movable/mob_or_objcritter = bomb_or_decoy.loc
 				mob_or_objcritter.maptext = maptext
 				mob_or_objcritter.maptext_y = mob_or_objcritter.bound_height/2
