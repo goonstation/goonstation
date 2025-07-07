@@ -109,18 +109,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		else
 			timer_string = get_countdown_timer()
 
-		var/maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[timer_string]</span>"
 		for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
-			if(istype(bomb_or_decoy.loc, /atom/movable))
-				var/atom/movable/AM = bomb_or_decoy.loc
-				AM.maptext = maptext
-				AM.maptext_width = 64 // no wrapping pls
-				// mapptext aligns itself automatically after x/y positioning at (maptext_width/2,maptext_height/2),
-				// but we want it on the top, so some adjustments must be made
-				AM.maptext_y = AM.bound_height - AM.maptext_height/2
-				AM.maptext_x = AM.bound_width/2 - AM.maptext_width/2
-			else
-				bomb_or_decoy.maptext = maptext
+			bomb_or_decoy.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[timer_string]</span>"
+
 
 	proc/set_time_left()
 		if (!src.armed)
