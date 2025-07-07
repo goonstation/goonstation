@@ -254,10 +254,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			. += "The cover is open and the power cell is [ cell ? "installed" : "missing"]."
 		else
 			. += "The cover is closed."
-
-/obj/machinery/power/apc/proc/update_area()
-	src.area = get_area(src)
-
+	
 /obj/machinery/power/apc/proc/toggle_operating()
 	src.operating = !src.operating
 	src.update()
