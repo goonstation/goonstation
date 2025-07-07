@@ -1,7 +1,8 @@
 /datum/client_auth_gate/version
 	check(client/C)
 		#ifndef LIVE_SERVER
-		UNLINT(return TRUE)
+		. = TRUE
+		UNLINT(return)
 		#endif
 
 		if (IsLocalClient(C)) return TRUE
