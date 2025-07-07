@@ -336,12 +336,6 @@
 	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	showdialogue()
-		if(cutoff)
-			return
-		else
-			..()
-
 	proc/lever_hv(mob/user)
 		cutoff = TRUE
 		for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
@@ -381,6 +375,13 @@
 	start = /datum/dialogueNode/controlpc_start
 	visibleDialogue = 0
 	maxDistance = -1 // Cause they have to delete themselves, doubt it'll be a problem... right?
+
+	showDialogue()
+		var/obj/dialogueobj/controlpc/PC = src.master
+		if(PC.cutoff)
+			return
+		else
+			..()
 
 /datum/dialogueNode
 
