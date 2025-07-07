@@ -378,6 +378,8 @@ var/list/admin_verbs = list(
 		/client/proc/show_image_to_all,
 		/client/proc/sharkban,
 		/client/proc/toggle_literal_disarm,
+		/client/proc/arm_nuke_inside,
+		/client/proc/disarm_nuke_inside,
 		/datum/admins/proc/toggle_emote_cooldowns,
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,

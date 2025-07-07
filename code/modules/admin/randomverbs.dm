@@ -3110,6 +3110,130 @@ var/global/force_radio_maptext = FALSE
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 
+/client/proc/arm_nuke_inside()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Arm nuke inside"
+	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/atom/movable/AM
+	var/nuke_type
+	var/obj/machinery/nuclearbomb/nuke
+	var/detonation_time_seconds
+	var/explosion_size
+
+	if (holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert(usr,"Search through all clients or trying to place a nuke in something funny?","Victim chooser 2000","Pick by player","Pick by reference","clown"))
+			// Choose our victim
+			if("Pick by player")
+				// gotta make a player pool now dangit.
+				var/list/player_pool = list()
+				for (var/mob/M in mobs)
+					if (!M.client || istype(M, /mob/new_player))
+						continue
+					player_pool += M
+				AM = tgui_input_list(usr, "Pick a player from the following list:","All active players",player_pool)
+			if("Pick by reference")
+				AM = pick_ref(usr)
+			if("clown") // probably a popular choice so might as well. also create player pool first in case clown pool is empty
+				var/list/player_pool = list()
+				var/list/clown_pool = list()
+				for (var/mob/M in mobs)
+					if (!M.client || istype(M, /mob/new_player))
+						continue
+					if (M.job == "Clown")
+						clown_pool += M
+					else
+						player_pool += M
+					if (!length(clown_pool))
+						alert(usr,"No clowns","Tragic day for the station",":(")
+						AM = tgui_input_list(usr,"Pick a normal person I guess (or next in chain of clowns)","backup clown list of clown people",player_pool)
+					else
+						AM = tgui_input_list(usr,"Pick from the following clowns (there are more than one! woah!)","Pick from local space circus",clown_pool)
+		if(isnull(AM))
+			boutput(usr,SPAN_ALERT("Nothing was able to be chosen. Aborting."))
+			return
+		switch(alert(usr,"THIS WILL PLACE AND ARM A NUCLEAR BOMB INSIDE [AM.name]. That being said, do it anyway?","SERIOUSLY?","Yes","No"))
+			if("No")
+				return
+			if("Yes")
+				// pick ur flavor
+				nuke_type = get_one_match(/obj/machinery/nuclearbomb, /obj/machinery/nuclearbomb)
+				nuke = new nuke_type
+				nuke.set_loc(AM)
+				explosion_size = nuke.boom_size
+				// how much to BO:OM
+				switch(alert(usr,"How would you like to customize the explosion?","PICK YOUR FIGHTER","Custom Explosion","Round-Ending","Default"))
+					if("Custom Explosion")
+						explosion_size = tgui_input_number(usr, "Select the explosion power (Leave at 250 if you dont really know)", "How much boom?", 250, 5000, 0)
+					if("Round-Ending")
+						explosion_size = "nuke"
+					if("Default")
+						explosion_size = nuke.boom_size
+				if (explosion_size == "nuke")
+					// this will SERIOUSLY fuck things up. make extra dextra sure
+					var/response = input(src, "THIS IS A REAL NUKE THAT WILL END THE SHIFT WHEN IT EXPLODES - Type YES to continue", "Caution!") as null|text
+					if (response != "YES")
+						qdel(nuke)
+						message_admins("[key_name(usr)] aborted priming a REAL nuke in [AM.name] due to failing to type 'YES'") // im telling on u!!!
+						return
+				// how much until DO:OM
+				var/acceptable_time = FALSE
+				var/times_admin_indecisive = 0
+				while(acceptable_time == FALSE && times_admin_indecisive < 5)
+					detonation_time_seconds = tgui_input_number(usr, "How many seconds until the nuke explodes? (Defaults to nuke default time)", "DO:OM", nuke.timer_default/10, 60 MINUTES, 0) SECONDS
+					// only difference between if/else is how sternly we are trying to make sure we prevent someone setting it to 5, and not reading its in seconds not minutes
+					if (detonation_time_seconds < 30 SECONDS)
+						switch(alert(usr,"WARNING: YOU ENTERED [detonation_time_seconds/10] SECOND(S). THESE ARE NOT MINUTES. ARE YOU REALLY SURE?", "Caution!","Yeah!!","WAIT NO!!"))
+							if("Yeah!!")
+								acceptable_time = TRUE
+							if("WAIT NO!!")
+								times_admin_indecisive++
+					else
+						switch(alert(usr,"You entered [detonation_time_seconds/10] second(s). Are you sure?","Just checking! :)","Yep","No"))
+							if("Yep")
+								acceptable_time = TRUE
+							if("No")
+								times_admin_indecisive++
+				if (times_admin_indecisive >= 5)
+					message_admins("Aborting arm_nuke_inside because [key_name(usr)] couldn't decide on a time in time. Oh well!")
+					qdel(nuke)
+					return
+				// ok survey over, results are in. we are ARMING THIS THING
+				nuke.timer_default = detonation_time_seconds
+				nuke.boom_size = explosion_size
+				nuke.arm()
+				message_admins("[key_name(usr)] armed a [nuke] inside of [AM.name] with a timer for [detonation_time_seconds/10] seconds!")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/disarm_nuke_inside()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Disarm nuke"
+	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (holder && src.holder.level >= LEVEL_ADMIN)
+		var/list/nuclear_bombs = by_cat[TR_CAT_NUCLEAR_BOMBS]
+		var/list/bomb_descriptions = list()
+		var/list/bombs_by_description = list()
+		if(!length(nuclear_bombs))
+			boutput(usr,SPAN_NOTICE("No nuclear bombs found."))
+		for(var/obj/machinery/nuclearbomb/N in nuclear_bombs)
+			// a bit more description of a nuke for the list so admins know what nuke they are disarming
+			var/bomb_desc = "Nuclear bomb '[N]' in/on [N.loc] ([N.loc.x], [N.loc.y], [N.loc.z]), [get_area(N)] which is [N.armed ? "exploding in [N.det_time/10] seconds" : "not armed"]."
+			bomb_descriptions += bomb_desc
+			bombs_by_description[bomb_desc] = N
+		var/obj/chosen_bomb = bombs_by_description[tgui_input_list(src,"","List of all nuclear bombs",bomb_descriptions)]
+		if(isnull(chosen_bomb))
+			return
+		qdel(chosen_bomb)
+		message_admins("[key_name(usr)] disarmed \the [chosen_bomb].")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
 /// Spawn custom reagent that can transform turfs and objs to whatever material you desire.
 /client/proc/spawn_custom_transmutation()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

@@ -56,10 +56,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		get_self_and_decoys() // links them up
 
 		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_NUCLEAR_BOMBS)
 		..()
 
 	disposing()
 		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_NUCLEAR_BOMBS)
+		// If we placed maptext on a mob we are inside of, remove it
+		if(istype(src.loc, /atom/movable))
+			var/atom/movable/AM = src.loc
+			AM.maptext = null
 		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/gamemode = ticker.mode
 			if(gamemode.the_bomb == src)
@@ -103,9 +109,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		else
 			timer_string = get_countdown_timer()
 
+		var/maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[timer_string]</span>"
 		for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
-			bomb_or_decoy.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[timer_string]</span>"
+			if(ismob(bomb_or_decoy.loc) || iscritter(bomb_or_decoy.loc))
+				var/atom/movable/mob_or_objcritter = bomb_or_decoy.loc
+				mob_or_objcritter.maptext = maptext
+				mob_or_objcritter.maptext_y = mob_or_objcritter.bound_height/2
+				mob_or_objcritter.maptext_width = 64 // no wrapping pls
+				mob_or_objcritter.maptext_x = -1 * mob_or_objcritter.maptext_width/4
 
+			else
+				bomb_or_decoy.maptext = maptext
 
 	proc/set_time_left()
 		if (!src.armed)
@@ -613,6 +627,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	disposing()
 		STOP_TRACKING
+		// If we placed maptext on a mob we are inside of, remove it
+		if(istype(src.loc, /atom/movable))
+			var/atom/movable/AM = src.loc
+			AM.maptext = null
 		..()
 
 	proc/checkhealth()
