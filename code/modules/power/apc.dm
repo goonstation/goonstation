@@ -209,6 +209,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	if (!QDELETED(src.area))
 		if(istype(src.area,/area/unconnected_zone)) //if we built in an as-yet APCless zone, we've created a new built zone as a consequence
 			unconnected_zone.propagate_zone(get_turf(src))
+			src.area = get_area(src)
 		else
 			src.area.area_apc = src
 
@@ -253,6 +254,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			. += "The cover is open and the power cell is [ cell ? "installed" : "missing"]."
 		else
 			. += "The cover is closed."
+
+/obj/machinery/power/apc/proc/update_area()
+	src.area = get_area(src)
 
 /obj/machinery/power/apc/proc/toggle_operating()
 	src.operating = !src.operating
