@@ -39,7 +39,7 @@
 		ooc_icon = "Newbee"
 
 	// Permit donors and contest winners to use :shelterfrog: and :shelterbee: in OOC.
-	if (mob_speaker.client.player.cloudSaves.getData("donor"))
+	if (mob_speaker.client.player?.cloudSaves.getData("donor"))
 		message.content = replacetext(message.content, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
 
 	if (mob_speaker.client.has_contestwinner_medal)

@@ -8,32 +8,14 @@
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
 
-	Z_LOG_DEBUG("World/Init", "Loading admins...")
-	load_admins()//UGH
-	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	load_whitelist() //WHY ARE WE UGH-ING
-
-	// NIGHTSHADE
-	load_whitelist("+secret/strings/whitelist.txt") //WHY ARE WE UGH-ING
-
-	// Temp hotpatch for tomato whitelist (as a result of spacebee and the game servers existing on different machines)
-#ifdef LIVE_SERVER
-	if (serverKey != 14)
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, config.irclog_url + "/nightshade_whitelist", "", "") // medass backup of the temp hotpatch
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-		if (!response.errored && response.body)
-			var/genWhiteFile = file("data/generated-whitelist.txt")
-			fdel(genWhiteFile)
-			genWhiteFile << response.body
-#endif
-	// NIGHTSHADE
-	load_whitelist("data/generated-whitelist.txt")
-
-	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
+	Z_LOG_DEBUG("World/Init", "Loading access lists...")
+	load_admins()
+	load_mentors()
+	load_hos()
+	load_whitelist()
 	load_playercap_bypass()
+	#endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	roundManagement.recordStart()
