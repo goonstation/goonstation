@@ -1,5 +1,9 @@
 
 (t)tue jul 08 25
+(u)JORJ949
+(p)24033
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The random contraband trader will now only sell syndicate headsets to real syndies.
 (u)JORJ949 & Username Unavailable
 (p)24063
 (e)🆕🤖|C-Feature, A-Silicons
