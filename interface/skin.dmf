@@ -859,6 +859,14 @@ window "mainwindow"
 		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"testverb"
 		is-flat = true
 		button-type = pushbox
+	elem "authfailed"
+		type = BROWSER
+		pos = 0,0
+		size = 0x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-visible = false
+		auto-format = false
 
 window "screenSizeHelper"
 	elem "screenSizeHelper"

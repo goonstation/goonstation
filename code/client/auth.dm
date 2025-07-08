@@ -20,9 +20,9 @@ var/list/datum/client_auth_gate/pre_auth_gates = list(
 )
 
 var/list/datum/client_auth_gate/post_auth_gates = list(
-	new /datum/client_auth_gate/ban,
 	new /datum/client_auth_gate/whitelist,
 	new /datum/client_auth_gate/cap,
+	new /datum/client_auth_gate/ban,
 )
 
 /*
@@ -56,6 +56,7 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  */
 /client/proc/auth()
 	src.client_auth_intent = new()
+	src.client_auth_provider = null
 
 	for (var/datum/client_auth_gate/gate in pre_auth_gates)
 		if (!gate.check(src))
@@ -74,27 +75,22 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 /client/proc/on_auth()
 	SHOULD_CALL_PARENT(TRUE)
 
+	src.client_auth_provider.post_auth()
+
 	for (var/datum/client_auth_gate/gate in post_auth_gates)
 		if (!gate.check(src))
 			gate.fail(src)
 			return CLIENT_AUTH_FAILED
 
-	src.client_auth_provider.post_auth()
 	src.post_auth()
 
 /*
  * Client auth failed
  *
- * This is called when the client fails to authenticate with the set auth provider.
+ * This is called when the client fails to authenticate with the set auth provider, or fails a gate check.
  */
 /client/proc/on_auth_failed()
 	SHOULD_CALL_PARENT(TRUE)
-
-	if (istype(src?.mob, /mob/new_player))
-		var/mob/new_player/new_player = src.mob
-		new_player.blocked_from_joining = TRUE
-
-	if (src?.mob) tgui_process?.close_user_uis(src.mob)
 	if (src) del(src)
 
 /*

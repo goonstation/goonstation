@@ -18,39 +18,34 @@
 			boutput(C, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
 			return TRUE
 
-		#if defined(LIVE_SERVER) && defined(NIGHTSHADE)
-		var/list/servers_to_offer = list("streamer1", "streamer2", "streamer3", "main3", "main4")
-		#elif defined(LIVE_SERVER)
-		var/list/servers_to_offer = list("main1", "main3", "main4")
-		#else
-		var/list/servers_to_offer = list()
-		#endif
-
-		var/list/valid_servers = list()
-		for (var/server in servers_to_offer)
-			if (config.server_id == server)
-				continue
-
-			var/datum/game_server/game_server = game_servers.find_server(server)
-			if (game_server)
-				valid_servers[game_server.name] = game_server
-
-		if (length(valid_servers) && tgui_process)
-			boutput(C, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server.</span>")
-			var/idx = tgui_input_list(C.mob, "Sorry, the player cap of [player_cap] has been reached for this server. Would you like to be redirected?", "SERVER FULL", valid_servers, timeout = 30 SECONDS)
-			var/datum/game_server/redirect_choice = valid_servers[idx]
-			logTheThing(LOG_ADMIN, C, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
-			logTheThing(LOG_DIARY, C, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].", "admin")
-			if (global.pcap_kick_messages)
-				message_admins("[key_name(C)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
-			if (redirect_choice)
-				C.changeServer(redirect_choice.id)
-		else
-			boutput(C, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
-			if (tgui_process) tgui_alert(C.mob, "Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
-			logTheThing(LOG_ADMIN, C, "kicked by popcap limit.")
-			logTheThing(LOG_DIARY, C, "kicked by popcap limit.", "admin")
-			if (global.pcap_kick_messages)
-				message_admins("[key_name(C)] was kicked by popcap limit.")
+		logTheThing(LOG_ADMIN, C, "kicked by popcap limit.")
+		logTheThing(LOG_DIARY, C, "kicked by popcap limit.", "admin")
+		if (global.pcap_kick_messages)
+			message_admins("[key_name(C)] was kicked by popcap limit.")
 
 		return FALSE
+
+/datum/client_auth_gate/cap/get_failure_message(client/C)
+	#if defined(LIVE_SERVER) && defined(NIGHTSHADE)
+	var/list/servers_to_offer = list("streamer1", "streamer2", "streamer3", "main3", "main4")
+	#elif defined(LIVE_SERVER)
+	var/list/servers_to_offer = list("main1", "main3", "main4")
+	#else
+	var/list/servers_to_offer = list()
+	#endif
+
+	var/server_buttons = ""
+	for (var/server in servers_to_offer)
+		if (config.server_id == server)
+			continue
+
+		var/datum/game_server/game_server = game_servers.find_server(server)
+		if (game_server)
+			server_buttons += {"<a href="[game_server.url]" class="button">[game_server.name]</a>"}
+
+	return {"
+		<h1>Server Full</h1>
+		Sorry, the server has reached the player cap of [player_cap].
+		<br><br>
+		[server_buttons ? "Would you like to be redirected to another server?<br><br>[server_buttons]" : "Please try again later."]
+	"}

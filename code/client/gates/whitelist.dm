@@ -8,24 +8,10 @@
 		// Check if the client is on the whitelist
 		if (C.client_auth_intent.whitelisted) return TRUE
 
-		// If the client is not on the whitelist, show them a message and boot them
-		SPAWN(-1)
-			C.Browse({"
-				<!doctype html>
-				<html>
-					<head>
-						<title>Server Whitelist Enabled</title>
-						<style>
-							h1 {
-								font-color:#F00;
-							}
-						</style>
-					</head>
-					<body>
-						<h1>Server whitelist enabled</h1>
-						This server has a player whitelist ON. You are not on the whitelist and will now be forcibly disconnected.
-					</body>
-				</html>
-			"}, "window=whiteout")
-
 		return FALSE
+
+/datum/client_auth_gate/whitelist/get_failure_message(client/C)
+	return {"
+		<h1>Server Whitelist Enabled</h1>
+		This server has a player whitelist ON. You are not on the whitelist and will now be disconnected.
+	"}

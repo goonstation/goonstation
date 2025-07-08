@@ -122,6 +122,7 @@ var/global
 	if (src.owner && !src.loaded)
 		src.loaded = 1
 		winset(src.owner, "browseroutput", "is-disabled=false")
+		src.changeTheme(src.owner.darkmode ? "theme-dark" : "theme-default")
 		//if (src.owner.holder)
 		src.loadAdmin()
 		if (src.messageQueue)
@@ -142,6 +143,7 @@ var/global
 		ehjax.send(src.owner, "browseroutput", url_encode(data))
 
 /datum/chatOutput/proc/changeTheme(theme)
+	if (!src.loaded) return
 	var/data = json_encode(list("changeTheme" = theme))
 	ehjax.send(src.owner, "browseroutput", url_encode(data))
 

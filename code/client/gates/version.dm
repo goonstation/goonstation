@@ -16,29 +16,15 @@
 				C << link("https://www.byond.com/download/build/516")
 			return TRUE
 
-		SPAWN(-1)
-			logTheThing(LOG_ADMIN, C, "connected with outdated client version [C.byond_version].[C.byond_build]. Request to update client sent to user.")
-
-			if (tgui_alert(C, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the latest 515 version (at the bottom of the page).", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				// TODO: mirror for download url
-				C << link("https://www.byond.com/download/build/516")
-
-			C.Browse({"
-				<!doctype html>
-				<html>
-					<head>
-						<title>Outdated Client Version</title>
-						<style>
-							h1 {
-								font-color:#F00;
-							}
-						</style>
-					</head>
-					<body>
-						<h1>Outdated Client Version</h1>
-						Please update your client to the latest version.
-					</body>
-				</html>
-			"}, "window=versionoutdated")
-
+		logTheThing(LOG_ADMIN, C, "connected with outdated client version [C.byond_version].[C.byond_build]. Request to update client sent to user.")
 		return FALSE
+
+/datum/client_auth_gate/version/get_failure_message(client/C)
+	return {"
+		<h1>Outdated Client Version</h1>
+		Please update your client to the latest version.
+		<br><br>
+		<a href="https://www.byond.com/download/build/516">Download the latest version</a>
+		<br><br>
+		Make sure to download the latest version (at the bottom of the page).
+	"}

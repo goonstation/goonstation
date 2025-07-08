@@ -484,6 +484,7 @@
 #include "code\mob\special_sprint.dm"
 #include "code\mob\suicide.dm"
 #include "code\mob\transform_procs.dm"
+#include "code\mob\unauthed.dm"
 #include "code\mob\who.dm"
 #include "code\mob\dead\hivemind_observer.dm"
 #include "code\mob\dead\mentor_mouse_observer.dm"

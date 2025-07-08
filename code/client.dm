@@ -202,61 +202,55 @@
 
 	return ..()
 
-/*********************************
-* NEW
-*********************************/
-
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
 	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
 	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
 
-	src.chatOutput = new /datum/chatOutput(src)
-
-	var/client_auth_status = src.auth()
-	if (client_auth_status == CLIENT_AUTH_FAILED) return FALSE
-
-	global.pre_auth_clients += src
-
-	src.player = make_player(src.key)
-	src.player.client = src
-
 	// TODO: is this necessary?
 	if (config.rsc) src.preload_rsc = config.rsc
 
-	// Assign custom interface datums
+	src.chatOutput = new /datum/chatOutput(src)
+	src.sync_dark_mode(TRUE)
+
+	var/client_auth_status = src.auth()
+
+	// Creates or assigns the client's mob
+	. = ..()
+
+	if (client_auth_status == CLIENT_AUTH_FAILED)
+		src.on_auth_failed()
+		return FALSE
+
+	global.pre_auth_clients += src
+
+	if (!preferences) src.preferences = new
+	src.player = make_player(src.key)
+	src.player.client = src
+
 	src.loadResources()
 	src.initSizeHelpers()
 	src.tooltipHolder = new /datum/tooltipHolder(src)
 	src.tooltipHolder.clearOld()
-
-	if (!preferences) src.preferences = new
 	src.volumes = default_channel_volumes.Copy()
-
-	// Creates or assigns the client's mob
-	. = ..()
+	src.initialize_interface()
 
 	if (isnewplayer(src.mob))
 		var/mob/new_player/new_player = src.mob
 		new_player.blocked_from_joining = TRUE
 
-	src.initialize_interface()
-
-	if (byond_version >= 516)
-		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
-
 	if (client_auth_status == CLIENT_AUTH_SUCCESS)
 		src.on_auth()
 
-
 /client/proc/post_auth()
+	global.pre_auth_clients -= src
+	global.clients += src
+
 	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
 	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
 	src.authenticated = TRUE
 	src.chatOutput.start()
-	global.pre_auth_clients -= src
-	global.clients += src
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
 	src.player.id = src.client_auth_intent.player_id || 0
@@ -439,8 +433,6 @@
 
 	//End widescreen stuff
 
-	src.sync_dark_mode()
-
 	//blendmode stuff
 
 	var/distort_checked = winget( src, "menu.zoom_distort", "is-checked" ) == "true"
@@ -454,10 +446,6 @@
 
 	if(winget(src, "menu.hide_menu", "is-checked") == "true")
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
-
-	// cursed darkmode end
-
-	//tg controls end
 
 	if (src.byond_version >= 516)
 		use_chui = FALSE
@@ -495,6 +483,9 @@
 	dark_screenflash = winget( src, "menu.toggle_dark_screenflashes", "is-checked") == "true"
 
 	winset(src, null, "rpanewindow.left=infowindow")
+
+	if (byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
@@ -1525,9 +1516,10 @@ mainwindow.hovertooltip.background-color=[_SKIN_BG];\
 mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 "
 
-/client/verb/sync_dark_mode()
+/client/verb/sync_dark_mode(from_new as null|num)
 	set hidden=1
-	if(winget(src, "menu.dark_mode", "is-checked") == "true")
+	if (!from_new) src.darkmode = winget(src, "menu.dark_mode", "is-checked") == "true"
+	if (src.darkmode)
 #define _SKIN_BG "#28292c"
 #define _SKIN_INFO_TAB_BG "#28292c"
 #define _SKIN_INFO_BG "#28292c"
@@ -1535,7 +1527,6 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #define _SKIN_COMMAND_BG "#28294c"
 		winset(src, null, SKIN_TEMPLATE)
 		chatOutput.changeTheme("theme-dark")
-		src.darkmode = TRUE
 #undef _SKIN_BG
 #undef _SKIN_INFO_TAB_BG
 #undef _SKIN_INFO_BG
@@ -1549,7 +1540,6 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 	else
 		winset(src, null, SKIN_TEMPLATE)
 		chatOutput.changeTheme("theme-default")
-		src.darkmode = FALSE
 #undef _SKIN_BG
 #undef _SKIN_INFO_TAB_BG
 #undef _SKIN_INFO_BG
