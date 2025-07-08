@@ -1,5 +1,10 @@
 
 (t)tue jul 08 25
+(u)glowbold
+(p)23965
+(e)⚖💊|C-Balance, A-Medical
+(*)Charcoal does not heal organ damage.
+(*)Most posions will directly damage your organs.
 (u)Kilprel
 (p)24032
 (e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
