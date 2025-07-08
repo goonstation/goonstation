@@ -1557,7 +1557,7 @@ Other Goonstation servers:[serverList]</span>"})
 
 		proc/setup_process_signal()
 			set waitfor = FALSE
-			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, 0)
 			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
 
 		proc/update_text()
