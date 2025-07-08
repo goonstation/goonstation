@@ -249,6 +249,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
+			flick("nanites-attack", src)
 			SPAWN(attack_cooldown)
 				attacking = 0
 		return
@@ -262,6 +263,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
+			flick("nanites-attack", src)
 			SPAWN(attack_cooldown)
 				attacking = 0
 		return
@@ -274,13 +276,26 @@ TYPEINFO(/obj/machinery/lrteleporter)
 	CritterDeath()
 		if(dying) return
 		src.visible_message(SPAN_ALERT("<b>[src]</b> collapses into a pile of dust!"))
+		walk(src, 0)
 		if(prob(50/src.generation) && alive && !dying)
 			src.visible_message(SPAN_ALERT("<b>[src]</b> begins to reassemble!"))
 			var/turf/T = src.loc
 			var/current_generation = src.generation
+			var/obj/decal/respawn_decal = new(src.loc)
+			respawn_decal.name = "reassembling nanite swarm"
+			respawn_decal.icon = 'icons/mob/critter/robotic/nanites.dmi'
+			respawn_decal.icon_state = "nanites-dead-reform"
+			respawn_decal.layer = MOB_LAYER + 1
+			respawn_decal.plane = PLANE_DEFAULT
+			SPAWN(4.7 SECONDS)
+				flick("nanites-reform", respawn_decal)
+
 			SPAWN(5 SECONDS)
 				var/obj/critter/gunbot/drone/buzzdrone/naniteswarm/swarm  = new(T)
 				swarm.generation = current_generation + 1
+
+				if(respawn_decal)
+					qdel(respawn_decal)
 
 				if(src)
 					qdel(src)
