@@ -1,4 +1,9 @@
+
 (t)tue jul 08 25
+(u)Kilprel
+(p)24032
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(+)Nanite swarms look more menacing.
 (u)LeahTheTech
 (+)Burn damage from hot air now scales a bit more reasonably with temperature, up to the same maximum.
 (t)sun jul 06 25
