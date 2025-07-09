@@ -1,5 +1,9 @@
 
 (t)wed jul 09 25
+(u)glowbold
+(p)24055
+(e)🔄📦|C-Rework, A-Game-Objects
+(+)The Floor and Wall designer uses cloth when changing floors and walls.
 (u)FlameArrow57
 (p)23924
 (e)🆕⚖🔄💊|C-Feature, C-Balance, C-Rework, A-Medical
