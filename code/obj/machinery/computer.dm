@@ -49,8 +49,11 @@
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
 			list(W, user), W.icon, W.icon_state, null, null)
 			return
-		else
-			src.Attackhand(user)
+		..()
+
+	grab_smash(obj/item/grab/G, mob/user)
+		if(..())
+			src.set_broken()
 
 	get_help_message(dist, mob/user)
 		if (src.circuit_type)

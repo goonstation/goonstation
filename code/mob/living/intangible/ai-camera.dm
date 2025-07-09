@@ -403,6 +403,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (mainframe)
 			mainframe.ai_state_fake_laws()
 
+	verb/ai_show_laws_fake()
+		set category = "AI Commands"
+		set name = "Show Fake Laws"
+		if (mainframe)
+			mainframe.ai_show_fake_laws()
+
 	verb/ai_statuschange()
 		set category = "AI Commands"
 		set name = "AI status"
