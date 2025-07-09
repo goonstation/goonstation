@@ -49,8 +49,11 @@
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
 			list(W, user), W.icon, W.icon_state, null, null)
 			return
-		else
-			src.Attackhand(user)
+		..()
+
+	grab_smash(obj/item/grab/G, mob/user)
+		if(..())
+			src.set_broken()
 
 	get_help_message(dist, mob/user)
 		if (src.circuit_type)
@@ -70,6 +73,7 @@
 			A.icon_state = "3"
 		else
 			user?.show_text("You disconnect the monitor.", "blue")
+			logTheThing(LOG_STATION, user, "disassembles [src] [log_loc(src)]")
 			A.state = 4
 			A.icon_state = "4"
 		var/obj/item/circuitboard/M = new src.circuit_type(A)

@@ -1,5 +1,63 @@
 
+(t)wed jul 09 25
+(u)FlameArrow57
+(p)23924
+(e)🆕⚖🔄💊|C-Feature, C-Balance, C-Rework, A-Medical
+(*)Added/removed some effects of brain damage, see minor changelog for details
+(+)As brain damage increases, you will now experience effects such as impaired speech, vomiting, messages about your head hurting, going blind temporarily, and being unable to hear others. Effects increment at every 20 value increase of brain damage
+(+)You no longer randomly speak over the radio if you have brain damage
+(+)The "blank expression" description for someone with brain damage now only appears if they have lethal (100) brain damage or Expresso in them
+(t)tue jul 08 25
+(u)JORJ949
+(p)24033
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The random contraband trader will now only sell syndicate headsets to real syndies.
+(u)JORJ949 & Username Unavailable
+(p)24063
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs and Cyborgs now have a Show Fake Laws command to check their fake laws. Idea from Username Unavailable on the forums!
+(u)glowbold
+(p)23965
+(e)⚖💊|C-Balance, A-Medical
+(*)Charcoal does not heal organ damage.
+(*)Most posions will directly damage your organs.
+(u)Kilprel
+(p)24032
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(+)Nanite swarms look more menacing.
+(u)LeahTheTech
+(+)Burn damage from hot air now scales a bit more reasonably with temperature, up to the same maximum.
+(t)sun jul 06 25
+(u)LeahTheTech
+(+)The way "power" type machines interact with wires has been tweaked slightly. They will no longer interact with wires running directly underneath them, instead requiring wires running directly into the machine or terminating underneath it. This shouldn't affect anything but report if it does. Hopefully this will fix some of the harder to explain hotwires!
+(t)thu jul 03 25
+(u)FlameArrow57 & Croissant_Man1
+(p)23539
+(e)🆕🎨🔬|C-Feature, C-Sprites, A-Science
+(*)Added a new Lattice artifact origin. Activator keys will only appear under this origin.
+(t)mon jun 30 25
+(u)LeahTheTech
+(+)Gunbots now have unique speech sounds.
+(u)JORJ949
+(p)23989
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Admins and Mentors now have OOC icons you can hover over to see their rank (instead of just knowing purple = mentor).
+(u)CalliopeSoups
+(p)23910
+(e)⚖🐁|C-Balance, A-Critters
+(+)Mimic's eat limb ability now has you latch onto your victim.
 (t)sun jun 29 25
+(u)JORJ949
+(p)23975
+(e)🆕🎨🔨📦|C-Feature, C-Sprites, A-Player-Actions, A-Game-Objects
+(*)Educated clowns can now show off their diploma like you can security badges!
+(u)glowbold
+(p)23923
+(e)🆕⚖🔄📄🧛|C-Feature, C-Balance, C-Rework, A-UI, A-Gamemodes
+(*)Vampires unlock a Spirit Bat ability at 150 blood. It is a weaker version of the Frost Bat ability.
+(*)Vampires with orbiting bats can point at a mob to send a bat towards them.
+(*)Vampires with orbiting bats can flip to send all bats towards nearby mobs.
+(*)Vampire glare is significantly quieter.
 (u)Lyy
 (p)23495
 (e)🆕🚗|C-Feature, A-Vehicles
