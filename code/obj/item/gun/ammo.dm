@@ -307,9 +307,15 @@
 			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
 				//shoot in a truly random direction
 				shoot_projectile_relay_pixel_spread(src, src.ammo_type, src, rand(-32, 32), rand(-32, 32), 360)
+				if(src.delete_on_reload && src.amount_left <= 0)
+					qdel(src)
+					return
 				if (prob(30) && src.use(1)) //small chance to do two per tick
 					sleep(0.3 SECONDS)
 					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
+					if(src.delete_on_reload && src.amount_left <= 0) //I don't like repeating code, but this is needed to catch if it empties on the second firing
+						qdel(src)
+
 
 //no caliber:
 /obj/item/ammo/bullets/vbullet
