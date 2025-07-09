@@ -606,8 +606,10 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (!ishuman(H))
 			continue
 		H.setStatusMin("humiliated", INFINITY)
-		H.sever_limb("l_arm")
-		H.sever_limb("r_arm")
+		H.drop_from_slot(H.l_hand, force_drop = TRUE)
+		H.drop_from_slot(H.r_hand, force_drop = TRUE)
+		H.force_equip(new /obj/item/instrument/bikehorn{cant_drop = TRUE}, SLOT_L_HAND)
+		H.force_equip(new /obj/item/instrument/bikehorn{cant_drop = TRUE}, SLOT_R_HAND)
 
 	for (var/datum/mind/mind as anything in winner.members)
 		var/mob/living/carbon/human/H = mind.current
