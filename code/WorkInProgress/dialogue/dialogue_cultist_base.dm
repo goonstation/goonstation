@@ -53,7 +53,7 @@
 			var/obj/item/cult_sigil_pt1/C = W
 			boutput(user, "The talisman settles onto the seal.")
 			pt1 = TRUE
-			C.UpdateOverlays(image('icons/obj/decoration.dmi', "sigil_pt2"), "sigil_pt1")
+			src.UpdateOverlays(image('icons/obj/decoration.dmi', "sigil_pt2"), "sigil_pt1")
 			if (C.pt3)
 				boutput(user, "The eye fits in the slot on the talisman, completing the sigil!")
 				qdel(C)
@@ -351,7 +351,9 @@
 		D.dir = 4
 		playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
 		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
-		user.unlock_medal("Waking Dream", TRUE) // Alternate medal maybe? for replayability?
+		for(var/mob/living/carbon/human/H in (range(5)))
+			if(H.mind)
+				user.unlock_medal("Waking Dream", TRUE)
 		qdel(src)
 
 	proc/lever_lv(mob/user)
@@ -367,7 +369,9 @@
 		D.dir = 4
 		playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
 		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
-		user.unlock_medal("Waking Dream", TRUE)
+		for(var/mob/living/carbon/human/H in (range(5)))
+			if(H.mind)
+				user.unlock_medal("Waking Dream", TRUE)
 		qdel(src)
 
 /datum/dialogueMaster/controlpc
