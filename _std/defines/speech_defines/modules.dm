@@ -50,6 +50,7 @@
 #define SPEECH_OUTPUT_SPOKEN_AUDIO_LOG "audio_log_spoken"
 #define SPEECH_OUTPUT_SPOKEN_DEVICE "device_spoken"
 #define SPEECH_OUTPUT_SPOKEN_FLOCKMIND "flockmind_spoken"
+#define SPEECH_OUTPUT_SPOKEN_HIVEMIND "hivemind_spoken"
 #define SPEECH_OUTPUT_SPOKEN_LOCAL "local_spoken"
 #define SPEECH_OUTPUT_SPOKEN_RADIO "radio_spoken"
 #define SPEECH_OUTPUT_SPOKEN_SOUND_CARD "sound_card_spoken"
@@ -222,6 +223,7 @@
 #define LISTEN_MODIFIER_MOB_MODIFIERS "mob_modifiers"
 #define LISTEN_MODIFIER_PHONE "phone_formatting"
 #define LISTEN_MODIFIER_RADIO "radio_formatting"
+#define LISTEN_MODIFIER_BRAIN_DAMAGE "brain_damage_hearing"
 
 
 //------------ Listen Effects ------------//

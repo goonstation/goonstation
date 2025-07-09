@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'How to be a Champion!',
-  content: (
+const WrestlerContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a wrestler!</h1>
 
@@ -59,5 +58,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Wrestler">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'How to be a Champion!',
+  component: WrestlerContentWindow,
 };

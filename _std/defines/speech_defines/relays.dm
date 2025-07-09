@@ -4,7 +4,8 @@
 #define FORMAT_MESSAGE_FOR_RELAY(message, relay_flag) \
 	message.relay_flags |= relay_flag; \
 	message.flags &= ~SAYFLAG_SPOKEN_BY_PLAYER; \
-	message.id = "\ref[message]";
+	message.id = "\ref[message]"; \
+	message.say_sound = null;
 
 
 //------------ Relay Types ------------//

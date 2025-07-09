@@ -57443,6 +57443,14 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/catwalk/south)
+"hBA" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/firealarm/north,
+/obj/machinery/computer/card,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint/podbay)
 "hBJ" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/access/medical,
@@ -66396,16 +66404,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"pzR" = (
-/obj/machinery/door/airlock/pyro/engineering,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering,
-/obj/decal/stripe_delivery,
-/obj/cable/orange{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engine/hotloop)
 "pAo" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttlebay,
@@ -72357,14 +72355,6 @@
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/blue,
 /area/station/science/lab)
-"vjS" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/submachine/poster_creator,
-/obj/machinery/firealarm/north,
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/station/security/checkpoint/podbay)
 "vla" = (
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
@@ -75132,6 +75122,16 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
+"yfP" = (
+/obj/machinery/door/airlock/pyro/engineering,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering,
+/obj/decal/stripe_delivery,
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/hotloop)
 "ygg" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -107445,7 +107445,7 @@ bCe
 bCj
 bEM
 fuP
-vjS
+hBA
 lcc
 bUQ
 byI
@@ -116190,7 +116190,7 @@ bos
 bpW
 hJM
 wrQ
-pzR
+yfP
 bxt
 bze
 bAL

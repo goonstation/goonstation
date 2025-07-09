@@ -1692,6 +1692,11 @@ or don't if it uses a custom topopen overlay
 	set name = "State Fake Laws"
 	src.state_fake_laws()
 
+/mob/living/silicon/ai/proc/ai_show_fake_laws()
+	set category = "AI Commands"
+	set name = "Show Fake Laws"
+	src.show_fake_laws()
+
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
 	set name = "State All Laws"

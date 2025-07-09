@@ -1540,7 +1540,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					src.part_head.ai_interface = null
 					src.shell = 0
 
-					if (src.module.radio_type)
+					if (src.module?.radio_type)
 						src.update_radio(src.module.radio_type)
 					else
 						src.update_radio(/obj/item/device/radio/headset)
@@ -2304,6 +2304,11 @@ TYPEINFO(/mob/living/silicon/robot)
 		set category = "Robot Commands"
 		set name = "State Fake Laws"
 		src.state_fake_laws() //already handles being a shell
+
+	verb/robot_show_fake_laws()
+		set category = "Robot Commands"
+		set name = "Show Fake Laws"
+		src.show_fake_laws() //already handles being a shell
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"

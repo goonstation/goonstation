@@ -1463,12 +1463,6 @@
 /obj/submachine/tape_deck,
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
-"aeF" = (
-/obj/mic_stand{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
 "aeG" = (
 /obj/machinery/phone,
 /obj/table/wood/auto,
@@ -5327,21 +5321,6 @@
 /obj/decal/cleanable/flockdrone_debris/fluid,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"aDt" = (
-/obj/table/wood/auto,
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/machinery/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "aDy" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/abandonedoutpostthing)
@@ -7049,6 +7028,14 @@
 	name = "GLOMAR Salvager";
 	dir = 4
 	},
+/turf/simulated/floor/plating/scorched,
+/area/salvage_trader)
+"aKW" = (
+/obj/marker/supplymarker,
+/obj/fakeobject/teleport_pad{
+	desc = "It doesn't look like this is working."
+	},
+/obj/marker/salvager_teleport,
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
 "aKX" = (
@@ -16307,6 +16294,17 @@
 	},
 /turf/space,
 /area/space)
+"dGY" = (
+/obj/table/wood/auto,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "dHq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20714,6 +20712,13 @@
 	icon_state = "carpetNW"
 	},
 /area/radiostation/bedroom)
+"ovR" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "owN" = (
 /obj/lattice{
 	dir = 4;
@@ -22024,17 +22029,6 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"rBa" = (
-/obj/table/wood/auto,
-/obj/machinery/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "rBu" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
@@ -24578,14 +24572,6 @@
 	dir = 1
 	},
 /area/radiostation/hallway)
-"xJu" = (
-/obj/marker/supplymarker,
-/obj/fakeobject/teleport_pad{
-	desc = "It doesn't look like this is working."
-	},
-/obj/marker/salvager_teleport,
-/turf/simulated/floor/plating/scorched,
-/area/salvage_trader)
 "xKR" = (
 /obj/fakeobject/pipe{
 	desc = "It won't budge.";
@@ -73894,7 +73880,7 @@ aJN
 aKX
 aKx
 aKG
-xJu
+aKW
 aLf
 aJN
 aIz
@@ -107893,7 +107879,7 @@ hnB
 oSY
 adx
 adK
-aDt
+dGY
 aem
 aeD
 adg
@@ -108497,9 +108483,9 @@ vMM
 adw
 adx
 adK
-rBa
+ovR
 aeo
-aeF
+adL
 adg
 agi
 aoY

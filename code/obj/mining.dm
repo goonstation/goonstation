@@ -2221,6 +2221,7 @@ TYPEINFO(/obj/item/cargotele)
 			for (var/subtype in typesof(supertype))
 				allowed_types[subtype] = 1
 		allowed_types -= /obj/storage/closet/flock
+		allowed_types -= concrete_typesof(/obj/storage/crate/gang_crate)
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)

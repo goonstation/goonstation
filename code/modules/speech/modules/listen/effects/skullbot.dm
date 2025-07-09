@@ -7,4 +7,4 @@
 		return
 
 	SPAWN(0)
-		bot.say(message.content, flags = 0, message_params = list("can_relay" = FALSE))
+		bot.say(message.content, message_params = list("can_relay" = FALSE))

@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Zombie Basics',
-  content: (
+const ZombieContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You have been revived as a Zombie!</h1>
       <p>
@@ -39,5 +38,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Zombie">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Zombie Basics',
+  component: ZombieContentWindow,
 };

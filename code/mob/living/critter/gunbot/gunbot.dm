@@ -20,7 +20,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	health_brute_vuln = 1
 	health_burn = 20
 	health_burn_vuln = 0.5
-	speech_verb_say = "states"
+	voice_type = "cyborg_distorted"
+	speech_verb_say = "blares"
 	speech_verb_gasp = "states"
 	speech_verb_stammer = "states"
 	speech_verb_exclaim = "declares"
@@ -32,7 +33,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	faction = list(FACTION_DERELICT)
 	is_npc = TRUE
 
-	speech_verb_say = "blares"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/speak_lines = TRUE
