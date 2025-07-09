@@ -43,7 +43,7 @@ TYPEINFO(/mob/living/intangible/blob_overmind)
 	var/started = FALSE //! Whether blob is pre or post deployment
 	var/starter_buff = TRUE //! Whether to give some assistance for blobs that may need a boost at the start
 	var/extra_nuclei = 0 //! Number of nuclei left to create
-	var/next_extra_nucleus = 100 //! Metric to how many total tiles are places until next nucleus can be placed. Scales
+	var/next_extra_nucleus = 100 //! Metric of how many total tiles are placed until next nucleus can be placed. Scales
 	var/multi_spread = 0 //! Keeps track of the cumulative spread chance from the spread upgrade, where 20 is 20% chance for an additional tile
 	// for whatever reason there are a ton of SLEEP and SPAWN calls in the upgrade code so presumably this prevents race conditions or similar
 	var/upgrading = FALSE //! Whether blob is upgrading itself right now
