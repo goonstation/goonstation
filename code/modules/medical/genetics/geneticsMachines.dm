@@ -387,7 +387,8 @@
 		if("researchmut")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
-			if(GetBioeffectFromGlobalListByID(E.id)?.research_level > EFFECT_RESEARCH_NONE)
+			var/datum/bioEffect/GBE = GetBioeffectFromGlobalListByID(E.id)
+			if(GBE.research_level > EFFECT_RESEARCH_NONE)
 				scanner_alert(ui.user, "Research already in progress.", error = TRUE)
 				return
 			if (params["sample"])
