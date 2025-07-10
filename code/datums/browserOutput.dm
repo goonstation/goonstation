@@ -123,13 +123,14 @@ var/global
 		src.loaded = 1
 		winset(src.owner, "browseroutput", "is-disabled=false")
 		src.changeTheme(src.owner.darkmode ? "theme-dark" : "theme-default")
-		//if (src.owner.holder)
 		src.loadAdmin()
 		if (src.messageQueue)
 			for (var/list/message in src.messageQueue)
 				boutput(src.owner, message["message"], message["group"])
 		src.messageQueue = null
 		src.sendClientData()
+		SEND_SIGNAL(src.owner, COMSIG_CLIENT_CHAT_LOADED, src)
+
 		/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
 		SPAWN(1 MINUTE) //60 seconds
 			if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file

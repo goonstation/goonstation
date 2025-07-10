@@ -4,9 +4,11 @@
 	can_logout = TRUE
 	var/timeout = 4 MINUTES
 	var/token = ""
+	var/pending_success_message = FALSE
 
 /datum/client_auth_provider/goonhub/New(client/owner)
 	. = ..()
+	RegisterSignal(owner, COMSIG_CLIENT_CHAT_LOADED, PROC_REF(on_chat_loaded))
 	src.owner.verbs += list(/client/proc/open_goonhub_auth)
 	src.setup_logout()
 	src.hide_ui()
@@ -91,6 +93,7 @@
 		src.on_error("Failed to verify your account. Please reconnect and try again.")
 		return
 
+	src.pending_success_message = TRUE
 	src.owner.verbs -= list(/client/proc/open_goonhub_auth)
 
 	src.owner.client_auth_intent.ckey = verification["ckey"]
@@ -104,17 +107,6 @@
 	src.owner.client_auth_intent.can_bypass_cap = verification["can_bypass_cap"]
 
 	assign_goonhub_abilities(verification["ckey"], verification)
-
-	boutput(src.owner, {"
-		<div style='border: 2px solid green; margin: 0.5em 0;'>
-			<div style="color: black; background: #8f8; font-weight: bold; border-bottom: 1px solid green; text-align: center; padding: 0.2em 0.5em;">
-				Authentication successful
-			</div>
-			<div style="padding: 0.2em 0.5em; text-align: center;">
-				You have been successfully authenticated, have fun!
-			</div>
-		</div>
-		"}, forceScroll=TRUE)
 
 	. = ..()
 
@@ -130,13 +122,19 @@
 
 	src.hide_ui()
 
-// /datum/client_auth_provider/goonhub/logout()
-// 	. = ..()
-// 	src.owner << output(null, "authlogout.browser:doLogout")
-
 /datum/client_auth_provider/goonhub/on_logout()
 	src.hide_ui()
 	. = ..()
+
+/datum/client_auth_provider/goonhub/proc/on_chat_loaded()
+	UnregisterSignal(src.owner, COMSIG_CLIENT_CHAT_LOADED)
+
+	if (src.pending_success_message)
+		src.pending_success_message = FALSE
+		src.owner << output(list2params(list(
+			"Authentication successful",
+			"You have been successfully authenticated, have fun!"
+		)), "browseroutput:showAuthMessage")
 
 /**
 	* Setup logout

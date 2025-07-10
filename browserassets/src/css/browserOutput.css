@@ -921,6 +921,22 @@ h2.asyn {
   color: #ff6a00;
 }
 
+.auth-message {
+  border: 2px solid green;
+  margin: 0.5em 0;
+  text-align: center;
+}
+.auth-message__title {
+  color: black;
+  background: #8f8;
+  font-weight: bold;
+  border-bottom: 1px solid green;
+  padding: 0.2em 0.5em;
+}
+.auth-message__content {
+  padding: 0.2em 0.5em;
+}
+
 /* bog-standard dark theme with easy, unsaturated colors */
 body.theme-dark {
   background-color: #23272a;
