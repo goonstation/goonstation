@@ -1099,7 +1099,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				boutput(user,"You need to use this on the AI core directly!")
 				return
 
-			if(!src.lawset_connection.host_rack)
+			if(!src.lawset_connection?.host_rack)
 				boutput(src,"[src.name] is not connected to a law rack")
 			else
 				var/area/A = get_area(src.lawset_connection.host_rack)
@@ -1111,7 +1111,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
 				if(src.emagged || src.syndicate)
 					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing(LOG_STATION, src, "[constructName(user)] tried to connect [src] to the rack [constructName(src.lawset_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
+					logTheThing(LOG_STATION, src, "[constructName(user)] tried to connect [src] to the rack [constructName(linker.linked_rack)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
 					elecflash(src,power=2)
 					return
 				if(src.lawset_connection.host_rack)
