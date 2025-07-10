@@ -98,6 +98,26 @@
 		"Would dispense paint, if only the maintenance panel was secured so as to allow operation."
 	)
 
+	HELP_MESSAGE_OVERRIDE({""})
+	get_help_message(dist, mob/user)
+		switch(src.repair_stage)
+			if(0)
+				. += "You can use a <b>screwdriver</b> to unscrew the maintenance panel."
+			if(1)
+				. += "You can use a <b>crowbar</b> to remove the maintenance panel."
+			if(2)
+				. += "You can use a <b>wrench</b> to unbolt the service module."
+			if(3)
+				. += "You can add cables to repair the service module."
+			if(4)
+				. += "You can use buckets of paint to refil the service module."
+			if(5)
+				. += "You can use a <b>wrench</b> to resecure the service module."
+			if(6)
+				. += "You can replace paint dispenser's maintenance panel to continue repairs."
+			if(7)
+				. += "You can use a <b>screwdriver</b> to secure the maintenance panel"
+
 	attack_hand(mob/user)
 		boutput(user, SPAN_ALERT("This must be repaired before it can be used!"))
 		add_fingerprint(user)
