@@ -100,6 +100,8 @@
 
 	HELP_MESSAGE_OVERRIDE({""})
 	get_help_message(dist, mob/user)
+		if(src.fallen)
+			. += {"You can use a <b>crowbar</b> to lift the machine back up.\n"}"
 		switch(src.repair_stage)
 			if(0)
 				. += "You can use a <b>screwdriver</b> to unscrew the maintenance panel."
@@ -126,7 +128,13 @@
 	attackby(obj/item/W, mob/user)
 		if (!W || !user)
 			return
-
+		if (src.fallen)
+			if (ispryingtool(W))
+				//action bar is defined at the end of these procs
+				actions.start(new /datum/action/bar/icon/right_vendor(src), user)
+			else
+				boutput(user, SPAN_ALERT("[src] needs to be stood upright first!"))
+			return
 		if(istype(W,/obj/item/paint_can))
 			if (repair_stage == 4)
 				var/obj/item/paint_can/can = W
