@@ -17,7 +17,8 @@ export const ChemiCompilerTextArea = () => {
 
   const [localInputValue, setLocalInputValue] = useState(inputValue);
 
-  // When loadTimestamp changes, it means a load button was clicked, so only then should we erase local input value with what was received from the server.
+  // When loadTimestamp changes, it means a load button was clicked, so only then
+  // should we erase local input value with what was received from the server.
   useEffect(() => {
     setLocalInputValue(inputValue);
   }, [loadTimestamp]);
