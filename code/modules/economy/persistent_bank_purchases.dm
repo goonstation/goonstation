@@ -547,6 +547,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				var/mob/living/carbon/human/H = M
 				if (H.back && istype(H.back, /obj/item/storage/backpack))
 					var/obj/item/storage/backpack/old_bag = H.back
+					if(old_bag.slots != 7) //No changing slot amounts
+						return 0
 					var/obj/item/storage/backpack/new_bag = new src.bag_type
 					//Delete anything in the new bag, replace with contents of old bag.
 					for (var/obj/item/I as anything in new_bag.storage.get_contents())
