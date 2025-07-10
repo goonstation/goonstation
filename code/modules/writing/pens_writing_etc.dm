@@ -283,7 +283,7 @@
 			src.change_mode(new_mode, user)
 
 	proc/change_mode(var/new_mode, var/mob/holder)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		switch (new_mode)
 			if ("pen")
 				src.penmode = "pen"
@@ -903,9 +903,9 @@
 		if(!user.literate)
 			boutput(user, SPAN_ALERT("You don't know how to write."))
 			return
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		var/holder = src.loc
-		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
+		var/str = copytext(strip_html_tags(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
@@ -1230,7 +1230,7 @@
 
 		if(href_list["action"] == "retrieve")
 			usr.put_in_hand_or_drop(src.contents[text2num(href_list["id"])], usr)
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			usr.visible_message("[usr] takes something out of the folder.")
 		else if(href_list["action"] == "peek")
 			var/obj/item/I = src.contents[text2num(href_list["id"])]
@@ -1264,7 +1264,7 @@
 			user.drop_item()
 		W.set_loc(src)
 		src.amount++
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /* =============== BOOKLETS =============== */
 

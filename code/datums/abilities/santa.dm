@@ -226,7 +226,7 @@
 			boutput(src.holder.owner, SPAN_ALERT("Invalid area selected."))
 			return 1
 		var/area/thearea = get_telearea(A)
-		if(thearea.teleport_blocked)
+		if(thearea.teleport_blocked && !istype(thearea, /area/wizard_station))
 			boutput(src.holder.owner, SPAN_ALERT("That area is blocked from teleportation."))
 			return 1
 

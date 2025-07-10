@@ -1,7 +1,6 @@
 
 /mob/living/critter/spider
 	name = "space spider"
-	real_name = "space spider"
 	desc = "A big ol' spider, from space. In space. A space spider."
 	icon_state = "big_spide"
 	density = 1
@@ -192,7 +191,6 @@
 
 /mob/living/critter/spider/nice
 	name = "bumblespider"
-	real_name = "bumblespider"
 	desc = "It seems pretty friendly. D'aww."
 	icon_state = "bumblespider"
 	icon_state_dead = "bumblespider-dead"

@@ -420,7 +420,7 @@ TYPEINFO(/obj/item/fish_portal)
 					amtload++
 				S.UpdateIcon()
 				boutput(user, SPAN_NOTICE("[amtload] fish loaded from the portable aquarium!"))
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 			return
 		else
 			var/proceed = FALSE
@@ -526,8 +526,8 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			src.lure.overlay_refs = I.overlay_refs?.Copy()
 			src.lure.plane = initial(src.lure.plane)
 			src.lure.layer = initial(src.lure.layer)
-			src.lure.tooltip_rebuild = 1
-			tooltip_rebuild = 1
+			src.lure.tooltip_rebuild = TRUE
+			tooltip_rebuild = TRUE
 		else
 			boutput(user, "You can't change the bait while the line is out!")
 		return
@@ -607,7 +607,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		if (!src.lure)
 			src.lure = new (src)
 			src.lure.rod = src
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			RegisterSignal(src.lure, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(max_range_check))
 		if (src.lure.owner && src.lure.loc != src.lure.owner)
 			src.lure.owner = null

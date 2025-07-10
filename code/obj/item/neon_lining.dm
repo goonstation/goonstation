@@ -60,14 +60,14 @@
 			return 1
 		else
 			amount -= used
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			src.UpdateIcon()
 			return 1
 
 	proc/take(var/amt, var/newloc)
 		if (amt > amount)
 			amt = amount
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			src.UpdateIcon()
 		if (amt == amount)
 			if (ismob(loc))
@@ -107,7 +107,7 @@
 		lining_item_color = "yellow"
 	else
 		lining_item_color = "blue"
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	boutput(user, "You change the [base_name]'s color to [lining_item_color].")
 	UpdateIcon()
 	return
@@ -118,7 +118,7 @@
 /obj/item/neon_lining/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
 		src.amount--
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		take(1, user.loc)
 		boutput(user, "You cut a piece off the [base_name].")
 		src.UpdateIcon()
@@ -134,7 +134,7 @@
 		if ((C.amount + src.amount <= MAXLINING))
 			C.amount += src.amount
 			boutput(user, "You join the lining coils together.")
-			C.tooltip_rebuild = 1
+			C.tooltip_rebuild = TRUE
 			C.UpdateIcon()
 			if(src.stored)
 				src.stored.transfer_stored_item(src, get_turf(src), user = user)
@@ -149,10 +149,10 @@
 			boutput(user, "You transfer [MAXLINING - src.amount] length\s of lining from one coil to the other.")
 			src.amount -= (MAXLINING-C.amount)
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			C.amount = MAXLINING
 			C.UpdateIcon()
-			C.tooltip_rebuild = 1
+			C.tooltip_rebuild = TRUE
 			return
 
 /obj/item/neon_lining/MouseDrop_T(atom/movable/O as obj, mob/user as mob)

@@ -1,3 +1,5 @@
+
+/// This is the base type for all the blob tiles, normally controlled by a blob overmind.
 /obj/blob
 	name = "blob"
 	desc = "A mysterious alien blob-like organism."
@@ -13,34 +15,39 @@
 	opacity = 0
 	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
-	var/health = 30         // current health of the blob
-	var/health_max = 30     // health cap
-	var/armor = 1           // how much incoming damage gets divided by unless it bypasses armor
-	var/ideal_temp = 310    // what temperature the blob is safe at
-	var/mob/living/intangible/blob_overmind/overmind = null // who's the player controlling this blob
-	var/gen_rate_value = 0  // how much gen rate upkeep the overmind is paying on this tile
-	var/can_spread_from_this = 1
-	var/can_attack_from_this = 1
-	var/poison = 0
-	var/can_absorb = 1
-	var/special_icon = 0
-	var/spread_type = null
-	var/spread_value = 0
-	var/movable = 0
-	var/in_disposing = 0
+	var/health = 30 //! Current health of the blob
+	var/health_max = 30 //! Health cap
+	var/armor = 1 //! How much incoming damage gets divided by unless it bypasses armor
+	var/mob/living/intangible/blob_overmind/overmind = null //! Who's the player controlling this blob
+	var/gen_rate_value = 0  //! How much gen rate upkeep the overmind is paying on this tile
+	// unused?
+	var/can_spread_from_this = TRUE //! Whether or not a blob can spread from this tile
+	var/can_attack_from_this = TRUE //! Whether or not the blob can attack with this tile
+	var/can_absorb = TRUE //! This controls whether or not this specific blob tile can absorb eligible mobs inside of it
+	var/special_icon = FALSE //! Whether or not the tile is a special tile, and this has a special icon ("organ" tiles)
+	var/spread_type = null //! Controls the type of blob tile that tiles spread from this are made into. If this is null, it's set to /obj/blob
+	// unused?
+	var/spread_value = 0 //! How much this tile weighs in to a final 'spread mitigation value' to the overmind, added on attach and removed on destruction.
+	// ? unused?? horrifying concept?
+	var/movable = FALSE //! ...if a blob tile can be moved on mouse click drag
+	// prevents accidentally deleting ourselves twice
+	var/in_disposing = FALSE //! Whether or not we are currently disposing() this tile
 	var/datum/action/bar/blob_health/healthbar //Hack.
 	var/static/image/poisoned_image
-	var/fire_coefficient = 1
-	var/poison_coefficient = 1
-	var/poison_spread_coefficient = 0.5
-	var/poison_depletion = 0.75
-	var/heat_divisor = 15
-	var/temp_tolerance = 40
-	mat_changename = 0
-	mat_changedesc = 0
-	var/runOnLife = 0 //Should this obj run Life?
+	var/poison = 0 //! Stores the current __queued__ 'amount' of poison damage to apply. It does not apply this amount, instead its just referenced for how much to apply at base.
+	var/poison_coefficient = 1 //! Poison armor for blobs. 1 is full damage, 0 is invincibity.
+	var/poison_spread_coefficient = 0.5 //! Blob tiles spread poison to other tiles when they die -- This controls how much is spread. 2x for twice the damage, 0x for none.
+	// e.g. (poison_damage_2_deal -= (damage_we_dealt_rn * this_depletion_rate))
+	var/poison_depletion = 0.75 //! Multiplier for how much poison is depleted per poison damage taken
+	var/fire_coefficient = 1 //! Fire armor for blobs. 1 is full damage, 0 is invincibity.
+	var/ideal_temp = 310 KELVIN //! What temperature the blob is safe at. higher values factor in tolerance and heat divisors
+	var/heat_divisor = 15 //! Divisor for temperature, controls scaling for atmos heat damage. Blob takes 1/heat_divisor more/less damage with this
+	var/temp_tolerance = 40 KELVIN //! How much temperature (kelvin) we tolerate above our ideal temperature, factored in *before* the divisor.
+	var/runOnLife = FALSE //! Should this obj run Life? (organ tiles that normally do things get TRUE'd)
 	var/processed_on_killed = FALSE //! Whether onKilled already ran
-	var/surrounded = 0 //! bitfield of dirs we have other blob tiles around us on
+	var/surrounded = 0 //! Bitfield of dirs we have other blob tiles around us on
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 
 	New()
 		..()

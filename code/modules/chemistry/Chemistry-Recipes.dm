@@ -4863,6 +4863,28 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
 
+	deageinium
+		name = "Deageinium"
+		id = "deageinium"
+		result = "deageinium"
+		required_reagents = list("sugar" = 1, "epinephrine" = 1, "juice_apple" = 1, "chickensoup" = 1, "milk_powder" = 1)
+		result_amount = 3
+		min_temperature = T0C + 21
+		mix_phrase = "The bubbling mixture gives off a scent of angst, sickeningly sweet soda and life."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
+	deageinium_alt
+		name = "Deageinium"
+		id = "deageinium_alt"
+		result = "deageinium"
+		required_reagents = list("ageinium" = 1, "reversium" = 1)
+		result_amount = 1
+		min_temperature = T0C + 21
+		mix_phrase = "The bubbling mixture gives off a scent of angst, sickeningly sweet soda and life."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
 	//Hello, here are some fake werewolf serum precursors
 	werewolf_serum_fake1
 		name = "Werewolf Serum Precursor Alpha"
@@ -5024,6 +5046,16 @@
 		result_amount = 1
 		mix_phrase = "The solution makes a little 'chirp' noise and settles."
 		hidden = TRUE
+
+	painbow_eggs
+		name = "painbow eggs"
+		id = "painbow_eggs"
+		result = "painbow_eggs"
+		required_reagents = list("painbow fluid" = 1, "spiders" = 2, "helium" = 1)
+		result_amount = 1
+		mix_phrase = "The painbow and the spider concoct into a horrific mix."
+		hidden = TRUE
+		mix_sound = 'sound/musical_instruments/Boathorn_1.ogg'
 
 	mewtini
 		name = "Mewtini"

@@ -204,6 +204,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 	name = "Overcoat and Scarf"
 	item_path = /obj/item/clothing/suit/johnny_coat
 
+/datum/clothingbooth_item/wear_suit/long_sleeved_shirt
+	item_path = /obj/item/clothing/suit/lshirt
+
 // todo: distinguish these two somehow
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 /datum/clothingbooth_item/wear_suit/poncho
