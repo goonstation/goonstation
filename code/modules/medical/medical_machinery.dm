@@ -100,10 +100,12 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/mouse_drop(atom/over_object)
 	if (!isatom(over_object))
-		return ..()
+		..()
+		return
 	var/mob/living/user = usr
 	if (!isliving(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
-		return ..()
+		..()
+		return
 	if (iscarbon(over_object))
 		if (src.patient == over_object)
 			src.attempt_remove_patient(user)
@@ -111,10 +113,12 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 			src.attempt_add_patient(over_object, user)
 		return
 	if (!isobj(over_object))
-		return ..()
+		..()
+		return
 	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
 	if (!(over_object.type in typinfo.paired_obj_whitelist))
-		return ..()
+		..()
+		return
 	if (over_object == src.paired_obj)
 		src.detach_from_obj(user)
 		return
@@ -129,6 +133,10 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	if (!in_interact_range(src, src.patient))
 		src.remove_patient(forceful = TRUE)
+		return
+	if (!src.check_remove_conditions())
+		src.remove_patient()
+		return
 	if (src.is_broken() || src.has_no_power())
 		return
 	src.affect_patient(mult)
@@ -140,6 +148,10 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	logTheThing(LOG_ADMIN, user, "emagged [src] at [log_loc(user)].")
 	logTheThing(LOG_DIARY, user, "emagged [src] at [log_loc(user)].", "admin")
 	message_admins("[key_name(usr)] emagged [src] at [log_loc(user)].")
+
+/// Override this proc on child types. Return boolean.
+/obj/machinery/medical/proc/check_remove_conditions()
+	. = TRUE
 
 /// Override this proc on child types.
 /obj/machinery/medical/proc/affect_patient(mult)
@@ -177,7 +189,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		src.remove_message(user)
 		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
 	if (forceful && !user)
-		src.forceful_remove_message()
+		src.force_remove_message()
 	src.patient = null
 	src.power_usage = 0
 	src.UnsubscribeProcess()
@@ -213,8 +225,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/proc/force_remove_message()
 	src.patient.visible_message(\
-		SPAN_ALERT(src.parse_message(src.forceful_remove_msg_viewer, target = src.patient)),\
-		SPAN_ALERT(src.parse_message(src.forceful_remove_msg_first, target = src.patient)))
+		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_viewer, target = src.patient)),\
+		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_patient, target = src.patient)))
 
 /obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
 	. = TRUE

@@ -84,7 +84,8 @@
 	..()
 
 /obj/machinery/medical/iv_stand/affect_patient(mult)
-
+	if (src.iv_drip)
+		boutput(src.patient, "poo poo pee pee")
 
 /obj/machinery/medical/iv_stand/proc/deconstruct()
 	if (src.iv_drip)
