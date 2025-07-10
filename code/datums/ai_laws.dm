@@ -174,9 +174,6 @@
 	/// used during UpdateLaws to determine which laws have changed
 	var/list/last_laws[LAWRACK_MAX_MODULES]
 	var/obj/machinery/lawrack/host_rack = null //law rack this datum is tied to. Might not exist
-	New()
-		. = ..()
-
 
 	/// Takes a list or single target to show laws to
 	proc/show_laws(var/who)
