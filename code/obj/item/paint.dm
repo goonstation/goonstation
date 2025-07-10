@@ -148,6 +148,7 @@
 				paint_needed--
 				if (!paint_needed)
 					user.visible_message("[user] pours some paint into [src]. The \"check paint cartridge\" light goes out.", "You pour some paint into [src], filling it up!")
+					playsound(user, 'sound/machines/ping.ogg', 65, TRUE)
 					src.repair_stage = 5
 					src.update_name()
 					return
