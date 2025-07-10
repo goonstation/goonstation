@@ -1001,6 +1001,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.emagged = TRUE
 				if(!src.opened)
 					src.opened = TRUE
+				boutput(src, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
 				boutput(src, SPAN_ALERT("Your interface lock has been emagged!"))
 				src.locked = FALSE
 				update_appearance()

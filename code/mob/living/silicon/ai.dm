@@ -282,6 +282,7 @@ or don't if it uses a custom topopen overlay
 		boutput(user, SPAN_NOTICE("You short out [src]'s cover lock."))
 		if(dismantle_stage < 2)
 			dismantle_stage = 2
+		boutput(src, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
 		boutput(src, SPAN_ALERT("Your cover lock has been emagged!"))
 		src.update_appearance()
 		return TRUE
