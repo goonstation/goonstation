@@ -281,6 +281,7 @@ TYPEINFO(/obj/item/tile/paintmachine)
 /obj/item/tile/paintmachine
 	name = "maintenance panel"
 	desc = "a very important panel from the back of a paint dispenser. Don't lose it!"
+	icon_state = "tile_paintmachine"
 	amount = 1
 	max_stack = 1
 	default_material = "steel"
