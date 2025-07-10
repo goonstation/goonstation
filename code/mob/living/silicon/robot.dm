@@ -1099,8 +1099,8 @@ TYPEINFO(/mob/living/silicon/robot)
 				boutput(user,"You need to use this on the AI core directly!")
 				return
 
-			if(!src.lawset_connection?.host_rack)
-				boutput(src,"[src.name] is not connected to a law rack")
+			if(!src.lawset_connection || !src.lawset_connection.host_rack)
+				boutput(user, "[src.name] is not connected to a law rack")
 			else
 				var/area/A = get_area(src.lawset_connection.host_rack)
 				boutput(user, "[src.name] is connected to a law rack at [A.name].")
