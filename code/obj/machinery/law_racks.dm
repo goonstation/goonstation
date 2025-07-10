@@ -498,8 +498,8 @@
 			holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
 			src.reset_ai_abilities(holoAI)
 		calculate_power_usage()
-		lawset.current_laws = format_as_list()
-		lawset.UpdateLaws()
+		src.lawset.current_laws = format_as_list()
+		src.lawset.UpdateLaws()
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
 		if(src.welded[slot_number])
