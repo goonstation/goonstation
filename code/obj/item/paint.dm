@@ -143,6 +143,8 @@
 					return
 
 				can.uses--
+				if (can.uses <= 0) can.overlays = null
+				can.inventory_counter?.update_number(can.uses)
 				paint_needed--
 				if (!paint_needed)
 					user.visible_message("[user] pours some paint into [src]. The \"check paint cartridge\" light goes out.", "You pour some paint into [src], filling it up!")
