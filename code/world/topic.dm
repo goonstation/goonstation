@@ -677,7 +677,8 @@
 					var/who = lowertext(plist["target"])
 					var/mob/living/silicon/S = ckey_to_mob_maybe_disconnected(who, exact = FALSE)
 					if(S)
-						ircmsg["laws"] = S.lawset_connection.format_for_logs(glue = "\n")
+						/datum/ai_lawset/laws = S.lawset_connection
+						ircmsg["laws"] = laws ? laws.format_for_logs(glue = "\n") : "No Laws"
 						return ircbot.response(ircmsg)
 					else
 						return 0
