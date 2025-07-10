@@ -101,7 +101,7 @@
 	HELP_MESSAGE_OVERRIDE({""})
 	get_help_message(dist, mob/user)
 		if(src.fallen)
-			. += {"You can use a <b>crowbar</b> to lift the machine back up.\n"}"
+			. += {"You can use a <b>crowbar</b> to lift the machine back up.\n"}
 		switch(src.repair_stage)
 			if(0)
 				. += "You can use a <b>screwdriver</b> to unscrew the maintenance panel."
@@ -290,6 +290,8 @@ TYPEINFO(/obj/item/tile/paintmachine)
 	max_stack = 1
 	default_material = "steel"
 
+	_update_stack_appearance()
+		return
 
 ////////////// paint cans
 
