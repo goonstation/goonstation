@@ -15,7 +15,7 @@ export const TTV = () => {
   const { act, data } = useBackend<TransferValveParams>();
   const { opened, tank_one, tank_two } = data;
   return (
-    <Window width={650} height={170}>
+    <Window width={560} height={175}>
       <Window.Content>
         <Stack>
           <Stack.Item>
