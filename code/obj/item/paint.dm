@@ -215,10 +215,13 @@
 
 			if (6)
 				if (istype(W, /obj/item/tile))
-					user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
-					playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
-					action_bar.duration = 5 SECONDS
-					actions.start(action_bar, user)
+					if(istype(W, /obj/item/tile/paintmachine))
+						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
+						playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
+						action_bar.duration = 5 SECONDS
+						actions.start(action_bar, user)
+					else
+						boutput(user, SPAN_ALERT("[src]'s service panel has a proprietary connection system, [W] won't fit!"))
 				else
 					boutput(user, SPAN_ALERT("The service panel must be replaced first!"))
 					return
