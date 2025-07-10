@@ -649,6 +649,20 @@
 		src.visible_message(SPAN_ALERT("<b>[src.name]</b> goes limp, their facial expression utterly blank."))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, death))
 
+
+	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+		if (src.listen_tree && !src.listen_tree.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
+			src.listen_tree.AddListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
+			src.change_misstep_chance(66)
+	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_SEVERE && src.listen_tree?.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
+		src.listen_tree.RemoveListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
+		src.change_misstep_chance(-66)
+
+	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_MODERATE && !(locate(/datum/lifeprocess/brain) in src.lifeprocesses))
+		src.add_lifeprocess(/datum/lifeprocess/brain)
+	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_MODERATE)
+		src.remove_lifeprocess(/datum/lifeprocess/brain)
+
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)
 		return src.organHolder.brain.get_damage()

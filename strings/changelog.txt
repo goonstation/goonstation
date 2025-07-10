@@ -1,4 +1,16 @@
 
+(t)wed jul 09 25
+(u)glowbold
+(p)24055
+(e)🔄📦|C-Rework, A-Game-Objects
+(+)The Floor and Wall designer uses cloth when changing floors and walls.
+(u)FlameArrow57
+(p)23924
+(e)🆕⚖🔄💊|C-Feature, C-Balance, C-Rework, A-Medical
+(*)Added/removed some effects of brain damage, see minor changelog for details
+(+)As brain damage increases, you will now experience effects such as impaired speech, vomiting, messages about your head hurting, going blind temporarily, and being unable to hear others. Effects increment at every 20 value increase of brain damage
+(+)You no longer randomly speak over the radio if you have brain damage
+(+)The "blank expression" description for someone with brain damage now only appears if they have lethal (100) brain damage or Expresso in them
 (t)tue jul 08 25
 (u)JORJ949
 (p)24033
