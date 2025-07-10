@@ -100,26 +100,4 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  */
 /client/proc/on_logout()
 	SHOULD_CALL_PARENT(TRUE)
-
-	boutput(src, {"
-		<div style='border: 2px solid green; margin: 0.5em 0;'>
-			<div style="color: black; background: #8f8; font-weight: bold; border-bottom: 1px solid green; text-align: center; padding: 0.2em 0.5em;">
-				Logged out
-			</div>
-			<div style="padding: 0.2em 0.5em; text-align: center;">
-				You have been logged out. Goodbye!
-			</div>
-		</div>
-		"}, forceScroll=TRUE)
 	if (src) del(src)
-
-/**
- * Client auth logout verb
- *
- * This is a verb that is used to logout the client.
- */
-/client/verb/auth_logout()
-	set name = ".authlogout"
-	set hidden = TRUE
-	if (src.client_auth_provider.can_logout)
-		src.client_auth_provider.logout()

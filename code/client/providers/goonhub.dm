@@ -8,6 +8,7 @@
 /datum/client_auth_provider/goonhub/New(client/owner)
 	. = ..()
 	src.owner.verbs += list(/client/proc/open_goonhub_auth)
+	src.setup_logout()
 	src.hide_ui()
 	src.show_wrapper()
 	if (src.begin_auth())
@@ -24,6 +25,14 @@
 	if (href_list["logout"])
 		src.on_logout()
 
+/**
+	* On error
+	*
+	* Called when the auth process errors
+	*
+	* Arguments:
+	* * error (string) - The error message
+*/
 /datum/client_auth_provider/goonhub/proc/on_error(error)
 	src.owner << output(list2params(list(error)), "mainwindow.authwrapper:GoonhubAuth.onError")
 
@@ -121,13 +130,33 @@
 
 	src.hide_ui()
 
-/datum/client_auth_provider/goonhub/logout()
-	. = ..()
-	src.show_external("logout")
+// /datum/client_auth_provider/goonhub/logout()
+// 	. = ..()
+// 	src.owner << output(null, "authlogout.browser:doLogout")
 
 /datum/client_auth_provider/goonhub/on_logout()
 	src.hide_ui()
 	. = ..()
+
+/**
+	* Setup logout
+	*
+	* Sets up the logout page
+	*/
+/datum/client_auth_provider/goonhub/proc/setup_logout()
+	var/html = grabResource("html/auth/goonhub/logout.html")
+	html = replacetext(html, "{$goonhub_url}", config.goonhub_url)
+	html = replacetext(html, "{$ref}", "\ref[src]")
+	src.owner << browse(html, list2params(list(
+		"window" = "authlogout",
+		"size" = "1x1",
+		"can_close" = FALSE,
+		"can_resize" = FALSE,
+		"can_minimize" = FALSE,
+		"titlebar" = FALSE,
+	)))
+	winshow(src.owner, "authlogout", FALSE)
+	winset(src.owner, "menu.auth_logout", "command=\".output authlogout.browser:doLogout\"")
 
 /**
 	* Show wrapper
@@ -135,9 +164,9 @@
 	* Shows the wrapper UI for the auth process
 	*/
 /datum/client_auth_provider/goonhub/proc/show_wrapper()
-	var/html = grabResource("html/goonhub_auth.html")
-	html = replacetext(html, "{ref}", "\ref[src]")
-	html = replacetext(html, "{timeout}", src.timeout / 10)
+	var/html = grabResource("html/auth/goonhub/wrapper.html")
+	html = replacetext(html, "{$ref}", "\ref[src]")
+	html = replacetext(html, "{$timeout}", src.timeout / 10)
 
 	if (!cdn)
 		src.owner.loadResourcesFromList(list(
@@ -151,11 +180,10 @@
 		"parent" = "mainwindow",
 		"type" = "browser",
 		"pos" = "0,0",
-		"size" = "-1x-1",
+		"size" = "0x0",
 		"anchor1" = "0,0",
 		"anchor2" = "100,100",
 		"background-color" = "#0f0f0f",
-		"is-visible" = TRUE,
 	)))
 
 	src.owner << browse(html, "window=mainwindow.authwrapper")
@@ -177,7 +205,6 @@
 		"pos" = "0,0",
 		"size" = "1x1",
 		"background-color" = "#0f0f0f",
-		"is-visible" = route != "logout",
 	)))
 	src.owner << browse(
 		{"<html style="background-color: #0f0f0f;"><head><meta http-equiv="refresh" content="0; url=[url]" /></head></html>"},

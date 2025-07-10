@@ -210,6 +210,7 @@
 	// TODO: is this necessary?
 	if (config.rsc) src.preload_rsc = config.rsc
 
+	src.volumes = default_channel_volumes.Copy()
 	src.chatOutput = new /datum/chatOutput(src)
 	src.sync_dark_mode(TRUE)
 
@@ -232,7 +233,6 @@
 	src.initSizeHelpers()
 	src.tooltipHolder = new /datum/tooltipHolder(src)
 	src.tooltipHolder.clearOld()
-	src.volumes = default_channel_volumes.Copy()
 	src.initialize_interface()
 
 	if (isnewplayer(src.mob))

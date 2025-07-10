@@ -682,6 +682,18 @@ function toggleWasd(state) {
   opts.wasd = state == 'on' ? true : false;
 }
 
+function showLogoutMessage() {
+  var message = `<div style='border: 2px solid green; margin: 0.5em 0;'>
+    <div style="color: black; background: #8f8; font-weight: bold; border-bottom: 1px solid green; text-align: center; padding: 0.2em 0.5em;">
+      Logged out
+    </div>
+    <div style="padding: 0.2em 0.5em; text-align: center;">
+      You have been logged out. Goodbye!
+    </div>
+  </div>`;
+  output(message);
+}
+
 /*****************************************
  *
  * DOM READY
