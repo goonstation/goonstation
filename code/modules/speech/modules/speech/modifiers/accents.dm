@@ -396,7 +396,10 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 		else if (char > 127)
 			output += ascii2text(char)
 
-	message.content = jointext(output, "")
+	if(!output.len)
+		message.content = "😶"
+	else
+		message.content = jointext(output, "")
 
 
 /datum/speech_module/modifier/accent/error
