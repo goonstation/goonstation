@@ -384,6 +384,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 /datum/speech_module/modifier/accent/emoji/only/process(datum/say_message/message)
 	message = ..()
+	. = message
 
 	var/processed = message.content
 	var/list/output = list()
