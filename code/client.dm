@@ -338,12 +338,9 @@
 			//Load the preferences up here instead.
 			if(!preferences.savefile_load(src))
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
-				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
 				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
 				boutput(src, SPAN_ALERT("Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!"))
-				//hey maybe put some 'new player mini-instructional' prompt here
-				//ok :)
 				is_newbie = 1
 #endif
 			else if(!src.holder)
@@ -430,7 +427,7 @@
 
 		set_splitter_orientation(0, splitter_value)
 		src.set_widescreen(1, splitter_value)
-		winset( src, "menu", "horiz_split.is-checked=true" )
+		winset( src, "menu.horiz_split", "is-checked=true" )
 
 	//End widescreen stuff
 
@@ -568,7 +565,7 @@
 		SPAWN(6 SECONDS)
 			if(tgui_alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is recommended for your display. Activate Horizontal Split?", "Recommended option", list("Yes", "No")) == "Yes")
 				set_splitter_orientation(0)
-				winset( src, "menu", "horiz_split.is-checked=true" )
+				winset( src, "menu.horiz_split", "is-checked=true" )
 
 /client/proc/checkHiRes(list/params)
 	if(!length(params))
@@ -1127,12 +1124,12 @@ var/global/curr_day = null
 	widescreen = wide
 	if (widescreen)
 		src.view = "[WIDE_TILE_WIDTH]x[SQUARE_TILE_WIDTH]"
-		winset( src, "menu", "set_wide.is-checked=true" )
+		winset( src, "menu.set_wide", "is-checked=true" )
 		if (vert_split)
 			winset( src, "mainwindow.mainvsplit", "splitter=[splitter_value ? splitter_value : 70]" )
 	else
 		src.view = 7
-		winset( src, "menu", "set_wide.is-checked=false" )
+		winset( src, "menu.set_wide", "is-checked=false" )
 		if (vert_split)
 			winset( src, "mainwindow.mainvsplit", "splitter=[splitter_value ? splitter_value : 50]" )
 
@@ -1174,7 +1171,7 @@ var/global/curr_day = null
 
 /client/proc/set_controls(var/tg)
 	tg_controls = tg
-	winset( src, "menu", "tg_controls.is-checked=[tg ? "true" : "false"]" )
+	winset( src, "menu.tg_controls", "is-checked=[tg ? "true" : "false"]" )
 
 	src.mob.reset_keymap()
 
@@ -1187,7 +1184,7 @@ var/global/curr_day = null
 
 /client/proc/set_layout(var/tg)
 	tg_layout = tg
-	winset( src, "menu", "tg_layout.is-checked=[tg ? "true" : "false"]" )
+	winset( src, "menu.tg_layout", "is-checked=[tg ? "true" : "false"]" )
 
 	if (istype(mob,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
