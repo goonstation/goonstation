@@ -75,13 +75,13 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 /client/proc/on_auth()
 	SHOULD_CALL_PARENT(TRUE)
 
-	src.client_auth_provider.post_auth()
-
 	for (var/datum/client_auth_gate/gate in post_auth_gates)
 		if (!gate.check(src))
+			src.client_auth_provider.post_auth_failed()
 			gate.fail(src)
 			return CLIENT_AUTH_FAILED
 
+	src.client_auth_provider.post_auth()
 	src.post_auth()
 
 /*

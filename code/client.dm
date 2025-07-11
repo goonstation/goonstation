@@ -251,6 +251,7 @@
 
 	src.authenticated = TRUE
 	src.chatOutput.start()
+	src.send_lobby_text()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
 	src.player.id = src.client_auth_intent.player_id || 0

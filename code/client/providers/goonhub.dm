@@ -122,6 +122,9 @@
 
 	src.hide_ui()
 
+/datum/client_auth_provider/goonhub/post_auth_failed()
+	src.hide_ui()
+
 /datum/client_auth_provider/goonhub/on_logout()
 	src.hide_ui()
 	. = ..()
