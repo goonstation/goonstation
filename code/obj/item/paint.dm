@@ -71,7 +71,7 @@
 
 //This is me being mean to the players.
 /obj/machinery/vending/paint/broken
-	name = "Broken Paint Dispenser"
+	name = "\improper Broken Paint Dispenser"
 	desc = "Would dispense paint, if it were not broken."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
@@ -277,7 +277,7 @@
 		src.update_name()
 
 	proc/update_name()
-		src.name = src.stage_names[src.repair_stage]
+		src.name = "\improper [src.stage_names[src.repair_stage]]"
 		src.desc = src.stage_desc[src.repair_stage]
 
 TYPEINFO(/obj/item/tile/paintmachine)
