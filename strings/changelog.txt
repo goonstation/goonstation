@@ -1,4 +1,10 @@
 
+(t)fri jul 11 25
+(u)RubberRats
+(p)24094
+(e)🪲💅💊|C-Bug, C-QoL, A-Medical
+(+)Frontal Gyrus Alteration Type-🤪 should now work again 🎉💬
+(+)Frontal Gyrus Alteration Type-🤪 now gives a blank 😶 message if it completely eats what you were going to say.
 (t)thu jul 10 25
 (u)JORJ949
 (p)24002
