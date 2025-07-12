@@ -53,7 +53,7 @@
 /area/dmm_suite/clear_area)
 "x" = (
 /obj/decal/cleanable/cobweb2,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /obj/machinery/light/small/sticky/warm{
 	dir = 1
 	},
