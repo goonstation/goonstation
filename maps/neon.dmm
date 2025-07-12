@@ -802,6 +802,7 @@
 /area/station/hallway/primary/central)
 "aEM" = (
 /obj/machinery/light_switch/north,
+/obj/landmark/start/job/journalist,
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/radiostation/bedroom)
 "aEU" = (
@@ -2734,7 +2735,6 @@
 /obj/stool/chair/dining/wood{
 	dir = 1
 	},
-/obj/landmark/latejoin_job/journalist,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "cjb" = (
