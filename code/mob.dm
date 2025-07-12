@@ -936,8 +936,8 @@ TYPEINFO(/mob)
 /mob/verb/list_medals()
 	set name = "Medals"
 
-	if (IsGuestKey(src.key))
-		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to view your medals."))
 		return
 
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
@@ -1092,7 +1092,7 @@ TYPEINFO(/mob)
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss=FALSE)
 	hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)

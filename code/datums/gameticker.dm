@@ -290,14 +290,6 @@ var/global/game_force_started = FALSE
 			if(lobby_player.client)
 				lobby_player.update_joinmenu()
 
-		//Setup the hub site logging
-		var hublog_filename = "data/stats/data.txt"
-		if (fexists(hublog_filename))
-			fdel(hublog_filename)
-
-		hublog = file(hublog_filename)
-		hublog << ""
-
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 		roundManagement.recordUpdate(mode)
@@ -355,9 +347,9 @@ var/global/game_force_started = FALSE
 			try
 				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
 			catch (var/exception/e)
-				logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
-				logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
-				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_ADMIN, null, "The automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_DIARY, null, "The automated map switch vote couldn't run because: [e.name]", "admin")
+				message_admins("The automated map switch vote couldn't run because: [e.name]")
 
 /datum/controller/gameticker
 	proc/distribute_jobs()

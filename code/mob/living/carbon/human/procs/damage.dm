@@ -387,6 +387,11 @@
 					if(prob(20))
 						make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
 					qdel(P)
+				else if (tox > 30 && prob(tox) && !disallow_limb_loss)
+					src.visible_message(SPAN_ALERT("[src.name]'s [initial(P.name)] turns to sludge!"))
+					P.remove(FALSE)
+					make_cleanable(/obj/decal/cleanable/molten_item{name="gooey green mass";color="#00AA00"}, get_turf(src))
+					qdel(P)
 
 	// roll a quick death roll if you're already really beat up
 	// same as the standard death rolls, but an additional penalty percentage is added, based on damage taken:
@@ -643,6 +648,20 @@
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
 		src.visible_message(SPAN_ALERT("<b>[src.name]</b> goes limp, their facial expression utterly blank."))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, death))
+
+
+	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+		if (src.listen_tree && !src.listen_tree.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
+			src.listen_tree.AddListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
+			src.change_misstep_chance(66)
+	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_SEVERE && src.listen_tree?.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
+		src.listen_tree.RemoveListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
+		src.change_misstep_chance(-66)
+
+	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_MODERATE && !(locate(/datum/lifeprocess/brain) in src.lifeprocesses))
+		src.add_lifeprocess(/datum/lifeprocess/brain)
+	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_MODERATE)
+		src.remove_lifeprocess(/datum/lifeprocess/brain)
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)
