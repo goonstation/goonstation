@@ -9,14 +9,6 @@
 	region = ABDOMINAL
 	var/digestion_efficiency = 1
 
-	// on_transplant()
-	// 	..()
-	// 	if (src.donor)
-	// 		for (var/datum/ailment_data/disease in src.donor.ailments)
-	// 			if (disease.cure == "Intestine Transplant")
-	// 				src.donor.cure_disease(disease)
-	// 		return
-
 	on_transplant(mob/M)
 		. = ..()
 		if(!broken)
