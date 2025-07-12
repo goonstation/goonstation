@@ -24,7 +24,7 @@ type Status = {
   color: string;
 };
 
-export const ManualAnnouncement = (_props, context) => {
+export const ManualAnnouncement = (_props) => {
   const { act, data } = useBackend<AnnouncementCompData>();
   const { card_name, status_message, time, max_length } = data;
 
@@ -33,7 +33,7 @@ export const ManualAnnouncement = (_props, context) => {
 
   let status: Status = getStatus(input, max_length, status_message, time);
 
-  const onChange = () => {
+  const handleBlur = () => {
     if (input === oldInput) {
       return;
     }
@@ -47,11 +47,9 @@ export const ManualAnnouncement = (_props, context) => {
     setOldInput('');
   };
 
-  const onType = (event) => {
-    event.preventDefault();
-    const target = event.target;
-    setInput(target.value);
-    status = getStatus(input, max_length, status_message, time);
+  const handleType = (value: string) => {
+    setInput(value);
+    status = getStatus(input, max_length, status_message, time); // TODO: status should not be changed like this
   };
 
   return (
@@ -72,8 +70,8 @@ export const ManualAnnouncement = (_props, context) => {
           <Input
             autoFocus
             fluid
-            onInput={(e) => onType(e)}
-            onChange={() => onChange()}
+            onChange={handleType}
+            onBlur={handleBlur}
             placeholder="Type something..."
             value={input}
           />

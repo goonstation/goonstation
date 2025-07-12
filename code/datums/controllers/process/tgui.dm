@@ -16,28 +16,19 @@ var/global/datum/controller/process/tgui/tgui_process
 	var/list/all_uis = list()
 	/// The HTML base used for all UIs.
 	var/basehtml
-	/// The polyfills uses for all UIs |GOONSTATION-ADD|
-	var/polyfill
+
 
 /datum/controller/process/tgui/setup()
 	name = "tgui"
 	schedule_interval = 0.9 SECONDS
 	try
 		basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-CHANGE|
-		polyfill = grabResource("tgui/tgui-polyfill.min.js") // |GOONSTATION-CHANGE|
-		polyfill = "<script>\n[polyfill]\n</script>"
-		setupBaseHtml()
 	catch(var/exception/e)
 		stack_trace("Unable to load tgui.html, retrying in 10 seconds.\n[e]")
 		SPAWN(10 SECONDS)
 			basehtml = grabResource("tgui/tgui.html")
-			polyfill = grabResource("tgui/tgui-polyfill.min.js")
-			polyfill = "<script>\n[polyfill]\n</script>"
-			setupBaseHtml()
-	global.tgui_process = src
 
-/datum/controller/process/tgui/proc/setupBaseHtml()
-	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
+	global.tgui_process = src
 
 /datum/controller/process/tgui/copyStateFrom(datum/controller/process/target)
 	var/datum/controller/process/tgui/old_tgui = target
