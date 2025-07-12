@@ -249,7 +249,7 @@
 		..()
 		if (src.active)
 			return
-		if (istype(A, /obj/item/bballbasket)) // oh for FUCK'S SAKE
+		if (istypes(A, list(/obj/item/bballbasket, /obj/item/dummy))) // oh for FUCK'S SAKE
 			return // NO
 		if (isitem(A))
 			src.shoot(A)
