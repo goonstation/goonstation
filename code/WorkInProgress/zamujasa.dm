@@ -1642,7 +1642,7 @@ Other Goonstation servers:[serverList]</span>"})
 	matter_remove_light_fixture = 1
 	time_remove_light_fixture = 0
 
-
+	forbidden_walltypes = list()
 
 
 
