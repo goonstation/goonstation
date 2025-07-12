@@ -47,23 +47,29 @@
 
 	html = replacetext(html, "<!--add_html-->", src.add_html)
 	last_pregame_html = html
-
-	for(var/client/C)
-		if(istype(C.mob, /mob/new_player))
-			if (!cdn)
-				var/list/resources = list("browserassets/src/misc/ibmvga9.ttf")
-				if (src.image_url)
-					resources += "browserassets/src/[src.image_url]"
-				if (src.overlay_image_url)
-					resources += "browserassets/src/[src.overlay_image_url]"
-				C.loadResourcesFromList(resources)
-
-			C << browse(last_pregame_html, "window=pregameBrowser")
-			if(C)
-				winshow(C, "pregameBrowser", 1)
-				var/mob/new_player/new_player = C.mob
-				new_player.pregameBrowserLoaded = TRUE
 	pregameHTML = last_pregame_html
+
+	var/list/resources = list()
+	if (!cdn)
+		resources = list("browserassets/src/misc/ibmvga9.ttf")
+		if (src.image_url) resources += "browserassets/src/[src.image_url]"
+		if (src.overlay_image_url) resources += "browserassets/src/[src.overlay_image_url]"
+
+	for (var/client/C)
+		if (C && isnewplayer(C.mob))
+			if (!cdn) C.loadResourcesFromList(resources)
+			C.load_pregame()
+
+/client/proc/load_pregame()
+	#ifndef NO_PREGAME_HTML
+	if (!pregameHTML || !src) return
+	src << browse(pregameHTML, "window=pregameBrowser")
+	winshow(src, "pregameBrowser", TRUE)
+
+	if (isnewplayer(src.mob))
+		var/mob/new_player/new_player = src.mob
+		new_player.pregameBrowserLoaded = TRUE
+	#endif
 
 /datum/titlecard/proc/set_maptext(id, text)
 	maptext_areas[id] = text
@@ -74,33 +80,29 @@
 		return
 #endif
 	if (last_pregame_html == pregameHTML)
-		for(var/client/C)
-			if(istype(C.mob, /mob/new_player))
+		for (var/client/C)
+			if (isnewplayer(C.mob))
 				var/mob/new_player/new_player = C.mob
-				if(new_player.pregameBrowserLoaded)
+				if (new_player.pregameBrowserLoaded)
 					C << output(list2params(list(id, text)), "pregameBrowser:set_area")
 
 /client/verb/send_lobby_text()
 	set name = ".send-lobby-text"
 	set hidden = 1
 
-	if (!istype(src?.mob, /mob/new_player))
-		return
-
+	if (!isnewplayer(src?.mob)) return
 	lobby_titlecard.send_lobby_text(src)
 
 /datum/titlecard/proc/send_lobby_text(client/C)
-	if (last_pregame_html != pregameHTML)
-		return
-	if(isnull(pregameHTML))
-		return
+	if (last_pregame_html != pregameHTML) return
+	if (isnull(pregameHTML)) return
 
 #ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	if(current_state <= GAME_STATE_PREGAME)
-		return
+	if (current_state <= GAME_STATE_PREGAME) return
 #endif
+
 	var/mob/new_player/new_player = C.mob
-	if(istype(new_player) && new_player.pregameBrowserLoaded)
+	if (istype(new_player) && new_player.pregameBrowserLoaded)
 		var/list/to_send = maptext_areas
 		to_send["auth"] = !C.authenticated ? "Please authenticate to play. To re-open the login window, <a href='byond://winset?command=goonhub-auth'>click here</a>." : ""
 		to_send["tip"] = C.authenticated ? src.get_tip(new_player) : ""

@@ -1,9 +1,10 @@
 <!doctype html>
-<html>
+<html class="{theme}">
   <head>
     <title>Chat</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="color-scheme" content="light dark" />
     <style>
       @font-face {
         font-family: 'Twemoji';
@@ -13,6 +14,18 @@
             format('embedded-opentype'),
           url('{{resource("css/fonts/Twemoji.ttf")}}') format('truetype');
         text-rendering: optimizeLegibility;
+      }
+
+      html {
+        background: #fff;
+        color: #000;
+        color-scheme: light;
+      }
+
+      html.theme-dark {
+        background-color: #23272a;
+        color: #dfdfcf;
+        color-scheme: dark;
       }
     </style>
     <link
@@ -25,10 +38,6 @@
       type="text/css"
       href="{{resource('css/browserOutput.css')}}"
     />
-    <script
-      type="text/javascript"
-      src="{{resource('vendor/js/jquery.min.js')}}"
-    ></script>
   </head>
   <body>
     <div id="loading">
@@ -89,6 +98,10 @@
     </div>
     <audio id="play-music" class="hidden" autoplay></audio>
 
+    <script
+      type="text/javascript"
+      src="{{resource('vendor/js/jquery.min.js')}}"
+    ></script>
     <script
       type="text/javascript"
       src="{{resource('js/errorHandler.js')}}"

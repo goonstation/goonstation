@@ -97,12 +97,16 @@ var/global
 				"browserassets/src/css/fonts/fontawesome-webfont.eot",
 				"browserassets/src/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/src/css/fonts/fontawesome-webfont.woff",
+				"browserassets/src/css/fonts/Twemoji.eot",
+				"browserassets/src/css/fonts/Twemoji.ttf",
 				"browserassets/src/vendor/css/font-awesome.css",
 				"browserassets/src/css/browserOutput.css"
 			)
 			src.owner.loadResourcesFromList(chatResources)
 
-		src.owner << browse(grabResource("html/browserOutput.html"), "window=browseroutput")
+		var/html = grabResource("html/browserOutput.html")
+		html = replacetext(html, "{theme}", src.owner.darkmode ? "theme-dark" : "theme-default")
+		src.owner << browse(html, "window=browseroutput")
 		winshow(src.owner, "browseroutput", TRUE)
 
 		if (src.loadAttempts < 5) //To a max of 5 load attempts
@@ -122,14 +126,14 @@ var/global
 	if (src.owner && !src.loaded)
 		src.loaded = 1
 		winset(src.owner, "browseroutput", "is-disabled=false")
-		src.changeTheme(src.owner.darkmode ? "theme-dark" : "theme-default")
-		//if (src.owner.holder)
 		src.loadAdmin()
 		if (src.messageQueue)
 			for (var/list/message in src.messageQueue)
 				boutput(src.owner, message["message"], message["group"])
 		src.messageQueue = null
 		src.sendClientData()
+		SEND_SIGNAL(src.owner, COMSIG_CLIENT_CHAT_LOADED, src)
+
 		/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
 		SPAWN(1 MINUTE) //60 seconds
 			if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file

@@ -25,7 +25,8 @@ TYPEINFO(/obj/submachine/claw_machine)
 	/obj/item/toy/plush/small/kitten/wizard,\
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
-	/obj/item/toy/plush/small/penguin/cool)
+	/obj/item/toy/plush/small/penguin/cool,\
+	/obj/item/toy/plush/small/shelterfrog)
 	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
 	/obj/item/toy/plush/small/tuba,\
 	/obj/item/toy/plush/small/chris,\
@@ -281,6 +282,26 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/penguin/cool
 	name = "super cool penguin plush toy"
 	icon_state = "penguin_cool"
+
+/obj/item/toy/plush/small/shelterfrog
+	name = "shelterfrog plush toy"
+	icon_state = "shelterfrog"
+
+/obj/item/toy/plush/small/shelterfrog/attack_self(mob/user as mob)
+	if (!ON_COOLDOWN(src,"ribbit",2 SECONDS))
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.sims)
+				H.sims.affectMotive("fun", 1)
+		src.ribbit()
+		src.add_fingerprint(user)
+		animate_door_squeeze(src)
+		user.visible_message(SPAN_EMOTE("[user] squeezes the [src], and it croaks. Wow!"))
+	return
+
+/obj/item/toy/plush/small/shelterfrog/proc/ribbit()
+	playsound(src, 'sound/misc/croak.ogg', 50, TRUE)
+
 
 /obj/item/toy/plush/small/orca
 	name = "Lilac the orca"

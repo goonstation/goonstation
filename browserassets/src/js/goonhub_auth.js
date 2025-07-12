@@ -1,11 +1,11 @@
 (function () {
   const authPlace = document.getElementById('auth-place');
   const errorMessage = document.getElementById('error-message');
-  const dpr = window.devicePixelRatio;
   const manualResize = !window.ResizeObserver;
-  document.documentElement.style.setProperty('--dpr', dpr);
+  let isWindowResizing = false;
 
   function positionExternal() {
+    const dpr = window.devicePixelRatio;
     const box = authPlace.getBoundingClientRect();
     window.location =
       'byond://winset?id=mainwindow.authexternal;size=' +
@@ -16,20 +16,29 @@
       box.left * dpr +
       ',' +
       box.top * dpr;
+    document.documentElement.style.setProperty('--dpr', dpr);
   }
 
   if (!manualResize) {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        if (entry.target === authPlace) {
+        if (entry.target === authPlace && !isWindowResizing) {
           positionExternal();
         }
       }
     });
     resizeObserver.observe(authPlace);
-  } else {
-    window.addEventListener('resize', positionExternal);
   }
+
+  let resizeTimeout = 0;
+  window.addEventListener('resize', () => {
+    isWindowResizing = true;
+    positionExternal();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      isWindowResizing = false;
+    }, 100);
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {

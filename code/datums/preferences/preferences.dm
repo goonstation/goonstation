@@ -146,8 +146,12 @@ var/list/removed_jobs = list(
 			ui = new(user, src, "CharacterPreferences")
 			ui.set_autoupdate(FALSE)
 			ui.open()
-		SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
-			src.update_preview_icon() //apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
+			if (isnull(src.preview))
+				src.preview = new(user.client, ui.window.id, "preferences_character_preview")
+			SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
+				//apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
+				src.preview.add_background()
+				src.update_preview_icon()
 
 	ui_close(mob/user)
 		. = ..()
@@ -176,11 +180,6 @@ var/list/removed_jobs = list(
 		)
 
 	ui_data(mob/user)
-		if (isnull(src.preview))
-			src.preview = new(user.client, "preferences", "preferences_character_preview")
-			src.preview.add_background()
-			src.update_preview_icon()
-
 		var/client/client = ismob(user) ? user.client : user
 		if (!client)
 			return
@@ -222,7 +221,7 @@ var/list/removed_jobs = list(
 			"profileName" = src.profile_name,
 			"profileModified" = src.profile_modified,
 
-			"preview" = src.preview?.preview_id,
+			"preview" = "preferences_character_preview",
 
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,

@@ -8,10 +8,8 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
-  color: #000000;
 }
 body {
-  background: #fff;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Twemoji',
     'Segoe UI Emoji';
   font-size: 12px;
@@ -921,190 +919,26 @@ h2.asyn {
   color: #ff6a00;
 }
 
-/* bog-standard dark theme with easy, unsaturated colors */
-body.theme-dark {
-  background-color: #23272a;
-  color: #dfdfcf;
+.auth-message {
+  border: 2px solid green;
+  margin: 0.5em 0;
+  text-align: center;
 }
-body.theme-dark .odd-highlight {
-  background-color: #191c20;
+.auth-message__title {
+  color: black;
+  background: #8f8;
+  font-weight: bold;
+  border-bottom: 1px solid green;
+  padding: 0.2em 0.5em;
 }
-body.theme-dark .regular {
-  color: #dfdfcf;
-}
-body.theme-dark .mhelp {
-  color: #e75ae0;
-}
-body.theme-dark .ahelp {
-  color: #ffa135;
-}
-body.theme-dark .notice {
-  color: #7996ff;
-}
-body.theme-dark .hint {
-  color: #7996ff;
-}
-body.theme-dark .internal {
-  color: #92b4ff;
-}
-body.theme-dark .alert {
-  color: #ff6d6d;
-}
-body.there-dark .arthint {
-  color: #5a1d8a;
-}
-body.theme-dark .system {
-  color: #ff6d6d;
-}
-body.theme-dark .success {
-  color: #92e592;
-}
-body.theme-dark .emote {
-  color: #888888;
-}
-body.theme-dark .subtle {
-  color: #7a7471;
-}
-body.theme-dark .ooc {
-  color: #688eff;
-}
-body.theme-dark .looc {
-  color: #92a9ee;
-}
-body.theme-dark .newbeeooc {
-  color: #29ab87;
-}
-body.theme-dark .newbeelooc {
-  color: #8bc16e;
-}
-body.theme-dark .adminooc {
-  color: #be6e53;
-}
-body.theme-dark .adminlooc {
-  color: #ce8c76;
-}
-body.theme-dark .mentorooc {
-  color: #a653ff;
-}
-body.theme-dark .mentorlooc {
-  color: #be81ff;
-}
-body.theme-dark .medal {
-  color: #caca20;
-}
-body.theme-dark .motd {
-  color: rgb(190, 190, 190);
-}
-body.theme-dark .motd h1,
-body.theme-dark .motd h2,
-body.theme-dark .motd h3,
-body.theme-dark .motd h4,
-body.theme-dark .motd h5,
-body.theme-dark .motd h6 {
-  color: rgb(255, 255, 255);
-}
-body.theme-dark .motd a,
-body.theme-dark .motd a:link,
-body.theme-dark .motd a:visited {
-  color: rgb(100, 100, 255);
-}
-body.theme-dark .motd a:active,
-body.theme-dark .motd a:hover {
-  color: rgb(48, 48, 223);
-}
-body.theme-dark .internal.boldnshit {
-  color: rgb(95, 95, 253);
-}
-body.theme-dark .green {
-  color: #3fcc3f;
-}
-body.theme-dark .radio {
-  color: #3fcc3f;
-}
-body.theme-dark .contextMenu {
-  background-color: rgb(48, 48, 48);
-}
-body.theme-dark .contextMenu a {
-  color: rgb(216, 216, 216);
-}
-body.theme-dark .contextMenu a:hover {
-  background-color: rgb(92, 92, 92);
-}
-body.theme-dark .popup {
-  background-color: rgb(48, 48, 48);
-}
-body.theme-dark .popup .close {
-  background: #333;
-  color: #aaa;
-}
-body.theme-dark .popup .close:hover {
-  background: #444;
-}
-body.theme-dark .popup .head {
-  background: rgb(22, 22, 22);
-  color: #ddd;
-  border-bottom: 2px solid rgb(3, 80, 3);
-}
-body.theme-dark .popup input {
-  border: 1px solid rgb(104, 104, 104);
-  background: rgb(61, 61, 61);
-  color: rgb(204, 204, 204);
-}
-body.theme-dark .popup input[type='text']:hover,
-body.theme-dark .popup input[type='text']:active,
-body.theme-dark .popup input[type='text']:focus {
-  border-color: green;
-}
-body.theme-dark .popup input[type='submit'] {
-  background: rgb(70, 70, 70);
-  color: #ddd;
-}
-body.theme-dark .popup input[type='submit']:hover,
-body.theme-dark .popup input[type='submit']:focus,
-body.theme-dark .popup input[type='submit']:active {
-  background: rgb(75, 75, 75);
+.auth-message__content {
+  padding: 0.2em 0.5em;
 }
 
-body.theme-dark a {
-  color: #6464ff;
-}
-body.theme-dark a:visited {
-  color: #ae6fff;
-}
-body.theme-dark h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #6464ff;
-}
-body.theme-dark #messages .entry > .streak-counter {
+/* bog-standard dark theme with easy, unsaturated colors */
+html.theme-dark {
+  background-color: #23272a;
   color: #dfdfcf;
-  border: 1px solid rgb(94, 94, 94);
-}
-body.theme-dark #newMessages {
-  background: rgb(63, 63, 63);
-  color: rgb(221, 221, 221);
-}
-body.theme-dark #newMessages:hover {
-  background: rgb(83, 83, 83);
-}
-body.theme-dark #ping {
-  background: #34393d;
-}
-body.theme-dark #options a {
-  background: #34393d;
-  color: rgb(189, 189, 189);
-  border-top: 1px solid #505050;
-}
-body.theme-dark #options a:hover {
-  background: #34393d;
-}
-body.theme-dark #options .toggle {
-  background: #34393d;
-}
-body.theme-dark {
   scrollbar-face-color: rgb(46, 46, 46);
   scrollbar-shadow-color: #4d4d4d;
   scrollbar-highlight-color: #4d4d4d;
@@ -1112,297 +946,478 @@ body.theme-dark {
   scrollbar-darkshadow-color: rgb(46, 46, 46);
   scrollbar-track-color: rgb(46, 46, 46);
   scrollbar-arrow-color: #808080;
-}
 
-body.theme-dark .admin {
-  color: #ecc300;
-}
-body.theme-dark .adminMsgWrap {
-  color: #cb79d4;
-}
-body.theme-dark .gfartooc {
-  color: #60c4e6;
-}
-body.theme-dark .gfartlooc {
-  color: #92cbdf;
-}
-body.theme-dark .gfartadmin {
-  color: #c2953c;
-}
-body.theme-dark .combat {
-  color: #e20000;
-}
-body.theme-dark .sing {
-  color: #d8bfd8;
-}
-body.theme-dark .robotsing {
-  color: #e0ffff;
-}
-body.theme-dark .blobsay {
-  color: #111;
-  background-color: #4ec44e;
-}
-body.theme-dark .bugsay {
-  color: #ea5d17;
-}
-body.theme-dark .deadsay {
-  color: #b27eff;
-}
-body.theme-dark .hivesay {
-  color: #e2a059;
-}
-body.theme-dark .thrallsay {
-  color: white;
-  background-color: #6f00a7;
-}
-body.theme-dark .wraithsay {
-  color: #b27eff;
-  background-color: #640000;
-}
-body.theme-dark .kudzusay {
-  color: #111;
-  background-color: #7b8f68;
-}
-body.theme-dark .crabsay {
-  color: #111;
-  background-color: #ac3232;
-}
-body.theme-dark .crabsay a {
-  color: #0000ff;
-}
-body.theme-dark .astralsay {
-  color: #60d4cf;
-}
-body.theme-dark .martiansay {
-  color: #e89235;
-} /* #BD33D9 is the telepathy colour, possibly more suitable? */
-body.theme-dark .martianimperial {
-  color: #e26794;
-}
-body.theme-dark .flocksay {
-  color: #6fbbac;
-}
-body.theme-dark .flocksay a {
-  color: #6dc0af;
-}
-body.theme-dark .flocksay a:visited {
-  color: #6ec2b1;
-}
-body.theme-dark .flocksay.sentient {
-  color: #111;
-  background-color: #82dbc8;
-}
-body.theme-dark .flocksay.sentient.flockmind {
-  font-size: 120%;
-}
-body.theme-dark .flocknpc {
-  color: #afc9c3;
-}
-body.theme-dark .ghostdronesay {
-  color: #ca4ed8;
-}
-body.theme-dark .roboticsay {
-  color: #111;
-  background-color: #c4c3c3;
-}
-body.theme-dark h1.alert {
-  color: #cfcfcf;
-}
-body.theme-dark h2.alert {
-  color: #cfcfcf;
-}
-body.theme-dark .adminHearing .name[data-ctx] {
-  border-bottom: 1px dotted rgb(219, 219, 219);
-}
-body.theme-dark .blobalert {
-  color: #9c74fc;
-}
-body.theme-dark .lawupdate {
-  color: #6464ff;
-}
-body.theme-dark .helpmsg {
-  color: #98bdc2;
-  border: 1px solid #98bdc2;
-}
+  .odd-highlight {
+    background-color: #191c20;
+  }
+  .regular {
+    color: #dfdfcf;
+  }
+  .mhelp {
+    color: #e75ae0;
+  }
+  .ahelp {
+    color: #ffa135;
+  }
+  .notice {
+    color: #7996ff;
+  }
+  .hint {
+    color: #7996ff;
+  }
+  .internal {
+    color: #92b4ff;
+  }
+  .alert {
+    color: #ff6d6d;
+  }
+  .arthint {
+    color: #5a1d8a;
+  }
+  .system {
+    color: #ff6d6d;
+  }
+  .success {
+    color: #92e592;
+  }
+  .emote {
+    color: #888888;
+  }
+  .subtle {
+    color: #7a7471;
+  }
+  .ooc {
+    color: #688eff;
+  }
+  .looc {
+    color: #92a9ee;
+  }
+  .newbeeooc {
+    color: #29ab87;
+  }
+  .newbeelooc {
+    color: #8bc16e;
+  }
+  .adminooc {
+    color: #be6e53;
+  }
+  .adminlooc {
+    color: #ce8c76;
+  }
+  .mentorooc {
+    color: #a653ff;
+  }
+  .mentorlooc {
+    color: #be81ff;
+  }
+  .medal {
+    color: #caca20;
+  }
+  .motd {
+    color: rgb(190, 190, 190);
+  }
+  .motd h1,
+  .motd h2,
+  .motd h3,
+  .motd h4,
+  .motd h5,
+  .motd h6 {
+    color: rgb(255, 255, 255);
+  }
+  .motd a,
+  .motd a:link,
+  .motd a:visited {
+    color: rgb(100, 100, 255);
+  }
+  .motd a:active,
+  .motd a:hover {
+    color: rgb(48, 48, 223);
+  }
+  .internal.boldnshit {
+    color: rgb(95, 95, 253);
+  }
+  .green {
+    color: #3fcc3f;
+  }
+  .radio {
+    color: #3fcc3f;
+  }
+  .contextMenu {
+    background-color: rgb(48, 48, 48);
+  }
+  .contextMenu a {
+    color: rgb(216, 216, 216);
+  }
+  .contextMenu a:hover {
+    background-color: rgb(92, 92, 92);
+  }
+  .popup {
+    background-color: rgb(48, 48, 48);
+  }
+  .popup .close {
+    background: #333;
+    color: #aaa;
+  }
+  .popup .close:hover {
+    background: #444;
+  }
+  .popup .head {
+    background: rgb(22, 22, 22);
+    color: #ddd;
+    border-bottom: 2px solid rgb(3, 80, 3);
+  }
+  .popup input {
+    border: 1px solid rgb(104, 104, 104);
+    background: rgb(61, 61, 61);
+    color: rgb(204, 204, 204);
+  }
+  .popup input[type='text']:hover,
+  .popup input[type='text']:active,
+  .popup input[type='text']:focus {
+    border-color: green;
+  }
+  .popup input[type='submit'] {
+    background: rgb(70, 70, 70);
+    color: #ddd;
+  }
+  .popup input[type='submit']:hover,
+  .popup input[type='submit']:focus,
+  .popup input[type='submit']:active {
+    background: rgb(75, 75, 75);
+  }
 
-body.theme-dark .connectionClosed {
-  background: rgb(192, 0, 0);
-  color: white;
-}
-body.theme-dark .fatalError {
-  background: rgb(192, 0, 0);
-  color: white;
-}
-body.theme-dark .connectionClosed.restored {
-  background: green;
-}
+  a {
+    color: #6464ff;
+  }
+  a:visited {
+    color: #ae6fff;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #6464ff;
+  }
+  #messages .entry > .streak-counter {
+    color: #dfdfcf;
+    border: 1px solid rgb(94, 94, 94);
+  }
+  #newMessages {
+    background: rgb(63, 63, 63);
+    color: rgb(221, 221, 221);
+  }
+  #newMessages:hover {
+    background: rgb(83, 83, 83);
+  }
+  #ping {
+    background: #34393d;
+  }
+  #options a {
+    background: #34393d;
+    color: rgb(189, 189, 189);
+  }
+  #options a:hover {
+    background: #34393d;
+  }
+  #options .toggle {
+    background: #34393d;
+  }
+  #options .sub a {
+    border-top: 1px solid #505050;
+  }
 
-body.theme-dark .command_alert {
-  color: #fff;
-}
+  .admin {
+    color: #ecc300;
+  }
+  .adminMsgWrap {
+    color: #cb79d4;
+  }
+  .gfartooc {
+    color: #60c4e6;
+  }
+  .gfartlooc {
+    color: #92cbdf;
+  }
+  .gfartadmin {
+    color: #c2953c;
+  }
+  .combat {
+    color: #e20000;
+  }
+  .sing {
+    color: #d8bfd8;
+  }
+  .robotsing {
+    color: #e0ffff;
+  }
+  .blobsay {
+    color: #111;
+    background-color: #4ec44e;
+  }
+  .bugsay {
+    color: #ea5d17;
+  }
+  .deadsay {
+    color: #b27eff;
+  }
+  .hivesay {
+    color: #e2a059;
+  }
+  .thrallsay {
+    color: white;
+    background-color: #6f00a7;
+  }
+  .wraithsay {
+    color: #b27eff;
+    background-color: #640000;
+  }
+  .kudzusay {
+    color: #111;
+    background-color: #7b8f68;
+  }
+  .crabsay {
+    color: #111;
+    background-color: #ac3232;
+  }
+  .crabsay a {
+    color: #0000ff;
+  }
+  .astralsay {
+    color: #60d4cf;
+  }
+  .martiansay {
+    color: #e89235;
+  } /* #BD33D9 is the telepathy colour, possibly more suitable? */
+  .martianimperial {
+    color: #e26794;
+  }
+  .flocksay {
+    color: #6fbbac;
+  }
+  .flocksay a {
+    color: #6dc0af;
+  }
+  .flocksay a:visited {
+    color: #6ec2b1;
+  }
+  .flocksay.sentient {
+    color: #111;
+    background-color: #82dbc8;
+  }
+  .flocksay.sentient.flockmind {
+    font-size: 120%;
+  }
+  .flocknpc {
+    color: #afc9c3;
+  }
+  .ghostdronesay {
+    color: #ca4ed8;
+  }
+  .roboticsay {
+    color: #111;
+    background-color: #c4c3c3;
+  }
+  h1.alert {
+    color: #cfcfcf;
+  }
+  h2.alert {
+    color: #cfcfcf;
+  }
+  .adminHearing .name[data-ctx] {
+    border-bottom: 1px dotted rgb(219, 219, 219);
+  }
+  .blobalert {
+    color: #9c74fc;
+  }
+  .lawupdate {
+    color: #6464ff;
+  }
+  .helpmsg {
+    color: #98bdc2;
+    border: 1px solid #98bdc2;
+  }
 
-body.theme-dark div.ageneral {
-  border-color: #434353;
-}
-body.theme-dark h1.ageneral {
-  background-color: #434353;
-}
-body.theme-dark h2.ageneral {
-  background-color: #535363;
-  border-color: #434353;
-}
+  .connectionClosed {
+    background: rgb(192, 0, 0);
+    color: white;
+  }
+  .fatalError {
+    background: rgb(192, 0, 0);
+    color: white;
+  }
+  .connectionClosed.restored {
+    background: green;
+  }
 
-body.theme-dark div.aanomaly {
-  border-color: #6c2b9c;
-}
-body.theme-dark h1.aanomaly {
-  background-color: #6c2b9c;
-}
-body.theme-dark h2.aanomaly {
-  background-color: #8544b5;
-  border-color: #6c2b9c;
-}
+  .command_alert {
+    color: #fff;
+  }
 
-body.theme-dark div.aweather {
-  border-color: #8211a2;
-}
-body.theme-dark h1.aweather {
-  background-color: #8211a2;
-}
-body.theme-dark h2.aweather {
-  background-color: #9c2bbc;
-  border-color: #8211a2;
-}
+  div.ageneral {
+    border-color: #434353;
+  }
+  h1.ageneral {
+    background-color: #434353;
+  }
+  h2.ageneral {
+    background-color: #535363;
+    border-color: #434353;
+  }
 
-body.theme-dark div.astation {
-  border-color: #953e19;
-}
-body.theme-dark h1.astation {
-  background-color: #953e19;
-}
-body.theme-dark h2.astation {
-  background-color: #af5833;
-  border-color: #953e19;
-}
+  div.aanomaly {
+    border-color: #6c2b9c;
+  }
+  h1.aanomaly {
+    background-color: #6c2b9c;
+  }
+  h2.aanomaly {
+    background-color: #8544b5;
+    border-color: #6c2b9c;
+  }
 
-body.theme-dark div.awatchful {
-  border-color: #6823c1;
-}
-body.theme-dark h1.awatchful {
-  background-color: #6823c1;
-}
-body.theme-dark h2.awatchful {
-  background-color: #823ddb;
-  border-color: #6823c1;
-}
+  div.aweather {
+    border-color: #8211a2;
+  }
+  h1.aweather {
+    background-color: #8211a2;
+  }
+  h2.aweather {
+    background-color: #9c2bbc;
+    border-color: #8211a2;
+  }
 
-body.theme-dark div.aegeria {
-  border-color: #ac3336;
-}
-body.theme-dark h1.aegeria {
-  background-color: #ac3336;
-}
-body.theme-dark h2.aegeria {
-  background-color: #c64d50;
-  border-color: #ac3336;
-}
+  div.astation {
+    border-color: #953e19;
+  }
+  h1.astation {
+    background-color: #953e19;
+  }
+  h2.astation {
+    background-color: #af5833;
+    border-color: #953e19;
+  }
 
-body.theme-dark div.acomm {
-  border-color: #4d4d7d;
-}
-body.theme-dark h1.acomm {
-  background-color: #4d4d7d;
-}
-body.theme-dark h2.acomm {
-  background-color: #666696;
-  border-color: #4d4d7d;
-}
+  div.awatchful {
+    border-color: #6823c1;
+  }
+  h1.awatchful {
+    background-color: #6823c1;
+  }
+  h2.awatchful {
+    background-color: #823ddb;
+    border-color: #6823c1;
+  }
 
-body.theme-dark div.adept {
-  border-color: #336363;
-}
-body.theme-dark h1.adept {
-  background-color: #336363;
-}
-body.theme-dark h2.adept {
-  background-color: #4d7d7d;
-  border-color: #336363;
-}
+  div.aegeria {
+    border-color: #ac3336;
+  }
+  h1.aegeria {
+    background-color: #ac3336;
+  }
+  h2.aegeria {
+    background-color: #c64d50;
+    border-color: #ac3336;
+  }
 
-body.theme-dark div.aclown {
-  border-color: #ff9ccc;
-}
-body.theme-dark h1.aclown {
-  background-color: #993666;
-}
-body.theme-dark h2.aclown {
-  background-color: #b35080;
-  border-color: #ff9ccc;
-}
+  div.acomm {
+    border-color: #4d4d7d;
+  }
+  h1.acomm {
+    background-color: #4d4d7d;
+  }
+  h2.acomm {
+    background-color: #666696;
+    border-color: #4d4d7d;
+  }
 
-body.theme-dark div.asyn {
-  border-color: #962121;
-}
-body.theme-dark h1.asyn {
-  background-color: #b03b3b;
-}
-body.theme-dark h2.asyn {
-  background-color: #b03b3b;
-  border-color: #962121;
-}
+  div.adept {
+    border-color: #336363;
+  }
+  h1.adept {
+    background-color: #336363;
+  }
+  h2.adept {
+    background-color: #4d7d7d;
+    border-color: #336363;
+  }
 
-body.theme-dark .rstandard {
-  color: #3fcc3f;
-}
-body.theme-dark .rintercom {
-  color: #81f7ff;
-}
-body.theme-dark .rnanotrasen {
-  color: #dfd000;
-}
-body.theme-dark .rcommand {
-  color: #7397c0;
-}
-body.theme-dark .rsecurity {
-  color: #e43535;
-}
-body.theme-dark .rdetective {
-  color: #af4242;
-}
-body.theme-dark .rengineering {
-  color: #dda448;
-}
-body.theme-dark .rmedical {
-  color: #00bbff;
-}
-body.theme-dark .rresearch {
-  color: #bf83e2;
-}
-body.theme-dark .rcivilian {
-  color: #ce45b2;
-}
-body.theme-dark .rsyndicate {
-  color: #cf5757;
-}
-body.theme-dark .rsalvager {
-  color: #a18146;
-}
-body.theme-dark .rintercomai {
-  color: #7f7fe2;
-}
-body.theme-dark .rother {
-  color: #e896e5;
-}
+  div.aclown {
+    border-color: #ff9ccc;
+  }
+  h1.aclown {
+    background-color: #993666;
+  }
+  h2.aclown {
+    background-color: #b35080;
+    border-color: #ff9ccc;
+  }
 
-body.theme-dark .help {
-  color: #42cc00;
-}
-body.theme-dark .harm {
-  color: #d01416;
-}
-body.theme-dark .disarm {
-  color: #ffff00;
-}
-body.theme-dark .grab {
-  color: #ff6a00;
+  div.asyn {
+    border-color: #962121;
+  }
+  h1.asyn {
+    background-color: #b03b3b;
+  }
+  h2.asyn {
+    background-color: #b03b3b;
+    border-color: #962121;
+  }
+
+  .rstandard {
+    color: #3fcc3f;
+  }
+  .rintercom {
+    color: #81f7ff;
+  }
+  .rnanotrasen {
+    color: #dfd000;
+  }
+  .rcommand {
+    color: #7397c0;
+  }
+  .rsecurity {
+    color: #e43535;
+  }
+  .rdetective {
+    color: #af4242;
+  }
+  .rengineering {
+    color: #dda448;
+  }
+  .rmedical {
+    color: #00bbff;
+  }
+  .rresearch {
+    color: #bf83e2;
+  }
+  .rcivilian {
+    color: #ce45b2;
+  }
+  .rsyndicate {
+    color: #cf5757;
+  }
+  .rsalvager {
+    color: #a18146;
+  }
+  .rintercomai {
+    color: #7f7fe2;
+  }
+  .rother {
+    color: #e896e5;
+  }
+
+  .help {
+    color: #42cc00;
+  }
+  .harm {
+    color: #d01416;
+  }
+  .disarm {
+    color: #ffff00;
+  }
+  .grab {
+    color: #ff6a00;
+  }
 }

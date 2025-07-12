@@ -33,3 +33,5 @@
 	src.owner?.on_logout()
 
 /datum/client_auth_provider/proc/post_auth()
+
+/datum/client_auth_provider/proc/post_auth_failed()

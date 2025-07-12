@@ -210,8 +210,9 @@
 	// TODO: is this necessary?
 	if (config.rsc) src.preload_rsc = config.rsc
 
+	if (!src.preferences) src.preferences = new
+	src.volumes = default_channel_volumes.Copy()
 	src.chatOutput = new /datum/chatOutput(src)
-	src.sync_dark_mode(TRUE)
 
 	var/client_auth_status = src.auth()
 
@@ -224,7 +225,7 @@
 
 	global.pre_auth_clients += src
 
-	if (!preferences) src.preferences = new
+	src.sync_dark_mode()
 	src.player = make_player(src.key)
 	src.player.client = src
 
@@ -232,7 +233,6 @@
 	src.initSizeHelpers()
 	src.tooltipHolder = new /datum/tooltipHolder(src)
 	src.tooltipHolder.clearOld()
-	src.volumes = default_channel_volumes.Copy()
 	src.initialize_interface()
 
 	if (isnewplayer(src.mob))
@@ -251,6 +251,7 @@
 
 	src.authenticated = TRUE
 	src.chatOutput.start()
+	src.send_lobby_text()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
 	src.player.id = src.client_auth_intent.player_id || 0
@@ -301,11 +302,11 @@
 	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
 	ability_holder?.locked = FALSE
 	var/datum/abilityHolder/composite/composite = ability_holder
-	if(istype(composite))
+	if (istype(composite))
 		for(var/datum/abilityHolder/inner_holder in composite.holders)
 			inner_holder.locked = FALSE
 
-	if(spooky_light_mode)
+	if (spooky_light_mode)
 		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
@@ -313,96 +314,90 @@
 	if (config.log_access)
 		src.ip_cid_conflict_check()
 
-	if(isadmin(src))
+	if (isadmin(src))
 		// when an admin logs in check all clients again per Mordent's request
-		for(var/client/C)
+		for (var/client/C in clients)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 
-	SPAWN(0) // to not lock up spawning process
+	// Put stuff that doesn't sleep here
+	SPAWN(0)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - spawn stuff")
-		if (global.browse_item_initial_done) sendItemIcons(src)
-		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
-		updateXpRewards()
 
-#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+		#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 		var/is_newbie = 0
-#endif
+		#endif
 
-		// new player logic, moving some of the preferences handling procs from new_player.Login
-		if (!preferences)
-			preferences = new
+		// new player logic
+		if (!preferences) preferences = new
+		var/loaded_savefile = preferences.savefile_load(src)
+
 		if (isnewplayer(src.mob))
 			Z_LOG_DEBUG("Client/New", "[src.ckey] - new player crap")
 
-			//Load the preferences up here instead.
-			if(!preferences.savefile_load(src))
-#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
-				//preferences.randomizeLook()
+			if (!loaded_savefile)
+				#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 				preferences.ShowChoices(src.mob)
 				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
 				boutput(src, SPAN_ALERT("Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!"))
-				//hey maybe put some 'new player mini-instructional' prompt here
-				//ok :)
 				is_newbie = 1
-#endif
-			else if(!src.holder)
+				#endif
+			else if (!isadmin(src))
 				preferences.sanitize_name()
 
 			if (noir)
 				animate_fade_grayscale(src, 50)
-#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+
+			#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
-				if (!cdn)
-					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
 				changes()
 
 			if (isadmin(src) && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
 				admin_changes()
-#endif
+			#endif
 		else
 			if (noir)
 				animate_fade_grayscale(src, 1)
-			preferences.savefile_load(src)
-			src.antag_tokens = src.player?.get_antag_tokens()
-			load_persistent_bank()
-
-		setJoinDate()
 
 		if (winget(src, null, "hwmode") != "true")
 			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")
 
-		ircbot.event("login", src.key)
-		src.antag_tokens = src.player?.get_antag_tokens()
-		src.load_persistent_bank()
-		var/decoded = src.player?.cloudSaves.getData("audio_volume")
-		if(decoded)
-			var/list/old_volumes = volumes.Copy()
-			volumes = json_decode(decoded)
-			for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
-				if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
-					volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+		// Stuff reliant on cloudsaves
+		var/audioVolume = src.player?.cloudSaves.getData("audio_volume")
+		if (audioVolume)
+			var/list/old_volumes = src.volumes.Copy()
+			src.volumes = json_decode(audioVolume)
+			for (var/i = length(src.volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+				if (i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+					src.volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
 				else
-					volumes += old_volumes[i]
+					src.volumes += old_volumes[i]
 
-			// Show login notice, if one exists
-			src.show_login_notice()
-
-			// Set screen saturation
-			src.set_saturation(text2num(src.player?.cloudSaves.getData("saturation")))
-
+		src.load_persistent_bank()
+		src.show_login_notice()
+		src.set_saturation(text2num(src.player?.cloudSaves.getData("saturation")))
 		src.mob.reset_keymap()
+		src.antag_tokens = src.player?.get_antag_tokens()
 
-		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
+		if (current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
 			if (isnewplayer(src.mob))
 				var/mob/new_player/M = src.mob
 				M.new_player_panel() // update if tokens available
 
-#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
+		#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
 		src.verbs += /client/proc/cmd_rp_rules
 		if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 			src.cmd_rp_rules()
-#endif
+		#endif
+		// End stuff reliant on cloudsaves
+
+	// Put stuff that sleeps here
+	SPAWN(0)
+		if (global.browse_item_initial_done) sendItemIcons(src)
+		ircbot.event("login", src.key)
+		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
+		src.setJoinDate()
+		src.updateXpRewards()
 
 
 /client/proc/initialize_interface()
@@ -429,7 +424,7 @@
 
 		set_splitter_orientation(0, splitter_value)
 		src.set_widescreen(1, splitter_value)
-		winset( src, "menu", "horiz_split.is-checked=true" )
+		winset( src, "menu.horiz_split", "is-checked=true" )
 
 	//End widescreen stuff
 
@@ -567,7 +562,7 @@
 		SPAWN(6 SECONDS)
 			if(tgui_alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is recommended for your display. Activate Horizontal Split?", "Recommended option", list("Yes", "No")) == "Yes")
 				set_splitter_orientation(0)
-				winset( src, "menu", "horiz_split.is-checked=true" )
+				winset( src, "menu.horiz_split", "is-checked=true" )
 
 /client/proc/checkHiRes(list/params)
 	if(!length(params))
@@ -1126,12 +1121,12 @@ var/global/curr_day = null
 	widescreen = wide
 	if (widescreen)
 		src.view = "[WIDE_TILE_WIDTH]x[SQUARE_TILE_WIDTH]"
-		winset( src, "menu", "set_wide.is-checked=true" )
+		winset( src, "menu.set_wide", "is-checked=true" )
 		if (vert_split)
 			winset( src, "mainwindow.mainvsplit", "splitter=[splitter_value ? splitter_value : 70]" )
 	else
 		src.view = 7
-		winset( src, "menu", "set_wide.is-checked=false" )
+		winset( src, "menu.set_wide", "is-checked=false" )
 		if (vert_split)
 			winset( src, "mainwindow.mainvsplit", "splitter=[splitter_value ? splitter_value : 50]" )
 
@@ -1173,7 +1168,7 @@ var/global/curr_day = null
 
 /client/proc/set_controls(var/tg)
 	tg_controls = tg
-	winset( src, "menu", "tg_controls.is-checked=[tg ? "true" : "false"]" )
+	winset( src, "menu.tg_controls", "is-checked=[tg ? "true" : "false"]" )
 
 	src.mob.reset_keymap()
 
@@ -1186,7 +1181,7 @@ var/global/curr_day = null
 
 /client/proc/set_layout(var/tg)
 	tg_layout = tg
-	winset( src, "menu", "tg_layout.is-checked=[tg ? "true" : "false"]" )
+	winset( src, "menu.tg_layout", "is-checked=[tg ? "true" : "false"]" )
 
 	if (istype(mob,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
@@ -1518,7 +1513,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 
 /client/verb/sync_dark_mode(from_new as null|num)
 	set hidden=1
-	if (!from_new) src.darkmode = winget(src, "menu.dark_mode", "is-checked") == "true"
+	src.darkmode = winget(src, "menu.dark_mode", "is-checked") == "true"
 	if (src.darkmode)
 #define _SKIN_BG "#28292c"
 #define _SKIN_INFO_TAB_BG "#28292c"

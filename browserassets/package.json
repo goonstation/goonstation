@@ -32,6 +32,7 @@
     "istextorbinary": "^9.5.0",
     "postcss": "^8.4.47",
     "postcss-clean": "1.2.0",
+    "postcss-nesting": "^13.0.2",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.5.3"
   },

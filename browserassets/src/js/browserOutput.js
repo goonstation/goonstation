@@ -403,9 +403,9 @@ function changeMode(mode) {
 }
 
 function changeTheme(theme) {
-  var body = $('body');
-  body.removeClass(opts.currentTheme);
-  body.addClass(theme);
+  var html = $('html');
+  html.removeClass(opts.currentTheme);
+  html.addClass(theme);
   opts.currentTheme = theme;
   setCookie('theme', theme, 365);
 }
@@ -682,6 +682,18 @@ function toggleWasd(state) {
   opts.wasd = state == 'on' ? true : false;
 }
 
+function showAuthMessage(title, content) {
+  output(
+    `<div class="auth-message">
+    <div class="auth-message__title">${title}</div>
+    <div class="auth-message__content">${content}</div>
+  </div>`,
+    '',
+    0,
+    true
+  );
+}
+
 /*****************************************
  *
  * DOM READY
@@ -820,9 +832,9 @@ $(function () {
     );
   }
   if (savedConfig.stheme) {
-    var body = $('body');
-    body.removeClass(opts.currentTheme);
-    body.addClass(savedConfig.stheme);
+    var html = $('html');
+    html.removeClass(opts.currentTheme);
+    html.addClass(savedConfig.stheme);
     opts.currentTheme = savedConfig.stheme;
     output(
       '<span class="internal boldnshit">Loaded theme setting of: ' +
@@ -1167,11 +1179,12 @@ $(function () {
       'application/x-www-form-urlencoded'
     );
     xmlHttp.send();
+    saved += '<html class="' + opts.currentTheme + '">';
     saved += '<style>' + xmlHttp.responseText + '</style>';
-    saved += '<body class="' + opts.currentTheme + '">';
+    saved += '<body>';
 
     saved += $messages.html();
-    saved += '</body>';
+    saved += '</body></html>';
 
     var now = new Date();
     var filename =
