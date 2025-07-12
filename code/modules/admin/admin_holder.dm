@@ -258,10 +258,9 @@
 
 	proc/load_admin_prefs()
 		var/list/AP
-		if (!owner.player.cloudSaves.loaded)
-			owner.player.cloudSaves.fetch()
 
-		var/json_data = owner.player.cloudSaves.getData("admin_preferences")
+		UNTIL(owner.player?.cloudSaves.loaded, 10 SECONDS)
+		var/json_data = owner.player?.cloudSaves.getData("admin_preferences")
 		if (json_data)
 			AP = json_decode(json_data)
 		else
@@ -421,7 +420,7 @@
 	proc/save_admin_prefs()
 		if (!src.owner)
 			return
-		var/data = owner.player.cloudSaves.getData("admin_preferences")
+		var/data = owner.player?.cloudSaves.getData("admin_preferences")
 		var/list/auto_aliases = list()
 		if (data) // decoding null will runtime
 			data = json_decode(data)
@@ -464,7 +463,7 @@
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)
 
-		if (!owner.player.cloudSaves.putData("admin_preferences", json_encode(AP)))
+		if (!owner.player?.cloudSaves.putData("admin_preferences", json_encode(AP)))
 			tgui_alert(src.owner, "ERROR: Unable to reach cloud.")
 		else
 			boutput(src.owner, SPAN_NOTICE("Admin preferences saved."))
