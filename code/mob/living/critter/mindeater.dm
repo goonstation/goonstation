@@ -27,6 +27,8 @@
 	var/image/mindeater_visibility_indicator/vis_indicator
 	/// shows health of the mindeater
 	var/image/mindeater_health_indicator/hp_indicator
+	/// health monitor that's shown while in human form
+	var/image/health_monitor
 	/// currently casting paralyze ability
 	var/casting_paralyze = FALSE
 	/// what this mindeater's disguise is set to
@@ -63,6 +65,11 @@
 
 		src.hp_indicator = new (loc = src)
 
+		src.health_monitor = image('icons/effects/healthgoggles.dmi' ,src, "100", EFFECTS_LAYER_UNDER_4)
+		src.health_monitor.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(src.health_monitor)
+		src.health_monitor.alpha = 0
+
 		src.demanifest()
 
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_mob(src)
@@ -79,6 +86,7 @@
 		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_mob(src)
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(src.health_monitor)
 
 		src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_INTRUDERCHAT)
 		src.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_INTRUDERCHAT)
@@ -360,6 +368,8 @@
 				src.desc = src.human_disguise_dummy.get_desc(TRUE, TRUE)
 				src.bioHolder.mobAppearance.gender = src.human_disguise_dummy.bioHolder.mobAppearance.gender
 
+				src.health_monitor.alpha = 255
+
 		src.update_name_tag(src.name)
 		qdel(temp)
 
@@ -378,6 +388,8 @@
 		src.update_name_tag(src.name)
 
 		src.flags &= ~(TABLEPASS | DOORPASS)
+
+		src.health_monitor.alpha = 0
 
 		src.disguised = FALSE
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
