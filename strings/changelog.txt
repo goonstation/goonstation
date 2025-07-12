@@ -1,4 +1,9 @@
 
+(t)sat jul 12 25
+(u)Wire
+(p)23530
+(e)🎨|C-Sprites
+(*)Authentication refactor to support external providers that aren't the Byond hub.
 (t)fri jul 11 25
 (u)JORJ949
 (p)24092
