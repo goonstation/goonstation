@@ -768,7 +768,11 @@ Equip items from body traits.
 		C.pronouns = src.get_pronouns()
 
 		if(!src.equip_if_possible(C, SLOT_WEAR_ID))
-			src.equip_if_possible(C, SLOT_IN_BACKPACK)
+			if(istype((src.wear_id), /obj/item/device/pda2))
+				var/obj/item/device/pda2/pda = src.wear_id
+				pda.insert_id_card(C, src)
+			else
+				src.equip_if_possible(C, SLOT_IN_BACKPACK)
 
 		if(src.pin)
 			C.pin = src.pin
