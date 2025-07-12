@@ -326,8 +326,8 @@
 
 	logTheThing(LOG_ADMIN, usr, "has added a new AI law - [input] (law # [law_num])")
 	logTheThing(LOG_DIARY, usr, "has added a new AI law - [input] (law # [law_num])", "admin")
-	logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
-	logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
+	logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.lawset.format_for_logs()]")
+	logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.lawset.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has added a new AI law - [input] (law # [law_num])")
 
 //badcode from Somepotato, pls no nerf its very bad AAA
@@ -338,7 +338,7 @@
 	SHOW_VERB_DESC
 
 	var/current_laws = list()
-	for (var/obj/item/aiModule/X in ticker.ai_law_rack_manager.default_ai_rack.law_circuits)
+	for (var/obj/item/aiModule/X in ticker.ai_law_rack_manager.default_ai_rack.law_modules)
 		if(!X)
 			continue
 		var/lt = X.get_law_text(TRUE)
@@ -372,8 +372,8 @@
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
-	logTheThing(LOG_ADMIN, usr, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
-	logTheThing(LOG_DIARY, usr, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
+	logTheThing(LOG_ADMIN, usr, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.lawset.format_for_logs()]")
+	logTheThing(LOG_DIARY, usr, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.lawset.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has adjusted all of the AI's laws!")
 
 
