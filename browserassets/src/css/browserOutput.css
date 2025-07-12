@@ -354,7 +354,7 @@ wbr:after {
 .thrallsay .vamp.name {color: #ff0000;}
 .wraithsay {color: #5C00E6; background-color: #FFC8C8;}
 .kudzusay {color: white; background-color: #566B44;}
-.intrudersay {color: #8600C8;}
+.intrudersay {color: #8600C8; background-color: #42c800}
 .crabsay {color: white; background-color: #6A1D1D;}
 .crabsay a {color: #6464ff;}
 .astralsay {color: #2AABA4;}
@@ -576,7 +576,7 @@ body.theme-dark .hivesay {color: #e2a059;}
 body.theme-dark .thrallsay {color: white; background-color: #6f00a7;}
 body.theme-dark .wraithsay {color: #b27eff; background-color: #640000;}
 body.theme-dark .kudzusay {color: #111; background-color: #7B8F68;}
-body.theme-dark .intrudersay {color: #8600C8;}
+body.theme-dark .intrudersay {color: #8600C8; background-color: #42c800}
 body.theme-dark .crabsay {color: #111; background-color: #AC3232;}
 body.theme-dark .crabsay a {color: #0000ff;}
 body.theme-dark .astralsay {color: #60d4cf;}

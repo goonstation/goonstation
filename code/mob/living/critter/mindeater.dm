@@ -1,3 +1,10 @@
+TYPEINFO(/mob/living/critter/mindeater)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_INTRUDERCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_INTRUDERCHAT)
+
 /mob/living/critter/mindeater
 	name = "mindeater"
 	real_name = "mindeater"
@@ -75,9 +82,6 @@
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_mob(src)
 		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(src)
 
-		src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_INTRUDERCHAT)
-		src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_INTRUDERCHAT)
-
 		src.human_disguise_dummy = new
 
 	disposing()
@@ -87,9 +91,6 @@
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(src.health_monitor)
-
-		src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_INTRUDERCHAT)
-		src.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_INTRUDERCHAT)
 
 		QDEL_NULL(src.human_disguise_dummy)
 
