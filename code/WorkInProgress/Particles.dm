@@ -1404,7 +1404,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			return
 
 		for(var/atom/A in view(smoke_size, get_turf(location)))
-			if(istype(A, /obj/particle) || istype(A, /obj/overlay/tile_effect/))
+			if(istype(A, /obj/particle) || istype(A, /atom/movable/light/robust_light))
 				continue
 			if(A in affected) continue
 			affected += A
