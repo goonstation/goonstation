@@ -14,6 +14,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/type_size = ARTIFACT_SIZE_LARGE
 	/// the artifact origin (martian, eldritch, etc...)
 	var/datum/artifact_origin/artitype = null
+	/// What it appears the artifact origin is. Only different from artitype if the artifact is disguised.
+	var/datum/artifact_origin/artiappear = null
 	/// the list of options for the origin from which to pick from
 	var/list/validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	// During setup, artitype will be set from a pick() from within the validtypes list.
@@ -171,6 +173,10 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/effect_melee_attack(var/obj/O,var/mob/living/user,var/mob/living/target)
 		if (!O || !user || !target)
 			return 1
+		if (!O.ArtifactSanityCheck())
+			return TRUE
+		if (!src.activated)
+			return TRUE
 		O.add_fingerprint(user)
 		ArtifactLogs(user, target, O, "weapon", null, 0)
 		return 0

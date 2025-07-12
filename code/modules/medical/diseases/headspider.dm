@@ -119,6 +119,8 @@
 				D.source.mind.transfer_to(affected_mob)
 
 				affected_mob.add_existing_ability_holder(D.source.changeling)
+				affected_mob.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[D.source.changeling]")
+				affected_mob.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[D.source.changeling]")
 				if (M)
 					D.source.changeling.insert_into_hivemind(M.current) //aaa aaa aaaaaaaahhhhhhhhhhhhh
 

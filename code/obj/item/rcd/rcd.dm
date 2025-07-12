@@ -175,7 +175,7 @@ TYPEINFO(/obj/item/rcd)
 					src.matter += R.matter
 					R.matter = 0
 					qdel(R)
-				R.tooltip_rebuild = 1
+				R.tooltip_rebuild = TRUE
 				src.UpdateIcon()
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
@@ -653,7 +653,7 @@ TYPEINFO(/obj/item/rcd)
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		switch (round((src.matter / src.max_matter) * 100)) //is the round() necessary? yell at me if it isnt
 			if (10 to 34)
 				ammo_amt = 1

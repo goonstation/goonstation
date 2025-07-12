@@ -125,37 +125,37 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", usr.client.key)
+					C.player?.cloudSaves.putData("adminhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("ah_unmute")//guHGUHGUGHGUHG
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.deleteData("adminhelp_banner")
+					C.player?.cloudSaves.deleteData("adminhelp_banner")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", usr.client.key)
+					C.player?.cloudSaves.putData("mentorhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("mh_unmute")//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.deleteData("mentorhelp_banner")
+					C.player?.cloudSaves.deleteData("mentorhelp_banner")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", usr.client.key)
+					C.player?.cloudSaves.putData("prayer_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("pr_unmute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.deleteData("prayer_banner")
+					C.player?.cloudSaves.deleteData("prayer_banner")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -353,7 +353,7 @@ var/global/noir = 0
 						if(!call_reason)
 							return
 						if (emergency_shuttle.incall())
-							command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+							command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", alert_origin=ALERT_COMMAND)
 							logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
 							logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 							message_admins(SPAN_INTERNAL("[key_name(usr)] called the Emergency Shuttle to the station."))
@@ -368,13 +368,13 @@ var/global/noir = 0
 								if(!call_reason)
 									call_reason = "No reason given."
 								if (emergency_shuttle.incall())
-									command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+									command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", alert_origin=ALERT_COMMAND)
 									logTheThing(LOG_ADMIN, usr, "called the Emergency Shuttle (reason: [call_reason])")
 									logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 									message_admins(SPAN_INTERNAL("[key_name(usr)] called the Emergency Shuttle to the station"))
 							if(1)
 								emergency_shuttle.recall()
-								boutput(world, SPAN_NOTICE("<B>Alert: The shuttle is going back!</B>"))
+								command_announcement("[SPAN_ALERT("Alert: The shuttle is going back!")]", "Emergency Shuttle Recall", alert_origin=ALERT_COMMAND)
 								logTheThing(LOG_ADMIN, usr, "sent the Emergency Shuttle back")
 								logTheThing(LOG_DIARY, usr, "sent the Emergency Shuttle back", "admin")
 								message_admins(SPAN_INTERNAL("[key_name(usr)] recalled the Emergency Shuttle"))
@@ -2580,10 +2580,10 @@ var/global/noir = 0
 							if (tgui_alert(usr,"Do you wish to give everyone brain damage?", "Confirmation", list("Yes", "No")) != "Yes")
 								return
 							for (var/mob/living/carbon/human/H in mobs)
-								if (H.get_brain_damage() < 60)
+								if (H.get_brain_damage() < BRAIN_DAMAGE_MAJOR)
 									if (H.client)
 										H.show_text("<B>You suddenly feel stupid.</B>","red")
-									H.take_brain_damage(min(60 - H.get_brain_damage(), 60)) // 100+ brain damage is lethal.
+									H.take_brain_damage(min(BRAIN_DAMAGE_MAJOR - H.get_brain_damage(), BRAIN_DAMAGE_MAJOR)) // 100+ brain damage is lethal.
 									LAGCHECK(LAG_LOW)
 								else
 									continue
@@ -2662,6 +2662,18 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] disabled the safeties on all station airlocks.")
 								logTheThing(LOG_ADMIN, usr, "disabled the safeties on all station airlocks.")
 								logTheThing(LOG_DIARY, usr, "disabled the safeties on all station airlocks.", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
+
+					if ("detonate_all_pdas")
+						if (src.level >= LEVEL_PA)
+							if (antagonists[ROLE_SPY_THIEF] && length(antagonists[ROLE_SPY_THIEF]))
+								if(tgui_alert(usr, "There are active spy-thieves!", "Antagonist Warning", list("OK", "Oops misclick")) != "OK")
+									return
+							if (tgui_alert(usr, "Really blow up everyone's PDAs?", "BOOM BOOM BOOM BOOM?", list("Yes", "Oops misclick")) == "Yes")
+								for_by_tcl(pda, /obj/item/device/pda2)
+									pda.explode()
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -3419,8 +3431,6 @@ var/global/noir = 0
 						src.owner:debug_variables(mining_controls)
 					if("mapsettings")
 						src.owner:debug_variables(map_settings)
-					if("ghostnotifications")
-						src.owner:debug_variables(ghost_notifier)
 					if("overlays")
 						overlaytest()
 					if("overlaysrem")
@@ -3911,7 +3921,6 @@ var/global/noir = 0
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=datacore'>Data Core</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=miningcontrols'>Mining Controls</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=mapsettings'>Map Settings</A> |
-					<A href='byond://?src=\ref[src];action=secretsdebug;type=ghostnotifications'>Ghost Notifications</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=overlays'>Overlays</A>
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=world'>World</A> |
@@ -4006,6 +4015,7 @@ var/global/noir = 0
 					<A href='byond://?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
 					<A href='byond://?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
 					<A href='byond://?src=\ref[src];action=secretsfun;type=airlock_safety'>Disable all airlock's safeties.</A><BR>
+					<A href='byond://?src=\ref[src];action=secretsfun;type=detonate_all_pdas'>Detonate all PDAs</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='byond://?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>
@@ -4379,22 +4389,22 @@ var/global/noir = 0
 
 /datum/admins/proc/show_chatbans(var/client/C)//do not use this as an example of how to write DM please.
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
-	if(C.player.cloudSaves.getData( "adminhelp_banner" ))
-		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player.cloudSaves.getData( "adminhelp_banner" )])<br/>"
+	if(C.player?.cloudSaves.getData( "adminhelp_banner" ))
+		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player?.cloudSaves.getData( "adminhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from adminhelping.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from adminhelping.")
 
-	if(C.player.cloudSaves.getData( "mentorhelp_banner" ))
-		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
+	if(C.player?.cloudSaves.getData( "mentorhelp_banner" ))
+		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player?.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from mentorhelping.")
 
-	if(C.player.cloudSaves.getData( "prayer_banner" ))
-		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player.cloudSaves.getData( "prayer_banner" )])<br/>"
+	if(C.player?.cloudSaves.getData( "prayer_banner" ))
+		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player?.cloudSaves.getData( "prayer_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from praying.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"

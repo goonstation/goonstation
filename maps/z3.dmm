@@ -1243,10 +1243,6 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
@@ -1260,10 +1256,6 @@
 /area/space)
 "adS" = (
 /obj/table/wood/auto,
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple2"
@@ -1487,12 +1479,6 @@
 /area/radiostation/podbay)
 "aeD" = (
 /obj/submachine/tape_deck,
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
-"aeF" = (
-/obj/mic_stand{
-	dir = 8
-	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "aeG" = (
@@ -7064,6 +7050,10 @@
 /area/salvage_trader)
 "aKW" = (
 /obj/marker/supplymarker,
+/obj/fakeobject/teleport_pad{
+	desc = "It doesn't look like this is working."
+	},
+/obj/marker/salvager_teleport,
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
 "aKX" = (
@@ -108495,7 +108485,7 @@ adx
 adK
 adS
 aeo
-aeF
+adL
 adg
 agi
 aoY

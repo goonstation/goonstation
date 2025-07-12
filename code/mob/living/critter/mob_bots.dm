@@ -85,7 +85,6 @@ TYPEINFO(/mob/living/critter/robotic/bot)
 
 	cleanbot
 		name = "cleanbot"
-		real_name = "cleanbot"
 		desc = "A little cleaning robot, he looks so excited!"
 		icon_state = "cleanbot1"
 		icon_state_base = "cleanbot"
@@ -263,7 +262,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 /mob/living/critter/robotic/bot/firebot
 	name = "firebot"
-	real_name = "firebot"
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
 	icon_state = "firebot1"
 	icon_state_base = "firebot"

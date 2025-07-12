@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/mixer)
 	density = 1
 	anchored = ANCHORED
 	flags = TGUI_INTERACTIVE
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	var/image/blender_off
@@ -40,6 +41,7 @@ TYPEINFO(/obj/machinery/mixer)
 			src.recipes += new /datum/cookingrecipe/mixer/pancake_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/brownie_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/cake_batter(src)
+			src.recipes += new /datum/cookingrecipe/mixer/raw_flan(src)
 			src.recipes += new /datum/cookingrecipe/mixer/custard(src)
 			src.recipes += new /datum/cookingrecipe/mixer/mashedpotatoes(src)
 			src.recipes += new /datum/cookingrecipe/mixer/mashedbrains(src)

@@ -21,7 +21,6 @@
 
 /mob/living/critter/singularity
   name = "singularity"
-  real_name = "singularity"
   desc = "A tiny, sentient singularity. If there was ever more proof needed of malevolent gods or other cosmic forces, this is it."
   density = 1
   icon_state = "sing"

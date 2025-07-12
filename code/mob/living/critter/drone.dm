@@ -1,6 +1,5 @@
 /mob/living/critter/robotic/drone
 	name = "drone"
-	real_name = "drone"
 	var/drone_designation = "SC"
 	var/num_max = 999
 	desc = "An armed and automated Syndicate scout drone."
@@ -29,7 +28,8 @@
 	New()
 		..()
 		setup_loot_table()
-		name = "[initial(name)] [drone_designation]-[rand(num_max)]"
+		src.name = "[initial(name)] [drone_designation]-[rand(num_max)]"
+		src.real_name = src.name
 
 	bump(atom/movable/AM)
 		if(smashes_shit)

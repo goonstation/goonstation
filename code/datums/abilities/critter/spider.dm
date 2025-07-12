@@ -324,8 +324,10 @@
 			while (flail > 0 && MT && !MT.disposed)
 				MT.changeStatus("knockdown", 2 SECONDS)
 				MT.canmove = 0
-				if (MT.loc)
+				if (MT.loc && get_dist(holder.owner.loc, MT.loc) < 2)
 					holder.owner.set_loc(MT.loc)
+				else
+					break
 				MT.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("knockdown") || holder.owner.getStatusDuration("unconscious"))
 					break

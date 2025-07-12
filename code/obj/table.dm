@@ -291,7 +291,7 @@ TYPEINFO_NEW(/obj/table)
 		else if (istype(W) && src.place_on(W, user, params))
 			return
 		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
-		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= 40 && rand(1, 10) < 10))
+		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= BRAIN_DAMAGE_MODERATE && rand(1, 10) < 10))
 			return
 
 		else
@@ -355,7 +355,6 @@ TYPEINFO_NEW(/obj/table)
 		var/obj/item/I = O
 		if(I.equipped_in_slot && I.cant_self_remove)
 			return
-		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
 			if (length(S.contents) < 1)
@@ -364,12 +363,14 @@ TYPEINFO_NEW(/obj/table)
 				user.visible_message(SPAN_NOTICE("[user] dumps out [S]'s contents onto [src]!"))
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				S.UpdateIcon()
 				return
+		// Placed as such because we do want to let borgs drag their satchels to dump on tables, but don't want to let them place items on tables from their module
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
 
+		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 		src.place_on(I, user, params, TRUE)
 
 

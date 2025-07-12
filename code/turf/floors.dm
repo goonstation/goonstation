@@ -1531,6 +1531,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 	default_material = "synthrubber"
+	can_dig = TRUE
 
 	#ifdef SEASON_WINTER
 	New()
@@ -1723,6 +1724,7 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 	#endif
 	mat_changename = 0
 	mat_changedesc = 0
+	can_dig = TRUE
 
 TYPEINFO(/turf/simulated/floor/dirt)
 	mat_appearances_to_ignore = list("steel","synthrubber")
@@ -1732,6 +1734,7 @@ TYPEINFO(/turf/simulated/floor/dirt)
 	icon_state = "dirt"
 	mat_changename = 0
 	mat_changedesc = 0
+	can_dig = TRUE
 
 /////////////////////////////////////////
 
@@ -1746,6 +1749,7 @@ TYPEINFO(/turf/simulated/floor/marslike)
 	icon_state = "placeholder"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 /turf/simulated/floor/marslike/t1
 	icon_state = "t1"
@@ -1809,7 +1813,8 @@ DEFINE_FLOORS(grasslush,
 	mat_changename = 0;\
 	mat_changedesc = 0;\
 	step_material = "step_outdoors";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(grasslush/border,
 	icon_state = "grass_lush_border")
@@ -1951,8 +1956,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			var/obj/machinery/vehicle/O = mover
-			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
-				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+			var/sec_system = O?.get_part(POD_PART_SECONDARY)
+			if (istype(sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = sec_system
 				if (I.crashable)
 					mover.Bump(src)
 					return TRUE
@@ -2314,6 +2320,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
+		..()
 		src.material_trigger_when_attacked(C, user, 1)
 	else
 		return attack_hand(user)
@@ -2678,6 +2685,20 @@ TYPEINFO(/turf/simulated/floor/auto)
 				edge_overlay.plane = PLANE_FLOOR
 				T.AddOverlays(edge_overlay, "edge_[direction]")
 
+/turf/simulated/floor/auto/grass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	#ifdef SEASON_AUTUMN
+	icon_state = "grass_autumn"
+	#else
+	icon_state = "grass"
+	#endif
+	mat_changename = 0
+	mat_changedesc = 0
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
+
 /turf/simulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
 	desc = "Grass. In a swamp. Truly fascinating."
@@ -2710,6 +2731,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 	icon_state = "dirt"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
+	can_dig = TRUE
 
 /turf/simulated/floor/auto/sand
 	name = "sand"
@@ -2718,6 +2740,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 	icon_state = "sand_other"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
 	icon_state_edge = "sand_edge"
+	can_dig = TRUE
 	var/tuft_prob = 2
 
 	New()
@@ -2820,6 +2843,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon_state_edge = "snow_edge"
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 	New()
 		. = ..()
@@ -2848,6 +2872,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	desc = ""
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass"
+	can_dig = TRUE
 
 	New()
 		..()
@@ -2859,6 +2884,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	desc = ""
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass_edge"
+	can_dig = TRUE
 
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")

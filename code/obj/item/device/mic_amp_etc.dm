@@ -19,7 +19,7 @@ TYPEINFO(/obj/item/device/microphone)
 
 	attack_self(mob/user as mob)
 		src.on = !(src.on)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		user.show_text("You switch [src] [src.on ? "on" : "off"].")
 		if (src.on && prob(5))
 			if (locate(/obj/loudspeaker) in range(2, user))
@@ -94,6 +94,7 @@ TYPEINFO(/obj/loudspeaker)
 	icon_state = "loudspeaker"
 	anchored = ANCHORED
 	density = 1
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 	New()

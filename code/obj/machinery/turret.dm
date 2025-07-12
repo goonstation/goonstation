@@ -473,9 +473,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 			. = TRUE
 
 /obj/machinery/turretid/receive_silicon_hotkey(var/mob/user)
-	..()
-
-	if (!isAI(user) && !issilicon(user))
+	if(..())
 		return
 
 	if(user.client.check_key(KEY_OPEN))

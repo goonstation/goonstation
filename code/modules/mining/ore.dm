@@ -31,7 +31,7 @@
 /datum/ore/mauxite
 	name = "mauxite"
 	output = /obj/item/raw_material/mauxite
-	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
+	events = list(/datum/ore/event/gem = 100)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
 	hardness_mod = 1
 	mining_health = 160
@@ -39,7 +39,7 @@
 /datum/ore/pharosium
 	name = "pharosium"
 	output = /obj/item/raw_material/pharosium
-	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
+	events = list(/datum/ore/event/gem = 100)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
 	hardness_mod = 1
 	mining_health = 160
@@ -74,7 +74,7 @@
 /datum/ore/cobryl
 	name = "cobryl"
 	output = /obj/item/raw_material/cobryl
-	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
+	events = list(/datum/ore/event/gem = 100)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
@@ -95,7 +95,7 @@
 /datum/ore/claretine
 	name = "claretine"
 	output = /obj/item/raw_material/claretine
-	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 0.5)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
@@ -118,7 +118,7 @@
 /datum/ore/syreline
 	name = "syreline"
 	output = /obj/item/raw_material/syreline
-	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 0.5)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
 	amount_per_tile_min = 2
 	amount_per_tile_max = 3
@@ -170,7 +170,7 @@
 /datum/ore/koshmarite
 	name = "koshmarite"
 	output = /obj/item/raw_material/eldritch
-	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
+	events = list(/datum/ore/event/gem = 100)
 	gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
 	event_chance = 12
 	tiles_per_rock_min = 4
@@ -249,7 +249,7 @@
 			return 1
 		if(prob(25))
 			var/obj/critter/gunbot/drone/buzzdrone/naniteswarm/N = new /obj/critter/gunbot/drone/buzzdrone/naniteswarm (AST)
-			N.set_loc(AST)
+			N.set_loc(get_turf(AST))
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!AST)

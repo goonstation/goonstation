@@ -467,6 +467,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		if (typepath == /obj/item/reagent_containers/food/snacks/mushroom/cloak) name = "cloaked panellus mushroom"
 		else if (typepath == /obj/item/reagent_containers/food/snacks/mushroom/amanita) name = "amanita mushroom"
 		else if (typepath == /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary) name = "volatile tomato"
+		else if (typepath == /obj/item/plant/herb/commol/burning) name = "warm commol root"
 
 
 

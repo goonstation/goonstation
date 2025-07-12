@@ -279,9 +279,9 @@ datum
 				if(!M) M = holder.my_atom
 				M.make_jittery(2)
 				if(M.bodytemperature > M.base_body_temp)
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
-				else if(M.bodytemperature < 311)
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
+					M.changeBodyTemp(-15 KELVIN * mult, min_temp = M.base_body_temp)
+				else if(M.bodytemperature < M.base_body_temp)
+					M.changeBodyTemp(15 KELVIN * mult, max_temp = M.base_body_temp)
 				..()
 				return
 
@@ -317,13 +317,11 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(55))
 					M.HealDamage("All", 2 * mult, 0)
-				if(M.bodytemperature > M.base_body_temp)
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(10 * mult))
+				M.changeBodyTemp(-10 KELVIN * mult, min_temp = M.base_body_temp)
 				// I only put this following bit because wiki claims it "attempts to return temperature to normal"
 				// Rather than the previous functionality of cooling down when hot
 				// No need to implement if the wiki is erronous here
-				if(M.bodytemperature < M.base_body_temp)
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(10 * mult))
+				M.changeBodyTemp(10 KELVIN * mult, max_temp = M.base_body_temp)
 				..()
 				return
 
@@ -344,8 +342,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(55))
 					M.HealDamage("All", 0, 2 * mult)
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(10 * mult),280)
+				M.changeBodyTemp(-10 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -408,9 +405,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < M.base_body_temp)
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
+					M.changeBodyTemp(15 KELVIN * mult, max_temp = M.base_body_temp)
 				else if(M.bodytemperature > M.base_body_temp)
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
+					M.changeBodyTemp(-15 KELVIN * mult, min_temp = M.base_body_temp)
 				if(volume >= 1)
 					var/oxyloss = M.get_oxygen_deprivation()
 					M.take_oxygen_deprivation(-INFINITY)
@@ -519,7 +516,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping) M.sleeping = 0
-				if (M.get_brain_damage() <= 90)
+				if (M.get_brain_damage() < BRAIN_DAMAGE_SEVERE)
 					if (prob(50)) M.take_brain_damage(-1 * mult)
 				else M.take_brain_damage(-10 * mult) // Zine those synapses into not dying *yet*
 				..()
@@ -588,7 +585,7 @@ datum
 				if (severity == 1) //lesser
 					M.stuttering += 1
 					if(effect <= 1)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches [his_or_her(M)] gut!"))
 						M.emote("scream")
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 3)
@@ -604,7 +601,7 @@ datum
 				else if (severity == 2) // greater
 					if(effect <= 5)
 						M.visible_message(pick(SPAN_ALERT("<b>[M.name]</b> jerks bolt upright, then collapses!"),
-							SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!")))
+							SPAN_ALERT("<b>[M.name]</b> suddenly cluches [his_or_her(M)] gut!")))
 						M.setStatusMin("knockdown", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
@@ -855,8 +852,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
+				M.changeBodyTemp(7 KELVIN * mult, max_temp = M.base_body_temp)
 				if(probmult(10))
 					M.make_jittery(4)
 				M.changeStatus("drowsy", -10 SECONDS)
@@ -1216,8 +1212,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
 				M.make_jittery(4)
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.losebreath > 3)
@@ -1392,7 +1387,7 @@ datum
 						M.take_oxygen_deprivation(-2 * mult)
 					if(M.losebreath && prob(50))
 						M.lose_breath(-1 * mult)
-					if (M.get_brain_damage())
+					if (M.get_brain_damage() <= BRAIN_DAMAGE_SEVERE)
 						M.take_brain_damage(-2 * mult)
 					M.HealDamage("All", 2 * mult, 2 * mult, 3 * mult)
 
@@ -1451,8 +1446,7 @@ datum
 				M.make_dizzy(1 * mult)
 				M.change_misstep_chance(5 * mult)
 				src.total_misstep += 5 * mult
-				if(M.bodytemperature < M.base_body_temp)
-					M.bodytemperature = min(M.base_body_temp + 10, M.bodytemperature+(10 * mult))
+				M.changeBodyTemp(10 KELVIN * mult, max_temp = M.base_body_temp + 10)
 				if(probmult(4)) M.emote("collapse")
 				if(M.losebreath > 5)
 					M.losebreath = max(5, M.losebreath-(5 * mult))
@@ -1462,11 +1456,13 @@ datum
 					if(M.get_toxin_damage())
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 3 * mult, 3 * mult)
-					if (M.get_brain_damage())
+					if (M.get_brain_damage() <= BRAIN_DAMAGE_SEVERE)
 						M.take_brain_damage(-2 * mult)
 				else if (M.health > 15 && M.get_toxin_damage() < 70)
 					M.take_toxin_damage(1 * mult)
 					flush(holder, 20 * mult, flushed_reagents)
+				if (M.get_brain_damage() > BRAIN_DAMAGE_SEVERE)
+					M.take_brain_damage(-5 * mult)
 				..()
 				return
 
@@ -1554,7 +1550,10 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.take_brain_damage(-3 * mult)
+				if (M.get_brain_damage() <= BRAIN_DAMAGE_SEVERE)
+					M.take_brain_damage(-3 * mult)
+				else
+					M.take_brain_damage(-0.25 * mult)
 				..()
 				return
 
@@ -1567,19 +1566,12 @@ datum
 			fluid_b = 0
 			fluid_g = 0
 			value = 5 // 3c + 1c + heat
-			target_organs = list("left_kidney", "right_kidney", "liver", "stomach", "intestines")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(prob(50))
 					flush(holder, 1 * mult)
 				M.HealDamage("All", 0, 0, 1.5 * mult)
-
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.organHolder)
-						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
-
 				..()
 				return
 

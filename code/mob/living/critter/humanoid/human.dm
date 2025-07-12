@@ -78,13 +78,12 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 
 	proc/post_setup()
 		src.name = initial(src.name)
-		src.real_name = initial(src.real_name)
+		src.real_name = src.name
 		src.desc = initial(src.desc)
 
 ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 /mob/living/critter/human/syndicate
 	name = "\improper Syndicate Operative"
-	real_name = "\improper Syndicate Operative"
 	desc = "A Syndicate Operative, oh dear."
 	health_brute = 25
 	health_burn = 25

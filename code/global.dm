@@ -40,8 +40,7 @@ var/global
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
-	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
-	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
+	list/pre_auth_clients = list()
 	list/clients = list()
 	list/donator_ckeys = list()
 	list/online_donator_ckeys = list()
@@ -265,7 +264,6 @@ var/global
 
 	diary = null
 	diary_name = null
-	hublog = null
 	game_version = "Goonstation 13 (r" + ORIGIN_REVISION + ")"
 
 	master_mode = "traitor"
@@ -479,7 +477,10 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "\
+		[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful","Treason")]\
+		[pick("-"," ")]\
+		[pick("Credits","Bux","Tokens","Cash","Dollars","Crystals","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees","Coins")]"
 
 	list/valid_modes = list("secret","action","random") // Other modes added by build_valid_game_modes()
 
@@ -534,7 +535,7 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
-	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD)
+	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD, R_FREQ_SALVAGER)
 	///base movedelay threshold for slipping
 	base_slip_delay = BASE_SPEED_SUSTAINED
 

@@ -208,7 +208,7 @@ proc/filter_trait_hats(var/type)
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			light.enable()
 			c_flags |= SPACEWEAR
 			processing_items |= src
@@ -216,7 +216,7 @@ proc/filter_trait_hats(var/type)
 			src.firesource = FALSE
 			src.force = 3
 			c_flags &= ~SPACEWEAR
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
 			light.disable()
@@ -2542,3 +2542,17 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "blorbohat"
 	item_state = "blorbohat"
 	seal_hair = TRUE
+
+/obj/item/clothing/head/chompskyhat
+	name = "Gnome hat"
+	desc = "A mirthful gnome's hat, now crew-sized!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "chompskyhat"
+	item_state = "chompskyhat"
+
+// The haunting giggle was a must.
+	equipped(var/mob/user, var/slot)
+		..()
+		if(ON_COOLDOWN(src, "gnome giggle",15 SECONDS)) return
+		playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 100, 1)

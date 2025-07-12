@@ -217,6 +217,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 		if (global_instance.research_level < EFFECT_RESEARCH_DONE)
 			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
+			global_instance.onResearched()
 		..()
 
 // TIER ONE

@@ -1,6 +1,6 @@
 /datum/speech_module/prefix/postmodifier/right_hand
 	id = SPEECH_PREFIX_RIGHT_HAND
-	prefix_id = ":rh"
+	prefix_id = PREFIX_TEXT_RIGHT_HAND
 
 /datum/speech_module/prefix/postmodifier/right_hand/process(datum/say_message/message)
 	. = message
@@ -37,3 +37,4 @@
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
+	message.can_relay = FALSE
