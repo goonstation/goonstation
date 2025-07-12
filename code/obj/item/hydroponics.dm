@@ -534,7 +534,6 @@ TYPEINFO(/obj/item/plantanalyzer)
 		src.empty_trowel()
 		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
 
-
 	/// Disposes all the trowel's contents and resets its icon state
 	proc/empty_trowel()
 		src.icon_state = "trowel"

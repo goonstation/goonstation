@@ -20,7 +20,7 @@ TYPEINFO(/obj/decorative_pot)
 								playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 								src.anchored = UNANCHORED
 						return
-				if (istype(weapon, /obj/item/gardentrowel)) // prevent attack message with a filled trowel
+				else if (istype(weapon, /obj/item/gardentrowel)) // prevent attack message with a filled trowel
 						var/obj/item/gardentrowel/trowel = weapon
 						if (trowel.holding_plant)
 								return
