@@ -592,7 +592,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "sX" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	pixel_y = 5
 	},
 /turf/simulated/floor/purple/checker,
