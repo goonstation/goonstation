@@ -21782,7 +21782,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "kcn" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -32060,7 +32060,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "rMh" = (
@@ -32633,7 +32633,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,

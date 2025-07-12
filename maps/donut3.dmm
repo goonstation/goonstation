@@ -3658,7 +3658,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -39606,7 +39606,7 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -62907,7 +62907,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "toq" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -71558,7 +71558,7 @@
 	},
 /area/station/medical/breakroom)
 "vSP" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 8
 	},
 /turf/simulated/floor/white/checker2{
@@ -73782,7 +73782,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/outer/east)
 "wAj" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 8
 	},
 /obj/disposalpipe/segment/transport,
