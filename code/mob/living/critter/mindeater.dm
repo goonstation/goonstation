@@ -110,13 +110,14 @@
 	death(gibbed)
 		gibbed = FALSE
 		if (src.lives < 0)
-			return ..()
+			. = ..()
+			qdel(src)
+			return
 		src.lives--
-		. = ..()
 		src.full_heal()
 		src.demanifest()
 		for (var/datum/statusEffect/status in src.statusEffects)
-			qdel(status)
+			src.delStatus(status)
 		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/manifest/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/manifest/)
 		abil_holder.deductPoints(abil_holder.points)

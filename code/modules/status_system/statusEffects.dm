@@ -4006,7 +4006,6 @@
 			if (!L.hasStatus("broken_madness") && L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
 				L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
 				L.ClearSpecificParticles("mindeater_mind_eating")
-				L.ClearSpecificParticles("mindeater_mind_eating-directional")
 			if (probmult(5))
 				boutput(L, SPAN_ALERT("<b>[pick(src.low_pct_messages)]</b>"))
 
@@ -4018,11 +4017,6 @@
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 50)
 			if (probmult(5))
 				boutput(L, SPAN_ALERT("<i>[pick(src.high_pct_messages)]</i>"))
-			if (!ON_COOLDOWN(L, "mindeater_directional_particle_clear", 1 SECOND))
-				L.ClearSpecificParticles("mindeater_mind_eating")
-				L.ClearSpecificParticles("mindeater_mind_eating-directional")
-				var/particles/mindeater_mind_eating/directional/effect = new(src.owning_mindeater, L)
-				L.UpdateParticles(effect, "mindeater_mind_eating-directional")
 
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 75)
 			get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(L)
@@ -4055,7 +4049,6 @@
 		if (!L.hasStatus("broken_madness") && L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
 			L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
 			L.ClearSpecificParticles("mindeater_mind_eating")
-			L.ClearSpecificParticles("mindeater_mind_eating-directional")
 
 /datum/statusEffect/mindeater_mind_eaten_warp
 	id = "mindeater_mind_eaten_warp"

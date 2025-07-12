@@ -390,13 +390,6 @@
 	friction = 0.5
 	position = generator("circle", 8, 10, NORMAL_RAND)
 
-/particles/mindeater_mind_eating/directional
-	friction = 0
-
-	New(mob/mindeater, mob/tracking_mob)
-		..()
-		src.gravity = list(mindeater.x - tracking_mob.x, mindeater.y - tracking_mob.y, 0)
-
 /obj/effects/impact_gunshot
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = null
