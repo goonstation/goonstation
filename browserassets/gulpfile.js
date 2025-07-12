@@ -10,6 +10,7 @@ import babel from 'gulp-babel';
 import autoprefixer from 'autoprefixer';
 import postcssClean from 'postcss-clean';
 import postcssSimpleVars from 'postcss-simple-vars';
+import postcssNesting from 'postcss-nesting';
 import rename from 'gulp-rename';
 import { isText } from 'istextorbinary';
 import vinyl from 'vinyl';
@@ -209,7 +210,7 @@ function html(cb) {
 function css(cb) {
   return src(sources.styles, { nocase: true, ignore: ignoreSources })
     .pipe(macroReplacer())
-    .pipe(postcss([postcssSimpleVars(), autoprefixer()]))
+    .pipe(postcss([postcssSimpleVars(), postcssNesting(), autoprefixer()]))
     .pipe(postcss([postcssClean()]))
     .pipe(rename(hashRenamer))
     .pipe(dest(dirs.dest + '/css'));
