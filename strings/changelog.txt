@@ -1,4 +1,7 @@
-
+(t)sun jul 13 25
+(u)glowbold
+(e)🆕💊|C-Feature, A-Medical
+(+)Cryogenic Healing Pods have an auto-eject toggle. Keep your organ-mulched patients inside for longer!
 (t)sat jul 12 25
 (u)Wire
 (p)23530
