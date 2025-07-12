@@ -519,6 +519,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		spawn_contents = list(/obj/item/gun/kinetic/grenade_launcher,
 		/obj/item/storage/pouch/grenade_round,
 		/obj/item/storage/grenade_pouch/mixed_explosive,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist/grenadier,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -539,6 +540,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/storage/pouch/assault_rifle/mixed,
 		/obj/item/storage/grenade_pouch/mixed_standard,
 		/obj/item/breaching_charge = 2,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -552,6 +554,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/old_grenade/smoke = 2,
 		/obj/item/dagger/specialist,
 		/obj/item/card/emag,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
@@ -566,6 +569,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/card/emag,
 		/obj/item/storage/backpack/chameleon,
 		/obj/item/device/chameleon,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
@@ -579,6 +583,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
 		/obj/item/lightbreaker,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 
@@ -648,6 +653,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		name = "Class Crate - Knight"
 		desc = "A crate containing a Specialist Operative loadout. This one contains a Hadar power-sword and heavy-duty combat armor."
 		spawn_contents = list(/obj/item/heavy_power_sword,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/shoes/swat/knight,
 		/obj/item/clothing/gloves/swat/syndicate/knight,
 		/obj/item/clothing/suit/space/syndicate/specialist/knight,

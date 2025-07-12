@@ -1336,9 +1336,12 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
 	item_function_flags = IMMUNE_TO_ACID
+	var/receives_storage = TRUE
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		if (src.receives_storage)
+			src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL, slots = 6, opens_if_worn = TRUE)
 		..()
 
 	disposing()
@@ -1459,6 +1462,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		unremovable
 			cant_self_remove = 1
 			cant_other_remove = 1
+			receives_storage = FALSE
 
 /obj/item/clothing/suit/space/ntso
 	name = "NT pressure suit"
