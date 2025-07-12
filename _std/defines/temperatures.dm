@@ -20,3 +20,8 @@
 #define FROM_CELSIUS(C) ((C) + T0C)
 /// Converts a temperature in fahrenheit to kelvin.
 #define FROM_FAHRENHEIT(F) (((F) - 32) / 1.8 + T0C)
+
+/// 5 Degrees Celsius, used in most vending machines
+#define COLD_SERVING 278
+/// 80 Degrees Celsius, average serving temperature for teas
+#define HOT_SERVING 353
