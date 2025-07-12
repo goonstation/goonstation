@@ -11,8 +11,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 	icon_state = "TheSingGen"
 	anchored = UNANCHORED // so it can be moved around out of crates
 	density = 1
-	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
-	var/activating = FALSE
+	// it is time. we can trust people to use the singularity For Good - cirr
+	var/makes_black_hole = FALSE //! Whether or not to make a black hole instead of a singularity, when activated.
+	var/activating = FALSE //! Whether or not generator is in activation process (summoning a singularity)
 
 	HELP_MESSAGE_OVERRIDE({"Automatically creates a singularity when all surrounding containment fields are active.\
 							Can be anchored/unanchored with a <b>wrench</b>"})
@@ -40,10 +41,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 	playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 3, flags=SOUND_IGNORE_SPACE)
 	src.icon_state = "TheSingGenOhNo"
 	SPAWN(7 SECONDS)
-		if (src.bhole)
+		if (src.makes_black_hole)
 			new /obj/bhole(T, 3000)
 		else
-			new /obj/machinery/the_singularity(T, 100,,max_radius)
+			new /obj/machinery/the_singularity(T, 100, null, max_radius)
 		qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
