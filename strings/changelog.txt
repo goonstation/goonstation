@@ -1,4 +1,9 @@
+
 (t)sun jul 13 25
+(u)RubberRats
+(p)23929
+(e)🆕🗺🎨🎩|C-Feature, A-Mapping, C-Sprites, A-Clothing
+(*)The clothing booth now supplies a selection of swimsuits during the summer season
 (u)glowbold
 (e)🆕💊|C-Feature, A-Medical
 (+)Cryogenic Healing Pods have an auto-eject toggle. Keep your organ-mulched patients inside for longer!
