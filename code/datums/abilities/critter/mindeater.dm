@@ -240,7 +240,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	targeted = TRUE
 	target_anything = TRUE
 	pointCost = INTRUDER_MAX_INTELLECT_THRESHOLD
-	full_reveal_on_use = TRUE
 
 	tryCast(atom/target)
 		var/mob/living/L = src.get_nearest_human(target)
@@ -423,6 +422,8 @@ ABSTRACT_TYPE(/area/veil_border)
 	var/mob/living/target
 
 	New(atom/target)
+		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) >= INTRUDER_MAX_INTELLECT_THRESHOLD)
+			src.duration = 0
 		..()
 		src.target = target
 

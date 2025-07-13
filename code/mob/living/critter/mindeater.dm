@@ -283,10 +283,10 @@ TYPEINFO(/mob/living/critter/mindeater)
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/project)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/spatial_swap)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/cosmic_light)
+		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/project)
+		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/spatial_swap)
+		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
+		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/cosmic_light)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/set_disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
@@ -301,10 +301,10 @@ TYPEINFO(/mob/living/critter/mindeater)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/project)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/spatial_swap)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/cosmic_light)
+		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/project)
+		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/spatial_swap)
+		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
+		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/cosmic_light)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/set_disguise)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
@@ -412,7 +412,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 			boutput(src, SPAN_NOTICE("You will no longer fire psi bolts when disguised."))
 
 /obj/dummy/fake_mindeater
-	name = "???"
+	name = "mindeater"
 	real_name = "mindeater"
 	desc = "What sort of eldritch abomination is this thing???"
 	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
