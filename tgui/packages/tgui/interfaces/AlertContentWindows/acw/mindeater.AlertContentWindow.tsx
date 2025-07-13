@@ -35,16 +35,13 @@ const MindeaterContentWindow = () => {
         you shows if you are visible or not.
       </p>
       <p>
-        4. Your basic attack is a ranged attack that slows down those hit and
-        prevents them from running. It drains chemicals, replacing them with
-        toxins.
+        4. Your basic attack is a ranged attack that drains chemicals from those
+        hit, replacing them with toxins.
       </p>
       <p>
-        5. Start attacks by sneakily using Brain Drain on crew members. When
-        they become aware of you, use your ranged attack to slow them down. Use
-        Project and Spatial Swap for evasion as needed. Use Project, Spatial
-        Swap, Paralyze, and Cosmic Light to gain as much Intellect as you can.
-        Finish off the attack with by using Pierce the Veil on the target.
+        5. Start attacks by sneakily using Brain Drain on crew members. Stay in
+        range while they become aware of you, and finish off the attack by using
+        Pierce the Veil on the target.
       </p>
       <p>
         6. You can speak over Intruder chat with the radio hotkey, or prefixing
