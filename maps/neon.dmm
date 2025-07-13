@@ -9731,13 +9731,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "gPD" = (
-/obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/junction/left/east,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "gPW" = (
@@ -22759,6 +22759,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "qju" = (
