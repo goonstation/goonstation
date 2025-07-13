@@ -46,12 +46,12 @@
 	proc/toggleSelfOnly(obj/item/W as obj, mob/user as mob)
 		self_only = !self_only
 		boutput(user, "[self_only ? "Now only processing messages addressed at us.":"Now processing all messages received."]")
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 	proc/toggleMainframeReg(obj/item/W as obj, mob/user as mob)
 		register = !register
 		boutput(user, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 	secure()
 		var/turf/T = get_turf(src)
