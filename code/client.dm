@@ -319,9 +319,10 @@
 
 	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
-		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
-		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
+		var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
+		var/banUrl = "<a href='[goonhub_href("/admin/bans/[ban.id]", TRUE)]'>[ban.id]</a>"
+		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [ban.id], IP: [src.address], CID: [src.computer_id])")
+		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [ban.id], IP: [src.address], CID: [src.computer_id])", "access")
 		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
 		var/banstring = {"
 							<!doctype html>
@@ -542,7 +543,7 @@
 
 #if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
 		src.verbs += /client/proc/cmd_rp_rules
-		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 			src.cmd_rp_rules()
 #endif
 
@@ -951,7 +952,7 @@ var/global/curr_day = null
 	set category = "Commands"
 
 	var/cant_interact_time = null
-	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
 		cant_interact_time = 15 SECONDS
 
 	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
@@ -1402,6 +1403,8 @@ var/global/curr_day = null
 		if(H.sims)
 			H.sims.add_hud()
 		H.update_equipment_screen_loc()
+		for (var/datum/hud/storage/S in H.huds)
+			S.update(H)
 
 /client/verb/set_tg_layout()
 	set hidden = 1

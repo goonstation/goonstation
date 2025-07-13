@@ -7113,7 +7113,6 @@
 /area/station/maintenance/inner/central)
 "aOO" = (
 /obj/machinery/light/small/sticky,
-/obj/blind_switch/area/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aOP" = (
@@ -17304,7 +17303,12 @@
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
 /obj/machinery/vending/security,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "dpc" = (
@@ -17913,6 +17917,17 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
+"dJz" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "dJK" = (
 /obj/machinery/light/incandescent,
 /obj/random_item_spawner/junk/one,
@@ -23652,9 +23667,6 @@
 /obj/item/device/radio/intercom/detnet/security{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
 /obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -27966,9 +27978,7 @@
 /area/station/turret_protected/ai)
 "jQb" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta{
-	setup_os_string = "ZETA_MAINFRAME"
-	},
+/obj/machinery/computer3/terminal/zeta/os_loaded,
 /obj/cable,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
@@ -38714,7 +38724,7 @@
 	},
 /area/station/hangar/main)
 "pTM" = (
-/obj/machinery/computer3/terminal/zeta{
+/obj/machinery/computer3/terminal/zeta/os_loaded{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -43418,9 +43428,8 @@
 	},
 /area/space)
 "sEx" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -48856,6 +48865,15 @@
 /obj/item/raw_material/shard/glass,
 /turf/space,
 /area/space)
+"vKR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "vKU" = (
 /obj/machinery/light/small/sticky,
 /obj/cable/orange{
@@ -130701,7 +130719,7 @@ lVX
 hxT
 ajS
 tyH
-ebB
+dJz
 alf
 ajz
 ajz
@@ -131003,7 +131021,7 @@ ajT
 ajT
 ajT
 lUy
-ajT
+vKR
 vmR
 aaa
 aaa

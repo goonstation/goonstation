@@ -226,7 +226,7 @@
 
 	proc/check_valid(mob/M, area/targetArea)
 		var/turf/T = get_turf(M)
-		if(!istype(targetArea, /area/station) || get_z(T) != Z_LEVEL_STATION)
+		if(!istype(targetArea, /area/station) || istype(targetArea, /area/station/medical/asylum) || get_z(T) != Z_LEVEL_STATION)
 			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
 			return FALSE
 
