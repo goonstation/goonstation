@@ -1450,7 +1450,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_launch(obj/projectile/O)
 		var/mob/living/critter/mindeater/mindeater = O.shooter || O.mob_shooter
-		mindeater.reveal()
+		mindeater.reveal(FALSE)
 
 	on_pre_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
@@ -1464,8 +1464,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			return
 		if (istype(L, /mob/living/critter/mindeater))
 			return
-		L.changeStatus("staggered", 1.5 SECONDS)
-		L.setStatus("mindeater_psi_slow", 5 SECONDS)
+
 		if (L.reagents)
 			var/amt = min(max(L.reagents.total_volume - L.reagents.get_reagent_amount("toxin"), 0), 1)
 			if (amt > 0)

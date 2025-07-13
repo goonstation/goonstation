@@ -3898,12 +3898,6 @@
 		..()
 		QDEL_NULL(src.target_image)
 
-/datum/statusEffect/psi_bolt_slown
-	id = "mindeater_psi_slow"
-	visible = FALSE
-	effect_quality = STATUS_QUALITY_NEGATIVE
-	movement_modifier = /datum/movement_modifier/psi_bolt
-
 /datum/statusEffect/piercing_the_veil
 	id = "mindeater_abducted"
 	icon_state = "mindeater_abducted"
