@@ -28,6 +28,9 @@
 
 #define isblob(x) istype(x, /mob/living/intangible/blob_overmind)
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_SPY_THIEF))
+#define isganger(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_GANG_LEADER) || x:mind:get_antagonist(ROLE_GANG_MEMBER)))
+#define isgangleader(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_GANG_LEADER))
+#define isgangmember(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_GANG_MEMBER))
 #define isfloorgoblin(x) (x:mind && x:mind:get_antagonist(ROLE_FLOOR_GOBLIN))
 #define isslasher(x) (istype(x, /mob/living/carbon/human/slasher) && x:mind:get_antagonist(ROLE_SLASHER))
 

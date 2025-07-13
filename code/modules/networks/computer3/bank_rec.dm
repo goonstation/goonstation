@@ -122,7 +122,7 @@
 		"Mining" = list(/datum/job/engineering/miner),
 		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
 		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant, /datum/job/command/research_director),
-		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/souschef, /datum/job/daily/waiter),
+		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/random/souschef, /datum/job/daily/waiter),
 		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
 		"Security" = list(/datum/job/security, /datum/job/command/head_of_security),
 		"Medical" = list(/datum/job/medical/medical_doctor, /datum/job/medical/medical_assistant, /datum/job/command/medical_director),
@@ -364,6 +364,12 @@
 						return
 
 					src.active_general["age"] = newAge
+
+				if(FIELDNUM_RANK)
+					if (ckey(inputText))
+						src.active_general["rank"] = copytext(inputText, 1, 33)
+					else
+						return
 
 				if(FIELDNUM_WAGE)
 					if (!src.active_bank)
@@ -717,7 +723,9 @@
 			src.log_wrapper("Issued bonus of [src.bonus_amount][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to team [src.teams[src.bonus_team]].")
 			command_announcement(
 				"Bonus of [src.bonus_amount][CREDIT_SIGN] issued to all [src.teams[src.bonus_team]] staff.<br>Reason: [inputText]",
-				"Payroll Announcement by [src.authenticated] ([src.account.assignment])"
+				"Payroll Announcement by [src.authenticated] ([src.account.assignment])",
+				'sound/misc/bingbong.ogg',
+				alert_origin=ALERT_DEPARTMENT
 			)
 			global.wagesystem.station_budget -= bonus_total
 			global.wagesystem.last_issued_bonus_time = world.time

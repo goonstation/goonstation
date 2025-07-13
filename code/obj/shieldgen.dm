@@ -7,7 +7,7 @@ Shield and graivty well generators
 /obj/shieldgen
 	name = "shield generator"
 	desc = "Used to seal minor hull breaches."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldoff"
 
 	density = 1

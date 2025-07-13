@@ -468,17 +468,9 @@ TYPEINFO(/obj/item/tank/jetpack)
 	var/on = FALSE
 
 	// base_icon_state is used when updating the jetpack's icon, with "1" or "0" appended depending on if the jetpack is on or not
-	// jetpacks have special behavior on Manta, hence the overrides here
-	#if defined(MAP_OVERRIDE_MANTA)
-	icon_state = "jetpack_mag0"
-	item_state = "jetpack_mag"
-	c_flags = IS_JETPACK | ONBACK
-	var/base_icon_state = "jetpack_mag"
-	#else
 	icon_state = "jetpack0"
 	item_state = "jetpack"
 	var/base_icon_state = "jetpack"
-	#endif
 
 	New()
 		..()
@@ -500,11 +492,6 @@ TYPEINFO(/obj/item/tank/jetpack)
 		return
 
 	proc/allow_thrust(num, mob/user)
-		#if defined(MAP_OVERRIDE_MANTA)
-		if (MagneticTether != 1)
-			return 0
-		#endif
-
 		if (!(src.on))
 			return 0
 		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
@@ -570,6 +557,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	extra_desc = "This one is the smaller variant, suitable for shorter ranged activities."
 	force = 6
 
+
 	New()
 		..()
 		src.air_contents.volume = 30
@@ -608,6 +596,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket)
 	name = "pocket tank (plasma)"
 	icon_state = "pocket_plasma"
 	extra_desc = "The bright orange paintwork indicates that it contains plasma."
+	distribute_pressure = 17
 
 	New()
 		..()
@@ -646,6 +635,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket/extended)
 	name = "extended capacity pocket tank (oxygen)"
 	icon_state = "ex_pocket_oxtank"
 	extra_desc = "The bright yellow and deep blue paintwork indicates that it contains oxygen."
+	distribute_pressure = 17
 
 	New()
 		..()
@@ -655,6 +645,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket/extended)
 	name = "extended capacity pocket tank (plasma)"
 	icon_state = "ex_pocket_plastank"
 	extra_desc = "The bright yellow and orange paintwork indicates that it contains plasma."
+	distribute_pressure = 17
 
 	New()
 		..()
@@ -703,6 +694,7 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 	icon_state = "mini_oxtank"
 	item_state = "mini_oxtank"
 	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
+	distribute_pressure = 17
 
 	New()
 		..()
@@ -721,6 +713,7 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 	item_state = "mini_plastank"
 	extra_desc = "The bright orange paintwork indicates that it contains plasma."
 	compatible_with_TTV = FALSE
+	distribute_pressure = 17
 
 	New()
 		..()

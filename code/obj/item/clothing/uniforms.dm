@@ -15,6 +15,7 @@
 	burn_output = 800
 	burn_possible = TRUE
 	health = 10
+	var/hide_underwear = FALSE
 	var/team_num
 	var/cutting_product = /obj/item/material_piece/cloth/cottonfabric
 
@@ -33,6 +34,17 @@
 				boutput(user, SPAN_ALERT("You can't cut that unless it's on a flat surface!"))
 				return
 			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/item/clothing/under/proc/cut_tha_crap, list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if(src.hide_underwear)
+			user.update_body()
+
+	unequipped(mob/user)
+		. = ..()
+		if(src.hide_underwear)
+			SPAWN(0) //uniform still counts as worn as unequipped() is called
+			user.update_body()
 
 	proc/cut_tha_crap(mob/user)
 		qdel(src)
@@ -992,6 +1004,7 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "fswimW"
 	item_state = "fswimW"
+	hide_underwear = TRUE
 
 	red
 		name = "red swimsuit"
@@ -1952,6 +1965,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 	desc = "Featuring a skirt over a skirt!"
 	icon_state = "westerndress"
 	item_state = "westerndress"
+	hide_underwear = TRUE
 
 //Crate Loot
 /obj/item/clothing/under/misc/tiedye
@@ -2058,6 +2072,90 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/blouse_skirt)
 	name = "black blouse and skirt"
 	icon_state = "blouse_skirt-black"
 	item_state = "blouse_skirt-black"
+
+//Tea Party Dresses
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/tea_party_dress)
+/obj/item/clothing/under/misc/tea_party_dress
+	name = "tea party dress"
+	desc = "An elegant, old-fashioned dress layered over a blouse."
+	icon_state = "tea_party_dress-pink"
+	item_state = "tea_party_dress-pink"
+
+/obj/item/clothing/under/misc/tea_party_dress/pink
+	name = "pink tea party dress"
+	icon_state = "tea_party_dress-pink"
+	item_state = "tea_party_dress-pink"
+
+/obj/item/clothing/under/misc/tea_party_dress/pink_and_black
+	name = "pink and black tea party dress"
+	icon_state = "tea_party_dress-pb"
+	item_state = "tea_party_dress-pb"
+
+/obj/item/clothing/under/misc/tea_party_dress/black_and_white
+	name = "black and white tea party dress"
+	icon_state = "tea_party_dress-bw"
+	item_state = "tea_party_dress-bw"
+
+/obj/item/clothing/under/misc/tea_party_dress/black
+	name = "black tea party dress"
+	icon_state = "tea_party_dress-black"
+	item_state = "tea_party_dress-black"
+
+/obj/item/clothing/under/misc/tea_party_dress/white
+	name = "white tea party dress"
+	icon_state = "tea_party_dress-white"
+	item_state = "tea_party_dress-white"
+
+/obj/item/clothing/under/misc/tea_party_dress/white_and_black
+	name = "white and black tea party dress"
+	icon_state = "tea_party_dress-wb"
+	item_state = "tea_party_dress-wb"
+
+/obj/item/clothing/under/misc/tea_party_dress/blue
+	name = "blue tea party dress"
+	icon_state = "tea_party_dress-blue"
+	item_state = "tea_party_dress-blue"
+
+/obj/item/clothing/under/misc/tea_party_dress/dark_blue
+	name = "dark blue tea party dress"
+	icon_state = "tea_party_dress-dblue"
+	item_state = "tea_party_dress-dblue"
+
+/obj/item/clothing/under/misc/tea_party_dress/light_blue
+	name = "light blue tea party dress"
+	icon_state = "tea_party_dress-lblue"
+	item_state = "tea_party_dress-lblue"
+
+/obj/item/clothing/under/misc/tea_party_dress/cyan
+	name = "cyan tea party dress"
+	icon_state = "tea_party_dress-cyan"
+	item_state = "tea_party_dress-cyan"
+
+/obj/item/clothing/under/misc/tea_party_dress/green
+	name = "green tea party dress"
+	icon_state = "tea_party_dress-green"
+	item_state = "tea_party_dress-green"
+
+/obj/item/clothing/under/misc/tea_party_dress/light_green
+	name = "light green tea party dress"
+	icon_state = "tea_party_dress-lgreen"
+	item_state = "tea_party_dress-lgreen"
+
+/obj/item/clothing/under/misc/tea_party_dress/orange
+	name = "orange tea party dress"
+	icon_state = "tea_party_dress-orange"
+	item_state = "tea_party_dress-orange"
+
+/obj/item/clothing/under/misc/tea_party_dress/red
+	name = "red tea party dress"
+	icon_state = "tea_party_dress-red"
+	item_state = "tea_party_dress-red"
+
+/obj/item/clothing/under/misc/tea_party_dress/yellow
+	name = "yellow tea party dress"
+	icon_state = "tea_party_dress-yellow"
+	item_state = "tea_party_dress-yellow"
+
 //Seasonal Stuff
 
 /obj/item/clothing/under/gimmick/clown_autumn

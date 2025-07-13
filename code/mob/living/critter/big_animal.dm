@@ -1,14 +1,13 @@
 /mob/living/critter/lion
 	name = "lion"
-	real_name = "lion"
 	desc = "Oh christ"
 	density = 1
 	custom_gib_handler = /proc/gibs
 	icon_state = "lion"
 	icon_state_dead = "lion-dead"
-	speechverb_say = "growls"
-	speechverb_exclaim = "roars"
-	speechverb_ask = "meows"
+	speech_verb_say = "growls"
+	speech_verb_exclaim = "roars"
+	speech_verb_ask = "meows"
 	death_text = "%src% gives up the ghost!"
 	hand_count = 2
 	can_throw = TRUE
@@ -73,7 +72,6 @@
 
 /mob/living/critter/lion/strong // Stronger one for admin stuff / one off spawns
 	name = "alpha lion"
-	real_name = "alpha lion"
 	desc = "Oh christ, this lion looks very buff..."
 	health_brute = 40
 	health_brute_vuln = 0.8

@@ -14,11 +14,17 @@
 			for(var/i in 1 to length(random_floor_turfs))
 				holepick = pick(random_floor_turfs)
 				targpick = pick(random_floor_turfs)
-				var/obj/portal/P = new /obj/portal/wormhole
-				P.set_loc(holepick)
-				P.set_target(targpick)
-				SPAWN(rand(18 SECONDS, 32 SECONDS))
-					qdel(P)
+				if (prob(1) && prob(10))
+					var/obj/vortex/V = new /obj/vortex
+					V.set_loc(holepick)
+					SPAWN(rand(18 SECONDS, 32 SECONDS))
+						qdel(V)
+				else
+					var/obj/portal/P = new /obj/portal/wormhole
+					P.set_loc(holepick)
+					P.set_target(targpick)
+					SPAWN(rand(18 SECONDS, 32 SECONDS))
+						qdel(P)
 				if (rand(1,1000) == 1)
 					Artifact_Spawn(holepick)
 				sleep(rand(1, 15))

@@ -347,7 +347,7 @@
 		if (src.stat || src.hasStatus("paralysis"))
 			. += "<br>[SPAN_ALERT("[src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"
 		else
-			if (src.get_brain_damage() >= 60)
+			if (src.get_brain_damage() >= BRAIN_DAMAGE_LETHAL || src.reagents?.has_reagent("expresso"))
 				. += "<br>[SPAN_ALERT("[src.name] has a blank expression on [his_or_her(src)] face.")]"
 
 			if (!src.client && !src.ai_active)
@@ -436,7 +436,7 @@
 	if (GET_DIST(usr, src) < 4)
 		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH))
 			. += "<br>[SPAN_ALERT("You analyze [src]'s vitals.")]<br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
-			scan_health_overhead(src, usr)
+			DISPLAY_MAPTEXT(src, list(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, src)
 			update_medical_record(src)
 
 	return jointext(., "")

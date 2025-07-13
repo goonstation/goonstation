@@ -489,7 +489,7 @@
 		//I don't think drones have hands technically but they can only hold one item anyway
 		if(isghostdrone(user))
 			return TRUE
-		if(user.find_type_in_hand(/obj/item/deconstructor/))
+		if(user.find_tool_in_hand(TOOL_DECONSTRUCTING))
 			return TRUE
 
 	wrench
@@ -644,13 +644,14 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			if (V.locked && V.lock)
+			if (V.locked && V.get_part(POD_PART_LOCK))
 				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			V.lock.show_lock_panel(user,0)
+			var/obj/item/shipcomponent/secondary_system/lock/lock_part = V.get_part(POD_PART_LOCK)
+			lock_part.show_lock_panel(user,0)
 
 	parts
 		name = "Show Parts Panel"
@@ -704,12 +705,12 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/thrusters/lateral)
+			. = ..() && istype(V.get_part(POD_PART_SECONDARY), /obj/item/shipcomponent/secondary_system/thrusters/lateral)
 
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.sec_system
+			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.get_part(POD_PART_SECONDARY)
 			thrusters.change_thruster_direction()
 			if (src.icon_state == "thrusters_right")
 				src.desc = "Change the lateral thrusters to move the ship left"
@@ -866,7 +867,7 @@
 			M.set_icon_state("[M.prefix]-remove")
 		else
 			M.set_icon_state("[M.prefix]-[M.setting]")
-		M.tooltip_rebuild = 1
+		M.tooltip_rebuild = TRUE
 
 /datum/contextAction/lamp_manufacturer/col_page_1/to_page_2
 	name = "Page 2"
@@ -1370,7 +1371,7 @@
 	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
 		if(!can_act(user) || !in_interact_range(rcd, user))
 			return FALSE
-		return rcd in user
+		return rcd in user.equipped_list()
 
 	deconstruct
 		name = "Deconstruct"
@@ -2361,8 +2362,9 @@
 		if (!istype(sp, /obj/item/device/speech_pro))
 			return
 		if (!ON_COOLDOWN(user, "use_speech_pro", 3 SECONDS))
-			sp.speak(src.speech_text, user)
+			sp.say(src.speech_text)
 			playsound(sp, src.speech_sound, 50, 1)
+			logTheThing(LOG_DEBUG, sp, "[user] said [src.speech_text] using [sp].")
 		else
 			boutput(user, SPAN_ALERT("Your [sp] is still loading..."))
 

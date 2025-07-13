@@ -282,7 +282,7 @@
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 	density = 0
 
 	updateHealth()
@@ -369,6 +369,10 @@
 /obj/proc/receive_silicon_hotkey(var/mob/user)
 	//A wee stub to handle other objects implementing the AI keys
 	//DEBUG_MESSAGE("[src] got a silicon hotkey from [user], containing: [user.client.check_key(KEY_OPEN) ? "KEY_OPEN" : ""] [user.client.check_key(KEY_BOLT) ? "KEY_BOLT" : ""] [user.client.check_key(KEY_SHOCK) ? "KEY_SHOCK" : ""]")
+	if (!isAI(user) && !issilicon(user))
+		return TRUE
+	if (!can_act(user))
+		return TRUE
 	return 0
 
 /obj/proc/mob_flip_inside(var/mob/user)
@@ -400,31 +404,6 @@
 	replacer.disguise_as(src)
 	qdel(src)
 
-
-/obj/proc/admin_command_obj_speak()
-	set name = "Object Speak"
-	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
-	if (msg)
-		src.obj_speak(msg)
-
-/obj/proc/obj_speak(message)
-	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
-
-	var/list/mob/targets = null
-	var/mob/holder = src
-	while(holder && !istype(holder))
-		holder = holder.loc
-	ENSURE_TYPE(holder)
-	if(!holder)
-		targets = hearers(src, null)
-	else
-		targets = list(holder)
-		chat_text.plane = PLANE_HUD
-		chat_text.layer = 999
-
-	for(var/mob/O in targets)
-		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)
-
 /obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
 	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
 		var/mob/dead/observer/O = viewer
@@ -451,6 +430,7 @@
 		F = new /obj/item/electronics/frame/flatpack(target_loc)
 	else
 		F = new(target_loc)
+	F.forensic_holder = src.forensic_holder // keep forensic evidence when deconstructed
 	F.name = "[src.name] frame"
 	if(src.deconstruct_flags & DECON_DESTRUCT)
 		F.store_type = src.type

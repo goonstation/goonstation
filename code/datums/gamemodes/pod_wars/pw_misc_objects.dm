@@ -317,7 +317,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			return 0
 
 /obj/deployable_turret/pod_wars/nt/activated
-	anchored=1
+	anchored=ANCHORED
 	active=1
 	deconstructable = FALSE
 
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			return 0
 
 /obj/deployable_turret/pod_wars/sy/activated
-	anchored=1
+	anchored=ANCHORED
 	active=1
 	deconstructable = FALSE
 	north
@@ -501,7 +501,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 //OK look, I made these objects, but I probably didn't need to. Setting the frequencies is done in the job equip.
 //Mainly I did it to give them the icon_override vars. Don't spawn these unless you want to set their secure frequencies yourself, because that's what you'd have to do. -Kyle
 /obj/item/device/radio/headset/pod_wars
-	protected_radio = 1
+	protected_radio = TRUE
 	var/team = 0
 
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
@@ -549,7 +549,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list("g" = RADIOCL_NANOTRASEN)
-	protected_radio = 1
+	protected_radio = TRUE
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate"
 	team = TEAM_SYNDICATE
@@ -891,8 +891,10 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	desc = "A collection of parts that can be used to make some kind of barricade."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "barricade"
-	var/object_type = /obj/barricade 		//object to deploy
-	var/build_duration = 2 SECONDS
+	var/object_type = /obj/barricade 		//!object to deploy
+	var/build_duration = 2 SECONDS			//!how long it takes to deploy it
+
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy the barricade on solid ground. Cannot be picked back up once deployed.")
 
 	New(loc)
 		..()
@@ -1113,7 +1115,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	/obj/item/reagent_containers/mender/burn,
 	/obj/item/reagent_containers/hypospray/emagged, // maybe fine. it'll be fine. i'm sure it's fine.
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
-	/obj/item/robodefibrillator,
+	/obj/item/robodefibrillator/recharging,
 	/obj/item/clothing/glasses/healthgoggles/upgraded,
 	/obj/item/suture )
 

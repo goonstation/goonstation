@@ -308,7 +308,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 
 	make_my_stuff()
 		..()
-		var/loot = rand(1,9)
+		var/loot = rand(1,11)
 		switch (loot)
 			if (1)
 				src.storage.add_contents(new /obj/item/stamped_bullion(src))
@@ -399,6 +399,47 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					else // if what we selected wasn't a valid path
 						i++ // try again
 
+			if (10) // weaker power eggs
+				var/list/eggs_weak = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/ghost)
+
+				for (var/i=rand(1,rand(3,5)), i>0, i--)
+					var/egg = pick(eggs_weak)
+					if (ispath(egg))
+						src.storage.add_contents(new egg(src))
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
+					E.infertile = TRUE
+
+			if (11) // strong power eggs
+				var/list/eggs_strong = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/popsicle)
+				#ifdef SECRETS_ENABLED
+				eggs_strong += list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+				#endif
+				var/list/eggs_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/spider,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne)
+				for(var/i=rand(1,2), i>0, i--)
+					var/egg = pick(eggs_strong)
+					if (ispath(egg))
+						src.storage.add_contents(new egg(src))
+				for (var/i=rand(2,rand(3,4)), i>0, i--)
+					var/junk_egg = pick(eggs_junk)
+					if (ispath(junk_egg))
+						src.storage.add_contents(new junk_egg(src))
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
+					E.infertile = TRUE
 /obj/item/paper/IOU
 	name = "paper- 'IOU'"
 	New()
@@ -628,6 +669,17 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	configure_mode = FALSE
 	random_code = TRUE
 	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/currency/buttcoin, /obj/item/currency/buttcoin)
+
+/obj/item/storage/secure/ssafe/syndicate_mining_encounter
+	configure_mode = FALSE
+	random_code = TRUE
+
+	New()
+		..()
+		for (var/i in 1 to rand(2, 3))
+			src.storage.add_contents(new /obj/item/stamped_bullion(src))
+		for (var/i in 1 to rand(2, 3))
+			src.storage.add_contents(new /obj/item/uplink_telecrystal/trick(src))
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET

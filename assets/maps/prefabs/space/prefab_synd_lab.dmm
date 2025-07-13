@@ -261,7 +261,7 @@
 /obj/storage/crate{
 	open = 1
 	},
-/obj/item/explosive_uplink_telecrystal,
+/obj/item/uplink_telecrystal/trick,
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "M" = (

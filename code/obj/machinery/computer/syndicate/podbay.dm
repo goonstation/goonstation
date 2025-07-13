@@ -1,10 +1,16 @@
 // Riot computer but reflavored for the Cairngorm
+TYPEINFO(/obj/machinery/computer/battlecruiser_podbay)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/computer/battlecruiser_podbay
 	name = "podbay authorization"
 	icon_state = "drawbr"
 	desc = "Controls access to the podbay. Use this when your team is ready to go."
 	density = FALSE
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	/// How many authentications are needed to release the shielding on the podbay. Set the first time someone clicks this.
 	var/auth_need
 	/// A list of the mobs who authorized.
@@ -88,15 +94,14 @@
 		if (length(src.authorized) < src.auth_need)
 			logTheThing(LOG_STATION, user.real_name, "added an approval for podbay access. [length(src.authorized)] total approval[s_es(length(src.authorized))].")
 			auths_required -= 1
-			for (var/mob/M in hearers(src, null))
-				M.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[user.real_name]'s request accepted. [auths_required] authorization[s_es(auths_required)] needed until Podbay is opened.\"")), 2)
+			src.say("[user.real_name]'s request accepted. [auths_required] authorization[s_es(auths_required)] needed until Podbay is opened.")
 		else
 			src.authorize()
 
 /obj/forcefield/battlecruiser
 	name = "podbay barrier"
 	desc = "An impenetrable forcefield designed to make you wait. It is controlled by an authorization computer."
-	icon = 'icons/obj/meteor_shield.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldw"
 	color = "#FF6666"
 

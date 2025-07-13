@@ -464,6 +464,32 @@ TRAYS
 		rancher
 			count = 4
 
+			//BR variants
+			void
+				name = "nebulous carton"
+				desc = "A egg carton with purple eggs, a label mentions squeezing and vulnerability."
+				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple
+			wizard
+				name = "magical carton"
+				desc = "A oddly mystical egg carton, there is a wizard using a spell on the top."
+				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard
+			snow
+				name = "cold carton"
+				desc = "This carton chills your hands to hold it, a slipping warning is printed on the back."
+				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/snow
+			plant
+				name = "overgrown carton"
+				desc = "Vines try to nudge out of this carton, it has a picture of the sun on it."
+				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant
+			mime
+				name = "monochrome carton"
+				desc = "This monochrome box shows a mime making a stop motion with their hands."
+				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime
+			knight
+				name = "chivalrous carton"
+				desc = "This plate-mailed carton has a shield printed onto it."
+				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight
+
 	lollipop
 		name = "lollipop bowl"
 		desc = "A little bowl of lollipops, totally healthy in every way! They're medicinal, after all!"
@@ -515,7 +541,7 @@ TRAYS
 				user.drop_item()
 				W.set_loc(src)
 				src.count ++
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				boutput(user, "You place [W] into [src].")
 				src.update()
 			else return ..()
@@ -543,13 +569,13 @@ TRAYS
 		if(myFood)
 			if(src.count >= 1)
 				src.count--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			user.put_in_hand_or_drop(myFood)
 			boutput(user, "You take [myFood] out of [src].")
 		else
 			if(src.count >= 1)
 				src.count--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				var/obj/item/reagent_containers/food/snacks/newFood = new src.contained_food(src.loc)
 				user.put_in_hand_or_drop(newFood)
 				boutput(user, "You take [newFood] out of [src].")

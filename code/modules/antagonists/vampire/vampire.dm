@@ -25,6 +25,7 @@
 		src.ability_holder.addAbility(/datum/targetable/vampire/glare)
 		src.ability_holder.addAbility(/datum/targetable/vampire/hypnotize)
 		src.ability_holder.addAbility(/datum/targetable/vampire/vamp_cloak)
+		src.ability_holder.check_for_unlocks()
 
 		src.owner.current.assign_gimmick_skull()
 

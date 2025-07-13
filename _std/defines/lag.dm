@@ -34,8 +34,11 @@
 #define LAG_REALTIME 90
 #define LAG_INIT 95
 
-/// Waits until a given condition is true, tg-style async
-#define UNTIL(X) while(!(X)) sleep(1)
+/// Waits until a given condition is true, or a timeout is reached
+#define UNTIL(X, TIMEOUT) do { \
+	var/end = TIMEOUT ? TIME + TIMEOUT : 0; \
+	while(!(X) && (!end || TIME < end)) sleep(1); \
+	} while(0)
 
 //ticklag stuff. code lives in gameticker's process() in datums/gameticker.dm
 #define TIME_DILATION_ENABLED 1

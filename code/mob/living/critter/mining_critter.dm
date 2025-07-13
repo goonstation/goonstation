@@ -26,15 +26,14 @@
 
 /mob/living/critter/fermid
 	name = "fermid"
-	real_name = "fermid"
 	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid them wherever possible."
 	icon_state = "fermid"
 	icon_state_dead = "fermid-dead"
-	speechverb_say = "clicks"
-	speechverb_exclaim = "clacks"
-	speechverb_ask = "chitters"
-	speechverb_gasp = "rattles"
-	speechverb_stammer = "click-clacks"
+	speech_verb_say = "clicks"
+	speech_verb_exclaim = "clacks"
+	speech_verb_ask = "chitters"
+	speech_verb_gasp = "rattles"
+	speech_verb_stammer = "click-clacks"
 	butcherable = BUTCHER_ALLOWED
 	can_throw = TRUE
 	can_grab = TRUE
@@ -162,8 +161,6 @@
 // FERMID WORKER
 ///////////////////////////////////////////////
 /mob/living/critter/fermid/worker
-	name = "fermid"
-	real_name = "fermid"
 	desc = "Extremely hostile asteroid-dwelling bugs. Small, numble, and a whole lot of mandible."
 	icon_state = "fermid-s"
 	icon_state_dead = "fermid-s-dead"
@@ -176,8 +173,6 @@
 		recolor = "#05da17"
 
 /mob/living/critter/fermid/spitter
-	name = "fermid"
-	real_name = "fermid"
 	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid whatever is in that enlarged gaster."
 	icon_state = "fermid-r"
 	icon_state_dead = "fermid-r-dead"
@@ -223,7 +218,6 @@
 
 /mob/living/critter/fermid/queen
 	name = "fermid queen"
-	real_name = "fermid queen"
 	desc = "Extremely hostile asteroid-dwelling mother of bugs. A risk to life as we know it if left unchecked."
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-queen"
@@ -240,7 +234,6 @@
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
-	real_name = "fermid hulk"
 	desc = "Extremely hostile asteroid-dwelling mother of bugs. A huge guardian of some riches."
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-hulk"
@@ -272,7 +265,6 @@
 
 /mob/living/critter/fermid/grub
 	name = "fermid grub"
-	real_name = "fermid grub"
 	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid them wherever possible."
 	icon_state = "fermid-g"
 	icon_state_dead = "fermid-g-dead"
@@ -358,7 +350,6 @@
 
 /mob/living/critter/rockworm
 	name = "rock worm"
-	real_name = "rock worm"
 	desc = "Tough lithovoric worms."
 	icon_state = "rockworm"
 	icon_state_dead = "rockworm-dead"
