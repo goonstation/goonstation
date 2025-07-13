@@ -623,6 +623,7 @@
 		A.icon_state = "3"
 	else
 		user?.show_text("You disconnect the monitor.", "blue")
+		logTheThing(LOG_STATION, user, "disassembles [src] [log_loc(src)]")
 		A.state = 4
 		A.icon_state = "4"
 
@@ -1055,9 +1056,11 @@
 				dv.authid = W
 				update_static_data(usr)
 			return
-		else
-			src.Attackhand(user)
-		return
+		..()
+
+	grab_smash(obj/item/grab/G, mob/user)
+		if(..())
+			src.set_broken()
 
 	powered()
 		if(!src.cell || src.cell.charge <= 0)

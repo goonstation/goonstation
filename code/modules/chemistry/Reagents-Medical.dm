@@ -1573,19 +1573,12 @@ datum
 			fluid_b = 0
 			fluid_g = 0
 			value = 5 // 3c + 1c + heat
-			target_organs = list("left_kidney", "right_kidney", "liver", "stomach", "intestines")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(prob(50))
 					flush(holder, 1 * mult)
 				M.HealDamage("All", 0, 0, 1.5 * mult)
-
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.organHolder)
-						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
-
 				..()
 				return
 
