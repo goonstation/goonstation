@@ -50,14 +50,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 				continue
 			return L
 
-	proc/get_nearest_mob_or_fake_mindeater(atom/target)
-		if (isliving(target) || istype(target, /obj/dummy/fake_mindeater))
-			return target
-		for (var/atom/A in view(1, get_turf(target)))
-			if (!(ishuman(A) || issilicon(A) || istype(A, /obj/dummy/fake_mindeater)))
-				continue
-			return A
-
 	proc/get_nearest_living(atom/target)
 		if (isliving(target))
 			return target
@@ -136,44 +128,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		else
 			actions.start(new /datum/action/bar/private/mindeater_regenerate(), src.holder.owner)
 
-/datum/targetable/critter/mindeater/project
-	name = "Project"
-	desc = "Create a fake Mindeater at the target location."
-	icon_state = "create"
-	cooldown = 45 SECONDS
-	targeted = TRUE
-	target_anything = TRUE
-	max_range = 7
-
-	cast(atom/target)
-		. = ..()
-		var/obj/dummy/fake_mindeater/fake = new /obj/dummy/fake_mindeater(get_turf(target))
-		fake.set_dir(src.holder.owner.dir)
-
-/datum/targetable/critter/mindeater/spatial_swap
-	name = "Spatial Swap"
-	desc = "Swap the location of yourself and another living creature or fake version of yourself. Full reveals you on use."
-	icon_state = "spatial_swap"
-	cooldown = 20 SECONDS
-	targeted = TRUE
-	target_anything = TRUE
-	max_range = 7
-
-	tryCast(atom/target)
-		target = src.get_nearest_mob_or_fake_mindeater(target)
-		if (!target)
-			boutput(src.holder.owner, SPAN_ALERT("You can only target living creatures or fake mindeaters!"))
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		return ..()
-
-	cast(atom/target)
-		. = ..()
-		var/atom/movable/AM = target
-		var/turf/T1 = get_turf(src.holder.owner)
-		var/turf/T2 = get_turf(AM)
-		AM.set_loc(T1)
-		src.holder.owner.set_loc(T2)
-
 /datum/targetable/critter/mindeater/paralyze
 	name = "Paralyze"
 	desc = {"Cast on a target you have Intellect on, only successful if they are facing you. Paralyzes them, making them unable to control their movement and reduce their vision.
@@ -220,16 +174,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTTURN, mindeater)
 			L.removeOverlayComposition(/datum/overlayComposition/weldingmask)
 			L.updateOverlaysClient(L.client)
-
-/datum/targetable/critter/mindeater/cosmic_light
-	name = "Cosmic Light"
-	desc = "Cast a purple light from you to gain Intellect from nearby mobs looking towards you. Full reveals you on use."
-	icon_state = "cosmic_light"
-	cooldown = 20 SECONDS
-
-	cast(atom/target)
-		. = ..()
-		src.holder.owner.setStatus("mindeater_cosmic_light", 7.5 SECONDS)
 
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"

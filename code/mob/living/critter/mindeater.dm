@@ -283,10 +283,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
-		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/project)
-		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/spatial_swap)
 		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
-		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/cosmic_light)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/set_disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
@@ -301,10 +298,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
-		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/project)
-		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/spatial_swap)
 		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
-		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/cosmic_light)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/set_disguise)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
@@ -410,44 +404,6 @@ TYPEINFO(/mob/living/critter/mindeater)
 			boutput(src, SPAN_NOTICE("You can now fire psi bolts when disguised."))
 		else
 			boutput(src, SPAN_NOTICE("You will no longer fire psi bolts when disguised."))
-
-/obj/dummy/fake_mindeater
-	name = "mindeater"
-	real_name = "mindeater"
-	desc = "What sort of eldritch abomination is this thing???"
-	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
-	icon_state = "intruder"
-	flags = LONG_GLIDE
-	density = FALSE
-	anchored = UNANCHORED
-
-	attack_hand(mob/user)
-		..()
-		src.reveal_fake()
-
-	attackby(obj/item/I, mob/user)
-		..()
-		src.reveal_fake()
-
-	proc/reveal_fake()
-		animate_wave(src, 5)
-		animate(src, 1 SECOND, flags = ANIMATION_PARALLEL, alpha = 0)
-		SPAWN(1 SECOND)
-			qdel(src)
-
-	bump(atom/A)
-		..()
-		if (A.density && A.material?.getProperty("reflective") > 7)
-			src.set_loc(get_turf(A))
-		else if (istype(A, /obj/machinery/door/airlock))
-			var/obj/machinery/door/airlock/airlock = A
-			airlock.open()
-
-	Crossed(atom/movable/AM)
-		. = ..()
-		var/obj/projectile/P = AM
-		if (istype(P) && !istype(P.proj_data, /datum/projectile/special/psi_bolt))
-			src.reveal_fake()
 
 /obj/dummy/mindeater_structure
 	name = "spire"
