@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/regenerate
 	name = "Regenerate"
-	desc = "Use Intellect to regenerate health."
+	desc = "Regenerate health over time."
 	icon_state = "regenerate"
 	pointCost = 1
 
@@ -130,33 +130,28 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/paralyze
 	name = "Paralyze"
-	desc = {"Cast on a target you have Intellect on, only successful if they are facing you. Paralyzes them, making them unable to control their movement and reduce their vision.
-			For each 10 Intellect on them, make them take 1 step towards you and receive a stab. Full reveals you on use."}
+	desc = {"Casts on the target you are brain draining. Paralyzes them, making them unable to control their movement and reduces their vision.
+			For each lack of 10 Intellect on them (out of 100), make them take 1 step towards you and receive a stab."}
 	icon_state = "paralyze"
 	cooldown = 20 SECONDS
-	targeted = TRUE
-	target_anything = TRUE
 	max_range = 5
 
-	tryCast(atom/target)
-		target = src.get_nearest_human(target)
-		if (!target)
-			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
+	tryCast()
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		if (!mindeater.drain_target)
+			boutput(src.holder.owner, SPAN_ALERT("You don't have a Brain Drain target!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) < 10)
-			boutput(src.holder.owner, SPAN_ALERT("You don't have enough Intellect collected on this mob!"))
+		if (GET_ATOM_PROPERTY(mindeater.drain_target, PROP_MOB_INTELLECT_COLLECTED) >= (INTRUDER_MAX_INTELLECT_THRESHOLD - 10))
+			boutput(src.holder.owner, SPAN_ALERT("You have too much Intellect collected on this mob!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
-	cast(atom/target)
+	cast()
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-		var/mob/living/L = target
+		var/mob/living/L = mindeater.drain_target
 
 		playsound(get_turf(mindeater), 'sound/misc/intruder/paralyze.ogg', 35, TRUE)
-		if (abs(dir2angle(L.dir) - dir2angle(get_dir(L, mindeater))) > 45)
-			boutput(src.holder.owner, SPAN_ALERT("The target was looking away from you!"))
-			return
 		SPAWN(0)
 			mindeater.casting_paralyze = TRUE
 			APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, mindeater)
@@ -164,7 +159,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			L.addOverlayComposition(/datum/overlayComposition/weldingmask)
 			L.updateOverlaysClient(L.client)
 
-			for (var/i in 1 to floor(GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) / 10))
+			for (var/i in 1 to floor((INTRUDER_MAX_INTELLECT_THRESHOLD - GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED)) / 10))
 				sleep(0.75 SECONDS)
 				L.Move(get_step(L, get_dir(L, mindeater)), get_dir(L, mindeater))
 				take_bleeding_damage(L, null, 2.5, pick(DAMAGE_CUT, DAMAGE_STAB))
@@ -177,7 +172,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"
-	desc = "Channel using a 3 charge shield to send a mob that you have 100 Intellect on to the border of the Intruder plane for 60 seconds, where they must survive in an arena. Full reveals you on use."
+	desc = "Channel using a 3 charge shield to send a mob to the border of the Intruder plane for 60 seconds, where they must survive in an arena."
 	icon_state = "pierce_the_veil"
 	cooldown = 60 SECONDS
 	max_range = 7
@@ -189,9 +184,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/L = src.get_nearest_human(target)
 		if (!L || isdead(L))
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) < src.pointCost)
-			boutput(src.holder.owner, SPAN_ALERT("You don't have enough Intellect collected on this mob!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..(L)
 
@@ -310,6 +302,8 @@ ABSTRACT_TYPE(/area/veil_border)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.target.setStatus("mindeater_brain_draining", INFINITE_STATUS)
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.drain_target = src.target
 
 	onUpdate()
 		..()
@@ -351,6 +345,8 @@ ABSTRACT_TYPE(/area/veil_border)
 		..()
 		if (flag & INTERRUPT_ALWAYS)
 			src.target.delStatus("mindeater_brain_draining")
+			var/mob/living/critter/mindeater/mindeater = src.owner
+			mindeater.drain_target = null
 
 	proc/check_for_interrupt()
 		var/mob/living/critter/mindeater/mindeater = src.owner

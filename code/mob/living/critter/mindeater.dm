@@ -51,6 +51,9 @@ TYPEINFO(/mob/living/critter/mindeater)
 	/// can fire psi bolts when disguised
 	var/can_fire_when_disguised = TRUE
 
+	/// the mob this mindeater is actively brain draining
+	var/mob/drain_target = null
+
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
@@ -283,7 +286,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
-		//src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/set_disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
@@ -298,7 +301,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
-		//src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/set_disguise)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
