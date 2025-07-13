@@ -15,12 +15,11 @@ TYPEINFO(/obj/item/storage/wall)
 	deconstruct_flags = DECON_SIMPLE
 	burn_possible = FALSE
 	mechanics_type_override = /obj/item/storage/wall
-	slots = 13 // these can't move so I guess we may as well let them store more stuff?
-	max_wclass = W_CLASS_BULKY
 
 	New()
 		..()
-		src.create_storage(/datum/storage/unholdable, slots = src.slots, max_wclass = src.max_wclass)
+		// these can't move so I guess we may as well let them store more stuff?
+		src.create_storage(/datum/storage/unholdable, slots = 13, max_wclass = W_CLASS_BULKY)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"

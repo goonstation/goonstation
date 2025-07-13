@@ -1,61 +1,51 @@
-(function (window, navigator) {
-  var escaper = encodeURIComponent || escape;
+(function(window, navigator) {
 
-  var triggerError = function (msg, url, line, col, error) {
-    window.onerror(msg, url, line, col, error);
-  };
+	var escaper = encodeURIComponent || escape;
 
-  /**
-   * Directs JS errors to a byond proc for logging
-   *
-   * @param string file Name of the logfile to dump errors in, do not prepend with data/
-   * @param boolean overrideDefault True to prevent default JS errors (an big honking error prompt thing)
-   * @param function customSuppress Pass a function that returns true to prevent logging of a specific error
-   * @return boolean
-   */
-  var attach = function (file, overrideDefault, customSuppress) {
-    overrideDefault =
-      typeof overrideDefault === 'undefined' ? false : overrideDefault;
-    file = escaper(file);
+	var triggerError = function(msg, url, line, col, error) {
+		window.onerror(msg, url, line, col, error);
+	};
 
-    //Prevent debug logging for those using anything lower than IE 10
-    var trident = navigator.userAgent.match(/Trident\/(\d)\.\d(?:;|$)/gi);
-    var msie = document.documentMode;
-    var suppressLogging =
-      (msie && msie < 10) || (trident && parseInt(trident) < 6);
+	/**
+	 * Directs JS errors to a byond proc for logging
+	 * 
+	 * @param string file Name of the logfile to dump errors in, do not prepend with data/
+	 * @param boolean overrideDefault True to prevent default JS errors (an big honking error prompt thing)
+	 * @param function customSuppress Pass a function that returns true to prevent logging of a specific error
+	 * @return boolean
+	 */
+	var attach = function(file, overrideDefault, customSuppress) {
+		overrideDefault = typeof overrideDefault === 'undefined' ? false : overrideDefault;
+		file = escaper(file);
 
-    //Ok enough is enough, this prevents A CERTAIN PLAYER (Studenterhue) from spamming the error logs with bullshit
-    if (!window.JSON) {
-      suppressLogging = true;
-    }
+		//Prevent debug logging for those using anything lower than IE 10
+		var trident = navigator.userAgent.match(/Trident\/(\d)\.\d(?:;|$)/gi);
+		var msie = document.documentMode;
+		var suppressLogging = (msie && msie < 10) || (trident && parseInt(trident) < 6);
 
-    window.onerror = function (msg, url, line, col, error) {
-      if (
-        typeof customSuppress === 'function' &&
-        customSuppress(msg, url, line, col, error)
-      ) {
-        suppressLogging = true;
-      }
+		//Ok enough is enough, this prevents A CERTAIN PLAYER (Studenterhue) from spamming the error logs with bullshit
+		if (!window.JSON) {
+			suppressLogging = true;
+		}
 
-      if (!suppressLogging) {
-        var extra = !col ? '' : ' | column: ' + col;
-        extra += !error ? '' : ' | error: ' + error;
-        extra += !navigator.userAgent
-          ? ''
-          : ' | user agent: ' + navigator.userAgent;
-        var debugLine =
-          'Error: ' + msg + ' | url: ' + url + ' | line: ' + line + extra;
-        window.location =
-          '?action=debugFileOutput&file=' +
-          file +
-          '&message=' +
-          escaper(debugLine);
-      }
-      return overrideDefault;
-    };
+		window.onerror = function(msg, url, line, col, error) {
+			if (typeof customSuppress === 'function' && customSuppress(msg, url, line, col, error)) {
+				suppressLogging = true;
+			}
 
-    return triggerError;
-  };
+			if (!suppressLogging) {
+				var extra = !col ? '' : ' | column: ' + col;
+				extra += !error ? '' : ' | error: ' + error;
+				extra += !navigator.userAgent ? '' : ' | user agent: ' + navigator.userAgent;
+				var debugLine = 'Error: ' + msg + ' | url: ' + url + ' | line: ' + line + extra;
+				window.location = '?action=debugFileOutput&file=' + file + '&message=' + escaper(debugLine);
+			}
+			return overrideDefault;
+		};
 
-  window.attachErrorHandler = attach;
-})(window, window.navigator);
+		return triggerError;
+	};
+
+	window.attachErrorHandler = attach;
+
+}(window, window.navigator));

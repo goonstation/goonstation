@@ -21,7 +21,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/show_beaker_contents = FALSE
 	var/current_heat_capacity = 50
 	var/occupied_power_use = 500 WATTS //! Additional power usage when the pod is occupied (and on)
-	var/eject_full_health_occupant = TRUE //! Does this pod eject occupants when they reach full health
 
 	var/reagent_scan_enabled = FALSE
 	var/reagent_scan_active = FALSE
@@ -60,7 +59,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 				src.use_power(src.occupied_power_use, EQUIP)
 				src.process_occupant()
 			else
-				if(src.occupant.mind && src.eject_full_health_occupant)
+				if(src.occupant.mind)
 					src.go_out()
 					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
@@ -115,7 +114,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	.["occupant"] = src.get_occupant_data()
 	.["cellTemp"] = src.air_contents.temperature
 	.["status"] = src.on
-	.["ejectFullHealthOccupant"] = src.eject_full_health_occupant
 
 	.["showBeakerContents"] = src.show_beaker_contents
 	.["reagentScanEnabled"] = src.reagent_scan_enabled
@@ -152,8 +150,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			src.defib.attack(src.occupant, usr)
 		if ("eject_occupant")
 			src.go_out()
-		if ("full_health_eject")
-			src.eject_full_health_occupant = !src.eject_full_health_occupant
 		if ("insert")
 			var/obj/item/I = usr.equipped()
 			if(istype(I, /obj/item/reagent_containers/glass))

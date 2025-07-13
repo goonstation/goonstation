@@ -5,7 +5,7 @@
 		return
 	var/datum/tgui_bug_report_form/form = new
 	form.ui_interact(user)
-	UNTIL(form.done || form.closed, 0)
+	UNTIL(form.done || form.closed)
 	if (!form.done)
 		return
 	var/title = form.data["title"]

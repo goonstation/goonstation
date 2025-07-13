@@ -323,9 +323,7 @@
 			. = TRUE
 			var/datum/geneticsResearchEntry/E = locate(params["ref"])
 			if (!research_sanity_check(E))
-				if (E.isResearched)
-					scanner_alert(ui.user, "Research already in progress.", error = TRUE)
-				else if (genResearch.addResearch(E))
+				if (genResearch.addResearch(E))
 					scanner_alert(ui.user, "Research initiated successfully.")
 				else
 					scanner_alert(ui.user, "Unable to begin research.", error = TRUE)
@@ -387,10 +385,6 @@
 		if("researchmut")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
-			var/datum/bioEffect/GBE = GetBioeffectFromGlobalListByID(E.id)
-			if(GBE.research_level > EFFECT_RESEARCH_NONE)
-				scanner_alert(ui.user, "Research already in progress.", error = TRUE)
-				return
 			if (params["sample"])
 				if (bioEffect_sanity_check(E, 0))
 					return

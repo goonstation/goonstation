@@ -6,7 +6,12 @@
 
 	var/client/client = src.client
 
-	if (client.player?.cloudSaves.getData("adminhelp_banner"))
+	if (IsGuestKey(client.key))
+		boutput(client.mob, "You are not authorized to communicate over these channels.")
+		gib(client.mob)
+		return
+
+	if (client.player.cloudSaves.getData("adminhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
@@ -79,14 +84,20 @@
 
 	var/client/client = src.client
 
-	if(!client || !client.authenticated)
+	if(!client)
 		return
 	if(client.ismuted())
 		boutput(client.mob, "You are muted and cannot pray.")
 		return
-	if(client.player?.cloudSaves.getData( "prayer_banner" ))
+	if(client.player.cloudSaves.getData( "prayer_banner" ))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
+
+	if (IsGuestKey(client.key))
+		boutput(client.mob, "You are not authorized to communicate over these channels.")
+		gib(client.mob)
+		return
+
 	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return

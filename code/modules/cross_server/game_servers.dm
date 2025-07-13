@@ -149,7 +149,7 @@ var/global/datum/game_servers/game_servers = new
 	proc/get_ip_port()
 		if(isnull(src.ip_port))
 			if(!isnull(src.waiting_for_ip_port_auth))
-				UNTIL(!isnull(src.waiting_for_ip_port_auth), 10 SECONDS)
+				UNTIL(!isnull(src.waiting_for_ip_port_auth))
 				return src.ip_port
 			var/success = FALSE
 			var/outer_send_attempts = 3
@@ -186,7 +186,7 @@ var/global/datum/game_servers/game_servers = new
 		var/datum/http_request/request = new()
 		request.prepare(RUSTG_HTTP_METHOD_GET, "https://node.goonhub.com/status?server=[src.id]", "", "")
 		request.begin_async()
-		UNTIL(request.is_complete(), 10 SECONDS)
+		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
 		var/list/data
 		if (!rustg_json_is_valid(response.body))

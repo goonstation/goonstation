@@ -173,10 +173,6 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/effect_melee_attack(var/obj/O,var/mob/living/user,var/mob/living/target)
 		if (!O || !user || !target)
 			return 1
-		if (!O.ArtifactSanityCheck())
-			return TRUE
-		if (!src.activated)
-			return TRUE
 		O.add_fingerprint(user)
 		ArtifactLogs(user, target, O, "weapon", null, 0)
 		return 0

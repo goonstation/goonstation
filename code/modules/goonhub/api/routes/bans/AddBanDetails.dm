@@ -13,7 +13,6 @@
 		ckey,
 		comp_id,
 		ip,
-		player_id,
 		evasion
 	)
 		. = ..(args)

@@ -113,7 +113,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_modal/proc/wait()
-	UNTIL(choice || closed || QDELETED(src), 0)
+	UNTIL(choice || closed || QDELETED(src))
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

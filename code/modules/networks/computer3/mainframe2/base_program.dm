@@ -77,7 +77,7 @@
 /// Initialise this program. Called when this program starts running.
 /datum/computer/file/mainframe_program/proc/initialize(initparams)
 	if (src.initialized || !src.master)
-		return TRUE
+		return FALSE
 
 	src.initialized = TRUE
 	return FALSE

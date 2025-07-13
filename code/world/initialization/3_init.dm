@@ -8,14 +8,12 @@
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
 
-	#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
-	Z_LOG_DEBUG("World/Init", "Loading access lists...")
-	load_admins()
-	load_mentors()
-	load_hos()
-	load_whitelist()
+	Z_LOG_DEBUG("World/Init", "Loading admins...")
+	load_admins()//UGH
+	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
+	load_whitelist() //WHY ARE WE UGH-ING
+	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
 	load_playercap_bypass()
-	#endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	roundManagement.recordStart()

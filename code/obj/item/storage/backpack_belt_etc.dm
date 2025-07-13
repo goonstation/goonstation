@@ -260,28 +260,24 @@
 	satchel_variant = /obj/item/storage/backpack/satchel/itabag
 
 	blue
-		name = "blue itabag"
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Dr. Acula!"
 		icon_state = "bp_itabag_blue"
 		item_state = "bp_itabag_blue"
 		satchel_variant = /obj/item/storage/backpack/satchel/itabag/blue
 
 	purple
-		name = "purple itabag"
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of a Bombini!"
 		icon_state = "bp_itabag_purple"
 		item_state = "bp_itabag_purple"
 		satchel_variant = /obj/item/storage/backpack/satchel/itabag/purple
 
 	mint
-		name = "mint itabag"
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Sylvester!"
 		icon_state = "bp_itabag_mint"
 		item_state = "bp_itabag_mint"
 		satchel_variant = /obj/item/storage/backpack/satchel/itabag/mint
 
 	black
-		name = "black itabag"
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Morty!"
 		icon_state = "bp_itabag_black"
 		item_state = "bp_itabag_black"

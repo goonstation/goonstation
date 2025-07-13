@@ -23,8 +23,9 @@
 
 	var/client/client = src.client
 
-	if (!client.authenticated)
-		boutput(src, "You are not authorized to communicate over these channels.")
+	if (IsGuestKey(client.key))
+		boutput(client.mob, "You are not authorized to communicate over these channels.")
+		gib(client.mob)
 		return
 
 	var/mob/dead/target_observer/mentor_mouse_observer/mmouse = locate() in src
@@ -41,7 +42,7 @@
 			client.mob.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_MENTOR_MOUSE)
 		return
 
-	if (client.player?.cloudSaves.getData("mentorhelp_banner"))
+	if (client.player.cloudSaves.getData("mentorhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 

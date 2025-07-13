@@ -13,7 +13,6 @@
 		comp_id,
 		byond_major,
 		byond_minor,
-		round_id,
-		server_id
+		round_id
 	)
 		. = ..(args)

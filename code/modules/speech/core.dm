@@ -159,7 +159,7 @@ TYPEINFO(/atom)
 	/// This client's auxiliary speech module tree.
 	var/datum/speech_module_tree/auxiliary/speech_tree
 
-/client/post_auth()
+/client/New()
 	. = ..()
 
 	src.ensure_listen_tree()

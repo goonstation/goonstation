@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <title>Goonhub Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 10px;
+      background: #303030;
+      font-size: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .content {
+      height: 100%;
+      background: #0f0f0f;
+      border-radius: 5px;
+      text-align: center;
+      color: white;
+    }
+
+    .content-header {
+      padding: 10px;
+      border-bottom: 1px solid #303030;
+      font-size: 1.1em;
+      font-weight: bold;
+      letter-spacing: 0.2px;
+    }
+
+    .content-wrap {
+      padding: 10px;
+    }
+
+    .content-wrap>div {
+      display: none;
+    }
+
+    p {
+      line-height: 1.4;
+    }
+
+    a {
+      display: inline-block;
+      padding: 1em;
+      border: 0;
+      border-radius: 5px;
+      background: #ffd125;
+      color: black;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a.cancel-login {
+      background: #999;
+    }
+
+    .spinner {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content">
+    <div class="content-header">
+      Hello (probable) Admin
+    </div>
+
+    <div class="content-wrap">
+      <div id="preLogin" style="display: block;">
+        <p>
+          You are required to login to Goonhub to continue.
+        </p>
+        <a href="#" onclick="openLogin(event)">
+          Open Login Page
+        </a>
+      </div>
+
+      <div id="loggingIn">
+        <p>
+          Opened login page, please check your browser and login to your account.
+        </p>
+        <div class="spinner">
+          <img src="{{resource("images/spinner.gif")}}" width="32" height="32" alt="" />
+        </div>
+        <a href="#" onclick="cancelLogin(event)" class="cancel-login">
+          Cancel
+        </a>
+      </div>
+
+      <div id="loginComplete">
+        <p>
+          Login successful! You can now close this window and go nuts.
+        </p>
+        <a href="#" onclick="closePopup(event)">
+          Close
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var ref = '{ref}';
+    var preLoginEl = document.getElementById('preLogin');
+    var loggingInEl = document.getElementById('loggingIn');
+    var loginCompleteEl = document.getElementById('loginComplete');
+
+    function openLogin(event) {
+      event.preventDefault();
+      window.location = 'byond://?src='+ref+';openLogin=1'
+      preLoginEl.style.display = 'none';
+      loggingInEl.style.display = 'block';
+    }
+
+    function cancelLogin(event) {
+      event.preventDefault();
+      preLoginEl.style.display = 'block';
+      loggingInEl.style.display = 'none';
+    }
+
+    function onAuthSuccess() {
+      loggingInEl.style.display = 'none';
+      loginCompleteEl.style.display = 'block';
+    }
+
+    function closePopup(event) {
+      event.preventDefault();
+      window.location = 'byond://winset?goonhubauth.is-visible=false';
+    }
+  </script>
+</body>
