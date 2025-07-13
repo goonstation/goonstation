@@ -3,7 +3,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_INTRUDERCHAT)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_INTRUDERCHAT)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_INTRUDERCHAT)
 
 /mob/living/critter/mindeater
 	name = "mindeater"
