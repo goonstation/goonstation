@@ -6661,7 +6661,7 @@
 /area/station/turret_protected/Zeta)
 "eLx" = (
 /obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 3
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
