@@ -145,6 +145,9 @@
 /obj/machinery/light/lamp/green{
 	pixel_y = 10
 	},
+/obj/decoration/bookcase{
+	pixel_y = 16
+	},
 /turf/simulated/floor/marble/border_bw{
 	dir = 1
 	},
@@ -307,6 +310,19 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"aD" = (
+/obj/stool/chair/office/syndie{
+	desc = "Is that real leather?";
+	dir = 4;
+	name = "very expensive chair"
+	},
+/turf/simulated/floor/marble/border_bw{
+	dir = 8
+	},
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "aE" = (
 /obj/item/cash_briefcase/syndicate/loaded,
 /obj/table/sleek/auto,
@@ -373,7 +389,7 @@
 	pixel_x = 10;
 	pixel_y = 16
 	},
-/turf/unsimulated/floor/circuit/off,
+/turf/unsimulated/floor/stairs/wood,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Hogge & Wylde Archives"
@@ -390,7 +406,13 @@
 	dir = 1;
 	density = 0
 	},
-/turf/unsimulated/floor/lunar/cavern,
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -522,6 +544,17 @@
 	name = "Old Military Annex";
 	ambient_light = "#331111"
 	})
+"ba" = (
+/obj/railway/adaptive{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 2
+	},
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "bb" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 5
@@ -554,7 +587,11 @@
 	})
 "be" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/decal/cleanable/wood_debris,
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
 /obj/fakeobject/pipe/heat{
 	desc = "Steam pipes, very hot to the touch.";
 	dir = 4;
@@ -605,6 +642,24 @@
 /turf/unsimulated/floor/carpet/office/other,
 /area/moon/underground/hemera{
 	name = "Concourse D"
+	})
+"bj" = (
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99;
+	pixel_y = -2
+	},
+/obj/decoration/frontwalldamage{
+	dir = 4;
+	pixel_x = -6
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 4;
+	icon_state = "leadcap_white"
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "bl" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -693,15 +748,19 @@
 	ambient_light = "#441111"
 	})
 "bt" = (
-/obj/mesh/catwalk/jen{
-	icon_state = "C12-0"
+/obj/railway/adaptive{
+	icon_state = "4-8"
 	},
-/obj/railing/purple,
-/obj/railing/purple{
-	dir = 1
+/obj/railway_vehicle/flatbed/container/tanker,
+/obj/burning_barrel{
+	pixel_y = -1;
+	alpha = 0;
+	mouse_opacity = 0
 	},
-/obj/decal/bloodtrace,
-/turf/unsimulated/floor/plating,
+/obj/sec_tape{
+	pixel_y = -12
+	},
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -729,27 +788,9 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/decal/cleanable/greenglow,
-/obj/decal/cleanable/greenglow,
-/obj/decal/cleanable/greenglow,
-/obj/decal/cleanable/greenglow,
 /obj/railway_vehicle/flatbed/container/nuclear{
-	name = "RTG fuel"
-	},
-/obj/decoration/bullethole{
-	pixel_x = -4;
-	icon_state = "bullethole-large";
-	plane = -99
-	},
-/obj/effects/welding/directed{
-	pixel_y = 5;
-	pixel_x = -4;
-	plane = PLANE_ABOVE_LIGHTING
-	},
-/obj/burning_barrel{
-	pixel_y = -1;
-	alpha = 0;
-	mouse_opacity = 0
+	name = "RTG fuel";
+	active = 0
 	},
 /turf/unsimulated/floor/industrial,
 /area/moon/underground{
@@ -832,20 +873,8 @@
 	name = "Concourse D"
 	})
 "bF" = (
-/obj/decoration/bullethole{
-	pixel_y = -7;
-	pixel_x = 11;
-	icon_state = "bullethole-large";
-	},
-/obj/decoration/bullethole{
-	pixel_y = -18;
-	pixel_x = -9;
-	icon_state = "bullethole-large"
-	},
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	icon_state = "leadjunction_white";
-	desc = "It's been punctured by a large and powerful bullet. You can see right through the hole.";
-	opacity = 0
+	icon_state = "leadjunction_white"
 	},
 /area/moon/underground/hemera{
 	name = "Air Handling";
@@ -892,9 +921,7 @@
 	dir = 1;
 	plane = -98
 	},
-/turf/unsimulated/wall/auto/adventure/hospital/interior{
-	icon_state = "interior-7"
-	},
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Old Military Annex";
@@ -927,12 +954,16 @@
 	name = "Concourse D"
 	})
 "bO" = (
-/obj/fakeobject/bigatmos/bigatmos3,
-/turf/unsimulated/floor/plating/damaged2,
+/obj/stool/chair/couch/purple{
+	icon_state = "chair_couch_ew-purple";
+	dir = 1;
+	pixel_x = 12
+	},
+/turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522";
-	icon_state = "orange"
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "bP" = (
 /obj/mesh/catwalk/jen{
@@ -969,11 +1000,26 @@
 /obj/decal/cleanable/rust/jen{
 	icon_state = "wood"
 	},
+/obj/machinery/light/small/broken{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Old Military Annex";
 	ambient_light = "#331111"
+	})
+"bS" = (
+/obj/machinery/door/airlock/pyro/command/syndicate{
+	name = "Private Reading Room"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "bT" = (
 /obj/decal/poster/wallsign/stencil/left/r,
@@ -994,13 +1040,26 @@
 	name = "Old Military Annex";
 	ambient_light = "#331111"
 	})
-"bX" = (
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
-	},
+"bV" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/disposalpipe/junction/left/south,
+/turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Hogge & Wylde Archives"
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
+	})
+"bX" = (
+/obj/machinery/sonic_shower{
+	pixel_y = 8
+	},
+/obj/machinery/drainage{
+	pixel_y = -8
+	},
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/engine,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
 	})
 "bY" = (
 /obj/item/storage/wall/purple,
@@ -1020,6 +1079,16 @@
 	name = "Hensbane Investigations";
 	ambient_light = "#555533"
 	})
+"ca" = (
+/obj/disposaloutlet/north{
+	pixel_y = -3
+	},
+/obj/disposalpipe/trunk/ejection,
+/turf/unsimulated/floor/carpet/purple/fancy/narrow/T_east,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "cb" = (
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
 	icon_state = "interior-46"
@@ -1028,6 +1097,22 @@
 	icon_state = "green";
 	name = "Old Military Annex";
 	ambient_light = "#331111"
+	})
+"cc" = (
+/obj/landmark/transition{
+	dir = 4;
+	tag = "lunaport_spectre0";
+	dest_tag = "lunaport_spectre1"
+	},
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 4
+	},
+/turf/unsimulated/floor/stairs/dark{
+	dir = 4
+	},
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "cd" = (
 /obj/stool/chair/couch/blue{
@@ -1227,6 +1312,16 @@
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
 	})
+"cz" = (
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
+/turf/unsimulated/floor/setpieces/oldfloor,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
+	})
 "cA" = (
 /obj/railway/adaptive{
 	icon_state = "4-8"
@@ -1239,6 +1334,22 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"cB" = (
+/obj/table/wood/auto,
+/obj/decal/stage_edge/alt,
+/obj/item/plate/tray,
+/obj/item/reagent_containers/food/snacks/sandwich/cheese{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 4;
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/engine,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
+	})
 "cC" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	icon_state = "leadjunction_white"
@@ -1247,20 +1358,15 @@
 	name = "Concourse D"
 	})
 "cD" = (
-/obj/decal/cleanable/gangtag{
-	icon_state = "gangtag3";
-	pixel_y = 29
+/obj/mesh/catwalk/jen{
+	icon_state = "C4-0"
 	},
-/obj/decal/tile_edge/line/orange{
-	icon_state = "line-broken1"
-	},
-/obj/railing/orange,
-/turf/unsimulated/floor/lunar/cavern,
+/obj/disposalpipe/segment/bent,
+/turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
 "cE" = (
-/obj/decoration/vent,
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	dir = 4;
 	icon_state = "leadcap_white"
@@ -1317,6 +1423,24 @@
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
+"cL" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "line-broken1"
+	},
+/obj/railing/orange/reinforced,
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag4";
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 6;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "cM" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -1347,16 +1471,12 @@
 	ambient_light = "#447f7f"
 	})
 "cN" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/paper/manufacturer_blueprint/alastor,
 /obj/machinery/light/small/frostedred{
 	dir = 8;
 	pixel_x = -10;
 	pixel_y = 16
 	},
-/turf/unsimulated/floor/circuit/off,
+/turf/unsimulated/floor/stairs/wood,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Hogge & Wylde Archives"
@@ -1463,7 +1583,9 @@
 	dir = 8
 	},
 /area/moon/underground/hemera{
-	name = "Concourse D"
+	icon_state = "red";
+	name = "Deep Archives";
+	ambient_light = "#447f7f"
 	})
 "cZ" = (
 /obj/decoration/syndiepc/syndiepc9,
@@ -1580,6 +1702,17 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"dm" = (
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	icon_state = "leadjunction_white";
+	desc = "It's got a hole shot right through it.";
+	opacity = 0
+	},
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
+	})
 "dn" = (
 /obj/rack/lunar{
 	icon_state = "aisleshelfend"
@@ -1591,13 +1724,18 @@
 	name = "Concourse B"
 	})
 "do" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	icon_state = "leadjunction_white";
-	desc = "It's got a hole shot right through it.";
-	opacity = 0
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
-	name = "Concourse D"
+	icon_state = "blue";
+	name = "Hogge & Wylde Archives"
 	})
 "dp" = (
 /obj/decoration/syndiepc/syndiepc16{
@@ -1818,6 +1956,31 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"dN" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "blue";
+	name = "Hogge & Wylde Archives"
+	})
+"dP" = (
+/obj/decal/cleanable/fungus,
+/obj/table/auto/desk,
+/obj/random_item_spawner/desk_stuff/lots,
+/obj/machinery/light/small/broken,
+/turf/unsimulated/floor/carpet/grime,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
+	})
 "dQ" = (
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line-broken1"
@@ -1888,6 +2051,17 @@
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
 	})
+"dX" = (
+/obj/decal/cleanable/rust/jen,
+/obj/fakeobject/synthomatic{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/black/grime,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
+	})
 "dY" = (
 /obj/stool/chair/comfy{
 	dir = 4;
@@ -1933,7 +2107,7 @@
 	})
 "ec" = (
 /obj/mecharrow,
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -2013,7 +2187,7 @@
 	})
 "em" = (
 /obj/disposalpipe/segment/ejection,
-/turf/unsimulated/floor/carpet/office/other,
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
@@ -2055,9 +2229,22 @@
 	icon_state = "C13-2"
 	},
 /obj/railing/orange,
+/obj/disposalpipe/segment/bent/west,
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
+	})
+"es" = (
+/obj/map/light/yellow,
+/obj/stool/chair/office/syndie{
+	desc = "Is that real leather?";
+	dir = 4;
+	name = "very expensive chair"
+	},
+/turf/simulated/floor/marble/black,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "eu" = (
 /obj/mesh/catwalk/jen{
@@ -2073,7 +2260,16 @@
 	ambient_light = "#331111"
 	})
 "ev" = (
-/turf/unsimulated/floor/longtile/black,
+/obj/railing{
+	color = "brown";
+	dir = 4;
+	plane = -99
+	},
+/turf/unsimulated/wall/setpieces/lunar{
+	dir = 4;
+	fullbright = 0;
+	icon_state = "lunar-s"
+	},
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
@@ -2103,15 +2299,13 @@
 	ambient_light = "#441111"
 	})
 "ez" = (
-/obj/mapping_helper/turf/floor/darkener{
+/obj/disposalpipe/segment/ejection,
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	dir = 4
 	},
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
-	},
 /area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Hogge & Wylde Archives"
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "eA" = (
 /obj/stool/chair/pew/fancy/center,
@@ -2141,35 +2335,41 @@
 	ambient_light = "#331111"
 	})
 "eD" = (
-/turf/unsimulated/floor/setpieces/pitchblack,
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/engine,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
 "eE" = (
-/obj/decoration/vent,
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 8;
-	icon_state = "leadcap_white"
+/obj/railway/adaptive{
+	icon_state = "4-8"
 	},
-/area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Hogge & Wylde Archives"
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 2
+	},
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "eF" = (
-/obj/fakeobject/robotpedestal{
-	pixel_y = 14;
-	density = 0;
-	plane = -102
+/obj/decal/tile_edge/line/purple{
+	dir = 1;
+	icon_state = "line-broken1"
 	},
-/obj/submachine/laundry_machine{
-	pixel_y = 25;
-	pixel_x = -1;
-	name = "Ships Services Laundry Machine"
+/obj/railing/purple/reinforced{
+	dir = 1
 	},
-/turf/unsimulated/floor/darkblue,
-/area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Nanotrasen Showrooms"
+/obj/decoration/railyard/signal/pole{
+	plane = -100
+	},
+/obj/map/light/dimred,
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/lunar/cavern,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "eG" = (
 /obj/decoration/damagedchair{
@@ -2182,12 +2382,26 @@
 	ambient_light = "#331111"
 	})
 "eH" = (
-/obj/landmark{
-	name = "moonfall_winecellar"
+/obj/table/reinforced/bar/auto{
+	name = "table"
 	},
-/turf/unsimulated/floor/minitiles/white,
+/obj/item/reagent_containers/food/snacks/cheesewheel,
+/obj/item/reagent_containers/food/snacks/cheesewheel{
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
+	})
+"eI" = (
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	icon_state = "leadjunction_white";
+	desc = "It's got a hole shot right through it.";
+	opacity = 0
+	},
+/area/moon/underground/hemera{
+	icon_state = "blue";
+	name = "Hogge & Wylde Archives"
 	})
 "eJ" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
@@ -2196,6 +2410,22 @@
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Hogge & Wylde Archives"
+	})
+"eK" = (
+/obj/stool/chair/office/syndie{
+	desc = "Is that real leather?";
+	dir = 1;
+	name = "very expensive chair"
+	},
+/obj/stool/chair/office/syndie{
+	desc = "Is that real leather?";
+	dir = 1;
+	name = "very expensive chair"
+	},
+/turf/simulated/floor/marble/black,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "eL" = (
 /obj/window/cubicle{
@@ -2240,6 +2470,27 @@
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
+"eP" = (
+/obj/railing/purple{
+	dir = 8;
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/longtile/black,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
+	})
+"eQ" = (
+/obj/machinery/door_control{
+	id = "lunaport_spectre2";
+	pixel_y = 28;
+	pixel_x = 10;
+	name = "Archive Window"
+	},
+/turf/unsimulated/floor/shiny/white,
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "SPECTRE Showroom"
+	})
 "eR" = (
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -2248,6 +2499,7 @@
 /obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 1
 	},
+/obj/disposalpipe/segment/bent/north,
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -2406,6 +2658,7 @@
 "fh" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/rust/jen,
+/obj/item/furniture_parts/wheelchair,
 /turf/unsimulated/floor/black/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -2421,17 +2674,11 @@
 	ambient_light = "#441111"
 	})
 "fj" = (
-/obj/landmark/transition{
-	dir = 8;
-	tag = "lunaport_archivesR0";
-	dest_tag = "lunaport_archivesR1"
-	},
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
-	},
+/obj/disposalpipe/segment/bent,
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Hogge & Wylde Archives"
+	name = "Air Handling";
+	ambient_light = "#555522"
 	})
 "fl" = (
 /obj/mesh/catwalk/jen{
@@ -2501,6 +2748,9 @@
 	icon_state = "woodwall4"
 	},
 /obj/decal/poster/wallsign/biohazard,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/unsimulated/wall{
 	desc = "It's sealed shut.";
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -2551,6 +2801,9 @@
 	icon_state = "4-8"
 	},
 /obj/railway_vehicle/flatbed/container/tanker,
+/obj/sec_tape{
+	pixel_y = -12
+	},
 /turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -2707,17 +2960,24 @@
 	ambient_light = "#441111"
 	})
 "fL" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 6
-	},
-/area/moon/underground/hemera{
-	name = "Concourse D"
-	})
-"fM" = (
-/obj/decoration/vent,
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+/obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/turf/unsimulated/wall/setpieces/lunar{
+	fullbright = 0
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
+"fM" = (
+/obj/landmark/transition{
+	tag = "lunaport_archivesR0";
+	dest_tag = "lunaport_archivesR1"
+	},
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 1
+	},
+/turf/unsimulated/floor/stairs/wood,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Hogge & Wylde Archives"
@@ -2838,20 +3098,19 @@
 	name = "Concourse D"
 	})
 "fZ" = (
-/obj/decal/tile_edge/line/purple{
-	dir = 1;
-	icon_state = "line-broken1"
+/obj/decal/cleanable/fungus{
+	dir = 8;
+	pixel_y = -1
 	},
-/obj/railing/purple/reinforced{
-	dir = 1
+/obj/stool/bed/moveable/hospital{
+	desc = "An old camping cot.";
+	name = "cot"
 	},
-/obj/fakeobject/moonrock{
-	pixel_y = -9;
-	dir = 8
-	},
-/turf/unsimulated/floor/lunar/cavern,
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/unsimulated/floor/carpet/grime,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "gb" = (
 /obj/stool/chair/office/syndie{
@@ -2875,6 +3134,18 @@
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
+	})
+"ge" = (
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 2
+	},
+/turf/unsimulated/floor/concrete,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "gf" = (
 /obj/machinery/cashreg,
@@ -2967,15 +3238,21 @@
 	name = "Concourse B"
 	})
 "go" = (
-/obj/mapping_helper/turf/floor/darkener{
-	dir = 1
+/obj/machinery/door/unpowered/wood/stall{
+	pixel_y = -8
+	},
+/obj/machinery/light/small/frostedred{
+	dir = 4;
+	pixel_y = 10
 	},
 /turf/unsimulated/floor/engine,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
 "gp" = (
-/obj/decoration/frontwalldamage,
+/obj/decoration/frontwalldamage{
+	plane = -99
+	},
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	icon_state = "leadcap_white"
 	},
@@ -3031,7 +3308,7 @@
 	pixel_y = 20;
 	pixel_x = -16
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -3084,29 +3361,36 @@
 /obj/candle_light{
 	pixel_y = 11
 	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
 "gy" = (
-/obj/machinery/light/small/frostedred,
-/turf/unsimulated/floor/minitiles/black,
+/obj/machinery/light/small/frostedred{
+	dir = 8;
+	pixel_x = -10;
+	pixel_y = 16
+	},
+/obj/machinery/door_control{
+	id = "lunaport_winevault";
+	pixel_x = -22
+	},
+/turf/unsimulated/floor/stairs/dark,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
 "gz" = (
-/obj/landmark{
-	name = "moonfall_winecellar"
+/obj/fakeobject/airlock_broken/sealed{
+	name = "sealed door"
 	},
-/obj/machinery/light/small/frostedred{
-	dir = 4;
-	pixel_x = 10;
-	pixel_y = 16
-	},
-/turf/unsimulated/floor/minitiles/white,
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/floor/plating,
 /area/moon/underground/hemera{
-	name = "Wine Cellar"
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "gA" = (
 /obj/decoration/vent,
@@ -3275,13 +3559,13 @@
 	name = "Wine Cellar"
 	})
 "gQ" = (
-/obj/disposalpipe/segment/ejection{
-	dir = 4
+/obj/decal/cleanable/blood,
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 1;
+	icon_state = "leadjunction_white"
 	},
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar,
-/area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "gR" = (
 /obj/ladder{
@@ -3550,6 +3834,9 @@
 /obj/decal/cleanable/dirt/dirt4{
 	dir = 1
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -3582,9 +3869,9 @@
 	ambient_light = "#441111"
 	})
 "ht" = (
-/obj/table/reinforced/auto,
-/obj/item/gang_loot,
-/turf/unsimulated/floor/circuit/vintage,
+/obj/table/folding,
+/obj/decal/bloodtrace,
+/turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -3596,6 +3883,13 @@
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Seneca Falls Staffing Solutions"
+	})
+"hw" = (
+/obj/decal/cleanable/robot_debris/gib,
+/obj/item/scrap,
+/turf/unsimulated/floor/wood/six,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
 	})
 "hx" = (
 /obj/decal/tile_edge/line/black{
@@ -3660,6 +3954,10 @@
 /obj/decal/cleanable/dirt/dirt4{
 	dir = 4
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/obj/item/clothing/suit/lunar_tshirt{
+	pixel_y = 2
+	},
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -3695,11 +3993,7 @@
 	})
 "hF" = (
 /obj/mesh/catwalk/jen{
-	icon_state = "M14-0"
-	},
-/obj/machinery/light/small/frostedred{
-	dir = 1;
-	pixel_y = 20
+	icon_state = "M15-0"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground/hemera{
@@ -3735,20 +4029,15 @@
 	name = "Blue Line platform"
 	})
 "hJ" = (
-/obj/mapping_helper/turf/floor/darkener{
-	dir = 8
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "Wine Cellar"
 	},
-/obj/landmark/transition{
-	dir = 4;
-	tag = "lunaport_archivesL0";
-	dest_tag = "lunaport_archivesL1"
-	},
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
-	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Hogge & Wylde Archives"
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "hK" = (
 /obj/item/storage/toilet{
@@ -3867,22 +4156,15 @@
 	ambient_light = "#441111"
 	})
 "hX" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
+/obj/stool/chair/comfy/red{
+	dir = 8;
+	pixel_x = 8
 	},
-/obj/machinery/networked/printer{
-	jam = 1;
-	pixel_y = 6;
-	print_id = "Office0"
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Hogge & Wylde Archives"
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "hY" = (
 /obj/machinery/light/incandescent/warm{
@@ -3986,18 +4268,20 @@
 	ambient_light = "#441111"
 	})
 "im" = (
-/obj/decal/tile_edge/line/purple{
-	icon_state = "line-broken1"
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
-/turf/unsimulated/wall/setpieces/lunar{
-	fullbright = 0
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-110"
 	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "in" = (
 /obj/stool,
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -4088,6 +4372,24 @@
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
 	})
+"iw" = (
+/obj/fakeobject/plantpot,
+/obj/shrub{
+	icon = 'icons/obj/hydroponics/plants_crop.dmi';
+	icon_state = "TreeDogwood-G4";
+	last_use = 25949.4;
+	max_uses = 2;
+	pixel_x = 2;
+	pixel_y = 4;
+	spawn_chance = 32
+	},
+/turf/simulated/floor/marble/border_bw{
+	dir = 4
+	},
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "ix" = (
 /turf/unsimulated/floor/blue/side{
 	dir = 9
@@ -4134,23 +4436,17 @@
 	name = "Concourse D"
 	})
 "iC" = (
-/obj/decal/tile_edge/line/purple{
-	icon_state = "line-broken1"
+/obj/mesh/catwalk/jen{
+	icon_state = "M10-0"
 	},
-/obj/railing/purple/reinforced,
-/obj/decoration/bullethole{
-	pixel_x = -4;
-	icon_state = "bullethole-large"
-	},
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 4;
-	opacity = 0;
-	desc = "It's been punctured by a large and powerful bullet. You can see right through the hole."
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 6;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
 	},
 /area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522";
-	icon_state = "orange"
+	name = "Wine Cellar"
 	})
 "iD" = (
 /turf/unsimulated/floor/blueblack/corner{
@@ -4160,19 +4456,18 @@
 	name = "Blue Line platform"
 	})
 "iE" = (
-/obj/ladder{
-	icon_state = "ladder_wall";
-	id = "lunar_deepmaint2";
-	pixel_y = 22
-	},
-/obj/decal/cleanable/cobweb2{
-	pixel_x = 10;
-	pixel_y = 21
-	},
 /obj/decal/cleanable/rust/jen,
+/obj/submachine/chef_sink{
+	desc = "A common utility sink.";
+	name = "rusty sink";
+	dir = 8;
+	pixel_x = 1
+	},
 /turf/unsimulated/floor/minitiles/black,
-/area/moon/underground{
-	ambient_light = "#441111"
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "iF" = (
 /obj/neon_lining,
@@ -4190,8 +4485,20 @@
 	ambient_light = "#441111"
 	})
 "iH" = (
-/obj/decal/cleanable/rust,
-/turf/unsimulated/floor/minitiles/black,
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "lunar_deepmaint1";
+	pixel_y = 24
+	},
+/obj/machinery/light/small/frostedred{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/decal/cleanable/cobweb2{
+	pixel_x = 10;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -4212,11 +4519,7 @@
 	name = "Concourse D"
 	})
 "iK" = (
-/obj/decal/cleanable/fungus{
-	dir = 8;
-	pixel_y = -1
-	},
-/obj/decal/cleanable/water,
+/obj/decal/cleanable/fungus,
 /turf/unsimulated/floor/carpet/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -4234,9 +4537,12 @@
 	ambient_light = "#555533"
 	})
 "iM" = (
-/turf/unsimulated/floor/stairs/dark{
-	dir = 4
+/obj/machinery/light/small/frostedred{
+	dir = 4;
+	pixel_x = 10;
+	pixel_y = 16
 	},
+/turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
@@ -4251,6 +4557,9 @@
 /obj/decal/cleanable/cobweb2{
 	pixel_x = 10;
 	pixel_y = 21
+	},
+/obj/storage/crate/biohazard{
+	pixel_y = 18
 	},
 /turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
@@ -4267,11 +4576,15 @@
 	ambient_light = "#331111"
 	})
 "iP" = (
-/obj/machinery/door/airlock/pyro/weapons{
-	name = "Secure Elevator"
+/obj/mesh/catwalk/jen{
+	icon_state = "M14-0"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/floor/engine,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 6;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
@@ -4297,14 +4610,15 @@
 	ambient_light = "#447f7f"
 	})
 "iT" = (
-/obj/railing/reinforced{
-	icon = 'icons/turf/walls/panel.dmi';
-	icon_state = "hole";
-	name = "broken window"
+/obj/stool/chair/office/syndie{
+	dir = 8
 	},
-/turf/unsimulated/floor/lunar/cavern,
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/simulated/floor/marble/border_bw{
+	dir = 4
+	},
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "iU" = (
 /obj/decoration/bookcase{
@@ -4321,6 +4635,16 @@
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Hogge & Wylde Archives"
+	})
+"iV" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/concrete,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "iW" = (
 /obj/railway/adaptive{
@@ -4339,6 +4663,7 @@
 /obj/railing/purple/reinforced{
 	dir = 1
 	},
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -4392,7 +4717,25 @@
 	icon_state = "4-8"
 	},
 /obj/railway_vehicle/flatbed/passenger/end,
+/obj/disposalpipe/segment/transport{
+	dir = 2
+	},
 /turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
+"je" = (
+/obj/railing/orange{
+	dir = 1
+	},
+/obj/mesh/catwalk/jen{
+	icon_state = "C12-0"
+	},
+/obj/railing/orange,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -4414,15 +4757,17 @@
 	ambient_light = "#223333"
 	})
 "ji" = (
-/obj/item/device/radio/intercom/loudspeaker{
-	frequency = 1988;
-	pixel_y = 7;
-	pixel_x = -1
+/obj/fakeobject/airlock_broken/bolted{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "secure_locked";
+	name = "Old Military Annex"
 	},
-/obj/table/auto/desk,
-/turf/unsimulated/floor/circuit/off,
-/area/moon/monorail_station{
-	name = "Blue Line platform"
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 4;
+	icon_state = "leadcap_white"
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "jj" = (
 /obj/machinery/light/small/frostedred{
@@ -4441,15 +4786,19 @@
 	ambient_light = "#555522"
 	})
 "jk" = (
-/obj/railing/guard{
-	dir = 8
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "lunar_deepmaint2";
+	pixel_y = 22
 	},
-/turf/unsimulated/floor/lunar/cavern{
-	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
-	dir = 10;
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "lunar-s"
+/obj/decal/cleanable/rust/jen{
+	icon_state = "wood"
 	},
+/obj/machinery/light/small/frostedred{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -4477,6 +4826,17 @@
 	icon_state = "red";
 	name = "Hensbane Investigations";
 	ambient_light = "#555533"
+	})
+"jq" = (
+/obj/item/clothing/under/misc/mobster{
+	name = "hemera office suit"
+	},
+/obj/item/clothing/under/misc/mobster{
+	name = "hemera office suit"
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	name = "Concourse D"
 	})
 "js" = (
 /obj/decal/tile_edge/line/green{
@@ -4573,6 +4933,17 @@
 	name = "Old Military Annex";
 	ambient_light = "#331111"
 	})
+"jC" = (
+/obj/table/auto/desk,
+/obj/item/device/radio/intercom/loudspeaker{
+	frequency = 1988;
+	pixel_y = 7;
+	pixel_x = -1
+	},
+/turf/unsimulated/floor/circuit/off,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
+	})
 "jD" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 8;
@@ -4619,6 +4990,9 @@
 	})
 "jI" = (
 /obj/decal/cleanable/dirt/dirt4,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/obj/item/clothing/shoes/detective,
+/obj/item/clothing/suit/wintercoat/detective,
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -4645,15 +5019,28 @@
 	name = "Seneca Falls Staffing Solutions"
 	})
 "jL" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 4
+/obj/fakeobject/pipe/heat{
+	desc = "Steam pipes, very hot to the touch.";
+	dir = 5
 	},
-/area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522"
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "jM" = (
 /turf/unsimulated/wall/setpieces/bunker_grille,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
+"jN" = (
+/obj/railway/adaptive{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/machinery/bot/firebot,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -4689,13 +5076,12 @@
 	name = "Blue Line platform"
 	})
 "jT" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 8;
-	icon_state = "leadcap_white"
-	},
-/area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522"
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg,
+/obj/item/raw_material/shard/glass,
+/turf/unsimulated/floor/wood/six,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
 	})
 "jU" = (
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
@@ -4811,16 +5197,15 @@
 	ambient_light = "#223333"
 	})
 "ki" = (
-/obj/item/storage/toilet{
-	dir = 8;
-	pixel_x = 8;
-	tag = ""
-	},
 /obj/window/cubicle{
 	desc = "A panel designed to separate bathroom stalls, turning one gross room into many.";
 	dir = 8;
 	name = "stall panel";
 	tag = ""
+	},
+/obj/item/storage/toilet{
+	pixel_y = 14;
+	pixel_x = 4
 	},
 /turf/unsimulated/floor/minitiles,
 /area/moon/underground/hemera{
@@ -4852,9 +5237,8 @@
 	ambient_light = "#441111"
 	})
 "kk" = (
-/obj/machinery/vehicle/tank/car/purple{
-	dir = 4
-	},
+/obj/stool/bed/brig,
+/obj/item/clothing/suit/bedsheet/orange,
 /turf/unsimulated/floor/engine,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
@@ -4872,10 +5256,6 @@
 	name = "Seneca Falls Staffing Solutions"
 	})
 "km" = (
-/obj/table/wood/auto/desk{
-	name = "moldy desk";
-	color = "#77bb44"
-	},
 /obj/decal/cleanable/fungus{
 	dir = 8;
 	pixel_y = -1;
@@ -4883,6 +5263,10 @@
 	},
 /obj/decal/cleanable/fungus{
 	pixel_x = 11
+	},
+/obj/storage/closet/dresser{
+	color = "#77bb44";
+	name = "moldy dresser"
 	},
 /turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
@@ -4892,6 +5276,7 @@
 	})
 "kn" = (
 /obj/decal/cleanable/rust,
+/obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/white/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -4931,13 +5316,11 @@
 	name = "Concourse B"
 	})
 "kr" = (
-/obj/machinery/vehicle/tank/car/purple{
-	dir = 8
+/obj/railing/purple{
+	dir = 8;
+	pixel_x = -4
 	},
-/obj/machinery/phone/wall{
-	pixel_y = 30
-	},
-/turf/unsimulated/floor/engine,
+/turf/unsimulated/floor/stairs/dark,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
@@ -5064,7 +5447,7 @@
 	dir = 4;
 	pixel_x = -8
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -5094,6 +5477,17 @@
 	},
 /area/moon/underground{
 	ambient_light = "#441111"
+	})
+"kG" = (
+/obj/railing{
+	color = "brown";
+	dir = 4
+	},
+/obj/decoration/regallamp,
+/turf/unsimulated/floor/wood/eight,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "kI" = (
 /obj/decal/tile_edge/line/purple{
@@ -5132,6 +5526,20 @@
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Concourse B"
+	})
+"kM" = (
+/obj/landmark/transition{
+	dir = 1;
+	tag = "lunaport_archivesL0";
+	dest_tag = "lunaport_archivesL1"
+	},
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 1
+	},
+/turf/unsimulated/floor/stairs/wood,
+/area/moon/underground/hemera{
+	icon_state = "blue";
+	name = "Hogge & Wylde Archives"
 	})
 "kN" = (
 /obj/decal/tile_edge/line/black{
@@ -5175,11 +5583,8 @@
 	icon_state = "line-broken1"
 	},
 /obj/railing/green,
-/obj/fakeobject/moonrock{
-	pixel_y = 10;
-	dir = 1;
-	density = 0
-	},
+/obj/decal/cleanable/blood,
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -5197,15 +5602,11 @@
 	name = "Wine Vault"
 	})
 "kU" = (
-/obj/decal/tile_edge/line/purple{
-	dir = 1;
-	icon_state = "noedge-tile1"
+/obj/machinery/light/small/frostedred{
+	dir = 8;
+	pixel_y = 10
 	},
-/obj/decal/tile_edge/line/white{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/marble/black,
+/turf/unsimulated/floor/engine,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
@@ -5258,23 +5659,10 @@
 	ambient_light = "#447f7f"
 	})
 "kZ" = (
-/obj/decoration/bullethole{
-	pixel_x = 10;
-	icon_state = "bullethole-large"
-	},
-/obj/decoration/bullethole{
-	pixel_y = -8;
-	pixel_x = -8;
-	icon_state = "bullethole-large"
-	},
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	desc = "It's been punctured with a high-powered bullet. You can see right through.";
-	opacity = 0
-	},
-/area/moon/underground/hemera{
-	icon_state = "red";
-	name = "Hensbane Investigations";
-	ambient_light = "#555533"
+/obj/decal/cleanable/robot_debris/limb,
+/turf/unsimulated/floor/wood/six,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
 	})
 "la" = (
 /obj/machinery/door/unpowered/wood/stall,
@@ -5296,7 +5684,11 @@
 /obj/cable/conduit{
 	dir = 10
 	},
-/obj/decal/cleanable/wood_debris,
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -5320,10 +5712,10 @@
 	name = "Hogge & Wylde"
 	})
 "lf" = (
-/obj/mesh/catwalk/jen{
-	icon_state = "C13-0"
+/obj/mesh/catwalk,
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
-/obj/railing/green,
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -5416,39 +5808,33 @@
 	ambient_light = "#331111"
 	})
 "ln" = (
-/obj/submachine/laundry_machine{
-	pixel_y = 25;
-	pixel_x = -1;
-	name = "Ships Services Laundry Machine"
+/obj/decal/cleanable/dirt/dirt2{
+	dir = 4
 	},
-/obj/fakeobject/robotpedestal{
-	pixel_y = 14;
-	density = 0;
-	plane = -102
+/obj/disposalpipe/segment/transport{
+	dir = 2
 	},
-/obj/machinery/vendingframe{
-	pixel_y = 20;
-	anchored = 1;
-	name = "Ships Services vending unit"
-	},
-/turf/unsimulated/floor/darkblue,
+/turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Nanotrasen Showrooms"
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "lp" = (
-/obj/decal/tile_edge/line/purple{
-	dir = 1;
-	icon_state = "noedge-tile1"
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 8
 	},
-/obj/decal/tile_edge/line/white{
-	dir = 1;
-	icon_state = "line1"
+/obj/landmark/transition{
+	dir = 4;
+	tag = "lunaport_spectre1";
+	dest_tag = "lunaport_spectre0"
 	},
-/obj/machinery/light/small/floor/blueish,
-/turf/simulated/floor/marble/black,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
 /area/moon/underground/hemera{
-	name = "Wine Cellar"
+	icon_state = "blue";
+	name = "Hogge & Wylde Archives"
 	})
 "lq" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -5555,6 +5941,8 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/decal/stage_edge/alt,
+/obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -5826,17 +6214,11 @@
 	ambient_light = "#441111"
 	})
 "md" = (
-/obj/machinery/door/airlock/pyro/weapons{
-	dir = 4;
-	name = "Secure Elevator"
-	},
-/obj/mapping_helper/airlock/bolter,
-/obj/mapping_helper/access/syndie_shuttle,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/unsimulated/floor/minitiles/black,
+/obj/stool,
+/obj/item/clothing/glasses/vr/arcade,
+/turf/unsimulated/floor/engine,
 /area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+	name = "Wine Cellar"
 	})
 "me" = (
 /obj/fakeobject/bigcabinets/rackmount,
@@ -6065,9 +6447,7 @@
 	dir = 4
 	},
 /turf/unsimulated/wall/setpieces/lunar{
-	dir = 4;
-	fullbright = 0;
-	icon_state = "lunar-s"
+	fullbright = 0
 	},
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
@@ -6092,9 +6472,6 @@
 /obj/item/toy/axe{
 	pixel_y = 24;
 	pixel_x = 1
-	},
-/obj/neon_lining{
-	dir = 1
 	},
 /turf/unsimulated/floor/circuit/vintage,
 /area/moon/underground/hemera{
@@ -6139,7 +6516,11 @@
 	ambient_light = "#223333"
 	})
 "mI" = (
-/obj/decal/bloodtrace,
+/obj/stool/chair/couch/purple{
+	icon_state = "chair_couch_ew-purple";
+	dir = 4;
+	pixel_x = -11
+	},
 /turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -6158,6 +6539,15 @@
 	icon_state = "red";
 	name = "Hensbane Investigations";
 	ambient_light = "#555533"
+	})
+"mK" = (
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-75"
+	},
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "mL" = (
 /obj/table/reinforced/industrial/auto,
@@ -6226,6 +6616,16 @@
 	icon_state = "green";
 	name = "Concourse B"
 	})
+"mU" = (
+/obj/disposalpipe/segment/transport{
+	dir = 2
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	icon_state = "leadjunction_white"
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "mV" = (
 /obj/machinery/door/poddoor/buff{
 	id = "lunaport_spectre";
@@ -6245,7 +6645,6 @@
 	dir = 1;
 	plane = -102
 	},
-/obj/decal/bloodtrace,
 /turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -6392,12 +6791,16 @@
 	name = "Nanotrasen Showrooms"
 	})
 "np" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	icon_state = "leadjunction_white"
+/obj/disposalpipe/segment/transport{
+	dir = 1
+	},
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-207"
 	},
 /area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522"
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "nq" = (
 /obj/stool/chair/comfy/ergonomic{
@@ -6409,9 +6812,8 @@
 	name = "Concourse D"
 	})
 "nr" = (
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
-	},
+/obj/storage/crate/bin/trash,
+/turf/unsimulated/floor/engine,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
@@ -6426,7 +6828,6 @@
 "nu" = (
 /obj/machinery/traymachine/morgue,
 /obj/decal/cleanable/rust/jen,
-/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -6535,6 +6936,17 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"nG" = (
+/obj/railing{
+	color = "brown";
+	dir = 8
+	},
+/obj/decoration/regallamp,
+/turf/unsimulated/floor/wood/eight,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "nH" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white{
 	dir = 4
@@ -6588,6 +7000,7 @@
 	plane = -100
 	},
 /obj/map/light/dimred,
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -6655,6 +7068,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -6771,6 +7185,7 @@
 /obj/decoration/clock/frozen{
 	pixel_y = 30
 	},
+/obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/white/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -6824,6 +7239,7 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line-broken1"
 	},
+/obj/disposalpipe/segment/bent/west,
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
 	icon_state = "interior-137"
 	},
@@ -6833,10 +7249,6 @@
 	ambient_light = "#331111"
 	})
 "oo" = (
-/obj/machinery/light/small/purpleish{
-	dir = 1;
-	pixel_y = 20
-	},
 /obj/table/glass/reinforced/auto,
 /turf/unsimulated/floor/carpet/purple,
 /area/moon/underground/hemera{
@@ -7329,10 +7741,6 @@
 	dir = 1;
 	plane = -102
 	},
-/obj/decal/bloodtrace,
-/obj/item/casing/cannon{
-	pixel_y = 1
-	},
 /turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -7368,6 +7776,9 @@
 "pn" = (
 /obj/structure/woodwall{
 	icon_state = "woodwall3"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 1
 	},
 /turf/unsimulated/wall{
 	desc = "It's sealed shut.";
@@ -7483,6 +7894,7 @@
 /obj/railing/purple{
 	dir = 1
 	},
+/obj/item/parts/robot_parts/leg/left/servotron,
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -7494,6 +7906,7 @@
 	pixel_x = -19
 	},
 /obj/decal/cleanable/fungus,
+/obj/disposalpipe/segment/transport,
 /turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -7503,8 +7916,9 @@
 "pA" = (
 /obj/mapping_helper/access/syndie_shuttle,
 /obj/machinery/door/airlock/pyro/weapons{
-	name = "Wine Cellar"
+	name = "Cheese Dungeon"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/longtile/black,
 /area/moon/underground/hemera{
 	name = "Concourse D"
@@ -7522,6 +7936,17 @@
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
 	})
+"pD" = (
+/obj/decal/cleanable/oil/streak,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "pE" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	dir = 5
@@ -7530,11 +7955,14 @@
 	name = "Wine Cellar"
 	})
 "pF" = (
-/obj/window/cubicle/railing{
-	dir = 8;
-	pixel_x = -3
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "lunar_deepvents3";
+	plane = -98;
+	pixel_y = 14
 	},
-/turf/unsimulated/floor/setpieces/pitchblack,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Old Military Annex";
@@ -7578,10 +8006,22 @@
 	ambient_light = "#331111"
 	})
 "pK" = (
-/turf/unsimulated/wall/setpieces/lunar{
-	dir = 1;
-	fullbright = 0;
-	icon_state = "lunar-c"
+/obj/rack{
+	color = "#666666";
+	name = "wine rack"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine/white{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine/white,
+/obj/item/reagent_containers/food/drinks/bottle/wine/white{
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 9;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
 	},
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
@@ -7623,12 +8063,22 @@
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
 	})
+"pO" = (
+/obj/railway/adaptive{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/robot_debris/gib,
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "pP" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
 	name = "Super! Fun Restricted Hallway"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -7740,6 +8190,15 @@
 	name = "Air Handling";
 	ambient_light = "#555522"
 	})
+"qc" = (
+/obj/fitness/weightlifter{
+	pixel_y = 6
+	},
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/engine,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
+	})
 "qe" = (
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
 	icon_state = "interior-127"
@@ -7775,16 +8234,11 @@
 	ambient_light = "#223333"
 	})
 "qi" = (
-/obj/mesh/catwalk/jen{
-	icon_state = "C12-0"
+/obj/fakeobject/moonrock{
+	dir = 4;
+	pixel_x = 4
 	},
-/obj/railing/purple,
-/obj/railing/purple{
-	dir = 1
-	},
-/obj/decal/bloodtrace,
-/obj/decal/cleanable/greenglow,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -7822,9 +8276,6 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/decal/cleanable/greenglow,
-/obj/decal/cleanable/greenglow,
-/obj/decal/cleanable/greenglow,
 /turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -7948,11 +8399,12 @@
 	ambient_light = "#447f7f"
 	})
 "qA" = (
-/turf/unsimulated/floor/setpieces/pitchblack,
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 4;
+	icon_state = "leadjunction_white"
+	},
 /area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522";
-	icon_state = "orange"
+	name = "Wine Cellar"
 	})
 "qB" = (
 /turf/unsimulated/floor/lunar/cavern{
@@ -8109,7 +8561,6 @@
 	ambient_light = "#331111"
 	})
 "qR" = (
-/obj/map/light/graveyard,
 /obj/fakeobject/carcosa/statue/broken,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
@@ -8126,6 +8577,21 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
+	})
+"qT" = (
+/obj/decoration/bullethole{
+	icon_state = "bullethole-large";
+	pixel_y = 8
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	icon_state = "leadjunction_white";
+	desc = "It's got a hole shot right through it.";
+	opacity = 0
+	},
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "qU" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white{
@@ -8198,6 +8664,16 @@
 	icon_state = "red";
 	name = "Hensbane Investigations";
 	ambient_light = "#555533"
+	})
+"rb" = (
+/obj/machinery/door/poddoor/buff{
+	id = "lunaport_winevault";
+	name = "Wine Cellar";
+	autoclose = 1
+	},
+/turf/unsimulated/floor/concrete,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
 	})
 "rc" = (
 /obj/machinery/light/incandescent/harsh{
@@ -8342,20 +8818,16 @@
 	name = "cherrywood dresser";
 	pixel_y = 16
 	},
+/obj/item/clothing/under/misc/lawyer/black,
 /turf/unsimulated/floor/carpet/purple,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
 "rq" = (
-/obj/machinery/door/unpowered/wood{
-	desc = "This heavy door has a more ornate lock than the rest.";
-	dir = 4;
-	locked = 1;
-	name = "old wooden door"
-	},
-/turf/simulated/floor/stairs/wood{
-	dir = 4
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "window";
+	opacity = 0
 	},
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -8402,6 +8874,9 @@
 	},
 /obj/decal/cleanable/cobweb2{
 	pixel_y = 2
+	},
+/obj/decal/stage_edge/alt{
+	color = "gray"
 	},
 /turf/unsimulated/floor/setpieces/pitchblack,
 /area/moon/underground/hemera{
@@ -8581,6 +9056,9 @@
 /obj/railing/guard{
 	dir = 4
 	},
+/obj/storage/secure/crate/gear{
+	name = "RHAEBUS crate"
+	},
 /turf/unsimulated/floor/circuit/vintage,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -8617,10 +9095,13 @@
 	name = "Hogge & Wylde"
 	})
 "rV" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 8;
-	icon_state = "leadcap_white"
+/obj/table/monodesk/auto,
+/obj/machinery/door/poddoor/buff{
+	id = "lunaport_spectre2";
+	name = "Tactical Archive";
+	autoclose = 1
 	},
+/turf/unsimulated/floor/shiny/white,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "SPECTRE Showroom"
@@ -8716,7 +9197,7 @@
 	name = "dried blood"
 	},
 /obj/sec_tape,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -8740,7 +9221,6 @@
 	dir = 8;
 	pixel_x = -6
 	},
-/obj/npc/trader/robot/robuddy/diner,
 /turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -8761,12 +9241,10 @@
 	ambient_light = "#447f7f"
 	})
 "sj" = (
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
-	},
-/area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+/obj/disposalpipe/segment/bent/west,
+/turf/unsimulated/wall/setpieces/lunar,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "sk" = (
 /obj/decal/tile_edge/line/green{
@@ -8791,6 +9269,9 @@
 	ambient_light = "#555533"
 	})
 "sn" = (
+/obj/disposalpipe/segment/transport{
+	dir = 1
+	},
 /turf/unsimulated/floor/stairs/dark{
 	dir = 4
 	},
@@ -8984,6 +9465,9 @@
 	dir = 8
 	},
 /obj/decal/cleanable/rust/jen,
+/obj/disposalpipe/segment/transport{
+	dir = 1
+	},
 /turf/unsimulated/floor/black/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -9032,10 +9516,9 @@
 	ambient_light = "#223333"
 	})
 "sK" = (
-/obj/machinery/light/small/frostedred{
-	dir = 8;
-	pixel_x = -10;
-	pixel_y = 16
+/obj/railing{
+	color = "brown";
+	plane = -99
 	},
 /turf/unsimulated/wall/setpieces/lunar{
 	dir = 1;
@@ -9070,16 +9553,27 @@
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
-"sO" = (
-/obj/decoration/railyard/signal/pole{
-	plane = -100
+"sN" = (
+/obj/neon_lining,
+/obj/decal/bloodtrace,
+/obj/item/caution{
+	name = "fire sign"
 	},
+/turf/unsimulated/grimycarpet,
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
+	})
+"sO" = (
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line-broken1"
 	},
 /obj/railing/purple/reinforced,
-/obj/map/light/dimred,
-/turf/unsimulated/floor/lunar/cavern,
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 1;
+	icon_state = "leadjunction_white"
+	},
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -9098,10 +9592,21 @@
 /obj/table/wood/auto/desk{
 	icon_state = "3"
 	},
+/obj/item/paper/manufacturer_blueprint/alastor,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Hogge & Wylde Archives"
+	})
+"sR" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-223"
+	},
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "sS" = (
 /obj/neon_lining,
@@ -9158,17 +9663,21 @@
 	ambient_light = "#555522"
 	})
 "sX" = (
-/obj/railway/adaptive{
-	icon_state = "4-8"
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_y = 11;
+	pixel_x = -4
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_y = 3
 	},
-/obj/window/cubicle/railing{
-	dir = 4;
-	pixel_x = 6
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 9;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
 	},
-/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -9336,30 +9845,19 @@
 	name = "Concourse D"
 	})
 "to" = (
-/obj/railing/reinforced{
-	icon = 'icons/turf/walls/panel.dmi';
-	icon_state = "hole";
-	name = "broken window"
+/obj/fakeobject/moonrock{
+	pixel_y = 10;
+	dir = 1;
+	density = 0
 	},
-/obj/decal/cleanable/cobweb2{
-	pixel_y = -2;
-	pixel_x = -10
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
 	},
-/obj/decal/cleanable/rust,
-/obj/decal/cleanable/dirt/dirt4,
-/obj/structure/woodwall{
-	icon_state = "woodwall4";
-	opacity = 0
-	},
-/obj/landmark/interesting{
-	infra_luminosity = null;
-	interesting = "There are bits of torn fabric where people have squeezed through here."
-	},
-/turf/unsimulated/floor/black/grime,
-/area/moon/underground/hemera{
-	icon_state = "green";
-	name = "Old Military Annex";
-	ambient_light = "#331111"
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "tq" = (
 /obj/decal/tile_edge/line/black{
@@ -9395,6 +9893,19 @@
 	icon_state = "red";
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
+	})
+"tr" = (
+/obj/fakeobject/airlock_broken/bolted{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "secure_locked";
+	name = "Old Military Annex"
+	},
+/obj/disposalpipe/segment/transport,
+/turf/unsimulated/floor/plating,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "ts" = (
 /obj/machinery/door/airlock/pyro/glass/windoor/alt{
@@ -9468,6 +9979,15 @@
 /turf/unsimulated/floor/grey/blackgrime,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
+	})
+"tx" = (
+/obj/machinery/door/unpowered/wood{
+	locked = 1;
+	name = "Wine Cellar"
+	},
+/turf/unsimulated/floor/concrete,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
 	})
 "ty" = (
 /obj/railway/adaptive{
@@ -9583,7 +10103,9 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/railway_vehicle/flatbed,
+/obj/railway_vehicle/flatbed{
+	active = 0
+	},
 /obj/machinery/broadside_gun/directfire/molotok{
 	pixel_y = 12;
 	pixel_x = -17;
@@ -9607,6 +10129,14 @@
 "tK" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M13-0"
+	},
+/obj/machinery/door_control/oneshot/keyed/code{
+	code = "1480";
+	desc = "A remote control switch for a door. There is a small emblem bearing a white rose.";
+	id = "lunaport_winevault";
+	name = "codepad";
+	pixel_y = 30;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground/hemera{
@@ -9667,6 +10197,9 @@
 /obj/railing/green,
 /obj/railing/green{
 	dir = 1
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
@@ -9776,9 +10309,7 @@
 	ambient_light = "#331111"
 	})
 "ud" = (
-/turf/unsimulated/wall/auto/adventure/hospital/interior{
-	icon_state = "interior-11"
-	},
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -9858,7 +10389,14 @@
 	dir = 1
 	},
 /obj/table/scrap/auto,
-/turf/unsimulated/floor/lunar/cavern,
+/obj/marker/supplymarker,
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -9889,6 +10427,10 @@
 	},
 /obj/railing/green{
 	dir = 1
+	},
+/obj/fakeobject/robot/servotron/older{
+	desc = "An old Kingsway lifter-loader model. It's offline right now.";
+	name = "railway stevedore unit"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
@@ -9997,6 +10539,18 @@
 	name = "Air Handling";
 	ambient_light = "#555522";
 	icon_state = "orange"
+	})
+"uu" = (
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
+	},
+/turf/unsimulated/wall/setpieces/lunar{
+	fullbright = 0
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "uv" = (
 /obj/machinery/light/worn{
@@ -10306,11 +10860,13 @@
 	name = "Hogge & Wylde Archives"
 	})
 "vf" = (
-/obj/machinery/light/small/broken,
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/drainage/big,
 /turf/unsimulated/floor/minitiles/black,
-/area/moon/underground{
-	ambient_light = "#441111"
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "vg" = (
 /obj/fakeobject/vacuumtape,
@@ -10404,6 +10960,13 @@
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
 	})
+"vq" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "vr" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 1
@@ -10470,20 +11033,27 @@
 	ambient_light = "#331111"
 	})
 "vy" = (
-/obj/ladder{
-	icon_state = "ladder_wall";
-	id = "lunar_deepmaint1";
-	pixel_y = 24
+/obj/decal/cleanable/rust,
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
+"vz" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "C12-0"
 	},
-/obj/machinery/light/small/frostedred{
-	dir = 8;
-	pixel_x = -10
+/obj/railing/purple,
+/obj/railing/purple{
+	dir = 1
 	},
-/obj/decal/cleanable/cobweb2{
-	pixel_x = 10;
-	pixel_y = 21
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
 	},
-/turf/unsimulated/floor/minitiles/black,
+/obj/item/parts/robot_parts/leg/right/light,
+/obj/decal/cleanable/robot_debris/gib,
+/turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -10498,6 +11068,20 @@
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
+	})
+"vB" = (
+/obj/neon_lining,
+/obj/decal/bloodtrace,
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
+/turf/unsimulated/grimycarpet,
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "vC" = (
 /obj/stool/chair/office/syndie{
@@ -10520,7 +11104,9 @@
 	ambient_light = "#441111"
 	})
 "vF" = (
-/obj/decoration/frontwalldamage,
+/obj/decoration/frontwalldamage{
+	plane = -99
+	},
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	dir = 1;
 	icon_state = "leadjunction_white"
@@ -10554,6 +11140,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -10657,18 +11244,22 @@
 	})
 "vU" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 8;
-	icon_state = "leadjunction_white"
+	dir = 5
 	},
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "SPECTRE Showroom"
 	})
 "vV" = (
-/turf/unsimulated/wall/setpieces/lunar{
-	density = 0;
+/obj/railing{
+	color = "brown";
+	dir = 4;
+	plane = -99
+	},
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 9;
-	fullbright = 0;
+	icon = 'icons/turf/walls.dmi';
 	icon_state = "lunar-s"
 	},
 /area/moon/underground/hemera{
@@ -10755,6 +11346,7 @@
 /obj/railing/purple/reinforced{
 	dir = 1
 	},
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -10767,6 +11359,9 @@
 "wd" = (
 /obj/structure/woodwall{
 	icon_state = "woodwall2"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 1
 	},
 /turf/unsimulated/wall{
 	desc = "It's sealed shut.";
@@ -10806,6 +11401,18 @@
 /turf/unsimulated/floor/wood/five,
 /area/moon/underground{
 	ambient_light = "#441111"
+	})
+"wh" = (
+/obj/stool/chair/black{
+	dir = 1
+	},
+/obj/neon_lining,
+/obj/decal/bloodtrace,
+/turf/unsimulated/grimycarpet,
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "wi" = (
 /obj/decal/tile_edge/check/blue{
@@ -10863,6 +11470,13 @@
 	})
 "wo" = (
 /obj/shattered_barrel,
+/obj/decal/cleanable/oil,
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99;
+	pixel_y = -2
+	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -10874,12 +11488,20 @@
 	name = "Hogge & Wylde"
 	})
 "wq" = (
-/obj/railing/guard{
-	dir = 8
+/obj/railing/reinforced{
+	icon = 'icons/turf/walls/panel.dmi';
+	icon_state = "hole";
+	name = "broken window"
+	},
+/obj/decal/cleanable/cobweb2{
+	pixel_y = -3;
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/lunar/cavern,
-/area/moon/underground{
-	ambient_light = "#441111"
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "wr" = (
 /obj/item/clothing/head/crown{
@@ -10919,6 +11541,9 @@
 /obj/mesh/catwalk/jen{
 	icon_state = "C12-1"
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -10945,7 +11570,6 @@
 	ambient_light = "#441111"
 	})
 "wy" = (
-/obj/disposalpipe/segment/bent/east,
 /turf/unsimulated/floor/stairs/wood,
 /area/moon/underground/hemera{
 	icon_state = "purple";
@@ -10958,33 +11582,33 @@
 	name = "Nanotrasen Showrooms"
 	})
 "wB" = (
-/obj/mapping_helper/turf/floor/darkener{
-	dir = 8
+/obj/table/wood/round,
+/obj/item/plate/tray{
+	pixel_y = 5
 	},
-/obj/landmark/transition{
-	dir = 4;
-	dest_tag = "lunaport_archivesR0";
-	tag = "lunaport_archivesR1"
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 5;
+	pixel_x = 8
 	},
-/turf/unsimulated/floor/stairs/dark{
-	dir = 4
+/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice{
+	pixel_y = 3;
+	pixel_x = -3
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
 "wC" = (
-/obj/mapping_helper/turf/floor/darkener{
-	dir = 4
-	},
-/obj/landmark/transition{
-	dir = 8;
-	dest_tag = "lunaport_archivesL0";
-	tag = "lunaport_archivesL1"
-	},
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
-	},
+/turf/unsimulated/floor/shiny/white,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
@@ -11129,9 +11753,24 @@
 	})
 "wQ" = (
 /obj/fakeobject/moonrock,
-/turf/unsimulated/floor/lunar/cavern,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
 /area/moon/underground{
 	ambient_light = "#441111"
+	})
+"wR" = (
+/obj/disposalpipe/segment/bent/north,
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-203"
+	},
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "wT" = (
 /obj/map/light/yellow,
@@ -11374,6 +12013,18 @@
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
+"xq" = (
+/obj/landmark/transition{
+	dir = 1;
+	dest_tag = "lunaport_archivesL0";
+	tag = "lunaport_archivesL1"
+	},
+/obj/mapping_helper/turf/floor/darkener,
+/turf/unsimulated/floor/stairs/wood,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "xr" = (
 /obj/item/clothing/suit/armor{
 	desc = "A suit of medieval armor.";
@@ -11403,7 +12054,9 @@
 	},
 /turf/unsimulated/floor/shiny,
 /area/moon/underground/hemera{
-	name = "Concourse D"
+	icon_state = "red";
+	name = "Deep Archives";
+	ambient_light = "#447f7f"
 	})
 "xt" = (
 /turf/unsimulated/floor/stairs/wide/other{
@@ -11579,13 +12232,19 @@
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
+"xL" = (
+/obj/decal/cleanable/fungus,
+/obj/decal/cleanable/water,
+/obj/disposalpipe/segment/transport,
+/turf/unsimulated/floor/concrete,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
+	})
 "xM" = (
 /obj/stool/bench/wooden{
 	pixel_y = 12
-	},
-/mob/living/silicon/hivebot/drone{
-	name = "CHARLES 1.2";
-	desc = "Some sort of observer drone."
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
@@ -11635,8 +12294,10 @@
 	name = "Seneca Falls Staffing Solutions"
 	})
 "xR" = (
-/obj/decal/bloodtrace,
-/obj/item/caution,
+/obj/stool/chair/couch/purple{
+	icon_state = "chair_couch_ew-purple";
+	pixel_x = -11
+	},
 /turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -11742,12 +12403,15 @@
 	name = "Hogge & Wylde"
 	})
 "yb" = (
-/obj/disposalpipe/segment/ejection{
+/obj/decal/cleanable/dirt/dirt4{
 	dir = 4
 	},
-/turf/unsimulated/floor/shiny,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground/hemera{
-	name = "Concourse D"
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "yc" = (
 /obj/item/storage/wall/clothingrack/clothes2,
@@ -11794,6 +12458,14 @@
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
 	})
+"yh" = (
+/obj/stool/chair/black{
+	dir = 8
+	},
+/turf/unsimulated/floor/engine,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
+	})
 "yi" = (
 /obj/railing/orange,
 /obj/railing/orange{
@@ -11807,21 +12479,17 @@
 	ambient_light = "#441111"
 	})
 "yj" = (
-/obj/machinery/light/small/cool,
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 1
+	},
 /area/moon/underground/hemera{
-	icon_state = "red";
-	name = "Hensbane Investigations";
-	ambient_light = "#555533"
+	name = "Wine Cellar"
 	})
 "yk" = (
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/window/cubicle/railing{
-	dir = 4;
-	pixel_x = -3
-	},
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -11921,10 +12589,7 @@
 /obj/mesh/catwalk/jen{
 	icon_state = "M12-3"
 	},
-/obj/effects/bad_smoke{
-	name = "hot steam";
-	desc = "Ouch!"
-	},
+/obj/machinery/light/small/frostedred,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -11996,14 +12661,31 @@
 	ambient_light = "#555533"
 	})
 "yE" = (
-/obj/map/light/graveyard,
 /obj/fakeobject/carcosa/statue,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"yF" = (
+/obj/railing{
+	color = "brown";
+	dir = 8
+	},
+/obj/decoration/vent{
+	pixel_y = 28;
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/circuit/off,
+/area/moon/underground/hemera{
+	icon_state = "blue";
+	name = "Hogge & Wylde Archives"
+	})
 "yG" = (
-/obj/decal/cleanable/wood_debris,
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
 /obj/item/decoration{
 	icon = 'icons/obj/writing.dmi';
 	icon_state = "eyehbopen";
@@ -12112,6 +12794,9 @@
 	icon_state = "line-broken1"
 	},
 /obj/map/light/dimred,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
 	icon_state = "interior-157"
 	},
@@ -12135,20 +12820,14 @@
 	ambient_light = "#331111"
 	})
 "yS" = (
-/obj/fakeobject/plantpot,
-/obj/shrub{
-	icon = 'icons/obj/hydroponics/plants_crop.dmi';
-	icon_state = "TreeDogwood-G4";
-	last_use = 25949.4;
-	max_uses = 2;
-	pixel_x = 2;
-	pixel_y = 4;
-	spawn_chance = 32
+/obj/submachine/chef_sink/chem_sink{
+	layer = 3;
+	pixel_y = 3
 	},
-/turf/unsimulated/floor/wood/eight,
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/engine,
 /area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+	name = "Wine Cellar"
 	})
 "yT" = (
 /obj/decal/cleanable/fungus{
@@ -12219,7 +12898,9 @@
 	},
 /turf/unsimulated/floor/shiny,
 /area/moon/underground/hemera{
-	name = "Concourse D"
+	icon_state = "red";
+	name = "Deep Archives";
+	ambient_light = "#447f7f"
 	})
 "yZ" = (
 /obj/neon_lining{
@@ -12421,7 +13102,9 @@
 	},
 /turf/unsimulated/floor/shiny,
 /area/moon/underground/hemera{
-	name = "Concourse D"
+	icon_state = "red";
+	name = "Deep Archives";
+	ambient_light = "#447f7f"
 	})
 "zr" = (
 /obj/disposalpipe/segment/ejection{
@@ -12447,8 +13130,7 @@
 	})
 "zt" = (
 /obj/table/folding,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/condiment/mayo,
+/obj/item/paper/manufacturer_blueprint/alastor,
 /turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -12546,16 +13228,14 @@
 	ambient_light = "#223333"
 	})
 "zF" = (
-/obj/shattered_barrel{
-	pixel_y = -23;
-	pixel_x = -1;
-	icon_state = "barrel-yellow-shattered"
-	},
-/turf/unsimulated/wall/setpieces/bunker_grille{
+/obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/unsimulated/floor/longtile/black,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
 	})
 "zG" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -12598,6 +13278,17 @@
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
 	})
+"zI" = (
+/obj/stool/chair/office/syndie{
+	desc = "Is that real leather?";
+	dir = 8;
+	name = "very expensive chair"
+	},
+/turf/unsimulated/floor/shiny/white,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "zJ" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -12606,8 +13297,31 @@
 	name = "Blue Line platform"
 	})
 "zK" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 1
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
+	},
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
+	},
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
+	},
+/obj/fakeobject/airlock_broken/bolted{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "eng_glass_locked";
+	name = "cargo platform";
+	desc = "The door has been rendered inoperable. There's a huge bullethole right through it."
+	},
+/obj/effect_sparker,
+/obj/decoration/frontwalldamage{
+	pixel_y = 2;
+	pixel_x = -2
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/monorail_station{
@@ -12638,7 +13352,7 @@
 	pixel_y = 28;
 	pixel_x = 21
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/stairs/dark,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
@@ -12697,6 +13411,10 @@
 /obj/mesh/catwalk/jen{
 	icon_state = "M3-1"
 	},
+/obj/effects/bad_smoke{
+	name = "hot steam";
+	desc = "Ouch!"
+	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -12712,7 +13430,7 @@
 	name = "dried blood";
 	pixel_y = -10
 	},
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -12792,22 +13510,41 @@
 	pixel_y = 2;
 	anchored = 1
 	},
-/turf/unsimulated/floor/carpet/green/fancy/innercorner/nw,
+/turf/unsimulated/floor/carpet/green/fancy/edge/west,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
 	})
-"Af" = (
-/obj/machinery/door/airlock/pyro/weapons{
-	dir = 4;
-	name = "Secure Elevator"
+"Ad" = (
+/obj/railway/adaptive{
+	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/bolter,
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/floor/minitiles/black,
-/area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+/obj/railway_vehicle/flatbed/passenger,
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -98
+	},
+/obj/decoration/frontwalldamage{
+	dir = 4;
+	plane = -99
+	},
+/turf/unsimulated/floor/industrial,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
+	})
+"Af" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/item/caution{
+	name = "fire sign";
+	pixel_y = 9
+	},
+/turf/unsimulated/floor/concrete,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Ah" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -12932,6 +13669,30 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"At" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "C4-0"
+	},
+/obj/railing/green{
+	dir = 1
+	},
+/obj/machinery/bot/mulebot/broken{
+	pixel_y = 8
+	},
+/obj/railing/green,
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
+	},
+/obj/effect_sparker,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "Au" = (
 /obj/machinery/vending/alcohol,
 /obj/map/light/purple,
@@ -13046,6 +13807,12 @@
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
+"AH" = (
+/obj/item/scrap,
+/turf/unsimulated/floor/wood/six,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
+	})
 "AI" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 1
@@ -13117,27 +13884,30 @@
 	name = "Nanotrasen Showrooms"
 	})
 "AR" = (
-/obj/machinery/light/small/frostedred{
-	dir = 4;
-	pixel_x = 10;
-	pixel_y = 16
-	},
 /obj/machinery/door_control{
 	id = "lunaport_winevault";
 	pixel_y = 28;
-	pixel_x = -21
+	pixel_x = 20
 	},
-/turf/unsimulated/floor/minitiles/black,
+/obj/machinery/light/small/frostedred{
+	dir = 8;
+	pixel_x = -10;
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/stairs/dark,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
 "AS" = (
-/turf/simulated/floor/stairs/wood{
-	dir = 4
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "window";
+	opacity = 0
 	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "AT" = (
 /obj/cable/conduit,
@@ -13284,8 +14054,8 @@
 	})
 "Be" = (
 /obj/table/wood/round/auto,
-/obj/item/plate{
-	pixel_y = 5
+/obj/item/cash_briefcase{
+	pixel_y = 3
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
@@ -13304,6 +14074,15 @@
 	icon_state = "red";
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
+	})
+"Bg" = (
+/obj/item/raw_material/shard/glass{
+	pixel_y = -6;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/grey/blackgrime/other,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
 	})
 "Bh" = (
 /obj/mesh/catwalk/jen{
@@ -13346,6 +14125,18 @@
 	icon_state = "green";
 	name = "Old Military Annex";
 	ambient_light = "#331111"
+	})
+"Bn" = (
+/obj/stool/chair/couch/purple{
+	icon_state = "chair_couch_ew-purple";
+	dir = 8;
+	pixel_x = 12
+	},
+/turf/unsimulated/grimycarpet,
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "Bo" = (
 /obj/fakeobject/vacuumtape,
@@ -13452,14 +14243,23 @@
 	ambient_light = "#331111"
 	})
 "By" = (
-/turf/unsimulated/floor/minitiles/white,
+/obj/decal/stage_edge/alt,
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/snacks/cheesewheel,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/plant/grape,
+/obj/item/reagent_containers/food/snacks/plant/apple,
+/obj/item/cocktail_stuff/cocktail_olive,
+/obj/item/cocktail_stuff/cocktail_olive,
+/obj/item/cocktail_stuff/cocktail_olive,
+/turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
 "Bz" = (
-/turf/unsimulated/wall/setpieces/leadwall/cap{
-	icon_state = "leadcap_gray"
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 8
 	},
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
@@ -13643,15 +14443,15 @@
 	ambient_light = "#223333"
 	})
 "BS" = (
-/obj/item/storage/toilet{
-	dir = 4;
-	pixel_x = -8
-	},
 /obj/window/cubicle{
 	desc = "A panel designed to separate bathroom stalls, turning one gross room into many.";
 	dir = 4;
 	name = "stall panel";
 	tag = ""
+	},
+/obj/item/storage/toilet{
+	pixel_y = 14;
+	pixel_x = -4
 	},
 /turf/unsimulated/floor/minitiles,
 /area/moon/underground/hemera{
@@ -13676,6 +14476,19 @@
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
 	})
+"BV" = (
+/obj/decal/poster/wallsign/stencil/right/r{
+	pixel_x = 4
+	},
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 1;
+	icon_state = "leadjunction_gray"
+	},
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Deep Archives";
+	ambient_light = "#447f7f"
+	})
 "BX" = (
 /obj/machinery/light/small/floor/frostedred,
 /obj/machinery/door_control/oneshot/keyed/code{
@@ -13691,13 +14504,12 @@
 	name = "Wine Vault"
 	})
 "BY" = (
-/obj/fakeobject/airlock_broken/sealed{
-	name = "sealed door"
-	},
 /obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor/plating,
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "Ca" = (
 /turf/unsimulated/floor/carpet/office,
@@ -13751,10 +14563,20 @@
 	name = "Hogge & Wylde"
 	})
 "Cg" = (
+/obj/item/wall_trophy{
+	name = "\improper TURBOT LANDING";
+	pixel_y = 33
+	},
+/obj/item/pen/typewriter{
+	anchored = 1;
+	name = "NaNo 'Turbot Landing' experimental integrated typewriter pen";
+	pixel_y = 29;
+	rarity = 5
+	},
 /obj/stool/chair/couch/blue{
 	icon_state = "chair_couch_ew-blue"
 	},
-/turf/unsimulated/floor/carpet/green/fancy/edge/north,
+/turf/unsimulated/floor/carpet/green/fancy,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
@@ -13771,6 +14593,18 @@
 /turf/unsimulated/floor/plating/damaged2,
 /area/moon/underground{
 	ambient_light = "#441111"
+	})
+"Ci" = (
+/obj/landmark/transition{
+	dir = 1;
+	dest_tag = "lunaport_archivesR0";
+	tag = "lunaport_archivesR1"
+	},
+/obj/mapping_helper/turf/floor/darkener,
+/turf/unsimulated/floor/stairs/wood,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "Cj" = (
 /obj/railway/adaptive{
@@ -13941,11 +14775,13 @@
 	ambient_light = "#331111"
 	})
 "CB" = (
-/obj/railway/adaptive{
-	icon_state = "4-8"
+/obj/stool/bench/wooden,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
 	},
-/obj/decal/bloodtrace,
-/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -14005,6 +14841,21 @@
 	name = "Deep Archives";
 	ambient_light = "#447f7f"
 	})
+"CI" = (
+/obj/fakeobject/airlock_broken/bolted{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "secure_locked";
+	name = "Old Military Annex"
+	},
+/turf/simulated/wall/false_wall/centcom{
+	desc = "There seems to be a slight draft here. Huh.";
+	dir = 8;
+	icon_state = "leadwall_white";
+	interesting = "Electrical components are detected within this wall."
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "CJ" = (
 /obj/fakeobject/bigcabinets/monitors,
 /turf/unsimulated/floor/carpet/office/other,
@@ -14033,10 +14884,20 @@
 	ambient_light = "#441111"
 	})
 "CN" = (
-/obj/map/light/graveyard,
-/turf/unsimulated/floor/lunar/cavern,
-/area/moon/underground{
-	ambient_light = "#441111"
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/reagent_containers/food/snacks/cheesewheel,
+/obj/item/reagent_containers/food/snacks/cheesewheel{
+	pixel_y = 7
+	},
+/obj/machinery/light/small/frostedred{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/concrete,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
 	})
 "CO" = (
 /obj/table/podium_wood/syndicate,
@@ -14101,15 +14962,14 @@
 	ambient_light = "#223333"
 	})
 "CU" = (
-/obj/machinery/light/small/frostedred{
-	dir = 8;
-	pixel_x = -10;
-	pixel_y = 16
+/obj/disposalpipe/segment/transport,
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-46"
 	},
-/turf/unsimulated/floor/stairs/dark,
 /area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "CV" = (
 /obj/table/wood/round,
@@ -14135,20 +14995,10 @@
 	name = "Wine Cellar"
 	})
 "CX" = (
-/obj/item/wall_trophy{
-	name = "\improper GRAND DUTCHESS";
-	pixel_y = 33
-	},
-/obj/item/pen/fancy{
-	anchored = 1;
-	name = "NaNo 'Grand Duchess' Executive Pen";
-	pixel_y = 29;
-	rarity = 5
-	},
-/turf/unsimulated/floor/darkblue,
+/obj/fakeobject/tower,
+/turf/unsimulated/floor/lunar,
 /area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Nanotrasen Showrooms"
+	name = "Concourse D"
 	})
 "CY" = (
 /obj/decal/cleanable/dirt/dirt5{
@@ -14169,23 +15019,22 @@
 	ambient_light = "#223333"
 	})
 "Da" = (
-/obj/table/nanotrasen/auto,
-/obj/item/paper/blueprint{
-	anchored = 1;
-	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
-	name = "Canadice-class light transit shuttle"
+/obj/submachine/laundry_machine{
+	pixel_y = 25;
+	pixel_x = -1;
+	name = "Ships Services Laundry Machine"
 	},
-/obj/item/paper/blueprint{
-	anchored = 1;
-	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
-	name = "Conesus-class transit shuttle"
+/obj/fakeobject/robotpedestal{
+	pixel_y = 14;
+	density = 0;
+	plane = -102
 	},
-/obj/item/paper/blueprint{
+/obj/machinery/vendingframe{
+	pixel_y = 20;
 	anchored = 1;
-	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
-	name = "Cayuga-class space liner"
+	name = "Ships Services vending unit"
 	},
-/turf/unsimulated/floor/carpet/green/fancy/edge/north,
+/turf/unsimulated/floor/carpet/green/fancy,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
@@ -14263,6 +15112,13 @@
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
 	})
+"Di" = (
+/obj/disposalpipe/segment/ejection,
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "Dj" = (
 /obj/stool/chair/office,
 /obj/npc/trader/random,
@@ -14317,6 +15173,9 @@
 	name = "Seneca Falls Staffing Solutions"
 	})
 "Dp" = (
+/obj/disposalpipe/segment/transport{
+	dir = 1
+	},
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
 	icon_state = "interior-223"
 	},
@@ -14353,6 +15212,21 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"Dv" = (
+/obj/machinery/light/small/frostedred,
+/obj/railing{
+	color = "brown";
+	dir = 8;
+	plane = -99
+	},
+/turf/unsimulated/wall/setpieces/lunar{
+	dir = 10;
+	fullbright = 0;
+	icon_state = "lunar-c"
+	},
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
+	})
 "Dw" = (
 /obj/fakeobject/pipe/heat{
 	desc = "Steam pipes, very hot to the touch.";
@@ -14376,15 +15250,15 @@
 	name = "Blue Line platform"
 	})
 "Dy" = (
-/obj/machinery/door/airlock/pyro/weapons{
-	dir = 4;
-	name = "SPECTRE Showroom"
+/obj/stool/chair/black{
+	dir = 4
 	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/floor/shiny/white,
+/obj/decal/bloodtrace,
+/turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
 	icon_state = "red";
-	name = "SPECTRE Showroom"
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "Dz" = (
 /obj/decoration/ntcratesmall/envelopes,
@@ -14423,14 +15297,22 @@
 	name = "Wine Vault"
 	})
 "DD" = (
-/obj/disposalpipe/segment/ejection{
-	dir = 4
+/obj/fakeobject/plantpot,
+/obj/shrub{
+	icon = 'icons/obj/hydroponics/plants_crop.dmi';
+	icon_state = "TreeDogwood-G4";
+	last_use = 25949.4;
+	max_uses = 2;
+	pixel_x = 2;
+	pixel_y = 4;
+	spawn_chance = 32
 	},
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 1
+/turf/simulated/floor/marble/border_bw{
+	dir = 8
 	},
 /area/moon/underground/hemera{
-	name = "Concourse D"
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "DE" = (
 /obj/machinery/door/airlock/pyro/glass/reinforced{
@@ -14592,23 +15474,41 @@
 "DV" = (
 /obj/decal/cleanable/ash,
 /obj/item/cigbutt,
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
 	ambient_light = "#555533"
+	})
+"DW" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "DX" = (
 /obj/table/nanotrasen/auto,
 /obj/item/paper/blueprint{
 	anchored = 1;
 	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
-	name = "Keuka-class cargo freighter"
+	name = "Hemlock-class trading vessel"
 	},
 /obj/item/paper/blueprint{
 	anchored = 1;
 	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
-	name = "Hemlock-class trading vessel"
+	name = "Cayuga-class space liner"
+	},
+/obj/item/paper/blueprint{
+	anchored = 1;
+	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
+	name = "Conesus-class transit shuttle"
+	},
+/obj/item/paper/blueprint{
+	anchored = 1;
+	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
+	name = "Canadice-class light transit shuttle"
 	},
 /turf/unsimulated/floor/carpet/green/fancy,
 /area/moon/underground/hemera{
@@ -14627,8 +15527,18 @@
 	icon_state = "line-broken1"
 	},
 /obj/railing/purple/reinforced,
+/obj/decoration/bullethole{
+	pixel_x = 1;
+	icon_state = "bullethole-large";
+	pixel_y = -4
+	},
+/obj/decoration/frontwalldamage{
+	dir = 4;
+	pixel_y = 5
+	},
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 6
+	dir = 1;
+	icon_state = "leadjunction_white"
 	},
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -14681,8 +15591,8 @@
 	icon_state = "orange"
 	})
 "Eg" = (
-/obj/decoration/regallamp,
-/turf/unsimulated/floor/wood/eight,
+/obj/disposalpipe/segment/ejection,
+/turf/unsimulated/floor/carpet/purple/fancy,
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
@@ -14706,18 +15616,22 @@
 	})
 "Ej" = (
 /obj/reagent_dispensers/watertank/fountain,
-/turf/unsimulated/floor/carpet/green/fancy/innercorner/ne,
+/turf/unsimulated/floor/carpet/green/fancy/edge/east,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
 	})
 "Ek" = (
-/obj/mesh/catwalk/jen{
-	icon_state = "M3-2"
+/obj/machinery/light/small/broken,
+/obj/decal/cleanable/rust/jen,
+/obj/disposaloutlet/north{
+	throw_range = 2
 	},
-/turf/unsimulated/floor/lunar/cavern,
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "El" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -14744,6 +15658,7 @@
 /obj/railing/purple/reinforced{
 	dir = 1
 	},
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -14787,11 +15702,27 @@
 	})
 "Eu" = (
 /obj/surgery_tray,
+/obj/item/storage/firstaid/docbag{
+	pixel_y = 9
+	},
 /turf/unsimulated/floor/white/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Old Military Annex";
 	ambient_light = "#331111"
+	})
+"Ev" = (
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 4;
+	icon_state = "leadcap_white"
+	},
+/area/moon/monorail_station{
+	name = "Blue Line platform"
 	})
 "Ew" = (
 /obj/decal/cleanable/rust{
@@ -14880,9 +15811,10 @@
 	pixel_y = 21
 	},
 /obj/decal/cleanable/dirt/dirt2,
-/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
-/obj/item/clothing/suit/wintercoat/detective,
-/obj/item/clothing/shoes/detective,
+/obj/machinery/light/small/broken{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -14935,6 +15867,12 @@
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
+"EJ" = (
+/obj/disposalpipe/segment/transport,
+/turf/unsimulated/floor/stairs,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "EK" = (
 /obj/storage/crate,
 /turf/unsimulated/floor/minitiles,
@@ -14967,18 +15905,24 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"EN" = (
+/obj/table/wood/auto,
+/obj/machinery/computer/security/wooden_tv/public{
+	pixel_y = 8
+	},
+/obj/decal/stage_edge/alt,
+/obj/item/clothing/head/NTberet/commander{
+	pixel_y = 17
+	},
+/turf/unsimulated/floor/engine,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
+	})
 "EO" = (
-/obj/mesh/catwalk/jen{
-	icon_state = "C12-0"
-	},
-/obj/railing/purple,
-/obj/railing/purple{
-	dir = 1
-	},
-/obj/decal/cleanable/greenglow,
-/turf/unsimulated/floor/plating,
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/unsimulated/floor/concrete,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "EP" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -14998,10 +15942,19 @@
 	ambient_light = "#331111"
 	})
 "ER" = (
-/turf/unsimulated/floor/carpet/green/fancy/edge/north,
-/area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Nanotrasen Showrooms"
+/obj/mesh/catwalk/jen{
+	icon_state = "C4-0"
+	},
+/obj/railing/green,
+/obj/railing/green{
+	dir = 1
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "ES" = (
 /obj/decoration/bookcase{
@@ -15107,6 +16060,11 @@
 	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
 	name = "Otisco-class ore bulker"
 	},
+/obj/item/paper/blueprint{
+	anchored = 1;
+	desc = "A sales schematic and information sheet regarding one of Tradecraft Seneca's hull designs.";
+	name = "Keuka-class cargo freighter"
+	},
 /turf/unsimulated/floor/carpet/green/fancy,
 /area/moon/underground/hemera{
 	icon_state = "blue";
@@ -15163,6 +16121,17 @@
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
 	icon_state = "interior-157"
 	},
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
+	})
+"Fh" = (
+/obj/disposalpipe/trunk/south,
+/obj/machinery/disposal/transport{
+	name = "laundry unit"
+	},
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Old Military Annex";
@@ -15258,7 +16227,7 @@
 "Fr" = (
 /obj/table/nanotrasen/auto,
 /obj/item/stamp,
-/turf/unsimulated/floor/carpet/green/fancy,
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
@@ -15278,6 +16247,21 @@
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Wine Vault"
+	})
+"Fu" = (
+/obj/window/cubicle/railing{
+	dir = 2;
+	pixel_y = -1;
+	pixel_x = -3
+	},
+/obj/decal/cleanable/dirt/dirt2{
+	dir = 8
+	},
+/turf/unsimulated/floor/concrete,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "Fv" = (
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
@@ -15355,9 +16339,10 @@
 	ambient_light = "#447f7f"
 	})
 "FD" = (
-/obj/decal/cleanable/gangtag{
-	icon_state = "gangtag3";
-	pixel_y = 29
+/obj/item/scrap,
+/obj/decal/poster/wallsign/poster_clown{
+	pixel_y = 33;
+	pixel_x = 7
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
@@ -15545,6 +16530,19 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"FV" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "C12-0"
+	},
+/obj/railing/purple,
+/obj/railing/purple{
+	dir = 1
+	},
+/obj/item/parts/robot_parts/head/servotron,
+/turf/unsimulated/floor/plating,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "FX" = (
 /obj/table/regal/auto,
 /obj/item/boarvessel{
@@ -15644,11 +16642,15 @@
 	ambient_light = "#441111"
 	})
 "Gg" = (
-/turf/unsimulated/wall/auto/adventure/hospital/interior{
-	icon_state = "interior-110"
+/obj/decal/cleanable/rust/jen,
+/obj/storage/cart{
+	name = "laundry cart"
 	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "Gh" = (
 /obj/fakeobject/biggercabinets/gauges{
@@ -15741,8 +16743,14 @@
 	ambient_light = "#331111"
 	})
 "Gr" = (
-/obj/stool/chair/blue{
-	dir = 1
+/obj/fakeobject{
+	density = 1;
+	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Looks like this guy excels in pulling levers.";
+	icon = 'icons/misc/lunar.dmi';
+	icon_state = "oldbuddy";
+	name = "tramway yard master";
+	pixel_y = 14;
+	pixel_x = 6
 	},
 /turf/unsimulated/floor/wood/six,
 /area/moon/monorail_station{
@@ -15786,9 +16794,21 @@
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
+"Gy" = (
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/lunar/cavern,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "Gz" = (
-/obj/machinery/light/incandescent/small,
 /obj/decal/cleanable/rust,
+/obj/machinery/light/small/broken,
 /turf/unsimulated/floor/white/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -15938,6 +16958,9 @@
 	icon_state = "woodwall2$$wood"
 	},
 /obj/decal/poster/wallsign/biohazard,
+/obj/disposalpipe/segment/transport{
+	dir = 1
+	},
 /turf/unsimulated/wall{
 	desc = "It's sealed shut.";
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -16197,14 +17220,16 @@
 	ambient_light = "#441111"
 	})
 "Ho" = (
-/obj/stool/chair/couch/red{
-	dir = 9
+/obj/railway/adaptive{
+	icon_state = "4-8"
 	},
-/turf/unsimulated/floor/circuit/vintage,
-/area/moon/underground/hemera{
-	icon_state = "red";
-	name = "Hensbane Investigations";
-	ambient_light = "#555533"
+/obj/fakeobject/robot{
+	icon_state = "AtmosBot";
+	name = "Fire Response Cyborg"
+	},
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Hp" = (
 /obj/bookcase/directional/full{
@@ -16226,12 +17251,12 @@
 	icon_state = "orange"
 	})
 "Hs" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	icon_state = "leadjunction_white_4way"
-	},
-/area/moon/underground/hemera{
-	icon_state = "red";
-	name = "SPECTRE Showroom"
+/obj/stool/bench/wooden,
+/obj/mapping_helper/mob_spawn/corpse/human/soviet,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/lunar/cavern,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Ht" = (
 /obj/table/reinforced/auto,
@@ -16261,6 +17286,9 @@
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "secure_locked";
 	name = "Old Military Annex"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 2
 	},
 /turf/space,
 /area/moon/underground/hemera{
@@ -16388,6 +17416,17 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"HI" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M12-0"
+	},
+/obj/railing{
+	color = "brown"
+	},
+/turf/unsimulated/floor/lunar/cavern,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
+	})
 "HJ" = (
 /obj/decal/cleanable/dirt/dirt4{
 	dir = 1
@@ -16466,7 +17505,7 @@
 /obj/railing/purple/reinforced{
 	dir = 8
 	},
-/obj/decal/cleanable/greenglow,
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -16498,7 +17537,6 @@
 	name = "consultation office"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
-/obj/disposalpipe/segment/ejection,
 /obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/wood/six,
 /area/moon/underground/hemera{
@@ -16587,12 +17625,11 @@
 	ambient_light = "#331111"
 	})
 "If" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 10
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-38"
 	},
-/area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522"
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Ig" = (
 /obj/decal/tile_edge/line/orange{
@@ -16617,7 +17654,6 @@
 	})
 "Ij" = (
 /obj/table/scrap/auto,
-/obj/marker/supplymarker,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -16647,16 +17683,17 @@
 	name = "Concourse D"
 	})
 "Im" = (
-/obj/railway/adaptive{
-	icon_state = "4-8"
+/obj/decal/poster/wallsign/stencil/right/e{
+	pixel_x = 5
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 1;
+	icon_state = "leadjunction_gray"
 	},
-/obj/decal/bloodtrace,
-/turf/unsimulated/floor/industrial,
-/area/moon/underground{
-	ambient_light = "#441111"
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Deep Archives";
+	ambient_light = "#447f7f"
 	})
 "In" = (
 /obj/railway/adaptive{
@@ -16680,14 +17717,10 @@
 	name = "Blue Line platform"
 	})
 "Iq" = (
-/obj/decoration/frontwalldamage{
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/hospital/interior{
-	icon_state = "interior-55"
-	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/obj/item/raw_material/shard/glass,
+/turf/unsimulated/floor/wood/six,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
 	})
 "Ir" = (
 /obj/mesh/catwalk/jen{
@@ -16774,12 +17807,24 @@
 	name = "Concourse B"
 	})
 "IA" = (
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
+/obj/railway/adaptive{
+	icon_state = "4-8"
 	},
-/area/moon/underground/hemera{
-	icon_state = "red";
-	name = "SPECTRE Showroom"
+/obj/railway_vehicle/flatbed/container/crime,
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
+/obj/decoration/bullethole{
+	pixel_x = 1;
+	icon_state = "bullethole-large";
+	pixel_y = -4;
+	plane = -99
+	},
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "IC" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
@@ -16810,6 +17855,17 @@
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Concourse B"
+	})
+"IF" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "C12-0"
+	},
+/obj/effects/bad_smoke{
+	opacity = 0
+	},
+/turf/unsimulated/floor/plating,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "IG" = (
 /obj/rack/lunar{
@@ -17021,6 +18077,7 @@
 /obj/railing/green/reinforced{
 	dir = 1
 	},
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -17135,10 +18192,10 @@
 	dir = 8;
 	pixel_x = -3
 	},
-/turf/unsimulated/floor/stairs/quilty{
-	dir = 1;
+/obj/decal/stage_edge/alt{
 	color = "gray"
 	},
+/turf/unsimulated/floor/setpieces/pitchblack,
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Old Military Annex";
@@ -17374,13 +18431,37 @@
 	name = "Wine Vault"
 	})
 "JN" = (
-/obj/machinery/light/small/floor/warm,
+/obj/railing/orange{
+	dir = 1
+	},
 /obj/mesh/catwalk/jen{
 	icon_state = "C12-0"
 	},
+/obj/fakeobject/robot{
+	icon_state = "AtmosBot";
+	name = "Fire Response Cyborg"
+	},
+/obj/railing/orange,
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
+	})
+"JO" = (
+/obj/table/folding,
+/obj/item/decoration{
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	pixel_y = 6;
+	desc = "What the hell is this? Looks dangerous as all hell.";
+	interesting = "A user guide for an experimental military railgun. Looks like someone misfired it.";
+	pixel_x = -3;
+	name = "RHAEBUS-pattern accelerated mass lancer"
+	},
+/turf/unsimulated/grimycarpet,
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "JP" = (
 /obj/table/reinforced/industrial/auto,
@@ -17443,17 +18524,35 @@
 /area/moon/underground/hemera{
 	name = "Concourse D"
 	})
-"JX" = (
-/obj/item/gun/kinetic/silenced_22{
-	pixel_y = 27
+"JW" = (
+/obj/railing{
+	color = "brown";
+	dir = 4
 	},
-/obj/rack{
-	pixel_y = 31
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 9;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
 	},
-/turf/unsimulated/floor/shiny/white,
 /area/moon/underground/hemera{
-	icon_state = "red";
-	name = "SPECTRE Showroom"
+	name = "Wine Cellar"
+	})
+"JX" = (
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
+	},
+/obj/decoration/frontwalldamage{
+	dir = 4;
+	pixel_y = 5
+	},
+/turf/unsimulated/wall/setpieces/leadwindow/white{
+	dir = 4
+	},
+/area/moon/monorail_station{
+	name = "Blue Line platform"
 	})
 "JY" = (
 /obj/machinery/light/small/purpleish,
@@ -17497,14 +18596,20 @@
 	ambient_light = "#441111"
 	})
 "Kc" = (
-/obj/fakeobject/pipe/heat{
-	desc = "Steam pipes, very hot to the touch.";
-	dir = 1;
-	plane = -98
+/obj/decal/cleanable/cobweb2{
+	pixel_x = 10;
+	pixel_y = 21
 	},
-/turf/unsimulated/wall/auto/adventure/hospital/interior{
-	icon_state = "interior-191"
+/obj/decal/cleanable/rust/jen,
+/obj/fakeobject/Laundry/open{
+	pixel_y = 19;
+	pixel_x = 7
 	},
+/obj/fakeobject/Laundry/open{
+	pixel_y = 19;
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Old Military Annex";
@@ -17522,7 +18627,11 @@
 /obj/decal/cleanable/dirt/dirt4{
 	dir = 4
 	},
-/obj/decal/cleanable/wood_debris,
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
 /turf/unsimulated/floor/black/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -17530,12 +18639,17 @@
 	ambient_light = "#331111"
 	})
 "Kf" = (
-/obj/decal/bloodtrace,
-/turf/unsimulated/floor/stairs{
-	dir = 1
+/obj/decal/cleanable/rust/jen,
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Military barracks";
+	icon_state = "old_open";
+	desc = "The airlock is jammed open."
 	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "Kg" = (
 /turf/unsimulated/floor/purpleblack/corner{
@@ -17594,6 +18708,15 @@
 /obj/table/wood/round/auto,
 /obj/item/dice/coin/poker_chip/v100,
 /turf/unsimulated/floor/wood/five,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
+"Km" = (
+/obj/railway/adaptive{
+	icon_state = "4-8"
+	},
+/obj/machinery/bot/firebot,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -17660,11 +18783,14 @@
 	ambient_light = "#441111"
 	})
 "Ku" = (
-/turf/unsimulated/wall/auto/adventure/hospital/interior{
-	icon_state = "interior-239"
+/obj/map/light/yellow,
+/obj/table/reinforced/bar/auto{
+	name = "table"
 	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/simulated/floor/marble/black,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "Kv" = (
 /obj/ladder{
@@ -17677,14 +18803,15 @@
 	ambient_light = "#441111"
 	})
 "Kw" = (
-/obj/decal/cleanable/fungus,
-/obj/table/auto/desk,
-/obj/random_item_spawner/desk_stuff/lots,
-/turf/unsimulated/floor/carpet/grime,
+/obj/decal/stage_edge/alt,
+/obj/table/monodesk/auto,
+/obj/machinery/light/lamp/black{
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/shiny/white,
 /area/moon/underground/hemera{
-	icon_state = "green";
-	name = "Old Military Annex";
-	ambient_light = "#331111"
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "Kx" = (
 /turf/unsimulated/floor/stairs/wood/wide,
@@ -17693,14 +18820,14 @@
 	name = "Hogge & Wylde"
 	})
 "Kz" = (
-/obj/stool/chair/couch/red{
-	dir = 5
+/obj/map/light/yellow,
+/obj/stool/chair/office/syndie{
+	dir = 8
 	},
-/turf/unsimulated/floor/circuit/vintage,
+/turf/simulated/floor/marble/black,
 /area/moon/underground/hemera{
-	icon_state = "red";
-	name = "Hensbane Investigations";
-	ambient_light = "#555533"
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "KA" = (
 /turf/unsimulated/floor/carpet/purple,
@@ -17758,6 +18885,22 @@
 	icon_state = "red";
 	name = "SPECTRE Showroom"
 	})
+"KH" = (
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 4
+	},
+/obj/landmark/transition{
+	dir = 8;
+	tag = "lunaport_cellar1";
+	dest_tag = "lunaport_cellar0"
+	},
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/moon/underground/hemera{
+	icon_state = "blue";
+	name = "Hogge & Wylde Archives"
+	})
 "KI" = (
 /obj/marker/supplymarker,
 /obj/table/auto,
@@ -17774,6 +18917,14 @@
 	icon_state = "green";
 	name = "Old Military Annex";
 	ambient_light = "#331111"
+	})
+"KK" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/wall/setpieces/lunar,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "KL" = (
 /turf/unsimulated/floor/grey/blackgrime,
@@ -17899,13 +19050,17 @@
 	ambient_light = "#331111"
 	})
 "KZ" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 4;
-	icon_state = "leadcap_white"
+/obj/decal/tile_edge/line/orange{
+	dir = 1;
+	icon_state = "line-broken1"
 	},
-/area/moon/underground/hemera{
-	icon_state = "red";
-	name = "SPECTRE Showroom"
+/obj/fakeobject/robot{
+	icon_state = "AtmosBot";
+	name = "Fire Response Cyborg"
+	},
+/turf/unsimulated/floor/concrete,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "La" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -17917,11 +19072,10 @@
 	name = "Hogge & Wylde"
 	})
 "Lc" = (
-/obj/disposalpipe/segment/bent/west,
-/turf/unsimulated/floor/wood/six,
-/area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+/obj/fakeobject/bigatmos/bigatmos3,
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Ld" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -17949,6 +19103,10 @@
 	dir = 4;
 	pixel_y = 4;
 	pixel_x = -10
+	},
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
@@ -18002,6 +19160,9 @@
 /obj/railing/green{
 	dir = 1
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -18032,6 +19193,7 @@
 	})
 "Lp" = (
 /obj/table/wood/auto/desk,
+/obj/item/cigarbox,
 /turf/unsimulated/floor/wood/five,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -18058,11 +19220,17 @@
 /obj/railing/green{
 	dir = 1
 	},
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
 "Ls" = (
+/obj/railing{
+	color = "brown";
+	dir = 8;
+	plane = -99
+	},
 /turf/unsimulated/wall/setpieces/lunar{
 	dir = 6;
 	fullbright = 0;
@@ -18128,7 +19296,7 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -18177,6 +19345,17 @@
 	icon_state = "purple";
 	name = "Hogge & Wylde"
 	})
+"LE" = (
+/obj/stool/chair/office/syndie{
+	desc = "Is that real leather?";
+	dir = 1;
+	name = "very expensive chair"
+	},
+/turf/simulated/floor/marble/black,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "LF" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -18188,6 +19367,7 @@
 /obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 9
 	},
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -18322,10 +19502,6 @@
 	name = "Blue Line platform"
 	})
 "LR" = (
-/obj/fakeobject/robot/servotron/older{
-	desc = "An old Kingsway lifter-loader model. It's offline right now.";
-	name = "railway stevedore unit"
-	},
 /obj/decal/tile_edge/stripe/big,
 /turf/unsimulated/floor/concrete,
 /area/moon/underground{
@@ -18367,6 +19543,17 @@
 	icon_state = "green";
 	name = "Old Military Annex";
 	ambient_light = "#331111"
+	})
+"LV" = (
+/obj/railway/adaptive{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/machine_debris{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "LW" = (
 /turf/unsimulated/floor/stairs/dark,
@@ -18420,20 +19607,14 @@
 	ambient_light = "#441111"
 	})
 "Mb" = (
-/obj/item/wall_trophy{
-	name = "\improper TURBOT LANDING";
-	pixel_y = 33
+/obj/disposalpipe/segment/bent/north,
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-127"
 	},
-/obj/item/pen/typewriter{
-	anchored = 1;
-	name = "NaNo 'Turbot Landing' experimental integrated typewriter pen";
-	pixel_y = 29;
-	rarity = 5
-	},
-/turf/unsimulated/floor/darkblue,
 /area/moon/underground/hemera{
-	icon_state = "blue";
-	name = "Nanotrasen Showrooms"
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "Mc" = (
 /obj/machinery/door/poddoor/buff{
@@ -18577,6 +19758,17 @@
 /area/moon/underground/hemera{
 	name = "Concourse D"
 	})
+"Mt" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 1;
+	icon_state = "leadcap_white"
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "Mu" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	name = "Aurora Lithographics"
@@ -18621,6 +19813,22 @@
 /area/moon/underground/hemera{
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
+	})
+"My" = (
+/obj/mapping_helper/turf/floor/darkener,
+/obj/landmark/transition{
+	dest_tag = "lunaport_lodge0";
+	tag = "lunaport_lodge1";
+	dir = 1
+	},
+/turf/unsimulated/floor/stairs/quilty{
+	dir = 1;
+	color = "gray"
+	},
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "Mz" = (
 /obj/mesh/catwalk,
@@ -18697,7 +19905,6 @@
 	icon_state = "line-broken1"
 	},
 /obj/decal/cleanable/dirt/dirt2,
-/obj/effect_sparker,
 /turf/unsimulated/floor/concrete,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -18756,20 +19963,16 @@
 	ambient_light = "#441111"
 	})
 "MT" = (
-/obj/railway/adaptive{
-	icon_state = "4-8"
+/obj/disposalpipe/segment/transport{
+	dir = 1
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-203"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/decal/cleanable/greenglow,
-/obj/decal/bloodtrace,
-/turf/unsimulated/floor/industrial,
-/area/moon/underground{
-	ambient_light = "#441111"
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "MU" = (
 /obj/decoration/bookcase{
@@ -18844,7 +20047,10 @@
 	pixel_y = 31
 	},
 /obj/item/gun/kinetic/silenced_22{
-	pixel_y = 27
+	pixel_y = 29
+	},
+/obj/item/gun/kinetic/silenced_22{
+	pixel_y = 23
 	},
 /turf/unsimulated/floor/shiny/white,
 /area/moon/underground/hemera{
@@ -19014,18 +20220,10 @@
 	name = "Wine Vault"
 	})
 "Nw" = (
-/obj/landmark/transition{
-	dest_tag = "lunaport_lodge0";
-	tag = "lunaport_lodge1";
-	dir = 4
+/obj/ladder{
+	id = "lunar_deepvents3"
 	},
-/obj/mapping_helper/turf/floor/darkener{
-	dir = 8
-	},
-/turf/unsimulated/floor/stairs/quilty{
-	dir = 5;
-	color = "gray"
-	},
+/turf/unsimulated/floor/plating/damaged2,
 /area/moon/underground/hemera{
 	name = "Air Handling";
 	ambient_light = "#555522";
@@ -19060,6 +20258,14 @@
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Concourse B"
+	})
+"NC" = (
+/obj/disposalpipe/segment/transport,
+/turf/unsimulated/floor/wood/five,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "ND" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -19107,6 +20313,7 @@
 /obj/decal/cleanable/rust/jen{
 	icon_state = "wood"
 	},
+/obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/white/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -19114,9 +20321,9 @@
 	ambient_light = "#331111"
 	})
 "NI" = (
-/obj/stool/chair/blue{
-	dir = 4
-	},
+/obj/item/raw_material/shard/glass,
+/obj/decal/cleanable/robot_debris/limb,
+/obj/decal/cleanable/robot_debris/gib,
 /turf/unsimulated/floor/wood/six,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
@@ -19130,11 +20337,13 @@
 	name = "Seneca Falls Staffing Solutions"
 	})
 "NK" = (
-/obj/table/reinforced/auto,
-/obj/table/reinforced/auto,
-/obj/item/syndicate_barrier,
-/obj/item/baton/classic,
-/obj/item/clothing/head/helmet/bobby,
+/obj/item/furniture_parts/table/reinforced,
+/obj/item/scrap,
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
 /turf/unsimulated/floor/wood/six,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
@@ -19199,27 +20408,33 @@
 	name = "Hogge & Wylde"
 	})
 "NT" = (
-/obj/machinery/light/small/cool,
-/turf/unsimulated/floor/stairs/quilty{
-	dir = 5;
-	color = "gray"
+/obj/fakeobject/airlock_broken/bolted{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "secure_locked";
+	name = "Old Military Annex"
 	},
-/area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522";
-	icon_state = "orange"
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-12"
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "NU" = (
-/obj/decoration/bookcase{
-	pixel_y = 16
+/obj/disposalpipe/segment/transport{
+	dir = 1
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/six,
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+	name = "Air Handling";
+	ambient_light = "#555522"
+	})
+"NV" = (
+/obj/decoration/frontwalldamage{
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "NX" = (
 /turf/simulated/floor/stairs/dark,
@@ -19246,7 +20461,6 @@
 	name = "deep maint"
 	},
 /obj/sec_tape,
-/obj/mapping_helper/airlock/bolter,
 /obj/mapping_helper/airlock/welder,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground{
@@ -19305,7 +20519,7 @@
 /obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 9
 	},
-/obj/decal/cleanable/greenglow,
+/obj/decal/stage_edge/alt,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -19323,6 +20537,7 @@
 /obj/item/wall_trophy{
 	pixel_y = 33
 	},
+/obj/disposalpipe/segment/ejection,
 /turf/unsimulated/floor/carpet/purple/fancy,
 /area/moon/underground/hemera{
 	icon_state = "purple";
@@ -19383,12 +20598,9 @@
 	ambient_light = "#441111"
 	})
 "Oo" = (
-/turf/unsimulated/floor/lunar/cavern{
-	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
-	dir = 1;
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "lunar-s"
-	},
+/obj/item/scrap,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -19471,14 +20683,38 @@
 	name = "Hensbane Investigations";
 	ambient_light = "#555533"
 	})
-"OC" = (
-/obj/fakeobject/airlock_broken/sealed{
-	name = "sealed door"
+"OA" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/kitchen/utensil/spoon,
+/obj/item/ladle{
+	pixel_y = 1
 	},
-/obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor/minitiles/black,
+/obj/item/kitchen/utensil/spoon,
+/obj/item/kitchen/utensil/spoon,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 9;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
 /area/moon/underground{
 	ambient_light = "#441111"
+	})
+"OB" = (
+/obj/disposalpipe/segment/transport,
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-55"
+	},
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
+	})
+"OC" = (
+/turf/unsimulated/wall/setpieces/lunar,
+/area/moon/underground/hemera{
+	icon_state = "blue";
+	name = "Nanotrasen Showrooms"
 	})
 "OD" = (
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
@@ -19695,14 +20931,8 @@
 	name = "Hogge & Wylde"
 	})
 "OW" = (
-/obj/disposaloutlet/east{
-	pixel_x = -8
-	},
-/obj/disposalpipe/trunk/ejection{
-	dir = 8
-	},
 /obj/mesh/catwalk/jen{
-	icon_state = "M4-0"
+	icon_state = "M5-0"
 	},
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
@@ -19767,9 +20997,14 @@
 	ambient_light = "#441111"
 	})
 "Pc" = (
-/turf/unsimulated/floor/shiny,
-/area/moon/underground/hemera{
-	name = "Concourse D"
+/obj/fakeobject/pipe/heat{
+	desc = "Steam pipes, very hot to the touch.";
+	dir = 10;
+	plane = -98
+	},
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Pd" = (
 /turf/unsimulated/wall/setpieces/bunker_grille,
@@ -19788,16 +21023,28 @@
 	name = "Concourse D"
 	})
 "Pg" = (
-/obj/railway/adaptive{
-	icon_state = "4-8"
+/obj/map/light/cyan,
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
 	},
-/obj/decal/cleanable/greenglow,
-/obj/decal/cleanable/greenglow,
-/turf/unsimulated/floor/industrial,
-/area/moon/underground{
-	ambient_light = "#441111"
+/obj/decoration/frontwalldamage{
+	dir = 4;
+	pixel_y = 5
+	},
+/turf/unsimulated/wall/setpieces/leadwindow/white{
+	dir = 4
+	},
+/area/moon/monorail_station{
+	name = "Blue Line platform"
 	})
 "Ph" = (
+/obj/railing{
+	color = "brown";
+	dir = 8;
+	plane = -99
+	},
 /turf/unsimulated/wall/setpieces/lunar{
 	density = 0;
 	dir = 10;
@@ -19811,7 +21058,7 @@
 /obj/decal/poster/wallsign/poster_cool{
 	pixel_y = 31
 	},
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -19822,6 +21069,7 @@
 /obj/mesh/catwalk/jen{
 	icon_state = "C13-0"
 	},
+/obj/disposalpipe/segment/bent/east,
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -19848,7 +21096,22 @@
 	pixel_x = -19
 	},
 /obj/decal/cleanable/dirt/dirt4,
+/obj/disposalpipe/segment/transport{
+	dir = 2
+	},
 /turf/unsimulated/floor/concrete,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
+	})
+"Pm" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-239"
+	},
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Old Military Annex";
@@ -19946,6 +21209,18 @@
 	icon_state = "green";
 	name = "Concourse B"
 	})
+"Pv" = (
+/obj/decal/poster/wallsign/stencil/right{
+	pixel_x = 6
+	},
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 10
+	},
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "Deep Archives";
+	ambient_light = "#447f7f"
+	})
 "Pw" = (
 /mob/living/critter/aquatic/fish/clown,
 /turf/unsimulated/floor/sand{
@@ -19996,7 +21271,9 @@
 	})
 "PB" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/item/baton/classic,
+/obj/item/syndicate_barrier,
+/obj/item/clothing/head/helmet/bobby,
 /turf/unsimulated/floor/wood/six,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
@@ -20033,7 +21310,7 @@
 	})
 "PF" = (
 /obj/machinery/vending/cigarette,
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/wood/five,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "Hensbane Investigations";
@@ -20059,10 +21336,13 @@
 	name = "Concourse D"
 	})
 "PI" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar,
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/turf/unsimulated/floor/carpet/purple/fancy/narrow/T_west,
 /area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522"
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "PJ" = (
 /obj/decal/tile_edge/line/black{
@@ -20140,10 +21420,6 @@
 	name = "Blue Line platform"
 	})
 "PR" = (
-/obj/machinery/light/small/frostedred{
-	dir = 4;
-	pixel_x = 12
-	},
 /turf/unsimulated/floor/stairs/quilty{
 	dir = 1;
 	color = "gray"
@@ -20169,14 +21445,12 @@
 	name = "Hogge & Wylde"
 	})
 "PU" = (
-/obj/fakeobject/moonrock{
-	pixel_y = 10;
-	dir = 1;
-	density = 0
-	},
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag20";
 	pixel_y = 24
+	},
+/obj/reagent_dispensers/chemicalbarrel/yellow{
+	name = "soup of the day"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
@@ -20200,9 +21474,6 @@
 	pixel_y = 16
 	},
 /obj/mapping_helper/access/syndie_shuttle,
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
 /turf/unsimulated/floor/carpet/office/other,
 /area/moon/underground/hemera{
 	icon_state = "purple";
@@ -20304,7 +21575,17 @@
 	name = "Blue Line platform"
 	})
 "Qi" = (
-/turf/unsimulated/floor/carpet/green/fancy/edge/nw,
+/obj/fakeobject/robotpedestal{
+	pixel_y = 14;
+	density = 0;
+	plane = -102
+	},
+/obj/submachine/laundry_machine{
+	pixel_y = 25;
+	pixel_x = -1;
+	name = "Ships Services Laundry Machine"
+	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/west,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
@@ -20318,7 +21599,12 @@
 	pixel_y = 10;
 	dir = 4
 	},
-/turf/unsimulated/floor/lunar/cavern,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -20377,6 +21663,9 @@
 	icon_state = "sec_glass_locked";
 	name = "Old Barracks";
 	dir = 8
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
 /turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
@@ -20556,15 +21845,19 @@
 	ambient_light = "#441111"
 	})
 "QL" = (
-/obj/decoration/bullethole{
-	pixel_y = -2;
-	pixel_x = -9;
-	icon_state = "bullethole-large"
+/obj/decal/tile_edge/line/orange{
+	dir = 1;
+	icon_state = "line-broken1"
 	},
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	icon_state = "leadjunction_white";
-	desc = "It's been punctured by a large and powerful bullet. You can see right through the hole.";
-	opacity = 0
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 5;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
 	},
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -20579,6 +21872,22 @@
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
+	})
+"QN" = (
+/obj/railing{
+	color = "brown"
+	},
+/obj/mesh/catwalk/jen{
+	icon_state = "M5-0"
+	},
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 9;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
 	})
 "QO" = (
 /obj/machinery/light/small/frostedred{
@@ -20722,6 +22031,13 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"Rc" = (
+/obj/cabinet/ammo,
+/turf/unsimulated/floor/shiny/white,
+/area/moon/underground/hemera{
+	icon_state = "purple";
+	name = "Hogge & Wylde"
+	})
 "Rd" = (
 /turf/unsimulated/floor/blue/corner{
 	dir = 1
@@ -20767,7 +22083,9 @@
 	},
 /turf/unsimulated/floor/shiny,
 /area/moon/underground/hemera{
-	name = "Concourse D"
+	icon_state = "red";
+	name = "Deep Archives";
+	ambient_light = "#447f7f"
 	})
 "Ri" = (
 /obj/railing/cyan,
@@ -20896,10 +22214,7 @@
 /obj/decoration/vent/vent2{
 	pixel_y = -3
 	},
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 4;
-	icon_state = "leadcap_white"
-	},
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -20921,22 +22236,9 @@
 "RC" = (
 /obj/fakeobject/bigatmos{
 	density = 0;
-	pixel_y = -1
+	pixel_y = -1;
+	plane = -99
 	},
-/obj/effects/welding/directed{
-	pixel_y = 2;
-	pixel_x = -3;
-	plane = PLANE_ABOVE_LIGHTING
-	},
-/obj/effect_sparker{
-	pixel_y = 15
-	},
-/obj/decoration/bullethole{
-	pixel_y = 3;
-	pixel_x = 2;
-	icon_state = "bullethole-large"
-	},
-/obj/map/light/dimred,
 /turf/unsimulated/floor/plating,
 /area/moon/underground/hemera{
 	name = "Air Handling";
@@ -21122,6 +22424,7 @@
 	dir = 8;
 	pixel_x = -6
 	},
+/obj/disposalpipe/segment/transport,
 /turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -21136,6 +22439,10 @@
 "RV" = (
 /obj/stool/chair/dining/scrap{
 	dir = 4
+	},
+/obj/npc/trader/exclown{
+	pixel_y = -1;
+	name = "Doctor Hijinks"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
@@ -21229,6 +22536,33 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"Sg" = (
+/obj/railway/adaptive{
+	icon_state = "4-8"
+	},
+/obj/decoration/bullethole{
+	pixel_x = -4;
+	icon_state = "bullethole-large";
+	plane = -99
+	},
+/obj/effects/welding/directed{
+	pixel_y = 5;
+	pixel_x = -4;
+	plane = PLANE_ABOVE_LIGHTING
+	},
+/obj/burning_barrel{
+	pixel_y = -1;
+	alpha = 0;
+	mouse_opacity = 0
+	},
+/obj/sec_tape{
+	pixel_y = -12
+	},
+/obj/map/light/lava,
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "Sh" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -21301,10 +22635,6 @@
 /obj/stool/chair/dining/scrap{
 	dir = 8
 	},
-/obj/npc/trader/exclown{
-	pixel_y = -1;
-	name = "Doctor Hijinks"
-	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -21356,7 +22686,11 @@
 	name = "Concourse B"
 	})
 "Sw" = (
-/obj/decal/cleanable/fungus,
+/obj/decal/cleanable/fungus{
+	dir = 8;
+	pixel_y = -1
+	},
+/obj/decal/cleanable/water,
 /obj/decoration/damagedchair{
 	pixel_y = 8;
 	pixel_x = 5
@@ -21402,6 +22736,11 @@
 	name = "Concourse B"
 	})
 "SA" = (
+/obj/railing{
+	color = "brown";
+	dir = 4;
+	plane = -99
+	},
 /turf/unsimulated/wall/setpieces/lunar{
 	dir = 9;
 	fullbright = 0;
@@ -21666,6 +23005,16 @@
 	name = "Old Military Annex";
 	ambient_light = "#331111"
 	})
+"Ta" = (
+/obj/decoration/vent{
+	pixel_y = 28;
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/circuit/off,
+/area/moon/underground/hemera{
+	icon_state = "blue";
+	name = "Hogge & Wylde Archives"
+	})
 "Tb" = (
 /obj/decoration/toiletholder{
 	pixel_y = 32
@@ -21676,11 +23025,12 @@
 	name = "Wine Vault"
 	})
 "Tc" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 1
-	},
-/area/moon/underground/hemera{
-	name = "Concourse D"
+/obj/decal/cleanable/oil/streak,
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/lunar/cavern,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Td" = (
 /obj/decoration/frontwalldamage{
@@ -21702,7 +23052,7 @@
 	pixel_x = 17
 	},
 /obj/item/swords/fragile_sword{
-	pixel_y = 16;
+	pixel_y = 15;
 	pixel_x = 1
 	},
 /obj/railing/guard{
@@ -21752,6 +23102,11 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
+	})
+"Tl" = (
+/turf/unsimulated/floor/industrial,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Tm" = (
 /obj/decal/tile_edge/line/green{
@@ -21835,6 +23190,16 @@
 /turf/unsimulated/wall/setpieces/leadwall/gray,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
+	})
+"Tw" = (
+/obj/table/glass/reinforced/auto,
+/obj/machinery/light/lamp/black{
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/shiny/white,
+/area/moon/underground/hemera{
+	icon_state = "red";
+	name = "SPECTRE Showroom"
 	})
 "Tx" = (
 /obj/item/device/light/candle/small{
@@ -22037,7 +23402,7 @@
 	pixel_x = 10;
 	pixel_y = 21
 	},
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -22085,7 +23450,7 @@
 	},
 /obj/item/dice/d8,
 /obj/item/diceholder/dicecup,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -22220,6 +23585,12 @@
 	name = "Von Burg Robotics";
 	ambient_light = "#223333"
 	})
+"Un" = (
+/obj/item/scrap,
+/turf/unsimulated/floor/lunar/cavern,
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "Up" = (
 /turf/unsimulated/wall/setpieces/bunker_grille{
 	dir = 4
@@ -22253,9 +23624,15 @@
 	ambient_light = "#447f7f"
 	})
 "Ur" = (
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
+/obj/decal/cleanable/dirt,
 /obj/decal/cleanable/gangtag{
-	icon_state = "gangtag4";
-	pixel_y = 27
+	icon_state = "gangtag3";
+	pixel_y = 29
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground{
@@ -22266,6 +23643,10 @@
 	pixel_x = 10;
 	pixel_y = 21
 	},
+/obj/storage/crate/medical/morgue{
+	pixel_y = 18;
+	anchored = 1
+	},
 /turf/unsimulated/floor/white/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -22273,11 +23654,9 @@
 	ambient_light = "#331111"
 	})
 "Ut" = (
-/obj/machinery/door/airlock/pyro/weapons{
-	name = "SPECTRE Showroom"
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
+	dir = 10
 	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	icon_state = "red";
 	name = "SPECTRE Showroom"
@@ -22291,12 +23670,20 @@
 	ambient_light = "#331111"
 	})
 "Uv" = (
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	dir = 6
+/obj/neon_lining{
+	dir = 1
 	},
+/obj/item/casing/cannon{
+	pixel_y = 1
+	},
+/obj/decal/cleanable/dirt/jen{
+	name = "powder residue"
+	},
+/turf/unsimulated/grimycarpet,
 /area/moon/underground/hemera{
-	name = "Air Handling";
-	ambient_light = "#555522"
+	icon_state = "red";
+	name = "Hensbane Investigations";
+	ambient_light = "#555533"
 	})
 "Uw" = (
 /obj/item/raw_material/scrap_metal,
@@ -22335,7 +23722,7 @@
 	})
 "UB" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/turf/unsimulated/floor/carpet/green/fancy/edge/west,
+/turf/unsimulated/floor/carpet/green/fancy/edge/nw,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
@@ -22433,6 +23820,15 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"UK" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 1;
+	name = "cargo platform"
+	},
+/turf/unsimulated/floor/plating,
+/area/moon/monorail_station{
+	name = "Blue Line platform"
+	})
 "UL" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar,
 /area/moon/underground/hemera{
@@ -22454,10 +23850,6 @@
 /obj/decal/cleanable/cobweb{
 	pixel_x = -10;
 	pixel_y = 20
-	},
-/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
-/obj/item/clothing/suit/lunar_tshirt{
-	pixel_y = 2
 	},
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground/hemera{
@@ -22489,7 +23881,7 @@
 	pixel_y = 21
 	},
 /obj/fakeobject/tallsmes,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -22562,13 +23954,10 @@
 	name = "Concourse D"
 	})
 "Vc" = (
-/obj/fakeobject/airlock_broken/bolted{
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "glass_locked";
-	name = "Highway One access tunnel";
-	dir = 8
+/turf/unsimulated/wall/setpieces/lunar{
+	fullbright = 0;
+	icon_state = "lunar-s"
 	},
-/turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
@@ -22811,6 +24200,9 @@
 /obj/mesh/catwalk/jen{
 	icon_state = "C4-0"
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -22862,14 +24254,15 @@
 	ambient_light = "#441111"
 	})
 "VH" = (
-/obj/machinery/door/airlock/pyro/weapons{
-	name = "Wine Cellar"
+/obj/machinery/light/small/frostedred{
+	dir = 4;
+	pixel_x = 10;
+	pixel_y = 16
 	},
-/obj/mapping_helper/access/syndie_shuttle,
-/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
-	name = "Wine Cellar"
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "VI" = (
 /obj/table/nanotrasen/auto,
@@ -22877,6 +24270,18 @@
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
+	})
+"VJ" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/adventure/hospital/interior{
+	icon_state = "interior-127"
+	},
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "VK" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -22931,7 +24336,7 @@
 	icon_state = "floor4";
 	name = "dried blood"
 	},
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -22958,9 +24363,9 @@
 /obj/machinery/camera/auto/alt{
 	dir = 1
 	},
-/obj/decal/cleanable/greenglow,
 /obj/railway_vehicle/flatbed/container/nuclear{
-	name = "RTG fuel"
+	name = "RTG fuel";
+	active = 0
 	},
 /turf/unsimulated/floor/industrial,
 /area/moon/underground{
@@ -23067,8 +24472,19 @@
 	})
 "Wi" = (
 /obj/table/reinforced/auto,
-/obj/table/reinforced/auto,
 /obj/item/gang_loot,
+/obj/item/clothing/suit/armor/tacticalvest/light,
+/obj/item/clothing/suit/armor/tacticalvest/light,
+/obj/item/clothing/suit/armor/tacticalvest/light,
+/obj/item/clothing/head/goggles/purple{
+	name = "purple tactical goggles"
+	},
+/obj/item/clothing/head/goggles/purple{
+	name = "purple tactical goggles"
+	},
+/obj/item/clothing/head/goggles/purple{
+	name = "purple tactical goggles"
+	},
 /turf/unsimulated/floor/circuit/vintage,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -23089,15 +24505,20 @@
 	name = "Concourse B"
 	})
 "Wl" = (
-/obj/machinery/light/small/frostedred{
-	dir = 4;
-	pixel_x = 10;
-	pixel_y = 16
+/obj/item/wall_trophy{
+	name = "\improper GRAND DUTCHESS";
+	pixel_y = 33
 	},
-/turf/unsimulated/floor/minitiles/white,
+/obj/item/pen/fancy{
+	anchored = 1;
+	name = "NaNo 'Grand Duchess' Executive Pen";
+	pixel_y = 29;
+	rarity = 5
+	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/east,
 /area/moon/underground/hemera{
-	icon_state = "purple";
-	name = "Hogge & Wylde"
+	icon_state = "blue";
+	name = "Nanotrasen Showrooms"
 	})
 "Wn" = (
 /turf/unsimulated/wall/auto/adventure/hospital/interior{
@@ -23333,6 +24754,20 @@
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
+"WN" = (
+/obj/item/storage/toilet{
+	pixel_y = 3
+	},
+/obj/decoration/toiletholder{
+	dir = 8;
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor/engine,
+/area/moon/underground/hemera{
+	name = "Wine Cellar"
+	})
 "WO" = (
 /turf/unsimulated/floor/concrete,
 /area/moon/underground/hemera{
@@ -23348,18 +24783,12 @@
 	name = "Blue Line platform"
 	})
 "WQ" = (
-/obj/mesh/catwalk/jen{
-	icon_state = "C12-0"
-	},
-/obj/railing/purple,
-/obj/railing/purple{
-	dir = 1
-	},
-/obj/decal/cleanable/greenglow,
-/obj/decal/cleanable/greenglow,
-/turf/unsimulated/floor/plating,
-/area/moon/underground{
-	ambient_light = "#441111"
+/obj/submachine/laundry_machine,
+/turf/unsimulated/floor/minitiles/black,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "WR" = (
 /turf/unsimulated/floor/grey/blackgrime,
@@ -23522,15 +24951,11 @@
 	ambient_light = "#331111"
 	})
 "Xh" = (
-/obj/machinery/door/unpowered/wood{
-	autoclose = 0;
-	dir = 4
-	},
-/turf/simulated/floor/stairs/wood{
-	dir = 4
-	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/turf/unsimulated/wall/auto/adventure/old/reinforced,
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "Xi" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
@@ -23596,7 +25021,12 @@
 /obj/table/scrap/auto,
 /obj/item/clothing/under/gimmick/trashsinglet/biohazard,
 /obj/item/clothing/head/helmet/space/fishbowl,
-/turf/unsimulated/floor/lunar/cavern,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -23607,6 +25037,17 @@
 /area/moon/underground/hemera{
 	icon_state = "purple";
 	name = "Hogge & Wylde"
+	})
+"Xr" = (
+/obj/fakeobject/airlock_broken/bolted{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "secure_locked";
+	name = "Old Military Annex";
+	dir = 8
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white/lunar,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "Xt" = (
 /obj/item/body_bag{
@@ -23638,6 +25079,23 @@
 	alpha = 0;
 	name = "hidden ladder"
 	},
+/obj/shattered_barrel{
+	pixel_y = -3;
+	pixel_x = -9;
+	icon_state = "barrel-yellow-shattered";
+	plane = -98
+	},
+/obj/shattered_barrel{
+	pixel_y = 7;
+	pixel_x = -1;
+	icon_state = "barrel-yellow-shattered";
+	plane = -99
+	},
+/obj/shattered_barrel{
+	plane = -98;
+	pixel_y = -3;
+	pixel_x = 8
+	},
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 9;
@@ -23653,6 +25111,7 @@
 	pixel_x = -6;
 	plane = -102
 	},
+/obj/decal/cleanable/oil/streak,
 /turf/unsimulated/floor/minitiles,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
@@ -23663,6 +25122,20 @@
 	isHemera = 1
 	},
 /area/shuttle/lunar_elevator/hemera/upper)
+"Xy" = (
+/obj/fakeobject/moonrock{
+	pixel_y = -9;
+	dir = 8
+	},
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 10;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
 "XA" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/ladder{
@@ -23718,16 +25191,13 @@
 	name = "Seneca Falls Staffing Solutions"
 	})
 "XE" = (
-/obj/decoration/bullethole{
-	pixel_x = 11;
-	icon_state = "bullethole-large";
-	pixel_y = -10
+/turf/unsimulated/wall/setpieces/leadwindow/white{
+	icon_state = "leadwindow_white_2"
 	},
-/turf/unsimulated/wall/setpieces/leadwall/white/lunar{
-	icon_state = "leadjunction_white"
-	},
-/area/moon/underground{
-	ambient_light = "#441111"
+/area/moon/underground/hemera{
+	icon_state = "green";
+	name = "Old Military Annex";
+	ambient_light = "#331111"
 	})
 "XF" = (
 /obj/fakeobject/airlock_broken/bolted{
@@ -23821,15 +25291,19 @@
 	name = "Blue Line platform"
 	})
 "XQ" = (
-/obj/fakeobject/tower,
-/turf/unsimulated/floor/lunar/cavern{
-	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
-	dir = 5;
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "lunar-s"
+/obj/railing/orange,
+/obj/railing/orange{
+	dir = 1
 	},
-/area/moon/underground/hemera{
-	name = "Concourse D"
+/obj/mesh/catwalk/jen{
+	icon_state = "C12-0"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/moon/underground{
+	ambient_light = "#441111"
 	})
 "XR" = (
 /obj/item/chair/folded,
@@ -23838,7 +25312,7 @@
 	pixel_y = -3
 	},
 /obj/item/dice/d100,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -23848,11 +25322,16 @@
 	id = "lunar_concourseB0"
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
 "XT" = (
+/obj/railing{
+	color = "brown";
+	dir = 8;
+	plane = -99
+	},
 /turf/unsimulated/wall/setpieces/lunar{
 	dir = 8;
 	fullbright = 0;
@@ -24100,7 +25579,7 @@
 	pixel_y = -10
 	},
 /obj/mapping_helper/mob_spawn/corpse/human/random/body_bag,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -24169,7 +25648,7 @@
 	id = "lunar_concourseB0"
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -24277,9 +25756,6 @@
 	name = "table";
 	pixel_x = 4
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/moon/underground/hemera{
 	icon_state = "purple";
@@ -24372,7 +25848,12 @@
 /obj/item/reagent_containers/food/drinks/bottle/wine/white{
 	pixel_x = 8
 	},
-/turf/unsimulated/floor/lunar/cavern,
+/turf/unsimulated/floor/lunar/cavern{
+	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
+	dir = 9;
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "lunar-s"
+	},
 /area/moon/underground/hemera{
 	name = "Wine Cellar"
 	})
@@ -24399,6 +25880,21 @@
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	icon_state = "leadjunction_white_4way"
 	},
+/area/moon/underground{
+	ambient_light = "#441111"
+	})
+"Zc" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "C4-1"
+	},
+/obj/railing/green,
+/obj/railing/green{
+	dir = 1
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -24510,7 +26006,7 @@
 	})
 "Zn" = (
 /obj/stool/chair/comfy/shuttle/green,
-/turf/unsimulated/floor/carpet/green/fancy,
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
 /area/moon/underground/hemera{
 	icon_state = "blue";
 	name = "Nanotrasen Showrooms"
@@ -24623,7 +26119,7 @@
 	pixel_y = -10
 	},
 /obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor/minitiles/black,
+/turf/unsimulated/floor/industrial,
 /area/moon/underground{
 	ambient_light = "#441111"
 	})
@@ -24713,8 +26209,11 @@
 	})
 "ZH" = (
 /obj/decal/cleanable/rust,
-/obj/item/furniture_parts/wheelchair,
 /obj/decal/cleanable/rust/jen,
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal/transport{
+	name = "laundry unit"
+	},
 /turf/unsimulated/floor/black/grime,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -24737,16 +26236,20 @@
 	name = "Concourse B"
 	})
 "ZK" = (
-/obj/decoration/damagedchair{
+/obj/landmark/transition{
+	dir = 4;
+	tag = "lunaport_cellar0";
+	dest_tag = "lunaport_cellar1"
+	},
+/obj/mapping_helper/turf/floor/darkener{
 	dir = 8
 	},
-/obj/decal/cleanable/fungus,
-/obj/decal/cleanable/water,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
 /area/moon/underground/hemera{
-	icon_state = "green";
-	name = "Old Military Annex";
-	ambient_light = "#331111"
+	icon_state = "purple";
+	name = "Hogge & Wylde"
 	})
 "ZL" = (
 /obj/sea_plant/anemone/lit,
@@ -24797,7 +26300,11 @@
 /obj/cable/conduit{
 	dir = 5
 	},
-/obj/decal/cleanable/wood_debris,
+/obj/decal/cleanable/wood_debris{
+	name = "concrete debris";
+	color = "gray";
+	desc = "A few scattered pieces of concrete that broke off something bigger."
+	},
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag4";
 	pixel_y = 27
@@ -24981,26 +26488,26 @@ Js
 Js
 Js
 Js
-Zw
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-ZE
-TB
-ZE
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
+ud
 Fd
 TB
 ZE
@@ -25083,7 +26590,7 @@ ZE
 wf
 zG
 Js
-Wa
+ud
 po
 iG
 nf
@@ -25101,13 +26608,13 @@ XZ
 XZ
 iG
 po
-Wa
+ud
 Pp
 tC
 QU
 sd
-TT
-TT
+Tl
+Tl
 QU
 "}
 (3,1,1) = {"
@@ -25185,7 +26692,7 @@ wL
 wi
 vH
 Js
-Wa
+ud
 po
 iG
 eM
@@ -25203,7 +26710,7 @@ XZ
 XZ
 iG
 po
-Wa
+ud
 Gh
 Cr
 YL
@@ -25287,12 +26794,12 @@ xf
 xV
 Wa
 Js
-XY
-ZE
-ZE
-ZE
-ZE
-TB
+ud
+ud
+ud
+ud
+ud
+ud
 EC
 EC
 EC
@@ -25300,12 +26807,12 @@ TB
 EC
 EC
 EC
-TB
+ud
 jM
 Uw
-TB
-ZE
-Hf
+ud
+ud
+ud
 AT
 JK
 ZM
@@ -25328,7 +26835,7 @@ uz
 DF
 Rp
 Yx
-uz
+Pv
 nw
 Ar
 Ge
@@ -25402,7 +26909,7 @@ AK
 HB
 HG
 Ia
-Wa
+ud
 Rf
 TT
 qu
@@ -25430,7 +26937,7 @@ aR
 pI
 Kk
 iv
-ZT
+Im
 oo
 AC
 KA
@@ -25515,7 +27022,7 @@ yN
 QK
 UR
 YC
-PL
+Lc
 YL
 "}
 (7,1,1) = {"
@@ -25532,7 +27039,7 @@ ZT
 DF
 Rp
 bb
-ZT
+BV
 pB
 Bp
 KB
@@ -25612,8 +27119,8 @@ xI
 LP
 ZO
 PC
-wv
-wv
+AS
+AS
 KY
 xS
 xS
@@ -25896,9 +27403,9 @@ ZE
 ZE
 ZE
 ZE
+ZE
 zG
 Cs
-CR
 Kh
 CR
 Gi
@@ -25990,18 +27497,18 @@ UI
 UQ
 UQ
 UQ
-UQ
-wX
-HF
-Ku
-Ue
-Ue
-Ue
-Ue
-XY
+WS
+jn
+jn
+jn
+jn
+ph
+jn
+jn
+zV
+Cb
 xw
 AP
-Fn
 Fn
 Fn
 if
@@ -26044,8 +27551,8 @@ st
 lk
 qj
 yY
-yb
-Pc
+yC
+qj
 Rh
 cX
 zc
@@ -26087,22 +27594,22 @@ vE
 fN
 Xk
 Xk
-Ek
+LX
 vw
 Xk
 Xk
 Xk
-Xk
+gz
 BY
-vd
+BY
+BY
+BY
+Kf
+My
+zU
+WY
 OC
-Ue
-Ue
-Ue
-Ue
-Ue
 uD
-Mb
 Cg
 Dh
 iA
@@ -26145,11 +27652,11 @@ DF
 Rp
 Yx
 iz
-Tc
-DD
-Tc
-Tc
-fL
+AI
+yX
+AI
+AI
+jb
 RE
 Zs
 TE
@@ -26188,24 +27695,24 @@ Zd
 yv
 dZ
 YU
-Zd
+jL
 jk
-dZ
+Pc
 YU
 Zd
 QO
 wq
-iT
+BY
 vf
 Gg
-Ue
-Ue
-Ue
-Ue
-Ue
+Ek
+CU
+OB
+OB
+Mb
+OC
 uD
-CX
-Cq
+Wl
 sF
 Ej
 Cb
@@ -26272,7 +27779,7 @@ Mn
 WL
 EK
 ZI
-qA
+rY
 rY
 Js
 Js
@@ -26289,27 +27796,27 @@ Xk
 zi
 ij
 QT
-rL
-rL
 wv
-rL
-rL
+Xh
+Xh
+Xh
+wv
 gj
 qB
-Nh
-tF
+GV
+Kc
 iE
-WS
+WQ
+QT
+mK
 jn
 jn
-jn
-zV
-Ue
+Pm
+OC
 uD
 OL
 Uj
 Uj
-ER
 Fr
 sD
 EX
@@ -26398,21 +27905,21 @@ Ko
 Ko
 TD
 wv
-rL
 lT
+ZC
+rL
 rL
 ss
 RI
 qQ
 cW
-WY
-Ue
+im
+OC
 uD
 BK
 CF
 Uj
 Cq
-sF
 sF
 sF
 Jy
@@ -26476,7 +27983,7 @@ Zj
 WD
 WD
 ZI
-NT
+uM
 rY
 Js
 Ul
@@ -26494,7 +28001,7 @@ jI
 vu
 vu
 hB
-vu
+yb
 tO
 vu
 bI
@@ -26503,16 +28010,16 @@ vu
 vu
 Aj
 Rt
+XG
 Rt
 XG
 XG
-Kw
-WY
-Ue
+dP
+im
+OC
 cT
 sr
 al
-Uj
 Uj
 Uj
 Uj
@@ -26560,7 +28067,7 @@ by
 JL
 XV
 XV
-XV
+Ki
 WL
 tm
 Ug
@@ -26577,8 +28084,8 @@ Ua
 Ua
 WL
 gs
-do
-OZ
+ZI
+uM
 rY
 lS
 xy
@@ -26601,7 +28108,7 @@ bG
 nn
 Ub
 OP
-rL
+wv
 rL
 lT
 pQ
@@ -26609,12 +28116,12 @@ pJ
 ku
 Sw
 iK
-WY
-Ue
+fZ
+im
+OC
 FP
 ZU
 JJ
-Uj
 Uj
 Uj
 Uj
@@ -26711,10 +28218,10 @@ pt
 lg
 lg
 lg
-hN
-Ue
+lg
+VJ
+OC
 RM
-NY
 NY
 NY
 Ez
@@ -26758,7 +28265,7 @@ Rp
 bb
 ZT
 ZI
-sz
+jq
 XX
 Bc
 XV
@@ -26814,11 +28321,11 @@ Mo
 Rj
 Rj
 TB
-Ue
+KK
+OC
 uD
 no
 Ui
-Ca
 Ca
 Jy
 wV
@@ -26890,8 +28397,8 @@ RY
 Xd
 fm
 xo
-Im
-XE
+fm
+ZM
 Je
 rR
 rR
@@ -26916,12 +28423,12 @@ az
 yi
 BM
 ZM
-Ue
+KK
+OC
 uD
 Zu
 nU
 DI
-Ca
 Jy
 Pw
 cS
@@ -26992,8 +28499,8 @@ Ws
 LN
 oy
 Mz
-MT
-Kf
+oy
+Vs
 aZ
 Cn
 XG
@@ -27016,12 +28523,12 @@ Xk
 uZ
 Ba
 Pj
-BM
-ZM
-Ue
+ba
+mU
+sj
+OC
 uD
 Hp
-Ca
 Ca
 Ca
 Jy
@@ -27093,7 +28600,7 @@ rY
 OZ
 Oq
 FZ
-EO
+xo
 qm
 HS
 ky
@@ -27117,12 +28624,12 @@ qB
 ZM
 xc
 MP
-yi
+XQ
 BM
 vJ
 Ue
+OC
 RM
-NY
 NY
 NY
 Ez
@@ -27195,7 +28702,7 @@ rY
 uM
 aj
 BM
-WQ
+xo
 bw
 Og
 yP
@@ -27219,14 +28726,14 @@ Av
 Bm
 aU
 BM
-yi
+XQ
 BM
 LF
 Ue
+OC
 WB
 ZU
 VI
-Uj
 Uj
 Uj
 Uj
@@ -27297,8 +28804,8 @@ rY
 uM
 aj
 BM
-qi
-Pg
+xo
+BM
 ZM
 Je
 Td
@@ -27313,8 +28820,8 @@ fl
 QC
 ZM
 Bm
-mF
-mF
+NP
+NP
 mF
 bn
 dG
@@ -27325,10 +28832,10 @@ wu
 BM
 ZM
 Ue
+OC
 CQ
 nZ
 ff
-Uj
 Uj
 Uj
 Uj
@@ -27398,8 +28905,8 @@ ub
 rY
 Hk
 aj
-CB
-bt
+BM
+xo
 VT
 wc
 GV
@@ -27415,23 +28922,23 @@ fl
 BM
 Jd
 KU
-NP
-NP
+zn
+mF
 mF
 mF
 Uu
 ky
 uC
 BM
-yi
+XQ
 BM
 vJ
 Ue
+OC
 AY
 lX
 Rz
 Uj
-Qi
 UB
 Vj
 rH
@@ -27496,12 +29003,12 @@ ds
 WL
 Zj
 ZI
-bO
+rY
 rY
 uM
 aj
 BM
-bt
+xo
 BM
 wc
 GV
@@ -27517,23 +29024,23 @@ fl
 BI
 Jd
 KU
-zn
-mF
+NP
+NP
 mF
 mF
 cx
 ky
 uC
 qK
-yi
+XQ
 BM
 vJ
 Ue
+OC
 uD
 FQ
 Uj
 Uj
-ER
 Zn
 wA
 AQ
@@ -27562,7 +29069,7 @@ HU
 WE
 ed
 SY
-hE
+SY
 SY
 SY
 ve
@@ -27619,20 +29126,20 @@ fl
 fm
 ZM
 Bm
-NP
-NP
+sP
+mF
 mF
 mF
 mF
 PC
 vS
 xb
-yi
+XQ
 BM
 ZM
 Ue
+OC
 uD
-eF
 Qi
 Vj
 Ac
@@ -27664,9 +29171,9 @@ lD
 WE
 TC
 sw
-fM
+kM
 cN
-hX
+ig
 uA
 ms
 nL
@@ -27721,20 +29228,20 @@ fl
 vQ
 EM
 KU
-sP
-mF
+lu
+NP
 mF
 mF
 vl
 ky
 uC
 qK
-yi
+XQ
 BM
 vJ
 Ue
+OC
 uD
-ln
 Da
 DX
 Fb
@@ -27764,10 +29271,10 @@ LP
 "}
 (29,1,1) = {"
 WE
-TC
-hJ
-TC
-sV
+eI
+SY
+ve
+yF
 ig
 bC
 om
@@ -27817,26 +29324,26 @@ Gq
 Iw
 oI
 tY
-VO
+Qf
 BM
 fl
 BM
 jz
 KU
-lu
-NP
+Fh
+NC
 mF
 mF
 uW
 tu
 uC
 BM
-yi
+XQ
 BM
 vJ
 Ue
+OC
 Cb
-Fn
 Fn
 Fn
 Fn
@@ -27867,7 +29374,7 @@ LP
 (30,1,1) = {"
 WE
 TC
-bX
+sw
 TC
 sV
 ig
@@ -27931,11 +29438,11 @@ Qq
 wv
 rL
 Bm
-uC
+cL
 vh
 wu
 BM
-ly
+QL
 WS
 jn
 Sa
@@ -27969,9 +29476,9 @@ DR
 (31,1,1) = {"
 ed
 Vo
-lF
+lp
 cE
-gN
+sV
 ig
 lF
 mz
@@ -28009,7 +29516,7 @@ ou
 XX
 Hq
 Ef
-iC
+aj
 BM
 xo
 He
@@ -28028,16 +29535,16 @@ BM
 jz
 ky
 km
-ZK
+CG
 hq
 Yy
 Fe
 ky
 uN
 fm
-nO
+je
 BM
-ly
+QL
 GV
 fJ
 Gs
@@ -28071,7 +29578,7 @@ Js
 (32,1,1) = {"
 TC
 dg
-ig
+do
 pq
 pq
 lF
@@ -28127,20 +29634,20 @@ VO
 BM
 fl
 jd
-jz
+ge
 Hv
-Bi
+ln
 Pl
-tB
+bV
 pz
-CG
-aZ
-LN
+xL
+tr
+EJ
 RT
 er
 BM
 ly
-to
+Tr
 uF
 qq
 UP
@@ -28192,7 +29699,7 @@ ZS
 ZS
 yK
 KX
-KX
+KM
 pZ
 KX
 xG
@@ -28227,26 +29734,26 @@ uI
 yO
 VO
 BM
-fl
+ER
 BM
 jz
 ky
 pF
-An
+Fu
 Jr
-WO
+An
 WO
 ky
 uN
 Pz
 nO
 BM
-ly
+QL
 GV
 Wz
 Gs
 Gs
-Gs
+DW
 WY
 WP
 Vv
@@ -28325,11 +29832,11 @@ rR
 rR
 XF
 od
-XF
+XE
 Bm
 Qk
 BM
-fl
+ER
 ru
 jz
 PC
@@ -28377,7 +29884,7 @@ Js
 (35,1,1) = {"
 TC
 iU
-ig
+dN
 Rg
 Rg
 lF
@@ -28396,7 +29903,7 @@ xE
 fg
 cC
 Zs
-RE
+QA
 QA
 QA
 BQ
@@ -28415,7 +29922,7 @@ TT
 TT
 BL
 BL
-QL
+ZM
 Vz
 MN
 BM
@@ -28428,7 +29935,7 @@ gZ
 Bu
 QU
 Sx
-QU
+ji
 HC
 BM
 tT
@@ -28479,9 +29986,9 @@ Js
 (36,1,1) = {"
 bC
 ve
-lF
-eE
-gN
+KH
+uA
+sV
 ig
 lF
 lF
@@ -28494,13 +30001,13 @@ LJ
 LK
 Sr
 VA
-Ce
 VA
-Jq
 VA
-Hs
-Dy
-Dy
+wI
+Rc
+KG
+RH
+RH
 vU
 aW
 Ql
@@ -28531,7 +30038,7 @@ Ws
 Es
 MS
 YL
-Qf
+VO
 fm
 Lk
 aP
@@ -28547,7 +30054,7 @@ uC
 BM
 yi
 BM
-ly
+QL
 GV
 Bw
 ZQ
@@ -28581,7 +30088,7 @@ Js
 (37,1,1) = {"
 WE
 TC
-fj
+sw
 TC
 sV
 ig
@@ -28599,10 +30106,10 @@ zO
 CS
 CS
 CS
-gy
-KZ
-IA
-IA
+CS
+KG
+KG
+KG
 PE
 fU
 Ql
@@ -28635,7 +30142,7 @@ yw
 RY
 vS
 mt
-rn
+Zc
 Pz
 ZM
 jM
@@ -28682,10 +30189,10 @@ Js
 "}
 (38,1,1) = {"
 WE
-TC
-ez
-TC
-sV
+eI
+om
+Vo
+Ta
 ig
 mz
 id
@@ -28697,13 +30204,13 @@ Lj
 Lj
 Gx
 Sr
+VA
 Lw
 VA
 VA
-TW
-Oj
+VA
 Ut
-KG
+eQ
 KG
 RK
 ZI
@@ -28727,17 +30234,17 @@ dQ
 fm
 Qu
 BM
-zF
+iG
 Xv
 ED
-GX
-GX
+OA
+sX
 GX
 xT
 zx
 ST
 BM
-fl
+ER
 Du
 iG
 zW
@@ -28751,7 +30258,7 @@ Ss
 BM
 yi
 BM
-ly
+QL
 GV
 ip
 qq
@@ -28799,15 +30306,15 @@ Lj
 Lj
 wr
 Tp
-Tp
-By
-By
-Tp
-sj
+Oj
+bS
+CS
+wC
+wC
 rV
-Nb
 KG
-RH
+KG
+Tw
 ZI
 Ql
 MY
@@ -28821,7 +30328,7 @@ Sb
 ma
 Cd
 Ud
-kZ
+Ud
 Ud
 SB
 SB
@@ -28839,7 +30346,7 @@ ZM
 jM
 Hf
 fm
-fl
+ER
 yd
 ZM
 jM
@@ -28851,7 +30358,7 @@ ZM
 TB
 hk
 fm
-yi
+JN
 yd
 ZM
 RY
@@ -28901,13 +30408,13 @@ Lj
 Lj
 ws
 Tp
+cc
 Tp
-By
-By
-Tp
+Kw
+zI
 wC
-Ds
-JX
+rV
+KG
 KG
 RH
 gv
@@ -28933,28 +30440,28 @@ py
 Cj
 NX
 Xk
-Xk
-Xk
-Xk
-Xk
-Xk
+NX
+lL
+lL
+lL
+uZ
 Xk
 uZ
 oy
 lf
 oy
 NX
+Xk
+NX
 lL
 lL
 lL
-lL
-ZB
 ZM
 Vz
-cD
-Pz
+Rx
+jN
 WF
-sX
+Pz
 Ig
 dE
 WP
@@ -29003,12 +30510,12 @@ VA
 vA
 VA
 Jq
+VA
 oY
-md
-md
-TW
-ih
-Ds
+VA
+VA
+VA
+rZ
 Nb
 KG
 RO
@@ -29026,10 +30533,10 @@ UT
 zP
 pi
 tJ
-tJ
-sS
-ht
-QG
+Dy
+sN
+cR
+Tq
 BM
 xo
 BM
@@ -29041,22 +30548,22 @@ Li
 lL
 ZM
 jM
-Hf
+gQ
 BM
-fl
+ER
 Pz
 ZM
 jM
 Hf
 FD
-ZB
-Js
+lL
+lL
 vP
 AE
 Rx
-BM
+Ho
 WF
-fx
+bt
 Ig
 aO
 nH
@@ -29105,12 +30612,12 @@ ui
 ZY
 ZY
 xK
-yS
 yo
 yo
-Qp
-Lw
-rZ
+wy
+xq
+ih
+Ds
 Nb
 KG
 RO
@@ -29126,69 +30633,69 @@ pr
 uK
 UT
 rQ
-BF
+Uv
 hG
-hG
-ra
-cR
+ht
+vB
+qT
 DZ
-Qy
-xo
-BM
-fZ
+IA
+vz
+pO
+iX
 lL
 lL
 lL
 lL
 lL
 lL
-fs
+Hs
 kR
 yk
-fl
-BM
-uk
+At
+LV
+Lr
 Ij
 wo
-lL
+Tc
 Oo
-Js
-YL
+Gy
+bj
 Ur
 MI
 BM
-WF
-BM
-Ig
+IF
+Sg
+Af
 Vs
 zK
 Xw
 Ne
 MC
-LQ
+Pg
 Xl
-ji
-nH
+cv
+JX
 Sj
 NR
 iD
 cK
-SL
+Ad
 Fy
 vv
 jY
 NR
 iD
-RB
-Ht
+Bg
+jT
 NI
-oc
-oc
+AH
+Iq
 NK
-oE
-UZ
-oE
-Js
+Ev
+cz
+Ev
+uu
 "}
 (43,1,1) = {"
 Vt
@@ -29198,7 +30705,7 @@ ah
 ah
 ah
 ah
-bM
+CX
 Se
 Xq
 rp
@@ -29209,9 +30716,9 @@ wF
 wI
 yo
 yo
-yo
-Eg
-Qp
+nG
+ux
+VA
 Jq
 Ny
 Ny
@@ -29229,16 +30736,16 @@ OK
 yD
 Mg
 BF
-hG
+JO
 zt
-ra
-UT
+wh
+dm
 sO
 ap
-xo
+FV
 BM
-iX
-lL
+eF
+AE
 fs
 lL
 lL
@@ -29247,19 +30754,19 @@ lL
 Be
 gx
 tH
-fl
+ER
 ap
 nM
 Sp
+VE
+Un
 lL
-lL
-Zw
-ZE
-Hf
+Nh
+vP
 lL
 nW
 ap
-JN
+WF
 fx
 JU
 mc
@@ -29283,9 +30790,9 @@ NR
 iD
 RB
 wn
-oc
-oc
-oc
+Iq
+kZ
+hw
 PB
 ro
 UZ
@@ -29313,7 +30820,7 @@ OU
 OU
 OU
 OU
-OU
+PI
 Tp
 NS
 Cf
@@ -29327,15 +30834,15 @@ eY
 Cf
 CV
 Tp
-Sb
+uK
 UT
 Te
 BF
 NE
 pu
 ra
-Lv
-QG
+dm
+Tq
 Qy
 xo
 BM
@@ -29349,29 +30856,29 @@ lL
 fs
 pL
 lb
-fl
+ER
 BM
 Lr
 lL
 lL
 lL
-vP
-Yp
+Nh
+Js
 QU
 lL
 MI
-BM
+Ho
 WF
 BM
 Ig
 Vs
-zK
+UK
 XP
 Ne
 MC
 LQ
 Xl
-cv
+jC
 nH
 Sj
 NR
@@ -29403,7 +30910,7 @@ ah
 ah
 ah
 bM
-XQ
+Se
 Sr
 ux
 ux
@@ -29415,57 +30922,57 @@ GJ
 GJ
 GJ
 GJ
-GJ
-Tp
+ca
+ez
 Oh
-YW
-YW
-Ts
-Oj
-iy
+Eg
+Eg
+em
+Di
+vq
 Oj
 CC
 YW
 YW
 kO
 Tp
-yj
+rS
 UT
 mD
 BF
 ME
 ME
 sS
-Ho
-QG
+Lv
+Tq
 BM
 xo
 BM
 iX
 lL
-fs
-lL
-AS
-lL
-lL
-VE
+CB
+to
+qB
+Xy
+qB
+pD
 pL
 sC
-rn
+Zc
 BM
 Lr
 RV
-AE
+qi
 Nh
-vP
-AS
+Js
+Js
 zw
 wj
 Rx
-BM
+Km
 WF
 iW
-Ig
+KZ
 LR
 nH
 rx
@@ -29509,13 +31016,13 @@ Se
 Xq
 ry
 xD
-xD
+aD
 xD
 ya
 xD
 xD
 xD
-xD
+DD
 wF
 VA
 TW
@@ -29524,31 +31031,31 @@ YW
 YW
 Ts
 Oj
-iy
+Oj
 Oj
 CC
 YW
 YW
 Db
 Tp
-Sb
+yB
 Lv
 as
 Py
-xe
-xe
+bO
+Bn
 sS
-Kz
-Tq
+jE
+QG
 Ly
 Hd
 BM
 aM
 wQ
 RF
-Mh
 rq
-Mh
+rq
+rq
 Mh
 QQ
 Qj
@@ -29559,8 +31066,8 @@ uk
 Xp
 Zw
 ZE
-RY
-Xh
+ZE
+ZE
 RY
 zG
 tj
@@ -29610,14 +31117,14 @@ Jc
 Se
 Xq
 PO
-PO
-PO
-vC
-vC
-vC
+es
+Ku
 vC
 Lj
 Lj
+Lj
+Lj
+HP
 Tp
 Hw
 La
@@ -29626,14 +31133,14 @@ YW
 YW
 Ts
 Oj
-iy
+Oj
 Oj
 CC
 YW
 YW
 Fo
 Tp
-Sb
+yB
 PF
 Lv
 rl
@@ -29655,7 +31162,7 @@ kQ
 ZM
 Hf
 PY
-rn
+Zc
 Ol
 ZM
 TB
@@ -29711,13 +31218,13 @@ ah
 bM
 Se
 Xq
-PO
 CD
+Ku
 pg
 pg
-HP
-HP
-HP
+LE
+Lj
+Lj
 Lj
 Lj
 hh
@@ -29728,7 +31235,7 @@ YW
 YW
 Ts
 Oj
-iy
+Oj
 Oj
 CC
 YW
@@ -29736,7 +31243,7 @@ YW
 kO
 Tp
 Pi
-Sb
+yB
 kC
 Gt
 lS
@@ -29757,7 +31264,7 @@ Yp
 tF
 YM
 lb
-fl
+ER
 BM
 OO
 nc
@@ -29813,13 +31320,13 @@ ah
 bM
 Se
 Xq
-PO
 CD
+Ku
 pg
 pg
-HP
-HP
-HP
+eK
+Lj
+Lj
 Lj
 Lj
 hh
@@ -29859,7 +31366,7 @@ Yp
 tF
 tU
 In
-fl
+ER
 BM
 um
 nc
@@ -29916,14 +31423,14 @@ bM
 Se
 Xq
 PO
-PO
-PO
-vM
-vM
-vM
+Kz
+Ku
 vM
 Lj
 Lj
+Lj
+Lj
+HP
 Tp
 HT
 wF
@@ -29932,7 +31439,7 @@ FS
 FS
 oY
 Lw
-gQ
+VA
 VA
 oY
 VA
@@ -29941,7 +31448,7 @@ VA
 TW
 gt
 in
-Sb
+hX
 EV
 nK
 lL
@@ -29961,7 +31468,7 @@ kQ
 ZM
 vS
 QJ
-fl
+ER
 fm
 ZM
 Hf
@@ -30019,13 +31526,13 @@ Se
 Xq
 wT
 OR
-OR
+iT
 OR
 zp
 OR
 OR
 OR
-OR
+iw
 Qp
 VA
 TW
@@ -30034,7 +31541,7 @@ PT
 HX
 tR
 Tp
-NU
+MU
 SJ
 SJ
 SJ
@@ -30117,7 +31624,7 @@ ah
 ah
 ah
 bM
-XQ
+Se
 Sr
 ux
 ux
@@ -30136,7 +31643,7 @@ HX
 HX
 HX
 La
-NU
+MU
 SJ
 qI
 zd
@@ -30165,8 +31672,8 @@ Yp
 yl
 VV
 sY
-VB
-BE
+cD
+eE
 eR
 vP
 Dr
@@ -30234,11 +31741,11 @@ GJ
 GJ
 VC
 wy
-em
-em
-em
+HX
+HX
+HX
 HV
-Lc
+SJ
 SJ
 AM
 Qm
@@ -30269,7 +31776,7 @@ RY
 SX
 fr
 Fm
-Ow
+Mt
 Hf
 JS
 Yp
@@ -30320,7 +31827,7 @@ ah
 ah
 ah
 ah
-bM
+CX
 Se
 Xq
 Fa
@@ -30331,9 +31838,9 @@ Qp
 AG
 yo
 yo
-yo
-Eg
-wF
+kG
+ux
+VA
 TW
 PW
 HX
@@ -30371,7 +31878,7 @@ Js
 YN
 YN
 YN
-Js
+fL
 nc
 Yp
 Yp
@@ -30379,10 +31886,10 @@ Yp
 Yp
 Yp
 tF
-im
 Js
-Js
-Js
+ym
+ym
+ym
 Js
 zl
 WX
@@ -30431,12 +31938,12 @@ vO
 ZY
 ZY
 xK
-yS
 yo
 yo
-wF
-oY
-TW
+wy
+Ci
+ih
+Tp
 PW
 HX
 QM
@@ -30468,31 +31975,31 @@ SK
 rh
 hC
 Yw
-yl
+CI
 Js
 Js
+fL
 Js
-Js
-Js
-nc
+fL
+NT
 kz
 Lp
 gb
 Yp
 Au
 tF
-Dp
+sR
 wd
 GQ
 pn
-jn
-jn
-ph
-jn
+MT
+MT
+np
+MT
 sG
-jn
-jn
-jn
+MT
+MT
+wR
 zV
 Js
 Js
@@ -30510,10 +32017,10 @@ UQ
 UQ
 UQ
 UQ
-wX
-HF
-HF
-Ku
+ud
+ud
+ud
+ud
 Js
 "}
 (56,1,1) = {"
@@ -30533,13 +32040,13 @@ VA
 vR
 VA
 Jq
+VA
 Lw
-Af
-Af
-TW
-ih
-Sr
-gQ
+VA
+VA
+VA
+Jq
+VA
 VA
 VA
 VA
@@ -30573,14 +32080,14 @@ ul
 Hf
 Js
 Js
+fL
 Js
-Js
-Js
+fL
 ZM
 wt
 TB
 ZE
-ZE
+Xr
 ZE
 Vz
 yQ
@@ -30615,17 +32122,17 @@ TQ
 Wy
 Zy
 XS
-Gg
+ud
 Js
 "}
 (57,1,1) = {"
 Hc
-Hc
-Hc
-Hc
 cG
 Iy
+qA
 Iy
+Iy
+qA
 Iy
 jW
 TW
@@ -30635,10 +32142,10 @@ Lj
 Lj
 wZ
 Tp
+ZK
 Tp
 By
-By
-Tp
+iV
 wB
 Cl
 mA
@@ -30677,14 +32184,14 @@ YI
 YI
 YI
 YI
-YI
-YI
+fj
+NU
 sn
-YI
+NU
 Dp
-jn
-jn
-ph
+MT
+MT
+np
 on
 Hi
 Iv
@@ -30715,20 +32222,20 @@ KV
 gg
 KV
 ud
-KV
-JB
-OQ
+ud
+ud
+ud
 Js
 "}
 (58,1,1) = {"
 Hc
-RZ
-Tv
+Cl
+WN
 Bz
-FT
+qc
 kk
-lp
-TF
+Bz
+cB
 Cl
 Tp
 FX
@@ -30737,12 +32244,12 @@ Lj
 Lj
 xj
 Tp
-Tp
-By
-Wl
-Tp
+VH
+hJ
+CS
+EO
 iM
-FT
+tx
 OW
 Hb
 So
@@ -30824,13 +32331,13 @@ Js
 "}
 (59,1,1) = {"
 Hc
-So
+Cl
 eD
 go
 iI
 iI
 kU
-TF
+yh
 Cl
 px
 nz
@@ -30839,12 +32346,12 @@ Lj
 Lj
 xl
 Sr
-oY
 VA
 VA
-TW
-Oj
-VH
+VA
+VA
+VA
+EI
 tK
 FT
 So
@@ -30894,9 +32401,9 @@ xZ
 Iv
 lQ
 Zh
-EQ
-bU
-GW
+iO
+GV
+dX
 GW
 BP
 BP
@@ -30926,13 +32433,13 @@ Js
 "}
 (60,1,1) = {"
 Hc
-So
-eD
-go
+Cl
+yS
+Bz
+EN
+md
 iI
 iI
-kU
-TF
 Cl
 px
 rI
@@ -30943,10 +32450,10 @@ wp
 pl
 AR
 CS
-CU
+CS
 CS
 gy
-Hb
+rb
 hF
 yu
 EF
@@ -30970,7 +32477,7 @@ Ya
 ob
 rs
 fp
-CN
+lL
 lL
 lL
 lL
@@ -30986,10 +32493,10 @@ Up
 BH
 Nq
 qD
-np
-PI
-PI
-If
+YI
+YI
+YI
+YI
 ey
 iN
 xZ
@@ -31028,12 +32535,12 @@ Js
 "}
 (61,1,1) = {"
 Hc
-SD
-Tv
+Cl
+bX
 Bz
-Hb
+eP
 kr
-lp
+iI
 nr
 Cl
 Tp
@@ -31088,10 +32595,10 @@ Ro
 Pd
 Ro
 qD
-yL
+YI
 Sn
 qy
-jL
+YI
 cq
 ql
 lZ
@@ -31130,13 +32637,13 @@ Js
 "}
 (62,1,1) = {"
 Hc
-cG
+pE
 Iy
-Iy
-jW
+EP
+zF
 ls
 ls
-Vc
+Iy
 EP
 Jq
 VA
@@ -31232,13 +32739,13 @@ Js
 "}
 (63,1,1) = {"
 Hc
-Cl
-eH
+Hc
+Vc
 eH
 iP
-ev
-ev
-ev
+QN
+JW
+SA
 ev
 fU
 pK
@@ -31250,7 +32757,7 @@ FT
 AU
 Va
 AU
-Va
+HI
 IG
 LM
 FJ
@@ -31276,7 +32783,7 @@ Ya
 yz
 rs
 Ul
-CN
+lL
 lL
 lL
 lL
@@ -31292,10 +32799,10 @@ Ro
 Pd
 Ro
 mX
-yL
+YI
 Qt
 kD
-jT
+YI
 Js
 Tm
 pb
@@ -31334,21 +32841,21 @@ Js
 "}
 (64,1,1) = {"
 Hc
-Cl
+Hc
+Vc
 eH
-gz
-iP
-ev
-ev
-ev
-ev
+iC
+JZ
+yj
+FA
+FA
 pA
 FA
 FA
+yj
 FA
 FA
-FA
-FA
+yj
 FA
 JZ
 FA
@@ -31394,16 +32901,16 @@ Up
 BH
 Nq
 qD
-yL
+YI
 kD
 nN
-jL
+YI
 Js
-Kc
+bJ
+bJ
+bJ
 bJ
 wP
-wP
-bJ
 zb
 yR
 hf
@@ -31436,14 +32943,14 @@ Js
 "}
 (65,1,1) = {"
 Hc
-pE
-Iy
-Iy
-EP
-Iy
-Iy
-Iy
-Iy
+Hc
+Hc
+Hb
+CN
+eH
+Hb
+Ph
+Dv
 gv
 XT
 Ph
@@ -31496,16 +33003,16 @@ YI
 YI
 YI
 Bq
-np
-PI
-PI
-Uv
+YI
+YI
+YI
+YI
 Js
-Js
-ey
-vy
+ud
 iH
+vy
 uV
+YF
 fN
 YF
 Sf
@@ -31540,10 +33047,10 @@ Js
 Hc
 Hc
 Hc
-Hc
-Hc
-Hc
-Hc
+FT
+IS
+IS
+FT
 Hc
 Hc
 fU
@@ -31603,11 +33110,11 @@ Js
 Js
 Js
 Js
-Js
-cq
-Iq
-JB
-Ck
+ud
+NV
+ud
+ud
+If
 Hx
 GU
 Ye
