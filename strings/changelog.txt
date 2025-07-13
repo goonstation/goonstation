@@ -1,4 +1,22 @@
-
+(t)sun jul 13 25
+(u)glowbold
+(e)🆕💊|C-Feature, A-Medical
+(+)Cryogenic Healing Pods have an auto-eject toggle. Keep your organ-mulched patients inside for longer!
+(t)sat jul 12 25
+(u)Wire
+(p)23530
+(e)🎨|C-Sprites
+(*)Authentication refactor to support external providers that aren't the Byond hub.
+(t)fri jul 11 25
+(u)JORJ949
+(p)24092
+(e)🪲🏅🎩|C-Bug, A-Medal, A-Clothing
+(+)Fixed spacebux purchased backpacks not redeeming satchels properly.
+(u)RubberRats
+(p)24094
+(e)🪲💅💊|C-Bug, C-QoL, A-Medical
+(+)Frontal Gyrus Alteration Type-🤪 should now work again 🎉💬
+(+)Frontal Gyrus Alteration Type-🤪 now gives a blank 😶 message if it completely eats what you were going to say.
 (t)thu jul 10 25
 (u)JORJ949
 (p)24002

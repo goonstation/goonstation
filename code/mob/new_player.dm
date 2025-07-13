@@ -73,18 +73,19 @@ TYPEINFO(/mob/new_player)
 			if (!isnull(P.round_join_time) && isnull(P.round_leave_time)) //they likely died but didnt d/c b4 respawn
 				P.log_leave_time()
 
+		src.client?.load_pregame()
 		new_player_panel()
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
 
-
+		#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
 		// byond members get a special join message :]
 		if (src.client?.IsByondMember())
 			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
 			var/num = rand(1,16)
 			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(num in msgs_which_are_gifs) ? "gif" : "jpg"]")
 			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
-
+		#endif
 
 		if (src.ckey && !adminspawned)
 			if ("[src.ckey]" in spawned_in_keys)
@@ -113,7 +114,7 @@ TYPEINFO(/mob/new_player)
 					qdel(src)
 
 			else
-				spawned_in_keys += "[src.ckey]"
+				if (src.client.authenticated) spawned_in_keys += "[src.ckey]"
 				for (var/sound in global.dj_panel.preloaded_sounds)
 					src.client << load_resource(sound, -1)
 
@@ -145,22 +146,13 @@ TYPEINFO(/mob/new_player)
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
 			SPAWN(0)
 				if(isclient(src.last_client))
-					winshow(src.last_client, "pregameBrowser", 0)
 					src.last_client << browse("", "window=pregameBrowser")
+					winshow(src.last_client, "pregameBrowser", FALSE)
 		return
 
 	verb/new_player_panel()
 		set src = usr
 		src.update_joinmenu()
-		#ifndef NO_PREGAME_HTML
-		if(pregameHTML && client)
-			winshow(client, "pregameBrowser", 1)
-			client << browse(pregameHTML, "window=pregameBrowser")
-			src.pregameBrowserLoaded = TRUE
-		else if(client)
-			winshow(src.last_client, "pregameBrowser", 0)
-			src.last_client << browse("", "window=pregameBrowser")
-		#endif
 
 	Stat()
 		..()
@@ -912,9 +904,9 @@ a.latejoin-card:hover {
 			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
@@ -935,9 +927,9 @@ a.latejoin-card:hover {
 			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if (ticker)
@@ -997,9 +989,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".observe_round"
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
@@ -1051,7 +1043,7 @@ a.latejoin-card:hover {
 #define JOINMENU_VERTICAL_OFFSET_PER_BUTTON 56
 
 /mob/new_player/proc/update_joinmenu()
-	if (!client)
+	if (!client || !client.authenticated)
 		return
 
 	// super conservative with client checks as we *really* don't want to crash here
