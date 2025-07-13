@@ -684,10 +684,10 @@ function toggleWasd(state) {
 
 function showAuthMessage(title, content) {
   output(
-    `<div class="auth-message">
-    <div class="auth-message__title">${title}</div>
-    <div class="auth-message__content">${content}</div>
-  </div>`,
+    '<div class="auth-message">\
+    <div class="auth-message__title">${title}</div>\
+    <div class="auth-message__content">${content}</div>\
+  </div>',
     '',
     0,
     true
