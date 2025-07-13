@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/brain_drain
 	name = "Brain Drain"
-	desc = "Gain 3 Intellect per second from a target in range. Intellect gained is reduced by mind-shielding drugs. Reveals you on use."
+	desc = "Gain 6 Intellect per second from a target in range. Intellect gained is reduced by mind-shielding drugs. Reveals you on use."
 	icon_state = "brain_drain"
 	targeted = TRUE
 	target_anything = TRUE
@@ -158,7 +158,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	targeted = TRUE
 	target_anything = TRUE
 	max_range = 7
-	full_reveal_on_use = TRUE
 
 	tryCast(atom/target)
 		target = src.get_nearest_mob_or_fake_mindeater(target)
@@ -183,7 +182,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cooldown = 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
-	full_reveal_on_use = TRUE
 	max_range = 5
 
 	tryCast(atom/target)
@@ -228,7 +226,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	desc = "Cast a purple light from you to gain Intellect from nearby mobs looking towards you. Full reveals you on use."
 	icon_state = "cosmic_light"
 	cooldown = 20 SECONDS
-	full_reveal_on_use = TRUE
 
 	cast(atom/target)
 		. = ..()
@@ -320,7 +317,7 @@ ABSTRACT_TYPE(/area/veil_border)
 
 /datum/action/bar/private/mindeater_regenerate
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT
-	duration = 1 SECOND
+	duration = 0.5 SECONDS
 	resumable = FALSE
 	color_success = "#4444FF"
 
@@ -354,7 +351,7 @@ ABSTRACT_TYPE(/area/veil_border)
 		return !abil_holder.pointCheck(1, TRUE) || mindeater.get_health_percentage() >= 1
 
 /datum/action/bar/private/mindeater_brain_drain
-	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_STUNNED
 	duration = 1 SECONDS
 	resumable = FALSE
 	color_success = "#4444FF"
@@ -385,21 +382,21 @@ ABSTRACT_TYPE(/area/veil_border)
 
 		if (ishuman(src.target))
 			var/mob/living/critter/mindeater/mindeater = src.owner
-			mindeater.collect_intellect(src.target, 3)
+			mindeater.collect_intellect(src.target, 6)
 			src.target.setStatus("mindeater_mind_eating", INFINITE_STATUS, src.owner)
 
 			var/mob/living/carbon/human/H = src.target
-			H.take_brain_damage(1)
+			H.take_brain_damage(2)
 			var/pick = rand(1, 4)
 			switch (pick)
 				if (1)
-					H.take_brain_damage(1)
+					H.take_brain_damage(2)
 				if (2)
-					H.TakeDamage("All", 1, hit_twitch = FALSE)
+					H.TakeDamage("All", 2, hit_twitch = FALSE)
 				if (3)
-					H.TakeDamage("All", burn = 1, hit_twitch = FALSE)
+					H.TakeDamage("All", burn = 2, hit_twitch = FALSE)
 				if (4)
-					H.TakeDamage("All", tox = 1, hit_twitch = FALSE)
+					H.TakeDamage("All", tox = 2, hit_twitch = FALSE)
 		else if (istype(src.target, /mob/living/silicon/ai))
 			src.target.TakeDamage("All", 15, damage_type = DAMAGE_CRUSH) // 15 - 20 seconds to kill
 		else

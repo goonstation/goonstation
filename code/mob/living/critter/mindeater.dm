@@ -21,6 +21,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 	can_implant = FALSE
 	metabolizes = FALSE
 	reagent_capacity = 0
+	do_hurt_slowdown = FALSE
 
 	/*
 	speechverb_say = "hums"
@@ -55,12 +56,14 @@ TYPEINFO(/mob/living/critter/mindeater)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		remove_lifeprocess(/datum/lifeprocess/chems)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/mutations)
+		remove_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 		QDEL_NULL(src.organHolder)
 
@@ -155,8 +158,8 @@ TYPEINFO(/mob/living/critter/mindeater)
 			return
 		..()
 		src.hp_indicator.set_icon_state(round(src.get_health_percentage() * 100, 20))
-		if (brute > 0 || burn > 0 || tox > 0)
-			src.reveal()
+		//if (brute > 0 || burn > 0 || tox > 0)
+		//	src.reveal()
 
 	attack_hand(mob/living/M)
 		..()
@@ -185,12 +188,12 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient, remove_stamina_below_zero, target_type, stack_stuns)
 		stamina_damage = 0
-		src.reveal()
+		src.reveal(FALSE)
 		..()
 
 	apply_flash(animation_duration, knockdown, stun, misstep, eyes_blurry, eyes_damage, eye_tempblind, burn, uncloak_prob, stamina_damage, disorient_time)
 		stamina_damage = 0
-		src.reveal()
+		src.reveal(FALSE)
 		..()
 
 	is_heat_resistant()
@@ -231,13 +234,13 @@ TYPEINFO(/mob/living/critter/mindeater)
 	shock(atom/origin, wattage, zone = "chest", stun_multiplier = 1, ignore_gloves = 0)
 		if (src.is_intangible())
 			return
-		src.reveal()
+		src.reveal(FALSE)
 		return ..()
 
 	ex_act(severity)
 		if (src.is_intangible())
 			return
-		src.reveal()
+		src.reveal(FALSE)
 		return ..()
 
 	/// returns if the turf is bright enough to reveal the mindeater

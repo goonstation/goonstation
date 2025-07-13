@@ -4099,7 +4099,7 @@
 		for (var/mob/living/carbon/human/H as anything in nearby_mobs)
 			if (!src.is_valid_mob(H))
 				continue
-			mindeater.collect_intellect(H, 1 * max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING)
+			mindeater.collect_intellect(H, 3 * max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING)
 
 	onRemove()
 		..()
