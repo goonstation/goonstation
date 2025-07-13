@@ -3618,6 +3618,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"axe" = (
+/obj/item/device/radio/intercom/detnet/security{
+	dir = 8
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "axf" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/morgue{
@@ -7111,10 +7118,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"aOO" = (
-/obj/machinery/light/small/sticky,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aOP" = (
 /obj/stool/chair{
 	dir = 4
@@ -17299,18 +17302,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"doU" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
-/obj/machinery/vending/security,
-/obj/machinery/light_switch/west{
-	pixel_y = -4
-	},
-/obj/blind_switch/area/west{
-	pixel_y = 5
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "dpc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -23663,13 +23654,6 @@
 	dir = 5
 	},
 /area/station/quartermaster/office)
-"hje" = (
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
-/obj/storage/cart/forensic/detective,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "hjz" = (
 /obj/machinery/light/small/floor,
 /obj/disposalpipe/segment{
@@ -23946,6 +23930,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay/treatment)
+"hve" = (
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "hvf" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular{
@@ -25803,6 +25791,13 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
+"iyc" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
+/obj/cable,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/crew_quarters/hor)
 "iyl" = (
 /obj/machinery/power/solar/west,
 /obj/cable/yellow{
@@ -27976,13 +27971,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"jQb" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta/os_loaded,
-/obj/cable,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/carpet/purple/fancy/edge/se,
-/area/station/crew_quarters/hor)
 "jQv" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -36547,6 +36535,18 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
+"oGd" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "oGn" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -37033,6 +37033,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
+"oTJ" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/obj/machinery/vending/security,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "oTS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38723,16 +38735,6 @@
 	dir = 4
 	},
 /area/station/hangar/main)
-"pTM" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "pUk" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -39577,6 +39579,16 @@
 	dir = 8
 	},
 /area/station/security/checkpoint/arrivals)
+"qpD" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "qqV" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -43427,18 +43439,6 @@
 	layer = 2
 	},
 /area/space)
-"sEx" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "sEV" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -93328,7 +93328,7 @@ dab
 vKc
 wkZ
 nns
-aOO
+hve
 dSK
 aQg
 evx
@@ -94237,7 +94237,7 @@ cqb
 hHK
 isv
 aQh
-doU
+oTJ
 aRG
 qMS
 pvT
@@ -95142,7 +95142,7 @@ wkZ
 aOi
 lbT
 inl
-hje
+axe
 aQR
 aRG
 aRK
@@ -125294,7 +125294,7 @@ jBf
 qdx
 tZC
 amc
-pTM
+qpD
 alE
 aaa
 aaa
@@ -126785,7 +126785,7 @@ hlO
 dZI
 hfH
 uvz
-jQb
+iyc
 eTy
 eNH
 dkS
@@ -129500,7 +129500,7 @@ aiU
 cEi
 tma
 hOU
-sEx
+oGd
 ybe
 bLx
 ssf

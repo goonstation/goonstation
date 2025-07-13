@@ -2562,8 +2562,8 @@ proc/alert_all_ghosts(atom/target, message)
 	if (!player)
 		boutput(src, SPAN_ALERT("Unable to load data for ckey \"[ckey]\""))
 		return
-	var/value = alert(src, "Set flag on or off? Currently [player.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
-	if (player.cloudSaves.putData("bypass_round_reqs", (value == "On")))
+	var/value = alert(src, "Set flag on or off? Currently [player?.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
+	if (player?.cloudSaves.putData("bypass_round_reqs", (value == "On")))
 		boutput(src, "Successfully set round requirement bypass flag")
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else

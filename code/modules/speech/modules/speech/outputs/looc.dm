@@ -15,7 +15,7 @@
 	if (mob_speaker.client.holder)
 		return ..()
 
-	if (IsGuestKey(mob_speaker.key))
+	if (!mob_speaker.client.authenticated)
 		boutput(mob_speaker, "You are not authorised to communicate over these channels.")
 		return
 	if (oocban_isbanned(mob_speaker))

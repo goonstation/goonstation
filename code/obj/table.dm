@@ -853,8 +853,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
 				/obj/item/storage/box/beakerbox,
 				/obj/item/reagent_containers/glass/beaker/large = 2,
-				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner = 2,
+				/obj/item/clothing/glasses/spectro = 2,
+				/obj/item/device/reagentscanner = 3,
 				/obj/item/reagent_containers/dropper/mechanical = 2,
 				/obj/item/reagent_containers/dropper = 2)
 
@@ -863,8 +863,6 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	desc = "Extra supplies for the discerning chemist."
 	drawer_contents = list(/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
-				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner,
 				/obj/item/bunsen_burner,
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,

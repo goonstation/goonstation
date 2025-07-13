@@ -125,37 +125,37 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", usr.client.key)
+					C.player?.cloudSaves.putData("adminhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("ah_unmute")//guHGUHGUGHGUHG
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.deleteData("adminhelp_banner")
+					C.player?.cloudSaves.deleteData("adminhelp_banner")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", usr.client.key)
+					C.player?.cloudSaves.putData("mentorhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("mh_unmute")//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.deleteData("mentorhelp_banner")
+					C.player?.cloudSaves.deleteData("mentorhelp_banner")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", usr.client.key)
+					C.player?.cloudSaves.putData("prayer_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("pr_unmute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.deleteData("prayer_banner")
+					C.player?.cloudSaves.deleteData("prayer_banner")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -4389,22 +4389,22 @@ var/global/noir = 0
 
 /datum/admins/proc/show_chatbans(var/client/C)//do not use this as an example of how to write DM please.
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
-	if(C.player.cloudSaves.getData( "adminhelp_banner" ))
-		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player.cloudSaves.getData( "adminhelp_banner" )])<br/>"
+	if(C.player?.cloudSaves.getData( "adminhelp_banner" ))
+		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player?.cloudSaves.getData( "adminhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from adminhelping.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from adminhelping.")
 
-	if(C.player.cloudSaves.getData( "mentorhelp_banner" ))
-		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
+	if(C.player?.cloudSaves.getData( "mentorhelp_banner" ))
+		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player?.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from mentorhelping.")
 
-	if(C.player.cloudSaves.getData( "prayer_banner" ))
-		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player.cloudSaves.getData( "prayer_banner" )])<br/>"
+	if(C.player?.cloudSaves.getData( "prayer_banner" ))
+		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player?.cloudSaves.getData( "prayer_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from praying.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"
