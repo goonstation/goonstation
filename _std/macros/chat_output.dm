@@ -64,7 +64,7 @@
 /// both: color "#ffffff" | light: background-color "#566B44" | dark: background-color "#7B8F68"
 #define SPAN_KUDZUSAY(string) ("<span class='kudzusay'>" + string + "</span>")
 
-/// both: color "#8600C8" / background-color "#42c800"
+/// both: color "#8600C8" | light: background-color "#42c800" | dark: background-color "#9c9c9c"
 #define SPAN_INTRUDERSAY(string) ("<span class='intrudersay'>" + string + "</span>")
 
 /** both
