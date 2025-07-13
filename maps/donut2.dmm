@@ -3618,13 +3618,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"axe" = (
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
-/obj/storage/cart/forensic/detective,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "axf" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/morgue{
@@ -7118,6 +7111,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"aOO" = (
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "aOP" = (
 /obj/stool/chair{
 	dir = 4
@@ -17302,6 +17299,18 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"doU" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/obj/machinery/vending/security,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "dpc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -17908,17 +17917,6 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
-"dJz" = (
-/obj/machinery/light/incandescent,
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "dJK" = (
 /obj/machinery/light/incandescent,
 /obj/random_item_spawner/junk/one,
@@ -23654,6 +23652,13 @@
 	dir = 5
 	},
 /area/station/quartermaster/office)
+"hje" = (
+/obj/item/device/radio/intercom/detnet/security{
+	dir = 8
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "hjz" = (
 /obj/machinery/light/small/floor,
 /obj/disposalpipe/segment{
@@ -23930,10 +23935,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/treatment)
-"hve" = (
-/obj/machinery/light/small/sticky,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "hvf" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular{
@@ -25791,13 +25792,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
-"iyc" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta/os_loaded,
-/obj/cable,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/carpet/purple/fancy/edge/se,
-/area/station/crew_quarters/hor)
 "iyl" = (
 /obj/machinery/power/solar/west,
 /obj/cable/yellow{
@@ -27971,6 +27965,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"jQb" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
+/obj/cable,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/crew_quarters/hor)
 "jQv" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -30385,6 +30386,17 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/research)
+"lny" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "lnW" = (
 /obj/storage/cart/forensic/bomb_disposal,
 /turf/simulated/floor/grime,
@@ -32684,6 +32696,15 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"mCQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "mDa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36535,18 +36556,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
-"oGd" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "oGn" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -37033,18 +37042,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
-"oTJ" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
-/obj/machinery/vending/security,
-/obj/machinery/light_switch/west{
-	pixel_y = -4
-	},
-/obj/blind_switch/area/west{
-	pixel_y = 5
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "oTS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38735,6 +38732,16 @@
 	dir = 4
 	},
 /area/station/hangar/main)
+"pTM" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "pUk" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -39579,16 +39586,6 @@
 	dir = 8
 	},
 /area/station/security/checkpoint/arrivals)
-"qpD" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "qqV" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -43439,6 +43436,18 @@
 	layer = 2
 	},
 /area/space)
+"sEx" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "sEV" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -48865,15 +48874,6 @@
 /obj/item/raw_material/shard/glass,
 /turf/space,
 /area/space)
-"vKR" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "vKU" = (
 /obj/machinery/light/small/sticky,
 /obj/cable/orange{
@@ -93328,7 +93328,7 @@ dab
 vKc
 wkZ
 nns
-hve
+aOO
 dSK
 aQg
 evx
@@ -94237,7 +94237,7 @@ cqb
 hHK
 isv
 aQh
-oTJ
+doU
 aRG
 qMS
 pvT
@@ -95142,7 +95142,7 @@ wkZ
 aOi
 lbT
 inl
-axe
+hje
 aQR
 aRG
 aRK
@@ -125294,7 +125294,7 @@ jBf
 qdx
 tZC
 amc
-qpD
+pTM
 alE
 aaa
 aaa
@@ -126785,7 +126785,7 @@ hlO
 dZI
 hfH
 uvz
-iyc
+jQb
 eTy
 eNH
 dkS
@@ -129500,7 +129500,7 @@ aiU
 cEi
 tma
 hOU
-oGd
+sEx
 ybe
 bLx
 ssf
@@ -130719,7 +130719,7 @@ lVX
 hxT
 ajS
 tyH
-dJz
+lny
 alf
 ajz
 ajz
@@ -131021,7 +131021,7 @@ ajT
 ajT
 ajT
 lUy
-vKR
+mCQ
 vmR
 aaa
 aaa
