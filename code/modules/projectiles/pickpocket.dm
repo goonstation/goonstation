@@ -38,7 +38,7 @@
 				if ("chest")
 					if (M.wear_id) stolenItem = M.wear_id
 				if ("head")
-					if (M.wear_mask) stolenItem = M.wear_mask
+					if (M.ears) stolenItem = M.ears
 				if ("r_arm")
 					stolenItem = M.r_hand ? M.r_hand : M.l_hand ? M.l_hand : null
 				if ("l_arm")
