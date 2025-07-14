@@ -53,20 +53,50 @@
 	// Handle brain damage modifiers.
 	if (speaker.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 		message.content = find_replace_in_string(message.content, "language/modifiers/brain_damage.txt")
-
-		// If the mob is wearing a headset, randomly cause them to speak into it.
-		if (prob(50))
-			message.prefix = ";"
-
-		if (prob(20))
-			if (prob(25))
-				message.content = uppertext(message.content)
-				message.content = "[message.content][stutter(pick("!", "!!", "!!!"))]"
-
-			if (!speaker.stuttering && prob(8))
-				message.content = stutter(message.content)
-
 		message.say_verb = pick("says", "stutters", "mumbles", "slurs")
+
+	if (speaker.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+		var/new_msg = ""
+
+		for (var/i in 1 to length(message.content))
+			if (prob(50))
+				if (is_uppercase_letter(message.content[i]))
+					new_msg += pick(uppercase_letters)
+				else if (is_lowercase_letter(message.content[i]))
+					new_msg += pick(lowercase_letters)
+				else
+					new_msg += message.content[i]
+			else
+				new_msg += message.content[i]
+
+		message.content = new_msg
+	else if (speaker.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
+		var/new_msg = ""
+
+		for (var/i in 1 to length(message.content))
+			if (prob(5))
+				if (is_uppercase_letter(message.content[i]))
+					new_msg += pick(uppercase_letters)
+				else if (is_lowercase_letter(message.content[i]))
+					new_msg += pick(lowercase_letters)
+				else
+					new_msg += message.content[i]
+			else
+				new_msg += message.content[i]
+				if (prob(5))
+					new_msg += message.content[i]
+
+		if (speaker.get_brain_damage() >= BRAIN_DAMAGE_MODERATE)
+			if (prob(20))
+				if (prob(25))
+					message.content = uppertext(message.content)
+					message.content = "[message.content][stutter(pick("!", "!!", "!!!"))]"
+
+				if (!speaker.stuttering && prob(8))
+					message.content = stutter(message.content)
+
+
+		message.content = new_msg
 
 	// Handle genetic stability modifiers.
 	if (speaker.bioHolder && (speaker.bioHolder.genetic_stability < 50) && prob(40))

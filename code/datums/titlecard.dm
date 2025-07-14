@@ -39,31 +39,37 @@
 		is_game_mode = TRUE
 
 /datum/titlecard/proc/set_pregame_html()
-	last_pregame_html = {"
-	<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge'><style>
-		@font-face{font-family:'PxPlus IBM VGA9';src:url([resource("misc/ibmvga9.ttf")]);}body{margin:0;padding:0;background:black;overflow:hidden;width:100%;height:100%;}
-		#main-img{z-index: -2;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:100%;object-fit:cover;[pixelated ? "image-rendering:pixelated;" : ""]}
-		#olay-img{z-index: -1;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);height:100%;object-fit:cover;image-rendering:pixelated;}
-		.area{white-space:pre;color:#fff;text-shadow: -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 2px 2px 0px #000, 2px 0px 0px #000, -2px 0px 0px #000, 0px 2px 0px #000, 0px -2px 0px #000;font:1em 'PxPlus IBM VGA9';}
-		#leftside{position:fixed;left:0;bottom:0;}#tip{text-align: center; width: 80%; white-space: pre-wrap; font-size: 0.7em; margin: 10px auto auto auto;}
-		a{text-decoration:none;}#status,#timer{text-align:center;position:fixed;right:0;bottom:0;height:12%;width:40%;}#timer{bottom:15%;}
-	</style></head>
-	<body oncontextmenu="return false">
-	<script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";};function set_area(id,text){document.getElementById(id).innerHTML=text||"";};onresize=function(){document.body.style.fontSize=Math.min(innerWidth/672,innerHeight/480)*16+"px";};onload=function(){onresize();location="byond://winset?command=.send-lobby-text";};</script>
-	<img id="main-img" src="[resource(src.image_url)]">
-		"}
-	if (!isnull(src.overlay_image_url))
-		last_pregame_html += {"<img id="olay-img" src="[resource(src.overlay_image_url)]">"}
+	var/html = grabResource("html/pregame.html")
+	html = replacetext(html, "<!--main_img-->", {"<img id="main-img" src="[resource(src.image_url)]" style="[src.pixelated ? "image-rendering: pixelated;" : ""]">"})
 
-	last_pregame_html += {"<div id="tip" class="area"></div><div id="status" class="area"></div><div id="timer" class="area"></div><div id="leftside" class="area"></div>[src.add_html]</body></html>"}
-	for(var/client/C)
-		if(istype(C.mob, /mob/new_player))
-			C << browse(last_pregame_html, "window=pregameBrowser")
-			if(C)
-				winshow(C, "pregameBrowser", 1)
-				var/mob/new_player/new_player = C.mob
-				new_player.pregameBrowserLoaded = TRUE
+	if (!isnull(src.overlay_image_url))
+		html = replacetext(html, "<!--overlay_img-->", {"<img id="olay-img" src="[resource(src.overlay_image_url)]">"})
+
+	html = replacetext(html, "<!--add_html-->", src.add_html)
+	last_pregame_html = html
 	pregameHTML = last_pregame_html
+
+	var/list/resources = list()
+	if (!cdn)
+		resources = list("browserassets/src/misc/ibmvga9.ttf")
+		if (src.image_url) resources += "browserassets/src/[src.image_url]"
+		if (src.overlay_image_url) resources += "browserassets/src/[src.overlay_image_url]"
+
+	for (var/client/C)
+		if (C && isnewplayer(C.mob))
+			if (!cdn) C.loadResourcesFromList(resources)
+			C.load_pregame()
+
+/client/proc/load_pregame()
+	#ifndef NO_PREGAME_HTML
+	if (!pregameHTML || !src) return
+	src << browse(pregameHTML, "window=pregameBrowser")
+	winshow(src, "pregameBrowser", TRUE)
+
+	if (isnewplayer(src.mob))
+		var/mob/new_player/new_player = src.mob
+		new_player.pregameBrowserLoaded = TRUE
+	#endif
 
 /datum/titlecard/proc/set_maptext(id, text)
 	maptext_areas[id] = text
@@ -74,36 +80,33 @@
 		return
 #endif
 	if (last_pregame_html == pregameHTML)
-		for(var/client/C)
-			if(istype(C.mob, /mob/new_player))
+		for (var/client/C)
+			if (isnewplayer(C.mob))
 				var/mob/new_player/new_player = C.mob
-				if(new_player.pregameBrowserLoaded)
+				if (new_player.pregameBrowserLoaded)
 					C << output(list2params(list(id, text)), "pregameBrowser:set_area")
 
 /client/verb/send_lobby_text()
 	set name = ".send-lobby-text"
 	set hidden = 1
 
-	if (!istype(src?.mob, /mob/new_player))
-		return
-
+	if (!isnewplayer(src?.mob)) return
 	lobby_titlecard.send_lobby_text(src)
 
 /datum/titlecard/proc/send_lobby_text(client/C)
-	if (last_pregame_html != pregameHTML)
-		return
-	if(isnull(pregameHTML))
-		return
+	if (last_pregame_html != pregameHTML) return
+	if (isnull(pregameHTML)) return
 
 #ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	if(current_state <= GAME_STATE_PREGAME)
-		return
+	if (current_state <= GAME_STATE_PREGAME) return
 #endif
+
 	var/mob/new_player/new_player = C.mob
-	if(istype(new_player) && new_player.pregameBrowserLoaded)
-		for (var/id in maptext_areas)
-			C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
-		C << output(list2params(list("tip", src.get_tip(new_player))), "pregameBrowser:set_area")
+	if (istype(new_player) && new_player.pregameBrowserLoaded)
+		var/list/to_send = maptext_areas
+		to_send["auth"] = !C.authenticated ? "Please authenticate to play. To re-open the login window, <a href='byond://winset?command=goonhub-auth'>click here</a>." : ""
+		to_send["tip"] = C.authenticated ? src.get_tip(new_player) : ""
+		C << output(list2params(list(json_encode(to_send))), "pregameBrowser:set_areas")
 
 /datum/titlecard/proc/get_tip(mob/new_player/new_player)
 	. = new_player.my_own_roundstart_tip || get_global_tip()
@@ -118,16 +121,23 @@ proc/get_random_tip()
 	#endif
 	. = pick(all_tips)
 
-proc/get_global_tip()
+proc/get_global_tip(generate = TRUE)
 	var/static/global_tip = null
-	if(isnull(global_tip))
+	if(isnull(global_tip) && generate)
 		global_tip = get_random_tip()
 	. = global_tip
 
 /mob/new_player/verb/refresh_tip()
 	set name = ".refresh_tip"
 	set hidden = 1
-	src.my_own_roundstart_tip = get_random_tip()
+	var/new_tip = ""
+	// Avoid duplicate sequential tips
+	var/tries = 0
+	while (new_tip == "" || new_tip == src.my_own_roundstart_tip || (!src.my_own_roundstart_tip && new_tip == get_global_tip(FALSE)))
+		new_tip = get_random_tip()
+		tries++
+		if (tries > 10) break
+	src.my_own_roundstart_tip = new_tip
 	lobby_titlecard.send_lobby_text(src.client)
 
 
