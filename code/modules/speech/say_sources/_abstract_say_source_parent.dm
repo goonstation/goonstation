@@ -8,14 +8,15 @@ TYPEINFO(/atom/movable/abstract_say_source)
 /atom/movable/abstract_say_source
 	name = "Unknown"
 
+	open_to_sound = FALSE
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	say_language = LANGUAGE_ENGLISH
+
 	speech_verb_say = "says"
 	speech_verb_ask = null
 	speech_verb_exclaim = null
 	speech_verb_stammer = null
 	speech_verb_gasp = null
-
-	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-	say_language = LANGUAGE_ENGLISH
 
 
 /**
