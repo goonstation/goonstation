@@ -344,10 +344,15 @@ TYPEINFO(/obj/item/radiojammer)
 	w_class = W_CLASS_TINY
 	is_syndicate = TRUE
 	var/active = FALSE
+	var/range = RADIO_JAMMER_RANGE
 
 /obj/item/radiojammer/New()
 	. = ..()
 	src.RegisterSignal(src, COMSIG_SIGNAL_JAMMED, PROC_REF(signal_jammed))
+
+/obj/item/radiojammer/disposing()
+	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+	. = ..()
 
 /obj/item/radiojammer/proc/signal_jammed()
 	//hoping this isn't too performance heavy if a lot of signals get blocked at once
@@ -371,10 +376,21 @@ TYPEINFO(/obj/item/radiojammer)
 		icon_state = "shieldoff"
 		STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 
-/obj/item/radiojammer/disposing()
-	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+/obj/item/radiojammer/attackby(obj/item/W, mob/user, params)
+	if(isscrewingtool(W) || ispulsingtool(W))
+		src.edit_range(user)
+		return
 	. = ..()
 
+/obj/item/radiojammer/proc/edit_range(mob/user)
+	var/inputted_number = tgui_input_number(user, "Input radio jammer range", "Radio Jammer", RADIO_JAMMER_RANGE, RADIO_JAMMER_RANGE, 1)
+	if(!inputted_number)
+		return
+	inputted_number = trunc(inputted_number)
+	if(!isnum_safe(inputted_number) || inputted_number > RADIO_JAMMER_RANGE || inputted_number < 1)
+		boutput(user, SPAN_ALERT("That number is out of [src]'s range!"))
+		return
+	src.range = inputted_number
 
 #undef WIRE_SIGNAL
 #undef WIRE_RECEIVE
