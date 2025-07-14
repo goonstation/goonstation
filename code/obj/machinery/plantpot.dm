@@ -1232,9 +1232,13 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /// Handles the finalisation of cropcount
 /obj/machinery/plantpot/proc/HYPharvesting_finalise_cropcount(datum/HYPharvesting_data/h_data)
-	h_data.cropcount *= (1 + ((h_data.DNA?.get_effective_value("cropsize") * h_data.growing.yield_multi) / 100))
-	// It's too easy for low-output plants to have no cropcount at barely-negative yield values, so yield shouldn't be able to zero cropcount by itself.
-	h_data.cropcount = max(h_data.cropcount, 1)
+	// only apply the yield multiplier and minimum if the count is likely to be positive, this allows prior modifiers to zero crop count without
+	// this overriding it back to 1.
+	var/cropsize = h_data.DNA?.get_effective_value("cropsize")
+	if (h_data.cropcount > 0)
+		h_data.cropcount *= (1 + ((cropsize * h_data.growing.yield_multi) / 100))
+		// It's too easy for low-output plants to have no cropcount at barely-negative yield values, so yield shouldn't be able to zero cropcount by itself.
+		h_data.cropcount = max(h_data.cropcount, 1)
 	// A higher output for plants with higher base output helps retains some personality.
 	h_data.harvest_cap += h_data.growing.cropsize
 	 // Introduce some variance at the end.
@@ -1283,11 +1287,6 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.health += src.plantgenes?.get_effective_value("harvests") * 2
 		// If we have a single-harvest vegetable plant, the harvests gene (which is otherwise
 		// useless) adds 2 health for every point. This works negatively also!
-
-	if(growing.cropsize + SDNA?.get_effective_value("cropsize") > 30)
-		src.health += (growing.cropsize + SDNA?.get_effective_value("cropsize")) - 30
-		// If we have a total crop yield above the maximum harvest size, we add it to the
-		// plant's starting health.
 
 	if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
 		src.AddComponent(/datum/component/proximity)
