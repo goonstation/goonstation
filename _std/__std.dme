@@ -112,6 +112,7 @@
 #include "defines\respawns.dm"
 #include "defines\roles.dm"
 #include "defines\security.dm"
+#include "defines\singularity.dm"
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\silicon.dm"

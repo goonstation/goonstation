@@ -25716,14 +25716,6 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"bTi" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "bTk" = (
 /obj/tug_cart,
 /turf/simulated/floor/plating/random,
@@ -26348,12 +26340,6 @@
 /area/station/crew_quarters/radio/lab)
 "bVw" = (
 /obj/stool/chair/comfy{
-	dir = 8
-	},
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
-"bVx" = (
-/obj/mic_stand{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue/checker/other,
@@ -40504,10 +40490,6 @@
 /turf/simulated/bar,
 /area/evilreaver/bar)
 "pdH" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
 /obj/table/wood/auto,
 /obj/item/storage/box/record/radio/host{
 	pixel_x = -4;
@@ -107490,7 +107472,7 @@ bKd
 bKd
 bRb
 bRa
-bTi
+bUu
 bUw
 bVv
 cfv
@@ -108096,7 +108078,7 @@ bRa
 bRa
 pdH
 bWq
-bVx
+bRa
 bRa
 epa
 aqn

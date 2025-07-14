@@ -146,8 +146,12 @@ var/list/removed_jobs = list(
 			ui = new(user, src, "CharacterPreferences")
 			ui.set_autoupdate(FALSE)
 			ui.open()
-		SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
-			src.update_preview_icon() //apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
+			if (isnull(src.preview))
+				src.preview = new(user.client, ui.window.id, "preferences_character_preview")
+			SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
+				//apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
+				src.preview.add_background()
+				src.update_preview_icon()
 
 	ui_close(mob/user)
 		. = ..()
@@ -176,11 +180,6 @@ var/list/removed_jobs = list(
 		)
 
 	ui_data(mob/user)
-		if (isnull(src.preview))
-			src.preview = new(user.client, "preferences", "preferences_character_preview")
-			src.preview.add_background()
-			src.update_preview_icon()
-
 		var/client/client = ismob(user) ? user.client : user
 		if (!client)
 			return
@@ -196,7 +195,7 @@ var/list/removed_jobs = list(
 		src.profile_names_dirty = FALSE
 
 		var/list/cloud_saves = list()
-		for (var/name in client.player.cloudSaves.saves)
+		for (var/name in client.player?.cloudSaves.saves)
 			cloud_saves += name
 
 		src.sanitize_null_values()
@@ -222,7 +221,7 @@ var/list/removed_jobs = list(
 			"profileName" = src.profile_name,
 			"profileModified" = src.profile_modified,
 
-			"preview" = src.preview?.preview_id,
+			"preview" = "preferences_character_preview",
 
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
@@ -358,7 +357,7 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-new")
-				if (length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
+				if (length(client.player?.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
@@ -1196,6 +1195,8 @@ var/list/removed_jobs = list(
 		H.update_icons_if_needed()
 
 	proc/ShowChoices(mob/user)
+		if (!user.client?.authenticated)
+			return
 		src.ui_interact(user)
 
 	proc/ResetAllPrefsToMed(mob/user)
@@ -1499,7 +1500,7 @@ var/list/removed_jobs = list(
 
 		HTML += "<td valign='top' class='antagprefs'>"
 #ifdef LIVE_SERVER
-		if ((user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT) && !user?.client?.player.cloudSaves.getData("bypass_round_reqs"))
+		if ((user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT) && !user?.client?.player?.cloudSaves.getData("bypass_round_reqs"))
 			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
 			src.be_syndicate = FALSE
 			src.be_syndicate_commander = FALSE
