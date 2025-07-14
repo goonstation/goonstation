@@ -55,7 +55,7 @@ proc/singularity_containment_check(turf/center)
 	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
 	var/num_absorbed_players = 0 //! number of players absorbed
 	var/gib_mobs = FALSE //! if it should call gib on mobs
-	var/list/datum/succ_cache //! A list of object types consumed by the singularity, used to remember what it ate for diminishing returns on energy.
+	var/list/succ_cache //! An associative list of object types consumed to the number of times eaten, used for diminishing returns on energy.
 	var/turf/target_turf //! Targeted turf when loose
 	var/target_turf_counter = 0 //! How many steps we'll continue to walk towards the target turf before rerolling
 
