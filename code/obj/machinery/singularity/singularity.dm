@@ -128,7 +128,7 @@ maximum_radius: Sets the initial maximum radius of the singularity.
 	if (prob(20))//Chance for it to run a special event
 		event()
 
-	if (src.contained == 1)
+	if (src.contained)
 		move()
 		SPAWN(2 SECONDS) // slowing this baby down a little -drsingh // smoother movement
 			move()
