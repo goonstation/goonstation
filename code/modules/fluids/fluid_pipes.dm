@@ -253,7 +253,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	if(src.awaiting_removal)
 		return
 	src.awaiting_removal = TRUE
-	UNTIL(!explosions.exploding) //not best but fine for explosions
+	UNTIL(!explosions.exploding, 0) //not best but fine for explosions
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
 		pipe.network = null
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
