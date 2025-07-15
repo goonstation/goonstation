@@ -344,7 +344,7 @@ TYPEINFO(/obj/item/radiojammer)
 	w_class = W_CLASS_TINY
 	is_syndicate = TRUE
 	var/active = FALSE
-	var/range = RADIO_JAMMER_RANGE
+	var/range = DEFAULT_RADIO_JAMMER_RANGE
 
 /obj/item/radiojammer/New()
 	. = ..()
@@ -383,11 +383,17 @@ TYPEINFO(/obj/item/radiojammer)
 	. = ..()
 
 /obj/item/radiojammer/proc/edit_range(mob/user)
-	var/inputted_number = tgui_input_number(user, "Input radio jammer range", "Radio Jammer", RADIO_JAMMER_RANGE, RADIO_JAMMER_RANGE, 1)
+	var/inputted_number = tgui_input_number(user, "Input radio jammer range", "Radio Jammer", DEFAULT_RADIO_JAMMER_RANGE, DEFAULT_RADIO_JAMMER_RANGE, 1)
 	if(!inputted_number)
 		return
+	if(!can_act(user))
+		boutput(user, SPAN_ALERT("Not while incapacitated!"))
+		return
+	if(BOUNDS_DIST(src,user) > 1)
+		boutput(user, SPAN_ALERT("You are too far away from [src]!"))
+		return
 	inputted_number = trunc(inputted_number)
-	if(!isnum_safe(inputted_number) || inputted_number > RADIO_JAMMER_RANGE || inputted_number < 1)
+	if(!isnum_safe(inputted_number) || inputted_number > DEFAULT_RADIO_JAMMER_RANGE || inputted_number < 1)
 		boutput(user, SPAN_ALERT("That number is out of [src]'s range!"))
 		return
 	src.range = inputted_number
