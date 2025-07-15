@@ -354,6 +354,12 @@ TYPEINFO(/obj/item/radiojammer)
 	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 	. = ..()
 
+/obj/item/radiojammer/get_desc(dist, mob/user)
+	. = ..()
+	. += "The range is currently set to [src.range]. "
+	if(!src.active)
+		.+= "It is off."
+
 /obj/item/radiojammer/proc/signal_jammed()
 	//hoping this isn't too performance heavy if a lot of signals get blocked at once
 	if (!src.GetOverlayImage("jammed_light"))
@@ -397,6 +403,7 @@ TYPEINFO(/obj/item/radiojammer)
 		boutput(user, SPAN_ALERT("That number is out of [src]'s range!"))
 		return
 	src.range = inputted_number
+	boutput(user, SPAN_NOTICE("You set [src]'s range to [inputted_number]."))
 
 #undef WIRE_SIGNAL
 #undef WIRE_RECEIVE
