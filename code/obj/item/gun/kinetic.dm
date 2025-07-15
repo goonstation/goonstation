@@ -529,6 +529,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/failured = 0
 	default_magazine = /obj/item/ammo/bullets/staples
 	icon_recoil_cap = 30
+	brew_result = list("gun_slop" = 20)
 	New()
 
 		ammo = new default_magazine
@@ -1545,6 +1546,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/pulled = FALSE
 	add_residue = FALSE
 	recoil_enabled = FALSE
+	brew_result = list("gun_slop" = 10)
 
 	New()
 		ammo = new default_magazine
@@ -1645,6 +1647,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
 	recoil_enabled = FALSE
+	brew_result = list("gun_slop" = 10)
 
 	New()
 		ammo = new default_magazine
@@ -1670,6 +1673,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
 	recoil_strength = 3
+	brew_result = list("gun_slop" = 10)
 
 	New()
 		ammo = new default_magazine
@@ -2190,6 +2194,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 	recoil_strength = 14
 	recoil_max = 14
+	brew_result = list("gun_slop" = 20)
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/a12)
@@ -2890,6 +2895,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_AIRZOOKA)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/airzooka
+	brew_result = list("gun_slop" = 10)
 
 	New()
 		ammo = new default_magazine

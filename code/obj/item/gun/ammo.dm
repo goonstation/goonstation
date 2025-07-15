@@ -1550,7 +1550,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	jammy_ammo = TRUE
 	rand_pos = TRUE
 	refillable = FALSE
-	cook_destructable = TRUE
 
 	var/base_damage = 1
 	var/damage_multi = 0.23
