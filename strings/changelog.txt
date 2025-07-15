@@ -1,4 +1,76 @@
 
+(t)mon jul 14 25
+(u)JORJ949
+(p)24005
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)ID Computer access has been renamed to Personnel Management
+(u)JORJ949
+(p)24117
+(e)💅📄🎩|C-QoL, A-UI, A-Clothing
+(*)Added a new "Use Satchel" option to character setup to automatically turn the backpack you spawn with into a satchel!
+(t)sun jul 13 25
+(u)RubberRats
+(p)23929
+(e)🆕🗺🎨🎩|C-Feature, A-Mapping, C-Sprites, A-Clothing
+(*)The clothing booth now supplies a selection of swimsuits during the summer season
+(u)glowbold
+(e)🆕💊|C-Feature, A-Medical
+(+)Cryogenic Healing Pods have an auto-eject toggle. Keep your organ-mulched patients inside for longer!
+(t)sat jul 12 25
+(u)Wire
+(p)23530
+(e)🎨|C-Sprites
+(*)Authentication refactor to support external providers that aren't the Byond hub.
+(t)fri jul 11 25
+(u)JORJ949
+(p)24092
+(e)🪲🏅🎩|C-Bug, A-Medal, A-Clothing
+(+)Fixed spacebux purchased backpacks not redeeming satchels properly.
+(u)RubberRats
+(p)24094
+(e)🪲💅💊|C-Bug, C-QoL, A-Medical
+(+)Frontal Gyrus Alteration Type-🤪 should now work again 🎉💬
+(+)Frontal Gyrus Alteration Type-🤪 now gives a blank 😶 message if it completely eats what you were going to say.
+(t)thu jul 10 25
+(u)JORJ949
+(p)24002
+(e)🔎🏅📦|C-Code-Quality, A-Medal, A-Game-Objects
+(+)Redeeming the satchel skin on a chameleon backpack automatically adds that satchel to the list of patterns to disguise as.
+(t)wed jul 09 25
+(u)glowbold
+(p)24055
+(e)🔄📦|C-Rework, A-Game-Objects
+(+)The Floor and Wall designer uses cloth when changing floors and walls.
+(u)FlameArrow57
+(p)23924
+(e)🆕⚖🔄💊|C-Feature, C-Balance, C-Rework, A-Medical
+(*)Added/removed some effects of brain damage, see minor changelog for details
+(+)As brain damage increases, you will now experience effects such as impaired speech, vomiting, messages about your head hurting, going blind temporarily, and being unable to hear others. Effects increment at every 20 value increase of brain damage
+(+)You no longer randomly speak over the radio if you have brain damage
+(+)The "blank expression" description for someone with brain damage now only appears if they have lethal (100) brain damage or Expresso in them
+(t)tue jul 08 25
+(u)JORJ949
+(p)24033
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The random contraband trader will now only sell syndicate headsets to real syndies.
+(u)JORJ949 & Username Unavailable
+(p)24063
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs and Cyborgs now have a Show Fake Laws command to check their fake laws. Idea from Username Unavailable on the forums!
+(u)glowbold
+(p)23965
+(e)⚖💊|C-Balance, A-Medical
+(*)Charcoal does not heal organ damage.
+(*)Most posions will directly damage your organs.
+(u)Kilprel
+(p)24032
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(+)Nanite swarms look more menacing.
+(u)LeahTheTech
+(+)Burn damage from hot air now scales a bit more reasonably with temperature, up to the same maximum.
+(t)sun jul 06 25
+(u)LeahTheTech
+(+)The way "power" type machines interact with wires has been tweaked slightly. They will no longer interact with wires running directly underneath them, instead requiring wires running directly into the machine or terminating underneath it. This shouldn't affect anything but report if it does. Hopefully this will fix some of the harder to explain hotwires!
 (t)thu jul 03 25
 (u)FlameArrow57 & Croissant_Man1
 (p)23539
