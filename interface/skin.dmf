@@ -46,7 +46,7 @@ menu "menu"
 		saved-params = "is-checked"
 	elem
 		name = "&Reconnect"
-		command = ".reconnect\n.output browseroutput:output Reconnecting..."
+		command = ".winset \"reset=true\"\n.reconnect\n.output browseroutput:output Reconnecting..."
 		category = "&File"
 		saved-params = "is-checked"
 	elem "screenshot"
@@ -64,6 +64,11 @@ menu "menu"
 		command = ".command"
 		category = "&File"
 		saved-params = "is-checked"
+	elem "auth_logout"
+		name = "Logout"
+		command = ""
+		category = "&File"
+		is-disabled = true
 	elem
 		name = ""
 		command = ""
@@ -854,6 +859,14 @@ window "mainwindow"
 		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"testverb"
 		is-flat = true
 		button-type = pushbox
+	elem "authfailed"
+		type = BROWSER
+		pos = 0,0
+		size = 0x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-visible = false
+		auto-format = false
 
 window "screenSizeHelper"
 	elem "screenSizeHelper"
@@ -949,8 +962,8 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
 		is-disabled = true
+		is-visible = false
 		saved-params = ""
 		auto-format = false
 

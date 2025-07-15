@@ -319,9 +319,6 @@
 		if(src.sealed)
 			boutput(user, SPAN_ALERT("You can't write on [src]."))
 			return
-		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
-			boutput(user, SPAN_ALERT("This sheet of paper is full!"))
-			return
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))

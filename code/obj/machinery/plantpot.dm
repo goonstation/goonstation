@@ -1013,12 +1013,12 @@ TYPEINFO(/obj/machinery/plantpot)
 		quality["score"] += rand(10,-10)
 
 /// helper method for picking the item type of produce
-/obj/machinery/plantpot/proc/pick_type(var/getitem)
+/obj/machinery/plantpot/proc/pick_type(datum/HYPharvesting_data/h_data)
 	var/itemtype = null
-	if(istype(getitem, /list))
-		itemtype = pick(getitem)
+	if(istype(h_data.getitem, /list))
+		itemtype = pick(h_data.getitem)
 	else
-		itemtype = getitem
+		itemtype = h_data.getitem
 	return itemtype
 
 /// Handles the generation of mobs/items during harvests
@@ -1035,7 +1035,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		//Now we can create an item or mob
 		// Marquesas: I thought of everything and couldn't find another way, but we need this for synthlimbs.
 		// Okay, I meanwhile realized there might be another way but this looks cleaner. IMHO.
-		var/itemtype = pick_type(h_data.getitem)
+		var/itemtype = pick_type(h_data)
 		var/atom/CROP = new itemtype
 
 		if(istype(CROP, /obj))

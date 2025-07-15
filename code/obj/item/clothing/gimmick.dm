@@ -849,6 +849,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty ultramarine backpack"
 	desc = "How is this janky piece of shit supposed to work anyway?"
 	icon_state = "um_back"
+	satchel_variant = null
 
 /obj/item/clothing/suit/power/noisemarine
 	name = "cardboard noise marine armor"
@@ -865,6 +866,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty noise marine backpack"
 	desc = "Shame this doesn't have real loudspeakers built into it."
 	icon_state = "nm_back"
+	satchel_variant = null
 
 TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	mat_appearances_to_ignore = list("jean")
@@ -1430,6 +1432,12 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "guardscoat"
+	item_state = "guardscoat"
+	coat_style = "guardscoat"
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 	setupProperties()
 		..()
@@ -2081,16 +2089,23 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 /obj/item/clothing/suit/pigeon
 	name = "Carrier Pigeon"
-	desc = "A motionless pigeon plushie that attaches to shoulders. It looks like something is sticking out of it."
+	desc = "A motionless pigeon plushie that attaches to shoulders. It looks like it has a postmaster's seal on it."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_HAIR_LAYER2
 	icon_state = "pigeon"
 	item_state = "pigeon"
+
+	equipped(mob/user)
+		if (ishuman(user))
+			var/mob/living/carbon/human/human = user
+			src.wear_image.pixel_y = human.mutantrace.head_offset
+		..()
 
 	attack_self (mob/user as mob)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
-		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] on the pigeon using a hidden switch!</b>"))
+		user.visible_message(SPAN_COMBAT("<b>[user] activates [his_or_her(user)] P1G30N using a hidden switch!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/mail/S = new /mob/living/critter/robotic/scuttlebot/mail(get_turf(src))
 		S.linked_pigeon = src
 		user.drop_item()
@@ -2098,9 +2113,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 		user.update_inhands()
 		return
 
-
 // Goku
-
 /obj/item/clothing/under/gimmick/goku
 	name = "anime martial artist costume"
 	desc = "Sturdy karate gi intended for only the toughest martial artists out there. If only you actually practiced!"

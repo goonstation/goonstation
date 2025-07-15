@@ -19,8 +19,6 @@
 	inventory_counter_enabled = 1
 	///Can this ammo be cooked off by heating?
 	var/cookable = TRUE
-	///Will this ammo be deleted if entirely cooked off?
-	var/cook_destructable = FALSE
 	///Jammy ammo cannot be reloaded until the remaining ammo is 0.
 	///For simulating ammo types that aren't fit for purpose
 	var/jammy_ammo = FALSE
@@ -318,8 +316,9 @@
 				if (prob(30) && src.use(1)) //small chance to do two per tick
 					sleep(0.3 SECONDS)
 					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
-				if(src.cook_destructable && src.amount_left <= 0)
+				if(src.delete_on_reload && src.amount_left <= 0)
 					qdel(src)
+
 
 //no caliber:
 /obj/item/ammo/bullets/vbullet
