@@ -568,6 +568,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						continue
 					thing.set_loc(T)
 					SEND_SIGNAL(thing,COMSIG_ATTACKHAND,user) //triggers radiation/explsion/glue stuff
+					SEND_SIGNAL(thing, COMSIG_ATOM_MOUSEDROP, user, src, thing.loc)
 					sleep(0.5)
 					if (!src.open)
 						break

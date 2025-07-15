@@ -1087,9 +1087,10 @@ proc/ui_describe_reagents(atom/A)
 			fabrication_tick += 1
 			if (fabrication_tick >= ticks_to_fabricate)
 				fabrication_tick = 0
-				var/reagents_per_container = flow_rate / length(connected_containers)
-				for(var/obj/container in connected_containers)
-					container.reagents.add_reagent(reagent_to_fabricate, reagents_per_container)
+				if(length(src.connected_containers))
+					var/reagents_per_container = flow_rate / length(src.connected_containers)
+					for(var/obj/container in src.connected_containers)
+						container.reagents.add_reagent(reagent_to_fabricate, reagents_per_container)
 			update_visuals()
 
 

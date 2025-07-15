@@ -715,6 +715,8 @@ TYPEINFO(/datum/mutantrace/blob)
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
 
+	ghost_icon_state = "ghost-blob"
+
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
 
@@ -1538,6 +1540,8 @@ TYPEINFO(/datum/mutantrace/ithillid)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "gills"
 
+	ghost_icon_state = "ghost-squid"
+
 	say_verb()
 		return "glubs"
 
@@ -1584,6 +1588,8 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "fur"
 	override_limb_icons = TRUE
+
+	ghost_icon_state = "ghost-monkey"
 
 	on_attach(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1716,6 +1722,8 @@ TYPEINFO(/datum/mutantrace/seamonkey)
 	human_compatible = 0
 	uses_human_clothes = 0
 	override_language = LANGUAGE_MARTIAN
+
+	ghost_icon_state = "ghost-martian"
 
 /datum/mutantrace/stupidbaby
 	name = "stupid alien baby"
@@ -1929,6 +1937,8 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#22EE99"
 
+	ghost_icon_state = "ghost-amphibian"
+
 	say_verb()
 		return "croaks"
 
@@ -1982,6 +1992,8 @@ TYPEINFO(/datum/mutantrace/amphibian/shelter)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#91b978"
+
+	ghost_icon_state = "ghost-shelterfrog"
 
 TYPEINFO(/datum/mutantrace/kudzu)
 	icon = 'icons/mob/kudzu.dmi'
@@ -2263,6 +2275,7 @@ TYPEINFO(/datum/mutantrace/cow)
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
 				src.mob.update_clothing()
+				. = "<B>[used_name]</B> adjusts [his_or_her(src.mob)] clothing."
 			else
 				.= ..()
 
