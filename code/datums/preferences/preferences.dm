@@ -73,6 +73,7 @@ var/list/removed_jobs = list(
 	var/use_azerty = FALSE // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
+	var/use_satchel //Automatically convert backpack to satchel?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -244,6 +245,7 @@ var/list/removed_jobs = list(
 			"chatsound" = src.AH.voicetype,
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
+			"useSatchel" = src.use_satchel,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -504,6 +506,11 @@ var/list/removed_jobs = list(
 			if ("toggle-hyphenation")
 				src.hyphenate_name = !src.hyphenate_name
 				src.set_real_name()
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("toggle-satchel")
+				src.use_satchel = !src.use_satchel
 				src.profile_modified = TRUE
 				return TRUE
 
