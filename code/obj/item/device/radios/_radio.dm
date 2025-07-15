@@ -356,9 +356,9 @@ TYPEINFO(/obj/item/radiojammer)
 
 /obj/item/radiojammer/get_desc(dist, mob/user)
 	. = ..()
-	. += "The range is currently set to [src.range]. "
+	. += " The range is currently set to [src.range]."
 	if(!src.active)
-		.+= "It is off."
+		.+= " It is off."
 
 /obj/item/radiojammer/proc/signal_jammed()
 	//hoping this isn't too performance heavy if a lot of signals get blocked at once
