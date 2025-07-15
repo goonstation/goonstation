@@ -14,7 +14,7 @@
 
 	if (user.current_prog)
 		if (file)
-			user.current_prog.receive_progsignal(TRUE, list("command" = DWAINE_COMMAND_RECVFILE, "user" = net_id), file)
+			user.current_prog.receive_progsignal(1, list("command" = DWAINE_COMMAND_RECVFILE, "user" = net_id), file)
 		else
 			user.current_prog.input_text(data["data"])
 	else

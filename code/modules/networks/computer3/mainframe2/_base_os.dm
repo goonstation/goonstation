@@ -109,12 +109,12 @@
 		return
 
 	if (is_break)
-		user.current_prog.receive_progsignal(TRUE, list("command" = DWAINE_COMMAND_BREAK, "user" = termid))
+		user.current_prog.receive_progsignal(1, list("command" = DWAINE_COMMAND_BREAK, "user" = termid))
 		return
 
 	if (user.current_prog)
 		if (file)
-			user.current_prog.receive_progsignal(TRUE, list("command" = DWAINE_COMMAND_RECVFILE, "user" = termid), file)
+			user.current_prog.receive_progsignal(1, list("command" = DWAINE_COMMAND_RECVFILE, "user" = termid), file)
 		else
 			user.current_prog.input_text(data)
 	else

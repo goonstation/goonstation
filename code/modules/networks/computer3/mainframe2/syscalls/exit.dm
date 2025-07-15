@@ -24,7 +24,7 @@
 		if (user.current_prog == caller_prog)
 			user.current_prog = quitparent
 		quitparent.useracc = user
-		quitparent.receive_progsignal(TRUE, list("command" = DWAINE_COMMAND_TEXIT, "id" = sendid))
+		quitparent.receive_progsignal(1, list("command" = DWAINE_COMMAND_TEXIT, "id" = sendid))
 
 	else if (QDELETED(quitparent) && !QDELETED(user.base_shell_instance)) // We can't use quitparent if it is already queued for deletion! Lets hope our shellbase didn't get randomly deleted!
 		if (user.current_prog == caller_prog)
