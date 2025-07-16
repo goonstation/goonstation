@@ -35,7 +35,7 @@ const ItemButtonSideButton = (props: ItemButtonSideButtonProps) => {
     <Button
       width={ItemButtonMiniButtonStyle.Width}
       height={
-        (ItemButtonStyle.Height / 2) - (ItemButtonMiniButtonStyle.Spacing / 4)
+        ItemButtonStyle.Height / 2 - ItemButtonMiniButtonStyle.Spacing / 4
       }
       py={ItemButtonMiniButtonStyle.IconSize / 4}
       mb={ItemButtonMiniButtonStyle.Spacing}
@@ -46,7 +46,13 @@ const ItemButtonSideButton = (props: ItemButtonSideButtonProps) => {
       disabled={disabled}
       tooltip={tooltip}
     >
-      <Icon name={icon} py={ItemButtonMiniButtonStyle.IconSize + (ItemButtonMiniButtonStyle.Spacing / 2)} />
+      <Icon
+        name={icon}
+        py={
+          ItemButtonMiniButtonStyle.IconSize +
+          ItemButtonMiniButtonStyle.Spacing / 2
+        }
+      />
     </Button>
   );
 };
