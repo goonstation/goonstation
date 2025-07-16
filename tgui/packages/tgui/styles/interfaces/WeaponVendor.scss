@@ -1,38 +1,56 @@
 @use '../colors';
 @use '../functions' as *;
+@use 'sass:list';
 
+// Color of categories (bg, text [default: white])
 $categories: (
-  'sidearm': var(--color-teal),
-  'loadout': var(--color-yellow),
-  'utility': var(--color-blue),
-  'ammo': var(--color-orange),
-  'assistant': var(--color-grey),
-  'fishing': var(--color-blue),
-  'armor': var(--color-grey),
+  'sidearm': (
+    var(--color-teal),
+  ),
+  'loadout': (
+    var(--color-yellow),
+    var(--color-black),
+  ),
+  'utility': (
+    var(--color-blue),
+  ),
+  'ammo': (
+    var(--color-orange),
+  ),
+  'assistant': (
+    var(--color-grey),
+  ),
+  'fishing': (
+    var(--color-blue),
+  ),
+  'armor': (
+    var(--color-grey),
+  ),
 );
 
-// [516 TODO] Uncomment and work out
-// .WeaponVendor {
-//   @each $category, $color in $categories {
-//     .Button__#{$category} {
-//       @include Button.button-color($color);
-//     }
-//   }
-// }
-
-@each $category, $color in $categories {
-  .WeaponVendor__Credits {
-    @at-root &--#{$category} {
-      color: $color;
+.WeaponVendor {
+  @each $category, $colors in $categories {
+    $bg: list.nth($colors, 1);
+    &__Button--#{$category} {
+      --color: #{$bg};
     }
   }
-  // [516 TODO] Uncomment and work out
-  // .WeaponVendor__Category--#{$category} {
-  //   $luminance: luminance($color);
-  //   $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
-  //   background-color: $color;
-  //   color: $text-color;
-  // }
+}
+
+@each $category, $colors in $categories {
+  $bg: list.nth($colors, 1);
+  $text: if(list.length($colors) > 1, list.nth($colors, 2), var(--color-white));
+  .WeaponVendor__Credits {
+    @at-root &--#{$category} {
+      color: $bg;
+    }
+  }
+  .WeaponVendor__Category--#{$category} {
+    --color: #{$bg};
+    --button-color: #{$text};
+    background-color: var(--color);
+    color: var(--button-color);
+  }
 }
 
 .WeaponVendor__Row {
