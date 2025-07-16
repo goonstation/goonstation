@@ -1204,6 +1204,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 0
 	wages = PAY_IMPORTANT
 	access_string = "Communications Officer"
+	announce_on_join = ANNOUNCE_ORDER_LAST
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
 
 	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
