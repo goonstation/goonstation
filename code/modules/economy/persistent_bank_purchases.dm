@@ -549,7 +549,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					var/obj/item/storage/backpack/old_bag = H.back
 					if(old_bag.slots != 7) //No changing slot amounts
 						return 0
-					var/obj/item/storage/backpack/new_bag = new src.bag_type
+					var/obj/item/storage/backpack/new_bag = new src.bag_type(M) //Spawn it inside the player so it respects satchel preference
 					//Delete anything in the new bag, replace with contents of old bag.
 					for (var/obj/item/I as anything in new_bag.storage.get_contents())
 						qdel(I)
