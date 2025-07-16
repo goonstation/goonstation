@@ -1,0 +1,212 @@
+/* Discord login page shows a mobile view below 500px */
+$externalWidth: 490px;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  background: #0f0f0f;
+}
+
+html {
+  --dpr: 1;
+  --dpr-inverse: calc(1 / var(--dpr));
+
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: white;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("{{resource('images/goonhub_auth_bg.jpg')}}") no-repeat center
+    center;
+  background-size: cover;
+  opacity: 0.1;
+}
+
+.content-wrapper {
+  position: relative;
+  display: inline-flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: #0f0f0f;
+}
+
+#top {
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 0;
+  margin-top: 4vh; /* IE compat */
+  margin-top: clamp(1rem, 4vh, 3rem);
+}
+
+#auth-place {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-grow: 1;
+  margin: 0 1rem;
+  width: $externalWidth; /* IE compat */
+  width: calc($externalWidth * var(--dpr-inverse));
+}
+
+#auth-place .spinner {
+  width: 4rem;
+  height: 4rem;
+  border: 0.4rem solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffd125;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#auth-place .error {
+  display: none;
+  max-width: 100%;
+  background: rgba(255, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  border-radius: 3px;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+#error-message {
+  margin-bottom: 1.5rem;
+}
+
+#reconnect {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.25);
+  border: 0;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#reconnect:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+body.has-error #auth-place .spinner {
+  display: none;
+}
+body.has-error #auth-place .error {
+  display: block;
+}
+
+#bottom {
+  margin-top: 1rem;
+}
+
+/* Countdown Slider Styles */
+#countdown-container {
+  width: $externalWidth; /* IE compat */
+  width: calc($externalWidth * var(--dpr-inverse));
+  margin: 0.5rem auto 0 auto;
+}
+body.timed-out #countdown-container {
+  display: none;
+}
+
+#countdown-label {
+  display: none;
+  position: relative;
+  border-width: 1px;
+  border-style: solid;
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  will-change: background;
+}
+
+#countdown-slider-bg {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  padding: 5px;
+  overflow: hidden;
+  border-radius: 3px;
+  border: 1px solid rgba(140, 140, 140, 0.4);
+}
+
+#countdown-slider-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #3fae3f, #ffd125);
+  border-radius: 2px;
+  will-change: width, background;
+}
+
+#countdown-label.is-active {
+  display: block;
+  animation: headShake 0.5s ease-in-out 3;
+}
+
+@keyframes headShake {
+  0% {
+    transform: translateX(0);
+  }
+
+  6.5% {
+    transform: translateX(-6px) rotateY(-9deg);
+  }
+
+  18.5% {
+    transform: translateX(5px) rotateY(7deg);
+  }
+
+  31.5% {
+    transform: translateX(-3px) rotateY(-5deg);
+  }
+
+  43.5% {
+    transform: translateX(2px) rotateY(3deg);
+  }
+
+  50% {
+    transform: translateX(0);
+  }
+}
