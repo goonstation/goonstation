@@ -52,6 +52,7 @@
 	var/num_arcfiends = 0
 	var/num_flockminds = 0
 	var/num_salvagers = 0
+	var/num_mindeaters = 1
 #if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types[ROLE_GRINCH] = 1;
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
@@ -93,6 +94,8 @@
 						j-- //reroll
 				if(ROLE_WEREWOLF) num_werewolves++
 				if(ROLE_ARCFIEND) num_arcfiends++
+				if (ROLE_MINDEATER)
+					num_mindeaters++
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -248,6 +251,13 @@
 			traitors += arcfiend
 			arcfiend.special_role = ROLE_ARCFIEND
 			possible_arcfiends.Remove(arcfiend)
+
+	if (num_mindeaters)
+		var/list/possible_mindeaters = get_possible_enemies(ROLE_MINDEATER, num_mindeaters)
+		for (var/datum/mind/mindeater in possible_mindeaters)
+			traitors += mindeater
+			mindeater.special_role = ROLE_MINDEATER
+			break
 
 	if(!traitors) return 0
 

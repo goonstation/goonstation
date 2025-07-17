@@ -12,7 +12,7 @@
 #ifdef RP_MODE
 	traitor_types = list(ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1)
 #else
-	traitor_types = list(ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WEREWOLF = 1)
+	traitor_types = list(ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WEREWOLF = 1, ROLE_MINDEATER = 1)
 #endif
 	major_threats = list(ROLE_WRAITH = 1)
 	var/minimum_players = 15
