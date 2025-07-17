@@ -80,7 +80,7 @@
 			src.loaded = TRUE
 
 		else
-			if (!src.player.id && !src.player.ckey) return FALSE
+			if (!src.player.client?.authenticated || (!src.player.id && !src.player.ckey)) return FALSE
 			try
 				var/datum/apiRoute/players/saves/get/getSavesAndData = new
 				getSavesAndData.queryParams = list("player_id" = src.player.id, "ckey" = src.player.ckey)
@@ -94,12 +94,12 @@
 
 				src.data = newData
 				src.saves = newSaves
-				src.loaded = TRUE
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to have their cloud data loaded: [error.message]")
 				logTheThing(LOG_DIARY, src.player.ckey, "failed to have their cloud data loaded: [error.message]", "admin")
 
+			src.loaded = TRUE
 		return TRUE
 
 	/// Save new cloud data for this player
@@ -112,6 +112,7 @@
 			src.putSimulatedCloud("data", key, value)
 
 		else
+			if (!src.player.client?.authenticated) return
 			if (!src.player.id && !src.player.ckey)
 				logTheThing(LOG_DEBUG, src.player.ckey, "No player ID or ckey found in cloud data put [key], [value]")
 				logTheThing(LOG_DIARY, src.player.ckey, "No player ID or ckey found in cloud data put [key], [value]", "admin")
@@ -139,7 +140,7 @@
 			src.putSimulatedCloud("saves", name, data)
 
 		else
-			if (!src.player.id && !src.player.ckey) return
+			if (!src.player.client?.authenticated || (!src.player.id && !src.player.ckey)) return
 			try
 				var/datum/apiRoute/players/saves/file/post/addPlayerSave = new
 				addPlayerSave.buildBody(src.player.id, src.player.ckey, name, data)
@@ -160,7 +161,7 @@
 			src.deleteSimulatedCloud("data", key)
 
 		else
-			if (!src.player.id && !src.player.ckey) return
+			if (!src.player.client?.authenticated || (!src.player.id && !src.player.ckey)) return
 			try
 				var/datum/apiRoute/players/saves/data/delete/deletePlayerData = new
 				deletePlayerData.buildBody(src.player.id, src.player.ckey, key)
@@ -181,7 +182,7 @@
 			src.deleteSimulatedCloud("saves", name)
 
 		else
-			if (!src.player.id && !src.player.ckey) return
+			if (!src.player.client?.authenticated || (!src.player.id && !src.player.ckey)) return
 			try
 				var/datum/apiRoute/players/saves/file/delete/deletePlayerSave = new
 				deletePlayerSave.buildBody(src.player.id, src.player.ckey, name)
@@ -278,10 +279,10 @@
 	for (var/client/C in clients)
 		if (C.ckey == from_ckey)
 			// The source player has all their saves moved
-			C.player.cloudSaves.saves = list()
+			C.player?.cloudSaves.saves = list()
 		if (C.ckey == to_ckey)
 			// Trigger a re-fetch on the target so they can get their new saves right away
-			C.player.cloudSaves.fetch()
+			C.player?.cloudSaves.fetch()
 
 	return TRUE
 #endif

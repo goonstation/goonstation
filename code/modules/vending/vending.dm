@@ -835,7 +835,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					src.last_reply = world.time
 
 			use_power(10)
-			if (src.icon_vend) //Show the vending animation if needed
+			if (src.icon_vend && !src.fallen) //Show the vending animation if needed
 				FLICK(src.icon_vend,src)
 
 			src.vend_ready = 0
@@ -1098,7 +1098,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!R.infinite)
 			R.product_amount--
 		use_power(10)
-		if (src.icon_vend) //Show the vending animation if needed
+		if (src.icon_vend && !src.fallen) //Show the vending animation if needed
 			FLICK(src.icon_vend,src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)

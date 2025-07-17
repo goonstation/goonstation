@@ -1,7 +1,6 @@
 .chemadd {
-
-	width:160px;
-	/*
+  width: 160px;
+  /*
 	display:inline-block;
 	color:#fff;
 	font-size:12px;
@@ -10,35 +9,35 @@
 	*/
 }
 .chemrem {
-	display:inline-block;
-	color:#fff;
-	font-size:10px;
-	font-weight: bold;
-	margin:1px;
-	padding:0 0 0 5px;
+  display: inline-block;
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  margin: 1px;
+  padding: 0 0 0 5px;
 }
 #groups {
-	display:inline-block;
-	color:#fff;
-	/*font-size:10px;*/
-	margin:1px;
-	padding:4px 0 4px 5px;
+  display: inline-block;
+  color: #fff;
+  /*font-size:10px;*/
+  margin: 1px;
+  padding: 4px 0 4px 5px;
 }
 .group {
-	display:block;
-	margin:0px 0px 2px 0px;
+  display: block;
+  margin: 0px 0px 2px 0px;
 }
 .info {
-	display:inline-block;
+  display: inline-block;
 }
 
 .group-desc {
-	margin-left:10px;
+  margin-left: 10px;
 }
 
 .reagent-name {
-	width:150px;
+  width: 150px;
 }
 .right {
-	float:right;
+  float: right;
 }

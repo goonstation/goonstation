@@ -567,6 +567,7 @@ Contains:
 	new_detonator.attachedTo = payload
 	new_detonator.builtBy = user
 	payload.overlay_state = "overlay_safety_on"
+	payload.disconnect()
 	payload.det = new_detonator
 	logTheThing(LOG_BOMBING, user, "builds a canister bomb [log_atmos(payload)] at [log_loc(payload)].")
 	if(payload.air_contents.check_if_dangerous())
