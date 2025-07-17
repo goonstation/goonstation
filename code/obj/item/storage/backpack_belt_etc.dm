@@ -65,6 +65,12 @@
 		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 
+		var/mob/M = src.loc
+		if(istype(M) && M.client && M.client.preferences.use_satchel)
+			if(!src.convert_to_satchel())
+				boutput(M, SPAN_NOTICE("Your worn backpack has no satchel variant!"))
+
+
 /obj/item/storage/backpack/empty
 	spawn_contents = list()
 

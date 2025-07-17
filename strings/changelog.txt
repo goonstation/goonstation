@@ -1,4 +1,13 @@
 
+(t)mon jul 14 25
+(u)JORJ949
+(p)24005
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)ID Computer access has been renamed to Personnel Management
+(u)JORJ949
+(p)24117
+(e)💅📄🎩|C-QoL, A-UI, A-Clothing
+(*)Added a new "Use Satchel" option to character setup to automatically turn the backpack you spawn with into a satchel!
 (t)sun jul 13 25
 (u)RubberRats
 (p)23929

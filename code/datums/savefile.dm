@@ -52,6 +52,7 @@
 		F["[profileNum]_voicetype"] << AH.voicetype
 		F["[profileNum]_PDAcolor"] << src.PDAcolor
 		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
+		F["[profileNum]_use_satchel"] << src.use_satchel
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -221,6 +222,7 @@
 		F["[profileNum]_voicetype"] >> AH.voicetype
 		F["[profileNum]_PDAcolor"] >> src.PDAcolor
 		F["[profileNum]_pda_ringtone_index"] >> src.pda_ringtone_index
+		F["[profileNum]_use_satchel"] >> src.use_satchel
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 

@@ -16,12 +16,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	anchored = UNANCHORED
 	density = 1
 	var/state = UNWRENCHED
-	var/timing = 0
-	var/time = 30
-	var/last_tick = null
+	var/countdown_active = FALSE
+	var/countdown_left = 30 SECONDS
+	var/last_tick = null //! Stores the last time this ticked in worldtime, for countdown purposes
 	var/mob/activator = null // For logging purposes.
-	is_syndicate = 1
-	var/bhole = 1
+	is_syndicate = TRUE
+	var/bhole = TRUE
 
 /obj/machinery/the_singularitybomb/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
@@ -43,7 +43,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 			return
 
 	if(isweldingtool(W))
-		if(timing)
+		if(countdown_active)
 			boutput(user, "Stop the countdown first.")
 			return
 
@@ -104,34 +104,34 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 			if("trigger")
 				switch(href_list["spec"])
 					if("prime")
-						if(!timing)
+						if(!countdown_active)
 							src.prime()
 						else
 							boutput(usr, SPAN_ALERT("\The [src] is already primed!"))
 					if("abort")
-						if(timing)
+						if(countdown_active)
 							src.abort()
 						else
 							boutput(usr, SPAN_ALERT("\The [src] is already deactivated!"))
 			if("timer")
-				if(!timing)
+				if(!countdown_active)
 					var/tp = text2num_safe(href_list["tp"])
-					src.time += tp
-					src.time = clamp(round(src.time), 30, 600)
+					src.countdown_left += tp
+					src.countdown_left = clamp(round(src.countdown_left), 30, 600)
 				else
 					boutput(usr, SPAN_ALERT("You can't change the time while the timer is engaged!"))
 		/*
 		if (href_list["time"])
-			src.timing = text2num_safe(href_list["time"])
-			if(timing) processing_items |= src
+			src.countdown_active = FALSEext2num_safe(href_list["time"])
+			if(countdown_active) pFALSEocessing_items |= src
 				src.icon_state = "portgen2"
 			else
 				src.icon_state = "portgen1"
 
 		if (href_list["tp"])
 			var/tp = text2num_safe(href_list["tp"])
-			src.time += tp
-			src.time = clamp(round(src.time), 60, 600)
+			src.countdown_left += tp
+			src.countdown_left = clamp(round(src.countdown_left), 60, 600)
 
 		if (href_list["close"])
 			usr.Browse(null, "window=timer")
@@ -150,16 +150,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	return
 
 /obj/machinery/the_singularitybomb/proc/prime()
-	src.timing = 1
+	src.countdown_active = TRUE
 	processing_items |= src
 	src.icon_state = "portgen2"
-	logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
-	message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+	logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.countdown_left] seconds) at [log_loc(src)].")
+	message_admins("[key_name(usr)] activated [src.name] ([src.countdown_left] seconds) at [log_loc(src)].")
 	if (ismob(usr))
 		src.activator = usr
 
 /obj/machinery/the_singularitybomb/proc/abort()
-	src.timing = 0
+	src.countdown_active = FALSE
 	src.icon_state = "portgen1"
 
 	// And here (Convair880).
@@ -179,7 +179,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
-		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='byond://?src=\ref[];tp=-30'>-</A> <A href='byond://?src=\ref[];tp=-1'>-</A> <A href='byond://?src=\ref[];tp=1'>+</A> <A href='byond://?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='byond://?src=\ref[];time=0'>Timing</A>", src) : text("<A href='byond://?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
+		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='byond://?src=\ref[];tp=-30'>-</A> <A href='byond://?src=\ref[];tp=-1'>-</A> <A href='byond://?src=\ref[];tp=1'>+</A> <A href='byond://?src=\ref[];tp=30'>+</A><br></TT>", (src.countdown_active ? text("<A href='byond://?src=\ref[];time=0'>Timing</A>", src) : text("<A href='byond://?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
 		dat += "<BR><BR><A href='byond://?src=\ref[src];close=1'>Close</A>"
 		*/
 		user.Browse(src.get_interface(), "window=timer")
@@ -191,7 +191,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	src.add_fingerprint(user)
 	return
 
-/obj/machinery/the_singularitybomb/proc/time()
+/obj/machinery/the_singularitybomb/proc/countdown_end()
 	var/turf/T = get_turf(src.loc)
 	for(var/mob/O in hearers(src.loc, null))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
@@ -199,7 +199,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 
 	playsound(T, 'sound/effects/creaking_metal1.ogg', 100, FALSE, 5, 0.5)
 	for (var/mob/M in range(7,T))
-		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
+		boutput(M, "<span class='bold alert'>The containment field on \the [src] begins destabilizing!</span>")
 		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
 		animate_shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
@@ -225,16 +225,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	return
 
 /obj/machinery/the_singularitybomb/process()
-	if (src.timing)
-		if (src.time > 0)
+	if (src.countdown_active)
+		if (src.countdown_left > 0)
 			if (!last_tick) last_tick = world.time
 			var/passed_time = round(max(round(world.time - last_tick),10) / 10)
-			src.time = max(0, src.time - passed_time)
+			src.countdown_left = max(0, src.countdown_left - passed_time)
 			last_tick = world.time
 		else
-			time()
-			src.time = 0
-			src.timing = 0
+			countdown_end()
+			src.countdown_left = 0
+			src.countdown_active = FALSE
 			last_tick = 0
 
 		if (ismob(src.loc))
@@ -246,13 +246,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 
 	return
 
-/obj/machinery/the_singularitybomb/proc/get_time()
-	if(src.time < 0)
+/obj/machinery/the_singularitybomb/proc/get_countdown_end()
+	if(src.countdown_left < 0)
 		return "DO:OM"
 	else
-		var/seconds = src.time % 60
-		var/minutes = (src.time - seconds) / 60
-		var/flick_seperator = (seconds % 2 == 0)  || !src.timing
+		var/seconds = src.countdown_left % 60
+		var/minutes = (src.countdown_left - seconds) / 60
+		var/flick_seperator = (seconds % 2 == 0)  || !src.countdown_active
 		minutes = minutes < 10 ? "0[minutes]" : "[minutes]"
 		seconds = seconds < 10 ? "0[seconds]" : "[seconds]"
 
@@ -341,7 +341,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 					<div class="timing_div top_level">
 						<table class="timer_table">
 							<tr>
-								<td class="timer[src.timing ? " active" : ""]" colspan=4>[src.get_time()]</td>
+								<td class="timer[src.countdown_active ? "active" : ""]" colspan=4>[src.get_countdown_end()]</td>
 							</tr>
 
 							<tr>

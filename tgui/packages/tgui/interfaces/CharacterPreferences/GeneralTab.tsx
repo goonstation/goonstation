@@ -184,9 +184,9 @@ export const GeneralTab = () => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="PDA">
+      <Section title="Equipment">
         <LabeledList>
-          <LabeledList.Item label="Ringtone">
+          <LabeledList.Item label="PDA Ringtone">
             <Button onClick={() => act('update-pdaRingtone')}>
               {data.pdaRingtone}
             </Button>
@@ -197,11 +197,19 @@ export const GeneralTab = () => {
               Preview
             </Button>
           </LabeledList.Item>
-          <LabeledList.Item label="Background Color">
+          <LabeledList.Item label="PDA Background Color">
             <ColorButton
               color={data.pdaColor}
               onClick={() => act('update-pdaColor')}
             />
+          </LabeledList.Item>
+          <LabeledList.Item label="Use Satchel">
+            <Button.Checkbox
+              checked={data.useSatchel}
+              onClick={() => act('toggle-satchel')}
+            >
+              Y/N
+            </Button.Checkbox>
           </LabeledList.Item>
         </LabeledList>
       </Section>
