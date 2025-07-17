@@ -304,11 +304,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		boutput(src, SPAN_ALERT("<b>Something went wrong setting up your rank and equipment! Report this to a coder.</b>"))
 		return
 
-	if (JOB.announce_on_join)
+	if (JOB.world_announce_priority)
 		var/list/L = list()
 		L["name"] = src.name
 		L["job"] = JOB.name
-		L["priority"] = JOB.announce_on_join
+		L["priority"] = JOB.world_announce_priority
 		unannounced_heads_of_staff += list(L)
 		SPAWN(1 SECOND)
 			announce_heads_of_staff()

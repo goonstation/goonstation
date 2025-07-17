@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/list/receives_implants = null //! List of object paths of implant types given on spawn.
 	var/receives_disk = FALSE //! Job spawns with cloning data disk, can specify a type
 	var/obj/item/clothing/suit/security_badge/badge = null //! Typepath of the badge to spawn the player with
-	var/announce_on_join = ANNOUNCE_ORDER_NEVER //! On join, send message to all players indicating who is fulfilling the role; ordered by rank, ANNOUNCE_ORDER_NEVER to never announce
+	var/world_announce_priority = ANNOUNCE_ORDER_NEVER //! On join, send message to all players indicating who is fulfilling the role; ordered by rank, ANNOUNCE_ORDER_NEVER to never announce
 	var/radio_announcement = TRUE //! The announcement computer will send a message when the player joins after round-start.
 	var/list/alt_names = list()
 	var/slot_card = /obj/item/card/id //! Object path of the ID card type to issue player. Overridden by `spawn_id`.
@@ -265,7 +265,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	job_category = JOB_COMMAND
 	unique = TRUE
-	announce_on_join = ANNOUNCE_ORDER_HEADS
+	world_announce_priority = ANNOUNCE_ORDER_HEADS
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -281,7 +281,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	high_priority_job = TRUE
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
-	announce_on_join = ANNOUNCE_ORDER_CAPTAIN
+	world_announce_priority = ANNOUNCE_ORDER_CAPTAIN
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	wiki_link = "https://wiki.ss13.co/Captain"
 
@@ -329,7 +329,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	allow_antag_fallthrough = FALSE
 	receives_miranda = TRUE
-	announce_on_join = ANNOUNCE_ORDER_HOP
+	world_announce_priority = ANNOUNCE_ORDER_HOP
 
 
 	slot_back = list(/obj/item/storage/backpack)
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	requires_whitelist = TRUE
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
-	announce_on_join = ANNOUNCE_ORDER_HOS
+	world_announce_priority = ANNOUNCE_ORDER_HOS
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 	badge = /obj/item/clothing/suit/security_badge
 	show_in_id_comp = FALSE
@@ -1204,7 +1204,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 0
 	wages = PAY_IMPORTANT
 	access_string = "Communications Officer"
-	announce_on_join = ANNOUNCE_ORDER_LAST
+	world_announce_priority = ANNOUNCE_ORDER_LAST
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
 
 	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
