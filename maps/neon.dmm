@@ -11669,6 +11669,13 @@
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/kitchen/food_box/donut_box,
+/obj/item/weldingtool{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/wrench{
+	pixel_x = -6
+	},
 /obj/item/kitchen/food_box/donut_box,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
