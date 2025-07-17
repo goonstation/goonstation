@@ -277,10 +277,15 @@
 
 	update_stack_name() //! How the material should be named at different stack sizes
 		UpdateName(src) // get the name in order so it has whatever it needs
+		var/name_mat = ""
+		var/name_rock = "stone"
+		if(src.material.getID() != "rock")
+			name_rock = "chunk"
+			name_mat = src.material.getName()
 		if(src.amount == 1)
-			name = "[src.material.getName()] stone"
+			name = "[name_mat] [name_rock]"
 		else
-			name = "[amount] [src.material.getName()] stones"
+			name = "[amount] [name_mat] [name_rock]s"
 
 /obj/item/raw_material/mauxite
 	name = "mauxite ore"
