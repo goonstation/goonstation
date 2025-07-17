@@ -281,9 +281,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			 */
 			var/generation = src.occupant.bioHolder.clone_generation
 			for (var/i in 1 to rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1))))
-				if (generation)
-					defects.add_random_cloner_defect()
-				else if (src.occupant.traitHolder.hasTrait("defect_prone"))
+				if (generation || src.occupant.traitHolder.hasTrait("defect_prone"))
 					defects.add_random_cloner_defect()
 				else
 					// First cloning can't get major defects
