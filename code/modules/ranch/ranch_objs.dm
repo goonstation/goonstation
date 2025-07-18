@@ -226,15 +226,10 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		src.add_item(W)
 
 	proc/add_item(var/obj/item/item)
-		src.icon_state = "feed_grinder-on"
-
-		if(istype(item,/obj/item/reagent_containers/food))
-			UpdateOverlays(feed_grinder_overlay, "feed_grinder_overlay")
+		if(istype(item, /obj/item/reagent_containers/food))
 			item.set_loc(src)
 		else
 			var/obj/item/reagent_containers/food/F = src.preprocess(item)
-			feed_grinder_overlay.color = F.food_color
-			UpdateOverlays(feed_grinder_overlay, "feed_grinder_overlay")
 			qdel(item)
 			F.set_loc(src)
 
@@ -284,6 +279,9 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				if(0)
 					if(QDELETED(current_food))
 						current_food = locate(/obj/item/reagent_containers/food) in src.contents
+						src.icon_state = "feed_grinder-on"
+						feed_grinder_overlay.color = current_food.food_color
+						UpdateOverlays(feed_grinder_overlay, "feed_grinder_overlay")
 						work_cycle++
 				if(1 to 2)
 					playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
