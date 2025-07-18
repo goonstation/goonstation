@@ -1,5 +1,9 @@
 
 (t)fri jul 18 25
+(u)JORJ949
+(p)24129
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)You can now edit the range on a syndicate signal jammer with either a screwing or pulsing tool, allowing for more precisely jammed crime dens.
 (u)LeahTheTech
 (p)24142
 (e)⚖🧛|C-Balance, A-Gamemodes
