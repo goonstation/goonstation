@@ -670,14 +670,24 @@
 
 				return 1
 
-			//Tells shitbee what the current AI laws are (if there are any custom ones)
+			//Tells shitbee what the current AI laws are (if there are any custom ones). If given a ckey as argument instead returns the laws for that ckey's silicon, if any
 			if ("ailaws")
-				if (current_state > GAME_STATE_PREGAME)
-					var/ircmsg[] = new()
-					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
-					return ircbot.response(ircmsg)
+				var/ircmsg[] = new()
+				if(plist["target"])
+					var/who = lowertext(plist["target"])
+					var/mob/living/silicon/S = ckey_to_mob_maybe_disconnected(who, exact = FALSE)
+					if(S)
+						var/datum/ai_lawset/laws = S.lawset_connection
+						ircmsg["laws"] = laws ? laws.format_for_logs(glue = "\n") : "No Laws"
+						return ircbot.response(ircmsg)
+					else
+						return 0
 				else
-					return 0
+					if (current_state > GAME_STATE_PREGAME)
+						ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
+						return ircbot.response(ircmsg)
+					else
+						return 0
 
 			if ("health")
 				var/ircmsg[] = new()
