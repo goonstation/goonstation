@@ -4,6 +4,8 @@
 (p)23716
 (e)🆕🗺🔧📦|C-Feature, A-Mapping, A-Tooling, A-Game-Objects
 (+)Loudspeakers can be damaged by explosions, gunfire, hitting with heavy items, and excessive microphone feedback. They can be repaired with a screwdriver.
+(u)LeahTheTech
+(+)Loudspeakers now cause audible disorient when they break.
 (u)JORJ949
 (p)23884
 (e)🪲🧑‍✈️|C-Bug, A-Command

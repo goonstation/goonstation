@@ -116,6 +116,8 @@ TYPEINFO(/obj/machinery/loudspeaker)
 	AddComponent(/datum/component/equipment_fault/elecflash, tool_flags = TOOL_SCREWING | TOOL_WIRING | TOOL_SNIPPING)
 	src.visible_message(SPAN_ALERT("[src] sparks and pops, shorting out!"))
 	playsound(src, 'sound/effects/screech_tone.ogg', 70, 2, pitch=0.5)
+	for (var/mob/living/M in hearers(5, src))
+		M.do_disorient(50, target_type = DISORIENT_EAR, remove_stamina_below_zero = TRUE)
 
 /obj/machinery/loudspeaker/ex_act(severity)
 	. = ..()
