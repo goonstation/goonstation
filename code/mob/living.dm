@@ -499,11 +499,11 @@ TYPEINFO(/mob/living)
 		return
 
 	if (params["middle"])
-		var/obj/storage/storage = locate() in get_turf(target)
-		if (storage.open)
-			storage.close(user = src)
-		else
-			storage.open(user = src)
+		for (var/obj/storage/storage in get_turf(target))
+			if (storage.open)
+				storage.close(user = src)
+			else
+				storage.open(user = src)
 		return
 
 	var/obj/item/equipped = src.equipped()
