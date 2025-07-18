@@ -129,7 +129,7 @@ datum
 			transparency = 30
 			addiction_prob = 10
 			addiction_min = 15
-			depletion_rate = 0.3
+			depletion_rate = 0.6
 			overdose = 40   //Ether is known for having a big difference in effective to toxic dosage
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			minimum_reaction_temperature = T0C + 80 //This stuff is extremely flammable
@@ -189,20 +189,14 @@ datum
 					M.changeStatus("stimulants", -4 SECONDS * mult)
 				if(M.hasStatus("recent_trauma")) // can be used to help fix recent trauma
 					M.changeStatus("recent_trauma", -2 SECONDS * mult)
-				if(holder.has_reagent(src.id,10)) // large doses progress somewhat faster than small ones
-					counter += mult
-					depletion_rate = 0.6 // depletes faster in large doses as well
-				else
-					depletion_rate = 0.3
 
 				switch(counter += 1 * mult)
-					if(1 to 7)
+					if(1 to 4)
 						if(probmult(7)) M.emote("yawn")
-					if(7 to 30)
+					if(4 to 15)
 						M.setStatus("drowsy", 40 SECONDS)
 						if(probmult(9)) M.emote(pick("smile","giggle","yawn"))
-					if(30 to INFINITY)
-						depletion_rate = 0.6
+					if(15 to INFINITY)
 						M.setStatusMin("unconscious", 6 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
