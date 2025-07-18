@@ -56,10 +56,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		get_self_and_decoys() // links them up
 
 		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_NUCLEAR_BOMBS)
 		..()
 
 	disposing()
 		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_NUCLEAR_BOMBS)
+		// If we placed maptext on a mob we are inside of, remove it
+		if(istype(src.loc, /atom/movable))
+			var/atom/movable/AM = src.loc
+			AM.maptext = null
 		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/gamemode = ticker.mode
 			if(gamemode.the_bomb == src)
@@ -613,6 +619,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	disposing()
 		STOP_TRACKING
+		// If we placed maptext on a mob we are inside of, remove it
+		if(istype(src.loc, /atom/movable))
+			var/atom/movable/AM = src.loc
+			AM.maptext = null
 		..()
 
 	proc/checkhealth()
