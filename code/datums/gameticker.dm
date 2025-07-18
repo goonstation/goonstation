@@ -998,7 +998,7 @@ var/global/game_force_started = FALSE
 		logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [pop_ratio], greater than threshold [RATIO_THRESHOLD], aborting end round drops.")
 		return // servers are reasonably balanced, no drops for u
 
-	if (global.round_elapsed_ticks < 10 MINUTES) //too short, possibly just an admin restarting the server to change map etc.
+	if (src.round_elapsed_ticks < 10 MINUTES) //too short, possibly just an admin restarting the server to change map etc.
 		return
 
 	var/actual_token_chance = BASE_TOKEN_CHANCE * ((RATIO_THRESHOLD - pop_ratio) / RATIO_THRESHOLD)
