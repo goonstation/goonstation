@@ -247,6 +247,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 /// Refreshes all machines and pipes and removes ourself. Delays during explosions.
 /datum/flow_network/proc/rebuild_network()
+	set waitfor = FALSE
 	if(src.awaiting_removal)
 		return
 	src.awaiting_removal = TRUE
