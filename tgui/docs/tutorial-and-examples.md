@@ -76,7 +76,7 @@ input. The input's `action` and `params` are passed to the proc.
 ```dm
 /obj/machinery/my_machine/ui_act(action, params)
   . = ..()
-  if (.)
+  if(.)
     return
   if(action == "change_color")
     var/new_color = params["color"]

@@ -95,14 +95,15 @@ export const ColorPickerModal = () => {
   );
 };
 
-export const ColorSelector = (
-  {
-    color,
-    setColor,
-    defaultColor,
-  }: { color: HsvaColor; setColor; defaultColor: string },
-  context,
-) => {
+export const ColorSelector = ({
+  color,
+  setColor,
+  defaultColor,
+}: {
+  color: HsvaColor;
+  setColor;
+  defaultColor: string;
+}) => {
   const handleChange = (params: Partial<HsvaColor>) => {
     setColor((current: HsvaColor) => {
       return Object.assign({}, current, params);

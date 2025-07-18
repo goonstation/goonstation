@@ -387,7 +387,7 @@ export const MakePills = (props) => {
   );
 };
 
-export const MakeBottle = (props, context) => {
+export const MakeBottle = (props) => {
   const { act, data } = useBackend<ChemMasterData>();
 
   const [bottle_amount, set_bottle_amount] = useSharedState(
@@ -575,7 +575,7 @@ export const OperationsSection = (props) => {
           <Input
             value={item_name}
             placeholder={placeholder}
-            onChange={(e, value) => {
+            onBlur={(value) => {
               set_item_name(value);
             }}
             maxLength={data.name_max_len}

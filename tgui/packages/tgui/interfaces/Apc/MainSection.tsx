@@ -55,7 +55,7 @@ const ExternalPowerListItem = (props: ExternalPowerListItemProps) => {
   );
 };
 
-export const MainSection = (_props, context) => {
+export const MainSection = (_props) => {
   const { act, data } = useBackend<ApcData>();
   const { area_name, host_id, locked, main_status, operating } = data;
 
