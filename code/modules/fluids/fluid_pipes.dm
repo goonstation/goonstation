@@ -30,16 +30,11 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 /obj/fluid_pipe/onDestroy()
 	src.network.remove_pipe(src)
-	qdel(src)
-
-/obj/fluid_pipe/Move()
-	..()
-	src.network.remove_pipe(src)
 
 /// Accepts a reagents datum to start with.
 /// Replaces our network with a new one and relooks for pipes to connect to.
 /obj/fluid_pipe/proc/refresh_connections(datum/reagents/flow_network/leftover)
-	src.network = new(src)
+	src.network = src.network || new(src)
 	leftover?.trans_to_direct(src.network.reagents, leftover.total_volume)
 	var/connect_directions = src.initialize_directions
 	for(var/direction in cardinal) // Look for pipes to connect to.
@@ -255,7 +250,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	src.awaiting_removal = TRUE
 	UNTIL(!explosions.exploding, 0) //not best but fine for explosions
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
-		pipe.network = null
+		pipe.network = new(pipe)
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
 		pipe.refresh_connections(src.reagents.remove_any_to(src.reagents.total_volume * (pipe.capacity/src.reagents.maximum_volume)))
 		src.reagents.maximum_volume -= pipe.capacity
@@ -267,7 +262,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /// Refreshes all machines and pipes and removes ourself. Does not delay during explosions.
 /datum/flow_network/proc/rebuild_network_force()
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
-		pipe.network = null
+		pipe.network = new(pipe)
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
 		pipe.refresh_connections(src.reagents.remove_any_to(src.reagents.total_volume * (pipe.capacity/src.reagents.maximum_volume)))
 		src.reagents.maximum_volume -= pipe.capacity
@@ -284,7 +279,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	src.reagents.maximum_volume -= node.capacity
 	src.pipes -= node
 	node.network = null
-	node.refresh_connections()
+	qdel(node)
 	src.rebuild_network()
 
 /datum/flow_network/proc/on_reagent_changed()
