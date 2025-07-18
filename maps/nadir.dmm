@@ -7232,11 +7232,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
-"doE" = (
-/turf/simulated/floor/engine/caution/corner{
-	dir = 8
-	},
-/area/shuttle/sea_elevator/upper)
 "doO" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
@@ -20942,12 +20937,6 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
-"iYk" = (
-/obj/loudspeaker,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "iYC" = (
 /obj/machinery/door/feather/friendly,
 /turf/simulated/floor/shuttle/flock,
@@ -25967,6 +25956,24 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"lbe" = (
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
+/obj/machinery/door_control{
+	id = "nadir_minetop";
+	name = "Loading Door Control";
+	pixel_y = 24;
+	pixel_x = 8
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28;
+	pixel_x = -6
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/mining/staff_room)
 "lbg" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light_switch/west,
@@ -35912,24 +35919,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"pqb" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
-/obj/machinery/door_control{
-	id = "nadir_minetop";
-	name = "Loading Door Control";
-	pixel_y = 24;
-	pixel_x = 8
-	},
-/obj/decal/poster/miners_almanac{
-	pixel_y = 28;
-	pixel_x = -6
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "pqp" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/item/reagent_containers/food/drinks/bottle/empty/square{
@@ -37612,6 +37601,12 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"qfc" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "qfm" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
@@ -41053,12 +41048,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"rNd" = (
-/obj/loudspeaker,
-/turf/simulated/floor/engine,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "rNq" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/grey/blackgrime,
@@ -42673,6 +42662,11 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"sBF" = (
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/shuttle/sea_elevator/upper)
 "sBQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52284,6 +52278,12 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"wQs" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "wQv" = (
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -9
@@ -101085,7 +101085,7 @@ vwG
 jci
 awA
 rdL
-rNd
+wQs
 afE
 drI
 rdL
@@ -107115,7 +107115,7 @@ gzq
 uiA
 qgt
 nAw
-iYk
+qfc
 bZd
 bZd
 rlq
@@ -108336,7 +108336,7 @@ gdf
 woS
 gdf
 aXs
-pqb
+lbe
 wtb
 tYz
 dYV
@@ -108936,7 +108936,7 @@ bzJ
 lsj
 tXW
 fNc
-doE
+sBF
 rNu
 wGJ
 ahN

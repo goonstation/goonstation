@@ -3445,14 +3445,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central)
-"aCt" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/obj/decal/stage_edge,
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "aCC" = (
 /obj/landmark/start/job/rancher,
 /turf/simulated/floor/dirt,
@@ -4185,11 +4177,6 @@
 "aIk" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"aIl" = (
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/chapel/sanctuary)
 "aIp" = (
 /obj/item/clothing/gloves/boxing{
 	pixel_x = -4
@@ -10132,11 +10119,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"bzP" = (
-/obj/window/reinforced/north,
-/obj/loudspeaker,
-/turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/chapel/funeral_parlor)
 "bzS" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -13980,6 +13962,14 @@
 "dZl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/diplomat)
+"dZp" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "dZw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17620,6 +17610,11 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
+"gGK" = (
+/obj/window/reinforced/north,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/chapel/funeral_parlor)
 "gGY" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -18889,11 +18884,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"hHP" = (
-/obj/landmark/start/job/assistant,
-/obj/loudspeaker,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/fitness)
 "hIl" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -28324,6 +28314,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"ouS" = (
+/obj/landmark/start/job/assistant,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/fitness)
 "ovf" = (
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
@@ -36200,6 +36195,11 @@
 	},
 /turf/simulated/floor/redwhite/corner,
 /area/station/medical/medbay/surgery)
+"ujX" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/chapel/sanctuary)
 "ukt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -71095,7 +71095,7 @@ asS
 wRX
 aaE
 kHT
-bzP
+gGK
 sYo
 xrj
 axT
@@ -73223,7 +73223,7 @@ dsT
 wND
 aWV
 aeD
-aIl
+ujX
 aJu
 xLj
 cAz
@@ -75337,7 +75337,7 @@ vQn
 ezX
 pSe
 aHm
-aIl
+ujX
 aJu
 xLj
 aLZ
@@ -77447,7 +77447,7 @@ azu
 fNe
 aCj
 aDj
-hHP
+ouS
 aFw
 lTl
 aSf
@@ -81371,7 +81371,7 @@ gmX
 qoe
 rtK
 icY
-aCt
+dZp
 pfJ
 qxc
 eYF

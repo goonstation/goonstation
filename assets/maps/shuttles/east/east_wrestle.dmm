@@ -308,7 +308,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "jS" = (
@@ -972,7 +972,7 @@
 	pixel_x = 10
 	},
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "If" = (
