@@ -172,26 +172,25 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"
-	desc = "Channel using a 3 charge shield to send a mob to the border of the Intruder plane for 60 seconds, where they must survive in an arena."
+	desc = {"Channel on the mob you are brain draining using a 3 charge shield to send them to the border of the Intruder plane for 60 seconds, where
+			they must survive in an arena. If the target has max Intellect collected on them, they will be sent instantly."}
 	icon_state = "pierce_the_veil"
 	cooldown = 60 SECONDS
-	max_range = 7
-	targeted = TRUE
-	target_anything = TRUE
+	max_range = 6
 	pointCost = INTRUDER_MAX_INTELLECT_THRESHOLD
 
 	tryCast(atom/target)
-		var/mob/living/L = src.get_nearest_human(target)
-		if (!L || isdead(L))
-			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		if (!mindeater.drain_target)
+			boutput(src.holder.owner, SPAN_ALERT("You don't have a Brain Drain target!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		return ..(L)
+		return ..()
 
-	cast(atom/target)
+	cast()
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		playsound(get_turf(mindeater), 'sound/misc/intruder/mindeater_abduct.ogg', 35, TRUE)
-		actions.start(new /datum/action/bar/mindeater_pierce_the_veil(target), mindeater)
+		actions.start(new /datum/action/bar/mindeater_pierce_the_veil(mindeater.drain_target), mindeater)
 
 ABSTRACT_TYPE(/area/veil_border)
 /area/veil_border
