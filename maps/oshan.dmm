@@ -25716,14 +25716,6 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"bTi" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "bTk" = (
 /obj/tug_cart,
 /turf/simulated/floor/plating/random,
@@ -26348,12 +26340,6 @@
 /area/station/crew_quarters/radio/lab)
 "bVw" = (
 /obj/stool/chair/comfy{
-	dir = 8
-	},
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
-"bVx" = (
-/obj/mic_stand{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue/checker/other,
@@ -35147,6 +35133,15 @@
 	},
 /turf/simulated/floor/grime,
 /area/derelict_diner)
+"inK" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/record/radio/host{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/storage/box/record/radio/host,
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/lab)
 "ioi" = (
 /obj/stool/chair{
 	dir = 8
@@ -40503,19 +40498,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/bar,
 /area/evilreaver/bar)
-"pdH" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/obj/table/wood/auto,
-/obj/item/storage/box/record/radio/host{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/storage/box/record/radio/host,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "pfe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -107490,7 +107472,7 @@ bKd
 bKd
 bRb
 bRa
-bTi
+bUu
 bUw
 bVv
 cfv
@@ -108094,9 +108076,9 @@ bMK
 bQf
 bRa
 bRa
-pdH
+inK
 bWq
-bVx
+bRa
 bRa
 epa
 aqn

@@ -2305,6 +2305,11 @@ TYPEINFO(/mob/living/silicon/robot)
 		set name = "State Fake Laws"
 		src.state_fake_laws() //already handles being a shell
 
+	verb/robot_show_fake_laws()
+		set category = "Robot Commands"
+		set name = "Show Fake Laws"
+		src.show_fake_laws() //already handles being a shell
+
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
 		set name = "Toggle Interface Lock"

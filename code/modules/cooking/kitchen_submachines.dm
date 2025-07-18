@@ -469,11 +469,20 @@ TYPEINFO(/obj/submachine/chef_oven)
 			"cook_time" = src.cooktime
 		)
 
-	ui_act(action, params)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
 		if (.)
 			return
 		. = TRUE
+
+		if (action == "open_recipe_book") // this can be opened even while cooking
+			usr.Browse(recipe_html, "window=recipes;size=500x700")
+			return
+
+		if (src.working)
+			boutput(ui.user, SPAN_NOTICE("You can't mess with [src] while it's cooking!"))
+			return
+
 		switch (action)
 			if ("set_time")
 				src.time = params["time"]
@@ -488,8 +497,6 @@ TYPEINFO(/obj/submachine/chef_oven)
 				var/obj/item/thing_to_eject = src.contents[params["ejected_item"]]
 				if (thing_to_eject)
 					thing_to_eject.set_loc(src.loc)
-			if ("open_recipe_book")
-				usr.Browse(recipe_html, "window=recipes;size=500x700")
 
 	proc/get_content_icons()
 		if (!length(src.contents))

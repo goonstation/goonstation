@@ -2275,6 +2275,7 @@ TYPEINFO(/datum/mutantrace/cow)
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
 				src.mob.update_clothing()
+				. = "<B>[used_name]</B> adjusts [his_or_her(src.mob)] clothing."
 			else
 				.= ..()
 
