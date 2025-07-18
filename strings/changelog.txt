@@ -1,6 +1,10 @@
 
 (t)fri jul 18 25
 (u)JORJ949
+(p)23884
+(e)🪲🧑‍✈️|C-Bug, A-Command
+(*)The Captain's Bonsai now uses health like other bushes, but is very fragile and only has 5hp!
+(u)JORJ949
 (p)23921
 (e)🆕💪|C-Feature, A-Traits
 (*)The Clown Disbelief trait now stops you from hearing strange squeaky voices (anything a clown says).
