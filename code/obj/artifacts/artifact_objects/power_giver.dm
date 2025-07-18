@@ -15,6 +15,8 @@
 	activ_text = "begins glowing with an eerie light!"
 	deact_text = "falls dark and quiet."
 	react_xray = list(10,90,80,10,"NONE")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_ANY
+	combine_effect_priority = ARTIFACT_COMBINATION_TOUCHED
 	var/power_granted = null
 	var/power_time = 0
 	var/recharge_time = 300
@@ -41,11 +43,11 @@
 			return
 		if (user.bioHolder && ready)
 			var/turf/T = get_turf(O)
-			T.visible_message("<b>[O]</b> envelops [user] in a strange light!")
+			T.visible_message("<b>[O.get_uppermost_artifact()]</b> envelops [user] in a strange light!")
 			user.bioHolder.AddEffect(power_granted,0,power_time)
 			O.ArtifactFaultUsed(user)
 			if (recharge_time > 0)
 				ready = 0
 				SPAWN(recharge_time)
-					T.visible_message("<b>[O]</b> begins to glow again.")
+					T.visible_message("<b>[O.get_uppermost_artifact()]</b> begins to glow again.")
 					ready = 1
