@@ -4,6 +4,48 @@
 #define GET_INPUT_OUTERMOST_LISTENER_LOC(INPUT) INPUT.parent_tree.listener_origin.outermost_listener_tracker.outermost_listener.loc
 /// Accesses a say message datum's outermost listener.
 #define GET_MESSAGE_OUTERMOST_LISTENER(MESSAGE) MESSAGE.message_origin.outermost_listener_tracker.outermost_listener
+/// Accesses a say message datum's outermost listener's loc.
+#define GET_MESSAGE_OUTERMOST_LISTENER_LOC(MESSAGE) MESSAGE.message_origin.outermost_listener_tracker.outermost_listener.loc
+
+/**
+ *	Returns `TRUE` if a say message datum cannot be heard by an input module datum, where both the speaker and listener are nested in the same loc chain.
+ *	Checks the following conditions:
+ *	- If the outermost listener's loc of the listener and the speaker match, the listener may hear the message.
+ *	> This allows the nested contents of an object to hear each other.
+ *
+ *	- If the outermost listener's loc is the speaker, the listener may hear the message.
+ *	> This allows the nested contents of an object to hear the object.
+ *
+ *	- If the speaker's loc is the listener, the listener may hear the message.
+ *	> This allows an object to hear its unnested contents.
+ */
+#define CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(INPUT, MESSAGE) \
+	((get_turf(INPUT.parent_tree.listener_origin) != get_turf(MESSAGE.message_origin)) || \
+	( \
+		(GET_INPUT_OUTERMOST_LISTENER_LOC(INPUT) != GET_MESSAGE_OUTERMOST_LISTENER_LOC(MESSAGE)) && \
+		(GET_INPUT_OUTERMOST_LISTENER_LOC(INPUT) != MESSAGE.message_origin) && \
+		(INPUT.parent_tree.listener_origin != MESSAGE.message_origin.loc) \
+	))
+
+/**
+ *	Effectively a stricter variant of `CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN` for whispers that doesn't consider nested contents.
+ *	Checks the following conditions:
+ *	- If the loc of the listener and the speaker match, the listener may hear the message clearly.
+ *	> This allows the nested contents of an object to hear each other.
+ *
+ *	- If the listener's loc is the speaker, the listener may hear the message clearly.
+ *	> This allows the unnested contents of an object to hear the object.
+ *
+ *	- If the speaker's loc is the listener, the listener may hear the message clearly.
+ *	> This allows an object to hear its unnested contents.
+ */
+#define CANNOT_HEAR_WHISPER_FROM_LOC_CHAIN(INPUT, MESSAGE) \
+	((get_turf(INPUT.parent_tree.listener_origin) != get_turf(MESSAGE.message_origin)) || \
+	( \
+		(INPUT.parent_tree.listener_origin.loc != MESSAGE.message_origin.loc) && \
+		(INPUT.parent_tree.listener_origin.loc != MESSAGE.message_origin) && \
+		(INPUT.parent_tree.listener_origin != MESSAGE.message_origin.loc) \
+	))
 
 /// Whether a message is able to be passed to a say channel.
 #define CAN_PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE) (CHANNEL.enabled || (ismob(message.speaker) && message.speaker:client?:holder))
