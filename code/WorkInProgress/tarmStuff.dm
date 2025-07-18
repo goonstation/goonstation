@@ -381,10 +381,6 @@
 		ammo.amount_left = 30
 		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
 
-
-/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
-	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
-
 //smart extinguisher
 /obj/item/gun/flamethrower/extinguisher
 	name = "smart fire extinguisher"
