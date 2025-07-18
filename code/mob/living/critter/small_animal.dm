@@ -267,6 +267,16 @@ proc/filter_carrier_pets(var/type)
 		src.set_a_intent(INTENT_HELP)
 		return can_act(src,TRUE)
 
+/mob/living/critter/small_animal/mouse/rat
+	name = "space rat"
+	desc = "Ew, a disgusting rat! Kill it!"
+	icon_state = "rat"
+	icon_state_dead = "rat-dead"
+	health_brute = 10
+	health_burn = 10
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	use_custom_color = FALSE
+	shiny_chance = 0
 
 /mob/living/critter/small_animal/mouse/dead
 	player_can_spawn_with_pet = FALSE
