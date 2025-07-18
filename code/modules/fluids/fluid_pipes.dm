@@ -187,6 +187,8 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /datum/flow_network/disposing()
 	src.reagents.fluid_network = null
 	QDEL_NULL(src.reagents)
+	src.pipes.len = 0
+	src.machines.len = 0
 	..()
 
 /// Accepts a pipe to merge with.
