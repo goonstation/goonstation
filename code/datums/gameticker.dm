@@ -918,6 +918,10 @@ var/global/game_force_started = FALSE
 		cloud_saves_put_data_bulk(bulk_commit)
 		logTheThing(LOG_DEBUG, null, "Done with spacebux")
 
+	logTheThing(LOG_DEBUG, null, "Starting round end drops...")
+	src.do_roundend_drops()
+	logTheThing(LOG_DEBUG, null, "Done with round end drops")
+
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
 
@@ -974,5 +978,49 @@ var/global/game_force_started = FALSE
 	if (!src.creds)
 		src.creds = new /datum/crewCredits
 	return src.creds
+
+//% - this is the maximum possible chance with very few people on one server and a lot on another
+#define BASE_TOKEN_CHANCE 10
+// the ratio of players between this server and the highest one before drops start to occur
+//eg. 36 players on Morty, 60 on Sylvester = we start to drop tokens, at a very low chance
+#define RATIO_THRESHOLD 0.6
+
+/datum/controller/gameticker/proc/do_roundend_drops()
+	var/datum/game_server/highest_pop = null
+	for (var/datum/game_server/server in global.game_servers.servers)
+		if (server.player_count > highest_pop?.player_count)
+			highest_pop = server
+
+	var/datum/game_server/self = global.game_servers.find_server(global.config.server_id)
+
+	var/pop_ratio = self.player_count / highest_pop.player_count
+	if (pop_ratio > RATIO_THRESHOLD)
+		logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [pop_ratio], greater than threshold [RATIO_THRESHOLD], aborting end round drops.")
+		return // servers are reasonably balanced, no drops for u
+
+	var/actual_token_chance = BASE_TOKEN_CHANCE * ((RATIO_THRESHOLD - pop_ratio) / RATIO_THRESHOLD)
+	logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [pop_ratio], starting end round drops with token chance [actual_token_chance]")
+
+	var/list/players = list()
+	for (var/mob/M as anything in mobs)
+		var/datum/player/player = M.mind.get_player()
+		if (player in players)
+			continue
+		players += player
+		//also scale by how long they've been in the round, no joining at the end just for the chance
+		var/time_ratio = player.current_playtime / ticker.round_elapsed_ticks
+		var/player_unique_chance = actual_token_chance * time_ratio
+		if (!prob(player_unique_chance))
+			continue //unlucky
+		if (player.get_antag_tokens() >= 1)
+			boutput(M, SPAN_BOLD("You would have received an antag token drop this round, but you already have one!"))
+			logTheThing(LOG_DEBUG, M, "[player.key] would have received an antag token drop but already had one. Aw!")
+		else
+			player.set_antag_tokens(1)
+			boutput(M, SPAN_BOLD("You have recieved an antag token drop for playing on a less populated server!"))
+			logTheThing(LOG_DEBUG, M, "[player.key] received an antag token drop with chance [player_unique_chance]%")
+
+#undef BASE_TOKEN_CHANCE
+#undef RATIO_THRESHOLD
 
 #undef LATEJOIN_FULL_WAGE_GRACE_PERIOD
