@@ -498,7 +498,7 @@ TYPEINFO(/mob/living)
 	if (src.stat || is_incapacitated(src))
 		return
 
-	if (params["middle"])
+	if (params["middle"] && can_reach(src, target))
 		for (var/obj/storage/storage in get_turf(target))
 			if (storage.open)
 				storage.close(user = src)
