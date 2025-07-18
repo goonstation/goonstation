@@ -1,6 +1,10 @@
 
 (t)fri jul 18 25
 (u)JORJ949
+(p)23921
+(e)🆕💪|C-Feature, A-Traits
+(*)The Clown Disbelief trait now stops you from hearing strange squeaky voices (anything a clown says).
+(u)JORJ949
 (p)24129
 (e)🆕📦|C-Feature, A-Game-Objects
 (*)You can now edit the range on a syndicate signal jammer with either a screwing or pulsing tool, allowing for more precisely jammed crime dens.
