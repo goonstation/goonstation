@@ -5571,13 +5571,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"avl" = (
-/obj/decal/boxingropeenter,
-/obj/decal/tile_edge/line/grey{
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "avm" = (
 /obj/decal/boxingrope,
 /obj/decal/tile_edge/line/black{
@@ -5837,13 +5830,6 @@
 /obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
-"awy" = (
-/obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
-/obj/decal/stage_edge,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "awA" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -8899,12 +8885,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"aIO" = (
-/obj/decal/boxingropeenter,
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
-/area/station/crew_quarters/fitness)
 "aIS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_north)
@@ -30531,11 +30511,6 @@
 	dir = 1
 	},
 /area/station/hangar/engine)
-"dFj" = (
-/obj/rack,
-/obj/item/swingsignfolded,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "dFk" = (
 /obj/blind_switch/area/north,
 /turf/simulated/floor/wood/two,
@@ -31282,6 +31257,13 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/secwing)
+"ecN" = (
+/obj/railing/wrestling,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "edo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -54547,6 +54529,12 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
+"uBr" = (
+/obj/railing/wrestling,
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/station/crew_quarters/fitness)
 "uCo" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "ranch";
@@ -57488,6 +57476,11 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
+"wHe" = (
+/obj/rack,
+/obj/item/swingsignfolded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "wHE" = (
 /obj/cable/orange{
 	icon_state = "0-4"
@@ -59209,6 +59202,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"xLr" = (
+/obj/table/reinforced/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "xLG" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -116390,7 +116390,7 @@ jOn
 qsw
 tmx
 pvj
-dFj
+wHe
 boo
 gkQ
 pJk
@@ -120879,7 +120879,7 @@ uQv
 fdN
 xix
 atr
-aIO
+uBr
 cfv
 aHF
 aHF
@@ -121487,7 +121487,7 @@ spC
 ewU
 aHF
 aHF
-avl
+ecN
 aJz
 atr
 beg
@@ -121790,7 +121790,7 @@ lGP
 aOn
 aSp
 aBw
-awy
+xLr
 atr
 bei
 kaJ
