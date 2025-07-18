@@ -67,6 +67,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	speech_verb_say = "beeps"
+	usable_with_brain_damage = FALSE
 
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
@@ -1396,6 +1397,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	light_r =1
 	light_g = 0.88
 	light_b = 0.88
+	usable_with_brain_damage = TRUE
 
 	create_products(restocked)
 		..()
