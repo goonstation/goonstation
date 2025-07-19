@@ -991,7 +991,7 @@ var/global/game_force_started = FALSE
 	var/datum/game_server/highest_pop = null
 	for (var/datum/game_server/server in global.game_servers.servers)
 		var/other_is_nightshade = findtext(server.name, "nightshade")
-		if (!!is_nightshade ^ !!other_is_nightshade) //rare non-bitwise xor use case!!
+		if ((!!is_nightshade) ^ (!!other_is_nightshade)) //rare non-bitwise xor use case!!
 			continue
 		if (server.player_count > highest_pop?.player_count)
 			highest_pop = server
