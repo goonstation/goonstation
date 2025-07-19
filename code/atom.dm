@@ -859,13 +859,16 @@ TYPEINFO(/atom/movable)
 	PROTECTED_PROC(TRUE)
 	if (src.storage?.storage_item_attack_by(W, user))
 		return
+	if (W.should_suppress_attack(src, user, params))
+		return
 	src.material_trigger_when_attacked(W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
-		var/hits = src
-		if (!src.name && isobj(src)) //shut up
-			var/obj/self = src
-			hits = "\the [self.real_name]"
-		user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
+	if (silent || !user || !W)
+		return
+	var/hits = src
+	if (!src.name && isobj(src)) // shut up
+		var/obj/self = src
+		hits = "\the [self.real_name]"
+	user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")

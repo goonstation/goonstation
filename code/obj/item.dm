@@ -1844,3 +1844,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
 	return
 
+///Called during attackby() to determine whether the default attack message should be suppressed.
+///Override this to add logic for suppressing the default attack message, or override it with a custom one.
+/obj/item/proc/should_suppress_attack(var/object, mob/user, params)
+	return flags & SUPPRESSATTACK
+
