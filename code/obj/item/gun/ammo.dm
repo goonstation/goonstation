@@ -1592,7 +1592,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		src.ammo_type.hit_type = temp_item.hit_type
 
 		// Increase the bullet's damage by the endurance.
-		src.ammo_type.damage = max(1, src.base_damage + floor(passed_genes.endurance * src.damage_multi))
+		src.ammo_type.damage = round(get_scaled_damage(passed_genes.endurance), 1)
 		// Increase armour-piercing by the potency.
 		src.ammo_type.armor_ignored = passed_genes.potency * src.armour_pierce_multi
 		// Reduce dissipation rate by lifespan.
@@ -1612,6 +1612,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		UpdateIcon()
 		qdel(temp_item)
 		return src
+
+	// breakpoints for this current formula, input = output: <-30 = 1, 0 = 17, 100 = 44, 200 = 66, 300 = 80, 640 = 100, 1000 = 120
+	proc/get_scaled_damage(x)
+		x += 100
+		if (x <= 0)
+			return 1
+		return (log(x / 68.8590961441749) / 0.0220758504333)
 
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
