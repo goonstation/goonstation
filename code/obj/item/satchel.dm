@@ -176,12 +176,31 @@
 		src.UpdateIcon()
 		tooltip_rebuild = TRUE
 
-	// Don't dump the satchel onto the table if using drag-and-drop to dump out other contents.
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (istype(over_object,/obj/table))
+			if (length(src.contents) < 1)
+				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))
+			else
+				usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
+				for (var/obj/item/thing in src.contents)
+					thing.set_loc(over_object.loc)
+				src.tooltip_rebuild = TRUE
+				src.UpdateIcon()
+				params["satchel_dumped"] = TRUE
+				return
+		. = ..()
+
+	// Don't place the satchel onto the table if we've dumped out its contents with the same command.
 	should_place_on(obj/target, params)
-		if (istype(target, /obj/table) && islist(params) && params["dragged"] && length(src.contents) > 0)
+		if (istype(target, /obj/table) && islist(params) && params["satchel_dumped"])
 			return FALSE
 		. = ..()
 
+	should_suppress_attack(var/object, mob/user)
+		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
+		if (istype(object, /obj/table) && (user.get_brain_damage() <= BRAIN_DAMAGE_MODERATE && rand(1, 10) < 10))
+			return TRUE
+		..()
 
 	proc/split_stack_into_satchel(var/obj/item/item_to_split, mob/user)
 		// This proc splits an object with multiple stacks and stuff it into the satchel until either
