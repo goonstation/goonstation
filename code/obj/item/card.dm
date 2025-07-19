@@ -85,7 +85,7 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "id_basic"
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
-	flags = TABLEPASS | ATTACK_SELF_DELAY
+	flags = TABLEPASS | ATTACK_SELF_DELAY | SUPPRESSATTACK
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
 	var/datum/pronouns/pronouns = null
