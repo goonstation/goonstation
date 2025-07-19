@@ -10,7 +10,6 @@
 	rand_pos = 0
 	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
-	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/datum/db_record/accessed_record = null // the bank account on the id card
 	var/obj/item/pen = null // slap a pen into that thang

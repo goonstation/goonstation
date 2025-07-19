@@ -133,8 +133,10 @@
 					boutput(donor, SPAN_ALERT("Oh god it's so bad you could choke to death in here!"))
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
-			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
-			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
+			//do scaling *before* the clamp
+			var/lung_burn = ((breath.temperature - temp_tolerance)/100) ** 0.5
+			lung_burn = clamp(lung_burn, 0, 10)
+			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT), 0, DAMAGE_BURN)
 			if(prob(20))
 				boutput(donor, SPAN_ALERT("This air is searing hot!"))
 				if (prob(80))

@@ -10,6 +10,8 @@
 	initial_reagents = list("egg"=5)
 	fill_amt = 0.5
 	doants = 0 // They're protected by a shell
+	/// bool for eggs that can't be used for incubation put here instead of ranch parent cause these ones are checked too
+	var/infertile = FALSE
 
 	New()
 		. = ..()
@@ -25,6 +27,11 @@
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
 		qdel (src)
+
+	get_desc()
+		. = ..()
+		if (infertile)
+			. += "\nThis egg is infertile and cannot be incubated."
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 	name = "hard-boiled egg"
