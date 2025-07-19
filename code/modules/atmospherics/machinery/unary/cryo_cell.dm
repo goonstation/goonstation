@@ -55,7 +55,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	if(src.occupant)
 		if (!ishuman(src.occupant))
 			src.go_out() // stop turning into cyborgs thanks
-		else if ((src.occupant.health >= src.occupant.max_health) && src.eject_full_health_occupant)
+		else if (src.occupant.health >= src.occupant.max_health && src.eject_full_health_occupant)
 			src.go_out()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 		else if (!isdead(src.occupant))
