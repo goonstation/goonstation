@@ -296,6 +296,15 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 		if (.)
 			return
 		. = TRUE
+
+		if (action == "open_recipe_book") // this can be opened even while cooking
+			usr.Browse(recipe_html, "window=recipes;size=500x700")
+			return
+
+		if (src.working)
+			boutput(ui.user, SPAN_NOTICE("You can't mess with [src] while it's cooking!"))
+			return
+
 		switch (action)
 			if ("set_time")
 				src.cooktime = params["time"] SECONDS
@@ -441,14 +450,6 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 		if (.)
 			return
 		. = TRUE
-
-		if (action == "open_recipe_book") // this can be opened even while cooking
-			usr.Browse(recipe_html, "window=recipes;size=500x700")
-			return
-
-		if (src.working)
-			boutput(ui.user, SPAN_NOTICE("You can't mess with [src] while it's cooking!"))
-			return
 
 		switch (action)
 			if ("eject")
