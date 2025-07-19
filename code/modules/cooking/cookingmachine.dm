@@ -291,7 +291,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 			"cook_time" = src.output_time
 		)
 
-	ui_act(action, params)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
 		if (.)
 			return
