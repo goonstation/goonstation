@@ -986,12 +986,20 @@ var/global/game_force_started = FALSE
 #define RATIO_THRESHOLD 0.6
 
 /datum/controller/gameticker/proc/do_roundend_drops()
+	var/datum/game_server/self = global.game_servers.find_server(global.config.server_id)
+	var/is_nightshade = findtext(self.name, "nightshade")
 	var/datum/game_server/highest_pop = null
 	for (var/datum/game_server/server in global.game_servers.servers)
+		var/other_is_nightshade = findtext(server.name, "nightshade")
+		if (!!is_nightshade ^ !!other_is_nightshade) //rare non-bitwise xor use case!!
+			continue
 		if (server.player_count > highest_pop?.player_count)
 			highest_pop = server
 
-	var/datum/game_server/self = global.game_servers.find_server(global.config.server_id)
+	//for when nightshade is winding down and we don't want to be giving people free tokens every round
+	if (highest_pop?.player_count <= 10)
+		logTheThing(LOG_DEBUG, null, "All linked servers below population threshold, no round end drops.")
+		return
 
 	var/pop_ratio = self.player_count / highest_pop.player_count
 	if (pop_ratio > RATIO_THRESHOLD)
