@@ -27,13 +27,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
 	new /datum/bank_purchaseable/altclown,\
-	new /datum/bank_purchaseable/bp_fjallraven,\
-	new /datum/bank_purchaseable/bp_randoseru,\
-	new /datum/bank_purchaseable/bp_anello,\
-	new /datum/bank_purchaseable/bp_brown,\
-	new /datum/bank_purchaseable/nt_backpack,\
-	new /datum/bank_purchaseable/bp_studded,\
-	new /datum/bank_purchaseable/bp_itabag,\
+
+	new /datum/bank_purchaseable/backpack/bp_fjallraven,\
+	new /datum/bank_purchaseable/backpack/bp_randoseru,\
+	new /datum/bank_purchaseable/backpack/bp_anello,\
+	new /datum/bank_purchaseable/backpack/bp_brown,\
+	new /datum/bank_purchaseable/backpack/nt_backpack,\
+	new /datum/bank_purchaseable/backpack/bp_studded,\
+	new /datum/bank_purchaseable/backpack/bp_itabag,\
 
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/space_diner,\
@@ -537,120 +538,96 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/M)
 			return 1
 
-	bp_fjallraven
-		name = "Rucksack"
-		cost = 1400
-		icon_state = "bp_fjallraven_red"
-		icon = 'icons/obj/items/storage.dmi'
+	backpack
+		name = "Youshouldn'tseemeeium bag"
+		var/bag_type = /obj/item/storage/backpack
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (H.back)
-					var/color = pick("red","yellow")
-					H.back.name = "rucksack"
-					H.back.icon_state = H.back.item_state = "bp_fjallraven_[color]"
-					H.back.desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
+				if (H.back && istype(H.back, /obj/item/storage/backpack))
+					var/obj/item/storage/backpack/old_bag = H.back
+					if(old_bag.slots != 7) //No changing slot amounts
+						return 0
+					var/obj/item/storage/backpack/new_bag = new src.bag_type(M) //Spawn it inside the player so it respects satchel preference
+					//Delete anything in the new bag, replace with contents of old bag.
+					for (var/obj/item/I as anything in new_bag.storage.get_contents())
+						qdel(I)
+					for (var/obj/item/I as anything in old_bag.storage.get_contents())
+						old_bag.storage.transfer_stored_item(I, new_bag, TRUE)
+					qdel(old_bag)
+					H.equip_if_possible(new_bag, SLOT_BACK)
 					return 1
 			return 0
 
-	bp_randoseru
-		name = "Randoseru"
-		cost = 1500
-		icon_state = "bp_randoseru"
-		icon = 'icons/obj/items/storage.dmi'
+		bp_fjallraven
+			name = "Rucksack"
+			cost = 1400
+			icon_state = "bp_fjallraven_red"
+			icon = 'icons/obj/items/storage.dmi'
+			bag_type = /obj/item/storage/backpack/fjallravenred
 
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.back)
-					H.back.name = "randoseru"
-					H.back.icon_state = H.back.item_state = "bp_randoseru"
-					H.back.desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
-					return 1
-			return 0
+			Create(var/mob/living/M)
+				//Randomise each time a new one is made.
+				if(prob(50))
+					src.bag_type = /obj/item/storage/backpack/fjallravenred
+				else
+					src.bag_type = /obj/item/storage/backpack/fjallravenyel
+				. = ..()
 
-	bp_anello
-		name = "Travel Backpack"
-		cost = 1600
-		icon_state = "bp_anello"
-		icon = 'icons/obj/items/storage.dmi'
+		bp_randoseru
+			name = "Randoseru"
+			cost = 1500
+			icon_state = "bp_randoseru"
+			icon = 'icons/obj/items/storage.dmi'
+			bag_type = /obj/item/storage/backpack/randoseru
 
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.back)
-					H.back.name = "travel pack"
-					H.back.icon_state = H.back.item_state = "bp_anello"
-					H.back.desc = "A thick, wearable container made of synthetic fibers, often seen carried by tourists and travelers."
-				return 1
-			return 0
+		bp_anello
+			name = "Travel Backpack"
+			cost = 1600
+			icon_state = "bp_anello"
+			icon = 'icons/obj/items/storage.dmi'
+			bag_type = /obj/item/storage/backpack/anello
 
-	nt_backpack
-		name = "NT Backpack"
-		cost = 600
-		icon_state = "NTbackpack"
-		icon = 'icons/obj/items/storage.dmi'
+		nt_backpack
+			name = "NT Backpack"
+			cost = 600
+			icon_state = "NTbackpack"
+			icon = 'icons/obj/items/storage.dmi'
+			bag_type = /obj/item/storage/backpack/NT
 
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.back)
-					H.back.name = "\improper NT backpack"
-					H.back.icon_state = H.back.item_state = "NTbackpack"
-					H.back.desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
-					return 1
-				return 0
+		bp_studded
+			name = "Studded Backpack"
+			cost = 1500
+			icon_state = "bp_studded"
+			icon = 'icons/obj/items/storage.dmi'
+			bag_type = /obj/item/storage/backpack/studdedblack
 
-	bp_studded
-		name = "Studded Backpack"
-		cost = 1500
-		icon_state = "bp_studded"
-		icon = 'icons/obj/items/storage.dmi'
+		bp_itabag
+			name = "Itabag"
+			cost = 1600
+			icon_state = "bp_itabag_pink"
+			icon = 'icons/obj/items/storage.dmi'
+			bag_type = /obj/item/storage/backpack/itabag
 
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.back)
-					H.back.name = "studded backpack"
-					H.back.icon_state = H.back.item_state = "bp_studded"
-					H.back.desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
-					return 1
-				return 0
+			Create(var/mob/living/M)
+				//Randomise each time a new one is made.
+				var/list/itabag_types = concrete_typesof(/obj/item/storage/backpack/itabag)
+				src.bag_type = pick(itabag_types)
+				. = ..()
+				//Add the randomised mascot.
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.back && istype(H.back, /obj/item/storage/backpack/itabag))
+						var/itabagmascot = pick("Heisenbee","Bombini","Morty","Sylvester","Dr. Acula","a clown","a mime","Jones the cat","Stir Stir","a bumblespider","a space bee","the Amusing Duck")
+						H.back.desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of [itabagmascot]!"
 
-	bp_itabag
-		name = "Itabag"
-		cost = 1600
-		icon_state = "bp_itabag_pink"
-		icon = 'icons/obj/items/storage.dmi'
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.back)
-					var/color = pick("pink","blue","purple","mint","black")
-					var/itabagmascot = pick("Heisenbee","Bombini","Morty","Sylvester","Dr. Acula","a clown","a mime","Jones the cat","Stir Stir","a bumblespider","a space bee","the Amusing Duck")
-					H.back.name = "[color] itabag"
-					H.back.icon_state = H.back.item_state = "bp_itabag_[color]"
-					H.back.desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of [itabagmascot]!"
-					return 1
-			return 0
-
-	bp_brown
-		name = "Brown Backpack"
-		cost = 500
-		icon_state = "backpackbr"
-		icon = 'icons/obj/items/storage.dmi'
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.back)
-					H.back.name = "backpack"
-					H.back.icon_state = H.back.item_state = "backpackbr"
-					H.back.desc = "A thick, wearable container made of synthetic fibers. This brown variation is both rustic and adventurous!"
-					return 1
-				return 0
+		bp_brown
+			name = "Brown Backpack"
+			cost = 500
+			icon_state = "backpackbr"
+			icon = 'icons/obj/items/storage.dmi'
+			bag_type = /obj/item/storage/backpack/brown
 
 	lunchbox
 		name = "Lunchbox"

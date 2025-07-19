@@ -18453,19 +18453,6 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/crew_quarters/hor)
-"heo" = (
-/obj/machinery/power/data_terminal,
-/obj/table/wood/auto,
-/obj/machinery/networked/printer{
-	print_id = "Artlab"
-	},
-/obj/cable,
-/obj/item/pinpointer/category/artifacts/safe{
-	pixel_y = 8;
-	pixel_x = 10
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/artifact)
 "her" = (
 /obj/stool/chair/couch/green{
 	dir = 4
@@ -31970,6 +31957,19 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"rKh" = (
+/obj/machinery/power/data_terminal,
+/obj/table/wood/auto,
+/obj/machinery/networked/printer{
+	print_id = "Artlab"
+	},
+/obj/cable,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_y = 8;
+	pixel_x = 10
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/artifact)
 "rKs" = (
 /obj/machinery/door_timer/solitary2/new_walls/north,
 /turf/simulated/floor/red/side{
@@ -36241,11 +36241,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"uOo" = (
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary)
 "uOv" = (
 /obj/cable{
 	icon_state = "4-6"
@@ -36287,6 +36282,11 @@
 	icon_state = "fgreen3"
 	},
 /area/station/bridge)
+"uQS" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/specialroom/chapel,
+/area/station/chapel/sanctuary)
 "uRe" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -88765,7 +88765,7 @@ aBS
 aCs
 aDv
 piA
-uOo
+uQS
 whg
 aEY
 aEv
@@ -99689,7 +99689,7 @@ nxF
 oIX
 pTJ
 qOd
-heo
+rKh
 sXL
 xis
 sZp

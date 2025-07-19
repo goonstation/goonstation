@@ -118,8 +118,8 @@ TYPEINFO(/obj/machinery/power/collector_control)
 			overlays += image('icons/obj/singularity.dmi', "cu n error")
 		if(length(S))
 			overlays += image('icons/obj/singularity.dmi', "cu sing")
-			for(var/obj/machinery/the_singularity/singu in S)
-				if(!singu.active)
+			for(var/obj/machinery/the_singularity/singularity in S)
+				if(!singularity.contained)
 					overlays += image('icons/obj/singularity.dmi', "cu conterr")
 					break
 	else
@@ -140,9 +140,9 @@ TYPEINFO(/obj/machinery/power/collector_control)
 			var/power_s = 0
 			var/power_p = 0
 
-			for(var/obj/machinery/the_singularity/singu in S)
-				if(singu && !QDELETED(singu))
-					power_s += singu.energy*max((singu.radius**2),1)/4
+			for(var/obj/machinery/the_singularity/singularity in S)
+				if(singularity && !QDELETED(singularity))
+					power_s += singularity.stored_energy*max((singularity.radius**2),1)/4
 			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
@@ -168,9 +168,9 @@ TYPEINFO(/obj/machinery/power/collector_control)
 		var/power_a = 0
 		var/power_s = 0
 		var/power_p = 0
-		for(var/obj/machinery/the_singularity/singu in S)
-			if(singu && !QDELETED(singu))
-				power_s += singu.energy*((singu.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
+		for(var/obj/machinery/the_singularity/singularity in S)
+			if(singularity && !QDELETED(singularity))
+				power_s += singularity.stored_energy*((singularity.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
 		power_p += 50
 		power_a = power_p*power_s*50
 		src.lastpower = power_a
