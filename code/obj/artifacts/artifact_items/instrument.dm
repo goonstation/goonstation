@@ -19,25 +19,8 @@
 			if(A?.artitype)
 				sounds_instrument = A.artitype.instrument_sounds
 
-	// okay, i wanted to inherit from artifact, alright, not instrument
-	// christ, if we only had components
-	proc/play(mob/user as mob)
-		if (!spam_flag)
-			src.ArtifactFaultUsed(user)
-			spam_flag = 1
-			src.add_fingerprint(user)
-			show_play_message(user)
-			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN(src.spam_timer)
-				spam_flag = 0
-		return
-
 	proc/show_play_message(mob/user as mob)
 		if (user) return user.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [his_or_her(user)] [src.name]!")
-
-	attack_self(mob/user as mob)
-		..()
-		src.play(user)
 
 /datum/artifact/instrument
 	associated_object = /obj/item/artifact/instrument
@@ -47,3 +30,18 @@
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor","martian","ancient")
 	react_xray = list(10,65,95,9,"TUBULAR")
+
+	effect_attack_self(mob/user)
+		if (..())
+			return
+		var/obj/item/artifact/instrument/instrument = src.holder
+		if (instrument.spam_flag)
+			return
+		instrument.ArtifactFaultUsed(user)
+		instrument.spam_flag = TRUE
+
+		instrument.show_play_message(user)
+		var/instrument_sound = islist(instrument.sounds_instrument) ? pick(instrument.sounds_instrument) : instrument.sounds_instrument
+		playsound(instrument, instrument_sound, instrument.volume, instrument.randomized_pitch)
+		SPAWN(instrument.spam_timer)
+			instrument.spam_flag = FALSE
