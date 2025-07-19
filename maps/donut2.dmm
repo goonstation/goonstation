@@ -4327,14 +4327,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"aAo" = (
-/obj/loudspeaker,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
-/turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
 "aAq" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -5360,6 +5352,10 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"aEY" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "aFd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8608,6 +8604,19 @@
 /obj/machinery/disposal/small/west,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
+"aWU" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "aWW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19497,14 +19506,6 @@
 	dir = 1
 	},
 /area/station/hangar/main)
-"eFV" = (
-/obj/loudspeaker,
-/obj/shrub{
-	dir = 6
-	},
-/obj/decal/cleanable/leaves,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "eGj" = (
 /obj/item/crowbar,
 /obj/cable{
@@ -19954,6 +19955,14 @@
 /obj/machinery/sheet_extruder,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
+"eVc" = (
+/obj/machinery/loudspeaker,
+/obj/shrub{
+	dir = 6
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "eVj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -20435,14 +20444,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"fjr" = (
-/obj/loudspeaker,
-/obj/shrub{
-	dir = 6
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "fjy" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -29841,14 +29842,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/corner,
 /area/station/hallway/primary/south)
-"kUu" = (
-/obj/loudspeaker,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "kUY" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -34387,6 +34380,25 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/stockex)
+"nyd" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter";
+	icon_state = "4"
+	},
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/machinery/light/incandescent{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "nyC" = (
 /obj/warp_beacon{
 	name = "Hangar Beacon"
@@ -35483,6 +35495,14 @@
 	dir = 4
 	},
 /area/station/hangar/arrivals)
+"ohA" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "ohC" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg{
@@ -35769,25 +35789,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"oqe" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter";
-	icon_state = "4"
-	},
-/obj/machinery/cookingmachine/mixer{
-	pixel_y = 5;
-	pixel_x = -4
-	},
-/obj/machinery/light/incandescent{
-	dir = 8;
-	nostick = 1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "oqw" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/light/emergency{
@@ -38296,6 +38297,18 @@
 	dir = 8
 	},
 /area/station/hangar/arrivals)
+"pEM" = (
+/obj/machinery/light/incandescent,
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 8;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	tag = "icon-plant (NORTH)"
+	},
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "pFc" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/conveyor/NS{
@@ -40194,10 +40207,6 @@
 /obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
-"qIv" = (
-/obj/loudspeaker,
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "qII" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/jazz)
@@ -42517,20 +42526,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"sft" = (
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/obj/machinery/cookingmachine/oven,
-/obj/machinery/disposal/small/north{
-	pixel_y = 32;
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/disposalpipe/trunk/food,
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "sfv" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -42800,6 +42795,20 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
+"sna" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/disposal/small/north{
+	pixel_y = 32;
+	name = "Lay-Z Chef Prison Food Chute"
+	},
+/obj/disposalpipe/trunk/food,
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "snf" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
@@ -44403,6 +44412,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"tjv" = (
+/obj/machinery/loudspeaker,
+/obj/shrub{
+	dir = 6
+	},
+/obj/decal/cleanable/leaves,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "tjO" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -45146,19 +45163,6 @@
 	oxygen = 30.8366
 	},
 /area/station/crew_quarters/kitchen/freezer)
-"tCO" = (
-/obj/machinery/cookingmachine/oven,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "tDg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -48390,6 +48394,14 @@
 	dir = 4
 	},
 /area/station/janitor/office)
+"vyD" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "vyP" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -52637,18 +52649,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"yjK" = (
-/obj/machinery/light/incandescent,
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 8;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	tag = "icon-plant (NORTH)"
-	},
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "yjL" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -70113,7 +70113,7 @@ bjm
 yhb
 kIu
 ant
-oqe
+nyd
 jhM
 stw
 bht
@@ -71015,7 +71015,7 @@ aXp
 vLP
 arN
 bjm
-sft
+sna
 wPd
 hiA
 qur
@@ -71317,7 +71317,7 @@ aXp
 qow
 arN
 bjm
-tCO
+aWU
 tvz
 xmV
 jgY
@@ -73443,7 +73443,7 @@ teF
 ovE
 ouJ
 bjo
-eFV
+tjv
 eBC
 dXv
 qjC
@@ -76166,7 +76166,7 @@ bvu
 qrs
 wQE
 wxc
-fjr
+eVc
 btx
 bAF
 bAI
@@ -89407,7 +89407,7 @@ hMH
 qCk
 lQh
 obN
-yjK
+pEM
 aOm
 gIJ
 aUm
@@ -90892,7 +90892,7 @@ qKY
 awG
 vWV
 axu
-aAo
+ohA
 fwf
 azh
 azn
@@ -91222,7 +91222,7 @@ lWw
 lWw
 aTa
 djq
-qIv
+aEY
 aPr
 azU
 mmb
@@ -91520,7 +91520,7 @@ nYq
 aUn
 aUn
 pQH
-kUu
+vyD
 aPr
 aPr
 aPr

@@ -3570,10 +3570,6 @@
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
-"ars" = (
-/obj/machinery/cookingmachine/oven,
-/turf/unsimulated/floor/specialroom/freezer,
-/area/hospital)
 "aru" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for a pod door.  I guess that pod door is working as part of an improvised observation window?";
@@ -3917,15 +3913,6 @@
 /obj/table/auto,
 /obj/random_item_spawner/tableware,
 /turf/unsimulated/floor/blackwhite/whitegrime,
-/area/hospital)
-"asZ" = (
-/obj/table/auto,
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 4
-	},
-/obj/machinery/cookingmachine/mixer,
-/turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ata" = (
 /obj/fakeobject{
@@ -6240,6 +6227,15 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
+"aED" = (
+/obj/map/light/brighterwhite,
+/obj/machinery/cookingmachine/oven{
+	desc = "An appliance back from the dead.";
+	dir = 8;
+	name = "salvaged oven"
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "aEF" = (
 /obj/machinery/light/small/iomoon{
 	dir = 1;
@@ -33673,13 +33669,6 @@
 	dir = 6
 	},
 /area/owlery/staffhall)
-"czQ" = (
-/obj/table/reinforced/auto{
-	layer = 2
-	},
-/obj/machinery/cookingmachine/mixer,
-/turf/unsimulated/floor/sanitary/white,
-/area/owlery/staffhall)
 "czR" = (
 /obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
@@ -36495,14 +36484,6 @@
 /obj/item/instrument/large/piano,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/owleryhall)
-"cIo" = (
-/obj/machinery/light,
-/obj/decal/stage_edge{
-	dir = 2
-	},
-/obj/loudspeaker,
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "cIp" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -37342,14 +37323,6 @@
 	name = "table"
 	},
 /turf/unsimulated/floor/wood/two,
-/area/owlery/owleryhall)
-"cKY" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/decal/stage_edge,
-/obj/loudspeaker,
-/turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cKZ" = (
 /turf/unsimulated/floor/greenwhite/corner,
@@ -43008,12 +42981,6 @@
 "daN" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/afterlife/bar)
-"daO" = (
-/obj/table/auto,
-/obj/machinery/cookingmachine/mixer,
-/obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
 "daP" = (
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
@@ -43794,15 +43761,6 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/afterlife/bar)
-"ddx" = (
-/obj/map/light/brighterwhite,
-/obj/machinery/cookingmachine/oven{
-	desc = "An appliance back from the dead.";
-	dir = 8;
-	name = "salvaged oven"
-	},
-/turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "ddy" = (
 /obj/decal/stage_edge{
@@ -44681,11 +44639,6 @@
 	icon_state = "cairngorm17"
 	},
 /area/syndicate_station/battlecruiser)
-"dfW" = (
-/obj/decal/stage_edge,
-/obj/loudspeaker,
-/turf/unsimulated/floor/wood/two,
-/area/afterlife/bar)
 "dfX" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -50376,15 +50329,6 @@
 /obj/machinery/vending/monkey,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
-"dHk" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cookingmachine/mixer,
-/turf/unsimulated/floor/specialroom/medbay,
-/area/centcom/lounge)
-"dHl" = (
-/obj/machinery/cookingmachine/oven,
-/turf/unsimulated/floor/specialroom/medbay,
-/area/centcom/lounge)
 "dHm" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -55130,6 +55074,11 @@
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
+"euv" = (
+/obj/lattice,
+/obj/machinery/cookingmachine/oven,
+/turf/unsimulated/floor/void,
+/area/void_diner)
 "euA" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -59069,6 +59018,14 @@
 	dir = 5
 	},
 /area/centcom/offices/cogwerks)
+"hDY" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "hEq" = (
 /obj/table/wood/round,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
@@ -60501,11 +60458,6 @@
 /obj/decoration/bullethole,
 /turf/unsimulated/floor/blackwhite/whitegrime/other,
 /area/observatory)
-"iMC" = (
-/obj/lattice,
-/obj/machinery/cookingmachine/oven,
-/turf/unsimulated/floor/void,
-/area/void_diner)
 "iNm" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -60561,6 +60513,11 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/offices/shotgunbill)
+"iPa" = (
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "iPo" = (
 /obj/window_blinds/cog2/right{
 	dir = 4
@@ -62659,6 +62616,11 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
+"kqF" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
 "kqJ" = (
 /obj/decal/exhibit/midrange{
 	exhibit_id = "ex_centcom_midrange_4";
@@ -66015,6 +65977,10 @@
 /obj/decal/poster/wallsign/stencil/left/e,
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/sim/racing_track)
+"nfm" = (
+/obj/machinery/cookingmachine/oven,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/hospital)
 "nfI" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -72820,6 +72786,10 @@
 	name = "blast door"
 	},
 /area/owlery/owllock)
+"seq" = (
+/obj/machinery/cookingmachine/oven,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
 "seu" = (
 /obj/table/auto,
 /obj/machinery/computer/television/small{
@@ -76797,6 +76767,12 @@
 /obj/landmark/lrt/icemoon,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
+"vtf" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "vtv" = (
 /obj/table/auto,
 /obj/decal/tile_edge/stripe{
@@ -78362,6 +78338,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"wyI" = (
+/obj/table/reinforced/auto{
+	layer = 2
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/unsimulated/floor/sanitary/white,
+/area/owlery/staffhall)
 "wzl" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 8
@@ -79415,6 +79398,14 @@
 	},
 /turf/space,
 /area/space)
+"xpD" = (
+/obj/machinery/light,
+/obj/decal/stage_edge{
+	dir = 2
+	},
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "xpW" = (
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
@@ -80833,6 +80824,15 @@
 /obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"yiu" = (
+/obj/table/auto,
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 4
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/hospital)
 "yiB" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -85436,7 +85436,7 @@ cyk
 cyI
 cyX
 czq
-czQ
+wyI
 cAd
 cEc
 cBx
@@ -89376,11 +89376,11 @@ cFq
 cFq
 cFq
 cFq
-cIo
+xpD
 cJL
 cJN
 cLs
-cKY
+hDY
 cFq
 cMa
 qrz
@@ -100594,7 +100594,7 @@ iBf
 iBf
 iBf
 iBf
-iMC
+euv
 tKt
 tKt
 wkZ
@@ -103510,7 +103510,7 @@ daN
 dSd
 daA
 ddQ
-dfW
+iPa
 dSb
 cwC
 dSm
@@ -108032,10 +108032,10 @@ cmj
 dcp
 aaa
 daN
-daO
+vtf
 dcU
 dTr
-ddx
+aED
 dSF
 dTv
 daN
@@ -137094,7 +137094,7 @@ aha
 aha
 aeX
 aeX
-ars
+nfm
 aeL
 aeL
 aeL
@@ -137398,7 +137398,7 @@ aeX
 aeX
 aeX
 asc
-asZ
+yiu
 atN
 aus
 aeX
@@ -158860,7 +158860,7 @@ aES
 iuD
 dGZ
 dHd
-dHk
+kqF
 dGZ
 xEP
 dHV
@@ -159162,7 +159162,7 @@ aES
 iuD
 dGZ
 dHe
-dHl
+seq
 dGZ
 wLo
 dHU
@@ -159464,7 +159464,7 @@ aES
 iuD
 dGZ
 dHf
-dHl
+seq
 dGZ
 wLo
 dHW

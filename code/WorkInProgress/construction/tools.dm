@@ -494,6 +494,11 @@ TYPEINFO(/obj/item/material_shaper)
 			processing = 0
 			user.visible_message(SPAN_NOTICE("[user] finishes stuffing materials into [src]."))
 
+#define ROOM_PLANNER_FLOORS "floors"
+#define ROOM_PLANNER_WALLS "walls"
+#define ROOM_PLANNER_RESTORE "restore original"
+#define ROOM_PLANNER_CHARGES_PER_MATERIAL 20
+
 TYPEINFO(/obj/item/room_planner)
 	mats = 6
 
@@ -505,11 +510,12 @@ TYPEINFO(/obj/item/room_planner)
 	flags = TABLEPASS | EXTRADELAY
 	w_class = W_CLASS_SMALL
 	click_delay = 1
+	inventory_counter_enabled = TRUE
 
 	var/selecting = 0
 	var/mode = null
-	var/icons = list("floors", "walls", "restore original")
-	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
+	var/icons = list(ROOM_PLANNER_FLOORS, ROOM_PLANNER_WALLS, ROOM_PLANNER_RESTORE)
+	var/marker_class = list(ROOM_PLANNER_FLOORS = /obj/plan_marker/floor, ROOM_PLANNER_WALLS = /obj/plan_marker/wall)
 	/// icon file selected
 	var/selectedicon
 	/// iconstate selected
@@ -518,6 +524,10 @@ TYPEINFO(/obj/item/room_planner)
 	var/selectedmod
 	// var/pod_turf = 0
 	var/turf_op = 0
+	/// how many tiles it can convert
+	var/charges = 100
+	/// maximum amount of stored "ammo"
+	var/max_charges = 1000
 
 	var/list/wallicons = list(
 		"diner" = 'icons/turf/walls/derelict.dmi',
@@ -576,6 +586,25 @@ TYPEINFO(/obj/item/room_planner)
 
 	)
 
+	HELP_MESSAGE_OVERRIDE("You can recharge the Floor and Wall Designer with processed cloth materials.")
+
+	New()
+		. = ..()
+		src.inventory_counter.update_number(src.charges)
+
+	attackby(obj/item/I, mob/user, params)
+		if (istype(I, /obj/item/material_piece) && (I.material.getMaterialFlags() & MATERIAL_CLOTH))
+			if(src.charges + ROOM_PLANNER_CHARGES_PER_MATERIAL > src.max_charges)
+				boutput(user, SPAN_NOTICE("\The [src] refuses \the [I.material.getName()] as it is too full."))
+				return
+			src.charges += ROOM_PLANNER_CHARGES_PER_MATERIAL
+			src.inventory_counter.update_number(src.charges)
+			boutput(user, SPAN_NOTICE("You load \an [I.material.getName()] into \the [src]. It has [src.charges] remaining charges."), "designer-reload")
+			I.change_stack_amount(-1)
+			user.playsound_local(loc, 'sound/machines/paper_shredder.ogg', 30, 1)
+			return
+		. = ..()
+
 	attack_self(mob/user as mob)
 		// This seems to not actually stop anything from working so just axing it.
 		//if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
@@ -589,9 +618,9 @@ TYPEINFO(/obj/item/room_planner)
 		// mode selection for floor planner
 		mode = tgui_input_list(message="What to mark?", title="Marking", items=icons)
 		if(!mode)
-			mode = "floors"
+			mode = ROOM_PLANNER_FLOORS
 		var/states = list()
-		if (mode == "restore original")
+		if (mode == ROOM_PLANNER_RESTORE)
 			boutput(user, SPAN_NOTICE("Now set for restoring appearance."))
 			selecting = 0
 			return
@@ -599,7 +628,7 @@ TYPEINFO(/obj/item/room_planner)
 		// icon selection
 		// selectedicon is the file we selected
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
-		if (mode == "floors")
+		if (mode == ROOM_PLANNER_FLOORS)
 			selectedtype = null
 			states += (get_icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
@@ -607,7 +636,7 @@ TYPEINFO(/obj/item/room_planner)
 			if(newtype)
 				selectedtype = newtype
 
-		if (mode == "walls")
+		if (mode == ROOM_PLANNER_WALLS)
 			selectedtype = null
 			selectedicon = null
 			selectedmod = null
@@ -622,7 +651,7 @@ TYPEINFO(/obj/item/room_planner)
 			selecting = 0
 			return
 
-		if (mode == "floors" || (mode == "walls" && findtext(selectedtype, "window") != 0))
+		if (mode == ROOM_PLANNER_FLOORS || (mode == ROOM_PLANNER_WALLS && findtext(selectedtype, "window") != 0))
 			turf_op = 0
 		else
 			turf_op = 1
@@ -639,7 +668,7 @@ TYPEINFO(/obj/item/room_planner)
 		if (GET_DIST(T, user) > 3)
 			return 0
 
-		if (mode == "restore original") //For those who want to undo the carnage
+		if (mode == ROOM_PLANNER_RESTORE) //For those who want to undo the carnage
 			if (istype(T, /turf/simulated/floor))
 				if (!T.intact)
 					return
@@ -656,6 +685,12 @@ TYPEINFO(/obj/item/room_planner)
 					W.UpdateIcon()
 					W.update_neighbors()
 			return
+
+		if (src.charges <= 0)
+			boutput(user, SPAN_ALERT("\The [src] requires more cloth to continue decorating!"))
+			user.playsound_local(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+			return
+
 		var/obj/plan_marker/old = null
 		for (var/obj/plan_marker/K in T)
 			if (istype(K, /obj/plan_marker/floor) || istype(K, /obj/plan_marker/wall))
@@ -663,21 +698,30 @@ TYPEINFO(/obj/item/room_planner)
 				break
 		if (old)
 			old.Attackby(src, user)
+			src.charges -= 1
 		else if (!isnull(selectedtype))
+			if (iswall(T) && mode != ROOM_PLANNER_WALLS)
+				boutput(user, SPAN_NOTICE("Currently in [mode] mode, cannot change walls."))
+				return
+			if (isfloor(T) && mode != ROOM_PLANNER_FLOORS)
+				boutput(user, SPAN_NOTICE("Currently in [mode] mode, cannot change floors."))
+				return
 			var/class = marker_class[mode]
+			src.charges -= 1
 			old = new class(T, selectedicon, selectedtype, mode)
-
 			old.set_dir(get_dir(user, T))
-			// if (pod_turf)
-			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
 			old:check(selectedmod)
 		else
 			boutput(user, SPAN_ALERT("No type selected for current mode!"))
 			return 0
-		boutput(user, SPAN_NOTICE("Done."))
-
+		src.inventory_counter.update_number(src.charges)
 		return 1
+
+#undef ROOM_PLANNER_FLOORS
+#undef ROOM_PLANNER_WALLS
+#undef ROOM_PLANNER_RESTORE
+#undef ROOM_PLANNER_CHARGES_PER_MATERIAL
 
 /obj/plan_marker
 	name = "\improper Plan Marker"

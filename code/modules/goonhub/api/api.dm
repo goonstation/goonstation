@@ -141,7 +141,7 @@ var/global/datum/apiHandler/apiHandler
 		if (src.debug) src.debugLogRequest(route.method, req_route, req_body)
 		var/time_started = TIME
 		var/time_started_unix = rustg_unix_timestamp()
-		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
+		UNTIL(request.is_complete(), 10 SECONDS)
 		if (!request.is_complete())
 			src.trackRecentError()
 			var/msg = "Request timed out during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"

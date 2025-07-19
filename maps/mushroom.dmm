@@ -13227,6 +13227,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/catering)
+"cMO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "cMS" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -18837,6 +18846,26 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"hty" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/kitchen/utensil/fork{
+	dir = 2;
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "htK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -21781,12 +21810,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"kcn" = (
-/obj/machinery/cookingmachine/oven{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "kcs" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -23127,6 +23150,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"llg" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "lnp" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -32043,26 +32072,6 @@
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/artifact)
-"rLY" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/item/kitchen/utensil/fork{
-	dir = 2;
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/kitchen/utensil/knife{
-	pixel_y = 3
-	},
-/obj/item/kitchen/utensil/spoon{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/machinery/cookingmachine/mixer,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "rMh" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
@@ -32629,15 +32638,6 @@
 /obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
-"skZ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/cookingmachine/oven{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "slg" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass{
@@ -36241,11 +36241,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"uOo" = (
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary)
 "uOv" = (
 /obj/cable{
 	icon_state = "4-6"
@@ -36287,6 +36282,11 @@
 	icon_state = "fgreen3"
 	},
 /area/station/bridge)
+"uQS" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/specialroom/chapel,
+/area/station/chapel/sanctuary)
 "uRe" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -74338,7 +74338,7 @@ geC
 rCt
 qGL
 bUq
-kcn
+llg
 qIR
 pcb
 kFq
@@ -74640,7 +74640,7 @@ viz
 tVY
 noz
 iWS
-skZ
+cMO
 ngB
 pcb
 wmR
@@ -75545,7 +75545,7 @@ lqG
 aDb
 sxh
 txB
-rLY
+hty
 hhS
 gzD
 pcb
@@ -88765,7 +88765,7 @@ aBS
 aCs
 aDv
 piA
-uOo
+uQS
 whg
 aEY
 aEv

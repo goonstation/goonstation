@@ -1746,15 +1746,6 @@
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
-"aiz" = (
-/obj/table/wood/auto,
-/obj/item/matchbook,
-/obj/loudspeaker,
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "aiA" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
 /obj/landmark/antagonist/blob,
@@ -9594,6 +9585,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"deQ" = (
+/obj/item/device/radio/intercom/catering,
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/white/corner{
+	dir = 8
+	},
+/area/station/crew_quarters/kitchen)
 "dfp" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -9699,6 +9697,15 @@
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"dkU" = (
+/obj/table/wood/auto,
+/obj/item/matchbook,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "dlb" = (
 /obj/machinery/recharger/wall/sticky,
 /obj/storage/secure/closet/security/equipment,
@@ -13562,17 +13569,6 @@
 	dir = 6
 	},
 /area/station/engine/engineering)
-"jcY" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/machinery/cookingmachine/oven,
-/turf/simulated/floor/white/side{
-	dir = 8
-	},
-/area/station/crew_quarters/kitchen)
 "jef" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/camera{
@@ -13643,6 +13639,23 @@
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
+"jmh" = (
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 4;
+	pixel_x = -4;
+	name = "KitchenHelper #2"
+	},
+/obj/item/paper/book/from_file/cookbook{
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/turf/simulated/floor/auto/grass,
+/area/station/crew_quarters/kitchen)
 "jmR" = (
 /obj/mesh/catwalk{
 	dir = 8
@@ -17834,23 +17847,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"pmb" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
-/obj/table/auto,
-/obj/machinery/cookingmachine/mixer{
-	pixel_y = 4;
-	pixel_x = -4;
-	name = "KitchenHelper #2"
-	},
-/obj/item/paper/book/from_file/cookbook{
-	pixel_y = 5;
-	pixel_x = 11
-	},
-/turf/simulated/floor/auto/grass,
-/area/station/crew_quarters/kitchen)
 "pmn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18817,6 +18813,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"rdA" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/white/side{
+	dir = 8
+	},
+/area/station/crew_quarters/kitchen)
 "reP" = (
 /obj/machinery/teleport/portal_ring,
 /obj/machinery/firealarm/north,
@@ -19104,13 +19111,6 @@
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/black,
 /area/station/security/brig)
-"rCX" = (
-/obj/item/device/radio/intercom/catering,
-/obj/machinery/cookingmachine/oven,
-/turf/simulated/floor/white/corner{
-	dir = 8
-	},
-/area/station/crew_quarters/kitchen)
 "rDt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -73040,7 +73040,7 @@ agV
 lDS
 xAd
 hrc
-pmb
+jmh
 kzg
 mNe
 ygO
@@ -74247,8 +74247,8 @@ wwD
 agV
 agV
 agV
-rCX
-jcY
+deQ
+rdA
 fps
 vyf
 nxa
@@ -80894,7 +80894,7 @@ aen
 afO
 ahi
 gsT
-aiz
+dkU
 ajJ
 aku
 akG

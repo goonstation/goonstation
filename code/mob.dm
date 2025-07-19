@@ -454,9 +454,9 @@ TYPEINFO(/mob)
 		return
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
-	if(isnull(src.client.tg_layout))
-		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
-	src.client.set_layout(src.client.tg_layout)
+	if(isnull(src.client?.tg_layout))
+		src.client?.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
+	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -480,13 +480,13 @@ TYPEINFO(/mob)
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
-	if(src.client.preferences)
+	if(src.client?.preferences)
 		src.reset_keymap()
 
-	src.client.mouse_pointer_icon = src.cursor
+	src.client?.mouse_pointer_icon = src.cursor
 
-	src.lastKnownIP = src.client.address
-	src.computer_id = src.client.computer_id
+	src.lastKnownIP = src.client?.address
+	src.computer_id = src.client?.computer_id
 
 	world.update_status()
 
@@ -520,7 +520,7 @@ TYPEINFO(/mob)
 
 	src.need_update_item_abilities = 1
 
-	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
+	var/atom/illumplane = src.client?.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
@@ -936,8 +936,8 @@ TYPEINFO(/mob)
 /mob/verb/list_medals()
 	set name = "Medals"
 
-	if (IsGuestKey(src.key))
-		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to view your medals."))
 		return
 
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
@@ -1092,7 +1092,7 @@ TYPEINFO(/mob)
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss=FALSE)
 	hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)

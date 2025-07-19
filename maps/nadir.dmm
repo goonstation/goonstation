@@ -9550,13 +9550,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"ers" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cookingmachine/mixer{
-	pixel_y = 4
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "erz" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -14553,6 +14546,17 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergency)
+"gxq" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "gxB" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -20942,12 +20946,6 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
-"iYk" = (
-/obj/loudspeaker,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "iYC" = (
 /obj/machinery/door/feather/friendly,
 /turf/simulated/floor/shuttle/flock,
@@ -37612,6 +37610,12 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"qfc" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "qfm" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
@@ -37955,6 +37959,13 @@
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
+"qng" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "qnB" = (
 /obj/stool/bar,
 /obj/disposalpipe/segment/horizontal,
@@ -41053,12 +41064,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"rNd" = (
-/obj/loudspeaker,
-/turf/simulated/floor/engine,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "rNq" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/grey/blackgrime,
@@ -41778,17 +41783,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/cloner)
-"sec" = (
-/obj/machinery/cookingmachine/oven,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "seK" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -46304,6 +46298,15 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"udK" = (
+/obj/machinery/door_control{
+	id = "kitchen";
+	name = "Kitchen Shutter Control";
+	pixel_y = 24
+	},
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "udR" = (
 /obj/machinery/vending/alcohol/with_ammo,
 /obj/decal/cleanable/dirt/jen,
@@ -49444,15 +49447,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
-"vAs" = (
-/obj/machinery/door_control{
-	id = "kitchen";
-	name = "Kitchen Shutter Control";
-	pixel_y = 24
-	},
-/obj/machinery/cookingmachine/oven,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "vAE" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/arcade,
@@ -52284,6 +52278,12 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"wQs" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "wQv" = (
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -9
@@ -90827,7 +90827,7 @@ oNg
 hWN
 oLJ
 iHN
-vAs
+udK
 bhF
 maE
 jpW
@@ -91129,7 +91129,7 @@ oNg
 vyr
 oLJ
 iHN
-sec
+gxq
 rCD
 tTz
 ssc
@@ -92337,7 +92337,7 @@ oNg
 hEe
 gbZ
 iHN
-ers
+qng
 maE
 bsw
 mjF
@@ -101085,7 +101085,7 @@ vwG
 jci
 awA
 rdL
-rNd
+wQs
 afE
 drI
 rdL
@@ -107115,7 +107115,7 @@ gzq
 uiA
 qgt
 nAw
-iYk
+qfc
 bZd
 bZd
 rlq

@@ -1098,6 +1098,9 @@ TYPEINFO(/obj/vehicle/clowncar)
 	if(mob_target == user && can_act(user))	// if drop self, then climbed in
 		if(rider)
 			return
+		if (user.hasStatus("drunk"))
+			var/mob/living/carbon/human/H = user
+			H.apply_automated_arrest("DUI.", "Drove while inebriated.")
 		mob_target.set_loc(src)
 		rider = mob_target
 		handle_button_addition()

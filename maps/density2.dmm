@@ -3326,6 +3326,15 @@
 /obj/machinery/computer/barcode/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"vL" = (
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/obj/railing{
+	color = "#222288"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/wood/two,
+/area/station/bridge)
 "vM" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -3707,15 +3716,6 @@
 /obj/machinery/computer/ATM,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"yB" = (
-/obj/decal/stage_edge,
-/obj/loudspeaker,
-/obj/railing{
-	color = "#222288"
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/wood/two,
-/area/station/bridge)
 "yE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4207,6 +4207,11 @@
 "CI" = (
 /turf/unsimulated/wall/setpieces/leadwindow,
 /area/station/security/main)
+"CM" = (
+/obj/machinery/cookingmachine/mixer,
+/obj/table/auto,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "CN" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -6297,11 +6302,6 @@
 	},
 /turf/simulated/floor/marble,
 /area/station/ranch)
-"Rj" = (
-/obj/machinery/cookingmachine/mixer,
-/obj/table/auto,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
 "Rn" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 10
@@ -6457,6 +6457,11 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"SK" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/light,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "SO" = (
 /obj/machinery/light,
 /turf/simulated/floor/sanitary,
@@ -6562,11 +6567,6 @@
 /obj/machinery/gibber{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
-"Tv" = (
-/obj/machinery/cookingmachine/oven,
-/obj/machinery/light,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Ty" = (
@@ -47899,7 +47899,7 @@ Rf
 aG
 ul
 wr
-yB
+vL
 AQ
 CQ
 Fq
@@ -56070,7 +56070,7 @@ Ow
 Py
 Ra
 Ox
-Tv
+SK
 in
 Rf
 Rf
@@ -56672,7 +56672,7 @@ MI
 MI
 Oz
 PD
-Rj
+CM
 Ox
 TT
 in

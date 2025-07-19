@@ -16105,16 +16105,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
-"bkL" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table/auto,
-/obj/machinery/cookingmachine/mixer{
-	pixel_y = 10
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "bkM" = (
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
@@ -25716,14 +25706,6 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"bTi" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "bTk" = (
 /obj/tug_cart,
 /turf/simulated/floor/plating/random,
@@ -26348,12 +26330,6 @@
 /area/station/crew_quarters/radio/lab)
 "bVw" = (
 /obj/stool/chair/comfy{
-	dir = 8
-	},
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
-"bVx" = (
-/obj/mic_stand{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue/checker/other,
@@ -28064,10 +28040,6 @@
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
-"cbR" = (
-/obj/machinery/cookingmachine/oven,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "cbS" = (
 /obj/machinery/deep_fryer,
 /obj/machinery/light/incandescent/warm/very,
@@ -28176,11 +28148,6 @@
 "ccm" = (
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
-"ccn" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cco" = (
@@ -31235,15 +31202,6 @@
 	dir = 5
 	},
 /area/station/medical/medbooth)
-"dlH" = (
-/obj/machinery/cookingmachine/oven{
-	dir = 4
-	},
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/crew_quarters/kitchen)
 "dlQ" = (
 /obj/decal/cleanable/oil,
 /obj/item/clothing/suit/space/old,
@@ -33736,6 +33694,16 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"ghq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 10
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "ghx" = (
 /obj/joeq/spooky,
 /turf/simulated/wall/auto/reinforced/old,
@@ -34641,6 +34609,11 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/green/side,
 /area/station/crew_quarters/market)
+"hsQ" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "hvu" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/genetics)
@@ -35147,6 +35120,15 @@
 	},
 /turf/simulated/floor/grime,
 /area/derelict_diner)
+"inK" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/record/radio/host{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/storage/box/record/radio/host,
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/lab)
 "ioi" = (
 /obj/stool/chair{
 	dir = 8
@@ -35303,14 +35285,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
-"iAL" = (
-/obj/machinery/cookingmachine/oven{
-	dir = 4
-	},
-/turf/simulated/floor/blackwhite/whitegrime/other{
-	dir = 10
-	},
-/area/station/crew_quarters/kitchen)
 "iBe" = (
 /obj/machinery/light/flock{
 	dir = 8
@@ -40503,19 +40477,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/bar,
 /area/evilreaver/bar)
-"pdH" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/obj/table/wood/auto,
-/obj/item/storage/box/record/radio/host{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/storage/box/record/radio/host,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "pfe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -41160,6 +41121,10 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"pXD" = (
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "pYr" = (
 /obj/mapping_helper/wingrille_spawn/flock,
 /turf/simulated/floor/shuttle/flock,
@@ -45995,6 +45960,14 @@
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
+"wOW" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/blackwhite/whitegrime/other{
+	dir = 10
+	},
+/area/station/crew_quarters/kitchen)
 "wPf" = (
 /obj/fakeobject/skeleton{
 	desc = "The head seems to be gone.";
@@ -46226,6 +46199,15 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
+"xav" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
 "xaz" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -76347,8 +76329,8 @@ aCR
 bqQ
 bXE
 clU
-dlH
-iAL
+xav
+wOW
 bhB
 tGH
 boW
@@ -77250,7 +77232,7 @@ bmt
 bmU
 bhC
 wwP
-bkL
+ghq
 cyx
 fLc
 bhC
@@ -107490,7 +107472,7 @@ bKd
 bKd
 bRb
 bRa
-bTi
+bUu
 bUw
 bVv
 cfv
@@ -108094,9 +108076,9 @@ bMK
 bQf
 bRa
 bRa
-pdH
+inK
 bWq
-bVx
+bRa
 bRa
 epa
 aqn
@@ -123865,9 +123847,9 @@ cbn
 aPB
 aPB
 cbD
-cbR
+pXD
 ccd
-ccn
+hsQ
 cbN
 cbD
 ccK

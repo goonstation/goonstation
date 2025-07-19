@@ -1068,6 +1068,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	set waitfor = 0
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
+	if (src.artifact?.activated)
+		if (reach)
+			src.artifact.effect_attack_atom(src, user, target)
+		src.artifact.effect_click_tile(src, user, get_turf(target))
 	return
 
 /obj/item/dummy/ex_act()
@@ -1315,6 +1319,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		if (user.a_intent == INTENT_GRAB)
 			src.try_grab(target, user)
 			return
+
+	if (src.artifact?.activated)
+		src.artifact.effect_melee_attack(src, user, target)
+		return
 
 	def_zone = target.get_def_zone(user, def_zone)
 	var/hit_area = parse_zone(def_zone)

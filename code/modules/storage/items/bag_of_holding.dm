@@ -16,7 +16,7 @@
 	if (istype(I, /obj/item/artifact/activator_key))
 		var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 		var/datum/artifact/activator_key/key = I.artifact
-		if (key.activated && (key.universal || key.artitype == boh.artifact.artitype))
+		if (key.activated && (key.universal || key.activating_origin == boh.artifact.artitype))
 			destroy_bag_of_holding(src.linked_item, I, user)
 			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
@@ -38,7 +38,7 @@
 	if (istype(I, /obj/item/artifact/activator_key))
 		var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 		var/datum/artifact/activator_key/key = I.artifact
-		if (key.activated && (key.universal || key.artitype == boh.artifact.artitype))
+		if (key.activated && (key.universal || key.activating_origin == boh.artifact.artitype))
 			destroy_bag_of_holding(src.linked_item, I, user)
 			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item

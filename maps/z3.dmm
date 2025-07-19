@@ -910,10 +910,6 @@
 	dir = 8
 	},
 /area/space_hive)
-"acT" = (
-/obj/machinery/cookingmachine/oven,
-/turf/unsimulated/floor/honeyblocks/corner,
-/area/space_hive)
 "acU" = (
 /obj/critter/domestic_bee/chef,
 /turf/unsimulated/floor/honeyblocks/border,
@@ -1237,38 +1233,12 @@
 	dir = 1
 	},
 /area/radiostation/hallway)
-"adQ" = (
-/obj/table/wood/auto,
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "adR" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
 /area/space)
-"adS" = (
-/obj/table/wood/auto,
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "adV" = (
 /obj/effects/background_objects/domus_dei,
 /turf/space,
@@ -1487,12 +1457,6 @@
 /area/radiostation/podbay)
 "aeD" = (
 /obj/submachine/tape_deck,
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
-"aeF" = (
-/obj/mic_stand{
-	dir = 8
-	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "aeG" = (
@@ -8862,10 +8826,6 @@
 /obj/map/light/screen,
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
-"aQH" = (
-/obj/machinery/cookingmachine/oven,
-/turf/simulated/floor/sanitary,
-/area/h7/crew)
 "aQJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16326,6 +16286,17 @@
 	},
 /turf/space,
 /area/space)
+"dGY" = (
+/obj/table/wood/auto,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "dHq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -16347,6 +16318,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"dJD" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "dLg" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
@@ -17458,6 +17436,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"gHW" = (
+/obj/machinery/cookingmachine/oven,
+/turf/unsimulated/floor/honeyblocks/corner,
+/area/space_hive)
 "gJv" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
@@ -19134,13 +19116,6 @@
 /obj/item/pen,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"kKo" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cookingmachine/mixer,
-/obj/decal/cleanable/cobweb2,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "kKQ" = (
 /obj/storage/secure/closet/fridge{
 	desc = "A staff fridge."
@@ -20623,6 +20598,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/diner/hangar)
+"ogr" = (
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
 "ohs" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -20733,6 +20712,13 @@
 	icon_state = "carpetNW"
 	},
 /area/radiostation/bedroom)
+"ovR" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "owN" = (
 /obj/lattice{
 	dir = 4;
@@ -22520,6 +22506,11 @@
 	dir = 8
 	},
 /area/diner/hallway)
+"sOo" = (
+/obj/machinery/cookingmachine/oven,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/scorched,
+/area/diner/kitchen)
 "sOs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23393,11 +23384,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/space_hive)
-"uJM" = (
-/obj/machinery/cookingmachine/oven,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/scorched,
-/area/diner/kitchen)
 "uJP" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -32762,7 +32748,7 @@ aaa
 aaa
 aOU
 aOU
-aQH
+ogr
 aRi
 aOU
 aSU
@@ -49296,7 +49282,7 @@ rpS
 aaO
 gaf
 acA
-acT
+gHW
 adl
 aaO
 qMu
@@ -74999,7 +74985,7 @@ pPj
 aaF
 aaa
 iDu
-uJM
+sOo
 azq
 fZa
 qSL
@@ -75905,7 +75891,7 @@ pPj
 afD
 aeZ
 iDu
-kKo
+dJD
 cPf
 boq
 alb
@@ -107893,7 +107879,7 @@ hnB
 oSY
 adx
 adK
-adQ
+dGY
 aem
 aeD
 adg
@@ -108497,9 +108483,9 @@ vMM
 adw
 adx
 adK
-adS
+ovR
 aeo
-aeF
+adL
 adg
 agi
 aoY
