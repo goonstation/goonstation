@@ -436,9 +436,18 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 	ui_static_data(mob/user)
 		. = list("maxItems" = src.max_contents)
 
-	ui_act(action, params)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
 		if (.)
+			return
+		. = TRUE
+
+		if (action == "open_recipe_book") // this can be opened even while cooking
+			usr.Browse(recipe_html, "window=recipes;size=500x700")
+			return
+
+		if (src.working)
+			boutput(ui.user, SPAN_NOTICE("You can't mess with [src] while it's cooking!"))
 			return
 
 		switch (action)
