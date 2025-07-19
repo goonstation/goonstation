@@ -1639,6 +1639,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		desc = "A weird flechette-like projectile."
 		icon_state = "blowdart"
 
+	produce
+		name= "organic matter"
+		desc = "A small, hard piece of organic matter. As if from some home-grown projectile."
+		icon_state = "grenadefragment"
+
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I, bleed_time)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
