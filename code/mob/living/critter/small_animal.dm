@@ -164,7 +164,14 @@ proc/filter_carrier_pets(var/type)
 	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 	player_can_spawn_with_pet = TRUE
 	var/attack_damage = 3
+	/// animal has colors to it
 	var/use_custom_color = TRUE
+	/// if use_custom_color is set, can the eyes be recolored?
+	var/use_colored_eyes = TRUE
+	/// used for setting custom color
+	var/custom_color_type = "mouse"
+	/// possible fur colors
+	var/list/fur_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 	var/shiny_chance = 4096 ///One in this chance of being shiny
 	var/is_shiny = FALSE
 
@@ -180,7 +187,7 @@ proc/filter_carrier_pets(var/type)
 			src.is_shiny = TRUE
 			src.desc += " This one seems rare."
 		else
-			fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
+			fur_color =	pick(src.fur_colors)
 		eye_color = "#FFFFF"
 		setup_overlays()
 		src.bioHolder.AddNewPoolEffect("albinism", scramble=TRUE)
@@ -190,18 +197,19 @@ proc/filter_carrier_pets(var/type)
 			if (src.client)
 				fur_color = src.client.preferences.AH.customizations["hair_bottom"].color
 				eye_color = src.client.preferences.AH.e_color
-			var/image/overlay = image(src.icon, "mouse_colorkey")
+			var/image/overlay = image(src.icon, "[src.custom_color_type]_colorkey")
 			overlay.color = fur_color
 			src.UpdateOverlays(overlay, "hair")
 
-			var/image/overlay_eyes = image(src.icon, "mouse_eyes")
-			overlay_eyes.color = eye_color
-			src.UpdateOverlays(overlay_eyes, "eyes")
+			if (use_colored_eyes)
+				var/image/overlay_eyes = image(src.icon, "[src.custom_color_type]_eyes")
+				overlay_eyes.color = eye_color
+				src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
 		if (src.use_custom_color)
 			src.ClearAllOverlays()
-			var/image/overlay = image(src.icon, "mouse_colorkey-dead")
+			var/image/overlay = image(src.icon, "[src.custom_color_type]_colorkey-dead")
 			overlay.color = fur_color
 			src.UpdateOverlays(overlay, "hair")
 		..()
@@ -275,7 +283,10 @@ proc/filter_carrier_pets(var/type)
 	health_brute = 10
 	health_burn = 10
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	use_custom_color = FALSE
+	use_custom_color = TRUE
+	use_colored_eyes = FALSE
+	custom_color_type = "rat"
+	fur_colors = list("#ffffff", "#555555", "#422219")
 	shiny_chance = 0
 
 /mob/living/critter/small_animal/mouse/dead
