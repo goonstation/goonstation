@@ -27,6 +27,7 @@
 	var/add_orig = 0.2
 	var/paint_intensity = 0.6
 	var/paint_uses = 15
+	var/bootleg = FALSE //Remember, use ONLY genuine replacement parts.
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(user)
@@ -216,13 +217,12 @@
 
 			if (6)
 				if (istype(W, /obj/item/tile))
-					if(istype(W, /obj/item/tile/paintmachine))
-						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
-						playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
-						action_bar.duration = 5 SECONDS
-						actions.start(action_bar, user)
-					else
-						boutput(user, SPAN_ALERT("[src]'s service panel has a proprietary connection system, [W] won't fit!"))
+					if(!istype(W, /obj/item/tile/paintmachine))
+						boutput(user, SPAN_NOTICE("[W] isn't [src]'s originial maintenance panel, but that should be fine, right?"))
+					user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
+					playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
+					action_bar.duration = 5 SECONDS
+					actions.start(action_bar, user)
 				else
 					boutput(user, SPAN_ALERT("The service panel must be replaced first!"))
 					return
@@ -263,15 +263,23 @@
 					repair_stage = 6
 					user.visible_message("[user] tightens the service module bolts.")
 			if(6)
-				if(user.equipped(W) && istype(W, /obj/item/tile/paintmachine))
+				if(user.equipped(W) && istype(W, /obj/item/tile))
 					repair_stage = 7
-					qdel(W)
 					user.visible_message("[user] replaces the maintenace panel.")
+					if(!istype(W, /obj/item/tile/paintmachine))
+						boutput(user, SPAN_ALERT("It seems like [W] isn't quite a perfect fit. Welp."))
+						src.bootleg = TRUE
+					qdel(W)
+
 			if(7)
 				if(user.equipped(W) && isscrewingtool(W))
 					repair_stage = 8
 					user.visible_message("[user] secures the maintenance panel!", "You secure the maintenance panel.")
-					new /obj/machinery/vending/paint(src.loc)
+					var/obj/machinery/vending/paint/paintmachine = new /obj/machinery/vending/paint(src.loc)
+					if(src.bootleg)
+						paintmachine.say("ERROR: Unable to verify PrismaColor license.")
+						paintmachine.bootleg = TRUE
+						paintmachine.name = "Bootleg Paint Dispenser"
 					qdel(src)
 					return
 		src.update_name()
