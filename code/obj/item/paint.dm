@@ -155,13 +155,13 @@
 				can.inventory_counter?.update_number(can.uses)
 				paint_needed--
 				if (!paint_needed)
-					user.visible_message("[user] pours some paint into [src]. The \"check paint cartridge\" light goes out.", "You pour some paint into [src], filling it up!")
+					user.visible_message("[user] pours some paint into [src]. The \"check paint cartridge\" light goes out.", "You pour some paint into [src], filling it up!", group = "paintmachine_fill")
 					playsound(user, 'sound/machines/ping.ogg', 65, TRUE)
 					src.repair_stage = 5
 					src.update_name()
 					return
 
-				user.visible_message("[user] pours some paint into [src].", "You pour some paint into [src]. ([paint_needed] units still needed)")
+				user.visible_message("[user] pours some paint into [src].", "You pour some paint into [src]. ([paint_needed] units still needed)", group = "paintmachine_fill")
 			else
 				boutput(user, SPAN_ALERT("You need to repair the machine first!"))
 			return
