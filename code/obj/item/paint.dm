@@ -60,6 +60,8 @@
 			return
 		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
+			if(src.bootleg)
+				col_new = BlendRGB(col_new, random_color(), 0.2)
 			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc, col_new)
 			paint_color = col_new
 			P.paint_intensity = src.paint_intensity
@@ -67,6 +69,11 @@
 			P.generate_icon()
 			user.put_in_hand_or_drop(P)
 		return
+
+/obj/machinery/vending/paint/bootleg
+	name = "bootleg paint dispenser"
+	bootleg = TRUE
+
 
 //////////////////// broken paint vending machine
 
@@ -279,7 +286,7 @@
 					if(src.bootleg)
 						paintmachine.say("ERROR: Unable to verify PrismaColor license.")
 						paintmachine.bootleg = TRUE
-						paintmachine.name = "Bootleg Paint Dispenser"
+						paintmachine.name = "bootleg paint dispenser"
 					qdel(src)
 					return
 		src.update_name()
