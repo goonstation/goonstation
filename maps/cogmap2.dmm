@@ -6189,14 +6189,6 @@
 	icon_state = "fpurple1"
 	},
 /area/station/chapel/sanctuary)
-"aub" = (
-/obj/table/reinforced/bar/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fpurple1"
-	},
-/area/station/chapel/sanctuary)
 "auc" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/light/candle{
@@ -7002,11 +6994,6 @@
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/gloves/boxing,
-/obj/decal/boxingrope,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
-"awx" = (
-/obj/loudspeaker,
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -9979,13 +9966,6 @@
 	icon_state = "wooden"
 	},
 /area/station/chapel/sanctuary)
-"aDV" = (
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "aDW" = (
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/chapel{
@@ -10019,13 +9999,6 @@
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple6"
-	},
-/area/station/chapel/sanctuary)
-"aEc" = (
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
 	},
 /area/station/chapel/sanctuary)
 "aEd" = (
@@ -39500,11 +39473,6 @@
 "cqE" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/south)
-"cqF" = (
-/obj/table/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "cqG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -56374,6 +56342,11 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/security/brig)
+"gyQ" = (
+/obj/table/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "gzl" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/plating,
@@ -57470,6 +57443,14 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/catwalk/south)
+"hBA" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/firealarm/north,
+/obj/machinery/computer/card,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint/podbay)
 "hBJ" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/access/medical,
@@ -58558,6 +58539,13 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
+"irY" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "isl" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -59871,6 +59859,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"jBT" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fpurple1"
+	},
+/area/station/chapel/sanctuary)
 "jCv" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -68492,6 +68488,13 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
+"rnY" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "roS" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/grey/side{
@@ -72352,14 +72355,6 @@
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/blue,
 /area/station/science/lab)
-"vjS" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/firealarm/north,
-/obj/machinery/computer/card,
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/station/security/checkpoint/podbay)
 "vla" = (
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
@@ -73486,6 +73481,11 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/catwalk/south)
+"wuw" = (
+/obj/machinery/loudspeaker,
+/obj/decal/boxingrope,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "wwk" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -107445,7 +107445,7 @@ bCe
 bCj
 bEM
 fuP
-vjS
+hBA
 lcc
 bUQ
 byI
@@ -111922,7 +111922,7 @@ asp
 atH
 atG
 atG
-awx
+wuw
 idN
 asM
 azJ
@@ -118643,7 +118643,7 @@ cjP
 clA
 cnj
 coT
-cqF
+gyQ
 csk
 ctG
 cuZ
@@ -121590,7 +121590,7 @@ ayB
 azZ
 aBB
 arx
-aDV
+rnY
 alM
 aGC
 aIl
@@ -123093,7 +123093,7 @@ apl
 aqw
 aqu
 asL
-aub
+jBT
 avB
 awR
 ayG
@@ -124006,7 +124006,7 @@ ayJ
 aAh
 aBI
 ary
-aEc
+irY
 alM
 aGC
 aIl
