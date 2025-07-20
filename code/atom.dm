@@ -859,10 +859,10 @@ TYPEINFO(/atom/movable)
 	PROTECTED_PROC(TRUE)
 	if (src.storage?.storage_item_attack_by(W, user))
 		return
-	if (W.should_suppress_attack(src, user, params))
+	if (!W || W.should_suppress_attack(src, user, params))
 		return
 	src.material_trigger_when_attacked(W, user, 1)
-	if (silent || !user || !W)
+	if (silent || !user)
 		return
 	var/hits = src
 	if (!src.name && isobj(src)) // shut up
