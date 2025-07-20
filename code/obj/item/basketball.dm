@@ -247,7 +247,7 @@
 
 	Crossed(atom/movable/A)
 		..()
-		if (src.active && src.mounted)
+		if (src.active || !src.mounted)
 			return
 		if (istypes(A, list(/obj/item/bballbasket, /obj/item/dummy))) // oh for FUCK'S SAKE
 			return // NO
