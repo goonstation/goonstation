@@ -127,14 +127,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Artistic Crate"
 
-/datum/supply_packs/paintmachine_cover
-	name = "Replacement Paint Dispenser Service Panel"
-	desc = "An authentic, precision-engineered replacement panel for the PX-35 Paint Dispenser."
-	contains = list(/obj/item/tile/paintmachine)
-	cost = PAY_TRADESMAN*4
-	containertype = /obj/storage/crate/wooden
-	containername = "Replacement Paint Dispenser Panel Crate"
-
 /datum/supply_packs/neon_lining
 	name = "Neon Lining Crate"
 	desc = "For intellectuals that value the aesthetic of the past."
