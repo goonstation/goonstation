@@ -182,7 +182,7 @@
 
 /obj/item/bballbasket
 	name = "basketball hoop" // it's a hoop you nerd, not a basket
-	desc = "Can be mounted on walls."
+	desc = "Ideal for dunking basketballs, among other things."
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
