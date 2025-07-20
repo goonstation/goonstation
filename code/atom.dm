@@ -857,12 +857,10 @@ TYPEINFO(/atom/movable)
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	PROTECTED_PROC(TRUE)
-	if (src.storage?.storage_item_attack_by(W, user))
-		return
-	if (!W || W.should_suppress_attack(src, user, params))
+	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
 	src.material_trigger_when_attacked(W, user, 1)
-	if (silent || !user)
+	if (silent)
 		return
 	var/hits = src
 	if (!src.name && isobj(src)) // shut up
