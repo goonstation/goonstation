@@ -1,4 +1,9 @@
 
+(t)sat jul 19 25
+(u)LeahTheTech
+(p)24158
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Middle mouse now attempts to open/close any large storage objects (lockers, crates) on the turf you click on.
 (t)fri jul 18 25
 (u)glowbold
 (p)23716
