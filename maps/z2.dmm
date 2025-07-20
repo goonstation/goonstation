@@ -27327,10 +27327,8 @@
 	},
 /area/crunch)
 "cdP" = (
-/obj/item/bballbasket{
-	anchored = 1;
-	dir = 8;
-	pixel_x = -20
+/obj/item/bballbasket/mounted{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "0,3"
@@ -27367,10 +27365,8 @@
 	},
 /area/sim/bball)
 "cdW" = (
-/obj/item/bballbasket{
-	anchored = 1;
-	dir = 4;
-	pixel_x = 20
+/obj/item/bballbasket/mounted{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "c13"
