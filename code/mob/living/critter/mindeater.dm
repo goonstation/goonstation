@@ -249,7 +249,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 	/// returns if the turf is bright enough to reveal the mindeater
 	proc/on_bright_turf()
 		var/turf/T = get_turf(src)
-		return T.is_lit()
+		return T?.is_lit()
 
 	/// if the mindeater is effectively intangible
 	proc/is_intangible()
