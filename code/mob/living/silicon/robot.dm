@@ -51,7 +51,6 @@ TYPEINFO(/mob/living/silicon/robot)
 	var/obj/item/device/radio_upgrade/radio_upgrade = null // Used for syndicate robots
 	var/obj/item/instrument/scream_instrument = null
 	var/scream_note = 1 //! Either a string note or an index of the sound to play (instruments are weird)
-	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/robot_module/module = null
 	var/list/upgrades = list()
@@ -111,6 +110,7 @@ TYPEINFO(/mob/living/silicon/robot)
 	var/custom = 0 //For custom borgs. Basically just prevents appearance changes. Obviously needs more work.
 
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+		START_TRACKING
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
@@ -208,12 +208,6 @@ TYPEINFO(/mob/living/silicon/robot)
 		src.attach_hud(zone_sel)
 
 		SPAWN(0.4 SECONDS)
-			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
-				for_by_tcl(A, /mob/living/silicon/ai)
-					src.connected_ai = A
-					A.connected_robots += src
-					break
-
 			src.botcard.access = get_all_accesses()
 			if (src.syndicate)
 				src.botcard.access += access_syndicate_shuttle
@@ -797,12 +791,6 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.UpdateName()
 			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
-		if (!src.syndicate && !src.connected_ai)
-			for_by_tcl(A, /mob/living/silicon/ai)
-				src.connected_ai = A
-				A.connected_robots += src
-				break
-
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.real_name = "SHELL/[src.mainframe.name]"
