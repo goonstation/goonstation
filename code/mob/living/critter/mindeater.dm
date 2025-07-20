@@ -124,11 +124,11 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 	death(gibbed)
 		gibbed = FALSE
-		if (src.lives < 0)
+		src.lives--
+		if (src.lives <= 0)
 			. = ..()
 			qdel(src)
 			return
-		src.lives--
 		src.full_heal()
 		src.demanifest()
 		for (var/datum/statusEffect/status in src.statusEffects)
