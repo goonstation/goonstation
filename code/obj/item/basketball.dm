@@ -303,6 +303,22 @@
 			A.invisibility = INVIS_NONE
 			src.active = 0
 
+/obj/item/bballbasket/mounted
+	anchored = ANCHORED
+	mounted = TRUE
+
+	New()
+		. = ..()
+		switch (src.dir)
+			if (NORTH)
+				src.pixel_y = 20
+			if (SOUTH)
+				src.pixel_y = -20
+			if (EAST)
+				src.pixel_x = 20
+			if (WEST)
+				src.pixel_x = -20
+
 /obj/item/bballbasket/testing
 	probability = 100
 
