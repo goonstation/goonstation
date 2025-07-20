@@ -192,6 +192,7 @@
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40
+	HELP_MESSAGE_OVERRIDE("Use on a wall to mount it. Use a <b>wrench</b> to unmount it from the wall.")
 
 	New()
 		..()
