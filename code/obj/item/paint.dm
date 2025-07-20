@@ -276,7 +276,7 @@
 					if(!istype(W, /obj/item/tile/paintmachine))
 						boutput(user, SPAN_ALERT("It seems like [W] isn't quite a perfect fit. Welp."))
 						src.bootleg = TRUE
-					qdel(W)
+					W.change_stack_amount(-1)
 
 			if(7)
 				if(user.equipped(W) && isscrewingtool(W))
