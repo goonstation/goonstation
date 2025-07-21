@@ -11654,6 +11654,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
+"fet" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/obj/landmark/bill_spawn,
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker2,
+/area/station/crew_quarters/kitchen)
 "few" = (
 /obj/lattice{
 	dir = 4;
@@ -12410,18 +12420,6 @@
 "fxR" = (
 /turf/simulated/floor/carpet/blue/standard/edge/nw,
 /area/station/hallway/secondary/north)
-"fyx" = (
-/obj/submachine/chef_oven{
-	dir = 8
-	},
-/obj/landmark/bill_spawn,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "fyI" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/supernorn,
@@ -19494,16 +19492,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"iJE" = (
-/obj/submachine/chef_oven{
-	dir = 8
-	},
-/obj/landmark/bill_spawn,
-/obj/disposalpipe/segment/brig{
-	dir = 8
-	},
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "iJG" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -21622,16 +21610,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
-"jAx" = (
-/obj/table/auto,
-/obj/disposalpipe/segment/food,
-/obj/item/hand_labeler{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/machinery/mixer,
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "jAR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25674,6 +25652,16 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
+"ltj" = (
+/obj/table/auto,
+/obj/disposalpipe/segment/food,
+/obj/item/hand_labeler{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/white/checker2,
+/area/station/crew_quarters/kitchen)
 "ltu" = (
 /obj/decal/glow{
 	brightness = 3;
@@ -50996,6 +50984,18 @@
 /area/station/security/brig{
 	name = "The Cage Arena"
 	})
+"wIq" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/obj/landmark/bill_spawn,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/white/checker2,
+/area/station/crew_quarters/kitchen)
 "wIG" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lobby)
@@ -107675,7 +107675,7 @@ eYp
 hwv
 vxZ
 jFk
-jAx
+ltj
 hkL
 bhg
 ovL
@@ -109185,9 +109185,9 @@ pRt
 qww
 ukp
 vgl
-iJE
+fet
 brG
-fyx
+wIq
 qIa
 kgh
 vVa

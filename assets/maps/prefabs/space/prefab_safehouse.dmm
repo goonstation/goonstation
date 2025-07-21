@@ -395,7 +395,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/prefab/safehouse)
 "mf" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/black,
 /area/prefab/safehouse)

@@ -13227,6 +13227,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/catering)
+"cMO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "cMS" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -18453,6 +18462,19 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/crew_quarters/hor)
+"heo" = (
+/obj/machinery/power/data_terminal,
+/obj/table/wood/auto,
+/obj/machinery/networked/printer{
+	print_id = "Artlab"
+	},
+/obj/cable,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_y = 8;
+	pixel_x = 10
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/artifact)
 "her" = (
 /obj/stool/chair/couch/green{
 	dir = 4
@@ -18824,6 +18846,26 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"hty" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/kitchen/utensil/fork{
+	dir = 2;
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "htK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -21768,12 +21810,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"kcn" = (
-/obj/submachine/chef_oven{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "kcs" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -23114,6 +23150,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"llg" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "lnp" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -31957,19 +31999,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"rKh" = (
-/obj/machinery/power/data_terminal,
-/obj/table/wood/auto,
-/obj/machinery/networked/printer{
-	print_id = "Artlab"
-	},
-/obj/cable,
-/obj/item/pinpointer/category/artifacts/safe{
-	pixel_y = 8;
-	pixel_x = 10
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/artifact)
 "rKs" = (
 /obj/machinery/door_timer/solitary2/new_walls/north,
 /turf/simulated/floor/red/side{
@@ -32043,26 +32072,6 @@
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/artifact)
-"rLY" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/item/kitchen/utensil/fork{
-	dir = 2;
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/kitchen/utensil/knife{
-	pixel_y = 3
-	},
-/obj/item/kitchen/utensil/spoon{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/machinery/mixer,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "rMh" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
@@ -32629,15 +32638,6 @@
 /obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
-"skZ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "slg" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass{
@@ -74338,7 +74338,7 @@ geC
 rCt
 qGL
 bUq
-kcn
+llg
 qIR
 pcb
 kFq
@@ -74640,7 +74640,7 @@ viz
 tVY
 noz
 iWS
-skZ
+cMO
 ngB
 pcb
 wmR
@@ -75545,7 +75545,7 @@ lqG
 aDb
 sxh
 txB
-rLY
+hty
 hhS
 gzD
 pcb
@@ -99689,7 +99689,7 @@ nxF
 oIX
 pTJ
 qOd
-rKh
+heo
 sXL
 xis
 sZp

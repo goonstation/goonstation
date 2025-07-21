@@ -32673,6 +32673,14 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
+"eZL" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 6;
+	pixel_x = 5
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "eZN" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -34046,12 +34054,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
-"gbQ" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "gcw" = (
 /obj/stool/chair{
 	dir = 4
@@ -39674,6 +39676,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/mining/magnet)
+"jVi" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "jVt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43192,6 +43204,12 @@
 /area/station/routing/medsci{
 	name = "Research Router"
 	})
+"moX" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "mph" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crematorium"
@@ -55696,14 +55714,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"vnl" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer{
-	pixel_y = 6;
-	pixel_x = 5
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "vnP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -58242,16 +58252,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"xfa" = (
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "xft" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
@@ -116984,8 +116984,8 @@ iNb
 aUM
 jOn
 eQk
-gbQ
-xfa
+moX
+jVi
 tYy
 ppQ
 mPi
@@ -117291,7 +117291,7 @@ jdC
 qUu
 qUu
 ncP
-vnl
+eZL
 dUm
 uzb
 xpA

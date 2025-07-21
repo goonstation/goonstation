@@ -910,10 +910,6 @@
 	dir = 8
 	},
 /area/space_hive)
-"acT" = (
-/obj/submachine/chef_oven,
-/turf/unsimulated/floor/honeyblocks/corner,
-/area/space_hive)
 "acU" = (
 /obj/critter/domestic_bee/chef,
 /turf/unsimulated/floor/honeyblocks/border,
@@ -8830,10 +8826,6 @@
 /obj/map/light/screen,
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
-"aQH" = (
-/obj/submachine/chef_oven,
-/turf/simulated/floor/sanitary,
-/area/h7/crew)
 "aQJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16326,6 +16318,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"dJD" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "dLg" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
@@ -17437,6 +17436,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"gHW" = (
+/obj/machinery/cookingmachine/oven,
+/turf/unsimulated/floor/honeyblocks/corner,
+/area/space_hive)
 "gJv" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
@@ -19113,13 +19116,6 @@
 /obj/item/pen,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"kKo" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer,
-/obj/decal/cleanable/cobweb2,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "kKQ" = (
 /obj/storage/secure/closet/fridge{
 	desc = "A staff fridge."
@@ -20602,6 +20598,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/diner/hangar)
+"ogr" = (
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
 "ohs" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -22506,6 +22506,11 @@
 	dir = 8
 	},
 /area/diner/hallway)
+"sOo" = (
+/obj/machinery/cookingmachine/oven,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/scorched,
+/area/diner/kitchen)
 "sOs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23379,11 +23384,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/space_hive)
-"uJM" = (
-/obj/submachine/chef_oven,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/scorched,
-/area/diner/kitchen)
 "uJP" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -32748,7 +32748,7 @@ aaa
 aaa
 aOU
 aOU
-aQH
+ogr
 aRi
 aOU
 aSU
@@ -49282,7 +49282,7 @@ rpS
 aaO
 gaf
 acA
-acT
+gHW
 adl
 aaO
 qMu
@@ -74985,7 +74985,7 @@ pPj
 aaF
 aaa
 iDu
-uJM
+sOo
 azq
 fZa
 qSL
@@ -75891,7 +75891,7 @@ pPj
 afD
 aeZ
 iDu
-kKo
+dJD
 cPf
 boq
 alb

@@ -8604,6 +8604,19 @@
 /obj/machinery/disposal/small/west,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
+"aWU" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "aWW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15353,16 +15366,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/pool)
-"cgO" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "cgU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -27963,6 +27966,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"jQb" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
+/obj/cable,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/crew_quarters/hor)
 "jQv" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -30834,18 +30844,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/science/hall)
-"lAo" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "lAs" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/disposalpipe/segment{
@@ -34382,6 +34380,25 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/stockex)
+"nyd" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter";
+	icon_state = "4"
+	},
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/machinery/light/incandescent{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "nyC" = (
 /obj/warp_beacon{
 	name = "Hangar Beacon"
@@ -35772,25 +35789,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"oqe" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter";
-	icon_state = "4"
-	},
-/obj/machinery/mixer{
-	pixel_y = 5;
-	pixel_x = -4
-	},
-/obj/machinery/light/incandescent{
-	dir = 8;
-	nostick = 1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "oqw" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/light/emergency{
@@ -38747,6 +38745,16 @@
 	dir = 4
 	},
 /area/station/hangar/main)
+"pTM" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "pUk" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -42518,20 +42526,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"sft" = (
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/obj/submachine/chef_oven,
-/obj/machinery/disposal/small/north{
-	pixel_y = 32;
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/disposalpipe/trunk/food,
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "sfv" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -42801,6 +42795,20 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
+"sna" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/disposal/small/north{
+	pixel_y = 32;
+	name = "Lay-Z Chef Prison Food Chute"
+	},
+/obj/disposalpipe/trunk/food,
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "snf" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
@@ -43437,6 +43445,18 @@
 	layer = 2
 	},
 /area/space)
+"sEx" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "sEV" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -44444,13 +44464,6 @@
 	dir = 8
 	},
 /area/station/science/artifact)
-"tmr" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta/os_loaded,
-/obj/cable,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/carpet/purple/fancy/edge/se,
-/area/station/crew_quarters/hor)
 "tmM" = (
 /obj/machinery/light/small/sticky/frostedred,
 /obj/cable{
@@ -45150,19 +45163,6 @@
 	oxygen = 30.8366
 	},
 /area/station/crew_quarters/kitchen/freezer)
-"tCO" = (
-/obj/submachine/chef_oven,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "tDg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -70113,7 +70113,7 @@ bjm
 yhb
 kIu
 ant
-oqe
+nyd
 jhM
 stw
 bht
@@ -71015,7 +71015,7 @@ aXp
 vLP
 arN
 bjm
-sft
+sna
 wPd
 hiA
 qur
@@ -71317,7 +71317,7 @@ aXp
 qow
 arN
 bjm
-tCO
+aWU
 tvz
 xmV
 jgY
@@ -125294,7 +125294,7 @@ jBf
 qdx
 tZC
 amc
-cgO
+pTM
 alE
 aaa
 aaa
@@ -126785,7 +126785,7 @@ hlO
 dZI
 hfH
 uvz
-tmr
+jQb
 eTy
 eNH
 dkS
@@ -129500,7 +129500,7 @@ aiU
 cEi
 tma
 hOU
-lAo
+sEx
 ybe
 bLx
 ssf

@@ -7232,6 +7232,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
+"doE" = (
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/shuttle/sea_elevator/upper)
 "doO" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
@@ -9545,13 +9550,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"ers" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer{
-	pixel_y = 4
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "erz" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -14548,6 +14546,17 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergency)
+"gxq" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "gxB" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -25956,24 +25965,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"lbe" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
-/obj/machinery/door_control{
-	id = "nadir_minetop";
-	name = "Loading Door Control";
-	pixel_y = 24;
-	pixel_x = 8
-	},
-/obj/decal/poster/miners_almanac{
-	pixel_y = 28;
-	pixel_x = -6
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "lbg" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light_switch/west,
@@ -35919,6 +35910,24 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"pqb" = (
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
+/obj/machinery/door_control{
+	id = "nadir_minetop";
+	name = "Loading Door Control";
+	pixel_y = 24;
+	pixel_x = 8
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28;
+	pixel_x = -6
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/mining/staff_room)
 "pqp" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/item/reagent_containers/food/drinks/bottle/empty/square{
@@ -37950,6 +37959,13 @@
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
+"qng" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "qnB" = (
 /obj/stool/bar,
 /obj/disposalpipe/segment/horizontal,
@@ -41767,17 +41783,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/cloner)
-"sec" = (
-/obj/submachine/chef_oven,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "seK" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -42662,11 +42667,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"sBF" = (
-/turf/simulated/floor/engine/caution/corner{
-	dir = 8
-	},
-/area/shuttle/sea_elevator/upper)
 "sBQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46298,6 +46298,15 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"udK" = (
+/obj/machinery/door_control{
+	id = "kitchen";
+	name = "Kitchen Shutter Control";
+	pixel_y = 24
+	},
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "udR" = (
 /obj/machinery/vending/alcohol/with_ammo,
 /obj/decal/cleanable/dirt/jen,
@@ -49438,15 +49447,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
-"vAs" = (
-/obj/machinery/door_control{
-	id = "kitchen";
-	name = "Kitchen Shutter Control";
-	pixel_y = 24
-	},
-/obj/submachine/chef_oven,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "vAE" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/arcade,
@@ -90827,7 +90827,7 @@ oNg
 hWN
 oLJ
 iHN
-vAs
+udK
 bhF
 maE
 jpW
@@ -91129,7 +91129,7 @@ oNg
 vyr
 oLJ
 iHN
-sec
+gxq
 rCD
 tTz
 ssc
@@ -92337,7 +92337,7 @@ oNg
 hEe
 gbZ
 iHN
-ers
+qng
 maE
 bsw
 mjF
@@ -108336,7 +108336,7 @@ gdf
 woS
 gdf
 aXs
-lbe
+pqb
 wtb
 tYz
 dYV
@@ -108936,7 +108936,7 @@ bzJ
 lsj
 tXW
 fNc
-sBF
+doE
 rNu
 wGJ
 ahN
