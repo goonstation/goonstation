@@ -91,6 +91,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	reveals_on_use = TRUE
 
 	tryCast(atom/target)
+		if (actions.hasAction(src.holder.owner, /datum/action/bar/private/mindeater_brain_drain))
+			actions.stopId(/datum/action/bar/private/mindeater_brain_drain, src.holder.owner)
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		target = src.get_nearest_human_or_silicon(target)
 		var/mob/living/L = target
 		if (!(istype(L, /mob/living/carbon/human) || istype(L, /mob/living/silicon)))
@@ -112,7 +115,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Regenerate"
 	desc = "Regenerate health over time."
 	icon_state = "regenerate"
-	pointCost = 1
 
 	tryCast()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
