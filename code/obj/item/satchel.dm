@@ -177,6 +177,8 @@
 		tooltip_rebuild = TRUE
 
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (!in_interact_range(src, usr)  || BOUNDS_DIST(over_object, usr) > 0 || !can_act(usr))
+			return
 		if (istype(over_object,/obj/table))
 			if (length(src.contents) < 1)
 				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))

@@ -344,10 +344,6 @@ TYPEINFO_NEW(/obj/table)
 			return
 
 		var/obj/item/I = O
-		if(I.equipped_in_slot && I.cant_self_remove)
-			return
-
-		// Placed as such because we do want to let borgs drag their satchels to dump on tables, but don't want to let them place items on tables from their module
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
 
