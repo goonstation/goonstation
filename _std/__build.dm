@@ -125,7 +125,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------- MAP OVERRIDES -------------//
 
-//#define MAP_OVERRIDE_DEVTEST      // Developer Testing map, by cringe
+#define MAP_OVERRIDE_ATLAS      // Developer Testing map, by cringe
 
 //-------Special Events:
 //#define MAP_OVERRIDE_CONSTRUCTION // Construction mode
