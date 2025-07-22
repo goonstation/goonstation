@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	limit = 1
 	wages = PAY_EXECUTIVE
 	access_string = "Captain"
-	high_priority_job = TRUE
+	high_priority_job = FALSE
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
 	announce_on_join = TRUE
@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
-	rounds_needed_to_play = ROUNDS_MIN_CAPTAIN
+	rounds_needed_to_play = 0
 
 	derelict
 		//name = "NT-SO Commander"
@@ -338,7 +338,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_drinker", "training_security")
 	access_string = "Head of Security"
-	requires_whitelist = TRUE
+	requires_whitelist = FALSE
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
 	announce_on_join = TRUE
@@ -479,7 +479,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	limit = 5
 	lower_limit = 3
 	variable_limit = TRUE
-	high_priority_job = TRUE
+	high_priority_job = FALSE
 	high_priority_limit = 2 //always try to make sure there's at least a couple of secoffs
 	order_priority = 2 //fill secoffs after captain and AI
 	wages = PAY_TRADESMAN
@@ -499,7 +499,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security)
-	rounds_needed_to_play = ROUNDS_MIN_SECURITY
+	rounds_needed_to_play = 0
 	wiki_link = "https://wiki.ss13.co/Security_Officer"
 
 	assistant
@@ -519,7 +519,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		slot_poc1 = list(/obj/item/storage/security_pouch/assistant)
 		slot_poc2 = list(/obj/item/requisition_token/security/assistant)
 		items_in_backpack = list(/obj/item/paper/book/from_file/space_law)
-		rounds_needed_to_play = ROUNDS_MIN_SECASS
+		rounds_needed_to_play = 0
 		wiki_link = "https://wiki.ss13.co/Security_Assistant"
 
 	derelict
@@ -563,7 +563,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun,/obj/item/camera/large)
 	map_can_autooverride = FALSE
-	rounds_needed_to_play = ROUNDS_MIN_DETECTIVE
+	rounds_needed_to_play = 0
 	wiki_link = "https://wiki.ss13.co/Detective"
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -998,7 +998,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = SILICON_LINK_COLOR
 	limit = 1
 	no_late_join = TRUE
-	high_priority_job = TRUE
+	high_priority_job = FALSE
 	can_roll_antag = FALSE
 	slot_ears = list()
 	slot_card = null
@@ -2567,7 +2567,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	wages = PAY_TRADESMAN
 	trait_list = list("training_security")
 	access_string = "Nanotrasen Security Consultant"
-	requires_whitelist = TRUE
+	requires_whitelist = FALSE
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
@@ -2954,7 +2954,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			limit = 0
 #endif
 			no_jobban_from_this_job = FALSE
-			high_priority_job = TRUE
+			high_priority_job = FALSE
 			cant_allocate_unwanted = TRUE
 			overlay_icon = "nanocomm"
 			access = list(access_heads, access_captain, access_medical, access_medical_lockers, access_engineering_power, access_mining)
@@ -2998,7 +2998,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			limit = 0
 #endif
 			no_jobban_from_this_job = FALSE
-			high_priority_job = TRUE
+			high_priority_job = FALSE
 			cant_allocate_unwanted = TRUE
 			overlay_icon = "syndcomm"
 			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power, access_mining)
