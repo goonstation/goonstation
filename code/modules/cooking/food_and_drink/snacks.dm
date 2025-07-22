@@ -3006,8 +3006,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	food_effects = list("food_warm","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK
 
-
-
 /obj/item/reagent_containers/food/snacks/flapjack
 	name = "flapjack"
 	desc = "A golden brown square of syrupy goodness. Yum!"
