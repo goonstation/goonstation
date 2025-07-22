@@ -997,7 +997,7 @@ var/global/game_force_started = FALSE
 			highest_pop = server
 
 	//for when nightshade is winding down and we don't want to be giving people free tokens every round
-	if (highest_pop?.player_count <= 10)
+	if (highest_pop?.player_count <= 20)
 		logTheThing(LOG_DEBUG, null, "All linked servers below population threshold, no round end drops.")
 		return
 
