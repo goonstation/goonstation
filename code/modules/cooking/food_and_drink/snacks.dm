@@ -3000,10 +3000,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	bites_left = 3
 	heal_amt = 2
 	food_color = "#38130C"
-	initial_volume = 10
+	initial_volume = 20
 	initial_reagents = list("chocolate" = 5)
 	food_effects = list("food_warm","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK
+	flags = TABLEPASS | NOSPLASH
+
 
 /obj/item/reagent_containers/food/snacks/flapjack
 	name = "flapjack"
