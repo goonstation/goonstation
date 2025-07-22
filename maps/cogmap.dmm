@@ -5556,7 +5556,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "awj" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
 	},
@@ -13247,7 +13249,9 @@
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/pool)
 "aUC" = (
@@ -25008,7 +25012,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /obj/cable/blue{
 	icon_state = "2-8"
 	},
@@ -27735,7 +27742,10 @@
 	dir = 1;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = -9
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cah" = (
@@ -27993,7 +28003,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "cbb" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 10
@@ -28364,7 +28377,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "ccf" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = -9;
+	pixel_x = 10
+	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 6
@@ -34461,7 +34477,10 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "cwJ" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = -9
+	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	level = 2
@@ -38173,7 +38192,10 @@
 	level = 2;
 	can_rupture = 0
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "evR" = (
@@ -44298,7 +44320,10 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "iXk" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
@@ -45483,7 +45508,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "jSg" = (
@@ -46488,7 +46516,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
@@ -50447,7 +50477,9 @@
 /obj/stool/chair/yellow{
 	dir = 1
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /obj/landmark/start/job/engineer,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -53180,7 +53212,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "pCy" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = -9
+	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	level = 2
@@ -54478,7 +54513,10 @@
 	dir = 8;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = 11
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -64769,7 +64807,10 @@
 	dir = 8;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = -9
+	},
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"

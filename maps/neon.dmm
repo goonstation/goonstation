@@ -18114,7 +18114,10 @@
 	},
 /area/station/hallway/primary/north)
 "mNi" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = -9;
+	pixel_x = 10
+	},
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
 	},
@@ -23259,7 +23262,10 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = -9
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "qDW" = (

@@ -60863,7 +60863,10 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "sJk" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = -9;
+	pixel_x = 10
+	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	level = 2

@@ -4699,7 +4699,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aqy" = (
@@ -8730,7 +8732,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = 11
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aEb" = (
@@ -9354,7 +9359,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aGi" = (
@@ -13801,7 +13809,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "baY" = (
@@ -13965,7 +13976,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbD" = (
@@ -14116,7 +14130,9 @@
 	can_rupture = 0;
 	dir = 1
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /obj/machinery/light/small/floor/greenish,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
@@ -36593,7 +36609,10 @@
 	can_rupture = 0;
 	dir = 5
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -36778,6 +36797,19 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/chamber)
+"kxv" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/meter{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "kxQ" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/red,
@@ -131221,7 +131253,7 @@ aLh
 bbu
 bbF
 mkI
-aqx
+kxv
 pvr
 aGh
 bCu

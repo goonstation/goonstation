@@ -7442,7 +7442,7 @@
 	tag = "Cold Loop Inlet Meter"
 	},
 /obj/machinery/meter{
-	pixel_x = 9;
+	pixel_x = 10;
 	pixel_y = -8
 	},
 /obj/cable{
@@ -8265,7 +8265,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aGu" = (
@@ -8960,7 +8963,10 @@
 	can_rupture = 0;
 	dir = 5
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "aJp" = (
@@ -10209,7 +10215,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aPM" = (
@@ -12642,7 +12650,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
 	icon_state = "2-8"
@@ -15618,7 +15629,9 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 10
+	},
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -15984,7 +15997,10 @@
 	dir = 8;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 9;
+	pixel_y = 11
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34508,7 +34524,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core)
 "grq" = (
@@ -34917,7 +34936,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core)
 "gDM" = (
@@ -40542,7 +40564,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -41175,7 +41200,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 12;
+	pixel_x = 10
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -42047,7 +42075,9 @@
 /turf/simulated/floor,
 /area/station/security/secwing)
 "lxk" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -52378,7 +52408,8 @@
 /area/station/hallway/primary/east)
 "sWW" = (
 /obj/machinery/meter{
-	pixel_x = -9
+	pixel_x = 10;
+	pixel_y = -9
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -55883,7 +55914,10 @@
 	dir = 10;
 	can_rupture = 0
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "vuD" = (
@@ -59442,7 +59476,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/gas)
 "xSq" = (

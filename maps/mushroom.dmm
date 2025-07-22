@@ -11695,7 +11695,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = 11
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "bKM" = (
@@ -17035,7 +17038,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = 11
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "fXC" = (
@@ -20661,7 +20667,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = -9;
+	pixel_x = -10
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "jim" = (
@@ -25748,7 +25757,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/space,
 /area/station/engine/proto)
 "nvB" = (
@@ -28814,7 +28826,9 @@
 	name = "autoname  - SS13"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "pyW" = (
@@ -29368,7 +29382,10 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "pRV" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = -9;
+	pixel_x = 10
+	},
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
 	},
@@ -35111,7 +35128,9 @@
 /area/station/crew_quarters/kitchen)
 "tWm" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "tWn" = (
@@ -36210,6 +36229,16 @@
 "uLU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/captain)
+"uMH" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "uMY" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor/plating,
@@ -124634,7 +124663,7 @@ aaa
 aaa
 aaB
 amC
-jij
+uMH
 oKZ
 pyt
 lsW

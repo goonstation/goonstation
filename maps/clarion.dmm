@@ -3986,7 +3986,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 10;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aGG" = (
@@ -4469,7 +4472,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
 "aKB" = (
@@ -5363,7 +5368,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "aQx" = (
@@ -5941,7 +5948,9 @@
 /area/station/hallway/primary/southeast)
 "aVp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "aVt" = (
@@ -6370,7 +6379,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "aYB" = (
@@ -7213,7 +7225,9 @@
 /area/station/science/bot_storage)
 "beD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -8028,7 +8042,9 @@
 /area/station/science/artifact)
 "blL" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /obj/machinery/door_control{
 	id = "tox_one";
 	name = "Chamber Exhaust";
@@ -16746,7 +16762,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "gba" = (
@@ -24291,7 +24310,10 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = 11
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "lvS" = (
@@ -24747,7 +24769,10 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = -9;
+	pixel_x = -10
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "lLj" = (
@@ -25492,7 +25517,10 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "mqj" = (

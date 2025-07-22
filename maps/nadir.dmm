@@ -2463,7 +2463,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -10791,7 +10794,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -11139,7 +11145,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /obj/cable/orange{
 	icon_state = "6-10"
 	},
@@ -19248,7 +19257,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 10;
+	pixel_x = 10
+	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
 "ili" = (
@@ -23685,7 +23697,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = 11
+	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
 "khK" = (
@@ -27180,7 +27195,9 @@
 /area/station/medical/medbay)
 "lDM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
 	},
@@ -39498,7 +39515,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -43161,7 +43180,9 @@
 /area/station/hydroponics/bay)
 "sKX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 8
 	},
@@ -49058,7 +49079,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = -9
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 3;
@@ -51223,7 +51246,9 @@
 /area/station/security/equipment)
 "wpd" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
 "wpe" = (
