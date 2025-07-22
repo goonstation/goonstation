@@ -2997,6 +2997,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	desc = "A perfectly baked square of chocolatey goodness. Yum!"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "brownie"
+	flags = TABLEPASS | NOSPLASH
 	bites_left = 3
 	heal_amt = 2
 	food_color = "#38130C"
@@ -3004,7 +3005,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	initial_reagents = list("chocolate" = 5)
 	food_effects = list("food_warm","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK
-	flags = TABLEPASS | NOSPLASH
+
 
 
 /obj/item/reagent_containers/food/snacks/flapjack
