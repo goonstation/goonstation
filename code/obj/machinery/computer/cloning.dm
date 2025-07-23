@@ -447,7 +447,7 @@ proc/eligible_to_clone(datum/mind/mind, scanning = FALSE)
 			return null
 	if(iswraith(M))
 		return null
-	if((!scanning && isdead(M)) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
+	if((!scanning && (isdead(M) || isobserver(M))) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 		return M
 	return null
 
