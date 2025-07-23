@@ -55,6 +55,7 @@ export const DiskRack = (_props: unknown) => {
                 <Flex.Item>
                   {disk ? (
                     <DiskButton
+                      icon="eject"
                       index={disks.length - index - 1}
                       backgroundColor={disk.color}
                       textColor={
