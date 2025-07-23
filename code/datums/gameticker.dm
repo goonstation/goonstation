@@ -1007,7 +1007,7 @@ var/global/game_force_started = FALSE
 		return // servers are reasonably balanced, no drops for u
 
 	//scale by round length, normalised at 60 minute rounds
-	var/length_ratio = src.round_elapsed_ticks/(60 MINUTES)
+	var/length_ratio = min(src.round_elapsed_ticks/(50 MINUTES), 1)
 
 	var/actual_token_chance = BASE_TOKEN_CHANCE * ((RATIO_THRESHOLD - pop_ratio) / RATIO_THRESHOLD) * length_ratio
 	logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [pop_ratio], starting end round drops with token chance [actual_token_chance]")
