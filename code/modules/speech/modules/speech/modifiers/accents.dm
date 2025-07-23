@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	var/datum/callback/accent_proc = null
 
 /datum/speech_module/modifier/accent/New(datum/speech_module_tree/parent)
-	if (src.accent_proc.object == SRC_PROC)
+	if (src.accent_proc && (src.accent_proc.object == SRC_PROC))
 		src.accent_proc.object = src
 
 	. = ..()
