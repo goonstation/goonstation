@@ -76,6 +76,7 @@
 			if (src.disks[i])
 				continue
 			src.insert_disk(i, disk, user)
+			tgui_process.update_uis(src)
 			return
 	. = ..()
 
