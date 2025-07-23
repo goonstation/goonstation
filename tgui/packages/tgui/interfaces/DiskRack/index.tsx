@@ -43,41 +43,43 @@ export const DiskRack = (_props: unknown) => {
   return (
     <Window
       title="Disk Rack"
-      height={disks.length * 45}
+      height={disks.length * 39 + 5}
       width={200 + (data.has_lights ? 24 : 0)}
     >
       <Window.Content>
         <Divider />
         <Stack vertical>
           {disks.reverse().map((disk: Disk, index) => (
-            <Stack.Item key={index}>
-              <Flex>
-                <Flex.Item>
-                  {disk ? (
-                    <DiskButton
-                      icon="eject"
-                      index={disks.length - index - 1}
-                      backgroundColor={disk.color}
-                      textColor={
-                        hexToHsva(disk.color).v > 50 ? 'black' : 'white'
-                      }
-                    >
-                      {disk.name}
-                    </DiskButton>
-                  ) : (
-                    <DiskButton index={disks.length - index - 1}>
-                      Empty slot
-                    </DiskButton>
-                  )}
-                </Flex.Item>
-                {!!data.has_lights && (
+            <>
+              <Stack.Item key={index}>
+                <Flex>
                   <Flex.Item>
-                    <Led flashing={disk?.light} />
+                    {disk ? (
+                      <DiskButton
+                        icon="eject"
+                        index={disks.length - index - 1}
+                        backgroundColor={disk.color}
+                        textColor={
+                          hexToHsva(disk.color).v > 50 ? 'black' : 'white'
+                        }
+                      >
+                        {disk.name}
+                      </DiskButton>
+                    ) : (
+                      <DiskButton index={disks.length - index - 1}>
+                        Empty slot
+                      </DiskButton>
+                    )}
                   </Flex.Item>
-                )}
-              </Flex>
-              <Divider />
-            </Stack.Item>
+                  {!!data.has_lights && (
+                    <Flex.Item>
+                      <Led flashing={disk?.light} />
+                    </Flex.Item>
+                  )}
+                </Flex>
+              </Stack.Item>
+              <Stack.Divider />
+            </>
           ))}
         </Stack>
       </Window.Content>
