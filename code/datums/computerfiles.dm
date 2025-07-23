@@ -281,9 +281,15 @@
 	size = 24 //come on, it's an entire human genome, gotta be at least 24 bytes
 	var/list/fields = list()
 
-	disposing()
-		fields = null
-		. = ..()
+/datum/computer/file/clone/proc/operator[](key)
+	return src.fields[key]
+
+/datum/computer/file/clone/proc/operator[]=(key, value)
+	src.fields[key] = value
+
+/datum/computer/file/clone/disposing()
+	fields = null
+	. = ..()
 
 /datum/computer/file/lrt_data
 	name = "Galactic Position Record"
