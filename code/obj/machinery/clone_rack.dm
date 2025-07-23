@@ -62,6 +62,7 @@
 	src.disks[index] = null
 	playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
 	src.UpdateIcon()
+	src.update_lights()
 
 /obj/machinery/disk_rack/proc/insert_disk(index, obj/item/disk/data/floppy/disk, mob/user)
 	src.disks[index] = disk
@@ -95,7 +96,6 @@
 		return FALSE
 	return TRUE
 
-#define LIGHT_KEY "angry_light_[i]"
 
 /obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk)
 	return list("light" = src.cloneable_disk(disk))
@@ -104,6 +104,10 @@
 	return ..() + list("has_lights" = TRUE)
 
 /obj/machinery/disk_rack/clone/process(mult)
+	src.update_lights()
+
+#define LIGHT_KEY "angry_light_[i]"
+/obj/machinery/disk_rack/clone/proc/update_lights()
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
 		if (!disk || !src.cloneable_disk(disk))
@@ -115,5 +119,4 @@
 		overlay.plane = PLANE_SELFILLUM
 		overlay.pixel_y = (i-1) * 2
 		src.UpdateOverlays(overlay, LIGHT_KEY)
-
 #undef LIGHT_KEY
