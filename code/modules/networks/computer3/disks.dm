@@ -91,9 +91,9 @@
 		src.icon_state = "datadisk[diskcolor]"
 		switch (diskcolor)
 			if (0)
-				src.disk_color = "#8D161F"
+				src.disk_color = "#f04c59"
 			if (1)
-				src.disk_color = "#16258D"
+				src.disk_color = "#5166ee"
 			if (2)
 				src.disk_color = "#D0D510"
 
@@ -138,7 +138,7 @@
 	solarium
 		name = "galactic coordinate disk - 'Sol'"
 		icon_state = "datadisktele1"
-		disk_color = "#C96D25"
+		disk_color = "#f39249"
 		target_name = "Sol"
 
 	biodome
@@ -227,7 +227,7 @@
 
 /obj/item/disk/data/floppy/sec_command
 	icon_state = "datadisksyn" //yeah its "syndie" but its not used anywhere
-	disk_color = "#3F4C5B"
+	disk_color = "#afb9c4"
 	random_color = FALSE
 
 	New()
@@ -359,7 +359,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	name = "Authentication Disk"
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
 	icon_state = "nucleardisk"
-	disk_color = "#168D1C"
+	disk_color = "#5fce64"
 	item_state = "card-id"
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY

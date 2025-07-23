@@ -1,11 +1,17 @@
-import { Button, Stack } from 'tgui-core/components';
+import { hexToHsva } from 'common/goonstation/colorful';
+import { Button, Divider, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { ButtonProps } from '../../components/Button';
 import { Window } from '../../layouts';
 
 interface DiskRackData {
-  disks: string[];
+  disks: Disk[];
+}
+
+interface Disk {
+  name: string;
+  color: string;
 }
 
 type DiskButtonProps = Partial<{
@@ -18,7 +24,7 @@ const DiskButton = (props: DiskButtonProps) => {
   const { act } = useBackend();
   return (
     <Button
-      width="10em"
+      width="15em"
       textAlign="center"
       key={props.index}
       {...rest}
@@ -31,20 +37,26 @@ export const DiskRack = (_props: unknown) => {
   const { data } = useBackend<DiskRackData>();
   const { disks } = data;
   return (
-    <Window height={disks.length * 5}>
+    <Window height={disks.length * 50} width={300}>
       <Window.Content>
+        <Divider />
         <Stack vertical>
-          {disks.reverse().map((string, index) => (
+          {disks.reverse().map((disk: Disk, index) => (
             <Stack.Item key={index}>
-              {string ? (
-                <DiskButton index={disks.length - index - 1}>
-                  {string}
+              {disk ? (
+                <DiskButton
+                  index={disks.length - index - 1}
+                  backgroundColor={disk.color}
+                  textColor={hexToHsva(disk.color).v > 50 ? 'black' : 'white'}
+                >
+                  {disk.name}
                 </DiskButton>
               ) : (
                 <DiskButton index={disks.length - index - 1}>
                   Empty slot
                 </DiskButton>
               )}
+              <Divider />
             </Stack.Item>
           ))}
         </Stack>

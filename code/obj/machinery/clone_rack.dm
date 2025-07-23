@@ -26,11 +26,12 @@
 		ui.open()
 
 /obj/machinery/disk_rack/ui_data(mob/user)
-	var/list/disk_names[MAX_DISKS]
+	var/list/disk_data[MAX_DISKS]
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
-		disk_names[i] = disk?.name
-	return list("disks" = disk_names)
+		if (disk)
+			disk_data[i] = list("name" = disk.name, "color" = disk.disk_color)
+	return list("disks" = disk_data)
 
 /obj/machinery/disk_rack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
