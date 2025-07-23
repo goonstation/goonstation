@@ -31,15 +31,17 @@ export const DiskRack = (_props: unknown) => {
   const { data } = useBackend<DiskRackData>();
   const { disks } = data;
   return (
-    <Window height={disks.length * 10}>
+    <Window height={disks.length * 5}>
       <Window.Content>
         <Stack vertical>
-          {disks.map((string, index) => (
+          {disks.reverse().map((string, index) => (
             <Stack.Item key={index}>
               {string ? (
-                <DiskButton id={index}>{string}</DiskButton>
+                <DiskButton index={disks.length - index - 1}>
+                  {string}
+                </DiskButton>
               ) : (
-                <DiskButton id={index} disabled>
+                <DiskButton index={disks.length - index - 1} disabled>
                   Empty slot
                 </DiskButton>
               )}

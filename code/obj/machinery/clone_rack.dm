@@ -12,6 +12,7 @@
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
 		if (!disk)
+			src.ClearSpecificOverlays("disks_[i]")
 			continue
 		var/image/overlay = image(src.icon, "disk_overlay")
 		overlay.color = disk.disk_color
@@ -34,37 +35,49 @@
 /obj/machinery/disk_rack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
-		return
+		return .
 	if (action == "action")
 		var/index = text2num_safe(params["id"])
 		if (index < 1 || index > MAX_DISKS) //nu
-			return
+			return FALSE
 		if (src.disks[index])
-			ui.user.put_in_hand_or_drop(src.disks[index])
-			src.disks[index] = null
+			src.remove_disk(index, ui.user)
 			return TRUE
+		var/obj/item/disk/data/floppy/disk = ui.user.equipped()
+		if (!istype(disk))
+			return FALSE
+		src.insert_disk(disk, ui.user)
+		return TRUE
 
+/obj/machinery/disk_rack/proc/remove_disk(index, mob/user)
+	user.put_in_hand_or_drop(src.disks[index])
+	src.disks[index] = null
+	playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
+	src.UpdateIcon()
+
+/obj/machinery/disk_rack/proc/insert_disk(index, obj/item/disk/data/floppy/disk, mob/user)
+	src.disks[index] = disk
+	user.drop_item(disk)
+	disk.set_loc(src)
+	playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
+	src.UpdateIcon()
 
 /obj/machinery/disk_rack/attackby(obj/item/disk/data/floppy/disk, mob/user)
 	if (istype(disk))
 		for (var/i in 1 to MAX_DISKS)
 			if (src.disks[i])
 				continue
-			src.disks[i] = disk
-			user.drop_item(disk)
-			disk.set_loc(src)
-			playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
-			src.UpdateIcon()
+			src.insert_disk(i, disk, user)
 			return
 	. = ..()
 
-/obj/machinery/disk_rack/clone_rack
+/obj/machinery/disk_rack/clone
 	name = "clone rack"
 	desc = "A big clunky rack for storing cloning records in."
 
 #define LIGHT_KEY "angry_light_[i]"
 
-/obj/machinery/disk_rack/clone_rack/process(mult)
+/obj/machinery/disk_rack/clone/process(mult)
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
 		if (!disk)
