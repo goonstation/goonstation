@@ -1,5 +1,3 @@
-var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
-
 /**
  *	The base message type; it contains the content of a message and all of the relevant metadata. Any text that has been passed
  *	to `say()` is in turn passed into a new say message datum.
@@ -175,8 +173,6 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 			src.prefix = lowertext(trimtext(copytext(src.content, 1, cut_position)))
 			src.content = copytext(src.content, cut_position, MAX_MESSAGE_LEN)
 
-	src.content = src.make_safe_for_chat(src.content)
-
 	// Determine whether this message has a singing prefix, and adjust the content accordingly.
 	if (copytext(src.content, 1, 2) == "%")
 		src.flags |= SAYFLAG_SINGING
@@ -186,6 +182,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	// Ensure that a channel is assigned to this message.
 	src.output_module_channel ||= src.speaker.default_speech_output_channel
 
+	src.content = src.make_safe_for_chat(src.content)
 	if (ismob(src.speaker))
 		src.run_mob_and_client_checks()
 
@@ -211,15 +208,21 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 	// Remove forbidden ASCII characters and whitespace from the beginning and end.
 	message = trimtext(message)
-	// Remove HTML tags.
-	if (!(src.flags & SAYFLAG_IGNORE_HTML))
-		message = strip_html(message)
 
-		// Check for URLs.
-		if (global.url_regex.Find(message))
-			if (ismob(src.speaker))
-				boutput(src.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-			return
+	// Handle message mutability.
+	// Strip any existing mutable tags.
+	message = STRIP_MUTABLE_CONTENT_TAGS(message)
+	// If the message should not strip HTML, make the HTML tags immutable.
+	if (src.flags & SAYFLAG_IGNORE_HTML)
+		message = MAKE_HTML_TAGS_IMMUTABLE(message)
+	// Check for URLs.
+	else if (global.url_regex.Find(message))
+		if (ismob(src.speaker))
+			boutput(src.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+
+		return
+	// Declare the message mutable.
+	message = MAKE_CONTENT_MUTABLE(message)
 
 	return message
 
@@ -305,6 +308,9 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 /datum/say_message/proc/format_for_output(atom/listener)
 	// Apply any message modifier flags to the message.
 	global.SpeechManager.ApplyMessageModifierPostprocessing(src)
+
+	// Apply HTML escaping to mutable characters.
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(src, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(strip_html)))
 
 	// Apply loudness effects.
 	if (!isnull(src.message_size_override))

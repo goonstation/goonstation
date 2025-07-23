@@ -1012,6 +1012,18 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		pos++
 	return copytext(sanitize(output), 1, MAX_MESSAGE_LEN)
 
+
+// Some BYOND builtins don't work with `PROC_REF`, so they need to be wrapped.
+/proc/replacetext_wrapper(haystack, needle, replacement, start = 1, end = 0)
+	return replacetext(haystack, needle, replacement, start, end)
+
+/proc/uppertext_wrapper(string)
+	return uppertext(string)
+
+/proc/ckeyEx_wrapper(string)
+	return ckeyEx(string)
+
+
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
 	if(!M || !M.client)
 		return
