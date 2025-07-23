@@ -1,17 +1,21 @@
 import { hexToHsva } from 'common/goonstation/colorful';
-import { Button, Divider, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'common/react';
+import { Button, Divider, Flex, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { ButtonProps } from '../../components/Button';
 import { Window } from '../../layouts';
+import { Led } from './LED';
 
 interface DiskRackData {
   disks: Disk[];
+  has_lights: BooleanLike;
 }
 
 interface Disk {
   name: string;
   color: string;
+  light: BooleanLike;
 }
 
 type DiskButtonProps = Partial<{
@@ -37,25 +41,40 @@ export const DiskRack = (_props: unknown) => {
   const { data } = useBackend<DiskRackData>();
   const { disks } = data;
   return (
-    <Window height={disks.length * 50} width={300}>
+    <Window
+      title="Disk Rack"
+      height={disks.length * 45}
+      width={200 + (data.has_lights ? 24 : 0)}
+    >
       <Window.Content>
         <Divider />
         <Stack vertical>
           {disks.reverse().map((disk: Disk, index) => (
             <Stack.Item key={index}>
-              {disk ? (
-                <DiskButton
-                  index={disks.length - index - 1}
-                  backgroundColor={disk.color}
-                  textColor={hexToHsva(disk.color).v > 50 ? 'black' : 'white'}
-                >
-                  {disk.name}
-                </DiskButton>
-              ) : (
-                <DiskButton index={disks.length - index - 1}>
-                  Empty slot
-                </DiskButton>
-              )}
+              <Flex>
+                <Flex.Item>
+                  {disk ? (
+                    <DiskButton
+                      index={disks.length - index - 1}
+                      backgroundColor={disk.color}
+                      textColor={
+                        hexToHsva(disk.color).v > 50 ? 'black' : 'white'
+                      }
+                    >
+                      {disk.name}
+                    </DiskButton>
+                  ) : (
+                    <DiskButton index={disks.length - index - 1}>
+                      Empty slot
+                    </DiskButton>
+                  )}
+                </Flex.Item>
+                {!!data.has_lights && (
+                  <Flex.Item>
+                    <Led flashing={disk?.light} />
+                  </Flex.Item>
+                )}
+              </Flex>
               <Divider />
             </Stack.Item>
           ))}

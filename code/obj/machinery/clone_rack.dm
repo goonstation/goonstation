@@ -31,7 +31,11 @@
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
 		if (disk)
 			disk_data[i] = list("name" = disk.name, "color" = disk.disk_color)
+			disk_data[i] += src.special_disk_data(disk)
 	return list("disks" = disk_data)
+
+/obj/machinery/disk_rack/proc/special_disk_data(obj/item/disk/data/floppy/disk)
+	return list()
 
 /obj/machinery/disk_rack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -76,21 +80,29 @@
 	name = "clone rack"
 	desc = "A big clunky rack for storing cloning records in."
 
+///Does this disk have an active clone record of someone who is currently dead
+/obj/machinery/disk_rack/clone/proc/cloneable_disk(obj/item/disk/data/floppy/disk)
+	var/datum/computer/file/clone/clone_record = locate() in disk.root.contents
+	if (!clone_record)
+		return FALSE
+	var/datum/mind/mind = clone_record.fields["mind"]
+	var/mob/selected = mind?.current
+	if (!selected || selected.mind?.get_player()?.dnr || !eligible_to_clone(mind))
+		return FALSE
+	return TRUE
+
 #define LIGHT_KEY "angry_light_[i]"
+
+/obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk)
+	return list("light" = src.cloneable_disk(disk))
+
+/obj/machinery/disk_rack/clone/ui_data(mob/user)
+	return ..() + list("has_lights" = TRUE)
 
 /obj/machinery/disk_rack/clone/process(mult)
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
-		if (!disk)
-			src.ClearSpecificOverlays(LIGHT_KEY)
-			continue
-		var/datum/computer/file/clone/cloneRecord = locate() in disk.root.contents
-		if (!cloneRecord)
-			src.ClearSpecificOverlays(LIGHT_KEY)
-			continue
-		var/datum/mind/mind = cloneRecord.fields["mind"]
-		var/mob/selected = mind?.current
-		if (!selected || selected.mind?.get_player()?.dnr || !eligible_to_clone(mind))
+		if (!disk || !src.cloneable_disk(disk))
 			src.ClearSpecificOverlays(LIGHT_KEY)
 			continue
 		if (src.GetOverlayImage(LIGHT_KEY))
