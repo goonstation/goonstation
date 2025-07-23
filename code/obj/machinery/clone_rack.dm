@@ -46,7 +46,7 @@
 		var/obj/item/disk/data/floppy/disk = ui.user.equipped()
 		if (!istype(disk))
 			return FALSE
-		src.insert_disk(disk, ui.user)
+		src.insert_disk(index, disk, ui.user)
 		return TRUE
 
 /obj/machinery/disk_rack/proc/remove_disk(index, mob/user)

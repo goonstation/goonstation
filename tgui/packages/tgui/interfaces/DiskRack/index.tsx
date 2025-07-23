@@ -41,7 +41,7 @@ export const DiskRack = (_props: unknown) => {
                   {string}
                 </DiskButton>
               ) : (
-                <DiskButton index={disks.length - index - 1} disabled>
+                <DiskButton index={disks.length - index - 1}>
                   Empty slot
                 </DiskButton>
               )}
