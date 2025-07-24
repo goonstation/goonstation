@@ -3725,7 +3725,7 @@
 	},
 /area/station/medical/medbay)
 "avS" = (
-/obj/storage/secure/closet/medical/cloning,
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "avY" = (
@@ -4079,6 +4079,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light_switch/auto,
+/obj/machinery/disk_rack/clone/genetics,
 /turf/simulated/floor/stairs/medical,
 /area/station/medical/medbay/cloner)
 "axW" = (
@@ -4625,6 +4626,7 @@
 	dir = 4;
 	pixel_x = -15
 	},
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -7632,6 +7634,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/stairs/medical,
 /area/station/medical/medbay/cloner)
 "aVI" = (
@@ -17311,7 +17314,7 @@
 /area/station/engine/elect)
 "opG" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/vending/monkey/genetics,
+/obj/machinery/disk_rack/clone/genetics,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -22682,6 +22685,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"wFH" = (
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/white/checker2{
+	dir = 5
+	},
+/area/station/medical/research)
 "wGd" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -76085,7 +76094,7 @@ aAc
 aAO
 aYi
 aAO
-aAO
+wFH
 inR
 aEi
 aUa
