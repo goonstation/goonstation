@@ -417,6 +417,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	var/read_only = src.diskette.read_only
 	src.diskette.read_only = FALSE
 	src.diskette.root.remove_file(clone_file)
+	var/datum/computer/file/genetics_scan/gene_file = locate() in src.diskette.root.contents
+	if (gene_file)
+		src.diskette.root.remove_file(gene_file)
 	src.diskette.read_only = read_only
 
 	//clear labels, we're empty now
