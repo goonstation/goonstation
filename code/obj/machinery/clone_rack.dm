@@ -1,4 +1,7 @@
 #define MAX_DISKS 8
+TYPEINFO(/obj/machinery/disk_rack)
+	mats = list("metal" = 30, "conductive" = 10)
+
 /obj/machinery/disk_rack
 	name = "disk rack"
 	desc = "A big clunky rack for storing floppy disks in."
@@ -6,7 +9,14 @@
 	icon_state = "disk_rack"
 	density = TRUE
 	anchored = ANCHORED
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/list/obj/item/disk/data/floppy/disks[MAX_DISKS]
+
+/obj/machinery/disk_rack/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	for (var/i in 1 to MAX_DISKS)
+		if (disks[i])
+			src.remove_disk(i)
 
 /obj/machinery/disk_rack/update_icon(...)
 	for (var/i in 1 to MAX_DISKS)
@@ -58,7 +68,8 @@
 		return TRUE
 
 /obj/machinery/disk_rack/proc/remove_disk(index, mob/user)
-	user.put_in_hand_or_drop(src.disks[index])
+	src.disks[index].set_loc(get_turf(src))
+	user?.put_in_hand_or_drop(src.disks[index])
 	src.disks[index] = null
 	playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
 	src.UpdateIcon()
