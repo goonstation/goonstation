@@ -1,3 +1,9 @@
+
+(t)thu jul 24 25
+(u)Colossus
+(p)24156
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether no longer works on a 10 unit threshold, always behaving on the fast depletion mode.
 (t)mon jul 21 25
 (u)glowbold
 (e)⚖🤖|A-Balance, A-Silicons
