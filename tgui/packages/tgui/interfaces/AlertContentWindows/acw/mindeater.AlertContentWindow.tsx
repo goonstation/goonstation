@@ -47,6 +47,7 @@ const MindeaterContentWindow = () => {
         6. You can speak over Intruder chat with the radio hotkey, or prefixing
         your message with <em>:int</em>.
       </p>
+      <p>7. Your goal is to just cause as much chaos as possible!</p>
       <p>This is a work in progress antag and will not be found on the wiki.</p>
     </div>
   );
