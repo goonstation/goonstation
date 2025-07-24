@@ -237,7 +237,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	if (src.diskette.read_only)
 		show_message("Error: Disk is write protected.", "warning")
 		return
-	if((src.diskette.file_used + /datum/computer/file/clone::size) > src.diskette.file_amount)
+	if((src.diskette.file_used + /datum/computer/file/clone::size + /datum/computer/file/genetics_scan::size) > src.diskette.file_amount)
 		show_message("Error: Insufficient space left on disk.", "danger")
 		return
 	if(!allow_dead_scanning && subject.decomp_stage)
@@ -308,6 +308,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	JOB_XP(usr, "Medical Doctor", 10)
 
 	src.diskette.root.add_file(clone_file)
+
+	var/datum/computer/file/genetics_scan/gene_scan = create_new_dna_sample_file(subject)
+	src.diskette.root.add_file(gene_scan)
+
 	//label the disk, clearing other labels
 	src.diskette.name_suffixes = list()
 	src.diskette.name_suffix("([subject.name])") //use the subjects *visible* name, disguises can fool the scanner
@@ -859,8 +863,6 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			"scannerOccupied" = src.scanner.occupant,
 			"scannerLocked" = src.scanner.locked,
 		)
-		if(!isnull(src.scanner?.occupant?.mind))
-			. += list("occupantScanned" = !isnull(find_record_by_mind(src.scanner.occupant.mind)))
 
 	if(!isnull(src.diskette))
 		. += list("diskReadOnly" = src.diskette.read_only)

@@ -16,7 +16,7 @@ export interface GeneTekData {
   finishedResearch: ResearchEntry[][];
   currentResearch: ResearchEntry[];
   equipmentCooldown: EquipmentCooldown[];
-  samples: Sample[];
+  racks: Rack[];
   savedMutations: BioEffect[];
   savedChromosomes: Chromosome[];
   combining: Ref[];
@@ -35,6 +35,10 @@ export interface GeneTekData {
   materialMax: number;
   mutantRaces: MutantRace[];
   bioEffects: BioEffect[];
+}
+
+interface Rack {
+  samples: Sample[];
 }
 
 interface ResearchEntry {

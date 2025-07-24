@@ -15,8 +15,7 @@ export const StorageTab = () => {
   const { data, act } = useBackend<GeneTekData>();
   const [_menu, setMenu] = useSharedState('menu', 'research');
   const [_isCombining, setIsCombining] = useSharedState('iscombining', false);
-  const { saveSlots, samples, savedMutations, savedChromosomes, toSplice } =
-    data;
+  const { saveSlots, racks, savedMutations, savedChromosomes, toSplice } = data;
 
   interface ChromosomeMapped {
     ref: string;
@@ -99,29 +98,31 @@ export const StorageTab = () => {
           'There are no chromosomes in storage.'
         )}
       </Section>
-      <Section title="DNA Samples">
-        <LabeledList>
-          {samples.map((s) => (
-            <LabeledList.Item
-              key={s.ref}
-              label={s.name}
-              buttons={
-                <Button
-                  icon="save"
-                  onClick={() => {
-                    act('setrecord', { ref: s.ref });
-                    setMenu('record');
-                  }}
-                >
-                  View Record
-                </Button>
-              }
-            >
-              <code>{s.uid}</code>
-            </LabeledList.Item>
-          ))}
-        </LabeledList>
-      </Section>
+      {racks.map((rack, index) => (
+        <Section title="DNA Sample Rack" key={index}>
+          <LabeledList>
+            {rack.samples.map((s) => (
+              <LabeledList.Item
+                key={s.ref}
+                label={s.name}
+                buttons={
+                  <Button
+                    icon="save"
+                    onClick={() => {
+                      act('setrecord', { ref: s.ref });
+                      setMenu('record');
+                    }}
+                  >
+                    View Record
+                  </Button>
+                }
+              >
+                <code>{s.uid}</code>
+              </LabeledList.Item>
+            ))}
+          </LabeledList>
+        </Section>
+      ))}
     </>
   );
 };

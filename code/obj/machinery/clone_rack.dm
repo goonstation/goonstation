@@ -2,8 +2,8 @@
 /obj/machinery/disk_rack
 	name = "disk rack"
 	desc = "A big clunky rack for storing floppy disks in."
-	icon = 'icons/obj/clone_rack.dmi'
-	icon_state = "clone_rack"
+	icon = 'icons/obj/disk_rack.dmi'
+	icon_state = "disk_rack"
 	density = TRUE
 	anchored = ANCHORED
 	var/list/obj/item/disk/data/floppy/disks[MAX_DISKS]
@@ -62,7 +62,6 @@
 	src.disks[index] = null
 	playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
 	src.UpdateIcon()
-	src.update_lights()
 
 /obj/machinery/disk_rack/proc/insert_disk(index, obj/item/disk/data/floppy/disk, mob/user)
 	src.disks[index] = disk
@@ -84,6 +83,7 @@
 /obj/machinery/disk_rack/clone
 	name = "clone rack"
 	desc = "A big clunky rack for storing cloning records in."
+	icon_state = "clone_rack_med"
 
 ///Does this disk have an active clone record of someone who is currently dead
 /obj/machinery/disk_rack/clone/proc/cloneable_disk(obj/item/disk/data/floppy/disk)
@@ -96,7 +96,6 @@
 		return FALSE
 	return TRUE
 
-
 /obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk)
 	return list("light" = src.cloneable_disk(disk))
 
@@ -104,6 +103,10 @@
 	return ..() + list("has_lights" = TRUE)
 
 /obj/machinery/disk_rack/clone/process(mult)
+	src.update_lights()
+
+/obj/machinery/disk_rack/clone/remove_disk(index, mob/user)
+	. = ..()
 	src.update_lights()
 
 #define LIGHT_KEY "angry_light_[i]"
@@ -120,3 +123,8 @@
 		overlay.pixel_y = (i-1) * 2
 		src.UpdateOverlays(overlay, LIGHT_KEY)
 #undef LIGHT_KEY
+
+/obj/machinery/disk_rack/clone/genetics
+	name = "\improper DNA sample rack"
+	desc = "A big clunky rack for storing cloning records in. This one can connect to nearby genetics research terminals."
+	icon_state = "clone_rack_gene"

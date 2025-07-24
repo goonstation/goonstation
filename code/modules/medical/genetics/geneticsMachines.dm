@@ -14,6 +14,7 @@
 	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null
+	var/list/obj/machinery/disk_rack/connected_racks
 	var/list/equipment = list(
 		GENETICS_INJECTORS = 0,
 		GENETICS_ANALYZER = 0,
@@ -47,6 +48,9 @@
 
 /obj/machinery/computer/genetics/connection_scan()
 	src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
+	src.connected_racks = list()
+	for (var/obj/machinery/disk_rack/gene_rack in range(1, src))
+		src.connected_racks += gene_rack
 
 /obj/machinery/computer/genetics/disposing()
 	STOP_TRACKING
@@ -953,15 +957,19 @@
 		"allowed" = src.allowed(user),
 	)
 
-	for(var/datum/db_record/R as anything in data_core.medical.records)
-		var/datum/computer/file/genetics_scan/S = R["dnasample"]
-		if (!istype(S))
-			continue
-		.["samples"] += list(list(
-			"ref" = "\ref[S]",
-			"name" = S.subject_name,
-			"uid" = S.subject_uID,
-		))
+	.["racks"] = list()
+	for(var/obj/machinery/disk_rack/rack in src.connected_racks)
+		var/list/samples = list()
+		for (var/obj/item/disk/data/floppy/disk in rack)
+			var/datum/computer/file/genetics_scan/S = locate() in disk.root.contents
+			if (!istype(S))
+				continue
+			samples += list(list(
+				"ref" = "\ref[S]",
+				"name" = S.subject_name,
+				"uid" = S.subject_uID,
+			))
+		.["racks"] += list(list("samples" = samples))
 
 	for(var/datum/bioEffect/BE as anything in saved_mutations)
 		.["savedMutations"] += list(serialize_bioeffect_for_tgui(BE))
