@@ -277,7 +277,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 
 	clone_file = new
 	clone_file["ckey"] = ckey(subjMind.key)
-	clone_file["name"] = subject.real_name
+
+	//use the subjects *visible* name, disguises can fool the scanner
+	if (subject.face_visible())
+		clone_file["name"] = subject.real_name
+	else
+		clone_file["name"] = subject.name
 	clone_file["id"] = copytext("\ref[subjMind]", 4, 12)
 	clone_file.name = "CloneRecord-[ckey(clone_file["name"])]"
 
@@ -309,12 +314,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 
 	src.diskette.root.add_file(clone_file)
 
-	var/datum/computer/file/genetics_scan/gene_scan = create_new_dna_sample_file(subject)
+	var/datum/computer/file/genetics_scan/gene_scan = create_new_dna_sample_file(subject, visible_name=TRUE)
 	src.diskette.root.add_file(gene_scan)
 
 	//label the disk, clearing other labels
 	src.diskette.name_suffixes = list()
-	src.diskette.name_suffix("([subject.name])") //use the subjects *visible* name, disguises can fool the scanner
+	src.diskette.name_suffix("[clone_file["name"]]")
 	src.diskette.UpdateName()
 	return clone_file
 
