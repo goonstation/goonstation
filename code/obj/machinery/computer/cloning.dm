@@ -312,27 +312,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	src.diskette.name_suffixes = list()
 	src.diskette.name_suffix("([subject.name])") //use the subjects *visible* name, disguises can fool the scanner
 	src.diskette.UpdateName()
-	return TRUE
-
-//Find a specific record by record ID (only used in UI functions)
-/obj/machinery/computer/cloning/proc/find_record_by_id(var/id)
-	RETURN_TYPE(/datum/db_record)
-	var/selected_record = null
-	for(var/datum/db_record/R as anything in src.records)
-		if (R["id"] == id)
-			selected_record = R
-			break
-	return selected_record
-
-// Find a specific record by saved mind
-/obj/machinery/computer/cloning/proc/find_record_by_mind(datum/mind/M)
-	RETURN_TYPE(/datum/db_record)
-	var/selected_record = null
-	for(var/datum/db_record/R as anything in src.records)
-		if (R["mind"] == M)
-			selected_record = R
-			break
-	return selected_record
+	return clone_file
 
 /obj/machinery/computer/cloning/proc/scan_someone()
 	src.scan_mob(src.scanner?.occupant)
@@ -884,30 +864,6 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 	if(!isnull(src.diskette))
 		. += list("diskReadOnly" = src.diskette.read_only)
-
-	var/list/recordsTemp = list()
-	for (var/datum/db_record/r as anything in records)
-		var/saved = FALSE
-		var/obj/item/implant/cloner/implant = locate(r["imp"])
-		var/currentHealth = ""
-		if(istype(implant))
-			currentHealth = implant.getHealthList()
-		if(src.diskette) // checks if saved to disk
-			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				if(F.fields["id"] == r["id"])
-					saved = TRUE
-
-		recordsTemp.Add(list(list(
-			name = r["name"],
-			id = r["id"],
-			ckey = r["ckey"],
-			note = r["note"],
-			health = currentHealth,
-			implant = !isnull(implant),
-			saved = saved
-		)))
-
-	. += list("cloneRecords" = recordsTemp)
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
