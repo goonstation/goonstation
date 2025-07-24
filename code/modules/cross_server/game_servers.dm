@@ -1,6 +1,7 @@
 var/global/datum/game_servers/game_servers = new
 
 /datum/game_servers
+	//these are all associative lists!!
 	var/list/servers = list()
 	var/list/by_ip_port = list()
 	var/list/message_kinds = list()

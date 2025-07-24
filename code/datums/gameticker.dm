@@ -989,7 +989,8 @@ var/global/game_force_started = FALSE
 	var/datum/game_server/self = global.game_servers.find_server(global.config.server_id)
 	var/is_nightshade = findtext(self.name, "nightshade")
 	var/datum/game_server/highest_pop = null
-	for (var/datum/game_server/server in global.game_servers.servers)
+	for (var/server_id in global.game_servers.servers)
+		var/datum/game_server/server = global.game_servers.servers[server_id]
 		var/other_is_nightshade = findtext(server.name, "nightshade")
 		if ((!!is_nightshade) ^ (!!other_is_nightshade)) //rare non-bitwise xor use case!!
 			continue
