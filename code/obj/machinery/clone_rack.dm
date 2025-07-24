@@ -68,8 +68,9 @@ TYPEINFO(/obj/machinery/disk_rack)
 		return TRUE
 
 /obj/machinery/disk_rack/proc/remove_disk(index, mob/user)
-	src.disks[index].set_loc(get_turf(src))
-	user?.put_in_hand_or_drop(src.disks[index])
+	var/obj/item/disk/data/floppy/disk = src.disks[index]
+	disk.set_loc(get_turf(src))
+	user?.put_in_hand_or_drop(disk)
 	src.disks[index] = null
 	playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
 	src.UpdateIcon()
