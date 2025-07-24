@@ -306,7 +306,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	show_message("Subject successfully scanned.", "success")
 	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
+
 	src.diskette.root.add_file(clone_file)
+	//label the disk, clearing other labels
+	src.diskette.name_suffixes = list()
+	src.diskette.name_suffix("([subject.name])") //use the subjects *visible* name, disguises can fool the scanner
+	src.diskette.UpdateName()
 	return TRUE
 
 //Find a specific record by record ID (only used in UI functions)
@@ -429,6 +434,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	src.diskette.read_only = FALSE
 	src.diskette.root.remove_file(clone_file)
 	src.diskette.read_only = read_only
+
+	//clear labels, we're empty now
+	src.diskette.name_suffixes = list()
+	src.diskette.UpdateName()
 
 /// Check if a mind has a current mob, a client, and is dead/a ghost/doing afterlife stuff.
 /// Scanning var controls whether we will return ghosts, because ghosts needs special handling in clone scans
@@ -775,7 +784,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				set_lock(0)
 				active_process = PROCESS_IDLE
 
-/obj/machinery/computer/cloning/ui_act(action, params)
+/obj/machinery/computer/cloning/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if (.)
 		return
