@@ -996,6 +996,8 @@ var/global/game_force_started = FALSE
 		if (server.player_count > highest_pop?.player_count)
 			highest_pop = server
 
+	logTheThing(LOG_DEBUG, null, "Round end drops: we are [is_nightshade ? "" : "not"] nightshade, highest population server is [highest_pop?.name] with [highest_pop?.player_count] players")
+
 	//for when nightshade is winding down and we don't want to be giving people free tokens every round
 	if (highest_pop?.player_count <= 20)
 		logTheThing(LOG_DEBUG, null, "All linked servers below population threshold, no round end drops.")
