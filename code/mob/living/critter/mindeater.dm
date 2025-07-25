@@ -124,18 +124,18 @@ TYPEINFO(/mob/living/critter/mindeater)
 	death(gibbed)
 		gibbed = FALSE
 		src.lives--
-		if (src.lives <= 0)
-			. = ..()
-			qdel(src)
-			return
 		src.full_heal()
 		src.demanifest()
 		for (var/datum/statusEffect/status in src.statusEffects)
 			src.delStatus(status)
+		actions.stop_all(src)
 		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/manifest/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/manifest/)
 		abil_holder.deductPoints(abil_holder.points)
 		abil.doCooldown()
+		if (src.lives <= 0)
+			. = ..()
+			qdel(src)
 
 	gib()
 		src.death(FALSE)
