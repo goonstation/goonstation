@@ -73,6 +73,12 @@
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/station/devzone)
+"bS" = (
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/east,
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "cj" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor,
@@ -567,6 +573,10 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
+/area/station/devzone)
+"kg" = (
+/obj/machinery/disk_rack/clone/genetics,
+/turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "ko" = (
 /obj/machinery/conveyor/WE{
@@ -1312,6 +1322,10 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
+/area/station/devzone)
+"zh" = (
+/obj/machinery/disk_rack/clone,
+/turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "zk" = (
 /obj/decal/tile_edge/line/black{
@@ -2262,12 +2276,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"OU" = (
-/obj/machinery/vending/monkey/genetics,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/turf/simulated/floor/blue/checker,
-/area/station/devzone)
 "Pb" = (
 /obj/machinery/computer/magnet,
 /turf/simulated/floor,
@@ -2503,6 +2511,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"Tp" = (
+/obj/item/storage/box/diskbox,
+/turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "Tu" = (
 /turf/unsimulated/floor/engine/caution/east,
@@ -3532,7 +3544,7 @@ ia
 zT
 Yx
 Yx
-Yx
+ng
 ng
 Kr
 ng
@@ -3575,11 +3587,11 @@ Bq
 hI
 dG
 Yx
-Yx
 ng
+fU
 Du
 qc
-fU
+zh
 ng
 Yx
 "}
@@ -3618,8 +3630,8 @@ ys
 Mo
 Yx
 Yx
-Yx
 ng
+vd
 vd
 wk
 vd
@@ -3661,11 +3673,11 @@ IX
 jz
 vr
 Yx
-Yx
 ng
-wy
-vd
 oG
+wy
+Tp
+vd
 ng
 Yx
 "}
@@ -3704,8 +3716,8 @@ kV
 kV
 Yx
 Yx
-Yx
 ng
+vd
 vd
 PU
 zF
@@ -3747,11 +3759,11 @@ kV
 bw
 Yx
 Yx
-Yx
 ng
-OU
-Er
+bS
 Gn
+Er
+kg
 ng
 Yx
 "}
