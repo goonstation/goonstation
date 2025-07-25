@@ -1020,7 +1020,7 @@ var/global/game_force_started = FALSE
 
 	var/list/players = list()
 	for (var/mob/M as anything in mobs)
-		var/datum/player/player = M.mind.get_player()
+		var/datum/player/player = M.mind?.get_player()
 		if (!player || (player in players))
 			continue
 		players += player
