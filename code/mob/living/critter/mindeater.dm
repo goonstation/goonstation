@@ -191,11 +191,15 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient, remove_stamina_below_zero, target_type, stack_stuns)
 		stamina_damage = 0
+		disorient = 0
+		src.setStatus("disorient", 5 SECONDS)
 		src.reveal(FALSE)
 		..()
 
 	apply_flash(animation_duration, knockdown, stun, misstep, eyes_blurry, eyes_damage, eye_tempblind, burn, uncloak_prob, stamina_damage, disorient_time)
 		stamina_damage = 0
+		disorient_time = 0
+		src.setStatus("disorient", 1 SECOND)
 		src.reveal(FALSE)
 		..()
 
