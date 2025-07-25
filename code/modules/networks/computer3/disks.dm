@@ -97,6 +97,27 @@
 			if (2)
 				src.disk_color = "#D0D510"
 
+/obj/item/disk/data/floppy/attackby(obj/item/W, mob/user)
+	if (!istype(W, /obj/item/pen))
+		return ..()
+
+	var/str = copytext(strip_html_tags(tgui_input_text(user, "Label text?", "Write label", allowEmpty = TRUE, max_length = 30)), 1, 32)
+
+	if(str)
+		phrase_log.log_phrase("label", str, no_duplicates=TRUE)
+	if (W.loc != user)
+		return
+	if(url_regex?.Find(str))
+		str = null
+	if (!str || !length(str))
+		return
+	str = "([str])"
+	if (length(src.name_suffixes) < 1)
+		src.name_suffixes = list(str)
+	else
+		src.name_suffixes[1] = str
+	src.UpdateName()
+
 /obj/item/disk/data/floppy/attack_self(mob/user as mob)
 	src.read_only = !src.read_only
 	boutput(user, "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].")
