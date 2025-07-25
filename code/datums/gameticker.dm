@@ -987,6 +987,7 @@ var/global/game_force_started = FALSE
 
 /datum/controller/gameticker/proc/do_roundend_drops()
 	var/datum/game_server/self = global.game_servers.find_server(global.config.server_id)
+	var/self_player_count = text2num_safe(self.player_count)
 	var/is_nightshade = findtext(self.name, "nightshade")
 	var/datum/game_server/highest_pop = null
 	for (var/server_id in global.game_servers.servers)
@@ -994,17 +995,19 @@ var/global/game_force_started = FALSE
 		var/other_is_nightshade = findtext(server.name, "nightshade")
 		if ((!!is_nightshade) ^ (!!other_is_nightshade)) //rare non-bitwise xor use case!!
 			continue
-		if (server.player_count > highest_pop?.player_count)
+		if (text2num_safe(server.player_count) > text2num_safe(highest_pop?.player_count))
 			highest_pop = server
 
-	logTheThing(LOG_DEBUG, null, "Round end drops: we are [is_nightshade ? "" : "not"] nightshade, highest population server is [highest_pop?.name] with [highest_pop?.player_count] players")
+	var/highest_player_count = text2num_safe(highest_pop.player_count)
+
+	logTheThing(LOG_DEBUG, null, "Round end drops: we are [is_nightshade ? "" : "not"] nightshade, highest population server is [highest_pop?.name] with [highest_player_count] players")
 
 	//for when nightshade is winding down and we don't want to be giving people free tokens every round
-	if (highest_pop?.player_count <= 20)
+	if (highest_player_count <= 20)
 		logTheThing(LOG_DEBUG, null, "All linked servers below population threshold, no round end drops.")
 		return
 
-	var/pop_ratio = self.player_count / highest_pop.player_count
+	var/pop_ratio = self_player_count / highest_player_count
 	if (pop_ratio > RATIO_THRESHOLD)
 		logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [pop_ratio], greater than threshold [RATIO_THRESHOLD], aborting end round drops.")
 		return // servers are reasonably balanced, no drops for u
