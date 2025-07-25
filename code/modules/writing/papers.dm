@@ -666,7 +666,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "tropical postcard"
 	desc = {"A postcard depicting a picturesque beach scene. The back side has a groan-worthy pun."}
 	icon_state = "postcard-beach"
-	info = {"Wish you were here <font color='#0026FF'>sea</font> this!<br><br>
+	info = {"Wish you were here to <font color='#0026FF'>sea</font> this!<br><br>
 	National Notary Supply Corporation<br>
 	Image #06019"}
 
@@ -692,7 +692,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "postcard-maryland" //deliberately uses the "MD" state abbreviation for laffes
 	info = {"There is much to love about the \"Old Line State\", one of the oldest states in the United States.
 	From the majestic Appalachian Mountains to the breath-taking Chesapeake Bay, every inch of Maryland
-	is blessed with natural beauty. Every year, thousands of history buffs make a pilgrimate to Fort McHenry, 
+	is blessed with natural beauty. Every year, thousands of history buffs make a pilgrimage to Fort McHenry, 
 	the site of the battle that inspired the anthem of the United States, and Maryland's warm and generous 
 	people welcome such storied institutions and corporations as the United States Naval Academy, John Hopkins 
 	University, and National Notary. Truly there is something for everyone in Maryland.<br><br>
