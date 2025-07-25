@@ -137,6 +137,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	icon_state = "paralyze"
 	cooldown = 20 SECONDS
 	max_range = 5
+	reveals_on_use = TRUE
 
 	tryCast()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
@@ -180,6 +181,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cooldown = 60 SECONDS
 	max_range = 6
 	pointCost = INTRUDER_MAX_INTELLECT_THRESHOLD
+	reveals_on_use = TRUE
 
 	tryCast(atom/target)
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
