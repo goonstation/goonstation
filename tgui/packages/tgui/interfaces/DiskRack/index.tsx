@@ -1,27 +1,10 @@
 import { hexToHsva } from 'common/goonstation/colorful';
-import { BooleanLike } from 'common/react';
 import { Button, Divider, Flex, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { ButtonProps } from '../../components/Button';
 import { Window } from '../../layouts';
 import { Led } from './LED';
-
-interface DiskRackData {
-  disks: Disk[];
-  has_lights: BooleanLike;
-}
-
-interface Disk {
-  name: string;
-  color: string;
-  light: BooleanLike;
-}
-
-type DiskButtonProps = Partial<{
-  index: number;
-}> &
-  ButtonProps;
+import { Disk, DiskButtonProps, DiskRackData } from './types';
 
 const DiskButton = (props: DiskButtonProps) => {
   const { index, ...rest } = props;
