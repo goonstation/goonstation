@@ -7,5 +7,3 @@ You'll want to modify the .css as well to only include eot and ttf.
 Remove useless `-webkit-font-smoothing:antialiased;` and `-moz-osx-font-smoothing:grayscale;`
 
 Remove brand related css.
-
-Finally, run `yarn tgui-polyfill:static-css ..\..\..\browserassets\src\vendor\css\tgui\`

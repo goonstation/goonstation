@@ -193,7 +193,6 @@ export const ScannerTab = () => {
                       width: '64px',
                       height: '128px',
                     }}
-                    hideOnScroll
                   />
                 </Flex.Item>
               )}

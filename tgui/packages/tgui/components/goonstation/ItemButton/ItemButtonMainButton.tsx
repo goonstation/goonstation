@@ -35,11 +35,11 @@ export const ItemButtonMainButton = (props: ItemButtonMainButtonProps) => {
               <Image
                 src={image}
                 backgroundColor="rgba(0,0,0,0.2)"
-                height="100%"
+                height={ItemButtonStyle.Height}
               />
             )}
           </Stack.Item>
-          <Stack.Item grow mx={1} align="center">
+          <Stack.Item grow mx={1} align="center" preserveWhitespace inline>
             {name}
           </Stack.Item>
         </Stack>

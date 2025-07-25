@@ -8,57 +8,54 @@ This table of contents must be manually maintained.
 Make sure to add new items to this list if you document new components.
 -->
 
-- [Component Reference](#component-reference)
-  - [General Concepts](#general-concepts)
-  - [`tgui/components`](#tguicomponents)
-    - [`AnimatedNumber`](#animatednumber)
-    - [`BlockQuote`](#blockquote)
-    - [`Box`](#box)
-    - [`Button`](#button)
-    - [`Button.Checkbox`](#buttoncheckbox)
-    - [`Button.Confirm`](#buttonconfirm)
-    - [`Button.Input`](#buttoninput)
-    - [`ByondUi`](#byondui)
-    - [`Collapsible`](#collapsible)
-    - [`ColorBox`](#colorbox)
-    - [`Dimmer`](#dimmer)
-    - [`Divider`](#divider)
-    - [`Dropdown`](#dropdown)
-    - [`Flex`](#flex)
-    - [`Flex.Item`](#flexitem)
-    - [`Grid`](#grid)
-    - [`Grid.Column`](#gridcolumn)
-    - [`Icon`](#icon)
-    - [`Icon.Stack`](#iconstack)
-    - [`Input`](#input)
-    - [`Knob`](#knob)
-    - [`LabeledControls`](#labeledcontrols)
-    - [`LabeledControls.Item`](#labeledcontrolsitem)
-    - [`LabeledList`](#labeledlist)
-    - [`LabeledList.Item`](#labeledlistitem)
-    - [`LabeledList.Divider`](#labeledlistdivider)
-    - [`Modal`](#modal)
-    - [`NoticeBox`](#noticebox)
-    - [`NumberInput`](#numberinput)
-    - [`Popper`](#popper)
-    - [`ProgressBar`](#progressbar)
-    - [`RoundGauge`](#roundgauge)
-    - [`Section`](#section)
-    - [`Slider`](#slider)
-    - [`Stack`](#stack)
-    - [`Stack.Item`](#stackitem)
-    - [`Table`](#table)
-    - [`Table.Row`](#tablerow)
-    - [`Table.Cell`](#tablecell)
-    - [`Tabs`](#tabs)
-    - [`Tabs.Tab`](#tabstab)
-    - [`Tooltip`](#tooltip)
-  - [`tgui/components/goon`](#tguicomponentsgoon)
-    - [`Image`](#image)
-    - [`HealthStat`](#healthstat)
-  - [`tgui/layouts`](#tguilayouts)
-    - [`Window`](#window)
-    - [`Window.Content`](#windowcontent)
+- [General Concepts](#general-concepts)
+- [`tgui/components`](#tguicomponents)
+  - [`AnimatedNumber`](#animatednumber)
+  - [`BlockQuote`](#blockquote)
+  - [`Box`](#box)
+  - [`Button`](#button)
+  - [`Button.Checkbox`](#buttoncheckbox)
+  - [`Button.Confirm`](#buttonconfirm)
+  - [`Button.Input`](#buttoninput)
+  - [`ByondUi`](#byondui)
+  - [`Collapsible`](#collapsible)
+  - [`ColorBox`](#colorbox)
+  - [`Dimmer`](#dimmer)
+  - [`Divider`](#divider)
+  - [`Dropdown`](#dropdown)
+  - [`Flex`](#flex)
+  - [`Flex.Item`](#flexitem)
+  - [`Grid`](#grid)
+  - [`Grid.Column`](#gridcolumn)
+  - [`Icon`](#icon)
+  - [`Icon.Stack`](#iconstack)
+  - [`Input`](#input)
+  - [`Knob`](#knob)
+  - [`LabeledControls`](#labeledcontrols)
+  - [`LabeledControls.Item`](#labeledcontrolsitem)
+  - [`LabeledList`](#labeledlist)
+  - [`LabeledList.Item`](#labeledlistitem)
+  - [`LabeledList.Divider`](#labeledlistdivider)
+  - [`Modal`](#modal)
+  - [`NoticeBox`](#noticebox)
+  - [`NumberInput`](#numberinput)
+  - [`ProgressBar`](#progressbar)
+  - [`RoundGauge`](#roundgauge)
+  - [`Section`](#section)
+  - [`Slider`](#slider)
+  - [`Stack`](#stack)
+  - [`Table`](#table)
+  - [`Table.Row`](#tablerow)
+  - [`Table.Cell`](#tablecell)
+  - [`Tabs`](#tabs)
+  - [`Tabs.Tab`](#tabstab)
+  - [`Tooltip`](#tooltip)
+- [`tgui/components/goon`](#tguicomponentsgoon)
+  - [`Image`](#image)
+  - [`HealthStat`](#healthstat)
+- [`tgui/layouts`](#tguilayouts)
+  - [`Window`](#window)
+  - [`Window.Content`](#windowcontent)
 
 ## General Concepts
 
@@ -255,19 +252,18 @@ A button with an extra confirmation step, using native button component.
 ### `Button.Input`
 
 A button that turns into an input box after the first click. Turns back into a
-button after the user hits enter, defocuses, or hits escape. Enter and defocus
-commit, while escape cancels.
+button after the user hits enter, defocuses, or hits escape. Enter or blur commits,
+while escape cancels.
 
 **Props:**
 
 - See inherited props: [Box](#box)
 - `fluid`: fill available horizontal space
-- `onCommit: (e, value) => void`: function that is called after the user
-  defocuses the input or presses enter
-- `currentValue: string`: default string to display when the input is shown
-- `defaultValue: string`: default value emitted if the user leaves the box
-  blank when hitting enter or defocusing. If left undefined, will cancel the
-  change on a blank defocus/enter
+- `disabled: boolean` - Disables and greys out the button.
+- `onCommit: (value) => void`: sends the value after enter/outside click
+- `value: string`: default string to display when the input is shown
+- `buttonText: string`: The text to display on the button. Defaults to value if
+  none is given.
 
 ### `ByondUi`
 
@@ -512,8 +508,9 @@ Renders one of the FontAwesome icons of your choice.
 To smoothen the transition from v4 to v5 to v6 (🙄), we have added a v4 semantic to
 transform names with `-o` suffixes to FA Regular icons. For example:
 
-- `square` will get transformed to `fa-solid square`
-- `square-o` will get transformed to `fa-solid square`
+[516 TODO] Check below, is copied from latest tgstation tgui, may not be correct
+- `square` will get transformed to `fas square`
+- `square-o` will get transformed to `far square`
 
 **Props:**
 
