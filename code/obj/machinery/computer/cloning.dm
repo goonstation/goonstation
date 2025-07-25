@@ -791,9 +791,11 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			if(usr == src.scanner.occupant)
 				boutput(usr, SPAN_ALERT("You can't quite reach the scan button from inside the scanner, darn!"))
 				return TRUE
-			if(!isnull(src.scanner))
-				src.scan_mob(src.scanner.occupant)
-				. = TRUE
+			if(QDELETED(src.scanner))
+				show_message("No scanner connected.", "warning")
+				return FALSE
+			src.scan_mob(src.scanner.occupant)
+			. = TRUE
 		if("toggleGeneticAnalysis")
 			if (any_active)
 				show_message("Cannot toggle any modules while cloner is active.", "warning")
