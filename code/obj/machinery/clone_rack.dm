@@ -97,7 +97,8 @@ TYPEINFO(/obj/machinery/disk_rack)
 	desc = "A big clunky rack for storing cloning records in."
 	icon_state = "clone_rack_med"
 
-///Does this disk have an active clone record of someone who is currently dead
+/// Does this disk have an active clone record of someone who is currently dead
+/// AND do they have a cloning implant so we know about it?
 /obj/machinery/disk_rack/clone/proc/cloneable_disk(obj/item/disk/data/floppy/disk)
 	var/datum/computer/file/clone/clone_record = locate() in disk.root.contents
 	if (!clone_record)
@@ -105,6 +106,14 @@ TYPEINFO(/obj/machinery/disk_rack)
 	var/datum/mind/mind = clone_record.fields["mind"]
 	var/mob/selected = mind?.current
 	if (!selected || selected.mind?.get_player()?.dnr || !eligible_to_clone(mind))
+		return FALSE
+	if (isobserver(selected))
+		var/mob/dead/ghost = selected
+		selected = ghost.corpse
+	if (!ishuman(selected)) //we don't know what the fuck that is, definitely can't clone it
+		return FALSE
+	var/mob/living/carbon/human/human = selected
+	if (!locate(/obj/item/implant/cloner) in human.implant) //maybe they are cloneable but we don't know about it
 		return FALSE
 	return TRUE
 
