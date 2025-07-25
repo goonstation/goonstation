@@ -12,6 +12,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	requires_power = FALSE //we handle our own power stuff
 	var/list/obj/item/disk/data/floppy/disks[MAX_DISKS]
+	var/list/active_lights[MAX_DISKS]
 
 /obj/machinery/disk_rack/was_deconstructed_to_frame(mob/user)
 	. = ..()
@@ -45,10 +46,10 @@ TYPEINFO(/obj/machinery/disk_rack)
 			var/regex/kill_brackets = regex(@"[\(\)]", "g")
 			name = kill_brackets.Replace(name, "")
 			disk_data[i] = list("name" = name, "color" = disk.disk_color)
-			disk_data[i] += src.special_disk_data(disk)
+			disk_data[i] += src.special_disk_data(disk, i)
 	return list("disks" = disk_data)
 
-/obj/machinery/disk_rack/proc/special_disk_data(obj/item/disk/data/floppy/disk)
+/obj/machinery/disk_rack/proc/special_disk_data(obj/item/disk/data/floppy/disk, index)
 	return list()
 
 /obj/machinery/disk_rack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -97,6 +98,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	name = "clone rack"
 	desc = "A big clunky rack for storing cloning records in."
 	icon_state = "clone_rack_med"
+	var/emagged = FALSE
 
 /// Does this disk have an active clone record of someone who is currently dead
 /// AND do they have a cloning implant so we know about it?
@@ -118,10 +120,10 @@ TYPEINFO(/obj/machinery/disk_rack)
 		return FALSE
 	return TRUE
 
-/obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk)
+/obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk, index)
 	if (status & NOPOWER)
 		return list("light" = FALSE)
-	return list("light" = src.cloneable_disk(disk))
+	return list("light" = src.active_lights[index])
 
 /obj/machinery/disk_rack/clone/ui_data(mob/user)
 	return ..() + list("has_lights" = TRUE)
@@ -146,9 +148,11 @@ TYPEINFO(/obj/machinery/disk_rack)
 		return
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
-		if (!disk || !src.cloneable_disk(disk))
+		if (!disk || !(src.cloneable_disk(disk) || src.emagged && prob(20)))
+			src.active_lights[i] = FALSE
 			src.ClearSpecificOverlays(LIGHT_KEY)
 			continue
+		src.active_lights[i] = TRUE
 		if (src.GetOverlayImage(LIGHT_KEY))
 			return
 		var/image/overlay = image(src.icon, "angry_light")
@@ -156,3 +160,11 @@ TYPEINFO(/obj/machinery/disk_rack)
 		overlay.pixel_y = (i-1) * 2
 		src.UpdateOverlays(overlay, LIGHT_KEY)
 #undef LIGHT_KEY
+
+/obj/machinery/disk_rack/clone/emag_act(mob/user, obj/item/card/emag/E)
+	if (src.emagged)
+		return FALSE
+	boutput(user, SPAN_ALERT("You short out [src]'s ImplantSense™ control module!"))
+	src.emagged = TRUE
+	src.processing_tier = PROCESSING_32TH
+	return TRUE
