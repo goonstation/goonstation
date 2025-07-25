@@ -86,19 +86,18 @@ TYPEINFO(/mob/living/critter/mindeater)
 		src.demanifest()
 
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_mob(src)
-		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(src)
 
 		src.human_disguise_dummy = new
 
 	disposing()
-		..()
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_mob(src)
-		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_mob(src)
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(src.health_monitor)
 
 		QDEL_NULL(src.human_disguise_dummy)
+
+		..()
 
 	Life()
 		. = ..()
@@ -199,7 +198,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 	apply_flash(animation_duration, knockdown, stun, misstep, eyes_blurry, eyes_damage, eye_tempblind, burn, uncloak_prob, stamina_damage, disorient_time)
 		stamina_damage = 0
 		disorient_time = 0
-		src.setStatus("disorient", 1 SECOND)
+		src.setStatus("disorient", 5 SECONDS)
 		src.reveal(FALSE)
 		..()
 
