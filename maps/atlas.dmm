@@ -4629,6 +4629,10 @@
 	},
 /obj/item/storage/box/diskbox,
 /obj/decal/stage_edge/alt,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},

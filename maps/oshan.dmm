@@ -33961,6 +33961,14 @@
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
 /turf/simulated/floor/grime,
 /area/derelict_diner)
+"gwP" = (
+/obj/table/auto,
+/obj/item/hand_labeler,
+/obj/item/storage/box/diskbox,
+/turf/simulated/floor/white/checker2{
+	dir = 5
+	},
+/area/station/medical/medbay/cloner)
 "gxt" = (
 /obj/item/reagent_containers/pill/tox{
 	pixel_x = -8;
@@ -44999,6 +45007,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -91117,7 +91126,7 @@ vEt
 apH
 fcV
 aqY
-fcV
+gwP
 dKk
 mZD
 awe

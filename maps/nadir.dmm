@@ -11074,9 +11074,7 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "eXG" = (
-/obj/stool/chair/blue{
-	dir = 8
-	},
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -48634,7 +48632,8 @@
 /area/station/crew_quarters/cafeteria)
 "vji" = (
 /obj/table/reinforced/auto,
-/obj/machinery/cashreg,
+/obj/item/hand_labeler,
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},

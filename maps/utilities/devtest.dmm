@@ -2510,6 +2510,10 @@
 /area/station/devzone)
 "Tp" = (
 /obj/item/storage/box/diskbox,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "Tu" = (

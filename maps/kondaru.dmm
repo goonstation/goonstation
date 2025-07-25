@@ -11529,7 +11529,7 @@
 	dir = 4;
 	pixel_y = 1
 	},
-/obj/storage/secure/closet/medical/cloning,
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aVh" = (
@@ -12162,9 +12162,9 @@
 /area/station/medical/medbay/cloner)
 "aXF" = (
 /obj/machinery/light,
-/obj/stool/chair/office{
-	dir = 1
-	},
+/obj/table/auto,
+/obj/item/hand_labeler,
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXG" = (

@@ -15760,7 +15760,7 @@
 	},
 /area/station/storage/warehouse)
 "ldm" = (
-/obj/storage/secure/closet/medical,
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -20586,6 +20586,17 @@
 "oKn" = (
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"oKt" = (
+/obj/table/auto,
+/obj/item/storage/box/diskbox,
+/obj/item/hand_labeler{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 5
+	},
+/area/station/medical/medbay/cloner)
 "oLc" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -77686,7 +77697,7 @@ nMd
 dNF
 lHb
 dNF
-dNF
+oKt
 boG
 xNW
 xXr

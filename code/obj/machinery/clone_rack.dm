@@ -7,6 +7,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	desc = "A big clunky rack for storing floppy disks in."
 	icon = 'icons/obj/disk_rack.dmi'
 	icon_state = "disk_rack"
+	layer = STORAGE_LAYER
 	density = TRUE
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL

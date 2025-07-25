@@ -5627,6 +5627,7 @@
 /obj/machinery/computer/cloning{
 	dir = 8
 	},
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "Me" = (

@@ -8565,6 +8565,7 @@
 "aWN" = (
 /obj/machinery/clonepod,
 /obj/machinery/light/incandescent,
+/obj/item/paper/Cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -19793,7 +19794,8 @@
 /obj/cable,
 /obj/machinery/light/emergency,
 /obj/table/reinforced/auto,
-/obj/item/paper/Cloning,
+/obj/item/hand_labeler,
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -44280,13 +44282,13 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "teJ" = (
-/obj/storage/secure/closet/medical/cloning,
 /obj/machinery/light/emergency{
 	dir = 1
 	},
 /obj/decal/poster/wallsign/poster_human{
 	pixel_y = 30
 	},
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
