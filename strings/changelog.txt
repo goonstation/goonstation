@@ -1,4 +1,6 @@
-
+(t)fri jul 25 25
+(u)LeahTheTech
+(*)Added preferences option to re-enable legacy middle mouse behaviour. Sigh...
 (t)thu jul 24 25
 (u)Colossus
 (p)24156
