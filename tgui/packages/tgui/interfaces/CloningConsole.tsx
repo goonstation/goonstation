@@ -41,6 +41,7 @@ interface CloningConsoleData {
   completion;
   disk;
   diskReadOnly;
+  diskHasRecord;
   geneticAnalysis;
   meatLevels;
   message;
@@ -300,6 +301,7 @@ const StatusSection = () => {
     scannerGone,
     disk,
     diskReadOnly,
+    diskHasRecord,
   } = data;
 
   const message = data.message || { text: '', status: '' };
@@ -374,24 +376,31 @@ const StatusSection = () => {
         </Button>
         <Divider />
         {!!disk && (
-          <Stack>
+          <Stack vertical textAlign="center">
             <Stack.Item>
-              <Button icon="eject" color={'bad'} onClick={() => act('eject')}>
+              <Button
+                fontSize="20px"
+                icon="eject"
+                color={'bad'}
+                onClick={() => act('eject')}
+              >
                 Eject Disk
               </Button>
             </Stack.Item>
             <Stack.Item>
               <Box>
                 <Icon color={diskReadOnly ? 'bad' : 'good'} name={'check'} />
-                {` ${diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
+                {` ${diskHasRecord ? 'Disk has saved scan.' : diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
               </Box>
             </Stack.Item>
           </Stack>
         )}
         {!disk && (
-          <Button icon="eject" onClick={() => act('insert')}>
-            Insert Disk
-          </Button>
+          <Box textAlign="center">
+            <Button fontSize="20px" icon="eject" onClick={() => act('insert')}>
+              Insert Disk
+            </Button>
+          </Box>
         )}
       </Section>
     </>

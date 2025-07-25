@@ -876,6 +876,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 	if(!isnull(src.diskette))
 		. += list("diskReadOnly" = src.diskette.read_only)
+		. += list("diskHasRecord" = !!(locate(/datum/computer/file/clone) in src.diskette.root.contents))
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
