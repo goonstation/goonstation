@@ -3326,6 +3326,15 @@
 /obj/machinery/computer/barcode/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"vL" = (
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/obj/railing{
+	color = "#222288"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/wood/two,
+/area/station/bridge)
 "vM" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -3707,15 +3716,6 @@
 /obj/machinery/computer/ATM,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"yB" = (
-/obj/decal/stage_edge,
-/obj/loudspeaker,
-/obj/railing{
-	color = "#222288"
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/wood/two,
-/area/station/bridge)
 "yE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47899,7 +47899,7 @@ Rf
 aG
 ul
 wr
-yB
+vL
 AQ
 CQ
 Fq

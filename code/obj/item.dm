@@ -1069,6 +1069,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
 	if (src.artifact?.activated)
+		if (reach)
+			src.artifact.effect_attack_atom(src, user, target)
 		src.artifact.effect_click_tile(src, user, get_turf(target))
 	return
 
