@@ -196,7 +196,7 @@ var/global/datum/game_servers/game_servers = new
 			return
 		data = json_decode(response.body)
 		if (data["response"])
-			src.player_count = data["response"]["players"]
+			src.player_count = text2num_safe(data["response"]["players"])
 			src.map = data["response"]["map_name"]
 
 		else if (data["message"])
