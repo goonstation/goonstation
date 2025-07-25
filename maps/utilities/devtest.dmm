@@ -574,10 +574,6 @@
 /obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/station/devzone)
-"kg" = (
-/obj/machinery/disk_rack/clone/genetics,
-/turf/simulated/floor/blue/checker,
-/area/station/devzone)
 "ko" = (
 /obj/machinery/conveyor/WE{
 	id = "ghostdrone"
@@ -3763,7 +3759,7 @@ ng
 bS
 Gn
 Er
-kg
+vd
 ng
 Yx
 "}

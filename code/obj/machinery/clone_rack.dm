@@ -156,8 +156,3 @@ TYPEINFO(/obj/machinery/disk_rack)
 		overlay.pixel_y = (i-1) * 2
 		src.UpdateOverlays(overlay, LIGHT_KEY)
 #undef LIGHT_KEY
-
-/obj/machinery/disk_rack/clone/genetics
-	name = "\improper DNA sample rack"
-	desc = "A big clunky rack for storing cloning records in. This one can connect to nearby genetics research terminals."
-	icon_state = "clone_rack_gene"
