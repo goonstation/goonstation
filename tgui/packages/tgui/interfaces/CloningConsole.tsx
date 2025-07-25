@@ -402,7 +402,7 @@ const StatusSection = () => {
           <Stack.Item>
             <Box>
               <Icon
-                color={diskReadOnly ? 'bad' : 'good'}
+                color={!disk || diskReadOnly ? 'bad' : 'good'}
                 name={disk ? 'check' : 'xmark'}
               />
               {` ${!disk ? 'No disk.' : diskHasRecord ? 'Disk has saved scan.' : diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
