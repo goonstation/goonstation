@@ -3445,14 +3445,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central)
-"aCt" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/obj/decal/stage_edge,
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "aCC" = (
 /obj/landmark/start/job/rancher,
 /turf/simulated/floor/dirt,
@@ -3994,7 +3986,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 10;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aGG" = (
@@ -4185,11 +4180,6 @@
 "aIk" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"aIl" = (
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/chapel/sanctuary)
 "aIp" = (
 /obj/item/clothing/gloves/boxing{
 	pixel_x = -4
@@ -4482,7 +4472,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
 "aKB" = (
@@ -5376,7 +5368,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "aQx" = (
@@ -5954,7 +5948,9 @@
 /area/station/hallway/primary/southeast)
 "aVp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "aVt" = (
@@ -6383,7 +6379,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "aYB" = (
@@ -7226,7 +7225,9 @@
 /area/station/science/bot_storage)
 "beD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -8041,7 +8042,9 @@
 /area/station/science/artifact)
 "blL" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
 /obj/machinery/door_control{
 	id = "tox_one";
 	name = "Chamber Exhaust";
@@ -10132,11 +10135,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"bzP" = (
-/obj/window/reinforced/north,
-/obj/loudspeaker,
-/turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/chapel/funeral_parlor)
 "bzS" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -13980,6 +13978,14 @@
 "dZl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/diplomat)
+"dZp" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "dZw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16756,7 +16762,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "gba" = (
@@ -17620,6 +17629,11 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
+"gGK" = (
+/obj/window/reinforced/north,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/chapel/funeral_parlor)
 "gGY" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -18889,11 +18903,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"hHP" = (
-/obj/landmark/start/job/assistant,
-/obj/loudspeaker,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/fitness)
 "hIl" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -24301,7 +24310,10 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = 11
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "lvS" = (
@@ -24757,7 +24769,10 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = -9;
+	pixel_x = -10
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "lLj" = (
@@ -25502,7 +25517,10 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "mqj" = (
@@ -28324,6 +28342,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"ouS" = (
+/obj/landmark/start/job/assistant,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/fitness)
 "ovf" = (
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
@@ -36200,6 +36223,11 @@
 	},
 /turf/simulated/floor/redwhite/corner,
 /area/station/medical/medbay/surgery)
+"ujX" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/chapel/sanctuary)
 "ukt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -71095,7 +71123,7 @@ asS
 wRX
 aaE
 kHT
-bzP
+gGK
 sYo
 xrj
 axT
@@ -73223,7 +73251,7 @@ dsT
 wND
 aWV
 aeD
-aIl
+ujX
 aJu
 xLj
 cAz
@@ -75337,7 +75365,7 @@ vQn
 ezX
 pSe
 aHm
-aIl
+ujX
 aJu
 xLj
 aLZ
@@ -77447,7 +77475,7 @@ azu
 fNe
 aCj
 aDj
-hHP
+ouS
 aFw
 lTl
 aSf
@@ -81371,7 +81399,7 @@ gmX
 qoe
 rtK
 icY
-aCt
+dZp
 pfJ
 qxc
 eYF

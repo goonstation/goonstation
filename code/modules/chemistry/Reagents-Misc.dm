@@ -4078,7 +4078,7 @@ datum
 			blocks_sight_gas = 1
 
 		iron_oxide
-			name = "Iron Oxide"
+			name = "iron oxide"
 			id = "iron_oxide"
 			description = "Iron, artificially rusted under the effects of oxygen, acetic acid, salt and a high temperature environment."
 			fluid_r = 112

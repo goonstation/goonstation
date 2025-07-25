@@ -1,10 +1,14 @@
 
-#define RADIO_JAMMER_RANGE 6
+#define DEFAULT_RADIO_JAMMER_RANGE 6
 
 proc/check_for_radio_jammers(atom/source)
 	. = FALSE
 	for (var/atom/A as anything in by_cat[TR_CAT_RADIO_JAMMERS])
-		if (IN_RANGE(source, A, RADIO_JAMMER_RANGE))
+		var/range = DEFAULT_RADIO_JAMMER_RANGE
+		if(istype(A, /obj/item/radiojammer))
+			var/obj/item/radiojammer/jammer = A
+			range = jammer.range
+		if (IN_RANGE(source, A, range))
 			SEND_SIGNAL(A, COMSIG_SIGNAL_JAMMED)
 			return TRUE
 

@@ -961,11 +961,6 @@
 	},
 /turf/simulated/grass,
 /area/station/garden/owlery)
-"asI" = (
-/obj/loudspeaker,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/research_outpost/protest)
 "ati" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
@@ -1276,6 +1271,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/north)
+"azY" = (
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/plating,
+/area/research_outpost/protest)
 "aAb" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/mail,
@@ -5938,6 +5938,12 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bathroom)
+"cDJ" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/market{
+	name = "Seating Area"
+	})
 "cDZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6132,6 +6138,13 @@
 	dir = 4
 	},
 /area/station/security/main)
+"cJm" = (
+/obj/machinery/loudspeaker,
+/obj/decoration/clock{
+	pixel_y = 30
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/lounge/luxury_seating)
 "cJp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/south)
@@ -11881,6 +11894,12 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
+"fki" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/central{
+	name = "Ringside Hallway"
+	})
 "fkk" = (
 /obj/table/glass/auto,
 /obj/machinery/coffeemaker/research,
@@ -12191,11 +12210,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/stockex)
-"fsu" = (
-/obj/decal/stage_edge,
-/obj/loudspeaker,
-/turf/simulated/floor/plating,
-/area/research_outpost/protest)
 "fsQ" = (
 /turf/space/asteroid,
 /area/mining/magnet)
@@ -13266,6 +13280,11 @@
 	},
 /turf/simulated/floor/carpet/green/decal,
 /area/station/crew_quarters/bar)
+"fPT" = (
+/obj/machinery/loudspeaker,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/research_outpost/protest)
 "fQo" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
@@ -23605,6 +23624,16 @@
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
 	})
+"kvH" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/light/incandescent/greenish{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/greenblack/corner{
+	dir = 4
+	},
+/area/research_outpost/protest)
 "kvR" = (
 /obj/cable{
 	icon_state = "4-5"
@@ -25374,6 +25403,13 @@
 	dir = 1
 	},
 /area/station/medical/medbay/treatment1)
+"lme" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor/greenblack/corner{
+	dir = 1
+	},
+/area/research_outpost/protest)
 "lmk" = (
 /obj/fakeobject/firealarm_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -27958,16 +27994,6 @@
 /obj/machinery/light/small/purpleish,
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
-"muC" = (
-/obj/loudspeaker,
-/obj/machinery/light/incandescent/greenish{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/greenblack/corner{
-	dir = 4
-	},
-/area/research_outpost/protest)
 "mva" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34466,12 +34492,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
-"pnZ" = (
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/hallway/secondary/central{
-	name = "Ringside Hallway"
-	})
 "poi" = (
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/tableware/few,
@@ -35839,13 +35859,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/processing)
-"pXb" = (
-/obj/loudspeaker,
-/obj/machinery/light/incandescent/greenish,
-/turf/simulated/floor/greenblack/corner{
-	dir = 1
-	},
-/area/research_outpost/protest)
 "pXg" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
@@ -41352,13 +41365,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"suU" = (
-/obj/loudspeaker,
-/obj/decoration/clock{
-	pixel_y = 30
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/lounge/luxury_seating)
 "suV" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -41945,12 +41951,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"sLh" = (
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/market{
-	name = "Seating Area"
-	})
 "sLl" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -88233,7 +88233,7 @@ vnX
 vnX
 vnX
 apR
-asI
+fPT
 mLs
 rpF
 vsf
@@ -88241,7 +88241,7 @@ etp
 vsf
 rpF
 haL
-fsu
+azY
 apR
 vnX
 vnX
@@ -90348,13 +90348,13 @@ sRu
 vnX
 vnX
 xHr
-muC
+kvH
 bZu
 rDC
 rDC
 bpJ
 iCk
-pXb
+lme
 xHr
 vnX
 vnX
@@ -103433,7 +103433,7 @@ oEN
 ocC
 chp
 jhq
-sLh
+cDJ
 ian
 mwi
 aaz
@@ -105547,7 +105547,7 @@ vPU
 wmA
 gTM
 flP
-pnZ
+fki
 rWg
 qnf
 jdY
@@ -106745,7 +106745,7 @@ dNw
 pud
 dNw
 dNw
-suU
+cJm
 iyq
 pFf
 ntZ

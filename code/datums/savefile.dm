@@ -117,6 +117,7 @@
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
 		F["scrollwheel_limb_targeting"] << src.scrollwheel_limb_targeting
+		F["middle_mouse_swap"] << src.middle_mouse_swap
 		F["changelog"] << src.view_changelog
 		F["score"] << src.view_score
 		F["tickets"] << src.view_tickets
@@ -314,6 +315,7 @@
 		// Game setting options, not per-profile
 		F["tooltip"] >> src.tooltip_option
 		F["scrollwheel_limb_targeting"] >> src.scrollwheel_limb_targeting
+		F["middle_mouse_swap"] >> src.middle_mouse_swap
 		if (isnull(src.scrollwheel_limb_targeting))
 			src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 		F["changelog"] >> src.view_changelog
