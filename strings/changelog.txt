@@ -1,4 +1,44 @@
-
+(t)fri jul 25 25
+(u)LeahTheTech
+(*)Added preferences option to re-enable legacy middle mouse behaviour. Sigh...
+(t)thu jul 24 25
+(u)Colossus
+(p)24156
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether no longer works on a 10 unit threshold, always behaving on the fast depletion mode.
+(t)mon jul 21 25
+(u)glowbold
+(e)⚖🤖|A-Balance, A-Silicons
+(+)Singularity containment fields fling Silicons away.
+(t)sat jul 19 25
+(u)LeahTheTech
+(p)24158
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Middle mouse now attempts to open/close any large storage objects (lockers, crates) on the turf you click on.
+(t)fri jul 18 25
+(u)glowbold
+(p)23716
+(e)🆕🗺🔧📦|C-Feature, A-Mapping, A-Tooling, A-Game-Objects
+(+)Loudspeakers can be damaged by explosions, gunfire, hitting with heavy items, and excessive microphone feedback. They can be repaired with a screwdriver.
+(u)LeahTheTech
+(+)Acid drones now drop a flask of random acid.
+(+)Loudspeakers now cause audible disorient when they break.
+(u)JORJ949
+(p)23884
+(e)🪲🧑‍✈️|C-Bug, A-Command
+(*)The Captain's Bonsai now uses health like other bushes, but is very fragile and only has 5hp!
+(u)JORJ949
+(p)23921
+(e)🆕💪|C-Feature, A-Traits
+(*)The Clown Disbelief trait now stops you from hearing strange squeaky voices (anything a clown says).
+(u)JORJ949
+(p)24129
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)You can now edit the range on a syndicate signal jammer with either a screwing or pulsing tool, allowing for more precisely jammed crime dens.
+(u)LeahTheTech
+(p)24142
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)The Super! Grapple Friend pickpocket gun can now steal headsets, masks and glasses (in order) and plant them back.
 (t)mon jul 14 25
 (u)JORJ949
 (p)24005

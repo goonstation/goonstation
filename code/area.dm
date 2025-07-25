@@ -3795,7 +3795,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 	CanEnter(atom/movable/A)
 		var/mob/living/M = A
-		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
+		if(istype(M) && M.mind && !(M.mind.get_antagonist(ROLE_WIZARD) || M.mind.special_role == ROLE_WIZARD || M.mind.get_antagonist(ROLE_BASKETBALL_WIZARD) || M.mind.special_role == ROLE_BASKETBALL_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
 				return TRUE
 			boutput(M, SPAN_ALERT("A magical barrier prevents you from entering!")) //or something

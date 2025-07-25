@@ -103,6 +103,8 @@ var/list/removed_jobs = list(
 
 	var/scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 
+	var/middle_mouse_swap = FALSE
+
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
 
 	var/preferred_map = ""
@@ -273,6 +275,7 @@ var/list/removed_jobs = list(
 			"targetingCursorPreview" = icon2base64(icon(cursors_selection[src.target_cursor])),
 			"tooltipOption" = src.tooltip_option,
 			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
+			"middleMouseSwap" = src.middle_mouse_swap,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
 			"viewChangelog" = src.view_changelog,
@@ -912,7 +915,10 @@ var/list/removed_jobs = list(
 					src.scrollwheel_limb_targeting = params["value"]
 					src.profile_modified = TRUE
 					return TRUE
-
+			if ("update-middleMouseSwap")
+				src.middle_mouse_swap = !src.middle_mouse_swap
+				src.profile_modified = TRUE
+				return TRUE
 			if ("update-tguiFancy")
 				src.tgui_fancy = !src.tgui_fancy
 				src.profile_modified = TRUE

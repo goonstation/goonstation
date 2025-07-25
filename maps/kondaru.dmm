@@ -5502,11 +5502,6 @@
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/black,
 /area/station/engine/storage)
-"auY" = (
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/news_office)
 "auZ" = (
 /obj/decal/poster/wallsign/engineering,
 /turf/simulated/wall/auto/supernorn,
@@ -6512,16 +6507,6 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
-"azw" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/news_office)
 "azx" = (
 /obj/stool,
 /obj/decal/boxingrope{
@@ -6847,16 +6832,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
-"aAA" = (
-/obj/loudspeaker,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/decal/stage_edge,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "aAB" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/brute,
@@ -7467,7 +7442,7 @@
 	tag = "Cold Loop Inlet Meter"
 	},
 /obj/machinery/meter{
-	pixel_x = 9;
+	pixel_x = 10;
 	pixel_y = -8
 	},
 /obj/cable{
@@ -8290,7 +8265,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aGu" = (
@@ -8985,7 +8963,10 @@
 	can_rupture = 0;
 	dir = 5
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "aJp" = (
@@ -10234,7 +10215,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aPM" = (
@@ -12667,7 +12650,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
 	icon_state = "2-8"
@@ -12757,14 +12743,6 @@
 /obj/shrub,
 /obj/item/instrument/cowbell,
 /turf/simulated/floor/darkblue,
-/area/station/crew_quarters/cafeteria)
-"bai" = (
-/obj/loudspeaker,
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "bak" = (
 /obj/machinery/light{
@@ -15651,7 +15629,9 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 10
+	},
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -16017,7 +15997,10 @@
 	dir = 8;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 9;
+	pixel_y = 11
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -18820,11 +18803,6 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
-"bCl" = (
-/obj/table/reinforced/auto,
-/obj/loudspeaker,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bCm" = (
@@ -22100,16 +22078,6 @@
 	},
 /turf/simulated/floor/stairs,
 /area/station/security/brig)
-"bNB" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/courtroom)
 "bNG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -34315,6 +34283,14 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"giB" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "gjm" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -34548,7 +34524,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core)
 "grq" = (
@@ -34957,7 +34936,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core)
 "gDM" = (
@@ -36230,6 +36212,11 @@
 /obj/decal/tile_edge/floorguide/arrow_w,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"hrB" = (
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/news_office)
 "hrS" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -37021,6 +37008,11 @@
 /obj/lattice,
 /turf/space,
 /area/station/com_dish/comdish)
+"icS" = (
+/obj/table/reinforced/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "idb" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -39150,6 +39142,16 @@
 /obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/comdish)
+"jBU" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "jCn" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -39949,6 +39951,16 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/diplomat)
+"kdE" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/table/wood/auto,
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/news_office)
 "keD" = (
 /obj/cable/orange{
 	icon_state = "2-8"
@@ -40552,7 +40564,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -41185,7 +41200,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 12;
+	pixel_x = 10
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -42057,7 +42075,9 @@
 /turf/simulated/floor,
 /area/station/security/secwing)
 "lxk" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -46527,6 +46547,10 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"oOw" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "oOz" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -51792,10 +51816,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"sCV" = (
-/obj/loudspeaker,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
 "sDQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -52388,7 +52408,8 @@
 /area/station/hallway/primary/east)
 "sWW" = (
 /obj/machinery/meter{
-	pixel_x = -9
+	pixel_x = 10;
+	pixel_y = -9
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -55893,7 +55914,10 @@
 	dir = 10;
 	can_rupture = 0
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "vuD" = (
@@ -58456,6 +58480,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
+"xmC" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "xmF" = (
 /obj/disposalpipe/segment/vertical,
 /obj/landmark/halloween,
@@ -59442,7 +59476,10 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = -10
+	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/gas)
 "xSq" = (
@@ -97315,7 +97352,7 @@ ait
 ait
 ait
 ait
-auY
+hrB
 aDl
 kZl
 art
@@ -97919,7 +97956,7 @@ ako
 wVq
 amf
 anm
-azw
+kdE
 qwf
 aHc
 aJg
@@ -101001,7 +101038,7 @@ sJN
 sJN
 sJN
 sJN
-bCl
+icS
 bCv
 bDA
 byk
@@ -117318,7 +117355,7 @@ bIv
 bJS
 oeB
 pAz
-bNB
+xmC
 cGP
 pQd
 vrC
@@ -120582,7 +120619,7 @@ azx
 aFC
 aFC
 aDp
-aAA
+jBU
 atr
 aNm
 kaJ
@@ -121513,7 +121550,7 @@ aVJ
 aSj
 aXX
 jfg
-bai
+giB
 bbm
 bcv
 rrq
@@ -122431,7 +122468,7 @@ noK
 bkM
 blZ
 vhz
-sCV
+oOw
 qFo
 ghK
 tQM
