@@ -3677,6 +3677,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/decal/stage_edge/alt,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -4079,7 +4080,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/stairs/medical,
+/obj/railing,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "axW" = (
 /obj/cable{
@@ -4626,6 +4628,7 @@
 	pixel_x = -15
 	},
 /obj/item/storage/box/diskbox,
+/obj/decal/stage_edge/alt,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -7634,7 +7637,8 @@
 	icon_state = "0-4"
 	},
 /obj/storage/secure/closet/medical/cloning,
-/turf/simulated/floor/stairs/medical,
+/obj/railing,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aVI" = (
 /turf/simulated/floor,
