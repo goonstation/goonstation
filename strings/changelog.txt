@@ -1,4 +1,9 @@
+
 (t)fri jul 25 25
+(u)Studenterhue
+(p)24133
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)You can now receive postcards in the mail! There are seven in all, two of which also appear in the Museum of Lunar History.
 (u)LeahTheTech
 (*)Added preferences option to re-enable legacy middle mouse behaviour. Sigh...
 (u)glowbold
