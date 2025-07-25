@@ -375,9 +375,9 @@ const StatusSection = () => {
           Clone
         </Button>
         <Divider />
-        {!!disk && (
-          <Stack vertical textAlign="center">
-            <Stack.Item>
+        <Stack vertical textAlign="center">
+          <Stack.Item>
+            {!!disk && (
               <Button
                 fontSize="20px"
                 icon="eject"
@@ -386,22 +386,29 @@ const StatusSection = () => {
               >
                 Eject Disk
               </Button>
-            </Stack.Item>
-            <Stack.Item>
-              <Box>
-                <Icon color={diskReadOnly ? 'bad' : 'good'} name={'check'} />
-                {` ${diskHasRecord ? 'Disk has saved scan.' : diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
+            )}
+            {!disk && (
+              <Box textAlign="center">
+                <Button
+                  fontSize="20px"
+                  icon="eject"
+                  onClick={() => act('insert')}
+                >
+                  Insert Disk
+                </Button>
               </Box>
-            </Stack.Item>
-          </Stack>
-        )}
-        {!disk && (
-          <Box textAlign="center">
-            <Button fontSize="20px" icon="eject" onClick={() => act('insert')}>
-              Insert Disk
-            </Button>
-          </Box>
-        )}
+            )}
+          </Stack.Item>
+          <Stack.Item>
+            <Box>
+              <Icon
+                color={diskReadOnly ? 'bad' : 'good'}
+                name={disk ? 'check' : 'xmark'}
+              />
+              {` ${!disk ? 'No disk.' : diskHasRecord ? 'Disk has saved scan.' : diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
+            </Box>
+          </Stack.Item>
+        </Stack>
       </Section>
     </>
   );
