@@ -10,6 +10,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	density = TRUE
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
+	requires_power = FALSE //we handle our own power stuff
 	var/list/obj/item/disk/data/floppy/disks[MAX_DISKS]
 
 /obj/machinery/disk_rack/was_deconstructed_to_frame(mob/user)
@@ -118,6 +119,8 @@ TYPEINFO(/obj/machinery/disk_rack)
 	return TRUE
 
 /obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk)
+	if (status & NOPOWER)
+		return list("light" = FALSE)
 	return list("light" = src.cloneable_disk(disk))
 
 /obj/machinery/disk_rack/clone/ui_data(mob/user)
@@ -131,7 +134,16 @@ TYPEINFO(/obj/machinery/disk_rack)
 	src.update_lights()
 
 #define LIGHT_KEY "angry_light_[i]"
+
+/obj/machinery/disk_rack/clone/power_change()
+	..()
+	if (status & NOPOWER)
+		for (var/i in 1 to MAX_DISKS)
+			src.ClearSpecificOverlays(LIGHT_KEY)
+
 /obj/machinery/disk_rack/clone/proc/update_lights()
+	if (status & NOPOWER)
+		return
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
 		if (!disk || !src.cloneable_disk(disk))
