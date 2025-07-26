@@ -182,3 +182,5 @@
 #define COMSIG_CLIENT_LOGIN "client_login"
 /// When a client logs out of a mob. (client, mob)
 #define COMSIG_CLIENT_LOGOUT "client_logout"
+/// When a client's chat is loaded
+#define COMSIG_CLIENT_CHAT_LOADED "client_chat_loaded"

@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/datum/job)
 		var/round_num = player.get_rounds_participated()
 		if (isnull(round_num)) //fetch failed, assume they're allowed because everything is probably broken right now
 			return TRUE
-		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
+		if (player?.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
 		if (round_num >= min && (round_num <= max || !max))
 			return TRUE
@@ -1013,6 +1013,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
+		M.traitHolder.removeTrait("cyber_incompatible")
 		return M.AIize()
 
 /datum/job/civilian/cyborg
@@ -1036,6 +1037,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		var/mob/living/silicon/S = M.Robotize_MK2()
 		APPLY_ATOM_PROPERTY(S, PROP_ATOM_ROUNDSTART_BORG, "borg")
+		S.traitHolder.removeTrait("cyber_incompatible")
 		return S
 
 // Special Cases

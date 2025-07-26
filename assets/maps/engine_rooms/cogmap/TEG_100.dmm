@@ -36,7 +36,8 @@
 	level = 2
 	},
 /obj/machinery/meter{
-	pixel_y = 1
+	pixel_y = -9;
+	pixel_x = 10
 	},
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -682,7 +683,8 @@
 	level = 2
 	},
 /obj/machinery/meter{
-	pixel_y = 1
+	pixel_y = -9;
+	pixel_x = -9
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)

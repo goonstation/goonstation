@@ -664,6 +664,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				src.visible_message(SPAN_NOTICE("[user] starts unwrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(unanchor), list(user), src.icon, src.icon_state,\
 					SPAN_NOTICE("[user] finishes unwrenching \the [src]."), null)
+			else
+				boutput(user, SPAN_ALERT("[src]'s retaining bolts won't budge! Looks like it's stuck in place."))
 		else if (ispryingtool(W))
 			if (cell)
 				boutput(user, SPAN_NOTICE("You pry [cell] out of [src]."))
