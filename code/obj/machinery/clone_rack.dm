@@ -128,6 +128,9 @@ TYPEINFO(/obj/machinery/disk_rack)
 	src.last_heartbeats[index] = TIME //give us a grace period for the first heartbeat to turn up
 
 /obj/machinery/disk_rack/clone/proc/cloneable_disk(index)
+	var/obj/item/disk/data/floppy/disk = src.disks[i]
+	if (!(locate() in disk.root.contents)) //no record = no clone
+		return FALSE
 	return TIME - src.last_heartbeats[index] > src.patience
 
 /obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk, index)
