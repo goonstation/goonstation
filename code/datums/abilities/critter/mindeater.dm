@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/area/veil_border)
 
 /datum/targetable/critter/mindeater/disguise
 	name = "Disguise"
-	desc = "Disguise yourself as a creature."
+	desc = "Channel over 3 seconds to disguise yourself as a creature."
 	icon_state = "disguise"
 	pointCost = 0
 	reveals_on_use = TRUE
@@ -238,14 +238,18 @@ ABSTRACT_TYPE(/area/veil_border)
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 
 		if (!mindeater.disguised)
-			mindeater.disguise()
-
-			src.name = "Clear Disguise"
-			src.desc = "Clear your disguise."
-			src.icon_state = "clear_disguise"
-			src.updateObject()
+			SETUP_GENERIC_PRIVATE_ACTIONBAR(mindeater, mindeater, 3 SECONDS, /mob/living/critter/mindeater/proc/use_disguise_ability, src, null, null, null, INTERRUPT_STUNNED)
 		else
 			mindeater.undisguise()
+
+	proc/perform_disguise()
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		mindeater.disguise()
+
+		src.name = "Clear Disguise"
+		src.desc = "Clear your disguise."
+		src.icon_state = "clear_disguise"
+		src.updateObject()
 
 	proc/reset()
 		src.name = initial(src.name)

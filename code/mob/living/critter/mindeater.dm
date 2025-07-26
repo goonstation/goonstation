@@ -352,6 +352,11 @@ TYPEINFO(/mob/living/critter/mindeater)
 			var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
 			abil_holder.addPoints(points)
 
+	/// triggers the disguise ability
+	proc/use_disguise_ability(datum/targetable/critter/mindeater/disguise/abil)
+		var/datum/targetable/critter/mindeater/disguise/disguise_abil = abil
+		disguise_abil.perform_disguise()
+
 	/// disguise as an entity
 	proc/disguise()
 		var/mob/living/temp
@@ -393,7 +398,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 				src.name = src.human_disguise_dummy.real_name
 				src.real_name = src.human_disguise_dummy.real_name
-				src.desc = src.human_disguise_dummy.get_desc(TRUE, TRUE)
+				src.desc = src.human_disguise_dummy.get_desc(TRUE, TRUE, src)
 				src.bioHolder.mobAppearance.gender = src.human_disguise_dummy.bioHolder.mobAppearance.gender
 
 				src.health_monitor.alpha = 255

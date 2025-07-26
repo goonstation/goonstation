@@ -1,24 +1,25 @@
 
-/mob/living/carbon/human/get_desc(ignore_all_checks, skip_afk_check)
+/mob/living/carbon/human/get_desc(ignore_all_checks, skip_afk_check, mob/user)
+	user = user || usr
 
-	var/ignore_checks = isobserver(usr) || ignore_all_checks
+	var/ignore_checks = isobserver(user) || ignore_all_checks
 	var/examine_stopper = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) || 0
-	if (!ignore_checks && examine_stopper && GET_DIST(usr.client.eye, src) > 3 - 2 * examine_stopper)
+	if (!ignore_checks && examine_stopper && GET_DIST(user.client.eye, src) > 3 - 2 * examine_stopper)
 		return "<br>[SPAN_ALERT("You can't seem to make yourself look at [examine_stopper >= 3 ? "this person" : src.name] long enough to observe anything!")]"
 
-	if (src.simple_examine || isghostdrone(usr))
+	if (src.simple_examine || isghostdrone(user))
 		return
 
-	if (!usr.client.eye)
+	if (!user.client.eye)
 		return // heh
 
 	. = list()
 	. += ..()
-	if (isalive(usr))
+	if (isalive(user))
 		. += "<br>[SPAN_NOTICE("You look closely at <B>[src.name] ([src.get_pronouns()])</B>.")]"
 
-	if (!isobserver(usr) && !isintangible(usr))
-		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
+	if (!isobserver(user) && !isintangible(user))
+		if (!ignore_checks && (GET_DIST(user.client.eye, src) > 7 && (!user.client || !user.client.eye || !user.client.holder || user.client.holder.state != 2)))
 			return "[jointext(., "")]<br>[SPAN_ALERT("<B>[src.name]</B> is too far away to see clearly.")]"
 
 	if(src.face_visible() && src.bioHolder?.mobAppearance.flavor_text)
@@ -37,11 +38,11 @@
 	. +=  "<br>[SPAN_NOTICE("*---------*")]"
 	var/datum/ailment_data/found = src.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
 	if (!ignore_checks && found)
-		if (!ishuman(usr))
+		if (!ishuman(user))
 			. += "<br>[SPAN_ALERT("You can't focus on [t_him], it's like looking through smoked glass.")]"
 			return jointext(., "")
 		else
-			var/mob/living/carbon/human/H = usr
+			var/mob/living/carbon/human/H = user
 			var/datum/ailment_data/memetic_madness/MM = H.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
 			if (istype(MM) && istype(MM.master,/datum/ailment/disability/memetic_madness))
 				H.contract_memetic_madness(MM.progenitor)
@@ -110,7 +111,7 @@
 
 	if (src.wear_id)
 		if (istype(src.wear_id, /obj/item/card/id))
-			if (src.wear_id:registered != src.real_name && in_interact_range(src, usr) && prob(10))
+			if (src.wear_id:registered != src.real_name && in_interact_range(src, user) && prob(10))
 				. += "<br>[SPAN_ALERT("[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] yet doesn't seem to be that person!!!")]"
 			else
 				. += "<br>[SPAN_NOTICE("[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name].")]"
@@ -122,12 +123,12 @@
 			else
 				desc_id_card = src.wear_id:ID_card
 			if (desc_id_card)
-				if (desc_id_card.registered != src.real_name && in_interact_range(src, usr) && prob(10))
+				if (desc_id_card.registered != src.real_name && in_interact_range(src, user) && prob(10))
 					. += "<br>[SPAN_ALERT("[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it yet doesn't seem to be that person!!!")]"
 				else
 					. += "<br>[SPAN_NOTICE("[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it.")]"
 
-	if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
+	if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[user]) // are you in the list of people who can see arrest icons??
 		var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
 		if(sec_record)
 			var/sechud_flag = sec_record["sec_flag"]
@@ -386,7 +387,7 @@
 		if (DECOMP_STAGE_SKELETONIZED)
 			. += "<br>[SPAN_ALERT("[src]'s remains are completely skeletonized.")]"
 
-	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
+	if(user.traitHolder && (user.traitHolder.hasTrait("observant") || istype(user, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
 			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]<br>"
 			var/list/trait_names = list()
@@ -433,10 +434,10 @@
 
 	. += "<br>[SPAN_NOTICE("*---------*")]"
 
-	if (GET_DIST(usr, src) < 4)
-		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH))
-			. += "<br>[SPAN_ALERT("You analyze [src]'s vitals.")]<br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
-			DISPLAY_MAPTEXT(src, list(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, src)
+	if (GET_DIST(user, src) < 4)
+		if (GET_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH))
+			. += "<br>[SPAN_ALERT("You analyze [src]'s vitals.")]<br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
+			DISPLAY_MAPTEXT(src, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, src)
 			update_medical_record(src)
 
 	return jointext(., "")
