@@ -2683,13 +2683,6 @@ datum
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				for (var/datum/ailment_data/disease/virus in M.ailments)
-					if (probmult(5) && istype(virus.master,/datum/ailment/disease/cold))
-						M.cure_disease(virus)
-					if (probmult(3) && istype(virus.master,/datum/ailment/disease/flu))
-						M.cure_disease(virus)
-					if (probmult(3) && istype(virus.master,/datum/ailment/disease/food_poisoning))
-						M.cure_disease(virus)
 				if (probmult(11))
 					M.show_text("You feel calm and relaxed.", "blue")
 				..()
@@ -2930,13 +2923,6 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(50))
 					M.nutrition += 1 * mult
-				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if(probmult(10) && istype(virus.master,/datum/ailment/disease/cold))
-						M.cure_disease(virus)
-					if(probmult(10) && istype(virus.master,/datum/ailment/disease/flu))
-						M.cure_disease(virus)
-					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
-						M.cure_disease(virus)
 				..()
 				return
 
@@ -3831,19 +3817,6 @@ datum
 						0, 0, 0.5,
 						0.5, 0.35, 0.0625)
 					T.onVarChanged("color", oldcol, T.color)
-
-			on_mob_life(var/mob/living/M, var/mult = 1)
-				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if(probmult(10) && istype(virus.master,/datum/ailment/disease/cold))
-						M.cure_disease(virus)
-						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
-					if(probmult(10) && istype(virus.master,/datum/ailment/disease/flu))
-						M.cure_disease(virus)
-						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
-					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
-						M.cure_disease(virus)
-						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
-				..()
 
 		fooddrink/cinnamon
 			name = "cinnamon"
