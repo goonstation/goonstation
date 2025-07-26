@@ -28738,17 +28738,21 @@
 "cdq" = (
 /obj/table/auto,
 /obj/decal/cleanable/cobweb,
-/obj/item/scalpel{
-	pixel_x = -4;
+/obj/item/weldingtool{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = 1;
 	pixel_y = 11
 	},
-/obj/item/circular_saw{
-	pixel_x = -3;
-	pixel_y = 4
+/obj/item/storage/firstaid/regular{
+	pixel_x = 12;
+	pixel_y = 10
 	},
-/obj/item/staple_gun{
-	pixel_x = 8;
-	pixel_y = 1
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -4;
+	pixel_y = 11
 	},
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
@@ -42555,24 +42559,24 @@
 /area/station/crew_quarters/clown)
 "hFD" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 12;
-	pixel_y = 10
-	},
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -4;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/glass/oilcan{
-	pixel_x = 1;
-	pixel_y = 11
-	},
-/obj/item/weldingtool{
-	pixel_x = 4;
-	pixel_y = 2
-	},
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
+	},
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = -5
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)

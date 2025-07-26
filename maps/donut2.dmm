@@ -5612,20 +5612,20 @@
 "aGm" = (
 /obj/table/auto,
 /obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
 	pixel_x = 5;
 	pixel_y = 10
 	},
 /obj/item/robot_module{
 	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/item/hand_labeler{
-	pixel_x = -10;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/glass/oilcan{
-	pixel_x = -8;
-	pixel_y = 3
+	pixel_y = -5
 	},
 /turf/simulated/floor/black/side{
 	dir = 9
@@ -28585,6 +28585,10 @@
 	pixel_x = 10;
 	pixel_y = 3
 	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = -8;
+	pixel_y = 3
+	},
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -36316,6 +36320,13 @@
 /obj/item/item_box/assorted/stickers/stickers_limited,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
+"ozE" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "ozI" = (
 /obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/food{
@@ -38656,13 +38667,6 @@
 /obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
-"pOX" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/middle{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/robotics)
 "pPv" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -71919,7 +71923,7 @@ faS
 ogH
 oDs
 kqV
-pOX
+ozE
 aYy
 gLb
 aLX
