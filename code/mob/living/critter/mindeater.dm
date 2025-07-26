@@ -330,21 +330,26 @@ TYPEINFO(/mob/living/critter/mindeater)
 		src.remove_pulling()
 
 	/// gain intellect points from target mob
-	proc/collect_intellect(mob/living/carbon/human/H, points)
-		APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, min(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) + points, INTRUDER_MAX_INTELLECT_THRESHOLD))
-		if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) >= INTRUDER_MAX_INTELLECT_THRESHOLD)
-			H.brain_level.set_icon_state("complete")
-		else
-			H.brain_level.set_icon_state(floor(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) / 10) * 10, INTRUDER_MAX_INTELLECT_THRESHOLD)
+	proc/collect_intellect(mob/living/L, points)
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, min(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) + points, INTRUDER_MAX_INTELLECT_THRESHOLD))
+			if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) >= INTRUDER_MAX_INTELLECT_THRESHOLD)
+				H.brain_level.set_icon_state("complete")
+			else
+				H.brain_level.set_icon_state(floor(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) / 10) * 10, INTRUDER_MAX_INTELLECT_THRESHOLD)
 
-		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
-		if (H.reagents.has_reagent("ethanol") || H.reagents.has_reagent("mannitol"))
-			abil_holder.addPoints(points * 5 / 6)
-		else if (H.reagents.has_reagent("morphine"))
-			abil_holder.addPoints(points / 2)
-		else if (H.reagents.has_reagent("haloperidol"))
-			abil_holder.addPoints(points / 3)
+			var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
+			if (H.reagents.has_reagent("ethanol") || H.reagents.has_reagent("mannitol"))
+				abil_holder.addPoints(points * 5 / 6)
+			else if (H.reagents.has_reagent("morphine"))
+				abil_holder.addPoints(points / 2)
+			else if (H.reagents.has_reagent("haloperidol"))
+				abil_holder.addPoints(points / 3)
+			else
+				abil_holder.addPoints(points)
 		else
+			var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
 			abil_holder.addPoints(points)
 
 	/// disguise as an entity

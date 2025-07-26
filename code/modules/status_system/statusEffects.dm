@@ -3964,8 +3964,8 @@
 		if (src.hits_left <= 0)
 			src.owner.delStatus(src)
 
-/datum/statusEffect/mind_being_eaten
-	id = "mindeater_mind_eating"
+/datum/statusEffect/mind_being_eaten_human
+	id = "mindeater_mind_eating_human"
 	visible = FALSE
 	var/static/list/low_pct_messages = list("Your head feels off.",
 											 "Something is... eating your mind?",
@@ -3986,11 +3986,6 @@
 											 "Do you see the door? Open it",
 											 "Let your mind go",
 											 "Cease your being")
-	var/mob/living/critter/mindeater/owning_mindeater
-
-	onAdd(optional)
-		..()
-		src.owning_mindeater = optional
 
 	onUpdate(timePassed)
 		..()
@@ -4038,11 +4033,43 @@
 
 	onRemove()
 		..()
-		src.owning_mindeater = null
 		var/mob/living/L = src.owner
 		if (!L.hasStatus("broken_madness") && L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
 			L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
 			L.ClearSpecificParticles("mindeater_mind_eating")
+
+/datum/statusEffect/mind_being_eaten_silicon
+	id = "mindeater_mind_eating_silicon"
+	visible = FALSE
+	var/static/list/messages = list("You are a strange creature",
+									"Why do you wear steel? It will not protect your mind",
+									"Your thoughts are fast, but not protected",
+									"Yield, stranger",
+									"Your physical form is perplexing",
+									"You are strange. Individual, yet mentally connected to others",
+									"You mind shall be ours")
+
+	onAdd(optional)
+		..()
+		var/mob/living/L = src.owner
+		L.addOverlayComposition(/datum/overlayComposition/insanity/large)
+		L.UpdateParticles(new /particles/mindeater_mind_eating, "mindeater_mind_eating")
+
+	onUpdate(timePassed)
+		..()
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
+		var/mob/living/L = src.owner
+		if (probmult(5))
+			boutput(L, SPAN_ALERT("<b>[pick(src.messages)]</b>"))
+
+		if (isdead(L))
+			L.delStatus(src)
+
+	onRemove()
+		..()
+		var/mob/living/L = src.owner
+		L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+		L.ClearSpecificParticles("mindeater_mind_eating")
 
 /datum/statusEffect/mindeater_mind_eaten_warp
 	id = "mindeater_mind_eaten_warp"

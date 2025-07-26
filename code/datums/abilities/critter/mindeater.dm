@@ -320,28 +320,33 @@ ABSTRACT_TYPE(/area/veil_border)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.collect_intellect(src.target, 6)
+
 		if (ishuman(src.target))
-			var/mob/living/critter/mindeater/mindeater = src.owner
-			mindeater.collect_intellect(src.target, 6)
-			src.target.setStatus("mindeater_mind_eating", INFINITE_STATUS, src.owner)
+			src.target.setStatus("mindeater_mind_eating_human", INFINITE_STATUS, src.owner)
 
 			if (GET_ATOM_PROPERTY(src.target, PROP_MOB_INTELLECT_COLLECTED) < INTRUDER_MAX_INTELLECT_THRESHOLD)
 				var/mob/living/carbon/human/H = src.target
-				H.take_brain_damage(2)
-				var/pick = rand(1, 4)
+				if (H.get_brain_damage() <= BRAIN_DAMAGE_MAJOR)
+					H.take_brain_damage(2)
+				var/pick = rand(1, 3)
 				switch (pick)
 					if (1)
-						H.take_brain_damage(1)
-					if (2)
 						H.TakeDamage("All", 2, hit_twitch = FALSE)
-					if (3)
+					if (2)
 						H.TakeDamage("All", burn = 2, hit_twitch = FALSE)
-					if (4)
+					if (3)
 						H.TakeDamage("All", tox = 2, hit_twitch = FALSE)
-		else if (istype(src.target, /mob/living/silicon/ai))
-			src.target.TakeDamage("All", 15, damage_type = DAMAGE_CRUSH) // 15 - 20 seconds to kill
 		else
-			src.target.TakeDamage("head", 10, damage_type = DAMAGE_CRUSH) // ~15 seconds to kill a standard cyborg
+			if (istype(src.target, /mob/living/silicon/ai))
+				src.target.TakeDamage("All", src.target.max_health / 20, damage_type = DAMAGE_CRUSH)
+			else if (istype(src.target, /mob/living/silicon/robot))
+				var/mob/living/silicon/robot/cyborg = src.target
+				src.target.TakeDamage("head", cyborg.part_head.max_health / 20, damage_type = DAMAGE_CRUSH)
+			else
+				src.target.TakeDamage("All", src.target.max_health / 20, damage_type = DAMAGE_CRUSH)
+			src.target.setStatus("mindeater_mind_eating_silicon", 3 SECONDS, src.owner)
 
 		src.onRestart()
 
