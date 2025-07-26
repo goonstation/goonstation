@@ -73,6 +73,7 @@ var/list/removed_jobs = list(
 	var/use_azerty = FALSE // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
+	var/use_satchel //Automatically convert backpack to satchel?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -100,6 +101,8 @@ var/list/removed_jobs = list(
 	var/tooltip_option = TOOLTIP_ALWAYS
 
 	var/scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
+
+	var/middle_mouse_swap = FALSE
 
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
 
@@ -146,8 +149,12 @@ var/list/removed_jobs = list(
 			ui = new(user, src, "CharacterPreferences")
 			ui.set_autoupdate(FALSE)
 			ui.open()
-		SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
-			src.update_preview_icon() //apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
+			if (isnull(src.preview))
+				src.preview = new(user.client, ui.window.id, "preferences_character_preview")
+			SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
+				//apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
+				src.preview.add_background()
+				src.update_preview_icon()
 
 	ui_close(mob/user)
 		. = ..()
@@ -176,11 +183,6 @@ var/list/removed_jobs = list(
 		)
 
 	ui_data(mob/user)
-		if (isnull(src.preview))
-			src.preview = new(user.client, "preferences", "preferences_character_preview")
-			src.preview.add_background()
-			src.update_preview_icon()
-
 		var/client/client = ismob(user) ? user.client : user
 		if (!client)
 			return
@@ -196,7 +198,7 @@ var/list/removed_jobs = list(
 		src.profile_names_dirty = FALSE
 
 		var/list/cloud_saves = list()
-		for (var/name in client.player.cloudSaves.saves)
+		for (var/name in client.player?.cloudSaves.saves)
 			cloud_saves += name
 
 		src.sanitize_null_values()
@@ -222,7 +224,7 @@ var/list/removed_jobs = list(
 			"profileName" = src.profile_name,
 			"profileModified" = src.profile_modified,
 
-			"preview" = src.preview?.preview_id,
+			"preview" = "preferences_character_preview",
 
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
@@ -245,6 +247,7 @@ var/list/removed_jobs = list(
 			"chatsound" = src.AH.voicetype,
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
+			"useSatchel" = src.use_satchel,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -271,6 +274,7 @@ var/list/removed_jobs = list(
 			"targetingCursorPreview" = icon2base64(icon(cursors_selection[src.target_cursor])),
 			"tooltipOption" = src.tooltip_option,
 			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
+			"middleMouseSwap" = src.middle_mouse_swap,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
 			"viewChangelog" = src.view_changelog,
@@ -358,7 +362,7 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-new")
-				if (length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
+				if (length(client.player?.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
@@ -505,6 +509,11 @@ var/list/removed_jobs = list(
 			if ("toggle-hyphenation")
 				src.hyphenate_name = !src.hyphenate_name
 				src.set_real_name()
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("toggle-satchel")
+				src.use_satchel = !src.use_satchel
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -905,7 +914,10 @@ var/list/removed_jobs = list(
 					src.scrollwheel_limb_targeting = params["value"]
 					src.profile_modified = TRUE
 					return TRUE
-
+			if ("update-middleMouseSwap")
+				src.middle_mouse_swap = !src.middle_mouse_swap
+				src.profile_modified = TRUE
+				return TRUE
 			if ("update-tguiFancy")
 				src.tgui_fancy = !src.tgui_fancy
 				src.profile_modified = TRUE
@@ -1196,6 +1208,8 @@ var/list/removed_jobs = list(
 		H.update_icons_if_needed()
 
 	proc/ShowChoices(mob/user)
+		if (!user.client?.authenticated)
+			return
 		src.ui_interact(user)
 
 	proc/ResetAllPrefsToMed(mob/user)
@@ -1499,7 +1513,7 @@ var/list/removed_jobs = list(
 
 		HTML += "<td valign='top' class='antagprefs'>"
 #ifdef LIVE_SERVER
-		if ((user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT) && !user?.client?.player.cloudSaves.getData("bypass_round_reqs"))
+		if ((user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT) && !user?.client?.player?.cloudSaves.getData("bypass_round_reqs"))
 			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
 			src.be_syndicate = FALSE
 			src.be_syndicate_commander = FALSE

@@ -51,6 +51,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// `icon_state` of the muzzle flash of the gun (if any)
 	muzzle_flash = "muzzle_flash"
 
+	/// Feedback for incompatible ammo can be customized for clarity.
+	var/ammo_incompatible_msg = "This ammo won't fit!"
+
 	// caliber list: update as needed
 	// 0.22 - pistols
 	// 0.308 - rifles
@@ -123,7 +126,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					user.show_text("You can't reload this gun.", "red")
 					return
 				if(AMMO_RELOAD_INCOMPATIBLE)
-					user.show_text("This ammo won't fit!", "red")
+					user.show_text(src.ammo_incompatible_msg, "red")
 					return
 				if(AMMO_RELOAD_SOURCE_EMPTY)
 					user.show_text("There's no ammo left in [b.name].", "red")
@@ -829,7 +832,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/dart_rifle
 	name = "tranquilizer rifle"
-	desc = "A veterinary tranquilizer rifle chambered in .308 caliber."
+	desc = "A veterinary tranquilizer rifle chambered in .308 caliber. This rifle can only accept .308 tranquilizer darts."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
@@ -850,6 +853,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	New()
 		ammo = new default_magazine
+		ammo_incompatible_msg = "[src] can only accept .308 tranquilizer darts!"
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart)
 		..()
 

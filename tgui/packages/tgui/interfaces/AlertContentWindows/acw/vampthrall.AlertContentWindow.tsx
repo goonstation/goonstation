@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: "You've become the brainwashed thrall of a Vampire!",
-  content: (
+const VampThrallContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You have been revived as a thrall!</h1>
       <p>
@@ -35,5 +34,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Thrall">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: "You've become the brainwashed thrall of a Vampire!",
+  component: VampThrallContentWindow,
 };
