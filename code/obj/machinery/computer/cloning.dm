@@ -879,13 +879,12 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			"scannerLocked" = src.scanner.locked,
 		)
 
-	if(!isnull(src.diskette))
-		. += list(
-			"diskReadOnly" = src.diskette.read_only,
-			"diskHasRecord" = !!(locate(/datum/computer/file/clone) in src.diskette.root.contents),
-			"diskColor" = src.diskette.disk_color,
-			"diskName" = src.diskette.disk_name()
-		)
+	. += list(
+		"diskReadOnly" = src.diskette?.read_only,
+		"diskHasRecord" = !!(locate(/datum/computer/file/clone) in src.diskette?.root.contents),
+		"diskColor" = src.diskette?.disk_color,
+		"diskName" = src.diskette?.disk_name()
+	)
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
