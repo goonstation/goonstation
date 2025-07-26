@@ -9273,6 +9273,7 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/decal/stripe_delivery,
+/obj/item/paper/Cloning,
 /turf/simulated/floor,
 /area/station/medical/medbay/cloner)
 "cMV" = (
