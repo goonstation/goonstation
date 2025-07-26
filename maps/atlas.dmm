@@ -3677,6 +3677,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/decal/stage_edge/alt,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -3725,7 +3726,7 @@
 	},
 /area/station/medical/medbay)
 "avS" = (
-/obj/storage/secure/closet/medical/cloning,
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "avY" = (
@@ -4079,7 +4080,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/stairs/medical,
+/obj/railing,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "axW" = (
 /obj/cable{
@@ -4624,6 +4626,12 @@
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -15
+	},
+/obj/item/storage/box/diskbox,
+/obj/decal/stage_edge/alt,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 5
@@ -7632,7 +7640,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/stairs/medical,
+/obj/storage/secure/closet/medical/cloning,
+/obj/railing,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aVI" = (
 /turf/simulated/floor,
@@ -9263,6 +9273,7 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/decal/stripe_delivery,
+/obj/item/paper/Cloning,
 /turf/simulated/floor,
 /area/station/medical/medbay/cloner)
 "cMV" = (

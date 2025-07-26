@@ -32175,27 +32175,12 @@
 	},
 /area/station/medical/medbay)
 "coS" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/brain{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/storage/firstaid/brain{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/machinery/cashreg{
-	pixel_x = -5;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
-	pixel_x = 4
-	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
 /obj/decal/stage_edge/alt,
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "coU" = (
@@ -58301,8 +58286,13 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/storage/secure/closet/medical/cloning,
 /obj/machinery/light_switch/east,
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/storage/firstaid/brain{
+	pixel_x = 4;
+	pixel_y = 8
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -59466,7 +59456,12 @@
 /area/station/engine/hotloop)
 "uke" = (
 /obj/disposalpipe/segment,
-/obj/storage/secure/closet/medical/cloning,
+/obj/table/auto,
+/obj/item/storage/box/diskbox,
+/obj/item/hand_labeler{
+	pixel_y = 7;
+	pixel_x = 6
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},

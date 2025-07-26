@@ -46602,6 +46602,7 @@
 "cNU" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
+/obj/item/storage/firstaid/brain,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "cNV" = (
@@ -54044,6 +54045,12 @@
 /obj/item/sheet/wood,
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
+"dZa" = (
+/obj/machinery/disk_rack/clone,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay/cloner)
 "dZJ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cargo Bay"
@@ -71167,8 +71174,8 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/item/storage/firstaid/brain,
 /obj/item/hand_labeler,
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -111490,7 +111497,7 @@ cGP
 cAL
 cLj
 cJt
-iuF
+dZa
 iuF
 osd
 cPr

@@ -16579,8 +16579,6 @@
 /area/station/hangar/sec)
 "fUo" = (
 /obj/table/auto,
-/obj/item/crowbar,
-/obj/item/storage/firstaid/brain,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -16592,6 +16590,11 @@
 	pixel_x = -10;
 	pixel_y = 15
 	},
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 11
+	},
+/obj/item/crowbar,
+/obj/item/storage/firstaid/brain,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -21114,13 +21117,8 @@
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "jgj" = (
-/obj/table/auto,
-/obj/item/kitchen/food_box/donut_box{
-	pixel_y = 11
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/toxin,
 /obj/machinery/light_switch/north,
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -22511,8 +22509,9 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "kiD" = (
-/obj/machinery/cashreg,
 /obj/table/auto,
+/obj/item/hand_labeler,
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},

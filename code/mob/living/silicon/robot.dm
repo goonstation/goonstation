@@ -796,8 +796,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.real_name == "Cyborg")
 			src.real_name = borgify_name(src.real_name)
 			src.UpdateName()
-			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
+			src.internal_pda?.name = "[src.name]'s Internal PDA Unit"
+			src.internal_pda?.owner = "[src]"
 		if (!src.syndicate && !src.connected_ai)
 			for_by_tcl(A, /mob/living/silicon/ai)
 				src.connected_ai = A

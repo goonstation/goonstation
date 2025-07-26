@@ -18567,6 +18567,7 @@
 	name = "Autopsy Table"
 	},
 /obj/machinery/drainage,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "fEU" = (
@@ -58335,13 +58336,12 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/northwest)
 "rUJ" = (
-/obj/table/auto,
-/obj/machinery/cashreg,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/disk_rack/clone,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -76453,16 +76453,17 @@
 /area/station/crew_quarters/arcade/dungeon)
 "xlE" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "xlG" = (
