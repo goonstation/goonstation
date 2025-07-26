@@ -1,5 +1,4 @@
-import { hexToHsva } from 'common/goonstation/colorful';
-import { Button, Divider, Flex, Stack } from 'tgui-core/components';
+import { Box, Button, Divider, Flex, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -11,10 +10,9 @@ const DiskButton = (props: DiskButtonProps) => {
   const { act } = useBackend();
   return (
     <Button
-      width="15em"
-      textAlign="center"
-      key={props.index}
+      width="25em"
       {...rest}
+      key={props.index}
       onClick={() => act('action', { id: index ? index + 1 : 1 })}
     />
   );
@@ -26,8 +24,8 @@ export const DiskRack = (_props: unknown) => {
   return (
     <Window
       title="Disk Rack"
-      height={disks.length * 39 + 5}
-      width={200 + (data.has_lights ? 24 : 0)}
+      height={disks.length * 46 + 5}
+      width={315 + (data.has_lights ? 25 : 0)}
     >
       <Window.Content>
         <Divider />
@@ -40,17 +38,44 @@ export const DiskRack = (_props: unknown) => {
                     {disk ? (
                       <DiskButton
                         icon="eject"
+                        iconPosition="left"
                         index={disks.length - index - 1}
                         backgroundColor={disk.color}
-                        textColor={
-                          hexToHsva(disk.color).v > 50 ? 'black' : 'white'
-                        }
+                        textColor="black"
+                        tooltip={disk.name}
+                        style={{
+                          cursor: 'grab',
+                        }}
                       >
-                        {disk.name}
+                        <Box
+                          width="21em"
+                          inline
+                          backgroundColor="white"
+                          pt="3px"
+                          pl="4px"
+                          height="25px"
+                          mb="-3px"
+                          bold
+                          style={{
+                            borderColor: '#cccccc',
+                            borderWidth: '3px',
+                            borderStyle: 'ridge',
+                            borderTop: 'none',
+                            borderRadius: '10px',
+                            borderTopLeftRadius: '0px',
+                            borderTopRightRadius: '0px',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {disk.name}
+                        </Box>
                       </DiskButton>
                     ) : (
                       <DiskButton index={disks.length - index - 1}>
-                        Empty slot
+                        <Box inline height="27px" pt="3px" pl="28px">
+                          Empty slot
+                        </Box>
                       </DiskButton>
                     )}
                   </Flex.Item>
