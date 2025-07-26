@@ -283,6 +283,20 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	//H.head?.setMaterial(getMaterial("jean"))
 	//#endif
 
+// So that the heads of staff are announced in order of rank and not by whoever's equipped first
+/// List of heads of staff to be announced containing lists with name, job and priority indexed
+/var/global/list/unannounced_heads_of_staff = list()
+/proc/announce_heads_of_staff()
+	if(!length(unannounced_heads_of_staff) || !unannounced_heads_of_staff)
+		return
+	sortList(unannounced_heads_of_staff, GLOBAL_PROC_REF(cmp_announce_levels))
+	for(var/list/to_announce in unannounced_heads_of_staff)
+		boutput(world, "<b>[to_announce["name"]] is the [to_announce["job"]]!</b>")
+	unannounced_heads_of_staff = list()
+
+/proc/cmp_announce_levels(var/list/listA, var/list/listB)
+	return listB["priority"] - listA["priority"]
+
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn, skip_manifest = FALSE)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
@@ -290,9 +304,14 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		boutput(src, SPAN_ALERT("<b>Something went wrong setting up your rank and equipment! Report this to a coder.</b>"))
 		return
 
-	if (JOB.announce_on_join)
+	if (JOB.world_announce_priority)
+		var/list/L = list()
+		L["name"] = src.name
+		L["job"] = JOB.name
+		L["priority"] = JOB.world_announce_priority
+		unannounced_heads_of_staff += list(L)
 		SPAWN(1 SECOND)
-			boutput(world, "<b>[src.name] is the [JOB.name]!</b>")
+			announce_heads_of_staff()
 	boutput(src, "<B>You are the [JOB.name].</B>")
 	src.job = JOB.name
 	src.mind.assigned_role = JOB.name
