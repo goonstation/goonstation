@@ -89,7 +89,7 @@
 
 	Crossed(atom/movable/A)
 		..()
-		if (A.anchored || HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(A) || istype(A, /obj/projectile)) return
+		if (A.anchored || HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(A) || istypes(A, list(/obj/projectile, /obj/item/dummy))) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -184,7 +184,7 @@
 
 	Crossed(atom/movable/A)
 		..()
-		if (HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(A)) return
+		if (HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(A) || istypes(A, list(/obj/projectile, /obj/item/dummy))) return
 
 		if (!trigger_when_no_match)
 			var/atom/movable/AM = A
