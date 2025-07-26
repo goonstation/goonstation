@@ -6,6 +6,7 @@
 /obj/machinery/camera/television
 	name = "television camera"
 	desc = "A bulky stationary camera for wireless broadcasting of live feeds."
+	icon = 'icons/obj/monitors.dmi'
 	icon_state = "television"
 	network = CAMERA_NETWORK_PUBLIC
 	prefix = null
@@ -51,6 +52,14 @@
 				boutput(user, SPAN_ALERT("You secure the floor bolts on the [src]."))
 				src.secured_state = SECURED_STATE_BOLTED
 				src.anchored = ANCHORED
+
+/obj/machinery/camera/television/set_camera_status(status)
+	src.camera_status = status
+	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter) || src.AddComponent(/datum/component/camera_coverage_emitter)
+	emitter.set_active(src.camera_status)
+
+/obj/machinery/camera/television/autoposition()
+	return
 
 /datum/action/bar/icon/cameraSecure //This is used when you are securing a non-mobile television camera
 	duration = 150
