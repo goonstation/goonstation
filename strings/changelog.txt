@@ -1,4 +1,9 @@
+
 (t)sat jul 26 25
+(u)Mr. Moriarty
+(p)24211
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited security cameras.
 (u)LeahTheTech + Flourish
 (*)Added almost legal firecrackers that explode when thrown. Available from Josh or as a random trinket/junk spawn.
 (t)fri jul 25 25
