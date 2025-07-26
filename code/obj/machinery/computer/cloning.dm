@@ -320,7 +320,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 
 	//label the disk, clearing other labels
 	src.diskette.name_suffixes = list()
-	src.diskette.name_suffix("[clone_file["name"]]")
+	src.diskette.name_suffix("([clone_file["name"]])")
 	src.diskette.UpdateName()
 	return clone_file
 
