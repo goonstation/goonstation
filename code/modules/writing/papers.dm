@@ -9,26 +9,20 @@
 
 /// Cloning Manual -- A big ol' manual.
 /obj/item/paper/Cloning
-	name = "H-87 Cloning Apparatus Manual"
+	name = "H-86 Cloning Apparatus Manual"
 	info = {"<h4>Getting Started</h4>
-	Congratulations, your station has purchased the H-87 industrial cloning device!<br>
-	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
+	Congratulations, your station has purchased the H-86 industrial cloning device!<br>
+	Using the H-86 is almost as simple as brain surgery! Simply insert a disk into the marked slot (cut corner on the RIGHT hand side), shove the target humanoid into the scanning chamber, and select the scan option to write their genetic data to the disk!<br>
 	<b>That's all there is to it!</b><br>
 	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
-	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which may be viewed from the cloning console.
-	Profile Deletion has been restricted to \[Station Head\] level access.</p>
-	<h4>Cloning from a profile</h4>
-	Cloning is as simple as pressing the CLONE option to the right of the desired profile.<br>
-	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-87 has been blocked from cloning crewmembers while they are still alive.<br>
+	<p>Clone disks should be properly labelled and stored in the provided rack. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which sends a "keep alive!" signal back to the rack. Note: a red warning light indicates a lack of "keep alive!" signal and may indicate the subject's death, unauthorized implant removal, or solar flare interference.
+	<h4>Cloning from a disk</h4>
+	Cloning is as simple as inserting the disk back into the console and hitting the clone button.<br>
+	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-86 has been blocked from cloning crewmembers while they are still alive.<br>
 	<br>
 	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (with SPEEDCLONE technology) are roughly 90 seconds.
-	The cloning pod may be unlocked early with any \[Medical Researcher\] ID after initial maturation is complete.</p><br>
+	The cloning pod may be unlocked early with any \[Medical\] ID after initial maturation is complete.</p><br>
 	<i>Please note that resulting clones may have a small DEVELOPMENTAL DEFECT as a result of genetic drift.</i><br>
-	<h4>Profile Management</h4>
-	<p>The H-87 (as well as your station's standard genetics machine) can accept STANDARD DATA DISKETTES.
-	These diskettes are used to transfer genetic information between machines and profiles.
-	A load/save dialog will become available in each profile if a disk is inserted.</p><br>
-	<i>A good diskette is a great way to counter aforementioned genetic drift!</i><br>
 	<br>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
 
@@ -692,9 +686,9 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "postcard-maryland" //deliberately uses the "MD" state abbreviation for laffes
 	info = {"There is much to love about the \"Old Line State\", one of the oldest states in the United States.
 	From the majestic Appalachian Mountains to the breath-taking Chesapeake Bay, every inch of Maryland
-	is blessed with natural beauty. Every year, thousands of history buffs make a pilgrimage to Fort McHenry, 
-	the site of the battle that inspired the anthem of the United States, and Maryland's warm and generous 
-	people welcome such storied institutions and corporations as the United States Naval Academy, John Hopkins 
+	is blessed with natural beauty. Every year, thousands of history buffs make a pilgrimage to Fort McHenry,
+	the site of the battle that inspired the anthem of the United States, and Maryland's warm and generous
+	people welcome such storied institutions and corporations as the United States Naval Academy, John Hopkins
 	University, and National Notary. Truly there is something for everyone in Maryland.<br><br>
 	I Heart Maryland<br>
 	National Notary Supply Corporation<br>
