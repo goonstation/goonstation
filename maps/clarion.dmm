@@ -1562,12 +1562,10 @@
 /obj/item/basketball,
 /obj/item/basketball,
 /obj/item/bballbasket{
-	dir = 4;
-	tag = "icon-bbasket0 (EAST)"
+	dir = 4
 	},
 /obj/item/bballbasket{
-	dir = 4;
-	tag = "icon-bbasket0 (EAST)"
+	dir = 4
 	},
 /obj/item/football,
 /obj/item/football,
