@@ -129,6 +129,10 @@ var/global/list/job_start_locations = list()
 	name = "Janitor"
 	icon_state = "janitor"
 
+/obj/landmark/start/job/journalist
+	name = "Journalist"
+	icon_state = "journalist"
+
 /obj/landmark/start/job/chaplain
 	name = "Chaplain"
 	icon_state = "chaplain"
@@ -290,10 +294,6 @@ var/global/list/job_start_locations = list()
 /obj/landmark/latejoin_job/radio_show_host
 	name = "Radio Show Host Spawn"
 	name_override = LANDMARK_RADIO_SHOW_HOST_SPAWN
-
-/obj/landmark/latejoin_job/journalist
-	name = "Journalist Spawn"
-	name_override = LANDMARK_JOURNALIST_SPAWN
 
 /obj/landmark/latejoin_job/actor
 	name = "Actor Spawn"

@@ -24319,7 +24319,7 @@
 /turf/simulated/floor/scorched,
 /area/diner/hangar)
 "wUw" = (
-/obj/landmark/latejoin_job/journalist,
+/obj/landmark/start/job/journalist,
 /turf/simulated/floor,
 /area/radiostation/press)
 "wXr" = (
