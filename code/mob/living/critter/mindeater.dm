@@ -224,11 +224,22 @@ TYPEINFO(/mob/living/critter/mindeater)
 		return
 
 	can_pull(atom/A)
-		. = ..()
+		. = TRUE
 		if (src.is_intangible())
+			return FALSE
+		if (src.disguised && src.set_disguise != MINDEATER_DISGUISE_HUMAN)
+			if (isitem(A))
+				var/obj/item/I = A
+				if (src.pull_w_class < I.w_class)
+					boutput(src, SPAN_ALERT("[A] is too big for you to pull!"))
+					return FALSE
+			if (isobj(A))
+				boutput(src, SPAN_ALERT("[A] is too big for you to pull!"))
 			return FALSE
 
 	set_pulling(atom/movable/AM)
+		if (!src.can_pull(AM))
+			return
 		..()
 		if (src.pulling)
 			src.reveal(FALSE)
@@ -345,6 +356,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 				src.icon = temp.icon
 				src.icon_state = temp.icon_state
 				src.flags |= (TABLEPASS | DOORPASS)
+				src.pull_w_class = W_CLASS_TINY
 				src.name = temp.real_name
 				src.real_name = temp.real_name
 				src.desc = temp.get_desc(0, src)
@@ -354,6 +366,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 				src.icon = temp.icon
 				src.icon_state = temp.icon_state
 				src.flags |= (TABLEPASS | DOORPASS)
+				src.pull_w_class = W_CLASS_TINY
 				src.name = temp.real_name
 				src.real_name = temp.real_name
 				src.desc = temp.get_desc(0, src)
@@ -398,6 +411,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		src.update_name_tag(src.name)
 
 		src.flags &= ~(TABLEPASS | DOORPASS)
+		src.pull_w_class = initial(src.pull_w_class)
 
 		src.health_monitor.alpha = 0
 
