@@ -134,6 +134,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/announcement/syndicate,
+/obj/item_dispenser/idcarddispenser/syndicate,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},

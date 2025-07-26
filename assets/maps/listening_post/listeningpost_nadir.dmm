@@ -1230,6 +1230,7 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
+/obj/item_dispenser/idcarddispenser/syndicate,
 /turf/simulated/floor/redblack,
 /area/listeningpost/general)
 "XE" = (

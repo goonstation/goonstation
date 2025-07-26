@@ -582,6 +582,16 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost/power)
+"Al" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/obj/item_dispenser/idcarddispenser/syndicate,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
 "Ao" = (
 /turf/simulated/floor/stairs/wide,
 /area/listeningpost/tech_room)
@@ -1700,7 +1710,7 @@ RO
 RO
 RO
 me
-Er
+Al
 kR
 kR
 me

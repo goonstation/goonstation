@@ -234,6 +234,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light/incandescent,
+/obj/item_dispenser/idcarddispenser/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "GK" = (
