@@ -98,7 +98,7 @@
 								skull_type = /obj/item/skull/peculiar
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
 							if (ROLE_VAMPIRE)
-								skull_type = /obj/item/skull/menacing
+
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."
 							else
@@ -126,6 +126,10 @@
 								if (isnpcmonkey(H))
 									skull_value = 0
 									skull_desc = "A meaningless trophy from a lab monkey. You feel disgusted to even look at it."
+								if (isfrog(H))
+									skull_type = /obj/item/skull/frog
+									skull_value = 2
+									skull_desc = "A trophy taken from an amphibian. A meaningless oddity at best."
 
 						// Everything's still default, so check for assigned_role. Could be a lizard captain or whatever.
 						if (isnull(skull_type) && skull_value == default_skull_value && skull_desc == default_skull_desc)
