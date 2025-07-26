@@ -61,7 +61,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 		var/index = text2num_safe(params["id"])
 		if (index < 1 || index > MAX_DISKS) //nu
 			return FALSE
-		if (BOUNDS_DIST(ui.user, src) && !isAIeye(user))
+		if (BOUNDS_DIST(ui.user, src) && !isAIeye(ui.user))
 			return FALSE
 		if (src.disks[index])
 			src.remove_disk(index, ui.user)
