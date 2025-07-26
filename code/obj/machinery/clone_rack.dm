@@ -57,7 +57,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	. = ..()
 	if (.)
 		return .
-	if (action == "action")
+	if (action == "diskAction")
 		var/index = text2num_safe(params["id"])
 		if (index < 1 || index > MAX_DISKS) //nu
 			return FALSE
@@ -119,6 +119,8 @@ TYPEINFO(/obj/machinery/disk_rack)
 			if (!disk)
 				continue
 			var/datum/computer/file/clone/clone_record = locate() in disk.root.contents
+			if (!clone_record)
+				continue
 			var/datum/bioHolder/stored_bioholder = clone_record["holder"]
 			if (stored_bioholder.Uid == uid)
 				src.last_heartbeats[i] = TIME
@@ -129,7 +131,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 
 /obj/machinery/disk_rack/clone/proc/cloneable_disk(index)
 	var/obj/item/disk/data/floppy/disk = src.disks[index]
-	if (!(locate() in disk.root.contents)) //no record = no clone
+	if (!(locate(/obj/item/disk/data/floppy) in disk.root.contents)) //no record = no clone
 		return FALSE
 	return TIME - src.last_heartbeats[index] > src.patience
 

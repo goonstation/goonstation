@@ -1,25 +1,13 @@
-import { Box, Button, Divider, Flex, Stack } from 'tgui-core/components';
+import { Divider, Flex, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { DiskButton } from './DiskButton';
 import { Led } from './LED';
-import { Disk, DiskButtonProps, DiskRackData } from './types';
-
-const DiskButton = (props: DiskButtonProps) => {
-  const { index, ...rest } = props;
-  const { act } = useBackend();
-  return (
-    <Button
-      width="25em"
-      {...rest}
-      key={props.index}
-      onClick={() => act('action', { id: index ? index + 1 : 1 })}
-    />
-  );
-};
+import { Disk, DiskRackData } from './types';
 
 export const DiskRack = (_props: unknown) => {
-  const { data } = useBackend<DiskRackData>();
+  const { data, act } = useBackend<DiskRackData>();
   const { disks } = data;
   return (
     <Window
@@ -37,46 +25,12 @@ export const DiskRack = (_props: unknown) => {
                   <Flex.Item>
                     {disk ? (
                       <DiskButton
-                        icon="eject"
-                        iconPosition="left"
                         index={disks.length - index - 1}
-                        backgroundColor={disk.color}
-                        textColor="black"
-                        tooltip={disk.name}
-                        style={{
-                          cursor: 'grab',
-                        }}
-                      >
-                        <Box
-                          width="21em"
-                          inline
-                          backgroundColor="white"
-                          pt="3px"
-                          pl="4px"
-                          height="25px"
-                          mb="-3px"
-                          bold
-                          style={{
-                            borderColor: '#cccccc',
-                            borderWidth: '3px',
-                            borderStyle: 'ridge',
-                            borderTop: 'none',
-                            borderRadius: '10px',
-                            borderTopLeftRadius: '0px',
-                            borderTopRightRadius: '0px',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                          }}
-                        >
-                          {disk.name}
-                        </Box>
-                      </DiskButton>
+                        diskName={disk.name}
+                        diskColor={disk.color}
+                      />
                     ) : (
-                      <DiskButton index={disks.length - index - 1}>
-                        <Box inline height="27px" pt="3px" pl="28px">
-                          Empty slot
-                        </Box>
-                      </DiskButton>
+                      <DiskButton index={disks.length - index - 1} />
                     )}
                   </Flex.Item>
                   {!!data.has_lights && (

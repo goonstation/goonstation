@@ -29,6 +29,7 @@ import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goonstation/HealthStat';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
+import { DiskButton } from './DiskRack/DiskButton';
 
 interface CloningConsoleData {
   allowDeadScan: BooleanLike;
@@ -41,7 +42,9 @@ interface CloningConsoleData {
   completion;
   disk;
   diskReadOnly;
-  diskHasRecord;
+  diskHasRecord: BooleanLike;
+  diskName: string;
+  diskColor: string;
   geneticAnalysis;
   meatLevels;
   message;
@@ -302,6 +305,8 @@ const StatusSection = () => {
     disk,
     diskReadOnly,
     diskHasRecord,
+    diskName,
+    diskColor,
   } = data;
 
   const message = data.message || { text: '', status: '' };
@@ -377,27 +382,7 @@ const StatusSection = () => {
         <Divider />
         <Stack vertical textAlign="center">
           <Stack.Item>
-            {!!disk && (
-              <Button
-                fontSize="20px"
-                icon="eject"
-                color={'bad'}
-                onClick={() => act('eject')}
-              >
-                Eject Disk
-              </Button>
-            )}
-            {!disk && (
-              <Box textAlign="center">
-                <Button
-                  fontSize="20px"
-                  icon="eject"
-                  onClick={() => act('insert')}
-                >
-                  Insert Disk
-                </Button>
-              </Box>
-            )}
+            <DiskButton diskColor={diskColor} diskName={diskName} />
           </Stack.Item>
           <Stack.Item>
             <Box>

@@ -806,18 +806,18 @@ TYPEINFO(/obj/machinery/clone_scanner)
 					playsound(src.loc, sound_ping, 50, 1)
 				. = TRUE
 
-		if("eject")
-			if (!isnull(src.diskette))
+		if("diskAction")
+			if (src.diskette)
 				src.diskette.set_loc(src.loc)
 				usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
 				src.diskette = null
 				. = TRUE
-		if ("insert")
-			var/obj/item/disk = ui.user.equipped()
-			if (istype(disk, /obj/item/disk/data/floppy))
-				src.attackby(disk, ui.user)
-			else if (istype(disk, /obj/item/disk))
-				boutput(ui.user, SPAN_ALERT("[disk] doesn't quite fit in [src]'s slot!"))
+			else
+				var/obj/item/disk = ui.user.equipped()
+				if (istype(disk, /obj/item/disk/data/floppy))
+					src.attackby(disk, ui.user)
+				else if (istype(disk, /obj/item/disk))
+					boutput(ui.user, SPAN_ALERT("[disk] doesn't quite fit in [src]'s slot!"))
 		if ("clone")
 			if (src.try_clone())
 				. = TRUE
@@ -860,6 +860,8 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		"podEfficient" = list(),
 		"cloneHack" = list(),
 		"completion" = list(),
+		"diskColor" = src.diskette?.disk_color,
+		"diskName" = src.diskette?.name_suffixes?[1] || src.diskette?.name,
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
