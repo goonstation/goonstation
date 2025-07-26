@@ -4,6 +4,7 @@
 	density = 1
 	anchored = ANCHORED
 	power_usage = 250
+	usable_with_brain_damage = FALSE
 	HELP_MESSAGE_OVERRIDE(null)
 	var/datum/light/light
 	var/light_r = 1
