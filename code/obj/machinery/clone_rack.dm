@@ -100,26 +100,35 @@ TYPEINFO(/obj/machinery/disk_rack)
 	desc = "A big clunky rack for storing cloning records in."
 	icon_state = "clone_rack_med"
 	var/emagged = FALSE
+	var/net_id
+	var/list/last_heartbeats[MAX_DISKS]
+	/// If we were a concerned mother, how long would our daughter have to have NOT TEXTED for us to assume they are dead?
+	var/patience = 10 SECONDS
 
-/// Does this disk have an active clone record of someone who is currently dead
-/// AND do they have a cloning implant so we know about it?
-/obj/machinery/disk_rack/clone/proc/cloneable_disk(obj/item/disk/data/floppy/disk)
-	var/datum/computer/file/clone/clone_record = locate() in disk.root.contents
-	if (!clone_record)
-		return FALSE
-	var/datum/mind/mind = clone_record.fields["mind"]
-	var/mob/selected = mind?.current
-	if (!selected || selected.mind?.get_player()?.dnr || !eligible_to_clone(mind))
-		return FALSE
-	if (isobserver(selected))
-		var/mob/dead/ghost = selected
-		selected = ghost.corpse
-	if (!ishuman(selected)) //we don't know what the fuck that is, definitely can't clone it
-		return FALSE
-	var/mob/living/carbon/human/human = selected
-	if (!locate(/obj/item/implant/cloner) in human.implant) //maybe they are cloneable but we don't know about it
-		return FALSE
-	return TRUE
+/obj/machinery/disk_rack/clone/New()
+	. = ..()
+	if (!src.net_id)
+		src.net_id = generate_net_id(src)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_CLONER_IMPLANT)
+
+/obj/machinery/disk_rack/clone/receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
+	if(signal.data["address_1"] == "00000000" && signal.data["sender"] && signal.data["command"] == "heartbeat")
+		var/uid = signal.data["bio_id"]
+		for (var/i in 1 to MAX_DISKS)
+			var/obj/item/disk/data/floppy/disk = src.disks[i]
+			if (!disk)
+				continue
+			var/datum/computer/file/clone/clone_record = locate() in disk.root.contents
+			var/datum/bioHolder/stored_bioholder = clone_record["holder"]
+			if (stored_bioholder.Uid == uid)
+				src.last_heartbeats[i] = TIME
+
+/obj/machinery/disk_rack/clone/insert_disk(index, obj/item/disk/data/floppy/disk, mob/user)
+	..()
+	src.last_heartbeats[index] = TIME //give us a grace period for the first heartbeat to turn up
+
+/obj/machinery/disk_rack/clone/proc/cloneable_disk(index)
+	return TIME - src.last_heartbeats[index] > src.patience
 
 /obj/machinery/disk_rack/clone/special_disk_data(obj/item/disk/data/floppy/disk, index)
 	if (status & NOPOWER)
@@ -149,13 +158,13 @@ TYPEINFO(/obj/machinery/disk_rack)
 		return
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
-		if (!disk || !(src.cloneable_disk(disk) || src.emagged && prob(20)))
+		if (!disk || !(src.cloneable_disk(i) || src.emagged && prob(20)))
 			src.active_lights[i] = FALSE
 			src.ClearSpecificOverlays(LIGHT_KEY)
 			continue
 		src.active_lights[i] = TRUE
 		if (src.GetOverlayImage(LIGHT_KEY))
-			return
+			continue
 		var/image/overlay = image(src.icon, "angry_light")
 		overlay.plane = PLANE_SELFILLUM
 		overlay.pixel_y = (i-1) * 2
