@@ -1,3 +1,21 @@
+(t)sat jul 26 25
+(u)LeahTheTech + Flourish
+(*)Added almost legal firecrackers that explode when thrown. Available from Josh or as a random trinket/junk spawn.
+(t)fri jul 25 25
+(u)Studenterhue
+(p)24133
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)You can now receive postcards in the mail! There are seven in all, two of which also appear in the Museum of Lunar History.
+(u)LeahTheTech
+(*)Added preferences option to re-enable legacy middle mouse behaviour. Sigh...
+(u)glowbold
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Arcfiends have objectives for hearts stopped, machines overloaded, and total power gained.
+(t)thu jul 24 25
+(u)Colossus
+(p)24156
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether no longer works on a 10 unit threshold, always behaving on the fast depletion mode.
 (t)mon jul 21 25
 (u)glowbold
 (e)⚖🤖|A-Balance, A-Silicons
