@@ -225,6 +225,13 @@ ABSTRACT_TYPE(/area/veil_border)
 		if (!option)
 			return
 		mindeater.set_disguise = option
+		if (option == MINDEATER_DISGUISE_HUMAN)
+			mindeater.human_disguise_job = tgui_input_list(mindeater, "What job?", "Set Human Disguise Job", \
+												list("Staff Assistant",
+													 "Botanist",
+													 "Engineer",
+													 "Medical Doctor",
+													 "Scientist")) || "Staff Assistant"
 
 /datum/targetable/critter/mindeater/disguise
 	name = "Disguise"
@@ -238,7 +245,8 @@ ABSTRACT_TYPE(/area/veil_border)
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 
 		if (!mindeater.disguised)
-			SETUP_GENERIC_PRIVATE_ACTIONBAR(mindeater, mindeater, 3 SECONDS, /mob/living/critter/mindeater/proc/use_disguise_ability, src, null, null, null, INTERRUPT_STUNNED)
+			if (!mindeater.casting_disguise)
+				actions.start(new /datum/action/bar/private/mindeater_disguise(src), mindeater)
 		else
 			mindeater.undisguise()
 
@@ -302,6 +310,10 @@ ABSTRACT_TYPE(/area/veil_border)
 	New(atom/target)
 		..()
 		src.target = target
+
+	disposing()
+		src.target = null
+		..()
 
 	onStart()
 		..()
@@ -380,6 +392,10 @@ ABSTRACT_TYPE(/area/veil_border)
 		..()
 		src.target = target
 
+	disposing()
+		src.target = null
+		..()
+
 	onStart()
 		..()
 		if(src.check_for_interrupt())
@@ -420,3 +436,34 @@ ABSTRACT_TYPE(/area/veil_border)
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/pierce_the_veil/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		return isdead(src.target) || GET_DIST(src.target, mindeater) >= abil.max_range
+
+/datum/action/bar/private/mindeater_disguise
+	interrupt_flags = INTERRUPT_STUNNED
+	duration = 3 SECONDS
+	resumable = FALSE
+	color_success = "#4444FF"
+	var/datum/targetable/critter/mindeater/disguise/disguise_abil
+
+	New(datum/targetable/critter/mindeater/disguise/abil)
+		..()
+		src.disguise_abil = abil
+
+	disposing()
+		src.disguise_abil = null
+		..()
+
+	onStart()
+		..()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.casting_disguise = TRUE
+
+	onInterrupt()
+		..()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.casting_disguise = FALSE
+
+	onEnd()
+		..()
+		src.disguise_abil.perform_disguise()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.casting_disguise = FALSE

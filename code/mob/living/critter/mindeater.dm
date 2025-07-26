@@ -43,8 +43,12 @@ TYPEINFO(/mob/living/critter/mindeater)
 	var/set_disguise = MINDEATER_DISGUISE_HUMAN
 	/// if this mindeater is using a disguise
 	var/disguised = FALSE
+	/// if this mindeater is currently disguising
+	var/casting_disguise = FALSE
 	/// fake human disguise, stored as a var to prevent unnecessary creation/deletion over and over since humans don't GC well
 	var/mob/living/carbon/human/normal/assistant/human_disguise_dummy
+	/// job the fake human appears as
+	var/human_disguise_job = "Staff Assistant"
 
 	var/lives = 3 // temporary lives for playtesting
 
@@ -110,7 +114,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		if (src.pulling)
 			src.reveal(FALSE)
 			return
-		if (actions.hasAction(src, /datum/action/bar/private/mindeater_brain_drain) || src.casting_paralyze || actions.hasAction(src, /datum/action/bar/mindeater_pierce_the_veil))
+		if (actions.hasAction(src, /datum/action/bar/private/mindeater_brain_drain) || src.casting_paralyze || src.casting_disguise || actions.hasAction(src, /datum/action/bar/mindeater_pierce_the_veil))
 			return
 		if (src.on_bright_turf())
 			src.delStatus("mindeater_cloaking")
@@ -190,7 +194,10 @@ TYPEINFO(/mob/living/critter/mindeater)
 			src.set_loc(get_turf(A))
 		else if (istype(A, /obj/machinery/door/airlock) && !istype(A, /obj/machinery/door/airlock/pyro/weapons/secure))
 			var/obj/machinery/door/airlock/airlock = A
-			airlock.open()
+			if (!src.disguised)
+				airlock.open()
+			else if (airlock.allowed(src.human_disguise_dummy))
+				airlock.open()
 
 	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient, remove_stamina_below_zero, target_type, stack_stuns)
 		stamina_damage = 0
@@ -352,11 +359,6 @@ TYPEINFO(/mob/living/critter/mindeater)
 			var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
 			abil_holder.addPoints(points)
 
-	/// triggers the disguise ability
-	proc/use_disguise_ability(datum/targetable/critter/mindeater/disguise/abil)
-		var/datum/targetable/critter/mindeater/disguise/disguise_abil = abil
-		disguise_abil.perform_disguise()
-
 	/// disguise as an entity
 	proc/disguise()
 		var/mob/living/temp
@@ -382,7 +384,9 @@ TYPEINFO(/mob/living/critter/mindeater)
 				src.desc = temp.get_desc(0, src)
 				src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
 			if (MINDEATER_DISGUISE_HUMAN)
-				randomize_look(src.human_disguise_dummy, change_name = FALSE)
+				src.human_disguise_dummy.unequip_all(TRUE)
+				randomize_look(src.human_disguise_dummy)
+				src.human_disguise_dummy.JobEquipSpawned(src.human_disguise_job)
 
 				var/icon/front = getFlatIcon(src.human_disguise_dummy, SOUTH)
 				var/icon/back = getFlatIcon(src.human_disguise_dummy, NORTH)
