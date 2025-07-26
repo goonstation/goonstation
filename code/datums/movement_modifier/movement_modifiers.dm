@@ -341,7 +341,3 @@
 
 /datum/movement_modifier/mimic/mimic_superslow
 	additive_slowdown = 5
-
-// projectiles
-/datum/movement_modifier/psi_bolt
-	multiplicative_slowdown = 1.5

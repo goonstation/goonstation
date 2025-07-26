@@ -414,7 +414,6 @@
 #include "code\datums\gamemodes\football.dm"
 #include "code\datums\gamemodes\gangwar.dm"
 #include "code\datums\gamemodes\gm_parent.dm"
-#include "code\datums\gamemodes\intrusion.dm"
 #include "code\datums\gamemodes\mixed.dm"
 #include "code\datums\gamemodes\mixed_rp.dm"
 #include "code\datums\gamemodes\mixed_spooky.dm"
