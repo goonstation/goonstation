@@ -1571,6 +1571,12 @@ datum/commodity/drugs/sell/poppies
 	desc = "The delightful regalia of a terrible polkadot mascot."
 	price = PAY_UNTRAINED
 
+/datum/commodity/costume/breadman
+	comname = "Bernd das Brot costume"
+	comtype = /obj/item/storage/box/costume/breadman
+	desc = "A costume of a bread so depressed they will ask you why you are so sour. Make sure they don't try to take a bite."
+	price = PAY_UNTRAINED
+
 /datum/commodity/costume/chompskysuit
 	comname = "Gnome Chompsky costume"
 	comtype = /obj/item/storage/box/costume/chompskysuit

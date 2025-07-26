@@ -2149,3 +2149,15 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "chompskysuit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+
+/obj/item/clothing/suit/breadman
+	name = "Bernd das Brot costume"
+	desc = "A costume of an famous German kids TV show, the depressed living piece of bread, he's beloved by all and hates life itself."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "breadman"
+	item_state = "breadman"
+	body_parts_covered = HEAD|TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	wear_layer = MOB_FULL_SUIT_LAYER
