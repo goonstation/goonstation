@@ -75,14 +75,14 @@ TYPEINFO(/obj/machinery/disk_rack)
 	disk.set_loc(get_turf(src))
 	user?.put_in_hand_or_drop(disk)
 	src.disks[index] = null
-	playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
+	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 	src.UpdateIcon()
 
 /obj/machinery/disk_rack/proc/insert_disk(index, obj/item/disk/data/floppy/disk, mob/user)
 	src.disks[index] = disk
 	user.drop_item(disk)
 	disk.set_loc(src)
-	playsound(src, 'sound/machines/law_insert.ogg', 60) //TODO: distinct sound for smaller disks?
+	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 	src.UpdateIcon()
 
 /obj/machinery/disk_rack/attackby(obj/item/disk/data/floppy/disk, mob/user)

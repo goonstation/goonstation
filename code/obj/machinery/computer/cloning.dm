@@ -150,6 +150,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 			W.set_loc(src)
 			src.diskette = W
 			boutput(user, "You insert [W].")
+			playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 			tgui_process.update_uis(src)
 			return
 
@@ -811,6 +812,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				src.diskette.set_loc(src.loc)
 				usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
 				src.diskette = null
+				playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 				. = TRUE
 			else
 				var/obj/item/disk = ui.user.equipped()
