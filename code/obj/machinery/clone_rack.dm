@@ -112,7 +112,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_CLONER_IMPLANT)
 
 /obj/machinery/disk_rack/clone/receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
-	if(signal.data["address_1"] == "00000000" && signal.data["sender"] && signal.data["command"] == "heartbeat")
+	if(signal.data["sender"] && signal.data["command"] == "heartbeat")
 		var/uid = signal.data["bio_id"]
 		for (var/i in 1 to MAX_DISKS)
 			var/obj/item/disk/data/floppy/disk = src.disks[i]
