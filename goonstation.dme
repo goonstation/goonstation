@@ -1558,6 +1558,7 @@
 #include "code\modules\mechanics\MechanicProcess.dm"
 #include "code\modules\mechanics\MechanicsNetworkCon.dm"
 #include "code\modules\mechanics\MechanicsTextToMusicCom.dm"
+#include "code\modules\mechanics\mechdrone.dm"
 #include "code\modules\medals\rewardsAI.dm"
 #include "code\modules\medals\rewardsLocker.dm"
 #include "code\modules\medical\blood_system.dm"
