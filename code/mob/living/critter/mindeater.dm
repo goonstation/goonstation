@@ -300,6 +300,8 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 	/// move from tangible to intangible state
 	proc/demanifest()
+		if (src.disguised)
+			src.undisguise()
 		src.event_handler_flags |= (MOVE_NOCLIP | IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
 		src.flags |= UNCRUSHABLE
 		src.density = FALSE
