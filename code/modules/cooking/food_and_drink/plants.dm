@@ -390,6 +390,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/orange/blood
 	name = "blood orange"
 	desc = "Juicy."
+	icon_state = "orange-blood"
 
 	make_reagents()
 		..()
