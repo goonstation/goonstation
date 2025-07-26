@@ -69,6 +69,7 @@ A Flamethrower in various states of assembly
 	spread_angle = 0
 	shoot_delay = 1 SECOND
 	recoil_strength = 6
+	brew_result = list("gun_slop" = 20)
 
 	New()
 		..()
@@ -320,6 +321,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	mode = FLAMER_MODE_BACKTANK
 	can_dual_wield = 0
 	shoot_delay = 5 DECI SECONDS
+	brew_result = list("gun_distillate" = 10)
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
