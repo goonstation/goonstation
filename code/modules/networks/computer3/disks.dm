@@ -84,6 +84,13 @@
 	var/random_color = 1
 	var/disk_color = "#bdbdbd"
 
+///The name this disk should show up as in UIs
+/obj/item/disk/data/floppy/proc/disk_name()
+	var/name = length(src.name_suffixes) ? src.name_suffixes[1] : src.name
+	var/regex/kill_brackets = regex(@"[\(\)]", "g")
+	name = kill_brackets.Replace(name, "")
+	return name
+
 /obj/item/disk/data/floppy/New()
 	. = ..()
 	if(random_color)

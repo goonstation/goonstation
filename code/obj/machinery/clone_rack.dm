@@ -43,10 +43,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	for (var/i in 1 to MAX_DISKS)
 		var/obj/item/disk/data/floppy/disk = src.disks[i]
 		if (disk)
-			var/name = length(disk.name_suffixes) ? disk.name_suffixes[1] : disk.name
-			var/regex/kill_brackets = regex(@"[\(\)]", "g")
-			name = kill_brackets.Replace(name, "")
-			disk_data[i] = list("name" = name, "color" = disk.disk_color)
+			disk_data[i] = list("name" = disk.disk_name(), "color" = disk.disk_color)
 			disk_data[i] += src.special_disk_data(disk, i)
 	return list("disks" = disk_data)
 

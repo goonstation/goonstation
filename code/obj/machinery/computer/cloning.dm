@@ -865,8 +865,6 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		"podEfficient" = list(),
 		"cloneHack" = list(),
 		"completion" = list(),
-		"diskColor" = src.diskette?.disk_color,
-		"diskName" = length(src.diskette?.name_suffixes) ? src.diskette.name_suffixes[1] : src.diskette?.name,
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
@@ -882,8 +880,12 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		)
 
 	if(!isnull(src.diskette))
-		. += list("diskReadOnly" = src.diskette.read_only)
-		. += list("diskHasRecord" = !!(locate(/datum/computer/file/clone) in src.diskette.root.contents))
+		. += list(
+			"diskReadOnly" = src.diskette.read_only,
+			"diskHasRecord" = !!(locate(/datum/computer/file/clone) in src.diskette.root.contents),
+			"diskColor" = src.diskette.disk_color,
+			"diskName" = src.diskette.disk_name()
+		)
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
