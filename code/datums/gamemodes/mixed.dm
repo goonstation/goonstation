@@ -52,7 +52,7 @@
 	var/num_arcfiends = 0
 	var/num_flockminds = 0
 	var/num_salvagers = 0
-	var/num_mindeaters = 1
+	var/num_mindeaters = (num_players >= 30) ? 1 : 0
 #if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types[ROLE_GRINCH] = 1;
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
