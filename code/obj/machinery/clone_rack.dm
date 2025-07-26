@@ -131,7 +131,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 
 /obj/machinery/disk_rack/clone/proc/cloneable_disk(index)
 	var/obj/item/disk/data/floppy/disk = src.disks[index]
-	if (!(locate(/obj/item/disk/data/floppy) in disk.root.contents)) //no record = no clone
+	if (!(locate(/datum/computer/file/clone) in disk.root.contents)) //no record = no clone
 		return FALSE
 	return TIME - src.last_heartbeats[index] > src.patience
 

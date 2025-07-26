@@ -863,7 +863,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		"cloneHack" = list(),
 		"completion" = list(),
 		"diskColor" = src.diskette?.disk_color,
-		"diskName" = src.diskette?.name_suffixes?[1] || src.diskette?.name,
+		"diskName" = length(src.diskette?.name_suffixes) ? src.diskette.name_suffixes[1] : src.diskette?.name,
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
