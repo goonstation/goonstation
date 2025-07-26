@@ -420,17 +420,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
 
-	var/read_only = src.diskette.read_only
-	src.diskette.read_only = FALSE
-	src.diskette.root.remove_file(clone_file)
-	var/datum/computer/file/genetics_scan/gene_file = locate() in src.diskette.root.contents
-	if (gene_file)
-		src.diskette.root.remove_file(gene_file)
-	src.diskette.read_only = read_only
+	if (.) //only wipe the disk if we're 100% sure we've succeeded
+		var/read_only = src.diskette.read_only
+		src.diskette.read_only = FALSE
+		src.diskette.root.remove_file(clone_file)
+		var/datum/computer/file/genetics_scan/gene_file = locate() in src.diskette.root.contents
+		if (gene_file)
+			src.diskette.root.remove_file(gene_file)
+		src.diskette.read_only = read_only
 
-	//clear labels, we're empty now
-	src.diskette.name_suffixes = list()
-	src.diskette.UpdateName()
+		//clear labels, we're empty now
+		src.diskette.name_suffixes = list()
+		src.diskette.UpdateName()
 
 /// Check if a mind has a current mob, a client, and is dead/a ghost/doing afterlife stuff.
 /// Scanning var controls whether we will return ghosts, because ghosts needs special handling in clone scans
