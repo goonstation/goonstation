@@ -281,7 +281,7 @@ THROWING DARTS
 		img.icon_state = "implant-cloner"
 
 	process()
-		if (!src.implanted || !isalive(src.owner)) //dead silence
+		if (!src.implanted || isdead(src.owner)) //dead silence
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.data = list(
