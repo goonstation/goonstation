@@ -1,4 +1,6 @@
-
+(t)sat jul 26 25
+(u)LeahTheTech + Flourish
+(*)Added almost legal firecrackers that explode when thrown. Available from Josh or as a random trinket/junk spawn.
 (t)fri jul 25 25
 (u)Studenterhue
 (p)24133
