@@ -581,6 +581,10 @@ wbr:after {
   color: white;
   background-color: #566b44;
 }
+.intrudersay {
+  color: #8600C8;
+  background-color: #42c800;
+}
 .crabsay {
   color: white;
   background-color: #6a1d1d;
@@ -1177,6 +1181,10 @@ html.theme-dark .wraithsay {
 html.theme-dark .kudzusay {
   color: #111;
   background-color: #7b8f68;
+}
+html.theme-dark .intrudersay {
+  color: #8600C8;
+  background-color: #42c800;
 }
 html.theme-dark .crabsay {
   color: #111;
