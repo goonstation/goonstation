@@ -247,8 +247,7 @@
 /obj/machinery/computer/secure_data/detective_computer,
 /obj/noticeboard/persistent/directional/east{
 	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office";
-	
+	persistent_id = "detectives office"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -3919,8 +3918,7 @@
 "axf" = (
 /obj/noticeboard/persistent/directional/east{
 	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics";
-	
+	persistent_id = "mechanics"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -5541,8 +5539,7 @@
 	},
 /obj/noticeboard/persistent/directional/east{
 	name = "Crew Quarters persistent notice board";
-	persistent_id = "crew quarters";
-	
+	persistent_id = "crew quarters"
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -7070,8 +7067,7 @@
 /obj/machinery/plantpot,
 /obj/noticeboard/persistent/directional/east{
 	name = "Botany persistent notice board";
-	persistent_id = "botany";
-	
+	persistent_id = "botany"
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
