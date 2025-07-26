@@ -95,8 +95,6 @@
 	var/makeup = null // for when you wanna look pretty
 	var/makeup_color = null
 
-	var/gunshot_residue = 0 // Fire a kinetic firearm and get forensic evidence all over you (Convair880).
-
 	var/datum/hud/human/hud
 	var/mini_health_hud = 0
 

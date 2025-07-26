@@ -10,8 +10,53 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 	var/category = FORENSIC_GROUP_NONE
 	var/group_flags = 0 //! Flags associated with the whole group. Actual usage may vary by group.
 
-	proc/apply_evidence(var/datum/forensic_data/data)
+	proc/apply_evidence(var/datum/forensic_data/new_data)
 		return
+
+	proc/remove_evidence(var/removal_flags)
+		return FALSE
+
+	proc/report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder)
+		return
+
+	proc/copy_to(var/datum/forensic_holder/other)
+		return
+
+	proc/get_header()
+		return "Null"
+
+	proc/should_remove(var/target_flags, var/removal_flags)
+		target_flags &= FORENSIC_REMOVE_ALL
+		removal_flags &= FORENSIC_REMOVE_ALL
+		return HAS_ALL_FLAGS(target_flags, removal_flags)
+
+/datum/forensic_group/text
+	category = FORENSIC_GROUP_TEXT
+	var/list/datum/forensic_data/text/evidence_list = new/list()
+
+	disposing()
+		src.evidence_list.len = 0
+		src.evidence_list = null
+		..()
+
+	apply_evidence(var/datum/forensic_data/new_data)
+		if(!istype(new_data, /datum/forensic_data/text))
+			return
+		var/datum/forensic_data/text/data = new_data
+		src.evidence_list.Add(data)
+
+	remove_evidence(var/removal_flags)
+		return evidence_list.len == 0
+
+	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder)
+		for(var/datum/forensic_data/text/f_data in src.evidence_list)
+			report_builder.add_line(f_data.get_text(scan), f_data.header)
+
+	copy_to(var/datum/forensic_holder/other)
+		for(var/datum/forensic_data/evidence in src.evidence_list)
+			var/datum/forensic_data/evidence_copy = evidence.get_copy()
+			other.add_evidence(evidence_copy, src.category)
+
 
 /datum/forensic_group/basic_list
 	var/list/datum/forensic_data/basic/evidence_list = new/list()
@@ -24,7 +69,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		..()
 
 	apply_evidence(var/datum/forensic_data/new_data)
-		if(!istype(new_data))
+		if(!istype(new_data, /datum/forensic_data/basic))
 			return
 		var/datum/forensic_data/basic/data = new_data
 
@@ -37,9 +82,25 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 			if(evidence_list[i].time_end < evidence_list[oldest].time_end)
 				oldest = i
 		if(length(src.evidence_list) < FORENSIC_EVIDENCE_MAX)
-			src.evidence_list.Insert(rand(length(evidence_list) + 1), data) // Randomize the order
+			// Randomize the order. Do it here so that it is the same order for each scan.
+			src.evidence_list.Insert(rand(length(evidence_list) + 1), data)
 		else
 			src.evidence_list[oldest] = data
+
+	remove_evidence(var/removal_flags)
+		if(!should_remove(src.group_flags, removal_flags))
+			return
+		src.evidence_list.len = 0
+		return TRUE
+
+	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder)
+		for(var/datum/forensic_data/f_data in src.evidence_list)
+			report_builder.add_line(f_data.get_text(scan), src.get_header())
+
+	copy_to(var/datum/forensic_holder/other)
+		for(var/datum/forensic_data/evidence_data in src.evidence_list)
+			var/datum/forensic_data/evidence_copy = evidence_data.get_copy()
+			other.add_evidence(evidence_copy, src.category)
 
 	/// If duplicate evidence is added, you can have that affect the value of the existing evidence
 	proc/update_value(var/datum/forensic_data/basic/data_old, var/datum/forensic_data/basic/data_new)
@@ -55,9 +116,25 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 			if(FORENSIC_VALUE_MAX)
 				data_old.value = max(data_old.value, data_new.value)
 
+/datum/forensic_group/basic_list/notes
+	category = FORENSIC_GROUP_NOTES
+	group_flags = FORENSIC_REMOVE_ALL
+
+	remove_evidence(var/removal_flags)
+		for(var/i=0; i< src.evidence_list.len; i++)
+			if(should_remove(src.evidence_list[i].flags, removal_flags))
+				src.evidence_list.Cut(i, i+1)
+		return src.evidence_list.len == 0
+
+	get_header()
+		return FORENSIC_HEADER_NOTES
+
 /datum/forensic_group/basic_list/sleuth // Used to store smells for Pug sleuthing
 	category = FORENSIC_GROUP_SLEUTH
 	group_flags = 0
+
+	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder)
+		return
 
 	/// Text proc is seperate for now since sleuthing is obtained via an emote rather than the forensics scanner
 	proc/get_sleuth_text(var/atom/A, var/sleuth_all = FALSE)

@@ -532,6 +532,25 @@
 		eth_eq = 0
 	return eth_eq
 
+/proc/scan_forensic_new(var/atom/A as turf|obj|mob, visible = 0)
+	RETURN_TYPE(/datum/forensic_scan)
+	if (istype(A, /obj/ability_button)) // STOP THAT
+		return
+	if (!A)
+		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
+	/*
+	if (CHECK_LIQUID_CLICK(A))
+		var/turf/T = get_turf(A)
+		if (T.active_liquid)
+			scan.chain_scan_target(T.active_liquid)
+		if (T.active_airborne_liquid)
+			scan.chain_scan_target(T.active_airborne_liquid)
+	*/
+	if(visible)
+		animate_scanning(A, "#b9d689")
+	var/datum/forensic_scan/scan = new(A)
+	return scan
+
 // Should make it easier to maintain the detective's scanner and PDA program (Convair880).
 /proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0)
 	if (istype(A, /obj/ability_button)) // STOP THAT
@@ -563,8 +582,8 @@
 		else
 			fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
 
-		if (H.gunshot_residue) // Left by firing a kinetic gun.
-			forensic_data += "<br>[SPAN_NOTICE("Gunshot residue found.")]"
+		//if (H.gunshot_residue) // Left by firing a kinetic gun.
+		//	forensic_data += "<br>[SPAN_NOTICE("Gunshot residue found.")]"
 
 		if (H.implant && length(H.implant) > 0)
 			var/wounds = null
