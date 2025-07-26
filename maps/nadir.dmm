@@ -17301,22 +17301,6 @@
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/hall)
 "hxL" = (
-/obj/table/reinforced/auto,
-/obj/item/scalpel,
-/obj/item/scalpel,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = -11
-	},
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = -12
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = -10;
-	pixel_y = 5
-	},
-/obj/item/scissors/surgical_scissors,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
@@ -17326,6 +17310,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "hxU" = (
@@ -22159,7 +22144,9 @@
 "jxY" = (
 /obj/stool/chair/office,
 /obj/landmark/start/job/roboticist,
-/obj/machinery/firealarm/north,
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 12
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "jyf" = (
@@ -24871,10 +24858,20 @@
 	pixel_x = 10
 	},
 /obj/item/robot_module{
-	pixel_x = -9
+	pixel_x = -10;
+	pixel_y = -5
 	},
 /obj/item/robot_module{
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
@@ -41470,6 +41467,12 @@
 /obj/item/hemostat{
 	pixel_y = 6
 	},
+/obj/item/scissors/surgical_scissors,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = -12
+	},
+/obj/item/scalpel,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "rVE" = (
@@ -44878,6 +44881,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "txe" = (
