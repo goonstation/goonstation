@@ -303,7 +303,6 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				else if (!growing && !HYPCheckCommut(DNA, /datum/plant_gene_strain/seedless))
 					//we create a new seed now
 					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(DNA, current_planttype, POT.generation)
-					temporary_seed.dont_mutate = TRUE //Plants are spreading via budding/are all one plant, genetically identical.
 					//we now devolve the seed to not make tumbler spread like wildfire
 					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
 					New_DNA.mutation = null
