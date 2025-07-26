@@ -183,7 +183,7 @@
 		var/codename = pick(src.available_codenames)
 		src.available_codenames -= codename
 		var/full_name = "Agent [codename]"
-		src.operative_codenames[user] = full_name
+		src.operative_codenames[target_mind] = full_name
 		return full_name
 
 /obj/item_dispenser/icedispenser
