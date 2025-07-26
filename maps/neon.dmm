@@ -2600,6 +2600,14 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
+"bZq" = (
+/obj/machinery/optable,
+/obj/machinery/drainage,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "bZx" = (
 /obj/machinery/firealarm/south,
 /obj/stool/chair{
@@ -8741,11 +8749,10 @@
 	},
 /area/station/hallway/primary/central)
 "gfg" = (
-/obj/machinery/optable,
-/obj/machinery/ai_status_display{
-	pixel_y = 28
+/obj/machinery/computer/operating/small,
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 8
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "gfz" = (
@@ -14365,11 +14372,11 @@
 /turf/simulated/floor/carpet/blue/decal/innercross,
 /area/station/bridge)
 "kel" = (
-/obj/landmark/start/job/cyborg,
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "kfa" = (
@@ -19357,7 +19364,7 @@
 "nMA" = (
 /obj/table/auto,
 /obj/item/robot_module{
-	pixel_x = 4;
+	pixel_x = 12;
 	pixel_y = 6
 	},
 /obj/machinery/disposal/small/east,
@@ -19369,7 +19376,16 @@
 	},
 /obj/disposalpipe/trunk/north,
 /obj/item/robot_module{
-	pixel_x = 4
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/obj/item/robot_module{
+	pixel_y = 6;
+	pixel_x = -2
+	},
+/obj/item/robot_module{
+	pixel_x = 12;
+	pixel_y = -8
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -21307,6 +21323,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "pnm" = (
@@ -31454,7 +31471,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/operating/small,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "wjm" = (
@@ -71940,7 +71956,7 @@ jOL
 jOL
 fxY
 fxY
-fxY
+jOL
 pYu
 eCB
 qgk
@@ -72546,7 +72562,7 @@ lOS
 jOL
 jOL
 uBi
-jOL
+wtb
 wtb
 wtb
 wtb
@@ -72849,7 +72865,7 @@ eCB
 rcD
 rML
 wtb
-wtb
+bZq
 bOJ
 utH
 giI
