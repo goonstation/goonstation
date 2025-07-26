@@ -118,6 +118,8 @@ THROWING DARTS
 			M.update_clothing()
 		src.owner = null
 		src.implanted = 0
+		UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
+		UnregisterSignal(M, COMSIG_MOB_DEATH)
 
 	proc/activate()
 		online = TRUE

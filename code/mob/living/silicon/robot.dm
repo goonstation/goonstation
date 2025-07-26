@@ -113,9 +113,10 @@ TYPEINFO(/mob/living/silicon/robot)
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
-		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
-		src.internal_pda.name = "[src]'s Internal PDA Unit"
-		src.internal_pda.owner = "[src]"
+		SPAWN(0) //Delay PDA spawning until the client is in the borg, so it respects preferences
+			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
+			src.internal_pda.name = "[src]'s Internal PDA Unit"
+			src.internal_pda.owner = "[src]"
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule

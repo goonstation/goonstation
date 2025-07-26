@@ -498,12 +498,17 @@ TYPEINFO(/mob/living)
 	if (src.stat || is_incapacitated(src))
 		return
 
-	if (params["middle"] && can_reach(src, target))
-		for (var/obj/storage/storage in get_turf(target))
-			if (storage.open)
-				storage.close(user = src)
-			else
-				storage.open(user = src)
+	if (params["middle"])
+		if (!src.client?.preferences.middle_mouse_swap)
+			if (!can_reach(src, target))
+				return
+			for (var/obj/storage/storage in get_turf(target))
+				if (storage.open)
+					storage.close(user = src)
+				else
+					storage.open(user = src)
+		else
+			src.swap_hand()
 		return
 
 	var/obj/item/equipped = src.equipped()
