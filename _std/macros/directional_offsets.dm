@@ -75,4 +75,4 @@
 
 
 //------------ Directional Offsets ------------//
-// TO IMPLEMENT
+SET_UP_STANDARD_DIRECTIONAL_OFFSETS(OFFSETS_NOTICEBOARD, 0, 32, 32, 0, 0, 0, -32, 0)
