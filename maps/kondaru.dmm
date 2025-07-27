@@ -11529,7 +11529,7 @@
 	dir = 4;
 	pixel_y = 1
 	},
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aVh" = (

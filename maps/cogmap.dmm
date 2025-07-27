@@ -32180,7 +32180,7 @@
 	pixel_x = 10
 	},
 /obj/decal/stage_edge/alt,
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "coU" = (

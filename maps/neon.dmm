@@ -15760,7 +15760,7 @@
 	},
 /area/station/storage/warehouse)
 "ldm" = (
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},

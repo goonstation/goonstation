@@ -21118,7 +21118,7 @@
 /area/station/turret_protected/ai)
 "jgj" = (
 /obj/machinery/light_switch/north,
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},

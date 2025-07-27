@@ -1320,7 +1320,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "zh" = (
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "zk" = (

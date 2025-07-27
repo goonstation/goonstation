@@ -44288,7 +44288,7 @@
 /obj/decal/poster/wallsign/poster_human{
 	pixel_y = 30
 	},
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},

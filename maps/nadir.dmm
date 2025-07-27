@@ -11074,7 +11074,7 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "eXG" = (
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},

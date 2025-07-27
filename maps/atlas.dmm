@@ -3726,7 +3726,7 @@
 	},
 /area/station/medical/medbay)
 "avS" = (
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "avY" = (

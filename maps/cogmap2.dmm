@@ -54046,7 +54046,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
 "dZa" = (
-/obj/machinery/disk_rack/clone,
+/obj/spawner/clone_rack,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},

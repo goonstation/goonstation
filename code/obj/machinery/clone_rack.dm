@@ -186,3 +186,15 @@ TYPEINFO(/obj/machinery/disk_rack)
 	src.emagged = TRUE
 	src.processing_tier = PROCESSING_32TH
 	return TRUE
+
+/obj/spawner/clone_rack
+	icon = 'icons/obj/disk_rack.dmi'
+	icon_state = "spawner"
+
+	New()
+		. = ..()
+		var/obj/machinery/disk_rack/clone/rack = new(get_turf(src))
+		rack.pixel_x = 8
+		rack = new(get_turf(src))
+		rack.pixel_x = -8
+		qdel(src)
