@@ -15,6 +15,10 @@ TYPEINFO(/obj/machinery/disk_rack)
 	var/list/obj/item/disk/data/floppy/disks[MAX_DISKS]
 	var/list/active_lights[MAX_DISKS]
 
+/obj/machinery/disk_rack/New()
+	. = ..()
+	src.AddComponent(/datum/component/side_by_side, /obj/machinery/disk_rack, 8, 0)
+
 /obj/machinery/disk_rack/was_deconstructed_to_frame(mob/user)
 	. = ..()
 	for (var/i in 1 to MAX_DISKS)

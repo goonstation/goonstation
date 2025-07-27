@@ -276,6 +276,7 @@
 #include "code\datums\components\seedy.dm"
 #include "code\datums\components\self_destruct.dm"
 #include "code\datums\components\send_to_target_mob.dm"
+#include "code\datums\components\side_by_side.dm"
 #include "code\datums\components\simplelight.dm"
 #include "code\datums\components\smartgun.dm"
 #include "code\datums\components\smartgun_homing.dm"
