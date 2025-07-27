@@ -158,6 +158,7 @@
 #include "macros\cooldown.dm"
 #include "macros\debug.dm"
 #include "macros\dir.dm"
+#include "macros\directional_offsets.dm"
 #include "macros\dist.dm"
 #include "macros\distributions.dm"
 #include "macros\factions.dm"
