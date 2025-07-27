@@ -950,5 +950,6 @@ var/list/trinket_safelist = list(
 	/obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 	/obj/item/seed/alien,
 	/obj/item/boarvessel,
-	/obj/item/boarvessel/forgery
+	/obj/item/boarvessel/forgery,
+	/obj/item/device/light/sparkler/firecracker
 )

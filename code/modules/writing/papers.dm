@@ -662,6 +662,80 @@ Only trained personnel should operate station systems. Follow all procedures car
 		pixel_y = rand(-8, 8)
 		info = PAPER_IMAGE_RENDER("images/arts/mushroom_station.png")
 
+/obj/item/paper/postcard/beach
+	name = "tropical postcard"
+	desc = {"A postcard depicting a picturesque beach scene. The back side has a groan-worthy pun."}
+	icon_state = "postcard-beach"
+	info = {"Wish you were here to <font color='#0026FF'>sea</font> this!<br><br>
+	National Notary Supply Corporation<br>
+	Image #06019"}
+
+/obj/item/paper/postcard/mountain
+	name = "alpine postcard"
+	desc = {"A postcard depicting a snow-capped mountain emitting a thin column of smoke. There's a bad joke on the back."}
+	icon_state = "postcard-mountain"
+	info = {"Is that mountain supposed to be smoking?<br><br>
+	National Notary Supply Corporation<br>
+	Image #06129"}
+
+/obj/item/paper/postcard/canyon
+	name = "canyon postcard"
+	desc = "A postcard depicting a river flowing through a sun-bleached canyon"
+	icon_state = "postcard-canyon"
+	info = {"Grand Canyon National Park, USA, Earth - River View 1<br>
+	National Notary Supply Corporation<br>
+	Image #05641"}
+
+/obj/item/paper/postcard/lovemd
+	name = "I Love Maryland postcard"
+	desc = "A postcard expressing admiration for the US state of Maryland, abbreviated MD. The back contains a tourist blurb about the state."
+	icon_state = "postcard-maryland" //deliberately uses the "MD" state abbreviation for laffes
+	info = {"There is much to love about the \"Old Line State\", one of the oldest states in the United States.
+	From the majestic Appalachian Mountains to the breath-taking Chesapeake Bay, every inch of Maryland
+	is blessed with natural beauty. Every year, thousands of history buffs make a pilgrimage to Fort McHenry, 
+	the site of the battle that inspired the anthem of the United States, and Maryland's warm and generous 
+	people welcome such storied institutions and corporations as the United States Naval Academy, John Hopkins 
+	University, and National Notary. Truly there is something for everyone in Maryland.<br><br>
+	I Heart Maryland<br>
+	National Notary Supply Corporation<br>
+	Image #01309"}
+
+/obj/item/paper/postcard/mdstatehouse
+	name = "Maryland State House postcard"
+	desc = "A postcard showing the Maryland State House in Annapolis. The back explains the building's significance."
+	icon_state = "postcard-md-state-house"
+	info = {"In addition to hosting the United States Naval Academy and the headquarters of the National
+	Notary Supply Corporation, Annapolis is also the capital of the US state of Maryland. The Maryland
+	State House, depicted on this postcard, is the oldest state legislature building still in continuous use
+	and once served as the national capitol, during the city's nine months as the capital of the United States.
+	<br><br>
+	Maryland State House<br>
+	National Notary Supply Corporation<br>
+	Image #01311"}
+
+/obj/item/paper/postcard/apollo
+	name = "Apollo 11 postcard"
+	desc = "A postcard showing the crew of Apollo 11, the first three modern men to land on the moon."
+	icon_state = "postcard-apollo"
+	info = {"<font face='Arial'><h3>MEET THE MEN WHO MADE A GIANT LEAP FOR MANKIND</h3>
+	When the three crew members of American spaceflight Apollo 11 landed on Earth's moon in July 1969,
+	the roughly 22 hours they spent on the lunar surface would totally reshape human history forever.
+	Their trip to the moon and back rocked the scientific world and paved the way for the ground-breaking
+	discovery of FAAE, the miracle substance popularly known as "plasma". Learn about Apollo 11,
+	plasma, and more at the Museum of Lunar History!<br><br><br><br><br><hr>
+	Printed by Aurora Lithographics<hr></font>"}
+
+/obj/item/paper/postcard/moonfootprint
+	name = "Lunar bootprint postcard"
+	desc = "A postcard telling readers that they should \"see Neil Armstrong's genuine lunar bootprint\" at the Museum of Lunar History"
+	icon_state = "postcard-moon-footprint"
+	info = {"<font face='Arial'><h3>SEE NEIL ARMSTRONG'S GENUINE LUNAR BOOTPRINT</h3>
+	When American astronaut Neil Armstrong took a small step out of the lunar lander on that fateful day
+	in July 20, 1969, he made a giant leap for humankind by becoming one of the first modern humans
+	to set foot on Earth's moon. Retrace his steps and see Neil Armstrong's genuine lunar bootprint,
+	only at the Museum of Lunar History!<br><br><br><br><br><hr>
+	Printed by Aurora Lithographics<hr></font>"}
+
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
