@@ -4327,14 +4327,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"aAo" = (
-/obj/loudspeaker,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
-/turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
 "aAq" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -5360,6 +5352,10 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"aEY" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "aFd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15357,6 +15353,16 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/pool)
+"cgO" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "cgU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -19497,14 +19503,6 @@
 	dir = 1
 	},
 /area/station/hangar/main)
-"eFV" = (
-/obj/loudspeaker,
-/obj/shrub{
-	dir = 6
-	},
-/obj/decal/cleanable/leaves,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "eGj" = (
 /obj/item/crowbar,
 /obj/cable{
@@ -19954,6 +19952,14 @@
 /obj/machinery/sheet_extruder,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
+"eVc" = (
+/obj/machinery/loudspeaker,
+/obj/shrub{
+	dir = 6
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "eVj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -20435,14 +20441,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"fjr" = (
-/obj/loudspeaker,
-/obj/shrub{
-	dir = 6
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "fjy" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -27965,13 +27963,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"jQb" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta/os_loaded,
-/obj/cable,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/carpet/purple/fancy/edge/se,
-/area/station/crew_quarters/hor)
 "jQv" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -29841,14 +29832,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/corner,
 /area/station/hallway/primary/south)
-"kUu" = (
-/obj/loudspeaker,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "kUY" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -30851,6 +30834,18 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/science/hall)
+"lAo" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "lAs" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/disposalpipe/segment{
@@ -35483,6 +35478,14 @@
 	dir = 4
 	},
 /area/station/hangar/arrivals)
+"ohA" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "ohC" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg{
@@ -38296,6 +38299,18 @@
 	dir = 8
 	},
 /area/station/hangar/arrivals)
+"pEM" = (
+/obj/machinery/light/incandescent,
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 8;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	tag = "icon-plant (NORTH)"
+	},
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "pFc" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/conveyor/NS{
@@ -38732,16 +38747,6 @@
 	dir = 4
 	},
 /area/station/hangar/main)
-"pTM" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "pUk" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -40194,10 +40199,6 @@
 /obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
-"qIv" = (
-/obj/loudspeaker,
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "qII" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/jazz)
@@ -43436,18 +43437,6 @@
 	layer = 2
 	},
 /area/space)
-"sEx" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "sEV" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -44403,6 +44392,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"tjv" = (
+/obj/machinery/loudspeaker,
+/obj/shrub{
+	dir = 6
+	},
+/obj/decal/cleanable/leaves,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "tjO" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -44447,6 +44444,13 @@
 	dir = 8
 	},
 /area/station/science/artifact)
+"tmr" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
+/obj/cable,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/crew_quarters/hor)
 "tmM" = (
 /obj/machinery/light/small/sticky/frostedred,
 /obj/cable{
@@ -44591,7 +44595,8 @@
 /area/station/science/hall)
 "tsa" = (
 /obj/machinery/meter{
-	pixel_y = 11
+	pixel_y = -9;
+	pixel_x = -10
 	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -45140,7 +45145,10 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366
@@ -48390,6 +48398,14 @@
 	dir = 4
 	},
 /area/station/janitor/office)
+"vyD" = (
+/obj/machinery/loudspeaker,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "vyP" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -52637,18 +52653,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"yjK" = (
-/obj/machinery/light/incandescent,
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 8;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	tag = "icon-plant (NORTH)"
-	},
-/obj/loudspeaker,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "yjL" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -73443,7 +73447,7 @@ teF
 ovE
 ouJ
 bjo
-eFV
+tjv
 eBC
 dXv
 qjC
@@ -76166,7 +76170,7 @@ bvu
 qrs
 wQE
 wxc
-fjr
+eVc
 btx
 bAF
 bAI
@@ -89407,7 +89411,7 @@ hMH
 qCk
 lQh
 obN
-yjK
+pEM
 aOm
 gIJ
 aUm
@@ -90892,7 +90896,7 @@ qKY
 awG
 vWV
 axu
-aAo
+ohA
 fwf
 azh
 azn
@@ -91222,7 +91226,7 @@ lWw
 lWw
 aTa
 djq
-qIv
+aEY
 aPr
 azU
 mmb
@@ -91520,7 +91524,7 @@ nYq
 aUn
 aUn
 pQH
-kUu
+vyD
 aPr
 aPr
 aPr
@@ -125294,7 +125298,7 @@ jBf
 qdx
 tZC
 amc
-pTM
+cgO
 alE
 aaa
 aaa
@@ -126785,7 +126789,7 @@ hlO
 dZI
 hfH
 uvz
-jQb
+tmr
 eTy
 eNH
 dkS
@@ -129500,7 +129504,7 @@ aiU
 cEi
 tma
 hOU
-sEx
+lAo
 ybe
 bLx
 ssf

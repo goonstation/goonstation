@@ -36500,7 +36500,7 @@
 /obj/decal/stage_edge{
 	dir = 2
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cIp" = (
@@ -37348,7 +37348,7 @@
 	dir = 1
 	},
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cKZ" = (
@@ -40159,6 +40159,18 @@
 "cSK" = (
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
+"cSL" = (
+/obj/rack/lunar{
+	dir = 1;
+	icon_state = "aisleshelfend"
+	},
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/turf/unsimulated/floor,
+/area/moon/museum/giftshop)
 "cSM" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -44683,7 +44695,7 @@
 /area/syndicate_station/battlecruiser)
 "dfW" = (
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dfX" = (
@@ -77239,6 +77251,18 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"vMw" = (
+/obj/rack/lunar{
+	dir = 1;
+	icon_state = "aisleshelfend"
+	},
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/turf/unsimulated/floor,
+/area/moon/museum/giftshop)
 "vMW" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -104836,7 +104860,7 @@ aCO
 aCx
 aDN
 aCN
-aCN
+vMw
 eyo
 aCu
 aaa
@@ -105138,7 +105162,7 @@ aCN
 aCN
 aCN
 aCN
-aCN
+cSL
 eyo
 aCu
 aaa
