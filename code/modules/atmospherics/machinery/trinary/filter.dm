@@ -204,5 +204,4 @@
 <a href="byond://?src=\ref[src]&ui_target=filter_ui&ui_action=change_gas">[src.our_filter.filter_type]</a>
 "}
 
-#undef MIN_VOLUME
 #undef MAX_VOLUME
