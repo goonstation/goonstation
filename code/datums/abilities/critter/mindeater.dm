@@ -341,9 +341,9 @@ ABSTRACT_TYPE(/area/veil_border)
 
 		if (ishuman(src.target))
 			src.target.setStatus("mindeater_mind_eating_human", INFINITE_STATUS, src.owner)
+			var/mob/living/carbon/human/H = src.target
 
 			if (GET_ATOM_PROPERTY(src.target, PROP_MOB_INTELLECT_COLLECTED) < INTRUDER_MAX_INTELLECT_THRESHOLD)
-				var/mob/living/carbon/human/H = src.target
 				if (H.get_brain_damage() <= BRAIN_DAMAGE_MAJOR)
 					H.take_brain_damage(2)
 				var/pick = rand(1, 3)
@@ -354,6 +354,12 @@ ABSTRACT_TYPE(/area/veil_border)
 						H.TakeDamage("All", burn = 2, hit_twitch = FALSE)
 					if (3)
 						H.TakeDamage("All", tox = 2, hit_twitch = FALSE)
+
+			if (H.reagents)
+				var/amt = min(max(H.reagents.total_volume - H.reagents.get_reagent_amount("toxin"), 0), 1)
+				if (amt > 0)
+					H.reagents.remove_any_except(amt, "toxin")
+					H.reagents.add_reagent("toxin", amt / 8)
 		else
 			if (istype(src.target, /mob/living/silicon/ai))
 				src.target.TakeDamage("All", src.target.max_health / 20, damage_type = DAMAGE_CRUSH)

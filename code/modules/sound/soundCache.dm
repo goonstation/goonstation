@@ -948,7 +948,6 @@ var/global/list/soundCache = list(
  	"sound/misc/headspiderability.ogg" = 'sound/misc/headspiderability.ogg',\
  	"sound/misc/intruder/mindeater_abduct.ogg" = 'sound/misc/intruder/mindeater_abduct.ogg',\
  	"sound/misc/intruder/paralyze.ogg" = 'sound/misc/intruder/paralyze.ogg',\
- 	"sound/misc/intruder/psi_bolt.ogg" = 'sound/misc/intruder/psi_bolt.ogg',\
  	"sound/misc/intruder/veil_border_ambience.ogg" = 'sound/misc/intruder/veil_border_ambience.ogg',\
  	"sound/misc/jaws.ogg" = 'sound/misc/jaws.ogg',\
  	"sound/misc/jester_laugh.ogg" = 'sound/misc/jester_laugh.ogg',\

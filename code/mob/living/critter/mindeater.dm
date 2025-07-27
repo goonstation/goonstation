@@ -12,10 +12,6 @@ TYPEINFO(/mob/living/critter/mindeater)
 	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
 	icon_state = "intruder"
 
-	custom_hud_type = /datum/hud/critter/mindeater
-
-	hand_count = 1
-
 	can_bleed = FALSE
 	can_lie = FALSE
 	can_implant = FALSE
@@ -51,9 +47,6 @@ TYPEINFO(/mob/living/critter/mindeater)
 	var/human_disguise_job = "Staff Assistant"
 
 	var/lives = 3 // temporary lives for playtesting
-
-	/// can fire psi bolts when disguised
-	var/can_fire_when_disguised = TRUE
 
 	/// the mob this mindeater is actively brain draining
 	var/mob/drain_target = null
@@ -152,17 +145,6 @@ TYPEINFO(/mob/living/critter/mindeater)
 		add_hh_flesh(62, 1)
 		add_hh_flesh_burn(62, 1)
 
-	setup_hands()
-		..()
-		var/datum/handHolder/HH = hands[1]
-		HH.name = "psionic-kinetic bolt"
-		HH.limb = new /datum/limb/gun/kinetic/mindeater
-		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "psi_bolt"
-		HH.limb_name = "psi bolt"
-		HH.can_hold_items = FALSE
-		HH.can_range_attack = TRUE
-
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (src.is_intangible())
 			return
@@ -184,9 +166,8 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 	bullet_act(obj/projectile/P)
 		..()
-		if (!istype(P.proj_data, /datum/projectile/special/psi_bolt))
-			for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
-				shield.process_hit()
+		for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
+			shield.process_hit()
 
 	bump(atom/A)
 		..()
@@ -436,15 +417,6 @@ TYPEINFO(/mob/living/critter/mindeater)
 		var/datum/targetable/critter/mindeater/disguise/abil = src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/disguise)
 		abil.reset()
 
-	/// turns psi bolt firing on/off when disguised
-	proc/toggle_psi_bolt()
-		src.can_fire_when_disguised = !src.can_fire_when_disguised
-
-		if (src.can_fire_when_disguised)
-			boutput(src, SPAN_NOTICE("You can now fire psi bolts when disguised."))
-		else
-			boutput(src, SPAN_NOTICE("You will no longer fire psi bolts when disguised."))
-
 /obj/dummy/mindeater_structure
 	name = "spire"
 	real_name = "mindeater"
@@ -487,7 +459,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 	Crossed(atom/movable/AM)
 		. = ..()
 		var/obj/projectile/P = AM
-		if (istype(P) && !istype(P.proj_data, /datum/projectile/special/psi_bolt))
+		if (istype(P))
 			src.reveal_fake()
 
 /image/mindeater_visibility_indicator
