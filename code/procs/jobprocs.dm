@@ -603,8 +603,9 @@ Equip items from body traits.
 				SPAWN(0)
 					if(!isnull(src.traitHolder))
 						R.fields["traits"] = src.traitHolder.copy()
-
-				R.fields["imp"] = null
+				var/obj/item/implant/cloner/implant = new(src)
+				implant.scanned_here = locate(/area/centcom/reconstitutioncenter) || null
+				R.fields["imp"] = implant
 				R.fields["mind"] = src.mind
 				D.root.add_file(R)
 
