@@ -98,7 +98,7 @@
 								skull_type = /obj/item/skull/peculiar
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
 							if (ROLE_VAMPIRE)
-
+								skull_type = /obj/item/skull/menacing
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."
 							else
