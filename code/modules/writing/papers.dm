@@ -1492,6 +1492,7 @@ proc/spawn_kitchen_note()
 				</tr>
 
 			<tr><td>PDAs</td><td>[format_frequency(FREQ_PDA)]kHz</td></tr>
+			<tr><td>Cloner implants</td><td>[format_frequency(FREQ_CLONER_IMPLANT)]kHz</td></tr>
 			<tr><td>Gas pumps</td><td>[format_frequency(FREQ_PUMP_CONTROL)]kHz</td></tr>
 			<tr><td>Airlocks</td><td>[format_frequency(FREQ_AIRLOCK)]kHz</td></tr>
 			<tr><td>Designated free frequency</td><td>[format_frequency(FREQ_FREE)]kHz</td></tr>
