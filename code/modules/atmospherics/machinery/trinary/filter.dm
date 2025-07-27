@@ -79,6 +79,7 @@
 	signal.data["sender"] = src.net_id
 	signal.data["power"] = src.on
 	signal.data["transfer_rate"] = src.transfer_rate
+	signal.data["filtered_gas"] = src.filter_type
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
