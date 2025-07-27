@@ -1,4 +1,4 @@
-/mob/living/critter/small_animal/mechdrone //Yes I know it's silly but if it works, eh.
+/mob/living/critter/robotic/mechdrone //Yes I know it's silly but if it works, eh.
 	name = "Mech Drone"
 	desc = "A programmable robotic drone that responds to network packets."
 	icon = 'icons/misc/mechDrone.dmi'
@@ -11,6 +11,7 @@
 	ai_type = null
 	health_burn = 25
 	health_burn_vuln = 0.8
+
 
 
 
@@ -55,7 +56,7 @@
 		frequency = new_frequency
 		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 
-	/mob/living/critter/small_animal/mechdrone/proc/receive_signal(datum/signal/signal)
+	/mob/living/critter/robotic/mechdrone/proc/receive_signal(datum/signal/signal)
 		if((signal.data["address_1"] == src.net_id)  || (signal.data["address_1"] == "ping"))
 
 			if((signal.data["address_1"] == "ping") && signal.data["sender"])
@@ -178,14 +179,13 @@
 							if(!T) continue
 							for(var/obj/O in T)
 								if(O.name == target_name)
-									var/obj/item/held = src.get_active_hand()
+									var/obj/item/held = src.get_active_hand().item
 									if(held)
-										O.attackby(src.get_active_hand(), src)
-										// world.log << "MechDrone used attackby to insert [held] into [O]"
+										O.attackby(get_active_hand().item, src)
 									else
 										O.attack_hand(src)
 									// After interaction, check if the item is still in hand
-									if(!src.get_active_hand())
+									if(!src.get_active_hand().item)
 										load = null
 										icon_state = "1"
 									else
@@ -219,9 +219,8 @@
 		src.visible_message(SPAN_SAY("[src] says, \"[message]\""))
 
 
-// /mob/living/critter/small_animal/mechdrone
-// 	start_bleeding(var/amount, var/limb)
-// 		return // Do nothing, can't bleed
+	death()
+		elecflash()
 
 //SCRAPPED REMOTE WITH UI THINGY
 // /obj/item/remote/mechdrone_remote
