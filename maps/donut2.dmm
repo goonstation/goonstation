@@ -31628,6 +31628,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/scissors/surgical_scissors,
 /obj/item/scissors/surgical_scissors,
+/obj/item/surgical_spoon,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "lSd" = (
@@ -48955,17 +48956,6 @@
 /area/station/maintenance/west)
 "vLU" = (
 /obj/storage/crate/robotics_supplies_borg,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/scissors/surgical_scissors,
-/obj/item/hemostat,
-/obj/item/suture,
-/obj/item/surgical_spoon{
-	pixel_y = -5
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},

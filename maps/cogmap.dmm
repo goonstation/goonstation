@@ -29800,6 +29800,7 @@
 /obj/item/suture{
 	pixel_y = 5
 	},
+/obj/item/surgical_spoon,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "che" = (
