@@ -1,3 +1,4 @@
+#define MAX_VOLUME 200
 /obj/machinery/atmospherics/trinary/filter
 	name = "Gas filter"
 	icon = 'icons/obj/atmospherics/filter.dmi'
@@ -12,6 +13,10 @@
 	var/filter_type = "Plasma"
 	var/static/list/gaslist
 	var/datum/filter_ui/ui
+	/// Radio frequency to operate on.
+	var/frequency = FREQ_FREE
+	/// Radio ID that refers to specifically us.
+	var/net_id = null
 
 /obj/machinery/atmospherics/trinary/filter/New()
 	..()
@@ -20,6 +25,9 @@
 	#define _CREATE_FILTER_LIST(_, _, GASNAME, ...) src.gaslist += GASNAME;
 	APPLY_TO_GASES(_CREATE_FILTER_LIST)
 	#undef _CREATE_FILTER_LIST
+	if(src.frequency)
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 
 /obj/machinery/atmospherics/trinary/filter/initialize()
 	..()
@@ -63,12 +71,81 @@
 
 	return TRUE
 
+/obj/machinery/atmospherics/trinary/filter/proc/broadcast_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
+
+	signal.data["sender"] = src.net_id
+	signal.data["power"] = src.on
+	signal.data["transfer_rate"] = src.transfer_rate
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+	return TRUE
+
+/obj/machinery/atmospherics/trinary/filter/receive_signal(datum/signal/signal)
+	if(!(signal.data["address_1"] == src.net_id))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
+
+	switch(signal.data["command"])
+		if("broadcast_status")
+			SPAWN(0.5 SECONDS)
+				broadcast_status()
+
+		if("power_on")
+			src.on = TRUE
+			. = TRUE
+
+		if("power_off")
+			src.on = FALSE
+			. = TRUE
+
+		if("power_toggle")
+			src.on = !on
+			. = TRUE
+
+		if("set_transfer_rate")
+			var/number = text2num_safe(signal.data["parameter"])
+
+			src.transfer_rate = clamp(number, 0, MAX_VOLUME)
+			. = TRUE
+
+		if("set_gas")
+			switch(signal.data["parameter"])
+				#define _FILTER_OUT_GAS(GAS, _, GASNAME, ...) \
+				if(#GAS) { \
+					src.filter_type = GASNAME; \
+				}
+				APPLY_TO_GASES(_FILTER_OUT_GAS)
+				#undef _FILTER_OUT_GAS
+			. = TRUE
+
+		if("help")
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
+
+			help.data["info"] = "Command help. \
+									power_on - Turns on filter \
+									power_off - Turns off filter. \
+									power_toggle - Toggles filter. \
+									set_transfer_rate (parameter: Number) - Sets transfer rate in liters to parameter. Max at [MAX_VOLUME] L. \
+									set_gas (parameter: String) - Set gas filtering to parameter. Uses the shortform name for a gas."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
+
+	if(.)
+		src.UpdateIcon()
+		FLICK("alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
+
+
 /obj/machinery/atmospherics/trinary/filter/active
 	icon_state = "on-map"
 	on = TRUE
 
-#define MIN_VOLUME 1
-#define MAX_VOLUME 200
 /datum/filter_ui
 	var/incr_small = 1
 	var/incr_large = 10
@@ -84,9 +161,9 @@
 	if(href_list["ui_target"] == "filter_ui")
 		switch(href_list["ui_action"])
 			if("set_transfer")
-				var/value = input(usr, "Transfer Rate ([MIN_VOLUME] - [MAX_VOLUME] L):", "Enter new value", src.our_filter.transfer_rate) as num
+				var/value = input(usr, "Transfer Rate ([0] - [MAX_VOLUME] L):", "Enter new value", src.our_filter.transfer_rate) as num
 				if(isnum_safe(value))
-					src.our_filter.transfer_rate = clamp(value, MIN_VOLUME, MAX_VOLUME)
+					src.our_filter.transfer_rate = clamp(value, 0, MAX_VOLUME)
 					logTheThing(LOG_STATION, usr, "has set [src.our_filter] transfer rate to [value] at [log_loc(src.our_filter)]")
 
 			if("toggle_power")
@@ -95,7 +172,7 @@
 				src.our_filter.UpdateIcon()
 
 			if("bump_transfer")
-				src.our_filter.transfer_rate = clamp(src.our_filter.transfer_rate + text2num_safe(href_list["bump_transfer"]), MIN_VOLUME, MAX_VOLUME)
+				src.our_filter.transfer_rate = clamp(src.our_filter.transfer_rate + text2num_safe(href_list["bump_transfer"]), 0, MAX_VOLUME)
 				logTheThing(LOG_STATION, usr, "has set [src.our_filter] transfer rate to [src.our_filter.transfer_rate] at [log_loc(src.our_filter)]")
 
 			if("change_gas")
