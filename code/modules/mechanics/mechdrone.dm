@@ -1,4 +1,4 @@
-/obj/machinery/mechdrone
+/mob/living/critter/small_animal/mechdrone //Yes I know it's silly but if it works, eh.
 	name = "Mech Drone"
 	desc = "A programmable robotic drone that responds to network packets."
 	icon = 'icons/misc/mechDrone.dmi'
@@ -8,7 +8,16 @@
 	var/net_id = null //What is our ID on the network?
 	var/frequency = FREQ_FREE
 	var/obj/item/load = null
+	ai_type = null
+	health_burn = 25
+	health_burn_vuln = 0.8
 
+
+
+
+	setup_healths()
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+		add_health_holder(/datum/healthHolder/brain)
 
 	New()
 		..()
@@ -46,7 +55,7 @@
 		frequency = new_frequency
 		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 
-	receive_signal(datum/signal/signal)
+	/mob/living/critter/small_animal/mechdrone/proc/receive_signal(datum/signal/signal)
 		if((signal.data["address_1"] == src.net_id)  || (signal.data["address_1"] == "ping"))
 
 			if((signal.data["address_1"] == "ping") && signal.data["sender"])
@@ -103,17 +112,15 @@
 									smallest_volume = I.w_class
 									smallest_item = I
 						if(smallest_item)
-							smallest_item.set_loc(src)
+							// Use the hand system to pick up the item
+							src.put_in_hand(smallest_item)
 							load = smallest_item
 							icon_state = "2"
-							//smallest_item.pixel_y -= 9
-							//overlays += smallest_item
+
 			if("unload")
 				SPAWN(0)
 					if(load)
-						load.set_loc(src.loc)
-						//load.pixel_y += 9
-						//overlays = null
+						src.drop_from_slot(load)
 						icon_state = "1"
 						load = null
 
@@ -171,11 +178,21 @@
 							if(!T) continue
 							for(var/obj/O in T)
 								if(O.name == target_name)
-									if(load)
-										load.set_loc(O)
+									var/obj/item/held = src.get_active_hand()
+									if(held)
+										O.attackby(src.get_active_hand(), src)
+										// world.log << "MechDrone used attackby to insert [held] into [O]"
+									else
+										O.attack_hand(src)
+									// After interaction, check if the item is still in hand
+									if(!src.get_active_hand())
+										load = null
 										icon_state = "1"
-										found = TRUE
-										break
+									else
+										load = src.get_active_hand()
+										icon_state = "2"
+									found = TRUE
+									break
 							if(found) break
 
 
@@ -202,7 +219,9 @@
 		src.visible_message(SPAN_SAY("[src] says, \"[message]\""))
 
 
-
+// /mob/living/critter/small_animal/mechdrone
+// 	start_bleeding(var/amount, var/limb)
+// 		return // Do nothing, can't bleed
 
 //SCRAPPED REMOTE WITH UI THINGY
 // /obj/item/remote/mechdrone_remote
