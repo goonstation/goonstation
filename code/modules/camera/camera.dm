@@ -1,7 +1,7 @@
 /obj/machinery/camera
 	name = "security camera"
 	desc = "A small, high quality camera equipped with face and ID recognition. It is tied into a computer system, allowing AI and those with access to watch what occurs through it."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/camera.dmi'
 	icon_state = "camera"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	text = ""
@@ -29,8 +29,6 @@
 	var/reinforced = FALSE
 	/// automatically offsets and snaps to perspective walls. Not for televisions or internal cameras.
 	var/sticky = FALSE
-	/// do auto position cameras use the alternate diagonal sprites?
-	var/alternate_sprites = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -78,10 +76,8 @@
 		src.network = CAMERA_NETWORK_AI_ONLY
 		src.color = "#9999cc"
 
-	if (src.sticky)
-		autoposition(src.alternate_sprites)
-
-	AddComponent(/datum/component/camera_coverage_emitter)
+	src.autoposition()
+	src.set_camera_status(TRUE)
 
 	LAZYLISTINIT(src.viewers)
 
@@ -187,14 +183,15 @@
 	..()
 	if(!src.network)
 		return //avoid stacking emp
-	src.icon_state = "[initial(src.icon_state)]emp"
+
 	src.network = null //Not the best way but it will do. I think.
 	src.set_camera_status(FALSE)
+	src.add_filter("emp_outline", 1, outline_filter(1, "#00FFFF", OUTLINE_SHARP))
 
 	SPAWN(90 SECONDS)
-		src.set_camera_status(TRUE)
 		src.network = initial(src.network)
-		src.icon_state = initial(src.icon_state)
+		src.set_camera_status(TRUE)
+		src.remove_filter("emp_outline")
 
 		src.update_coverage()
 
@@ -222,7 +219,28 @@
 
 /obj/machinery/camera/proc/set_camera_status(status)
 	src.camera_status = status
-	var/datum/component/camera_coverage_emitter/emitter = GetComponent(/datum/component/camera_coverage_emitter)
+
+	if (src.camera_status)
+		src.icon_state = "camera"
+		var/image/on_light = image(src.icon, "camera-light")
+		src.UpdateOverlays(on_light, "on_light")
+
+		on_light.color = list(
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 1,
+			1, 1, 1, 0,
+		)
+		on_light.plane = PLANE_LIGHTING
+		src.UpdateOverlays(on_light, "on_light_lighting")
+
+	else
+		src.icon_state = "camera-off"
+		src.UpdateOverlays(null, "on_light")
+		src.UpdateOverlays(null, "on_light_lighting")
+
+	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter) || src.AddComponent(/datum/component/camera_coverage_emitter)
 	emitter.set_active(src.camera_status)
 
 /obj/machinery/camera/proc/update_coverage()
@@ -290,7 +308,6 @@
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.set_camera_status(FALSE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-	src.icon_state = "[initial(src.icon_state)]1"
 	src.light.disable()
 	if (user)
 		user.visible_message(SPAN_ALERT("[user] has deactivated [src]!"), SPAN_ALERT("You have deactivated [src]."))
@@ -302,11 +319,66 @@
 	cables?.change_stack_amount(-1)
 	src.set_camera_status(TRUE)
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
-	src.icon_state = initial(src.icon_state)
 	src.light.enable()
 	if (user)
 		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
 		add_fingerprint(user)
+
+/obj/machinery/camera/proc/autoposition()
+	// This will eventually be removed after wall cameras are repathed using an UpdatePaths script.
+	switch (src.dir)
+		if (NORTH, SOUTH)
+			src.pixel_x -= 10
+
+		if (EAST, WEST)
+			src.pixel_y += 10
+
+		if (NORTHWEST)
+			src.pixel_y -= 10
+			src.set_dir(WEST)
+
+		if (NORTHEAST)
+			src.pixel_y -= 10
+			src.set_dir(EAST)
+
+		if (SOUTHEAST)
+			src.pixel_x += 10
+			src.set_dir(SOUTH)
+
+		if (SOUTHWEST)
+			src.pixel_x += 10
+			src.set_dir(NORTH)
+
+	if (!src.sticky)
+		return
+
+	var/turf/T = null
+	var/list/directions = null
+	var/pixel_offset = 10 // this will get overridden if jen wall
+
+	T = get_step(src, turn(src.dir, 180)) // lets first check if we can attach to a wall with our dir
+	if (wall_window_check(T))
+		directions = list(turn(src.dir, 180))
+	else
+		directions = cardinal // check each direction
+
+	for (var/D as anything in directions)
+		T = get_step(src, D)
+		if (!wall_window_check(T))
+			continue
+
+		if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
+			pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
+		else
+			src.set_dir(turn(D, 180))
+
+		switch (D) // north facing ones don't need to be offset ofc
+			if (EAST)
+				src.pixel_x = pixel_offset
+			if (WEST)
+				src.pixel_x = -pixel_offset
+			if (NORTH)
+				src.pixel_y = pixel_offset * 2
 
 /// Adds the minimap component for the camera
 /obj/machinery/camera/proc/add_to_minimap()
@@ -439,43 +511,3 @@
 
 
 /obj/machinery/camera/auto/alt
-#ifdef IN_MAP_EDITOR
-	icon_state = "cameras_alt"
-#endif
-	alternate_sprites = TRUE
-
-/obj/machinery/camera/proc/autoposition(var/alt)
-	var/turf/T = null
-	var/list/directions = null
-	var/pixel_offset = 10 // this will get overridden if jen wall
-	T = get_step(src, turn(src.dir, 180)) // lets first check if we can attach to a wall with our dir
-	if (wall_window_check(T))
-		directions = list(turn(src.dir, 180))
-	else
-		directions = cardinal // check each direction
-
-	for (var/D as anything in directions)
-		T = get_step(src, D)
-		if (wall_window_check(T))
-			if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
-				pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
-			if (alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
-				switch (D) // this is horrid but it works ish
-					if (NORTH)
-						src.set_dir(SOUTHEAST)
-					if (SOUTH)
-						src.set_dir(SOUTHWEST)
-					if (EAST)
-						src.set_dir(NORTHWEST)
-					if (WEST)
-						src.set_dir(NORTHEAST)
-			else
-				src.set_dir(turn(D, 180))
-			switch (D) // north facing ones don't need to be offset ofc
-				if (EAST)
-					src.pixel_x = pixel_offset
-				if (WEST)
-					src.pixel_x = -pixel_offset
-				if (NORTH)
-					src.pixel_y = pixel_offset * 2
-		T = null

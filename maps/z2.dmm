@@ -40159,6 +40159,18 @@
 "cSK" = (
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
+"cSL" = (
+/obj/rack/lunar{
+	dir = 1;
+	icon_state = "aisleshelfend"
+	},
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/turf/unsimulated/floor,
+/area/moon/museum/giftshop)
 "cSM" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -57005,7 +57017,7 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 5;
+	dir = 4;
 	pixel_x = -10;
 	network = "Eye"
 	},
@@ -58135,7 +58147,7 @@
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	pixel_y = 20;
-	dir = 6;
+	dir = 2;
 	network = "Eye"
 	},
 /obj/machinery/camera{
@@ -63476,7 +63488,7 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
+	dir = 1;
 	network = "Eye"
 	},
 /obj/machinery/camera{
@@ -66664,23 +66676,6 @@
 /obj/item/clothing/head/helmet/space/soviet,
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
-"nFq" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1;
-	network = "Eye"
-	},
-/obj/machinery/camera{
-	name = "sensor";
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
-	network = "Eye"
-	},
-/obj/lattice,
-/turf/space,
-/area/watchful_eye_sensor)
 "nFE" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/mining)
@@ -77239,6 +77234,18 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"vMw" = (
+/obj/rack/lunar{
+	dir = 1;
+	icon_state = "aisleshelfend"
+	},
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/turf/unsimulated/floor,
+/area/moon/museum/giftshop)
 "vMW" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -78933,14 +78940,14 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 9;
+	dir = 8;
 	pixel_x = 10;
 	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
+	dir = 1;
 	network = "Eye"
 	},
 /turf/space,
@@ -104836,7 +104843,7 @@ aCO
 aCx
 aDN
 aCN
-aCN
+vMw
 eyo
 aCu
 aaa
@@ -105138,7 +105145,7 @@ aCN
 aCN
 aCN
 aCN
-aCN
+cSL
 eyo
 aCu
 aaa
@@ -147347,7 +147354,7 @@ wfJ
 sgR
 nzY
 eAB
-nFq
+kXv
 nJg
 iUy
 laI
@@ -147649,7 +147656,7 @@ mZO
 iha
 xuD
 jwj
-nFq
+kXv
 nJg
 xPj
 lrS
@@ -147951,7 +147958,7 @@ wfJ
 sgR
 nzY
 eAB
-nFq
+kXv
 nJg
 lev
 fWR
@@ -148253,7 +148260,7 @@ jAK
 uLf
 eYq
 jCA
-nFq
+kXv
 nJg
 xmf
 jRl
