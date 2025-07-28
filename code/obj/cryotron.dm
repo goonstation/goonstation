@@ -221,7 +221,8 @@
 								antagonist.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
-							qdel(user)
+							//Disabling this for now, humans don't GC usually anyway and it was messing with cloner implants
+							// qdel(user)
 							return 1
 
 		return 0
