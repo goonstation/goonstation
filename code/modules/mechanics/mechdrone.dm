@@ -1,4 +1,4 @@
-/mob/living/critter/robotic/mechdrone //Yes I know it's silly but if it works, eh.
+/mob/living/critter/small_animal/mechdrone //Yes I know it's silly but if it works, eh.
 	name = "Mech Drone"
 	desc = "A programmable robotic drone that responds to network packets."
 	icon = 'icons/misc/mechDrone.dmi'
@@ -9,23 +9,30 @@
 	var/frequency = FREQ_FREE
 	var/obj/item/load = null
 	ai_type = null
-	health_burn = 25
-	health_burn_vuln = 0.8
+	health_brute = 400
+	health_brute_vuln = 0.1
+	blood_id = "oil"
 
 
 
 
 
 	setup_healths()
-		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
-		add_health_holder(/datum/healthHolder/brain)
+		add_hh_robot(src.health_brute, src.health_brute)
+
 
 	New()
 		..()
+		src.health = 4000
+		src.max_health = 4000
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",PROC_REF(setFreqManually))
 
 		src.net_id = format_net_id("\ref[src]")
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "main", frequency)
+
+	get_desc()
+		. = ..()
+		. += SPAN_NOTICE("<br>Its network address is [net_id].")
 
 	Cross(atom/movable/mover)
 		. = ..()
@@ -56,7 +63,7 @@
 		frequency = new_frequency
 		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 
-	/mob/living/critter/robotic/mechdrone/proc/receive_signal(datum/signal/signal)
+	/mob/living/critter/small_animal/mechdrone/proc/receive_signal(datum/signal/signal)
 		if((signal.data["address_1"] == src.net_id)  || (signal.data["address_1"] == "ping"))
 
 			if((signal.data["address_1"] == "ping") && signal.data["sender"])
@@ -73,9 +80,9 @@
 
 		//var/senderid = signal.data["sender"]
 		switch( lowertext(signal.data["command"]) )
-			if("open") //debug test
-				SPAWN(0)
-					src.icon_state = "2"
+			// if("open") //debug test
+			// 	SPAWN(0)
+			// 		src.icon_state = "2"
 			if("follow")
 				SPAWN(0)
 					var/turf/target_turf = find_target_location_from_signal(signal)
@@ -130,21 +137,21 @@
 					if(signal.data["data"])
 						var/message = signal.data["data"]
 						if(istext(message))
-							say_something(message)
-			if("step")
-				SPAWN(0)
-					if(signal.data["data"])
-						var/direction = lowertext(signal.data["data"])
-						var/dir_const
-						switch(direction)
-							if("north") dir_const = NORTH
-							if("south") dir_const = SOUTH
-							if("east") dir_const = EAST
-							if("west") dir_const = WEST
-						if(dir_const)
-							var/turf/target_turf = get_step(src, dir_const)
-							if(target_turf && (istype(target_turf, /turf) || istype(target_turf, /mob) || istype(target_turf, /obj)))
-								step_to(src, target_turf)
+							src.say(message)
+			// if("step")
+			// 	SPAWN(0)
+			// 		if(signal.data["data"])
+			// 			var/direction = lowertext(signal.data["data"])
+			// 			var/dir_const
+			// 			switch(direction)
+			// 				if("north") dir_const = NORTH
+			// 				if("south") dir_const = SOUTH
+			// 				if("east") dir_const = EAST
+			// 				if("west") dir_const = WEST
+			// 			if(dir_const)
+			// 				var/turf/target_turf = get_step(src, dir_const)
+			// 				if(target_turf && (istype(target_turf, /turf) || istype(target_turf, /mob) || istype(target_turf, /obj)))
+			// 					step_to(src, target_turf)
 
 			if("pointer")
 				SPAWN(0)
@@ -219,8 +226,10 @@
 		src.visible_message(SPAN_SAY("[src] says, \"[message]\""))
 
 
-	death()
-		elecflash()
+	death(gibbed)
+		..()
+		elecflash(src, 1, 1) // Flash the area with an electric effect
+		qdel(src) // Remove the mechdrone from the world
 
 //SCRAPPED REMOTE WITH UI THINGY
 // /obj/item/remote/mechdrone_remote
@@ -358,6 +367,18 @@
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "capacitor2"
 	var/pointer_name = null
+	anchored = UNANCHORED
+
+	attackby(obj/item/W, mob/user)
+		user.lastattacked = get_weakref(src)
+		if (iswrenchingtool(W))
+			if (src.anchored == ANCHORED)
+				src.anchored = UNANCHORED
+				boutput(user, "You unanchor the [src].")
+			else
+				src.anchored = ANCHORED
+				boutput(user, "You anchor the [src].")
+			return TRUE
 
 
 	attack_self(mob/user)
@@ -365,6 +386,7 @@
 		pointer_name = input("Name pointer:") as text
 		desc = "A pointer for the MechDrone. It can be used to control the drone. Its name is [pointer_name]."
 
+//SCRAPPED INSERT POINTER INTO MACHINERY FUNCTIONALITY
 		// // Find adjacent machinery
 		// var/list/nearby_machinery = list()
 		// var/turf/user_turf = get_turf(user)

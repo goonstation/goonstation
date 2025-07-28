@@ -1,0 +1,21 @@
+<BIG><B>The Mechdrone is a little helper drone that can be programed via packets!
+<br>
+<br>The pointers are small electronic devices that the drone can be instructed to go to.
+<br>
+<br>Using mechcomp, the packet format and commands ar these:
+<br>
+<br>address_1=x&command=y
+<br>
+<br>Some more complex commands will add the following:
+<br>
+<br>address_1=x&command=y&data=z
+<br>
+<br>Here are the commands of the mechdrone:
+<br>
+<br>command=load --> Picks the smallest object in it's spot from the ground and carries it.
+<br>command=unload --> Unloads the carried object.
+<br>command=say&data=(What you want it to say) --> Makes the drone say something
+<br>command=follow --> Makes the drone go to the origin of the signal
+<br>command=stop --> Makes the drone stop moving
+<br>command=pointer&data=(pointer name) --> Makes the drone go to a specified pointer
+<br>command=interact&data=(Object, machine, etc. that you want it to interact with) --> Makes the drone put the object it's carrying into the specified object if possible, or interact with that object. So it can for example, carry a potato and put it in a oven, or click a mechcomp button.

@@ -133,6 +133,12 @@ Custom Books
 	desc = "A Book on how to use the wireless Components of the Mechanic's lab"
 	file_path = "strings/books/mechanicbook.txt"
 
+/obj/item/paper/book/from_file/mechdronebook
+	name = "MechDrone Guide"
+	icon_state = "mechcompguide"
+	desc = "A Book on how to use packets to control the MechDrone."
+	file_path = "strings/books/mechdronebook.txt"
+
 /obj/item/paper/book/from_file/text_to_music_com // based off the revised Player Piano book
 	name = "Text to Music Component Manual"
 	desc = "Details the use of the Text to Music Component."
