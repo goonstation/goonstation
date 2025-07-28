@@ -69,7 +69,6 @@ A Flamethrower in various states of assembly
 	spread_angle = 0
 	shoot_delay = 1 SECOND
 	recoil_strength = 6
-	brew_result = list("gun_slop" = 20)
 
 	New()
 		..()

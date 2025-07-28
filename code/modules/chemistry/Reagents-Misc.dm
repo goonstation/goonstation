@@ -3256,7 +3256,7 @@ datum
 		gun_distillate
 			name = "gun distillate"
 			id = "gun_distillate"
-			description = "The distilled essence of ranged weaponry."
+			description = "The distilled essence of real kinetic weaponry."
 			fluid_r = 141
 			fluid_g = 145
 			fluid_b = 141

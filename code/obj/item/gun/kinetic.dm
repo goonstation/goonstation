@@ -54,6 +54,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// Feedback for incompatible ammo can be customized for clarity.
 	var/ammo_incompatible_msg = "This ammo won't fit!"
 
+	brew_result = list("gun_distillate" = 10)
+
 	// caliber list: update as needed
 	// 0.22 - pistols
 	// 0.308 - rifles
@@ -832,6 +834,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_inaccuracy_max = 20
 	rarity = 3
 	abilities = list(/obj/ability_button/toggle_scope)
+	brew_result = list("gun_distillate" = 30)
 
 	New()
 		ammo = new default_magazine
@@ -1856,6 +1859,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 2
 	recoil_strength = 10
 	recoil_max = 60
+	brew_result = list("gun_distillate" = 30)
 
 	New()
 		if(prob(10))
