@@ -1,6 +1,6 @@
 /datum/abilityHolder/mindeater
 	usesPoints = TRUE
-	var/max_points = INTRUDER_MAX_INTELLECT_THRESHOLD
+	var/max_points = MINDEATER_MAX_INTELLECT_THRESHOLD
 
 	var/brain_stored = 0
 
@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (!mindeater.drain_target)
 			boutput(src.holder.owner, SPAN_ALERT("You don't have a Brain Drain target!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (GET_ATOM_PROPERTY(mindeater.drain_target, PROP_MOB_INTELLECT_COLLECTED) >= (INTRUDER_MAX_INTELLECT_THRESHOLD - 10))
+		if (GET_ATOM_PROPERTY(mindeater.drain_target, PROP_MOB_INTELLECT_COLLECTED) >= (MINDEATER_MAX_INTELLECT_THRESHOLD - 10))
 			boutput(src.holder.owner, SPAN_ALERT("You have too much Intellect collected on this mob!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
@@ -162,7 +162,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			L.addOverlayComposition(/datum/overlayComposition/weldingmask)
 			L.updateOverlaysClient(L.client)
 
-			for (var/i in 1 to floor((INTRUDER_MAX_INTELLECT_THRESHOLD - GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED)) / 10))
+			for (var/i in 1 to floor((MINDEATER_MAX_INTELLECT_THRESHOLD - GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED)) / 10))
 				sleep(0.75 SECONDS)
 				L.Move(get_step(L, get_dir(L, mindeater)), get_dir(L, mindeater))
 				take_bleeding_damage(L, null, 2.5, pick(DAMAGE_CUT, DAMAGE_STAB))
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	icon_state = "pierce_the_veil"
 	cooldown = 60 SECONDS
 	max_range = 6
-	pointCost = INTRUDER_MAX_INTELLECT_THRESHOLD
+	pointCost = MINDEATER_MAX_INTELLECT_THRESHOLD
 	reveals_on_use = TRUE
 
 	tryCast(atom/target)
@@ -343,7 +343,7 @@ ABSTRACT_TYPE(/area/veil_border)
 			src.target.setStatus("mindeater_mind_eating_human", INFINITE_STATUS, src.owner)
 			var/mob/living/carbon/human/H = src.target
 
-			if (GET_ATOM_PROPERTY(src.target, PROP_MOB_INTELLECT_COLLECTED) < INTRUDER_MAX_INTELLECT_THRESHOLD)
+			if (GET_ATOM_PROPERTY(src.target, PROP_MOB_INTELLECT_COLLECTED) < MINDEATER_MAX_INTELLECT_THRESHOLD)
 				if (H.get_brain_damage() <= BRAIN_DAMAGE_MAJOR)
 					H.take_brain_damage(2)
 				var/pick = rand(1, 3)
@@ -393,7 +393,7 @@ ABSTRACT_TYPE(/area/veil_border)
 	var/mob/living/target
 
 	New(atom/target)
-		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) >= INTRUDER_MAX_INTELLECT_THRESHOLD)
+		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) >= MINDEATER_MAX_INTELLECT_THRESHOLD)
 			src.duration = 0
 		..()
 		src.target = target

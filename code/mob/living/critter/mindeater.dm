@@ -321,11 +321,11 @@ TYPEINFO(/mob/living/critter/mindeater)
 	proc/collect_intellect(mob/living/L, points)
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = L
-			APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, min(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) + points, INTRUDER_MAX_INTELLECT_THRESHOLD))
-			if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) >= INTRUDER_MAX_INTELLECT_THRESHOLD)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, min(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) + points, MINDEATER_MAX_INTELLECT_THRESHOLD))
+			if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) >= MINDEATER_MAX_INTELLECT_THRESHOLD)
 				H.brain_level.set_icon_state("complete")
 			else
-				H.brain_level.set_icon_state(floor(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) / 10) * 10, INTRUDER_MAX_INTELLECT_THRESHOLD)
+				H.brain_level.set_icon_state(floor(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) / 10) * 10, MINDEATER_MAX_INTELLECT_THRESHOLD)
 
 			var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
 			if (H.reagents.has_reagent("ethanol") || H.reagents.has_reagent("mannitol"))
