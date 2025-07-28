@@ -9812,7 +9812,6 @@
 /area/tech_outpost)
 "gRJ" = (
 /obj/machinery/disposal_pipedispenser,
-/obj/marker/supplymarker,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "gRV" = (
@@ -27041,7 +27040,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tmm" = (
-/obj/submachine/slot_machine,
+/obj/machinery/computer/tetris,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
@@ -72235,9 +72234,9 @@ fXA
 wSs
 qpn
 eUE
-vzh
 jOL
-lOS
+jOL
+jOL
 jOL
 jOL
 jOL
@@ -72537,9 +72536,9 @@ upz
 wSs
 qpn
 eUE
-jOL
+vzh
 pYu
-eCB
+dAs
 eCB
 eCB
 eCB
