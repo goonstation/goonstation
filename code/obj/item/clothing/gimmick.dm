@@ -2151,8 +2151,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	hides_from_examine = C_UNIFORM|C_SHOES
 
 /obj/item/clothing/suit/breadman
-	name = "Bernd das Brot costume"
-	desc = "A costume of an famous German kids TV show, the depressed living piece of bread, he's beloved by all and hates life itself."
+	name = "Breadlicious Barry costume"
+	desc = "A totally original costume, a depressed living piece of bread. Almost as crunchy as toasted bread!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'

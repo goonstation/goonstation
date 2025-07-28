@@ -1572,7 +1572,7 @@ datum/commodity/drugs/sell/poppies
 	price = PAY_UNTRAINED
 
 /datum/commodity/costume/breadman
-	comname = "Bernd das Brot costume"
+	comname = "Breadlicious Barry costume"
 	comtype = /obj/item/storage/box/costume/breadman
 	desc = "A costume of a bread so depressed they will ask you why you are so sour. Make sure they don't try to take a bite."
 	price = PAY_UNTRAINED
