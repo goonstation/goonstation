@@ -1,4 +1,19 @@
+
+(t)mon jul 28 25
+(u)RubberRats
+(p)24215
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The barberang should more reliably drop any hair it takes.
+(u)TheGeneralJay
+(p)24233
+(e)🗺💅|A-Mapping, C-QoL
+(*)Standardized available equipment that spawns in robotics across each map. See minor changes for details.
+(+)All current-rotation robotics departments have been equipped with blinds (yay, crime!), anesthetic storage lockers, sinks, modules, and other minor QoL tweaks.
 (t)sat jul 26 25
+(u)Mr. Moriarty
+(p)24211
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited security cameras.
 (u)LeahTheTech + Flourish
 (*)Added almost legal firecrackers that explode when thrown. Available from Josh or as a random trinket/junk spawn.
 (t)fri jul 25 25
