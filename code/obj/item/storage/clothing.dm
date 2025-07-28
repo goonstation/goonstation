@@ -503,6 +503,6 @@
 	/obj/item/clothing/suit/chompskysuit)
 
 /obj/item/storage/box/costume/breadman
-	name = "Bernd das Brot costume"
+	name = "Breadlicious Barry costume"
 	desc = "Ever wanted to be a sad piece of bread? Yeah me neither, but here we are."
 	spawn_contents = list(/obj/item/clothing/suit/breadman)
