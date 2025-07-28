@@ -1,4 +1,10 @@
 
+(t)mon jul 28 25
+(u)TheGeneralJay
+(p)24233
+(e)🗺💅|A-Mapping, C-QoL
+(*)Standardized available equipment that spawns in robotics across each map. See minor changes for details.
+(+)All current-rotation robotics departments have been equipped with blinds (yay, crime!), anesthetic storage lockers, sinks, modules, and other minor QoL tweaks.
 (t)sat jul 26 25
 (u)Mr. Moriarty
 (p)24211
