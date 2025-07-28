@@ -1,5 +1,9 @@
 
 (t)mon jul 28 25
+(u)RubberRats
+(p)24215
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The barberang should more reliably drop any hair it takes.
 (u)TheGeneralJay
 (p)24233
 (e)🗺💅|A-Mapping, C-QoL
