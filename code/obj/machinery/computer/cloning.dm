@@ -810,7 +810,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 		if("diskAction")
 			if (src.diskette)
-				if (BOUNDS_DIST(ui.user, src) && !isAIeye(ui.user))
+				if (BOUNDS_DIST(ui.user, src) || isAIeye(ui.user))
 					return
 				src.diskette.set_loc(src.loc)
 				usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
