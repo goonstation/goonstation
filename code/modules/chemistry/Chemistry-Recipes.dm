@@ -4034,19 +4034,15 @@
 		id = "gun_infusion"
 		result = "gun_infusion"
 		/*
-		The recipe is meant to encourage quintissential botany practices
-		- Botany's association with chemicals can best be described as "mass production", hence the quantities.
 		- Blackpowder is both a bullet chemical and a chem that is traditionally mass produced with the help of ingredients sourced from botany.
-		- Booster enzyme adds splice-requirements to the recipe, and acts as the 'organic' interface.
+		- Glowing slurry is the plant-interface part of the recipe.
 		- Plasma is the sci-fi space-magic chem that makes any of this even quasi-believable.
 		- Extensive research into the first paragraph on Wikipedia suggests bullets are often made from copper.
-		- Gun distillate adds the still as part of the process, and limits accessibility to more antagonistic behaviours.
-		- Temperature basically forces the use of Cryostylane, since this can only be made in something like a chem barrel.
+		- Gun distillate adds the still as part of the process, and limits accessibility to the more antagonistic behaviours.
 		*/
-		required_reagents = list("blackpowder" = 300, "booster_enzyme" = 500, "plasma" = 100, "copper" = 100, "gun_distillate" = 10)
-		max_temperature = 250
-		result_amount = 20
-		mix_phrase = "The mixture crystalises and then collapses in on itself, leaving behind small amount of gunmetal-grey sludge."
+		required_reagents = list("blackpowder" = 5, "omega_mutagen" = 3, "plasma" = 2, "copper" = 1, "gun_distillate" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture pops a few times, and then smokes as it settles."
 
 	copper_nitrate
 		name = "Copper Nitrate"
