@@ -649,11 +649,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "TN" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
