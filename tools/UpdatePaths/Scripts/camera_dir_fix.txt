@@ -1,0 +1,6 @@
+/obj/machinery/camera{dir=6} : /obj/machinery/camera{@OLD;dir=2}
+/obj/machinery/camera{dir=10} : /obj/machinery/camera{@OLD;dir=1}
+/obj/machinery/camera{dir=5} : /obj/machinery/camera{@OLD;dir=4}
+/obj/machinery/camera{dir=9} : /obj/machinery/camera{@OLD;dir=8}
+
+/obj/machinery/camera{dir=3} : /obj/machinery/camera{@OLD;dir=2}
