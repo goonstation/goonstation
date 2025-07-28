@@ -13,12 +13,6 @@
 /obj/machinery/camera,
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
-"p" = (
-/obj/machinery/camera{
-	dir = 10
-	},
-/turf/simulated/floor/circuit/red,
-/area/dmm_suite/clear_area)
 "y" = (
 /obj/item/screwdriver{
 	pixel_x = 12;
@@ -48,7 +42,7 @@
 /area/dmm_suite/clear_area)
 "T" = (
 /obj/machinery/camera{
-	dir = 6
+	dir = 2
 	},
 /obj/machinery/networked/printer{
 	pixel_x = -2;
@@ -80,5 +74,5 @@ y
 (3,1,1) = {"
 T
 Q
-p
+X
 "}

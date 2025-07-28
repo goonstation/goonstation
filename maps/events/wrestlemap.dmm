@@ -752,7 +752,7 @@
 "amn" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -844,7 +844,7 @@
 "apf" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -1086,7 +1086,7 @@
 "avd" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -1291,7 +1291,7 @@
 "aAs" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -1823,7 +1823,7 @@
 "aMh" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -2235,7 +2235,7 @@
 "aVD" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -2487,7 +2487,7 @@
 /obj/item/bat,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -3173,7 +3173,7 @@
 /obj/machinery/turret,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -3555,7 +3555,7 @@
 "bCE" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -3893,7 +3893,7 @@
 "bJr" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -4546,7 +4546,7 @@
 "bYj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -4883,7 +4883,7 @@
 /obj/machinery/vending/security,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -5679,7 +5679,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -6416,7 +6416,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -6795,7 +6795,7 @@
 "dba" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -8198,7 +8198,7 @@
 "dEi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -8326,7 +8326,7 @@
 "dGX" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -8425,7 +8425,7 @@
 /obj/machinery/power/lgenerator,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -9290,7 +9290,7 @@
 /obj/rack,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -9406,7 +9406,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -10209,7 +10209,7 @@
 /obj/item/pen,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -10293,7 +10293,7 @@
 /obj/decal/cleanable/paper,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -10517,7 +10517,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -11175,7 +11175,7 @@
 "eUu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -11405,7 +11405,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -11735,7 +11735,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -12196,7 +12196,7 @@
 "fsq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -13341,7 +13341,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -13676,7 +13676,7 @@
 "fYj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -13899,7 +13899,7 @@
 "gdi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -13987,7 +13987,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -14607,7 +14607,7 @@
 "guP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -15964,7 +15964,7 @@
 "hdE" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -16082,7 +16082,7 @@
 "hhe" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -16652,7 +16652,7 @@
 "hwg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -16716,7 +16716,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -16756,7 +16756,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -17022,7 +17022,7 @@
 "hDr" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -17443,7 +17443,7 @@
 /obj/machinery/vending/monkey/kitchen,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -18508,7 +18508,7 @@
 /obj/machinery/light/lamp/black,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -18594,7 +18594,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -19062,7 +19062,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -19337,7 +19337,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -19480,7 +19480,7 @@
 "iJq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -19712,7 +19712,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -20377,7 +20377,7 @@
 "iZV" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -21484,7 +21484,7 @@
 /obj/machinery/recharge_station,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -21720,7 +21720,7 @@
 "jEK" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -22513,7 +22513,7 @@
 /obj/storage/secure/closet/engineering/mechanic,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -22664,7 +22664,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -22942,7 +22942,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -23703,7 +23703,7 @@
 "kxr" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -23868,7 +23868,7 @@
 "kAG" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -24058,7 +24058,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -24266,7 +24266,7 @@
 "kJq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -24295,7 +24295,7 @@
 /obj/machinery/vending/medical_public,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -24484,7 +24484,7 @@
 "kPj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -24587,7 +24587,7 @@
 "kSm" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -24642,7 +24642,7 @@
 "kTI" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -24676,7 +24676,7 @@
 "kUq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -24835,7 +24835,7 @@
 "kYA" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -25105,7 +25105,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -25138,7 +25138,7 @@
 "lfm" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -25740,7 +25740,7 @@
 "luN" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -26025,7 +26025,7 @@
 "lzM" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -26910,7 +26910,7 @@
 "lUR" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -27106,7 +27106,7 @@
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -27553,7 +27553,7 @@
 "mjd" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -27881,7 +27881,7 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -28387,7 +28387,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -28647,7 +28647,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -29125,7 +29125,7 @@
 "mUQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13"
 	},
 /obj/machinery/emitter{
@@ -29557,7 +29557,7 @@
 /obj/storage/cart/trash,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -29844,7 +29844,7 @@
 /obj/table/auto,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -29965,7 +29965,7 @@
 "nns" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -30242,7 +30242,7 @@
 /obj/machinery/portable_reclaimer,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -31023,7 +31023,7 @@
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -31468,7 +31468,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -32833,7 +32833,7 @@
 "owg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -33114,7 +33114,7 @@
 "oEt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -33160,7 +33160,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -33353,7 +33353,7 @@
 "oLi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -33827,7 +33827,7 @@
 "oUP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -34002,7 +34002,7 @@
 "oZz" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -35041,7 +35041,7 @@
 "pBq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -35474,7 +35474,7 @@
 "pLm" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -35881,7 +35881,7 @@
 "pXG" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -35919,7 +35919,7 @@
 "pYF" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -35933,7 +35933,7 @@
 "pYL" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -36223,7 +36223,7 @@
 "qfD" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -36259,7 +36259,7 @@
 "qfU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -36689,7 +36689,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -36913,7 +36913,7 @@
 /obj/machinery/disposal,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -37154,7 +37154,7 @@
 "qxM" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -37260,7 +37260,7 @@
 "qBs" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -37292,7 +37292,7 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -37441,7 +37441,7 @@
 "qFE" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -37777,7 +37777,7 @@
 /obj/machinery/manufacturer/mining,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -38052,7 +38052,7 @@
 "qUw" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -38458,7 +38458,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -39261,7 +39261,7 @@
 "ryU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -39793,7 +39793,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -39859,7 +39859,7 @@
 "rLh" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -40411,7 +40411,7 @@
 "saj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -40570,7 +40570,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -40846,7 +40846,7 @@
 "sio" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -41283,7 +41283,7 @@
 /obj/machinery/manufacturer/general,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -42365,7 +42365,7 @@
 "sTB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -42737,7 +42737,7 @@
 "sZB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -43082,7 +43082,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -43381,7 +43381,7 @@
 "tmN" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -43615,7 +43615,7 @@
 "tuh" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -43782,7 +43782,7 @@
 "tyd" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -43849,7 +43849,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -44133,7 +44133,7 @@
 /obj/machinery/light/small/floor,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/white,
@@ -44250,7 +44250,7 @@
 /obj/random_item_spawner/desk_stuff,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -44383,7 +44383,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -44818,7 +44818,7 @@
 /obj/item/paper/antisingularity,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -46653,7 +46653,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -46921,7 +46921,7 @@
 /obj/item/wrench,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -47079,7 +47079,7 @@
 "vaa" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -47115,7 +47115,7 @@
 /obj/machinery/vending/cola/blue,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -47293,7 +47293,7 @@
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -47412,7 +47412,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -47579,7 +47579,7 @@
 /obj/item/device/camera_viewer,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -48440,7 +48440,7 @@
 "vBK" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13"
 	},
 /obj/machinery/light/emergency{
@@ -48838,7 +48838,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -50516,7 +50516,7 @@
 "wzo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -51730,7 +51730,7 @@
 "wYl" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -52147,7 +52147,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -52304,7 +52304,7 @@
 /obj/machinery/light/lamp/black,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -52651,7 +52651,7 @@
 "xtt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 3;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -52858,7 +52858,7 @@
 /obj/machinery/power/apc/autoname_south,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 10;
+	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -53703,7 +53703,7 @@
 "xPz" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
@@ -54453,7 +54453,7 @@
 "yhP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 6;
+	dir = 2;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
