@@ -88,6 +88,18 @@
 	if (src.network in /obj/machinery/computer/camera_viewer::camera_networks)
 		src.minimap_types |= MAP_CAMERA_STATION
 
+	if (dd_hasprefix(src.name, "autoname"))
+		var/name_build_string = ""
+		if (src.prefix)
+			name_build_string += "[src.prefix] "
+
+		name_build_string += "camera"
+		if (src.uses_area_name)
+			var/area/A = get_area(src)
+			name_build_string += " - [A.name]"
+
+		src.name = name_build_string
+
 	SPAWN(1 SECOND)
 		addToNetwork()
 
