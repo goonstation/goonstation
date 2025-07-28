@@ -40382,7 +40382,7 @@
 	pixel_x = -10;
 	pixel_y = 5
 	},
-/obj/item/scissors/surgical_scissors,
+/obj/item/surgical_spoon,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "ctw" = (
@@ -50486,6 +50486,9 @@
 "dce" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light_switch/east,
+/obj/blind_switch/area/east{
+	pixel_y = 8
+	},
 /turf/simulated/floor/blueblack{
 	dir = 6
 	},
@@ -54059,6 +54062,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/robotics,
 /obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "dZS" = (
@@ -56990,6 +56994,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/robotics,
 /obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "haZ" = (
@@ -62346,6 +62351,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/robotics,
 /obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "lGN" = (
@@ -67534,6 +67540,9 @@
 	},
 /obj/mapping_helper/access/robotics,
 /obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "qyf" = (
@@ -67655,6 +67664,9 @@
 /obj/mapping_helper/access/robotics,
 /obj/mapping_helper/firedoor_spawn,
 /obj/random_item_spawner/desk_stuff/few,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "qBq" = (
@@ -70406,6 +70418,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
+"tev" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "teY" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -70769,6 +70788,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
+"tuq" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 10
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "tuD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -73716,6 +73742,9 @@
 /area/station/science/chemistry)
 "wGP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 9
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "wHl" = (
@@ -73784,6 +73813,11 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/ne)
+"wMG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "wNU" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
@@ -110874,8 +110908,8 @@ ckq
 coE
 cqn
 cqn
-tLy
-tLy
+tev
+tev
 cwn
 cxO
 czn
@@ -111783,7 +111817,7 @@ csc
 daZ
 des
 cwp
-wGP
+tuq
 qBp
 qxB
 wGP
@@ -112692,7 +112726,7 @@ csd
 csd
 csd
 cAP
-wGP
+wMG
 cDG
 cFB
 ddb
@@ -114202,7 +114236,7 @@ cwv
 cxS
 czv
 dce
-wGP
+wMG
 cDK
 eXp
 cGY

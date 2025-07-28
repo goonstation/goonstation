@@ -21200,10 +21200,6 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
 "guU" = (
-/obj/decal/poster/wallsign/poster_borg{
-	pixel_x = 22;
-	pixel_y = 4
-	},
 /obj/item/device/radio/intercom/medical{
 	pixel_x = 7;
 	pixel_y = 21
@@ -21214,6 +21210,10 @@
 	pixel_y = 24
 	},
 /obj/surgery_tray,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "gvh" = (
@@ -22005,9 +22005,7 @@
 /area/station/quartermaster/office)
 "gIH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/right{
-	id = "chemistry"
-	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "gIT" = (
@@ -52710,6 +52708,9 @@
 	pixel_x = -6;
 	pixel_y = -1
 	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4
+	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -62901,15 +62902,20 @@
 "toz" = (
 /obj/table/reinforced/auto,
 /obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
 	pixel_x = 5;
 	pixel_y = 10
 	},
 /obj/item/robot_module{
 	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -4
+	pixel_y = -5
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)

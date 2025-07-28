@@ -1802,6 +1802,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "agj" = (
@@ -1812,34 +1813,56 @@
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/item/crowbar,
 /obj/item/device/multitool{
-	pixel_x = -7;
+	pixel_x = -12;
 	pixel_y = 1
 	},
 /obj/item/device/multitool{
-	pixel_x = -7;
+	pixel_x = -12;
 	pixel_y = 1
 	},
 /obj/machinery/light/incandescent/cool/very,
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_y = 12;
+	pixel_x = 8
+	},
+/obj/item/storage/belt/utility{
+	pixel_y = 12;
+	pixel_x = -6
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 8
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "agl" = (
 /obj/table/reinforced/auto,
 /obj/machinery/power/apc/autoname_north,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/emergency,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/reagent_containers/glass/oilcan,
-/obj/item/reagent_containers/glass/oilcan,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/hand_labeler,
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "agq" = (
@@ -9501,8 +9524,12 @@
 /area/station/maintenance/inner/central)
 "aGI" = (
 /obj/storage/crate,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /obj/item/rubber_hammer,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -12660,7 +12687,9 @@
 /area/space)
 "aUh" = (
 /obj/table/round/auto,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /turf/space/fluid,
 /area/space)
 "aUi" = (
@@ -19197,8 +19226,12 @@
 /area/station/crew_quarters/info)
 "bvO" = (
 /obj/storage/crate,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -26124,8 +26157,12 @@
 /turf/simulated/floor/damaged4,
 /area/station/storage/warehouse)
 "bUB" = (
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/warehouse)
 "bUC" = (
@@ -29325,7 +29362,9 @@
 /area/station/engine/engineering)
 "cgB" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "cgC" = (
@@ -30072,7 +30111,9 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "ckI" = (
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "ckJ" = (
@@ -40542,6 +40583,13 @@
 	icon_state = "green1"
 	},
 /area/station/crew_quarters/hop)
+"pgc" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "pgK" = (
 /obj/item/currency/spacecash/tourist,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
@@ -41935,7 +41983,9 @@
 "qZZ" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/storage/crate,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /obj/item/weldingtool,
 /obj/item/weldingtool,
 /turf/simulated/floor,
@@ -46371,8 +46421,12 @@
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/machinery/light_switch/auto,
@@ -47072,7 +47126,9 @@
 /obj/item/shipcomponent/mainweapon/bad_mining,
 /obj/item/shipcomponent/secondary_system/tractor_beam,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /obj/item/weldingtool,
 /obj/item/crowbar,
 /obj/item/device/gps,
@@ -96525,7 +96581,7 @@ akB
 agj
 agj
 agj
-agj
+pgc
 agA
 ajQ
 mNG
