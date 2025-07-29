@@ -372,6 +372,19 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	item_state = "vest"
 	c_flags = SLEEVELESS
 
+	blackpants
+		icon_state = "vestblack"
+		item_state = "vestblack"
+
+	bluepants
+		icon_state = "vestblue"
+		item_state = "vestblue"
+
+	brownpants
+		icon_state = "vestbrown"
+		item_state = "vestbrown"
+
+
 /obj/item/clothing/under/rank/chief_engineer
 	name = "chief engineer's uniform"
 	desc = "It's an old, battered boiler suit with faded oil stains."
