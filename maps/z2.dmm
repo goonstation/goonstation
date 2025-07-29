@@ -57017,7 +57017,7 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 5;
+	dir = 4;
 	pixel_x = -10;
 	network = "Eye"
 	},
@@ -58147,7 +58147,7 @@
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	pixel_y = 20;
-	dir = 6;
+	dir = 2;
 	network = "Eye"
 	},
 /obj/machinery/camera{
@@ -63488,7 +63488,7 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
+	dir = 1;
 	network = "Eye"
 	},
 /obj/machinery/camera{
@@ -66676,23 +66676,6 @@
 /obj/item/clothing/head/helmet/space/soviet,
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
-"nFq" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1;
-	network = "Eye"
-	},
-/obj/machinery/camera{
-	name = "sensor";
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
-	network = "Eye"
-	},
-/obj/lattice,
-/turf/space,
-/area/watchful_eye_sensor)
 "nFE" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/mining)
@@ -78957,14 +78940,14 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 9;
+	dir = 8;
 	pixel_x = 10;
 	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
+	dir = 1;
 	network = "Eye"
 	},
 /turf/space,
@@ -147371,7 +147354,7 @@ wfJ
 sgR
 nzY
 eAB
-nFq
+kXv
 nJg
 iUy
 laI
@@ -147673,7 +147656,7 @@ mZO
 iha
 xuD
 jwj
-nFq
+kXv
 nJg
 xPj
 lrS
@@ -147975,7 +147958,7 @@ wfJ
 sgR
 nzY
 eAB
-nFq
+kXv
 nJg
 lev
 fWR
@@ -148277,7 +148260,7 @@ jAK
 uLf
 eYq
 jCA
-nFq
+kXv
 nJg
 xmf
 jRl
