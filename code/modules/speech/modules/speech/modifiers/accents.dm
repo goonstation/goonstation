@@ -353,7 +353,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 /datum/speech_module/modifier/accent/emoji/only
 	id = SPEECH_MODIFIER_ACCENT_EMOJI_ONLY
-	accent_proc = /datum/speech_module/modifier/accent/emoji/only/replace_words
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
 
 /datum/speech_module/modifier/accent/emoji/only/replace_words(string)
 	var/processed = ..()
