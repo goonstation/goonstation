@@ -3531,7 +3531,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	proc/toggleAutoFloor(obj/item/W as obj, mob/user as mob)
 		src.floorResults = !src.floorResults
-		boutput(user, SPAN_NOTICE("Results will <b>[src.autoEval ? "be" : "not be"] floor()ed</b>."))
+		boutput(user, SPAN_NOTICE("Results will <b>[src.floorResults ? "be" : "not be"] floor()ed</b>."))
 		tooltip_rebuild = TRUE
 		return TRUE
 

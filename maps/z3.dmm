@@ -1237,30 +1237,12 @@
 	dir = 1
 	},
 /area/radiostation/hallway)
-"adQ" = (
-/obj/table/wood/auto,
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "adR" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
 /area/space)
-"adS" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "adV" = (
 /obj/effects/background_objects/domus_dei,
 /turf/space,
@@ -5535,8 +5517,9 @@
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
 "aES" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
@@ -6546,11 +6529,9 @@
 	},
 /area/h7/asteroid)
 "aJi" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
+/obj/machinery/camera/directional/west{
 	network = "Pathopost";
-	tag = ""
+	pixel_y = 10
 	},
 /obj/stool/chair,
 /turf/simulated/floor,
@@ -7030,8 +7011,9 @@
 	dir = 1;
 	status = 2
 	},
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
@@ -11076,8 +11058,9 @@
 	},
 /area/abandonedoutpostthing)
 "aXy" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 5
@@ -11141,8 +11124,9 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aXH" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
@@ -11754,8 +11738,9 @@
 /turf/space,
 /area/space)
 "aZV" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -16312,6 +16297,17 @@
 	},
 /turf/space,
 /area/space)
+"dGY" = (
+/obj/table/wood/auto,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "dHq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -19419,8 +19415,9 @@
 	},
 /area/derelict_ai_sat)
 "lxr" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /mob/living/critter/zombie/scientist,
 /turf/simulated/floor,
@@ -20719,6 +20716,13 @@
 	icon_state = "carpetNW"
 	},
 /area/radiostation/bedroom)
+"ovR" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "owN" = (
 /obj/lattice{
 	dir = 4;
@@ -107879,7 +107883,7 @@ hnB
 oSY
 adx
 adK
-adQ
+dGY
 aem
 aeD
 adg
@@ -108483,7 +108487,7 @@ vMM
 adw
 adx
 adK
-adS
+ovR
 aeo
 adL
 adg

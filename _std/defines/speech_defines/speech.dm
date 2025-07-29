@@ -53,6 +53,7 @@ var/regex/mutable_content_regex = regex(@"(?<=\<mutable\>).*?(?=\<\/mutable\>)",
 /// Applies a proc to the mutable content of a say message datum in the form of a callback.
 #define APPLY_CALLBACK_TO_MESSAGE_CONTENT(_MESSAGE, _CALLBACK) _MESSAGE.content = global.mutable_content_regex.ReplaceWithCallback(_MESSAGE.content, _CALLBACK)
 
+
 //------------ Other ------------//
 #define NO_MESSAGE null
 #define NO_SAY_SOUND ""

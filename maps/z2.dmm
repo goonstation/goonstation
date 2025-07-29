@@ -5686,10 +5686,9 @@
 	},
 /area/owlery/office)
 "aBV" = (
-/obj/machinery/camera/auto/vspace{
-	c_tag = "autotag";
-	dir = 9;
-	name = "V-space - B-Ball Court"
+/obj/machinery/camera/vspace{
+	name = "V-space - B-Ball Court";
+	pixel_y = -10
 	},
 /turf/unsimulated/floor{
 	icon_state = "0,6"
@@ -16312,18 +16311,13 @@
 /area/marsoutpost)
 "bnk" = (
 /obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/north{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_y = 20;
-	network = "Eye"
+	pixel_x = -10
 	},
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/west{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 4;
-	pixel_x = -10;
-	network = "Eye"
+	pixel_y = 10
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -36500,7 +36494,7 @@
 /obj/decal/stage_edge{
 	dir = 2
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cIp" = (
@@ -37348,7 +37342,7 @@
 	dir = 1
 	},
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cKZ" = (
@@ -40159,6 +40153,18 @@
 "cSK" = (
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
+"cSL" = (
+/obj/rack/lunar{
+	dir = 1;
+	icon_state = "aisleshelfend"
+	},
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/turf/unsimulated/floor,
+/area/moon/museum/giftshop)
 "cSM" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -44683,7 +44689,7 @@
 /area/syndicate_station/battlecruiser)
 "dfW" = (
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dfX" = (
@@ -57002,18 +57008,13 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "fZb" = (
 /obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/west{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 5;
-	pixel_x = -10;
-	network = "Eye"
+	pixel_y = -10
 	},
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/south{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1;
-	network = "Eye"
+	pixel_x = -10
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -58131,19 +58132,13 @@
 /area/crunch)
 "gNL" = (
 /obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/north{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_y = 20;
-	dir = 6;
-	network = "Eye"
+	pixel_x = 10
 	},
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/east{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 8;
-	pixel_x = 10;
-	network = "Eye"
+	pixel_y = 10
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -63473,17 +63468,13 @@
 /area/centcom/offices/janantilles)
 "kXv" = (
 /obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/south{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
-	network = "Eye"
+	pixel_x = 10
 	},
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/south{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1;
-	network = "Eye"
+	pixel_x = -10
 	},
 /obj/lattice,
 /turf/space,
@@ -66666,17 +66657,13 @@
 /area/hospital/samostrel)
 "nFq" = (
 /obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/south{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1;
-	network = "Eye"
+	pixel_x = -10
 	},
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/south{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
-	network = "Eye"
+	pixel_x = 10
 	},
 /obj/lattice,
 /turf/space,
@@ -72478,11 +72465,12 @@
 	camera_networks = list("Minerva5");
 	pixel_x = -3
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "NT/SCI #41903";
 	desc = "";
 	invisibility = 100;
-	network = "Minerva5"
+	network = "Minerva5";
+	pixel_x = -10
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/black,
@@ -77239,6 +77227,18 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"vMw" = (
+/obj/rack/lunar{
+	dir = 1;
+	icon_state = "aisleshelfend"
+	},
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/turf/unsimulated/floor,
+/area/moon/museum/giftshop)
 "vMW" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -77413,11 +77413,12 @@
 	camera_networks = list("Minerva5");
 	pixel_y = 6
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "NT/ADMIN/SCI #51352";
 	desc = "";
 	invisibility = 100;
-	network = "Minerva5"
+	network = "Minerva5";
+	pixel_x = -10
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/carpet{
@@ -78930,18 +78931,13 @@
 /area/centcom/offices/wander)
 "wVh" = (
 /obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/east{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 9;
-	pixel_x = 10;
-	network = "Eye"
+	pixel_y = -10
 	},
-/obj/machinery/camera{
-	name = "sensor";
+/obj/machinery/camera/watchful_eye/directional/south{
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
-	network = "Eye"
+	pixel_x = 10
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -80678,10 +80674,9 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "ycI" = (
-/obj/machinery/camera/auto/vspace{
-	c_tag = "autotag";
-	dir = 9;
-	name = "V-Space - Gun Sim Arena"
+/obj/machinery/camera/vspace{
+	name = "V-Space - Gun Sim Arena";
+	pixel_y = -10
 	},
 /obj/invisible_teleporter/receive_only{
 	id = "murderbox"
@@ -104836,7 +104831,7 @@ aCO
 aCx
 aDN
 aCN
-aCN
+vMw
 eyo
 aCu
 aaa
@@ -105138,7 +105133,7 @@ aCN
 aCN
 aCN
 aCN
-aCN
+cSL
 eyo
 aCu
 aaa
