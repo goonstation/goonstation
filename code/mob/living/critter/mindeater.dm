@@ -366,50 +366,41 @@ TYPEINFO(/mob/living/critter/mindeater)
 	/// disguise as an entity
 	proc/disguise()
 		var/mob/living/temp
-		switch (src.set_disguise)
-			if (MINDEATER_DISGUISE_MOUSE)
+		if (src.set_disguise == MINDEATER_DISGUISE_MOUSE || src.set_disguise == MINDEATER_DISGUISE_COCKROACH)
+			if (src.set_disguise == MINDEATER_DISGUISE_MOUSE)
 				temp = new /mob/living/critter/small_animal/mouse
-				src.icon = temp.icon
-				src.icon_state = temp.icon_state
-				src.flags |= (TABLEPASS | DOORPASS)
-				src.pull_w_class = W_CLASS_TINY
-				src.name = temp.real_name
-				src.real_name = temp.real_name
-				src.desc = temp.get_desc(0, src)
-				src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
-			if (MINDEATER_DISGUISE_COCKROACH)
+			else if (src.set_disguise == MINDEATER_DISGUISE_COCKROACH)
 				temp = new /mob/living/critter/small_animal/cockroach
-				src.icon = temp.icon
-				src.icon_state = temp.icon_state
-				src.flags |= (TABLEPASS | DOORPASS)
-				src.pull_w_class = W_CLASS_TINY
-				src.name = temp.real_name
-				src.real_name = temp.real_name
-				src.desc = temp.get_desc(0, src)
-				src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
-			if (MINDEATER_DISGUISE_HUMAN)
-				src.human_disguise_dummy.unequip_all(TRUE)
-				randomize_look(src.human_disguise_dummy)
-				src.human_disguise_dummy.JobEquipSpawned(src.human_disguise_job)
 
-				var/icon/front = getFlatIcon(src.human_disguise_dummy, SOUTH)
-				var/icon/back = getFlatIcon(src.human_disguise_dummy, NORTH)
-				var/icon/left = getFlatIcon(src.human_disguise_dummy, WEST)
-				var/icon/right = getFlatIcon(src.human_disguise_dummy, EAST)
-				var/icon/guise = new
-				guise.Insert(front, dir = SOUTH)
-				guise.Insert(back, dir = NORTH)
-				guise.Insert(left, dir = WEST)
-				guise.Insert(right, dir = EAST)
+			src.icon = temp.icon
+			src.icon_state = temp.icon_state
+			src.name = temp.real_name
+			src.real_name = temp.real_name
+			src.desc = temp.get_desc(0, src)
+			src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
 
-				src.icon = guise
-
-				src.name = src.human_disguise_dummy.real_name
-				src.real_name = src.human_disguise_dummy.real_name
-				src.desc = src.human_disguise_dummy.get_desc(TRUE, TRUE, src)
-				src.bioHolder.mobAppearance.gender = src.human_disguise_dummy.bioHolder.mobAppearance.gender
-
-				src.health_monitor.alpha = 255
+			src.flags |= (TABLEPASS | DOORPASS)
+			src.pull_w_class = W_CLASS_TINY
+			src.apply_critter_debuffs()
+		else
+			src.human_disguise_dummy.unequip_all(TRUE)
+			randomize_look(src.human_disguise_dummy)
+			src.human_disguise_dummy.JobEquipSpawned(src.human_disguise_job)
+			var/icon/front = getFlatIcon(src.human_disguise_dummy, SOUTH)
+			var/icon/back = getFlatIcon(src.human_disguise_dummy, NORTH)
+			var/icon/left = getFlatIcon(src.human_disguise_dummy, WEST)
+			var/icon/right = getFlatIcon(src.human_disguise_dummy, EAST)
+			var/icon/guise = new
+			guise.Insert(front, dir = SOUTH)
+			guise.Insert(back, dir = NORTH)
+			guise.Insert(left, dir = WEST)
+			guise.Insert(right, dir = EAST)
+			src.icon = guise
+			src.name = src.human_disguise_dummy.real_name
+			src.real_name = src.human_disguise_dummy.real_name
+			src.desc = src.human_disguise_dummy.get_desc(TRUE, TRUE, src)
+			src.bioHolder.mobAppearance.gender = src.human_disguise_dummy.bioHolder.mobAppearance.gender
+			src.health_monitor.alpha = 255
 
 		src.update_name_tag(src.name)
 		qdel(temp)
