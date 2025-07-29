@@ -271,6 +271,16 @@ TYPEINFO(/mob/living/critter/mindeater)
 		src.reveal(FALSE)
 		return ..()
 
+	examine(mob/user)
+		if (src.disguised && src.set_disguise == MINDEATER_DISGUISE_HUMAN)
+			return src.human_disguise_dummy.examine(user)
+		return ..()
+
+	get_desc(dist, mob/user)
+		if (src.disguised && src.set_disguise == MINDEATER_DISGUISE_HUMAN)
+			return src.human_disguise_dummy.get_desc(TRUE, TRUE, user)
+		return ..()
+
 	/// returns if the turf is bright enough to reveal the mindeater
 	proc/on_bright_turf()
 		var/turf/T = get_turf(src)
@@ -414,7 +424,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 			src.icon = guise
 			src.name = src.human_disguise_dummy.real_name
 			src.real_name = src.human_disguise_dummy.real_name
-			src.desc = src.human_disguise_dummy.get_desc(TRUE, TRUE, src)
+			src.desc = null
 			src.bioHolder.mobAppearance.gender = src.human_disguise_dummy.bioHolder.mobAppearance.gender
 			src.health_monitor.alpha = 255
 

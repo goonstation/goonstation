@@ -18,7 +18,7 @@
 		var/mob/living/critter/mindmite/C = src.holder.owner
 		if (BOUNDS_DIST(C, C.target_mob) == 0)
 			src.holder.owner.ai.interrupt()
-		else
+		else if (can_act(C))
 			walk_towards(C, C.target_mob, 0, 32)
 		..()
 

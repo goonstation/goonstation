@@ -38,6 +38,8 @@
 		..()
 		if (QDELETED(src))
 			return
+		if (!can_act(src))
+			return
 		if (!length(get_path_to(src, src.target_mob, 0)))
 			step_towards(src, src.target_mob, 32)
 
