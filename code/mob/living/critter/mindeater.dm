@@ -172,6 +172,9 @@ TYPEINFO(/mob/living/critter/mindeater)
 		for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
 			shield.process_hit()
 
+	projCanHit(datum/projectile/P)
+		return !src.is_intangible()
+
 	bump(atom/A)
 		..()
 		if (A.density && A.material?.getProperty("reflective") > 7)
@@ -292,6 +295,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		src.event_handler_flags &= ~(MOVE_NOCLIP | IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
 		src.flags &= ~UNCRUSHABLE
 		src.density = TRUE
+		src.throws_can_hit_me = TRUE
 		src.set_invisible()
 		src.alpha = 255
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
@@ -309,6 +313,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		src.event_handler_flags |= (MOVE_NOCLIP | IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
 		src.flags |= UNCRUSHABLE
 		src.density = FALSE
+		src.throws_can_hit_me = FALSE
 		src.set_invisible()
 		src.alpha = 150
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
