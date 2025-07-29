@@ -130,6 +130,11 @@
 			src.real_name = src.name
 		src.name = "[name_prefix(null, 1)][src.real_name || initial(src.name)][name_suffix(null, 1)]"
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.forensic_ID)
+			scan.add_text("Forensic profile: [src.forensic_ID]")
+
 	proc/can_access_remotely(mob/user)
 		. = FALSE
 

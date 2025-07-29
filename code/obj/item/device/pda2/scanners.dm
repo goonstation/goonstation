@@ -57,7 +57,7 @@
 		scan_atom(atom/A as mob|obj|turf|area)
 			if(..())
 				return
-			var/datum/forensic_scan/scan = scan_forensic_new(A, visible = 1)
+			var/datum/forensic_scan/scan = scan_forensic(A, visible = TRUE)
 			. = scan.build_report()
 
 	//Reagent scanning program

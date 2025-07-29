@@ -265,7 +265,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if(distancescan)
 			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant forensic scan of [target]."))
-				var/datum/forensic_scan/scan = scan_forensic_new(target, visible = 1)
+				var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
 				last_scan = scan.build_report()
 				boutput(user, last_scan)
 				src.add_fingerprint(user)
@@ -279,11 +279,11 @@ TYPEINFO(/obj/item/device/detective_scanner)
 
 		if (scans == null)
 			scans = new/list(maximum_scans)
-		var/datum/forensic_scan/scan = scan_forensic_new(A, visible = 1)
+		var/datum/forensic_scan/scan = scan_forensic(A, visible = TRUE)
 		last_scan = scan.build_report()
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = last_scan + "<br>---- <a href='byond://?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ---" + last_scan
 		number_of_scans += 1
 
 		boutput(user, scan_output)

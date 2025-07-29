@@ -12,7 +12,13 @@
 	// -------------------- New Stuff -----------
 	var/datum/forensic_holder/forensic_holder = new() //! A place to store forensic information related to this atom
 
+/// Called before a forensics scan. You can change how the scan works here.
 /atom/proc/on_forensic_scan(var/datum/forensic_scan/scan)
+	src.forensic_holder.copy_to(scan.holder, scan.is_admin)
+	if(src.reagents)
+		src.reagents.on_forensic_scan_reagent(scan)
+
+	// Transfer old forensics to new forensics for scan
 	for(var/fingerprint in src.fingerprints)
 		scan.add_text(fingerprint, FORENSIC_HEADER_FINGERPRINTS)
 	if(src.blood_DNA)

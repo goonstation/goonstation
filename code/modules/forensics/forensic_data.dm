@@ -35,18 +35,19 @@
 		src.value = value
 
 	get_text(var/datum/forensic_scan/scan)
-		return replacetextEx(src.display, "@F", src.evidence.id)
+		return replacetextEx(src.display.text, "@F", src.evidence.id)
 
 	get_copy()
 		var/datum/forensic_data/basic/data_copy = new(src.evidence, src.display, src.flags, src.value)
 		data_copy.time_start = src.time_start
 		data_copy.time_end = src.time_end
+		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
 		return data_copy
 
-// Simple text displayed as forensic evidence.
+/// Simple text displayed as forensic evidence.
 /datum/forensic_data/text
 	var/text = ""
-	var/header = "" //! The label that the text is placed under.
+	var/header = "" //! The header that the text is placed under.
 
 	New(var/text, var/header = "Notes", var/flags = 0)
 		..()
@@ -61,4 +62,5 @@
 		var/datum/forensic_data/text/data_copy = new(src.text, src.header, src.flags)
 		data_copy.time_start = src.time_start
 		data_copy.time_end = src.time_end
+		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
 		return data_copy

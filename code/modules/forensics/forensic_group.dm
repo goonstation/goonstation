@@ -16,7 +16,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 	proc/remove_evidence(var/removal_flags)
 		return FALSE
 
-	proc/report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder)
+	proc/report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
 		return
 
 	proc/copy_to(var/datum/forensic_holder/other)
@@ -46,11 +46,16 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		src.evidence_list.Add(data)
 
 	remove_evidence(var/removal_flags)
-		return evidence_list.len == 0
+		for(var/i=0; i<= src.evidence_list.len; i++)
+			if(should_remove(src.evidence_list[i].flags, removal_flags))
+				var/list/datum/forensic_data/removed_data = src.evidence_list[i]
+				src.evidence_list.Cut(i, i+1)
+				qdel(removed_data)
+		return src.evidence_list.len == 0
 
-	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder)
+	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
 		for(var/datum/forensic_data/text/f_data in src.evidence_list)
-			report_builder.add_line(f_data.get_text(scan), f_data.header)
+			report.add_line(f_data.get_text(scan), f_data.header)
 
 	copy_to(var/datum/forensic_holder/other)
 		for(var/datum/forensic_data/evidence in src.evidence_list)
@@ -76,6 +81,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		var/oldest = 1
 		for(var/i in 1 to length(src.evidence_list))
 			if(data.evidence == src.evidence_list[i].evidence)
+				evidence_list[i].time_start = min(evidence_list[i].time_start, data.time_start)
 				evidence_list[i].time_end = max(evidence_list[i].time_end, data.time_end)
 				update_value(evidence_list[i], data)
 				return
@@ -93,9 +99,9 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		src.evidence_list.len = 0
 		return TRUE
 
-	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder)
+	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
 		for(var/datum/forensic_data/f_data in src.evidence_list)
-			report_builder.add_line(f_data.get_text(scan), src.get_header())
+			report.add_line(f_data.get_text(scan), src.get_header())
 
 	copy_to(var/datum/forensic_holder/other)
 		for(var/datum/forensic_data/evidence_data in src.evidence_list)
@@ -121,9 +127,11 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 	group_flags = FORENSIC_REMOVE_ALL
 
 	remove_evidence(var/removal_flags)
-		for(var/i=0; i< src.evidence_list.len; i++)
+		for(var/i=1; i<= src.evidence_list.len; i++)
 			if(should_remove(src.evidence_list[i].flags, removal_flags))
+				var/list/datum/forensic_data/removed_data = src.evidence_list[i]
 				src.evidence_list.Cut(i, i+1)
+				qdel(removed_data)
 		return src.evidence_list.len == 0
 
 	get_header()
@@ -133,7 +141,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 	category = FORENSIC_GROUP_SLEUTH
 	group_flags = 0
 
-	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder)
+	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
 		return
 
 	/// Text proc is seperate for now since sleuthing is obtained via an emote rather than the forensics scanner

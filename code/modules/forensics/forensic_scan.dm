@@ -1,9 +1,10 @@
 // A copy of all the evidence collected from a forensic scan
-datum/forensic_scan
+/datum/forensic_scan
 	var/datum/forensic_holder/holder = new()
 	var/datum/forensic_scan/next_chain = null //! Allows scanning multiple objects at once
 	var/scan_time = 0
 	var/accuracy = 0 //! The quality of the scan
+	var/is_admin = FALSE
 
 	var/report_title = "Unknown Forensic Analysis"
 
@@ -11,14 +12,17 @@ datum/forensic_scan
 		..()
 		src.scan_time = TIME
 		if(scan_target)
-			report_title = "Forensic Analysis of [scan_target]"
+			report_title = "Forensic Analysis of <b>[scan_target]</b>"
 			scan_target.on_forensic_scan(src)
 
-	proc/build_report()
-		var/datum/forensic_report_builder/report_builder = new(src.report_title, src.scan_time)
-		src.holder.report_text(src, report_builder)
-		var/report = report_builder.compile_report()
-		return report
+	proc/build_report(var/print_hyperlink = "")
+		var/datum/forensic_report/report = new(src.report_title, src.scan_time)
+		src.holder.report_text(src, report)
+		var/report_scan = report.compile_report()
+		var/report_chain = next_chain?.build_report()
+		if(report_chain)
+			report_chain = "<li></li>" + report_chain
+		return report_scan + report_chain
 
 	proc/add_data(var/datum/forensic_data/forensic_data, var/category = FORENSIC_GROUP_NOTES)
 		src.holder.add_evidence(forensic_data, category)
@@ -43,16 +47,15 @@ datum/forensic_scan
 		else
 			src.next_chain.chain_scan(new_scan)
 
-// Used to store text while building the forensic report
-datum/forensic_report_builder
+// The results of a forensics scan in text format.
+/datum/forensic_report
+	/// Associative list. Keys are header names. Each element is a list of evidence under that header in text format.
 	var/list/list/report_lines = list()
-	var/report_title = ""
-	var/report_time = ""
+	var/title = ""
 
-	New(var/report_title, var/scan_time)
+	New(var/title)
 		..()
-		src.report_title = report_title
-		src.report_time = "[scan_time]"
+		src.title = title
 
 	proc/add_line(var/evidence_text, var/header = FORENSIC_HEADER_NOTES)
 		var/list/header_lines = src.report_lines[header]
@@ -61,38 +64,44 @@ datum/forensic_report_builder
 			header_lines = src.report_lines[header]
 		header_lines.Add(evidence_text)
 
-	proc/compile_report()
+	/// Collect all the lines into a single string
+	proc/compile_report(var/print_hyperlink = "")
 		var/list/headers = list()
 		for(var/header in src.report_lines)
 			headers.Add(header)
-		sortList(headers, PROC_REF(compare_header_priority))
+		sortList(headers, /proc/cmp_forensic_headers)
 
 		var/report = ""
-		for(var/header in headers)
-			report += SPAN_NOTICE("<li>[header]</li>")
-			for(var/line in src.report_lines[header])
-				report += "<li>[line]</li>"
+		// Go through headers in order
+		for(var/i=1; i<= headers.len; i++)
+			report += SPAN_NOTICE("<li><dt>[headers[i]]</dt></li>")
+			for(var/line in src.report_lines[headers[i]])
+				report += "<li><dd>&#x2022; [line]</dd></li>" // Indent line and add a bullent point
 		if(!report)
-			report = "<li>No evidence detected.</li>"
+			report = "<li>&#x2022; No evidence detected.</li>"
 
-		report = SPAN_SUCCESS("<li>[src.report_title]</li>") + report
+		var/report_title = SPAN_SUCCESS(src.title)
+		if(print_hyperlink)
+			report_title += ": [print_hyperlink]"
+		report = "<li>[report_title]</li>" + report
+		report = "<style> dd {margin-left:12px;} </style>" + report // Set the indentation size
 		return report
 
-	proc/compare_header_priority(var/headerA, var/headerB)
-		var/priorityA = get_header_priority(headerA)
-		var/priorityB = get_header_priority(headerB)
-		if(priorityA == priorityB)
-			return cmp_text_asc(headerA, headerB)
-		return (priorityA > priorityB)
+/proc/cmp_forensic_headers(var/headerA, var/headerB)
+	var/priorityA = get_header_priority(headerA)
+	var/priorityB = get_header_priority(headerB)
+	if(priorityA == priorityB)
+		return cmp_text_asc(headerA, headerB)
+	return (priorityA < priorityB)
 
-	proc/get_header_priority(var/header)
-		switch(header)
-			if(FORENSIC_HEADER_FINGERPRINTS)
-				return 100
-			if(FORENSIC_HEADER_DNA)
-				return 90
-			if(FORENSIC_HEADER_NOTES)
-				return 20
-			else
-				return 50
+/proc/get_header_priority(var/header)
+	switch(header)
+		if(FORENSIC_HEADER_FINGERPRINTS)
+			return 100
+		if(FORENSIC_HEADER_DNA)
+			return 90
+		if(FORENSIC_HEADER_NOTES)
+			return 20
+		else
+			return 50
 

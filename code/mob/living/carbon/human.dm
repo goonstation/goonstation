@@ -3356,3 +3356,33 @@ mob/living/carbon/human/has_genetics()
 	sleep(1.2 SECONDS * spaces)
 	src.remove_typing_indicator()
 	src.say(text)
+
+/mob/living/carbon/human/on_forensic_scan(datum/forensic_scan/scan)
+	..()
+	if(!src.gloves?.hide_prints)
+		scan.add_text("Target's Fingerprints: [src.bioHolder?.fingerprints]")
+	if(src.gloves)
+		scan.add_text("Target's Glove ID: [src.gloves.glove_ID] [src.gloves.material_prints ? "([src.gloves.material_prints])" : null]")
+	if(src.bioHolder.Uid)
+		scan.add_text("Target's DNA: [src.bioHolder.Uid]")
+
+	if (src.blood_DNA && !src.gloves) // Don't magically detect blood through worn gloves.
+		var/list/BH = params2list(src.blood_DNA)
+		for(var/i in BH)
+			scan.add_text("[i] (Hands)", FORENSIC_HEADER_DNA)
+
+	var/list/gear_to_check = list(src.head, src.wear_mask, src.w_uniform, src.wear_suit, src.belt, src.gloves, src.shoes, src.back, src.r_hand, src.l_hand)
+	for (var/obj/item/check in gear_to_check)
+		if (!check?.blood_DNA)
+			continue
+		var/list/BC = params2list(check.blood_DNA)
+		for(var/i in BC)
+			scan.add_text("[i] ([check.name])", FORENSIC_HEADER_DNA)
+
+	if(src.implant && length(src.implant) > 0)
+		var/wound_count = 0
+		for (var/obj/item/implant/I in src.implant)
+			if (istype(I, /obj/item/implant/projectile))
+				wound_count++
+		if(wound_count)
+			scan.add_text("Gunshot wounds: [wound_count] fragments detected")

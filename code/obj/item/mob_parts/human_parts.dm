@@ -208,6 +208,11 @@
 			return
 		..()
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.original_DNA)
+			scan.add_text("[src]'s DNA: [src.original_DNA]")
+
 	/// Determines what the limb's skin tone should be
 	proc/colorize_limb_icon()
 		if (!src.skintoned) return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
@@ -362,6 +367,12 @@
 			holder.u_equip(I)
 			I.set_loc(holder.loc)
 		. = ..()
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.original_fprints)
+			scan.add_text("Arm's fingerprints: [src.original_fprints]")
+
 
 
 /obj/item/parts/human_parts/arm/left

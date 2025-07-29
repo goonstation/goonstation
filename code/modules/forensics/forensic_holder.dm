@@ -20,6 +20,10 @@ datum/forensic_holder
 
 	/// Add forensic data to the holder, such as an indiviual fingerprint or DNA sample
 	proc/add_evidence(var/datum/forensic_data/data, var/category = FORENSIC_GROUP_NOTES, var/admin_only = FALSE)
+		if(HAS_FLAG(data.flags, FORENSIC_USED))
+			CRASH("Another forensic_holder is already using this forensic_data! Please use a copy instead.")
+
+		ADD_FLAG(data.flags, FORENSIC_USED)
 		if(!HAS_FLAG(data.flags, FORENSIC_FAKE))
 			var/datum/forensic_group/admin_group = get_group(category, TRUE)
 			if(!admin_group)
@@ -61,9 +65,9 @@ datum/forensic_holder
 		for(var/datum/forensic_group/group in scan_groups)
 			group.copy_to(other)
 
-	proc/report_text(var/datum/forensic_scan/scan, var/datum/forensic_report_builder/report_builder, var/is_admin = FALSE)
+	proc/report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report, var/is_admin = FALSE)
 		var/list/datum/forensic_group/scan_groups = src.group_list
 		if(is_admin)
 			scan_groups = src.admin_list
 		for(var/datum/forensic_group/group in scan_groups)
-			group.report_text(scan, report_builder)
+			group.report_text(scan, report)
