@@ -42,7 +42,8 @@ const MindeaterContentWindow = () => {
       </p>
       <p>
         5. Stuns and flashes will disorient and stagger you. While in critter
-        form, you take increased damage and are hurt by mousetraps.
+        form, you take increased damage, have reduced stamina, and are hurt
+        significantly by mousetraps.
       </p>
       <p>
         6. You can speak over Intruder chat with the radio hotkey, or prefixing

@@ -213,7 +213,7 @@ ABSTRACT_TYPE(/area/veil_border)
 
 /datum/targetable/critter/mindeater/set_disguise
 	name = "Set Disguise"
-	desc = "Set what you will disguise as. Human disguises have door access tied to the job disguised as. Critters may move through doors/tables, but take increased damage and have reduced stamina."
+	desc = "Set what you will disguise as. Human disguises have door access tied to the job disguised as. Critters may move through doors/tables, but take increased damage, have reduced stamina, and are hurt by mousetraps"
 	icon_state = "set_disguise"
 	pointCost = 0
 
