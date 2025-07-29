@@ -416,7 +416,7 @@ or don't if it uses a custom topopen overlay
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
 
-		src.camera = new /obj/machinery/camera/auto/AI(src)
+		src.camera = new /obj/machinery/camera/AI(src)
 		src.camera.c_tag = src.real_name
 		src.camera.network = CAMERA_NETWORK_ROBOTS
 

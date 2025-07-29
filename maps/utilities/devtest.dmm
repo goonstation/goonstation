@@ -440,11 +440,9 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "ib" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
+/obj/machinery/camera/directional/north{
 	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -486,11 +484,9 @@
 /obj/machinery/magnet_chassis{
 	pixel_x = 16
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
+/obj/machinery/camera/directional/north{
 	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2631,11 +2627,9 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "Wg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
+/obj/machinery/camera/directional/north{
 	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2727,11 +2721,9 @@
 /area/station/devzone)
 "Xu" = (
 /obj/item/rcd/construction/safe/admin_crimes,
-/obj/machinery/camera{
-	c_tag = "autotag";
+/obj/machinery/camera/directional/north{
 	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2763,11 +2755,9 @@
 	},
 /area/station/devzone)
 "XI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
+/obj/machinery/camera/directional/north{
 	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+	pixel_x = -10
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
