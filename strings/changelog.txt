@@ -1,5 +1,9 @@
 
 (t)tue jul 29 25
+(u)SnugglyCactus
+(p)24197
+(e)🎨|C-Sprites
+(+)Added organ variants for skeletons, amphibians, and martians. Selling your kidney has never been so fun.
 (u)RubberRats
 (p)24089
 (e)🪲🎨📄📦|C-Bug, C-Sprites, A-UI, A-Game-Objects
