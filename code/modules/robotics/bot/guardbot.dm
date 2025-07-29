@@ -4779,6 +4779,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	icon_state = "tour"
 	pixel_y = 8
 	var/obj/machinery/bot/guardbot/linked_bot = null
+	object_flags = NO_BLOCK_TABLE
 
 	New()
 		..()

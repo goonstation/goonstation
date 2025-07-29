@@ -390,6 +390,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/orange/blood
 	name = "blood orange"
 	desc = "Juicy."
+	icon_state = "orange-blood"
 
 	make_reagents()
 		..()
@@ -650,18 +651,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 				playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 				if (ismob(hit_atom))
 					var/mob/hitMob = hit_atom
-					if (ishuman(hitMob))
-						SPAWN( 0 )
-							if (istype(user))
-								if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
-									src.hitHard(hitMob, user)
-
-									if(!(hitMob == user))
-										user.say(pick("Who's the kingpin now, baby?", "STRIIIKE!", "Watch it, pinhead!", "Ten points!"))
-								else
-									src.hitWeak(hitMob, user)
+					SPAWN( 0 )
+						if (istype(user))
+							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+								src.hitHard(hitMob, user)
+								if(!(hitMob == user) && ishuman(hitMob))
+									user.say(pick("Who's the kingpin now, baby?", "STRIIIKE!", "Watch it, pinhead!", "Ten points!"))
 							else
 								src.hitWeak(hitMob, user)
+						else
+							src.hitWeak(hitMob, user)
 				if(already_burst)
 					return
 				already_burst = TRUE
@@ -732,7 +731,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
-		M.bodytemperature -= DNA?.get_effective_value("potency")
+		M.changeBodyTemp(-DNA?.get_effective_value("potency"))
 		boutput(M, SPAN_ALERT("You feel cold!"))
 
 /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
@@ -758,7 +757,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, SPAN_ALERT("Fuck! Your mouth feels like it's on fire!"))
-		M.bodytemperature += (DNA?.get_effective_value("potency") * 5)
+		M.changeBodyTemp(DNA?.get_effective_value("potency") * 5)
 
 
 /obj/item/reagent_containers/food/snacks/plant/lettuce

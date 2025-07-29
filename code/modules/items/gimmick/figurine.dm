@@ -862,8 +862,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "froggitdogget"
 
 	munien
-		name = "\improper Elijah Retluoc"
-		icon_state = "elijahretluoc"
+		name = "\improper Elijah Caldwell"
+		icon_state = "elijahcaldwell"
 		ckey = "munien"
 
 	calliopesoups

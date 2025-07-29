@@ -118,6 +118,8 @@ THROWING DARTS
 			M.update_clothing()
 		src.owner = null
 		src.implanted = 0
+		UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
+		UnregisterSignal(M, COMSIG_MOB_DEATH)
 
 	proc/activate()
 		online = TRUE
@@ -1719,7 +1721,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			return 0
 		else
 			uses -= 1
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return 1
 
 	infinite
@@ -2173,7 +2175,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			. += "It appears to contain \a [src.imp.name]."
 
 	proc/update()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (src.imp)
 			src.icon_state = src.imp.impcolor ? "implanter1-[imp.impcolor]" : "implanter1-g"
 		else
@@ -2503,7 +2505,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		. += "It appears to contain \a [src.imp.name]."
 
 /obj/item/implantcase/proc/update()
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	if (src.imp)
 		if (disposable)
 			src.icon_state = src.imp.impcolor ? "implantpaper-[imp.impcolor]" : "implantpaper-g"
@@ -2528,7 +2530,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.name = "glass case - '[t]'"
 		else
 			src.name = "glass case"
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		return
 	else if (istype(I, /obj/item/implanter))
 		var/obj/item/implanter/Imp = I
@@ -2607,7 +2609,7 @@ TYPEINFO(/obj/item/gun/implanter)
 				return
 
 			my_implant = I
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			if (istype(W, /obj/item/implant))
 				user.u_equip(W)
@@ -2652,7 +2654,7 @@ TYPEINFO(/obj/item/gun/implanter)
 			return ..()
 		my_implant.set_loc(P)
 		my_implant = null
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /datum/projectile/implanter
 	name = "implant bullet"

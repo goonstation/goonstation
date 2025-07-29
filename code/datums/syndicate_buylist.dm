@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Syndicate Omnitool"
 	items = list(/obj/item/tool/omnitool/syndicate)
 	cost = 2
-	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes."
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes. The handle is insulated, no gloves needed!"
 	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/bighat
@@ -998,7 +998,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 6
 	vr_allowed = FALSE
 	desc = "A barrel of bloodthirsty apes. Careful!"
-	br_allowed = TRUE
 	job = list("Staff Assistant","Test Subject","Geneticist","Pathologist")
 
 /datum/syndicate_buylist/traitor/mindhack_module

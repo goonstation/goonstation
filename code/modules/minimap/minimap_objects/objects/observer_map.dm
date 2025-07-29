@@ -47,5 +47,5 @@
 	if ("left" in param_list)
 		// Convert from screen (x, y) to map (x, y) coordinates.
 		var/turf/clicked = src.get_turf_at_screen_coords(text2num(param_list["icon-x"]), text2num(param_list["icon-y"]))
-		usr.set_loc(clicked)
-		return
+		if (clicked)
+			usr.set_loc(clicked)

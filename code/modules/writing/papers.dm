@@ -662,6 +662,80 @@ Only trained personnel should operate station systems. Follow all procedures car
 		pixel_y = rand(-8, 8)
 		info = PAPER_IMAGE_RENDER("images/arts/mushroom_station.png")
 
+/obj/item/paper/postcard/beach
+	name = "tropical postcard"
+	desc = {"A postcard depicting a picturesque beach scene. The back side has a groan-worthy pun."}
+	icon_state = "postcard-beach"
+	info = {"Wish you were here to <font color='#0026FF'>sea</font> this!<br><br>
+	National Notary Supply Corporation<br>
+	Image #06019"}
+
+/obj/item/paper/postcard/mountain
+	name = "alpine postcard"
+	desc = {"A postcard depicting a snow-capped mountain emitting a thin column of smoke. There's a bad joke on the back."}
+	icon_state = "postcard-mountain"
+	info = {"Is that mountain supposed to be smoking?<br><br>
+	National Notary Supply Corporation<br>
+	Image #06129"}
+
+/obj/item/paper/postcard/canyon
+	name = "canyon postcard"
+	desc = "A postcard depicting a river flowing through a sun-bleached canyon"
+	icon_state = "postcard-canyon"
+	info = {"Grand Canyon National Park, USA, Earth - River View 1<br>
+	National Notary Supply Corporation<br>
+	Image #05641"}
+
+/obj/item/paper/postcard/lovemd
+	name = "I Love Maryland postcard"
+	desc = "A postcard expressing admiration for the US state of Maryland, abbreviated MD. The back contains a tourist blurb about the state."
+	icon_state = "postcard-maryland" //deliberately uses the "MD" state abbreviation for laffes
+	info = {"There is much to love about the \"Old Line State\", one of the oldest states in the United States.
+	From the majestic Appalachian Mountains to the breath-taking Chesapeake Bay, every inch of Maryland
+	is blessed with natural beauty. Every year, thousands of history buffs make a pilgrimage to Fort McHenry, 
+	the site of the battle that inspired the anthem of the United States, and Maryland's warm and generous 
+	people welcome such storied institutions and corporations as the United States Naval Academy, John Hopkins 
+	University, and National Notary. Truly there is something for everyone in Maryland.<br><br>
+	I Heart Maryland<br>
+	National Notary Supply Corporation<br>
+	Image #01309"}
+
+/obj/item/paper/postcard/mdstatehouse
+	name = "Maryland State House postcard"
+	desc = "A postcard showing the Maryland State House in Annapolis. The back explains the building's significance."
+	icon_state = "postcard-md-state-house"
+	info = {"In addition to hosting the United States Naval Academy and the headquarters of the National
+	Notary Supply Corporation, Annapolis is also the capital of the US state of Maryland. The Maryland
+	State House, depicted on this postcard, is the oldest state legislature building still in continuous use
+	and once served as the national capitol, during the city's nine months as the capital of the United States.
+	<br><br>
+	Maryland State House<br>
+	National Notary Supply Corporation<br>
+	Image #01311"}
+
+/obj/item/paper/postcard/apollo
+	name = "Apollo 11 postcard"
+	desc = "A postcard showing the crew of Apollo 11, the first three modern men to land on the moon."
+	icon_state = "postcard-apollo"
+	info = {"<font face='Arial'><h3>MEET THE MEN WHO MADE A GIANT LEAP FOR MANKIND</h3>
+	When the three crew members of American spaceflight Apollo 11 landed on Earth's moon in July 1969,
+	the roughly 22 hours they spent on the lunar surface would totally reshape human history forever.
+	Their trip to the moon and back rocked the scientific world and paved the way for the ground-breaking
+	discovery of FAAE, the miracle substance popularly known as "plasma". Learn about Apollo 11,
+	plasma, and more at the Museum of Lunar History!<br><br><br><br><br><hr>
+	Printed by Aurora Lithographics<hr></font>"}
+
+/obj/item/paper/postcard/moonfootprint
+	name = "Lunar bootprint postcard"
+	desc = "A postcard telling readers that they should \"see Neil Armstrong's genuine lunar bootprint\" at the Museum of Lunar History"
+	icon_state = "postcard-moon-footprint"
+	info = {"<font face='Arial'><h3>SEE NEIL ARMSTRONG'S GENUINE LUNAR BOOTPRINT</h3>
+	When American astronaut Neil Armstrong took a small step out of the lunar lander on that fateful day
+	in July 20, 1969, he made a giant leap for humankind by becoming one of the first modern humans
+	to set foot on Earth's moon. Retrace his steps and see Neil Armstrong's genuine lunar bootprint,
+	only at the Museum of Lunar History!<br><br><br><br><br><hr>
+	Printed by Aurora Lithographics<hr></font>"}
+
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
@@ -1481,7 +1555,7 @@ proc/spawn_kitchen_note()
 		Remember you can usually only fit three items total into a pipe frame.<br>
 		<b>Step 4:</b> Pour something flammable into the frame. Generally the more angrily it burns the bigger the boom you'll make.<br>
 		<b>Step 5:</b> Tangle some wires around it. Don't worry about wiring diagrams, this thing only has to work <i>once.</i><br>
-		<b>FINAL STEP:</b> Stick a timer on it and resist pressing the button until you're near your target.<br><br>
+		<b>FINAL STEP:</b> Attach a detonator. The gold standard is a timer/igniter assembly, but anything stuck to an igniter will make it go boom. <b>Make sure to secure the assembly to your bomb with a screwdriver!</b><br><br>
 
 		Good luck, agent. Try not to blow the bloody doors off the listening post this time.
 		"}
@@ -1543,3 +1617,16 @@ proc/spawn_kitchen_note()
 			<h3>Section 3: Safety</h3>
 			All user contact with the blades of a spinning turbine is prohibited and may result in a fine of up to 400[CREDIT_SIGN], the loss of 1-4 limbs, or death.
 		"}
+
+/obj/item/paper/syndicate_mining_magnet_1
+	name = "syndicate leadership memo"
+	info = {"<h2>Attention Syndicate outpost-62 members:<br></h2>
+	You've been stationed in this concealed outpost inside an artificial comet inbound for listening post 6678 in approximately one half (1/2) of a year.
+	You are to observe Nanotrasen facilities through Nanotrasen occupied space along the way and record your findings. Please help yourself to the
+	given amenities for enjoyment during your stay. Provided is 100k credits in bullion and cash to acquire asset Omicron upon arrival. You are to return
+	back using the comet.<br><br>Repeat, REPEAT, do not use the provided goods for any reason other than to acquire asset Omicron."}
+
+/obj/item/paper/syndicate_mining_magnet_2
+	name = "stern note"
+	info = {"so um. i spent all of our money that we were told not to spend, only after reading our leadership's note. we are so fucked. anyways, i
+	went out for a short bit and will be back in a day's time.<br><br>no, you are the one who is fucked. i'm out of here."}

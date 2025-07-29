@@ -97,14 +97,8 @@
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
 	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
-	if (GET_DIST(src, target) > 0)
-		if(src.can_turn())
-			set_dir(get_dir(src, target))
-			if(dir & (dir-1))
-				if (dir & EAST)
-					set_dir(EAST)
-				else if (dir & WEST)
-					set_dir(WEST)
+	if (GET_DIST(src, target) > 0 && src.can_turn())
+		set_dir(get_dir_accurate(src, target, FALSE)) // Face the direction of the target
 
 /**
  * This proc is called when a mob double clicks on something with the left mouse button.
@@ -205,11 +199,11 @@
 /mob/proc/apply_custom_keybinds(client/C)
 	PROTECTED_PROC(TRUE)
 
-	if(!C)
+	if(!C || !C.player)
 		//logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
 		return
 
-	var/fetched_keylist = C.player.cloudSaves.getData("custom_keybind_data")
+	var/fetched_keylist = C.player?.cloudSaves.getData("custom_keybind_data")
 	if (!isnull(fetched_keylist) && fetched_keylist != "") //The client has a list of custom keybinds.
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)

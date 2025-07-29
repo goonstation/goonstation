@@ -49,7 +49,7 @@
 			if (length(src.contents) == src.maxitems)
 				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			boutput(user, SPAN_ALERT("[src] is full!"))
 
@@ -62,7 +62,7 @@
 				I.add_fingerprint(user)
 			boutput(user, SPAN_NOTICE("You empty out [src]."))
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else ..()
 
 	attack_hand(mob/user)
@@ -94,7 +94,7 @@
 					SPAN_NOTICE("You take \a [getItem.name] from [src]."))
 					user.put_in_hand_or_drop(getItem)
 					src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return ..(user)
 
 	proc/search_through(mob/user as mob)
@@ -174,7 +174,7 @@
 			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
 		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
 		src.UpdateIcon()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 	// Don't dump the satchel onto the table if using drag-and-drop to dump out other contents.
 	should_place_on(obj/target, params)
@@ -327,6 +327,18 @@
 			..()
 			allowed = list(/obj/item/random_mail)
 
+		large
+			name = "large mail satchel"
+			desc = "A leather satchel for carrying around mail. This one happens to be <em>really</em> big."
+			icon_state = "mailsatchel-large"
+			maxitems = 100
+
+		compressed
+			name = "spatially-compressed mail satchel"
+			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding mail."
+			icon_state = "mailsatchel-compressed"
+			maxitems = 250
+
 	figurines
 		name = "figurine case"
 		desc = "A cool plastic case for storing little figurines!"
@@ -384,5 +396,5 @@
 			var/obj/item/toy/figure/F = new()
 			F.set_loc(src)
 			src.UpdateIcon()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
