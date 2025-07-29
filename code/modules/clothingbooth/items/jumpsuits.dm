@@ -86,11 +86,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
 		item_path = /obj/item/clothing/under/gimmick/dinerdress_pink
 
 /datum/clothingbooth_item/w_uniform/dirty_vest
-
-	redpants
-		name = "Red Pants"
-		swatch_background_color = "#8d1422"
-		item_path = /obj/item/clothing/under/misc/dirty_vest/redpants
+	name = "Red Pants"
+	swatch_background_color = "#8d1422"
+	item_path = /obj/item/clothing/under/misc/dirty_vest/
 
 	blackpants
 		name = "Black Jeans"
