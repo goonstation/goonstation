@@ -54,12 +54,6 @@
 #define HOTSPOTS_ENABLED 1
 
 // Non rotation
-#elif defined(MAP_OVERRIDE_MANTA)
-
-#define UNDERWATER_MAP 1
-#define MOVING_SUB_MAP 1
-#define SUBMARINE_MAP 1
-
 #elif defined(MAP_OVERRIDE_DESTINY)
 
 #elif defined(MAP_OVERRIDE_HORIZON)

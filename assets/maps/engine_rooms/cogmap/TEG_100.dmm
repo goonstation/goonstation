@@ -36,7 +36,8 @@
 	level = 2
 	},
 /obj/machinery/meter{
-	pixel_y = 1
+	pixel_y = -9;
+	pixel_x = 10
 	},
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -73,7 +74,6 @@
 /area/station/engine/core)
 "eq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 6
 	},
 /obj/machinery/meter{
@@ -210,7 +210,6 @@
 /area/station/engine/core)
 "lQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 10
 	},
 /obj/machinery/meter{
@@ -337,7 +336,6 @@
 /area/station/engine/inner)
 "vv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 9
 	},
 /obj/cable{
@@ -349,9 +347,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "vN" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
 	req_access = null
@@ -418,9 +414,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "yZ" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
 	req_access = null
@@ -491,7 +485,6 @@
 /area/station/engine/inner)
 "Cv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 1
 	},
 /obj/machinery/power/stats_meter{
@@ -663,7 +656,6 @@
 	pixel_y = 20
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 10
 	},
 /obj/cable{
@@ -691,7 +683,8 @@
 	level = 2
 	},
 /obj/machinery/meter{
-	pixel_y = 1
+	pixel_y = -9;
+	pixel_x = -9
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -701,7 +694,6 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 6
 	},
 /obj/cable{

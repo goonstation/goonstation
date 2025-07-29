@@ -445,7 +445,7 @@
 	icon_state = "bigcabinet1"
 	bound_width = 32
 	bound_height = 64
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	gauges
@@ -475,7 +475,7 @@
 	icon_state = "bigatmos1"
 	bound_width = 32
 	bound_height = 64
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	bigatmos2
@@ -491,7 +491,7 @@
 	icon_state = "displays"
 	bound_width = 64
 	bound_height = 64
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	gauges
@@ -512,7 +512,7 @@
 	icon_state = "tower1"
 	bound_width = 32
 	bound_height = 32 // ignore the top part i guess
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	tower2

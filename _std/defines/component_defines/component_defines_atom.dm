@@ -57,6 +57,8 @@
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
 	/// sent to the parent object when its handset retracts, see /datum/component/cord
 	#define COMSIG_CORD_RETRACT "cord_retract"
+	/// sent to the signal jamming thing when it successfully blocks a signal
+	#define COMSIG_SIGNAL_JAMMED "signal_jammed"
 
 // ---- minimap ----
 
@@ -141,7 +143,7 @@
 	#define COMSIG_ITEM_UNEQUIPPED "itm_unequip"
 	/// When an item is picked up (user)
 	#define COMSIG_ITEM_PICKUP "itm_pickup"
-	/// When an item is picked dropped (user)
+	/// When an item is dropped (user)
 	#define COMSIG_ITEM_DROPPED "itm_drop"
 	/// When an item is used to attack a mob
 	#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
@@ -254,7 +256,7 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
-	/// Sent when a mob is grabbed by another mob (grab object)
+	/// Sent when a mob is grabbed by another mob, and when the grab is upgraded (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 	/// Sent when a mob emotes (emote, voluntary, emote target)
 	#define COMSIG_MOB_EMOTE "mob_emote"
@@ -270,6 +272,8 @@
 	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
 	/// Sent when the mob points at something (point target)
 	#define COMSIG_MOB_POINT "mob_point"
+	/// Sent when a mob is pulled
+	#define COMSIG_MOB_PULL_TRIGGER "pull_trigger"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
 	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)

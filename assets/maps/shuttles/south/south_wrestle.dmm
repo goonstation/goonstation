@@ -614,7 +614,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "wq" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "wI" = (

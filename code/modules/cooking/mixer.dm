@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/mixer)
 	density = 1
 	anchored = ANCHORED
 	flags = TGUI_INTERACTIVE
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	var/image/blender_off
@@ -40,6 +41,7 @@ TYPEINFO(/obj/machinery/mixer)
 			src.recipes += new /datum/cookingrecipe/mixer/pancake_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/brownie_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/cake_batter(src)
+			src.recipes += new /datum/cookingrecipe/mixer/raw_flan(src)
 			src.recipes += new /datum/cookingrecipe/mixer/custard(src)
 			src.recipes += new /datum/cookingrecipe/mixer/mashedpotatoes(src)
 			src.recipes += new /datum/cookingrecipe/mixer/mashedbrains(src)
@@ -201,7 +203,13 @@ TYPEINFO(/obj/machinery/mixer)
 					if (!bowl_checkitem(I, R.ingredients[I])) continue check_recipe
 				output = R.specialOutput(src)
 				if (!output)
-					output = R.output
+					if(R.variants)//replace all of this with getVariant() once cooking machines are given a common type
+						for(var/specialIngredient in R.variants)
+							if(output) break
+							if(bowl_checkitem(specialIngredient, R.variant_quantity))
+								output = R.variants[specialIngredient]
+					else
+						output = R.output
 				if (R.useshumanmeat)
 					derivename = 1
 				break

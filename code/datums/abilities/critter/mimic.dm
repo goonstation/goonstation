@@ -16,6 +16,9 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, SPAN_ALERT("You must be adjacent to [target] to mimic it."))
 			return TRUE
+		var/datum/targetable/critter/stomach_retreat/stomach_abil = src.holder.getAbility(/datum/targetable/critter/stomach_retreat)
+		if (stomach_abil?.inside)
+			return TRUE
 		var/mob/living/critter/mimic/user = holder.owner
 		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, target, 2 SECONDS, /datum/targetable/critter/mimic/proc/mimic, user, null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION)
 		boutput(holder.owner, SPAN_ALERT("You begin to mimic [target]..."))

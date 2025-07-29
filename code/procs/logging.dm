@@ -26,6 +26,9 @@ var/global/logLength = 0
 	var/forceNonDiaryLoggingToo = FALSE
 	var/area/A
 
+	if (length(trimtext(text)) == 0)
+		CRASH("Attempted to log without text with type \[[type]\] and source \[[source]\].")
+
 	if(istype(source, /mob/living/carbon/human/preview) && type == LOG_COMBAT)
 		return //we don't give a flying fuck about the preview mobs maving mutations - but maybe we care about debug etc.?
 
@@ -92,7 +95,6 @@ var/global/logLength = 0
 		if (!diaryLogging)
 			var/datum/eventRecord/Log/logEvent = new()
 			logEvent.send(type, source && source != "<span class='blank'>(blank)</span>" ? source : null, text)
-	return
 
 ///Check config for whether a message should be logged to the diary
 /proc/should_diary_log(diaryType)

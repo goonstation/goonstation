@@ -607,12 +607,14 @@
 	if (isdead(src))
 		return
 
-	src.update_health_monitor_icon()
-
 	src.need_update_item_abilities = 1
 	setdead(src)
 	src.dizziness = 0
 	src.jitteriness = 0
+
+	src.update_health_monitor_icon()
+
+	src.drop_juggle()
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -893,9 +895,9 @@
 			src.toggle_throw_mode()
 		if ("walk")
 			if (src.m_intent == "run")
-				src.m_intent = "walk"
+				src.set_m_intent("walk")
 			else
-				src.m_intent = "run"
+				src.set_m_intent("run")
 			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
@@ -980,7 +982,7 @@
 	u_equip(I)
 
 	if (GET_DIST(src, target) > 0)
-		src.set_dir(get_dir(src, target))
+		src.set_dir(get_dir_accurate(src, target, FALSE)) // Face the throwing direction
 
 	//actually throw it!
 	if (I)
@@ -988,7 +990,7 @@
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
 		var/yeet_change_mod = yeet_chance
-		var/throw_dir = get_dir(src, target)
+		var/throw_dir = get_dir_accurate(src, target)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
 				yeet_change_mod *= 1
@@ -1010,7 +1012,7 @@
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
+			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
 			var/mob/M = I
@@ -1494,13 +1496,13 @@
 
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
-		return 0
+		return FALSE
 	if (src.equipped() && istype(src.equipped(), /obj/item/magtractor))
 		var/obj/item/magtractor/M = src.equipped()
 		if (M.pickupItem(I, src))
 			actions.start(new/datum/action/magPickerHold(M), src)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 	if (I.two_handed) //MARKER1
 		if (!src.can_hold_two_handed())
 			return FALSE
@@ -1508,7 +1510,7 @@
 		src.r_hand = I
 		I.pickup(src)
 		if(QDELETED(I))
-			return 0
+			return FALSE
 		I.add_fingerprint(src)
 		I.set_loc(src)
 		src.update_inhands()
@@ -1519,47 +1521,43 @@
 			hud.set_visible(hud.twohandl, 1)
 			hud.set_visible(hud.twohandr, 1)
 
-		return 1
+		return TRUE
 	else
 		if (isnull(hand))
 			if (src.put_in_hand(I, src.hand))
-				return 1
+				return TRUE
 			if (src.put_in_hand(I, !src.hand))
-				return 1
-			return 0
+				return TRUE
 		else
 			if (hand)
 				if (!src.l_hand)
 					if (I == src.r_hand && I.cant_self_remove)
-						return 0
+						return FALSE
 					if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
-						return 0
+						return FALSE
 					src.l_hand = I
 					I.pickup(src)
 					if(QDELETED(I))
-						return 0
+						return FALSE
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
 					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
-					return 1
-				else
-					return 0
+					return TRUE
 			else
 				if (!src.r_hand)
 					if (I == src.l_hand && I.cant_self_remove)
-						return 0
+						return FALSE
 					if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
-						return 0
+						return FALSE
 					src.r_hand = I
 					I.pickup(src)
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
 					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
-					return 1
-				else
-					return 0
+					return TRUE
+		return FALSE
 
 /**
 Attempts to put an item in the hand of a mob, if not possible then stow it, then by default delete the item.
@@ -2051,6 +2049,10 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.organHolder.heart.op_stage = 0
 	if (src.organHolder.brain)
 		src.organHolder.brain.op_stage = 0
+	if (src.organHolder.head && isskeleton(src))
+		var/datum/mutantrace/skeleton/S = src.mutantrace
+		S.set_head(src.organHolder.head)
+		S.head_moved() // update tracking
 
 	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
 		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
@@ -2181,7 +2183,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		else
 			src.last_resist = world.time + 100
 			var/time = 450
-			src.show_text("You attempt to remove your shackles. (This will take around [round(time / 10)] seconds and you need to stand still.)", "red")
 			actions.start(new/datum/action/bar/private/icon/shackles_removal(time), src)
 
 	if (src.hasStatus("handcuffed"))
@@ -2231,7 +2232,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			if (!src.canmove)
 				calcTime *= 1.5
-			boutput(src, SPAN_ALERT("You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)"))
 			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
@@ -2565,6 +2565,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	return FALSE
 
 /mob/living/carbon/human/proc/drop_juggle()
+	set waitfor = FALSE // remove if you want to see 3,500 SHOULD_NOT_SLEEP errors because anything that ever causes a person to die can't sleep anymore
+
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))
@@ -2633,7 +2635,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
-		src.RegisterSignal(src, COMSIG_MOB_DEATH, PROC_REF(drop_juggle)) // if something more important needs this signal PLEASE take it
 	src.juggling += thing
 	if(isnull(src.juggle_dummy))
 		src.juggle_dummy = new(null)
@@ -3066,7 +3067,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			#endif
 
 			if(AM.throwforce >= 40)
-				src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+				src.throw_at(get_edge_target_turf(src,get_dir_accurate(AM, src)), 10, 1)
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
@@ -3093,7 +3094,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		#endif
 
 		if(AM.throwforce >= 40)
-			src.throw_at(get_edge_target_turf(src, get_dir(AM, src)), 10, 1)
+			src.throw_at(get_edge_target_turf(src, get_dir_accurate(AM, src)), 10, 1)
 			src.changeStatus("stunned", 3 SECONDS)
 
 /// Goes through all the things that can be recolored and updates their colors
@@ -3251,6 +3252,33 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		if (-INFINITY to 0)
 			src.health_mon.icon_state = "0"
 
+/mob/living/carbon/human/proc/apply_automated_arrest(var/reason, var/details, var/major_crime = FALSE, var/requires_camera_seen = TRUE, var/use_visible_name = TRUE)
+	if(!seen_by_camera(src) && requires_camera_seen)
+		return
+	var/target_name = src.name
+	if(!use_visible_name)
+		target_name = src.real_name
+	else if(src.face_visible())
+		target_name = src.real_name
+	var/crime_field = "mi_crim"
+	if(major_crime)
+		crime_field = "ma_crim"
+
+	var/datum/db_record/sec_record = data_core.security.find_record("name", target_name)
+	if(!sec_record)
+		return
+	if(sec_record["criminal"] == ARREST_STATE_ARREST)
+		return
+	sec_record["criminal"] = ARREST_STATE_ARREST
+	sec_record[crime_field] = reason
+	if(details)
+		sec_record["[crime_field]_d"] = details
+
+	for (var/mob/living/carbon/human/H in mobs) //Anyone could be pretending to be the target, all of them need updating
+		if (H.real_name == target_name || H.name == target_name)
+			H.update_arrest_icon()
+	return
+
 /mob/living/carbon/human/proc/update_arrest_icon()
 	if (!src.arrestIcon)
 		return
@@ -3318,6 +3346,10 @@ mob/living/carbon/human/has_genetics()
 			return hand_color
 
 	. = ..()
+
+/mob/living/carbon/human/remove_pulling()
+	..()
+	src.hud?.update_pulling()
 
 /mob/living/carbon/human/proc/fake_say(text)
 	set waitfor = FALSE

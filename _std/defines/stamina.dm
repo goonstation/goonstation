@@ -82,6 +82,7 @@
 
 /// How much farting costs. I am not even kidding.
 #define STAMINA_DEFAULT_FART_COST 1
+#define STAMINA_DEFAULT_WOOF_COST 15
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
 

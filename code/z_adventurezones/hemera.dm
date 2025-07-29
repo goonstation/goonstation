@@ -10,7 +10,7 @@ Obsidian Crown
 	name = "Hemera VII"
 	icon_state = "yellow"
 	sound_environment = 12
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	skip_sims = 1
 	sims_score = 30
 

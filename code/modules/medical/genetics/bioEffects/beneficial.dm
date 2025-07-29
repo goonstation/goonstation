@@ -21,6 +21,17 @@
 			overlay_image.color = "#FFA200"
 
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		return
 
 /datum/bioEffect/coldres
 	name = "Cold Resistance"
@@ -42,6 +53,17 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#009DFF"
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		return
 
 /datum/bioEffect/thermalres
 	name = "Thermal Resistance"
@@ -66,15 +88,24 @@
 		if(overlay_image_two)
 			var/mob/living/L = owner
 			L.UpdateOverlays(overlay_image_two, id + "2")
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 50)
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 50)
-		owner.temp_tolerance *= 10
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+		owner.temp_tolerance *= 5 * src.power
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+		owner.temp_tolerance /= 5 * oldval
+		owner.temp_tolerance *= 5 * newval
 
 	OnRemove()
 		..()
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
-		owner.temp_tolerance /= 10
+		owner.temp_tolerance /= 5 * src.power
 		if(overlay_image_two)
 			if(isliving(owner))
 				var/mob/living/L = owner
@@ -303,6 +334,7 @@
 	var/heal_per_tick = 0.66
 	var/regrow_prob = 250
 	var/roundedmultremainder
+	var/blood_regen_amt = 1
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 	effect_group = "regen"
@@ -311,6 +343,9 @@
 		if(..()) return
 		var/mob/living/L = owner
 		L.HealDamage("All", heal_per_tick * mult * power, heal_per_tick * power)
+		if (L.blood_volume < initial(L.blood_volume) && L.blood_volume > 0)
+			L.blood_volume += 1*mult*power
+
 		var/roundedmult = round(mult)
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
@@ -341,6 +376,7 @@
 	msgLose = "Your flesh stops mending itself together."
 	heal_per_tick = 7 // decrease to 5 if extreme narcolepsy doesn't counterbalance this enough
 	regrow_prob = 50 //increase to 100 if not counterbalanced
+	blood_regen_amt = 2
 
 /datum/bioEffect/regenerator/wolf
 	name = "Lupine Regeneration"
@@ -361,6 +397,7 @@
 	heal_per_tick = 2
 	regrow_prob = 50
 	acceptable_in_mutini = 0 // fun is banned
+	blood_regen_amt = 8
 
 	OnAdd()
 		. = ..()
@@ -1231,14 +1268,14 @@
 	proc/absorb_tasty_rock(obj/item/rock)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/human = src.owner
-			human.sims.affectMotive("Hunger", rock.w_class * 3)
+			human.sims?.affectMotive("Hunger", rock.w_class * 3)
 		src.gain_material(rock.w_class * 10)
 		qdel(rock)
 
 	proc/absorb_liquid_plasma(amount)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/human = src.owner
-			human.sims.affectMotive("Thirst", amount)
+			human.sims?.affectMotive("Thirst", amount)
 		src.gain_material(amount)
 
 	proc/gain_material(amount)

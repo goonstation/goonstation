@@ -36500,7 +36500,7 @@
 /obj/decal/stage_edge{
 	dir = 2
 	},
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cIp" = (
@@ -37348,7 +37348,7 @@
 	dir = 1
 	},
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cKZ" = (
@@ -40159,6 +40159,18 @@
 "cSK" = (
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
+"cSL" = (
+/obj/rack/lunar{
+	dir = 1;
+	icon_state = "aisleshelfend"
+	},
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/obj/item/paper/postcard/moonfootprint,
+/turf/unsimulated/floor,
+/area/moon/museum/giftshop)
 "cSM" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -44683,7 +44695,7 @@
 /area/syndicate_station/battlecruiser)
 "dfW" = (
 /obj/decal/stage_edge,
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dfX" = (
@@ -50596,7 +50608,7 @@
 /area/centcom/lounge)
 "dHW" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/steak_h,
+/obj/item/reagent_containers/food/snacks/steak,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHX" = (
@@ -57005,7 +57017,7 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 5;
+	dir = 4;
 	pixel_x = -10;
 	network = "Eye"
 	},
@@ -58135,7 +58147,7 @@
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	pixel_y = 20;
-	dir = 6;
+	dir = 2;
 	network = "Eye"
 	},
 /obj/machinery/camera{
@@ -63476,7 +63488,7 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
+	dir = 1;
 	network = "Eye"
 	},
 /obj/machinery/camera{
@@ -66664,23 +66676,6 @@
 /obj/item/clothing/head/helmet/space/soviet,
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
-"nFq" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera{
-	name = "sensor";
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1;
-	network = "Eye"
-	},
-/obj/machinery/camera{
-	name = "sensor";
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
-	network = "Eye"
-	},
-/obj/lattice,
-/turf/space,
-/area/watchful_eye_sensor)
 "nFE" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/mining)
@@ -77239,6 +77234,18 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"vMw" = (
+/obj/rack/lunar{
+	dir = 1;
+	icon_state = "aisleshelfend"
+	},
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/obj/item/paper/postcard/apollo,
+/turf/unsimulated/floor,
+/area/moon/museum/giftshop)
 "vMW" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -78400,9 +78407,12 @@
 	},
 /mob/living/critter/small_animal/cat{
 	icon_state = "cat2";
+	icon_state_alive = "cat2";
+	icon_state_dead = "cat2";
 	name = "Moo";
 	random_look = 0;
-	random_name = 0
+	random_name = 0;
+	nodamage = 1
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/adventure_gannets.dmi';
@@ -78930,14 +78940,14 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 9;
+	dir = 8;
 	pixel_x = 10;
 	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10;
+	dir = 1;
 	network = "Eye"
 	},
 /turf/space,
@@ -104833,7 +104843,7 @@ aCO
 aCx
 aDN
 aCN
-aCN
+vMw
 eyo
 aCu
 aaa
@@ -105135,7 +105145,7 @@ aCN
 aCN
 aCN
 aCN
-aCN
+cSL
 eyo
 aCu
 aaa
@@ -147344,7 +147354,7 @@ wfJ
 sgR
 nzY
 eAB
-nFq
+kXv
 nJg
 iUy
 laI
@@ -147646,7 +147656,7 @@ mZO
 iha
 xuD
 jwj
-nFq
+kXv
 nJg
 xPj
 lrS
@@ -147948,7 +147958,7 @@ wfJ
 sgR
 nzY
 eAB
-nFq
+kXv
 nJg
 lev
 fWR
@@ -148250,7 +148260,7 @@ jAK
 uLf
 eYq
 jCA
-nFq
+kXv
 nJg
 xmf
 jRl

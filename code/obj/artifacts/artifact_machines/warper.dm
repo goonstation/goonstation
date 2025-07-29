@@ -40,7 +40,7 @@
 			teleports = 0
 			return
 		else
-			var/loc = (wormholer ? pick(random_floor_turfs) : get_offset_target_turf(T, rand(-teleport_range, teleport_range), rand(-teleport_range, teleport_range)) )
+			var/loc = ((wormholer && O.z == Z_LEVEL_STATION) ? pick(random_floor_turfs) : get_offset_target_turf(T, rand(-teleport_range, teleport_range), rand(-teleport_range, teleport_range)) )
 			playsound(O.loc, "warp", 50)
 			for (var/mob/living/M in orange(grab_range,O))
 				if (isintangible(M)) continue

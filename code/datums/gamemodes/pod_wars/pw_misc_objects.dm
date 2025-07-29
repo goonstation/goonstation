@@ -317,7 +317,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			return 0
 
 /obj/deployable_turret/pod_wars/nt/activated
-	anchored=1
+	anchored=ANCHORED
 	active=1
 	deconstructable = FALSE
 
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			return 0
 
 /obj/deployable_turret/pod_wars/sy/activated
-	anchored=1
+	anchored=ANCHORED
 	active=1
 	deconstructable = FALSE
 	north
@@ -891,8 +891,10 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	desc = "A collection of parts that can be used to make some kind of barricade."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "barricade"
-	var/object_type = /obj/barricade 		//object to deploy
-	var/build_duration = 2 SECONDS
+	var/object_type = /obj/barricade 		//!object to deploy
+	var/build_duration = 2 SECONDS			//!how long it takes to deploy it
+
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy the barricade on solid ground. Cannot be picked back up once deployed.")
 
 	New(loc)
 		..()
@@ -1113,7 +1115,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	/obj/item/reagent_containers/mender/burn,
 	/obj/item/reagent_containers/hypospray/emagged, // maybe fine. it'll be fine. i'm sure it's fine.
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
-	/obj/item/robodefibrillator,
+	/obj/item/robodefibrillator/recharging,
 	/obj/item/clothing/glasses/healthgoggles/upgraded,
 	/obj/item/suture )
 

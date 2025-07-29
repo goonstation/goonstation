@@ -64,7 +64,7 @@
 		if (src.laces == LACES_TIED && istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 			boutput(user, "You neatly cut the knot and most of the laces away. Problem solved forever!")
 			src.laces = LACES_CUT
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 /obj/item/clothing/shoes/rocket
 	name = "rocket shoes"

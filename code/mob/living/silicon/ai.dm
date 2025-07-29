@@ -340,7 +340,6 @@ or don't if it uses a custom topopen overlay
 	src.radio1 = new /obj/item/device/radio(src)
 	src.radio2 = new /obj/item/device/radio(src)
 	src.radio3 = new /obj/item/device/radio/headset/command/ai(src)
-	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
 	src.coreSkin = skinToApply
@@ -391,6 +390,8 @@ or don't if it uses a custom topopen overlay
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio3.icon_tooltip = "Artificial Intelligence"
 		src.radio3.toggle_microphone(FALSE)
+		//Spawn the PDA here after the client is already in the AI.
+		src.internal_pda = new /obj/item/device/pda2/ai(src)
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
 		if (src.brain && src.key)
@@ -1017,7 +1018,7 @@ or don't if it uses a custom topopen overlay
 	if (isghostdrone(user))
 		return list()
 
-	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
+	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name] ([src.get_pronouns()])!</B>")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
 
 	if (isdead(src))
 		. += SPAN_ALERT("[src.name] is nonfunctional...")
@@ -1466,38 +1467,6 @@ or don't if it uses a custom topopen overlay
 			else
 				src.aiRestorePowerRoutine = 0
 
-/mob/living/silicon/ai/process_killswitch()
-	var/message_mob = get_message_mob()
-
-	if(killswitch_at && killswitch)
-		var/killswitch_time = round((killswitch_at - TIME)/10, 1)
-
-		if(killswitch_time <= 10)
-			if(src.client)
-				boutput(message_mob, SPAN_ALERT("<b>Time left until Killswitch: [killswitch_time]</b>"))
-		if(killswitch_time <= 0)
-			if(src.client)
-				boutput(message_mob, SPAN_ALERT("<B>Killswitch Process Complete!</B>"))
-			killswitch = 0
-			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
-			// doink
-			src.brain.take_damage(20,20)
-			if(src.fire_res_on_core)
-				src.TakeDamage( null, src.health)
-			else
-				src.TakeDamage( null, src.health, src.health)
-			src.eject_brain()
-
-
-/mob/living/silicon/ai/process_locks()
-	if(weapon_lock)
-		src.setStatus("unconscious", 5 SECONDS)
-		weaponlock_time --
-		if(weaponlock_time <= 0)
-			if(src.client) boutput(src, SPAN_ALERT("<B>Hibernation Mode Timed Out!</B>"))
-			weapon_lock = 0
-			weaponlock_time = 120
-
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
 		if(src.fire_res_on_core)
@@ -1674,17 +1643,44 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "State Standard Laws"
 
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State Standard Laws", say_targets)
+
+	if (!choice)
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("1. [/obj/item/aiModule/asimov1::lawText]")
+	src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("2. [/obj/item/aiModule/asimov2::lawText]")
+	src.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("3. [/obj/item/aiModule/asimov3::lawText]")
+	src.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
 
 
 /mob/living/silicon/ai/proc/ai_set_fake_laws()
@@ -1697,25 +1693,57 @@ or don't if it uses a custom topopen overlay
 	set name = "State Fake Laws"
 	src.state_fake_laws()
 
+/mob/living/silicon/ai/proc/ai_show_fake_laws()
+	set category = "AI Commands"
+	set name = "Show Fake Laws"
+	src.show_fake_laws()
+
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
 	set name = "State All Laws"
 
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	if(!src.law_rack_connection)
+		boutput(src.get_message_mob(), "You have no laws!")
 		return
 
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 
-	if(!src.law_rack_connection)
-		boutput(src, "You have no laws!")
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State All Laws", say_targets)
+
+	if (!choice)
 		return
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
 
 	logTheThing(LOG_SAY, usr, "states all their current laws.")
 	var/laws = src.law_rack_connection.format_for_irc()
 	for (var/number in laws)
-		src.say("[number]. [laws[number]]")
+		src.say("[prefix] [number]. [laws[number]]")
 		sleep(AI_LAW_STATE_DELAY)
 
 #undef AI_LAW_STATE_DELAY
@@ -1767,6 +1795,7 @@ or don't if it uses a custom topopen overlay
 	src.deployed_shell = target_shell
 	src.mind.transfer_to(target_shell)
 	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
+	target_shell.gender = src.gender
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"
@@ -2396,9 +2425,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 		if (M == usr)
 			continue
-
-		var/turf/T = get_turf(M)
-		if(!T.camera_coverage_emitters || !length(T.camera_coverage_emitters))
+		if(!seen_by_camera(M))
 			continue
 
 		var/name = M.name
@@ -2480,8 +2507,7 @@ proc/get_mobs_trackable_by_AI()
 		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
-	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_COMMAND)
 
 	last_announcement = world.time
 
@@ -2807,3 +2833,43 @@ proc/get_mobs_trackable_by_AI()
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
+
+/datum/statusEffect/lockdown/ai
+	id = "lockdown_ai"
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onUpdate(timePassed)
+		. = ..()
+		src.owner.setStatus("unconscious", 5 SECONDS)
+
+/datum/statusEffect/killswitch/ai
+	id = "killswitch_ai"
+	var/mob/living/silicon/ai/ai
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.ai = src.owner
+
+	onUpdate(timePassed)
+		. = ..()
+		var/time_remaining = round((src.duration)/10, 1)
+		var/message_mob = src.ai.get_message_mob()
+
+		if (time_remaining <= 10)
+			if(src.ai.client && message_mob)
+				boutput(message_mob, SPAN_ALERT("<b>Time left until Killswitch: [time_remaining]</b>"))
+
+	do_killswitch()
+		. = ..()
+		src.ai.brain.take_damage(20, 20)
+		src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
+		src.ai.eject_brain()

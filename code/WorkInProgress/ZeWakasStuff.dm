@@ -96,11 +96,14 @@ atoms can be rendered by reference in browser
 	name = "beach"
 	desc = "A very strange beach, almost artificial somehow."
 	icon_state = "sand"
+	can_dig = TRUE
 
 	curve
 		icon_state = "beach-curve"
+		can_dig = FALSE
 	bodge //yes, i needed this
 		icon_state = "island-1"
+		can_dig = FALSE
 
 /turf/unsimulated/greek/water
 	name = "water"
@@ -265,5 +268,9 @@ atoms can be rendered by reference in browser
 	desc = "Oh wow, you finally found the end of the rainbow."
 	icon_state = "rainbow"
 
+
+/proc/zewakadownloadshit(mob/M)
+	var/mob/user = usr || M
+	user << ftp(file("data/missing_inhand_item_states.txt"))
 
 //th3*vqoE

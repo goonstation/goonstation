@@ -153,6 +153,7 @@
 	desc = "A presumably natural rock formation belching bubbles of gas from deep below."
 	icon = 'icons/obj/nadir_seaobj.dmi'
 	icon_state = "bitelung"
+	anchored = ANCHORED
 #define _DEFINE_GAS(GAS, ...) var/GAS = FALSE;
 	APPLY_TO_GASES(_DEFINE_GAS)
 #undef _DEFINE_GAS

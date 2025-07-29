@@ -242,7 +242,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 /// Determines the say sound that this message should use, and plays it.
 /datum/say_message/proc/process_say_sound()
-	if (world.time < src.speaker.last_voice_sound + VOICE_SOUND_COOLDOWN)
+	if (world.time < src.message_origin.last_voice_sound + VOICE_SOUND_COOLDOWN)
 		return
 
 	if (src.say_sound == NO_SAY_SOUND)
@@ -272,8 +272,8 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	if (islist(src.say_sound))
 		src.say_sound = pick(src.say_sound)
 
-	src.speaker.last_voice_sound = world.time
-	playsound(src.speaker, src.say_sound, 55, 0.01, 8, voice_pitch, ignore_flag = SOUND_SPEECH)
+	src.message_origin.last_voice_sound = world.time
+	playsound(src.message_origin, src.say_sound, 55, 0.01, 8, voice_pitch, ignore_flag = SOUND_SPEECH)
 
 /// Determines the speech bubble that this message should use, and displays it on the speaker.
 /datum/say_message/proc/process_speech_bubble()
@@ -331,7 +331,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 		// Handle hear sounds.
 		if (src.hear_sound && !src.received_module.say_channel.suppress_hear_sound)
-			mob_listener.playsound_local_not_inworld(src.hear_sound, 55, 0.01, flags = SOUND_IGNORE_SPACE)
+			mob_listener.playsound_local_not_inworld(src.hear_sound, 55, 0.01, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS)
 
 	// If the speaker to display is null, use the real name of the speaker instead.
 	if (isnull(src.speaker_to_display))

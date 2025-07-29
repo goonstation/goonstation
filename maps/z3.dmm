@@ -1237,38 +1237,12 @@
 	dir = 1
 	},
 /area/radiostation/hallway)
-"adQ" = (
-/obj/table/wood/auto,
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "adR" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
 /area/space)
-"adS" = (
-/obj/table/wood/auto,
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple2"
-	},
-/area/radiostation/studio)
 "adV" = (
 /obj/effects/background_objects/domus_dei,
 /turf/space,
@@ -1487,12 +1461,6 @@
 /area/radiostation/podbay)
 "aeD" = (
 /obj/submachine/tape_deck,
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
-"aeF" = (
-/obj/mic_stand{
-	dir = 8
-	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "aeG" = (
@@ -7064,6 +7032,10 @@
 /area/salvage_trader)
 "aKW" = (
 /obj/marker/supplymarker,
+/obj/fakeobject/teleport_pad{
+	desc = "It doesn't look like this is working."
+	},
+/obj/marker/salvager_teleport,
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
 "aKX" = (
@@ -16322,6 +16294,17 @@
 	},
 /turf/space,
 /area/space)
+"dGY" = (
+/obj/table/wood/auto,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "dHq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20729,6 +20712,13 @@
 	icon_state = "carpetNW"
 	},
 /area/radiostation/bedroom)
+"ovR" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
 "owN" = (
 /obj/lattice{
 	dir = 4;
@@ -107889,7 +107879,7 @@ hnB
 oSY
 adx
 adK
-adQ
+dGY
 aem
 aeD
 adg
@@ -108493,9 +108483,9 @@ vMM
 adw
 adx
 adK
-adS
+ovR
 aeo
-aeF
+adL
 adg
 agi
 aoY
