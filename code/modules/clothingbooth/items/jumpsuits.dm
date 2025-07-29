@@ -85,7 +85,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
 		swatch_background_color = "#f9aaaa"
 		item_path = /obj/item/clothing/under/gimmick/dinerdress_pink
 
-ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/dirty_vest)
 /datum/clothingbooth_item/w_uniform/dirty_vest
 
 	redpants
