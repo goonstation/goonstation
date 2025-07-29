@@ -80,7 +80,7 @@
 /datum/clothingbooth_grouping/dirty_vest
 	name = "Dirty Vest"
 	item_paths = list(
-		/datum/clothingbooth_item/w_uniform/dirty_vest,
+		/datum/clothingbooth_item/w_uniform/dirty_vest/redpants,
 		/datum/clothingbooth_item/w_uniform/dirty_vest/blackpants,
 		/datum/clothingbooth_item/w_uniform/dirty_vest/bluepants,
 		/datum/clothingbooth_item/w_uniform/dirty_vest/brownpants

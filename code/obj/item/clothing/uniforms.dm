@@ -365,12 +365,15 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		icon_state = "hos-fancy-alt"
 		item_state = "hos-fancy-alt"
 
-/obj/item/clothing/under/misc/dirty_vest //HoS uniform from the Elite Security era
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/dirty_vest) //HoS uniform from the Elite Security era
+/obj/item/clothing/under/misc/dirty_vest
 	name = "dirty vest"
 	desc = "This outfit has seen better days."
 	icon_state = "vest"
 	item_state = "vest"
 	c_flags = SLEEVELESS
+
+	redpants
 
 	blackpants
 		icon_state = "vestblack"
