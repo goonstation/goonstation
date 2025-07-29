@@ -81,86 +81,76 @@
 		//var/senderid = signal.data["sender"]
 		switch( lowertext(signal.data["command"]) )
 			if("follow")
-				SPAWN(0)
-					src.follow(signal)
+				src.follow(signal)
 			if("stop")
-				SPAWN(0)
-					src.stop_movement()
+				src.stop_movement()
 			if("load")
-				SPAWN(0)
-					var/turf/current_turf = get_turf(src)
-					if(current_turf)
-						var/obj/item/smallest_item = null
-						var/smallest_volume = INFINITY
-						for(var/obj/item/I in current_turf)
-							if(I.loc == current_turf && I != src && !I.anchored)
-								if(I.w_class < smallest_volume)
-									smallest_volume = I.w_class
-									smallest_item = I
-						if(smallest_item)
-							// Use the hand system to pick up the item
-							src.put_in_hand(smallest_item)
-							load = smallest_item
-							icon_state = "mechdrone_carrying"
+				var/turf/current_turf = get_turf(src)
+				if(current_turf)
+					var/obj/item/smallest_item = null
+					var/smallest_volume = INFINITY
+					for(var/obj/item/I in current_turf)
+						if(I.loc == current_turf && I != src && !I.anchored)
+							if(I.w_class < smallest_volume)
+								smallest_volume = I.w_class
+								smallest_item = I
+					if(smallest_item)
+						// Use the hand system to pick up the item
+						src.put_in_hand(smallest_item)
+						load = smallest_item
+						icon_state = "mechdrone_carrying"
 
 			if("unload")
-				SPAWN(0)
-					if(load)
-						src.drop_from_slot(load)
-						icon_state = "mechdrone"
-						load = null
+				if(load)
+					src.drop_from_slot(load)
+					icon_state = "mechdrone"
+					load = null
 
 			if("say")
-				SPAWN(0)
-					if(signal.data["data"])
-						var/message = signal.data["data"]
-						if(istext(message))
-							src.say(message)
+				if(signal.data["data"])
+					var/message = signal.data["data"]
+					if(istext(message))
+						src.say(message)
 
 			if("pointer")
-				SPAWN(0)
-					if(signal.data["data"])
-						var/pointer_name = signal.data["data"]
-						// Search for a pointer with the given name on the same z-level
-						for(var/obj/item/mechdrone_pointer/P in world)
-							if(P.pointer_name == pointer_name && P.z == src.z)
-								// Use mulebot-style pathfinding
-								var/list/path = get_path_to(src, P, max_distance=200, id=null, skip_first=FALSE, exclude=null, cardinal_only=TRUE, do_doorcheck=TRUE)
-								if(path && length(path) > 1)
-									for(var/turf/step in path)
-										if(!src) break
-										sleep(3)
-										step_to(src, step)
-										sleep(1)
-								else
-									// Fallback to walk_to if pathfinding fails
-									walk_to(src, P, 0, 5, 5)
-								break
+				if(signal.data["data"])
+					var/pointer_name = signal.data["data"]
+					// Search for a pointer with the given name on the same z-level
+					for_by_tcl(P, /obj/item/mechdrone_pointer)
+						if(P.pointer_name == pointer_name && P.z == src.z)
+							// Use mulebot-style pathfinding
+							var/list/path = get_path_to(src, P, max_distance=200, id=null, skip_first=FALSE, exclude=null, cardinal_only=TRUE, do_doorcheck=TRUE)
+							if(path && length(path) > 1)
+								for(var/turf/step in path)
+									if(!src) break
+									sleep(3)
+									step_to(src, step)
+									sleep(1)
+							else
+								// Fallback to walk_to if pathfinding fails
+								walk_to(src, P, 0, 5, 5)
+							break
 			if("interact")
-				SPAWN(0)
-					if(signal.data["data"])
-						var/target_name = signal.data["data"]
-						var/found = FALSE
-						for(var/dir in cardinal)
-							var/turf/T = get_step(get_turf(src), dir)
-							if(!T) continue
-							for(var/obj/O in oview(1, src))
-								if(O.name == target_name)
-									var/obj/item/held = src.get_active_hand().item
-									if(held)
-										O.attackby(get_active_hand().item, src)
-									else
-										O.attack_hand(src)
-									// After interaction, check if the item is still in hand
-									if(!src.get_active_hand().item)
-										load = null
-										icon_state = "mechdrone"
-									else
-										load = src.get_active_hand()
-										icon_state = "mechdrone_carrying"
-									found = TRUE
-									break
-							if(found) break
+				if(signal.data["data"])
+					var/target_name = signal.data["data"]
+					var/found = FALSE
+					for(var/obj/O in oview(1, src))
+						if(O.name == target_name)
+							var/obj/item/held = src.get_active_hand().item
+							if(held)
+								O.attackby(get_active_hand().item, src)
+							else
+								O.attack_hand(src)
+							// After interaction, check if the item is still in hand
+							if(!src.get_active_hand().item)
+								load = null
+								icon_state = "mechdrone"
+							else
+								load = src.get_active_hand()
+								icon_state = "mechdrone_carrying"
+								found = TRUE
+								break
+						if(found) break
 
 
 
@@ -181,27 +171,22 @@
 
 	proc/follow(datum/signal/signal)
 	//Follows the source of the signal
-		var/turf/target_turf = find_target_location_from_signal(signal)
-		if(target_turf && (istype(target_turf, /turf) || istype(target_turf, /mob) || istype(target_turf, /obj)))
-			if(target_turf.z == src.z)
+		var/atom/target = find_target_location_from_signal(signal)
+		if(!target)
+			return
+		if(target.z != src.z)
+			return // Don't follow if the target is on a different z-level
 			// Use mulebot-style pathfinding
-				var/list/path = get_path_to(src, target_turf, max_distance=200, id=null, skip_first=FALSE, exclude=null, cardinal_only=TRUE, do_doorcheck=TRUE)
-				if(path && length(path) > 1)
-					for(var/turf/step in path)
-						if(!src) break
-						sleep(3)
-						step_to(src, step)
-					sleep(1)
-				else
-				// Fallback to walk_to if pathfinding fails
-					walk_to(src, target_turf, 0, 5, 5)
-
-
-	// proc/say_something(var/message)
-	// 	// message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-	// 	if (!message)
-	// 		return
-	// 	src.say(SPAN_SAY("[src] says, \"[message]\""))
+		var/list/path = get_path_to(src, target, max_distance=200, id=null, skip_first=FALSE, exclude=null, cardinal_only=TRUE, do_doorcheck=TRUE)
+		if(path && length(path) > 1)
+			for(var/turf/step in path)
+				if(!src) break
+				sleep(3)
+				step_to(src, step)
+			sleep(1)
+		else
+		// Fallback to walk_to if pathfinding fails
+			walk_to(src, target, 0, 5, 5)
 
 
 	death(gibbed)
@@ -217,6 +202,10 @@
 	icon_state = "capacitor2"
 	var/pointer_name = null
 	anchored = UNANCHORED
+
+	New()
+		..()
+		START_TRACKING
 
 	attackby(obj/item/W, mob/user)
 		user.lastattacked = get_weakref(src)
@@ -234,6 +223,10 @@
 		// Prompt for pointer name as before
 		pointer_name = input("Name pointer:") as text
 		desc = "A pointer for the MechDrone. It can be used to control the drone. Its name is [pointer_name]."
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 
 
