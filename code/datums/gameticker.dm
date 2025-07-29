@@ -1035,6 +1035,7 @@ var/global/game_force_started = FALSE
 		player.set_antag_tokens(1)
 		boutput(M, SPAN_BOLD("You have recieved an antag token drop for playing on a less populated server!"))
 		logTheThing(LOG_DEBUG, M, "[player.key] received an antag token drop with chance [player_unique_chance]%")
+		ircbot.export("admin_debug", list(msg = "<@844525423412379668> [player.key] got an antag token drop with [player_unique_chance]% chance yeyy!"))
 
 #undef BASE_TOKEN_CHANCE
 #undef RATIO_THRESHOLD
