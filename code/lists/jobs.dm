@@ -34,7 +34,7 @@ var/list/page_departments = list(
 	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS,
 	"Mining" = MGD_MINING)
 
-/proc/get_all_jobs()
+/proc/get_all_jobs(var/include_silicons = FALSE)
 	var/all_jobs = list()
 	all_jobs += command_jobs
 	all_jobs += security_jobs
@@ -43,6 +43,9 @@ var/list/page_departments = list(
 	all_jobs += medical_jobs
 	all_jobs += service_jobs
 	all_jobs += "Staff Assistant"
+	if(include_silicons)
+		all_jobs += "AI"
+		all_jobs += "Cyborg"
 	return all_jobs
 
 var/list/command_jobs = list(

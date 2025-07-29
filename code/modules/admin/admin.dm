@@ -557,9 +557,7 @@ var/global/noir = 0
 
 			//Determine which system we're using.
 
-			for(var/job in uniquelist(get_all_jobs()))
-				if(job in list("Tourist","Mining Supervisor","Atmospheric Technician","Vice Officer"))
-					continue
+			for(var/job in uniquelist(get_all_jobs(TRUE)))
 				if(jobban_isbanned(M, job))
 					jobs += "<a href='byond://?src=\ref[src];action=[action];type=[job];target=[target]'><font color=red>[replacetext(job, " ", "&nbsp")]</font></a> "
 				else
@@ -653,7 +651,7 @@ var/global/noir = 0
 							jobban_unban(M,"Security Department", usr.ckey)
 						if(player.cached_jobbans.Find("Heads of Staff"))
 							jobban_unban(M,"Heads of Staff", usr.ckey)
-						for(var/Trank1 in uniquelist(get_all_jobs()))
+						for(var/Trank1 in uniquelist(get_all_jobs(TRUE)))
 							if(player.cached_jobbans.Find("[Trank1]"))
 								jobban_unban(M,Trank1, usr.ckey)
 					else if(job == "Engineering Department")
@@ -712,7 +710,7 @@ var/global/noir = 0
 							jobban_unban(M,"Security Department", usr.ckey)
 						if(cache.Find("Heads of Staff"))
 							jobban_unban(M,"Heads of Staff", usr.ckey)
-						for(var/Trank1 in uniquelist(get_all_jobs()))
+						for(var/Trank1 in uniquelist(get_all_jobs(TRUE)))
 							if(cache.Find("[Trank1]"))
 								jobban_unban(M,Trank1, usr.ckey)
 					else if(job == "Engineering Department")
