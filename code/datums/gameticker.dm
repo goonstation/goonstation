@@ -1016,7 +1016,7 @@ var/global/game_force_started = FALSE
 	var/length_ratio = min(src.round_elapsed_ticks/(50 MINUTES), 1)
 
 	var/actual_token_chance = BASE_TOKEN_CHANCE * ((RATIO_THRESHOLD - pop_ratio) / RATIO_THRESHOLD) * length_ratio
-	logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [pop_ratio], starting end round drops with token chance [actual_token_chance]")
+	logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [self_player_count]/[highest_player_count]: [pop_ratio]. Round length [ticker.round_elapsed_ticks / 600] minutes, length scaling set at [length_ratio]. Starting end round drops with token chance [actual_token_chance]")
 
 	var/list/players = list()
 	for (var/mob/M as anything in mobs)
@@ -1027,15 +1027,14 @@ var/global/game_force_started = FALSE
 		//also scale by how long they've been in the round, no joining at the end just for the chance
 		var/time_ratio = player.current_playtime / ticker.round_elapsed_ticks
 		var/player_unique_chance = actual_token_chance * time_ratio
+		if (player.get_antag_tokens() >= 1)
+			boutput(M, SPAN_BOLD("You would have been eligable for an antag token drop this round, but you already have one!"))
+			continue
 		if (!prob(player_unique_chance))
 			continue //unlucky
-		if (player.get_antag_tokens() >= 1)
-			boutput(M, SPAN_BOLD("You would have received an antag token drop this round, but you already have one!"))
-			logTheThing(LOG_DEBUG, M, "[player.key] would have received an antag token drop but already had one. Aw!")
-		else
-			player.set_antag_tokens(1)
-			boutput(M, SPAN_BOLD("You have recieved an antag token drop for playing on a less populated server!"))
-			logTheThing(LOG_DEBUG, M, "[player.key] received an antag token drop with chance [player_unique_chance]%")
+		player.set_antag_tokens(1)
+		boutput(M, SPAN_BOLD("You have recieved an antag token drop for playing on a less populated server!"))
+		logTheThing(LOG_DEBUG, M, "[player.key] received an antag token drop with chance [player_unique_chance]%")
 
 #undef BASE_TOKEN_CHANCE
 #undef RATIO_THRESHOLD
