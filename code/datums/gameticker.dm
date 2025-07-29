@@ -980,7 +980,7 @@ var/global/game_force_started = FALSE
 	return src.creds
 
 //% - this is the maximum possible chance with very few people on one server and a lot on another
-#define BASE_TOKEN_CHANCE 10
+#define BASE_TOKEN_CHANCE 20
 // the ratio of players between this server and the highest one before drops start to occur
 //eg. 36 players on Morty, 60 on Sylvester = we start to drop tokens, at a very low chance
 #define RATIO_THRESHOLD 0.6
