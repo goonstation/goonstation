@@ -5517,8 +5517,9 @@
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
 "aES" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
@@ -6528,11 +6529,9 @@
 	},
 /area/h7/asteroid)
 "aJi" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
+/obj/machinery/camera/directional/west{
 	network = "Pathopost";
-	tag = ""
+	pixel_y = 10
 	},
 /obj/stool/chair,
 /turf/simulated/floor,
@@ -7012,8 +7011,9 @@
 	dir = 1;
 	status = 2
 	},
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
@@ -11058,8 +11058,9 @@
 	},
 /area/abandonedoutpostthing)
 "aXy" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 5
@@ -11123,8 +11124,9 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aXH" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
@@ -11736,8 +11738,9 @@
 /turf/space,
 /area/space)
 "aZV" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -19412,8 +19415,9 @@
 	},
 /area/derelict_ai_sat)
 "lxr" = (
-/obj/machinery/camera{
-	network = "Pathopost"
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
 	},
 /mob/living/critter/zombie/scientist,
 /turf/simulated/floor,

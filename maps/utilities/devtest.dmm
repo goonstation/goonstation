@@ -278,6 +278,14 @@
 /obj/machinery/dialysis,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"fh" = (
+/obj/item/rcd/construction/safe/admin_crimes,
+/obj/machinery/camera/directional/north{
+	name = "autoname  - SS13";
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "fs" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor,
@@ -445,18 +453,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/devzone)
-"ib" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/glow,
-/area/space)
 "ic" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -485,21 +481,6 @@
 /obj/machinery/vehicle/miniputt/gold,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
-"ip" = (
-/obj/machinery/mining_magnet{
-	pixel_x = 16
-	},
-/obj/machinery/magnet_chassis{
-	pixel_x = 16
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "iA" = (
 /obj/disposalpipe/loafer/horizontal{
 	dir = 1
@@ -717,6 +698,13 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/drinks/espressocup,
 /turf/simulated/floor/white,
+/area/station/devzone)
+"nG" = (
+/obj/machinery/camera/directional/north{
+	name = "autoname  - SS13";
+	pixel_x = -10
+	},
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "nI" = (
 /obj/machinery/atmospherics/binary/pump/active{
@@ -2206,6 +2194,19 @@
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/devzone)
+"Oe" = (
+/obj/machinery/mining_magnet{
+	pixel_x = 16
+	},
+/obj/machinery/magnet_chassis{
+	pixel_x = 16
+	},
+/obj/machinery/camera/directional/north{
+	name = "autoname  - SS13";
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "Om" = (
 /obj/railing/red{
 	dir = 1
@@ -2642,15 +2643,16 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
-"Wg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
+"Wa" = (
+/obj/machinery/camera/directional/north{
 	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+	pixel_x = -10
 	},
-/turf/simulated/floor,
-/area/station/devzone)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/space)
 "Wj" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor,
@@ -2737,16 +2739,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
-"Xu" = (
-/obj/item/rcd/construction/safe/admin_crimes,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Xx" = (
 /obj/forcefield/energyshield/perma{
 	dir = 6
@@ -2773,15 +2765,6 @@
 	allows_vehicles = 0;
 	icon_state = "engine_caution_south"
 	},
-/area/station/devzone)
-"XI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "XR" = (
 /obj/submachine/weapon_vendor/fishing/portable,
@@ -2871,6 +2854,13 @@
 "Zk" = (
 /obj/item/instrument/large/jukebox,
 /turf/simulated/floor/white,
+/area/station/devzone)
+"Zt" = (
+/obj/machinery/camera/directional/north{
+	name = "autoname  - SS13";
+	pixel_x = -10
+	},
+/turf/simulated/floor,
 /area/station/devzone)
 "Zx" = (
 /obj/machinery/power/data_terminal,
@@ -3277,7 +3267,7 @@ hR
 NE
 Yx
 Yx
-XI
+nG
 NU
 Ni
 NG
@@ -3291,7 +3281,7 @@ ng
 ng
 ng
 ng
-XI
+nG
 Yx
 "}
 (10,1,1) = {"
@@ -3415,7 +3405,7 @@ ng
 ng
 ng
 ng
-XI
+nG
 Hy
 UD
 UD
@@ -3457,7 +3447,7 @@ Nu
 ys
 ys
 Yx
-Wg
+Zt
 Yx
 Yx
 Yx
@@ -3879,7 +3869,7 @@ he
 ng
 du
 SI
-XI
+nG
 kV
 kV
 kV
@@ -3893,7 +3883,7 @@ uE
 ng
 La
 Vg
-XI
+nG
 Yx
 "}
 (24,1,1) = {"
@@ -4338,7 +4328,7 @@ Yx
 Yx
 Yx
 Yx
-Wg
+Zt
 Yx
 Yx
 Yx
@@ -4397,7 +4387,7 @@ Yx
 ft
 Yx
 ZZ
-Xu
+fh
 Kx
 Yx
 ZZ
@@ -4481,7 +4471,7 @@ ng
 Yx
 uF
 Id
-Wg
+Zt
 iP
 Yx
 Yx
@@ -4495,7 +4485,7 @@ ng
 Rq
 Be
 Rq
-XI
+nG
 Yx
 "}
 (38,1,1) = {"
@@ -4933,7 +4923,7 @@ rz
 rz
 rS
 kI
-ip
+Oe
 Yx
 qg
 hR
@@ -5046,7 +5036,7 @@ rx
 rz
 rx
 rz
-ib
+Wa
 rz
 rx
 rz
@@ -5371,7 +5361,7 @@ ng
 ng
 ng
 ng
-XI
+nG
 ng
 ng
 ng

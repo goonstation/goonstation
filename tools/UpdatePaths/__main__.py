@@ -21,10 +21,12 @@ New paths properties:
     property = @SKIP - will not copy this property through when global @OLD is used.
     property = @OLD - will copy this modified property from original object even if global @OLD is not used
     property = @OLD:name - will copy [name] property from original object even if global @OLD is not used
+    property = @ADD:number - will add [number] to the value of the property from original object if and only if it exists
     Anything else is copied as written.
 Old paths properties:
     Will be used as a filter.
     property = @UNSET - will apply the rule only if the property is not mapedited
+    property = @ANY - will apply the rule when the property is mapedited, regardless of its value.
 """
 
 default_map_directory = "../.."
@@ -34,7 +36,7 @@ default_map_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 replacement_re = re.compile(r'\s*(?P<path>[^{]*)\s*(\{(?P<props>.*)\})?')
 
 #urgent todo: replace with actual parser, this is slow as janitor in crit
-split_re = re.compile(r'((?:[A-Za-z0-9_\-$]+)\s*=\s*(?:"(?:.+?)"|[^";][^;]*)|@OLD);?')
+split_re = re.compile(r'(\s*(?:[A-Za-z0-9_\-$]+)\s*=\s*(?:"(?:.*?)"|[^";][^;]*)|@OLD);?')
 
 
 def props_to_string(props):
@@ -94,7 +96,9 @@ def update_path(dmm_data, replacement_string, verbose=False):
                 else:
                     return [match.group(0)]
             else:
-                if old_props[filter_prop] != old_path_props[filter_prop] or old_path_props[filter_prop] == "@UNSET":
+                if old_path_props[filter_prop] == "@ANY":
+                   continue
+                elif old_props[filter_prop] != old_path_props[filter_prop] or old_path_props[filter_prop] == "@UNSET":
                     return [match.group(0)] #does not match current filter, skip the change.
         if verbose:
             print("Found match : {0}".format(match.group(0)))
@@ -106,9 +110,8 @@ def update_path(dmm_data, replacement_string, verbose=False):
                 if verbose:
                     print("Deleting match : {0}".format(match.group(0)))
                 return [None]
-            elif new_path.endswith("/@SUBTYPES"):
-                path_start = new_path[:-len("/@SUBTYPES")]
-                out = path_start + match.group('subtype')
+            elif new_path.find("/@SUBTYPES"):
+                out = new_path.replace("/@SUBTYPES", match.group('subtype'), 1)
             else:
                 out = new_path
 
@@ -124,6 +127,12 @@ def update_path(dmm_data, replacement_string, verbose=False):
                     params = prop_value.split(":")
                     if prop_name in old_props:
                         out_props[prop_name] = old_props[params[1]] if len(params) > 1 else old_props[prop_name]
+                    continue
+                if prop_value.startswith("@ADD"):
+                    if prop_name in old_props:
+                        old_value = int(old_props[prop_name])
+                        to_add = int(prop_value.split(":")[1])
+                        out_props[prop_name] = str(old_value + to_add)
                     continue
                 out_props[prop_name] = prop_value
             if out_props:
