@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			For each lack of 10 Intellect on them (out of 100), make them take 1 step towards you and receive a stab."}
 	icon_state = "paralyze"
 	cooldown = 20 SECONDS
-	max_range = 5
+	max_range = 4
 	reveals_on_use = TRUE
 
 	tryCast()
@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			they must survive in an arena. If the target has max Intellect collected on them, they will be sent faster."}
 	icon_state = "pierce_the_veil"
 	cooldown = 60 SECONDS
-	max_range = 6
+	max_range = 7
 	pointCost = MINDEATER_MAX_INTELLECT_THRESHOLD
 	reveals_on_use = TRUE
 
