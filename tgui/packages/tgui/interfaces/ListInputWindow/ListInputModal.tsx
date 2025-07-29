@@ -301,11 +301,11 @@ const ListDisplay = (props) => {
       {filteredItems.map((item, index) => {
         return (
           <Button
-            color="transparent"
+            className="search-item"
+            color={index !== selected ? 'transparent' : undefined}
             fluid
             id={index}
             key={index}
-            className="search-item"
             onClick={() => onClick(index)}
             onDoubleClick={(event) => {
               event.preventDefault();

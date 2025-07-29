@@ -68,7 +68,8 @@ export const InputAndButtonsSection = () => {
           <Tooltip content="Enter">
             <Button
               icon="share"
-              color={TermActive ? 'positive' : 'negative'}
+              // disabled={!TermActive}
+              color={!TermActive ? 'transparent' : 'default'}
               onClick={handleEnterClick}
             />
           </Tooltip>
@@ -77,7 +78,8 @@ export const InputAndButtonsSection = () => {
           <Tooltip content="Restart">
             <Button
               icon="repeat"
-              color={TermActive ? 'positive' : 'negative'}
+              // disabled={!TermActive}
+              color={!TermActive ? 'transparent' : 'default'}
               onClick={handleRestartClick}
             />
           </Tooltip>
