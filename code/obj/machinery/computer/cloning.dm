@@ -145,14 +145,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 		user.u_equip(W)
 		qdel(W)
 	else if (istype(W, /obj/item/disk/data/floppy))
-		if (!src.diskette)
-			user.drop_item()
-			W.set_loc(src)
-			src.diskette = W
-			boutput(user, "You insert [W].")
-			playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
-			tgui_process.update_uis(src)
-			return
+		var/obj/item/disk/data/floppy/disk_to_drop = null
+		if (src.diskette) //let them swap
+			disk_to_drop = src.diskette
+			src.diskette = null
+		user.drop_item()
+		W.set_loc(src)
+		src.diskette = W
+		user.put_in_hand_or_drop(disk_to_drop)
+		boutput(user, "You insert [W].")
+		playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
+		tgui_process.update_uis(src)
+		return
 
 	else if (istype(W, /obj/item/cloner_upgrade))
 		if (allow_dead_scanning || allow_mind_erasure)
@@ -809,20 +813,19 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				. = TRUE
 
 		if("diskAction")
-			if (src.diskette)
-				if (BOUNDS_DIST(ui.user, src) || isintangible(ui.user))
-					return
-				src.diskette.set_loc(src.loc)
-				usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
+			if (BOUNDS_DIST(ui.user, src) || isintangible(ui.user))
+				return
+			var/obj/item/disk/data/floppy/disk = ui.user.equipped()
+			if (src.diskette && !istype(disk))
+				usr.put_in_hand_or_drop(src.diskette)
 				src.diskette = null
 				playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 				. = TRUE
-			else
-				var/obj/item/disk = ui.user.equipped()
-				if (istype(disk, /obj/item/disk/data/floppy))
-					src.attackby(disk, ui.user)
-				else if (istype(disk, /obj/item/disk))
-					boutput(ui.user, SPAN_ALERT("[disk] doesn't quite fit in [src]'s slot!"))
+				return
+			if (istype(disk))
+				src.attackby(disk, ui.user) //insert or swap
+			else if (istype(disk, /obj/item/disk))
+				boutput(ui.user, SPAN_ALERT("[disk] doesn't quite fit in [src]'s slot!"))
 		if ("clone")
 			if (src.try_clone())
 				. = TRUE
