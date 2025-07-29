@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	icon_state = "brain_drain"
 	targeted = TRUE
 	target_anything = TRUE
-	max_range = 6
+	max_range = 4
 	reveals_on_use = TRUE
 
 	tryCast(atom/target)
@@ -176,7 +176,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"
 	desc = {"Channel on the mob you are brain draining using a 3 charge shield to send them to the border of the Intruder plane for 60 seconds, where
-			they must survive in an arena. If the target has max Intellect collected on them, they will be sent instantly."}
+			they must survive in an arena. If the target has max Intellect collected on them, they will be sent faster."}
 	icon_state = "pierce_the_veil"
 	cooldown = 60 SECONDS
 	max_range = 6
@@ -213,7 +213,7 @@ ABSTRACT_TYPE(/area/veil_border)
 
 /datum/targetable/critter/mindeater/set_disguise
 	name = "Set Disguise"
-	desc = "Set what you will disguise as."
+	desc = "Set what you will disguise as. Human disguises have door access tied to the job disguised as. Critters may move through doors/tables, but take increased damage."
 	icon_state = "set_disguise"
 	pointCost = 0
 
@@ -243,6 +243,10 @@ ABSTRACT_TYPE(/area/veil_border)
 	cast(atom/target)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+
+		if (mindeater.casting_disguise)
+			actions.stopId(/datum/action/bar/private/mindeater_disguise, mindeater)
+			return
 
 		if (!mindeater.disguised)
 			if (!mindeater.casting_disguise)
@@ -344,7 +348,7 @@ ABSTRACT_TYPE(/area/veil_border)
 			var/mob/living/carbon/human/H = src.target
 
 			if (GET_ATOM_PROPERTY(src.target, PROP_MOB_INTELLECT_COLLECTED) < MINDEATER_MAX_INTELLECT_THRESHOLD)
-				if (H.get_brain_damage() <= BRAIN_DAMAGE_MAJOR)
+				if (H.get_brain_damage() <= MINDEATER_BRAIN_DMG_CAP)
 					H.take_brain_damage(2)
 				var/pick = rand(1, 3)
 				switch (pick)
@@ -394,7 +398,7 @@ ABSTRACT_TYPE(/area/veil_border)
 
 	New(atom/target)
 		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) >= MINDEATER_MAX_INTELLECT_THRESHOLD)
-			src.duration = 0
+			src.duration = 3 SECONDS
 		..()
 		src.target = target
 

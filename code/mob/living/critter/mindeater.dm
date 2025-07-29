@@ -135,15 +135,18 @@ TYPEINFO(/mob/living/critter/mindeater)
 		abil_holder.deductPoints(abil_holder.points)
 		abil.doCooldown()
 		if (src.lives <= 0)
+			playsound(get_turf(src), 'sound/misc/intruder/mindeater_death.ogg', 75, TRUE)
 			. = ..()
 			qdel(src)
+		else
+			playsound(get_turf(src), 'sound/misc/intruder/mindeater_life_lost.ogg', 100, TRUE)
 
 	gib()
 		src.death(FALSE)
 
 	setup_healths()
-		add_hh_flesh(62, 1)
-		add_hh_flesh_burn(62, 1)
+		add_hh_flesh(60, 1)
+		add_hh_flesh_burn(60, 1)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (src.is_intangible())
@@ -184,6 +187,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		stamina_damage = 0
 		disorient = 0
 		src.setStatus("disorient", 5 SECONDS)
+		src.setStatus("staggered", 5 SECONDS)
 		src.reveal(FALSE)
 		..()
 
@@ -191,6 +195,7 @@ TYPEINFO(/mob/living/critter/mindeater)
 		stamina_damage = 0
 		disorient_time = 0
 		src.setStatus("disorient", 5 SECONDS)
+		src.setStatus("staggered", 5 SECONDS)
 		src.reveal(FALSE)
 		..()
 
@@ -340,6 +345,24 @@ TYPEINFO(/mob/living/critter/mindeater)
 			var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
 			abil_holder.addPoints(points)
 
+	/// applies debuffs that appear in critter form
+	proc/apply_critter_debuffs()
+		var/datum/healthHolder/brute_holder = get_health_holder("brute")
+		brute_holder.damage_multiplier = 2
+		var/datum/healthHolder/burn_holder = get_health_holder("burn")
+		burn_holder.damage_multiplier = 2
+
+		src.add_stam_mod_max("critter_form_stamina_loss", -100)
+
+	/// removes debuffs that appear in critter form
+	proc/remove_critter_debuffs()
+		var/datum/healthHolder/brute_holder = get_health_holder("brute")
+		brute_holder.damage_multiplier = 1
+		var/datum/healthHolder/burn_holder = get_health_holder("burn")
+		burn_holder.damage_multiplier = 1
+
+		src.remove_stam_mod_max("critter_form_stamina_loss")
+
 	/// disguise as an entity
 	proc/disguise()
 		var/mob/living/temp
@@ -410,12 +433,21 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 		src.health_monitor.alpha = 0
 
+		if (src.set_disguise != MINDEATER_DISGUISE_HUMAN)
+			src.remove_critter_debuffs()
+
 		src.disguised = FALSE
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 
 		var/datum/targetable/critter/mindeater/disguise/abil = src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/disguise)
 		abil.reset()
+
+	/// when a mindeater moves over an armed mousetrap
+	proc/mousetrap_act(obj/item/mousetrap)
+		if (src.disguised && src.set_disguise != MINDEATER_DISGUISE_HUMAN)
+			src.visible_message(SPAN_ALERT("[src] lets out an eldritch wail!"))
+			src.TakeDamage("All", 15)
 
 /obj/dummy/mindeater_structure
 	name = "spire"

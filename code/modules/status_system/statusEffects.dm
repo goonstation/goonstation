@@ -3918,7 +3918,8 @@
 
 		if (probmult(50))
 			var/mob/living/carbon/human/H = src.owner
-			H.take_brain_damage(1 * mult)
+			if (H.get_brain_damage() <= MINDEATER_BRAIN_DMG_CAP)
+				H.take_brain_damage(1 * mult)
 
 		if (probmult(20) && length(src.active_mindmites) < 5)
 			var/turf/T = get_turf(src.owner)
@@ -3937,6 +3938,8 @@
 		var/mob/living/L = src.owner
 		if (!QDELETED(L))
 			L.set_loc(src.start_turf)
+		for (var/obj/item/I in range(11, alloc_region.get_center()))
+			I.set_loc(src.start_turf)
 		QDEL_NULL(alloc_region)
 
 		for (var/mite in src.active_mindmites)
@@ -3995,8 +3998,8 @@
 			if (!L.hasStatus("broken_madness") && L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
 				L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
 				L.ClearSpecificParticles("mindeater_mind_eating")
-			if (probmult(5))
-				boutput(L, SPAN_ALERT("<b>[pick(src.low_pct_messages)]</b>"))
+			if (probmult(3))
+				boutput(L, SPAN_ALERT("<font color='purple'><b>[pick(src.low_pct_messages)]</b></font>"))
 
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 25)
 			if (!L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
@@ -4004,8 +4007,8 @@
 				L.UpdateParticles(new /particles/mindeater_mind_eating, "mindeater_mind_eating")
 
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 50)
-			if (probmult(5))
-				boutput(L, SPAN_ALERT("<i>[pick(src.high_pct_messages)]</i>"))
+			if (probmult(3))
+				boutput(L, SPAN_ALERT("<font color='purple'><i>[pick(src.high_pct_messages)]</i></font>"))
 
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 75)
 			get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(L)
@@ -4059,8 +4062,8 @@
 		..()
 		var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
 		var/mob/living/L = src.owner
-		if (probmult(5))
-			boutput(L, SPAN_ALERT("<b>[pick(src.messages)]</b>"))
+		if (probmult(3))
+			boutput(L, SPAN_ALERT("<font color='purple'><b>[pick(src.messages)]</b></font>"))
 
 		if (isdead(L))
 			L.delStatus(src)

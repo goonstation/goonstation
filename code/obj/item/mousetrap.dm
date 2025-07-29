@@ -144,6 +144,11 @@
 		if (istype(user) && user.ghost_spawned)
 			user.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
 			return TRUE
+		if (istype(user, /mob/living/critter/mindeater))
+			var/mob/living/critter/mindeater/mindeater = user
+			if (mindeater.disguised && mindeater.set_disguise != MINDEATER_DISGUISE_HUMAN)
+				boutput(mindeater, SPAN_ALERT("Better not touch this!"))
+				return TRUE
 		return ..()
 
 	attackby(obj/item/C, mob/user)
@@ -211,6 +216,12 @@
 			clear_armer()
 			src.visible_message(SPAN_ALERT("<b>[M] is caught in the trap!</b>"))
 			M.death()
+
+		else if (istype(AM, /mob/living/critter/mindeater) && src.armed)
+			var/mob/living/critter/mindeater/mindeater = AM
+			if (!mindeater.is_intangible())
+				src.triggered(mindeater)
+				mindeater.mousetrap_act(src)
 
 		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM

@@ -41,10 +41,14 @@ const MindeaterContentWindow = () => {
         chemicals from targets which replaces them with toxin.
       </p>
       <p>
-        5. You can speak over Intruder chat with the radio hotkey, or prefixing
+        5. Stuns and flashes will disorient and stagger you. While in critter
+        form, you take increased damage and are hurt by mousetraps.
+      </p>
+      <p>
+        6. You can speak over Intruder chat with the radio hotkey, or prefixing
         your message with <em>:int</em>.
       </p>
-      <p>6. Your goal is to just cause chaos. Have fun!</p>
+      <p>7. Your goal is to just cause chaos. Have fun!</p>
       <p>This is a work in progress antag and will not be found on the wiki.</p>
     </div>
   );
