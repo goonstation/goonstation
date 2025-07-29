@@ -45,6 +45,8 @@ TYPEINFO(/mob/living/critter/mindeater)
 	var/mob/living/carbon/human/normal/assistant/human_disguise_dummy
 	/// job the fake human appears as
 	var/human_disguise_job = "Staff Assistant"
+	/// arena created through Pierce the Veil ability
+	var/datum/allocated_region/veil_arena
 
 	var/lives = 3 // temporary lives for playtesting
 
@@ -86,6 +88,13 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 		src.human_disguise_dummy = new
 
+		SPAWN(0)
+			src.veil_arena = global.region_allocator.allocate(21, 21)
+			src.veil_arena.clean_up()
+			var/turf/center = src.veil_arena.get_center()
+			var/dmm_suite/map_loader = new
+			map_loader.read_map(file2text("assets/maps/allocated/intruder_veil_border.dmm"), center.x - 10, center.y - 10, center.z)
+
 	disposing()
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_mob(src)
 		QDEL_NULL(src.vis_indicator)
@@ -93,6 +102,8 @@ TYPEINFO(/mob/living/critter/mindeater)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(src.health_monitor)
 
 		QDEL_NULL(src.human_disguise_dummy)
+
+		QDEL_NULL(src.veil_arena)
 
 		..()
 

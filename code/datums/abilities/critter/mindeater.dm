@@ -425,15 +425,7 @@ ABSTRACT_TYPE(/area/veil_border)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/datum/allocated_region/veil_border = global.region_allocator.allocate(21, 21)
-		veil_border.clean_up()
-
-		var/turf/center = veil_border.get_center()
-
-		var/dmm_suite/map_loader = new
-		map_loader.read_map(file2text("assets/maps/allocated/intruder_veil_border.dmm"), center.x - 10, center.y - 10, center.z)
-		src.target.setStatus("mindeater_abducted", 60 SECONDS, list(get_turf(src.target), veil_border))
-		src.target.set_loc(locate(center.x + rand(-1, 1), center.y + rand(-1, 1), center.z))
+		src.target.setStatus("mindeater_abducted", 60 SECONDS, list(get_turf(src.target), src.owner))
 
 		src.owner.delStatus("pierce_the_veil_shield")
 

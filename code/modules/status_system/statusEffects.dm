@@ -3904,13 +3904,17 @@
 	name = "Abducted"
 	desc = "You're trapped at the border of the Intruder plane! Survive, and you might just make it back."
 	var/turf/start_turf
-	var/datum/allocated_region/alloc_region
+	var/mob/living/critter/mindeater/owning_mindeater
 	var/list/active_mindmites = list()
 
 	onAdd(optional)
 		..()
 		src.start_turf = optional[1]
-		src.alloc_region = optional[2]
+		src.owning_mindeater = optional[2]
+
+		var/mob/living/L = src.owner
+		var/turf/T = src.owning_mindeater.veil_arena.get_center()
+		L.set_loc(locate(T.x + rand(-1, 1), T.y + rand(-1, 1), T.z))
 
 	onUpdate(timePassed)
 		..()
@@ -3938,9 +3942,11 @@
 		var/mob/living/L = src.owner
 		if (!QDELETED(L))
 			L.set_loc(src.start_turf)
-		for (var/obj/item/I in range(11, alloc_region.get_center()))
+		for (var/obj/item/I in range(11, src.owning_mindeater.veil_arena.get_center()))
 			I.set_loc(src.start_turf)
-		QDEL_NULL(alloc_region)
+		src.owning_mindeater = null
+
+		src.start_turf = null
 
 		for (var/mite in src.active_mindmites)
 			qdel(mite)
