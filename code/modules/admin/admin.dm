@@ -565,16 +565,6 @@ var/global/noir = 0
 				else
 					jobs += "<a href='byond://?src=\ref[src];action=[action];type=[job];target=[target]'>[replacetext(job, " ", "&nbsp")]</a> " //why doesn't this work
 
-			if(jobban_isbanned(M, "Captain"))
-				jobs += "<a href='byond://?src=\ref[src];action=[action];type=Captain;target=[target]'><font color=red>Captain</font></a> "
-			else
-				jobs += "<a href='byond://?src=\ref[src];action=[action];type=Captain;target=[target]'>Captain</a> " //why doesn't this work
-
-			if(jobban_isbanned(M, "Head of Security"))
-				jobs += "<a href='byond://?src=\ref[src];action=[action];type=Head of Security;target=[target]'><font color=red>Head of Security</font></a> "
-			else
-				jobs += "<a href='byond://?src=\ref[src];action=[action];type=Head of Security;target=[target]'>Head of Security</a> "
-
 			if(jobban_isbanned(M, "Syndicate"))
 				jobs += "<BR><a href='byond://?src=\ref[src];action=[action];type=Syndicate;target=[target]'><font color=red>[replacetext("Syndicate", " ", "&nbsp")]</font></a> "
 			else

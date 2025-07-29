@@ -47,17 +47,16 @@ var/list/page_departments = list(
 
 var/list/command_jobs = list(
 	"Captain",
-	"Medical Director",
-	"Research Director",
 	"Head of Personnel",
 	"Head of Security",
+	"Medical Director",
+	"Research Director",
 	"Chief Engineer",
 	/*"Clown"*/
 )
 var/list/security_jobs = list(
 	"Head of Security",
 	"Nanotrasen Security Consultant",
-	"Nanotrasen Special Operative",
 	"Security Officer",
 	"Security Assistant",
 	"Detective",
@@ -92,8 +91,6 @@ var/list/service_jobs = list(
 	"Chaplain",
 	"Janitor",
 	"Mail Courier",
-	"Head of Deliverying",
-	"Mail Bringer",
 )
 
 // we have to include alt names for jobs or they won't be sorted into categories correctly
@@ -104,7 +101,8 @@ var/list/command_gimmicks = list(
 )
 var/list/security_gimmicks = list(
 	"Vice Officer",
-	"Forensic Technician"
+	"Forensic Technician",
+	"Nanotrasen Special Operative"
 )
 var/list/engineering_gimmicks = list(
 	"Head of Mining",
@@ -157,5 +155,7 @@ var/list/service_gimmicks = list(
 	"Life Coach",
 	"Stowaway",
 	"Hall Monitor",
+	"Head of Deliverying",
+	"Mail Bringer",
 )
 
