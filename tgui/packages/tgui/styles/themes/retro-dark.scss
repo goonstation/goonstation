@@ -12,14 +12,13 @@
   // Base
   --color-base: var(--darkorange);
   --color-primary: var(--lightlightorange);
-  // --secondary-saturation: 10;
-  // --secondary-lightness-adjustment: 5;
   --base-gradient-spread: 0;
-  // --border-radius-unit: 0;
   --color-text: var(--lightlightorange);
 
-  // Components
+  // Layouts
   --titlebar-background: color-mix(in srgb, var(--darkorange), white 5%);
+
+  // Components
 
   --button-color: var(--darkorange);
   --button-background-default: var(--lightlightorange);
@@ -30,7 +29,6 @@
   --progress-bar-background: rgba(68, 46, 26, 0.5);
 
   --input-background: #0a0a0a;
-  // --input-border-color: var(--lightorange);
 
   --ring-color: var(--lightorange);
 

@@ -37,15 +37,16 @@
 @include meta.load-css('~tgui-core/styles/themes/syndicate.scss');
 // @include meta.load-css('~tgui-core/styles/themes/wizard.scss');
 
-// |GOOONSTATION-CHANGE|
-// |     Our themes    |
+// |GOOONSTATION-ADD| Our themes
 @include meta.load-css('./themes/flock.scss');
 @include meta.load-css('./themes/genetek.scss');
-@include meta.load-css('./themes/genetek-disabled.scss');
 @include meta.load-css('./themes/retro-dark.scss');
-// |    theme modes   |
+// |GOOONSTATION-ADD| Theme modes
 @include meta.load-css('./theme-modes/nanotrasen-light.scss');
 @include meta.load-css('./theme-modes/ntos-light.scss');
+
+// |GOOONSTATION-ADD| Components
+@include meta.load-css('./components/GeneIcon.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/AlertModal.scss');

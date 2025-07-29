@@ -78,14 +78,22 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.(png|jpg)$/,
-          use: [
+          oneOf: [
             {
-              loader: require.resolve('url-loader'),
-              options: {
-                esModule: false,
-                outputPath: 'assets/',
-                publicPath: '/assets/',
-              },
+              issuer: /\.(s)?css$/,
+              type: 'asset/inline',
+            },
+            {
+              use: [
+                {
+                  loader: require.resolve('url-loader'),
+                  options: {
+                    esModule: false,
+                    outputPath: 'assets/', // [516 TODO]: resolve path?
+                    publicPath: '/assets/', // [516 TODO]: resolve path?
+                  },
+                },
+              ],
             },
           ],
         },
