@@ -1,5 +1,9 @@
 
 (t)tue jul 29 25
+(u)Mr. Moriarty
+(p)24247
+(e)🗺🎨🔎💅📦|A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-Game-Objects
+(*)Every single camera has been remapped. Please report any cameras that aren't offset onto walls or that are facing the wrong way.
 (u)SnugglyCactus
 (p)24197
 (e)🎨|C-Sprites
