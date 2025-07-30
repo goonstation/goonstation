@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	targeted = TRUE
 	target_anything = TRUE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	var/using = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (src.using)
@@ -305,7 +305,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	targeted = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -395,7 +395,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	icon_state = "polymorphism"
 	targeted = TRUE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -474,7 +474,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	targeted = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -528,7 +528,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	targeted = TRUE
 	do_logs = FALSE //Handle logs ourselves
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -612,7 +612,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	targeted = TRUE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -757,7 +757,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	targeted = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -807,7 +807,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	targeted = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (istype(src.owner.loc, /obj/dummy/spell_invis)) // stops biomass manipulation and dimension shift from messing with eachother.
@@ -879,7 +879,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	targeted = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -1041,7 +1041,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	target_anything = TRUE
 	needs_hands = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (misfire)
@@ -1132,7 +1132,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	can_act_check = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (!src.owner.reagents)
@@ -1175,7 +1175,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	icon_state = "midas"
 	targeted = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if(src.linked_power.using)
@@ -1287,7 +1287,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	icon_state = "healingtouch"
 	targeted = TRUE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (BOUNDS_DIST(target, src.owner) > 0 && !src.owner.bioHolder.HasEffect("telekinesis"))
 			boutput(usr, SPAN_ALERT("You need to be closer to do that."))
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
@@ -1370,7 +1370,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	cooldown = 90 SECONDS
 	has_misfire = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -1454,7 +1454,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	targeted = TRUE
 	has_misfire = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (!istype(src.linked_power,/datum/bioEffect/power/photokinesis/))
@@ -1523,7 +1523,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	targeted = TRUE
 	has_misfire = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (!istype(src.linked_power,/datum/bioEffect/power/erebokinesis/))
@@ -1565,7 +1565,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	targeted = TRUE
 
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		return misfire ? cast_mis(target) : cast_reg(target)
@@ -1623,7 +1623,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	targeted = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		return misfire ? cast_mis(target) : cast_reg(target)
@@ -1713,7 +1713,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	cooldown = 20 SECONDS
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/list/thrown = list()
@@ -1811,7 +1811,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	has_misfire = FALSE
 	do_logs = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/datum/bioEffect/power/darkcloak/DC = linked_power
@@ -1892,7 +1892,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	has_misfire = FALSE
 	do_logs = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/datum/bioEffect/power/chameleon/CH = linked_power
@@ -1933,7 +1933,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	var/puke_reagents = list("vomit" = 20)
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -2009,7 +2009,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	has_misfire = FALSE
 	needs_hands = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -2099,7 +2099,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			hit.force_laydown_standup()
 			break
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -2230,7 +2230,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 	has_misfire = FALSE
 	needs_hands = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
@@ -2287,7 +2287,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 	var/active = FALSE
 	var/fading = FALSE
 
-	cast_genetics(atom/target, params, misfire)
+	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_SUCCESS
 

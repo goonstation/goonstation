@@ -336,12 +336,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			src.owner.set_dir(get_dir(src.owner, target))
 		if (!has_misfire)
 			..()
-			return cast_genetics(target = target, params = params, misfire = FALSE)
+			return cast_genetics(target, FALSE, params)
 		var/is_misfire = !prob(get_success_prob())
 		if (is_misfire)
 			LAZYLISTADDASSOC(params, "misfire", TRUE)
 		..()
-		return cast_genetics(target, params, is_misfire)
+		return cast_genetics(target, is_misfire, params)
 
 	logCast(atom/target, params)
 		var/fired_text = LAZYLISTACCESSASSOC(params, "misfire") ? "misfired" : "used"
@@ -351,7 +351,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			logTheThing(LOG_COMBAT, src.owner, "[fired_text] the [linked_power.name] power at [log_loc(src.owner)].")
 
 	/// Called by cast(). Override this instead of cast() to more easily account for misfires.
-	proc/cast_genetics(atom/target, params, misfire)
+	proc/cast_genetics(atom/target, misfire, params)
 		return CAST_ATTEMPT_SUCCESS
 
 	/// Calculates and returns the current probability to not misfire
