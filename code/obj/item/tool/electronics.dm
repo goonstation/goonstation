@@ -348,7 +348,7 @@
 		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
 
-	return
+	return AM
 
 
 /obj/item/electronics/frame/proc/parts_check()

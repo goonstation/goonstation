@@ -53,6 +53,7 @@
 // Goonstation Component Styles
 @include meta.load-css('./components/goon/GeneIcon.scss');
 @include meta.load-css('./components/goon/TooltipOverflow.scss');
+@include meta.load-css('./components/goon/LED.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/common/ListSearch.scss');
