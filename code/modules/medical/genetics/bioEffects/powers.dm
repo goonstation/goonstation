@@ -242,28 +242,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		return FALSE
 
 	proc/handle_parts(var/obj/item/parts/object)
-		if (!istype(object))
+		if (!istype(object) || !ishuman(src.owner))
 			return FALSE
 		var/mob/living/carbon/human/H = src.owner
 		object.delete()
 		H.hud.update_hands()
 		return TRUE
-
-
-		/* // Organs and body parts have special behaviors we need to account for
-		proc/handle_organs()
-			if (!ishuman(src.owner))
-				return
-			var/mob/living/carbon/human/H = src.owner
-			if (istype(the_object, /obj/item/organ))
-				var/obj/item/organ/organ_obj = the_object
-				if (organ_obj.donor)
-					H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
-			else if (istype(the_object, /obj/item/parts))
-				var/obj/item/parts/part = the_object
-				part.delete()
-				H.hud.update_hands() */
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
