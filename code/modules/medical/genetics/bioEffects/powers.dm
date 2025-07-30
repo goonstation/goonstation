@@ -149,7 +149,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (src.using)
-			return TRUE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		src.using = TRUE
 
 		var/datum/bioEffect/power/mattereater/mattereater = linked_power
