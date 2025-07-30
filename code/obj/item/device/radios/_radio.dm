@@ -64,6 +64,8 @@ TYPEINFO(/obj/item/device/radio)
 	var/initial_microphone_enabled = FALSE
 
 	// Speaker Variables:
+	/// Whether this radio should display a speaker component in its UI.
+	var/has_speaker = TRUE
 	/// The range in which radio messages received by this radio should be spoken to listeners.
 	var/speaker_range = 2
 	/// Whether this radio's speaker is enabled. If not, received radio messages will not be spoken.
@@ -201,14 +203,15 @@ TYPEINFO(/obj/item/device/radio)
 
 	. = list(
 		"name" = src.name,
-		"broadcasting" = src.microphone_enabled,
-		"listening" = src.speaker_enabled,
+		"hasMicrophone" = src.has_microphone,
+		"microphoneEnabled" = src.microphone_enabled,
+		"hasSpeaker" = src.has_speaker,
+		"speakerEnabled" = src.speaker_enabled,
 		"frequency" = src.frequency,
 		"lockedFrequency" = src.locked_frequency,
 		"secureFrequencies" = frequencies,
 		"wires" = src.wires,
 		"modifiable" = src.b_stat,
-		"hasMicrophone" = src.has_microphone,
 	)
 
 /obj/item/device/radio/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -243,11 +246,11 @@ TYPEINFO(/obj/item/device/radio)
 
 			return TRUE
 
-		if ("toggle-broadcasting")
+		if ("toggle-microphone")
 			src.toggle_microphone(!src.microphone_enabled)
 			return TRUE
 
-		if ("toggle-listening")
+		if ("toggle-speaker")
 			src.toggle_speaker(!src.speaker_enabled)
 			return TRUE
 
@@ -336,11 +339,33 @@ TYPEINFO(/obj/item/radiojammer)
 /obj/item/radiojammer
 	name = "signal jammer"
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldoff"
 	w_class = W_CLASS_TINY
 	is_syndicate = TRUE
 	var/active = FALSE
+	var/range = DEFAULT_RADIO_JAMMER_RANGE
+
+/obj/item/radiojammer/New()
+	. = ..()
+	src.RegisterSignal(src, COMSIG_SIGNAL_JAMMED, PROC_REF(signal_jammed))
+
+/obj/item/radiojammer/disposing()
+	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+	. = ..()
+
+/obj/item/radiojammer/get_desc(dist, mob/user)
+	. = ..()
+	. += " The range is currently set to [src.range]."
+	if(!src.active)
+		.+= " It is off."
+
+/obj/item/radiojammer/proc/signal_jammed()
+	//hoping this isn't too performance heavy if a lot of signals get blocked at once
+	if (!src.GetOverlayImage("jammed_light"))
+		src.UpdateOverlays(image(src.icon, "signal_jammed"), "jammed_light")
+	SPAWN(2 DECI SECONDS)
+		src.ClearSpecificOverlays("jammed_light")
 
 /obj/item/radiojammer/attack_self(mob/user)
 	if (!istype(global.radio_controller))
@@ -357,10 +382,28 @@ TYPEINFO(/obj/item/radiojammer)
 		icon_state = "shieldoff"
 		STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 
-/obj/item/radiojammer/disposing()
-	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+/obj/item/radiojammer/attackby(obj/item/W, mob/user, params)
+	if(isscrewingtool(W) || ispulsingtool(W))
+		src.edit_range(user)
+		return
 	. = ..()
 
+/obj/item/radiojammer/proc/edit_range(mob/user)
+	var/inputted_number = tgui_input_number(user, "Input radio jammer range", "Radio Jammer", DEFAULT_RADIO_JAMMER_RANGE, DEFAULT_RADIO_JAMMER_RANGE, 1)
+	if(!inputted_number)
+		return
+	if(!can_act(user))
+		boutput(user, SPAN_ALERT("Not while incapacitated!"))
+		return
+	if(BOUNDS_DIST(src,user) > 1)
+		boutput(user, SPAN_ALERT("You are too far away from [src]!"))
+		return
+	inputted_number = trunc(inputted_number)
+	if(!isnum_safe(inputted_number) || inputted_number > DEFAULT_RADIO_JAMMER_RANGE || inputted_number < 1)
+		boutput(user, SPAN_ALERT("That number is out of [src]'s range!"))
+		return
+	src.range = inputted_number
+	boutput(user, SPAN_NOTICE("You set [src]'s range to [inputted_number]."))
 
 #undef WIRE_SIGNAL
 #undef WIRE_RECEIVE

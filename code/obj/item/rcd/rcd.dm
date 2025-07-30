@@ -1,4 +1,3 @@
-///
 
 TYPEINFO(/obj/item/rcd)
 	mats = list("metal_superdense" = 20,
@@ -118,6 +117,16 @@ TYPEINFO(/obj/item/rcd)
 	/// Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
 
+	///Walls that the RCD probably shouldn't be interacting with. Mostly ones that can't be deconstructed normally
+	var/list/forbidden_walltypes = list(
+		/turf/simulated/wall/airbridge,
+		/turf/simulated/wall/ancient,
+		/turf/simulated/wall/void,
+		/turf/simulated/wall/auto/asteroid,
+		/turf/simulated/wall/auto/feather/strong,
+		/turf/simulated/wall/auto/shuttle
+	)
+
 	get_desc()
 		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_name : "matter"]  units. It is currently set to "
 		switch (src.mode)
@@ -175,7 +184,7 @@ TYPEINFO(/obj/item/rcd)
 					src.matter += R.matter
 					R.matter = 0
 					qdel(R)
-				R.tooltip_rebuild = 1
+				R.tooltip_rebuild = TRUE
 				src.UpdateIcon()
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
@@ -262,7 +271,7 @@ TYPEINFO(/obj/item/rcd)
 			return
 
 		if (istype(A, /turf/simulated/wall))
-			if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced) || istype(A, /turf/simulated/wall/auto/shuttle))
+			if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced) || istypes(A, src.forbidden_walltypes))
 				// You can't reinforce walls that are already reinforced
 				return
 
@@ -449,16 +458,16 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_AIRLOCK)
 				// create_door handles all the other stuff.
-				SPAWN(0) //let's not lock the entire attack call and let people attack with zero delay
-					create_door(A, user)
-
-				return
+				if (istypes(A, list(/turf/simulated/floor, /turf/unsimulated/floor)))
+					SPAWN(0) //let's not lock the entire attack call and let people attack with zero delay
+						create_door(A, user)
+					return
 
 			if (RCD_MODE_DECONSTRUCT)
 				if (length(restricted_materials) && !(A.material?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
-				if (istype(A, /turf/simulated/wall/auto/feather/strong))
+				if (istypes(A, src.forbidden_walltypes))
 					return
 
 				handle_deconstruct(A, user)
@@ -653,7 +662,7 @@ TYPEINFO(/obj/item/rcd)
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		switch (round((src.matter / src.max_matter) * 100)) //is the round() necessary? yell at me if it isnt
 			if (10 to 34)
 				ammo_amt = 1

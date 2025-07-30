@@ -40,7 +40,7 @@
 	set desc = "Speaking on the main radio frequency."
 	set hidden = TRUE
 
-	if (!src.ensure_speech_tree().GetPrefixByID(SPEECH_PREFIX_RADIO_GENERAL))
+	if (!src.ensure_speech_tree().GetPrefixByPrefixText(PREFIX_TEXT_RADIO_GENERAL))
 		return
 
 	src.say_verb("; [message]")
@@ -107,5 +107,6 @@ ADMIN_SAY_PROC(kudzusay, SAY_CHANNEL_KUDZU, null)
 ADMIN_SAY_PROC(marsay, SAY_CHANNEL_MARTIAN, null)
 ADMIN_SAY_PROC(silisay, SAY_CHANNEL_SILICON, null)
 ADMIN_SAY_PROC(thrallsay, SAY_CHANNEL_GLOBAL_THRALL, null)
+ADMIN_SAY_PROC(wraithsay, SAY_CHANNEL_WRAITH, SPEECH_OUTPUT_WRAITHCHAT_ADMIN)
 
 #undef ADMIN_SAY_PROC

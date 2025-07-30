@@ -782,6 +782,73 @@
 				var/mob/M = owner
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stim_withdrawl")
 
+	simpledot/werewolf_bane
+		id = "werewolf_bane"
+		name = "Wolf's Bane"
+		desc = "POISON!"
+		icon_state = "wolf_bane"
+		maxDuration = 5 MINUTES
+//////////////////////////////////effect_quality =
+		var/stage = 0
+
+		onAdd(optional=null)
+			changeState()
+			return ..(optional)
+
+		getTooltip()
+			var/how_much = ""
+			switch(stage)
+				if(0)
+					how_much = "a bit of"
+				if(1)
+					how_much = "a little"
+				if(2)
+					how_much = "some"
+				if(3)
+					how_much = "quite a lot"
+				if(4)
+					how_much = "a dangerous amount of"
+				if(5)
+					how_much = "way way way too much"
+			. = "You are afflicted with [how_much] wolf's bane."
+
+		onUpdate(timePassed)
+			changeState()
+			if (istype(owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = owner
+				if (iswerewolf(H))
+					if (prob(8))
+						H.changeStatus("stunned", 1 SECONDS)
+					if (prob(10))
+						H.dizziness = clamp(H.dizziness+5, 0, stage*5)
+					if (stage >= 2 && prob(stage*10)) //Why not?
+						H.take_toxin_damage(stage)
+					H.make_jittery(2)
+					return
+				if (H.get_ability_holder(/datum/abilityHolder/werewolf) != null) //If wolf in human form
+					if (prob(40))
+						H.dizziness = clamp(H.dizziness+5, 0, stage*5)
+					H.make_jittery(5)
+					return
+
+			return ..(timePassed)
+
+		proc/changeState()
+			if(owner?.reagents)
+				if (duration >= 200 SECONDS)
+					stage = 4
+				else if (duration >= 100 SECONDS)
+					stage = 3
+				else if (duration > 50 SECONDS)
+					stage = 2
+				else if (duration <= 20 SECONDS)
+					stage = 1
+				else if (duration <= 0)
+					stage = 0
+					return
+				// TODO: different icons per stage
+				// icon_state = "wolf_bane[stage]"
+
 	stuns
 		effect_quality = STATUS_QUALITY_NEGATIVE
 
@@ -2440,7 +2507,7 @@
 /datum/statusEffect/quickcharged
 	id = "quick_charged"
 	name = "Quick charged"
-	icon_state = "stam-"
+	icon_state = "stam+"
 	maxDuration = null
 
 	getTooltip()
@@ -3744,7 +3811,7 @@
 			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_fast
 			health = 10
 			speed_string = "Fast!"
-		else if (src.pixels <= 230)
+		else if (src.pixels <= 230 || mob_owner.base_form)
 			mob_owner.modifier = /datum/movement_modifier/mimic
 			health = 25
 			speed_string = "Normal."

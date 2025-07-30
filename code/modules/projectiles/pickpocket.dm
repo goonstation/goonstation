@@ -38,7 +38,7 @@
 				if ("chest")
 					if (M.wear_id) stolenItem = M.wear_id
 				if ("head")
-					if (M.wear_mask) stolenItem = M.wear_mask
+					stolenItem = M.ears || M.wear_mask || M.glasses
 				if ("r_arm")
 					stolenItem = M.r_hand ? M.r_hand : M.l_hand ? M.l_hand : null
 				if ("l_arm")
@@ -59,52 +59,55 @@
 /datum/projectile/pickpocket/plant
 	sname = "plant"
 	var/strikeFlavor = list("How strange.", "Huh.", "That's weird!", "Don't see that every day.", "", "Gosh!", "What will they think up next?")
-	on_hit(atom/hit)
-		if (linkedGun.heldItem) // Stupidity check for stripping item out of gun while projectile was in flight
-			if(ishuman(hit))
-				var/mob/living/carbon/human/M = hit
-				logTheThing(LOG_COMBAT, linkedGun, " attempts to plant [linkedGun.heldItem] on [constructTarget(M,"combat")]")
-				switch (targetZone)
-					if ("chest")
-						if (M.wear_id || !M.equip_if_possible(linkedGun.heldItem, SLOT_WEAR_ID)) // If already wearing ID or attempt to equip failed
-							linkedGun.heldItem.set_loc(get_turf(M))
-							linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
-							boutput(M, "\A [linkedGun.heldItem] suddenly thwacks into your chest! [pick(strikeFlavor)]")
-					if ("head")
-						if (M.wear_mask || !M.equip_if_possible(linkedGun.heldItem, SLOT_WEAR_MASK)) // Masks have more inherent grif potential than glasses/hat
-							linkedGun.heldItem.set_loc(get_turf(M))
-							linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
-							boutput(M, "\A [linkedGun.heldItem] suddenly thwacks into your head! [pick(strikeFlavor)]")
-					if ("r_arm", "l_arm") // TODO: Maybe switch arm-targetting to try to put things into backpack. Less sensical but more useful
-						if (!M.put_in_hand_or_drop(linkedGun.heldItem))
-							boutput(M, "\A [linkedGun.heldItem] brushes insistently at your hands! [pick(strikeFlavor)]")
-					if ("r_leg")
-						if (!M.r_store && M.can_equip(linkedGun.heldItem, SLOT_R_STORE))
-							M.equip_if_possible(linkedGun.heldItem, SLOT_R_STORE)
-						else if (!M.l_store && M.can_equip(linkedGun.heldItem, SLOT_L_STORE))
-							M.equip_if_possible(linkedGun.heldItem, SLOT_L_STORE)
-						else // Couldn't go into a pocket, dump on ground
-							linkedGun.heldItem.set_loc(get_turf(M))
-							linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
-							boutput(M, "\A [linkedGun.heldItem] tries to cram itself into your pockets! [pick(strikeFlavor)]")
-					if ("l_leg")
-						if (!M.l_store && M.can_equip(linkedGun.heldItem, SLOT_L_STORE))
-							M.equip_if_possible(linkedGun.heldItem, SLOT_L_STORE)
-						else if (!M.r_store && M.can_equip(linkedGun.heldItem, SLOT_R_STORE))
-							M.equip_if_possible(linkedGun.heldItem, SLOT_R_STORE)
-						else // Couldn't go into a pocket, dump on ground
-							linkedGun.heldItem.set_loc(get_turf(M))
-							linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
-							boutput(M, "\A [linkedGun.heldItem] tries to cram itself into your pockets! [pick(strikeFlavor)]")
-			else
-				var/turf/T = get_turf(hit)
-				if((isrestrictedz(T.z) || istype(T, /turf/unsimulated)) && !in_shuttle_transit(T))
-					message_admins("[key_name(src.firer)] is a nerd and tried to fire a pickpocket gun on an unsimulated turf at [log_loc(T)].")
-					T.visible_message("The [linkedGun.name] jams!")
+
+	proc/try_plant(mob/living/carbon/human/M)
+		switch (targetZone)
+			if ("chest")
+				if (M.wear_id || !M.equip_if_possible(linkedGun.heldItem, SLOT_WEAR_ID)) // If already wearing ID or attempt to equip failed
+					boutput(M, "\A [linkedGun.heldItem] suddenly thwacks into your chest! [pick(strikeFlavor)]")
+			if ("head")
+				if (M.equip_if_possible(linkedGun.heldItem, SLOT_WEAR_MASK))
 					return
-				logTheThing(LOG_COMBAT, linkedGun, " [key_name(src.firer)] plants [linkedGun.heldItem] at [log_loc(hit)]")
-				linkedGun.heldItem.set_loc(get_turf(hit))
-			linkedGun.heldItem = null // One wayor another it's somewhere else now
+				if (M.equip_if_possible(linkedGun.heldItem, SLOT_EARS))
+					return
+				if (M.equip_if_possible(linkedGun.heldItem, SLOT_GLASSES))
+					return
+				boutput(M, "\A [linkedGun.heldItem] suddenly thwacks into your head! [pick(strikeFlavor)]")
+			if ("r_arm", "l_arm") // TODO: Maybe switch arm-targetting to try to put things into backpack. Less sensical but more useful
+				if (!M.put_in_hand_or_drop(linkedGun.heldItem))
+					boutput(M, "\A [linkedGun.heldItem] brushes insistently at your hands! [pick(strikeFlavor)]")
+			if ("r_leg")
+				if (!M.r_store && M.can_equip(linkedGun.heldItem, SLOT_R_STORE))
+					M.equip_if_possible(linkedGun.heldItem, SLOT_R_STORE)
+				else if (!M.l_store && M.can_equip(linkedGun.heldItem, SLOT_L_STORE))
+					M.equip_if_possible(linkedGun.heldItem, SLOT_L_STORE)
+				else // Couldn't go into a pocket, dump on ground
+					boutput(M, "\A [linkedGun.heldItem] tries to cram itself into your pockets! [pick(strikeFlavor)]")
+			if ("l_leg")
+				if (!M.l_store && M.can_equip(linkedGun.heldItem, SLOT_L_STORE))
+					M.equip_if_possible(linkedGun.heldItem, SLOT_L_STORE)
+				else if (!M.r_store && M.can_equip(linkedGun.heldItem, SLOT_R_STORE))
+					M.equip_if_possible(linkedGun.heldItem, SLOT_R_STORE)
+				else // Couldn't go into a pocket, dump on ground
+					boutput(M, "\A [linkedGun.heldItem] tries to cram itself into your pockets! [pick(strikeFlavor)]")
+
+	on_hit(atom/hit)
+		if (!linkedGun.heldItem) // Stupidity check for stripping item out of gun while projectile was in flight
+			return
+		if(ishuman(hit))
+			logTheThing(LOG_COMBAT, linkedGun, " attempts to plant [linkedGun.heldItem] on [constructTarget(hit,"combat")]")
+			linkedGun.heldItem.set_loc(get_turf(hit))
+			linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
+			src.try_plant(hit)
+		else
+			var/turf/T = get_turf(hit)
+			if((isrestrictedz(T.z) || istype(T, /turf/unsimulated)) && !in_shuttle_transit(T))
+				message_admins("[key_name(src.firer)] is a nerd and tried to fire a pickpocket gun on an unsimulated turf at [log_loc(T)].")
+				T.visible_message("The [linkedGun.name] jams!")
+				return
+			logTheThing(LOG_COMBAT, linkedGun, " [key_name(src.firer)] plants [linkedGun.heldItem] at [log_loc(hit)]")
+			linkedGun.heldItem.set_loc(get_turf(hit))
+		linkedGun.heldItem = null // One wayor another it's somewhere else now
 
 /datum/projectile/pickpocket/harass
 	sname = "harass"
@@ -153,7 +156,7 @@
 				if ("r_leg", "l_leg") // Tie shoelaces
 					if (M.shoes && M.shoes.laces == LACES_NORMAL)
 						M.shoes.laces = LACES_TIED
-						M.shoes.tooltip_rebuild = 1
+						M.shoes.tooltip_rebuild = TRUE
 						if (istype(M.shoes, /obj/item/clothing/shoes/clown_shoes))
 							boutput(M, "Your shoes give out one sad, final squeak. Oh no.")
 							M.shoes.step_sound = null

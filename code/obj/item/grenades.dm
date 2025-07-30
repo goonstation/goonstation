@@ -240,8 +240,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
-	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
+	var/payload = /obj/item/bananapeel
 	var/count = 7
+	var/throw_radius = 5
 
 	detonate()
 		var/turf/T = ..()
@@ -249,16 +250,88 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
-				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
+				var/turf/target = locate(T.x + rand(-throw_radius, throw_radius), T.y + rand(-throw_radius, throw_radius), T.z)
 				if(target)
-					thing.throw_at(target, rand(0, 10), rand(1, 4))
+					before_throwing(thing, target)
+					thing.throw_at(target, rand(0, 10), rand(1, throw_radius))
+
 		qdel(src)
+
 
 	launcher_clone() //for varedit shenanigans
 		var/obj/item/old_grenade/thing_thrower/out = ..()
 		out.payload = src.payload
 		out.count = src.count
 		return out
+
+	proc/before_throwing(var/thing, var/turf/target)
+		return
+
+/obj/item/old_grenade/thing_thrower/aconite
+	desc = "It is set to detonate in 3 seconds."
+	name = "aconite grenade"
+	icon_state = "aconite"
+	icon_state_armed = "aconite1"
+
+	payload = /obj/item/plant/herb/aconite
+	count = 8
+
+/obj/item/old_grenade/thing_thrower/garlic
+	desc = "It is set to detonate in 3 seconds."
+	name = "garlic grenade"
+	icon_state = "garlic"
+	icon_state_armed = "garlic1"
+
+	payload = /obj/item/reagent_containers/food/snacks/plant/garlic
+	count = 16
+
+/obj/item/old_grenade/thing_thrower/csword
+	desc = "It is set to detonate in 3 seconds."
+	name = "cyalume saber grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+	payload = /obj/item/sword
+	count = 12
+
+	before_throwing(var/thing, var/turf/target)
+		if (istype(thing, /obj/item/sword))
+			var/obj/item/sword/sword = thing
+			sword.active = TRUE
+			sword.UpdateIcon()
+			// SET_BLOCKS(BLOCK_ALL)
+			sword.throwforce = 15
+			sword.hit_type = DAMAGE_CUT
+			sword.stamina_damage = sword.active_stamina_dmg
+			if(prob(50))
+				playsound(target,'sound/weapons/male_cswordturnon.ogg', 70, FALSE, 5, clamp(1.0 , 0.7, 1.2))
+			else
+				playsound(target,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0, 0.7, 1.4))
+			sword.force = sword.active_force
+			sword.stamina_cost = sword.active_stamina_cost
+			sword.w_class = W_CLASS_BULKY
+			sword.leaves_slash_wound = TRUE
+			sword.setItemSpecial(/datum/item_special/swipe/csaber)
+
+		return
+
+/obj/item/old_grenade/thing_thrower/pie
+	desc = "It is set to detonate in 3 seconds."
+	name = "pie grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+
+	payload = /obj/item/reagent_containers/food/snacks/pie/cream
+	count = 20
+
+
+/obj/item/old_grenade/thing_thrower/shuriken
+	desc = "It is set to detonate in 3 seconds."
+	name = "shuriken grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+
+	payload = /obj/item/implant/projectile/shuriken
+	count = 12
 
 TYPEINFO(/obj/item/old_grenade/graviton)
 	mats = 12
@@ -1008,12 +1081,12 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
-	proc/arm(mob/usr as mob)
+	proc/arm(mob/user as mob)
 
-		usr.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
-		for(var/mob/O in viewers(usr))
+		user.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
+		for(var/mob/O in viewers(user))
 			if (O.client)
-				O.show_message(SPAN_ALERT("<B>[usr] has armed the [src.name]! Run!</B>"), 1)
+				O.show_message(SPAN_ALERT("<B>[user] has armed the [src.name]! Run!</B>"), 1)
 
 		if (icon_state_armed)
 			icon_state = icon_state_armed

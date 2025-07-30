@@ -340,7 +340,14 @@
 			C.visible_message(SPAN_ALERT("[owner] hatches the eggs in the nesting box!"), SPAN_NOTICE("You hatch the eggs in the nesting box."))
 			var/left = 6
 			for(var/obj/item/reagent_containers/food/snacks/ingredient/egg/E in get_turf(C))
-				if(istype(E,/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken))
+				if (E.infertile)
+					var/turf/T = get_turf(C)
+					C.visible_message(SPAN_ALERT("[owner] tries to hatch a infertile egg and breaks it open!"))
+					playsound(E.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+					make_cleanable(/obj/decal/cleanable/eggsplat,T)
+					qdel (E)
+					return
+				else if(istype(E,/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken))
 					var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/CE = E
 					var/datum/chicken_egg_props/egg_props = null
 					if(C.special_hatch(CE))

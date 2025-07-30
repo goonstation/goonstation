@@ -21,6 +21,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/show_beaker_contents = FALSE
 	var/current_heat_capacity = 50
 	var/occupied_power_use = 500 WATTS //! Additional power usage when the pod is occupied (and on)
+	var/eject_full_health_occupant = TRUE //! Does this pod eject occupants when they reach full health
 
 	var/reagent_scan_enabled = FALSE
 	var/reagent_scan_active = FALSE
@@ -52,16 +53,14 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		return
 
 	if(src.occupant)
-		if(!isdead(src.occupant))
-			if (!ishuman(src.occupant))
-				src.go_out() // stop turning into cyborgs thanks
-			if (src.occupant.health < src.occupant.max_health || src.occupant.bioHolder.HasEffect("premature_clone"))
-				src.use_power(src.occupied_power_use, EQUIP)
-				src.process_occupant()
-			else
-				if(src.occupant.mind)
-					src.go_out()
-					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		if (!ishuman(src.occupant))
+			src.go_out() // stop turning into cyborgs thanks
+		else if (src.eject_full_health_occupant && src.occupant.health >= src.occupant.max_health && !src.occupant.bioHolder.HasEffect("premature_clone"))
+			src.go_out()
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		else if (!isdead(src.occupant))
+			src.process_occupant()
+		src.use_power(src.occupied_power_use, EQUIP)
 
 	if(src.air_contents)
 		src.ARCHIVED(temperature) = src.air_contents.temperature
@@ -114,6 +113,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	.["occupant"] = src.get_occupant_data()
 	.["cellTemp"] = src.air_contents.temperature
 	.["status"] = src.on
+	.["ejectFullHealthOccupant"] = src.eject_full_health_occupant
 
 	.["showBeakerContents"] = src.show_beaker_contents
 	.["reagentScanEnabled"] = src.reagent_scan_enabled
@@ -140,11 +140,18 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		if ("reagent_scan_active")
 			src.reagent_scan_active = !src.reagent_scan_active
 		if ("defib")
+			var/area/A = get_area(src)
+			if (!A.powered(EQUIP))
+				boutput(usr, SPAN_ALERT("There's no local power to prime [src.defib]!"))
+				return FALSE
 			if(!ON_COOLDOWN(src.defib, "defib_cooldown", 10 SECONDS))
 				src.defib.setStatus("defib_charged", 3 SECONDS)
+			src.use_power(src.defib.cost)
 			src.defib.attack(src.occupant, usr)
 		if ("eject_occupant")
 			src.go_out()
+		if ("full_health_eject")
+			src.eject_full_health_occupant = !src.eject_full_health_occupant
 		if ("insert")
 			var/obj/item/I = usr.equipped()
 			if(istype(I, /obj/item/reagent_containers/glass))
@@ -276,17 +283,17 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			return
 	else if (istype(I, /obj/item/robodefibrillator))
 		if (src.defib)
-			boutput(user, SPAN_ALERT("[src] already has a Defibrillator installed."))
+			boutput(user, SPAN_ALERT("[src] already has a defibrillator installed."))
 		else
 			if (I.cant_drop)
 				boutput(user, SPAN_ALERT("You can't put that in [src] while it's attached to you!"))
 				return
 			var/obj/item/robodefibrillator/defibrillator = I
-			if(defibrillator.mounted)
-				boutput(user, SPAN_ALERT("You can't install a mounted Defibrillator!"))
+			if(!istype_exact(defibrillator, /obj/item/robodefibrillator))
+				boutput(user, SPAN_ALERT("You can't install [defibrillator] into [src]!"))
 				return
 			src.defib = I
-			boutput(user, SPAN_NOTICE("Defibrillator installed into [src]."))
+			boutput(user, SPAN_NOTICE("[defibrillator] installed into [src]."))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(I)
 			I.set_loc(src)
@@ -294,13 +301,15 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			src.UpdateIcon()
 	else if (iswrenchingtool(I))
 		if (!src.defib)
-			boutput(user, SPAN_ALERT("[src] does not have a Defibrillator installed."))
+			boutput(user, SPAN_ALERT("[src] does not have a defibrillator installed."))
 		else
 			src.defib.set_loc(src.loc)
 			src.defib = null
 			src.UpdateIcon()
-			src.visible_message(SPAN_ALERT("[user] removes the Defibrillator from [src]."))
+			src.visible_message(SPAN_ALERT("[user] removes the defibrillator from [src]."))
 			playsound(src.loc , 'sound/items/Ratchet.ogg', 50, 1)
+			src.build_icon()
+			src.UpdateIcon()
 	else if (istype(I, /obj/item/device/analyzer/healthanalyzer))
 		if (!src.occupant)
 			boutput(user, SPAN_NOTICE("This Cryo Cell is empty!"))
@@ -369,8 +378,8 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	if(ishuman(src.occupant))
 		if(isdead(src.occupant))
 			return
-		src.occupant.bodytemperature += 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
-		src.occupant.bodytemperature = max(src.occupant.bodytemperature, src.air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		var/temp_change = 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
+		src.occupant.changeBodyTemp(temp_change, src.air_contents.temperature, src.air_contents.temperature)
 		src.occupant.changeStatus("burning", -10 SECONDS)
 		var/mob/living/carbon/human/H = null
 		if (ishuman(occupant))

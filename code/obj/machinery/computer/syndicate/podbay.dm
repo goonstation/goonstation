@@ -101,7 +101,7 @@ TYPEINFO(/obj/machinery/computer/battlecruiser_podbay)
 /obj/forcefield/battlecruiser
 	name = "podbay barrier"
 	desc = "An impenetrable forcefield designed to make you wait. It is controlled by an authorization computer."
-	icon = 'icons/obj/meteor_shield.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldw"
 	color = "#FF6666"
 

@@ -182,6 +182,18 @@
 		name = replacetext(name, "_", " ")
 		src.accents[name] = effect_type::id
 
+/obj/submachine/mixing_desk/attack_hand(mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
+	. = ..()
+
+/obj/submachine/mixing_desk/attackby(obj/item/I, mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
+	. = ..()
+
 /obj/submachine/mixing_desk/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		state.can_use_topic(src, user),
@@ -306,6 +318,9 @@
 		. = ..()
 
 /obj/submachine/record_player/attackby(obj/item/W, mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
 	if (istype(W, /obj/item/record))
 		if (!src.can_play_music)
 			boutput(user, SPAN_ALERT("You insert the record into the record player, but it won't turn on."))

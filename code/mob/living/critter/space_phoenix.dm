@@ -3,7 +3,6 @@ TYPEINFO(/mob)
 
 /mob/living/critter/space_phoenix
 	name = "space phoenix"
-	real_name = "space phoenix"
 	desc = "A majestic bird from outer space, sailing the solar winds. Until Space Station 13 came along, that is."
 	icon = 'icons/mob/critter/nonhuman/spacephoenix.dmi'
 	icon_state = "spacephoenix"
@@ -75,8 +74,7 @@ TYPEINFO(/mob)
 		if (src.hasStatus("phoenix_vulnerable"))
 			src.radiate_cold(get_turf(src))
 
-		if (src.bodytemperature >= initial(src.bodytemperature))
-			src.bodytemperature = max(initial(src.bodytemperature), src.bodytemperature - 10)
+		src.changeBodyTemp(-10 KELVIN, min_temp = initial(src.bodytemperature))
 
 	death(gibbed)
 		if (src.hasStatus("phoenix_revive_ready") && !gibbed)
@@ -149,7 +147,7 @@ TYPEINFO(/mob)
 			return
 		M.TakeDamage("All", burn = 5)
 		M.changeStatus("shivering", 1 SECOND, TRUE)
-		M.bodytemperature -= 5
+		M.changeBodyTemp(-5 KELVIN)
 		boutput(M, SPAN_ALERT("[src] is freezing cold!!!"))
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)

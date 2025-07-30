@@ -1,6 +1,5 @@
 /mob/living/critter/robotic/gunbot/riotbot
 	name = "Syndicate Suppression Unit"
-	real_name = "Syndicate Suppression Unit"
 	icon_state = "riotbot"
 	base_icon_state = "riotbot"
 	desc = "A sturdy version with a shield for increased survivability. Not nearly as lethal as the others though."

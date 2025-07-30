@@ -117,8 +117,8 @@
 	else if (iswrenchingtool(W))
 		if ((istype(src, /obj/machinery/portable_atmospherics/canister))) //No messing with anchored canbombs. -ZeWaka
 			var/obj/machinery/portable_atmospherics/canister/C = src
-			if (!isnull(C.det) && C.anchored)
-				boutput(user, SPAN_ALERT("The detonating mechanism blocks you from modifying the anchors on the [src.name]."))
+			if (!isnull(C.det))
+				boutput(user, SPAN_ALERT("The detonating mechanism blocks you from modifying the anchors on the [src.name] with a wrench."))
 				return
 		if(connected_port)
 			logTheThing(LOG_STATION, user, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")

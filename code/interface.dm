@@ -9,6 +9,8 @@
 			else
 				var/changelogHtml
 				var/data
+				if (!cdn)
+					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
 				if (byond_version >= 516)
 					changelogHtml = grabResource("html/changelog.html")
 					data = changelog.html
@@ -111,7 +113,7 @@
 		return
 	if (user_mind.assigned_role)
 		var/datum/job/Job = find_job_in_controller_by_string(user_mind.assigned_role)
-		if(Job.wiki_link)
+		if(Job?.wiki_link)
 			. = Job.wiki_link
 	if (user_mind.is_antagonist())
 		for (var/datum/antagonist/antagonist_role in user_mind.antagonists)

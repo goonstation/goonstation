@@ -18,6 +18,9 @@
 	default_material = "greymatter"
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
+	/// is this brain cyber incompatible?
+	var/cyber_incompatible = FALSE
+
 	disposing()
 		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.ckey]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""] [log_loc(src)]. Brain last touched by [src.fingerprintslast].")
 
@@ -183,3 +186,8 @@
 	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
 		[SPAN_BOLD("ID:")] Computational core<br>\
 		[SPAN_BOLD("###=-")]")]"}
+
+/obj/item/organ/brain/amphibian
+	name = "amphibian brain"
+	desc = "A frog brain. Look at the size of those optic lobes!"
+	icon_state = "amphibian_brain"

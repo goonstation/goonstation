@@ -485,6 +485,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		RegisterSignal(src, COMSIG_ATOM_ANALYZE, PROC_REF(noreward))
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
@@ -500,6 +501,34 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		..()
 		UpdateIcon()
 		M.update_inhands()
+
+	pickup(mob/user)
+		. = ..()
+		if (user.mind?.assigned_role == "Head of Security")
+			src.verbs |= /obj/item/gun/energy/egun/verb/claim_lawbringer
+		else if (user.mind?.assigned_role == "Captain")
+			src.verbs |= /obj/item/gun/energy/egun/verb/claim_sword
+
+	dropped(mob/user)
+		. = ..()
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
+
+	verb/claim_lawbringer()
+		set src in usr
+		set category = "Local"
+		set name = "Convert to Lawbringer"
+
+		var/datum/jobXpReward/reward = global.xpRewards["The Lawbringer"]
+		reward.try_claim(usr, FALSE)
+
+	verb/claim_sword()
+		set src in usr
+		set category = "Local"
+		set name = "Convert to Sabre"
+
+		var/datum/jobXpReward/reward = global.xpRewards["Commander's Sabre"]
+		reward.try_claim(usr, FALSE)
 
 	proc/noreward()
 		src.nojobreward = 1
@@ -1302,7 +1331,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
 				user.put_in_hand_or_drop(heldItem)
 				heldItem = null
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			else
 				boutput(user, "The gun does not contain anything.")
 		else
@@ -1317,7 +1346,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			user.u_equip(I)
 			I.dropped(user)
 			boutput(user, "You insert \the [heldItem.name] into the gun's gripper.")
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -1474,7 +1503,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				boutput(M, SPAN_ALERT("[src] has accepted the DNA string. You are now the owner!"))
 				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 
 	proc/change_mode(var/mob/M, var/text, var/sound = TRUE)
 		switch(text)
@@ -1512,7 +1541,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				if (sound)
 					playsound(M, 'sound/vox/hot.ogg', 50)
 				src.toggle_recoil(TRUE)
-			if ("assault","highpower", "bigshot")
+			if ("assault","high power", "bigshot")
 				set_current_projectile(projectiles["assault"])
 				current_projectile.cost = 170
 				item_state = "lawg-bigshot"
