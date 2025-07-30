@@ -179,14 +179,6 @@
 		var/datum/material/dummy = new new_material
 		src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
 
-		// Force lightly-colored rocks to have dark faces and vise-versa
-		var/list/light_list = list("gold","cobryl","pharosium","syreline")
-		var/list/dark_list = list("bohrum","plutonium")
-		if(light_list.Find(src.material.getID()))
-			src.bright = FALSE
-		else if(dark_list.Find(src.material.getID()))
-			src.bright = TRUE
-
 		// Use ore sprites if available
 		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium")
 		if(!rock_list.Find(src.material.getID()))
