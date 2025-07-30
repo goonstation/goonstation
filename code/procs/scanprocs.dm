@@ -118,10 +118,10 @@
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff++
 						continue
-					if (I.scan_category == "not_shown")
+					if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
 						continue
-					if (I.scan_category != "syndicate")
-						if (I.scan_category != "unknown")
+					if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
+						if (I.scan_category != IMPLANT_SCAN_CATEGORY_UNKNOWN)
 							implant_list[capitalize(I.name)]++
 						else
 							implant_list["Unknown implant"]++
@@ -149,12 +149,18 @@
 			var/mob/living/carbon/human/H = M
 
 			if (H.get_organ("brain"))
-				if (H.get_brain_damage() >= 100)
+				if (H.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 					brain_data = SPAN_ALERT("Subject is braindead.")
-				else if (H.get_brain_damage() >= 60)
-					brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-				else if (H.get_brain_damage() >= 10)
-					brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+					brain_data = SPAN_ALERT("Severe brain damage detected. Subject unable to function.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
+					brain_data = SPAN_ALERT("Major brain damage detected. Impaired functioning present.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MODERATE)
+					brain_data = SPAN_ALERT("Moderate brain damage detected. Subject unable to function well.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
+					brain_data = SPAN_ALERT("Minor brain damage detected.")
+				else if (H.get_brain_damage() > 0)
+					brain_data = SPAN_ALERT("Brain synapse function may be disrupted.")
 			else
 				brain_data = SPAN_ALERT("Subject has no brain.")
 
@@ -217,11 +223,11 @@
 				reagent_data = SPAN_NOTICE("Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.")
 
 	if (!ishuman) // vOv
-		if (M.get_brain_damage() >= 100)
+		if (M.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 			brain_data = SPAN_ALERT("Subject is braindead.")
-		else if (M.get_brain_damage() >= 60)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 			brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-		else if (M.get_brain_damage() >= 10)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
 			brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
 
 	if (M.interesting)
@@ -420,22 +426,6 @@
 	var/brute = round(M.get_brute_damage())
 
 	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
-
-
-// output a health pop-up overhead thing to the client
-/proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
-	if (C.client && !C.client.preferences?.flying_chat_hidden)
-
-		var/image/chat_maptext/chat_text = null
-		var/popup_text = scan_health_generate_text(M)
-
-		chat_text = make_chat_maptext(M, popup_text, force = 1)
-		if(chat_text)
-			chat_text.measure(C.client)
-			for(var/image/chat_maptext/I in C.chat_text.lines)
-				if(I != chat_text)
-					I.bump_up(chat_text.measured_height)
-			chat_text.show_to(C.client)
 
 /proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)

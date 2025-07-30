@@ -23,21 +23,16 @@
 
 
 
+TYPEINFO(/obj/item/device/speechtotext)
+	start_listen_effects = list(LISTEN_EFFECT_PROTOTYPE_MAPTEXT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+
 /obj/item/device/speechtotext
 	name = "prototype flying chat device"
 	desc = "This is a microphone that was a prototype of the floating chat that pali added. It doesn't work that great, but hey."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
-
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
-
-	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		new /obj/maptext_junk/speech(M, msg = messages[1])
-
 
 /obj/maptext_junk
 	mouse_opacity = 0
@@ -1451,9 +1446,8 @@
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
-New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" class="ol" target="_blank">Click here for a tutorial!</a>
-Ask mentors for help with <strong>F3</strong>
-Contact admins with <strong>F1</strong>
+Have gameplay questions? Ask mentors with \[F3]!
+Have rules questions? Message admins with \[F1].
 Read the rules, don't grief, and have fun!</div>"}
 
 
@@ -1529,7 +1523,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 		proc/setup_process_signal()
 			set waitfor = FALSE
-			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, 0)
 			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
 
 		proc/update_text()
@@ -1541,9 +1535,8 @@ Read the rules, don't grief, and have fun!</div>"}
 				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][!isnull(server.player_count) ? " ([server.player_count] players)" : " (restarting now)"]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
-New? <a style='color: #88f;' href="https://wiki.ss13.co/Super_Quick_Tutorial" target="_blank">Check the tutorial</a>!
-Have questions? Ask mentors with \[F3]!
-Need an admin? Message us with \[F1].
+Have gameplay questions? Ask mentors with \[F3]!
+Have rules questions? Message admins with \[F1].
 
 Other Goonstation servers:[serverList]</span>"})
 
@@ -1649,7 +1642,7 @@ Other Goonstation servers:[serverList]</span>"})
 	matter_remove_light_fixture = 1
 	time_remove_light_fixture = 0
 
-
+	forbidden_walltypes = list()
 
 
 
@@ -1799,7 +1792,7 @@ Other Goonstation servers:[serverList]</span>"})
 	name = "admin spacebux store setup object"
 	desc = "An admin can click on this to set stuff up."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "DONGS"
 	var/tmp/set_up = FALSE

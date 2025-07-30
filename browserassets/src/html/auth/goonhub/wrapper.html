@@ -1,0 +1,49 @@
+<!doctype html>
+<html style="background-color: #0f0f0f">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="color-scheme" content="dark" />
+    <title>Goonhub Auth</title>
+    <link rel="stylesheet" href="{{resource('css/goonhub_auth.css')}}" />
+  </head>
+
+  <body>
+    <div class="content-wrapper">
+      <div id="top">
+        <img
+          src="{{resource('images/welcome_logo_light.png')}}"
+          alt="Goonstation Logo"
+          width="495"
+          height="115"
+          class="logo"
+        />
+      </div>
+
+      <div id="auth-place">
+        <div class="spinner"></div>
+        <div class="error">
+          <div id="error-message"></div>
+          <button type="button" id="reconnect">Reconnect</button>
+        </div>
+      </div>
+
+      <div id="bottom">
+        <div id="countdown-container">
+          <div id="countdown-label"></div>
+          <div id="countdown-slider-bg">
+            <div id="countdown-slider-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.GH_TIMEOUT = parseInt('{$timeout}');
+    </script>
+    <script
+      type="text/javascript"
+      src="{{resource('js/goonhub_auth.js')}}"
+    ></script>
+  </body>
+</html>

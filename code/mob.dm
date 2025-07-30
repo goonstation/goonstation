@@ -1,3 +1,10 @@
+TYPEINFO(/mob)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /mob
 	density = 1
 	layer = MOB_LAYER
@@ -8,8 +15,17 @@
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
+	open_to_sound = FALSE
+
+	speech_verb_say = "says"
+	speech_verb_ask = "asks"
+	speech_verb_exclaim = "exclaims"
+	speech_verb_stammer = "stammers"
+	speech_verb_gasp = "gasps"
+
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/tmp/datum/mind/mind
-	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
 
@@ -23,8 +39,6 @@
 
 	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/stamina_bar/stamina_bar = null
-
-	var/robot_talk_understand = 0
 
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = null
@@ -77,7 +91,6 @@
 	var/incrit = 0
 	var/timeofdeath = 0
 	var/fakeloss = 0
-	var/fakedead = 0
 	var/health = 100
 	var/max_health = 100
 	var/bodytemperature = T0C + 37
@@ -108,7 +121,6 @@
 	var/network_device = null
 	var/Vnetwork = null
 	var/lastDamageIconUpdate
-	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
 
 	var/list/movement_modifiers = list()
@@ -137,10 +149,7 @@
 
 	var/nodamage = 0
 
-	var/spellshield = 0
-
 	var/voice_name = "unidentifiable voice"
-	var/voice_message = null
 	var/oldname = null
 	var/mob/oldmob = null
 	var/datum/mind/oldmind = null
@@ -148,15 +157,8 @@
 	var/attack_alert = 0 // should we message admins when attacking another player?
 	var/suicide_alert = 0 // should we message admins when dying/dead?
 
-	var/speechverb_say = "says"
-	var/speechverb_ask = "asks"
-	var/speechverb_exclaim = "exclaims"
-	var/speechverb_stammer = "stammers"
-	var/speechverb_gasp = "gasps"
-	var/speech_void = 0
 	var/now_pushing = null //temp. var used for bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
-	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
@@ -234,7 +236,6 @@
 	var/being_controlled = FALSE
 	///Lazy inited list of custom vomit behaviours from reagents, organs etc.
 	var/list/datum/vomit_behavior/vomit_behaviors = null
-
 	/// if this mob can interface with pod context menu by left clicking
 	var/can_interface_with_pods = TRUE
 
@@ -272,7 +273,6 @@
 
 	src.lastattacked = get_weakref(src) //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new(null, src)
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -340,9 +340,6 @@
 		skipped_mobs_list = 0
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
-
-	qdel(chat_text)
-	chat_text = null
 
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
@@ -457,9 +454,9 @@
 		return
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
-	if(isnull(src.client.tg_layout))
-		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
-	src.client.set_layout(src.client.tg_layout)
+	if(isnull(src.client?.tg_layout))
+		src.client?.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
+	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -483,13 +480,13 @@
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
-	if(src.client.preferences)
+	if(src.client?.preferences)
 		src.reset_keymap()
 
-	src.client.mouse_pointer_icon = src.cursor
+	src.client?.mouse_pointer_icon = src.cursor
 
-	src.lastKnownIP = src.client.address
-	src.computer_id = src.client.computer_id
+	src.lastKnownIP = src.client?.address
+	src.computer_id = src.client?.computer_id
 
 	world.update_status()
 
@@ -523,7 +520,7 @@
 
 	src.need_update_item_abilities = 1
 
-	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
+	var/atom/illumplane = src.client?.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
@@ -746,6 +743,11 @@
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
 
+				if(tmob.buckled)
+					tmob.buckled.set_loc(oldloc)
+				if(src.buckled)
+					src.buckled.set_loc(newloc)
+
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/atom/movable/hotspot) in tmob.loc)
@@ -777,8 +779,6 @@
 			victim.deliver_move_trigger("bump")
 			var/was_in_space = istype(victim.loc, /turf/space)
 			var/was_in_fire = locate(/atom/movable/hotspot) in victim.loc
-			if (victim.buckled && !victim.buckled.anchored)
-				step(victim.buckled, t)
 			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into space.")
 			else if (!was_in_fire && (locate(/atom/movable/hotspot) in victim.loc))
@@ -795,7 +795,6 @@
 			var/list/pulling = list()
 			if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || src.pulling == src) // fucks sake
 				src.remove_pulling()
-				//hud.update_pulling() // FIXME
 			else
 				pulling += src.pulling
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
@@ -909,6 +908,12 @@
 	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
 		src.equipped().intent_switch_trigger(src)
 
+/// Set movement intent variable on a mob
+/mob/proc/set_m_intent(intent)
+	if (!intent)
+		return
+	src.m_intent = intent
+
 // medals
 
 /mob/proc/revoke_medal(title)
@@ -931,8 +936,8 @@
 /mob/verb/list_medals()
 	set name = "Medals"
 
-	if (IsGuestKey(src.key))
-		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to view your medals."))
 		return
 
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
@@ -1087,7 +1092,7 @@
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss=FALSE)
 	hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
@@ -1216,12 +1221,10 @@
 
 /mob/proc/death(gibbed = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins(SPAN_ALERT("Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)]."))
-	//if(src.mind && !gibbed)
-	//	src.mind.death_icon = getFlatIcon(src,SOUTH) crew photo stuff
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
 		src.damn()
 		return
@@ -1230,8 +1233,10 @@
 		src.suicide_alert = 0
 	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
-	//stop piloting pods or whatever
+	// stop piloting pods or whatever
 	src.override_movement_controller = null
+	// stop pulling shit!!
+	src.remove_pulling()
 
 
 /mob/proc/restrained()
@@ -1764,6 +1769,20 @@
 
 	return temperature
 
+/// Change the mob's body temperature without leaving the specified bounds
+/mob/proc/changeBodyTemp(var/amount, var/min_temp = 0 KELVIN, var/max_temp = INFINITY)
+	if(amount <= 0)
+		if(src.bodytemperature <= min_temp) // Keep body temp as is if below min
+			return
+		src.bodytemperature += amount
+		if(src.bodytemperature < min_temp)
+			src.bodytemperature = min_temp
+	else
+		if(src.bodytemperature >= max_temp)  // Keep body temp as is if above max
+			return
+		src.bodytemperature += amount
+		if(src.bodytemperature > max_temp)
+			src.bodytemperature = max_temp
 
 //Gets rid of the mob without all the messy fuss of a gib
 /mob/proc/remove()
@@ -2800,6 +2819,8 @@
 	return mobs
 
 /mob/get_examine_tag(mob/examiner)
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		return null
 	return src.name_tag
 
 /mob/proc/protected_from_space()
@@ -3476,6 +3497,9 @@
 	if (src.bioHolder?.mobAppearance)
 		return src.bioHolder.mobAppearance.s_tone
 	return "#042069"
+
+/mob/proc/update_movement_modifiers()
+	process_movespeed_update()
 
 /mob/proc/scald_temp()
 	return src.base_body_temp + (src.temp_tolerance * 4)

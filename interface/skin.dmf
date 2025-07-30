@@ -46,7 +46,7 @@ menu "menu"
 		saved-params = "is-checked"
 	elem
 		name = "&Reconnect"
-		command = ".reconnect\n.output browseroutput:output Reconnecting..."
+		command = ".winset \"reset=true\"\n.reconnect\n.output browseroutput:output Reconnecting..."
 		category = "&File"
 		saved-params = "is-checked"
 	elem "screenshot"
@@ -64,6 +64,11 @@ menu "menu"
 		command = ".command"
 		category = "&File"
 		saved-params = "is-checked"
+	elem "auth_logout"
+		name = "Logout"
+		command = ""
+		category = "&File"
+		is-disabled = true
 	elem
 		name = ""
 		command = ""
@@ -714,7 +719,7 @@ window "joinmenu"
 	elem "joinmenu"
 		type = MAIN
 		pos = 281,-40
-		size = 240x200
+		size = 240x256
 		anchor1 = none
 		anchor2 = none
 		is-visible = false
@@ -724,7 +729,7 @@ window "joinmenu"
 		can-close = false
 		can-minimize = false
 		can-resize = false
-	elem "observe"
+	elem "button_observe"
 		type = BUTTON
 		pos = 18,136
 		size = 200x40
@@ -767,7 +772,7 @@ window "joinmenu"
 		text = ""
 		image = 'icons\\ui\\cancel.png'
 		command = ".cancel_ready"
-	elem "button_ready"
+	elem "button_ready_play"
 		type = BUTTON
 		pos = 18,80
 		size = 200x40
@@ -806,6 +811,19 @@ window "joinmenu"
 		text = ""
 		image = 'icons\\ui\\edit-character-button.png'
 		command = "Character-Setup"
+	elem "button_tutorial"
+		type = BUTTON
+		pos = 18,192
+		size = 200x40
+		anchor1 = none
+		anchor2 = none
+		font-family = "Verdana"
+		font-size = 10
+		font-style = "bold"
+		saved-params = "is-checked"
+		text = ""
+		image = 'icons\\ui\\play-tutorial.png'
+		command = "Play-Tutorial"
 
 window "mainwindow"
 	elem "mainwindow"
@@ -874,6 +892,14 @@ window "mainwindow"
 		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"testverb"
 		is-flat = true
 		button-type = pushbox
+	elem "authfailed"
+		type = BROWSER
+		pos = 0,0
+		size = 0x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-visible = false
+		auto-format = false
 
 window "screenSizeHelper"
 	elem "screenSizeHelper"
@@ -969,8 +995,8 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
 		is-disabled = true
+		is-visible = false
 		saved-params = ""
 		auto-format = false
 

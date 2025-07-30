@@ -37,7 +37,6 @@
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/eyespider)
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/legworm)
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/buttcrab)
-		src.ability_holder.addAbility(/datum/targetable/changeling/hivesay)
 		src.ability_holder.addAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.addAbility(/datum/targetable/changeling/give_control)
 
@@ -66,7 +65,6 @@
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/eyespider)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/legworm)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/buttcrab)
-		src.ability_holder.removeAbility(/datum/targetable/changeling/hivesay)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/give_control)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/changeling)

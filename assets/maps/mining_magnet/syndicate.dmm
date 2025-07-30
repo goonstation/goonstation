@@ -1,0 +1,456 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/syndicate/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = 1;
+	pixel_y = 4;
+	on = 1
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"b" = (
+/turf/space,
+/area/mining/magnet)
+"c" = (
+/obj/table/syndicate/auto,
+/obj/item/clipboard/with_pen{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/pen/pencil{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"d" = (
+/obj/table/syndicate/auto,
+/obj/item/paper/syndicate_mining_magnet_1,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"e" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"f" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"g" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"j" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"k" = (
+/obj/table/syndicate/auto,
+/obj/item/decoration/ashtray{
+	pixel_y = 2;
+	pixel_x = 1
+	},
+/obj/item/cigbutt{
+	pixel_x = 5
+	},
+/obj/item/cigbutt{
+	pixel_y = 2
+	},
+/obj/item/cigbutt{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"m" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"n" = (
+/obj/table/syndicate/auto,
+/obj/decal/cleanable/desk_clutter{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"o" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"q" = (
+/turf/simulated/wall/auto/shuttle/dark,
+/area/mining/magnet)
+"r" = (
+/obj/storage/closet/syndicate,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"t" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"v" = (
+/obj/storage/crate/classcrate{
+	name = "money crate"
+	},
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/storage/secure/ssafe/syndicate_mining_encounter{
+	pixel_y = 25
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"y" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/mob/living/critter/robotic/gunbot/syndicate_mining_encounter,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"A" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"D" = (
+/obj/table/syndicate/auto,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"E" = (
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"F" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 1
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"H" = (
+/obj/storage/crate/classcrate{
+	name = "money crate"
+	},
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"I" = (
+/obj/storage/closet/syndicate,
+/obj/item/clothing/shoes/swat,
+/obj/item/clothing/shoes/swat,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/head/bandana/random_color,
+/obj/item/clothing/head/bandana/random_color,
+/obj/item/clothing/head/black,
+/obj/item/clothing/head/black,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"J" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"K" = (
+/turf/simulated/floor/auto/glassblock/red,
+/area/mining/magnet)
+"M" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/obj/item/storage/secure/ssafe/syndicate_mining_encounter{
+	pixel_y = 5;
+	pixel_x = -24
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"N" = (
+/mob/living/critter/human/syndicate/knife,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"O" = (
+/mob/living/critter/robotic/gunbot/syndicate_mining_encounter,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"P" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	name = "Syndicate Post";
+	opacity = 0
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"R" = (
+/turf/simulated/wall/auto/asteroid/dark,
+/area/mining/magnet)
+"S" = (
+/obj/submachine/syndicate_teleporter,
+/turf/simulated/floor/auto/glassblock/red,
+/area/mining/magnet)
+"T" = (
+/obj/table/syndicate/auto,
+/obj/random_item_spawner/desk_stuff/few,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"U" = (
+/obj/table/syndicate/auto,
+/obj/item/cigpacket{
+	pixel_x = -4
+	},
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"V" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"W" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+"X" = (
+/obj/table/syndicate/auto,
+/obj/item/paper/syndicate_mining_magnet_2{
+	pixel_y = 5;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry,
+/turf/simulated/floor/shuttle/red,
+/area/mining/magnet)
+
+(1,1,1) = {"
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+b
+"}
+(2,1,1) = {"
+R
+R
+q
+q
+q
+q
+q
+q
+q
+q
+q
+R
+R
+"}
+(3,1,1) = {"
+R
+q
+q
+r
+o
+E
+E
+o
+k
+U
+q
+q
+R
+"}
+(4,1,1) = {"
+R
+q
+q
+q
+q
+v
+E
+E
+E
+O
+t
+q
+R
+"}
+(5,1,1) = {"
+R
+g
+a
+c
+q
+q
+A
+q
+q
+m
+V
+q
+R
+"}
+(6,1,1) = {"
+R
+g
+D
+j
+q
+N
+K
+j
+q
+q
+q
+q
+R
+"}
+(7,1,1) = {"
+R
+g
+n
+W
+F
+K
+S
+K
+E
+P
+m
+P
+R
+"}
+(8,1,1) = {"
+R
+g
+d
+j
+q
+N
+K
+j
+q
+q
+q
+q
+R
+"}
+(9,1,1) = {"
+R
+g
+T
+T
+q
+q
+f
+q
+q
+M
+J
+q
+R
+"}
+(10,1,1) = {"
+R
+q
+q
+q
+q
+H
+E
+E
+E
+E
+y
+q
+R
+"}
+(11,1,1) = {"
+R
+q
+q
+I
+m
+E
+E
+m
+X
+a
+e
+q
+R
+"}
+(12,1,1) = {"
+R
+R
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+R
+"}
+(13,1,1) = {"
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+"}

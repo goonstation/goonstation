@@ -1,6 +1,7 @@
 /obj/railing
 	name = "railing"
 	desc = "Two sets of bars shooting onward with the sole goal of blocking you off. They can't stop you from vaulting over them though!"
+	HELP_MESSAGE_OVERRIDE("")
 	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/objects.dmi'
@@ -57,6 +58,16 @@
 				var/datum/material/M = getMaterial("steel")
 				R.setMaterial(M)
 		qdel(src)
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		if (src.broken)
+			. += "You can use a <b>welding tool</b> to remove this broken railing."
+		else
+			if (src.is_reinforced)
+				. += "You can use <b>wirecutters</b> to remove the reinforcement from this railing, or a <b>welding tool</b> to deconstruct it."
+			else
+				. += "You can use <b>metal rods</b> to reinforce this railing, or a <b>welding tool</b> to deconstruct it."
 
 	ex_act(severity)
 		switch(severity)
@@ -142,6 +153,11 @@
 					R.setMaterial(M)
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
+		else if (ispryingtool(W))
+			if(src.anchored)
+				boutput(user, SPAN_NOTICE("\The [src] must be unfastened to rotate!"))
+			else
+				src.set_dir(turn(src.dir, -90))
 		else if (istype(W,/obj/item/rods))
 			if(!src.is_reinforced && can_reinforce)
 				var/obj/item/rods/R = W

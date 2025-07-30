@@ -38,8 +38,8 @@ h1 {
 }
 
 p {
-	margin: 0;
-	line-height: 1.2;
+  margin: 0;
+  line-height: 1.2;
 }
 
 hr {
@@ -150,7 +150,7 @@ img {
 
 /* You didn't see nothing */
 .rainbow {
-	animation: rainbow 1s infinite alternate;
+  animation: rainbow 1s infinite alternate;
 }
 
 /*****************************

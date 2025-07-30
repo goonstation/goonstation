@@ -29,7 +29,6 @@
 
 /mob/living/critter/plant/maneater
 	name = "man-eating plant"
-	real_name = "man-eating plant"
 	desc = "It looks hungry..."
 	density = TRUE
 	icon_state = "maneater"
@@ -311,7 +310,6 @@
 
 /mob/living/critter/plant/maneater/polymorph
 	name = "man-eating plant"
-	real_name = "Wizard-eating plant"
 	desc = "It looks upset about something..."
 	is_npc = FALSE
 	add_abilities = list(/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)

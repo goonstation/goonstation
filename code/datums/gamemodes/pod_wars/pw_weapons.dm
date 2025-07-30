@@ -190,7 +190,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	max_charge = 350
 	recharge_rate = 15
 
-//////////survival_machete//////////////
+//////////melee weapons//////////////
 /obj/item/survival_machete
 	name = "pilot survival machete"
 	desc = "This peculularly shaped design was used by the Soviets nearly a century ago. It's also useful in space."
@@ -215,8 +215,139 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
-	syndicate
-		icon_state = "surv_machete_st"
+
+/obj/item/survival_machete/NT
+	icon_state = "surv_machete_nt"
+
+/obj/item/survival_machete/SY
+	icon_state = "surv_machete_sy"
+
+/obj/item/survival_knife
+	name = "pilot survival knife"
+	desc = "A lightweight carbon steel knife that allows you to move faster in fights, colored for your stabbing pleasure."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "surv_knife_nt"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "surv_machete" // they're already small inhands *shrug
+	force = 6
+	throwforce = 6
+	throw_range = 7
+	hit_type = DAMAGE_STAB
+	w_class = W_CLASS_POCKET_SIZED
+	flags = TABLEPASS | NOSHIELD | USEDELAY
+	tool_flags = TOOL_CUTTING
+	burn_remains = BURN_REMAINS_MELT
+	stamina_damage = 15
+	stamina_cost = 8
+	stamina_crit_chance = 40
+	pickup_sfx = 'sound/items/blade_pull.ogg'
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+
+	setupProperties()
+		..()
+		setProperty("movespeed", -0.3)
+
+/obj/item/survival_knife/NT
+	icon_state = "surv_knife_nt"
+
+/obj/item/survival_knife/SY
+	icon_state = "surv_knife_sy"
+
+/obj/item/survival_axe
+	name = "pilot survival axe"
+	desc = "An axe with a pick-shaped end on the back, intended to be used to get through doors or windows in an emergency, or the skull of your enemy also in an emergency. It's quite hefty."
+	icon = 'icons/obj/items/weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	icon_state = "surv_axe_nt"
+	item_state = "surv_axe_nt"
+	hitsound = null
+	flags = CONDUCT | TABLEPASS | USEDELAY
+	c_flags = ONBELT
+	object_flags = NO_ARM_ATTACH
+	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
+	hit_type = DAMAGE_CUT
+	leaves_slash_wound = TRUE
+	click_delay = 10
+	two_handed = 0
+
+	w_class = W_CLASS_NORMAL
+	force = 15
+	var/one_handed_force = 15
+	var/two_handed_force = 30
+	throwforce = 15
+	throw_speed = 2
+	throw_range = 4
+	stamina_damage = 25
+	stamina_cost = 15
+	stamina_crit_chance = 5
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.4)
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "force")
+			if (src.two_handed)
+				src.two_handed_force = newval
+			else
+				src.one_handed_force = newval
+
+	proc/set_values()
+		if(two_handed)
+			src.click_delay = COMBAT_CLICK_DELAY * 1.5
+			force = src.two_handed_force
+			throwforce = 25
+			throw_speed = 4
+			throw_range = 8
+			stamina_damage = 45
+			stamina_cost = 25
+			stamina_crit_chance = 10
+		else
+			src.click_delay = COMBAT_CLICK_DELAY
+			force = src.one_handed_force
+			throwforce = 15
+			throw_speed = 2
+			throw_range = 4
+			stamina_damage = 25
+			stamina_cost = 15
+			stamina_crit_chance = 5
+		tooltip_rebuild = TRUE
+		return
+
+	attack_self(mob/user as mob)
+		if(ishuman(user))
+			if(two_handed)
+				setTwoHanded(0) //Go 1-handed.
+				set_values()
+			else
+				if(!setTwoHanded(1)) //Go 2-handed.
+					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
+				else
+					set_values()
+		..()
+
+	attack_hand(var/mob/user) // todo: maybe make the base/twohand delays into vars. maybe.
+		src.two_handed = 0
+		set_values()
+		return ..()
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		..()
+		// ugly but basically we make it louder and slightly downpitched if we're 2 handing
+		playsound(target, 'sound/impact_sounds/Fireaxe.ogg', 30 * (1 + src.two_handed), pitch=(1 - 0.3 * src.two_handed))
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_ROD)
+
+/obj/item/survival_axe/NT
+	icon_state = "surv_axe_nt"
+
+/obj/item/survival_axe/SY
+	icon_state = "surv_axe_sy"
+	item_state = "surv_axe_sy"
 
 //basically like stinger in that it shoots projectiles, but has no explosions, different icon
 /obj/item/old_grenade/energy_frag

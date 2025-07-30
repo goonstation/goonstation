@@ -282,7 +282,7 @@
 		if (src.amount_left < 0)
 			src.amount_left = 0
 		inventory_counter?.update_number(src.amount_left)
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
@@ -307,9 +307,15 @@
 			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
 				//shoot in a truly random direction
 				shoot_projectile_relay_pixel_spread(src, src.ammo_type, src, rand(-32, 32), rand(-32, 32), 360)
+				if(src.delete_on_reload && src.amount_left <= 0)
+					qdel(src)
+					return
 				if (prob(30) && src.use(1)) //small chance to do two per tick
 					sleep(0.3 SECONDS)
 					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
+					if(src.delete_on_reload && src.amount_left <= 0) //I don't like repeating code, but this is needed to catch if it empties on the second firing
+						qdel(src)
+
 
 //no caliber:
 /obj/item/ammo/bullets/vbullet
@@ -466,6 +472,19 @@
 	ammo_type = new/datum/projectile/bullet/rifle_3006
 	icon_state = "rifle_clip-4"
 	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_RIFLE_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip"
+	icon_empty = "rifle_clip_empty"
+
+/obj/item/ammo/bullets/rifle_3006/single
+	sname = ".308 AP"
+	name = ".308 rifle magazine"
+	desc = "An old stripper clip of .308 bullets, ready to rip through whatever they hit."
+	ammo_type = new/datum/projectile/bullet/rifle_3006
+	icon_state = "rifle_clip-1"
+	amount_left = 1
 	max_amount = 4
 	ammo_cat = AMMO_RIFLE_308
 	icon_dynamic = 1

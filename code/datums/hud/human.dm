@@ -339,20 +339,7 @@
 						master.autoequip_slot(I, SLOT_R_STORE)
 					return
 				show_inventory = !show_inventory
-				if (show_inventory)
-					for (var/atom/movable/screen/hud/S in inventory_bg)
-						src.add_screen(S)
-					for (var/obj/O in inventory_items)
-						src.add_object(O, HUD_LAYER+2)
-					if (layout_style == "tg")
-						src.add_screen(legend)
-				else
-					for (var/atom/movable/screen/hud/S in inventory_bg)
-						src.remove_screen(S)
-					for (var/obj/O in inventory_items)
-						src.remove_object(O)
-					if (layout_style == "tg")
-						src.remove_screen(legend)
+				src.update_inventory()
 
 			if ("lhand")
 				master.swap_hand(1)
@@ -424,9 +411,9 @@
 
 			if ("mintent")
 				if (master.m_intent == "run")
-					master.m_intent = "walk"
+					master.set_m_intent("walk")
 				else
-					master.m_intent = "run"
+					master.set_m_intent("run")
 				boutput(master, "You are now [master.m_intent == "walk" ? "walking" : "running"].")
 				src.update_mintent()
 
@@ -542,7 +529,7 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_y <= 16)
 					if (icon_x < 16)
-						master.say_radio()
+						master.say_over_channel()
 					else
 						master.client << link("https://wiki.ss13.co/Construction")
 
@@ -727,6 +714,22 @@
 		else
 			I.screen_loc = loc
 
+	proc/update_inventory()
+		if (src.show_inventory)
+			for (var/atom/movable/screen/hud/S in inventory_bg)
+				src.add_screen(S)
+			for (var/obj/O in inventory_items)
+				src.add_object(O, HUD_LAYER+2)
+			if (layout_style == "tg")
+				src.add_screen(legend)
+		else
+			for (var/atom/movable/screen/hud/S in inventory_bg)
+				src.remove_screen(S)
+			for (var/obj/O in inventory_items)
+				src.remove_object(O)
+			if (layout_style == "tg")
+				src.remove_screen(legend)
+
 	proc/remove_item(obj/item/I)
 		if (length(inventory_items))
 			inventory_items -= I
@@ -862,7 +865,7 @@
 		var/stage = 0
 		if (master?.mini_health_hud)
 			healthicon = "healthpip"
-			if (isdead(master) || master.fakedead)
+			if (isdead(master))
 				health_brute.icon_state = "mhealth7" // rip
 				health_brute.tooltip_options = list("theme" = "healthDam7")
 				health_brute.name = "Health"
@@ -965,7 +968,7 @@
 			health_tox.icon_state = "blank"
 			health_oxy.icon_state = "blank"
 
-			if (isdead(master) || master.fakedead)
+			if (isdead(master))
 				health.icon_state = "health7" // dead
 				health.tooltip_options = list("theme" = "healthDam7")
 				health.desc = "Seems like you've died. Bummer."

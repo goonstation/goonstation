@@ -264,7 +264,8 @@
 		if (!ispath(abilityType))
 			return
 		if (locate(abilityType) in src.abilities)
-			return
+			var/datum/targetable/A = locate(abilityType) in src.abilities
+			return A
 		var/datum/targetable/A = new abilityType(src)
 		A.holder = src // redundant but can't hurt I guess
 		src.abilities += A
@@ -428,6 +429,7 @@
 
 	///Returns the actual mob currently controlling this holder, in case src.owner and composite_owner.owner differ (eg flockmind in a drone)
 	proc/get_controlling_mob()
+		RETURN_TYPE(/mob)
 		return src.composite_owner?.owner || src.owner
 
 /atom/movable/screen/ability

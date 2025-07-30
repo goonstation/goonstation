@@ -69,6 +69,10 @@
 /obj/machinery/neosmelter,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"bE" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor,
+/area/station/devzone)
 "cj" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor,
@@ -79,9 +83,14 @@
 /area/station/devzone)
 "ct" = (
 /obj/machinery/recharge_station,
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
+/area/station/devzone)
+"cu" = (
+/obj/landmark/start/job/medical_director,
+/turf/simulated/floor/white,
 /area/station/devzone)
 "cx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -92,6 +101,10 @@
 /area/station/devzone)
 "cD" = (
 /obj/landmark/start/job/assistant,
+/turf/simulated/floor,
+/area/station/devzone)
+"cH" = (
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor,
 /area/station/devzone)
 "cK" = (
@@ -322,6 +335,10 @@
 	},
 /turf/space,
 /area/station/devzone)
+"gQ" = (
+/obj/landmark/start/job/head_of_personnel,
+/turf/simulated/floor,
+/area/station/devzone)
 "hc" = (
 /obj/machinery/conveyor/SN{
 	id = "cargobuy"
@@ -423,11 +440,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "ib" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -438,6 +452,10 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"id" = (
+/obj/machinery/computer/secure_data/detective_computer,
 /turf/simulated/floor,
 /area/station/devzone)
 "ii" = (
@@ -465,11 +483,8 @@
 /obj/machinery/magnet_chassis{
 	pixel_x = 16
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -675,6 +690,10 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"nd" = (
+/obj/machinery/computer/general_alert,
+/turf/simulated/floor,
+/area/station/devzone)
 "nf" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/devzone)
@@ -710,7 +729,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
 "nO" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -777,6 +796,10 @@
 "oY" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/grass/random,
+/area/station/devzone)
+"pb" = (
+/obj/machinery/computer3/generic/communications,
+/turf/simulated/floor,
 /area/station/devzone)
 "pc" = (
 /obj/machinery/manufacturer/medical,
@@ -939,6 +962,14 @@
 /obj/disposalpipe/junction{
 	name = "factory pipe"
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"rY" = (
+/obj/machinery/computer/robotics,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
+"se" = (
+/obj/landmark/start/job/head_of_security,
 /turf/simulated/floor,
 /area/station/devzone)
 "sg" = (
@@ -1109,6 +1140,10 @@
 	dir = 8
 	},
 /turf/simulated/floor/blue/checker,
+/area/station/devzone)
+"wn" = (
+/obj/landmark/start/job/captain,
+/turf/simulated/floor,
 /area/station/devzone)
 "wp" = (
 /obj/machinery/deep_fryer,
@@ -1286,6 +1321,10 @@
 /obj/machinery/manufacturer/qm,
 /turf/simulated/floor,
 /area/station/devzone)
+"zw" = (
+/obj/machinery/computer3/generic/bank_data,
+/turf/simulated/floor,
+/area/station/devzone)
 "zF" = (
 /obj/item/dna_scrambler,
 /obj/item/dna_scrambler,
@@ -1344,6 +1383,10 @@
 /obj/disposalpipe/type_sensing_outlet/drone_factory{
 	dir = 4
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"Af" = (
+/obj/machinery/computer/card,
 /turf/simulated/floor,
 /area/station/devzone)
 "Ag" = (
@@ -1443,6 +1486,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"Bs" = (
+/obj/machinery/computer/announcement/station,
+/turf/simulated/floor,
+/area/station/devzone)
 "Cf" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/orangeblack,
@@ -1462,6 +1509,10 @@
 	},
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"Cq" = (
+/obj/machinery/computer3/generic/personnel_management,
+/turf/simulated/floor,
 /area/station/devzone)
 "Cv" = (
 /obj/cable{
@@ -1686,8 +1737,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
-/area/station/devzone)
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
 "Gi" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor/white,
@@ -2044,6 +2096,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"Mp" = (
+/obj/machinery/computer3/generic/med_data,
+/turf/simulated/floor,
+/area/station/devzone)
 "MA" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/white,
@@ -2257,6 +2313,10 @@
 /obj/traitorifier/virtual/wizard,
 /turf/simulated/floor,
 /area/station/devzone)
+"PF" = (
+/obj/landmark/start/job/clown,
+/turf/simulated/floor,
+/area/station/devzone)
 "PH" = (
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
@@ -2408,7 +2468,6 @@
 	},
 /area/station/devzone)
 "SI" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2446,10 +2505,6 @@
 /obj/machinery/ghost_catcher,
 /turf/simulated/floor,
 /area/station/devzone)
-"Tz" = (
-/obj/landmark/start/job/chief_engineer,
-/turf/simulated/floor/orangeblack,
-/area/station/devzone)
 "TF" = (
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -2461,6 +2516,10 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"TM" = (
+/obj/landmark/start/job/research_director,
+/turf/simulated/floor,
 /area/station/devzone)
 "TY" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -2566,11 +2625,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "Wg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2620,6 +2676,10 @@
 /obj/machinery/vehicle/tank/minisub/mining,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
+"Xb" = (
+/obj/landmark/start/job/quartermaster,
+/turf/simulated/floor,
+/area/station/devzone)
 "Xd" = (
 /obj/railing/red{
 	dir = 8
@@ -2658,11 +2718,8 @@
 /area/station/devzone)
 "Xu" = (
 /obj/item/rcd/construction/safe/admin_crimes,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2694,11 +2751,8 @@
 	},
 /area/station/devzone)
 "XI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
@@ -2777,6 +2831,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"YV" = (
+/obj/machinery/computer3/generic/secure_data,
+/turf/simulated/floor,
+/area/station/devzone)
 "Zd" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -2808,6 +2866,10 @@
 /obj/machinery/conveyor_switch{
 	id = "cargosell"
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"ZX" = (
+/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/devzone)
 "ZZ" = (
@@ -3029,7 +3091,7 @@ KD
 eq
 uE
 Yx
-Yx
+ZX
 ng
 Yx
 "}
@@ -3071,8 +3133,8 @@ sg
 eL
 Om
 Yx
-Yx
-Yx
+se
+cH
 ng
 Yx
 "}
@@ -3539,7 +3601,7 @@ Nu
 Nu
 ys
 Mo
-dG
+Yx
 Yx
 Yx
 ng
@@ -3664,7 +3726,7 @@ Yx
 ng
 Fe
 Yx
-Yx
+TM
 Yx
 kV
 bw
@@ -3701,7 +3763,7 @@ ng
 ng
 ng
 ng
-Tz
+ng
 ng
 ng
 ng
@@ -3785,7 +3847,7 @@ ck
 ng
 qI
 bi
-Yx
+Xb
 he
 ng
 du
@@ -3831,7 +3893,7 @@ ag
 wg
 ZD
 ng
-ng
+rY
 FV
 ng
 LH
@@ -3973,7 +4035,7 @@ Vh
 ng
 sJ
 Ni
-Ni
+cu
 Ni
 lU
 ng
@@ -4167,7 +4229,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+ng
 Yx
 Yx
 Yx
@@ -4210,7 +4272,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+ng
 Yx
 Yx
 Yx
@@ -4253,11 +4315,11 @@ Wg
 Yx
 Yx
 Yx
+ng
 Yx
+bE
 Yx
-Yx
-Yx
-Yx
+zw
 Yx
 ng
 VO
@@ -4296,11 +4358,11 @@ Yx
 Yx
 Yx
 Yx
+ng
 Yx
-Yx
-Yx
-Yx
-Yx
+YV
+wn
+Mp
 Yx
 ng
 Id
@@ -4339,11 +4401,11 @@ Yx
 Yx
 Yx
 Yx
+ng
+PF
+id
 Yx
-Yx
-Yx
-Yx
-Yx
+Cq
 Yx
 ng
 Yx
@@ -4382,11 +4444,11 @@ Yx
 Yx
 Yx
 Yx
+ng
 Yx
-Yx
-Yx
-Yx
-Yx
+nd
+gQ
+pb
 Yx
 ng
 Yx
@@ -4425,11 +4487,11 @@ Yx
 Yx
 Yx
 Yx
+ng
 Yx
+Af
 Yx
-Yx
-Yx
-Yx
+Bs
 Yx
 ng
 Yx
@@ -4468,7 +4530,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+ng
 Yx
 Yx
 Yx

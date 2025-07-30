@@ -1,6 +1,5 @@
 /mob/living/critter/brullbar
 	name = "brullbar"
-	real_name = "brullbar"
 	desc = "Oh god."
 	density = 1
 	icon = 'icons/mob/critter/humanoid/brullbar.dmi'
@@ -218,7 +217,6 @@
 
 /mob/living/critter/brullbar/king
 	name = "brullbar king"
-	real_name = "brullbar king"
 	desc = "You should run."
 	icon_state = "brullbarking"
 	icon_state_dead = "brullbarking-dead"

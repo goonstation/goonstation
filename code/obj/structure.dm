@@ -12,6 +12,7 @@
 		desc = "A metal support for an incomplete wall."
 		HELP_MESSAGE_OVERRIDE({"
 			You can use a <b>crowbar</b> to displace it,
+			use a <b>wrench</b> to deconstruct it,
 			add metal to finish the wall,
 			or add reinforced metal to make the girder stronger.
 		"})
@@ -24,6 +25,7 @@
 			desc = "An unsecured support for an incomplete wall."
 			HELP_MESSAGE_OVERRIDE({"
 				You can use a <b>screwdriver</b> to seperate the metal into sheets,
+				use a <b>wrench</b> to anchor the girder in place,
 				or add metal or reinforced metal to turn it into fake wall that can opened by hand.
 			"})
 
@@ -241,6 +243,9 @@ obj/structure/ex_act(severity)
 				else
 					var/datum/material/defaultMaterial = getMaterial("steel")
 					A.setMaterial(defaultMaterial)
+
+				var/obj/item/sheet/S = the_tool
+				S?.change_stack_amount(-2)
 				qdel(the_girder)
 			if (GIRDER_SECURE)
 				if (!istype(the_girder.loc, /turf/simulated/floor/))

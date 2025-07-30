@@ -293,8 +293,7 @@
 					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 						src.reagents.remove_any(puffrate)
 					else
-						if(H.bodytemperature < H.base_body_temp)
-							H.bodytemperature += 1
+						H.changeBodyTemp(1 KELVIN, max_temp = H.base_body_temp)
 						if (prob(1))
 							H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 						src.reagents.trans_to(M, puffrate)
@@ -879,7 +878,7 @@
 				user.put_in_hand_or_drop(W)
 				if (src.match_amt != -1)
 					src.match_amt --
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 			src.UpdateIcon()
 		else
 			return ..()
