@@ -278,14 +278,6 @@
 /obj/machinery/dialysis,
 /turf/simulated/floor/white,
 /area/station/devzone)
-"fh" = (
-/obj/item/rcd/construction/safe/admin_crimes,
-/obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
-	pixel_x = -10
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "fs" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor,
@@ -301,6 +293,13 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
+"fL" = (
+/obj/item/rcd/construction/safe/admin_crimes,
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "fN" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -573,6 +572,12 @@
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
 /area/station/devzone)
+"kz" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
 "kI" = (
 /obj/forcefield/energyshield/perma{
 	dir = 1
@@ -698,13 +703,6 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/drinks/espressocup,
 /turf/simulated/floor/white,
-/area/station/devzone)
-"nG" = (
-/obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
-	pixel_x = -10
-	},
-/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "nI" = (
 /obj/machinery/atmospherics/binary/pump/active{
@@ -1494,6 +1492,12 @@
 /obj/machinery/computer/announcement/station,
 /turf/simulated/floor,
 /area/station/devzone)
+"Bw" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "Cf" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/orangeblack,
@@ -2194,19 +2198,6 @@
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/devzone)
-"Oe" = (
-/obj/machinery/mining_magnet{
-	pixel_x = 16
-	},
-/obj/machinery/magnet_chassis{
-	pixel_x = 16
-	},
-/obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
-	pixel_x = -10
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Om" = (
 /obj/railing/red{
 	dir = 1
@@ -2366,6 +2357,18 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/space)
+"Qm" = (
+/obj/machinery/mining_magnet{
+	pixel_x = 16
+	},
+/obj/machinery/magnet_chassis{
+	pixel_x = 16
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "Qy" = (
 /obj/decal/tile_edge/line/red{
 	dir = 8;
@@ -2427,6 +2430,15 @@
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"RQ" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/space)
 "RV" = (
 /turf/simulated/floor/engine{
 	dir = 4;
@@ -2643,16 +2655,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
-"Wa" = (
-/obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
-	pixel_x = -10
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/glow,
-/area/space)
 "Wj" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor,
@@ -2854,13 +2856,6 @@
 "Zk" = (
 /obj/item/instrument/large/jukebox,
 /turf/simulated/floor/white,
-/area/station/devzone)
-"Zt" = (
-/obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
-	pixel_x = -10
-	},
-/turf/simulated/floor,
 /area/station/devzone)
 "Zx" = (
 /obj/machinery/power/data_terminal,
@@ -3267,7 +3262,7 @@ hR
 NE
 Yx
 Yx
-nG
+kz
 NU
 Ni
 NG
@@ -3281,7 +3276,7 @@ ng
 ng
 ng
 ng
-nG
+kz
 Yx
 "}
 (10,1,1) = {"
@@ -3405,7 +3400,7 @@ ng
 ng
 ng
 ng
-nG
+kz
 Hy
 UD
 UD
@@ -3447,7 +3442,7 @@ Nu
 ys
 ys
 Yx
-Zt
+Bw
 Yx
 Yx
 Yx
@@ -3869,7 +3864,7 @@ he
 ng
 du
 SI
-nG
+kz
 kV
 kV
 kV
@@ -3883,7 +3878,7 @@ uE
 ng
 La
 Vg
-nG
+kz
 Yx
 "}
 (24,1,1) = {"
@@ -4328,7 +4323,7 @@ Yx
 Yx
 Yx
 Yx
-Zt
+Bw
 Yx
 Yx
 Yx
@@ -4387,7 +4382,7 @@ Yx
 ft
 Yx
 ZZ
-fh
+fL
 Kx
 Yx
 ZZ
@@ -4471,7 +4466,7 @@ ng
 Yx
 uF
 Id
-Zt
+Bw
 iP
 Yx
 Yx
@@ -4485,7 +4480,7 @@ ng
 Rq
 Be
 Rq
-nG
+kz
 Yx
 "}
 (38,1,1) = {"
@@ -4923,7 +4918,7 @@ rz
 rz
 rS
 kI
-Oe
+Qm
 Yx
 qg
 hR
@@ -5036,7 +5031,7 @@ rx
 rz
 rx
 rz
-Wa
+RQ
 rz
 rx
 rz
@@ -5361,7 +5356,7 @@ ng
 ng
 ng
 ng
-nG
+kz
 ng
 ng
 ng
