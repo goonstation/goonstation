@@ -325,19 +325,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			if(!push_off)
 				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
 				return CAST_ATTEMPT_FAIL_CAST_FAILURE
-		if(misfire)
-			SPAWN(sleep_time * jump_tiles)
-				if (!src.owner)
-					return
-				playsound(src.owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
-				usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> leaps far too high and comes crashing down hard!"))
-				src.owner.changeStatus("knockdown", 10 SECONDS)
-				src.owner.changeStatus("stunned", 5 SECONDS)
+
 		usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> takes a huge leap!"))
 		playsound(src.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 		var/prevLayer = src.owner.layer
 		src.owner.layer = EFFECTS_LAYER_BASE
-
+		if(misfire)
+			playsound(src.owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
+			usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> leaps far too high and comes crashing down hard!"))
+			src.owner.changeStatus("knockdown", 10 SECONDS)
+			src.owner.changeStatus("stunned", 5 SECONDS)
 		animate(src.owner,
 			pixel_y = pixel_move * jump_tiles / 2,
 			time = sleep_time * jump_tiles / 2,
@@ -1072,7 +1069,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			H.take_eye_damage(5)
-			src.owner.emote("scream")
 		return CAST_ATTEMPT_SUCCESS
 
 /datum/projectile/laser/eyebeams
@@ -1713,7 +1709,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				thrown += O
 				animate_float(O)
 		SPAWN(1 SECOND)
-			if (misfire) boutput(src.owner, SPAN_ALERT("The things fly towards you instead!"))
 			for (var/obj/O in thrown)
 				O.throw_at(misfire ? src.owner : target, 32, 2)
 

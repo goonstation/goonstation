@@ -303,7 +303,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/success_prob_min_cap = 30
 	var/can_act_check = TRUE
 	var/needs_hands = TRUE
-	var/face_target = TRUE ///Whether the mob should turn and face the target upon cast
 	var/datum/bioEffect/power/linked_power = null
 	var/mob/living/owner = null
 
@@ -332,8 +331,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 	/// To account for misfires without cast_genetics(), check for the 'misfire' key in params.
 	cast(atom/target, params)
-		if (face_target && target)
-			src.owner.set_dir(get_dir(src.owner, target))
 		if (!has_misfire)
 			..()
 			return cast_genetics(target, FALSE, params)
