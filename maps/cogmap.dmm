@@ -763,13 +763,6 @@
 	},
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
-"adB" = (
-/obj/machinery/vending/paint/broken,
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/turf/simulated/floor/grime,
-/area/station/hallway/secondary/construction2)
 "adC" = (
 /turf/space,
 /area/space)
@@ -4436,18 +4429,6 @@
 /area/station/crew_quarters/kitchen)
 "asv" = (
 /obj/kitchenspike,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen/freezer)
-"asw" = (
-/obj/table/auto,
-/obj/item/kitchen/utensil/knife,
-/obj/item/kitchen/utensil/knife{
-	pixel_x = 5;
-	pixel_y = 2
-	},
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "asx" = (
@@ -32007,30 +31988,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay)
-"coS" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/brain{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/storage/firstaid/brain{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/machinery/cashreg{
-	pixel_x = -5;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
-	pixel_x = 4
-	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/decal/stage_edge/alt,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/cloner)
 "coU" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
@@ -34468,16 +34425,6 @@
 	dir = 6
 	},
 /area/station/janitor/supply)
-"cxl" = (
-/obj/table/wood/auto,
-/obj/item/pen,
-/obj/item/paper_bin,
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "cxo" = (
 /obj/window_blinds/cog2/left,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -42592,6 +42539,19 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
+"hPI" = (
+/obj/machinery/firealarm/east,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/window/cubicle{
+	dir = 2
+	},
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/quartersB)
 "hPO" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -42679,6 +42639,13 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"hTj" = (
+/obj/machinery/vending/paint/broken,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/secondary/construction2)
 "hTs" = (
 /obj/window_blinds/cog2/right,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -43191,6 +43158,16 @@
 	},
 /turf/space,
 /area/space)
+"imS" = (
+/obj/table/wood/auto,
+/obj/item/pen,
+/obj/item/paper_bin,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "inc" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light{
@@ -47480,6 +47457,18 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"lJV" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/knife,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "lJY" = (
 /obj/machinery/firealarm/west,
 /obj/disposalpipe/segment/mail{
@@ -52083,6 +52072,18 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/mining/magnet)
+"paw" = (
+/obj/disposalpipe/segment,
+/obj/table/auto,
+/obj/item/storage/box/diskbox,
+/obj/item/hand_labeler{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay/cloner)
 "paF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53101,6 +53102,22 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"pOO" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/light_switch/east,
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/storage/firstaid/brain{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/station/medical/medbay/cloner)
 "pOR" = (
 /obj/machinery/drainage,
 /obj/disposalpipe/chicken_disposal_pipe/horizontal,
@@ -57903,17 +57920,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"tuj" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/storage/secure/closet/medical/cloning,
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/bluewhite{
-	dir = 6
-	},
-/area/station/medical/medbay/cloner)
 "tvd" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -58417,19 +58423,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"tQZ" = (
-/obj/machinery/firealarm/east,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/window/cubicle{
-	dir = 2
-	},
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/turf/simulated/floor/blue,
-/area/station/crew_quarters/quartersB)
 "tRj" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	name = "Central Primary Hallway Repressurization West"
@@ -59059,13 +59052,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
-"uke" = (
-/obj/disposalpipe/segment,
-/obj/storage/secure/closet/medical/cloning,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay/cloner)
 "uki" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -60644,6 +60630,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
+"vpP" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/decal/stage_edge/alt,
+/obj/spawner/clone_rack,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/cloner)
 "vqd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -105167,7 +105162,7 @@ jMs
 ahz
 jMs
 ahE
-tQZ
+hPI
 ahz
 bEg
 aeB
@@ -106480,10 +106475,10 @@ sOG
 coR
 cpP
 cqS
-coS
+vpP
 csL
-uke
-tuj
+paw
+pOO
 ctD
 vmP
 cus
@@ -109085,7 +109080,7 @@ aaw
 aaw
 aaw
 oQp
-adB
+hTj
 aea
 aeL
 afr
@@ -118764,7 +118759,7 @@ kVG
 arq
 szn
 pYK
-asw
+lJV
 jfV
 auD
 pYK
@@ -123303,7 +123298,7 @@ azh
 aAS
 aoE
 aDO
-cxl
+imS
 aGo
 sUv
 nTf

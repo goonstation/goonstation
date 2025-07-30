@@ -213,23 +213,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
-"bg" = (
-/obj/mesh/catwalk,
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/turretid{
-	pixel_x = 24
-	},
-/obj/machinery/camera/directional/east{
-	icon_state = "camera";
-	pixel_y = 10
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9;
-	layer = 2
-	},
-/area/station/solar/aisat)
 "bi" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -1319,6 +1302,23 @@
 "hU" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/station/ranch)
+"hW" = (
+/obj/mesh/catwalk,
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/turretid{
+	pixel_x = 24
+	},
+/obj/machinery/camera/directional/east{
+	icon_state = "camera";
+	pixel_y = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9;
+	layer = 2
+	},
+/area/station/solar/aisat)
 "hX" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -5437,6 +5437,13 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/quartermaster/office)
+"Ll" = (
+/obj/machinery/computer/cloning{
+	dir = 8
+	},
+/obj/item/storage/box/diskbox,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "Lq" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
 /turf/simulated/floor/auto/dirt,
@@ -5532,12 +5539,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
-"Md" = (
-/obj/machinery/computer/cloning{
-	dir = 8
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "Me" = (
@@ -56161,7 +56162,7 @@ ZJ
 Za
 VS
 VS
-bg
+hW
 VS
 VS
 Za
@@ -58970,7 +58971,7 @@ Cz
 JY
 Nw
 LC
-Md
+Ll
 MM
 NB
 NT
