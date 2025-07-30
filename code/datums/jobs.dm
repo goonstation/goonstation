@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/limit = -1
 	var/list/trait_list = list() // specific job trait string, i.e. "training_security"
 	/// job category flag for use with loops rather than a needing a bunch of type checks
-	var/job_category = JOB_SPECIAL
+	var/job_categories = list(JOB_SPECIAL)
 	var/upper_limit = null //! defaults to `limit`
 	var/lower_limit = 0
 	var/admin_set_limit = FALSE //! has an admin manually set the limit to something
@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
-	job_category = JOB_COMMAND
+	job_categories = list(JOB_COMMAND)
 	unique = TRUE
 
 	special_setup(mob/M, no_special_spawn)
@@ -472,7 +472,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	linkcolor = SECURITY_LINK_COLOR
 	slot_card = /obj/item/card/id/security
 	receives_miranda = TRUE
-	job_category = JOB_SECURITY
+	job_categories = list(JOB_SECURITY)
 
 /datum/job/security/security_officer
 	name = "Security Officer"
@@ -578,7 +578,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
 	linkcolor = RESEARCH_LINK_COLOR
 	slot_card = /obj/item/card/id/research
-	job_category = JOB_RESEARCH
+	job_categories = list(JOB_RESEARCH)
 
 /datum/job/research/scientist
 	name = "Scientist"
@@ -618,7 +618,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 /datum/job/medical
 	linkcolor = MEDICAL_LINK_COLOR
 	slot_card = /obj/item/card/id/medical
-	job_category = JOB_MEDICAL
+	job_categories = list(JOB_MEDICAL)
 
 /datum/job/medical/medical_doctor
 	name = "Medical Doctor"
@@ -714,7 +714,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
 	linkcolor = ENGINEERING_LINK_COLOR
 	slot_card = /obj/item/card/id/engineering
-	job_category = JOB_ENGINEERING
+	job_categories = list(JOB_ENGINEERING)
 
 /datum/job/engineering/engineer
 	name = "Engineer"
@@ -829,7 +829,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	linkcolor = CIVILIAN_LINK_COLOR
 	slot_card = /obj/item/card/id/civilian
-	job_category = JOB_CIVILIAN
+	job_categories = list(JOB_CIVILIAN)
 
 /datum/job/civilian/chef
 	name = "Chef"
@@ -3094,7 +3094,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 /datum/job/created
 	name = "Special Job"
-	job_category = JOB_CREATED
+	job_categories = list(JOB_CREATED)
 
 	//handle special spawn location
 	Write(F)

@@ -18,11 +18,11 @@
 	var/list/special_job_data = list()
 	var/list/hidden_job_data = list()
 	for (var/datum/job/job in job_controls.staple_jobs)
-		staple_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
+		staple_job_data += list(list(name = job.name, type = job.job_categories[JOB_CATEGORY_PRIMARY], count = countJob(job.name), limit = job.limit))
 	for (var/datum/job/job in job_controls.special_jobs)
-		special_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
+		special_job_data += list(list(name = job.name, type = job.job_categories[JOB_CATEGORY_PRIMARY], count = countJob(job.name), limit = job.limit))
 	for (var/datum/job/job in job_controls.hidden_jobs)
-		hidden_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
+		hidden_job_data += list(list(name = job.name, type = job.job_categories[JOB_CATEGORY_PRIMARY], count = countJob(job.name), limit = job.limit))
 	. = list(
 		"stapleJobs" = staple_job_data,
 		"specialJobs" = special_job_data,
