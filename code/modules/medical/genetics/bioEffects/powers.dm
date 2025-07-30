@@ -1636,7 +1636,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			if (!L.hearing_check(1))
 				continue
 			if(count++ > (4 + src.linked_power.power * 3)) break
-			L.emote("fart")
+			if(locate(/obj/item/bible) in get_turf(L))
+				owner.visible_message(SPAN_ALERT("<b>A mysterious force smites [owner.name] for inciting blasphemy!</b>"))
+				owner.gib()
+			else
+				L.emote("fart")
 		return CAST_ATTEMPT_SUCCESS
 
 	proc/cast_mis()
