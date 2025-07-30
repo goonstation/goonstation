@@ -25,6 +25,7 @@ export const ChemiCompilerTextArea = () => {
 
   return (
     <TextArea
+      fluid
       value={localInputValue}
       onChange={(value) => {
         setLocalInputValue(value);

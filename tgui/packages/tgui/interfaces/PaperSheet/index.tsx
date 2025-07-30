@@ -401,6 +401,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
         {previewSelected === 'Edit' ? (
           <TextArea
             value={textAreaText}
+            fluid
             textColor={textColor}
             fontFamily={fontFamily}
             height={window.innerHeight - 60 + 'px'}

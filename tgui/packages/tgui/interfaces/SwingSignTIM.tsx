@@ -88,6 +88,7 @@ const InputArea = (props: InputAreaProps) => {
     <Stack.Item grow>
       <TextArea
         autoFocus
+        fluid
         height="100%"
         textAlign="center"
         fontFamily="Consolas"

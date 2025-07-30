@@ -118,6 +118,7 @@ const InputArea = (props: {
       autoFocus
       autoSelect
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
+      fluid
       maxLength={max_length}
       onEscape={() => act('cancel')}
       onKeyDown={(event) => {
