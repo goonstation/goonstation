@@ -2238,7 +2238,7 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 /// Repeat a gradient between two colors across text.
 /// Note: This is inaccurate because its a linear transformation, but human eyes do not perceive color this way.
-/proc/gradientText(color_1, color_2, message)
+/proc/gradientText(color_1, color_2, message, mutable_tags = FALSE)
 	var/list/color_list_1 = rgb2num(color_1)
 	var/list/color_list_2 = rgb2num(color_2)
 
@@ -2273,8 +2273,13 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 			dir = -1
 
 		var/col = rgb(r1 + delta_r*coeff, g1 + delta_g*coeff, b1 + delta_b*coeff)
-		var/chars = copytext(message, i, i + 3)
-		result += "<span style='color:[col]'>[chars]</span>"
+		if (mutable_tags)
+			result += MAKE_CONTENT_IMMUTABLE("<span style='color:[col]'>")
+			result += copytext(message, i, i + 3)
+			result += MAKE_CONTENT_IMMUTABLE("</span>")
+
+		else
+			result += "<span style='color:[col]'>[copytext(message, i, i + 3)]</span>"
 
 	. = jointext(result, "")
 
