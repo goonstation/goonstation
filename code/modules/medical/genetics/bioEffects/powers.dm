@@ -77,14 +77,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	cast_genetics(atom/target, params, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
-		return misfire ? cast_mis(target) : cast_reg(target)
+
+		src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> points at [target]!"))
+		playsound(src.owner.loc, 'sound/effects/bamf.ogg', 50, 0)
+		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(src.owner),"8x8snowflake","#88FFFF"))
+
+		if (misfire) cast_mis(target)
+		return cast_reg(target)
 
 	proc/cast_reg(atom/target)
 		var/turf/T = get_turf(target)
-
-		target.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(target, 'sound/effects/bamf.ogg', 50, 0)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(target),"8x8snowflake","#88FFFF"))
 
 		var/obj/decal/icefloor/B
 		for (var/turf/TF in range(src.linked_power.power - 1,T))
@@ -105,10 +107,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		return CAST_ATTEMPT_SUCCESS
 
 	proc/cast_mis(atom/target)
-		src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> points at [target]!"))
-		playsound(src.owner.loc, 'sound/effects/bamf.ogg', 50, 0)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(src.owner),"8x8snowflake","#88FFFF"))
-
 		if (!src.linked_power.safety)
 			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
 			if(src.owner.getStatusDuration("burning"))
