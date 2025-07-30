@@ -4324,9 +4324,8 @@
 	icon_state = "chair_couch-green";
 	name = "tacky green couch"
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
@@ -8222,9 +8221,8 @@
 	},
 /obj/stool/bench/red/auto,
 /obj/machinery/light_switch/north,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
@@ -11851,9 +11849,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/substation/pylon{
@@ -15086,9 +15083,8 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/wood{
@@ -15556,9 +15552,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "gVv" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -17545,9 +17540,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "hIJ" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/space/fluid/acid,
 /area/space)
@@ -18631,9 +18625,8 @@
 	name = "Shielding Control";
 	pixel_y = 26
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -23082,9 +23075,8 @@
 /turf/simulated/floor/engine/caution,
 /area/station/ai_monitored/armory)
 "kcx" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
@@ -33687,9 +33679,8 @@
 /area/station/engine/core/nuclear)
 "oDX" = (
 /obj/storage/closet/emergency,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/sw{
@@ -35978,9 +35969,8 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
@@ -39151,9 +39141,8 @@
 	pixel_x = 12
 	},
 /obj/machinery/hair_dye_dispenser,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
@@ -40414,9 +40403,8 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
 /obj/landmark/pest,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
@@ -41555,9 +41543,8 @@
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/machinery/firealarm{
 	pixel_x = 4;
@@ -41801,9 +41788,8 @@
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "svP" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -42210,7 +42196,6 @@
 /obj/lattice,
 /obj/machinery/launcher_loader/south,
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = 6
 	},
 /turf/space/fluid/acid/clear,
@@ -47271,9 +47256,8 @@
 	name = "The Warrens"
 	})
 "uSB" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -48257,9 +48241,8 @@
 /obj/machinery/meter{
 	pixel_y = -9
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
@@ -50670,9 +50653,8 @@
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "wwo" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)

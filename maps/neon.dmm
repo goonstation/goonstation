@@ -23704,9 +23704,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "rhZ" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -28660,9 +28659,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "uFZ" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/escape{
 	dir = 9

@@ -8058,7 +8058,6 @@
 	icon_state = "line1"
 	},
 /obj/machinery/camera/directional/south{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/floor/circuit,
@@ -10285,7 +10284,6 @@
 	icon_state = "2-9"
 	},
 /obj/machinery/camera/directional/south{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/floor/blueblack,
@@ -10299,7 +10297,6 @@
 /obj/cable,
 /obj/disposalpipe/segment/brig,
 /obj/machinery/camera/directional/south{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/floor/redblack{
@@ -11210,7 +11207,6 @@
 /area/station/maintenance/inner/nw)
 "dou" = (
 /obj/machinery/camera/directional/south{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /obj/disposalpipe/segment/mail{
@@ -12246,7 +12242,6 @@
 /area/station/maintenance/outer/se)
 "dIf" = (
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/floor/blueblack{
@@ -15072,9 +15067,8 @@
 /area/station/mining/staff_room)
 "eCk" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -33747,7 +33741,6 @@
 	icon_state = "line1"
 	},
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = 6
 	},
 /obj/machinery/status_display{
@@ -34211,7 +34204,6 @@
 /area/station/crewquarters/fuq3)
 "kCV" = (
 /obj/machinery/camera/directional/south{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/space,
@@ -59936,7 +59928,6 @@
 /area/station/solar/east)
 "sEw" = (
 /obj/machinery/camera/directional/south{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /obj/decal/tile_edge/line/yellow{
@@ -71549,7 +71540,6 @@
 /area/station/crew_quarters/hor)
 "wfA" = (
 /obj/machinery/camera/directional/south{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/wall/auto/reinforced/jen,

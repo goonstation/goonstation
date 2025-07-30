@@ -223,7 +223,6 @@
 	},
 /obj/machinery/camera/directional/east{
 	icon_state = "camera";
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{

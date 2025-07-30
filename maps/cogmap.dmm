@@ -766,7 +766,6 @@
 "adB" = (
 /obj/machinery/vending/paint/broken,
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /turf/simulated/floor/grime,
@@ -4447,7 +4446,6 @@
 	pixel_y = 2
 	},
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -34475,7 +34473,6 @@
 /obj/item/pen,
 /obj/item/paper_bin,
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /obj/machinery/light/small/floor,
@@ -58429,7 +58426,6 @@
 	dir = 2
 	},
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /turf/simulated/floor/blue,

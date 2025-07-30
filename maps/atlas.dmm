@@ -6976,7 +6976,6 @@
 "aRo" = (
 /obj/machinery/vending/cola/red,
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /turf/simulated/floor/black,
@@ -16556,7 +16555,6 @@
 /area/station/hallway/primary/east)
 "nDN" = (
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /obj/securearea{
@@ -18919,7 +18917,6 @@
 	},
 /obj/cable,
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /obj/item/device/radio/intercom/mining{
