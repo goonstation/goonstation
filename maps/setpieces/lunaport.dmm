@@ -14239,8 +14239,8 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/machinery/camera/auto/alt{
-	dir = 1
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /obj/railway_vehicle/flatbed/container/nuclear{
 	name = "RTG fuel";
@@ -16236,10 +16236,9 @@
 	name = "SPECTRE Showroom"
 	})
 "cKa" = (
-/obj/machinery/camera/auto/alt{
+/obj/machinery/camera/directional/north{
 	network = "lunaport_trainyard";
-	pixel_x = -14;
-	pixel_y = 20
+	pixel_x = -24
 	},
 /obj/railway/adaptive{
 	icon_state = "4-8"
@@ -18398,8 +18397,8 @@
 	})
 "gYL" = (
 /obj/decal/tile_edge/stripe/big,
-/obj/machinery/camera/auto/alt{
-	dir = 1
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /obj/fakeobject{
 	density = 1;
@@ -19365,8 +19364,8 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/machinery/camera/auto/alt{
-	dir = 1
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /obj/railway_vehicle/flatbed/container/military,
 /turf/unsimulated/floor/industrial,
@@ -20489,8 +20488,8 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/machinery/camera/auto/alt{
-	dir = 1
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -25835,8 +25834,8 @@
 	ambient_light = "#331111"
 	})
 "xua" = (
-/obj/machinery/camera/auto/alt{
-	dir = 1
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -26155,10 +26154,9 @@
 	name = "Blue Line platform"
 	})
 "xWE" = (
-/obj/machinery/camera/auto/alt{
+/obj/machinery/camera/directional/north{
 	network = "lunaport_trainyard";
-	pixel_x = -14;
-	pixel_y = 20
+	pixel_x = -24
 	},
 /obj/railway/adaptive{
 	icon_state = "4-8"
@@ -26395,8 +26393,8 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/machinery/camera/auto/alt{
-	dir = 1
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /turf/unsimulated/floor/industrial,
 /area/moon/underground{

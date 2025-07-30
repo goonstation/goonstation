@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/directional_offsets/jen_walls)
 	priority = 1
 
 /datum/directional_offsets/jen_walls/is_compatible(atom/A, old_dir, new_dir)
-	var/turf/T = get_step(A, turn(A.dir, 180))
+	var/turf/T = get_step(A, A.dir)
 	if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 		return TRUE
 

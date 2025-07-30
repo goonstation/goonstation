@@ -1,4 +1,17 @@
 
+(t)tue jul 29 25
+(u)Mr. Moriarty
+(p)24247
+(e)🗺🎨🔎💅📦|A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-Game-Objects
+(*)Every single camera has been remapped. Please report any cameras that aren't offset onto walls or that are facing the wrong way.
+(u)SnugglyCactus
+(p)24197
+(e)🎨|C-Sprites
+(+)Added organ variants for skeletons, amphibians, and martians. Selling your kidney has never been so fun.
+(u)RubberRats
+(p)24089
+(e)🪲🎨📄📦|C-Bug, C-Sprites, A-UI, A-Game-Objects
+(+)Replacing the paint dispenser's service panel with non-authentic parts degrades its color-accuracy slightly.
 (t)mon jul 28 25
 (u)RubberRats
 (p)24215
