@@ -322,7 +322,7 @@ toxic - poisons
 			silentshot = 1
 
 	//haha gannets, fuck you I stole ur shit! - kyle
-	law_giver
+	lawbringer
 		sname = "knockout"
 		casing = /obj/item/casing/small
 		shot_sound = 'sound/weapons/tranq_pistol.ogg'
@@ -524,7 +524,8 @@ toxic - poisons
 	casing = /obj/item/casing/medium
 	ricochets = TRUE
 
-/datum/projectile/bullet/revolver_38/lb
+/datum/projectile/bullet/revolver_38/lawbringer
+	cost = 10
 	shot_sound = 'sound/weapons/lb_execute.ogg'
 
 /datum/projectile/bullet/revolver_38/AP//traitor det revolver
@@ -1661,6 +1662,9 @@ datum/projectile/bullet/autocannon
 	var/list/smokeLocs = list()
 	var/smokeLength = 100
 
+	lawbringer
+		cost = 15
+
 	proc/startSmoke(atom/hit, dirflag, atom/projectile)
 		/*var/turf/trgloc = get_turf(projectile)
 		var/list/affected = block(locate(trgloc.x - 3,trgloc.y - 3,trgloc.z), locate(trgloc.x + 3,trgloc.y + 3,trgloc.z))
@@ -2368,7 +2372,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	name = "clownshot"
 	sname = "clownshot"
 	damage = 1
-	cost = 15				//This should either cost a lot or a little I don't know. On one hand if it costs nothing you can truly tormet clowns with it, but on the other hand if it costs your full charge, then the clown will know how much you hate it because of how much you sacraficed to harm it. I settled for a med amount...
+	cost = 5				//This should either cost a lot or a little I don't know. On one hand if it costs nothing you can truly tormet clowns with it, but on the other hand if it costs your full charge, then the clown will know how much you hate it because of how much you sacraficed to harm it. I settled for a med amount...
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	implanted = null

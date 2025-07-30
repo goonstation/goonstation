@@ -23,7 +23,7 @@
 	)
 
 /datum/listen_module/effect/lawbringer/process(datum/say_message/message)
-	var/obj/item/gun/energy/lawbringer/lawbringer = src.parent_tree.listener_parent
+	var/obj/item/gun/energy/matter/lawbringer/lawbringer = src.parent_tree.listener_parent
 	if (!istype(lawbringer) || !ismob(message.original_speaker))
 		return
 	if (lawbringer.loc != message.original_speaker)

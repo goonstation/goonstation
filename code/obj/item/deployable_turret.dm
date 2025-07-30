@@ -591,7 +591,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	health = 125
 	max_health = 125
 	range = 7
-	projectile_type = /datum/projectile/bullet/revolver_38/lb
+	projectile_type = /datum/projectile/bullet/revolver_38/lawbringer
 	burst_size = 2
 	fire_rate = 1
 	angle_arc_size = 60
