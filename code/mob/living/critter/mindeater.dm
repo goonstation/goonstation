@@ -19,13 +19,11 @@ TYPEINFO(/mob/living/critter/mindeater)
 	reagent_capacity = 0
 	do_hurt_slowdown = FALSE
 
-	/*
-	speechverb_say = "hums"
-	speechverb_gasp = "hums"
-	speechverb_stammer = "hums"
-	speechverb_exclaim = "hums"
-	speechverb_ask = "hums"
-	*/
+	speech_verb_say = "projects"
+	speech_verb_gasp = "projects"
+	speech_verb_stammer = "projects"
+	speech_verb_exclaim = "projects"
+	speech_verb_ask = "projects"
 
 	/// shows whether this mindeater is visible to all or not
 	var/image/mindeater_visibility_indicator/vis_indicator
@@ -164,8 +162,6 @@ TYPEINFO(/mob/living/critter/mindeater)
 			return
 		..()
 		src.hp_indicator.set_icon_state(round(src.get_health_percentage() * 100, 20))
-		//if (brute > 0 || burn > 0 || tox > 0)
-		//	src.reveal()
 
 	attack_hand(mob/living/M)
 		..()
@@ -250,14 +246,6 @@ TYPEINFO(/mob/living/critter/mindeater)
 		..()
 		if (src.pulling)
 			src.reveal(FALSE)
-
-	//say_understands(var/other)
-	//	return 1
-
-	//understands_language(langname)
-	//	if (langname == src.say_language || langname == "feather" || langname == "english") // understands but can't speak flock
-	//		return TRUE
-	//	return FALSE
 
 	shock(atom/origin, wattage, zone = "chest", stun_multiplier = 1, ignore_gloves = 0)
 		if (src.is_intangible())
@@ -408,6 +396,12 @@ TYPEINFO(/mob/living/critter/mindeater)
 			src.flags |= (TABLEPASS | DOORPASS)
 			src.pull_w_class = W_CLASS_TINY
 			src.apply_critter_debuffs()
+
+			src.speech_verb_say = temp.speech_verb_say
+			src.speech_verb_gasp = temp.speech_verb_gasp
+			src.speech_verb_stammer = temp.speech_verb_stammer
+			src.speech_verb_exclaim = temp.speech_verb_exclaim
+			src.speech_verb_ask = temp.speech_verb_ask
 		else
 			src.human_disguise_dummy.unequip_all(TRUE)
 			randomize_look(src.human_disguise_dummy)
@@ -452,6 +446,12 @@ TYPEINFO(/mob/living/critter/mindeater)
 
 		if (src.set_disguise != MINDEATER_DISGUISE_HUMAN)
 			src.remove_critter_debuffs()
+
+		src.speech_verb_say = initial(src.speech_verb_say)
+		src.speech_verb_gasp = initial(src.speech_verb_gasp)
+		src.speech_verb_stammer = initial(src.speech_verb_stammer)
+		src.speech_verb_exclaim = initial(src.speech_verb_exclaim)
+		src.speech_verb_ask = initial(src.speech_verb_ask)
 
 		src.disguised = FALSE
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
