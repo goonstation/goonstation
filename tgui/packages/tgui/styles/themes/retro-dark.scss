@@ -17,6 +17,9 @@
 
   // Layouts
   --titlebar-background: color-mix(in srgb, var(--darkorange), white 5%);
+  .TitleBar__close {
+    --button-background-danger: hsl(10, 100%, 30%);
+  }
 
   // Components
   --button-color: var(--darkorange);
