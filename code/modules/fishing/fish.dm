@@ -104,6 +104,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 	afterattack(obj/target, mob/user, flag)
 		. = ..()
+		src.slapsound()
 		src.apply_scent(target)
 
 	pickup(mob/user)
@@ -312,7 +313,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 	get_scent_color()
 		var/color_base = pick("blue","green","yellow","orange","brown","red","pink","purple","grey","magenta","cyan","indigo","scarlet","turquoise")
-		var/color_desc = pick("deadly","ghastly","siren","fishy","feline","foxy","mysterious","alluring","troubling")
+		var/color_desc = pick("deadly","ghastly","siren","fishy","feline","cunning","mysterious","alluring","troubling")
 		return "[color_desc] [color_base]"
 
 /obj/item/reagent_containers/food/fish/tuna
@@ -478,7 +479,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	rarity = ITEM_RARITY_COMMON
 
 	get_scent_color()
-		return "effervescent orange"
+		return "warm orange"
 
 /obj/item/reagent_containers/food/fish/damselfish
 	name = "damselfish"
@@ -581,6 +582,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#af2323"
 	rarity = ITEM_RARITY_RARE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
+
+	get_scent_color()
+		return "blood red"
 /*
 /obj/item/reagent_containers/food/fish/blood_fish
 	name = "blood fish"
@@ -606,6 +610,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	rarity = ITEM_RARITY_EPIC
 	slice_product = /mob/living/critter/blobman/meat
 
+	get_scent_color()
+		return "blood red"
+
 //void
 /obj/item/reagent_containers/food/fish/void_fish
 	name = "void fish"
@@ -613,6 +620,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	icon_state = "void_fish"
 	inhand_color = "#8f3ed1"
 	rarity = ITEM_RARITY_RARE
+
+	get_scent_color()
+		return "deep purple"
 
 //code
 /obj/item/reagent_containers/food/fish/code_worm
