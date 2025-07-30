@@ -794,16 +794,14 @@
 /area/ghostdrone_factory)
 "acF" = (
 /obj/stool/bench/blue,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "acG" = (
 /obj/stool/bench/blue,
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = 10
 	},
 /turf/simulated/floor,
@@ -1735,9 +1733,8 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "agi" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/black,
@@ -2860,9 +2857,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -4464,9 +4460,8 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
@@ -4869,9 +4864,8 @@
 	pixel_y = 4
 	},
 /obj/item/storage/belt/utility,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/item/storage/belt/utility,
 /turf/simulated/floor,
@@ -10028,9 +10022,8 @@
 /obj/shrub{
 	dir = 8
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/item/device/radio/intercom/science{
 	dir = 4
@@ -10323,7 +10316,6 @@
 /area/station/janitor/office)
 "aJU" = (
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = 10
 	},
 /turf/simulated/floor/plating/random,
@@ -11109,9 +11101,8 @@
 /area/station/hallway/primary/east)
 "aOy" = (
 /obj/storage/secure/closet/command/chief_engineer,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/ce)
@@ -17665,9 +17656,8 @@
 /obj/table/auto,
 /obj/item/device/light/flashlight,
 /obj/item/crowbar,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -19080,9 +19070,8 @@
 /obj/item/clothing/mask/breath{
 	pixel_x = -3
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
@@ -19192,9 +19181,8 @@
 	name = "fedora"
 	},
 /obj/item/storage/fanny,
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
@@ -32112,9 +32100,8 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -36933,7 +36920,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = 10
 	},
 /obj/machinery/light/incandescent/netural{

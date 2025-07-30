@@ -441,7 +441,6 @@
 /area/station/devzone)
 "ib" = (
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /obj/cable{
@@ -485,7 +484,6 @@
 	pixel_x = 16
 	},
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/floor,
@@ -2628,7 +2626,6 @@
 /area/station/devzone)
 "Wg" = (
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/floor,
@@ -2722,7 +2719,6 @@
 "Xu" = (
 /obj/item/rcd/construction/safe/admin_crimes,
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/floor,
@@ -2756,7 +2752,6 @@
 /area/station/devzone)
 "XI" = (
 /obj/machinery/camera/directional/north{
-	name = "autoname  - SS13";
 	pixel_x = -10
 	},
 /turf/simulated/floor/orangeblack,
