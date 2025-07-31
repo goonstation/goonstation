@@ -147,7 +147,7 @@ export const AirVendor = () => {
   const handleCashEject = () => act('returncash');
 
   return (
-    <Window width={350} height={320}>
+    <Window width={350} height={300}>
       <Window.Content>
         <VendorSection />
         <TankSection />
