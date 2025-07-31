@@ -47,6 +47,7 @@
 
 // |GOOONSTATION-ADD| Components
 @include meta.load-css('./components/GeneIcon.scss');
+@include meta.load-css('./components/LED.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/AlertModal.scss');

@@ -3625,20 +3625,6 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
-"avw" = (
-/obj/machinery/computer/genetics{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
 "avx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
@@ -3682,10 +3668,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay)
-"avS" = (
-/obj/storage/secure/closet/medical/cloning,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/cloner)
 "avY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -4025,13 +4007,6 @@
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
-"axV" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light_switch/auto,
-/turf/simulated/floor/stairs/medical,
-/area/station/medical/medbay/cloner)
 "axW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4562,16 +4537,6 @@
 /area/station/medical/medbay/surgery)
 "aAM" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/research)
-"aAN" = (
-/obj/table/auto,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
 /area/station/medical/research)
 "aAO" = (
 /turf/simulated/floor/white/checker2{
@@ -6973,14 +6938,6 @@
 "aRn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
-"aRo" = (
-/obj/machinery/vending/cola/red,
-/obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
-	pixel_y = 10
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "aRv" = (
 /obj/machinery/plantpot,
 /obj/noticeboard/persistent/directional/east{
@@ -7524,13 +7481,6 @@
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
-"aVH" = (
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/stairs/medical,
-/area/station/medical/medbay/cloner)
 "aVI" = (
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -9045,6 +8995,22 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
+"cEj" = (
+/obj/table/auto,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/obj/item/storage/box/diskbox,
+/obj/decal/stage_edge/alt,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 5
+	},
+/area/station/medical/research)
 "cFx" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -9137,15 +9103,6 @@
 	dir = 4
 	},
 /area/station/hangar/main)
-"cMJ" = (
-/obj/machinery/clonepod,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/light/incandescent,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/medical/medbay/cloner)
 "cMV" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -11207,6 +11164,14 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"fNo" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/auto,
+/obj/railing,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "fNz" = (
 /obj/disposalpipe/trunk/south,
 /obj/machinery/floorflusher{
@@ -13187,6 +13152,19 @@
 	dir = 8
 	},
 /area/station/crew_quarters/cafeteria)
+"iQX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/item/device/radio/intercom/mining{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/station/mining/magnet)
 "iQY" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -13838,6 +13816,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"jKb" = (
+/obj/machinery/vending/cola/red,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "jKM" = (
 /obj/potted_plant{
 	dir = 8
@@ -14122,6 +14107,16 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
+"kcY" = (
+/obj/machinery/clonepod,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/incandescent,
+/obj/decal/stripe_delivery,
+/obj/item/paper/Cloning,
+/turf/simulated/floor,
+/area/station/medical/medbay/cloner)
 "kdc" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -14654,6 +14649,21 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor,
 /area/station/science/storage)
+"kST" = (
+/obj/machinery/computer/genetics{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stage_edge/alt,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 5
+	},
+/area/station/medical/research)
 "kTx" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/science/research_director)
@@ -16554,18 +16564,6 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/east)
-"nDN" = (
-/obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
-	pixel_y = 10
-	},
-/obj/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	name = "VACUUM AREA"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/combustion_chamber)
 "nEw" = (
 /obj/stool/bench/blue,
 /obj/disposalpipe/segment{
@@ -17672,6 +17670,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"pqx" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	name = "VACUUM AREA"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/combustion_chamber)
 "pqD" = (
 /obj/machinery/navbeacon/mule/catering_north,
 /obj/decal/mule/beacon,
@@ -18913,20 +18922,6 @@
 	dir = 1
 	},
 /area/station/security/hos)
-"rIc" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable,
-/obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
-	pixel_y = 10
-	},
-/obj/item/device/radio/intercom/mining{
-	dir = 8
-	},
-/turf/simulated/floor/grime,
-/area/station/mining/magnet)
 "rId" = (
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -19499,6 +19494,15 @@
 	dir = 10
 	},
 /area/research_outpost/hangar)
+"sDm" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/storage/secure/closet/medical/cloning,
+/obj/railing,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "sDB" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
@@ -20832,6 +20836,10 @@
 	dir = 10
 	},
 /area/station/science/artifact)
+"uqo" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "uqD" = (
 /obj/machinery/door_control{
 	id = "cargo_shutter";
@@ -49482,7 +49490,7 @@ aaa
 aaa
 mqJ
 anE
-rIc
+iQX
 jbt
 tbE
 hDO
@@ -56733,7 +56741,7 @@ apX
 ofz
 ofz
 ofz
-nDN
+pqx
 tzx
 lXO
 aaa
@@ -67307,7 +67315,7 @@ quH
 ssU
 aqD
 aZl
-aRo
+jKb
 anu
 aRZ
 aPq
@@ -75156,11 +75164,11 @@ afl
 xyg
 ick
 ayh
-avS
+uqo
 naC
 azk
-aVH
-aAN
+sDm
+cEj
 opG
 aCe
 aCJ
@@ -75458,7 +75466,7 @@ afl
 bQk
 ahV
 ayh
-cMJ
+kcY
 dcx
 jZF
 aAb
@@ -76367,8 +76375,8 @@ ayh
 bfR
 xRX
 pKg
-axV
-avw
+fNo
+kST
 aQH
 aJz
 dAs

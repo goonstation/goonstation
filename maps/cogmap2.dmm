@@ -46116,11 +46116,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"cNU" = (
-/obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay)
 "cNV" = (
 /obj/machinery/clonegrinder,
 /turf/simulated/floor/bluewhite{
@@ -53483,6 +53478,12 @@
 /obj/item/sheet/wood,
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
+"dZa" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay/cloner)
 "dZJ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cargo Bay"
@@ -56293,13 +56294,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"gWh" = (
-/obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
-	pixel_y = 10
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "gXa" = (
 /obj/machinery/manufacturer/medical,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
@@ -60742,6 +60736,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
+"kOg" = (
+/obj/stool/bed/moveable,
+/obj/item/clothing/suit/bedsheet,
+/obj/item/storage/firstaid/brain,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay)
 "kOh" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -63429,6 +63429,13 @@
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"njz" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/north)
 "nkn" = (
 /obj/table/auto,
 /obj/item/device/analyzer/healthanalyzer,
@@ -66458,6 +66465,21 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
+"qbQ" = (
+/obj/table/auto,
+/obj/machinery/door_control{
+	id = "cloning";
+	name = "Cloning Door Control";
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/item/hand_labeler,
+/obj/item/storage/box/diskbox,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 4
+	},
+/area/station/medical/medbay/cloner)
 "qbW" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -69448,14 +69470,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
-"sRj" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
-	pixel_y = 10
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/solar/north)
 "sRL" = (
 /obj/storage/closet/wardrobe/mixed,
 /obj/machinery/light/small{
@@ -70449,21 +70463,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/crew_quarters/captain)
-"tQH" = (
-/obj/table/auto,
-/obj/machinery/door_control{
-	id = "cloning";
-	name = "Cloning Door Control";
-	pixel_x = 23;
-	dir = 4;
-	pixel_y = 0
-	},
-/obj/item/storage/firstaid/brain,
-/obj/item/hand_labeler,
-/turf/simulated/floor/bluewhite/corner{
-	dir = 4
-	},
-/area/station/medical/medbay/cloner)
 "tRs" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro{
@@ -72936,6 +72935,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southwest)
+"wCZ" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "wDH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -107033,7 +107038,7 @@ aaa
 aaa
 aaa
 add
-sRj
+njz
 aek
 aeV
 aeV
@@ -107948,7 +107953,7 @@ adL
 ahV
 aiX
 ajU
-gWh
+wCZ
 fBe
 ahV
 aoF
@@ -110767,7 +110772,7 @@ cGP
 cAL
 cLj
 cJt
-iuF
+dZa
 iuF
 osd
 cPr
@@ -111672,13 +111677,13 @@ rhQ
 cFB
 spv
 cLj
-tQH
+qbQ
 ggg
 cMF
 cNV
 cOh
 cLj
-cNU
+kOg
 iwc
 cHZ
 jhE

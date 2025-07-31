@@ -254,9 +254,10 @@
 	src.send_lobby_text()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
-	src.player.id = src.client_auth_intent.player_id || 0
-	src.player.record_login()
-	src.player.setup(src.key)
+	src.player = make_player(src.key)
+	src.player.id = src.client_auth_intent.player_id || src.player.id
+	if (!src.client_auth_intent.can_skip_player_login) src.player.record_login()
+	src.player.on_client_authenticated()
 
 	if (isnewplayer(src.mob))
 		var/mob/new_player/new_player = src.mob
