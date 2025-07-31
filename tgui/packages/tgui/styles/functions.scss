@@ -5,18 +5,6 @@
 
 @use 'sass:math';
 
-/* Type-casting: Get a unit-less numeric value */
-@function num($value) {
-  @if meta.type-of($value) != number {
-    @error 'Could not convert `#{$value}` - must be `type-of number`';
-    @return null;
-  }
-  @if math.unit($value) == '%' {
-    @return math.div($value, 100%);
-  }
-  @return math.div($value, $value * 0 + 1);
-}
-
 // Multiplies our viewport units by the DPI scaling amount
 // to ensure that they display correctly when using differently-scaled windows
 @function vp($viewportUnit) {

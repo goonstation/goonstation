@@ -170,7 +170,7 @@ TYPEINFO(/obj/item/device/multitool)
 			frequency = omniperipheral.frequency
 	else if (targetimplant)
 		net_id = targetimplant.net_id
-		frequency = targetimplant.pda_alert_frequency
+		frequency = targetimplant.alert_frequency
 
 	if(net_id)
 		boutput(user, SPAN_ALERT("NETID#[net_id]"))

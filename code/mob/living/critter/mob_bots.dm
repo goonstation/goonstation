@@ -132,6 +132,21 @@ TYPEINFO(/mob/living/critter/robotic/bot)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
 
 ABSTRACT_TYPE(/datum/targetable/critter/bot)
+/datum/targetable/critter/bot
+
+	/// Propel user in opposite direction
+	proc/propel_bot(var/turf/target)
+		var/mob/bot = holder.owner
+		if (istype(bot.loc, /turf/space))
+			bot.inertia_dir = get_dir_accurate(target, bot)
+			step(bot, bot.inertia_dir)
+		else if(bot.buckled && !bot.buckled.anchored )
+			var/wooshdir = get_dir_accurate(target, bot)
+			SPAWN(0)
+				for(var/i = 1, (bot?.buckled && !bot.buckled.anchored && i <= rand(3,5)), i++)
+					step(bot.buckled, wooshdir)
+					sleep(rand(1,3))
+
 /datum/targetable/critter/bot/mop_floor
 	name = "Mop Floor"
 	desc = "Clean the floor of dirt and other grime."
@@ -342,6 +357,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				R.add_reagent(reagent_key, spray_reagents[reagent_key], temp_new = spray_temperature)
 			W.spray_at(my_target, R, 1)
 
+		src.propel_bot(T)
+
 	fuel
 		name = "Spray Burning Fuel"
 		desc = "Spray burning fuel all over the place. Highly flammable but near useless in flooded areas."
@@ -399,4 +416,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			if (GET_DIST(holder.owner,F) > max_fire_range)
 				continue
 			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
+
+		src.propel_bot(T)
 

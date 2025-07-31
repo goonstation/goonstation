@@ -220,8 +220,13 @@
 							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
 								antagonist.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
-							user.ghostize()
-							qdel(user)
+							var/mob/dead/observer/ghost = user.ghostize()
+							//hopefully that's all the links?
+							ghost.corpse = null
+							user.ghost = null
+							user.last_ckey = null
+							//Disabling this for now, humans don't GC usually anyway and it was messing with cloner implants
+							// qdel(user)
 							return 1
 
 		return 0

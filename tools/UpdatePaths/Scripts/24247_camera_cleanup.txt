@@ -1,8 +1,6 @@
-# Temporarily repath TVs, so that they're unaffected by the script.
-/obj/machinery/camera/television/@SUBTYPES : /temporary_tv_repath/@SUBTYPES{@OLD}
-
 # Change of default variables.
 /obj/machinery/camera/@SUBTYPES{name = "autoname - SS13"}	: /obj/machinery/camera/@SUBTYPES{@OLD; name = @SKIP}
+/obj/machinery/camera/@SUBTYPES{name = "autoname  - SS13"}	: /obj/machinery/camera/@SUBTYPES{@OLD; name = @SKIP}
 /obj/machinery/camera/mining{name = "autoname - Mining"}	: /obj/machinery/camera/mining{@OLD; name = @SKIP}
 /obj/machinery/camera/mining{name = "autoname -  Mining"}	: /obj/machinery/camera/mining{@OLD; name = @SKIP}
 /obj/machinery/camera/@SUBTYPES{c_tag = "autotag"}			: /obj/machinery/camera/@SUBTYPES{@OLD; c_tag = @SKIP}
@@ -18,6 +16,12 @@
 /obj/machinery/camera/auto/vspace		: /obj/machinery/camera/vspace{@OLD}
 /obj/machinery/camera{name = "sensor"}	: /obj/machinery/camera/watchful_eye{@OLD; name = @SKIP; network = @SKIP}
 
+# Temporarily repath subtypes that shouldn't be affected by the main repath.
+/obj/machinery/camera/@SUBTYPES/directional/@SUBTYPES	: /temporary_directional_repath/@SUBTYPES{@OLD}
+/obj/machinery/camera/vspace/@SUBTYPES					: /temporary_vspace_repath/@SUBTYPES{@OLD}
+/obj/machinery/camera/public/@SUBTYPES					: /temporary_public_repath/@SUBTYPES{@OLD}
+/obj/machinery/camera/television/@SUBTYPES				: /temporary_tv_repath/@SUBTYPES{@OLD}
+
 # Repath and flip directions, and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths twice.
 # NORTH
 /obj/machinery/camera/@SUBTYPES{dir = 1; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = @ADD:-10; pixel_y = @SKIP}
@@ -29,6 +33,8 @@
 /obj/machinery/camera/@SUBTYPES{dir = 0; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = -10; pixel_y = @SKIP}
 /obj/machinery/camera/@SUBTYPES{dir = 2; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @ADD:-10; pixel_y = @SKIP}
 /obj/machinery/camera/@SUBTYPES{dir = 2; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = -10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 3; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @ADD:-10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 3; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = -10; pixel_y = @SKIP}
 # EAST
 /obj/machinery/camera/@SUBTYPES{dir = 4; pixel_y = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @ADD:10}
 /obj/machinery/camera/@SUBTYPES{dir = 4; pixel_y = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = 10}
@@ -48,12 +54,13 @@
 /obj/machinery/camera/@SUBTYPES{dir = 10; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = @ADD:10; pixel_y = @SKIP}
 /obj/machinery/camera/@SUBTYPES{dir = 10; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = 10; pixel_y = @SKIP}
 
-# Revert the camera repath.
+# Revert the temporary repaths.
 /temporary_camera_repath/@SUBTYPES : /obj/machinery/camera/@SUBTYPES{@OLD}
+/temporary_directional_repath/@SUBTYPES	: /obj/machinery/camera/@SUBTYPES{@OLD}
+/temporary_vspace_repath/@SUBTYPES		: /obj/machinery/camera/vspace/@SUBTYPES{@OLD}
+/temporary_public_repath/@SUBTYPES		: /obj/machinery/camera/public/@SUBTYPES{@OLD}
+/temporary_tv_repath/@SUBTYPES			: /obj/machinery/camera/television/@SUBTYPES{@OLD}
 
 # Ensure non-directional cameras aren't subtyped as directional.
 /obj/machinery/camera/public/directional/@SUBTYPES : /obj/machinery/camera/public{@OLD}
 /obj/machinery/camera/vspace/directional/@SUBTYPES : /obj/machinery/camera/vspace{@OLD}
-
-# Revert the TV repath.
-/temporary_tv_repath/@SUBTYPES : /obj/machinery/camera/television/@SUBTYPES{@OLD}

@@ -158,15 +158,7 @@ ABSTRACT_TYPE(/datum/job)
 			if (length(src.receives_implants))
 				for(var/obj/item/implant/implant as anything in src.receives_implants)
 					if(ispath(implant))
-						var/mob/living/carbon/human/H = M
-						var/obj/item/implant/I = new implant(M)
-						if (ispath(I, /obj/item/implant/health) && src.receives_disk && ishuman(M))
-							if (H.back?.storage)
-								var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
-								if (D)
-									var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
-									if (R)
-										R.fields["imp"] = "\ref[I]"
+						new implant(M)
 
 			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))

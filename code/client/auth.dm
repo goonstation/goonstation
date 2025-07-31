@@ -43,6 +43,7 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 	var/hos = FALSE
 	var/whitelisted = FALSE
 	var/can_bypass_cap = FALSE
+	var/can_skip_player_login = FALSE
 
 /client/var/datum/client_auth_intent/client_auth_intent
 /client/var/datum/client_auth_provider/client_auth_provider

@@ -201,6 +201,13 @@ Running the script will update this into:
 
 Note how since you kept in `{@OLD}`, it was able to retain the re-named variables of the subtypes.
 
+More advanced `@SUBTYPES` syntax:
+- In the old path, the `@SUBTYPES` keyword may be used multiple times. This is useful for finding paths that end in a specific path or contain a specific path.
+- In the new path, the `@SUBTYPES` keyword will refer to the ENTIRE subtype, starting from the first use of @SUBTYPES.
+- If multple `@SUBTYPES` keywords are used in the old path, in the new path the `@SUBTYPES_N` keyword will refer to the Nth subtype path.
+- `/obj/machinery/camera/@SUBTYPES : /obj/machinery/camera/@SUBTYPES/directional` - add the "directional" subtype to every instace (including subtypes that are already directional).
+- `/obj/machinery/camera/@SUBTYPES/directional/@SUBTYPES : /obj/machinery/camera/@SUBTYPES_1` - remove all directional subtypes from every instance.
+
 
 ### Old Path Variable Filtering
 
