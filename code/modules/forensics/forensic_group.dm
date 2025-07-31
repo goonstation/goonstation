@@ -76,7 +76,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 
 		var/scent_report = ""
 		if(main_scents.len > 0)
-			scent_report = "[A] mostly smells like \a "
+			scent_report = "[A] mostly smells like "
 		for(var/i in 1 to main_scents.len)
 			if(i == 1)
 				scent_report += main_scents[i]
