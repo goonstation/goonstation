@@ -188,6 +188,9 @@
 			if(!isturf(user.loc))
 				boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
 				return
+			if(!src.can_build(user, user.loc))
+				boutput(user, SPAN_ALERT("You can't build \the [src] here!"))
+				return
 			boutput(user, SPAN_ALERT("You deploy the [src]!"))
 			if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 				qdel(user.loc)
@@ -303,6 +306,17 @@
 		src.visible_message(SPAN_NOTICE("[src] vanishes in a puff of logic!"), SPAN_NOTICE("You hear a mild poof."), "frame_poof")
 		qdel(src)
 
+/obj/item/electronics/frame/proc/can_build(mob/user, turf/T)
+	var/type = src.store_type
+	if(src.deconstructed_thing != null)
+		type = src.deconstructed_thing.type
+	var/typeinfo/datum/type_typeinfo = get_type_typeinfo(type)
+	if(!istype(type_typeinfo, /typeinfo/atom/movable))
+		// can_build is only defined on subtypes of /typeinfo/atom/movable, if other types need can_build implementation add a stub proc and more handling here
+		return TRUE
+	var/typeinfo/atom/movable/AM_typeinfo = type_typeinfo
+	return AM_typeinfo.can_build(T)
+
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 	var/turf/T = get_turf(src)
@@ -315,6 +329,7 @@
 		AM.set_loc(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 0)
+		AM.forensic_holder = src.forensic_holder
 
 		// if we have a material, give it to the object if the object doesn't have one
 		if (src.material && !AM.material)
@@ -323,6 +338,7 @@
 		AM = new store_type(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 1)
+		AM.forensic_holder = src.forensic_holder
 
 		if (src.material && !AM.material)
 			AM.setMaterial(src.material)
@@ -332,7 +348,7 @@
 		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
 
-	return
+	return AM
 
 
 /obj/item/electronics/frame/proc/parts_check()
@@ -874,7 +890,7 @@
 
 	dropped(var/mob/user)
 		. = ..()
-		user.closeContextActions()
+		user?.closeContextActions()
 
 	MouseDrop_T(atom/target, mob/user)
 		src.pre_attackby(src, target, user)

@@ -45,9 +45,6 @@ TYPEINFO(/obj/storage/closet)
 		return
 
 	proc/take_damage(var/amount, var/obj/projectile/P)
-		if (!P)
-			message_admins("P Gone")
-			return
 		if (!isnum(amount) || amount <= 0)
 			return
 		src._health -= amount
@@ -90,6 +87,17 @@ TYPEINFO(/obj/storage/closet)
 			AM.changeStatus("knockdown", 1 SECOND)
 			AM.set_loc(src.loc)
 			src.close()
+
+	get_help_message(dist, mob/user)
+		if (src.open)
+			. = " You can use a <b>wrench</b> to dismantle the closet. [src.can_leghole && !src.legholes ? "You can use a <b>welding tool</b> to cut foot holes in the bottom. " : ""]"
+		else
+			if (src.welded)
+				. += " You can use a <b>welding tool</b> to remove the weld and allow it to open."
+			else
+				. += " You can use a <b>welding tool</b> to weld it shut and prevent it being opened."
+			if (src.can_flip_bust)
+				. += " Anyone locked inside can <b>flip</b> to try to break out."
 
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
@@ -183,6 +191,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
 	auto_close = FALSE
+	can_leghole = FALSE
 
 	wood
 		icon_closed = "woodcoffin"
@@ -222,11 +231,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(
 	/obj/item/clothing/mask/breath,
 	/obj/item/clothing/under/misc/syndicate,
-#if defined(MAP_OVERRIDE_MANTA)
 	/obj/item/tank/jetpack/syndicate,
-#else
-	/obj/item/tank/jetpack,
-#endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
 	/obj/item/clothing/head/helmet/space/santahat/noslow,
@@ -524,7 +529,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 						I.set_loc(src)
 					amtload++
 				W:UpdateIcon()
-				W.tooltip_rebuild = 1
+				W.tooltip_rebuild = TRUE
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else

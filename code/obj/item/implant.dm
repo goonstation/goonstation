@@ -45,14 +45,14 @@ THROWING DARTS
 	var/uses_radio = 0
 	var/list/mailgroups = null
 	var/net_id = null
-	var/pda_alert_frequency = FREQ_PDA
+	var/alert_frequency = FREQ_PDA
 
 	New()
 		..()
 		if (uses_radio)
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, pda_alert_frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.alert_frequency)
 		if (ismob(src.loc))
 			src.implanted(src.loc)
 
@@ -118,6 +118,8 @@ THROWING DARTS
 			M.update_clothing()
 		src.owner = null
 		src.implanted = 0
+		UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
+		UnregisterSignal(M, COMSIG_MOB_DEATH)
 
 	proc/activate()
 		online = TRUE
@@ -259,6 +261,8 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 	scan_category = IMPLANT_SCAN_CATEGORY_CLONER
+	alert_frequency = FREQ_CLONER_IMPLANT
+	uses_radio = TRUE
 	var/area/scanned_here
 
 	New()
@@ -267,6 +271,7 @@ THROWING DARTS
 
 	implanted(mob/M, mob/I)
 		..()
+		global.processing_items |= src
 		if (!istype(M, /mob/living/carbon/human))
 			return
 		var/mob/living/carbon/human/H = M
@@ -274,6 +279,18 @@ THROWING DARTS
 			return
 		var/image/img = H.prodoc_icons["cloner"]
 		img.icon_state = "implant-cloner"
+
+	process()
+		if (!src.implanted || isdead(src.owner)) //dead silence
+			return
+		var/datum/signal/signal = get_free_signal()
+		signal.data = list(
+			"address_1"="00000000",
+			"command"="heartbeat",
+			"bio_id"= src.owner.bioHolder.Uid,
+			"sender" = src.net_id,
+		)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	on_remove(mob/M)
 		..()
@@ -412,14 +429,14 @@ THROWING DARTS
 		var/myarea = get_area(src)
 		var/list/cloner_areas = list()
 		for(var/obj/item/implant/cloner/cl_implant in src.owner)
-			if(cl_implant.owner != src.owner)
+			if(cl_implant.owner != src.owner || !cl_implant.scanned_here)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
 		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
 		if (he_or_she(src.owner) == "they")
-			message += "they " + (length(cloner_areas) ? "have been clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning record.")
+			message += "they " + (length(cloner_areas) ? "were clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning implant.")
 		else
-			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "has been clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning record.")
+			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "was clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning implant.")
 
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
@@ -937,7 +954,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-mh"
 	impcolor = "r"
 	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
-	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
+	alert_frequency = FREQ_MARIONETTE_IMPLANT
 
 	/// A network address that this implant is linked to. Can be null.
 	/// Packets sent by this address skip the passkey requirement, and if the implant burns out,
@@ -973,7 +990,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		// The `uses_radio` variable only adds a sender component, not a two-way one. So we have to do that manually!
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.pda_alert_frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.alert_frequency)
 		processing_items.Add(src)
 
 	disposing()
@@ -1719,7 +1736,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			return 0
 		else
 			uses -= 1
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return 1
 
 	infinite
@@ -2173,7 +2190,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			. += "It appears to contain \a [src.imp.name]."
 
 	proc/update()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (src.imp)
 			src.icon_state = src.imp.impcolor ? "implanter1-[imp.impcolor]" : "implanter1-g"
 		else
@@ -2382,7 +2399,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			else
 				if (P.linked_address)
 					. += "<br>[SPAN_NOTICE("This implant is linked to a remote of network address [P.linked_address].")]"
-				. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
+				. += "<br>[SPAN_NOTICE("Frequency: [P.alert_frequency]")]"
 				. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
 				. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
 
@@ -2503,7 +2520,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		. += "It appears to contain \a [src.imp.name]."
 
 /obj/item/implantcase/proc/update()
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	if (src.imp)
 		if (disposable)
 			src.icon_state = src.imp.impcolor ? "implantpaper-[imp.impcolor]" : "implantpaper-g"
@@ -2528,7 +2545,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.name = "glass case - '[t]'"
 		else
 			src.name = "glass case"
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		return
 	else if (istype(I, /obj/item/implanter))
 		var/obj/item/implanter/Imp = I
@@ -2607,7 +2624,7 @@ TYPEINFO(/obj/item/gun/implanter)
 				return
 
 			my_implant = I
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			if (istype(W, /obj/item/implant))
 				user.u_equip(W)
@@ -2652,7 +2669,7 @@ TYPEINFO(/obj/item/gun/implanter)
 			return ..()
 		my_implant.set_loc(P)
 		my_implant = null
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /datum/projectile/implanter
 	name = "implant bullet"

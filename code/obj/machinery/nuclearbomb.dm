@@ -268,7 +268,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 				return
 
 			var/timer_modifier = 0
-			if (isnukeop(user))
+			if (istrainedsyndie(user))
 				timer_modifier = -src.timer_modifier_disk
 				user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
 			else
@@ -463,14 +463,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		//explosion(src, src.loc, 35, 45, 55, 55)
 
 
-#ifdef MAP_OVERRIDE_MANTA
-		world.showCinematic("manta_nukies")
-#else
 		var/datum/hud/cinematic/cinematic = new
 		for (var/client/C in clients)
 			cinematic.add_client(C)
 		cinematic.play("nuke")
-#endif
 		if(istype(gamemode))
 			gamemode.nuke_detonated = 1
 			gamemode.check_win()

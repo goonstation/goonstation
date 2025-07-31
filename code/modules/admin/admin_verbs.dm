@@ -32,6 +32,7 @@ var/list/admin_verbs = list(
 		/client/proc/marsay,
 		/client/proc/silisay,
 		/client/proc/thrallsay,
+		/client/proc/wraithsay,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
@@ -133,7 +134,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
-		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
 		/client/proc/toggle_tracy_profiling,
 
@@ -278,6 +278,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_manageabils,
 		/client/proc/create_all_wizard_rings,
 		/client/proc/toggle_vpn_blacklist,
+		/client/proc/toggle_tutorial_enabled,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -2560,8 +2561,8 @@ proc/alert_all_ghosts(atom/target, message)
 	if (!player)
 		boutput(src, SPAN_ALERT("Unable to load data for ckey \"[ckey]\""))
 		return
-	var/value = alert(src, "Set flag on or off? Currently [player.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
-	if (player.cloudSaves.putData("bypass_round_reqs", (value == "On")))
+	var/value = alert(src, "Set flag on or off? Currently [player?.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
+	if (player?.cloudSaves.putData("bypass_round_reqs", (value == "On")))
 		boutput(src, "Successfully set round requirement bypass flag")
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else

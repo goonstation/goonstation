@@ -549,7 +549,18 @@
 		src.health -= power * 3
 		checkhealth()
 
-	get_desc()
+	get_desc(dist, mob/user)
+		. = ..()
+		var/list/visible_parts = list()
+		var/obj/item/shipcomponent/engine/engine = src.get_part(POD_PART_ENGINE)
+		if (istype(engine))
+			visible_parts += "[engine.name]"
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
+		if (istype(main_weapon))
+			visible_parts += "[main_weapon.name]"
+		if (length(visible_parts))
+			. += "It looks like it has [english_list(visible_parts)] installed."
+
 		if (src.keyed > 0)
 			var/t = strings("descriptors.txt", "keyed")
 			var/t_ind = clamp(round(keyed/10), 0, 10)
@@ -572,6 +583,15 @@
 		qdel(P)
 		return
 
+	proc/get_random_part()
+		var/list/actually_installed_parts = list()
+		for (var/id in src.installed_parts)
+			if (src.installed_parts[id])
+				actually_installed_parts += src.installed_parts[id]
+		if (!length(actually_installed_parts))
+			return null
+		return pick(actually_installed_parts)
+
 	proc/disrupt(disruption, obj/projectile/P)
 		if(disruption <= 0 || !length(src.installed_parts))
 			return
@@ -579,7 +599,9 @@
 		if(pilot)
 			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-		var/obj/item/shipcomponent/S = src.installed_parts[pick(src.installed_parts)]
+		var/obj/item/shipcomponent/S = src.get_random_part()
+		if (!S)
+			return
 		if (istype(S, /obj/item/shipcomponent/engine))
 			disruption += 40
 
@@ -592,8 +614,14 @@
 			else
 				S.deactivate()
 				S.disrupted = TRUE
-				SPAWN(2 SECONDS)
+				SPAWN(3 SECONDS)
 					S.disrupted = FALSE
+
+	overload_act()
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+		src.disrupt(100) //you managed to punch a pod, you get full disruption
+		src.disrupt(100)
+		return TRUE
 
 	emp_act()
 		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
@@ -1126,7 +1154,15 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		var/was_seen_boarding = FALSE
+		if (istype(V, /obj/machinery/vehicle/tank/car)) // you can drive pods drunk, but not cars. space law.
+			was_seen_boarding = seen_by_camera(owner)
+
 		V.finish_board_pod(owner)
+
+		if (was_seen_boarding && V.pilot == owner && ishuman(owner) && owner.hasStatus("drunk"))
+			var/mob/living/carbon/human/H = owner
+			H.apply_automated_arrest("DUI.", "Drove while inebriated.", requires_camera_seen = FALSE)
 
 /datum/action/bar/icon/eject_pod
 	duration = 50
@@ -1589,10 +1625,12 @@
 		return
 	sec_part.Use(usr)
 
-/obj/machinery/vehicle/proc/open_hangar()
+/obj/machinery/vehicle/proc/toggle_hangar_door(var/pass)
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
-	if(comms)
-		comms.rc_ship.open_hangar(usr)
+	if(!comms)
+		return
+	comms.rc_ship.toggle_hangar_door(usr, pass)
+
 
 /obj/machinery/vehicle/proc/return_to_station()
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)

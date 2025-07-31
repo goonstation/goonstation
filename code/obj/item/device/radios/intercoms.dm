@@ -19,6 +19,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	hardened = 0
 	use_speech_bubble = TRUE
 	forced_maptext = TRUE
+	speaker_range = 7
 
 	HELP_MESSAGE_OVERRIDE("Stand next to an intercom and use the prefix <B> :in </B> to speak directly into it.")
 
@@ -81,9 +82,10 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	. = ..()
 
 /obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
-	..()
+	if(..())
+		return
 
-	if (!isAI(user))
+	if (!isAI(user)) // this is AI only
 		return
 
 	if (!isAIeye(user))
@@ -110,7 +112,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			"maptext_css_values" = list("color" = "#CC3FCC"),
 			"relay_flags" = SAY_RELAY_RADIO,
 		)
-		src.say("AI override engaged!", flags = 0, message_params = message_params)
+		src.say("AI override engaged!", message_params = message_params)
 		src.show_speech_bubble(image('icons/mob/mob.dmi', "ai"))
 
 		SPAWN(1 MINUTE)

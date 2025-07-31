@@ -468,7 +468,7 @@ proc/ui_describe_reagents(atom/A)
 		else if (istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
 			if ("silver" in src.reagents.reaction(I, react_volume = src.reagents.total_volume))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!"))
-				I.tooltip_rebuild = 1
+				I.tooltip_rebuild = TRUE
 			else
 				if(istype(I, /obj/item/ammo/bullets))
 					var/obj/item/ammo/A = I
@@ -1006,7 +1006,7 @@ proc/ui_describe_reagents(atom/A)
 		var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate (1-10)",flow_rate,10,1,FALSE,TRUE)
 		if (number && flow_rate != number)
 			flow_rate = number
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 	proc/set_flow(var/desired_state)
 		if (!desired_state && open)
 			processing_items -= src
@@ -1085,9 +1085,10 @@ proc/ui_describe_reagents(atom/A)
 			fabrication_tick += 1
 			if (fabrication_tick >= ticks_to_fabricate)
 				fabrication_tick = 0
-				var/reagents_per_container = flow_rate / length(connected_containers)
-				for(var/obj/container in connected_containers)
-					container.reagents.add_reagent(reagent_to_fabricate, reagents_per_container)
+				if(length(src.connected_containers))
+					var/reagents_per_container = flow_rate / length(src.connected_containers)
+					for(var/obj/container in src.connected_containers)
+						container.reagents.add_reagent(reagent_to_fabricate, reagents_per_container)
 			update_visuals()
 
 
@@ -1134,7 +1135,7 @@ proc/ui_describe_reagents(atom/A)
 			reagent_to_fabricate = reagent
 		if (number && flow_rate != number)
 			flow_rate = number
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 		update_visuals()
 
 	proc/set_flow(var/desired_state)

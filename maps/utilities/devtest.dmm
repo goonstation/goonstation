@@ -69,6 +69,16 @@
 /obj/machinery/neosmelter,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"bE" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor,
+/area/station/devzone)
+"bS" = (
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/east,
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "cj" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor,
@@ -79,9 +89,14 @@
 /area/station/devzone)
 "ct" = (
 /obj/machinery/recharge_station,
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
+/area/station/devzone)
+"cu" = (
+/obj/landmark/start/job/medical_director,
+/turf/simulated/floor/white,
 /area/station/devzone)
 "cx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -92,6 +107,10 @@
 /area/station/devzone)
 "cD" = (
 /obj/landmark/start/job/assistant,
+/turf/simulated/floor,
+/area/station/devzone)
+"cH" = (
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor,
 /area/station/devzone)
 "cK" = (
@@ -274,6 +293,13 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
+"fL" = (
+/obj/item/rcd/construction/safe/admin_crimes,
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "fN" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -321,6 +347,10 @@
 	dir = 9
 	},
 /turf/space,
+/area/station/devzone)
+"gQ" = (
+/obj/landmark/start/job/head_of_personnel,
+/turf/simulated/floor,
 /area/station/devzone)
 "hc" = (
 /obj/machinery/conveyor/SN{
@@ -422,22 +452,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/devzone)
-"ib" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/glow,
-/area/space)
 "ic" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"id" = (
+/obj/machinery/computer/secure_data/detective_computer,
 /turf/simulated/floor,
 /area/station/devzone)
 "ii" = (
@@ -458,21 +480,6 @@
 /obj/machinery/vehicle/miniputt/gold,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
-"ip" = (
-/obj/machinery/mining_magnet{
-	pixel_x = 16
-	},
-/obj/machinery/magnet_chassis{
-	pixel_x = 16
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "iA" = (
 /obj/disposalpipe/loafer/horizontal{
 	dir = 1
@@ -564,6 +571,12 @@
 "kv" = (
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
+/area/station/devzone)
+"kz" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "kI" = (
 /obj/forcefield/energyshield/perma{
@@ -675,6 +688,10 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"nd" = (
+/obj/machinery/computer/general_alert,
+/turf/simulated/floor,
+/area/station/devzone)
 "nf" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/devzone)
@@ -710,7 +727,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
 "nO" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -777,6 +794,10 @@
 "oY" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/grass/random,
+/area/station/devzone)
+"pb" = (
+/obj/machinery/computer3/generic/communications,
+/turf/simulated/floor,
 /area/station/devzone)
 "pc" = (
 /obj/machinery/manufacturer/medical,
@@ -939,6 +960,14 @@
 /obj/disposalpipe/junction{
 	name = "factory pipe"
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"rY" = (
+/obj/machinery/computer/robotics,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
+"se" = (
+/obj/landmark/start/job/head_of_security,
 /turf/simulated/floor,
 /area/station/devzone)
 "sg" = (
@@ -1110,6 +1139,10 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
+"wn" = (
+/obj/landmark/start/job/captain,
+/turf/simulated/floor,
+/area/station/devzone)
 "wp" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/white,
@@ -1272,6 +1305,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/devzone)
+"zh" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "zk" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1284,6 +1321,10 @@
 /area/station/devzone)
 "zn" = (
 /obj/machinery/manufacturer/qm,
+/turf/simulated/floor,
+/area/station/devzone)
+"zw" = (
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor,
 /area/station/devzone)
 "zF" = (
@@ -1344,6 +1385,10 @@
 /obj/disposalpipe/type_sensing_outlet/drone_factory{
 	dir = 4
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"Af" = (
+/obj/machinery/computer/card,
 /turf/simulated/floor,
 /area/station/devzone)
 "Ag" = (
@@ -1443,6 +1488,16 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"Bs" = (
+/obj/machinery/computer/announcement/station,
+/turf/simulated/floor,
+/area/station/devzone)
+"Bw" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "Cf" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/orangeblack,
@@ -1462,6 +1517,10 @@
 	},
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"Cq" = (
+/obj/machinery/computer3/generic/personnel_management,
+/turf/simulated/floor,
 /area/station/devzone)
 "Cv" = (
 /obj/cable{
@@ -1686,8 +1745,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
-/area/station/devzone)
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
 "Gi" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor/white,
@@ -2044,6 +2104,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"Mp" = (
+/obj/machinery/computer3/generic/med_data,
+/turf/simulated/floor,
+/area/station/devzone)
 "MA" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/white,
@@ -2200,12 +2264,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"OU" = (
-/obj/machinery/vending/monkey/genetics,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/turf/simulated/floor/blue/checker,
-/area/station/devzone)
 "Pb" = (
 /obj/machinery/computer/magnet,
 /turf/simulated/floor,
@@ -2257,6 +2315,10 @@
 /obj/traitorifier/virtual/wizard,
 /turf/simulated/floor,
 /area/station/devzone)
+"PF" = (
+/obj/landmark/start/job/clown,
+/turf/simulated/floor,
+/area/station/devzone)
 "PH" = (
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
@@ -2295,6 +2357,18 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/space)
+"Qm" = (
+/obj/machinery/mining_magnet{
+	pixel_x = 16
+	},
+/obj/machinery/magnet_chassis{
+	pixel_x = 16
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "Qy" = (
 /obj/decal/tile_edge/line/red{
 	dir = 8;
@@ -2356,6 +2430,15 @@
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"RQ" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/space)
 "RV" = (
 /turf/simulated/floor/engine{
 	dir = 4;
@@ -2408,7 +2491,6 @@
 	},
 /area/station/devzone)
 "SI" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2439,16 +2521,20 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"Tp" = (
+/obj/item/storage/box/diskbox,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "Tu" = (
 /turf/unsimulated/floor/engine/caution/east,
 /area/station/devzone)
 "Tw" = (
 /obj/machinery/ghost_catcher,
 /turf/simulated/floor,
-/area/station/devzone)
-"Tz" = (
-/obj/landmark/start/job/chief_engineer,
-/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "TF" = (
 /turf/simulated/floor/engine{
@@ -2461,6 +2547,10 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"TM" = (
+/obj/landmark/start/job/research_director,
+/turf/simulated/floor,
 /area/station/devzone)
 "TY" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -2565,15 +2655,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
-"Wg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Wj" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor,
@@ -2620,6 +2701,10 @@
 /obj/machinery/vehicle/tank/minisub/mining,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
+"Xb" = (
+/obj/landmark/start/job/quartermaster,
+/turf/simulated/floor,
+/area/station/devzone)
 "Xd" = (
 /obj/railing/red{
 	dir = 8
@@ -2656,16 +2741,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
-"Xu" = (
-/obj/item/rcd/construction/safe/admin_crimes,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Xx" = (
 /obj/forcefield/energyshield/perma{
 	dir = 6
@@ -2692,15 +2767,6 @@
 	allows_vehicles = 0;
 	icon_state = "engine_caution_south"
 	},
-/area/station/devzone)
-"XI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "XR" = (
 /obj/submachine/weapon_vendor/fishing/portable,
@@ -2777,6 +2843,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"YV" = (
+/obj/machinery/computer3/generic/secure_data,
+/turf/simulated/floor,
+/area/station/devzone)
 "Zd" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -2808,6 +2878,10 @@
 /obj/machinery/conveyor_switch{
 	id = "cargosell"
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"ZX" = (
+/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/devzone)
 "ZZ" = (
@@ -3029,7 +3103,7 @@ KD
 eq
 uE
 Yx
-Yx
+ZX
 ng
 Yx
 "}
@@ -3071,8 +3145,8 @@ sg
 eL
 Om
 Yx
-Yx
-Yx
+se
+cH
 ng
 Yx
 "}
@@ -3188,7 +3262,7 @@ hR
 NE
 Yx
 Yx
-XI
+kz
 NU
 Ni
 NG
@@ -3202,7 +3276,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 Yx
 "}
 (10,1,1) = {"
@@ -3326,7 +3400,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 Hy
 UD
 UD
@@ -3368,7 +3442,7 @@ Nu
 ys
 ys
 Yx
-Wg
+Bw
 Yx
 Yx
 Yx
@@ -3455,7 +3529,7 @@ ia
 zT
 Yx
 Yx
-Yx
+ng
 ng
 Kr
 ng
@@ -3498,11 +3572,11 @@ Bq
 hI
 dG
 Yx
-Yx
 ng
+fU
 Du
 qc
-fU
+zh
 ng
 Yx
 "}
@@ -3539,10 +3613,10 @@ Nu
 Nu
 ys
 Mo
-dG
 Yx
 Yx
 ng
+vd
 vd
 wk
 vd
@@ -3584,11 +3658,11 @@ IX
 jz
 vr
 Yx
-Yx
 ng
-wy
-vd
 oG
+wy
+Tp
+vd
 ng
 Yx
 "}
@@ -3627,8 +3701,8 @@ kV
 kV
 Yx
 Yx
-Yx
 ng
+vd
 vd
 PU
 zF
@@ -3664,17 +3738,17 @@ Yx
 ng
 Fe
 Yx
-Yx
+TM
 Yx
 kV
 bw
 Yx
 Yx
-Yx
 ng
-OU
-Er
+bS
 Gn
+Er
+vd
 ng
 Yx
 "}
@@ -3701,7 +3775,7 @@ ng
 ng
 ng
 ng
-Tz
+ng
 ng
 ng
 ng
@@ -3785,12 +3859,12 @@ ck
 ng
 qI
 bi
-Yx
+Xb
 he
 ng
 du
 SI
-XI
+kz
 kV
 kV
 kV
@@ -3804,7 +3878,7 @@ uE
 ng
 La
 Vg
-XI
+kz
 Yx
 "}
 (24,1,1) = {"
@@ -3831,7 +3905,7 @@ ag
 wg
 ZD
 ng
-ng
+rY
 FV
 ng
 LH
@@ -3973,7 +4047,7 @@ Vh
 ng
 sJ
 Ni
-Ni
+cu
 Ni
 lU
 ng
@@ -4167,7 +4241,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+ng
 Yx
 Yx
 Yx
@@ -4210,7 +4284,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+ng
 Yx
 Yx
 Yx
@@ -4249,15 +4323,15 @@ Yx
 Yx
 Yx
 Yx
-Wg
+Bw
 Yx
 Yx
 Yx
+ng
 Yx
+bE
 Yx
-Yx
-Yx
-Yx
+zw
 Yx
 ng
 VO
@@ -4296,11 +4370,11 @@ Yx
 Yx
 Yx
 Yx
+ng
 Yx
-Yx
-Yx
-Yx
-Yx
+YV
+wn
+Mp
 Yx
 ng
 Id
@@ -4308,7 +4382,7 @@ Yx
 ft
 Yx
 ZZ
-Xu
+fL
 Kx
 Yx
 ZZ
@@ -4339,11 +4413,11 @@ Yx
 Yx
 Yx
 Yx
+ng
+PF
+id
 Yx
-Yx
-Yx
-Yx
-Yx
+Cq
 Yx
 ng
 Yx
@@ -4382,17 +4456,17 @@ Yx
 Yx
 Yx
 Yx
+ng
 Yx
-Yx
-Yx
-Yx
-Yx
+nd
+gQ
+pb
 Yx
 ng
 Yx
 uF
 Id
-Wg
+Bw
 iP
 Yx
 Yx
@@ -4406,7 +4480,7 @@ ng
 Rq
 Be
 Rq
-XI
+kz
 Yx
 "}
 (38,1,1) = {"
@@ -4425,11 +4499,11 @@ Yx
 Yx
 Yx
 Yx
+ng
 Yx
+Af
 Yx
-Yx
-Yx
-Yx
+Bs
 Yx
 ng
 Yx
@@ -4468,7 +4542,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+ng
 Yx
 Yx
 Yx
@@ -4844,7 +4918,7 @@ rz
 rz
 rS
 kI
-ip
+Qm
 Yx
 qg
 hR
@@ -4957,7 +5031,7 @@ rx
 rz
 rx
 rz
-ib
+RQ
 rz
 rx
 rz
@@ -5282,7 +5356,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 ng
 ng
 ng

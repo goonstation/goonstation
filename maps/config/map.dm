@@ -56,8 +56,6 @@
 #include "nadir.dm"
 
 // non rotation maps
-#elif defined(MAP_OVERRIDE_MANTA)
-#include "manta.dm"
 
 #elif defined(MAP_OVERRIDE_DESTINY)
 #include "destiny.dm"

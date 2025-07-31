@@ -2,10 +2,10 @@
 
 TYPEINFO(/mob/living/intangible/wraith)
 	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL_GHOST)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_WRAITHCHAT, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL_GHOST)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_WRAITH)
+	start_speech_outputs = list(SPEECH_OUTPUT_WRAITHCHAT_WRAITH, SPEECH_OUTPUT_DEADCHAT_WRAITH)
 
 /mob/living/intangible/wraith
 	name = "wraith"
@@ -22,7 +22,9 @@ TYPEINFO(/mob/living/intangible/wraith)
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	alpha = 180
 	plane = PLANE_NOSHADOW_ABOVE
-	default_speech_output_channel = SAY_CHANNEL_DEAD
+
+	default_speech_output_channel = SAY_CHANNEL_WRAITH
+	voice_type = null
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
@@ -52,6 +54,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 	var/next_area_change = 10 MINUTES
 	var/list/mob/living/critter/summons = list()	//Keep track of who we summoned to the material plane
 	var/datum/abilityHolder/wraith/AH = null
+	var/name_generator_path = /datum/wraith_name_generator/wraith
 
 	var/list/poltergeists
 	/// how much formaldehyde a corpse can have while still being absorbable
@@ -70,33 +73,6 @@ TYPEINFO(/mob/living/intangible/wraith)
 	//////////////
 	// Wraith Overrides
 	//////////////
-
-	proc/make_name()
-		var/len = rand(4, 8)
-		var/vowel_prob = 0
-		var/list/con = list("x", "z", "n", "k", "s", "l", "t", "r", "sh", "m", "d")
-		#ifdef APRIL_FOOLS
-		con += list("j", "j", "j", "j", "j", "j", "j", "j")
-		#endif
-		var/list/vow = list("y", "o", "a", "ae", "u", "ou")
-		var/theName = ""
-		for (var/i = 1, i <= len, i++)
-			if (prob(vowel_prob))
-				vowel_prob = 0
-				theName += pick(vow)
-			else
-				vowel_prob += rand(15, 40)
-				theName += pick(con)
-		var/fc = copytext(theName, 1, 2)
-		theName = "[uppertext(fc)][copytext(theName, 2)]"
-
-		#ifdef APRIL_FOOLS
-		var/suffix = pick(" the Jimpaler", " the Jormentor", " the Jorsaken", " the Jestroyer", " the Jevourer", " the Jyrant", " the Joverlord", " the Jamned", " the Jesolator", " the Jexiled")
-		#else
-		var/suffix = pick(" the Impaler", " the Tormentor", " the Forsaken", " the Destroyer", " the Devourer", " the Tyrant", " the Overlord", " the Damned", " the Desolator", " the Exiled")
-		#endif
-		theName = theName  + suffix
-		return theName
 
 	New(var/mob/M)
 		. = ..()
@@ -133,7 +109,8 @@ TYPEINFO(/mob/living/intangible/wraith)
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
-		real_name = make_name()
+		var/datum/wraith_name_generator/name_generator = global.get_singleton(src.name_generator_path)
+		src.real_name = name_generator.generate_name()
 		src.UpdateName()
 
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_mob(src)
@@ -552,7 +529,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 		src.addAbility(/datum/targetable/wraithAbility/poison)
 		src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 		src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
-		src.addAbility(/datum/targetable/wraithAbility/speak)
+
 /mob/living/intangible/wraith/wraith_harbinger
 	name = "Harbinger"
 	real_name = "harbinger"
@@ -571,7 +548,6 @@ TYPEINFO(/mob/living/intangible/wraith)
 		src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 		src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
 		src.addAbility(/datum/targetable/wraithAbility/harbinger_summon)
-		src.addAbility(/datum/targetable/wraithAbility/speak)
 
 /mob/living/intangible/wraith/wraith_trickster
 	name = "trickster"

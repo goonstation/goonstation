@@ -207,6 +207,11 @@
 		if(!can_lie && !isdead(src))
 			can_lie = 1
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (src.stage == RANCH_STAGE_SENIOR)
+			. += "<br>This animal looks rather old and probably won't be able to produce anything."
+
 	reduce_lifeprocess_on_death()
 		. = ..()
 		remove_lifeprocess(/datum/lifeprocess/ranch/age)
@@ -432,6 +437,10 @@
 
 			if(C.reagents.has_reagent("ageinium"))
 				C.age += get_multiplier()*2
+
+			else if(C.reagents.has_reagent("deageinium"))
+				if(C.age > 10)
+					C.age -= get_multiplier()
 
 			else if (C.named)
 				C.age += get_multiplier()/20

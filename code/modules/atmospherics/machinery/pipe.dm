@@ -26,7 +26,15 @@
 	initial_icon_state = icon_state
 
 /obj/machinery/atmospherics/pipe/proc/effective_fatigue_pressure()
-	return src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
+	var/output = src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
+	var/turf/pipe_location = get_turf(src)
+	//pipes encased by walls get a bonus in fatigue pressure equal to the density of the material times 5, times 10 for reinforced walls. So pipes that lay bare should be the main weak point of the engine.
+	if(istype(pipe_location, /turf/simulated/wall))
+		var/turf/simulated/wall/wall_location = pipe_location
+		output *= ((wall_location.material?.getProperty("density") * 5) || 1)
+		if(istype(pipe_location, /turf/simulated/wall/auto/reinforced))
+			output *= 2
+	return output
 
 /// Returns list of coordinates to start and stop welding animation.
 /obj/machinery/atmospherics/pipe/proc/get_welding_positions()
@@ -88,6 +96,8 @@
 	if(new_rupture > src.ruptured)
 		ON_COOLDOWN(parent, "pipeline_rupture_protection", 16 SECONDS + rand(4 SECONDS, 24 SECONDS))
 	ruptured = max(src.ruptured, new_rupture, 1)
+	for (var/obj/window/window in get_turf(src))
+		window.smash()
 	src.desc = "[initial(src.desc)] Still looks salvageable through some careful welding."
 	UpdateIcon()
 
