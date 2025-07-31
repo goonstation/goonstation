@@ -1,4 +1,7 @@
 
+(t)thu jul 31 25
+(u)aloe
+(+)There will now be a confirmation pop-up when you click a server link from the title menu.
 (t)wed jul 30 25
 (u)LeahTheTech + Glowbold
 (p)24194
