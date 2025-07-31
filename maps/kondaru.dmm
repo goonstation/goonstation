@@ -2329,10 +2329,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/noticeboard/persistent{
-	name = "Information Office persistent notice board";
-	persistent_id = "information office"
-	},
+/obj/noticeboard/persistent/information_office/directional/north,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -5568,10 +5565,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/noticeboard/persistent{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics"
-	},
+/obj/noticeboard/persistent/mechanics/directional/north,
 /obj/item/storage/wall{
 	dir = 4;
 	pixel_x = -32
@@ -7776,10 +7770,7 @@
 /obj/decal/cleanable/desk_clutter{
 	pixel_y = -8
 	},
-/obj/noticeboard/persistent{
-	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office"
-	},
+/obj/noticeboard/persistent/detectives_office/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aGe" = (
@@ -18930,10 +18921,7 @@
 /area/station/crew_quarters/courtroom)
 "bHe" = (
 /obj/submachine/poster_creator,
-/obj/noticeboard/persistent{
-	name = "Customs persistent notice board";
-	persistent_id = "customs"
-	},
+/obj/noticeboard/persistent/customs/directional/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bHf" = (
@@ -29420,10 +29408,7 @@
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
 "dVT" = (
-/obj/noticeboard/persistent{
-	name = "Medbay persistent notice board";
-	persistent_id = "medbay"
-	},
+/obj/noticeboard/persistent/medbay/directional/north,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -33818,10 +33803,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/noticeboard/persistent{
-	name = "Cargo persistent notice board";
-	persistent_id = "cargo"
-	},
+/obj/noticeboard/persistent/cargo/directional/north,
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
 "gRQ" = (
@@ -34473,10 +34455,7 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
-/obj/noticeboard/persistent{
-	name = "Crew Quarters persistent notice board";
-	persistent_id = "crew quarters"
-	},
+/obj/noticeboard/persistent/crew_quarters/directional/north,
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/crew_quarters/quarters_east)
 "hmG" = (
@@ -36188,10 +36167,7 @@
 /area/station/maintenance/north)
 "iCC" = (
 /obj/vehicle/segway,
-/obj/noticeboard/persistent{
-	name = "Security persistent notice board";
-	persistent_id = "security"
-	},
+/obj/noticeboard/persistent/security/directional/north,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -40047,10 +40023,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/noticeboard/persistent{
-	name = "Botany persistent notice board";
-	persistent_id = "botany"
-	},
+/obj/noticeboard/persistent/botany/directional/north,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -42148,13 +42121,7 @@
 "mAy" = (
 /obj/table/wood/auto,
 /obj/item/decoration/flower_vase,
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-	persistent_id = "chapel";
-	pixel_x = 32;
-	pixel_y = 0;
-	dir = 4
-	},
+/obj/noticeboard/persistent/chapel/directional/east,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "mAR" = (
@@ -43027,10 +42994,7 @@
 "njl" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
-	},
+/obj/noticeboard/persistent/bar/directional/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "nju" = (
@@ -47245,13 +47209,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "qmz" = (
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = "brig";
-	pixel_x = 32;
-	dir = 4;
-	pixel_y = 4
-	},
+/obj/noticeboard/persistent/brig/directional/east,
 /obj/machinery/vending/snack{
 	credit = 50
 	},
@@ -53368,10 +53326,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/noticeboard/persistent{
-	name = "Research persistent notice board";
-	persistent_id = "research"
-	},
+/obj/noticeboard/persistent/research/directional/north,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "uyV" = (
@@ -54188,10 +54143,7 @@
 	amount = 50
 	},
 /obj/item/storage/box/cablesbox,
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = "engineering"
-	},
+/obj/noticeboard/persistent/engineering/directional/north,
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "uZG" = (

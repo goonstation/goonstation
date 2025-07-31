@@ -4773,9 +4773,7 @@
 	name = "crematorium pipe"
 	},
 /obj/stool/wooden,
-/obj/noticeboard{
-	pixel_y = 28
-	},
+/obj/noticeboard/directional/north,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
@@ -8039,10 +8037,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "aUD" = (
-/obj/noticeboard/persistent{
-	name = "Medbay persistent notice board";
-	persistent_id = "medbay"
-	},
+/obj/noticeboard/persistent/medbay/directional/north,
 /obj/machinery/light/incandescent,
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/white,
@@ -22848,10 +22843,7 @@
 	pixel_x = 5;
 	icon_state = "paper_caution_crumple"
 	},
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
-	},
+/obj/noticeboard/persistent/bar/directional/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gRE" = (
@@ -29568,10 +29560,7 @@
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_y = 5
 	},
-/obj/noticeboard/persistent{
-	name = "Botany persistent notice board";
-	persistent_id = "botany"
-	},
+/obj/noticeboard/persistent/botany/directional/north,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "kUg" = (
@@ -43770,10 +43759,7 @@
 /area/station/crew_quarters/pool)
 "sWA" = (
 /obj/machinery/deep_fryer,
-/obj/noticeboard/persistent{
-	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen"
-	},
+/obj/noticeboard/persistent/kitchen/directional/north,
 /turf/simulated/floor/grey/checker{
 	dir = 4
 	},

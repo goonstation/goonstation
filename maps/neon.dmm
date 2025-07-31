@@ -5785,7 +5785,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "eot" = (
@@ -13854,11 +13854,7 @@
 /area/station/quartermaster/office)
 "jRd" = (
 /obj/machinery/light/incandescent,
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = "engineering";
-	pixel_y = -24
-	},
+/obj/noticeboard/persistent/engineering/directional/north,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "jRN" = (
@@ -21930,10 +21926,7 @@
 /area/station/bridge/execrestroom)
 "pQv" = (
 /obj/machinery/vending/medical,
-/obj/noticeboard/persistent{
-	name = "Medbay persistent notice board";
-	persistent_id = "medbay"
-	},
+/obj/noticeboard/persistent/medbay/directional/north,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -23117,12 +23110,7 @@
 /area/station/maintenance/disposal)
 "qKk" = (
 /obj/table/wood/auto,
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-	persistent_id = "chapel";
-	pixel_y = 8;
-	pixel_x = -32
-	},
+/obj/noticeboard/persistent/chapel/directional/north,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -24766,12 +24754,7 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/noticeboard/persistent{
-	name = "Security Foyer persistent notice board";
-	persistent_id = "security foyer";
-	pixel_y = 6;
-	pixel_x = 32
-	},
+/obj/noticeboard/persistent/security_foyer/directional/north,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "rVX" = (

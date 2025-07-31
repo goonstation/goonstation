@@ -3255,7 +3255,7 @@
 	color = "aqua"
 	})
 "wz" = (
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/simulated/floor/circuit/off,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";

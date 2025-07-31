@@ -2465,7 +2465,7 @@
 "amK" = (
 /obj/table,
 /obj/item/stamp,
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/unsimulated/floor/black,
 /area/hospital)
 "amL" = (
@@ -3888,7 +3888,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asU" = (
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asV" = (
@@ -8128,7 +8128,7 @@
 "aNg" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box,
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aNh" = (
@@ -10307,7 +10307,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/unsimulated/floor/neutral/side{
 	dir = 1
 	},
@@ -15934,7 +15934,7 @@
 	},
 /area/drone/office)
 "blW" = (
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/office)
 "blX" = (
@@ -23113,9 +23113,7 @@
 /turf/unsimulated/floor/red/side,
 /area/crunch)
 "bNV" = (
-/obj/noticeboard{
-	pixel_x = 28
-	},
+/obj/noticeboard/directional/north,
 /turf/unsimulated/floor/red/side,
 /area/crunch)
 "bNW" = (
@@ -45890,11 +45888,7 @@
 	dir = 4;
 	pixel_x = -21
 	},
-/obj/noticeboard/persistent{
-	desc = "A board for pinning important notices upon. Looks like this one doesn't get cleared out at the end of the shift. Must be some sort of magic.";
-	name = "wizard persistent notice board";
-	persistent_id = "wizard"
-	},
+/obj/noticeboard/persistent/wizard/directional/north,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/carpet/wizard/standard/edge/nw,
 /area/wizard_station)
@@ -58985,9 +58979,7 @@
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "hxO" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
+/obj/noticeboard/directional/north,
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg11"
 	},
@@ -70985,7 +70977,7 @@
 /turf/space,
 /area/space)
 "qJM" = (
-/obj/noticeboard/persistent{
+/obj/noticeboard/persistent/directional/north{
 	name = "aloe's personal persistent notice board";
 	persistent_id = "aloe"
 	},
