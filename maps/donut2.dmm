@@ -10669,6 +10669,9 @@
 /obj/item/device/radio/intercom/brig{
 	dir = 8
 	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "bki" = (
@@ -27564,9 +27567,6 @@
 "jJj" = (
 /obj/item/device/radio/intercom/security{
 	dir = 8
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
