@@ -312,8 +312,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	rarity = ITEM_RARITY_LEGENDARY
 
 	get_scent_color()
+		// An important clue that every pug detective should try and follow.
 		var/color_base = pick("blue","green","yellow","orange","brown","red","pink","purple","grey","magenta","cyan","indigo","scarlet","turquoise")
-		var/color_desc = pick("deadly","ghastly","siren","fishy","feline","cunning","mysterious","alluring","troubling")
+		var/color_desc = pick("deadly","ghastly","siren","fishy","feline","cunning","mysterious","alluring","troubling","jewel")
 		return "[color_desc] [color_base]"
 
 /obj/item/reagent_containers/food/fish/tuna
