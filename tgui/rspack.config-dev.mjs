@@ -1,5 +1,9 @@
+import { createRequire } from 'node:module';
+
 import { defineConfig } from '@rspack/cli';
 import { rspack } from '@rspack/core';
+
+const require = createRequire(import.meta.url);
 
 const createStats = (verbose) => ({
   assets: verbose,
@@ -86,7 +90,7 @@ export default (env = {}, argv) => {
             {
               use: [
                 {
-                  loader: require.resolve('url-loader'),
+                  loader: 'url-loader',
                   options: {
                     esModule: false,
                     outputPath: 'assets/', // [516 TODO]: resolve path?
@@ -107,7 +111,7 @@ export default (env = {}, argv) => {
             {
               use: [
                 {
-                  loader: require.resolve('url-loader'),
+                  loader: 'url-loader',
                   options: {
                     esModule: false,
                     outputPath: 'assets/', // [516 TODO]: resolve path?

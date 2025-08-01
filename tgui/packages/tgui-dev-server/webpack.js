@@ -33,11 +33,12 @@ class RspackCompiler {
     /** @type {typeof import('@rspack/core')} */
     const rspack = await requireFromRoot('@rspack/core');
 
-    const createConfig = await requireFromRoot('./rspack.config.cjs');
-    const createDevConfig = await requireFromRoot('./rspack.config-dev.cjs');
+    // Import default exports from the config files
+    const configModule = await requireFromRoot('./rspack.config.mjs');
+    const devConfigModule = await requireFromRoot('./rspack.config-dev.mjs');
 
-    const config = createConfig({}, options);
-    const devConfig = createDevConfig({}, options);
+    const config = configModule.default({}, options);
+    const devConfig = devConfigModule.default({}, options);
 
     const mergedConfig = { ...config, ...devConfig };
 
