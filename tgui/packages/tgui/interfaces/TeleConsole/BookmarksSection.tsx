@@ -21,7 +21,7 @@ type BookmarksSectionProps = Pick<TeleConsoleData, 'bookmarks'> & {
   targetCoords: [number, number, number];
 };
 
-export const BookmarksSection = (props: BookmarksSectionProps, context) => {
+export const BookmarksSection = (props: BookmarksSectionProps) => {
   const {
     bookmarks,
     maxBookmarks,
@@ -75,9 +75,9 @@ export const BookmarksSection = (props: BookmarksSectionProps, context) => {
             <Input
               width="100%"
               value={newBookmarkName}
-              onInput={(_e, value: string) => setNewBookmarkName(value)}
+              onChange={(value: string) => setNewBookmarkName(value)}
               placeholder="New bookmark"
-              onEnter={(_e, value: string) => handleAddBookmark(value)}
+              onEnter={(value: string) => handleAddBookmark(value)}
               maxLength={32}
             />
           </LabeledList.Item>
