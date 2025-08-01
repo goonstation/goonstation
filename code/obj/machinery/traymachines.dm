@@ -538,7 +538,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		for (var/mob/M in contents)
 			if (isliving(M))
 				var/mob/living/L = M
-				for (var/i = 1 SECOND, i <= src.settime; i += 1 SECOND)
+				for (var/i = 1 SECOND; i <= src.settime; i += 1 SECOND)
 					sleep(1 SECOND)
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
