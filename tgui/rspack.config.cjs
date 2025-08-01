@@ -117,8 +117,8 @@ module.exports = (env = {}, argv) => {
                   loader: require.resolve('url-loader'),
                   options: {
                     esModule: false,
-                    outputPath: 'assets/', // [516 TODO]: resolve path?
-                    publicPath: '/assets/', // [516 TODO]: resolve path?
+                    outputPath: 'assets/',
+                    publicPath: '/assets/',
                   },
                 },
               ],
@@ -138,8 +138,8 @@ module.exports = (env = {}, argv) => {
                   loader: require.resolve('url-loader'),
                   options: {
                     esModule: false,
-                    outputPath: 'assets/', // [516 TODO]: resolve path?
-                    publicPath: '/assets/', // [516 TODO]: resolve path?
+                    outputPath: 'assets/',
+                    publicPath: '/assets/',
                   },
                 },
               ],
@@ -172,18 +172,16 @@ module.exports = (env = {}, argv) => {
     };
   }
 
-  // [516 TODO]: minimizer config, or are defaults fine for production? Below is old webpack config
   // Production build specific options
-  // if (mode === 'production') {
-  //   const { EsbuildPlugin } = require('esbuild-loader');
-  //   config.optimization.minimizer = [
-  //     new EsbuildPlugin({
-  //       target: 'edge123',
-  //       css: true,
-  //       legalComments: 'none', // We're open source, these are in the original source files
-  //     }),
-  //   ];
-  // }
+  if (mode === 'production') {
+    // Exclude debug modules in production by stubbing the main entry point
+    config.plugins.push(
+      new rspack.NormalModuleReplacementPlugin(
+        /[\\/]debug[\\/]index\.ts$/,
+        path.resolve(__dirname, 'packages/tgui/debug/index-production.ts'),
+      ),
+    );
+  }
 
   // Development build specific options
   if (mode !== 'production') {

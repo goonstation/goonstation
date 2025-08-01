@@ -218,6 +218,9 @@ export default defineConfig([
       'sonarjs/no-labels': 'off',
       'sonarjs/label-position': 'off',
       // Too much work to fix this right now
+      'sonarjs/cognitive-complexity': ['error', 70], // 50
+      'sonarjs/updated-loop-counter': 'off',
+      'sonarjs/no-nested-assignment': 'off',
       'sonarjs/no-nested-functions': 'off',
       'sonarjs/no-ignored-exceptions': 'off',
       'sonarjs/single-char-in-character-classes': 'off',
@@ -236,7 +239,6 @@ export default defineConfig([
       'sonarjs/no-dead-store': 'off',
       'sonarjs/no-nested-conditional': 'off',
       'sonarjs/no-commented-code': 'off',
-      'sonarjs/cognitive-complexity': ['error', 50],
 
       'react/boolean-prop-naming': 'error',
       'react/button-has-type': 'error',

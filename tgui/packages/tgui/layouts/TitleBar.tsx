@@ -5,7 +5,7 @@ import { BooleanLike, classes } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
 
 import { globalStore } from '../backend';
-import { toggleKitchenSink } from '../debug/actions';
+import { toggleKitchenSink } from '../debug';
 
 type TitleBarProps = Partial<{
   className: string;

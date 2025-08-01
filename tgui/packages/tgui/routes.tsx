@@ -65,11 +65,10 @@ export function getRoutedComponent() {
     return RefreshingWindow;
   }
   */
-  if (process.env.NODE_ENV !== 'production') {
-    // Show a kitchen sink
-    if (kitchenSink) {
-      return require('./debug').KitchenSink;
-    }
+
+  if (process.env.NODE_ENV !== 'production' && kitchenSink) {
+    const { KitchenSink } = require('./debug');
+    return KitchenSink;
   }
 
   const name = config?.interface?.name;
