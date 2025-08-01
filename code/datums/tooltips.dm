@@ -267,6 +267,7 @@
 	proc/setMouseWithoutParams(list/clientView, list/iconSize)
 		PRIVATE_PROC(TRUE)
 		var/atom/refTarget = src.target.deref()
+		#ifndef SPACEMAN_DMM // pixloc var def broken
 		var/pixloc/clientLoc = bound_pixloc(src.holder.owner.virtual_eye, SOUTHWEST)
 		var/pixloc/targetLoc = bound_pixloc(refTarget, SOUTHWEST)
 		var/tilesLeft = clientView["x"] + 1 - ((clientLoc.x - targetLoc.x) / iconSize["width"])
@@ -275,6 +276,7 @@
 			"left" = alist("tiles" = tilesLeft, "pixels" = 1, "icon" = refTarget.pixel_x * -1),
 			"bottom" = alist("tiles" = tilesBottom, "pixels" = 1, "icon" = refTarget.pixel_y * -1),
 		)
+		#endif
 
 	proc/shouldUpdate(atom/target)
 		PRIVATE_PROC(TRUE)
