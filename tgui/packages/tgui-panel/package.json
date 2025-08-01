@@ -3,14 +3,14 @@
   "name": "tgui-panel",
   "version": "5.0.1",
   "dependencies": {
-    "@types/node": "^20.17.48",
-    "@types/react": "^19.1.4",
+    "@types/node": "^24.1.0",
+    "@types/react": "^19.1.9",
     "common": "workspace:*",
     "dompurify": "^2.5.8",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "tgui": "workspace:*",
-    "tgui-core": "^4.3.4",
+    "tgui-core": "^4.4.0",
     "tgui-dev-server": "workspace:*"
   }
 }
