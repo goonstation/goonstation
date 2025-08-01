@@ -2004,6 +2004,7 @@
 #include "code\modules\speech\modules\speech\outputs\radio.dm"
 #include "code\modules\speech\modules\speech\outputs\siliconchat.dm"
 #include "code\modules\speech\modules\speech\outputs\thrallchat.dm"
+#include "code\modules\speech\modules\speech\outputs\vampire.dm"
 #include "code\modules\speech\modules\speech\outputs\wraithchat.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\_spoken.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\audio_log.dm"

@@ -149,6 +149,7 @@
 #define SPEECH_MODIFIER_REVENANT "revenant"
 #define SPEECH_MODIFIER_TEST_DUMMY "test_dummy"
 #define SPEECH_MODIFIER_TRANSLATOR "translator"
+#define SPEECH_MODIFIER_VAMPIRE "vampire"
 #define SPEECH_MODIFIER_VENDING_MACHINE "vending_machine"
 
 

@@ -240,6 +240,9 @@
 
 			src.has_xray = 1
 			src.has_fullpower = 1
+
+			src.owner.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_VAMPIRE)
+
 			//boutput(src.owner, SPAN_NOTICE("<h3>Your vampiric vision has improved (x-ray)!</h3>"))
 			boutput(src.owner, SPAN_NOTICE("<h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3>"))
 
@@ -256,6 +259,8 @@
 		src.removeAbility(/datum/targetable/vampire/vampire_scream)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream/mk2)
 		src.removeAbility(/datum/targetable/vampire/plague_touch)
+
+		src.owner.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_VAMPIRE)
 
 		src.updateButtons()
 
