@@ -1,5 +1,5 @@
-const { defineConfig } = require('@rspack/cli');
-const { rspack } = require('@rspack/core');
+import { defineConfig } from '@rspack/cli';
+import { rspack } from '@rspack/core';
 
 const createStats = (verbose) => ({
   assets: verbose,
@@ -26,7 +26,7 @@ const createStats = (verbose) => ({
  *
  * `TypeError: Cannot read properties of null (reading 'removeChild')`
  */
-module.exports = (env = {}, argv) => {
+export default (env = {}, argv) => {
   /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
     cache: false,

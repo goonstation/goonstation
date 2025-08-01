@@ -4,9 +4,13 @@
  * @license MIT
  */
 
-const path = require('path');
-const { defineConfig } = require('@rspack/cli');
-const { rspack } = require('@rspack/core');
+import { defineConfig } from '@rspack/cli';
+import { rspack } from '@rspack/core';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const createStats = (verbose) => ({
   assets: verbose,
@@ -23,7 +27,7 @@ const createStats = (verbose) => ({
   version: verbose,
 });
 
-module.exports = (env = {}, argv) => {
+export default (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
 
@@ -95,7 +99,7 @@ module.exports = (env = {}, argv) => {
           test: /\.(s)?css$/,
           use: [
             {
-              loader: require.resolve('sass-loader'),
+              loader: 'sass-loader',
               options: {
                 api: 'modern-compiler',
                 implementation: 'sass-embedded',
@@ -114,7 +118,7 @@ module.exports = (env = {}, argv) => {
             {
               use: [
                 {
-                  loader: require.resolve('url-loader'),
+                  loader: 'url-loader',
                   options: {
                     esModule: false,
                     outputPath: 'assets/',
@@ -135,7 +139,7 @@ module.exports = (env = {}, argv) => {
             {
               use: [
                 {
-                  loader: require.resolve('url-loader'),
+                  loader: 'url-loader',
                   options: {
                     esModule: false,
                     outputPath: 'assets/',
