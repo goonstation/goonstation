@@ -85,7 +85,7 @@
 	process_status()
 	if(status < UI_UPDATE)
 		return FALSE
-	window = tgui_process.request_pooled_window(user) // |GOONSTATION-CHANGE| Different process holder
+	window = tgui_process.request_pooled_window(user, interface) // |GOONSTATION-CHANGE| Different process holder, add interface
 	if(!window)
 		// |GOONSTATION-ADD|
 		if(istype(src_object, /datum/tgui_modal))
