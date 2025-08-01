@@ -10,8 +10,9 @@
 
 
 /datum/component/itemblock/Initialize()
-	..()
 	SHOULD_CALL_PARENT(1)
+	..()
+
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_BLOCK_BEGIN, PROC_REF(on_block_begin))

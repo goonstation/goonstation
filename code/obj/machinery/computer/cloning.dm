@@ -199,7 +199,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 
 /obj/machinery/computer/cloning/emp_act()
 	if (length(src.records))
-		for (var/i = 0 ; i <= (min(5,length(src.records))), i += 1) //eat up to 5 records
+		for (var/i = 0 ; i <= (min(5,length(src.records))); i += 1) //eat up to 5 records
 			var/RIP = pick(src.records)
 			src.records.Remove(RIP)
 			qdel(RIP)
