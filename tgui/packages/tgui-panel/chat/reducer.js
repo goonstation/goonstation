@@ -30,6 +30,7 @@ export const initialState = {
   },
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export const chatReducer = (state = initialState, action) => {
   const { type, payload } = action;
   if (type === loadChat.type) {

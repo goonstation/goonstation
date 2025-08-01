@@ -156,4 +156,5 @@ interface ModifyAppearance {
   channels: string[];
 }
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases
 type Ref = string;

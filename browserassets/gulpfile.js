@@ -67,18 +67,18 @@ function cleanFilePath(filePath) {
 }
 
 function macroReplacer() {
-	const resources = replace(
-		resourceMacroRegex,
-		function handleReplace(m, filePath) {
-			if (buildManifest.has(filePath)) {
-				const manifestEntry = buildManifest.get(filePath);
-				filePath = manifestEntry.path;
-			}
-			return `${cdn}/${filePath}?v=${CDN_VERSION}`;
-		},
-	);
-	const cdnVersions = replace(cdnVersionRegex, CDN_VERSION);
-	return compose(resources, cdnVersions);
+  const resources = replace(
+    resourceMacroRegex,
+    function handleReplace(m, filePath) {
+      if (buildManifest.has(filePath)) {
+        const manifestEntry = buildManifest.get(filePath);
+        filePath = manifestEntry.path;
+      }
+      return `${cdn}/${filePath}?v=${CDN_VERSION}`;
+    }
+  );
+  const cdnVersions = replace(cdnVersionRegex, CDN_VERSION);
+  return compose(resources, cdnVersions);
 }
 
 function hashRenamer(filePath, file) {

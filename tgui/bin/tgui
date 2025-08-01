@@ -86,11 +86,6 @@ task-test-ci() {
   yarn run tgui:test-ci
 }
 
-task-sonar() {
-  cd "${base_dir}"
-  yarn run tgui:sonar
-}
-
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
@@ -218,13 +213,6 @@ if [[ ${1} == '--test-ci' ]]; then
   shift 1
   task-install
   task-test-ci "${@}"
-  exit 0
-fi
-
-if [[ ${1} == '--sonar' ]]; then
-  shift 1
-  task-install
-  task-sonar "${@}"
   exit 0
 fi
 

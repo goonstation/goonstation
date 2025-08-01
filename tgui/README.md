@@ -34,9 +34,10 @@ You will need these programs to start developing in tgui:
 
 - [Node v**22**.11+](https://nodejs.org/en/download/)
   - Using either the prebuilt installer or a package manager works.
+  - If you're confused, click the green 'Windows Installer' button.
   - **LTS v22** release is recommended instead of latest, as well as the x64 arch.
   - **DO NOT install Chocolatey if Node installer asks you to!**
-- [Yarn v4.8.1+](https://yarnpkg.com/getting-started/install) (optional)
+- [Yarn v4.9.2+](https://yarnpkg.com/getting-started/install) (optional)
   - Yarn is normally installed with corepack.
 
 ## Usage
@@ -81,7 +82,6 @@ Run `bin/tgui.bat` with any of the options listed below.
   - `bin/tgui --dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
   - `bin/tgui --dev --no-tmp` - Don't use the tmp folder
 - `bin/tgui --lint` - Show (and auto-fix) problems with the code.
-- `bin/tgui --sonar` - Analyze code with SonarQube.
 - `bin/tgui --test` - Run unit and integration tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --bench` - Run benchmarks. *Windows Only*

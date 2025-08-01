@@ -42,7 +42,11 @@ module.exports = (env = {}, argv) => {
     },
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
-    target: ['web', 'browserslist:edge >= 123'],
+    target: [
+      'web',
+      'browserslist:last 5 Edge versions',
+      'browserslist:last 6 Chrome versions',
+    ],
     entry: {
       tgui: ['./packages/tgui'],
       // 'tgui-panel': ['./packages/tgui-panel'], // |GOONSTATION-CHANGE| Not used by us yet

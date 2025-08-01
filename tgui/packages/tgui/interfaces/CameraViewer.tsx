@@ -88,7 +88,7 @@ export const CameraViewer = () => {
   );
 };
 
-type SearchableMinimapIconMarkerProps = MinimapMarkerData & { search: String };
+type SearchableMinimapIconMarkerProps = MinimapMarkerData & { search: string };
 
 const SearchableMinimapIconMarker = (
   props: SearchableMinimapIconMarkerProps,

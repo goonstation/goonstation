@@ -79,10 +79,6 @@ function task-test-ci {
   yarn run tgui:test-ci
 }
 
-function task-sonar {
-  yarn run tgui:sonar
-}
-
 ## Mr. Proper
 function task-clean {
   Remove-Quiet -Recurse -Force ../browserassets/src/tgui/.tmp
@@ -171,13 +167,6 @@ if ($Args.Length -gt 0) {
     $Rest = $Args | Select-Object -Skip 1
     task-install
     task-test-ci @Rest
-    exit 0
-  }
-
-  if ($Args[0] -eq "--sonar") {
-    $Rest = $Args | Select-Object -Skip 1
-    task-install
-    task-sonar @Rest
     exit 0
   }
 
