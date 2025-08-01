@@ -33,9 +33,11 @@
 	proc/clearAll()
 		PRIVATE_PROC(TRUE)
 		if (!src.owner) return
-		for (var/window,windowId in params2list(winget(src.owner, "[src.mapId].*", "id")))
+		#ifndef SPACEMAN_DMM
+		for (var/window, windowId in params2list(winget(src.owner, "[src.mapId].*", "id")))
 			if (findtext(windowId, src.windowPrefix, 1, length(src.windowPrefix) + 1))
 				winset(src.owner, windowId, "parent=none")
+		#endif
 
 	/// Send browser assets to the client
 	proc/loadAssets()
@@ -266,6 +268,7 @@
 
 	proc/setMouseWithoutParams(list/clientView, list/iconSize)
 		PRIVATE_PROC(TRUE)
+		#ifndef SPACEMAN_DMM
 		var/atom/refTarget = src.target.deref()
 		var/pixloc/clientLoc = bound_pixloc(src.holder.owner.virtual_eye, SOUTHWEST)
 		var/pixloc/targetLoc = bound_pixloc(refTarget, SOUTHWEST)
@@ -275,6 +278,7 @@
 			"left" = alist("tiles" = tilesLeft, "pixels" = 1, "icon" = refTarget.pixel_x * -1),
 			"bottom" = alist("tiles" = tilesBottom, "pixels" = 1, "icon" = refTarget.pixel_y * -1),
 		)
+		#endif
 
 	proc/shouldUpdate(atom/target)
 		PRIVATE_PROC(TRUE)
@@ -595,8 +599,10 @@
 
 /client/verb/getMapWindows()
 	var/out = "<ul>"
+	#ifndef SPACEMAN_DMM
 	for (var/window,windowId in params2list(winget(src, "[src.tooltips.mapId].*", "id")))
 		if (findtext(windowId, src.tooltips.windowPrefix, 1, length(src.tooltips.windowPrefix) + 1))
 			out += "<li>[windowId]</li>"
+	#endif
 	out += "</ul>"
 	boutput(src, out)
