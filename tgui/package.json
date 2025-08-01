@@ -27,11 +27,11 @@
     "@typescript-eslint/parser": "^8.38.0",
     "@typescript-eslint/utils": "^8.38.0",
     "css-loader": "^7.1.2",
-    "eslint": "^8.57.1",
-    "eslint-config-prettier": "^9.1.2",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-sonarjs": "^1.0.4",
+    "eslint-plugin-sonarjs": "^3.0.4",
     "eslint-plugin-unused-imports": "^4.1.4",
     "jsdom": "^26.1.0",
     "prettier": "^3.6.2",
@@ -42,9 +42,12 @@
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.32.0",
     "@types/node": "^24.1.0",
     "@types/webpack-env": "^1.18.8",
     "@types/wicg-file-system-access": "^2023.10.6",
+    "globals": "^16.3.0",
     "vitest": "^3.2.4"
   }
 }
