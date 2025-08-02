@@ -94,7 +94,7 @@
 
 	var/datum/chatOutput/chatOutput = null
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
-	var/datum/tooltipHolder/tooltipHolder = null
+	var/datum/tooltips/tooltips = null
 
 	var/datum/keybind_menu/keybind_menu = null
 
@@ -231,8 +231,7 @@
 
 	src.loadResources()
 	src.initSizeHelpers()
-	src.tooltipHolder = new /datum/tooltipHolder(src)
-	src.tooltipHolder.clearOld()
+	src.tooltips = new /datum/tooltips(src)
 	src.initialize_interface()
 
 	if (isnewplayer(src.mob))
@@ -1292,11 +1291,20 @@ var/global/curr_day = null
 	else
 		src.ignore_sound_flags |= SOUND_VOX
 
-
 /client/verb/set_hand_ghosts()
 	set hidden = 1
 	set name = "set-hand-ghosts"
 	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
+/client/verb/set_tooltip_option(val as text)
+	set hidden = 1
+	set name = "set-tooltip-option"
+	if (val == "always")
+		src.preferences.tooltip_option = TOOLTIP_ALWAYS
+	else if (val == "alt")
+		src.preferences.tooltip_option = TOOLTIP_ALT
+	else if (val == "never")
+		src.preferences.tooltip_option = TOOLTIP_NEVER
 
 /client/verb/disable_colorblind_modes()
 	set hidden = TRUE
@@ -1379,7 +1387,7 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "window-resize-event"
 
-	src.resizeTooltipEvent()
+	src.tooltips?.onResize()
 
 	//tell the interface helpers to recompute data
 	src.mapSizeHelper?.update()

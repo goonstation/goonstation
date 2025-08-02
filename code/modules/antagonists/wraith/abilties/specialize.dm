@@ -4,7 +4,7 @@
 	desc = "Choose a form to evolve into once you have absorbed at least 3 souls"
 	targeted = 0
 	pointCost = 150
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 	special_screen_loc = "NORTH-1,EAST"
 	var/static/list/paths = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
 	var/list/paths_buttons = list()

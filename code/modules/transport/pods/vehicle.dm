@@ -944,8 +944,6 @@
 
 	if (ejectee.client)
 		ejectee.detach_hud(myhud)
-		if (ejectee.client.tooltipHolder)
-			ejectee.client.tooltipHolder.inPod = 0
 
 	ejectee.override_movement_controller = null
 
@@ -1072,8 +1070,6 @@
 		M.attach_hud(myhud)
 		if(ishuman(M))
 			myhud.check_hud_layout(M)
-		if (M.client.tooltipHolder)
-			M.client.tooltipHolder.inPod = 1
 
 	src.add_fingerprint(M)
 

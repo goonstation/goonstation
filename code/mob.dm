@@ -2996,6 +2996,8 @@ TYPEINFO(/mob)
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
 
+	src.client?.tooltips?.onMove(src.move_dir)
+
 /mob/proc/on_centcom()
 	. = FALSE
 	var/mob_loc = src.loc
