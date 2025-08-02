@@ -1504,8 +1504,8 @@ var/list/fun_images = list()
 
 		LAGCHECK(LAG_LOW)
 
-	logTheThing(LOG_ADMIN, usr ? usr : src, null, "gave every player a pet [pet_path]!")
-	logTheThing(LOG_DIARY, usr ? usr : src, null, "gave every player a pet [pet_path]!", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, "gave every player a pet [pet_path]!")
+	logTheThing(LOG_DIARY, usr ? usr : src, "gave every player a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave every player a pet [pet_path]!")
 
 /client/proc/cmd_customgrenade()
