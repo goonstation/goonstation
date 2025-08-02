@@ -799,6 +799,26 @@
 		message_admins("[user] (Discord) [logMessage]")
 		system.reply(logMessage)
 
+/datum/spacebee_extension_command/server_rebuild
+	name = "serverrebuild"
+	help_message = "Toggle a server rebuild"
+	argument_types = list()
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user)
+		var/logMessage = ""
+		if (global.rebuildServerContainer)
+			global.rebuildServerContainer = FALSE
+			logMessage = "removed a server rebuild"
+		else
+			global.rebuildServerContainer = TRUE
+			logMessage = "queued a server rebuild"
+
+		logTheThing(LOG_DEBUG, "[user] (Discord)", null, logMessage)
+		logTheThing(LOG_DIARY, "[user] (Discord)", null, "admin")
+		message_admins("[user] (Discord) [logMessage]")
+		system.reply(logMessage)
+
 
 /datum/spacebee_extension_command/state_based/confirmation/renamestation
 	name = "renamestation"
