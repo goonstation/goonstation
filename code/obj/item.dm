@@ -301,6 +301,12 @@ ABSTRACT_TYPE(/obj/item)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		var/contra = GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS)
+		if(contra)
+			scan.add_text("CONTRABAND: Level [contra]")
+
 	proc/update_wear_image(mob/living/carbon/human/H, override)
 		return
 
