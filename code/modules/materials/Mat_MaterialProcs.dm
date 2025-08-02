@@ -301,11 +301,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/uqill_add
 	execute(var/atom/location)
-		var/uqill_matrix = list( 0.00, 0.00, 0.15, 0.00,\
-									0.00, 0.00, -0.15, 0.00,\
-									0.00, 0.00, 0.15, 0.00,\
-									0.00, 0.00, 0.00, 1.00,\
-									0.00, 0.00, 0.00, 0.00)
+		var/uqill_matrix = list(0.00, 0.00, 0.15, 0.00,\
+								0.00, 0.00, -0.15, 0.00,\
+								0.00, 0.00, 0.15, 0.00,\
+								0.00, 0.00, 0.00, 1.00,\
+								0.00, 0.00, 0.00, 0.00)
 		location.color = null
 		location.add_filter("uqill_color", 1, color_matrix_filter(uqill_matrix, FILTER_COLOR_HCY))
 

@@ -99,5 +99,3 @@
 	else if (istype(target_atom, /client))
 		var/client/target_client = target_atom
 		target_client.animate_color(matrix = current_color, time = 0.4 SECONDS, easing = SINE_EASING)
-
-

@@ -648,7 +648,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "cobryl"
 	name = "cobryl"
 	desc = "Cobryl is a somewhat valuable metal."
-	color = list( 0.50, 0.50, 0.65, 0.00,\
+	color = list(0.50, 0.50, 0.65, 0.00,\
 				0.30, 0.30, 0.4, 0.00,\
 				0.40, 0.40, 0.40, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
@@ -723,7 +723,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "gold"
 	name = "gold"
 	desc = "A somewhat valuable and conductive metal."
-	color = list( 0.70, 0.50, 0.00, 0.00,\
+	color = list(0.70, 0.50, 0.00, 0.00,\
 				0.50, 0.40, 0.00, 0.00,\
 				0.60, 0.50, 0.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
@@ -738,7 +738,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("reflective", 6)
 		setProperty("electrical", 7)
 		setProperty("thermal", 7)
-
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
@@ -747,7 +746,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "silver"
 	name = "silver"
 	desc = "A slightly valuable and conductive metal."
-	color = list( 0.50, 0.50, 0.55, 0.00,\
+	color = list(0.50, 0.50, 0.55, 0.00,\
 				0.30, 0.30, 0.325, 0.00,\
 				0.40, 0.40, 0.40, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
@@ -932,7 +931,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "claretine"
 	name = "claretine"
 	desc = "Claretine is a highly conductive salt."
-	color = list( 0.4, 0.10, 0.10, 0.00,\
+	color = list(0.4, 0.10, 0.10, 0.00,\
 				0.35, 0.20, 0.20, 0.00,\
 				0.3, 0.15, 0.20, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
@@ -1154,9 +1153,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 8)
 		setProperty("hard", 4)
 		setProperty("chemical", 9)
-		if(src.mat_id != "uqillglass")
-			addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/uqill_add())
-			addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/uqill_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/uqill_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/uqill_remove())
 
 
 // hi it me cirr im doing dumb
@@ -1188,7 +1186,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "telecrystal"
 	name = "telecrystal"
 	desc = "Telecrystal is a gemstone with space-warping properties."
-	color = list( 0.50, 0.25, 0.25, 0.00,\
+	color = list(0.50, 0.25, 0.25, 0.00,\
 				0.25, 0.00, 0.25, 0.00,\
 				0.35, 0.25, 0.45, 0.00,\
 				0.00, 0.00, 0.00, 0.75,\
@@ -1228,7 +1226,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "starstone"
 	name = "starstone"
 	desc = "An extremely rare jewel."
-	color = list( 0.45, 0.50, 0.50, 0.00,\
+	color = list(0.45, 0.50, 0.50, 0.00,\
 				0.20, 0.20, 0.20, 0.00,\
 				0.30, 0.35, 0.40, 0.00,\
 				0.00, 0.00, 0.00, 0.8,\
