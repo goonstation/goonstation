@@ -1540,10 +1540,7 @@
 /obj/disposalpipe/broken{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/west,
 /obj/machinery/camera/directional/east{
 	pixel_y = -10
 	},
@@ -7334,10 +7331,7 @@
 /obj/disposalpipe/broken{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/yellow,
 /area/space)
 "Dg" = (
@@ -10245,9 +10239,7 @@
 /obj/disposalpipe/broken{
 	dir = 8
 	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
@@ -11015,10 +11007,7 @@
 /area/space)
 "RK" = (
 /obj/disposalpipe/broken,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},

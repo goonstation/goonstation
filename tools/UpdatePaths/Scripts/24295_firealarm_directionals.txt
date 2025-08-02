@@ -1,0 +1,21 @@
+# Remove old directional subtypes.
+/obj/machinery/firealarm/@SUBTYPES/north		: /obj/machinery/firealarm/@SUBTYPES_1{@OLD; dir = 2}
+/obj/machinery/firealarm/@SUBTYPES/south		: /obj/machinery/firealarm/@SUBTYPES_1{@OLD; dir = 1}
+/obj/machinery/firealarm/@SUBTYPES/east			: /obj/machinery/firealarm/@SUBTYPES_1{@OLD; dir = 8}
+/obj/machinery/firealarm/@SUBTYPES/west			: /obj/machinery/firealarm/@SUBTYPES_1{@OLD; dir = 4}
+/obj/machinery/firealarm/@SUBTYPES/directional	: /obj/machinery/firealarm/@SUBTYPES_1{@OLD}
+
+# Repath and flip directions, and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths twice.
+# NORTH
+/obj/machinery/firealarm/@SUBTYPES{dir = 1}			: /temporary_firealarm_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# SOUTH
+/obj/machinery/firealarm/@SUBTYPES{dir = @UNSET}	: /temporary_firealarm_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/machinery/firealarm/@SUBTYPES{dir = 0}			: /temporary_firealarm_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/machinery/firealarm/@SUBTYPES{dir = 2}			: /temporary_firealarm_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# EAST
+/obj/machinery/firealarm/@SUBTYPES{dir = 4}			: /temporary_firealarm_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP}
+# WEST
+/obj/machinery/firealarm/@SUBTYPES{dir = 8}			: /temporary_firealarm_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP}
+
+# Revert the temporary repaths.
+/temporary_firealarm_repath/@SUBTYPES : /obj/machinery/firealarm/@SUBTYPES{@OLD}
