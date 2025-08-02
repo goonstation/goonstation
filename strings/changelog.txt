@@ -4,7 +4,7 @@
 (e)🆕|C-Feature
 (*)We've updated to BYOND 516! It's now required to play on Goonstation. If you have any issues: check the minor changes for some tips, ask on the Discord, or mentor/adminhelp.
 (+)If you get white browser screens directly after installing and connecting, try closing BYOND and reopening it. If that doesn't work, clear your cache in the BYOND settings menu, under Preferences -> Advanced.
-(+)One common issue is DPI scaling, when you have Windows set to anything except 100% scaling. This can also cause white screens. First, try clearing your BYOND cache. Then maybe try rebooting. If all else fails, right click on dreamseekere.exe in your BYOND installation folder, go to Properties -> Compatability -> High DPI Settings and mess around there.
+(+)One common issue is DPI scaling, when you have Windows set to anything except 100% scaling. This can also cause white screens. First, try clearing your BYOND cache. Then maybe try rebooting. If all else fails, right click on dreamseeker.exe in your BYOND installation folder, go to Properties -> Compatibility -> High DPI Settings and mess around there.
 (+)Since BYOND 516 switched to using WebView2, clearing your browser cache works differently now. You can find it at `Documents\BYOND\cache\WebView2`.
 (u)ZeWaka, Mordent, LeahTheTech, Romayne, Sov, RubberRats, Wire
 (e)🪲🔄📄|C-Bug, C-Rework, A-UI
