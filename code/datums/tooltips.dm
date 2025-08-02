@@ -592,13 +592,3 @@
 	set desc = "Toggle tooltip debugging"
 	src.tooltips.toggleDebug()
 	boutput(src, "Tooltip debugging [src.tooltips.debug ? "enabled" : "disabled"]")
-
-// TODO: debug verbs follow
-
-/client/verb/getMapWindows()
-	var/out = "<ul>"
-	for (var/window,windowId in params2list(winget(src, "[src.tooltips.mapId].*", "id")))
-		if (findtext(windowId, src.tooltips.windowPrefix, 1, length(src.tooltips.windowPrefix) + 1))
-			out += "<li>[windowId]</li>"
-	out += "</ul>"
-	boutput(src, out)
