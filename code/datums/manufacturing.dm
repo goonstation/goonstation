@@ -1156,6 +1156,15 @@
 	time = 20 SECONDS
 	category = "Clothing"
 
+/datum/manufacture/wheelchair
+	name = "Wheelchair Parts"
+	item_requirements = list("metal" = 8,
+							 "fabric" = 3)
+	item_outputs = list(/obj/item/furniture_parts/wheelchair)
+	create = 1
+	time = 30 SECONDS
+	category = "Resource"
+
 /datum/manufacture/hypospray
 	name = "Hypospray"
 	item_requirements = list("metal" = 2,
