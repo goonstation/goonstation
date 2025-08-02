@@ -303,17 +303,21 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/location)
 		if(endswith(location.icon_state,"$$uqill"))
 			return
-		var/uqill_matrix = list(0.00, 0.00, 0.15, 0.00,\
-								0.00, 0.00, -0.15, 0.00,\
-								0.00, 0.00, 0.15, 0.00,\
+		var/uqill_matrix = list(0.00, 0.00, 0.20, 0.00,\
+								0.00, 0.00, -0.20, 0.00,\
+								0.00, 0.00, 0.20, 0.00,\
 								0.00, 0.00, 0.00, 1.00,\
 								0.00, 0.00, 0.00, 0.00)
-		location.color = null
+		// location.color = null
 		location.add_filter("uqill_color", 1, color_matrix_filter(uqill_matrix, FILTER_COLOR_HCY))
+		if(!isturf(location))
+			var/outline_color = "#4d4d4d"
+			location.add_filter("uqill_outline", 2, outline_filter(1, outline_color, OUTLINE_SHARP))
 
 /datum/materialProc/uqill_remove
 	execute(var/atom/location)
 		location.remove_filter("uqill_color")
+		location.remove_filter("uqill_outline")
 		return
 
 /datum/materialProc/telecrystal_entered

@@ -1138,7 +1138,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "uqill"
 	name = "uqill"
 	desc = "Uqill is a rare and very dense stone."
-	color = "#0F0A08"
+	color = null //"#0F0A08"
 	alpha = 255
 
 	transparent // For bulletproof windows.
@@ -1189,9 +1189,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	color = list(0.50, 0.25, 0.25, 0.00,\
 				0.25, 0.00, 0.25, 0.00,\
 				0.35, 0.25, 0.45, 0.00,\
-				0.00, 0.00, 0.00, 0.75,\
+				0.00, 0.00, 0.00, 0.39,\
 				0.00, 0.00, 0.00, 0.00)
-	alpha = 191
+	alpha = 100
 
 	New()
 		..()
@@ -1229,9 +1229,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	color = list(0.45, 0.50, 0.50, 0.00,\
 				0.20, 0.20, 0.20, 0.00,\
 				0.30, 0.35, 0.40, 0.00,\
-				0.00, 0.00, 0.00, 0.8,\
+				0.00, 0.00, 0.00, 0.31,\
 				0.00, 0.15, 0.25, 0.00)
-	alpha = 191
+	alpha = 80
 	value = 1000
 
 	New()
