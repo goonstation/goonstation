@@ -301,6 +301,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/uqill_add
 	execute(var/atom/location)
+		if(endswith(location.icon_state,"$$uqill"))
+			return
 		var/uqill_matrix = list(0.00, 0.00, 0.15, 0.00,\
 								0.00, 0.00, -0.15, 0.00,\
 								0.00, 0.00, 0.15, 0.00,\

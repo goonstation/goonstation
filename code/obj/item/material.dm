@@ -356,6 +356,7 @@
 	icon = 'icons/obj/items/materials/claretine.dmi'
 	material_name = "Claretine"
 	default_material = "claretine"
+	uses_default_material_appearance = FALSE
 	conductor = 2
 
 	update_stack_name()
