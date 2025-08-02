@@ -81,13 +81,10 @@
 				owner.animate_color(matrix = current_color, time = 0.4 SECONDS, easing = SINE_EASING)
 		if("client-reset")
 			if (src.old_owner_color)
-				change_brightness(0.15)
-				// owner.set_color(src.old_owner_color)
+				owner.set_color(src.old_owner_color)
 		if("confirm")
 			on_confirm()
 			tgui_process.close_uis(src)
-		if("matrix-operation")
-			change_brightness(0.15)
 
 
 /datum/color_matrix_editor/ui_close(mob/user)
@@ -103,26 +100,4 @@
 		var/client/target_client = target_atom
 		target_client.animate_color(matrix = current_color, time = 0.4 SECONDS, easing = SINE_EASING)
 
-
-// 01 02 03 04
-// 05 06 07 08
-// 09 10 11 12
-// 13 14 15 16
-// 17 18 19 20
-
-/datum/color_matrix_editor/proc/change_brightness(var/amount)
-	src.current_color[1] += amount
-	src.current_color[6] += amount
-	src.current_color[11] += amount
-
-/datum/color_matrix_editor/proc/set_saturation(var/sat)
-	var/lumR = 0.3086
-	var/lumG = 0.6094
-	var/lumB = 0.0820
-	var/sr = (1-sat) * lumR
-	var/sg = (1-sat) * lumG
-	var/sb = (1-sat) * lumB
-	src.current_color[1] += sr+s
-	src.current_color[6] += amount
-	src.current_color[11] += amount
 

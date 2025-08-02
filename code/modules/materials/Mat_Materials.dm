@@ -616,7 +616,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "copper"
 	name = "copper"
 	desc = "Copper is a terrestrial conductive metal from proto-Dan mines. It is inferior to pharosium."
-	color = "#B87333" //the hex value known as copper in RGB colorspace
+	color = list( 0.80, 0.40, 0.00, 0.00,\
+				0.40, 0.20, 0.10, 0.00,\
+				0.60, 0.20, 0.20, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	New()
 		..()
 		setProperty("electrical", 6)
@@ -628,7 +632,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "pharosium"
 	name = "pharosium"
 	desc = "Pharosium is a conductive metal."
-	color = "#E39362"
+	color = list( 0.80, 0.40, 0.00, 0.00,\
+				0.40, 0.20, 0.10, 0.00,\
+				0.60, 0.20, 0.20, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	New()
 		..()
 		setProperty("electrical", 7)
@@ -640,7 +648,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "cobryl"
 	name = "cobryl"
 	desc = "Cobryl is a somewhat valuable metal."
-	color = "#84D5F0"
+	color = list( 0.50, 0.50, 0.65, 0.00,\
+				0.30, 0.30, 0.4, 0.00,\
+				0.40, 0.40, 0.40, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	New()
 		..()
 		value = 175
@@ -703,14 +715,19 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
 
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
 
 /datum/material/metal/gold
 	mat_id = "gold"
 	name = "gold"
 	desc = "A somewhat valuable and conductive metal."
-	color = "#F5BE18"
+	color = list( 0.70, 0.50, 0.00, 0.00,\
+				0.50, 0.40, 0.00, 0.00,\
+				0.60, 0.50, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -722,14 +739,19 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 7)
 		setProperty("thermal", 7)
 
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
 
 /datum/material/metal/silver
 	mat_id = "silver"
 	name = "silver"
 	desc = "A slightly valuable and conductive metal."
-	color = "#C1D1D2"
+	color = list( 0.50, 0.50, 0.55, 0.00,\
+				0.30, 0.30, 0.325, 0.00,\
+				0.40, 0.40, 0.40, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -910,7 +932,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "claretine"
 	name = "claretine"
 	desc = "Claretine is a highly conductive salt."
-	color = "#C2280A"
+	color = list( 0.4, 0.10, 0.10, 0.00,\
+				0.35, 0.20, 0.20, 0.00,\
+				0.3, 0.15, 0.20, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	texture = "claretine"
+	texture_blend = BLEND_MULTIPLY
 
 	New()
 		..()
@@ -991,7 +1019,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "clear [src.name]"
 				setProperty("density", 6)
 				setProperty("hard", 7)
-				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
+				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
+				addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 			if(2)
 				value = 500
 				name = "flawed [src.name]"
@@ -1125,6 +1154,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 8)
 		setProperty("hard", 4)
 		setProperty("chemical", 9)
+		if(src.mat_id != "uqillglass")
+			addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/uqill_add())
+			addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/uqill_remove())
 
 
 // hi it me cirr im doing dumb
@@ -1156,8 +1188,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "telecrystal"
 	name = "telecrystal"
 	desc = "Telecrystal is a gemstone with space-warping properties."
-	color = "#4C14F5"
-	alpha = 100
+	color = list( 0.50, 0.25, 0.25, 0.00,\
+				0.25, 0.00, 0.25, 0.00,\
+				0.35, 0.25, 0.45, 0.00,\
+				0.00, 0.00, 0.00, 0.75,\
+				0.00, 0.00, 0.00, 0.00)
+	alpha = 191
 
 	New()
 		..()
@@ -1192,8 +1228,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "starstone"
 	name = "starstone"
 	desc = "An extremely rare jewel."
-	color = "#B5E0FF"
-	alpha = 80
+	color = list( 0.45, 0.50, 0.50, 0.00,\
+				0.20, 0.20, 0.20, 0.00,\
+				0.30, 0.35, 0.40, 0.00,\
+				0.00, 0.00, 0.00, 0.8,\
+				0.00, 0.15, 0.25, 0.00)
+	alpha = 191
 	value = 1000
 
 	New()
@@ -1202,7 +1242,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("electrical", 1)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
 
 /datum/material/crystal/ice
