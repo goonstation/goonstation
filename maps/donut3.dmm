@@ -4193,13 +4193,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
-/obj/noticeboard/persistent{
-	name = "Crew Quarters persistent notice board";
-	persistent_id = "crew quarters";
-	pixel_x = 32;
-	pixel_y = 0;
-	dir = 4
-	},
+/obj/noticeboard/persistent/crew_quarters/directional/east,
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/secondary/entry)
 "bkQ" = (
@@ -4540,10 +4534,7 @@
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "pharmacy"
 	},
-/obj/noticeboard/persistent{
-	name = "Medbay persistent notice board";
-	persistent_id = "medbay"
-	},
+/obj/noticeboard/persistent/medbay/directional/north,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -8804,10 +8795,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "cAW" = (
-/obj/noticeboard/persistent{
-	name = "Security persistent notice board";
-	persistent_id = "security"
-	},
+/obj/noticeboard/persistent/security/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "cAX" = (
@@ -10636,10 +10624,7 @@
 	},
 /obj/item/bee_egg_carton,
 /obj/item/bee_egg_carton,
-/obj/noticeboard/persistent{
-	name = "Botany persistent notice board";
-	persistent_id = "botany"
-	},
+/obj/noticeboard/persistent/botany/directional/north,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "dgW" = (
@@ -12518,13 +12503,7 @@
 /area/station/chapel/sanctuary)
 "dMJ" = (
 /obj/table/round/auto,
-/obj/noticeboard/persistent{
-	name = "Cargo persistent notice board";
-	persistent_id = "cargo";
-	pixel_x = 32;
-	pixel_y = 0;
-	dir = 4
-	},
+/obj/noticeboard/persistent/cargo/directional/east,
 /obj/item/kitchen/food_box/sugar_box{
 	pixel_y = 16
 	},
@@ -14889,10 +14868,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/noticeboard/persistent{
-	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office"
-	},
+/obj/noticeboard/persistent/detectives_office/directional/north,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "ezc" = (
@@ -46419,10 +46395,7 @@
 /area/station/crew_quarters/cafeteria)
 "ovE" = (
 /obj/machinery/chem_master,
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
-	},
+/obj/noticeboard/persistent/bar/directional/north,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -49531,10 +49504,7 @@
 "ptw" = (
 /obj/disposalpipe/segment/transport,
 /obj/surgery_tray/kitchen_island,
-/obj/noticeboard/persistent{
-	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen"
-	},
+/obj/noticeboard/persistent/kitchen/directional/north,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -51146,13 +51116,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
 "pRN" = (
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = "engineering";
-	pixel_x = -32;
-	pixel_y = 0;
-	dir = 8
-	},
+/obj/noticeboard/persistent/engineering/directional/west,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
 "pRW" = (
@@ -53374,13 +53338,7 @@
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "qEA" = (
-/obj/noticeboard/persistent{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics";
-	pixel_x = 32;
-	pixel_y = 0;
-	dir = 4
-	},
+/obj/noticeboard/persistent/mechanics/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -68616,10 +68574,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/noticeboard/persistent{
-	name = "Security Foyer persistent notice board";
-	persistent_id = "security foyer"
-	},
+/obj/noticeboard/persistent/security_foyer/directional/north,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -74180,10 +74135,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-	persistent_id = "chapel"
-	},
+/obj/noticeboard/persistent/chapel/directional/north,
 /turf/simulated/floor/carpet/purple/fancy/narrow/west,
 /area/station/chapel/sanctuary)
 "wRx" = (
@@ -78842,10 +78794,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/noticeboard/persistent{
-	name = "Customs persistent notice board";
-	persistent_id = "customs"
-	},
+/obj/noticeboard/persistent/customs/directional/north,
 /obj/item/bell/hop{
 	pixel_y = 3
 	},

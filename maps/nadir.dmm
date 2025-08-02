@@ -2633,10 +2633,7 @@
 	},
 /area/station/medical/research)
 "bjU" = (
-/obj/noticeboard/persistent{
-	name = "Cargo persistent notice board";
-	persistent_id = "cargo"
-	},
+/obj/noticeboard/persistent/cargo/directional/north,
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
@@ -5353,10 +5350,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "cuL" = (
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-	persistent_id = "chapel"
-	},
+/obj/noticeboard/persistent/chapel/directional/north,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "cuZ" = (
@@ -11887,10 +11881,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/noticeboard/persistent{
-	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office"
-	},
+/obj/noticeboard/persistent/detectives_office/directional/north,
 /obj/landmark/start/job/detective,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -16158,10 +16149,7 @@
 	name = "ratty blue couch"
 	},
 /obj/landmark/start/job/botanist,
-/obj/noticeboard/persistent{
-	name = "Botany persistent notice board";
-	persistent_id = "botany"
-	},
+/obj/noticeboard/persistent/botany/directional/north,
 /turf/simulated/floor/greenblack{
 	dir = 5
 	},
@@ -19739,10 +19727,7 @@
 	pixel_y = 3
 	},
 /obj/item/electronics/soldering,
-/obj/noticeboard/persistent{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics"
-	},
+/obj/noticeboard/persistent/mechanics/directional/north,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -33034,10 +33019,7 @@
 /obj/machinery/espresso_machine{
 	pixel_y = 5
 	},
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
-	},
+/obj/noticeboard/persistent/bar/directional/north,
 /obj/item/reagent_containers/food/drinks/espressocup,
 /obj/machinery/light{
 	dir = 1;
@@ -36204,10 +36186,7 @@
 /area/station/science/hall)
 "pKj" = (
 /obj/submachine/poster_creator,
-/obj/noticeboard/persistent{
-	name = "Customs persistent notice board";
-	persistent_id = "customs"
-	},
+/obj/noticeboard/persistent/customs/directional/north,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
@@ -37555,10 +37534,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "qsp" = (
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = "engineering"
-	},
+/obj/noticeboard/persistent/engineering/directional/north,
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
@@ -41005,10 +40981,7 @@
 	},
 /area/station/science/hall)
 "sbT" = (
-/obj/noticeboard/persistent{
-	name = "Medbay persistent notice board";
-	persistent_id = "medbay"
-	},
+/obj/noticeboard/persistent/medbay/directional/north,
 /obj/machinery/sleeper/port_a_medbay,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
@@ -43676,10 +43649,7 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/bent/east,
-/obj/noticeboard/persistent{
-	name = "Crew Quarters persistent notice board";
-	persistent_id = "crew quarters"
-	},
+/obj/noticeboard/persistent/crew_quarters/directional/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_west)
 "tmO" = (
@@ -45678,10 +45648,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/noticeboard/persistent{
-	name = "Research persistent notice board";
-	persistent_id = "research"
-	},
+/obj/noticeboard/persistent/research/directional/north,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = -5;
 	pixel_y = -6
@@ -48159,10 +48126,7 @@
 /obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
-/obj/noticeboard/persistent{
-	name = "Security persistent notice board";
-	persistent_id = "security"
-	},
+/obj/noticeboard/persistent/security/directional/north,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},

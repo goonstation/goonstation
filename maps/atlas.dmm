@@ -237,10 +237,7 @@
 /area/station/security/detectives_office)
 "abq" = (
 /obj/machinery/computer/secure_data/detective_computer,
-/obj/noticeboard/persistent/directional/east{
-	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office"
-	},
+/obj/noticeboard/persistent/detectives_office/directional/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "abr" = (
@@ -1255,10 +1252,7 @@
 	dir = 1;
 	light_type = /obj/item/light/tube/yellowish
 	},
-/obj/noticeboard/persistent/directional/north{
-	name = "Cargo persistent notice board";
-	persistent_id = "cargo"
-	},
+/obj/noticeboard/persistent/cargo/directional/north,
 /obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -1925,10 +1919,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/bench/blue/auto,
-/obj/noticeboard/persistent/directional/north{
-	name = "Medbay persistent notice board";
-	persistent_id = "medbay"
-	},
+/obj/noticeboard/persistent/medbay/directional/north,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -3855,10 +3846,7 @@
 	},
 /area/station/engine/elect)
 "axf" = (
-/obj/noticeboard/persistent/directional/east{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics"
-	},
+/obj/noticeboard/persistent/mechanics/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -5442,10 +5430,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/noticeboard/persistent/directional/east{
-	name = "Crew Quarters persistent notice board";
-	persistent_id = "crew quarters"
-	},
+/obj/noticeboard/persistent/crew_quarters/directional/east,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -6940,10 +6925,7 @@
 /area/station/ranch)
 "aRv" = (
 /obj/machinery/plantpot,
-/obj/noticeboard/persistent/directional/east{
-	name = "Botany persistent notice board";
-	persistent_id = "botany"
-	},
+/obj/noticeboard/persistent/botany/directional/east,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "aRz" = (
@@ -10286,10 +10268,7 @@
 	pixel_x = 10
 	},
 /obj/submachine/foodprocessor,
-/obj/noticeboard/persistent/directional/north{
-	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen"
-	},
+/obj/noticeboard/persistent/kitchen/directional/north,
 /obj/item/storage/wall{
 	dir = 4;
 	pixel_y = -1;
@@ -14374,10 +14353,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/noticeboard/persistent/directional/north{
-	name = "Chapel persistent notice board";
-	persistent_id = "chapel"
-	},
+/obj/noticeboard/persistent/chapel/directional/north,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -18732,10 +18708,7 @@
 /area/station/engine/engineering/ce)
 "rvp" = (
 /obj/table/wood/auto/desk,
-/obj/noticeboard/persistent/directional/north{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
-	},
+/obj/noticeboard/persistent/bar/directional/north,
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "rwZ" = (
@@ -21758,10 +21731,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "vFQ" = (
-/obj/noticeboard/persistent/directional/north{
-	name = "Security Foyer persistent notice board";
-	persistent_id = "security foyer"
-	},
+/obj/noticeboard/persistent/security_foyer/directional/north,
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box{
 	desc = "A box of Dunkin-Kreme donuts.  The brand name made a lot more sense before the companies merged in 2038.";

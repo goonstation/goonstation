@@ -9509,9 +9509,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/noticeboard{
-	name = "Complaint Board";
-	pixel_y = 24
+/obj/noticeboard/directional/north{
+	name = "Complaint Board"
 	},
 /turf/simulated/floor,
 /area/h7/crew)
@@ -20537,7 +20536,7 @@
 /area/salyut)
 "nWz" = (
 /obj/stool/chair/blue,
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/simulated/floor/green/checker,
 /area/radiostation/green)
 "nYg" = (
