@@ -2090,7 +2090,7 @@ proc/alert_all_ghosts(atom/target, message)
 		for(var/atom/thing as anything in list(clicked_turf) + clicked_turf.contents)
 			if(thing.name)
 				atom_names[thing.admin_visible_name()] = thing
-			else if(!istype(thing, /obj/effect) && !istype(thing, /obj/overlay/tile_effect))
+			else if(!istype(thing, /obj/effect) && !istype(thing, /atom/movable/light/robust_light))
 				if(initial(thing.name))
 					atom_names["nameless [initial(thing.name)]"] = thing
 				else
