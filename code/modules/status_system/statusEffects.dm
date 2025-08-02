@@ -3106,7 +3106,7 @@
 			boutput(L, SPAN_NOTICE(src.removal_msg))
 		if(id != "art_curser_displaced_soul")
 			src.linked_curser.active_cursees -= L
-		if(length(src.linked_curser.active_cursees) == 0)
+		if(!length(src.linked_curser.active_cursees))
 			src.linked_curser.curse_cleanup()
 		src.linked_curser = null
 		..()
