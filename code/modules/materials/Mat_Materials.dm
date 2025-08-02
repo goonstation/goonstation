@@ -1138,7 +1138,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "uqill"
 	name = "uqill"
 	desc = "Uqill is a rare and very dense stone."
-	color = null //"#0F0A08"
+	color = "#FFFFFF" //"#0F0A08" Color set to white to prevent conflicts with the color filter in uqill_add()
 	alpha = 255
 
 	transparent // For bulletproof windows.
