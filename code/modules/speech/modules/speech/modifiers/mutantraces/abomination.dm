@@ -4,4 +4,4 @@
 /datum/speech_module/modifier/mutantrace/abomination/process(datum/say_message/message)
 	. = message
 
-	message.content = pick("We are one...", "Join with us...", "Sssssss...")
+	message.content = MAKE_CONTENT_MUTABLE(pick("We are one...", "Join with us...", "Sssssss..."))
