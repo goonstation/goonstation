@@ -26103,9 +26103,8 @@
 /obj/item/extinguisher,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
-/obj/item/bballbasket{
-	dir = 8;
-	pixel_x = -25
+/obj/item/bballbasket/mounted{
+	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
