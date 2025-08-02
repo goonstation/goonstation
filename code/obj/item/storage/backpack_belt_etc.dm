@@ -993,7 +993,7 @@
 	/obj/item/gun/energy/phaser_gun,
 	/obj/item/gun/energy/laser_gun,
 	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/lawbringer,
+	/obj/item/gun/energy/matter/lawbringer,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
