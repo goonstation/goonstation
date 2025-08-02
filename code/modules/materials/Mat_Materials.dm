@@ -1237,7 +1237,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("reflective", 9)
 		setProperty("density", 9)
 		setProperty("hard", 9)
-		setProperty("electrical", 1)\
+		setProperty("electrical", 1)
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
