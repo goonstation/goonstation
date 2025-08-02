@@ -21303,7 +21303,7 @@
 /obj/mapping_helper/access/armory,
 /obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
-/area/station/security/secwing)
+/area/station/ai_monitored/armory)
 "jFc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -84041,7 +84041,7 @@ bFw
 qzB
 kyJ
 xZe
-qzB
+bgz
 pop
 iyl
 uDF
@@ -84049,7 +84049,7 @@ qLR
 xdq
 txc
 oxR
-bgz
+uPa
 bIO
 bIO
 bFo
@@ -84351,7 +84351,7 @@ biM
 biM
 frn
 ozI
-bgz
+uPa
 bIO
 bIO
 bFo
@@ -84645,7 +84645,7 @@ rgn
 khE
 uCg
 uBg
-qzB
+bgz
 kwA
 glL
 glL
@@ -84653,7 +84653,7 @@ glL
 glL
 pzC
 hjZ
-bgz
+uPa
 bIO
 bIO
 bFo
@@ -84947,7 +84947,7 @@ crl
 lJm
 kTc
 mOv
-qzB
+bgz
 bHH
 kcn
 jOO
@@ -84955,7 +84955,7 @@ cUY
 hTx
 rTC
 hjZ
-bgz
+uPa
 bIO
 bIO
 bFo
@@ -85249,7 +85249,7 @@ uTQ
 qzB
 lTW
 vDp
-qzB
+bgz
 bgz
 bgz
 vpj
@@ -85257,7 +85257,7 @@ sPv
 sPv
 sPv
 htj
-bgz
+uPa
 bIO
 bIO
 bFo
