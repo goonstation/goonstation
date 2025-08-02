@@ -24,13 +24,16 @@
 	else
 		current_color = COLOR_MATRIX_IDENTITY
 
-	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
+	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "wheel")
 	if (_target)
 		target = get_weakref(_target)
 		if (istype(_target) && !(_target.appearance_flags & PLANE_MASTER)) // see: client.color
 			view = image(_target)
 		if (istype(_target, /client))
-			src.old_owner_color = owner.color
+			if(owner.color)
+				src.old_owner_color = owner.color
+			else
+				src.old_owner_color = COLOR_MATRIX_IDENTITY
 
 	src.preview = new(owner, "color_matrix_editor-\ref[src]")
 	src.preview.add_background("#000")
