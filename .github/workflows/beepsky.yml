@@ -84,7 +84,7 @@ jobs:
           tag: "latest"
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
-      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=515.1635
+      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=516.1666
 
   compile:
     name: Compile
@@ -108,6 +108,12 @@ jobs:
           echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
+
+      - name: Install Dependencies
+        uses: ZeWaka/cache-apt-pkgs-action@latest
+        with:
+          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
+          version: 1.1
 
       - name: Compile
         run: |
@@ -151,6 +157,12 @@ jobs:
           echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
+
+      - name: Install Dependencies
+        uses: ZeWaka/cache-apt-pkgs-action@latest
+        with:
+          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
+          version: 1.1
 
       - name: Cache SpacemanDMM
         uses: actions/cache@v4
