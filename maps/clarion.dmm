@@ -28664,11 +28664,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "oUh" = (
-/obj/storage/crate/robotparts,
-/obj/item/sheet/steel/fullstack{
-	pixel_x = 7;
-	pixel_y = -4
-	},
+/obj/storage/crate/robotics_supplies_borg,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "oUo" = (
