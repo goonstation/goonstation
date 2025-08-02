@@ -3,6 +3,7 @@
  * @copyright 2020 Aleksej Komarov
  * @license MIT
  */
+import { createRequire } from 'node:module';
 
 import { defineConfig } from '@rspack/cli';
 import { rspack } from '@rspack/core';
@@ -11,6 +12,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
 
 const createStats = (verbose) => ({
   assets: verbose,
@@ -99,7 +101,7 @@ export default (env = {}, argv) => {
           test: /\.(s)?css$/,
           use: [
             {
-              loader: 'sass-loader',
+              loader: require.resolve('sass-loader'),
               options: {
                 api: 'modern-compiler',
                 implementation: 'sass-embedded',
