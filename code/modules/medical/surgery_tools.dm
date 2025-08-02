@@ -768,17 +768,17 @@ CONTAINS:
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!ishuman(target))
-			if (user.a_intent == INTENT_HELP)
+			if (user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB)
 				return
 			return ..()
 		var/mob/living/carbon/human/H = target
 		var/surgery_status = H.get_surgery_status(user.zone_sel.selecting)
 		if (!surgery_status)
-			if (user.a_intent == INTENT_HELP)
+			if (user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB)
 				return
 			return ..()
 		if (!surgeryCheck(H, user))
-			if (user.a_intent == INTENT_HELP)
+			if (user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB)
 				return
 			return ..()
 		if (H.chest_cavity_clamped && !H.bleeding)

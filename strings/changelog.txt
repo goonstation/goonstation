@@ -1,4 +1,181 @@
 
+(t)thu jul 31 25
+(u)aloe
+(+)There will now be a confirmation pop-up when you click a server link from the title menu.
+(t)wed jul 30 25
+(u)LeahTheTech + Glowbold
+(p)24194
+(e)🗺🎨⚖🔄⛔📄📦💡|A-Mapping, C-Sprites, C-Balance, C-Rework, C-Removal, A-UI, A-Game-Objects, A-Station-Systems
+(*)The cloning console now stores all its records on floppy disks, two racks of which can be found in cloning.
+(+)Disk racks can be placed side-by-side by clicking on them with a frame.
+(+)Cloner implants send a heartbeat signal back to the cloning rack, if the implant is removed or the person dies the rack will display a flashing red light next to their disk.
+(+)Floppy disks can be labelled with a pen as well as hand labellers.
+(t)tue jul 29 25
+(u)Mr. Moriarty
+(p)24247
+(e)🗺🎨🔎💅📦|A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-Game-Objects
+(*)Every single camera has been remapped. Please report any cameras that aren't offset onto walls or that are facing the wrong way.
+(u)SnugglyCactus
+(p)24197
+(e)🎨|C-Sprites
+(+)Added organ variants for skeletons, amphibians, and martians. Selling your kidney has never been so fun.
+(u)RubberRats
+(p)24089
+(e)🪲🎨📄📦|C-Bug, C-Sprites, A-UI, A-Game-Objects
+(+)Replacing the paint dispenser's service panel with non-authentic parts degrades its color-accuracy slightly.
+(t)mon jul 28 25
+(u)RubberRats
+(p)24215
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The barberang should more reliably drop any hair it takes.
+(u)TheGeneralJay
+(p)24233
+(e)🗺💅|A-Mapping, C-QoL
+(*)Standardized available equipment that spawns in robotics across each map. See minor changes for details.
+(+)All current-rotation robotics departments have been equipped with blinds (yay, crime!), anesthetic storage lockers, sinks, modules, and other minor QoL tweaks.
+(t)sat jul 26 25
+(u)Mr. Moriarty
+(p)24211
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited security cameras.
+(u)LeahTheTech + Flourish
+(*)Added almost legal firecrackers that explode when thrown. Available from Josh or as a random trinket/junk spawn.
+(t)fri jul 25 25
+(u)Studenterhue
+(p)24133
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)You can now receive postcards in the mail! There are seven in all, two of which also appear in the Museum of Lunar History.
+(u)LeahTheTech
+(*)Added preferences option to re-enable legacy middle mouse behaviour. Sigh...
+(u)glowbold
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Arcfiends have objectives for hearts stopped, machines overloaded, and total power gained.
+(t)thu jul 24 25
+(u)Colossus
+(p)24156
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether no longer works on a 10 unit threshold, always behaving on the fast depletion mode.
+(t)mon jul 21 25
+(u)glowbold
+(e)⚖🤖|A-Balance, A-Silicons
+(+)Singularity containment fields fling Silicons away.
+(t)sat jul 19 25
+(u)LeahTheTech
+(p)24158
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Middle mouse now attempts to open/close any large storage objects (lockers, crates) on the turf you click on.
+(t)fri jul 18 25
+(u)glowbold
+(p)23716
+(e)🆕🗺🔧📦|C-Feature, A-Mapping, A-Tooling, A-Game-Objects
+(+)Loudspeakers can be damaged by explosions, gunfire, hitting with heavy items, and excessive microphone feedback. They can be repaired with a screwdriver.
+(u)LeahTheTech
+(+)Acid drones now drop a flask of random acid.
+(+)Loudspeakers now cause audible disorient when they break.
+(u)JORJ949
+(p)23884
+(e)🪲🧑‍✈️|C-Bug, A-Command
+(*)The Captain's Bonsai now uses health like other bushes, but is very fragile and only has 5hp!
+(u)JORJ949
+(p)23921
+(e)🆕💪|C-Feature, A-Traits
+(*)The Clown Disbelief trait now stops you from hearing strange squeaky voices (anything a clown says).
+(u)JORJ949
+(p)24129
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)You can now edit the range on a syndicate signal jammer with either a screwing or pulsing tool, allowing for more precisely jammed crime dens.
+(u)LeahTheTech
+(p)24142
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)The Super! Grapple Friend pickpocket gun can now steal headsets, masks and glasses (in order) and plant them back.
+(t)mon jul 14 25
+(u)JORJ949
+(p)24005
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)ID Computer access has been renamed to Personnel Management
+(u)JORJ949
+(p)24117
+(e)💅📄🎩|C-QoL, A-UI, A-Clothing
+(*)Added a new "Use Satchel" option to character setup to automatically turn the backpack you spawn with into a satchel!
+(t)sun jul 13 25
+(u)RubberRats
+(p)23929
+(e)🆕🗺🎨🎩|C-Feature, A-Mapping, C-Sprites, A-Clothing
+(*)The clothing booth now supplies a selection of swimsuits during the summer season
+(u)glowbold
+(e)🆕💊|C-Feature, A-Medical
+(+)Cryogenic Healing Pods have an auto-eject toggle. Keep your organ-mulched patients inside for longer!
+(t)sat jul 12 25
+(u)Wire
+(p)23530
+(e)🎨|C-Sprites
+(*)Authentication refactor to support external providers that aren't the Byond hub.
+(t)fri jul 11 25
+(u)JORJ949
+(p)24092
+(e)🪲🏅🎩|C-Bug, A-Medal, A-Clothing
+(+)Fixed spacebux purchased backpacks not redeeming satchels properly.
+(u)RubberRats
+(p)24094
+(e)🪲💅💊|C-Bug, C-QoL, A-Medical
+(+)Frontal Gyrus Alteration Type-🤪 should now work again 🎉💬
+(+)Frontal Gyrus Alteration Type-🤪 now gives a blank 😶 message if it completely eats what you were going to say.
+(t)thu jul 10 25
+(u)JORJ949
+(p)24002
+(e)🔎🏅📦|C-Code-Quality, A-Medal, A-Game-Objects
+(+)Redeeming the satchel skin on a chameleon backpack automatically adds that satchel to the list of patterns to disguise as.
+(t)wed jul 09 25
+(u)glowbold
+(p)24055
+(e)🔄📦|C-Rework, A-Game-Objects
+(+)The Floor and Wall designer uses cloth when changing floors and walls.
+(u)FlameArrow57
+(p)23924
+(e)🆕⚖🔄💊|C-Feature, C-Balance, C-Rework, A-Medical
+(*)Added/removed some effects of brain damage, see minor changelog for details
+(+)As brain damage increases, you will now experience effects such as impaired speech, vomiting, messages about your head hurting, going blind temporarily, and being unable to hear others. Effects increment at every 20 value increase of brain damage
+(+)You no longer randomly speak over the radio if you have brain damage
+(+)The "blank expression" description for someone with brain damage now only appears if they have lethal (100) brain damage or Expresso in them
+(t)tue jul 08 25
+(u)JORJ949
+(p)24033
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The random contraband trader will now only sell syndicate headsets to real syndies.
+(u)JORJ949 & Username Unavailable
+(p)24063
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs and Cyborgs now have a Show Fake Laws command to check their fake laws. Idea from Username Unavailable on the forums!
+(u)glowbold
+(p)23965
+(e)⚖💊|C-Balance, A-Medical
+(*)Charcoal does not heal organ damage.
+(*)Most posions will directly damage your organs.
+(u)Kilprel
+(p)24032
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(+)Nanite swarms look more menacing.
+(u)LeahTheTech
+(+)Burn damage from hot air now scales a bit more reasonably with temperature, up to the same maximum.
+(t)sun jul 06 25
+(u)LeahTheTech
+(+)The way "power" type machines interact with wires has been tweaked slightly. They will no longer interact with wires running directly underneath them, instead requiring wires running directly into the machine or terminating underneath it. This shouldn't affect anything but report if it does. Hopefully this will fix some of the harder to explain hotwires!
+(t)thu jul 03 25
+(u)FlameArrow57 & Croissant_Man1
+(p)23539
+(e)🆕🎨🔬|C-Feature, C-Sprites, A-Science
+(*)Added a new Lattice artifact origin. Activator keys will only appear under this origin.
+(t)mon jun 30 25
+(u)LeahTheTech
+(+)Gunbots now have unique speech sounds.
+(u)JORJ949
+(p)23989
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Admins and Mentors now have OOC icons you can hover over to see their rank (instead of just knowing purple = mentor).
+(u)CalliopeSoups
+(p)23910
+(e)⚖🐁|C-Balance, A-Critters
+(+)Mimic's eat limb ability now has you latch onto your victim.
 (t)sun jun 29 25
 (u)JORJ949
 (p)23975

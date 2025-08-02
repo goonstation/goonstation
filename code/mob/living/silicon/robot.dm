@@ -113,9 +113,10 @@ TYPEINFO(/mob/living/silicon/robot)
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
-		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
-		src.internal_pda.name = "[src]'s Internal PDA Unit"
-		src.internal_pda.owner = "[src]"
+		SPAWN(0) //Delay PDA spawning until the client is in the borg, so it respects preferences
+			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
+			src.internal_pda.name = "[src]'s Internal PDA Unit"
+			src.internal_pda.owner = "[src]"
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
@@ -795,8 +796,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.real_name == "Cyborg")
 			src.real_name = borgify_name(src.real_name)
 			src.UpdateName()
-			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
+			src.internal_pda?.name = "[src.name]'s Internal PDA Unit"
+			src.internal_pda?.owner = "[src]"
 		if (!src.syndicate && !src.connected_ai)
 			for_by_tcl(A, /mob/living/silicon/ai)
 				src.connected_ai = A
@@ -1540,7 +1541,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					src.part_head.ai_interface = null
 					src.shell = 0
 
-					if (src.module.radio_type)
+					if (src.module?.radio_type)
 						src.update_radio(src.module.radio_type)
 					else
 						src.update_radio(/obj/item/device/radio/headset)
@@ -2304,6 +2305,11 @@ TYPEINFO(/mob/living/silicon/robot)
 		set category = "Robot Commands"
 		set name = "State Fake Laws"
 		src.state_fake_laws() //already handles being a shell
+
+	verb/robot_show_fake_laws()
+		set category = "Robot Commands"
+		set name = "Show Fake Laws"
+		src.show_fake_laws() //already handles being a shell
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"

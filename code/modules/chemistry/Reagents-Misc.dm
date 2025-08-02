@@ -2043,6 +2043,7 @@ datum
 			hunger_value = 0.8
 			threshold = THRESHOLD_INIT
 			fluid_flags = FLUID_BANNED
+			target_organs = list("stomach", "instestines")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -2077,6 +2078,9 @@ datum
 					if(prob(10))
 						boutput(M, SPAN_ALERT("[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]"))
 						M.take_toxin_damage(4 * mult)
+						if (isliving(M))
+							var/mob/living/target_mob = M
+							target_mob.organHolder?.damage_organs(tox=4*mult, organs=src.target_organs)
 				M.UpdateDamageIcon()
 				..()
 				return
@@ -2107,12 +2111,17 @@ datum
 			fluid_g = 135
 			fluid_b = 200
 			hunger_value = 0.5
+			target_organs = list("stomach", "intestines")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
 				M.HealDamage("All", mult * 2, mult * 1.5)
 				M.take_toxin_damage(0.5 * mult)
+				if (isliving(M))
+					var/mob/living/target_mob = M
+					target_mob.organHolder?.damage_organs(tox=0.5*mult, organs=src.target_organs)
+
 				if(prob(20))
 					M.setStatusMin("knockdown", 3 SECONDS)
 				if(prob(10))
@@ -3122,6 +3131,7 @@ datum
 			transparency = 170
 			hygiene_value = 0.3
 			thirst_value = -0.098
+			target_organs = list("pancreas") // endocrine system
 			var/list/flushed_reagents = list("THC","CBD")
 
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
@@ -3130,6 +3140,13 @@ datum
 					M.take_toxin_damage(3 * mult)
 				else
 					M.take_toxin_damage(2 * mult)
+					if (isliving(M))
+						var/mob/living/target_mob = M
+						target_mob.organHolder?.damage_organs(tox=2*mult, organs=target_organs)
+						for (var/organ_slot in target_mob.organHolder?.organ_list) // damages synthorgans as well
+							var/obj/item/organ/O = target_mob.organHolder?.organ_list[organ_slot]
+							if (istype(O) && O.synthetic)
+								O.take_damage(tox=2*mult, damage_type=DAMAGE_BURN)
 				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
@@ -3141,6 +3158,16 @@ datum
 					if(M.reagents)
 						M.reagents.add_reagent(src.id,volume*plant_touch_modifier,src.data)
 						. = 0
+				if (ishuman(M) && volume > 25)
+					var/mob/living/carbon/human/H = M
+					if (H.limbs?.l_arm?.kind_of_limb & LIMB_PLANT)
+						M.TakeDamage("l_arm", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
+					if (H.limbs?.r_arm?.kind_of_limb & LIMB_PLANT)
+						M.TakeDamage("r_arm", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
+					if (H.limbs?.l_leg?.kind_of_limb & LIMB_PLANT)
+						M.TakeDamage("l_leg", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
+					if (H.limbs?.r_leg?.kind_of_limb & LIMB_PLANT)
+						M.TakeDamage("r_leg", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
@@ -4051,7 +4078,7 @@ datum
 			blocks_sight_gas = 1
 
 		iron_oxide
-			name = "Iron Oxide"
+			name = "iron oxide"
 			id = "iron_oxide"
 			description = "Iron, artificially rusted under the effects of oxygen, acetic acid, salt and a high temperature environment."
 			fluid_r = 112

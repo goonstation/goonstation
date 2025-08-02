@@ -603,8 +603,9 @@ Equip items from body traits.
 				SPAWN(0)
 					if(!isnull(src.traitHolder))
 						R.fields["traits"] = src.traitHolder.copy()
-
-				R.fields["imp"] = null
+				var/obj/item/implant/cloner/implant = new(src)
+				implant.scanned_here = locate(/area/centcom/reconstitutioncenter) || null
+				R.fields["imp"] = implant
 				R.fields["mind"] = src.mind
 				D.root.add_file(R)
 
@@ -768,7 +769,11 @@ Equip items from body traits.
 		C.pronouns = src.get_pronouns()
 
 		if(!src.equip_if_possible(C, SLOT_WEAR_ID))
-			src.equip_if_possible(C, SLOT_IN_BACKPACK)
+			if(istype((src.wear_id), /obj/item/device/pda2))
+				var/obj/item/device/pda2/pda = src.wear_id
+				pda.insert_id_card(C, src)
+			else
+				src.equip_if_possible(C, SLOT_IN_BACKPACK)
 
 		if(src.pin)
 			C.pin = src.pin
@@ -950,5 +955,6 @@ var/list/trinket_safelist = list(
 	/obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 	/obj/item/seed/alien,
 	/obj/item/boarvessel,
-	/obj/item/boarvessel/forgery
+	/obj/item/boarvessel/forgery,
+	/obj/item/device/light/sparkler/firecracker
 )

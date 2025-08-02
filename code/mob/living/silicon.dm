@@ -609,9 +609,7 @@ var/global/list/module_editors = list()
 			continue
 		fake_laws += nice_law
 
-	src.show_message(SPAN_BOLD("Your new fake laws are: "))
-	for(var/a_law in src.fake_laws)
-		src.show_message(a_law)
+	src.show_fake_laws()
 	#undef FAKE_LAW_LIMIT
 
 /mob/living/silicon/proc/state_fake_laws()
@@ -662,6 +660,22 @@ var/global/list/module_editors = list()
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
 		src.say(html_decode("[prefix] [a_law]"))
 		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
+
+/mob/living/silicon/proc/show_fake_laws()
+	var/mob/message_mob = src
+	if (istype(src, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = src
+		message_mob = AI.get_message_mob()
+
+	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
+
+	if (length(laws) == 0)
+		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
+		return
+
+	message_mob.show_message(SPAN_BOLD("Your fake laws are: "))
+	for(var/a_law in laws)
+		message_mob.show_message(a_law)
 
 /mob/living/silicon/get_unequippable()
 	return

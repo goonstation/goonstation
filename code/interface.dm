@@ -9,6 +9,8 @@
 			else
 				var/changelogHtml
 				var/data
+				if (!cdn)
+					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
 				if (byond_version >= 516)
 					changelogHtml = grabResource("html/changelog.html")
 					data = changelog.html

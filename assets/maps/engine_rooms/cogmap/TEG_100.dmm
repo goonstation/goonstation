@@ -36,7 +36,8 @@
 	level = 2
 	},
 /obj/machinery/meter{
-	pixel_y = 1
+	pixel_y = -9;
+	pixel_x = 10
 	},
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -648,11 +649,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "TN" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
@@ -682,7 +680,8 @@
 	level = 2
 	},
 /obj/machinery/meter{
-	pixel_y = 1
+	pixel_y = -9;
+	pixel_x = -9
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
