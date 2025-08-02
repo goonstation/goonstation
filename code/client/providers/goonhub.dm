@@ -105,6 +105,7 @@
 	src.owner.client_auth_intent.hos = verification["is_hos"]
 	src.owner.client_auth_intent.whitelisted = verification["is_whitelisted"]
 	src.owner.client_auth_intent.can_bypass_cap = verification["can_bypass_cap"]
+	src.owner.client_auth_intent.can_skip_player_login = TRUE
 
 	assign_goonhub_abilities(verification["ckey"], verification)
 

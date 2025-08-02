@@ -8025,6 +8025,18 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"fJV" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "fKc" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/firedoor_spawn,
@@ -10093,6 +10105,14 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"hki" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/escape{
+	dir = 9
+	},
+/area/station/hallway/secondary/exit)
 "hkw" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -15518,12 +15538,6 @@
 	dir = 8
 	},
 /area/station/storage/warehouse)
-"ldm" = (
-/obj/storage/secure/closet/medical,
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/medbay/cloner)
 "lek" = (
 /obj/disposalpipe/segment/vertical,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -20313,6 +20327,17 @@
 "oKn" = (
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"oKt" = (
+/obj/table/auto,
+/obj/item/storage/box/diskbox,
+/obj/item/hand_labeler{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 5
+	},
+/area/station/medical/medbay/cloner)
 "oLc" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -23703,19 +23728,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"rhZ" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
-/area/station/hallway/primary/north)
 "rih" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/light/incandescent/cool,
@@ -24699,6 +24711,12 @@
 	dir = 10
 	},
 /area/station/hallway/primary/north)
+"rUX" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/white/checker2{
+	dir = 5
+	},
+/area/station/medical/medbay/cloner)
 "rVg" = (
 /obj/lattice,
 /turf/space/fluid,
@@ -28659,15 +28677,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"uFZ" = (
-/obj/machinery/camera{
-	dir = 3;
-	pixel_y = 20
-	},
-/turf/simulated/floor/escape{
-	dir = 9
-	},
-/area/station/hallway/secondary/exit)
 "uGf" = (
 /obj/machinery/vending/jobclothing/research,
 /obj/machinery/light/incandescent/cool,
@@ -77190,7 +77199,7 @@ nMd
 dNF
 lHb
 dNF
-dNF
+oKt
 boG
 xNW
 xXr
@@ -77792,7 +77801,7 @@ qaH
 vfZ
 nMd
 reZ
-ldm
+rUX
 ikj
 twX
 bbZ
@@ -78055,7 +78064,7 @@ fIS
 qti
 qti
 euu
-rhZ
+fJV
 euv
 uRQ
 qQR
@@ -96491,7 +96500,7 @@ qpn
 qpn
 qpn
 brh
-uFZ
+hki
 kfn
 rxT
 brh

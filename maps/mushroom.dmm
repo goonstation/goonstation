@@ -617,7 +617,6 @@
 /area/station/security/checkpoint/arrivals)
 "adS" = (
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /turf/simulated/floor,
@@ -3697,7 +3696,6 @@
 /obj/submachine/slot_machine,
 /obj/disposalpipe/segment/produce,
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /turf/simulated/floor/wood/two,
@@ -8553,7 +8551,6 @@
 /area/mining/magnet)
 "aZc" = (
 /obj/machinery/camera/directional/west{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /obj/machinery/computer/magnet{
@@ -18017,7 +18014,6 @@
 "gNh" = (
 /obj/machinery/camera/directional/east{
 	icon_state = "camera";
-	name = "autoname  - SS13";
 	network = "SS13";
 	pixel_y = 10
 	},
@@ -28152,7 +28148,6 @@
 	},
 /obj/machinery/camera/directional/east{
 	icon_state = "camera";
-	name = "autoname  - SS13";
 	network = "SS13";
 	pixel_y = 10
 	},
@@ -28412,8 +28407,8 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai_upload)
 "plc" = (
-/obj/machinery/camera{
-	dir = 3
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -28732,7 +28727,6 @@
 /area/station/engine/proto)
 "pyx" = (
 /obj/machinery/camera/directional/east{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -32664,7 +32658,6 @@
 "snD" = (
 /obj/machinery/camera/directional/east{
 	icon_state = "camera";
-	name = "autoname  - SS13";
 	network = "SS13";
 	pixel_y = 10
 	},
@@ -33461,7 +33454,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/camera/directional/west{
-	name = "autoname  - SS13";
 	pixel_y = 10
 	},
 /turf/simulated/floor/purple/side{

@@ -82,12 +82,48 @@
 
 /obj/item/disk/data/floppy
 	var/random_color = 1
+	var/disk_color = "#bdbdbd"
+
+///The name this disk should show up as in UIs
+/obj/item/disk/data/floppy/proc/disk_name()
+	var/name = length(src.name_suffixes) ? src.name_suffixes[1] : src.name
+	var/regex/kill_brackets = regex(@"[\(\)]", "g")
+	name = kill_brackets.Replace(name, "")
+	return name
 
 /obj/item/disk/data/floppy/New()
 	. = ..()
 	if(random_color)
 		var/diskcolor = pick(0,1,2)
 		src.icon_state = "datadisk[diskcolor]"
+		switch (diskcolor)
+			if (0)
+				src.disk_color = "#f04c59"
+			if (1)
+				src.disk_color = "#5166ee"
+			if (2)
+				src.disk_color = "#D0D510"
+
+/obj/item/disk/data/floppy/attackby(obj/item/W, mob/user)
+	if (!istype(W, /obj/item/pen))
+		return ..()
+
+	var/str = copytext(strip_html_tags(tgui_input_text(user, "Label text?", "Write label", allowEmpty = TRUE, max_length = 30)), 1, 32)
+
+	if(str)
+		phrase_log.log_phrase("label", str, no_duplicates=TRUE)
+	if (W.loc != user)
+		return
+	if(url_regex?.Find(str))
+		str = null
+	if (!str || !length(str))
+		return
+	str = "([str])"
+	if (length(src.name_suffixes) < 1)
+		src.name_suffixes = list(str)
+	else
+		src.name_suffixes[1] = str
+	src.UpdateName()
 
 /obj/item/disk/data/floppy/attack_self(mob/user as mob)
 	src.read_only = !src.read_only
@@ -130,6 +166,7 @@
 	solarium
 		name = "galactic coordinate disk - 'Sol'"
 		icon_state = "datadisktele1"
+		disk_color = "#f39249"
 		target_name = "Sol"
 
 	biodome
@@ -218,6 +255,7 @@
 
 /obj/item/disk/data/floppy/sec_command
 	icon_state = "datadisksyn" //yeah its "syndie" but its not used anywhere
+	disk_color = "#afb9c4"
 	random_color = FALSE
 
 	New()
@@ -349,6 +387,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	name = "Authentication Disk"
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
 	icon_state = "nucleardisk"
+	disk_color = "#5fce64"
 	item_state = "card-id"
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY

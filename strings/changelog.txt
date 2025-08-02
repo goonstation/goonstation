@@ -1,4 +1,15 @@
 
+(t)thu jul 31 25
+(u)aloe
+(+)There will now be a confirmation pop-up when you click a server link from the title menu.
+(t)wed jul 30 25
+(u)LeahTheTech + Glowbold
+(p)24194
+(e)🗺🎨⚖🔄⛔📄📦💡|A-Mapping, C-Sprites, C-Balance, C-Rework, C-Removal, A-UI, A-Game-Objects, A-Station-Systems
+(*)The cloning console now stores all its records on floppy disks, two racks of which can be found in cloning.
+(+)Disk racks can be placed side-by-side by clicking on them with a frame.
+(+)Cloner implants send a heartbeat signal back to the cloning rack, if the implant is removed or the person dies the rack will display a flashing red light next to their disk.
+(+)Floppy disks can be labelled with a pen as well as hand labellers.
 (t)tue jul 29 25
 (u)Mr. Moriarty
 (p)24247
