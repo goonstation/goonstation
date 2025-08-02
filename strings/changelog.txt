@@ -1,4 +1,9 @@
 
+(t)sat aug 02 25
+(u)JORJ949
+(p)24139
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)Roundstart head of staff announcements will now be ordered by rank.
 (t)thu jul 31 25
 (u)aloe
 (+)There will now be a confirmation pop-up when you click a server link from the title menu.
