@@ -33813,6 +33813,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/start/job/journalist,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "oHc" = (
