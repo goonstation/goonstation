@@ -1,18 +1,5 @@
 var/global/totally_random_jobs = FALSE
 
-/proc/SetupOccupationsList()
-	set background = 1
-
-	var/list/new_occupations = list()
-
-	for(var/occupation in occupations)
-		if (!(new_occupations.Find(occupation)))
-			new_occupations[occupation] = 1
-		else
-			new_occupations[occupation] += 1
-	occupations = new_occupations
-	return
-
 /proc/FindOccupationCandidates(list/unassigned, job, level, set_antag_fallthrough = FALSE)
 	set background = 1
 
