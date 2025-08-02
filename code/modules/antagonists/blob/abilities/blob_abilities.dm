@@ -12,6 +12,7 @@
 	var/atom/movable/screen/blob/button
 	var/special_screen_loc = null
 	var/helpable = 1
+	var/list/tooltip_options = list()
 
 	New()
 		..()
@@ -21,6 +22,7 @@
 		B.ability = src
 		B.name = src.name
 		B.desc = src.desc
+		B.tooltip_options = src.tooltip_options
 		src.button = B
 
 	disposing()
@@ -150,6 +152,7 @@
 	targeted = 0
 	special_screen_loc = "SOUTH,WEST"
 	helpable = 0
+	tooltip_options = list("align" = TOOLTIP_TOP, "bounds" = list(16, 32))
 
 	onUse(var/turf/T)
 		if (..())
@@ -167,6 +170,7 @@
 	targeted = 0
 	special_screen_loc = "SOUTH,EAST"
 	helpable = 0
+	tooltip_options = list("align" = TOOLTIP_TOP | TOOLTIP_RIGHT)
 
 	onUse(var/turf/T)
 		if (..())
@@ -957,6 +961,7 @@
 	var/atom/movable/screen/blob/button
 	var/upgradename = "upgrade"
 	var/purchased_times = 0 // For crew credits
+	var/list/tooltip_options = list("align" = TOOLTIP_TOP)
 
 	New()
 		..()
@@ -966,6 +971,7 @@
 		B.upgrade = src
 		B.name = src.name
 		B.desc = src.desc
+		B.tooltip_options = src.tooltip_options
 		src.button = B
 
 	disposing()

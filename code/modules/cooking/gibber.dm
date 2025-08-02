@@ -189,10 +189,11 @@ TYPEINFO(/obj/machinery/gibber)
 
 		playsound(src.loc, machine_startup_sound, 80, 1)
 		sleep(1.5 SECONDS)
+
 		if(src.disposed)
 			return
 		playsound(src.loc, rotor_sound, 80, 1)
-		for(var/i = 1, i < 10; i++)
+		for(var/i = 1; i < 10; i++)
 			if(src.disposed)
 				return
 			if(i % 3 == 0) // alternate between dispensing meat or gibs

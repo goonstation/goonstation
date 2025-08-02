@@ -106,7 +106,7 @@ export const GimmickObject = () => {
                           <Input
                             fluid
                             value={eventList[event].description}
-                            onInput={(e, description) =>
+                            onChange={(description) =>
                               act('description', {
                                 event: eventIndex,
                                 value: description,
@@ -140,7 +140,7 @@ export const GimmickObject = () => {
                           <Input
                             fluid
                             value={eventList[event].message}
-                            onInput={(e, message) =>
+                            onChange={(message) =>
                               act('message', {
                                 event: eventIndex,
                                 value: message,

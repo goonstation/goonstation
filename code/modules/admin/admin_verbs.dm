@@ -474,7 +474,6 @@ var/list/admin_verbs = list(
 		/client/proc/toggleResourceCache,
 		/client/proc/debugResourceCache,
 		/client/proc/debug_profiler,
-		/client/proc/cmd_tooltip_debug,
 		/client/proc/deleteJsLogFile,
 		/client/proc/deleteAllJsLogFiles,
 		/client/proc/random_color_matrix,
@@ -484,6 +483,7 @@ var/list/admin_verbs = list(
 		/client/proc/rebuild_flow_networks,
 		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
+		/client/proc/toggle_server_rebuild,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
@@ -1561,9 +1561,7 @@ var/list/fun_images = list()
 				<style type="text/css">
 				@font-face {
 					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/Twemoji.eot")]');
-					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
-						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					src: url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
 					text-rendering: optimizeLegibility;
 				}
 				</style>
