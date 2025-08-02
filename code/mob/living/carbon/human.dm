@@ -57,6 +57,7 @@
 	var/image/image_special_three = null
 
 	var/image/phoenix_temperature_indicator/phoenix_temp_overlay = null
+	var/image/intrusion_brain_level/brain_level = null
 
 	///Has our chest cavity been clamped by hemostats?
 	var/chest_cavity_clamped = FALSE
@@ -217,6 +218,8 @@
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	arrestIcon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
+
+	src.brain_level = new (loc = src)
 
 	src.organHolder = new(src)
 
@@ -545,6 +548,8 @@
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
 		arrestIcon = null
+
+	QDEL_NULL(src.brain_level)
 
 	src.chest_item = null
 
@@ -3358,3 +3363,10 @@ mob/living/carbon/human/has_genetics()
 	sleep(1.2 SECONDS * spaces)
 	src.remove_typing_indicator()
 	src.say(text)
+
+/mob/living/carbon/human/proc/clear_intellect(amt)
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_INTELLECT_COLLECTED) && !src.hasStatus("mindeater_brain_draining"))
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INTELLECT_COLLECTED, src, max(GET_ATOM_PROPERTY(src, PROP_MOB_INTELLECT_COLLECTED) - amt, 0))
+		src.brain_level.set_icon_state(floor(GET_ATOM_PROPERTY(src, PROP_MOB_INTELLECT_COLLECTED) / 10) * 10, MINDEATER_MAX_INTELLECT_THRESHOLD)
+		if (GET_ATOM_PROPERTY(src, PROP_MOB_INTELLECT_COLLECTED) <= 0)
+			src.delStatus("mindeater_brain_draining")

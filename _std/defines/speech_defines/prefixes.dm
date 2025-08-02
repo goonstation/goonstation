@@ -4,6 +4,7 @@
 #define PREFIX_TEXT_DEADCHAT ":d"
 #define PREFIX_TEXT_HIVECHAT ":hive"
 #define PREFIX_TEXT_INTERCOM ":in"
+#define PREFIX_TEXT_INTRUDER ":int"
 #define PREFIX_TEXT_KUDZUCHAT ":kudzu"
 #define PREFIX_TEXT_LEFT_HAND ":lh"
 #define PREFIX_TEXT_LOOC ":looc"

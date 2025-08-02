@@ -1,0 +1,589 @@
+TYPEINFO(/mob/living/critter/mindeater)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_INTRUDERCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_INTRUDERCHAT)
+
+/mob/living/critter/mindeater
+	name = "mindeater"
+	real_name = "mindeater"
+	desc = "What sort of eldritch abomination is this thing???"
+	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
+	icon_state = "intruder"
+
+	can_bleed = FALSE
+	can_lie = FALSE
+	can_implant = FALSE
+	metabolizes = FALSE
+	reagent_capacity = 0
+	do_hurt_slowdown = FALSE
+
+	speech_verb_say = "projects"
+	speech_verb_gasp = "projects"
+	speech_verb_stammer = "projects"
+	speech_verb_exclaim = "projects"
+	speech_verb_ask = "projects"
+
+	/// shows whether this mindeater is visible to all or not
+	var/image/mindeater_visibility_indicator/vis_indicator
+	/// shows health of the mindeater
+	var/image/mindeater_health_indicator/hp_indicator
+	/// health monitor that's shown while in human form
+	var/image/health_monitor
+	/// currently casting paralyze ability
+	var/casting_paralyze = FALSE
+	/// what this mindeater's disguise is set to
+	var/set_disguise = MINDEATER_DISGUISE_HUMAN
+	/// if this mindeater is using a disguise
+	var/disguised = FALSE
+	/// if this mindeater is currently disguising
+	var/casting_disguise = FALSE
+	/// fake human disguise, stored as a var to prevent unnecessary creation/deletion over and over since humans don't GC well
+	var/mob/living/carbon/human/normal/assistant/human_disguise_dummy
+	/// job the fake human appears as
+	var/human_disguise_job = "Staff Assistant"
+	/// arena created through Pierce the Veil ability
+	var/datum/allocated_region/veil_arena
+
+	var/lives = 3 // temporary lives for playtesting
+
+	/// the mob this mindeater is actively brain draining
+	var/mob/drain_target = null
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
+		remove_lifeprocess(/datum/lifeprocess/chems)
+		remove_lifeprocess(/datum/lifeprocess/blood)
+		remove_lifeprocess(/datum/lifeprocess/mutations)
+		remove_lifeprocess(/datum/lifeprocess/stuns_lying)
+
+		QDEL_NULL(src.organHolder)
+
+		src.add_ability_holder(/datum/abilityHolder/mindeater)
+
+		src.see_invisible = INVIS_INTRUDER
+
+		src.vis_indicator = new (loc = src)
+
+		src.hp_indicator = new (loc = src)
+
+		src.health_monitor = image('icons/effects/healthgoggles.dmi' ,src, "100", EFFECTS_LAYER_UNDER_4)
+		src.health_monitor.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(src.health_monitor)
+		src.health_monitor.alpha = 0
+
+		src.demanifest()
+
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_mob(src)
+
+		src.human_disguise_dummy = new
+
+		SPAWN(0)
+			src.veil_arena = global.region_allocator.allocate(21, 21)
+			src.veil_arena.clean_up()
+			var/turf/center = src.veil_arena.get_center()
+			var/dmm_suite/map_loader = new
+			map_loader.read_map(file2text("assets/maps/allocated/intruder_veil_border.dmm"), center.x - 10, center.y - 10, center.z)
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_mob(src)
+		QDEL_NULL(src.vis_indicator)
+		QDEL_NULL(src.hp_indicator)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(src.health_monitor)
+
+		QDEL_NULL(src.human_disguise_dummy)
+
+		QDEL_NULL(src.veil_arena)
+
+		..()
+
+	Life()
+		. = ..()
+		if (src.is_intangible())
+			return
+		if (istype(get_turf(src), /turf/space) && !istype(get_turf(src), /turf/space/fluid))
+			src.TakeDamage("All", 10, 10)
+		if (src.disguised)
+			return
+		if (src.pulling)
+			src.reveal(FALSE)
+			return
+		if (actions.hasAction(src, /datum/action/bar/private/mindeater_brain_drain) || src.casting_paralyze || src.casting_disguise || actions.hasAction(src, /datum/action/bar/mindeater_pierce_the_veil))
+			return
+		if (src.on_bright_turf())
+			src.delStatus("mindeater_cloaking")
+			if (!src.hasStatus("mindeater_appearing") && !src.is_visible())
+				src.setStatus("mindeater_appearing", 10 SECONDS)
+		else
+			src.delStatus("mindeater_appearing")
+			if (!src.hasStatus("mindeater_cloaking") && src.is_visible())
+				src.setStatus("mindeater_cloaking", 5 SECONDS)
+
+	death(gibbed)
+		gibbed = FALSE
+		src.lives--
+		for (var/obj/item/grab/G as anything in src.grabbed_by)
+			qdel(G)
+		src.full_heal()
+		src.demanifest()
+		for (var/datum/statusEffect/status as anything in src.statusEffects)
+			src.delStatus(status)
+		actions.stop_all(src)
+		if (src.z != Z_LEVEL_STATION)
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
+		var/datum/targetable/critter/mindeater/manifest/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/manifest/)
+		abil_holder.deductPoints(abil_holder.points)
+		abil.doCooldown()
+		if (src.lives <= 0)
+			playsound(get_turf(src), 'sound/misc/intruder/mindeater_death.ogg', 75, TRUE)
+			. = ..()
+			qdel(src)
+		else
+			playsound(get_turf(src), 'sound/misc/intruder/mindeater_life_lost.ogg', 100, TRUE)
+
+	gib()
+		src.death(FALSE)
+
+	setup_healths()
+		add_hh_flesh(60, 1)
+		add_hh_flesh_burn(60, 1)
+
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+		if (src.is_intangible())
+			return
+		..()
+		src.hp_indicator.set_icon_state(round(src.get_health_percentage() * 100, 20))
+
+	attack_hand(mob/living/M)
+		..()
+		if (M.a_intent == INTENT_HARM)
+			for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
+				shield.process_hit()
+
+	attackby(obj/item/I, mob/M)
+		..()
+		for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
+			shield.process_hit()
+
+	bullet_act(obj/projectile/P)
+		..()
+		for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
+			shield.process_hit()
+
+	projCanHit(datum/projectile/P)
+		return !src.is_intangible()
+
+	bump(atom/A)
+		..()
+		if (A.density && A.material?.getProperty("reflective") > 7)
+			src.set_loc(get_turf(A))
+		else if (istype(A, /obj/machinery/door/airlock) && !istype(A, /obj/machinery/door/airlock/pyro/weapons/secure))
+			var/obj/machinery/door/airlock/airlock = A
+			if (!src.disguised)
+				airlock.open()
+			else if (airlock.allowed(src.human_disguise_dummy))
+				airlock.open()
+
+	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient, remove_stamina_below_zero, target_type, stack_stuns)
+		stamina_damage = 0
+		disorient = 0
+		src.setStatus("disorient", 5 SECONDS)
+		src.setStatus("staggered", 5 SECONDS)
+		src.reveal(FALSE)
+		..()
+
+	apply_flash(animation_duration, knockdown, stun, misstep, eyes_blurry, eyes_damage, eye_tempblind, burn, uncloak_prob, stamina_damage, disorient_time)
+		stamina_damage = 0
+		disorient_time = 0
+		src.setStatus("disorient", 5 SECONDS)
+		src.setStatus("staggered", 5 SECONDS)
+		src.reveal(FALSE)
+		..()
+
+	is_heat_resistant()
+		return TRUE
+
+	is_cold_resistant()
+		return TRUE
+
+	is_spacefaring()
+		return src.is_intangible()
+
+	movement_delay()
+		. = ..()
+		if (src.is_intangible())
+			return . / 3
+
+	nauseate(stacks)
+		return
+
+	can_pull(atom/A)
+		. = TRUE
+		if (src.is_intangible())
+			return FALSE
+		if (src.disguised && src.set_disguise != MINDEATER_DISGUISE_HUMAN)
+			if (isitem(A))
+				var/obj/item/I = A
+				if (src.pull_w_class < I.w_class)
+					boutput(src, SPAN_ALERT("[A] is too big for you to pull!"))
+					return FALSE
+			if (isobj(A))
+				boutput(src, SPAN_ALERT("[A] is too big for you to pull!"))
+			return FALSE
+
+	set_pulling(atom/movable/AM)
+		if (!src.can_pull(AM))
+			return
+		..()
+		if (src.pulling)
+			src.reveal(FALSE)
+
+	shock(atom/origin, wattage, zone = "chest", stun_multiplier = 1, ignore_gloves = 0)
+		if (src.is_intangible())
+			return
+		src.reveal(FALSE)
+		return ..()
+
+	ex_act(severity)
+		if (src.is_intangible())
+			return
+		src.reveal(FALSE)
+		return ..()
+
+	examine(mob/user)
+		if (src.disguised && src.set_disguise == MINDEATER_DISGUISE_HUMAN)
+			return src.human_disguise_dummy.examine(user)
+		return ..()
+
+	get_desc(dist, mob/user)
+		if (src.disguised && src.set_disguise == MINDEATER_DISGUISE_HUMAN)
+			return src.human_disguise_dummy.get_desc(TRUE, TRUE, user)
+		return ..()
+
+	/// returns if the turf is bright enough to reveal the mindeater
+	proc/on_bright_turf()
+		var/turf/T = get_turf(src)
+		return T?.is_lit()
+
+	/// if the mindeater is effectively intangible
+	proc/is_intangible()
+		return src.event_handler_flags & MOVE_NOCLIP
+
+	/// if the mindeater is visible to all humans
+	proc/is_visible()
+		return src.invisibility == INVIS_NONE
+
+	/// reveal the mindeater's true form to all
+	proc/reveal(remove_disguise = TRUE)
+		src.delStatus("mindeater_appearing")
+		src.delStatus("mindeater_cloaking")
+		src.vis_indicator.set_visible(TRUE)
+		src.invisibility = INVIS_NONE
+		if (remove_disguise)
+			src.undisguise()
+
+	/// set the mindeater invisible to humans
+	proc/set_invisible()
+		src.delStatus("mindeater_appearing")
+		src.delStatus("mindeater_cloaking")
+		src.vis_indicator.set_visible(FALSE)
+		src.invisibility = INVIS_INTRUDER
+
+	/// move from intangible to tangible state
+	proc/manifest()
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/manifest)
+		src.event_handler_flags &= ~(MOVE_NOCLIP | IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
+		src.flags &= ~UNCRUSHABLE
+		src.density = TRUE
+		src.throws_can_hit_me = TRUE
+		src.set_invisible()
+		src.alpha = 255
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/set_disguise)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
+
+	/// move from tangible to intangible state
+	proc/demanifest()
+		if (src.disguised)
+			src.undisguise()
+		src.event_handler_flags |= (MOVE_NOCLIP | IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
+		src.flags |= UNCRUSHABLE
+		src.density = FALSE
+		src.throws_can_hit_me = FALSE
+		src.set_invisible()
+		src.alpha = 150
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/set_disguise)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/manifest)
+
+		src.remove_pulling()
+
+	/// gain intellect points from target mob
+	proc/collect_intellect(mob/living/L, points)
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, min(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) + points, MINDEATER_MAX_INTELLECT_THRESHOLD))
+			if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) >= MINDEATER_MAX_INTELLECT_THRESHOLD)
+				H.brain_level.set_icon_state("complete")
+			else
+				H.brain_level.set_icon_state(floor(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) / 10) * 10, MINDEATER_MAX_INTELLECT_THRESHOLD)
+
+			var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
+			if (H.reagents.has_reagent("ethanol") || H.reagents.has_reagent("mannitol"))
+				abil_holder.addPoints(points * 5 / 6)
+			else if (H.reagents.has_reagent("morphine"))
+				abil_holder.addPoints(points / 2)
+			else if (H.reagents.has_reagent("haloperidol"))
+				abil_holder.addPoints(points / 3)
+			else
+				abil_holder.addPoints(points)
+		else
+			var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
+			abil_holder.addPoints(points)
+
+	/// applies debuffs that appear in critter form
+	proc/apply_critter_debuffs()
+		var/datum/healthHolder/brute_holder = get_health_holder("brute")
+		brute_holder.damage_multiplier = 2
+		var/datum/healthHolder/burn_holder = get_health_holder("burn")
+		burn_holder.damage_multiplier = 2
+
+		src.add_stam_mod_max("critter_form_stamina_loss", -100)
+
+	/// removes debuffs that appear in critter form
+	proc/remove_critter_debuffs()
+		var/datum/healthHolder/brute_holder = get_health_holder("brute")
+		brute_holder.damage_multiplier = 1
+		var/datum/healthHolder/burn_holder = get_health_holder("burn")
+		burn_holder.damage_multiplier = 1
+
+		src.remove_stam_mod_max("critter_form_stamina_loss")
+
+	/// disguise as an entity
+	proc/disguise()
+		var/mob/living/temp
+		if (src.set_disguise == MINDEATER_DISGUISE_MOUSE || src.set_disguise == MINDEATER_DISGUISE_COCKROACH)
+			if (src.set_disguise == MINDEATER_DISGUISE_MOUSE)
+				temp = new /mob/living/critter/small_animal/mouse
+			else if (src.set_disguise == MINDEATER_DISGUISE_COCKROACH)
+				temp = new /mob/living/critter/small_animal/cockroach
+
+			src.icon = temp.icon
+			src.icon_state = temp.icon_state
+			src.name = temp.real_name
+			src.real_name = temp.real_name
+			src.desc = temp.get_desc(0, src)
+			src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
+
+			src.flags |= (TABLEPASS | DOORPASS)
+			src.pull_w_class = W_CLASS_TINY
+			src.apply_critter_debuffs()
+
+			src.speech_verb_say = temp.speech_verb_say
+			src.speech_verb_gasp = temp.speech_verb_gasp
+			src.speech_verb_stammer = temp.speech_verb_stammer
+			src.speech_verb_exclaim = temp.speech_verb_exclaim
+			src.speech_verb_ask = temp.speech_verb_ask
+		else
+			src.human_disguise_dummy.unequip_all(TRUE)
+			randomize_look(src.human_disguise_dummy)
+			src.human_disguise_dummy.JobEquipSpawned(src.human_disguise_job)
+			var/icon/front = getFlatIcon(src.human_disguise_dummy, SOUTH)
+			var/icon/back = getFlatIcon(src.human_disguise_dummy, NORTH)
+			var/icon/left = getFlatIcon(src.human_disguise_dummy, WEST)
+			var/icon/right = getFlatIcon(src.human_disguise_dummy, EAST)
+			var/icon/guise = new
+			guise.Insert(front, dir = SOUTH)
+			guise.Insert(back, dir = NORTH)
+			guise.Insert(left, dir = WEST)
+			guise.Insert(right, dir = EAST)
+			src.icon = guise
+			src.name = src.human_disguise_dummy.real_name
+			src.real_name = src.human_disguise_dummy.real_name
+			src.desc = null
+			src.bioHolder.mobAppearance.gender = src.human_disguise_dummy.bioHolder.mobAppearance.gender
+			src.health_monitor.alpha = 255
+
+		src.update_name_tag(src.name)
+		qdel(temp)
+
+		src.disguised = TRUE
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+
+	/// undisguise as disguised entity
+	proc/undisguise()
+		src.name = initial(src.name)
+		src.real_name = initial(src.real_name)
+		src.desc = initial(src.desc)
+		src.icon = initial(src.icon)
+		src.icon_state = initial(src.icon_state)
+		src.bioHolder.mobAppearance.gender = initial(src.gender)
+		src.update_name_tag(src.name)
+
+		src.flags &= ~(TABLEPASS | DOORPASS)
+		src.pull_w_class = initial(src.pull_w_class)
+
+		src.health_monitor.alpha = 0
+
+		if (src.set_disguise != MINDEATER_DISGUISE_HUMAN)
+			src.remove_critter_debuffs()
+
+		src.speech_verb_say = initial(src.speech_verb_say)
+		src.speech_verb_gasp = initial(src.speech_verb_gasp)
+		src.speech_verb_stammer = initial(src.speech_verb_stammer)
+		src.speech_verb_exclaim = initial(src.speech_verb_exclaim)
+		src.speech_verb_ask = initial(src.speech_verb_ask)
+
+		src.disguised = FALSE
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+
+		var/datum/targetable/critter/mindeater/disguise/abil = src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/disguise)
+		abil.reset()
+
+	/// when a mindeater moves over an armed mousetrap
+	proc/mousetrap_act(obj/item/mousetrap)
+		if (src.disguised && src.set_disguise != MINDEATER_DISGUISE_HUMAN)
+			src.visible_message(SPAN_ALERT("[src] lets out an eldritch wail!"))
+			src.TakeDamage("All", 15)
+
+/obj/dummy/mindeater_structure
+	name = "spire"
+	real_name = "mindeater"
+	desc = "Some sort of ancient structure. You feel your mind slipping away just looking at it."
+	icon = null
+	icon_state = null
+	density = FALSE
+	anchored = ANCHORED_ALWAYS
+	var/image/mob_appearance
+
+	New(turf/newLoc)
+		..()
+		SPAWN(rand(30, 60) SECONDS)
+			src.reveal_fake()
+
+		src.mob_appearance = image('icons/mob/critter/nonhuman/intruder.dmi', src, "spire")
+		src.mob_appearance.alpha = 0
+		animate(src.mob_appearance, alpha = 255, time = 1 SECOND)
+		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_image(src.mob_appearance)
+
+	disposing()
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_image(src.mob_appearance)
+		QDEL_NULL(src.mob_appearance)
+
+	attack_hand(mob/user)
+		..()
+		src.reveal_fake()
+
+	attackby(obj/item/I, mob/user)
+		..()
+		src.reveal_fake()
+
+	proc/reveal_fake()
+		animate_wave(src, 5)
+		animate(src, 1 SECOND, flags = ANIMATION_PARALLEL, alpha = 0)
+		SPAWN(1 SECOND)
+			qdel(src)
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/obj/projectile/P = AM
+		if (istype(P))
+			src.reveal_fake()
+
+/image/mindeater_visibility_indicator
+	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
+	icon_state = "invisible"
+	plane = PLANE_HUD
+	layer = HUD_LAYER_BASE
+	appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+	pixel_x = 16
+	pixel_y = -16
+
+	New(icon, loc, icon_state, layer, dir)
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_image(src)
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_image(src)
+		..()
+
+	proc/set_visible(vis)
+		src.icon_state = vis ? "visible" : "invisible"
+
+/image/mindeater_health_indicator
+	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
+	icon_state = "health-100"
+	plane = PLANE_HUD
+	layer = HUD_LAYER_BASE
+	appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+	pixel_x = 30
+	pixel_y = -16
+
+	New(icon, loc, icon_state, layer, dir)
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_image(src)
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_image(src)
+		..()
+
+	proc/set_icon_state(pct)
+		src.icon_state = "health-[pct]"
+
+/image/mindeater_brain_drain_targeted
+	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
+	icon_state = "brain_drain_targeted"
+	plane = PLANE_HUD
+	layer = HUD_LAYER_BASE
+	appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+	pixel_x = 18
+	pixel_y = 0
+
+	New(icon, loc, icon_state, layer, dir)
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_image(src)
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_image(src)
+		..()
+
+/image/intrusion_brain_level
+	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
+	icon_state = "brain-0"
+	plane = PLANE_HUD
+	layer = HUD_LAYER_BASE
+	appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+	pixel_x = 18
+	pixel_y = 10
+
+	New(icon, loc, icon_state, layer, dir)
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_image(src)
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_image(src)
+		..()
+
+	proc/set_icon_state(pct)
+		src.icon_state = "brain-[pct]"

@@ -513,6 +513,12 @@ datum
 				if (M.get_brain_damage() < BRAIN_DAMAGE_SEVERE)
 					if (prob(50)) M.take_brain_damage(-1 * mult)
 				else M.take_brain_damage(-10 * mult) // Zine those synapses into not dying *yet*
+				var/mob/living/carbon/human/H = M
+				if (istype(H))
+					if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) > MINDEATER_INTELLECT_CHEM_INTERACTION)
+						H.clear_intellect(10 * mult)
+					else
+						H.clear_intellect(1 * mult)
 				..()
 				return
 
@@ -1457,6 +1463,12 @@ datum
 					flush(holder, 20 * mult, flushed_reagents)
 				if (M.get_brain_damage() > BRAIN_DAMAGE_SEVERE)
 					M.take_brain_damage(-5 * mult)
+				var/mob/living/carbon/human/H = M
+				if (istype(H))
+					if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) > MINDEATER_INTELLECT_CHEM_INTERACTION)
+						H.clear_intellect(5 * mult)
+					else
+						H.clear_intellect(0.5 * mult)
 				..()
 				return
 
@@ -1548,6 +1560,9 @@ datum
 					M.take_brain_damage(-3 * mult)
 				else
 					M.take_brain_damage(-0.25 * mult)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.clear_intellect(2)
 				..()
 				return
 

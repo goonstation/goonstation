@@ -1495,4 +1495,3 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_max_range_die(obj/projectile/O)
 		src.die(get_turf(O))
 		..()
-
