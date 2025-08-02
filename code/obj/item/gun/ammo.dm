@@ -1841,3 +1841,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 					overlays += "burst_laspistol-100"
 			return
 
+/obj/item/ammo/power_cell/siren_orb
+	name = "Siren Orb"
+	desc = "You've somehow dislodged this from the resonator. Good Job!"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "siren_orb"
+	charge = 400
+	max_charge = 400
+	recharge_rate = 10
