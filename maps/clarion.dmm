@@ -18493,17 +18493,6 @@
 /area/space)
 "hLB" = (
 /obj/table/reinforced/auto,
-/obj/item/device/panicbutton{
-	pixel_y = 7;
-	pixel_x = -3
-	},
-/obj/item/storage/box/panic_buttons{
-	pixel_x = 7
-	},
-/obj/item/hand_labeler{
-	pixel_x = 5;
-	pixel_y = 14
-	},
 /obj/machinery/light,
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -31960,10 +31949,6 @@
 	dir = 6
 	},
 /area/station/engine/storage)
-"rwR" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "rxh" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -39813,6 +39798,21 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"xfu" = (
+/obj/table/reinforced/auto,
+/obj/item/device/panicbutton{
+	pixel_y = 7;
+	pixel_x = -3
+	},
+/obj/item/storage/box/panic_buttons{
+	pixel_x = 7
+	},
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "xgj" = (
 /obj/machinery/light,
 /obj/cable/orange{
@@ -86452,7 +86452,7 @@ aQR
 lzl
 nBf
 nuh
-rwR
+iuy
 uZq
 sht
 mzk
@@ -87056,7 +87056,7 @@ aQR
 qjL
 lmn
 uWQ
-iuy
+xfu
 oCX
 lKl
 utp
