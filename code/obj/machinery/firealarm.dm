@@ -259,6 +259,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 		SPAWN(0.5 SECONDS)
 			src.reply_status(sender, "ping_reply")
 
+SET_UP_DIRECTIONALS(/obj/machinery/firealarm, OFFSETS_FIREALARM)
+
 // these seem kind of inverted but it's because an alarm on a wall to the north faces south and etc
 /obj/machinery/firealarm/north
 	pixel_y = 30
