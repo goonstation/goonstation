@@ -21,6 +21,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
+	usable_with_brain_damage = FALSE
 	var/health = 400
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
