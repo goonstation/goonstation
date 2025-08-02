@@ -97,7 +97,6 @@ var/global
 				"browserassets/src/css/fonts/fontawesome-webfont.eot",
 				"browserassets/src/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/src/css/fonts/fontawesome-webfont.woff",
-				"browserassets/src/css/fonts/Twemoji.eot",
 				"browserassets/src/css/fonts/Twemoji.ttf",
 				"browserassets/src/vendor/css/font-awesome.css",
 				"browserassets/src/css/browserOutput.css"

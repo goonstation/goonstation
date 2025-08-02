@@ -131,11 +131,10 @@ export const Vendors = () => {
                         Loading Chute
                       </Button>
                       <Button.Input
-                        defaultValue={name}
-                        onCommit={(e, value) => act('rename', { name: value })}
-                      >
-                        {name}
-                      </Button.Input>
+                        value={name}
+                        onCommit={(value) => act('rename', { name: value })}
+                        buttonText={name}
+                      />
                     </>
                   )}
                   <Flex justify="space-between" align="stretch">
@@ -181,7 +180,7 @@ export const Vendors = () => {
                             tooltip="Set as displayed product"
                           />
                           <Button.Input
-                            onCommit={(_e, value) => {
+                            onCommit={(value) => {
                               const parsedPrice = parseInt(value, 10);
                               if (!isNaN(parsedPrice)) {
                                 act('setPrice', {
@@ -190,11 +189,9 @@ export const Vendors = () => {
                                 });
                               }
                             }}
-                            defaultValue="0"
-                            currentValue={`${cost ?? 0}`}
-                          >
-                            Set Price
-                          </Button.Input>
+                            value={`${cost ?? 0}`}
+                            buttonText="Set Price"
+                          />
                         </ProductList.Cell>
                       ) : undefined;
                     return (

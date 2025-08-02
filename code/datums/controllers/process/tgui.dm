@@ -16,28 +16,33 @@ var/global/datum/controller/process/tgui/tgui_process
 	var/list/all_uis = list()
 	/// The HTML base used for all UIs.
 	var/basehtml
-	/// The polyfills uses for all UIs |GOONSTATION-ADD|
-	var/polyfill
+
 
 /datum/controller/process/tgui/setup()
 	name = "tgui"
 	schedule_interval = 0.9 SECONDS
 	try
-		basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-CHANGE|
-		polyfill = grabResource("tgui/tgui-polyfill.min.js") // |GOONSTATION-CHANGE|
-		polyfill = "<script>\n[polyfill]\n</script>"
-		setupBaseHtml()
+		basehtml = getBaseHTML() // |GOONSTATION-CHANGE|
 	catch(var/exception/e)
-		stack_trace("Unable to load tgui.html, retrying in 10 seconds.\n[e]")
-		SPAWN(10 SECONDS)
-			basehtml = grabResource("tgui/tgui.html")
-			polyfill = grabResource("tgui/tgui-polyfill.min.js")
-			polyfill = "<script>\n[polyfill]\n</script>"
-			setupBaseHtml()
+		stack_trace("Unable to load tgui.html, retrying in 5 seconds.\n[e]")
+		SPAWN(5 SECONDS)
+			basehtml = getBaseHTML()
+
 	global.tgui_process = src
 
-/datum/controller/process/tgui/proc/setupBaseHtml()
-	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
+/datum/controller/process/tgui/proc/getBaseHTML()
+	. = grabResource("tgui/tgui.html")
+
+	// Inject inline helper functions
+	var/helpers = grabResource("tgui/setup/helpers.min.js")
+	helpers = "<script type='text/javascript'>\n[helpers]\n</script>"
+	. = replacetextEx(., "<!-- tgui:helpers -->", helpers)
+
+	// Inject inline ntos-error styles
+	var/ntos_error = grabResource("tgui/setup/ntos-error.min.css")
+	ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
+	. = replacetextEx(., "<!-- tgui:ntos-error -->", ntos_error)
+
 
 /datum/controller/process/tgui/copyStateFrom(datum/controller/process/target)
 	var/datum/controller/process/tgui/old_tgui = target

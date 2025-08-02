@@ -1,120 +1,100 @@
 /**
- * Copyright (c) 2023 pali6
+ * Copyright (c) 2025 pali6 & ZeWaka
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+.mode-light:root {
+  // Vars
+  --bg-color: #ffffff;
+  --fg-color: #000000;
+  --component-bg-color: color-mix(in srgb, var(--bg-color), black 10%);
+  --border-color: #4171a8;
+  --primary-color: color-mix(in srgb, var(--bg-color), black 20%);
 
-$bg-color: #ffffff !default;
-$fg-color: #000000 !default;
-$component-bg-color: color.scale($bg-color, $lightness: -10%) !default;
-$border-color: #4171a8 !default;
-$primary-color: color.scale($bg-color, $lightness: -20%) !default;
+  // Base
+  --color-base: var(--bg-color);
+  --color-primary: var(--fg-color);
+  --base-gradient-spread: 3;
+  --color-text: var(--fg-color);
 
-@use '../colors' with (
-  $primary: $primary-color,
-  $bg-lightness: 25%,
-  $fg-lightness: -10%,
-  //we need to recalculate the color maps for a lighter theme.
-  $good: #499417,
-  $average: #b86903,
-  $bad: #a81c1c,
-  $label: #415369,
-  // some base colours changed to be more readable on white background
-  $white: #afafaf,
-  $yellow: #c0a300,
-  $olive: #8c9e14
-);
+  --adjust-color: -16.5;
+  --primary-lightness: 25%;
+  --secondary-lightness-adjustment: 7.5;
 
-@use '../base' with (
-  $color-bg: $bg-color,
-  $color-fg: $fg-color,
-  $color-bg-section: rgba($bg-color, 0.33),
-  $color-bg-grad-spread: 3%
-);
+  --color-good: #499417;
+  --color-average: #b86903;
+  --color-bad: #a81c1c;
 
-// Atomic classes
-@include meta.load-css('../atomic/color.scss');
+  --color-label: #415369;
+  --color-white: #afafaf;
+  --color-yellow: #c0a300;
+  --color-olive: #8c9e14;
 
-// Components
-@include meta.load-css(
-  '../components/Tooltip.scss',
-  $with: ('color': base.$color-fg, 'background-color': $component-bg-color)
-);
-@include meta.load-css(
-  '../components/Divider.scss',
-  $with: ('color': rgba(0, 0, 0, 0.1))
-);
-@include meta.load-css(
-  '../components/Stack.scss',
-  $with: ('zebra-background-color': base.$color-bg-section)
-);
-@include meta.load-css(
-  '../components/ProgressBar.scss',
-  $with: (
-    'color-default-fill': base.$color-bg,
-    'background-color': rgba(255, 255, 255, 0.5)
-  )
-);
-@include meta.load-css(
-  '../components/Section.scss',
-  $with: ('background-color': rgba(0, 0, 0, 0.1))
-);
-@include meta.load-css(
-  '../components/Button.scss',
-  $with: (
-    'color-default': base.$color-bg,
-    'color-disabled': #777777,
-    'color-selected': #58c44a,
-    'color-caution': #b96817,
-    'color-danger': #9a9d00,
-    'color-transparent-text': rgba(33, 33, 34, 0.75)
-  )
-);
-@include meta.load-css(
-  '../components/Input.scss',
-  $with: (
-    'background-color': $component-bg-color,
-    'border-color': $border-color
-  )
-);
-@include meta.load-css(
-  '../components/TextArea.scss',
-  $with: ('background-color': $component-bg-color)
-);
-@include meta.load-css(
-  '../components/Modal.scss',
-  $with: ('background-color': $component-bg-color)
-);
-@include meta.load-css('../components/NumberInput.scss');
-@include meta.load-css(
-  '../components/Tabs.scss',
-  $with: (
-    'text-color': rgba(0, 0, 0, 0.5),
-    'text-color-selected': rgba(0, 0, 0, 0.9),
-    'tab-color-hovered': rgba(0, 0, 0, 0.075),
-    'tab-color-selected': rgba(0, 0, 0, 0.125)
-  )
-);
-@include meta.load-css(
-  '../components/Slider.scss',
-  $with: ('popup-background-color': #ffffff, 'popup-text-color': #000000)
-);
-@include meta.load-css('../components/BlockQuote.scss');
+  --color-border-primary: var(--border-color);
+  --color-border-secondary: color-mix(in srgb, var(--border-color), black 20%);
 
-// Layouts
-@include meta.load-css('../layouts/Layout.scss');
-@include meta.load-css('../layouts/Window.scss');
-@include meta.load-css(
-  '../layouts/TitleBar.scss',
-  $with: (
-    'text-color': rgba(0, 0, 0, 0.9),
-    'background-color': base.$color-bg,
-    'shadow-color-core': rgba(0, 0, 0, 0.25)
-  )
-);
+  // Layouts
+  // --titlebar-background: var(--color-base);
+  --titlebar-shadow-core: rgba(0, 0, 0, 0.25);
+  .TitleBar {
+    .TitleBar__title {
+      color: rgba(0, 0, 0, 0.9);
+    }
+  }
 
-.Layout__content {
-  background-image: url('../../assets/bg-nanotrasen-light.svg');
+  // Components
+  --button-color: var(--fg-color);
+  --button-background-default: var(--primary-color);
+  --button-background-disabled: #777;
+  --button-disabled-opacity: 0.9;
+  --button-background-selected: #32831e;
+  --button-background-caution: #b96817;
+  --button-background-danger: #9a9d00;
+  --button-color-transparent: rgba(33, 33, 34, 0.75);
+
+  .Button {
+    --button-color: var(--fg-color);
+  }
+
+  .Button--color--bad,
+  .Button--color--black,
+  .Button--color--red,
+  .Button--color--violet,
+  .Button--color--purple {
+    --button-color: var(--bg-color);
+  }
+
+  --divider-color: rgba(0, 0, 0, 0.1);
+
+  --input-background: var(--component-bg-color);
+  --input-border-color: var(--border-color);
+
+  --knob-ring-color: var(--border-color);
+  .Knob--color--primary {
+    --ring-color: var(--border-color);
+  }
+
+  --modal-background: var(--component-bg-color);
+
+  // --progress-bar-fill: color-mix(in srgb, var(--color-base), black 30%);
+  --progress-bar-fill: #f0f;
+  --progress-bar-background: transparent;
+
+  --section-separator-color: color-mix(in srgb, var(--border-color), white 20%);
+  --color-section: rgba(0, 0, 0, 0.1);
+
+  --slider-popup-background: #ffffff;
+  // --slider-popup-color: #000000;
+
+  --tab-color: rgba(0, 0, 0, 0.5);
+  --tab-color-selected: rgba(0, 0, 0, 0.9);
+  --tab-background-hover: rgba(0, 0, 0, 0.075);
+  --tab-background-selected: rgba(0, 0, 0, 0.125);
+
+  --tooltip-color: var(--bg-color);
+  --tooltip-background: var(--fg-color);
+
+  .Layout__content {
+    background-image: url('../assets/bg-nanotrasen-light.svg');
+  }
 }

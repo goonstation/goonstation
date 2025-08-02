@@ -46,7 +46,7 @@ export const ScoreTab = () => {
 
 interface SummaryDisplayProps {
   preamble: string;
-  headline: string | JSX.Element;
+  headline: string | React.JSX.Element;
   body: string;
 }
 
