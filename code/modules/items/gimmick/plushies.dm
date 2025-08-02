@@ -296,7 +296,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		src.ribbit()
 		src.add_fingerprint(user)
 		animate_door_squeeze(src)
-		user.visible_message(SPAN_EMOTE("[user] squeezes the [src], and it croaks. Wow!"))
+		user.visible_message(SPAN_EMOTE("[user] squeezes [src], and it croaks. Wow!"))
 	return
 
 /obj/item/toy/plush/small/shelterfrog/proc/ribbit()

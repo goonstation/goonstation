@@ -2336,7 +2336,7 @@
 		result = "pumpkinspicelatte"
 		required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1, "cinnamon"=1)
 		result_amount = 5
-		mix_phrase = "The drink smells vaguely like artifical autumn."
+		mix_phrase = "The drink smells vaguely like artificial autumn."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	lavenderlatte
@@ -3491,7 +3491,7 @@
 		instant = 0
 		reaction_speed = 1
 		max_temperature = T0C + 50
-		mix_phrase = "The solution bubbles as frost precipitates from the sorrounding air."
+		mix_phrase = "The solution bubbles as frost precipitates from the surrounding air."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_ice-1", "reaction_ice-2")
 		reaction_icon_color = "#24ccff"

@@ -94,7 +94,7 @@ datum
 		disease/lungrot
 			name = "lungrot bloom"
 			id = "lungrot_bloom"
-			description = "highly toxic fungal colonies created in the enviroment of a weakened lung."
+			description = "highly toxic fungal colonies created in the environment of a weakened lung."
 			reagent_state = SOLID
 			minimum_to_infect = 7.5
 			fluid_r = 43
