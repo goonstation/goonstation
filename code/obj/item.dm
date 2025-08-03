@@ -275,9 +275,9 @@ ABSTRACT_TYPE(/obj/item)
 					var/mob/living/carbon/human/withinMob = withinStorage ? src.stored.linked_item.loc : src.loc
 					var/datum/hud/human/hud = istype(withinMob) ? withinMob.hud : null
 
-						// If we're over an item that's stored in a container a mob has equipped
-						if (withinStorage && istype(hud) && hud.layout_style != "tg")
-							tooltipAlign = TOOLTIP_RIGHT | TOOLTIP_CENTER
+					// If we're over an item that's stored in a container a mob has equipped
+					if (withinStorage && istype(hud) && hud.layout_style != "tg")
+						tooltipAlign = TOOLTIP_RIGHT | TOOLTIP_CENTER
 
 				usr.client.tooltips.show(arglist(list(
 					"type" = TOOLTIP_HOVER,
