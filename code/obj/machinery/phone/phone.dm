@@ -186,7 +186,7 @@ TYPEINFO(/obj/machinery/phone)
 
 	src.icon_state = "[answered_icon]"
 	src.UpdateIcon()
-	playsound(user, 'sound/machines/phones/pick_up.ogg', 50, FALSE)
+	playsound(user, 'sound/machines/phones/pick_up.ogg', 2, FALSE)
 
 	// A call is being answered.
 	if (src.ringing)
@@ -272,6 +272,8 @@ TYPEINFO(/obj/machinery/phone)
 		return TRUE
 
 /obj/machinery/phone/ui_interact(mob/user, datum/tgui/ui)
+	if (!tgui_process)
+		return
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "Phone")
@@ -360,7 +362,7 @@ TYPEINFO(/obj/machinery/phone)
 	src.icon_state = "[phone_icon]"
 	tgui_process.close_uis(src)
 	src.UpdateIcon()
-	playsound(src.loc, 'sound/machines/phones/hang_up.ogg', 50, 0)
+	playsound(src.loc, 'sound/machines/phones/hang_up.ogg', 2, 0)
 
 /obj/machinery/phone/proc/call_other(obj/machinery/phone/target)
 	if (!src.handset)

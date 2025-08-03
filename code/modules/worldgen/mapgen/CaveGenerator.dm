@@ -135,7 +135,7 @@
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/cave_generator/generate_terrain(list/turfs, reuse_seed, flags)
 	. = ..()
-	var/cave_seed = seeds[1]
+	// var/cave_seed = seeds[1]
 	var/humidity_seed = seeds[2]
 	var/heat_seed = seeds[3]
 

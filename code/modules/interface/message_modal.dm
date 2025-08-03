@@ -56,7 +56,7 @@
 	. = tgui_always_state
 
 /datum/message_modal/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
+	ui = tgui_process?.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MessageModal")
 		ui.set_autoupdate(FALSE)

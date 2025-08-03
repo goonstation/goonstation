@@ -273,10 +273,10 @@
 		Reboot_server()
 #endif
 
-#if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
-	SPAWN(10 SECONDS)
-		Reboot_server()
-#endif
+// #if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
+// 	SPAWN(10 SECONDS)
+// 		Reboot_server()
+// #endif
 
 #undef UPDATE_TITLE_STATUS
 

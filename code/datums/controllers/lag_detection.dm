@@ -54,10 +54,8 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 			else
 				highCpuCount = CPU_STOP_PROFILING_COUNT
 			if(highCpuCount <= 0 || force_stop)
-				var/output = world.Profile(PROFILE_REFRESH | PROFILE_STOP, null, "json")
 				var/fname = "[global.roundLog_date]_automatic_[profilerLogID++].json"
 				var/external_url = "https://logs.goonhub.com/[config.server_id]/logs/profiling/[fname]"
-				var/fpath = "data/logs/profiling/[fname]"
 				rustg_file_write(output, fpath)
 				var/spike_time = (TIME - automatic_profiling_started) / (1 SECOND)
 				message_admins("CPU back down to [world.cpu], turning off profiling, saved as <a href='[external_url]'>[external_url]</a>. Spike took [spike_time] seconds.")
@@ -73,8 +71,6 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				highCpuCount++
 			if(world.cpu >= cpu_start_profiling_immediately_threshold || time_since_last > tick_time_profiling_threshold)
 				#ifdef PRE_PROFILING_ENABLED
-				var/output = src.start_auto_profile(PROFILE_REFRESH)
-				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++]_spike.json"
 				rustg_file_write(output, fname)
 				#endif
 				force_start = TRUE

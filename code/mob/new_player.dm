@@ -127,13 +127,15 @@ TYPEINFO(/mob/new_player)
 				boutput(src, "<span class='bold notice'>Please wait. When the game starts, Shitty Bill will be activated.</span>")
 #endif
 
+		src.observe_round()
+
 	Logout()
 		src.ready_play = FALSE
 		src.ready_tutorial = FALSE
-		if (src.ckey) //Null if the client changed to another mob, but not null if they disconnected.
-			spawned_in_keys -= "[src.ckey]"
-		else if (isclient(src.last_client)) //playtime logging stuff
-			src.last_client.player.log_join_time()
+		// if (src.ckey) //Null if the client changed to another mob, but not null if they disconnected.
+		// 	spawned_in_keys -= "[src.ckey]"
+		// else if (isclient(src.last_client)) //playtime logging stuff
+		// 	src.last_client.player.log_join_time()
 
 		..()
 		close_spawn_windows()
@@ -994,40 +996,40 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
-			if(!src.client) return
-			var/mob/dead/observer/observer = new(src)
-			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
-				src.client.using_antag_token = 0
-				src.show_text("Token refunded, your new total is [src.client.antag_tokens].", "red")
-			src.spawning = 1
+		// if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(!src.client) return
+		var/mob/dead/observer/observer = new(src)
+		if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
+			src.client.using_antag_token = 0
+			src.show_text("Token refunded, your new total is [src.client.antag_tokens].", "red")
+		src.spawning = 1
 
-			close_spawn_windows()
-			boutput(src, SPAN_NOTICE("Now teleporting."))
-			logTheThing(LOG_DEBUG, src, "observes.")
-			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-			if (ASLoc)
-				observer.set_loc(ASLoc)
+		close_spawn_windows()
+		boutput(src, SPAN_NOTICE("Now teleporting."))
+		logTheThing(LOG_DEBUG, src, "observes.")
+		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+		if (ASLoc)
+			observer.set_loc(ASLoc)
 
-			observer.observe_round = 1
-			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
-				client.preferences.randomize_name()
-			observer.real_name = client.preferences.real_name
-			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
-			observer.gender = observer.bioHolder.mobAppearance.gender
-			observer.UpdateName()
-			observer.apply_looks_of(client)
+		observer.observe_round = 1
+		if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
+			client.preferences.randomize_name()
+		observer.real_name = client.preferences.real_name
+		observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
+		observer.gender = observer.bioHolder.mobAppearance.gender
+		observer.UpdateName()
+		observer.apply_looks_of(client)
 
-			if(!src.mind) src.mind = new(src)
-			ticker.minds |= src.mind
-			src.mind.get_player()?.joined_observer = TRUE
-			src.mind.transfer_to(observer)
-			if(observer?.client)
-				observer.client.loadResources()
+		if(!src.mind) src.mind = new(src)
+		ticker?.minds |= src.mind
+		src.mind.get_player()?.joined_observer = TRUE
+		src.mind.transfer_to(observer)
+		if(observer?.client)
+			observer.client.loadResources()
 
-			respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
+		respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
 
-			qdel(src)
+		qdel(src)
 
 #ifdef TWITCH_BOT_ALLOWED
 	proc/try_force_into_bill() //try to put the twitch mob into shittbill

@@ -70,7 +70,7 @@
 	if(in_progress)
 		CRASH("Attempted to re-use a request object.")
 
-	id = rustg_http_request_async(method, url, body, headers, build_options())
+	id = 1
 
 	if(isnull(text2num(id)))
 		_raw_response = "Proc error: [id]"
@@ -106,7 +106,7 @@
 		return TRUE
 
 	// We got here, so check the status
-	var/result = rustg_http_check_request(id)
+	var/result = RUSTG_JOB_NO_RESULTS_YET
 
 	// If we have no result, were not finished
 	if(result == RUSTG_JOB_NO_RESULTS_YET)
@@ -183,35 +183,35 @@
  * Returns list(filename, url) if successful, otherwise crashes.
  */
 /datum/cobalt_tools/proc/request_tunnel(normalized_url, request_type = "audio")
-	var/static/headers = json_encode(list(
-		"Accept" = "application/json",
-		"Content-Type" = "application/json",
-	))
+	// var/static/headers = json_encode(list(
+	// 	"Accept" = "application/json",
+	// 	"Content-Type" = "application/json",
+	// ))
 
-	var/body = json_encode(list(
-		"url" = normalized_url,
-		"downloadMode" = request_type,
-		"filenameStyle" = "basic",
-	))
+	// var/body = json_encode(list(
+	// 	"url" = normalized_url,
+	// 	"downloadMode" = request_type,
+	// 	"filenameStyle" = "basic",
+	// ))
 
-	var/response_raw = rustg_http_request_blocking(RUSTG_HTTP_METHOD_POST, base_url, body, headers, null)
-	var/list/response
-	try
-		response = json_decode(response_raw)
-		if(!("body" in response))
-			. = REQUEST_FAIL_BAD_URL
-			CRASH("Failed to perform cobalt.tools API request: Response lacks body.")
-		response = json_decode(response["body"])
-	catch
-		. = REQUEST_FAIL_BAD_URL
-		CRASH("Failed to perform cobalt.tools API request: Failed to decode response.")
+	// var/response_raw = 1
+	// var/list/response
+	// try
+	// 	response = json_decode(response_raw)
+	// 	if(!("body" in response))
+	// 		. = REQUEST_FAIL_BAD_URL
+	// 		CRASH("Failed to perform cobalt.tools API request: Response lacks body.")
+	// 	response = json_decode(response["body"])
+	// catch
+	// 	. = REQUEST_FAIL_BAD_URL
+	// 	CRASH("Failed to perform cobalt.tools API request: Failed to decode response.")
 
-	var/static/list/valid_status = list("redirect", "tunnel")
-	var/status = response["status"]
-	if(!(status in valid_status))
-		. = REQUEST_FAIL_NOT_POSSIBLE
-		CRASH("Failed to perform cobalt.tools API request: [json_encode(response)]")
-	return list(response["filename"], response["url"])
+	// var/static/list/valid_status = list("redirect", "tunnel")
+	// var/status = response["status"]
+	// if(!(status in valid_status))
+	// 	. = REQUEST_FAIL_NOT_POSSIBLE
+	// 	CRASH("Failed to perform cobalt.tools API request: [json_encode(response)]")
+	// return list(response["filename"], response["url"])
 
 #undef REQUEST_FAIL_BAD_URL
 #undef REQUEST_FAIL_NOT_POSSIBLE

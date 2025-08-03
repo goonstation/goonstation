@@ -11,7 +11,7 @@ Example out of game log call:
 //We save this as html because the non-diary logging currently has html tags in place
 
 
-#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG(log2, text) world.log << text
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
 var/global/roundLog_date = time2text(world.realtime, "YYYY-MM-DD-hh-mm")
