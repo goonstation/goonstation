@@ -78,7 +78,7 @@
 #define rustg_dbp_generate(seed, accuracy, stamp_size, world_size, lower_range, upper_range) "69"
 
 #define rustg_file_read(fname) "69"
-#define rustg_file_exists(fname) TRUE
+#define rustg_file_exists(fname) round(rand(), 1)
 #define rustg_file_write(text, fname) world.log << null
 
 #define RUSTG_HTTP_METHOD_GET "get"
@@ -96,7 +96,7 @@
 #define RUSTG_JOB_NO_SUCH_JOB "NO SUCH JOB"
 #define RUSTG_JOB_ERROR "JOB PANICKED"
 
-#define rustg_json_is_valid(text) TRUE
+#define rustg_json_is_valid(text) round(rand(), 1)
 
 
 /proc/rustg_log_close_all() return TRUE
