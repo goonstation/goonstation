@@ -27,3 +27,5 @@ var/datum/preMapLoad/preMapLoad = new
 #define UNIT_TEST_TYPES /datum/unit_test/phone_crash */
 
 #define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1
+
+// #define TRACY_PROFILER_HOOK

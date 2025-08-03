@@ -86,7 +86,7 @@ var/server_rebuild_file_path = "data/triggers/rebuild"
 #if defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
-
+	world.log << "Shutting down after testing for runtimes."
 	logTheThing(LOG_DIARY, null, "Shutting down after testing for runtimes.", "admin")
 	if (isnull(runtimeDetails))
 		text2file("Runtime checking failed due to missing runtimeDetails global list", "errors.log")
