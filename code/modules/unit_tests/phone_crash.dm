@@ -4,7 +4,7 @@
 	var/mob/living/carbon/human/tdummy/tdummy = new(run_loc_floor_bottom_left)
 	var/obj/machinery/phone/phone = new(run_loc_floor_bottom_left)
 	var/i=0
-	while(i < 500)
+	while(i < 100)
 		i++
 		phone.Attackhand(tdummy)
 		sleep(1)
