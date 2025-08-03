@@ -40,6 +40,10 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 var/regex/mutable_tags_regex = regex(@"(\<\/?mutable\>)", "g")
 /// Strips mutable tags from a string.
 #define STRIP_MUTABLE_CONTENT_TAGS(CONTENT) global.mutable_tags_regex.Replace(CONTENT, "")
+/// Selects the immutable content from a string, alongside mutable tags.
+var/regex/immutable_content_regex = regex(@"<\/mutable>.*?<mutable>|<mutable>|<\/mutable>", "g")
+/// Strips immutable tags and content from a string.
+#define STRIP_IMMUTABLE_CONTENT(CONTENT) global.immutable_content_regex.Replace(CONTENT, "")
 /// Selects all the HTML tags present in a string.
 var/regex/html_tags_regex = regex(@"(\<.*?\>)", "g")
 /// Ensures that all the HTML tags in a string are outside of mutable content tags.

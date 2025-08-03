@@ -212,6 +212,11 @@
 	// Handle message mutability.
 	// Strip any existing mutable tags.
 	message = STRIP_MUTABLE_CONTENT_TAGS(message)
+
+	// At this point return if the message is empty, so to avoid inserting empty mutable tags.
+	if (!message)
+		return
+
 	// If the message should not strip HTML, make the HTML tags immutable.
 	if (src.flags & SAYFLAG_IGNORE_HTML)
 		message = MAKE_HTML_TAGS_IMMUTABLE(message)
@@ -221,6 +226,7 @@
 			boutput(src.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 
 		return
+
 	// Declare the message mutable.
 	message = MAKE_CONTENT_MUTABLE(message)
 
