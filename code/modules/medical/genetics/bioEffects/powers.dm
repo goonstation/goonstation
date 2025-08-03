@@ -1191,7 +1191,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				split_item.set_loc(get_turf(the_item))
 				the_object = split_item
 
-		if (!src.linked_power)
+		if (!src.linked_power)//////////// todo figure this out
 			src.owner.visible_message("[src.owner] touches [the_object].")
 		else if (misfire)
 			transmute_flesh(the_object)
