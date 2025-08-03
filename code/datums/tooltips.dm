@@ -20,8 +20,9 @@
 
 	New(client/C)
 		..()
+		if (!isclient(C)) return
 		SPAWN(0)
-			if (!C) return
+			if (!isclient(C)) return
 			src.owner = C
 			src.clearAll()
 			src.loadAssets()
@@ -282,7 +283,7 @@
 		PRIVATE_PROC(TRUE)
 		if (!src.target) return FALSE
 		var/atom/refTarget = src.target.deref()
-		return src.showing && !src.hiding && src.loaded && target == refTarget
+		return src.showing && !src.hiding && src.loaded && refTarget && target == refTarget
 
 	proc/build()
 		PRIVATE_PROC(TRUE)
@@ -349,6 +350,10 @@
 		src.preloading = FALSE
 		src.hiding = FALSE
 		src.target = get_weakref(target)
+
+		if (isnull(src.target))
+			// Failed to get a weakref to the target, it's probably queued for deletion
+			return
 
 		if (!update) src.options.reset()
 		if (mouse) src.options.setMouse(mouse)
