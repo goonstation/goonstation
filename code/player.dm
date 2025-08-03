@@ -261,6 +261,7 @@
 
 	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/unlock_medal_sync(medal_name, announce=FALSE)
+		if (!medal_name) return FALSE
 		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
 
 		try
@@ -295,6 +296,7 @@
 
 	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/clear_medal(medal_name)
+		if (!medal_name) return FALSE
 		var/datum/apiRoute/players/medals/delete/deleteMedal = new
 		deleteMedal.buildBody(src.id ? src.id : null, src.ckey, medal_name)
 

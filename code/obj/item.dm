@@ -232,6 +232,7 @@ ABSTRACT_TYPE(/obj/item)
 	proc/tooltipHook(datum/tooltipOptions/options)
 		if (src.z != 0 || options.mouse["bottom"]["tiles"] != 1) return
 		var/mob/living/carbon/human/withinMob = src.stored?.linked_item.loc || src.loc
+		if (!istype(withinMob)) return
 		var/datum/hud/human/hud = withinMob?.hud
 
 		// If the mob is using goon HUD style, and the item is within the bottom row of the two-row style inventory
@@ -272,11 +273,11 @@ ABSTRACT_TYPE(/obj/item)
 
 					var/withinStorage = !!src.stored?.linked_item.loc
 					var/mob/living/carbon/human/withinMob = withinStorage ? src.stored.linked_item.loc : src.loc
-					var/datum/hud/human/hud = withinMob?.hud
+					var/datum/hud/human/hud = istype(withinMob) ? withinMob.hud : null
 
-					// If we're over an item that's stored in a container a mob has equipped
-					if (withinStorage && istype(hud) && hud.layout_style != "tg")
-						tooltipAlign = TOOLTIP_RIGHT | TOOLTIP_CENTER
+						// If we're over an item that's stored in a container a mob has equipped
+						if (withinStorage && istype(hud) && hud.layout_style != "tg")
+							tooltipAlign = TOOLTIP_RIGHT | TOOLTIP_CENTER
 
 				usr.client.tooltips.show(arglist(list(
 					"type" = TOOLTIP_HOVER,
