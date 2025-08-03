@@ -59,6 +59,12 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 	src.client_auth_intent = new()
 	src.client_auth_provider = null
 
+	// The user previously failed a gate check and rejoined.
+	// So delete the unauthed mob so they arent stuck in it if they pass auth this time.
+	if (istype(src.mob, /mob/unauthed))
+		qdel(src.mob)
+		src.mob = null
+
 	for (var/datum/client_auth_gate/gate in pre_auth_gates)
 		if (!gate.check(src))
 			gate.fail(src)
