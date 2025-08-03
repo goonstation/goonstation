@@ -40,11 +40,11 @@
 #endif
 
 // Handle 515 call() -> call_ext() changes
-#if DM_VERSION >= 515
-#define RUSTG_CALL call_ext
-#else
-#define RUSTG_CALL call
-#endif
+// #if DM_VERSION >= 515
+// #define RUSTG_CALL call_ext
+// #else
+// #define RUSTG_CALL call
+// #endif
 
 
 /**

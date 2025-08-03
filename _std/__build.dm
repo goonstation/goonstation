@@ -31,6 +31,8 @@ o+`        `-` ``..-:yooos-..----------..`
 #define UNIT_TESTS
 #define UNIT_TEST_TYPES /datum/unit_test/phone_crash
 
+// #define TRACY_PROFILER_HOOK
+
 //------------ OPTIONS TO GO FAST ------------//
 
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
