@@ -1008,6 +1008,7 @@ TYPEINFO(/obj/item/chair/folded)
 	name = "comfy brown chair"
 	desc = "This advanced seat commands authority and respect. Everyone is super envious of whoever sits in this chair."
 	icon_state = "chair_comfy"
+	appearance_flags = LONG_GLIDE | PIXEL_SCALE | KEEP_TOGETHER
 	comfort_value = 7
 	foldable = 0
 	deconstructable = 1
