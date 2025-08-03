@@ -360,7 +360,7 @@ TYPEINFO(/obj/machinery/phone)
 	qdel(src.handset)
 	src.handset = null
 	src.icon_state = "[phone_icon]"
-	tgui_process.close_uis(src)
+	tgui_process?.close_uis(src)
 	src.UpdateIcon()
 	playsound(src.loc, 'sound/machines/phones/hang_up.ogg', 2, 0)
 
