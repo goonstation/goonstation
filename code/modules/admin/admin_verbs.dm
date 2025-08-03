@@ -484,6 +484,7 @@ var/list/admin_verbs = list(
 		/client/proc/rebuild_flow_networks,
 		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
+		/client/proc/toggle_server_rebuild,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
