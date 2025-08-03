@@ -1,4 +1,15 @@
 
+(t)sat aug 02 25
+(u)Goonstation Development Team
+(*)For now, we have reverted the servers back to BYOND 515 due to crashing issues. There is no need to downgrade your clients aside from some slight UI bugs.
+(u)Munien
+(p)24255
+(e)🎨|C-Sprites
+(+)Added a few new tanktop variants to the clothing booth.
+(u)JORJ949
+(p)24139
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)Roundstart head of staff announcements will now be ordered by rank.
 (t)thu jul 31 25
 (u)aloe
 (+)There will now be a confirmation pop-up when you click a server link from the title menu.
