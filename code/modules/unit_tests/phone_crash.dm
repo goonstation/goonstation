@@ -1,7 +1,7 @@
 /datum/unit_test/phone_crash
 
 /datum/unit_test/phone_crash/Run()
-	var/mob/living/carbon/human/tdummy/tdummy = new(run_loc_floor_bottom_left)
+	var/mob/living/carbon/human/tdummy/tdummy = new(locate(run_loc_floor_bottom_left.x+1,run_loc_floor_bottom_left.y,run_loc_floor_bottom_left.z))
 	var/obj/machinery/phone/phone = new(run_loc_floor_bottom_left)
 	var/i=0
 	while(i < 100)
