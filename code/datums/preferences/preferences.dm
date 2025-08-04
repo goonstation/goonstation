@@ -73,6 +73,7 @@ var/list/removed_jobs = list(
 	var/use_azerty = FALSE // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
+	var/use_satchel //Automatically convert backpack to satchel?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -100,6 +101,8 @@ var/list/removed_jobs = list(
 	var/tooltip_option = TOOLTIP_ALWAYS
 
 	var/scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
+
+	var/middle_mouse_swap = FALSE
 
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
 
@@ -244,6 +247,7 @@ var/list/removed_jobs = list(
 			"chatsound" = src.AH.voicetype,
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
+			"useSatchel" = src.use_satchel,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -270,6 +274,7 @@ var/list/removed_jobs = list(
 			"targetingCursorPreview" = icon2base64(icon(cursors_selection[src.target_cursor])),
 			"tooltipOption" = src.tooltip_option,
 			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
+			"middleMouseSwap" = src.middle_mouse_swap,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
 			"viewChangelog" = src.view_changelog,
@@ -504,6 +509,11 @@ var/list/removed_jobs = list(
 			if ("toggle-hyphenation")
 				src.hyphenate_name = !src.hyphenate_name
 				src.set_real_name()
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("toggle-satchel")
+				src.use_satchel = !src.use_satchel
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -904,7 +914,10 @@ var/list/removed_jobs = list(
 					src.scrollwheel_limb_targeting = params["value"]
 					src.profile_modified = TRUE
 					return TRUE
-
+			if ("update-middleMouseSwap")
+				src.middle_mouse_swap = !src.middle_mouse_swap
+				src.profile_modified = TRUE
+				return TRUE
 			if ("update-tguiFancy")
 				src.tgui_fancy = !src.tgui_fancy
 				src.profile_modified = TRUE

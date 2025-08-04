@@ -59,7 +59,7 @@
 		src.fingerprintslast = M.key
 	if(M.mind?.color)
 		var/datum/forensic_data/basic/color_data = new(M.mind.color, flags = 0)
-		src.forensic_holder.add_evidence(color_data, FORENSIC_GROUP_SLEUTH)
+		src.add_evidence(color_data, FORENSIC_GROUP_SLEUTH)
 
 /// Add a fingerprint to an atom directly. Doesn't interact with hidden prints at all
 /atom/proc/add_fingerprint_direct(print)
