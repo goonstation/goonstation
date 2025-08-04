@@ -15,6 +15,7 @@
 	activ_text = "opens up, revealing a strange horn!"
 	deact_text = "closes itself up."
 	react_xray = list(8,60,80,6,"TUBULAR")
+	combine_flags = ARTIFACT_COMBINES_INTO_ANY | ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/range
 	var/picked_emote
 	var/recharge_time
@@ -47,7 +48,7 @@
 			return
 
 		var/turf/T = get_turf(O)
-		T.visible_message("<b>[O]</b> emits a weird noise!")
+		T.visible_message("<b>[O.get_uppermost_artifact()]</b> emits a weird noise!")
 
 		var/count = 0
 		for (var/mob/living/L in range(range,O))

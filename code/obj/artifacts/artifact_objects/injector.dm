@@ -15,6 +15,8 @@
 	activ_text = "opens up, revealing an array of strange needles!"
 	deact_text = "closes itself up."
 	react_xray = list(8,60,75,11,"SEGMENTED")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_ANY
+	combine_effect_priority = ARTIFACT_COMBINATION_TOUCHED
 	var/list/injection_reagents = list()
 	var/injection_amount = 10
 
@@ -54,7 +56,7 @@
 			return
 		if (user.reagents && length(injection_reagents) > 0)
 			var/turf/T = get_turf(O)
-			T.visible_message("<b>[O]</b> jabs [user] with a needle and injects something!")
+			T.visible_message("<b>[O.get_uppermost_artifact()]</b> jabs [user] with a needle and injects something!")
 			for (var/X in injection_reagents)
 				ArtifactLogs(user, null, O, "touched by [user.real_name]", "injecting [X]", 0) // Added (Convair880).
 				user.reagents.add_reagent(X,injection_amount)
