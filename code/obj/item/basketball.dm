@@ -186,7 +186,7 @@
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "bbasket0"
 	event_handler_flags = USE_FLUID_ENTER
 	var/mounted = 0
