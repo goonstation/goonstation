@@ -170,14 +170,16 @@ This is because if one 'square' element was used to cover the entire space, you 
 		var/pos_x = tg_layout ? (ABS_SCREEN_CENTER_X - 1/2 - slots_per_group/2) : 1 //! The leftmost starting position for the inventory
 		var/pos_y = tg_layout ? 2 : 1 //! The bottommost starting position for the inventory
 		var/width = tg_layout ? (pos_x + slots_per_group-1) : (pos_y + groups-1-(groups>1?1:0)) //! Width which is accurate for either goon/tg layout
-		var/height = tg_layout ? (pos_y + groups-1-(groups>1?1:0)) : (pos_x + slots_per_group-1) //! Height which is accurate for either goon/tg layout
+		var/height = tg_layout ? (pos_y + groups-1-(groups>1?1:0)) : (slots_per_group) //! Height which is accurate for either goon/tg layout
 
 		src.primary_group.screen_loc = "[pos_x],[pos_y]:[pixel_y_adjust] to [width],[height]:[pixel_y_adjust]"
 
 		// Only setup secondary group if its needed
+		var/primary_cluster_slots = null
+		var/secondary_cluster_slots = null
 		if (groups > 1)
-			var/primary_cluster_slots = ((groups-2)*MAX_GROUP_SIZE) + (MAX_GROUP_SIZE-1) // Middle row storage slots + Bottom row storage slots
-			var/secondary_cluster_slots = max_slots - primary_cluster_slots // Will always range from 1 to MAX_GROUP_SIZE
+			primary_cluster_slots = ((groups-2)*MAX_GROUP_SIZE) + (MAX_GROUP_SIZE-1) // Middle row storage slots + Bottom row storage slots
+			secondary_cluster_slots = max_slots - primary_cluster_slots // Will always range from 1 to MAX_GROUP_SIZE
 			if (isnull(src.secondary_group))
 				src.secondary_group = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
 			var/start_x = tg_layout ? pos_x : (pos_x+groups-1)
@@ -189,21 +191,24 @@ This is because if one 'square' element was used to cover the entire space, you 
 		close_button.screen_loc = "[pos_x-(tg_layout ? 1/2 : 0)]:[pixel_y_adjust],[pos_y]:[pixel_y_adjust]"
 
 		src.obj_locs = list()
-		var/i = 1 // start at 1 to skip x on first group
+		var/iter = tg_layout ? 1 : 1 // start at 1 to skip x on first group unless we are goonhud in which case we are skipping iteration i==slots_per_group
 		var/offset_x
 		var/offset_y
 		for (var/obj/item/I as anything in hud_contents)
 			if (!(I in src.objects)) // ugh
 				add_object(I, HUD_LAYER+1)
-			offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
-			offset_y = tg_layout ? round(i/slots_per_group) : (height-i%slots_per_group)
+			offset_x = tg_layout ? (iter%slots_per_group) : round(iter/slots_per_group)
+			offset_y = tg_layout ? round(iter/slots_per_group) : (height-(iter%slots_per_group))
+			if (!tg_layout)
+				if (iter > primary_cluster_slots) // items need to be brought down through the empty space when in the last group
+					offset_y -= (pos_y + height - secondary_cluster_slots)
 			var/obj_loc = "[pos_x+offset_x],[pos_y+offset_y]" //no pixel coords cause that makes click detection harder above
 			var/final_loc = "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 			I.screen_loc = do_hud_offset_thing(I, final_loc)
 			src.obj_locs[obj_loc] = I
-			i++
-		offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
-		offset_y = tg_layout ? round(i/slots_per_group) : (i%slots_per_group)
+			iter++
+		offset_x = tg_layout ? (iter%slots_per_group) : round(iter/slots_per_group)
+		offset_y = tg_layout ? round(iter/slots_per_group) : (iter%slots_per_group)
 		empty_obj_loc =  "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 		master.linked_item?.UpdateIcon()
 		src.update_box_icons(user)
