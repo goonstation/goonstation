@@ -208,7 +208,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 			src.obj_locs[obj_loc] = I
 			i++
 		offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
-		offset_y = tg_layout ? round(i/slots_per_group) : (i%slots_per_group)
+		offset_y = tg_layout ? round(i/slots_per_group) : (height-(i%slots_per_group))
 		empty_obj_loc =  "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 		master.linked_item?.UpdateIcon()
 		src.update_box_icons(user)
