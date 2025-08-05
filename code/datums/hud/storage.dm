@@ -196,7 +196,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 			if (!(I in src.objects)) // ugh
 				add_object(I, HUD_LAYER+1)
 			offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
-			offset_y = tg_layout ? round(i/slots_per_group) : (i%slots_per_group)
+			offset_y = tg_layout ? round(i/slots_per_group) : (height-i%slots_per_group)
 			var/obj_loc = "[pos_x+offset_x],[pos_y+offset_y]" //no pixel coords cause that makes click detection harder above
 			var/final_loc = "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 			I.screen_loc = do_hud_offset_thing(I, final_loc)
