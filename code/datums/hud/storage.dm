@@ -200,7 +200,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 			offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
 			offset_y = tg_layout ? round(i/slots_per_group) : (height-(i%slots_per_group))
 			if (!tg_layout)
-				if (i > primary_cluster_slots) // items need to be brought down through the empty space when in the last group
+				if (groups > 1 && i > primary_cluster_slots) // items need to be brought down through the empty space when in the last group
 					offset_y -= (pos_y + height - secondary_cluster_slots)
 			var/obj_loc = "[pos_x+offset_x],[pos_y+offset_y]" //no pixel coords cause that makes click detection harder above
 			var/final_loc = "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
