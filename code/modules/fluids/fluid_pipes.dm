@@ -148,6 +148,16 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/fluid_tank/initialize_dir_vars()
 	src.initialize_directions = src.dir
 
+/obj/fluid_pipe/fluid_tank/attackby(obj/item/I, mob/user) //let's just make these breakable for now
+	if (I.force)
+		src.visible_message(SPAN_ALERT("[user] hits \the [src] with \a [I]!"))
+		user.lastattacked = get_weakref(src)
+		attack_particle(user,src)
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+		src.changeHealth(-I.force)
+	..()
+
 /obj/fluid_pipe/fluid_tank/see_fluid
 	icon_state = "tank-view"
 
