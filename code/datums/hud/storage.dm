@@ -199,9 +199,8 @@ This is because if one 'square' element was used to cover the entire space, you 
 				add_object(I, HUD_LAYER+1)
 			offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
 			offset_y = tg_layout ? round(i/slots_per_group) : (height-(i%slots_per_group))
-			if (!tg_layout)
-				if (groups > 1 && i > primary_cluster_slots) // items need to be brought down through the empty space when in the last group
-					offset_y -= (pos_y + height - secondary_cluster_slots)
+			if (!tg_layout && groups > 1 && i > primary_cluster_slots) // items need to be brought down through the empty space when in the last group
+				offset_y -= (pos_y + height - secondary_cluster_slots)
 			var/obj_loc = "[pos_x+offset_x],[pos_y+offset_y]" //no pixel coords cause that makes click detection harder above
 			var/final_loc = "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 			I.screen_loc = do_hud_offset_thing(I, final_loc)
@@ -209,6 +208,8 @@ This is because if one 'square' element was used to cover the entire space, you 
 			i++
 		offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
 		offset_y = tg_layout ? round(i/slots_per_group) : (height-(i%slots_per_group))
+		if (!tg_layout && groups > 1 && i > primary_cluster_slots)
+			offset_y -= (pos_y + height - secondary_cluster_slots)
 		empty_obj_loc =  "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 		master.linked_item?.UpdateIcon()
 		src.update_box_icons(user)
