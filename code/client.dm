@@ -254,9 +254,10 @@
 	src.send_lobby_text()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
-	src.player.id = src.client_auth_intent.player_id || 0
-	src.player.record_login()
-	src.player.setup(src.key)
+	src.player = make_player(src.key)
+	src.player.id = src.client_auth_intent.player_id || src.player.id
+	if (!src.client_auth_intent.can_skip_player_login) src.player.record_login()
+	src.player.on_client_authenticated()
 
 	if (isnewplayer(src.mob))
 		var/mob/new_player/new_player = src.mob
@@ -769,9 +770,13 @@ var/global/curr_day = null
 	set hidden = 1
 	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
-	if (server)
-		boutput(src, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
-		src << link(game_server.url)
+	if (game_server)
+		if (tgui_alert(src, "Are you sure you want to switch to [game_server.name]?", "Server Change Confirmation", list("Yes", "No"), 30 SECONDS) == "Yes")
+			if (istype(src.mob, /mob/new_player)) // just in case
+				boutput(src, "<h3>[SPAN_SUCCESS("You are being redirected to [game_server.name]...")]</h3>")
+				src << link(game_server.url)
+			else
+				boutput(src, "<h3>[SPAN_ALERT("You're already in the round, switch servers the normal way!")]</h3>")
 
 /client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
 	set name = "Download Sprite"

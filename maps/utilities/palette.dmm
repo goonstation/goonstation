@@ -1544,19 +1544,11 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
 	},
 /turf/simulated/floor,
 /area/space)
@@ -10256,19 +10248,11 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 2;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
 	},
 /turf/simulated/floor/yellow,
 /area/space)
@@ -11035,31 +11019,17 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
+/obj/machinery/camera/directional/south{
+	pixel_x = 10
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
+/obj/machinery/camera/directional/west{
+	pixel_y = -10
 	},
 /turf/simulated/floor,
 /area/space)

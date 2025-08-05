@@ -58,9 +58,6 @@
 	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter) || src.AddComponent(/datum/component/camera_coverage_emitter)
 	emitter.set_active(src.camera_status)
 
-/obj/machinery/camera/television/autoposition()
-	return
-
 /datum/action/bar/icon/cameraSecure //This is used when you are securing a non-mobile television camera
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
