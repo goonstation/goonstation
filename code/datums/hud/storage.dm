@@ -191,24 +191,24 @@ This is because if one 'square' element was used to cover the entire space, you 
 		close_button.screen_loc = "[pos_x-(tg_layout ? 1/2 : 0)]:[pixel_y_adjust],[pos_y]:[pixel_y_adjust]"
 
 		src.obj_locs = list()
-		var/iter = 1
+		var/i = 1
 		var/offset_x
 		var/offset_y
 		for (var/obj/item/I as anything in hud_contents)
 			if (!(I in src.objects)) // ugh
 				add_object(I, HUD_LAYER+1)
-			offset_x = tg_layout ? (iter%slots_per_group) : round(iter/slots_per_group)
-			offset_y = tg_layout ? round(iter/slots_per_group) : (height-(iter%slots_per_group))
+			offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
+			offset_y = tg_layout ? round(i/slots_per_group) : (height-(i%slots_per_group))
 			if (!tg_layout)
-				if (iter > primary_cluster_slots) // items need to be brought down through the empty space when in the last group
+				if (i > primary_cluster_slots) // items need to be brought down through the empty space when in the last group
 					offset_y -= (pos_y + height - secondary_cluster_slots)
 			var/obj_loc = "[pos_x+offset_x],[pos_y+offset_y]" //no pixel coords cause that makes click detection harder above
 			var/final_loc = "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 			I.screen_loc = do_hud_offset_thing(I, final_loc)
 			src.obj_locs[obj_loc] = I
-			iter++
-		offset_x = tg_layout ? (iter%slots_per_group) : round(iter/slots_per_group)
-		offset_y = tg_layout ? round(iter/slots_per_group) : (iter%slots_per_group)
+			i++
+		offset_x = tg_layout ? (i%slots_per_group) : round(i/slots_per_group)
+		offset_y = tg_layout ? round(i/slots_per_group) : (i%slots_per_group)
 		empty_obj_loc =  "[pos_x+offset_x],[pos_y+offset_y]:[pixel_y_adjust]"
 		master.linked_item?.UpdateIcon()
 		src.update_box_icons(user)
