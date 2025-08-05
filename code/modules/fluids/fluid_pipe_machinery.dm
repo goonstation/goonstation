@@ -165,6 +165,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 	name = "Hand Pump"
 	icon_state = "output0"
 	desc = "A hand-operated pump."
+	flags = NOSPLASH
 
 	var/pullrate = 100
 
@@ -178,6 +179,27 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 	fluid?.trans_to(T, fluid.total_volume)
 	qdel(fluid)
 
+/obj/machinery/fluid_pipe_machinery/unary/hand_pump/attackby(obj/item/I, mob/user)
+	if(!I.is_open_container(TRUE))
+		return
+
+	if (I.reagents.total_volume >= I.reagents.maximum_volume)
+		boutput(user, SPAN_ALERT("[src] is full."))
+		return
+
+	FLICK("output1", src)
+	if(!src.network)
+		return
+
+	if (!src.network.reagents.total_volume)
+		boutput(user, SPAN_ALERT("You tried to fill [I] from [src], but nothing came out!"))
+		return
+
+	var/turf/simulated/T = get_turf(src)
+	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
+	boutput(user, SPAN_NOTICE("You fill [I] with [fluid?.trans_to(I, fluid.total_volume)] units of the contents of [src]."))
+	qdel(fluid)
+	playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
 /obj/machinery/fluid_pipe_machinery/unary/dispenser
 	name = "Dispenser"
