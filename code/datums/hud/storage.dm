@@ -191,7 +191,7 @@ This is because if one 'square' element was used to cover the entire space, you 
 		close_button.screen_loc = "[pos_x-(tg_layout ? 1/2 : 0)]:[pixel_y_adjust],[pos_y]:[pixel_y_adjust]"
 
 		src.obj_locs = list()
-		var/iter = tg_layout ? 1 : 1 // start at 1 to skip x on first group unless we are goonhud in which case we are skipping iteration i==slots_per_group
+		var/iter = 1
 		var/offset_x
 		var/offset_y
 		for (var/obj/item/I as anything in hud_contents)
