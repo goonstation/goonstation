@@ -926,7 +926,7 @@ datum/pump_ui/circulator_ui
 
 		if(semiconductor)
 			//Bound contribution of the semiconductor to +/- 25
-			var/semi_contribution = clamp(src.semiconductor.efficiency_offset, -25, 25)
+			var/semi_contribution = clamp(src.semiconductor.efficiency_offset, -25,48)
 			efficiency_scale += semi_contribution
 
 		if(src.generator_flags & (TEG_HIGH_TEMP | TEG_LOW_TEMP))
