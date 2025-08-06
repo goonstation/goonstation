@@ -78,6 +78,7 @@
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
+		/datum/manufacture/bullet_9mm_frangible,
 		/datum/manufacture/stapler,
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/fiddle,
