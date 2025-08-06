@@ -690,8 +690,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 6)
 		setProperty("hard", 5)
 		setProperty("chemical", 7)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/bohrum_add())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/bohrum_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/bohrum())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/metal/mauxite
@@ -707,8 +707,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 4)
 		setProperty("hard", 3)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/mauxite_add())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/mauxite_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/mauxite())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/metal/cerenkite
@@ -725,8 +725,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 5)
 		setProperty("hard", 2)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/cerenkite_add())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/cerenkite_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/cerenkite())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/metal/syreline
@@ -907,8 +907,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		material_flags|= MATERIAL_ENERGY
 		setProperty("density", 4)
 		setProperty("hard", 2)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/soulsteel_add())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/soulsteel_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/soulsteel())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
@@ -993,8 +993,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 1)
 		setProperty("electrical", 8)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/claretine_add())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/claretine_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/claretine())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/crystal/erebite
