@@ -3320,8 +3320,15 @@ var/list/lag_list = new/list()
 				active_mode.saved_var = input(usr,"Enter ID","ID","MyId") as text
 				if(!active_mode.saved_var || isnull(active_mode.saved_var)) active_mode = null
 
-			if(istype(active_mode,/datum/engibox_mode/transmute)) //You only have yourself to blame for this. This shitty code is the fault of whoever changed this!!!
-				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","brullbarhide","cotton","fibrilith")
+			// Get a list of every material ID
+			if(istype(active_mode,/datum/engibox_mode/transmute))
+				var/list/mat_options = list()
+				for(var/mat in concrete_typesof(/datum/material))
+					var/datum/material/dummy = new mat
+					mat_options += dummy.getID()
+				mat_options -= "imcoderium"
+				sortList(mat_options, /proc/cmp_text_asc)
+				active_mode:mat_id = input(usr,"Select material","material","gold") in mat_options
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null
