@@ -668,17 +668,18 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/remove_color_hsl
 	execute(atom/owner)
-		var/mat_id = owner.material.getID()
-		owner.remove_filter("[mat_id]_color")
+		var/removed_mat_id = owner.material.getID()
+		owner.remove_filter("[removed_mat_id]_color")
 
 /datum/materialProc/spacelag_add
 	execute(atom/owner)
-		// if(endswith(owner.icon_state, "$$spacelag")) // Commented out for now so that spacelag ingots also change color
-		// 	return
+		if(endswith(owner.icon_state, "$$spacelag"))
+			return
 		if (!isturf(owner))
 			animate_lag(owner)
 			var/outline_filter = outline_filter(1, "#003800", OUTLINE_SHARP) // Outline color gets changed by material color
 			owner.add_filter("spacelag_outline", 20, outline_filter)
+		return
 
 /datum/materialProc/spacelag_remove
 	execute(var/atom/location)
