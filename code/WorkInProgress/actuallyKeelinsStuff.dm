@@ -3322,13 +3322,10 @@ var/list/lag_list = new/list()
 
 			// Get a list of every material ID
 			if(istype(active_mode,/datum/engibox_mode/transmute))
-				var/list/mat_options = list()
-				for(var/mat in concrete_typesof(/datum/material))
-					var/datum/material/dummy = new mat
-					mat_options += dummy.getID()
-				mat_options -= "imcoderium"
+				var/datum/engibox_mode/transmute/transmute_mode = src.active_mode
+				var/list/mat_options = global.material_cache.Copy()
 				sortList(mat_options, /proc/cmp_text_asc)
-				active_mode:mat_id = input(usr,"Select material","material","gold") in mat_options
+				transmute_mode.mat_id = input(usr,"Select material","material","gold") in mat_options
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null
