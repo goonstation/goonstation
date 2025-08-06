@@ -619,8 +619,129 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/spacelag_add
 	execute(atom/owner)
+		// if(endswith(owner.icon_state, "$$spacelag")) // Commented out for now so that spacelag ingots also change color
+		// 	return
 		if (!isturf(owner))
 			animate_lag(owner)
+			var/outline_filter = outline_filter(1, "#003800", OUTLINE_SHARP) // Outline color gets changed by material color
+			owner.add_filter("spacelag_outline", 20, outline_filter)
+
+/datum/materialProc/spacelag_remove
+	execute(var/atom/location)
+		location.remove_filter("spacelag_outline")
+		return
+
+/datum/materialProc/bohrum_add
+	execute(atom/owner)
+		if(endswith(owner.icon_state, "$$bohrum"))
+			return
+		var/list/bohrum_matrix = list(0.00, 0.00, 0.00, 0.00,\
+										0.00, 0.60, 0.00, 0.00,\
+										0.00, 0.00, 1.00, 0.00,\
+										0.00, 0.00, 0.00, 1.00,\
+										0.33, 0.10, 0.00, 0.00)
+		var/bohrum_filter = color_matrix_filter(bohrum_matrix, FILTER_COLOR_HSL)
+		owner.add_filter("bohrum_color", 5, bohrum_filter)
+
+/datum/materialProc/bohrum_remove
+	execute(var/atom/location)
+		location.remove_filter("bohrum_color")
+		return
+
+/datum/materialProc/claretine_add
+	execute(atom/owner)
+		if(endswith(owner.icon_state, "$$claretine"))
+			return
+		var/list/claretine_matrix = list(0.00, 0.00, 0.00, 0.00,\
+										0.00, 0.60, 0.00, 0.00,\
+										0.00, 0.00, 1.00, 0.00,\
+										0.00, 0.00, 0.00, 1.00,\
+										0.00, 0.10, 0.00, 0.00)
+		var/claretine_filter = color_matrix_filter(claretine_matrix, FILTER_COLOR_HSL)
+		owner.add_filter("claretine_color", 5, claretine_filter)
+
+/datum/materialProc/claretine_remove
+	execute(var/atom/location)
+		location.remove_filter("claretine_color")
+		return
+
+/datum/materialProc/cerenkite_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$cerenkite"))
+			return
+		var/list/mat_color = list(0.00, 0.00, 0.00, 0.00,\
+								0.00, 0.40, 0.00, 0.00,\
+								0.00, 0.00, 1.00, 0.00,\
+								0.00, 0.00, 0.00, 1.00,\
+								0.60, 0.10, 0.00, 0.00)
+		var/filter = color_matrix_filter(mat_color, FILTER_COLOR_HSL)
+		location.add_filter("cerenkite_color", 20, filter)
+		return
+
+/datum/materialProc/cerenkite_remove
+	execute(var/atom/location)
+		location.remove_filter("cerenkite_color")
+		return
+
+/datum/materialProc/honey_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$honey"))
+			return
+		var/offset = 0
+		if(!isturf(location))
+			offset = rand()
+		var/wave_filter = wave_filter(16, 16, 1, offset, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		location.add_filter("honey_wave", 20, wave_filter)
+
+		var/list/honey_matrix = list(0.00, 0.00, 0.00, 0.00,\
+									0.00, 0.30, 0.00, 0.00,\
+									0.00, 0.00, 1.00, 0.00,\
+									0.00, 0.00, 0.00, 1.00,\
+									0.10, 0.70, 0.00, 0.00)
+		var/color_filter = color_matrix_filter(honey_matrix, FILTER_COLOR_HSL)
+		location.add_filter("honey_color", 21, color_filter)
+		return
+
+/datum/materialProc/honey_remove
+	execute(var/atom/location)
+		location.remove_filter("honey_color")
+		location.remove_filter("honey_wave")
+		return
+
+/datum/materialProc/mauxite_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$mauxite"))
+			return
+		var/list/mat_color = list(0.00, 0.00, 0.00, 0.00,\
+								0.00, 0.35, 0.00, 0.00,\
+								0.00, 0.00, 0.90, 0.00,\
+								0.00, 0.00, 0.00, 1.00,\
+								0.00, 0.05, -0.10, 0.00)
+		var/filter = color_matrix_filter(mat_color, FILTER_COLOR_HSL)
+		location.add_filter("mauxite_color", 20, filter)
+		return
+
+/datum/materialProc/mauxite_remove
+	execute(var/atom/location)
+		location.remove_filter("mauxite_color")
+		return
+
+/datum/materialProc/soulsteel_add
+	execute(atom/owner)
+		if(endswith(owner.icon_state, "$$soulsteel"))
+			return
+		var/list/soulsteel_matrix = list(0.00, 0.00, 0.00, 0.00,\
+										0.00, 0.80, 0.00, 0.00,\
+										0.00, 0.00, 1.00, 0.00,\
+										0.00, 0.00, 0.00, 1.00,\
+										0.00, 0.20, 0.00, 0.00)
+		var/soulsteel_filter = color_matrix_filter(soulsteel_matrix, FILTER_COLOR_HSL)
+		owner.add_filter("soulsteel_color", 5, soulsteel_filter)
+
+/datum/materialProc/soulsteel_remove
+	execute(var/atom/location)
+		location.remove_filter("soulsteel_color")
+		return
 
 /datum/materialProc/temp_miraclium
 	execute(var/atom/location, var/temp)
