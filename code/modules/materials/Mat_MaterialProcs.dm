@@ -625,6 +625,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/added_mat_id = owner.material.getID()
 		if(endswith(owner.icon_state, "$$[added_mat_id]"))
 			return
+		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
+			return
 		var/color_filter = color_matrix_filter(color_matrix, FILTER_COLOR_HSL)
 		owner.add_filter("[added_mat_id]_color", 5, color_filter)
 		return
