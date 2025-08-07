@@ -1,5 +1,4 @@
-
-(t)sat aug 02 25
+(t)wed aug 06 25
 (u)Goonstation Developer Team & Contributors
 (e)🆕|C-Feature
 (*)We've updated to BYOND 516! It's now required to play on Goonstation. If you have any issues: check the minor changes for some tips, ask on the Discord, or mentor/adminhelp.
@@ -12,6 +11,10 @@
 (u)Wire
 (e)🪲🔄📄|C-Bug, C-Rework, A-UI
 (*)Complete rewrite of tooltips for better performance and a host of bug fixes. If you encounter any issues, be sure to submit a bug report! Including screenshots would be helpful.
+(t)mon aug 04 25
+(u)LeahTheTech
+(+)Instruments with only one note (whistles etc.) no longer use the instrument audio channel. Get whistled at.
+(t)sat aug 02 25
 (u)Munien
 (p)24255
 (e)🎨|C-Sprites

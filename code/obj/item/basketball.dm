@@ -182,16 +182,17 @@
 
 /obj/item/bballbasket
 	name = "basketball hoop" // it's a hoop you nerd, not a basket
-	desc = "Can be mounted on walls."
+	desc = "Ideal for dunking basketballs, among other things."
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "bbasket0"
 	event_handler_flags = USE_FLUID_ENTER
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40
+	HELP_MESSAGE_OVERRIDE("Use on a wall to mount it. Use a <b>wrench</b> to unmount it from the wall.")
 
 	New()
 		..()
@@ -247,9 +248,9 @@
 
 	Crossed(atom/movable/A)
 		..()
-		if (src.active)
+		if (src.active || !src.mounted)
 			return
-		if (istype(A, /obj/item/bballbasket)) // oh for FUCK'S SAKE
+		if (istypes(A, list(/obj/item/bballbasket, /obj/item/dummy))) // oh for FUCK'S SAKE
 			return // NO
 		if (isitem(A))
 			src.shoot(A)
@@ -302,6 +303,22 @@
 		SPAWN(2.3 SECONDS)
 			A.invisibility = INVIS_NONE
 			src.active = 0
+
+/obj/item/bballbasket/mounted
+	anchored = ANCHORED
+	mounted = TRUE
+
+	New()
+		. = ..()
+		switch (src.dir)
+			if (NORTH)
+				src.pixel_y = 20
+			if (SOUTH)
+				src.pixel_y = -20
+			if (EAST)
+				src.pixel_x = 20
+			if (WEST)
+				src.pixel_x = -20
 
 /obj/item/bballbasket/testing
 	probability = 100

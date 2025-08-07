@@ -1,5 +1,6 @@
 /datum/client_auth_gate/version
 	check(client/C)
+
 		#ifndef LIVE_SERVER
 		. = TRUE
 		UNLINT(return)
@@ -12,7 +13,7 @@
 
 		if (C.byond_version >= 517)
 			if (tgui_alert(C, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				C << link("https://spacestation13.github.io/byond-builds/516/516_latest.exe")
+				C << link("https://spacestation13.github.io/byond-builds/516/516.latest_byond.exe")
 			return TRUE
 
 		logTheThing(LOG_ADMIN, C, "connected with outdated client version [C.byond_version].[C.byond_build]. Request to update client sent to user.")
