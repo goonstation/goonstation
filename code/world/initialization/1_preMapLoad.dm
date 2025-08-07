@@ -265,6 +265,8 @@
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
 
+	sortList(global.material_cache, /proc/cmp_text_asc)
+
 /proc/buildManufacturingRequirementCache()
 	requirement_cache = list()
 	var/requirementList = concrete_typesof(/datum/manufacturing_requirement) - /datum/manufacturing_requirement/match_material

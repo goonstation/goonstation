@@ -3323,7 +3323,6 @@ var/list/lag_list = new/list()
 			// Get a list of every material ID
 			if(istype(active_mode,/datum/engibox_mode/transmute))
 				var/datum/engibox_mode/transmute/transmute_mode = src.active_mode
-				sortList(global.material_cache, /proc/cmp_text_asc)
 				transmute_mode.mat_id = input(usr,"Select material","material","gold") in global.material_cache
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
