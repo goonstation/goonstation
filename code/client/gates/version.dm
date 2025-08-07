@@ -1,7 +1,7 @@
 /datum/client_auth_gate/version
 	check(client/C)
 		// Temp notice to ugprade to 516
-		if ((config?.server_id == "main1") && C.byond_version < 516)
+		if ((config?.server_id == "main3" || config?.server_id == "main4") && C.byond_version < 516)
 			SPAWN(5 SECONDS)
 				var/beg = tgui_alert(C, "We are imminently moving to BYOND 516. Please update your client soon to the latest version for the best experience. Download 516 at https://goonhub.com/r/516", "ALERT", list("Later", "Download"), 20 SECONDS)
 				if (beg == "Download")
