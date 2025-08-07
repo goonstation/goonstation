@@ -235,11 +235,7 @@ export const backendMiddleware = (store) => {
       // Tiny window in hell to not show previous content when resumed
       Byond.winset(Byond.windowId, {
         size: '1x1',
-        // Due to this, if you have a monitor /below/ the one you play SS13 on,
-        // that will become the 'closest' screen.
-        // If it's a different resolution, TGUI windows will spawn slightly off-center
-        // (positioned relatively to the lower monitor sizing)
-        pos: '1,1000000000',
+        pos: '1,1',
         'is-visible': false,
       });
       setTimeout(() => focusMap());
