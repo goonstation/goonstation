@@ -26,8 +26,6 @@
 	if (should_init_tracy)
 		prof_init()
 
-	enable_auxtools_debugger()
-
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
 	world.Profile(PROFILE_START | PROFILE_AVERAGE, "sendmaps", "json")
@@ -56,7 +54,7 @@
 	world.log << "========================================"
 	world.log << ""
 #endif
-
+	enable_auxtools_debugger()
 	Z_LOG_DEBUG("Preload", "  radio")
 	radio_controller = new /datum/controller/radio()
 
