@@ -9379,7 +9379,8 @@
 	icon_state = "floor4"
 	},
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/h7/crew)
@@ -9636,7 +9637,8 @@
 /area/abandonedship)
 "aTo" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor/green/corner{
 	dir = 4
@@ -11164,7 +11166,8 @@
 /area/h7/lab)
 "aXO" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/h7/lab)
@@ -24673,7 +24676,8 @@
 /area/diner/hallway)
 "xZp" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 28
+	pixel_y = 28;
+	dir = 1
 	},
 /obj/machinery/vending/alcohol,
 /obj/decal/cleanable/dirt,
