@@ -3,46 +3,43 @@ set -euo pipefail
 
 source buildByond.conf
 
-PRINT_ONLY=0
-if [[ "${1:-}" == "--resolve-ref" ]]; then PRINT_ONLY=1; shift; fi
-
 REF="${SPACEMAN_DMM_REF:?SPACEMAN_DMM_REF is required}"
 REPO_URL="https://github.com/SpaceManiac/SpacemanDMM.git"
 
-# --- resolve branch -> commit (else use REF as-is for SHAs) ---
-BRANCH_SHA="$(git ls-remote "$REPO_URL" "refs/heads/${REF}" 2>/dev/null | cut -f1 || true)"
-RESOLVED_REF="${BRANCH_SHA:-$REF}"
-
-# resolve-only: output for cache key and exit
-if [[ $PRINT_ONLY -eq 1 ]]; then
-  echo "ref=$RESOLVED_REF" >> "$GITHUB_OUTPUT"
-  exit 0
-fi
-
-# fast path check for cache hit
+# Fast path: if suite is already present (cache restore), do nothing.
 if [[ -d "$HOME/SpacemanDMM" ]]; then
   shopt -s nullglob
   existing=( "$HOME/SpacemanDMM"/* )
   [[ ${#existing[@]} -gt 0 ]] && exit 0
 fi
 
-# fetch source at ref
+# Fetch the exact tag or commit (no branch logic).
 T="$(mktemp -d)"
-if [[ -n "$BRANCH_SHA" ]]; then
-  git clone --depth 1 --branch "$REF" "$REPO_URL" "$T"
-else
-  git init "$T"
-  git -C "$T" remote add origin "$REPO_URL"
-  git -C "$T" fetch --depth 1 origin "$RESOLVED_REF"
+git init "$T"
+git -C "$T" remote add origin "$REPO_URL"
+
+if [[ "$REF" =~ ^[0-9a-fA-F]{7,40}$ ]]; then
+  # Commit SHA
+  git -C "$T" fetch --depth 1 origin "$REF"
   git -C "$T" checkout --detach FETCH_HEAD
+else
+  # Tag
+  git -C "$T" fetch --depth 1 origin "refs/tags/$REF:refs/tags/$REF"
+  git -C "$T" checkout --detach "refs/tags/$REF"
 fi
 
-# build linux musl for selected crates
+# Build selected crates for linux-musl
 ( cd "$T" && cargo build --release --target x86_64-unknown-linux-musl \
-    -p dreamchecker -p dmdoc -p dmm-tools -p dm-langserver )
+  # -p dreammaker \
+	#	-p dm-langserver \
+	#	-p dmdoc \
+		-p dreamchecker \
+	#	-p dmm-tools \
+	#	-p dmm-tools-cli \
+		)
 
-# install
+# Install suite
 dest="$HOME/SpacemanDMM"
 mkdir -p "$dest"
-cp -f "$T/target/x86_64-unknown-linux-musl/release/"{dreamchecker,dmdoc,dmm-tools,dm-langserver} "$dest/" 2>/dev/null || true
+cp -f "$T/target/x86_64-unknown-linux-musl/release/"* "$dest/"
 chmod +x "$dest/"* || true

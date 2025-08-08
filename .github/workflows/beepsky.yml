@@ -16,16 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Resolve SpacemanDMM ref
-        id: smref
-        run: tools/ci/install_spaceman_dmm.sh --resolve-ref
+      - name: Read SpacemanDMM ref from config
+        id: smver
+        run: |
+          REF="$(grep -E '^SPACEMAN_DMM_REF=' buildByond.conf | cut -d= -f2)"
+          if [[ -z "$REF" ]]; then echo "SPACEMAN_DMM_REF missing"; exit 1; fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
 
       - name: Cache SpacemanDMM
         id: smcache
         uses: actions/cache@v4
         with:
           path: /home/runner/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm-${{ steps.smref.outputs.ref }}
+          key: ${{ runner.os }}-spacemandmm-${{ steps.smver.outputs.ref }}
 
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.1
@@ -186,16 +189,19 @@ jobs:
         with:
           packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
 
-      - name: Resolve SpacemanDMM ref
-        id: smref
-        run: tools/ci/install_spaceman_dmm.sh --resolve-ref
+      - name: Read SpacemanDMM ref from config
+        id: smver
+        run: |
+          REF="$(grep -E '^SPACEMAN_DMM_REF=' buildByond.conf | cut -d= -f2)"
+          if [[ -z "$REF" ]]; then echo "SPACEMAN_DMM_REF missing"; exit 1; fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
 
       - name: Cache SpacemanDMM
         id: smcache
         uses: actions/cache@v4
         with:
           path: /home/runner/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm-${{ steps.smref.outputs.ref }}
+          key: ${{ runner.os }}-spacemandmm-${{ steps.smver.outputs.ref }}
 
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.1
