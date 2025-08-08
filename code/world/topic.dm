@@ -7,19 +7,9 @@
 	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
-		var/x = 1
-		for (var/client/C)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
-				continue
-			x++
-		return x
+		return src.total_player_count()
 	else if(T == "players")
-		var/n = 0
-		for(var/client/C)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
-				continue
-			n++
-		return n
+		return src.total_player_count()
 
 	else if (T == "status")
 		var/list/s = list()
