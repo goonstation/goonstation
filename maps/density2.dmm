@@ -336,6 +336,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
+"bW" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "bZ" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -5572,6 +5576,10 @@
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/item/sticker/postit{
+	icon_state = "postit-writing";
+	words = "Post Cloning Checklist:<br>1. Arms, Legs, and Organs to QM for sale<br>2. Body into the gibber for meat, send to the chef<br>3. Scrape up the blood, etc. and refill the cloner's biomatter reserves<br>4. Supplement with monkeys as needed.<br><br>PS: Do NOT let security know we set up a robotics and cloner in the back of the mall! We got a good thing going here."
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -58005,7 +58013,7 @@ ML
 Nw
 Nw
 Nw
-Nw
+bW
 Rq
 JX
 Ub
