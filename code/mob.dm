@@ -454,8 +454,8 @@ TYPEINFO(/mob)
 		return
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
-	if(isnull(src.client?.tg_layout))
-		src.client?.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
+	if(isclient(src.client) && isnull(src.client?.tg_layout))
+		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
 	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
@@ -483,7 +483,7 @@ TYPEINFO(/mob)
 	if(src.client?.preferences)
 		src.reset_keymap()
 
-	src.client?.mouse_pointer_icon = src.cursor
+	if (isclient(src.client)) src.client.mouse_pointer_icon = src.cursor
 
 	src.lastKnownIP = src.client?.address
 	src.computer_id = src.client?.computer_id
@@ -917,20 +917,20 @@ TYPEINFO(/mob)
 // medals
 
 /mob/proc/revoke_medal(title)
-	src.mind.get_player().clear_medal(title)
+	src.mind?.get_player().clear_medal(title)
 
 /mob/proc/unlock_medal(title, announce=FALSE)
 	set waitfor = 0
 	if (!src.client)
 		return
-	src.mind.get_player().unlock_medal(title, announce)
+	src.mind?.get_player().unlock_medal(title, announce)
 
 /mob/proc/has_medal(medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
 #ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
 	return TRUE
 #else
-	return src.mind.get_player().has_medal(medal)
+	return src.mind?.get_player().has_medal(medal)
 #endif
 
 /mob/verb/list_medals()
@@ -966,6 +966,9 @@ TYPEINFO(/mob)
 /mob/verb/setdnr()
 	set name = "Set DNR"
 	set desc = "Set yourself as Do Not Resuscitate."
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to set DNR."))
+		return
 	if(isadmin(src))
 		src.mind.get_player()?.dnr = !src.mind.get_player()?.dnr
 		boutput(src, SPAN_ALERT("DNR status [src.mind.get_player()?.dnr ? "set" : "removed"]!"))
@@ -1512,7 +1515,7 @@ TYPEINFO(/mob)
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 
-	if (!( abandon_allowed ))
+	if (!( abandon_allowed ) || !src.mind)
 		return
 
 	if(!isobserver(usr) || !(ticker))
@@ -1531,6 +1534,7 @@ TYPEINFO(/mob)
 	set desc = "Displays the window to edit your character preferences"
 	set category = "Commands"
 
+	if (!src.mind) return
 	client.preferences.ShowChoices(src)
 
 /mob/verb/cmd_rules()
@@ -1549,6 +1553,7 @@ TYPEINFO(/mob)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
+	if (!src.mind) return
 	src.set_eye(null)
 	src.remove_dialogs()
 	if (!isliving(src))
@@ -1562,6 +1567,8 @@ TYPEINFO(/mob)
 	set name = "Show Credits"
 	set desc = "Open the crew credits window"
 	set category = "Commands"
+
+	if (!src.mind) return
 
 	if (global.current_state < GAME_STATE_FINISHED)
 		boutput(src, SPAN_NOTICE("The game hasn't finished yet!"))
@@ -1829,7 +1836,7 @@ TYPEINFO(/mob)
 
 	if (src.client) // I feel like every player should be ghosted when they get gibbed
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 		if (!isnull(newmob) && give_medal)
 			newmob.unlock_medal("Gore Fest", 1)
 
@@ -1930,7 +1937,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (animation)
 		animation.delaydispose()
@@ -2002,7 +2009,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (bdna && btype)
 		partygibs(src.loc, bdna, btype) // For forensics (Convair880).
@@ -2050,7 +2057,7 @@ TYPEINFO(/mob)
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (bdna && btype)
 		gibs(src.loc, null, bdna, btype) // For forensics (Convair880).
@@ -2093,7 +2100,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	elecflash(src.loc,exclude_center = 0)
 
@@ -2121,7 +2128,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 
@@ -2195,7 +2202,7 @@ TYPEINFO(/mob)
 		sleep(duration+5)
 		src.death(TRUE)
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 		qdel(floorcluwne)
 		qdel(src)
@@ -2229,7 +2236,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	var/list/ejectables = list_ejectables()
 
@@ -2995,6 +3002,8 @@ TYPEINFO(/mob)
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
+
+	src.client?.tooltips?.onMove(src.move_dir)
 
 /mob/proc/on_centcom()
 	. = FALSE

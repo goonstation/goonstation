@@ -1005,7 +1005,7 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 
 	dan
 		name = "basketball jersey"
-		desc = "A jersey worn by Smokin' Sealpups the during the last Space Olympics. It seems to be advertising something."
+		desc = "A jersey worn by Smokin' Sealpups during the last Space Olympics. It seems to be advertising something."
 		icon_state = "dan_jersey"
 		item_state = "dan_jersey"
 
