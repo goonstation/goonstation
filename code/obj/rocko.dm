@@ -183,7 +183,7 @@
 		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium")
 		if(!rock_list.Find(src.material.getID()))
 			return
-		src.icon = file("icons/obj/items/materials/[src.material.getID()].dmi")
+		src.icon = src.material.get_icon_file()
 		var/sprite_prefix = "ore"
 		var/sprite_value = pick(1,2,3,4,5,6)
 		var/list/sprite_variants = list("")
@@ -192,6 +192,7 @@
 				sprite_value = pick(1,2,3,4) // Larger bohrum stack sizes are more piles of rocks than rocks
 			if("plutonium")
 				sprite_prefix = "scrap"
+
 		// Include variants of ores if they exist
 		for(var/letter in list("b","c","d"))
 			if(is_valid_icon_state("[sprite_prefix][sprite_value][letter]_$$[src.material.getID()]"))
