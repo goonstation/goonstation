@@ -1,39 +1,4 @@
-var/list/occupations = list(
-
-	"Chief Engineer",
-	"Engineer","Engineer","Engineer",
-	"Miner","Miner","Miner",
-	"Security Officer", "Security Officer", "Security Officer",
-//	"Vice Officer",
-	"Detective",
-	"Geneticist",
-	"Pathologist",
-	"Scientist","Scientist", "Scientist",
-	"Medical Doctor", "Medical Doctor",
-	"Head of Personnel",
-//	"Head of Security",
-	"Research Director",
-	"Medical Director",
-	"Chaplain",
-	"Roboticist",
-//	"Hangar Mechanic", "Hangar Mechanic",
-	"AI",
-	"Cyborg", "Cyborg",
-	"Bartender",
-	"Chef",
-	"Janitor",
-	"Clown",
-//	"Chemist","Chemist",
-	"Quartermaster","Quartermaster",
-	"Botanist","Botanist")
-//	"Attorney at Space-Law")
-
-var/list/assistant_occupations = list(
-	"Staff Assistant")
-
-//	"Mechanic",
-//	"Atmospheric Technician","Atmospheric Technician","Atmospheric Technician",
-
+// Used for emails (yes this is a feature)
 var/list/job_mailgroup_list = list(
 	"Captain" = MGD_COMMAND,
 	"Head of Personnel" = MGD_COMMAND,
@@ -69,7 +34,7 @@ var/list/page_departments = list(
 	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS,
 	"Mining" = MGD_MINING)
 
-/proc/get_all_jobs()
+/proc/get_all_jobs(var/include_silicons = FALSE)
 	var/all_jobs = list()
 	all_jobs += command_jobs
 	all_jobs += security_jobs
@@ -78,21 +43,23 @@ var/list/page_departments = list(
 	all_jobs += medical_jobs
 	all_jobs += service_jobs
 	all_jobs += "Staff Assistant"
+	if(include_silicons)
+		all_jobs += "AI"
+		all_jobs += "Cyborg"
 	return all_jobs
 
 var/list/command_jobs = list(
 	"Captain",
-	"Medical Director",
-	"Research Director",
 	"Head of Personnel",
 	"Head of Security",
+	"Medical Director",
+	"Research Director",
 	"Chief Engineer",
 	/*"Clown"*/
 )
 var/list/security_jobs = list(
 	"Head of Security",
 	"Nanotrasen Security Consultant",
-	"Nanotrasen Special Operative",
 	"Security Officer",
 	"Security Assistant",
 	"Detective",
@@ -127,8 +94,6 @@ var/list/service_jobs = list(
 	"Chaplain",
 	"Janitor",
 	"Mail Courier",
-	"Head of Deliverying",
-	"Mail Bringer",
 )
 
 // we have to include alt names for jobs or they won't be sorted into categories correctly
@@ -139,7 +104,8 @@ var/list/command_gimmicks = list(
 )
 var/list/security_gimmicks = list(
 	"Vice Officer",
-	"Forensic Technician"
+	"Forensic Technician",
+	"Nanotrasen Special Operative"
 )
 var/list/engineering_gimmicks = list(
 	"Head of Mining",
@@ -192,5 +158,7 @@ var/list/service_gimmicks = list(
 	"Life Coach",
 	"Stowaway",
 	"Hall Monitor",
+	"Head of Deliverying",
+	"Mail Bringer",
 )
 

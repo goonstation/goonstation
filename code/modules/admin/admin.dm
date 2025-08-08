@@ -557,23 +557,11 @@ var/global/noir = 0
 
 			//Determine which system we're using.
 
-			for(var/job in uniquelist(occupations))
-				if(job in list("Tourist","Mining Supervisor","Atmospheric Technician","Vice Officer"))
-					continue
+			for(var/job in uniquelist(get_all_jobs(TRUE)))
 				if(jobban_isbanned(M, job))
 					jobs += "<a href='byond://?src=\ref[src];action=[action];type=[job];target=[target]'><font color=red>[replacetext(job, " ", "&nbsp")]</font></a> "
 				else
 					jobs += "<a href='byond://?src=\ref[src];action=[action];type=[job];target=[target]'>[replacetext(job, " ", "&nbsp")]</a> " //why doesn't this work
-
-			if(jobban_isbanned(M, "Captain"))
-				jobs += "<a href='byond://?src=\ref[src];action=[action];type=Captain;target=[target]'><font color=red>Captain</font></a> "
-			else
-				jobs += "<a href='byond://?src=\ref[src];action=[action];type=Captain;target=[target]'>Captain</a> " //why doesn't this work
-
-			if(jobban_isbanned(M, "Head of Security"))
-				jobs += "<a href='byond://?src=\ref[src];action=[action];type=Head of Security;target=[target]'><font color=red>Head of Security</font></a> "
-			else
-				jobs += "<a href='byond://?src=\ref[src];action=[action];type=Head of Security;target=[target]'>Head of Security</a> "
 
 			if(jobban_isbanned(M, "Syndicate"))
 				jobs += "<BR><a href='byond://?src=\ref[src];action=[action];type=Syndicate;target=[target]'><font color=red>[replacetext("Syndicate", " ", "&nbsp")]</font></a> "
@@ -663,7 +651,7 @@ var/global/noir = 0
 							jobban_unban(M,"Security Department", usr.ckey)
 						if(player.cached_jobbans.Find("Heads of Staff"))
 							jobban_unban(M,"Heads of Staff", usr.ckey)
-						for(var/Trank1 in uniquelist(occupations))
+						for(var/Trank1 in uniquelist(get_all_jobs(TRUE)))
 							if(player.cached_jobbans.Find("[Trank1]"))
 								jobban_unban(M,Trank1, usr.ckey)
 					else if(job == "Engineering Department")
@@ -722,7 +710,7 @@ var/global/noir = 0
 							jobban_unban(M,"Security Department", usr.ckey)
 						if(cache.Find("Heads of Staff"))
 							jobban_unban(M,"Heads of Staff", usr.ckey)
-						for(var/Trank1 in uniquelist(occupations))
+						for(var/Trank1 in uniquelist(get_all_jobs(TRUE)))
 							if(cache.Find("[Trank1]"))
 								jobban_unban(M,Trank1, usr.ckey)
 					else if(job == "Engineering Department")
