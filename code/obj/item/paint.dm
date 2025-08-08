@@ -393,6 +393,17 @@ var/list/cached_colors = new/list()
 
 		. = ..()
 
+	should_suppress_attack(var/object, mob/user)
+		if (istype(object, /obj/table) || istype(object, /obj/window))
+			return TRUE
+		. = ..()
+
+	should_place_on(obj/target, params)
+		// Don't place on tables unless click-dragged or empty
+		if (istype(target, /obj/table) && uses > 0 && islist(params) && !params["dragged"])
+			return FALSE
+		. = ..()
+
 	proc/generate_icon()
 		overlays = null
 		src.inventory_counter?.update_number(src.uses)
