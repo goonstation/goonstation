@@ -501,6 +501,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
 	icon_state = "cheesepizza"
 	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "badgrease" = 20)
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/cheese
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/snacks/pizza/vendor/pepperoni
 	name = "pepperoni pizza"
@@ -508,6 +509,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
 	icon_state = "pepperonipizza"
 	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "pepperoni" = 15, "badgrease" = 20)
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pepperoni
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/snacks/pizza/vendor/meatball
 	name = "meatball pizza"
@@ -515,6 +517,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
 	icon_state = "meatballpizza"
 	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "beff" = 15, "badgrease" = 20)
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/meatball
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/snacks/pizza/vendor/mushroom
 	name = "mushroom pizza"
@@ -522,6 +525,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
 	icon_state = "mushroompizza"
 	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "space_fungus" = 15, "badgrease" = 20)
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/mushroom
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/snacks/pizza/vendor/pineapple // only from hacked vendor
 	name = "pineapple pizza"
@@ -529,6 +533,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
 	contraband = 2
 	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "juice_pineapple" = 15, "badgrease" = 20)
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pineapple
+	vendor_item = TRUE
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/standard)
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard

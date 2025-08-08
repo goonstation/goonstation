@@ -9,6 +9,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("methamphetamine"=5,"VHFCS"=10,"cola"=15)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/blue
 	name = "Grife-O"
@@ -17,6 +18,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("radium"=3,"ephedrine"=6,"VHFCS"=10,"cola"=11)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/pink
 	name = "Dr. Pubber"
@@ -25,6 +27,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("haloperidol"=4,"morphine"=4,"VHFCS"=10,"cola"=12)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/lime
 	name = "Lime-Aid"
@@ -33,6 +36,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("antihol"=20,"juice_lime"=20)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/spooky
 	name = "Spooky Dan's Runoff Cola"
@@ -41,6 +45,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("chlorine"=5,"phosphorus"=5,"mercury"=5,"VHFCS"=10,"cola"=15)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/spooky2
 	name = "Spooky Dan's Horrortastic Cola"
@@ -49,6 +54,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("ectoplasm"=10,"sulfur"=5,"VHFCS"=5,"cola"=20)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/xmas
 	name = "Happy Elf Hot Chocolate"
@@ -57,6 +63,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("chocolate"=45)
+	vendor_item = TRUE
 
 	New()
 		if (prob(10))
@@ -70,6 +77,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("iodine"=5,"water"=45)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza
 	name = "Soft Soft Pizza"
@@ -78,6 +86,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("pizza" = 40, "salt" = 10)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/grones
 	name = "Grones Soda "
@@ -87,6 +96,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("cola"=20)
+	vendor_item = TRUE
 
 	New()
 		switch(rand(1,16))
@@ -155,6 +165,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("oculine"=20,"juice_orange"=20)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/gingerale
 	name = "Delightful Dan's Ginger Ale"
@@ -164,6 +175,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = "ginger_ale"
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/drowsy
 	name = "Drowsy Dan's Terrific Tonic"
@@ -173,6 +185,7 @@
 	labeled = 1
 	initial_volume = 50
 	initial_reagents = list("lemonade"=25,"ether"=25)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/water
 	name = "water bottle"
@@ -189,6 +202,7 @@
 	initial_volume = 20
 	var/yerba_left = 0
 	var/water_amount
+	vendor_item = TRUE
 
 	on_reagent_change()
 		if((yerba_left > 1) && reagents.get_reagent_amount("water") > 0)
@@ -220,6 +234,7 @@
 	item_state = "tea"
 	initial_volume = 50
 	initial_reagents = "tea"
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/tea/mugwort
 	name = "mugwort tea"
@@ -235,6 +250,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("coffee"=30)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/chickensoup
 	name = "Chicken Soup"
@@ -245,6 +261,7 @@
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/fruitmilk
 	name = "Creaca's Fruit Milk "
@@ -253,6 +270,7 @@
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("milk"=20)
+	vendor_item = TRUE
 
 	New()
 		switch(rand(1,10))
@@ -300,6 +318,7 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = list("lipolicide"=30,"chocolate"=5)
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/cola
 	name = "space cola"
@@ -318,6 +337,7 @@
 	is_sealed = TRUE
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
 	var/shaken = FALSE //sets to TRUE on *twirl emote
+	vendor_item = TRUE
 
 	New()
 		..()
@@ -397,6 +417,7 @@
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
+	vendor_item = TRUE
 
 	New()
 		..()
@@ -443,6 +464,7 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = "juice_peach"
+	vendor_item = TRUE
 
 /obj/item/reagent_containers/food/drinks/milk
 	name = "Creaca's Space Milk"
@@ -455,6 +477,7 @@
 	initial_volume = 50
 	initial_reagents = "milk"
 	var/canberandom = TRUE
+	vendor_item = TRUE
 
 	New()
 		. = ..()
@@ -510,6 +533,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 	icon_state = "coffee"
 	heal_amt = 1
 	initial_volume = 50
+	vendor_item = TRUE
 
 	New()
 		..()
@@ -529,6 +553,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 	heal_amt = 1
 	labeled = 1
 	initial_volume = 50
+	vendor_item = TRUE
 
 	lizard_tonic
 		name = "Grones Soda Lucky Lizard Tonic flavor" //by Rlocks
@@ -557,6 +582,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 	icon_state = "coffee_fall"
 	initial_volume = 50
 	initial_reagents = list("pumpkinspicelatte"=15, "VHFCS"=10)
+	vendor_item = TRUE
 
 	New()
 		switch(rand(1,13))
@@ -669,6 +695,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie/pumpinspies
 	name = "Pumpin' Spies Latte"
 	desc = "How did this get in the coffee machine? It doesn't look safe. There's not even a lid!"
+	vendor_item = TRUE
 #ifdef SECRETS_ENABLED
 	initial_reagents = list("pumpkinspicelatte"=15, "VHFCS"=10, "strychnine"=7, "orange_crime"=18)
 #else
