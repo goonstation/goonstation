@@ -29,10 +29,13 @@ else
 fi
 
 # Build selected crates for linux-musl
-( cd "$T" && cargo build --release --target x86_64-unknown-linux-musl -p dreamchecker )
+( cd "$T" && cargo build --release --target x86_64-unknown-linux-musl $(printf -- '-p %s ' "$@") )
 
 # Install suite
 dest="$HOME/SpacemanDMM"
 mkdir -p "$dest"
-cp -f "$T/target/x86_64-unknown-linux-musl/release/"* "$dest/"
-chmod +x "$dest/"* || true
+
+for tool in "$@"; do
+  cp -f "$T/target/x86_64-unknown-linux-musl/release/$tool" "$dest/"
+  chmod +x "$dest/$tool"
+done
