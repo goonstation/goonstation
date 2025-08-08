@@ -617,10 +617,99 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate_levitate(owner)
 		return
 
+/datum/materialProc/add_color_hsl
+	max_generations = 0 // These filters are typically for turning everything into a single color
+	var/list/color_matrix = null
+
+	execute(var/atom/owner)
+		var/added_mat_id = owner.material.getID()
+		if(endswith(owner.icon_state, "$$[added_mat_id]"))
+			return
+		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
+			return
+		var/color_filter = color_matrix_filter(color_matrix, FILTER_COLOR_HSL)
+		owner.add_filter("[added_mat_id]_color", 5, color_filter)
+		return
+
+	bohrum
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.60, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.33, 0.10, 0.00, 0.00)
+
+	claretine
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.60, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.00, 0.10, 0.00, 0.00)
+
+	cerenkite
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.40, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.60, 0.10, 0.00, 0.00)
+
+	mauxite
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.35, 0.00, 0.00,\
+							0.00, 0.00, 0.90, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.00, 0.05, -0.10, 0.00)
+
+	soulsteel
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.80, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.00, 0.20, 0.00, 0.00)
+
+/datum/materialProc/remove_color_hsl
+	execute(atom/owner)
+		var/removed_mat_id = owner.material.getID()
+		owner.remove_filter("[removed_mat_id]_color")
+
 /datum/materialProc/spacelag_add
 	execute(atom/owner)
+		if(endswith(owner.icon_state, "$$spacelag"))
+			return
 		if (!isturf(owner))
 			animate_lag(owner)
+			var/outline_filter = outline_filter(1, "#003800", OUTLINE_SHARP) // Outline color gets changed by material color
+			owner.add_filter("spacelag_outline", 20, outline_filter)
+		return
+
+/datum/materialProc/spacelag_remove
+	execute(var/atom/location)
+		location.remove_filter("spacelag_outline")
+		return
+
+/datum/materialProc/honey_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$honey"))
+			return
+		var/offset = 0
+		if(!isturf(location))
+			offset = rand()
+		var/wave_filter = wave_filter(16, 16, 1, offset, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		location.add_filter("honey_wave", 20, wave_filter)
+
+		var/list/honey_matrix = list(0.00, 0.00, 0.00, 0.00,\
+									0.00, 0.30, 0.00, 0.00,\
+									0.00, 0.00, 1.00, 0.00,\
+									0.00, 0.00, 0.00, 1.00,\
+									0.10, 0.70, 0.00, 0.00)
+		var/color_filter = color_matrix_filter(honey_matrix, FILTER_COLOR_HSL)
+		location.add_filter("honey_color", 21, color_filter)
+		return
+
+/datum/materialProc/honey_remove
+	execute(var/atom/location)
+		location.remove_filter("honey_color")
+		location.remove_filter("honey_wave")
+		return
 
 /datum/materialProc/temp_miraclium
 	execute(var/atom/location, var/temp)
