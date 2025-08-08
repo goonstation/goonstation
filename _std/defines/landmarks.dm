@@ -19,7 +19,6 @@
 
 // station job special_spawn_location landmarks
 #define LANDMARK_RADIO_SHOW_HOST_SPAWN "Radio-Show-Host-Spawn"
-#define LANDMARK_JOURNALIST_SPAWN "Journalist-Spawn"
 #define LANDMARK_ACTOR_SPAWN "Actor-Spawn"
 #define LANDMARK_INFLUENCER_SPAWN "Influencer-Spawn"
 
