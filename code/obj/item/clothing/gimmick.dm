@@ -2007,7 +2007,9 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/under/gimmick/trashsinglet
 	name = "trash bag singlet"
 	desc = "It's time for the trashman to eat garbage and smash opponents!"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "trashbag"
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY

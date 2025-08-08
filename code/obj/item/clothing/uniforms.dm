@@ -1396,7 +1396,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 /obj/item/clothing/under/gimmick
 	name = "Coder Jumpsuit"
 	desc = "This is weird! Report this to a coder!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "sailor"
@@ -1405,7 +1405,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 /obj/item/clothing/under/gimmick/sailor
 	name = "sailor uniform"
 	desc = "What's with these guys?! It's like one of my Japanese animes!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "sailor"
