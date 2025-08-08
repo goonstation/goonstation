@@ -27,7 +27,10 @@ jobs:
           key: ${{ runner.os }}-spacemandmm-${{ steps.smref.outputs.ref }}
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.1
+        run: |
+          rustup target add x86_64-unknown-linux-musl
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
 
       - uses: actions/setup-node@v4
         with:
@@ -189,6 +192,9 @@ jobs:
           key: ${{ runner.os }}-spacemandmm-${{ steps.smref.outputs.ref }}
 
       - name: Setup Rust
+        run: |
+          rustup target add x86_64-unknown-linux-musl
+          sudo apt-get install -y musl-tools
         uses: hecrj/setup-rust-action@v2.0.1
 
       - uses: actions/setup-node@v4
