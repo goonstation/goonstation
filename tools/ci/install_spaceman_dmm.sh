@@ -29,14 +29,7 @@ else
 fi
 
 # Build selected crates for linux-musl
-( cd "$T" && cargo build --release --target x86_64-unknown-linux-musl \
-  # -p dreammaker \
-	#	-p dm-langserver \
-	#	-p dmdoc \
-		-p dreamchecker \
-	#	-p dmm-tools \
-	#	-p dmm-tools-cli \
-		)
+( cd "$T" && cargo build --release --target x86_64-unknown-linux-musl -p dreamchecker )
 
 # Install suite
 dest="$HOME/SpacemanDMM"
