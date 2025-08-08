@@ -49,6 +49,15 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 		if (gene_pool)
 			return TRUE
 
+	/// This proc is called whenever the plant is harvested. Override it to manipulate harvesting data before crops are generated.
+	proc/manipulate_harvest_data(datum/HYPharvesting_data/h_data)
+		return
+
+	/// This proc is called whenever the plant is harvested. Override and return a type to change what the current harvest produces.
+	/// Returning null will just result in the harvest failing.
+	proc/override_crop(datum/HYPharvesting_data/h_data)
+		return FALSE
+
 /datum/plant_gene_strain/temporary_splice_stabilizer
 	name = "Temporary Spliceability"
 	desc = "This seed was stabilized using advanced technology to be spliced once and won't be able to be spliced afterwards."
@@ -365,3 +374,20 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	name = "Inhibited Potential"
 	desc = "Produce harvested from this plant won't contain special dangerous chemicals"
 	var/list/reagents_to_remove = list("ghostchilijuice", "potassium", "lithium")
+
+/datum/plant_gene_strain/gun_genome
+	name = "Kinetically-Expressive Genome"
+	desc = "Produce harvested from this plant will be smaller and much more ballistically capable, but its lifespan is extremely limited."
+
+	override_crop(datum/HYPharvesting_data/h_data)
+		var/obj/item/crop = h_data.pot.pick_type(h_data.getitem)
+		if (!ispath(crop, /obj/item)) // only override items
+			return FALSE
+		return /obj/item/ammo/bullets/produce
+
+	manipulate_harvest_data(datum/HYPharvesting_data/h_data)
+		h_data.dont_rename_crop = TRUE
+		// Setting harvests to 1 means multi-harvest plants are guaranteed to die after a harvest, unless another gene strain interferes.
+		// I don't want to preemptively counteract stuff like immortal unless necessary, that'd be no fun.
+		h_data.pot.harvests = 1
+		h_data.extra_harvest_chance = -999
