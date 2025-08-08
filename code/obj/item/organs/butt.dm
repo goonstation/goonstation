@@ -197,6 +197,11 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		else
 			return ..()
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.donor_DNA)
+			scan.add_text("Butt's DNA: [src.donor_DNA]")
+
 	proc/explode_butt()
 		var/turf/T = get_turf(src)
 		playsound(T, 'sound/voice/farts/superfart.ogg', 45, 1)

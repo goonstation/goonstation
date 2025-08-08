@@ -12,7 +12,7 @@
 		src.time_end = time_start
 
 	/// The text to display when scanned
-	proc/get_text()
+	proc/get_text(var/datum/forensic_scan/scan)
 		return ""
 
 	proc/get_copy()
@@ -34,8 +34,33 @@
 		src.flags = flags
 		src.value = value
 
+	get_text(var/datum/forensic_scan/scan)
+		return replacetextEx(src.display.text, "@F", src.evidence.id)
+
 	get_copy()
 		var/datum/forensic_data/basic/data_copy = new(src.evidence, src.display, src.flags, src.value)
 		data_copy.time_start = src.time_start
 		data_copy.time_end = src.time_end
+		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
+		return data_copy
+
+/// Simple text displayed as forensic evidence.
+/datum/forensic_data/text
+	var/text = ""
+	var/header = "" //! The header that the text is placed under.
+
+	New(var/text, var/header = "Notes", var/flags = 0)
+		..()
+		src.text = text
+		src.header = header
+		src.flags = flags
+
+	get_text(var/datum/forensic_scan/scan)
+		return src.text
+
+	get_copy()
+		var/datum/forensic_data/text/data_copy = new(src.text, src.header, src.flags)
+		data_copy.time_start = src.time_start
+		data_copy.time_end = src.time_end
+		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
 		return data_copy

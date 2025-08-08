@@ -90,6 +90,13 @@
 				src.set_opacity(src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 		return
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.active_liquid)
+			scan.chain_scan_target(src.active_liquid)
+		if(src.active_airborne_liquid)
+			scan.chain_scan_target(src.active_airborne_liquid)
+
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
 		serialize_icon(F, path, sandbox)
