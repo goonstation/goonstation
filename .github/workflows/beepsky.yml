@@ -16,11 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Resolve SpacemanDMM ref
+        id: smref
+        run: tools/ci/install_spaceman_dmm.sh --resolve-ref
+
       - name: Cache SpacemanDMM
         uses: actions/cache@v4
         with:
           path: $HOME/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          key: ${{ runner.os }}-spacemandmm-${{ steps.smref.outputs.ref }}
 
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.1
@@ -41,7 +45,7 @@ jobs:
           touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
-          tools/ci/install_spaceman_dmm.sh dreamchecker
+          tools/ci/install_spaceman_dmm.sh
           tools/bootstrap/python -c ''
 
       - name: Check TGUI
@@ -67,7 +71,7 @@ jobs:
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker
+          ~/SpacemanDMM/dreamchecker
 
   odlint:
     name: Lint with OpenDream
@@ -174,11 +178,15 @@ jobs:
         with:
           packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
 
+      - name: Resolve SpacemanDMM ref
+        id: smref
+        run: tools/ci/install_spaceman_dmm.sh --resolve-ref
+
       - name: Cache SpacemanDMM
         uses: actions/cache@v4
         with:
           path: $HOME/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          key: ${{ runner.os }}-spacemandmm-${{ steps.smref.outputs.ref }}
 
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.1
@@ -198,7 +206,7 @@ jobs:
         run: |
           pip3 install setuptools
           tools/ci/install_build_tools.sh
-          tools/ci/install_spaceman_dmm.sh dreamchecker
+          tools/ci/install_spaceman_dmm.sh
           tools/bootstrap/python -c ''
 
       - name: Misc Checks
@@ -213,7 +221,7 @@ jobs:
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker
+          ~/SpacemanDMM/dreamchecker
 
       - name: Compile
         run: |
