@@ -6,16 +6,16 @@
 
 	src.cache_tick = world.time
 
-	var/is_in_mob = ismob(message.message_origin.loc)
-	var/flags = "[(is_in_mob << 0) | ((message.flags & SAYFLAG_WHISPER) << 1) | (heard_clearly << 2)]"
+	var/use_range_check = isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message))
+	var/flags = "[(use_range_check << 0) | ((message.flags & SAYFLAG_WHISPER) << 1) | (heard_clearly << 2)]"
 	src.cached_listeners_by_range_message_origin ||= list()
 	src.cached_listeners_by_range_message_origin[message.message_origin] ||= list()
 
-	if (is_in_mob)
-		src.cached_listeners_by_range_message_origin[message.message_origin][flags] = listeners
-	else
+	if (use_range_check)
 		src.cached_listeners_by_range_message_origin[message.message_origin][flags] ||= list()
 		src.cached_listeners_by_range_message_origin[message.message_origin][flags]["[message.heard_range]"] = listeners
+	else
+		src.cached_listeners_by_range_message_origin[message.message_origin][flags] = listeners
 
 /datum/listener_tick_cache/outloud/read_from_cache(datum/say_message/message, heard_clearly)
 	RETURN_TYPE(/list/list/datum/listen_module/input)
@@ -27,13 +27,13 @@
 		src.cached_listeners_by_range_message_origin = null
 		return
 
-	var/is_in_mob = ismob(message.message_origin.loc)
-	var/flags = "[(is_in_mob << 0) | ((message.flags & SAYFLAG_WHISPER) << 1) | (heard_clearly << 2)]"
+	var/use_range_check = isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message))
+	var/flags = "[(use_range_check << 0) | ((message.flags & SAYFLAG_WHISPER) << 1) | (heard_clearly << 2)]"
 	var/list/list/cached_listeners_by_range = src.cached_listeners_by_range_message_origin[message.message_origin][flags]
 	if (!cached_listeners_by_range)
 		return
 
-	if (is_in_mob)
+	if (!use_range_check)
 		return cached_listeners_by_range
 
 	. = cached_listeners_by_range["[message.heard_range]"]
@@ -53,5 +53,5 @@
 
 				.[type] += input
 
-		src.cached_listeners_by_range_message_origin[message.message_origin][flags][message.heard_range] = .
+		src.cached_listeners_by_range_message_origin[message.message_origin][flags]["[message.heard_range]"] = .
 		return
