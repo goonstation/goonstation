@@ -30,14 +30,15 @@ fi
 T="$(mktemp -d)"
 if [[ -n "$BRANCH_SHA" ]]; then
   git clone --depth 1 --branch "$REF" "$REPO_URL" "$T"
-  git -C "$T" fetch --tags --depth 1
 else
   git init "$T"
   git -C "$T" remote add origin "$REPO_URL"
   git -C "$T" fetch --depth 1 origin "$RESOLVED_REF"
   git -C "$T" checkout --detach FETCH_HEAD
-  git -C "$T" fetch --tags --depth 1
 fi
+
+# give HEAD a local tag so build script's `git describe --exact-match --tags` is happy
+git -C "$T" tag -f "ci-${RESOLVED_REF:0:12}"
 
 # build suite
 ( cd "$T" && bash scripts/build-suite-release.sh )
