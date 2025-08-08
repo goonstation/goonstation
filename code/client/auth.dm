@@ -63,10 +63,10 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 	// So delete the unauthed mob so they arent stuck in it if they pass auth this time.
 	if (istype(src.mob, /mob/unauthed))
 		logTheThing(LOG_DEBUG, src, "was unauthed and their mob is getting deleted: \ref[src.mob]")
-		qdel(src.mob)
+		del(src.mob)
 		src.mob = null
 		// make them reconnect idk
-		del(src)
+		// del(src)
 
 	for (var/datum/client_auth_gate/gate in pre_auth_gates)
 		if (!gate.check(src))
@@ -101,7 +101,9 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  */
 /client/proc/on_auth_failed()
 	SHOULD_CALL_PARENT(TRUE)
-	if (src) del(src)
+	if (src)
+		del(src.mob)
+		del(src)
 
 /*
  * Client auth logout
