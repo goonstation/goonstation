@@ -1191,7 +1191,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			P.setup(src.mob.loc)
 			var/obj/item/I
 			I = src.mob.organHolder.drop_organ("head", src.mob)
-			I.loc = get_turf(src.mob)
+			if (I) I.loc = get_turf(src.mob)
 			var/list/limbs = list()
 			limbs += src.mob.limbs.l_arm?.remove(FALSE)
 			limbs += src.mob.limbs.r_arm?.remove(FALSE)
