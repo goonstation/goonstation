@@ -228,6 +228,8 @@
 					throw_return = FALSE
 					SPAWN(2 SECONDS)
 						throw_return = TRUE
+			else if(stolen_hair) //failsafe to prevent it from bricking itself
+				stolen_hair.set_loc(get_turf(src))
 
 		. = ..()
 

@@ -6,19 +6,11 @@
 	var/list/counts_by_tag = list()
 	var/list/obj/machinery/camera/first_cam_by_tag = list()
 	for (var/obj/machinery/camera/C as anything in cameras)
-		var/area/where = get_area(C)
-		var/name_build_string = ""
 		var/tag_we_use = null
-		if (dd_hasprefix(C.name, "autoname"))
-			if (C.prefix)
-				name_build_string += "[C.prefix] "
-			name_build_string += "camera"
-			if (C.uses_area_name)
-				name_build_string += " - [where.name]"
-			C.name = name_build_string
 
 		if (isnull(C.c_tag) || dd_hasprefix(C.c_tag, "autotag"))
-			tag_we_use = where.name
+			var/area/A = get_area(C)
+			tag_we_use = A.name
 		else
 			tag_we_use = C.c_tag
 

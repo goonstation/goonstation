@@ -1294,6 +1294,10 @@
 	set popup_menu = 0
 
 	SPAWN(0)
+		if (!src.authenticated)
+			boutput(usr, SPAN_ALERT("You need to be authenticated to claim rewards."))
+			return
+
 		src.verbs -= /client/verb/claimreward
 		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
 		var/list/eligible = list()

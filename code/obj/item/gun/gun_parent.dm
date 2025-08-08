@@ -428,7 +428,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if(isobj(P.implanted))
 			var/obj/O = P.implanted
 			O.forensic_holder = P.forensic_holder
-	P.spread = spread
+		P.spread = spread
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)
 			for(var/mob/O in AIviewers(user, null))

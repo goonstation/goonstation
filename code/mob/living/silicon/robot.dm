@@ -113,9 +113,10 @@ TYPEINFO(/mob/living/silicon/robot)
 		START_TRACKING
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
-		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
-		src.internal_pda.name = "[src]'s Internal PDA Unit"
-		src.internal_pda.owner = "[src]"
+		SPAWN(0) //Delay PDA spawning until the client is in the borg, so it respects preferences
+			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
+			src.internal_pda.name = "[src]'s Internal PDA Unit"
+			src.internal_pda.owner = "[src]"
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
@@ -789,8 +790,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.real_name == "Cyborg")
 			src.real_name = borgify_name(src.real_name)
 			src.UpdateName()
-			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
+			src.internal_pda?.name = "[src.name]'s Internal PDA Unit"
+			src.internal_pda?.owner = "[src]"
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.real_name = "SHELL/[src.mainframe.name]"

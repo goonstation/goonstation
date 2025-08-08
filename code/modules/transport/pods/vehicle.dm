@@ -494,10 +494,14 @@
 		var/damage = src.calculate_shielded_dmg(round(P.power, 1.0))
 
 		var/hitsound = null
+		var/volume = 35
 
-		if(istype(P.proj_data, /datum/projectile/bullet/foamdart)) // foam darts shouldn't hurt
+		if (istype(P.proj_data, /datum/projectile/bullet/foamdart)) // foam darts shouldn't hurt
 			hitsound = 'sound/impact_sounds/Glass_Hit_1.ogg'
+		else if (P.proj_data?.shot_sound)
+			hitsound = P.proj_data.shot_sound
 		else
+			volume = 30
 			switch(P.proj_data.damage_type)
 				if(D_KINETIC)
 					src.health -= damage/1.7
@@ -525,12 +529,8 @@
 		src.visible_message(SPAN_ALERT("<b>[P]<b> hits [src]!"))
 
 		for(var/mob/M in src)
-			if(P.proj_data.shot_sound)
-				M.playsound_local(src, P.proj_data.shot_sound, vol=35)
-			M.playsound_local(src, hitsound, vol=30)
+			M.playsound_local(src, hitsound, vol=volume)
 			shake_camera(M, 1, 8)
-
-
 
 		//IF DAMAGE IS ENOUGH, PICK MOB AND SHOOT THAT GUY
 		//means the bullet went into the pod instead of hitting the exterior
@@ -944,8 +944,6 @@
 
 	if (ejectee.client)
 		ejectee.detach_hud(myhud)
-		if (ejectee.client.tooltipHolder)
-			ejectee.client.tooltipHolder.inPod = 0
 
 	ejectee.override_movement_controller = null
 
@@ -1072,8 +1070,6 @@
 		M.attach_hud(myhud)
 		if(ishuman(M))
 			myhud.check_hud_layout(M)
-		if (M.client.tooltipHolder)
-			M.client.tooltipHolder.inPod = 1
 
 	src.add_fingerprint(M)
 
@@ -1888,11 +1884,11 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 			if(1) //dies
 				shipdeath()
 			if(2) //fuel tank explodes??
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, SPAN_ALERT("The fuel tank of your escape sub explodes!"))
 				explosion(src, src.loc, 2, 3, 4, 6)
 			if(3) //falls apart
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, SPAN_ALERT("Your escape sub is falling apart around you!"))
 				while(src)
 					step(src,src.dir)
@@ -1904,7 +1900,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 					if(prob(10)) shipdeath()
 					sleep(0.4 SECONDS)
 			if(4) //flies off course
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, SPAN_ALERT("Your escape sub is veering out of control!"))
 				while(src)
 					if(prob(10)) src.dir = turn(dir,pick(90,-90))
@@ -1918,7 +1914,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 				boutput(pilot, SPAN_ALERT("Your escape sub sputters to a halt!"))
 			if(6)
 				boutput(pilot, SPAN_ALERT("Your escape sub explosively decompresses, hurling you into the ocean!"))
-				pilot.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
@@ -1954,7 +1950,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 					sleep(speed)
 			if(8)
 				boutput(pilot, SPAN_ALERT("Your escape sub starts to drive around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!"))
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				var/spin_dir = pick(90,-90)
 				while(src)
 					src.dir = turn(dir,spin_dir)
