@@ -392,6 +392,17 @@
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/bullet_9mm_frangible
+	name = "9mm Frangible Rounds"
+	item_requirements = list("metal" = 10,
+							 "conductive" = 25,
+							 "plastic" = 15,
+							 "rubber" = 15)
+	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
+	create = 1
+	time = 15 SECONDS
+	category = "Resource"
+
 /datum/manufacture/bullet_12g_nail
 	name = "12 gauge nailshot"
 	item_requirements = list("metal_dense" = 40,
