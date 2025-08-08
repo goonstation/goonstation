@@ -37,14 +37,12 @@ else
   git -C "$T" checkout --detach FETCH_HEAD
 fi
 
-# give HEAD a local tag so build script's `git describe --exact-match --tags` is happy
-git -C "$T" tag -f "ci-${RESOLVED_REF:0:12}"
+# build linux musl for selected crates
+( cd "$T" && cargo build --release --target x86_64-unknown-linux-musl \
+    -p dreamchecker -p dmdoc -p dmm-tools -p dm-langserver )
 
-# build suite
-( cd "$T" && bash scripts/build-suite-release.sh )
-
-# install suite
+# install
 dest="$HOME/SpacemanDMM"
 mkdir -p "$dest"
-cp -f "$T/target/release/"* "$dest/"
+cp -f "$T/target/x86_64-unknown-linux-musl/release/"{dreamchecker,dmdoc,dmm-tools,dm-langserver} "$dest/" 2>/dev/null || true
 chmod +x "$dest/"* || true
