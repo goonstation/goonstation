@@ -285,11 +285,18 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/turf/T in view(1, attacked))
 			harmless_smoke_puff(get_turf(T))
 
-/datum/materialProc/gold_add
+/datum/materialProc/sparkles_add
 	desc = "It's very shiny."
-	execute(var/location)
+	execute(var/atom/location)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
 			particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(location))
+		return
+
+/datum/materialProc/sparkles_remove
+	desc = "All that glitters is not gold."
+	execute(var/atom/location)
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
+			particleMaster.RemoveSystem(/datum/particleSystem/sparkles, location)
 		return
 
 /datum/materialProc/telecrystal_entered

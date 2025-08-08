@@ -56,7 +56,7 @@ export interface InteractiveProps {
 }
 
 export class Interactive extends Component {
-  containerRef: RefObject<HTMLDivElement>;
+  containerRef: RefObject<HTMLDivElement | null>;
   props: InteractiveProps;
 
   constructor(props: InteractiveProps) {

@@ -540,7 +540,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	info = {"<center><h2>Finally, my own ship!</h2></center>
 	<hr>
 	<i>This is the begining of my log, I figured since I made it rich after all this time, I ought to recount my thoughts now in a log of sorts.
-	Years of working in a damm cubicle, my only worthwile cash comming from transfering dead crew members credits to my own account.
+	Years of working in a damm cubicle, my only worthwile cash comming from transferring dead crew members credits to my own account.
 	But it has all paid off, I got a beautiful ship, my dog, a whole damm vault, and plenty of room for guests!
 	I even got this bottle of blue label! I was going to save it for my first cruise with others, but I suppose it wont hurt to dip into a bit of it.</i>
 	"}

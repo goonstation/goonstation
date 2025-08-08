@@ -124,7 +124,7 @@ const Stock = ({ stock }: StockProps) => {
 
   return (
     <Table.Row
-      className="WeaponVendor__Row"
+      className="WeaponVendor__Row candystripe"
       opacity={stock.cost > data.credits[stock.category] ? 0.5 : 1}
     >
       <Table.Cell className="WeaponVendor__Cell" py="5px">
