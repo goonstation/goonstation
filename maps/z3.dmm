@@ -8371,7 +8371,7 @@
 	},
 /area/derelict_ai_sat/solar)
 "aPi" = (
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor,
 /area/h7)
 "aPj" = (
@@ -11802,7 +11802,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "bae" = (
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
