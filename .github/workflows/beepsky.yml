@@ -23,7 +23,7 @@ jobs:
       - name: Cache SpacemanDMM
         uses: actions/cache@v4
         with:
-          path: $HOME/SpacemanDMM
+          path: /home/runner/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ steps.smref.outputs.ref }}
 
       - name: Setup Rust
@@ -191,7 +191,7 @@ jobs:
       - name: Cache SpacemanDMM
         uses: actions/cache@v4
         with:
-          path: $HOME/SpacemanDMM
+          path: /home/runner/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ steps.smref.outputs.ref }}
 
       - name: Setup Rust
