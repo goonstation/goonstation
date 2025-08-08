@@ -52,6 +52,8 @@
 #define JOB_CIVILIAN "civilian"
 #define JOB_CREATED "created"
 
+#define JOB_CATEGORY_PRIMARY 1
+
 // Job categories
 #define STAPLE_JOBS (1<<0)
 #define SPECIAL_JOBS (1<<1)
