@@ -675,14 +675,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "ei" = (
-/obj/cable/orange{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable/orange{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "ek" = (
 /obj/cable{
@@ -1379,14 +1373,8 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
 "if" = (
-/obj/cable/orange{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable/orange{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
+/obj/machinery/dispenser,
+/turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "ii" = (
 /obj/machinery/mass_driver{
@@ -2375,9 +2363,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "oN" = (
-/obj/cable/orange,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "oO" = (
 /obj/landmark/magnet_shield,
@@ -2568,11 +2555,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "qh" = (
-/obj/machinery/door/airlock/pyro/engineering,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
+/obj/table/auto,
+/obj/item/clothing/shoes/magnetic,
+/obj/item/clothing/shoes/magnetic,
+/turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "qy" = (
 /obj/machinery/manufacturer/robotics,
@@ -2668,14 +2654,6 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/quartermaster/office)
-"rf" = (
-/obj/cable/orange,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable/orange{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/engineering)
 "rg" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -3375,14 +3353,6 @@
 /obj/decal/tile_edge/stripe,
 /turf/simulated/floor/wood,
 /area/station/bridge)
-"wt" = (
-/obj/cable/orange,
-/obj/cable/orange{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/engine/engineering)
 "ww" = (
 /obj/decal/tile_edge/stripe,
 /turf/simulated/floor/wood,
@@ -4021,23 +3991,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"BE" = (
-/obj/cable/orange,
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/cable/orange{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/engineering)
-"BR" = (
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
 "BT" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -4124,9 +4077,6 @@
 "Cr" = (
 /obj/cable/orange,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/cable/orange{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "Cu" = (
@@ -4137,12 +4087,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/engineering)
-"Cw" = (
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "Cz" = (
 /turf/simulated/wall/auto/supernorn,
@@ -4329,14 +4273,6 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/yellow,
-/area/station/engine/engineering)
-"DE" = (
-/obj/cable/orange,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable/orange{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "DI" = (
 /obj/cable{
@@ -4658,20 +4594,7 @@
 /area/station/bridge)
 "FL" = (
 /obj/item/device/radio/beacon,
-/obj/item/clothing/shoes/magnetic,
-/obj/item/clothing/shoes/magnetic,
-/obj/table/auto,
 /turf/simulated/floor/engine,
-/area/station/engine/engineering)
-"FN" = (
-/obj/cable/orange{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/cable/orange{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "FR" = (
 /obj/machinery/vending/jobclothing/engineering,
@@ -4687,21 +4610,11 @@
 	},
 /turf/space,
 /area/shuttle/arrival/station)
-"FZ" = (
-/obj/cable/orange{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/engine/engineering)
 "Gb" = (
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/cable/orange{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "Gc" = (
@@ -4752,17 +4665,6 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
-"Gp" = (
-/obj/cable/orange,
-/obj/cable/orange{
-	icon_state = "0-2"
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 8
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
 "Gr" = (
 /obj/machinery/door/poddoor{
 	id = "speedboost_crusher";
@@ -5028,13 +4930,6 @@
 "Ih" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
-"Im" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 8
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
 "Io" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
 /turf/simulated/floor/auto/dirt,
@@ -7261,10 +7156,6 @@
 /obj/item/raw_material/char,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"Yr" = (
-/obj/machinery/dispenser,
-/turf/simulated/floor/engine,
-/area/station/engine/engineering)
 "Ys" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor{
@@ -52060,11 +51951,11 @@ Pf
 sR
 sc
 xp
+ei
 tn
-qh
 sV
-qh
 tn
+oN
 dL
 sc
 UB
@@ -52361,13 +52252,13 @@ Pf
 sc
 sc
 sc
-Gp
-wt
-rf
+tn
+tn
+tn
 sV
-ei
-oN
-Im
+tn
+tn
+tn
 sc
 sc
 sc
@@ -52665,9 +52556,9 @@ sU
 ve
 xr
 xr
-BR
+xr
 DI
-Cw
+tn
 tn
 tn
 Jr
@@ -53873,7 +53764,7 @@ ta
 sj
 pM
 zo
-Yr
+zo
 DP
 FL
 zo
@@ -54779,9 +54670,9 @@ sV
 vm
 xq
 zf
-BE
+Cr
 DV
-FN
+Gb
 zf
 xq
 JE
@@ -55081,9 +54972,9 @@ np
 uN
 xr
 xr
-BR
+xr
 DI
-Cw
+tn
 tn
 tn
 vw
@@ -55381,13 +55272,13 @@ Pf
 sc
 sc
 sc
-Im
-FZ
-DE
+tn
+tn
+tn
 sV
-if
-oN
-Im
+tn
+tn
+tn
 sc
 sc
 sc
@@ -55684,11 +55575,11 @@ Pf
 sR
 sc
 uR
+if
 tn
-qh
 sV
-qh
 tn
+qh
 eD
 sc
 sR
