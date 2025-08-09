@@ -81,7 +81,8 @@ Run `bin/tgui.bat` with any of the options listed below.
   - `bin/tgui --dev --debug` - Run server with debug logging enabled.
   - `bin/tgui --dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
   - `bin/tgui --dev --no-tmp` - Don't use the tmp folder
-- `bin/tgui --lint` - Show (and auto-fix) problems with the code.
+- `bin/tgui --lint` - Show problems with the code.
+- `bin/tgui --lint-fix` - Show (and auto-fix) problems with the code.
 - `bin/tgui --test` - Run unit and integration tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --bench` - Run benchmarks. *Windows Only*
