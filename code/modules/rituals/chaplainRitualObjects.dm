@@ -616,22 +616,22 @@
 			flagStr += " ???"
 			flagStr += " "
 
-		if (usr.client.tooltipHolder && (component != null))
-			var/turf/T = locate(usr.x-1, usr.y+3, usr.z) //This is so unbelievably fucking stupid. WHY ARE THE PARAMS PASSED INTO THIS NON-EXISTENT ANYWAY. FUCK.
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = T ? T.getScreenParams() : usr.getScreenParams(),
-				"title" = component.name + " ([flagStr])",
-				"content" = component.desc,
-				"theme" = "wraith"
-			))
+		if (usr.client.tooltips && (component != null))
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = component.name + " ([flagStr])",
+				content = component.desc,
+				theme = "wraith"
+			)
 		return
 
 	MouseExited(location,control,params)
 		src.add_filter("chalkbutton_drop_shadow", 0, drop_shadow_filter(x=0, y=0, size=3, offset=0, color="#000000"))
 		src.add_filter("chalkbutton_outline", 0, outline_filter(size=2, color="#000000"))
 
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 		return
 
 	clicked(list/params)

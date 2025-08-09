@@ -60,7 +60,7 @@ export const PowerMonitorSmesGlobal = () => {
   );
 };
 
-export const PowerMonitorSmesTableHeader = (props, context) => {
+export const PowerMonitorSmesTableHeader = (props) => {
   return (
     <>
       <Table.Cell header>Area</Table.Cell>

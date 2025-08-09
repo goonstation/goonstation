@@ -45,7 +45,7 @@ export const PowerTransmissionLaser = () => {
   const { data } = useBackend<PowerTransmissionLaserData>();
   const { storedBalance, name = 'Power Transmission Laser' } = data;
   return (
-    <Window title={name} width={310} height={485}>
+    <Window title={name} width={320} height={490}>
       <Window.Content>
         <Status />
         <InputControls />
@@ -95,7 +95,7 @@ const Status = () => {
   );
 };
 
-const InputControls = (props, context) => {
+const InputControls = (props) => {
   const { act, data } = useBackend<PowerTransmissionLaserData>();
   const {
     isChargingEnabled,

@@ -1,4 +1,62 @@
-
+(t)wed aug 06 25
+(u)Goonstation Developer Team & Contributors
+(e)🆕|C-Feature
+(*)We've updated to BYOND 516! It's now required to play on Goonstation. If you have any issues: check the minor changes for some tips, ask on the Discord, or mentor/adminhelp.
+(+)If you get white browser screens directly after installing and connecting, try closing BYOND and reopening it. If that doesn't work, clear your cache in the BYOND settings menu, under Preferences -> Advanced.
+(+)One common issue is DPI scaling, when you have Windows set to anything except 100% scaling. This can also cause white screens. First, try clearing your BYOND cache. Then maybe try rebooting. If all else fails, right click on dreamseeker.exe in your BYOND installation folder, go to Properties -> Compatibility -> High DPI Settings and mess around there.
+(+)Since BYOND 516 switched to using WebView2, clearing your browser cache works differently now. You can find it at `Documents\BYOND\cache\WebView2`.
+(u)ZeWaka, Mordent, LeahTheTech, Romayne, Sov, RubberRats, Wire
+(e)🪲🔄📄|C-Bug, C-Rework, A-UI
+(*)TGUI (our UI system) has been updated. Everything should look identical, or better. Please report any issues you stumble upon!
+(u)Wire
+(e)🪲🔄📄|C-Bug, C-Rework, A-UI
+(*)Complete rewrite of tooltips for better performance and a host of bug fixes. If you encounter any issues, be sure to submit a bug report! Including screenshots would be helpful.
+(t)mon aug 04 25
+(u)LeahTheTech
+(+)Instruments with only one note (whistles etc.) no longer use the instrument audio channel. Get whistled at.
+(t)sat aug 02 25
+(u)Munien
+(p)24255
+(e)🎨|C-Sprites
+(+)Added a few new tanktop variants to the clothing booth.
+(u)JORJ949
+(p)24139
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)Roundstart head of staff announcements will now be ordered by rank.
+(t)thu jul 31 25
+(u)aloe
+(+)There will now be a confirmation pop-up when you click a server link from the title menu.
+(t)wed jul 30 25
+(u)LeahTheTech + Glowbold
+(p)24194
+(e)🗺🎨⚖🔄⛔📄📦💡|A-Mapping, C-Sprites, C-Balance, C-Rework, C-Removal, A-UI, A-Game-Objects, A-Station-Systems
+(*)The cloning console now stores all its records on floppy disks, two racks of which can be found in cloning.
+(+)Disk racks can be placed side-by-side by clicking on them with a frame.
+(+)Cloner implants send a heartbeat signal back to the cloning rack, if the implant is removed or the person dies the rack will display a flashing red light next to their disk.
+(+)Floppy disks can be labelled with a pen as well as hand labellers.
+(t)tue jul 29 25
+(u)Mr. Moriarty
+(p)24247
+(e)🗺🎨🔎💅📦|A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-Game-Objects
+(*)Every single camera has been remapped. Please report any cameras that aren't offset onto walls or that are facing the wrong way.
+(u)SnugglyCactus
+(p)24197
+(e)🎨|C-Sprites
+(+)Added organ variants for skeletons, amphibians, and martians. Selling your kidney has never been so fun.
+(u)RubberRats
+(p)24089
+(e)🪲🎨📄📦|C-Bug, C-Sprites, A-UI, A-Game-Objects
+(+)Replacing the paint dispenser's service panel with non-authentic parts degrades its color-accuracy slightly.
+(t)mon jul 28 25
+(u)RubberRats
+(p)24215
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The barberang should more reliably drop any hair it takes.
+(u)TheGeneralJay
+(p)24233
+(e)🗺💅|A-Mapping, C-QoL
+(*)Standardized available equipment that spawns in robotics across each map. See minor changes for details.
+(+)All current-rotation robotics departments have been equipped with blinds (yay, crime!), anesthetic storage lockers, sinks, modules, and other minor QoL tweaks.
 (t)sat jul 26 25
 (u)Mr. Moriarty
 (p)24211

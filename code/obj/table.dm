@@ -15,6 +15,7 @@ TYPEINFO_NEW(/obj/table)
 	density = 1
 	anchored = ANCHORED
 	flags = NOSPLASH
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
