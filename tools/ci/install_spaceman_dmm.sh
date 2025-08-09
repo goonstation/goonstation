@@ -21,12 +21,13 @@ git -C "$T" remote add origin "$REPO_URL"
 if [[ "$REF" =~ ^[0-9a-fA-F]{7,40}$ ]]; then
   # SHA
   git -C "$T" fetch --depth 1 origin "$REF"
+  git -C "$T" checkout "$REF"
 else
   # Tag
-  git -C "$T" fetch --depth 1 origin "refs/tags/$REF"
+  git -C "$T" fetch --depth 1 origin "refs/tags/$REF:refs/tags/$REF"
+  git -C "$T" checkout "refs/tags/$REF"
 fi
 
-git -C "$T" checkout "$REF"
 
 # Build selected crates for linux-musl
 ( cd "$T" && cargo build --release --target x86_64-unknown-linux-musl $(printf -- '-p %s ' "$@") )
