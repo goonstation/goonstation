@@ -1116,24 +1116,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	icon_state = "maid"
 	item_state = "maid"
 
-/obj/item/clothing/under/gimmick/dinerdress_mint
-	name = "Mint Diner Waitress's Dress"
-	desc = "Can I getcha somethin', sugar?"
-	icon_state = "dinerdress-mint"
-	item_state = "dinerdress-mint"
-
-/obj/item/clothing/under/gimmick/dinerdress_pink
-	name = "Pink Diner Waitress's Dress"
-	desc = "Y'all come back now, ya hear?"
-	icon_state = "dinerdress-pink"
-	item_state = "dinerdress-pink"
-
-/obj/item/clothing/under/gimmick/kilt
-	name = "kilt"
-	desc = "Traditional Scottish clothing. A bit drafty in here, isn't it?"
-	icon_state = "kilt"
-	item_state = "kilt"
-
 /obj/item/clothing/under/gimmick/ziggy
 	name = "familiar jumpsuit"
 	desc = "A bold jumpsuit, reminiscent of a long lost, but very loved celebrity from long ago."
@@ -1208,14 +1190,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A fiery flame shirt even Guy Fieri would be envious of."
 	icon_state = "flame"
 	item_state = "flame"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-
-/obj/item/clothing/under/misc/america
-	name = "american pride shirt"
-	desc = "I am a REAL AMERICAN, I fight for the rights of every man!"
-	icon_state = "america"
-	item_state = "america"
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 
@@ -1443,24 +1417,6 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 		..()
 		setProperty("coldprot", 35)
 
-/obj/item/clothing/under/gimmick/black_wcoat
-	name = "dress shirt and waistcoat"
-	desc = "A formal waistcoat meant to be worn alongside an overcoat."
-	icon_state = "black_wcoat"
-	item_state = "black_wcoat"
-
-/obj/item/clothing/under/gimmick/red_wcoat
-	name = "dress shirt and red waistcoat"
-	desc = "A formal red waistcoat meant to be worn alongside an overcoat."
-	icon_state = "red_wcoat"
-	item_state = "red_wcoat"
-
-/obj/item/clothing/under/gimmick/blue_wcoat
-	name = "dress shirt and blue waistcoat"
-	desc = "A formal blue waistcoat meant to be worn alongside an overcoat."
-	icon_state = "blue_wcoat"
-	item_state = "blue_wcoat"
-
 /obj/item/clothing/under/rank/bartender/tuxedo // look I really want to make the clothes vendor just produce clothing directly and not have to spawn this in a box with a custom name or something
 	name = "dress shirt and bowtie"
 	desc = "A nice, crisp shirt, dress pants and a black bowtie. Fancy."
@@ -1488,28 +1444,6 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	name = "\improper Red T-shirt and yoga pants"
 	icon_state = "yoga-c"
 	item_state = "yoga-c"
-
-/obj/item/clothing/under/misc/dress
-	name = "little black dress"
-	desc = "Every girl needs one, you know, but this is very, very little. Yeesh."
-	icon_state = "blackdress"
-	item_state = "blackdress"
-	hide_underwear = TRUE
-	c_flags = SLEEVELESS
-
-/obj/item/clothing/under/misc/dress/red
-	name = "little red dress"
-	desc = "Every girl needs one, you know, but would your grandma approve of this one?"
-	icon_state = "reddress"
-	item_state = "reddress"
-	c_flags = SLEEVELESS
-
-/obj/item/clothing/under/misc/dress/hawaiian
-	name = "hawaiian dress"
-	desc = "A vibrantly colored Hawaiian dress."
-	icon_state = "hawaiiandress"
-	item_state = "hawaiiandress"
-	c_flags = SLEEVELESS
 
 /obj/item/clothing/suit/poncho
 	name = "poncho"
@@ -1579,18 +1513,6 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 #endif
 	icon_state = "pajamas"
 	item_state = "pajamas"
-
-
-TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
-	mat_appearances_to_ignore = list("jean")
-/obj/item/clothing/under/gimmick/shirtnjeans
-	name = "shirt and jeans"
-	desc = "A white shirt and a pair of torn jeans."
-	icon_state = "shirtnjeans"
-	item_state = "white"
-	material_piece = /obj/item/material_piece/cloth/jean
-	mat_changename = FALSE
-	default_material = "jean"
 
 /obj/item/clothing/suit/jacketsjacket
 	name = "baseball jacket"
@@ -1737,16 +1659,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "Pristine white bell bottoms with red kick pleats and a snazzy gold belt."
 	icon_state = "elivissuit"
 
-/obj/item/clothing/under/gimmick/eightiesmens
-	name = "flashy vest"
-	desc = "A confident pair of clothes guaranteed to get you into a stride."
-	icon_state = "80smens"
-
-/obj/item/clothing/under/gimmick/eightieswomens
-	name = "flashy shirt"
-	desc = "A confident pair of clothes guaranteed to get you into a stride."
-	icon_state = "80swomens"
-
 /obj/item/clothing/under/gimmick/rollerdisco
 	name = "disco getup"
 	desc = "A funky shirt straight out of the 70s and a pair of athletic shorts for maximum agility."
@@ -1761,11 +1673,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	name = "tacky shirt and slacks"
 	desc = "A perfect set of clothes to go bowling in."
 	icon_state = "itsyourcousin"
-
-/obj/item/clothing/under/gimmick/adidad
-	name = "black tracksuit"
-	desc = "The result of outsourcing jumpsuit production to Russian companies."
-	icon_state = "adidad"
 
 // Sart's scifi clothing
 
@@ -1818,50 +1725,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "ftscanplate"
 	desc = "This eyewear looks incredibly advanced, as do most things that come from the Commonwealth of Free Worlds. Unfortunately, this is a non-functioning replica sold to tourists."
 	wear_layer = MOB_GLASSES_LAYER2
-
-/obj/item/clothing/under/blossomdress
-	name = "cherryblossom dress"
-	desc = "A dress. Specifically for masquerades."
-	icon_state = "blossomdress"
-	item_state = "blossomdress"
-	hide_underwear = TRUE
-
-/obj/item/clothing/under/peacockdress
-	name = "peacock dress"
-	desc = "A dress. Specifically for masquerades."
-	icon_state = "peacockdress"
-	item_state = "peacockdress"
-	hide_underwear = TRUE
-
-/obj/item/clothing/under/collardressbl
-	name = "collar dress"
-	desc = "a dress made for casual wear"
-	icon_state = "collardressbl"
-	item_state = "collardressbl"
-
-/obj/item/clothing/under/collardressr
-	name = "collar dress"
-	desc = "a dress made for casual wear"
-	icon_state = "collardressr"
-	item_state = "collardressr"
-
-/obj/item/clothing/under/collardressg
-	name = "collar dress"
-	desc = "a dress made for casual wear"
-	icon_state = "collardressg"
-	item_state = "collardressg"
-
-/obj/item/clothing/under/collardressb
-	name = "collar dress"
-	desc = "a dress made for casual wear"
-	icon_state = "collardressb"
-	item_state = "collardressb"
-
-/obj/item/clothing/under/redtie
-	name = "collar shirt and red tie"
-	desc = "a pale dress shirt with a nice red tie to go with it"
-	icon_state = "red-tie"
-	item_state = "red-tie"
 
 /obj/item/clothing/suit/loosejacket
 	name = "loose jacket"

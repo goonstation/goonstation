@@ -1,3 +1,25 @@
+//everything that's indicative of a particular nation
+ABSTRACT_TYPE(/obj/item/clothing/under/cultural)
+/obj/item/clothing/under/cultural
+    name = "cultural coders Jumpsuit"
+	desc = "This is weird! Report this to a coder!"
+	icon = 'icons/obj/clothing/jumpsuits/item_js_cultural.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_cultural.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_cultural.dmi'
+
+/obj/item/clothing/under/gimmick/hakama
+	name = "uwagi and hakama"
+	desc = "The traditional garb of the samurai. You have no idea what this is doing on a space station."
+	icon_state = "hakama_1"
+	item_state = "hakama_1"
+
+/obj/item/clothing/under/gimmick/hakama/random
+	New()
+		var/n = rand(1,6)
+		icon_state = "hakama_[n]"
+		item_state = "hakama_[n]"
+		..()
+
 ABSTRACT_TYPE(/obj/item/clothing/under/gimmick/yukata)
 /obj/item/clothing/under/gimmick/yukata
 	name = "yukata"
@@ -68,3 +90,21 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick/yukata/floral)
 			icon_state = "yukata_floral[yukata_index]"
 			item_state = "yukata_floral[yukata_index]"
 			..()
+
+/obj/item/clothing/under/misc/america
+	name = "american pride shirt"
+	desc = "I am a REAL AMERICAN, I fight for the rights of every man!"
+	icon_state = "america"
+	item_state = "america"
+
+/obj/item/clothing/under/misc/tricolor
+    name = "Tricolor Jumpsuit"
+    desc = "A jumpsuit that shows you're serious about pizza."
+    icon_state = "tricolor"
+    item_state = "tricolor"
+
+/obj/item/clothing/under/gimmick/kilt
+	name = "kilt"
+	desc = "Traditional Scottish clothing. A bit drafty in here, isn't it?"
+	icon_state = "kilt"
+	item_state = "kilt"
