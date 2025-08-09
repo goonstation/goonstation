@@ -6,13 +6,6 @@ source buildByond.conf
 REF="${SPACEMAN_DMM_REF:?SPACEMAN_DMM_REF is required}"
 REPO_URL="https://github.com/SpaceManiac/SpacemanDMM.git"
 
-# Check for existing cache, exit if found
-if [[ -d "$HOME/SpacemanDMM" ]]; then
-  shopt -s nullglob
-  existing=( "$HOME/SpacemanDMM"/* )
-  [[ ${#existing[@]} -gt 0 ]] && exit 0
-fi
-
 # Fetch the exact tag or commit
 T="$(mktemp -d)"
 git init "$T"

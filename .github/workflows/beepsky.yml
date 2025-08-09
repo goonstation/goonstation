@@ -56,8 +56,12 @@ jobs:
           touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
-          tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
+
+      - name: Build SpacemanDMM
+        if: steps.smcache.outputs.cache-hit != 'true'
+        run: |
+          tools/ci/install_spaceman_dmm.sh dreamchecker
 
       - name: Check TGUI
         run: |
@@ -228,8 +232,12 @@ jobs:
         run: |
           pip3 install setuptools
           tools/ci/install_build_tools.sh
-          tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
+
+      - name: Build SpacemanDMM
+        if: steps.smcache.outputs.cache-hit != 'true'
+        run: |
+          tools/ci/install_spaceman_dmm.sh dreamchecker
 
       - name: Misc Checks
         run: |
