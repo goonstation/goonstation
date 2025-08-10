@@ -1,0 +1,19 @@
+.SpeechModuleTree {
+  --section-bg-nested: color-mix(
+    in srgb,
+    var(--section-background),
+    var(--tab-color) 10%
+  );
+  .Section.module {
+    background-color: var(--section-bg-nested);
+  }
+  .Section.module--auxiliary {
+    background: repeating-linear-gradient(
+      45deg,
+      var(--section-background),
+      var(--section-background) 10px,
+      var(--section-bg-nested) 10px,
+      var(--section-bg-nested) 20px
+    );
+  }
+}

@@ -26,7 +26,7 @@ export const SpeechModuleTree = () => {
 
   return (
     <Window title={data.title} width={670} height={750}>
-      <Window.Content scrollable>
+      <Window.Content scrollable className="SpeechModuleTree">
         <Section>
           <Table>
             <Table.Cell textAlign="justify">{data.info}</Table.Cell>
@@ -112,9 +112,7 @@ const Module = (props: ModuleProps) => {
           </Flex>
         }
         m="1px"
-        className={
-          props.auxiliary ? 'ModuleSection__Disabled' : 'ModuleSection'
-        }
+        className={props.auxiliary ? 'module--auxiliary' : 'module'}
       >
         <LabeledList>
           {props.module_variables?.map((variable, index) => (
