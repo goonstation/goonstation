@@ -146,7 +146,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/shoe/one,
 /obj/random_item_spawner/hat/maybe_few,
-/obj/item/clothing/under/gimmick/shirtnjeans,
+/obj/item/clothing/under/athletic/shirtnjeans,
 /turf/simulated/floor/wood/three,
 /area/prefab/larrys_laundry)
 "oH" = (

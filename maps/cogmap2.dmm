@@ -2943,7 +2943,7 @@
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/under/misc/flame,
+/obj/item/clothing/under/gimmick/flame,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
 "aki" = (
@@ -3467,7 +3467,7 @@
 	name = "old matchbook"
 	},
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/under/suit/pinstripe,
+/obj/item/clothing/under/formal/pinstripe,
 /obj/item/paper{
 	info = ": )"
 	},
@@ -3733,7 +3733,7 @@
 /obj/landmark/start/job/assistant,
 /obj/decal/cleanable/dirt,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/under/misc/america,
+/obj/item/clothing/under/cultural/america,
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "amF" = (
@@ -5193,7 +5193,7 @@
 /obj/item/sponge{
 	name = "loofah"
 	},
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "art" = (
@@ -6930,8 +6930,8 @@
 /area/station/crew_quarters/fitness)
 "aww" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
 /obj/item/clothing/gloves/boxing,
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
@@ -8864,9 +8864,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aBx" = (
-/obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/under/suit/black,
-/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/under/formal/black/dress,
+/obj/item/clothing/under/formal/black,
+/obj/item/clothing/under/formal/shirt_pants,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/head/fedora,
 /obj/item/clothing/glasses/eyepatch{
@@ -8875,8 +8875,8 @@
 /obj/disposalpipe/segment/morgue,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/under/gimmick/mime,
+/obj/item/clothing/under/gimmick/mime/alt,
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /obj/storage/closet/dresser{
@@ -12368,7 +12368,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aMi" = (
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
@@ -14334,22 +14334,22 @@
 /obj/item/sponge{
 	name = "loofah"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
 /obj/decal/poster/wallsign/poster_rand{
 	pixel_y = 28
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
@@ -18121,7 +18121,7 @@
 /area/space)
 "bdI" = (
 /obj/storage/closet/dresser/random,
-/obj/item/clothing/under/misc/america,
+/obj/item/clothing/under/cultural/america,
 /obj/item/clothing/suit/jacket/plastic/random_color,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
@@ -33001,7 +33001,7 @@
 /obj/item/clothing/under/jersey/purple,
 /obj/item/clothing/under/jersey/green,
 /obj/item/clothing/under/jersey/black,
-/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/athletic/jersey,
 /obj/item/basketball,
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/pill/crank,
@@ -55200,8 +55200,8 @@
 "fOO" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
@@ -55285,7 +55285,7 @@
 "fUC" = (
 /obj/storage/closet/dresser/random,
 /obj/item/clothing/under/gimmick/trashsinglet,
-/obj/item/clothing/under/misc/flame,
+/obj/item/clothing/under/gimmick/flame,
 /obj/machinery/door_control/bolter/new_walls/south{
 	id = "cc3";
 	dir = 1;
@@ -56021,7 +56021,7 @@
 /area/station/engine/engineering)
 "gFI" = (
 /obj/table/auto,
-/obj/item/clothing/under/suit/mortician,
+/obj/item/clothing/under/formal/mortician,
 /obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/detective_scanner,
@@ -60086,7 +60086,7 @@
 	name = "laundry cart"
 	},
 /obj/item/reagent_containers/glass/bottle/cleaner,
-/obj/item/clothing/under/scrub,
+/obj/item/clothing/under/misc/scrub,
 /obj/item/clothing/under/color/white,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/clothing/suit/bedsheet,
@@ -60095,7 +60095,7 @@
 /obj/item/clothing/shoes/white,
 /obj/item/clothing/shoes/white,
 /obj/item/clothing/under/color/white,
-/obj/item/clothing/under/scrub,
+/obj/item/clothing/under/misc/scrub,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -70039,17 +70039,17 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/gimmick/macho,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/storage/closet/dresser/random,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/clothing/under/shorts/luchador,
-/obj/item/clothing/under/shorts/luchador/green,
-/obj/item/clothing/under/shorts/luchador/red,
+/obj/item/clothing/under/athletic/luchador,
+/obj/item/clothing/under/athletic/luchador/green,
+/obj/item/clothing/under/athletic/luchador/red,
 /obj/item/clothing/under/gimmick/trashsinglet,
 /obj/item/clothing/head/helmet/men,
 /obj/item/clothing/head/helmet/men,
@@ -70245,7 +70245,7 @@
 /area/station/bridge/customs)
 "tDu" = (
 /obj/machinery/firealarm/directional/north,
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},

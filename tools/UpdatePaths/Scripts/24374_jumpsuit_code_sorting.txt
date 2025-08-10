@@ -1,0 +1,208 @@
+/obj/item/clothing/under/shorts : /obj/item/clothing/under/athletic/shorts{@OLD}
+/obj/item/clothing/under/shorts/red : /obj/item/clothing/under/athletic/shorts/red{@OLD}
+/obj/item/clothing/under/shorts/green : /obj/item/clothing/under/athletic/shorts/green{@OLD}
+/obj/item/clothing/under/shorts/blue : /obj/item/clothing/under/athletic/shorts/blue{@OLD}
+/obj/item/clothing/under/shorts/purple : /obj/item/clothing/under/athletic/shorts/purple{@OLD}
+/obj/item/clothing/under/shorts/black : /obj/item/clothing/under/athletic/shorts/black{@OLD}
+
+/obj/item/clothing/under/jersey : /obj/item/clothing/under/athletic/jersey{@OLD}
+
+/obj/item/clothing/under/shorts/luchador : /obj/item/clothing/under/athletic/luchador{@OLD}
+/obj/item/clothing/under/shorts/luchador/red : /obj/item/clothing/under/athletic/luchador/red{@OLD}
+/obj/item/clothing/under/shorts/luchador/green : /obj/item/clothing/under/athletic/luchador/green{@OLD}
+
+/obj/item/clothing/under/referee : /obj/item/clothing/under/athletic/referee{@OLD}
+
+/obj/item/clothing/under/gimmick/macho : /obj/item/clothing/under/athletic/macho{@OLD}
+
+/obj/item/clothing/under/gimmick/eightiesmens : /obj/item/clothing/under/athletic/eightiesmens{@OLD}
+/obj/item/clothing/under/gimmick/eightieswomens : /obj/item/clothing/under/athletic/eightieswomens{@OLD}
+
+/obj/item/clothing/under/gimmick/adidad : /obj/item/clothing/under/athletic/adidad{@OLD}
+
+/obj/item/clothing/under/gimmick/shirtnjeans : /obj/item/clothing/under/athletic/shirtnjeans{@OLD}
+
+/obj/item/clothing/under/misc/dirty_vest : /obj/item/clothing/under/athletic/dirty_vest{@OLD}
+
+
+/obj/item/clothing/under/gimmick/hakama : /obj/item/clothing/under/cultural/hakama{@OLD}
+/obj/item/clothing/under/gimmick/hakama/random : /obj/item/clothing/under/cultural/hakama/random{@OLD}
+
+/obj/item/clothing/under/gimmick/yukata : /obj/item/clothing/under/cultural/yukata{@OLD}
+/obj/item/clothing/under/gimmick/yukata/plain : /obj/item/clothing/under/cultural/yukata/plain{@OLD}
+/obj/item/clothing/under/gimmick/yukata/floral : /obj/item/clothing/under/cultural/yukata/floral{@OLD}
+
+/obj/item/clothing/under/misc/america : /obj/item/clothing/under/cultural/america{@OLD}
+
+/obj/item/clothing/under/misc/tricolor : /obj/item/clothing/under/cultural/tricolor{@OLD}
+
+/obj/item/clothing/under/gimmick/kilt : /obj/item/clothing/under/cultural/kilt{@OLD}
+
+/obj/item/clothing/under/peacockdress : /obj/item/clothing/under/formal/peacockdress{@OLD}
+
+/obj/item/clothing/under/blossomdress : /obj/item/clothing/under/formal/blossomdress{@OLD}
+
+/obj/item/clothing/under/collardressbl : /obj/item/clothing/under/formal/collardressbl{@OLD}
+/obj/item/clothing/under/collardressr : /obj/item/clothing/under/formal/collardressr{@OLD}
+/obj/item/clothing/under/collardressg : /obj/item/clothing/under/formal/collardressg{@OLD}
+/obj/item/clothing/under/collardressb : /obj/item/clothing/under/formal/collardressb{@OLD}
+
+/obj/item/clothing/under/misc/dress : /obj/item/clothing/under/formal/dress{@OLD}
+/obj/item/clothing/under/misc/dress/hawaiian : /obj/item/clothing/under/formal/dress/hawaiian{@OLD}
+/obj/item/clothing/under/misc/dress/red : /obj/item/clothing/under/formal/dress/red{@OLD}
+
+/obj/item/clothing/under/misc/casdressblk : /obj/item/clothing/under/formal/casdressblk{@OLD}
+/obj/item/clothing/under/misc/casdressblu : /obj/item/clothing/under/formal/casdressblu{@OLD}
+/obj/item/clothing/under/misc/casdressgrn : /obj/item/clothing/under/formal/casdressgrn{@OLD}
+/obj/item/clothing/under/misc/casdresspnk : /obj/item/clothing/under/formal/casdresspnk{@OLD}
+/obj/item/clothing/under/misc/casdresswht : /obj/item/clothing/under/formal/casdresswht{@OLD}
+/obj/item/clothing/under/misc/casdressbolty : /obj/item/clothing/under/formal/casdressbolty{@OLD}
+/obj/item/clothing/under/misc/casdressboltp : /obj/item/clothing/under/formal/casdressboltp{@OLD}
+/obj/item/clothing/under/misc/casdressleoy : /obj/item/clothing/under/formal/casdressleoy{@OLD}
+/obj/item/clothing/under/misc/casdressleop : /obj/item/clothing/under/formal/casdressleop{@OLD}
+
+/obj/item/clothing/under/misc/sktdress_red : /obj/item/clothing/under/formal/sktdress_red{@OLD}
+/obj/item/clothing/under/misc/sktdress_purple : /obj/item/clothing/under/formal/sktdress_purple{@OLD}
+/obj/item/clothing/under/misc/sktdress_blue : /obj/item/clothing/under/formal/sktdress_blue{@OLD}
+/obj/item/clothing/under/misc/sktdress_gold : /obj/item/clothing/under/formal/sktdress_gold{@OLD}
+
+/obj/item/clothing/under/gimmick/dinerdress_mint : /obj/item/clothing/under/formal/dinerdress_mint{@OLD}
+/obj/item/clothing/under/gimmick/dinerdress_mint : /obj/item/clothing/under/formal/dinerdress_pink{@OLD}
+
+/obj/item/clothing/under/misc/tea_party_dress : /obj/item/clothing/under/formal/tea_party_dress{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/pink : /obj/item/clothing/under/formal/tea_party_dress/pink{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/pink_and_black : /obj/item/clothing/under/formal/tea_party_dress/pink_and_black{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/black_and_white : /obj/item/clothing/under/formal/tea_party_dress/black_and_white{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/black : /obj/item/clothing/under/formal/tea_party_dress/black{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/white : /obj/item/clothing/under/formal/tea_party_dress/white{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/white_and_black : /obj/item/clothing/under/formal/tea_party_dress/white_and_black{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/blue : /obj/item/clothing/under/formal/tea_party_dress/blue{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/dark_blue : /obj/item/clothing/under/formal/tea_party_dress/dark_blue{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/light_blue : /obj/item/clothing/under/formal/tea_party_dress/light_blue{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/cyan : /obj/item/clothing/under/formal/tea_party_dress/cyan{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/green : /obj/item/clothing/under/formal/tea_party_dress/green{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/light_green : /obj/item/clothing/under/formal/tea_party_dress/light_green{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/orange : /obj/item/clothing/under/formal/tea_party_dress/orange{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/red : /obj/item/clothing/under/formal/tea_party_dress/red{@OLD}
+/obj/item/clothing/under/misc/tea_party_dress/yellow : /obj/item/clothing/under/formal/tea_party_dress/yellow{@OLD}
+
+/obj/item/clothing/under/misc/blouse_skirt : /obj/item/clothing/under/formal/blouse_skirt{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/white : /obj/item/clothing/under/formal/blouse_skirt/white{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/cream : /obj/item/clothing/under/formal/blouse_skirt/cream{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/khaki : /obj/item/clothing/under/formal/blouse_skirt/khaki{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/pink : /obj/item/clothing/under/formal/blouse_skirt/pink{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/red : /obj/item/clothing/under/formal/blouse_skirt/red{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/dark_red : /obj/item/clothing/under/formal/blouse_skirt/dark_red{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/orange : /obj/item/clothing/under/formal/blouse_skirt/orange{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/brown : /obj/item/clothing/under/formal/blouse_skirt/brown{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/yellow : /obj/item/clothing/under/formal/blouse_skirt/yellow{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/green : /obj/item/clothing/under/formal/blouse_skirt/green{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/dark_green : /obj/item/clothing/under/formal/blouse_skirt/dark_green{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/mint : /obj/item/clothing/under/formal/blouse_skirt/mint{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/blue : /obj/item/clothing/under/formal/blouse_skirt/blue{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/dark_blue : /obj/item/clothing/under/formal/blouse_skirt/dark_blue{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/purple : /obj/item/clothing/under/formal/blouse_skirt/purple{@OLD}
+/obj/item/clothing/under/misc/blouse_skirt/black : /obj/item/clothing/under/formal/blouse_skirt/black{@OLD}
+
+/obj/item/clothing/under/suit/black/dress : /obj/item/clothing/under/formal/black/dress{@OLD}
+/obj/item/clothing/under/suit/captain/dress : /obj/item/clothing/under/formal/captain/dress{@OLD}
+/obj/item/clothing/under/suit/red/dress : /obj/item/clothing/under/formal/red/dress{@OLD}
+/obj/item/clothing/under/suit/hop/dress : /obj/item/clothing/under/formal/hop/dress{@OLD}
+/obj/item/clothing/under/suit/purple/dress : /obj/item/clothing/under/formal/purple/dress{@OLD}
+/obj/item/clothing/under/suit/hos/dress : /obj/item/clothing/under/formal/hos/dress{@OLD}
+/obj/item/clothing/under/suit/captain/dress/blue : /obj/item/clothing/under/formal/captain/dress/blue{@OLD}
+/obj/item/clothing/under/suit/captain/dress/red : /obj/item/clothing/under/formal/captain/dress/red{@OLD}
+
+/obj/item/clothing/under/suit/black : /obj/item/clothing/under/formal/black{@OLD}
+/obj/item/clothing/under/suit/mortician : /obj/item/clothing/under/formal/mortician{@OLD}
+/obj/item/clothing/under/suit/pinstripe : /obj/item/clothing/under/formal/pinstripe{@OLD}
+/obj/item/clothing/under/suit/captain : /obj/item/clothing/under/formal/captain{@OLD}
+/obj/item/clothing/under/suit/red : /obj/item/clothing/under/formal/red{@OLD}
+/obj/item/clothing/under/suit/hop/april_fools : /obj/item/clothing/under/formal/hop/april_fools{@OLD}
+/obj/item/clothing/under/suit/hop : /obj/item/clothing/under/formal/hop{@OLD}
+/obj/item/clothing/under/suit/purple : /obj/item/clothing/under/formal/purple{@OLD}
+/obj/item/clothing/under/suit/hos : /obj/item/clothing/under/formal/hos{@OLD}
+/obj/item/clothing/under/suit/captain/blue : /obj/item/clothing/under/formal/captain/blue{@OLD}
+/obj/item/clothing/under/suit/captain/red : /obj/item/clothing/under/formal/captain/red{@OLD}
+
+/obj/item/clothing/under/redtie : /obj/item/clothing/under/formal/redtie{@OLD}
+
+/obj/item/clothing/under/shirt_pants : /obj/item/clothing/under/formal/shirt_pants{@OLD}
+/obj/item/clothing/under/shirt_pants_b : /obj/item/clothing/under/formal/shirt_pants_b{@OLD}
+/obj/item/clothing/under/shirt_pants_b/redtie : /obj/item/clothing/under/formal/shirt_pants_b/redtie{@OLD}
+/obj/item/clothing/under/shirt_pants_b/blacktie : /obj/item/clothing/under/formal/shirt_pants_b/blacktie{@OLD}
+/obj/item/clothing/under/shirt_pants_b/bluetie : /obj/item/clothing/under/formal/shirt_pants_b/bluetie{@OLD}
+
+/obj/item/clothing/under/shirt_pants_br : /obj/item/clothing/under/formal/shirt_pants_br{@OLD}
+/obj/item/clothing/under/shirt_pants_br/redtie : /obj/item/clothing/under/formal/shirt_pants_br/redtie{@OLD}
+/obj/item/clothing/under/shirt_pants_br/blacktie : /obj/item/clothing/under/formal/shirt_pants_br/blacktie{@OLD}
+/obj/item/clothing/under/shirt_pants_br/bluetie : /obj/item/clothing/under/formal/shirt_pants_br/bluetie{@OLD}
+
+/obj/item/clothing/under/shirt_pants_w : /obj/item/clothing/under/formal/shirt_pants_w{@OLD}
+/obj/item/clothing/under/shirt_pants_w/redtie : /obj/item/clothing/under/formal/shirt_pants_w/redtie{@OLD}
+/obj/item/clothing/under/shirt_pants_w/blacktie : /obj/item/clothing/under/formal/shirt_pants_w/blacktie{@OLD}
+/obj/item/clothing/under/shirt_pants_w/bluetie : /obj/item/clothing/under/formal/shirt_pants_w/bluetie{@OLD}
+
+/obj/item/clothing/under/misc/collar_shirt : /obj/item/clothing/under/formal/collar_shirt{@OLD}
+/obj/item/clothing/under/misc/collar_shirt/white : /obj/item/clothing/under/formal/collar_shirt/white
+/obj/item/clothing/under/misc/collar_shirt/cream : /obj/item/clothing/under/formal/collar_shirt/cream
+/obj/item/clothing/under/misc/collar_shirt/khaki : /obj/item/clothing/under/formal/collar_shirt/khaki
+/obj/item/clothing/under/misc/collar_shirt/pink : /obj/item/clothing/under/formal/collar_shirt/pink
+/obj/item/clothing/under/misc/collar_shirt/red : /obj/item/clothing/under/formal/collar_shirt/red
+/obj/item/clothing/under/misc/collar_shirt/dark_red : /obj/item/clothing/under/misc/collar_shirt/dark_red
+/obj/item/clothing/under/misc/collar_shirt/orange : /obj/item/clothing/under/formal/collar_shirt/orange
+/obj/item/clothing/under/misc/collar_shirt/brown : /obj/item/clothing/under/formal/collar_shirt/brown
+/obj/item/clothing/under/misc/collar_shirt/yellow : /obj/item/clothing/under/formal/collar_shirt/yellow
+/obj/item/clothing/under/misc/collar_shirt/green : /obj/item/clothing/under/formal/collar_shirt/green
+/obj/item/clothing/under/misc/collar_shirt/dark_green : /obj/item/clothing/under/formal/collar_shirt/dark_green
+/obj/item/clothing/under/misc/collar_shirt/mint : /obj/item/clothing/under/formal/collar_shirt/mint
+/obj/item/clothing/under/misc/collar_shirt/blue : /obj/item/clothing/under/formal/collar_shirt/blue
+/obj/item/clothing/under/misc/collar_shirt/dark_blue : /obj/item/clothing/under/formal/collar_shirt/dark_blue
+/obj/item/clothing/under/misc/collar_shirt/purple : /obj/item/clothing/under/formal/collar_shirt/purple
+/obj/item/clothing/under/misc/collar_shirt/black : /obj/item/clothing/under/formal/collar_shirt/black
+
+/obj/item/clothing/under/gimmick/black_wcoat : /obj/item/clothing/under/formal/black_wcoat{@OLD}
+/obj/item/clothing/under/gimmick/red_wcoat : /obj/item/clothing/under/formal/red_wcoat{@OLD}
+/obj/item/clothing/under/gimmick/blue_wcoat : /obj/item/clothing/under/formal/blue_wcoat{@OLD}
+
+/obj/item/clothing/under/misc/fancy_vest : /obj/item/clothing/under/formal/fancy_vest{@OLD}
+
+/obj/item/clothing/under/misc/clown/blue : /obj/item/clothing/under/gimmick/clown/blue{@OLD}
+/obj/item/clothing/under/misc/clown/purple : /obj/item/clothing/under/gimmick/clown/purple{@OLD}
+/obj/item/clothing/under/misc/clown/yellow : /obj/item/clothing/under/gimmick/clown/yellow{@OLD}
+/obj/item/clothing/under/misc/clown/pink : /obj/item/clothing/under/gimmick/clown/pink{@OLD}
+
+/obj/item/clothing/under/misc/mime : /obj/item/clothing/under/gimmick/mime{@OLD}
+/obj/item/clothing/under/misc/mime/alt : /obj/item/clothing/under/gimmick/mime/alt{@OLD}
+/obj/item/clothing/under/misc/mimedress : /obj/item/clothing/under/gimmick/mimedress{@OLD}
+/obj/item/clothing/under/misc/mimefancy : /obj/item/clothing/under/gimmick/mimefancy{@OLD}
+
+/obj/item/clothing/under/misc/flame : /obj/item/clothing/under/gimmick/flame{@OLD}
+
+/obj/item/clothing/under/rotten : /obj/item/clothing/under/gimmick/rotten{@OLD}
+
+/obj/item/clothing/under/misc/western : /obj/item/clothing/under/gimmick/western{@OLD}
+/obj/item/clothing/under/misc/westerndress : /obj/item/clothing/under/gimmick/westerndress{@OLD}
+
+/obj/item/clothing/under/rank/clown : /obj/item/clothing/under/rank/clown{@OLD}
+/obj/item/clothing/under/misc/clowndress : /obj/item/clothing/under/rank/clowndress{@OLD}
+
+/obj/item/clothing/under/scrub : /obj/item/clothing/under/misc/scrub{@OLD}
+
+/obj/item/clothing/under/patient_gown : /obj/item/clothing/under/misc/patient_gown{@OLD}
+
+/obj/item/clothing/under/misc/bikini : /obj/item/clothing/under/swimsuit/bikini{@OLD}
+
+/obj/item/clothing/under/gimmick/donkini : /obj/item/clothing/under/swimsuit/donkini{@OLD}
+
+/obj/item/clothing/under/misc/onepiece : /obj/item/clothing/under/swimsuit/onepiece{@OLD}
+
+/obj/item/clothing/under/misc/frillyswimsuit : /obj/item/clothing/under/swimsuit/frillyswimsuit{@OLD}
+
+/obj/item/clothing/under/misc/swimtrunks : /obj/item/clothing/under/swimsuit/swimtrunks{@OLD}
+
+/obj/item/clothing/under/misc/wetsuit : /obj/item/clothing/under/swimsuit/wetsuit{@OLD}
+
+/obj/item/clothing/under/misc/oldswimsuit : /obj/item/clothing/under/swimsuit/oldswimsuit{@OLD}
+
+/obj/item/clothing/under/swimsuit : /obj/item/clothing/under/swimsuit/swimsuits{@OLD}

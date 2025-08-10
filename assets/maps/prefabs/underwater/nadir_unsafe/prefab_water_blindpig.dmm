@@ -472,8 +472,8 @@
 /area/prefab/blind_pig)
 "WN" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit/black,
-/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/under/formal/black,
+/obj/item/clothing/under/formal/shirt_pants,
 /turf/simulated/floor/black,
 /area/prefab/blind_pig)
 "WP" = (

@@ -16906,7 +16906,7 @@
 /obj/map/light/graveyard,
 /obj/decal/cleanable/dirt,
 /obj/storage/closet/coffin,
-/obj/item/clothing/under/suit/pinstripe,
+/obj/item/clothing/under/formal/pinstripe,
 /obj/item/clothing/mask/smile,
 /obj/item/dagger/smile,
 /obj/item/device/key/haunted{
@@ -20870,7 +20870,7 @@
 	icon_state = "skeleton_s";
 	name = "crumbly skeleton"
 	},
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bGi" = (
@@ -21554,7 +21554,7 @@
 "bID" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/unsimulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -30099,8 +30099,8 @@
 /obj/storage/crate,
 /obj/item/clothing/head/flatcap,
 /obj/item/clothing/head/flatcap,
-/obj/item/clothing/under/suit/pinstripe,
-/obj/item/clothing/under/suit/pinstripe,
+/obj/item/clothing/under/formal/pinstripe,
+/obj/item/clothing/under/formal/pinstripe,
 /obj/decal/poster/wallsign/newtonscrew{
 	pixel_y = 32
 	},
@@ -30565,7 +30565,7 @@
 /area/dojo)
 "cpu" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/hakama/random,
+/obj/item/clothing/under/cultural/hakama/random,
 /obj/item/clothing/head/bandana/random_color,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
@@ -45770,11 +45770,11 @@
 /area/wizard_station)
 "dki" = (
 /obj/table/wood/auto,
-/obj/item/clothing/under/shorts/red{
+/obj/item/clothing/under/athletic/shorts/red{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/clothing/under/shorts/purple{
+/obj/item/clothing/under/athletic/shorts/purple{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -45782,18 +45782,18 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/clothing/under/shorts/green{
+/obj/item/clothing/under/athletic/shorts/green{
 	pixel_x = -3
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	pixel_x = 3;
 	pixel_y = 8
 	},
-/obj/item/clothing/under/shorts/black{
+/obj/item/clothing/under/athletic/shorts/black{
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/shorts{
+/obj/item/clothing/under/athletic/shorts{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -47860,7 +47860,7 @@
 /turf/unsimulated/floor/engine/caution/north,
 /area/centcom/offices/mordent)
 "dxj" = (
-/obj/item/clothing/under/misc/dress/red,
+/obj/item/clothing/under/formal/dress/red,
 /turf/unsimulated/floor/void,
 /area/centcom/offices/lyra)
 "dxk" = (
@@ -48006,7 +48006,7 @@
 /area/centcom/offices/gannets)
 "dxD" = (
 /obj/rack,
-/obj/item/clothing/under/gimmick/kilt{
+/obj/item/clothing/under/cultural/kilt{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -55001,7 +55001,7 @@
 /area/centcom/offices/studenterhue)
 "epD" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/formal/black,
 /obj/item/storage/briefcase,
 /obj/item/storage/pill_bottle/antirad,
 /obj/item/cigpacket/menthol,
@@ -58928,7 +58928,7 @@
 /obj/item/clothing/head/walphat,
 /obj/item/clothing/under/misc/walpoutfit1,
 /obj/item/clothing/suit/walpcardigan,
-/obj/item/clothing/under/misc/mimefancy,
+/obj/item/clothing/under/gimmick/mimefancy,
 /obj/item/clothing/head/witchhat_purple,
 /obj/item/clothing/shoes/witchboots,
 /obj/item/clothing/suit/witchcape_purple,
@@ -60103,7 +60103,7 @@
 "ius" = (
 /obj/machinery/light,
 /obj/item/clothing/suit/armor/vest/macho,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/item/clothing/head/helmet/macho,
 /obj/window{
 	dir = 8;
@@ -64374,7 +64374,7 @@
 /obj/item/clothing/suit/hoodie/white,
 /obj/item/clothing/suit/armor/hoscape,
 /obj/item/clothing/shoes/swat/heavy,
-/obj/item/clothing/under/misc/mimedress,
+/obj/item/clothing/under/gimmick/mimedress,
 /obj/item/clothing/shoes/mjblack,
 /obj/item/clothing/shoes/sandal,
 /turf/unsimulated/floor/tatami/east,
@@ -70383,7 +70383,7 @@
 /area/owlery/Owlmait2)
 "qoB" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit/hos/dress{
+/obj/item/clothing/under/formal/hos/dress{
 	desc = "A fancy red suit with a black skirt. This one has some blood and sweat stains. Ew.";
 	name = "grungy HoS suit"
 	},
@@ -73517,7 +73517,7 @@
 /area/syndicate_station/battlecruiser)
 "sGw" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/hakama/random,
+/obj/item/clothing/under/cultural/hakama/random,
 /obj/item/clothing/head/bandana/random_color,
 /obj/item/clothing/head/helmet/men,
 /obj/item/clothing/head/helmet/men,
@@ -79408,7 +79408,7 @@
 /obj/item/clothing/head/flatcap,
 /obj/item/instrument/fiddle,
 /obj/machinery/light/small,
-/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/formal/black/dress,
 /obj/item/clothing/glasses/monocle,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -79695,7 +79695,7 @@
 	font_color = "#de0c62";
 	name = "cerise lipstick"
 	},
-/obj/item/clothing/under/misc/casdresswht,
+/obj/item/clothing/under/formal/casdresswht,
 /obj/item/storage/backpack/satchel/brown,
 /obj/item/clothing/shoes/bootsbrn,
 /obj/item/clothing/head/barrette/gold,

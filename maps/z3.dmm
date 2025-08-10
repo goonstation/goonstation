@@ -5700,7 +5700,7 @@
 "aGh" = (
 /obj/storage/crate,
 /obj/item/pen/crayon/rainbow,
-/obj/item/clothing/under/misc/clown/blue,
+/obj/item/clothing/under/gimmick/clown/blue,
 /obj/item/clothing/shoes/clown_shoes/blue,
 /obj/item/clothing/mask/clown_hat/blue,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -16812,7 +16812,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hangar)
 "fiK" = (
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged2,
@@ -18840,7 +18840,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "kdO" = (

@@ -60,7 +60,7 @@
 /area/dmm_suite/clear_area)
 "L" = (
 /obj/decal/cleanable/ash,
-/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/gimmick/mime,
 /obj/item/clothing/mask/mime,
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/dmm_suite/clear_area)

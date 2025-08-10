@@ -12,7 +12,7 @@
 /turf/simulated/floor/stone,
 /area/dmm_suite/clear_area)
 "l" = (
-/obj/item/clothing/under/gimmick/hakama{
+/obj/item/clothing/under/cultural/hakama{
 	pixel_y = 9;
 	pixel_x = 8
 	},

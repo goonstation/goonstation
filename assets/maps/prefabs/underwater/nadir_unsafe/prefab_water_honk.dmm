@@ -433,7 +433,7 @@
 "bA" = (
 /obj/stool/chair,
 /obj/item/gun/reagent/syringe/love,
-/obj/item/clothing/under/misc/clown/pink,
+/obj/item/clothing/under/gimmick/clown/pink,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -589,7 +589,7 @@
 /area/prefab/slimy_honk)
 "ch" = (
 /obj/item/chair/folded,
-/obj/item/clothing/under/misc/clown/purple,
+/obj/item/clothing/under/gimmick/clown/purple,
 /turf/simulated/floor/carpet/purple,
 /area/prefab/slimy_honk)
 "ci" = (
@@ -770,7 +770,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/prefab/slimy_honk)
 "cP" = (
-/obj/item/clothing/under/misc/clown/blue,
+/obj/item/clothing/under/gimmick/clown/blue,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/slimy_honk)
 "cQ" = (

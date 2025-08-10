@@ -1765,7 +1765,7 @@
 /area/station/medical/robotics)
 "bwd" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
+/obj/item/clothing/under/athletic/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
@@ -7655,7 +7655,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "fxt" = (
@@ -11426,7 +11426,7 @@
 "iku" = (
 /obj/rack,
 /obj/item/clothing/head/helmet/space/donk,
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/grime,
 /area/iss)
 "ikC" = (
@@ -28312,7 +28312,7 @@
 /obj/item/hand_labeler,
 /obj/item/storage/box/biohazard_bags,
 /obj/item/storage/box/body_bag,
-/obj/item/clothing/under/suit/mortician,
+/obj/item/clothing/under/formal/mortician,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)

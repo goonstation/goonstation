@@ -108,16 +108,16 @@
 	},
 /area/prefab/dreamplaza)
 "dg" = (
-/obj/item/clothing/under/misc/casdressboltp{
+/obj/item/clothing/under/formal/casdressboltp{
 	pixel_x = 20;
 	pixel_y = 8;
 	rand_pos = 1
 	},
-/obj/item/clothing/under/misc/casdressbolty{
+/obj/item/clothing/under/formal/casdressbolty{
 	pixel_x = 11;
 	rand_pos = 1
 	},
-/obj/item/clothing/under/misc/casdressleop{
+/obj/item/clothing/under/formal/casdressleop{
 	pixel_x = 3;
 	pixel_y = 8
 	},
@@ -780,11 +780,11 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/clothing/under/misc/casdressleoy{
+/obj/item/clothing/under/formal/casdressleoy{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/clothing/under/misc/casdressblu{
+/obj/item/clothing/under/formal/casdressblu{
 	pixel_x = 8;
 	pixel_y = 5
 	},

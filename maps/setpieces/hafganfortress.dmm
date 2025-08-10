@@ -1513,19 +1513,19 @@
 /obj/storage/closet/syndicate{
 	pixel_y = 1
 	},
-/obj/item/clothing/under/shirt_pants_br/redtie{
+/obj/item/clothing/under/formal/shirt_pants_br/redtie{
 	name = "HAFGAN office attire";
 	rarity = 3
 	},
-/obj/item/clothing/under/shirt_pants_br/redtie{
+/obj/item/clothing/under/formal/shirt_pants_br/redtie{
 	name = "HAFGAN office attire";
 	rarity = 3
 	},
-/obj/item/clothing/under/shirt_pants_br/redtie{
+/obj/item/clothing/under/formal/shirt_pants_br/redtie{
 	name = "HAFGAN office attire";
 	rarity = 3
 	},
-/obj/item/clothing/under/shirt_pants_br/redtie{
+/obj/item/clothing/under/formal/shirt_pants_br/redtie{
 	name = "HAFGAN office attire";
 	rarity = 3
 	},
@@ -1537,14 +1537,14 @@
 /obj/item/device/radio/headset/syndicate,
 /obj/item/device/radio/headset/syndicate,
 /obj/item/device/radio/headset/syndicate,
-/obj/item/clothing/under/suit/red/dress,
-/obj/item/clothing/under/suit/red/dress,
-/obj/item/clothing/under/suit/red/dress,
-/obj/item/clothing/under/suit/red/dress,
-/obj/item/clothing/under/suit/red,
-/obj/item/clothing/under/suit/red,
-/obj/item/clothing/under/suit/red,
-/obj/item/clothing/under/suit/red,
+/obj/item/clothing/under/formal/red/dress,
+/obj/item/clothing/under/formal/red/dress,
+/obj/item/clothing/under/formal/red/dress,
+/obj/item/clothing/under/formal/red/dress,
+/obj/item/clothing/under/formal/red,
+/obj/item/clothing/under/formal/red,
+/obj/item/clothing/under/formal/red,
+/obj/item/clothing/under/formal/red,
 /obj/random_item_spawner/kineticgun/safer/one,
 /obj/random_item_spawner/kineticgun/safer/one,
 /turf/unsimulated/floor/plating,

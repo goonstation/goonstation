@@ -10776,7 +10776,7 @@
 /obj/item/device/detective_scanner{
 	pixel_x = -6
 	},
-/obj/item/clothing/under/suit/black{
+/obj/item/clothing/under/formal/black{
 	name = "Mortician Suit";
 	pixel_y = 11
 	},
@@ -20081,11 +20081,11 @@
 /obj/item/clothing/gloves/boxing{
 	pixel_y = -7
 	},
-/obj/item/clothing/under/shorts/black{
+/obj/item/clothing/under/athletic/shorts/black{
 	pixel_x = -7;
 	pixel_y = -5
 	},
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -22591,7 +22591,7 @@
 	})
 "jRm" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
+/obj/item/clothing/under/athletic/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
@@ -30562,7 +30562,7 @@
 /obj/item/clothing/under/jersey/purple,
 /obj/item/clothing/under/jersey/green,
 /obj/item/clothing/under/jersey/black,
-/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/athletic/jersey,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
 	name = "barkley's basketball"
@@ -48200,7 +48200,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "vuv" = (
@@ -53403,7 +53403,7 @@
 	pixel_x = -4
 	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	pixel_x = 8;
 	pixel_y = -5
 	},
@@ -53418,7 +53418,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/clothing/under/shorts/black{
+/obj/item/clothing/under/athletic/shorts/black{
 	pixel_x = -7;
 	pixel_y = -5
 	},

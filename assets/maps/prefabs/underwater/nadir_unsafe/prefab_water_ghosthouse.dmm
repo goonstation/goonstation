@@ -349,7 +349,7 @@
 "bB" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/color/purple,
-/obj/item/clothing/under/suit/purple,
+/obj/item/clothing/under/formal/purple,
 /obj/item/clothing/head/that/purple,
 /obj/item/clothing/glasses/thermal/orange,
 /turf/simulated/floor/carpet/purple/fancy,
@@ -357,7 +357,7 @@
 "bC" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/wedding_dress,
-/obj/item/clothing/under/misc/dress,
+/obj/item/clothing/under/formal/dress,
 /obj/item/clothing/glasses/regular/ecto,
 /obj/item/clothing/gloves/ring/gold,
 /obj/item/clothing/head/veil,

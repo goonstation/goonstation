@@ -4100,23 +4100,23 @@
 /area/station/crew_quarters/market)
 "axo" = (
 /obj/table/wood/auto,
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
@@ -4223,19 +4223,19 @@
 /area/station/engine/storage)
 "axU" = (
 /obj/table/wood/auto,
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
@@ -34141,9 +34141,9 @@
 	tag = "icon-reinf_tabledir (SOUTHWEST)"
 	},
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
 /obj/item/clothing/gloves/boxing,
 /obj/item/device/radio,
 /turf/simulated/floor{
@@ -35411,9 +35411,9 @@
 	tag = "icon-reinf_tabledir (SOUTHWEST)"
 	},
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
 /obj/item/clothing/gloves/boxing,
 /turf/simulated/floor{
 	icon_state = "0,6";

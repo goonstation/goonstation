@@ -392,7 +392,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/obj/item/clothing/under/misc/dirty_vest,
+/obj/item/clothing/under/athletic/dirty_vest,
 /turf/simulated/floor/shuttle/green,
 /area/prefab/radshuttle)
 "aS" = (

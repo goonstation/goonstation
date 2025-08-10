@@ -538,7 +538,7 @@
 /obj/item/clothing/head/that/white{
 	pixel_y = 17
 	},
-/obj/item/clothing/under/shirt_pants_b/blacktie{
+/obj/item/clothing/under/formal/shirt_pants_b/blacktie{
 	pixel_y = -2
 	},
 /obj/item/clothing/glasses/noir{
@@ -2118,7 +2118,7 @@
 /obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
-/obj/item/clothing/under/gimmick/kilt,
+/obj/item/clothing/under/cultural/kilt,
 /obj/item/paper/businesscard/bonktek{
 	pixel_y = -12
 	},

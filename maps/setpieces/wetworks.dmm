@@ -2951,7 +2951,7 @@
 /obj/decal/stage_edge/alt{
 	color = "gray"
 	},
-/obj/item/clothing/under/gimmick/blue_wcoat,
+/obj/item/clothing/under/formal/blue_wcoat,
 /obj/item/clothing/shoes/white{
 	pixel_y = -12;
 	pixel_x = -2

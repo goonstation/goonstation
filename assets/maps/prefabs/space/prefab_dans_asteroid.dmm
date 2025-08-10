@@ -690,7 +690,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/discount_dans_asteroid)
 "BG" = (
-/obj/item/clothing/under/gimmick/shirtnjeans{
+/obj/item/clothing/under/athletic/shirtnjeans{
 	pixel_x = -6;
 	pixel_y = 6
 	},

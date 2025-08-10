@@ -755,7 +755,7 @@
 /obj/item/clothing/under/jersey/purple,
 /obj/item/clothing/under/jersey/green,
 /obj/item/clothing/under/jersey/black,
-/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/athletic/jersey,
 /obj/item/basketball,
 /obj/storage/crate,
 /obj/machinery/camera/directional/north{
@@ -2819,8 +2819,8 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/gimmick/macho,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/storage/closet/dresser,
 /obj/item/clothing/head/helmet/men,
 /obj/item/clothing/head/helmet/men,
@@ -3265,7 +3265,7 @@
 /obj/item/sponge{
 	name = "loofah"
 	},
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "amH" = (
@@ -4071,8 +4071,8 @@
 "aqG" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aqH" = (
@@ -4365,7 +4365,7 @@
 "asc" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "asd" = (
@@ -6179,8 +6179,8 @@
 "ayG" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
 /obj/decal/stage_edge{
 	dir = 4
 	},
@@ -10378,12 +10378,12 @@
 /area/station/chapel/sanctuary)
 "aMs" = (
 /obj/item/device/radio/intercom,
-/obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/formal/black/dress,
+/obj/item/clothing/under/formal/black/dress,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/under/gimmick/mime,
+/obj/item/clothing/under/gimmick/mime/alt,
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /obj/storage/closet/dresser{
@@ -12099,7 +12099,7 @@
 "aRt" = (
 /obj/machinery/light,
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
+/obj/item/clothing/under/athletic/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
@@ -29261,7 +29261,7 @@
 	pixel_x = 12;
 	pixel_y = 9
 	},
-/obj/item/clothing/under/suit/black{
+/obj/item/clothing/under/formal/black{
 	name = "Mortician Suit";
 	pixel_x = -4;
 	pixel_y = 4
@@ -36126,8 +36126,8 @@
 "dnk" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
 /obj/decal/stage_edge{
 	dir = 4
 	},

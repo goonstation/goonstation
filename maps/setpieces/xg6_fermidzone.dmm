@@ -755,7 +755,7 @@
 	name = "funny skeleton"
 	},
 /obj/decal/cleanable/dirt/dirt4,
-/obj/item/clothing/under/misc/clown/blue,
+/obj/item/clothing/under/gimmick/clown/blue,
 /obj/stool/chair/material/mauxite,
 /obj/item/clothing/mask/clown_hat/blue{
 	pixel_y = 11
@@ -3742,7 +3742,7 @@
 	desc = "A large hamper for soiled clothing.";
 	name = "laundry bin"
 	},
-/obj/item/clothing/under/misc/dirty_vest,
+/obj/item/clothing/under/athletic/dirty_vest,
 /obj/item/clothing/suit/gimmick/guncoat/dirty,
 /turf/unsimulated/floor/sanitary/blue,
 /area/solarium{

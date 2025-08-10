@@ -165,7 +165,7 @@
 "X" = (
 /obj/fakeobject/skeleton,
 /obj/item/clothing/shoes/clown_shoes/blue,
-/obj/item/clothing/under/misc/clown/blue,
+/obj/item/clothing/under/gimmick/clown/blue,
 /obj/item/clothing/mask/clown_hat/blue,
 /turf/simulated/floor/grass{
 	name = "astroturf"

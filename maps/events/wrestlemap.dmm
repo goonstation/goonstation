@@ -199,7 +199,7 @@
 /obj/storage/secure/crate/gear/armory/equipment,
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/mask/wrestling/black,
-/obj/item/clothing/under/shorts/luchador/red,
+/obj/item/clothing/under/athletic/luchador/red,
 /obj/decal/tile_edge/stripe{
 	icon_state = "bot2";
 	tag = ""
@@ -4643,7 +4643,7 @@
 /area/station/maintenance/inner/central)
 "cbO" = (
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/red,
+/obj/item/clothing/under/athletic/shorts/red,
 /obj/storage/closet/radiation,
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -5716,7 +5716,7 @@
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/gimmick/macho{
+/obj/item/clothing/under/athletic/macho{
 	pixel_x = 3;
 	pixel_y = 7
 	},
@@ -6328,7 +6328,7 @@
 /area/space)
 "cSw" = (
 /obj/table/auto,
-/obj/item/clothing/under/referee,
+/obj/item/clothing/under/athletic/referee,
 /obj/item/instrument/whistle,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/radio/commentators_desk)
@@ -7810,8 +7810,8 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/gimmick/macho,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/storage/closet/dresser,
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -10241,10 +10241,10 @@
 /area/station/maintenance/inner/the_cage)
 "eyD" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit/pinstripe,
-/obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/under/suit/black,
-/obj/item/clothing/under/suit/red,
+/obj/item/clothing/under/formal/pinstripe,
+/obj/item/clothing/under/formal/black/dress,
+/obj/item/clothing/under/formal/black,
+/obj/item/clothing/under/formal/red,
 /obj/item/clothing/shoes/white,
 /obj/cable{
 	icon_state = "4-8"
@@ -15697,7 +15697,7 @@
 "hev" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
 "heD" = (
@@ -17321,7 +17321,7 @@
 /obj/item/clothing/head/helmet/macho,
 /obj/item/clothing/shoes/macho,
 /obj/item/clothing/suit/armor/vest/macho,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "hRB" = (
@@ -18581,7 +18581,7 @@
 /obj/item/gun/russianrevolver,
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/fruit_wedges,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/disposalpipe/segment/brig{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -19593,9 +19593,9 @@
 "iSL" = (
 /obj/table/reinforced/auto,
 /obj/item/instrument/whistle,
-/obj/item/clothing/under/referee,
-/obj/item/clothing/under/referee,
-/obj/item/clothing/under/referee,
+/obj/item/clothing/under/athletic/referee,
+/obj/item/clothing/under/athletic/referee,
+/obj/item/clothing/under/athletic/referee,
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
@@ -26908,7 +26908,7 @@
 	},
 /area/station/engine/power)
 "mgE" = (
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/kitchenspike,
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -27669,7 +27669,7 @@
 "mzN" = (
 /obj/table/auto,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/item/clothing/gloves/boxing,
 /turf/simulated/floor/white,
@@ -33760,7 +33760,7 @@
 "pml" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
@@ -42932,7 +42932,7 @@
 /obj/item/clothing/head/helmet/macho,
 /obj/item/clothing/shoes/macho,
 /obj/item/clothing/suit/armor/vest/macho,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8;
 	pixel_x = -10
@@ -43471,7 +43471,7 @@
 "tMF" = (
 /obj/item/clothing/mask/wrestling,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/purple,
+/obj/item/clothing/under/athletic/shorts/purple,
 /obj/item/clothing/under/jersey/purple,
 /obj/storage/closet/dresser,
 /obj/item/clothing/glasses/regular,
@@ -44434,7 +44434,7 @@
 "umz" = (
 /obj/item/clothing/mask/wrestling/green,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/green,
+/obj/item/clothing/under/athletic/shorts/green,
 /obj/item/clothing/under/jersey/green,
 /obj/storage/closet/dresser,
 /obj/item/plant/herb/mint,
@@ -44920,7 +44920,7 @@
 "uzh" = (
 /obj/item/clothing/mask/skull,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/red,
+/obj/item/clothing/under/athletic/shorts/red,
 /obj/item/clothing/under/jersey/red,
 /obj/storage/closet/dresser,
 /obj/decal/cleanable/ketchup,
@@ -45536,9 +45536,9 @@
 "uNr" = (
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts,
+/obj/item/clothing/under/athletic/shorts,
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/athletic/jersey,
 /obj/item/clothing/mask/horse_mask,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
@@ -47098,7 +47098,7 @@
 "vvE" = (
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/athletic/shorts/black,
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/jersey/black,
 /obj/item/clothing/glasses/eyepatch,
@@ -48428,7 +48428,7 @@
 /obj/table/auto,
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
-/obj/item/clothing/under/suit/mortician,
+/obj/item/clothing/under/formal/mortician,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "wbw" = (
@@ -52861,7 +52861,7 @@
 /area/station/maintenance/east)
 "xXA" = (
 /obj/table/glass/auto,
-/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/formal/black,
 /obj/item/device/radio/headset/command{
 	pixel_x = 4;
 	pixel_y = 4
@@ -52900,7 +52900,7 @@
 "xXP" = (
 /obj/item/clothing/mask/spiderman,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/blue,
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/jersey/blue,
 /obj/decal/cleanable/cobweb2,
@@ -53103,7 +53103,7 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "ycY" = (
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/table/auto,
 /obj/linen_bin/towel,
 /obj/disposalpipe/junction/right/south,

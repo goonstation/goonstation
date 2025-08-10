@@ -4304,12 +4304,12 @@
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aAs" = (
-/obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/formal/black/dress,
+/obj/item/clothing/under/formal/black/dress,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/under/gimmick/mime,
+/obj/item/clothing/under/gimmick/mime/alt,
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /obj/storage/closet/dresser{
@@ -10181,7 +10181,7 @@
 /obj/item/storage/box/biohazard_bags,
 /obj/item/body_bag,
 /obj/item/body_bag,
-/obj/item/clothing/under/suit/mortician,
+/obj/item/clothing/under/formal/mortician,
 /obj/item/device/reagentscanner{
 	pixel_x = -13
 	},
@@ -16152,7 +16152,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "cNv" = (
-/obj/item/clothing/under/suit/pinstripe,
+/obj/item/clothing/under/formal/pinstripe,
 /obj/item/clothing/mask/smile,
 /obj/item/razor_blade,
 /turf/simulated/floor/plating,
@@ -22161,8 +22161,8 @@
 /obj/storage/cart/medcart,
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/item/clothing/suit/bedsheet/blue,
-/obj/item/clothing/under/patient_gown,
-/obj/item/clothing/under/patient_gown,
+/obj/item/clothing/under/misc/patient_gown,
+/obj/item/clothing/under/misc/patient_gown,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
@@ -26529,7 +26529,7 @@
 /obj/decal/cleanable/rust{
 	pixel_y = 34
 	},
-/obj/item/clothing/under/gimmick/eightiesmens,
+/obj/item/clothing/under/athletic/eightiesmens,
 /obj/item/clothing/shoes/rollerskates,
 /obj/item/clothing/head/bandana/random_color,
 /turf/simulated/floor/carpet/grime,
@@ -27239,12 +27239,12 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/shorts/luchador,
-/obj/item/clothing/under/shorts/luchador/green,
-/obj/item/clothing/under/shorts/luchador/red,
-/obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/under/shorts/red,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/athletic/luchador,
+/obj/item/clothing/under/athletic/luchador/green,
+/obj/item/clothing/under/athletic/luchador/red,
+/obj/item/clothing/under/athletic/shorts/blue,
+/obj/item/clothing/under/athletic/shorts/red,
+/obj/item/clothing/under/athletic/shorts/black,
 /obj/item/clothing/under/gimmick/trashsinglet,
 /obj/item/clothing/gloves/boxing,
 /obj/item/storage/box/kendo_box/hakama,
@@ -38118,7 +38118,7 @@
 /area/station/turret_protected/armory_outside)
 "pHf" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
+/obj/item/clothing/under/athletic/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
@@ -44958,7 +44958,7 @@
 /obj/item/clothing/mask/mime,
 /obj/item/clothing/head/mime_beret,
 /obj/critter/domestic_bee/mimebee,
-/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/gimmick/mime,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "tGq" = (

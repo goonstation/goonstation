@@ -116,11 +116,11 @@
 /area/prefab/candy_shop)
 "ng" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/under/suit/purple/dress{
+/obj/item/clothing/under/formal/purple/dress{
 	pixel_x = 8;
 	pixel_y = -7
 	},
-/obj/item/clothing/under/suit/purple{
+/obj/item/clothing/under/formal/purple{
 	pixel_x = -8;
 	pixel_y = -7
 	},

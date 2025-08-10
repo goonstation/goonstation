@@ -65,7 +65,7 @@
 	pixel_x = 7;
 	pixel_y = -1
 	},
-/obj/item/clothing/under/gimmick/dinerdress_mint{
+/obj/item/clothing/under/formal/dinerdress_mint{
 	pixel_y = 0
 	},
 /turf/simulated/floor/white/checker2,

@@ -293,7 +293,7 @@
 "Hf" = (
 /obj/decal/cleanable/slime,
 /obj/item/gun/reagent/syringe/love,
-/obj/item/clothing/under/misc/clown/pink{
+/obj/item/clothing/under/gimmick/clown/pink{
 	pixel_x = -5;
 	pixel_y = -5
 	},

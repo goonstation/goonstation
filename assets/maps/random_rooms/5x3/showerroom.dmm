@@ -19,7 +19,7 @@
 /obj/item/sponge{
 	name = "loofah"
 	},
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /turf/simulated/floor/sanitary,
 /area/dmm_suite/clear_area)
 "S" = (

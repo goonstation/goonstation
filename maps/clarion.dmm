@@ -725,9 +725,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
 "aeD" = (
-/obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/under/suit/black,
-/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/under/formal/black/dress,
+/obj/item/clothing/under/formal/black,
+/obj/item/clothing/under/formal/shirt_pants,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/head/fedora,
 /obj/item/clothing/glasses/eyepatch{
@@ -4062,7 +4062,7 @@
 	pixel_x = -4
 	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	pixel_x = 8;
 	pixel_y = -5
 	},
@@ -4077,7 +4077,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/clothing/under/shorts/black{
+/obj/item/clothing/under/athletic/shorts/black{
 	pixel_x = -7;
 	pixel_y = -5
 	},
@@ -19313,7 +19313,7 @@
 /obj/storage/closet/dresser,
 /obj/item/clothing/shoes/flippers,
 /obj/item/clothing/shoes/flippers,
-/obj/item/clothing/under/gimmick/macho{
+/obj/item/clothing/under/athletic/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
@@ -19329,13 +19329,13 @@
 /obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/black{
+/obj/item/clothing/under/athletic/shorts/black{
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/red{
+/obj/item/clothing/under/athletic/shorts/red{
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},

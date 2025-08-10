@@ -6191,11 +6191,11 @@
 "bPa" = (
 /obj/decal/boxingrope,
 /obj/table/wood/round/auto,
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	pixel_x = -7;
 	pixel_y = 4
 	},
@@ -7290,11 +7290,11 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "chv" = (
-/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/formal/black/dress,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/under/gimmick/mime,
+/obj/item/clothing/under/gimmick/mime/alt,
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
 /obj/item/clothing/glasses/eyepatch{
@@ -12251,7 +12251,7 @@
 /area/station/solar/small_backup1)
 "dIG" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
+/obj/item/clothing/under/athletic/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
@@ -17009,7 +17009,7 @@
 /obj/rack,
 /obj/item/clothing/mask/clown_hat/blue,
 /obj/item/clothing/shoes/clown_shoes/blue,
-/obj/item/clothing/under/misc/clown/blue,
+/obj/item/clothing/under/gimmick/clown/blue,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "fiX" = (
@@ -21025,9 +21025,9 @@
 /area/station/chapel/funeral_parlor)
 "gwZ" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/jersey,
-/obj/item/clothing/under/jersey,
-/obj/item/clothing/under/jersey,
+/obj/item/clothing/under/athletic/jersey,
+/obj/item/clothing/under/athletic/jersey,
+/obj/item/clothing/under/athletic/jersey,
 /obj/item/clothing/under/jersey/black,
 /obj/item/clothing/under/jersey/black,
 /obj/item/clothing/under/jersey/black,
@@ -29664,8 +29664,8 @@
 /area/station/medical/medbay)
 "jkn" = (
 /obj/storage/closet/dresser/random,
-/obj/item/clothing/under/shorts/red,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/athletic/shorts/red,
+/obj/item/clothing/under/athletic/shorts/black,
 /obj/item/clothing/suit/bathrobe,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -30787,11 +30787,11 @@
 "jCe" = (
 /obj/decal/boxingrope,
 /obj/table/wood/round/auto,
-/obj/item/clothing/under/shorts/black{
+/obj/item/clothing/under/athletic/shorts/black{
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/shorts/black{
+/obj/item/clothing/under/athletic/shorts/black{
 	pixel_x = -6;
 	pixel_y = 4
 	},
@@ -42449,8 +42449,8 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/gimmick/macho,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/storage/closet/dresser,
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/light/incandescent/netural{
@@ -49628,7 +49628,7 @@
 	icon_state = "line1"
 	},
 /obj/table/auto,
-/obj/item/clothing/under/misc/mimefancy{
+/obj/item/clothing/under/gimmick/mimefancy{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -78658,7 +78658,7 @@
 /area/station/security/checkpoint/podbay)
 "yeo" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
+/obj/item/clothing/under/athletic/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"

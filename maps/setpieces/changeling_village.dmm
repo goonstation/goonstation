@@ -1509,8 +1509,8 @@
 /obj/storage/closet/wardrobe/black/formalwear,
 /obj/item/clothing/under/gimmick/maid,
 /obj/item/clothing/head/maid,
-/obj/item/clothing/under/gimmick/red_wcoat,
-/obj/item/clothing/under/gimmick/red_wcoat,
+/obj/item/clothing/under/formal/red_wcoat,
+/obj/item/clothing/under/formal/red_wcoat,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_beret,
 /obj/machinery/light/small/warm{

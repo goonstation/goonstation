@@ -12510,7 +12510,7 @@
 "aVj" = (
 /obj/rack,
 /obj/item/clothing/head/helmet/space/donk,
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVm" = (
@@ -17908,7 +17908,7 @@
 	pixel_x = -4
 	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	pixel_x = 8;
 	pixel_y = -5
 	},
@@ -17923,7 +17923,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/clothing/under/shorts/black{
+/obj/item/clothing/under/athletic/shorts/black{
 	pixel_x = -7;
 	pixel_y = -5
 	},
@@ -18064,7 +18064,7 @@
 "btf" = (
 /obj/rack,
 /obj/item/reagent_containers/glass/bottle/bubblebath,
-/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/athletic/macho,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -19461,7 +19461,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
 /obj/item/clothing/head/flatcap,
-/obj/item/clothing/under/referee,
+/obj/item/clothing/under/athletic/referee,
 /obj/item/instrument/whistle,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -30900,7 +30900,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "dBP" = (
-/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/under/gimmick/mime/alt,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "dCj" = (
@@ -37249,8 +37249,8 @@
 	anchored = 1;
 	name = "costume dresser"
 	},
-/obj/item/clothing/under/shirt_pants,
-/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/formal/shirt_pants,
+/obj/item/clothing/under/formal/black,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/headband/devil,
 /turf/simulated/floor/black,
@@ -45394,7 +45394,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "wPq" = (
@@ -45520,7 +45520,7 @@
 /obj/machinery/light_switch/auto,
 /obj/item/storage/box/biohazard_bags,
 /obj/item/storage/box/body_bag,
-/obj/item/clothing/under/suit/mortician,
+/obj/item/clothing/under/formal/mortician,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "wUd" = (

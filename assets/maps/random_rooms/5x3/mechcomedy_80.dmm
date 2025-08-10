@@ -79,7 +79,7 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/item/clothing/under/misc/clown/yellow,
+/obj/item/clothing/under/gimmick/clown/yellow,
 /obj/machinery/light/emergencyflashing,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)

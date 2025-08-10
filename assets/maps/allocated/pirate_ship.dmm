@@ -1023,8 +1023,8 @@
 /obj/item/clothing/glasses/eyepatch/pirate,
 /obj/item/clothing/glasses/eyepatch/pirate,
 /obj/item/clothing/glasses/eyepatch/pirate,
-/obj/item/clothing/under/misc/dirty_vest,
-/obj/item/clothing/under/misc/dirty_vest,
+/obj/item/clothing/under/athletic/dirty_vest,
+/obj/item/clothing/under/athletic/dirty_vest,
 /obj/item/clothing/under/gimmick/guybrush{
 	name = "pirate outfit"
 	},
@@ -2332,7 +2332,7 @@
 "Zh" = (
 /obj/storage/crate,
 /obj/item/clothing/glasses/eyepatch/pirate,
-/obj/item/clothing/under/misc/dirty_vest,
+/obj/item/clothing/under/athletic/dirty_vest,
 /obj/item/clothing/head/red,
 /turf/simulated/floor/grey/side{
 	dir = 8

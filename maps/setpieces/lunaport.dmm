@@ -5776,7 +5776,7 @@
 	dir = 1;
 	icon_state = "aisleshelfend"
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "Peak fashion.";
 	name = "jorts";
 	pixel_x = -5
@@ -5785,7 +5785,7 @@
 	pixel_x = 6;
 	pixel_y = -9
 	},
-/obj/item/clothing/under/shorts/blue{
+/obj/item/clothing/under/athletic/shorts/blue{
 	desc = "Peak fashion.";
 	name = "jorts";
 	pixel_x = -5;
@@ -6581,11 +6581,11 @@
 /obj/rack/lunar{
 	icon_state = "aisleshelfend"
 	},
-/obj/item/clothing/under/shorts/luchador{
+/obj/item/clothing/under/athletic/luchador{
 	pixel_x = -5;
 	pixel_y = 11
 	},
-/obj/item/clothing/under/shorts/luchador/green{
+/obj/item/clothing/under/athletic/luchador/green{
 	pixel_x = -6
 	},
 /obj/item/clothing/under/shorts/random_color{
@@ -15625,7 +15625,7 @@
 	})
 "byS" = (
 /obj/decal/cleanable/dirt/dirt2,
-/obj/item/clothing/under/suit/mortician{
+/obj/item/clothing/under/formal/mortician{
 	pixel_y = 16;
 	pixel_x = -4
 	},
@@ -24095,7 +24095,7 @@
 /obj/item/clothing/head/NTberet{
 	pixel_y = 18
 	},
-/obj/item/clothing/under/suit/captain/dress/blue{
+/obj/item/clothing/under/formal/captain/dress/blue{
 	desc = "A crisp office suit in Nanotrasen blue.";
 	name = "administrative assistant's dress";
 	pixel_y = 3
