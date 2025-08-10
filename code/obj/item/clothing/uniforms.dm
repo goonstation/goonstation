@@ -628,7 +628,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	icon_state = "chaplain"
 	item_state = "chaplain"
 
-/obj/item/clothing/under/misc/clown
+/obj/item/clothing/under/rank/clown
 	name = "clown suit"
 	desc = "You are likely taking your life into your own hands by wearing this."
 	icon_state = "clown"
@@ -638,7 +638,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		..()
 		AddComponent(/datum/component/clown_disbelief_item)
 
-/obj/item/clothing/under/misc/clowndress
+/obj/item/clothing/under/rank/clowndress
     name = "clown suit"
 	desc = "You are likely taking your life into your own hands by wearing this."
 	icon_state = "clown-dress"
@@ -648,13 +648,13 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		..()
 		AddComponent(/datum/component/clown_disbelief_item)
 
-/obj/item/clothing/under/misc/mimefancy
+/obj/item/clothing/under/gimmick/mimefancy
 	name = "fancy mime suit"
 	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
 	icon_state = "mime-fancy"
 	item_state = "mime-fancy"
 
-/obj/item/clothing/under/misc/mimedress
+/obj/item/clothing/under/gimmick/mimedress
 	name = "mime dress"
 	desc = "You may be trapped in an invisible box forever and ever, but at least you look stylish!"
 	icon_state = "mime-dress"
@@ -938,14 +938,14 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     item_state = "jester"
 
 //Western Jumpsuit
-/obj/item/clothing/under/misc/western
+/obj/item/clothing/under/gimmick/western
     name = "Western Shirt and Pants"
     desc = "Now comes with a matching belt buckle and leather straps!"
     icon_state = "western"
     item_state = "western"
 
 //Western Saloon Dress
-/obj/item/clothing/under/misc/westerndress
+/obj/item/clothing/under/gimmick/westerndress
 	name = "Western Saloon Dress"
 	desc = "Featuring a skirt over a skirt!"
 	icon_state = "westerndress"

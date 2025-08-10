@@ -1,7 +1,7 @@
 //Swimsuits, by RubberRats
 //Please don't wear a bikini as a work uniform on the RP servers, it would make me very unhappy.
-ABSTRACT_TYPE(/obj/item/clothing/under/misc/bikini)
-/obj/item/clothing/under/misc/bikini
+ABSTRACT_TYPE(/obj/item/clothing/under/swimsuit/bikini)
+/obj/item/clothing/under/swimsuit/bikini
 	name = "bikini"
 	icon_state = "bikini_w"
 	item_state = "bikini_w"
@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/bikini)
 
 // Donkini
 
-/obj/item/clothing/under/gimmick/donkini
+/obj/item/clothing/under/swimsuit/donkini
 	name = "\improper Donkini"
 	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
 	icon_state = "donkini"
@@ -73,8 +73,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/bikini)
 
 //END
 
-ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
-/obj/item/clothing/under/misc/onepiece
+ABSTRACT_TYPE(/obj/item/clothing/under/swimsuit/onepiece)
+/obj/item/clothing/under/swimsuit/onepiece
 	name = "white one-piece swimsuit"
 	icon_state = "onepiece_w"
 	item_state = "onepiece_w"
@@ -121,8 +121,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 		icon_state = "onepiece_b"
 		item_state = "onepiece_b"
 
-ABSTRACT_TYPE(/obj/item/clothing/under/misc/frillyswimsuit)
-/obj/item/clothing/under/misc/frillyswimsuit
+ABSTRACT_TYPE(/obj/item/clothing/under/swimsuit/frillyswimsuit)
+/obj/item/clothing/under/swimsuit/frillyswimsuit
 	name = "frilly swimsuit"
 	icon_state = "frillyswimsuit_w"
 	item_state = "frillyswimsuit_w"
@@ -161,8 +161,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/frillyswimsuit)
 		item_state = "frillyswimsuit_circus"
 		desc = "A playful swimsuit with a ruffled top. This one has an alarming polka-dot pattern."
 
-ABSTRACT_TYPE(/obj/item/clothing/under/misc/swimtrunks)
-/obj/item/clothing/under/misc/swimtrunks
+ABSTRACT_TYPE(/obj/item/clothing/under/swimsuit/swimtrunks)
+/obj/item/clothing/under/swimsuit/swimtrunks
 	name = "swim trunks"
 	icon_state = "swimtrunks_w"
 	item_state = "swimtrunks_w"
@@ -204,7 +204,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/swimtrunks)
 		item_state = "swimtrunks_circus"
 		desc = "A pair of swim trunks. This one has an alarming polka-dot pattern."
 
-/obj/item/clothing/under/misc/wetsuit
+/obj/item/clothing/under/swimsuit/wetsuit
 	name = "wetsuit"
 	icon_state = "wetsuit"
 	item_state = "wetsuit"
@@ -240,8 +240,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/swimtrunks)
 		icon_state = "wetsuit_p"
 		item_state = "wetsuit_p"
 
-ABSTRACT_TYPE(/obj/item/clothing/under/misc/oldswimsuit)
-/obj/item/clothing/under/misc/oldswimsuit
+ABSTRACT_TYPE(/obj/item/clothing/under/swimsuit/oldswimsuit)
+/obj/item/clothing/under/swimsuit/oldswimsuit
 	name = "old-timey swimsuit"
 	icon_state = "oldswimsuit_rw"
 	item_state = "oldswimsuit_rw"
@@ -263,7 +263,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/oldswimsuit)
 		icon_state = "oldswimsuit_by"
 		item_state = "oldswimsuit_by"
 
-/obj/item/clothing/under/swimsuit
+/obj/item/clothing/under/swimsuit/swimsuits
 	name = "white swimsuit"
 	desc = "This piece of clothing is good for when you want to be in the water, but not wearing your normal clothes, but also not naked."
 	icon_state = "fswimW"

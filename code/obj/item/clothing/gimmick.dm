@@ -493,7 +493,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	base_icon_state = "blessedclown"
 	bald_desc_state = "For sad clowns who want to show off their hair!"
 
-/obj/item/clothing/under/misc/clown/blue
+/obj/item/clothing/under/gimmick/clown/blue
 	name = "blue clown suit"
 	desc = "Proof that if you truly believe in yourself, you can accomplish anything. Honk."
 	icon_state = "blessedclown"
@@ -516,7 +516,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	base_icon_state = "purpleclown"
 	bald_desc_state = "For fancy clowns who want to show off their hair!"
 
-/obj/item/clothing/under/misc/clown/purple
+/obj/item/clothing/under/gimmick/clown/purple
 	name = "purple clown suit"
 	desc = "What kind of clown are you for wearing this color? It's a good question, honk."
 	icon_state = "purpleclown"
@@ -536,7 +536,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	//item_state = "pinkclown"
 	bald_desc_state = "For sweet clowns who want to show off their hair!"
 
-/obj/item/clothing/under/misc/clown/pink
+/obj/item/clothing/under/gimmick/clown/pink
 	name = "pink clown suit"
 	desc = "The color pink is the embodiment of love and hugs and nice people. Honk."
 	icon_state = "pinkclown"
@@ -569,7 +569,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	//item_state = "yellowclown"
 	bald_desc_state = "For bright clowns who want to show off their hair!"
 
-/obj/item/clothing/under/misc/clown/yellow
+/obj/item/clothing/under/gimmick/clown/yellow
 	name = "yellow clown suit"
 	desc = "Have a happy honk!"
 	icon_state = "yellowclown"
@@ -1120,13 +1120,13 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	icon_state = "mime"
 	see_face = FALSE
 
-/obj/item/clothing/under/misc/mime
+/obj/item/clothing/under/gimmick/mime
 	name = "mime suit"
 	desc = "The signature striped uniform of the mime. Not necessarily French."
 	icon_state = "mime1"
 	item_state = "mime1"
 
-/obj/item/clothing/under/misc/mime/alt
+/obj/item/clothing/under/gimmick/mime/alt
 	icon_state = "mime2"
 	item_state = "mime2"
 	desc = "A mime outfit with a pair of dungarees. The front pocket is all stitched up, jeez."
@@ -1164,7 +1164,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "suspenders"
 
-/obj/item/clothing/under/misc/flame
+/obj/item/clothing/under/gimmick/flame
 	name = "flame shirt"
 	desc = "A fiery flame shirt even Guy Fieri would be envious of."
 	icon_state = "flame"
@@ -1433,7 +1433,7 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	hides_from_examine = C_MASK|C_GLASSES|C_EARS
 	seal_hair = 1
 
-/obj/item/clothing/under/rotten
+/obj/item/clothing/under/gimmick/rotten
 	name = "suit and vest"
 	desc = "You feel like you could sing a real catchy tune in this getup!"
 	icon_state = "rotten"

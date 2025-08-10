@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	item_state = "nt"
 
 // Scrubs
-/obj/item/clothing/under/scrub
+/obj/item/clothing/under/gimmick/scrub
 	name = "medical scrubs"
 	desc = "A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking."
 	icon_state = "scrub-w"
@@ -225,7 +225,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 		icon_state = "scrub-f"
 		item_state = "lightblue"
 
-/obj/item/clothing/under/patient_gown
+/obj/item/clothing/under/gimmick/patient_gown
 	name = "gown"
 	desc = "A light cloth gown that ties in the back, given to medical patients when undergoing examinations or medical operations."
 	icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'

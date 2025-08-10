@@ -7,33 +7,33 @@ ABSTRACT_TYPE(/obj/item/clothing/under/athletic)
     wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 
-/obj/item/clothing/under/shorts
+/obj/item/clothing/under/athletic/shorts
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
 
-/obj/item/clothing/under/shorts/red
+/obj/item/clothing/under/athletic/shorts/red
 	icon_state = "shortsR"
 	item_state = "shortsR"
 
-/obj/item/clothing/under/shorts/green
+/obj/item/clothing/under/athletic/shorts/green
 	icon_state = "shortsG"
 	item_state = "shortsG"
 
-/obj/item/clothing/under/shorts/blue
+/obj/item/clothing/under/athletic/shorts/blue
 	icon_state = "shortsBl"
 	item_state = "shortsBl"
 
-/obj/item/clothing/under/shorts/purple
+/obj/item/clothing/under/athletic/shorts/purple
 	icon_state = "shortsP"
 	item_state = "shortsP"
 
-/obj/item/clothing/under/shorts/black
+/obj/item/clothing/under/athletic/shorts/black
 	icon_state = "shortsB"
 	item_state = "shortsB"
 
-/obj/item/clothing/under/jersey
+/obj/item/clothing/under/athletic/jersey
 	name = "white basketball jersey"
 	desc = "An all-white jersey. Be careful not to stain it!"
 	icon_state = "jerseyW"
@@ -82,53 +82,53 @@ ABSTRACT_TYPE(/obj/item/clothing/under/athletic)
 		icon_state = "dan_jersey"
 		item_state = "dan_jersey"
 
-TYPEINFO(/obj/item/clothing/under/shorts/luchador)
-	random_subtypes = list(/obj/item/clothing/under/shorts/luchador,
-		/obj/item/clothing/under/shorts/luchador/red,
-		/obj/item/clothing/under/shorts/luchador/green)
-/obj/item/clothing/under/shorts/luchador
+TYPEINFO(/obj/item/clothing/under/athletic/shorts/luchador)
+	random_subtypes = list(/obj/item/clothing/under/athletic/shorts/luchador,
+		/obj/item/clothing/under/athletic/shorts/luchador/red,
+		/obj/item/clothing/under/athletic/shorts/luchador/green)
+/obj/item/clothing/under/athletic/shorts/luchador
 	name = "luchador shorts"
 	desc = "Taken from that strange uncle's trophy cabinet."
 	icon_state = "lucha1"
 	item_state = "lucha1"
 
-/obj/item/clothing/under/shorts/luchador/green
+/obj/item/clothing/under/athletic/shorts/luchador/green
 	icon_state = "lucha2"
 	item_state = "lucha2"
 
-/obj/item/clothing/under/shorts/luchador/red
+/obj/item/clothing/under/athletic/shorts/luchador/red
 	icon_state = "lucha3"
 	item_state = "lucha3"
 
-/obj/item/clothing/under/shorts/random_color
+/obj/item/clothing/under/athletic/shorts/random_color
 	New()
 		..()
 		src.color = random_saturated_hex_color(1)
 
-/obj/item/clothing/under/referee
+/obj/item/clothing/under/athletic/referee
 	name = "referee uniform"
 	desc = "For when yelling at athletes is your job, not just your hobby."
 	icon_state = "referee"
 	item_state = "referee"
 
-/obj/item/clothing/under/gimmick/eightiesmens
+/obj/item/clothing/under/athletic/eightiesmens
 	name = "flashy vest"
 	desc = "A confident pair of clothes guaranteed to get you into a stride."
 	icon_state = "80smens"
 
-/obj/item/clothing/under/gimmick/eightieswomens
+/obj/item/clothing/under/athletic/eightieswomens
 	name = "flashy shirt"
 	desc = "A confident pair of clothes guaranteed to get you into a stride."
 	icon_state = "80swomens"
 
-/obj/item/clothing/under/gimmick/adidad
+/obj/item/clothing/under/athletic/adidad
 	name = "black tracksuit"
 	desc = "The result of outsourcing jumpsuit production to Russian companies."
 	icon_state = "adidad"
 
-TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
+TYPEINFO(/obj/item/clothing/under/athletic/shirtnjeans)
 	mat_appearances_to_ignore = list("jean")
-/obj/item/clothing/under/gimmick/shirtnjeans
+/obj/item/clothing/under/athletic/shirtnjeans
 	name = "shirt and jeans"
 	desc = "A white shirt and a pair of torn jeans."
 	icon_state = "shirtnjeans"
@@ -137,7 +137,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	mat_changename = FALSE
 	default_material = "jean"
 
-/obj/item/clothing/under/misc/dirty_vest  //HoS uniform from the Elite Security era
+/obj/item/clothing/under/athletic/dirty_vest  //HoS uniform from the Elite Security era
 	name = "dirty vest"
 	desc = "This outfit has seen better days."
 	icon_state = "vest"
