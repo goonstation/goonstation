@@ -2,7 +2,7 @@
   --section-bg-nested: color-mix(
     in srgb,
     var(--section-background),
-    var(--tab-color) 10%
+    var(--tab-color) 15%
   );
   .Section.module {
     background-color: var(--section-bg-nested);

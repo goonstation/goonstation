@@ -9,9 +9,9 @@ import {
   Box,
   Button,
   Collapsible,
-  Flex,
   LabeledList,
   Section,
+  Stack,
   Table,
   Tooltip,
 } from 'tgui-core/components';
@@ -25,7 +25,7 @@ export const SpeechModuleTree = () => {
   const { data } = useBackend<SpeechModuleTreeProps>();
 
   return (
-    <Window title={data.title} width={670} height={750}>
+    <Window title={data.title} width={660} height={740}>
       <Window.Content scrollable className="SpeechModuleTree">
         <Section>
           <Table>
@@ -61,15 +61,15 @@ const ModuleSection = (props: ModuleSectionProps) => {
     }) || [];
 
   return (
-    <Box my={2}>
+    <Box>
       <Collapsible title={props.title} open fontSize={1.2} bold>
-        <Section mt={-1.1}>
-          <Flex wrap m="-3px">
+        <Section mt={-1}>
+          <Stack wrap m="-3px">
             <AddModuleButton add_action={props.add_action} />
             {sortedModules?.map((module, index) => (
               <Module key={index} {...module} />
             ))}
-          </Flex>
+          </Stack>
         </Section>
       </Collapsible>
     </Box>
@@ -78,11 +78,11 @@ const ModuleSection = (props: ModuleSectionProps) => {
 
 const Module = (props: ModuleProps) => {
   return (
-    <Flex.Item width="200px" m="5px">
+    <Stack.Item width="17em">
       <Section
         title={
-          <Flex align="center">
-            <Flex.Item grow>
+          <Stack align="center">
+            <Stack.Item grow>
               <Tooltip content={props.id}>
                 <Box
                   pb="1px"
@@ -91,8 +91,8 @@ const Module = (props: ModuleProps) => {
                   {props.id}
                 </Box>
               </Tooltip>
-            </Flex.Item>
-            <Flex.Item>
+            </Stack.Item>
+            <Stack.Item>
               <RemoveModuleButton
                 disabled={props.auxiliary}
                 remove_action={props.remove_action}
@@ -103,13 +103,13 @@ const Module = (props: ModuleProps) => {
                     : 'Remove Module Subscription'
                 }
               />
-            </Flex.Item>
+            </Stack.Item>
             {!!props.atom_ref && (
-              <Flex.Item ml="2px">
+              <Stack.Item>
                 <ViewVariablesButton atom_ref={props.atom_ref} />
-              </Flex.Item>
+              </Stack.Item>
             )}
-          </Flex>
+          </Stack>
         }
         m="1px"
         className={props.auxiliary ? 'module--auxiliary' : 'module'}
@@ -120,23 +120,7 @@ const Module = (props: ModuleProps) => {
           ))}
         </LabeledList>
       </Section>
-    </Flex.Item>
-  );
-};
-
-const ViewVariablesButton = (props) => {
-  const { atom_ref } = props;
-  const { act } = useBackend<SpeechModuleTreeProps>();
-
-  return (
-    <Button
-      onClick={() => act('view_variables', { ref: atom_ref })}
-      tooltip="View Variables"
-      icon="gear"
-      textAlign="center"
-      width={2}
-      p="0px"
-    />
+    </Stack.Item>
   );
 };
 
@@ -145,7 +129,7 @@ const AddModuleButton = (props) => {
   const { act } = useBackend<SpeechModuleTreeProps>();
 
   return (
-    <Flex.Item width="100%" mr="6px">
+    <Stack.Item width="100%" mr="0.3em">
       <Button
         onClick={() => act(add_action)}
         tooltip="Add Module"
@@ -154,7 +138,7 @@ const AddModuleButton = (props) => {
       >
         + Add
       </Button>
-    </Flex.Item>
+    </Stack.Item>
   );
 };
 
@@ -168,9 +152,19 @@ const RemoveModuleButton = (props) => {
       onClick={() => act(remove_action, { module_id: id })}
       tooltip={tooltip}
       icon="minus"
-      textAlign="center"
-      width={2}
-      p="0px"
+    />
+  );
+};
+
+const ViewVariablesButton = (props) => {
+  const { atom_ref } = props;
+  const { act } = useBackend<SpeechModuleTreeProps>();
+
+  return (
+    <Button
+      onClick={() => act('view_variables', { ref: atom_ref })}
+      tooltip="View Variables"
+      icon="gear"
     />
   );
 };
