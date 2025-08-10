@@ -1415,22 +1415,6 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	step_sound = "footstep"
 	step_priority = STEP_PRIORITY_LOW
 
-/obj/item/clothing/under/misc/yoga
-	name = "\improper T-shirt and yoga pants"
-	desc = "A big, comfy T-shirt and some yoga pants that will turn heads."
-	icon_state = "yoga"
-	item_state = "yoga"
-
-/obj/item/clothing/under/misc/yoga/red
-	name = "red T-shirt and yoga pants"
-	icon_state = "yoga-r"
-	item_state = "yoga-r"
-
-/obj/item/clothing/under/misc/yoga/communist // I dunno, the dude made these sprites and I guess it doesn't hurt to use them? :v
-	name = "\improper Red T-shirt and yoga pants"
-	icon_state = "yoga-c"
-	item_state = "yoga-c"
-
 /obj/item/clothing/suit/poncho
 	name = "poncho"
 	desc = "This thing looks painful to wear. It smells bad, feels gross and makes you feel kinda weirded out."
