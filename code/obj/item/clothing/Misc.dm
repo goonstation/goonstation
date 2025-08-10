@@ -182,16 +182,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 		..()
 		AddComponent(/datum/component/clown_disbelief_item)
 
-/obj/item/clothing/under/misc/clowndress
-    name = "clown suit"
-	desc = "You are likely taking your life into your own hands by wearing this."
-	icon_state = "clown-dress"
-	item_state = "clown-dress"
-
-	New()
-		..()
-		AddComponent(/datum/component/clown_disbelief_item)
-
 /obj/item/clothing/under/misc/NT
 	name = "nanotrasen jumpsuit"
 	desc = "Corporate higher-ups get some pretty comfy jumpsuits."
