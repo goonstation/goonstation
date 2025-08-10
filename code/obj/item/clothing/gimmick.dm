@@ -505,9 +505,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/blue
 	name = "blue clown suit"
 	desc = "Proof that if you truly believe in yourself, you can accomplish anything. Honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "blessedclown"
 	item_state = "blessedclown"
 
@@ -531,8 +528,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/purple
 	name = "purple clown suit"
 	desc = "What kind of clown are you for wearing this color? It's a good question, honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
 
@@ -553,10 +548,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/pink
 	name = "pink clown suit"
 	desc = "The color pink is the embodiment of love and hugs and nice people. Honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "pinkclown"
-	//item_state = "pinkclown"
+	item_state = "pinkclown"
 
 /obj/item/clothing/shoes/clown_shoes/pink
 	name = "pink clown shoes"
@@ -588,10 +581,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/yellow
 	name = "yellow clown suit"
 	desc = "Have a happy honk!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "yellowclown"
-	//item_state = "yellowclown"
+	item_state = "yellowclown"
 
 /obj/item/clothing/shoes/clown_shoes/yellow
 	name = "yellow clown shoes"
@@ -786,7 +777,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "birdman suit"
 	desc = "It has wings!"
 	icon_state = "birdman"
-	item_state = "b_mask"
+	item_state = "birdman"
 
 //WARHAMS STUFF
 
@@ -1141,14 +1132,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
 	desc = "The signature striped uniform of the mime. Not necessarily French."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "mime1"
 	item_state = "mime1"
 
 /obj/item/clothing/under/misc/mime/alt
 	icon_state = "mime2"
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	item_state = "mime2"
 	desc = "A mime outfit with a pair of dungarees. The front pocket is all stitched up, jeez."
 
@@ -1190,8 +1178,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A fiery flame shirt even Guy Fieri would be envious of."
 	icon_state = "flame"
 	item_state = "flame"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 
 /obj/item/clothing/under/gimmick/wedding_dress
 	name = "wedding dress"
@@ -1475,8 +1461,6 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 /obj/item/clothing/under/rotten
 	name = "suit and vest"
 	desc = "You feel like you could sing a real catchy tune in this getup!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "rotten"
 	item_state = "rotten"
 
@@ -1870,9 +1854,6 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 /obj/item/clothing/under/gimmick/trashsinglet
 	name = "trash bag singlet"
 	desc = "It's time for the trashman to eat garbage and smash opponents!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "trashbag"
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY

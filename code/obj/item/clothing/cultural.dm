@@ -1,8 +1,8 @@
-//everything that's indicative of a particular nation
+//everything that's indicative of a particular existing nation
 ABSTRACT_TYPE(/obj/item/clothing/under/cultural)
 /obj/item/clothing/under/cultural
     name = "cultural coders Jumpsuit"
-	desc = "This is weird! Report this to a coder!"
+    desc = "This is weird! Report this to a coder!"
 	icon = 'icons/obj/clothing/jumpsuits/item_js_cultural.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_cultural.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_cultural.dmi'

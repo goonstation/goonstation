@@ -665,16 +665,12 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 /obj/item/clothing/under/misc/mimefancy
 	name = "fancy mime suit"
 	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
-	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	icon_state = "mime-fancy"
 	item_state = "mime-fancy"
 
 /obj/item/clothing/under/misc/mimedress
 	name = "mime dress"
 	desc = "You may be trapped in an invisible box forever and ever, but at least you look stylish!"
-	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	icon_state = "mime-dress"
 	item_state = "mime-dress"
 
@@ -984,9 +980,9 @@ TYPEINFO(/obj/item/clothing/under/towel)
 /obj/item/clothing/under/towel
 	name = "towel"
 	desc = "Made of nice, soft terrycloth. Very important when adventuring."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 	icon_state = "towel"
 	item_state = "towel"
 	layer = MOB_LAYER
@@ -1081,16 +1077,13 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 	desc = "This is weird! Report this to a coder!"
 	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 	icon_state = "sailor"
 	item_state = "sailor"
 
 /obj/item/clothing/under/gimmick/sailor
 	name = "sailor uniform"
 	desc = "What's with these guys?! It's like one of my Japanese animes!"
-	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "sailor"
 	item_state = "sailor"
 
