@@ -4,7 +4,7 @@
 /obj/item/clothing/under/shorts/blue : /obj/item/clothing/under/athletic/shorts/blue{@OLD}
 /obj/item/clothing/under/shorts/purple : /obj/item/clothing/under/athletic/shorts/purple{@OLD}
 /obj/item/clothing/under/shorts/black : /obj/item/clothing/under/athletic/shorts/black{@OLD}
-/obj/item/clothing/under/shorts/psyche : /obj/item/clothing/under/shorts/athletic/psyche{@OLD}
+/obj/item/clothing/under/shorts/psyche : /obj/item/clothing/under/athletic/shorts/psyche{@OLD}
 /obj/item/clothing/under/shorts/random_color : /obj/item/clothing/under/athletic/shorts/random_color{@OLD}
 
 /obj/item/clothing/under/jersey : /obj/item/clothing/under/athletic/jersey{@OLD}
@@ -13,6 +13,7 @@
 /obj/item/clothing/under/jersey/purple : /obj/item/clothing/under/athletic/jersey/purple{@OLD}
 /obj/item/clothing/under/jersey/green : /obj/item/clothing/under/athletic/jersey/green{@OLD}
 /obj/item/clothing/under/jersey/black : /obj/item/clothing/under/athletic/jersey/black{@OLD}
+/obj/item/clothing/under/jersey/random : /obj/item/clothing/under/athletic/jersey/random{@OLD}
 
 /obj/item/clothing/under/shorts/luchador : /obj/item/clothing/under/athletic/shorts/luchador{@OLD}
 /obj/item/clothing/under/shorts/luchador/red : /obj/item/clothing/under/athletic/shorts/luchador/red{@OLD}
@@ -198,7 +199,7 @@
 
 /obj/item/clothing/under/scrub : /obj/item/clothing/under/gimmick/scrub{@OLD}
 
-/obj/item/clothing/under/patient_gown : /obj/item/clothing/under/gimmick/patient_gown{@OLD}
+/obj/item/clothing/under/misc/patient_gown : /obj/item/clothing/under/gimmick/patient_gown{@OLD}
 
 /obj/item/clothing/under/misc/bikini : /obj/item/clothing/under/swimsuit/bikini{@OLD}
 

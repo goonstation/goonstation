@@ -44987,7 +44987,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "nXb" = (
-/obj/item/clothing/under/jersey/random,
+/obj/item/clothing/under/athletic/jersey/random,
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/station/maintenance/outer/north)
 "nXm" = (

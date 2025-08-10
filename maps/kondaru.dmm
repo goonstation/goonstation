@@ -59083,7 +59083,7 @@
 	pixel_x = 12
 	},
 /obj/rack,
-/obj/item/clothing/under/shorts/athletic/psyche{
+/obj/item/clothing/under/athletic/shorts/psyche{
 	desc = "The label says the fibers are handcrafted from artisan Miraclium. You feel like you're going to get some sort of poisoning if you stay too close to these.";
 	name = "captain's special bath shorts"
 	},
