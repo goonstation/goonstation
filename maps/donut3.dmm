@@ -12251,23 +12251,23 @@
 /area/station/solar/small_backup1)
 "dIG" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/athletic/macho{
+/obj/item/clothing/under/gimmick/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -42449,8 +42449,8 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/athletic/macho,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/storage/closet/dresser,
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/light/incandescent/netural{
@@ -78658,23 +78658,23 @@
 /area/station/security/checkpoint/podbay)
 "yeo" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/athletic/macho{
+/obj/item/clothing/under/gimmick/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},

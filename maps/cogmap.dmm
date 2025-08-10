@@ -2819,8 +2819,8 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/athletic/macho,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/storage/closet/dresser,
 /obj/item/clothing/head/helmet/men,
 /obj/item/clothing/head/helmet/men,
@@ -3265,7 +3265,7 @@
 /obj/item/sponge{
 	name = "loofah"
 	},
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "amH" = (
@@ -12099,23 +12099,23 @@
 "aRt" = (
 /obj/machinery/light,
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/athletic/macho{
+/obj/item/clothing/under/gimmick/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},

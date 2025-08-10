@@ -8738,7 +8738,7 @@
 /area/station/crew_quarters/locker)
 "aEL" = (
 /obj/storage/closet/wardrobe/mixed,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/window_blinds/cog2/left{
 	dir = 8;
 	pixel_x = 32
@@ -8748,7 +8748,7 @@
 "aEM" = (
 /obj/storage/closet/wardrobe/blue,
 /obj/machinery/light/incandescent/cool,
-/obj/item/clothing/under/swimsuit/blue,
+/obj/item/clothing/under/swimsuit/swimsuits/blue,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aEO" = (
@@ -8900,7 +8900,7 @@
 "aFs" = (
 /obj/storage/closet/wardrobe/white,
 /obj/machinery/light/incandescent/cool,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/window_blinds/cog2/left{
 	dir = 8;
 	pixel_x = 32
@@ -9059,7 +9059,7 @@
 /area/station/crew_quarters/locker)
 "aFY" = (
 /obj/storage/closet/wardrobe/grey,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/window_blinds/cog2/left{
 	dir = 8;
 	pixel_x = 32
@@ -9203,7 +9203,7 @@
 /area/station/hallway/primary/west)
 "aGz" = (
 /obj/storage/closet/wardrobe/yellow,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aGA" = (
@@ -9362,7 +9362,7 @@
 /area/station/engine/engineering)
 "aHc" = (
 /obj/storage/closet/wardrobe/black,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/window_blinds/cog2/left{
 	dir = 8;
 	pixel_x = 32
@@ -18064,7 +18064,7 @@
 "btf" = (
 /obj/rack,
 /obj/item/reagent_containers/glass/bottle/bubblebath,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)

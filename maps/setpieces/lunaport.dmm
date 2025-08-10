@@ -5781,7 +5781,7 @@
 	name = "jorts";
 	pixel_x = -5
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	pixel_x = 6;
 	pixel_y = -9
 	},
@@ -5791,7 +5791,7 @@
 	pixel_x = -5;
 	pixel_y = -9
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	pixel_x = 6
 	},
 /obj/machinery/light/incandescent/warm{
@@ -6588,11 +6588,11 @@
 /obj/item/clothing/under/athletic/luchador/green{
 	pixel_x = -6
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	pixel_x = 6;
 	pixel_y = 11
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	pixel_x = 6
 	},
 /turf/unsimulated/floor/minitiles,

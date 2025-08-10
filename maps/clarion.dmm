@@ -19313,20 +19313,20 @@
 /obj/storage/closet/dresser,
 /obj/item/clothing/shoes/flippers,
 /obj/item/clothing/shoes/flippers,
-/obj/item/clothing/under/athletic/macho{
+/obj/item/clothing/under/gimmick/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/black,
-/obj/item/clothing/under/swimsuit/red,
-/obj/item/clothing/under/swimsuit/blue,
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/black,
+/obj/item/clothing/under/swimsuit/swimsuits/red,
+/obj/item/clothing/under/swimsuit/swimsuits/blue,
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks"
 	},
 /obj/item/clothing/under/athletic/shorts/black{

@@ -16035,7 +16035,7 @@
 /area/station/hallway/primary/south)
 "btU" = (
 /obj/storage/crate,
-/obj/item/clothing/under/athletic/macho{
+/obj/item/clothing/under/gimmick/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
@@ -45783,23 +45783,23 @@
 /area/station/maintenance/southeast)
 "pmV" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/athletic/macho{
+/obj/item/clothing/under/gimmick/macho{
 	color = "#555555";
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -57342,8 +57342,8 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/athletic/macho,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/storage/closet/dresser/random,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)

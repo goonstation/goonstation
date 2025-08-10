@@ -4,6 +4,7 @@
 /obj/item/clothing/under/shorts/blue : /obj/item/clothing/under/athletic/shorts/blue{@OLD}
 /obj/item/clothing/under/shorts/purple : /obj/item/clothing/under/athletic/shorts/purple{@OLD}
 /obj/item/clothing/under/shorts/black : /obj/item/clothing/under/athletic/shorts/black{@OLD}
+/obj/item/clothing/under/shorts/random_color : /obj/item/clothing/under/athletic/shorts/random_color{@OLD}
 
 /obj/item/clothing/under/jersey : /obj/item/clothing/under/athletic/jersey{@OLD}
 
@@ -13,7 +14,7 @@
 
 /obj/item/clothing/under/referee : /obj/item/clothing/under/athletic/referee{@OLD}
 
-/obj/item/clothing/under/gimmick/macho : /obj/item/clothing/under/athletic/macho{@OLD}
+/obj/item/clothing/under/gimmick/macho : /obj/item/clothing/under/gimmick/macho{@OLD}
 
 /obj/item/clothing/under/gimmick/eightiesmens : /obj/item/clothing/under/athletic/eightiesmens{@OLD}
 /obj/item/clothing/under/gimmick/eightieswomens : /obj/item/clothing/under/athletic/eightieswomens{@OLD}
@@ -37,6 +38,7 @@
 /obj/item/clothing/under/misc/tricolor : /obj/item/clothing/under/cultural/tricolor{@OLD}
 
 /obj/item/clothing/under/gimmick/kilt : /obj/item/clothing/under/cultural/kilt{@OLD}
+
 
 /obj/item/clothing/under/peacockdress : /obj/item/clothing/under/formal/peacockdress{@OLD}
 
@@ -206,3 +208,7 @@
 /obj/item/clothing/under/misc/oldswimsuit : /obj/item/clothing/under/swimsuit/oldswimsuit{@OLD}
 
 /obj/item/clothing/under/swimsuit : /obj/item/clothing/under/swimsuit/swimsuits{@OLD}
+/obj/item/clothing/under/swimsuit/black : /obj/item/clothing/under/swimsuit/swimsuits/black{@OLD}
+/obj/item/clothing/under/swimsuit/red : /obj/item/clothing/under/swimsuit/swimsuits/red{@OLD}
+/obj/item/clothing/under/swimsuit/blue : /obj/item/clothing/under/swimsuit/swimsuits/blue{@OLD}
+/obj/item/clothing/under/swimsuit/random : /obj/item/clothing/under/swimsuit/swimsuits/random{@OLD}

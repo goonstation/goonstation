@@ -5716,7 +5716,7 @@
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/athletic/macho{
+/obj/item/clothing/under/gimmick/macho{
 	pixel_x = 3;
 	pixel_y = 7
 	},
@@ -7810,8 +7810,8 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/athletic/macho,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/storage/closet/dresser,
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -15697,7 +15697,7 @@
 "hev" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
 "heD" = (
@@ -17321,7 +17321,7 @@
 /obj/item/clothing/head/helmet/macho,
 /obj/item/clothing/shoes/macho,
 /obj/item/clothing/suit/armor/vest/macho,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "hRB" = (
@@ -18581,7 +18581,7 @@
 /obj/item/gun/russianrevolver,
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/fruit_wedges,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/disposalpipe/segment/brig{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -22907,7 +22907,7 @@
 "kpR" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random_color,
+/obj/item/clothing/under/athletic/shorts/random_color,
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -26908,7 +26908,7 @@
 	},
 /area/station/engine/power)
 "mgE" = (
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/kitchenspike,
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -27669,7 +27669,7 @@
 "mzN" = (
 /obj/table/auto,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/item/clothing/gloves/boxing,
 /turf/simulated/floor/white,
@@ -33760,7 +33760,7 @@
 "pml" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
@@ -35041,7 +35041,7 @@
 "pUP" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random_color,
+/obj/item/clothing/under/athletic/shorts/random_color,
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -41793,7 +41793,7 @@
 "sZc" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random_color,
+/obj/item/clothing/under/athletic/shorts/random_color,
 /obj/machinery/light/emergency{
 	dir = 4
 	},
@@ -42932,7 +42932,7 @@
 /obj/item/clothing/head/helmet/macho,
 /obj/item/clothing/shoes/macho,
 /obj/item/clothing/suit/armor/vest/macho,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8;
 	pixel_x = -10
@@ -43065,7 +43065,7 @@
 "tDm" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random_color,
+/obj/item/clothing/under/athletic/shorts/random_color,
 /obj/machinery/light/emergency{
 	dir = 8
 	},
@@ -53103,7 +53103,7 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "ycY" = (
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/table/auto,
 /obj/linen_bin/towel,
 /obj/disposalpipe/junction/right/south,
