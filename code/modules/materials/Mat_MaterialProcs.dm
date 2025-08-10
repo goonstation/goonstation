@@ -617,13 +617,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate_levitate(owner)
 		return
 
+// Apply HSL colorspace filter. Typically used for turning everything into a single color while still having some grayscale remaining.
 /datum/materialProc/add_color_hsl
-	max_generations = 0 // These filters are typically for turning everything into a single color
+	max_generations = 0 // No need to apply the same single-color visuals to the subtypes
 	var/list/color_matrix = null
 
 	execute(var/atom/owner)
 		var/added_mat_id = owner.material.getID()
-		if(endswith(owner.icon_state, "$$[added_mat_id]"))
+		if(endswith(owner.icon_state, "$$[added_mat_id]")) // Ignore if it is a material version of a sprite
 			return
 		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
 			return
