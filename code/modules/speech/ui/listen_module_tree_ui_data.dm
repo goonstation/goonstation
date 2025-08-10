@@ -7,7 +7,7 @@
 /datum/listen_module_tree/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "ModuleTree")
+		ui = new(user, src, "SpeechModuleTree")
 		ui.open()
 
 /datum/listen_module_tree/ui_data(mob/user)

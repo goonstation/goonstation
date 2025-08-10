@@ -9,7 +9,7 @@ import { Box, Button, LabeledList, Table, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import {
-  ModuleTreeProps,
+  SpeechModuleTreeProps,
   VariableProps,
   VarReferenceListProps,
   VarReferenceProps,
@@ -51,7 +51,7 @@ const VariableValue = (props: VarValueProps) => {
 };
 
 const VariableToggleable = (props: VarToggleableProps) => {
-  const { act } = useBackend<ModuleTreeProps>();
+  const { act } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Tooltip content="Toggle Value">
@@ -66,7 +66,7 @@ const VariableToggleable = (props: VarToggleableProps) => {
 };
 
 const VariableReference = (props: VarReferenceProps) => {
-  const { act } = useBackend<ModuleTreeProps>();
+  const { act } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Tooltip content={props.tooltip}>
@@ -105,7 +105,7 @@ const variableValueComponents = {
 
 const EditVariableButton = (props) => {
   const { edit_action, edit_tooltip } = props;
-  const { act } = useBackend<ModuleTreeProps>();
+  const { act } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Button

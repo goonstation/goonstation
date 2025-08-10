@@ -8,7 +8,7 @@
 import { BooleanLike } from 'tgui-core/react';
 
 // Interface for the main body of the module tree.
-export interface ModuleTreeProps {
+export interface SpeechModuleTreeProps {
   title: string;
   info: string;
   atom_ref: string;

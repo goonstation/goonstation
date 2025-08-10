@@ -18,11 +18,11 @@ import {
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { ModuleProps, ModuleSectionProps, ModuleTreeProps } from './type';
+import { ModuleProps, ModuleSectionProps, SpeechModuleTreeProps } from './type';
 import { Variable } from './Variable';
 
-export const ModuleTree = () => {
-  const { data } = useBackend<ModuleTreeProps>();
+export const SpeechModuleTree = () => {
+  const { data } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Window title={data.title} width={670} height={750}>
@@ -128,7 +128,7 @@ const Module = (props: ModuleProps) => {
 
 const ViewVariablesButton = (props) => {
   const { atom_ref } = props;
-  const { act } = useBackend<ModuleTreeProps>();
+  const { act } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Button
@@ -144,7 +144,7 @@ const ViewVariablesButton = (props) => {
 
 const AddModuleButton = (props) => {
   const { add_action } = props;
-  const { act } = useBackend<ModuleTreeProps>();
+  const { act } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Flex.Item width="100%" mr="6px">
@@ -162,7 +162,7 @@ const AddModuleButton = (props) => {
 
 const RemoveModuleButton = (props) => {
   const { disabled, remove_action, id, tooltip } = props;
-  const { act } = useBackend<ModuleTreeProps>();
+  const { act } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Button
