@@ -31672,9 +31672,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
-"rqa" = (
-/turf/space,
-/area/station/quartermaster/office)
 "rqn" = (
 /obj/cable/orange{
 	icon_state = "2-8"
@@ -81123,7 +81120,7 @@ aaa
 aaa
 aaa
 aaa
-rqa
+aaa
 aaa
 aaa
 aaa
