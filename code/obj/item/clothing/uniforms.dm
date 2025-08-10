@@ -3,9 +3,9 @@
 /obj/item/clothing/under
 	name = "jumpsuit"
 	desc = "A serviceable and comfortable jumpsuit used by nearly everyone on the station."
-	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 	icon_state = "black"
 	item_state = "black"
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -176,9 +176,9 @@
 /obj/item/clothing/under/pride
 	name = "LGBT pride jumpsuit"
 	desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the LGBT flag."
-	icon = 'icons/obj/clothing/uniforms/item_js_pride.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_pride.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_pride.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
 	cutting_product = /obj/item/flag/rainbow
@@ -294,9 +294,9 @@
 ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 /obj/item/clothing/under/rank
     name = "rank under parent"
-    icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
+    icon = 'icons/obj/clothing/jumpsuits/item_js_rank.dmi'
     wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
-    inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
+    inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_rank.dmi'
 
 // Heads
 
@@ -553,7 +553,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	name = "construction worker's overalls"
 	desc = "Durable overalls for the hard worker who likes to build things."
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
-	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js.dmi'
 	icon_state = "overalls_orange"
 	item_state = "overalls_orange"
 

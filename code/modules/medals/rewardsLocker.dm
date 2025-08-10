@@ -242,7 +242,7 @@
 					boutput(activator, SPAN_ALERT("You're not wearing medical scrubs!"))
 					return
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
 				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
