@@ -62,12 +62,9 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 	// The user previously failed a gate check and rejoined.
 	// So delete the unauthed mob so they arent stuck in it if they pass auth this time.
 	if (istype(src.mob, /mob/unauthed))
-		logTheThing(LOG_DEBUG, src, "was unauthed and their mob is getting deleted: \ref[src.mob]")
 		src.mob.key = null
 		del(src.mob)
 		src.mob = null
-		// make them reconnect idk
-		// del(src)
 
 	for (var/datum/client_auth_gate/gate in pre_auth_gates)
 		if (!gate.check(src))
