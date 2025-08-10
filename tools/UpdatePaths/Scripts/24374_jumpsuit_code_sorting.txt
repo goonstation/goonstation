@@ -4,13 +4,19 @@
 /obj/item/clothing/under/shorts/blue : /obj/item/clothing/under/athletic/shorts/blue{@OLD}
 /obj/item/clothing/under/shorts/purple : /obj/item/clothing/under/athletic/shorts/purple{@OLD}
 /obj/item/clothing/under/shorts/black : /obj/item/clothing/under/athletic/shorts/black{@OLD}
+/obj/item/clothing/under/shorts/psyche : /obj/item/clothing/under/shorts/athletic/psyche{@OLD}
 /obj/item/clothing/under/shorts/random_color : /obj/item/clothing/under/athletic/shorts/random_color{@OLD}
 
 /obj/item/clothing/under/jersey : /obj/item/clothing/under/athletic/jersey{@OLD}
+/obj/item/clothing/under/jersey/blue : /obj/item/clothing/under/athletic/jersey/blue{@OLD}
+/obj/item/clothing/under/jersey/red : /obj/item/clothing/under/athletic/jersey/red{@OLD}
+/obj/item/clothing/under/jersey/purple : /obj/item/clothing/under/athletic/jersey/purple{@OLD}
+/obj/item/clothing/under/jersey/green : /obj/item/clothing/under/athletic/jersey/green{@OLD}
+/obj/item/clothing/under/jersey/black : /obj/item/clothing/under/athletic/jersey/black{@OLD}
 
-/obj/item/clothing/under/shorts/luchador : /obj/item/clothing/under/athletic/luchador{@OLD}
-/obj/item/clothing/under/shorts/luchador/red : /obj/item/clothing/under/athletic/luchador/red{@OLD}
-/obj/item/clothing/under/shorts/luchador/green : /obj/item/clothing/under/athletic/luchador/green{@OLD}
+/obj/item/clothing/under/shorts/luchador : /obj/item/clothing/under/athletic/shorts/luchador{@OLD}
+/obj/item/clothing/under/shorts/luchador/red : /obj/item/clothing/under/athletic/shorts/luchador/red{@OLD}
+/obj/item/clothing/under/shorts/luchador/green : /obj/item/clothing/under/athletic/shorts/luchador/green{@OLD}
 
 /obj/item/clothing/under/referee : /obj/item/clothing/under/athletic/referee{@OLD}
 
@@ -69,7 +75,7 @@
 /obj/item/clothing/under/misc/sktdress_gold : /obj/item/clothing/under/formal/sktdress_gold{@OLD}
 
 /obj/item/clothing/under/gimmick/dinerdress_mint : /obj/item/clothing/under/formal/dinerdress_mint{@OLD}
-/obj/item/clothing/under/gimmick/dinerdress_mint : /obj/item/clothing/under/formal/dinerdress_pink{@OLD}
+/obj/item/clothing/under/gimmick/dinerdress_pink : /obj/item/clothing/under/formal/dinerdress_pink{@OLD}
 
 /obj/item/clothing/under/misc/tea_party_dress : /obj/item/clothing/under/formal/tea_party_dress{@OLD}
 /obj/item/clothing/under/misc/tea_party_dress/pink : /obj/item/clothing/under/formal/tea_party_dress/pink{@OLD}
@@ -169,6 +175,7 @@
 
 /obj/item/clothing/under/misc/fancy_vest : /obj/item/clothing/under/formal/fancy_vest{@OLD}
 
+/obj/item/clothing/under/misc/clown/fancy : /obj/item/clothing/under/misc/clownfancy{@OLD}
 /obj/item/clothing/under/misc/clown/blue : /obj/item/clothing/under/gimmick/clown/blue{@OLD}
 /obj/item/clothing/under/misc/clown/purple : /obj/item/clothing/under/gimmick/clown/purple{@OLD}
 /obj/item/clothing/under/misc/clown/yellow : /obj/item/clothing/under/gimmick/clown/yellow{@OLD}
@@ -186,12 +193,12 @@
 /obj/item/clothing/under/misc/western : /obj/item/clothing/under/gimmick/western{@OLD}
 /obj/item/clothing/under/misc/westerndress : /obj/item/clothing/under/gimmick/westerndress{@OLD}
 
-/obj/item/clothing/under/rank/clown : /obj/item/clothing/under/rank/clown{@OLD}
+/obj/item/clothing/under/misc/clown : /obj/item/clothing/under/rank/clown{@OLD}
 /obj/item/clothing/under/misc/clowndress : /obj/item/clothing/under/rank/clowndress{@OLD}
 
-/obj/item/clothing/under/scrub : /obj/item/clothing/under/misc/scrub{@OLD}
+/obj/item/clothing/under/scrub : /obj/item/clothing/under/gimmick/scrub{@OLD}
 
-/obj/item/clothing/under/patient_gown : /obj/item/clothing/under/misc/patient_gown{@OLD}
+/obj/item/clothing/under/patient_gown : /obj/item/clothing/under/gimmick/patient_gown{@OLD}
 
 /obj/item/clothing/under/misc/bikini : /obj/item/clothing/under/swimsuit/bikini{@OLD}
 
@@ -211,4 +218,6 @@
 /obj/item/clothing/under/swimsuit/black : /obj/item/clothing/under/swimsuit/swimsuits/black{@OLD}
 /obj/item/clothing/under/swimsuit/red : /obj/item/clothing/under/swimsuit/swimsuits/red{@OLD}
 /obj/item/clothing/under/swimsuit/blue : /obj/item/clothing/under/swimsuit/swimsuits/blue{@OLD}
+/obj/item/clothing/under/swimsuit/green : /obj/item/clothing/under/swimsuit/swimsuits/green{@OLD}
+/obj/item/clothing/under/swimsuit/purple : /obj/item/clothing/under/swimsuit/swimsuits/purple{@OLD}
 /obj/item/clothing/under/swimsuit/random : /obj/item/clothing/under/swimsuit/swimsuits/random{@OLD}

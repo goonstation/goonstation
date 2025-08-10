@@ -30558,10 +30558,10 @@
 	})
 "nja" = (
 /obj/storage/crate,
-/obj/item/clothing/under/jersey/red,
-/obj/item/clothing/under/jersey/purple,
-/obj/item/clothing/under/jersey/green,
-/obj/item/clothing/under/jersey/black,
+/obj/item/clothing/under/athletic/jersey/red,
+/obj/item/clothing/under/athletic/jersey/purple,
+/obj/item/clothing/under/athletic/jersey/green,
+/obj/item/clothing/under/athletic/jersey/black,
 /obj/item/clothing/under/athletic/jersey,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";

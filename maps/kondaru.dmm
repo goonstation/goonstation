@@ -2249,10 +2249,10 @@
 /area/station/crew_quarters/arcade/dungeon)
 "ajf" = (
 /obj/storage/crate,
-/obj/item/clothing/under/jersey/red,
-/obj/item/clothing/under/jersey/purple,
-/obj/item/clothing/under/jersey/green,
-/obj/item/clothing/under/jersey/black,
+/obj/item/clothing/under/athletic/jersey/red,
+/obj/item/clothing/under/athletic/jersey/purple,
+/obj/item/clothing/under/athletic/jersey/green,
+/obj/item/clothing/under/athletic/jersey/black,
 /obj/item/clothing/under/athletic/jersey,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
@@ -59083,7 +59083,7 @@
 	pixel_x = 12
 	},
 /obj/rack,
-/obj/item/clothing/under/shorts/psyche{
+/obj/item/clothing/under/shorts/athletic/psyche{
 	desc = "The label says the fibers are handcrafted from artisan Miraclium. You feel like you're going to get some sort of poisoning if you stay too close to these.";
 	name = "captain's special bath shorts"
 	},

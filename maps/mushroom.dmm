@@ -13047,7 +13047,7 @@
 "cGg" = (
 /obj/storage/crate,
 /obj/item/instrument/bikehorn,
-/obj/item/clothing/under/misc/clown,
+/obj/item/clothing/under/rank/clown,
 /obj/item/clothing/mask/clown_hat,
 /obj/item/clothing/shoes/clown_shoes,
 /obj/item/clothing/under/misc/barber,

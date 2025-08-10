@@ -61,7 +61,7 @@
 /area/dmm_suite/clear_area)
 "u" = (
 /obj/decal/cleanable/slime,
-/obj/item/clothing/under/gimmick/dinerdress_pink{
+/obj/item/clothing/under/formal/dinerdress_pink{
 	pixel_x = 7;
 	pixel_y = -1
 	},

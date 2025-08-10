@@ -14183,7 +14183,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
 "bGe" = (
-/obj/item/clothing/under/misc/clown,
+/obj/item/clothing/under/rank/clown,
 /obj/item/clothing/shoes/clown_shoes,
 /obj/item/clothing/mask/clown_hat,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -27239,9 +27239,9 @@
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/item/clothing/mask/wrestling/green,
-/obj/item/clothing/under/athletic/luchador,
-/obj/item/clothing/under/athletic/luchador/green,
-/obj/item/clothing/under/athletic/luchador/red,
+/obj/item/clothing/under/athletic/shorts/luchador,
+/obj/item/clothing/under/athletic/shorts/luchador/green,
+/obj/item/clothing/under/athletic/shorts/luchador/red,
 /obj/item/clothing/under/athletic/shorts/blue,
 /obj/item/clothing/under/athletic/shorts/red,
 /obj/item/clothing/under/athletic/shorts/black,

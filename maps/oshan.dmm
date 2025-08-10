@@ -8729,7 +8729,7 @@
 /area/station/hallway/primary/west)
 "aEJ" = (
 /obj/storage/closet/wardrobe/green,
-/obj/item/clothing/under/swimsuit/green,
+/obj/item/clothing/under/swimsuit/swimsuits/green,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aEK" = (
@@ -9046,7 +9046,7 @@
 /area/station/crew_quarters/sauna)
 "aFW" = (
 /obj/storage/closet/wardrobe/pink,
-/obj/item/clothing/under/swimsuit/purple,
+/obj/item/clothing/under/swimsuit/swimsuits/purple,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aFX" = (
@@ -12111,7 +12111,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aTr" = (
-/obj/item/clothing/under/swimsuit/green,
+/obj/item/clothing/under/swimsuit/swimsuits/green,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aTs" = (

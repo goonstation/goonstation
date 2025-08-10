@@ -797,7 +797,7 @@
 /area/listeningpost/power)
 "XV" = (
 /obj/storage/closet/syndicate/personal,
-/obj/item/clothing/under/misc/clown,
+/obj/item/clothing/under/rank/clown,
 /obj/random_item_spawner/dressup/lots,
 /obj/random_item_spawner/hat/lots,
 /turf/simulated/floor/black,

@@ -751,10 +751,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/entry)
 "adA" = (
-/obj/item/clothing/under/jersey/red,
-/obj/item/clothing/under/jersey/purple,
-/obj/item/clothing/under/jersey/green,
-/obj/item/clothing/under/jersey/black,
+/obj/item/clothing/under/athletic/jersey/red,
+/obj/item/clothing/under/athletic/jersey/purple,
+/obj/item/clothing/under/athletic/jersey/green,
+/obj/item/clothing/under/athletic/jersey/black,
 /obj/item/clothing/under/athletic/jersey,
 /obj/item/basketball,
 /obj/storage/crate,

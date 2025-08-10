@@ -6581,11 +6581,11 @@
 /obj/rack/lunar{
 	icon_state = "aisleshelfend"
 	},
-/obj/item/clothing/under/athletic/luchador{
+/obj/item/clothing/under/athletic/shorts/luchador{
 	pixel_x = -5;
 	pixel_y = 11
 	},
-/obj/item/clothing/under/athletic/luchador/green{
+/obj/item/clothing/under/athletic/shorts/luchador/green{
 	pixel_x = -6
 	},
 /obj/item/clothing/under/athletic/shorts/random_color{
