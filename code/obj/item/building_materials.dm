@@ -779,7 +779,6 @@ MATERIAL
 	icon_state = "head_spike"
 	anchored = UNANCHORED
 	density = 1
-	open_to_sound = TRUE
 	var/list/heads = list()
 	var/head_offset = 0 //so the ones at the botton don't teleport upwards when a head is removed
 	var/bloodiness = 0 //
@@ -1015,7 +1014,7 @@ MATERIAL
 			var/obj/item/tile/F = split_stack(1)
 			if (!istype(F))
 				return
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			user.put_in_hand_or_drop(F)
 		else
 			..()
@@ -1037,14 +1036,14 @@ MATERIAL
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T
 					F.Attackby(src, user)
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 				else
 					boutput(user, "You cannot build on or repair this turf!")
 					return
 			else
 				// Otherwise, try to build on top of it
 				src.build(S)
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 		src.add_fingerprint(user)
 		return
 
@@ -1066,10 +1065,10 @@ MATERIAL
 			boutput(user, SPAN_NOTICE("You add [success] tiles to the stack. It now has [W.amount] tiles."))
 		else
 			boutput(user, SPAN_NOTICE("You add [src.amount - success] tiles to the stack. It now has [src.amount] tiles."))
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (!W.disposed)
 			W.add_fingerprint(user)
-			W.tooltip_rebuild = 1
+			W.tooltip_rebuild = TRUE
 		return
 
 	before_stack(atom/movable/O as obj, mob/user as mob)

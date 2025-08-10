@@ -38,6 +38,7 @@ export interface CharacterPreferencesData {
   chatsound: string;
   pdaColor: string;
   pdaRingtone: string;
+  useSatchel: BooleanLike;
   skinTone: string;
   specialStyle: string;
   eyeColor: string;
@@ -64,6 +65,7 @@ export interface CharacterPreferencesData {
   hudThemePreview: string;
   tooltipOption: CharacterPreferencesTooltip;
   scrollWheelTargeting: CharacterPreferencesScrollTarget;
+  middleMouseSwap: BooleanLike;
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;
   viewChangelog: BooleanLike;

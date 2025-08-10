@@ -40,6 +40,8 @@
 	Move(newloc, dir)
 		. = ..()
 		var/turf/T = newloc
+		if (QDELETED(src))
+			return
 		if (istype(T) && T.active_liquid?.my_depth_level)
 			return
 		if (istype(newloc, /turf/space/fluid))
@@ -151,6 +153,7 @@
 	desc = "A presumably natural rock formation belching bubbles of gas from deep below."
 	icon = 'icons/obj/nadir_seaobj.dmi'
 	icon_state = "bitelung"
+	anchored = ANCHORED
 #define _DEFINE_GAS(GAS, ...) var/GAS = FALSE;
 	APPLY_TO_GASES(_DEFINE_GAS)
 #undef _DEFINE_GAS

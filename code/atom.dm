@@ -123,7 +123,7 @@ TYPEINFO(/atom)
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_suffixes))
 			if (length(src.name_suffixes) >= src.num_allowed_suffixes)
 				src.remove_suffixes(1)
-			src.name_suffixes += strip_html(text_to_add)
+			src.name_suffixes += strip_html_tags(text_to_add)
 		if (return_suffixes)
 			var/amt_suffixes = 0
 			for (var/i in src.name_suffixes)
@@ -191,6 +191,7 @@ TYPEINFO(/atom)
 
 		fingerprints_full = null
 		tag = null
+		src.forensic_holder = null
 
 		if(length(src.statusEffects))
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
@@ -474,6 +475,11 @@ TYPEINFO(/atom/movable)
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
 
+	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
+	/// if an object type can be built somewhere, before instantiating the object itself.
+	proc/can_build(turf/T)
+		return TRUE
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/tmp/turf/last_turf = 0
@@ -703,6 +709,7 @@ TYPEINFO(/atom/movable)
 		user.set_pulling(src)
 
 		SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
+		SEND_SIGNAL(src, COMSIG_MOB_PULL_TRIGGER, user)
 
 /atom/movable/set_dir(new_dir)
 	..()

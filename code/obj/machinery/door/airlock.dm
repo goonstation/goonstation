@@ -1177,9 +1177,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	return TRUE
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
-	..()
-
-	if (!isAI(user) && !issilicon(user))
+	if(..())
 		return
 
 	if (src.aiControlDisabled == 1) return
@@ -1256,7 +1254,6 @@ TYPEINFO(/obj/machinery/door/airlock)
 		"hackingProgression" = src.hackingProgression,
 		"hackMessage" = src.hackMessage,
 		"aiControlVar" = src.aiControlDisabled,
-		"aiControlDisabled" = src.aiControlDisabled,
 
 		"noPower" = (src.status & NOPOWER),
 		"powerIsOn" = src.arePowerSystemsOn() && !(src.status & NOPOWER),

@@ -15,43 +15,6 @@
 	var/east_entr_placed = FALSE
 	var/west_entr_placed = FALSE
 
-	afterattack(atom/target, mob/user, reach)
-		..()
-		if (!src.artifact.activated)
-			return
-		if (!reach)
-			return
-		if (!iswall(target))
-			return
-		if (BOUNDS_DIST(user, target) > 0 || isrestrictedz(get_z(target)))
-			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [src] probably doesn't work here"))
-			return
-
-		if (user.dir == NORTH)
-			if (!src.south_entr_placed)
-				src.create_entrance(SOUTH_ENTRANCE, target, user)
-				src.south_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == SOUTH)
-			if (!src.north_entr_placed)
-				src.create_entrance(NORTH_ENTRANCE, target, user)
-				src.north_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == EAST)
-			if (!src.west_entr_placed)
-				src.create_entrance(WEST_ENTRANCE, target, user)
-				src.west_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == WEST)
-			if (!src.east_entr_placed)
-				src.create_entrance(EAST_ENTRANCE, target, user)
-				src.east_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-
 	proc/create_entrance(entrance_dir, turf/entrance, mob/user)
 		var/obj/art_fissure_objs/door/inner_door
 		var/turf/fissure_entr
@@ -129,6 +92,42 @@
 		var/turf/T = artkey.fissure_region.get_center()
 		var/area/artifact_fissure/fissure_area = get_area(T)
 		fissure_area.fissure_region = artkey.fissure_region
+
+	effect_attack_atom(obj/art, mob/living/user, atom/A)
+		if (..())
+			return
+		if (!iswall(A))
+			return
+		if (isrestrictedz(get_z(A)))
+			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [art] probably doesn't work here."))
+			return
+
+		var/obj/item/artifact/dimensional_key/dim_key = art
+
+		if (user.dir == NORTH)
+			if (!dim_key.south_entr_placed)
+				dim_key.create_entrance(SOUTH_ENTRANCE, A, user)
+				dim_key.south_entr_placed = TRUE
+			else
+				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+		else if (user.dir == SOUTH)
+			if (!dim_key.north_entr_placed)
+				dim_key.create_entrance(NORTH_ENTRANCE, A, user)
+				dim_key.north_entr_placed = TRUE
+			else
+				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+		else if (user.dir == EAST)
+			if (!dim_key.west_entr_placed)
+				dim_key.create_entrance(WEST_ENTRANCE, A, user)
+				dim_key.west_entr_placed = TRUE
+			else
+				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+		else if (user.dir == WEST)
+			if (!dim_key.east_entr_placed)
+				dim_key.create_entrance(EAST_ENTRANCE, A, user)
+				dim_key.east_entr_placed = TRUE
+			else
+				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 
 /****** Supporting items/atoms/etc. *******/
 

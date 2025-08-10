@@ -32,6 +32,7 @@ var/list/admin_verbs = list(
 		/client/proc/marsay,
 		/client/proc/silisay,
 		/client/proc/thrallsay,
+		/client/proc/wraithsay,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
@@ -133,7 +134,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
-		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
 		/client/proc/toggle_tracy_profiling,
 
@@ -278,6 +278,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_manageabils,
 		/client/proc/create_all_wizard_rings,
 		/client/proc/toggle_vpn_blacklist,
+		/client/proc/toggle_tutorial_enabled,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -473,7 +474,6 @@ var/list/admin_verbs = list(
 		/client/proc/toggleResourceCache,
 		/client/proc/debugResourceCache,
 		/client/proc/debug_profiler,
-		/client/proc/cmd_tooltip_debug,
 		/client/proc/deleteJsLogFile,
 		/client/proc/deleteAllJsLogFiles,
 		/client/proc/random_color_matrix,
@@ -483,6 +483,7 @@ var/list/admin_verbs = list(
 		/client/proc/rebuild_flow_networks,
 		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
+		/client/proc/toggle_server_rebuild,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
@@ -1503,8 +1504,8 @@ var/list/fun_images = list()
 
 		LAGCHECK(LAG_LOW)
 
-	logTheThing(LOG_ADMIN, usr ? usr : src, null, "gave every player a pet [pet_path]!")
-	logTheThing(LOG_DIARY, usr ? usr : src, null, "gave every player a pet [pet_path]!", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, "gave every player a pet [pet_path]!")
+	logTheThing(LOG_DIARY, usr ? usr : src, "gave every player a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave every player a pet [pet_path]!")
 
 /client/proc/cmd_customgrenade()
@@ -1560,9 +1561,7 @@ var/list/fun_images = list()
 				<style type="text/css">
 				@font-face {
 					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/Twemoji.eot")]');
-					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
-						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					src: url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
 					text-rendering: optimizeLegibility;
 				}
 				</style>
@@ -1825,17 +1824,57 @@ var/list/fun_images = list()
 // 	antagHistoryHtml = replacetext(antagHistoryHtml, "<!-- HTML GOES HERE -->", html)
 // 	src.Browse(antagHistoryHtml, "window=antaghistory[ckey];title=[capitalize(ckey)]+Antag+History;")
 
+/datum/targetable/ghost_alert_picker
+	target_anything = TRUE
+	targeted = TRUE
+	max_range = 3000
 
-/client/proc/cmd_dispatch_observe_to_ghosts(var/atom/movable/target)
+	castcheck(mob/M)
+		if (M.client && M.client.holder)
+			return 1
+
+	handleCast(atom/target, params)
+		var/message = tgui_input_text(src.holder, "What message should ghosts see on the notice?", "Ghost Notice Message", "Something is happening! Observe [target]?")
+		if (message)
+			global.alert_all_ghosts(target, message)
+
+/// Send an alert to all ghosts to observe a thing with a given message
+proc/alert_all_ghosts(atom/target, message)
+	for(var/client/C)
+		if (isdead(C.mob) && !istype(C.mob, /mob/dead/target_observer/slasher_ghost))
+			SPAWN(0)
+				C.mob.playsound_local(C.mob, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+				if(tgui_alert(C.mob, message, "Ghost Notification", list("Observe", "No"), 30 SECONDS, FALSE) == "Observe")
+					var/mob/dead/M = C.mob
+					if(ismob(target) || isobj(target))
+						if (istype(M, /mob/dead/observer))
+							var/mob/dead/observer/O = M
+							O.insert_observer(target)
+						else if (istype(M, /mob/dead/target_observer))
+							var/mob/dead/target_observer/TO = M
+							TO.set_observe_target(target)
+					else if(isturf(target))
+						if (istype(M, /mob/dead/observer))
+							var/mob/dead/observer/O = M
+							O.set_loc(target)
+						else if (istype(M, /mob/dead/target_observer))
+							var/mob/dead/target_observer/TO = M
+							TO.ghostjump(target.x, target.y, target.z)
+
+
+/client/proc/cmd_dispatch_observe_to_ghosts()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Alert All Ghosts"
-	set desc = "Send a notice to ghosts that something weird is happening at a person"
+	set desc = "Send a notice to ghosts to observe a selected target."
 	set popup_menu = 0
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	if(ghost_notifier)
-		ghost_notifier.send_notification(src, target, /datum/ghost_notification/observe/admin)
+	var/mob/M = usr
+	var/datum/targetable/ghost_alert_picker/picker = new()
+	M.targeting_ability = picker
+	M.update_cursor()
+	boutput(usr, SPAN_NOTICE("Select the target to notify ghosts about."))
 
 /client/proc/showLoadingHint()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -2520,8 +2559,8 @@ var/list/fun_images = list()
 	if (!player)
 		boutput(src, SPAN_ALERT("Unable to load data for ckey \"[ckey]\""))
 		return
-	var/value = alert(src, "Set flag on or off? Currently [player.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
-	if (player.cloudSaves.putData("bypass_round_reqs", (value == "On")))
+	var/value = alert(src, "Set flag on or off? Currently [player?.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
+	if (player?.cloudSaves.putData("bypass_round_reqs", (value == "On")))
 		boutput(src, "Successfully set round requirement bypass flag")
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else

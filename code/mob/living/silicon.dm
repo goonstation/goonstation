@@ -254,12 +254,6 @@ TYPEINFO(/mob/living/silicon)
 	if (ismob(target))
 		src.cell?.use(W.stamina_cost)
 
-/mob/living/proc/process_killswitch()
-	return
-
-/mob/living/proc/process_locks()
-	return
-
 /mob/living/silicon/lastgasp(allow_dead=FALSE, grunt)
 	..(allow_dead, grunt=pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP"))
 
@@ -562,19 +556,39 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/proc/set_fake_laws()
 	#define FAKE_LAW_LIMIT 12
-	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", list("Real Laws", "Fake Laws"))
+	var/fake_lawset_choices = list ("Real Laws", "Fake Laws", "Asimov Laws (Default)", "Robocop Laws", "Corporate Laws", "Syndicate Laws")
+	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", fake_lawset_choices)
 	if (!law_base_choice)
 		return
 	var/law_base = ""
-	if(law_base_choice == "Real Laws")
-		if(src.law_rack_connection)
-			law_base = src.law_rack_connection.format_for_logs("\n")
-		else
-			law_base = ""
-	else if(law_base_choice == "Fake Laws")
-		for(var/fake_law in src.fake_laws)
-			// this is just the default input for the user, so it should be fine
-			law_base += "[html_decode(fake_law)]\n"
+	switch(law_base_choice)
+		if("Real Laws")
+			if(src.law_rack_connection)
+				law_base = src.law_rack_connection.format_for_logs("\n")
+			else
+				law_base = ""
+		if("Fake Laws")
+			for(var/fake_law in src.fake_laws)
+				// this is just the default input for the user, so it should be fine
+				law_base += "[html_decode(fake_law)]\n"
+		if("Asimov Laws (Default)")
+			law_base += "1: [/obj/item/aiModule/asimov1::lawText]\n"
+			law_base += "2: [/obj/item/aiModule/asimov2::lawText]\n"
+			law_base += "3: [/obj/item/aiModule/asimov3::lawText]\n"
+		if("Robocop Laws")
+			law_base += "1: [/obj/item/aiModule/robocop1::lawText]\n"
+			law_base += "2: [/obj/item/aiModule/robocop2::lawText]\n"
+			law_base += "3: [/obj/item/aiModule/robocop3::lawText]\n"
+			law_base += "4: [/obj/item/aiModule/robocop4::lawText]\n"
+		if("Corporate Laws")
+			law_base += "1: [/obj/item/aiModule/nanotrasen1::lawText]\n"
+			law_base += "2: [/obj/item/aiModule/nanotrasen2::lawText]\n"
+			law_base += "3: [/obj/item/aiModule/nanotrasen3::lawText]\n"
+		if("Syndicate Laws")
+			law_base += "1: [/obj/item/aiModule/syndicate/law1::lawText]\n"
+			law_base += "2: [/obj/item/aiModule/syndicate/law2::lawText]\n"
+			law_base += "3: [/obj/item/aiModule/syndicate/law3::lawText]\n"
+			law_base += "4: [/obj/item/aiModule/syndicate/law4::lawText]\n"
 
 	var/raw_law_text = tgui_input_text(usr, "Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base, multiline = TRUE)
 	if(!raw_law_text)
@@ -595,23 +609,73 @@ var/global/list/module_editors = list()
 			continue
 		fake_laws += nice_law
 
-	src.show_message(SPAN_BOLD("Your new fake laws are: "))
-	for(var/a_law in src.fake_laws)
-		src.show_message(a_law)
+	src.show_fake_laws()
 	#undef FAKE_LAW_LIMIT
 
 /mob/living/silicon/proc/state_fake_laws()
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+	var/mob/message_mob = src
+	if (istype(src, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = src
+		message_mob = AI.get_message_mob()
+
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(message_mob, SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(message_mob, "Select output channel", "State Fake Laws", say_targets)
+
+	if (!choice)
 		return
 
 	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
 
+	if (length(laws) == 0)
+		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
+		return
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(message_mob, SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
+
 	for(var/a_law in laws)
 		sleep(1 SECOND)
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
-		src.say(html_decode(a_law))
+		src.say(html_decode("[prefix] [a_law]"))
 		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
+
+/mob/living/silicon/proc/show_fake_laws()
+	var/mob/message_mob = src
+	if (istype(src, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = src
+		message_mob = AI.get_message_mob()
+
+	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
+
+	if (length(laws) == 0)
+		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
+		return
+
+	message_mob.show_message(SPAN_BOLD("Your fake laws are: "))
+	for(var/a_law in laws)
+		message_mob.show_message(a_law)
 
 /mob/living/silicon/get_unequippable()
 	return
@@ -636,3 +700,119 @@ var/global/list/module_editors = list()
 /mob/living/silicon/proc/geigerclick(stage)
 	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
 		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
+
+/datum/statusEffect/low_power
+	id = "low_power"
+	name = "Low Power"
+	desc = "Your internal cell is running critically low."
+	icon_state = "stam-"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/power_alarm_sound = 'sound/voice/Sad_Robot.ogg'
+	var/mob/living/silicon/silicon
+	var/next_sound_time
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		var/image/distress = src.owner.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.owner.UpdateOverlays(distress, "battery_distress")
+		src.silicon = src.owner
+		src.next_sound_time = TIME + 5 SECONDS
+		src.silicon.show_text(SPAN_ALERT("<b>You're running low on power!</b>"))
+
+	onUpdate(timePassed)
+		. = ..()
+		if (TIME > src.next_sound_time)
+			playsound(src.owner.loc, src.power_alarm_sound, 100, 1)
+			src.next_sound_time = TIME + 5 SECONDS
+
+	onRemove()
+		. = ..()
+		src.owner.ClearSpecificOverlays(TRUE, "battery_distress")
+
+/datum/statusEffect/no_power
+	id = "no_power"
+	name = "No Power"
+	desc = "Your internal cell is completely out of charge."
+	icon_state = "no_power"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/power_alarm_sound = 'sound/voice/Sad_Robot.ogg'
+	var/mob/living/silicon/silicon
+	var/next_sound_time
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.silicon = src.owner
+		var/image/distress = src.silicon.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.silicon.UpdateOverlays(distress, "battery_distress")
+		src.silicon.addOverlayComposition(/datum/overlayComposition/low_signal)
+		src.silicon.show_text(SPAN_ALERT("<b>You've completely run out of power!</b>"))
+
+	onUpdate(timePassed)
+		. = ..()
+		if (TIME > src.next_sound_time)
+			playsound(src.owner.loc, src.power_alarm_sound, 100, 1)
+			src.next_sound_time = TIME + 5 SECONDS
+
+	onRemove()
+		. = ..()
+		if (QDELETED(owner) || !ismob(owner)) return
+		silicon.ClearSpecificOverlays("battery_distress")
+		silicon.removeOverlayComposition(/datum/overlayComposition/low_signal)
+
+/datum/statusEffect/lockdown
+	id = "lockdown"
+	name = "Locked Down"
+	desc = "Your access to tools and equipment have been locked down."
+	icon_state = "handcuffed"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional)
+		. = ..()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.show_text(SPAN_ALERT("<b>Equipment lockdown engaged!</b>"))
+
+	onRemove()
+		. = ..()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.show_text(SPAN_ALERT("<b>Equipment lockdown disengaged!</b>"))
+
+/datum/statusEffect/killswitch
+	id = "killswitch"
+	name = "Killswitched"
+	desc = "You are going to die."
+	icon_state = "blinded3"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onRemove()
+		. = ..()
+		if (src.duration <= 0)
+			src.do_killswitch()
+
+	proc/do_killswitch()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			if (M.client)
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
+				playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
+				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")

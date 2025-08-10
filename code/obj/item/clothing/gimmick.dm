@@ -342,6 +342,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
 	icon_state = "donkini"
 	item_state = "donkini"
+	hide_underwear = TRUE
 
 // Duke Nukem
 
@@ -848,6 +849,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty ultramarine backpack"
 	desc = "How is this janky piece of shit supposed to work anyway?"
 	icon_state = "um_back"
+	satchel_variant = null
 
 /obj/item/clothing/suit/power/noisemarine
 	name = "cardboard noise marine armor"
@@ -864,6 +866,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty noise marine backpack"
 	desc = "Shame this doesn't have real loudspeakers built into it."
 	icon_state = "nm_back"
+	satchel_variant = null
 
 TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	mat_appearances_to_ignore = list("jean")
@@ -1221,6 +1224,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A very fancy and very expensive white dress which one is supposed to wear to be married, or while going insane post-marriage. Boy, it sure would be terrible if this got covered in blood and gore or something, someone would be out a lot of money!"
 	icon_state = "weddress"
 	item_state = "weddress"
+	hide_underwear = TRUE
 	c_flags = SLEEVELESS
 
 /obj/item/clothing/gloves/ring
@@ -1428,6 +1432,12 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "guardscoat"
+	item_state = "guardscoat"
+	coat_style = "guardscoat"
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 	setupProperties()
 		..()
@@ -1484,6 +1494,7 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	desc = "Every girl needs one, you know, but this is very, very little. Yeesh."
 	icon_state = "blackdress"
 	item_state = "blackdress"
+	hide_underwear = TRUE
 	c_flags = SLEEVELESS
 
 /obj/item/clothing/under/misc/dress/red
@@ -1813,12 +1824,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "A dress. Specifically for masquerades."
 	icon_state = "blossomdress"
 	item_state = "blossomdress"
+	hide_underwear = TRUE
 
 /obj/item/clothing/under/peacockdress
 	name = "peacock dress"
 	desc = "A dress. Specifically for masquerades."
 	icon_state = "peacockdress"
 	item_state = "peacockdress"
+	hide_underwear = TRUE
 
 /obj/item/clothing/under/collardressbl
 	name = "collar dress"
@@ -2074,8 +2087,33 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
-// Goku
+/obj/item/clothing/suit/pigeon
+	name = "Carrier Pigeon"
+	desc = "A motionless pigeon plushie that attaches to shoulders. It looks like it has a postmaster's seal on it."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_HAIR_LAYER2
+	icon_state = "pigeon"
+	item_state = "pigeon"
 
+	equipped(mob/user)
+		if (ishuman(user))
+			var/mob/living/carbon/human/human = user
+			src.wear_image.pixel_y = human.mutantrace.head_offset
+		..()
+
+	attack_self (mob/user as mob)
+		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
+			return
+		user.visible_message(SPAN_COMBAT("<b>[user] activates [his_or_her(user)] P1G30N using a hidden switch!</b>"))
+		var/mob/living/critter/robotic/scuttlebot/mail/S = new /mob/living/critter/robotic/scuttlebot/mail(get_turf(src))
+		S.linked_pigeon = src
+		user.drop_item()
+		src.set_loc(S)
+		user.update_inhands()
+		return
+
+// Goku
 /obj/item/clothing/under/gimmick/goku
 	name = "anime martial artist costume"
 	desc = "Sturdy karate gi intended for only the toughest martial artists out there. If only you actually practiced!"
@@ -2100,3 +2138,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "blorbosuit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+
+/obj/item/clothing/suit/chompskysuit
+	name = "Gnome Chompsky costume"
+	desc = "Giant-sized gnome costume. Smells faintly of camphor oil."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "chompskysuit"
+	item_state = "chompskysuit"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES

@@ -118,10 +118,10 @@
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff++
 						continue
-					if (I.scan_category == "not_shown")
+					if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
 						continue
-					if (I.scan_category != "syndicate")
-						if (I.scan_category != "unknown")
+					if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
+						if (I.scan_category != IMPLANT_SCAN_CATEGORY_UNKNOWN)
 							implant_list[capitalize(I.name)]++
 						else
 							implant_list["Unknown implant"]++
@@ -149,12 +149,18 @@
 			var/mob/living/carbon/human/H = M
 
 			if (H.get_organ("brain"))
-				if (H.get_brain_damage() >= 100)
+				if (H.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 					brain_data = SPAN_ALERT("Subject is braindead.")
-				else if (H.get_brain_damage() >= 60)
-					brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-				else if (H.get_brain_damage() >= 10)
-					brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+					brain_data = SPAN_ALERT("Severe brain damage detected. Subject unable to function.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
+					brain_data = SPAN_ALERT("Major brain damage detected. Impaired functioning present.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MODERATE)
+					brain_data = SPAN_ALERT("Moderate brain damage detected. Subject unable to function well.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
+					brain_data = SPAN_ALERT("Minor brain damage detected.")
+				else if (H.get_brain_damage() > 0)
+					brain_data = SPAN_ALERT("Brain synapse function may be disrupted.")
 			else
 				brain_data = SPAN_ALERT("Subject has no brain.")
 
@@ -217,11 +223,11 @@
 				reagent_data = SPAN_NOTICE("Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.")
 
 	if (!ishuman) // vOv
-		if (M.get_brain_damage() >= 100)
+		if (M.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 			brain_data = SPAN_ALERT("Subject is braindead.")
-		else if (M.get_brain_damage() >= 60)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 			brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-		else if (M.get_brain_damage() >= 10)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
 			brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
 
 	if (M.interesting)

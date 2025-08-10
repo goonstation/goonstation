@@ -69,7 +69,7 @@
 			user.visible_message(SPAN_NOTICE("[user] dumps out [S]'s contents onto [src]!"))
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
-			S.tooltip_rebuild = 1
+			S.tooltip_rebuild = TRUE
 			S.UpdateIcon()
 			return
 	if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
@@ -164,6 +164,7 @@
 	var/order_override = "" //! Force a specific organization layout
 	var/shuffle_chance = 1 //! Probability of the card order being shuffled
 #ifdef IN_MAP_EDITOR
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "rack_filled"
 #endif
 

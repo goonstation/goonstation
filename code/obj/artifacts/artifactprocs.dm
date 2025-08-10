@@ -77,6 +77,7 @@
 			all_origin_names += O.name
 		appearance = artifact_controls.get_origin_from_string(pick(all_origin_names))
 
+	A.artiappear = appearance
 	var/name1 = pick(appearance.adjectives)
 	var/name2 = "thingy"
 	if (isitem(src))
@@ -266,7 +267,7 @@
 		var/datum/artifact/activator_key/K = ACT.artifact
 
 		if (K.activated)
-			if (K.universal || A.artitype == K.artitype)
+			if (K.universal || A.artitype == K.activating_origin)
 				if (K.activator && !A.activated)
 					src.ArtifactActivated()
 					if(K.corrupting && length(A.faults) < 10) // there's only so much corrupting you can do ok

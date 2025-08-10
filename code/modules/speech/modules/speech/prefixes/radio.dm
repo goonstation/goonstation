@@ -1,7 +1,7 @@
 /datum/speech_module/prefix/postmodifier/radio
 	id = SPEECH_PREFIX_RADIO
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT
-	prefix_id = ":"
+	prefix_id = PREFIX_TEXT_RADIO
 
 /datum/speech_module/prefix/postmodifier/radio/process(datum/say_message/message)
 	. = message
@@ -25,11 +25,12 @@
 
 	var/datum/say_message/radio_message = message.Copy()
 	radio_message.atom_listeners_override = list(radio)
-	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
+	if (src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message))
+		message.say_sound = 'sound/misc/talk/radio.ogg'
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
-	message.say_sound = 'sound/misc/talk/radio.ogg'
+	message.can_relay = FALSE
 
 /datum/speech_module/prefix/postmodifier/radio/get_prefix_choices()
 	var/obj/item/device/radio/radio
@@ -55,7 +56,7 @@
 /datum/speech_module/prefix/postmodifier/radio/general
 	id = SPEECH_PREFIX_RADIO_GENERAL
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 1
-	prefix_id = ";"
+	prefix_id = PREFIX_TEXT_RADIO_GENERAL
 
 /datum/speech_module/prefix/postmodifier/radio/general/get_prefix_choices()
 	var/obj/item/device/radio/radio

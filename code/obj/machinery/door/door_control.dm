@@ -667,7 +667,10 @@ TYPEINFO(/obj/machinery/door_control)
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (istrainedsyndie(user))
-		src.toggle()
+		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
+		if (listening_post.unlocked)
+			listening_post.first_unlock(user)
+		src.toggle(user)
 		if (src.entrance_scanner)
 			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanently unlocked.")
 	else
@@ -1188,24 +1191,12 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		light.enable()
 
 	Click(var/location,var/control,var/params)
-		if(GET_DIST(usr, src) < 16)
-			if(istype(usr.loc, /obj/machinery/vehicle))
-				var/obj/machinery/vehicle/V = usr.loc
-				if (!V.com_system)
-					boutput(usr, SPAN_ALERT("Your pod has no comms system installed!"))
-					return ..()
-				if (!V.com_system.active)
-					boutput(usr, SPAN_ALERT("Your communications array isn't on!"))
-					return ..()
-				if (!access_type)
-					open_door()
-				else
-					if(V.com_system.access_type.Find(src.access_type))
-						open_door()
-					else
-						boutput(usr, SPAN_ALERT("Access denied. Comms system not recognized."))
-						return ..()
+		if(GET_DIST(usr, src) > 16)
 			return ..()
+		if(istype(usr.loc, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/V = usr.loc
+			V.toggle_hangar_door(pass)
+
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -1219,7 +1210,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		boutput(user, SPAN_NOTICE("The password is \[[src.pass]\]"))
 		return
 
-	proc/open_door()
+	proc/toggle_hangar_door()
 		if(src.status & (NOPOWER|BROKEN))
 			return
 		src.use_power(5)
@@ -1237,7 +1228,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		if(..())
 			return
 		//////Open Door
-		if(signal.data["command"] =="open door")
+		if(signal.data["command"] =="toggle_hangar_door")
 			if(!signal.data["doorpass"])
 				return
 			if(!signal.data["access_type"])
@@ -1249,16 +1240,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 				return
 
 			if(signal.data["doorpass"] == src.pass)
-				if(src.status & (NOPOWER|BROKEN))
-					return
-				src.use_power(5)
-
-				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-					if (M.id == src.id)
-						if (M.density)
-							M.open()
-						else
-							M.close()
+				toggle_hangar_door()
 			return
 		////////reset pass
 		if(signal.data["command"] =="reset door pass")

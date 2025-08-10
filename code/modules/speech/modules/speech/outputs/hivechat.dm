@@ -1,6 +1,7 @@
 /datum/speech_module/output/bundled/hivemind
 	id = SPEECH_OUTPUT_HIVECHAT
 	channel = SAY_CHANNEL_HIVEMIND
+	speech_prefix = SPEECH_PREFIX_HIVECHAT
 	var/role = ""
 
 /datum/speech_module/output/bundled/hivemind/process(datum/say_message/message)
@@ -62,8 +63,7 @@
 			src.role = " (MASTER)"
 
 	if (isabomination(changeling_ability_holder.owner) && istype(message.speaker, /mob/dead/target_observer/hivemind_observer))
-		changeling_ability_holder.owner.say(message.content, flags = 0, message_params = list("speaker_to_display" = "Congealed [message.speaker]"))
-
+		message.speaker.say(message.content, message_params = list("output_module_override" = SPEECH_OUTPUT_SPOKEN_HIVEMIND))
 	. = ..()
 
 

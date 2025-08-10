@@ -380,6 +380,11 @@
 	RETURN_TYPE(/datum/speech_module/prefix)
 	return src.speech_prefixes_by_id[prefix_id]
 
+/// Returns the speech prefix module that matches the specified prefix text.
+/datum/speech_module_tree/proc/GetPrefixByPrefixText(prefix_text)
+	RETURN_TYPE(/datum/speech_module/prefix)
+	return src.premodifier_speech_prefixes_by_prefix_id[prefix_text] || src.postmodifier_speech_prefixes_by_prefix_id[prefix_text]
+
 /// Returns the number of subscriptions to this speech prefix module.
 /datum/speech_module_tree/proc/GetPrefixSubcount(prefix_id)
 	return src.speech_prefix_ids_with_subcount[prefix_id]

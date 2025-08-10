@@ -306,12 +306,13 @@ TYPEINFO(/obj/machinery/bot/secbot)
 			Guard Lockdown: <A href='byond://?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
 			<A href='byond://?src=\ref[src];operation=guardhere'>Guard Here</A>"}
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = "Securitron v2.0 controls",
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = "Securitron v2.0 controls",
+				content = dat,
+			)
 
 		return
 
@@ -848,7 +849,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
 				break
-			if(C.traitHolder.hasTrait("wasitsomethingisaid") && src.threatlevel >= 1)
+			if(C.traitHolder?.hasTrait("wasitsomethingisaid") && src.threatlevel >= 1)
 				src.EngageTarget(C)
 			else
 				continue

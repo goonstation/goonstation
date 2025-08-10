@@ -15,6 +15,8 @@ TYPEINFO(/mob)
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
+	open_to_sound = FALSE
+
 	speech_verb_say = "says"
 	speech_verb_ask = "asks"
 	speech_verb_exclaim = "exclaims"
@@ -146,8 +148,6 @@ TYPEINFO(/mob)
 	var/faction = list()
 
 	var/nodamage = 0
-
-	var/spellshield = 0
 
 	var/voice_name = "unidentifiable voice"
 	var/oldname = null
@@ -454,9 +454,9 @@ TYPEINFO(/mob)
 		return
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
-	if(isnull(src.client.tg_layout))
+	if(isclient(src.client) && isnull(src.client?.tg_layout))
 		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
-	src.client.set_layout(src.client.tg_layout)
+	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -480,13 +480,13 @@ TYPEINFO(/mob)
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
-	if(src.client.preferences)
+	if(src.client?.preferences)
 		src.reset_keymap()
 
-	src.client.mouse_pointer_icon = src.cursor
+	if (isclient(src.client)) src.client.mouse_pointer_icon = src.cursor
 
-	src.lastKnownIP = src.client.address
-	src.computer_id = src.client.computer_id
+	src.lastKnownIP = src.client?.address
+	src.computer_id = src.client?.computer_id
 
 	world.update_status()
 
@@ -520,7 +520,7 @@ TYPEINFO(/mob)
 
 	src.need_update_item_abilities = 1
 
-	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
+	var/atom/illumplane = src.client?.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
@@ -743,6 +743,11 @@ TYPEINFO(/mob)
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
 
+				if(tmob.buckled)
+					tmob.buckled.set_loc(oldloc)
+				if(src.buckled)
+					src.buckled.set_loc(newloc)
+
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/atom/movable/hotspot) in tmob.loc)
@@ -774,8 +779,6 @@ TYPEINFO(/mob)
 			victim.deliver_move_trigger("bump")
 			var/was_in_space = istype(victim.loc, /turf/space)
 			var/was_in_fire = locate(/atom/movable/hotspot) in victim.loc
-			if (victim.buckled && !victim.buckled.anchored)
-				step(victim.buckled, t)
 			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into space.")
 			else if (!was_in_fire && (locate(/atom/movable/hotspot) in victim.loc))
@@ -792,7 +795,6 @@ TYPEINFO(/mob)
 			var/list/pulling = list()
 			if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || src.pulling == src) // fucks sake
 				src.remove_pulling()
-				//hud.update_pulling() // FIXME
 			else
 				pulling += src.pulling
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
@@ -906,30 +908,36 @@ TYPEINFO(/mob)
 	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
 		src.equipped().intent_switch_trigger(src)
 
+/// Set movement intent variable on a mob
+/mob/proc/set_m_intent(intent)
+	if (!intent)
+		return
+	src.m_intent = intent
+
 // medals
 
 /mob/proc/revoke_medal(title)
-	src.mind.get_player().clear_medal(title)
+	src.mind?.get_player().clear_medal(title)
 
 /mob/proc/unlock_medal(title, announce=FALSE)
 	set waitfor = 0
 	if (!src.client)
 		return
-	src.mind.get_player().unlock_medal(title, announce)
+	src.mind?.get_player().unlock_medal(title, announce)
 
 /mob/proc/has_medal(medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
 #ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
 	return TRUE
 #else
-	return src.mind.get_player().has_medal(medal)
+	return src.mind?.get_player().has_medal(medal)
 #endif
 
 /mob/verb/list_medals()
 	set name = "Medals"
 
-	if (IsGuestKey(src.key))
-		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to view your medals."))
 		return
 
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
@@ -958,6 +966,9 @@ TYPEINFO(/mob)
 /mob/verb/setdnr()
 	set name = "Set DNR"
 	set desc = "Set yourself as Do Not Resuscitate."
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to set DNR."))
+		return
 	if(isadmin(src))
 		src.mind.get_player()?.dnr = !src.mind.get_player()?.dnr
 		boutput(src, SPAN_ALERT("DNR status [src.mind.get_player()?.dnr ? "set" : "removed"]!"))
@@ -1084,7 +1095,7 @@ TYPEINFO(/mob)
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss=FALSE)
 	hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
@@ -1213,12 +1224,10 @@ TYPEINFO(/mob)
 
 /mob/proc/death(gibbed = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins(SPAN_ALERT("Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)]."))
-	//if(src.mind && !gibbed)
-	//	src.mind.death_icon = getFlatIcon(src,SOUTH) crew photo stuff
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
 		src.damn()
 		return
@@ -1227,8 +1236,10 @@ TYPEINFO(/mob)
 		src.suicide_alert = 0
 	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
-	//stop piloting pods or whatever
+	// stop piloting pods or whatever
 	src.override_movement_controller = null
+	// stop pulling shit!!
+	src.remove_pulling()
 
 
 /mob/proc/restrained()
@@ -1504,7 +1515,7 @@ TYPEINFO(/mob)
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 
-	if (!( abandon_allowed ))
+	if (!( abandon_allowed ) || !src.mind)
 		return
 
 	if(!isobserver(usr) || !(ticker))
@@ -1523,6 +1534,7 @@ TYPEINFO(/mob)
 	set desc = "Displays the window to edit your character preferences"
 	set category = "Commands"
 
+	if (!src.mind) return
 	client.preferences.ShowChoices(src)
 
 /mob/verb/cmd_rules()
@@ -1541,6 +1553,7 @@ TYPEINFO(/mob)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
+	if (!src.mind) return
 	src.set_eye(null)
 	src.remove_dialogs()
 	if (!isliving(src))
@@ -1554,6 +1567,8 @@ TYPEINFO(/mob)
 	set name = "Show Credits"
 	set desc = "Open the crew credits window"
 	set category = "Commands"
+
+	if (!src.mind) return
 
 	if (global.current_state < GAME_STATE_FINISHED)
 		boutput(src, SPAN_NOTICE("The game hasn't finished yet!"))
@@ -1761,6 +1776,20 @@ TYPEINFO(/mob)
 
 	return temperature
 
+/// Change the mob's body temperature without leaving the specified bounds
+/mob/proc/changeBodyTemp(var/amount, var/min_temp = 0 KELVIN, var/max_temp = INFINITY)
+	if(amount <= 0)
+		if(src.bodytemperature <= min_temp) // Keep body temp as is if below min
+			return
+		src.bodytemperature += amount
+		if(src.bodytemperature < min_temp)
+			src.bodytemperature = min_temp
+	else
+		if(src.bodytemperature >= max_temp)  // Keep body temp as is if above max
+			return
+		src.bodytemperature += amount
+		if(src.bodytemperature > max_temp)
+			src.bodytemperature = max_temp
 
 //Gets rid of the mob without all the messy fuss of a gib
 /mob/proc/remove()
@@ -1807,7 +1836,7 @@ TYPEINFO(/mob)
 
 	if (src.client) // I feel like every player should be ghosted when they get gibbed
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 		if (!isnull(newmob) && give_medal)
 			newmob.unlock_medal("Gore Fest", 1)
 
@@ -1908,7 +1937,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (animation)
 		animation.delaydispose()
@@ -1980,7 +2009,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (bdna && btype)
 		partygibs(src.loc, bdna, btype) // For forensics (Convair880).
@@ -2028,7 +2057,7 @@ TYPEINFO(/mob)
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (bdna && btype)
 		gibs(src.loc, null, bdna, btype) // For forensics (Convair880).
@@ -2071,7 +2100,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	elecflash(src.loc,exclude_center = 0)
 
@@ -2099,7 +2128,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 
@@ -2173,7 +2202,7 @@ TYPEINFO(/mob)
 		sleep(duration+5)
 		src.death(TRUE)
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 		qdel(floorcluwne)
 		qdel(src)
@@ -2207,7 +2236,7 @@ TYPEINFO(/mob)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	var/list/ejectables = list_ejectables()
 
@@ -2973,6 +3002,8 @@ TYPEINFO(/mob)
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
+
+	src.client?.tooltips?.onMove(src.move_dir)
 
 /mob/proc/on_centcom()
 	. = FALSE

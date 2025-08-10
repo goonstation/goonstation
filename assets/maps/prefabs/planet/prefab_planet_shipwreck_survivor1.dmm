@@ -94,9 +94,8 @@
 /turf/unsimulated/floor/wood/two,
 /area/noGenerate)
 "pS" = (
-/obj/item/bballbasket{
-	dir = 1;
-	pixel_y = 24
+/obj/item/bballbasket/mounted{
+	dir = 1
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/grey,
@@ -135,7 +134,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/noGenerate)
 "wp" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/machinery/light/small{
 	dir = 1
 	},

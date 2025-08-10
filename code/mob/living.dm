@@ -465,8 +465,8 @@ TYPEINFO(/mob/living)
 				else
 					src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
 					src.force_laydown_standup()
-		if ("say_radio")
-			src.say_radio()
+		if ("say_over_channel")
+			src.say_over_channel()
 		else
 			. = ..()
 
@@ -474,10 +474,6 @@ TYPEINFO(/mob/living)
 	. = ..()
 	if (. == 100)
 		return 100
-
-	if (params["middle"])
-		src.swap_hand()
-		return
 
 	if (src.hibernating && istype(src.loc, /obj/cryotron))
 		var/obj/cryotron/cryo = src.loc
@@ -499,77 +495,94 @@ TYPEINFO(/mob/living)
 
 	actions.interrupt(src, INTERRUPT_ACT)
 
-	if (!src.stat && !is_incapacitated(src))
-		var/obj/item/equipped = src.equipped()
-		var/use_delay = (target.flags & CLICK_DELAY_IN_CONTENTS || !(target in src.contents)) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
-		var/grace_penalty = 0
-		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
-			var/time_left = src.next_click - world.time
-			// since we're essentially encouraging players to click as soon as they possibly can, and how clicking strongly depends on lag, having a strong cutoff feels like bullshit
-			// the grace window gives people a small amount of leeway without increasing the overall click rate by much
-			if (time_left > CLICK_GRACE_WINDOW || (equipped && (equipped.flags & EXTRADELAY))) // also let's not enable this for guns.
-				return time_left
-			else
-				grace_penalty = time_left
+	if (src.stat || is_incapacitated(src))
+		return
 
-		if (target == equipped)
-			equipped.AttackSelf(src)
-			if(equipped.flags & ATTACK_SELF_DELAY)
-				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
-		else if (params["ctrl"])
-			var/atom/movable/movable = target
-			if (istype(movable))
-				movable.pull(src)
-
-				SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
-		else
-			var/reach = can_reach(src, target)
-			if (src.pre_attack_modify())
-				equipped = src.equipped() //might have changed from successful modify
-			if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
-				if (use_delay)
-					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
-
-				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc))) || (ismob(target.loc) && target != src && target.loc != src)) // dont want to check for a cloaker every click if we're not invisible
-					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
-
-				if (equipped)
-					weapon_attack(target, equipped, reach, params)
+	if (params["middle"])
+		if (!src.client?.preferences.middle_mouse_swap)
+			if (!can_reach(src, target))
+				return
+			for (var/obj/storage/storage in get_turf(target))
+				if (storage.open)
+					storage.close(user = src)
 				else
-					hand_attack(target, params, location, control)
+					storage.open(user = src)
+		else
+			src.swap_hand()
+		return
 
-				//If lastattacked was set, this must be a combat action!! Use combat click delay ||  the other condition is whether a special attack was just triggered.
-				if ((lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
-					src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
-					src.lastattacked = null
+	var/obj/item/equipped = src.equipped()
+	var/use_delay = (target.flags & CLICK_DELAY_IN_CONTENTS || !(target in src.contents)) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+	var/grace_penalty = 0
+	if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
+		var/time_left = src.next_click - world.time
+		// since we're essentially encouraging players to click as soon as they possibly can, and how clicking strongly depends on lag, having a strong cutoff feels like bullshit
+		// the grace window gives people a small amount of leeway without increasing the overall click rate by much
+		if (time_left > CLICK_GRACE_WINDOW || (equipped && (equipped.flags & EXTRADELAY))) // also let's not enable this for guns.
+			return time_left
+		else
+			grace_penalty = time_left
 
-			else if (!equipped)
-				hand_range_attack(target, params, location, control)
+	if (target == equipped)
+		equipped.AttackSelf(src)
+		if(equipped.flags & ATTACK_SELF_DELAY)
+			src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
+	else if (params["ctrl"])
+		var/atom/movable/movable = target
+		if (istype(movable))
+			movable.pull(src)
 
-				if (lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay)
-					src.next_click = world.time + src.combat_click_delay
-					src.lastattacked = null
+			SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
+	else
+		var/reach = can_reach(src, target)
+		if (src.pre_attack_modify())
+			equipped = src.equipped() //might have changed from successful modify
+		if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial
+			if (use_delay)
+				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-		//Don't think I need the above, this should work here.
-		if (istype(src.loc, /obj/machinery/vehicle))
-			var/obj/machinery/vehicle/ship = src.loc
-			if (ship.pilot == src)
-				if (ship.sensors)
-					if (ship.sensors.active)
-						var/obj/machinery/vehicle/target_pod = target
-						if (src.loc != target_pod && istype(target_pod))
-							ship.sensors.end_tracking()
-							ship.sensors.quick_obtain_target(target_pod)
-					else
-						if (istype(target, /obj/machinery/vehicle))
-							boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
-			else if (istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support) && ship.sec_system.active)
-				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
-				support_gunner.fire_at(target, src)
+			if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc))) || (ismob(target.loc) && target != src && target.loc != src)) // dont want to check for a cloaker every click if we're not invisible
+				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+
+			if (equipped)
+				weapon_attack(target, equipped, reach, params)
+			else
+				hand_attack(target, params, location, control)
+
+			//If lastattacked was set, this must be a combat action!! Use combat click delay ||  the other condition is whether a special attack was just triggered.
+			if ((lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
+				src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
+				src.lastattacked = null
+
+		else if (!equipped)
+			hand_range_attack(target, params, location, control)
+
+			if (lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay)
+				src.next_click = world.time + src.combat_click_delay
+				src.lastattacked = null
+
+	//Don't think I need the above, this should work here.
+	if (istype(src.loc, /obj/machinery/vehicle))
+		var/obj/machinery/vehicle/ship = src.loc
+		var/obj/item/shipcomponent/secondary_system/sec_part = ship.get_part(POD_PART_SECONDARY)
+		if (ship.pilot == src)
+			var/obj/item/shipcomponent/sensor/sensors_part = ship.get_part(POD_PART_SENSORS)
+			if (sensors_part)
+				if (sensors_part.active)
+					var/obj/machinery/vehicle/target_pod = target
+					if (src.loc != target_pod && istype(target_pod))
+						sensors_part.end_tracking()
+						sensors_part.quick_obtain_target(target_pod)
+				else
+					if (istype(target, /obj/machinery/vehicle))
+						boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
+		else if (istype(sec_part, /obj/item/shipcomponent/secondary_system/gunner_support) && sec_part.active)
+			var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = sec_part
+			support_gunner.fire_at(target, src)
 
 
-		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
-			src.next_click += grace_penalty
+	if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
+		src.next_click += grace_penalty
 
 /mob/living/proc/pre_attack_modify()
 	. = 0
@@ -1041,10 +1054,10 @@ TYPEINFO(/mob/living)
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.5)
 				sustained_moves += steps
 			else
-				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.8)
-				else if (move_dir == turn(last_move_dir,180) && !isFlying)
+				else if (move_dir == turn(last_move_dir,180) && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 					if(!HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 						sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.9)
@@ -1074,8 +1087,6 @@ TYPEINFO(/mob/living)
 			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 			playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.8)
 		sustained_moves = 0
-
-
 
 /mob/living/movement_delay(var/atom/move_target = 0, running = 0)
 	var/base_speed = BASE_SPEED
@@ -1256,7 +1267,7 @@ TYPEINFO(/mob/living)
 
 			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
 				sprint_particle(src, last)
-				if (!isFlying)
+				if (!HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
@@ -1283,7 +1294,7 @@ TYPEINFO(/mob/living)
 			M.mind.violated_hippocratic_oath = 1
 
 	if (src.nodamage) return 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		src.visible_message(SPAN_ALERT("[src]'s shield deflects the shot!"))
 		return 0
 
@@ -1466,8 +1477,14 @@ TYPEINFO(/mob/living)
 	if (ishuman(src))
 		H = src
 		var/obj/item/clothing/gloves/G = H.gloves
+		var/obj/item/leftItem = H.l_hand
+		var/obj/item/rightItem = H.r_hand
 		if (G && !ignore_gloves)
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
+		if (leftItem && !ignore_gloves && (leftItem.c_flags & EQUIPPED_WHILE_HELD))
+			prot = min(prot,(leftItem.hasProperty("conductivity") ? leftItem.getProperty("conductivity") : 1))
+		if (rightItem && !ignore_gloves && (rightItem.c_flags & EQUIPPED_WHILE_HELD))
+			prot = min(prot,(rightItem.hasProperty("conductivity") ? rightItem.getProperty("conductivity") : 1))
 		if (H.limbs.l_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
 		if (H.limbs.r_arm && !ignore_gloves)
@@ -1748,7 +1765,8 @@ TYPEINFO(/mob/living)
 /mob/living/clamp_act()
 	if (isintangible(src))
 		return FALSE
-	src.TakeDamage("All", 6)
+	src.TakeDamage("All", 10)
+	src.setStatusMin("slowed", 2 SECONDS, 15)
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
 	return TRUE

@@ -1,3 +1,10 @@
+TYPEINFO(/mob/dead/target_observer/hivemind_observer)
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_HIVEMIND)
+
 /mob/dead/target_observer/hivemind_observer
 	is_respawnable = FALSE
 	locked = TRUE

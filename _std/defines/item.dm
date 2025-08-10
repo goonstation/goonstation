@@ -81,6 +81,8 @@
 #define TOOL_SOLDERING (1<<11)
 #define TOOL_WIRING    (1<<12)
 #define TOOL_ASSEMBLY_APPLIER (1<<13) // for anything that are useable for assemblies, e.g. igniters & bikehorns
+#define TOOL_DIGGING   (1<<14)
+#define TOOL_DECONSTRUCTING (1<<15)
 
 //omnitool flags
 #define OMNI_MODE_PRYING 1
@@ -90,6 +92,8 @@
 #define OMNI_MODE_PULSING 5
 #define OMNI_MODE_CUTTING 6
 #define OMNI_MODE_WELDING 7
+#define OMNI_MODE_DECON 8
+#define OMNI_MODE_SOLDERING 9
 
 //fluid_canister flags
 #define FLUID_CANISTER_MODE_OFF 1
@@ -231,5 +235,13 @@
 #define MATCH_LIT 1
 #define MATCH_INERT 2 /// broken or burn out
 
-///macro for rendering an image fullsize on paper
+/// Macro for rendering an image fullsize on paper
 #define PAPER_IMAGE_RENDER(image) "<img style='position: absolute; top: 0; left: 0' src='[resource(image)]'>"
+
+// implant stuff
+#define IMPLANT_SCAN_CATEGORY_OTHER "other"
+#define IMPLANT_SCAN_CATEGORY_HEALTH "health"
+#define IMPLANT_SCAN_CATEGORY_CLONER "cloner"
+#define IMPLANT_SCAN_CATEGORY_SYNDICATE "syndicate"
+#define IMPLANT_SCAN_CATEGORY_UNKNOWN "unknown"
+#define IMPLANT_SCAN_CATEGORY_NOT_SHOWN "not_shown"

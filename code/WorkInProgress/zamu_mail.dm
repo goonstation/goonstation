@@ -186,17 +186,9 @@
 
 		// I TOLD YOU IT WAS ILLEGAL!!!
 		// I WARNED YOU DOG!!!
-		if (ishuman(owner) && seen_by_camera(owner))
-			var/perpname = owner.name
-			if (owner:wear_id && owner:wear_id:registered)
-				perpname = owner:wear_id:registered
-
-			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-			if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
-				sec_record["criminal"] = ARREST_STATE_ARREST
-				sec_record["mi_crim"] = "Mail fraud."
-				var/mob/living/carbon/human/H = owner
-				H.update_arrest_icon()
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.apply_automated_arrest("Mail fraud.")
 
 
 /obj/decal/cleanable/mail_fraud
@@ -617,6 +609,11 @@ var/global/mail_types_by_job = list(
 		/obj/item/storage/goodybag = 3,
 		),
 
+	/datum/job/civilian/mail_courier = list(
+		/obj/item/clothing/suit/pigeon = 3,
+		/obj/item/satchel/mail/large = 5,
+		),
+
 	/datum/job/civilian/staff_assistant = list(
 		/obj/item/football = 2,
 		/obj/item/basketball = 2,
@@ -680,6 +677,13 @@ var/global/mail_types_everyone = list(
 	/obj/item/clothing/glasses/vr/arcade = 2,
 	/obj/item/device/light/zippo = 4,
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 6,
+	/obj/item/paper/postcard/beach = 7,
+	/obj/item/paper/postcard/canyon = 7,
+	/obj/item/paper/postcard/mountain = 7,
+	/obj/item/paper/postcard/lovemd = 7,
+	/obj/item/paper/postcard/mdstatehouse = 7,
+	/obj/item/paper/postcard/moonfootprint = 7,
+	/obj/item/paper/postcard/apollo = 7,
 
 	// mostly taken from gangwar as a "relatively safe list of random hats"
 	/obj/item/clothing/head/biker_cap = 1,

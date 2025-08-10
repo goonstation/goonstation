@@ -11,7 +11,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 	icon_state = "station"
 	density = 1
 	anchored = ANCHORED
-	open_to_sound = TRUE
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = TRUE
@@ -60,7 +59,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	return FALSE
 
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
-	if (src.conversion_chamber && !isrobot(user))
+	if (src.conversion_chamber && !isrobot(user) && !isshell(user))
 		boutput(user, SPAN_ALERT("You're trapped inside!"))
 		return
 	src.go_out()
@@ -245,7 +244,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (isunconscious(user))
 				return
 			else
-				user.visible_message("<b>[user]</b> moves [R] into  [src].")
+				user.visible_message("<b>[user]</b> moves [R] into [src].")
 		R.remove_pulling()
 		R.set_loc(src)
 		src.occupant = R
@@ -277,9 +276,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 		actions.start(try_convert, user)
 
 /obj/machinery/recharge_station/receive_silicon_hotkey(mob/user)
-	. = ..()
+	if(..())
+		return
 
-	if (!isAI(user))
+	if (!isAI(user)) // this is AI only
 		return
 
 	var/mob/living/silicon/ai/mainframe = null

@@ -182,12 +182,13 @@
 		dat += "<br><br>"
 		dat += "Status: <A href='byond://?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = "Cleanerbot v1.1 controls",
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = "Cleanerbot v1.1 controls",
+				content = dat,
+			)
 
 		return
 
@@ -378,7 +379,7 @@
 			return
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.traitHolder.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
+			if(H.traitHolder?.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
 				src.visible_message(SPAN_COMBAT("[src] [pick("sneakily","slyly","guilefully","deviously","rudely","devilishly","cleanly","delightfully devilishly","duplicitously","dastardly","connivingly","fucking rudely")] trips [M.name] with their mop!"))
 				H.setStatus("resting", duration = INFINITE_STATUS)
 				H.force_laydown_standup()

@@ -146,7 +146,7 @@
 	pixel_y = 4 // so we don't have to have two sets of the skin sprites, we're just gunna bump this up a bit
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
-	var/skin = null // same as the bots themselves: options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
+	var/skin = null // same as the bots themselves: options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, mental1/2/3, and psyche
 	w_class = W_CLASS_NORMAL
 
 /obj/item/firstaid_arm_assembly/New()
@@ -231,13 +231,14 @@
 		dat += "Reagent Source: "
 		dat += "<a href='byond://?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
-	if (user.client?.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(src, list(
-			"params" = params,
-			"title" = "Medibot v1.0 controls",
-			"content" = dat,
-			"size" = "260xauto"
-		))
+	if (user.client?.tooltips)
+		user.client.tooltips.show(
+			TOOLTIP_PINNED, src,
+			mouse = params,
+			title = "Medibot v1.0 controls",
+			content = dat,
+			size = list(260, 0)
+		)
 
 	return
 
@@ -420,7 +421,7 @@
 			continue
 
 		if (src.assess_patient(C))
-			if(C.traitHolder.hasTrait("wasitsomethingisaid") && !src.emagged && !src.terrifying) //they still try to kill you if they can
+			if(C.traitHolder?.hasTrait("wasitsomethingisaid") && !src.emagged && !src.terrifying) //they still try to kill you if they can
 				ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(C?.name)]", src.last_patient_cooldown * 10) //don't bother insulting them for a good while
 				if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam this either!
 					src.point(C, 1)

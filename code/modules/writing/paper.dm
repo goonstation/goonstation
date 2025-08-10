@@ -319,9 +319,6 @@
 		if(src.sealed)
 			boutput(user, SPAN_ALERT("You can't write on [src]."))
 			return
-		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
-			boutput(user, SPAN_ALERT("This sheet of paper is full!"))
-			return
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
@@ -607,10 +604,10 @@
 	bin_type = /obj/item/sticker/postit/artifact_paper
 
 	update()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /obj/item/paper_bin/proc/update()
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	src.icon_state = "paper_bin[(src.amount_left || locate(bin_type, src)) ? "1" : null]"
 	return
 

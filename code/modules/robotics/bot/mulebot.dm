@@ -249,12 +249,13 @@
 			else
 				dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = "Mulebot [suffix ? "([suffix])" : ""] controls",
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = "Mulebot [suffix ? "([suffix])" : ""] controls",
+				content = dat,
+			)
 
 		return
 
@@ -706,7 +707,7 @@
 	bump(var/atom/obs)
 		if(ismob(obs))
 			var/mob/M = obs
-			if(M.traitHolder.hasTrait("wasitsomethingisaid")) //tee hee
+			if(M.traitHolder?.hasTrait("wasitsomethingisaid")) //tee hee
 				knock_over_mob(M)
 			if(!(wires & wire_mobavoid))		//usually just bumps, but if avoidance disabled knock over mobs
 				knock_over_mob(M)

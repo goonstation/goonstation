@@ -1,44 +1,61 @@
-#define ADMIN_SPEECH_OUTPUTS list( \
-	SPEECH_OUTPUT_BLOBCHAT, \
-	SPEECH_OUTPUT_DEADCHAT, \
-	SPEECH_OUTPUT_FLOCK_GLOBAL, \
-	SPEECH_OUTPUT_GHOSTDRONE, \
-	SPEECH_OUTPUT_HIVECHAT_GLOBAL, \
-	SPEECH_OUTPUT_KUDZUCHAT, \
-	SPEECH_OUTPUT_MARTIAN, \
-	SPEECH_OUTPUT_SILICONCHAT_ADMIN, \
-	SPEECH_OUTPUT_THRALLCHAT_GLOBAL, \
-)
+#ifdef NO_ADMIN_SPEECH_MODULES
 
-#define ADMIN_SPEECH_MODIFIERS null
+	#define ADMIN_SPEECH_OUTPUTS null
+	#define ADMIN_SPEECH_MODIFIERS null
+	#define ADMIN_SPEECH_PREFIXES null
+	#define ADMIN_LISTEN_INPUTS null
+	#define ADMIN_LISTEN_MODIFIERS null
+	#define ADMIN_LISTEN_EFFECTS null
+	#define ADMIN_LISTEN_CONTROLS null
+	#define ADMIN_UNDERSTOOD_LANGUAGES null
 
-#define ADMIN_SPEECH_PREFIXES null
+#else
 
-#define ADMIN_LISTEN_INPUTS list( \
-	LISTEN_INPUT_BLOBCHAT, \
-	LISTEN_INPUT_DEADCHAT_ADMIN, \
-	LISTEN_INPUT_FLOCK_GLOBAL, \
-	LISTEN_INPUT_GHOSTDRONE, \
-	LISTEN_INPUT_GLOBAL_HEARING, \
-	LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART, \
-	LISTEN_INPUT_HIVECHAT_GLOBAL, \
-	LISTEN_INPUT_KUDZUCHAT, \
-	LISTEN_INPUT_MARTIAN, \
-	LISTEN_INPUT_SILICONCHAT, \
-	LISTEN_INPUT_THRALLCHAT_GLOBAL, \
-)
+	#define ADMIN_SPEECH_OUTPUTS list( \
+		SPEECH_OUTPUT_BLOBCHAT, \
+		SPEECH_OUTPUT_DEADCHAT_ADMIN, \
+		SPEECH_OUTPUT_FLOCK_GLOBAL, \
+		SPEECH_OUTPUT_GHOSTDRONE, \
+		SPEECH_OUTPUT_HIVECHAT_GLOBAL, \
+		SPEECH_OUTPUT_KUDZUCHAT_ADMIN, \
+		SPEECH_OUTPUT_MARTIAN, \
+		SPEECH_OUTPUT_SILICONCHAT_ADMIN, \
+		SPEECH_OUTPUT_THRALLCHAT_GLOBAL, \
+		SPEECH_OUTPUT_WRAITHCHAT_ADMIN, \
+	)
 
-#define ADMIN_LISTEN_MODIFIERS list( \
-	LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS, \
-)
+	#define ADMIN_SPEECH_MODIFIERS null
 
-#define ADMIN_LISTEN_EFFECTS null
+	#define ADMIN_SPEECH_PREFIXES null
 
-#define ADMIN_LISTEN_CONTROLS null
+	#define ADMIN_LISTEN_INPUTS list( \
+		LISTEN_INPUT_BLOBCHAT, \
+		LISTEN_INPUT_DEADCHAT_ADMIN, \
+		LISTEN_INPUT_FLOCK_GLOBAL, \
+		LISTEN_INPUT_GHOSTDRONE, \
+		LISTEN_INPUT_GLOBAL_HEARING, \
+		LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART, \
+		LISTEN_INPUT_HIVECHAT_GLOBAL, \
+		LISTEN_INPUT_KUDZUCHAT, \
+		LISTEN_INPUT_MARTIAN, \
+		LISTEN_INPUT_SILICONCHAT, \
+		LISTEN_INPUT_THRALLCHAT_GLOBAL, \
+		LISTEN_INPUT_WRAITHCHAT, \
+	)
 
-#define ADMIN_UNDERSTOOD_LANGUAGES list( \
-	LANGUAGE_ALL, \
-)
+	#define ADMIN_LISTEN_MODIFIERS list( \
+		LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS, \
+	)
+
+	#define ADMIN_LISTEN_EFFECTS null
+
+	#define ADMIN_LISTEN_CONTROLS null
+
+	#define ADMIN_UNDERSTOOD_LANGUAGES list( \
+		LANGUAGE_ALL, \
+	)
+
+#endif
 
 
 /datum/admins
@@ -110,6 +127,12 @@
 		src.owner = C
 		src.admin_speech_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS, ADMIN_SPEECH_PREFIXES, src.owner.ensure_speech_tree(), "Admin")
 		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_LISTEN_EFFECTS, ADMIN_LISTEN_CONTROLS, ADMIN_UNDERSTOOD_LANGUAGES, src.owner.ensure_listen_tree(), "Admin")
+
+		if (src.owner.preferences.listen_ooc)
+			src.admin_listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
+
+		if (src.owner.preferences.listen_looc)
+			src.admin_listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)
@@ -235,10 +258,9 @@
 
 	proc/load_admin_prefs()
 		var/list/AP
-		if (!owner.player.cloudSaves.loaded)
-			owner.player.cloudSaves.fetch()
 
-		var/json_data = owner.player.cloudSaves.getData("admin_preferences")
+		UNTIL(owner.player?.cloudSaves.loaded, 10 SECONDS)
+		var/json_data = owner.player?.cloudSaves.getData("admin_preferences")
 		if (json_data)
 			AP = json_decode(json_data)
 		else
@@ -398,7 +420,7 @@
 	proc/save_admin_prefs()
 		if (!src.owner)
 			return
-		var/data = owner.player.cloudSaves.getData("admin_preferences")
+		var/data = owner.player?.cloudSaves.getData("admin_preferences")
 		var/list/auto_aliases = list()
 		if (data) // decoding null will runtime
 			data = json_decode(data)
@@ -441,7 +463,7 @@
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)
 
-		if (!owner.player.cloudSaves.putData("admin_preferences", json_encode(AP)))
+		if (!owner.player?.cloudSaves.putData("admin_preferences", json_encode(AP)))
 			tgui_alert(src.owner, "ERROR: Unable to reach cloud.")
 		else
 			boutput(src.owner, SPAN_NOTICE("Admin preferences saved."))
@@ -489,6 +511,9 @@
 
 #undef ADMIN_SPEECH_OUTPUTS
 #undef ADMIN_SPEECH_MODIFIERS
+#undef ADMIN_SPEECH_PREFIXES
 #undef ADMIN_LISTEN_INPUTS
 #undef ADMIN_LISTEN_MODIFIERS
+#undef ADMIN_LISTEN_EFFECTS
+#undef ADMIN_LISTEN_CONTROLS
 #undef ADMIN_UNDERSTOOD_LANGUAGES

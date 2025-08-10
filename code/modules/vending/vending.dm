@@ -730,6 +730,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
 				if(player_list)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
+				if(account && (account["name"] != usr.real_name))
+				    // reduce logging spam from clerical errors
+					if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
+						logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account["name"]]).")
 		else
 			. = FALSE
 
@@ -831,7 +835,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					src.last_reply = world.time
 
 			use_power(10)
-			if (src.icon_vend) //Show the vending animation if needed
+			if (src.icon_vend && !src.fallen) //Show the vending animation if needed
 				FLICK(src.icon_vend,src)
 
 			src.vend_ready = 0
@@ -1094,7 +1098,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!R.infinite)
 			R.product_amount--
 		use_power(10)
-		if (src.icon_vend) //Show the vending animation if needed
+		if (src.icon_vend && !src.fallen) //Show the vending animation if needed
 			FLICK(src.icon_vend,src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)
@@ -1939,6 +1943,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/ketchup, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/soysauce, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/gravyboat, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/tomato, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/apple, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/lettuce, 10)
@@ -2327,7 +2332,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				productListUpdater(I, user)
 			src.sortProducts()
 			S.UpdateIcon()
-			S.tooltip_rebuild = 1
+			S.tooltip_rebuild = TRUE
 		else
 			for (var/obj/item/I as anything in targetContainer.storage.get_contents())
 				targetContainer.storage.transfer_stored_item(I, src, user = user)
@@ -2634,14 +2639,14 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/device/prox_sensor, 8)
 		product_list += new/datum/data/vending_product(/obj/item/device/igniter, 8)
 		product_list += new/datum/data/vending_product(/obj/item/device/radio/signaler, 8)
-		product_list += new/datum/data/vending_product(/obj/item/wirecutters, 1)
+		product_list += new/datum/data/vending_product(/obj/item/screwdriver, 1)
+		product_list += new/datum/data/vending_product(/obj/item/wrench, 1)
 		product_list += new/datum/data/vending_product(/obj/item/device/timer, 8)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmosanalyzer_upgrade, 3)
 		product_list += new/datum/data/vending_product(/obj/item/pressure_crystal, 5)
 		product_list += new/datum/data/vending_product(/obj/item/device/pressure_sensor, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/device/light/flashlight, rand(1, 6), hidden=1)
-		//product_list += new/datum/data/vending_product(/obj/item/device/timer, rand(1, 6), hidden=1)
 
 
 /obj/machinery/vending/standard/toxins
@@ -2652,7 +2657,8 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/device/prox_sensor, 10)
 		product_list += new/datum/data/vending_product(/obj/item/device/igniter, 10)
 		product_list += new/datum/data/vending_product(/obj/item/device/radio/signaler, 10)
-		product_list += new/datum/data/vending_product(/obj/item/wirecutters, 1)
+		product_list += new/datum/data/vending_product(/obj/item/screwdriver, 1)
+		product_list += new/datum/data/vending_product(/obj/item/wrench, 1)
 		product_list += new/datum/data/vending_product(/obj/item/device/timer, 10)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmospheric, 2)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmosanalyzer_upgrade, 3)

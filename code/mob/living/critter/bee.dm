@@ -6,7 +6,6 @@
 // I will probably regret this but I think the time has finally come for PLAYABLE BEES
 /mob/living/critter/small_animal/bee
 	name = "greater domestic space-bee"
-	real_name = "greater domestic space-bee"
 	icon = 'icons/misc/bee.dmi'
 #ifdef HALLOWEEN
 	icon_state = "vorbees-wings"
@@ -59,8 +58,6 @@
 
 	New()
 		..()
-		// bee mobs should have their actual bee names
-		real_name = name
 		SPAWN(0)
 			ADMIN_BEES_ONLY
 			src.UpdateIcon()
@@ -857,7 +854,6 @@
 
 /mob/living/critter/small_animal/bee/overbee
 	name = "THE OVERBEE"
-	real_name = "THE OVERBEE"
 	desc = "Not to be confused with that other stinging over-insect."
 	health_brute = 500
 	health_brute_vuln = 0.2
@@ -1089,9 +1085,7 @@ particles/swarm/bees
 	count = 10
 	spawning = 0.35
 	fade = 5
-#ifndef SPACEMAN_DMM
 	fadein = 5
-#endif
 	lifespan = generator("num", 50, 80, LINEAR_RAND)
 	width = 64
 	position = generator("box", list(-10,-10,0), list(10,10,50))

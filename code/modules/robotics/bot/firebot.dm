@@ -77,12 +77,13 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client?.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(src, list(
-			"params" = params,
-			"title" = "Firebot v1.0 controls",
-			"content" = dat,
-		))
+	if (user.client?.tooltips)
+		user.client.tooltips.show(
+			TOOLTIP_PINNED, src,
+			mouse = params,
+			title = "Firebot v1.0 controls",
+			content = dat,
+		)
 
 /obj/machinery/bot/firebot/attack_hand(mob/user, params)
 	var/dat
@@ -93,12 +94,13 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client?.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(src, list(
-			"params" = params,
-			"title" = "Firebot v1.0 controls",
-			"content" = dat,
-		))
+	if (user.client?.tooltips)
+		user.client.tooltips.show(
+			TOOLTIP_PINNED, src,
+			mouse = params,
+			title = "Firebot v1.0 controls",
+			content = dat,
+		)
 
 	return
 
@@ -259,7 +261,7 @@
 		for (var/mob/M in by_cat[TR_CAT_BURNING_MOBS]) // fine I guess we can go extinguish someone
 			if (M == src.oldtarget || isdead(M) || !src.valid_target(M) || (get_weakref(M) in src.people_to_ignore))
 				continue
-			if(M.traitHolder.hasTrait("wasitsomethingisaid"))
+			if(M.traitHolder?.hasTrait("wasitsomethingisaid"))
 				src.people_to_ignore.Add(get_weakref(M)) //each bot gets to insult the person once
 				src.point(M, 1)
 				src.say(pick("I WILL IGNORE THAT BECAUSE I DO NOT LIKE YOU.", "SOME BOTS JUST WANT TO WATCH CERTAIN PEOPLE BURN TO DEATH","I CAN MAKE AN EXCEPTION JUST THIS ONCE, FIRE.","AND NOW THAT THE WORLD IS ON FIRE YOU HAVE THE AUDACITY TO COME TO ME FOR HELP?", "MY HATRED FOR YOU OUTWEIGHS MY FEELINGS ON FIRE WHICH ARE PUBLICLY KNOWN TO BE QUITE STRONG"))

@@ -1,29 +1,32 @@
 /datum/listen_module/effect/lawbringer
 	id = LISTEN_EFFECT_LAWBRINGER
 	var/list/valid_modes = list(
-		"detain" = TRUE,
-		"execute" = TRUE,
-		"exterminate" = TRUE,
-		"cluwneshot" = TRUE,
-		"smokeshot" = TRUE,
-		"fog" = TRUE,
-		"knockout" = TRUE,
-		"sleepshot" = TRUE,
-		"hotshot" = TRUE,
-		"incendiary" = TRUE,
-		"assault" = TRUE,
-		"highpower" = TRUE,
-		"bigshot" = TRUE,
-		"clownshot" = TRUE,
-		"clown" = TRUE,
-		"pulse" = TRUE,
-		"push" = TRUE,
-		"throw" = TRUE,
+		"detain",
+		"execute",
+		"exterminate",
+		"cluwneshot",
+		"smokeshot",
+		"fog",
+		"knockout",
+		"sleepshot",
+		"hotshot",
+		"incendiary",
+		"fired",
+		"assault",
+		"high power",
+		"bigshot",
+		"clownshot",
+		"clown",
+		"pulse",
+		"push",
+		"throw",
 	)
 
 /datum/listen_module/effect/lawbringer/process(datum/say_message/message)
 	var/obj/item/gun/energy/lawbringer/lawbringer = src.parent_tree.listener_parent
 	if (!istype(lawbringer) || !ismob(message.original_speaker))
+		return
+	if (lawbringer.loc != message.original_speaker)
 		return
 
 	if (!ishuman(message.original_speaker))
@@ -31,7 +34,7 @@
 		return
 
 	var/mob/living/carbon/human/H = message.original_speaker
-	if (lawbringer.owner_prints && (H.bioHolder.Uid != lawbringer.owner_prints))
+	if (!lawbringer.fingerprints_can_shoot(H))
 		lawbringer.are_you_the_law(H, message.content)
 		return
 
@@ -44,15 +47,11 @@
 		return
 
 	var/text = lawbringer.sanitize_talk(message.content)
-	if (!lawbringer.fingerprints_can_shoot(H))
-		if (src.valid_modes[text])
-			global.random_burn_damage(H, 50)
-			H.changeStatus("knockdown", 4 SECONDS)
-			global.elecflash(lawbringer, power = 2)
-			H.visible_message(SPAN_ALERT("[H] tries to fire [lawbringer]! The gun initiates its failsafe mode."))
 
+	for(var/valid_mode in valid_modes)
+		if(!findtext(text, valid_mode))
+			continue
+		lawbringer.change_mode(H, valid_mode)
+		H.update_inhands()
+		lawbringer.UpdateIcon()
 		return
-
-	lawbringer.change_mode(H, text)
-	H.update_inhands()
-	lawbringer.UpdateIcon()

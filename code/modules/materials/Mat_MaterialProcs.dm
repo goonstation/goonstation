@@ -285,11 +285,18 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/turf/T in view(1, attacked))
 			harmless_smoke_puff(get_turf(T))
 
-/datum/materialProc/gold_add
+/datum/materialProc/sparkles_add
 	desc = "It's very shiny."
-	execute(var/location)
+	execute(var/atom/location)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
 			particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(location))
+		return
+
+/datum/materialProc/sparkles_remove
+	desc = "All that glitters is not gold."
+	execute(var/atom/location)
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
+			particleMaster.RemoveSystem(/datum/particleSystem/sparkles, location)
 		return
 
 /datum/materialProc/telecrystal_entered
@@ -551,8 +558,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/mob/M, var/obj/item/I, mult)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
-			if (C.bodytemperature > 0)
-				C.bodytemperature -= 2
+			C.changeBodyTemp(-2 KELVIN)
 			if (C.bodytemperature > T0C && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
@@ -793,3 +799,41 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
 		else
 			I.material.removeProperty("n_radioactive")
+
+/datum/materialProc/shock_life
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
+			return
+		if (istype(L))
+			L.shock(I, src.wattage, "All", 1, FALSE)
+
+/datum/materialProc/arcflash_life
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_arcflash", rand(cd_min, cd_max)))
+			return
+		if (!istype(L))
+			return
+		if (!isturf(L.loc) || prob(10))
+			L.shock(I, src.wattage, "All", 1.5, TRUE)
+		else
+			arcFlashTurf(L, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), src.wattage, 100)

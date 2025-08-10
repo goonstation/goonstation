@@ -269,20 +269,19 @@ obj/item/reagent_containers/iv_drip/dead_exec
 					attempt_remote_scan(src.owner)
 
 	on_death()
+		. = ..()
 		if(!ishuman(src.owner))
 			return
 		attempt_remote_scan(src.owner)
 
 	proc/attempt_remote_scan(mob/living/carbon/human/H)
 		for_by_tcl(C, /obj/machinery/computer/cloning) //Scan success or corruption is on a by-computer basis, results allowed to differ.
-			C.scan_mob(H) //Take advantage of scan_mob's checks
-			var/datum/db_record/R = new /datum/db_record()
-			R = C.find_record_by_mind(H.mind)
-			if(!isnull(R))// Proceed if scan was a success or user has been scanned previously, our broadcast is interfering with the existing scan.
+			var/datum/computer/file/clone/clone_file = C.scan_mob(H) //Take advantage of scan_mob's checks
+			if(!isnull(clone_file))// Proceed if scan was a success or user has been scanned previously, our broadcast is interfering with the existing scan.
 				boutput(H,"Link to cloning computer establised succesfully.")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 				var/has_puritan = FALSE
-				var/datum/traitHolder/traits = R["traits"]
+				var/datum/traitHolder/traits = clone_file["traits"]
 				if(traits.hasTrait("puritan")) //Does the user's clone record have puritan?
 					has_puritan = TRUE
 				if(prob(20) && !has_puritan) //If the scan doesn't have puritan, roll a dice. Too uncommon to weaponise too common for general use.

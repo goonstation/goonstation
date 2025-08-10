@@ -34,18 +34,6 @@
 	secs_offset_x = 23
 	secs_offset_y = 7
 
-	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			if (!istype(owner, /datum/targetable/wraithAbility/spook))
-				var/theme = src.owner.theme
-
-				usr.client.tooltipHolder.showHover(src, list(
-					"params" = params,
-					"title" = src.name,
-					"content" = (src.desc ? src.desc : null),
-					"theme" = theme
-				))
-
 /datum/targetable/wraithAbility
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "template"
@@ -56,6 +44,7 @@
 	preferred_holder_type = /datum/abilityHolder/wraith
 	ignore_holder_lock = 1 //So we can still do things while our summons are coming
 	theme = "wraith"
+	show_tooltip = FALSE
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
 	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
@@ -117,6 +106,7 @@
 	cooldown = 0
 	helpable = 0
 	special_screen_loc = "SOUTH,EAST"
+	tooltip_options = list("align" = TOOLTIP_TOP | TOOLTIP_RIGHT)
 
 	cast(atom/target)
 		if (..())
