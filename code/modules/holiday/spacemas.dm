@@ -761,7 +761,7 @@ proc/compare_ornament_score(list/a, list/b)
 		desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
 		gender = "male"
 
-		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/athletic/shorts/red, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, SLOT_WEAR_SUIT)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
 		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)

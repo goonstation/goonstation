@@ -245,9 +245,9 @@
 
 /obj/storage/crate/clown
 	desc = "A big metal box that you can put things into. It looks a little funny."
-	spawn_contents = list(/obj/item/clothing/under/misc/clown/fancy,
-	/obj/item/clothing/under/misc/clown/dress,
-	/obj/item/clothing/under/misc/clown,
+	spawn_contents = list(/obj/item/clothing/under/misc/clownfancy,
+	/obj/item/clothing/under/rank/clowndress,
+	/obj/item/clothing/under/rank/clown,
 	/obj/item/clothing/shoes/clown_shoes,
 	/obj/item/clothing/mask/clown_hat,
 	/obj/item/storage/box/crayon,

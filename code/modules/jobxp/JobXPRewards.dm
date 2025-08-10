@@ -661,7 +661,7 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		boutput(C, "You pretend to unfold a piece of clothing, and suddenly the Fancy Mime Suit is in your hands!")
-		var/obj/item/I = new/obj/item/clothing/under/misc/mimefancy()
+		var/obj/item/I = new/obj/item/clothing/under/gimmick/mimefancy()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 		return
@@ -676,7 +676,7 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		boutput(C, "You pretend to unfold a piece of clothing, and suddenly the Mime Dress is in your hands!")
-		var/obj/item/I = new/obj/item/clothing/under/misc/mimedress()
+		var/obj/item/I = new/obj/item/clothing/under/gimmick/mimedress()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 		return

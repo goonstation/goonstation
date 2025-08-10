@@ -639,7 +639,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		AddComponent(/datum/component/clown_disbelief_item)
 
 /obj/item/clothing/under/rank/clowndress
-    name = "clown suit"
+	name = "clown-dress"
 	desc = "You are likely taking your life into your own hands by wearing this."
 	icon_state = "clown-dress"
 	item_state = "clown-dress"
@@ -671,15 +671,15 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 
 // Athletic Gear
 
-TYPEINFO(/obj/item/clothing/under/shorts)
-	random_subtypes = list(/obj/item/clothing/under/shorts,
-		/obj/item/clothing/under/shorts/red,
-		/obj/item/clothing/under/shorts/green,
-		/obj/item/clothing/under/shorts/blue,
-		/obj/item/clothing/under/shorts/purple,
-		/obj/item/clothing/under/shorts/black)
+TYPEINFO(/obj/item/clothing/under/athletic/shorts)
+	random_subtypes = list(/obj/item/clothing/under/athletic/shorts,
+		/obj/item/clothing/under/athletic/shorts/red,
+		/obj/item/clothing/under/athletic/shorts/green,
+		/obj/item/clothing/under/athletic/shorts/blue,
+		/obj/item/clothing/under/athletic/shorts/purple,
+		/obj/item/clothing/under/athletic/shorts/black)
 
-/obj/item/clothing/under/shorts/psyche
+/obj/item/clothing/under/athletic/shorts/psyche
 	name = "psychedelic shorts"
 	desc = "Only wear these if you don't mind being the center of attention."
 	icon_state = "shortsPs"
@@ -911,7 +911,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 		name = "massive asshole's hat"
 		desc = "A purple cap with a tetris block on it. It radiates pure malice."
 		icon_state = "waluigi"
-
 
 /obj/item/clothing/under/misc/hitman
     name = "shirt and tie"

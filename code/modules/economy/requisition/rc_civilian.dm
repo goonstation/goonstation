@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	scrubs
 		name = "medical scrubs"
 		feemod = PAY_DOCTORATE
-		typepath = /obj/item/clothing/under/scrub
+		typepath = /obj/item/clothing/under/gimmick/scrub
 		exactpath = FALSE
 
 	white

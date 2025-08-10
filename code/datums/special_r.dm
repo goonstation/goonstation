@@ -141,7 +141,7 @@ datum/special_respawn
 		if(rname == "The Smiling Man")
 			mob = new /mob/living/carbon/human(spawn_landmark.loc)
 			mob.equip_if_possible(new /obj/item/device/radio/headset(mob), SLOT_EARS)
-			mob.equip_if_possible(new /obj/item/clothing/under/suit/pinstripe(mob), SLOT_W_UNIFORM)
+			mob.equip_if_possible(new /obj/item/clothing/under/formal/pinstripe(mob), SLOT_W_UNIFORM)
 			mob.equip_if_possible(new /obj/item/clothing/shoes/black(mob), SLOT_SHOES)
 			var/obj/item/clothing/gloves/latex/gloves = new /obj/item/clothing/gloves/latex
 			gloves.name = "Kidskin Gloves"

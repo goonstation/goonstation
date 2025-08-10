@@ -117,17 +117,17 @@
 					H.equip_if_possible( clownmask, SLOT_WEAR_MASK)
 
 			if(H && probmult(10))
-				if(!H.w_uniform || ((H.w_uniform != null) && !istype(H.w_uniform, /obj/item/clothing/under/misc/clown)))
+				if(!H.w_uniform || ((H.w_uniform != null) && !istype(H.w_uniform, /obj/item/clothing/under/rank/clown)))
 					var/obj/item/clothing/under/olduni = H.w_uniform
 
-					if((H.w_uniform != null) && !istype(H.w_uniform, /obj/item/clothing/under/misc/clown))
+					if((H.w_uniform != null) && !istype(H.w_uniform, /obj/item/clothing/under/rank/clown))
 						H.u_equip(olduni)
 						if(olduni)
 							olduni.set_loc(H.loc)
 							olduni.dropped(H)
 							olduni.layer = initial(olduni.layer)
 
-					var/obj/item/clothing/under/misc/clown/clownsuit = new /obj/item/clothing/under/misc/clown(affected_mob)
+					var/obj/item/clothing/under/rank/clown/clownsuit = new /obj/item/clothing/under/rank/clown(affected_mob)
 					//clownsuit.cursed = 1
 					H.equip_if_possible( clownsuit, SLOT_W_UNIFORM)
 

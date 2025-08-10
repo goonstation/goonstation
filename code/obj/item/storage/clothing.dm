@@ -12,16 +12,16 @@
 	/obj/item/clothing/under/rank/captain/dress,
 	/obj/item/clothing/head/fancy/captain,
 	/obj/item/clothing/under/rank/captain/fancy,
-	/obj/item/clothing/under/suit/captain,
-	/obj/item/clothing/under/suit/captain/dress,
+	/obj/item/clothing/under/formal/captain,
+	/obj/item/clothing/under/formal/captain/dress,
 	/obj/item/clothing/suit/wintercoat/command)
 
 /obj/item/storage/box/clothing/hos
 	name = "\improper Head of Security's clothing"
 	spawn_contents = list(/obj/item/clothing/under/rank/head_of_security,
 	/obj/item/clothing/under/rank/head_of_security/dress,
-	/obj/item/clothing/under/suit/hos,
-	/obj/item/clothing/under/suit/hos/dress,
+	/obj/item/clothing/under/formal/hos,
+	/obj/item/clothing/under/formal/hos/dress,
 	/obj/item/clothing/under/rank/head_of_security/fancy,
 	/obj/item/clothing/suit/wintercoat/command)
 
@@ -29,8 +29,8 @@
 	name = "\improper Head of Personnel's clothing"
 	spawn_contents = list(/obj/item/clothing/under/rank/head_of_personnel,
 	/obj/item/clothing/under/rank/head_of_personnel/dress,
-	/obj/item/clothing/under/suit/hop,
-	/obj/item/clothing/under/suit/hop/dress,
+	/obj/item/clothing/under/formal/hop,
+	/obj/item/clothing/under/formal/hop/dress,
 	/obj/item/clothing/head/fancy/rank,
 	/obj/item/clothing/under/rank/head_of_personnel/fancy,
 	/obj/item/clothing/suit/wintercoat/command)
@@ -275,7 +275,7 @@
 	icon_state = "clown"
 	desc = "A box that contains a clown costume."
 	spawn_contents = list(/obj/item/clothing/mask/clown_hat,
-	/obj/item/clothing/under/misc/clown,
+	/obj/item/clothing/under/rank/clown,
 	/obj/item/clothing/shoes/clown_shoes,
 	/obj/item/storage/fanny/funny,
 	/obj/item/card/id/clown,
@@ -286,7 +286,7 @@
 	desc = "A box that contains a clown costume. One clumsy former owner."
 	spawn_contents = list(
 		/obj/item/clothing/mask/clown_hat,
-		/obj/item/clothing/under/misc/clown,
+		/obj/item/clothing/under/rank/clown,
 		/obj/item/clothing/shoes/clown_shoes,
 		/obj/item/storage/fanny/funny/mini,
 		/obj/item/card/id/clown,
@@ -302,7 +302,7 @@
 		/obj/item/clothing/head/mime_bowler,
 		/obj/item/clothing/mask/mime,
 		/obj/item/clothing/gloves/latex,
-		/obj/item/clothing/under/misc/mime/alt,
+		/obj/item/clothing/under/gimmick/mime/alt,
 		/obj/item/clothing/suit/scarf,
 		/obj/item/clothing/shoes/black,
 	)
@@ -312,7 +312,7 @@
 		/obj/item/clothing/head/mime_beret,
 		/obj/item/clothing/mask/mime,
 		/obj/item/clothing/gloves/latex,
-		/obj/item/clothing/under/misc/mime,
+		/obj/item/clothing/under/gimmick/mime,
 		/obj/item/clothing/suit/suspenders,
 		/obj/item/clothing/shoes/black,
 	)
@@ -381,7 +381,7 @@
 		chat.name = "victorian confectionery factory owner hat"
 		chat.desc = "This hat really feels like something you shouldn't be putting near your brain! 'Spook*Corp Costumes' on embedded on the side of it."
 
-		var/obj/item/clothing/under/sunder = new /obj/item/clothing/under/suit/purple(src)
+		var/obj/item/clothing/under/sunder = new /obj/item/clothing/under/formal/purple(src)
 		src.storage.add_contents(sunder)
 		sunder.name = "victorian confectionery factory owner suit"
 		sunder.desc = "Just looking at this thing makes you feel itchy! 'Spook*Corp Costumes' is embedded on the side of it."
@@ -445,8 +445,8 @@
 
 /obj/item/storage/box/costume/eighties
 	name = "eighties costume set"
-	spawn_contents = list(/obj/item/clothing/under/gimmick/eightiesmens,
-	/obj/item/clothing/under/gimmick/eightieswomens)
+	spawn_contents = list(/obj/item/clothing/under/athletic/eightiesmens,
+	/obj/item/clothing/under/athletic/eightieswomens)
 
 /obj/item/storage/box/costume/roller_disco
 	name = "roller disco costume set"

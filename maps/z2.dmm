@@ -44533,7 +44533,7 @@
 "dfB" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/closet/wardrobe/green,
-/obj/item/clothing/under/shorts/psyche,
+/obj/item/clothing/under/gimmick/psyche,
 /obj/item/storage/box/lightbox/tubes/blacklight,
 /obj/item/clothing/under/color/lime,
 /turf/unsimulated/floor/plating,
@@ -44776,7 +44776,7 @@
 /obj/item/device/light/glowstick,
 /obj/item/wrench,
 /obj/item/storage/box/costume/clown{
-	spawn_contents = list(/obj/item/clothing/mask/clown_hat,/obj/item/clothing/under/misc/clown,/obj/item/clothing/shoes/clown_shoes,/obj/item/storage/fanny/funny,/obj/item/card/id/clown)
+	spawn_contents = list(/obj/item/clothing/mask/clown_hat,/obj/item/clothing/under/rank/clown,/obj/item/clothing/shoes/clown_shoes,/obj/item/storage/fanny/funny,/obj/item/card/id/clown)
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
@@ -45778,7 +45778,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/shorts/psyche{
+/obj/item/clothing/under/athletic/shorts/psyche{
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -51826,13 +51826,13 @@
 /obj/storage/closet/dresser,
 /obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random_color{
+/obj/item/clothing/under/athletic/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -60103,7 +60103,7 @@
 "ius" = (
 /obj/machinery/light,
 /obj/item/clothing/suit/armor/vest/macho,
-/obj/item/clothing/under/athletic/macho,
+/obj/item/clothing/under/gimmick/macho,
 /obj/item/clothing/head/helmet/macho,
 /obj/window{
 	dir = 8;
@@ -64369,7 +64369,7 @@
 "lHb" = (
 /obj/decal/cleanable/sakura,
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/yukata/plain/black,
+/obj/item/clothing/under/cultural/yukata/plain/black,
 /obj/item/clothing/suit/hoodie/black,
 /obj/item/clothing/suit/hoodie/white,
 /obj/item/clothing/suit/armor/hoscape,
@@ -74903,9 +74903,9 @@
 	},
 /obj/item/clothing/suit/labcoatlong,
 /obj/item/clothing/shoes/brown,
-/obj/item/clothing/under/scrub/pink,
+/obj/item/clothing/under/gimmick/scrub/pink,
 /obj/item/clothing/head/barrette/pink,
-/obj/item/clothing/under/scrub/maroon{
+/obj/item/clothing/under/gimmick/scrub/maroon{
 	name = "Head Surgeon scrubs"
 	},
 /obj/item/clothing/suit/apron/surgeon,

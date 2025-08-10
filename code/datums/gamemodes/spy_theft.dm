@@ -306,7 +306,7 @@
 	station_bounties[/obj/item/spraybottle] = 1
 
 	station_bounties[/obj/item/clothing/gloves/yellow] = 1
-	station_bounties[/obj/item/clothing/under/misc/clown] = 1
+	station_bounties[/obj/item/clothing/under/rank/clown] = 1
 	station_bounties[/obj/item/clothing/shoes/galoshes] = 1
 	station_bounties[/obj/item/clothing/shoes/magnetic] = 1
 	station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1

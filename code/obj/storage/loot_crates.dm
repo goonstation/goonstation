@@ -15,8 +15,8 @@
 		/obj/item/clothing/under/misc/tiedye = 20,\
 		/obj/item/clothing/under/misc/neapolitan = 20,\
 		/obj/item/clothing/under/misc/mint_chip = 20,\
-		/obj/item/clothing/under/misc/mimefancy = 10,\
-		/obj/item/clothing/under/misc/mimedress = 10,\
+		/obj/item/clothing/under/gimmick/mimefancy = 10,\
+		/obj/item/clothing/under/gimmick/mimedress = 10,\
 		/obj/item/clothing/suit/torncloak/random = 20,\
 		/obj/item/clothing/suit/scarfcape/random = 20,\
 		/obj/item/clothing/suit/fakebeewings = 10,\

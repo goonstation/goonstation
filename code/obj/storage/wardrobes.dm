@@ -178,7 +178,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 	spawn_contents = list(/obj/item/clothing/shoes/brown = 4,
 	/obj/item/clothing/under/color/red,
 	/obj/item/clothing/under/gimmick/police,
-	/obj/item/clothing/under/misc/dirty_vest,
+	/obj/item/clothing/under/athletic/dirty_vest,
 	/obj/item/clothing/under/misc/tourist,
 	/obj/item/clothing/under/misc/tourist/max_payne,
 	/obj/item/clothing/under/misc/serpico,

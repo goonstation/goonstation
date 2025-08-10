@@ -177,14 +177,14 @@
 /area/prefab/discount_dans_asteroid)
 "fM" = (
 /obj/rack,
-/obj/item/clothing/under/jersey/dan{
+/obj/item/clothing/under/athletic/jersey/dan{
 	pixel_x = -5
 	},
-/obj/item/clothing/under/jersey/dan{
+/obj/item/clothing/under/athletic/jersey/dan{
 	pixel_x = -1;
 	pixel_y = -4
 	},
-/obj/item/clothing/under/jersey/dan{
+/obj/item/clothing/under/athletic/jersey/dan{
 	pixel_x = 5;
 	pixel_y = -3
 	},

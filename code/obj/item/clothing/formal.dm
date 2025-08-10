@@ -1,11 +1,11 @@
 //formal clothes like suits or dresses (which are jumpsuits), regardless of what the description says!
 ABSTRACT_TYPE(/obj/item/clothing/under/formal)
 /obj/item/clothing/under/formal
-    name = "nice looking coder jumpsuit"
+	name = "nice looking coder jumpsuit"
 	desc = "This is weird! Report this to a coder!"
 	icon = 'icons/obj/clothing/jumpsuits/item_js_formal.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_formal
-	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_formal'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_formal.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_formal.dmi'
 
 /obj/item/clothing/under/formal/peacockdress
 	name = "peacock dress"
@@ -149,13 +149,13 @@ ABSTRACT_TYPE(/obj/item/clothing/under/formal)
 
 	// WALPVRGIS fashion END
 
-/obj/item/clothing/under/gimmick/dinerdress_mint
+/obj/item/clothing/under/formal/dinerdress_mint
 	name = "Mint Diner Waitress's Dress"
 	desc = "Can I getcha somethin', sugar?"
 	icon_state = "dinerdress-mint"
 	item_state = "dinerdress-mint"
 
-/obj/item/clothing/under/gimmick/dinerdress_pink
+/obj/item/clothing/under/formal/dinerdress_pink
 	name = "Pink Diner Waitress's Dress"
 	desc = "Y'all come back now, ya hear?"
 	icon_state = "dinerdress-pink"

@@ -992,7 +992,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	check_completion()
 		if(owner.current && ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
-			if(istype(H.wear_mask,/obj/item/clothing/mask/clown_hat) || istype(H.w_uniform,/obj/item/clothing/under/misc/clown) || istype(H.shoes,/obj/item/clothing/shoes/clown_shoes)) return 1
+			if(istype(H.wear_mask,/obj/item/clothing/mask/clown_hat) || istype(H.w_uniform,/obj/item/clothing/under/rank/clown) || istype(H.shoes,/obj/item/clothing/shoes/clown_shoes)) return 1
 		return 0
 
 /datum/objective/crew/staffassistant/chompski

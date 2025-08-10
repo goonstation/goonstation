@@ -45,7 +45,7 @@
 
 		// Assign wizard attire.
 		H.unequip_all(TRUE)
-		H.equip_if_possible(new /obj/item/clothing/under/shorts/black(H), SLOT_W_UNIFORM)
+		H.equip_if_possible(new /obj/item/clothing/under/athletic/shorts/black(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/storage/backpack(H), SLOT_BACK)
 		if (!src.vr)
 			H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), SLOT_EARS)

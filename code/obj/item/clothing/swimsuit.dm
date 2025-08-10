@@ -1,3 +1,5 @@
+//thinks worn to swim
+
 //Swimsuits, by RubberRats
 //Please don't wear a bikini as a work uniform on the RP servers, it would make me very unhappy.
 ABSTRACT_TYPE(/obj/item/clothing/under/swimsuit/bikini)

@@ -9,7 +9,7 @@
 	give_equipment()
 		var/mob/living/carbon/human/H = src.owner.current
 		H.unequip_all(TRUE)
-		H.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/jersey)), SLOT_W_UNIFORM)
+		H.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/athletic/jersey)), SLOT_W_UNIFORM)
 		H.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES)
 		H.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/head/wizard)), SLOT_HEAD)
 		H.equip_new_if_possible(/obj/item/device/radio/headset/wizard, SLOT_EARS)

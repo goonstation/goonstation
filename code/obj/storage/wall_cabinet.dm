@@ -225,28 +225,28 @@ TYPEINFO(/obj/item/storage/wall)
 
 /obj/item/storage/wall/clothingrack/dresses
 	base_icon_state = "dress1"
-	spawn_contents = list(/obj/item/clothing/under/suit/red/dress = 1,
-	/obj/item/clothing/under/suit/purple/dress = 1,
+	spawn_contents = list(/obj/item/clothing/under/formal/red/dress = 1,
+	/obj/item/clothing/under/formal/purple/dress = 1,
 	/obj/item/clothing/under/gimmick/wedding_dress = 1,
 	/obj/item/clothing/under/gimmick/sailormoon = 1,
 	/obj/item/clothing/under/gimmick/princess = 1,
 	/obj/item/clothing/under/gimmick/maid = 1,
-	/obj/item/clothing/under/gimmick/kilt = 1)
+	/obj/item/clothing/under/cultural/kilt = 1)
 
 /obj/item/storage/wall/clothingrack/clothes1
 	base_icon_state = "01"
-	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
+	spawn_contents = list(/obj/item/clothing/under/cultural/hakama/random = 1,
 	/obj/item/clothing/under/gimmick/sweater = 1,
 	/obj/item/clothing/under/gimmick/mario = 1,
 	/obj/item/clothing/under/gimmick/odlaw = 1,
 	/obj/item/clothing/under/gimmick/sealab = 1,
 	/obj/item/clothing/under/misc/hitman = 1,
-	/obj/item/clothing/under/misc/america = 1)
+	/obj/item/clothing/under/cultural/america = 1)
 
 /obj/item/storage/wall/clothingrack/dresses2
 	base_icon_state = "dress2"
-	spawn_contents = list(/obj/item/clothing/under/misc/dress/hawaiian = 1,
-	/obj/item/clothing/under/misc/dress/red = 1,
+	spawn_contents = list(/obj/item/clothing/under/formal/dress/hawaiian = 1,
+	/obj/item/clothing/under/formal/dress/red = 1,
 	/obj/item/clothing/suit/dressb = 1,
 	/obj/item/clothing/suit/dressb/dressr = 1,
 	/obj/item/clothing/suit/dressb/dressg = 1,
@@ -255,7 +255,7 @@ TYPEINFO(/obj/item/storage/wall)
 
 /obj/item/storage/wall/clothingrack/clothes2
 	base_icon_state = "02"
-	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
+	spawn_contents = list(/obj/item/clothing/under/cultural/hakama/random = 1,
 	/obj/item/clothing/under/gimmick/toga = 1,
 	/obj/item/clothing/suit/mj_suit = 1,
 	/obj/item/clothing/under/gimmick/mj_clothes = 1,
@@ -270,7 +270,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/misc/barber = 1,
 	/obj/item/clothing/under/misc/serpico = 1,
 	/obj/item/clothing/under/misc/tourist/max_payne = 1,
-	/obj/item/clothing/under/referee = 1,
+	/obj/item/clothing/under/athletic/referee = 1,
 	/obj/item/clothing/under/misc/mail = 1)
 
 /obj/item/storage/wall/clothingrack/clothes4
@@ -281,7 +281,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/butler = 1,
 	/obj/item/clothing/under/misc/mobster = 1,
 	/obj/item/clothing/suit/chaps= 1,
-	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
+	/obj/item/clothing/under/athletic/shirtnjeans = 1)
 
 /obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
 	base_icon_state = "05"
@@ -291,7 +291,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/suit/hitman = 1,
 	/obj/item/clothing/suit/johnny_coat = 1,
 	/obj/item/clothing/suit/chaps= 1,
-	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
+	/obj/item/clothing/under/athletic/shirtnjeans = 1)
 
 obj/item/storage/wall/clothingrack/hatrack
 	name = "hat shelf"

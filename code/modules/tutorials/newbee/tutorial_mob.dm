@@ -3,7 +3,7 @@
 		. = ..()
 		src.real_name = "The Clown You Help"
 		src.equip_new_if_possible(/obj/item/clothing/mask/clown_hat/blue, SLOT_WEAR_MASK)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown/blue, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/clown/blue, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes/blue, SLOT_SHOES)
 		var/obj/item/card/id/clown/clown_id = new()
 		clown_id.registered = "The Clown You Help"
@@ -21,7 +21,7 @@
 		. = ..()
 		src.real_name = "The Clown You Disarm"
 		src.equip_new_if_possible(/obj/item/clothing/mask/clown_hat/yellow, SLOT_WEAR_MASK)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown/yellow, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/clown/yellow, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes/yellow, SLOT_SHOES)
 		src.equip_new_if_possible(/obj/item/instrument/bikehorn, SLOT_L_HAND)
 		var/obj/item/card/id/clown/clown_id = new()
@@ -44,7 +44,7 @@
 		. = ..()
 		src.real_name = "The Clown You Grab"
 		src.equip_new_if_possible(/obj/item/clothing/mask/clown_hat/purple, SLOT_WEAR_MASK)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown/purple, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/clown/purple, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes/purple, SLOT_SHOES)
 		var/obj/item/card/id/clown/clown_id = new()
 		clown_id.registered = "The Clown You Grab"
@@ -68,7 +68,7 @@
 		. = ..()
 		src.real_name = "The Clown You Kill"
 		src.equip_new_if_possible(/obj/item/clothing/mask/clown_hat, SLOT_WEAR_MASK)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/clown, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes, SLOT_SHOES)
 		src.equip_new_if_possible(/obj/item/storage/fanny/funny, SLOT_BELT)
 		src.equip_new_if_possible(/obj/item/instrument/bikehorn, SLOT_L_HAND)

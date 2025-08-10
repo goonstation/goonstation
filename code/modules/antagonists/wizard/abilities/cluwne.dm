@@ -125,7 +125,7 @@
 			var/obj/item/the_id = target.wear_id
 
 			if(target.w_uniform && findtext("[target.w_uniform.type]","clown"))
-				target.w_uniform = new /obj/item/clothing/under/suit/black(target)
+				target.w_uniform = new /obj/item/clothing/under/formal/black(target)
 				qdel(old_uniform)
 
 			if(target.shoes && findtext("[target.shoes.type]","clown"))

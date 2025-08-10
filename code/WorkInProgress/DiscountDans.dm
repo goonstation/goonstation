@@ -69,7 +69,7 @@
 /datum/ticket_reward/jersey
 	name = "Jersey"
 	cost = 2
-	path = /obj/item/clothing/under/jersey/dan
+	path = /obj/item/clothing/under/athletic/jersey/dan
 	description = "A fine silk basketball jersey with antimicrobial and 3-pointer-making properties."
 
 /datum/ticket_reward/lshirt_red

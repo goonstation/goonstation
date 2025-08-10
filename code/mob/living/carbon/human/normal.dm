@@ -258,7 +258,7 @@
 /mob/living/carbon/human/normal/baller
 	New()
 		. = ..()
-		src.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/jersey)), SLOT_W_UNIFORM)
+		src.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/athletic/jersey)), SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES) //sneakers or something
 		src.throw_mode_on()
 

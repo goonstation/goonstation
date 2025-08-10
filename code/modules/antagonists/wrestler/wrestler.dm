@@ -29,17 +29,17 @@
 			if (prob(50)) // Are they a luchador or not?
 				var/obj/item/clothing/mask/rand_mask = get_random_subtype (/obj/item/clothing/mask/wrestling)
 				H.equip_new_if_possible(rand_mask, SLOT_WEAR_MASK)
-				var/obj/item/clothing/under/shorts/luchador/rand_shorts = get_random_subtype (/obj/item/clothing/under/shorts/luchador)
+				var/obj/item/clothing/under/athletic/shorts/luchador/rand_shorts = get_random_subtype (/obj/item/clothing/under/athletic/shorts/luchador)
 				H.equip_new_if_possible(rand_shorts, SLOT_W_UNIFORM)
 			else
 				if (prob(50))
-					var/obj/item/clothing/under/shorts/rand_shorts = get_random_subtype (/obj/item/clothing/under/shorts)
+					var/obj/item/clothing/under/athletic/shorts/rand_shorts = get_random_subtype (/obj/item/clothing/under/athletic/shorts)
 					H.equip_new_if_possible(rand_shorts, SLOT_W_UNIFORM)
 				else
 					H.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho/random_color, SLOT_W_UNIFORM)
 				if (prob(33))
 					H.equip_new_if_possible(/obj/item/clothing/head/bandana/random_color, SLOT_HEAD)
-			var/obj/item/clothing/under/shorts/rand_shoes
+			var/obj/item/clothing/under/athletic/shorts/rand_shoes
 			switch(pick(1, 2, 3, 4))
 				if(1)
 					rand_shoes = /obj/item/clothing/shoes/macho

@@ -1241,7 +1241,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 /obj/vehicle/clowncar/attackby(var/obj/item/I, var/mob/user)
 	var/clown_tally = 0
 	if(ishuman(user))
-		if(istype(user:w_uniform, /obj/item/clothing/under/misc/clown))
+		if(istype(user:w_uniform, /obj/item/clothing/under/rank/clown))
 			clown_tally += 1
 		if(istype(user:shoes, /obj/item/clothing/shoes/clown_shoes))
 			clown_tally += 1

@@ -714,8 +714,8 @@
 		// Must be jumpsuit. `/obj/item/clothing/under`
 		src.uniform_list = list(
 		"owl suit" = /obj/item/clothing/under/gimmick/owl,
-		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
-		"purple suit" = /obj/item/clothing/under/suit/purple,
+		"pinstripe suit" = /obj/item/clothing/under/formal/pinstripe,
+		"purple suit" = /obj/item/clothing/under/formal/purple,
 		"mail courier's jumpsuit" = /obj/item/clothing/under/misc/mail,
 		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
 		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,
@@ -723,10 +723,10 @@
 		"birdman suit" = /obj/item/clothing/under/gimmick/birdman,
 		"safari clothing" = /obj/item/clothing/under/gimmick/safari,
 		"hard worn suit" = /obj/item/clothing/under/rank/det,
-		"red athletic shorts" = /obj/item/clothing/under/shorts/red,
-		"blue athletic shorts" = /obj/item/clothing/under/shorts/blue,
-		"black basketball jersey" = /obj/item/clothing/under/jersey/black,
-		"white basketball jersey" = /obj/item/clothing/under/jersey,
+		"red athletic shorts" = /obj/item/clothing/under/athletic/shorts/red,
+		"blue athletic shorts" = /obj/item/clothing/under/athletic/shorts/blue,
+		"black basketball jersey" = /obj/item/clothing/under/athletic/jersey/black,
+		"white basketball jersey" = /obj/item/clothing/under/athletic/jersey,
 		"rainbow jumpsuit" = /obj/item/clothing/under/gimmick/rainbow,
 		"johnny" = /obj/item/clothing/under/gimmick/johnny,
 		"rastafarian's shirt" = /obj/item/clothing/under/misc/chaplain/rasta,
@@ -747,7 +747,7 @@
 		"duke's suit" = /obj/item/clothing/under/gimmick/duke,
 		"psychedelic jumpsuit" = /obj/item/clothing/under/gimmick/psyche,
 		"hawaiian shirt" = /obj/item/clothing/under/misc/tourist,
-		"western shirt and pants" = /obj/item/clothing/under/misc/western)
+		"western shirt and pants" = /obj/item/clothing/under/gimmick/western)
 
 
 		// Must be mask or hat. `/obj/item/clothing/mask` or `/obj/item/clothing/head`

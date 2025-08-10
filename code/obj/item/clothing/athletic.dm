@@ -1,11 +1,11 @@
 //sportswear not including swimsuits
 ABSTRACT_TYPE(/obj/item/clothing/under/athletic)
 /obj/item/clothing/under/athletic
-    name = "athletic Coder Jumpsuit"
-    desc = "This is weird! Report this to a coder!"
-    icon = 'icons/obj/clothing/jumpsuits/item_js_athletic.dmi'
-    wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
+	name = "athletic Coder Jumpsuit"
+	desc = "This is weird! Report this to a coder!"
+	icon = 'icons/obj/clothing/jumpsuits/item_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_athletic.dmi'
 
 /obj/item/clothing/under/athletic/shorts
 	name = "athletic shorts"
@@ -32,6 +32,12 @@ ABSTRACT_TYPE(/obj/item/clothing/under/athletic)
 /obj/item/clothing/under/athletic/shorts/black
 	icon_state = "shortsB"
 	item_state = "shortsB"
+
+/obj/item/clothing/under/athletic/shorts/psyche
+	name = "psychedelic shorts"
+	desc = "Only wear these if you don't mind being the center of attention."
+	icon_state = "shortsPs"
+	item_state = "shortsPs"
 
 /obj/item/clothing/under/athletic/jersey
 	name = "white basketball jersey"

@@ -2847,7 +2847,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/tricolor
 	name = "Tricolor Jumpsuit"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/misc/tricolor)
+	item_outputs = list(/obj/item/clothing/under/cultural/tricolor)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -2943,7 +2943,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/suit_black
 	name = "Fancy Black Suit"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/suit/black)
+	item_outputs = list(/obj/item/clothing/under/formal/black)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -2951,7 +2951,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/dress_black
 	name = "Fancy Black Dress"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/suit/black/dress)
+	item_outputs = list(/obj/item/clothing/under/formal/black/dress)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -2967,7 +2967,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/scrubs_white
 	name = "White Scrubs"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/scrub)
+	item_outputs = list(/obj/item/clothing/under/gimmick/scrub)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -2975,7 +2975,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/scrubs_teal
 	name = "Teal Scrubs"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/scrub/teal)
+	item_outputs = list(/obj/item/clothing/under/gimmick/scrub/teal)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -2983,7 +2983,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/scrubs_maroon
 	name = "Maroon Scrubs"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/scrub/maroon)
+	item_outputs = list(/obj/item/clothing/under/gimmick/scrub/maroon)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -2991,7 +2991,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/scrubs_blue
 	name = "Navy Scrubs"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/scrub/blue)
+	item_outputs = list(/obj/item/clothing/under/gimmick/scrub/blue)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -2999,7 +2999,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/scrubs_purple
 	name = "Violet Scrubs"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/scrub/purple)
+	item_outputs = list(/obj/item/clothing/under/gimmick/scrub/purple)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -3007,7 +3007,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/scrubs_orange
 	name = "Orange Scrubs"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/scrub/orange)
+	item_outputs = list(/obj/item/clothing/under/gimmick/scrub/orange)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -3015,7 +3015,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/scrubs_pink
 	name = "Hot Pink Scrubs"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/scrub/pink)
+	item_outputs = list(/obj/item/clothing/under/gimmick/scrub/pink)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
@@ -3031,7 +3031,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/patient_gown
 	name = "Gown"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/patient_gown)
+	item_outputs = list(/obj/item/clothing/under/gimmick/patient_gown)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"

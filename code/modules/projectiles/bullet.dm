@@ -2383,7 +2383,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/H = hit
 			var/clown_tally = 0
-			if(istype(H.w_uniform, /obj/item/clothing/under/misc/clown))
+			if(istype(H.w_uniform, /obj/item/clothing/under/rank/clown))
 				clown_tally += 1
 			if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 				clown_tally += 1

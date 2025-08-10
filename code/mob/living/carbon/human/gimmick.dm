@@ -398,7 +398,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/brown, SLOT_SHOES)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/dirty_vest, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/athletic/dirty_vest, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/paper/postcard/owlery, SLOT_L_HAND)
 		//src.equip_new_if_possible(/obj/item/device/radio/headset/civilian, SLOT_EARS)
 		//src.equip_new_if_possible(/obj/item/clothing/suit, SLOT_WEAR_SUIT)
@@ -833,7 +833,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/orange, SLOT_SHOES)
-		src.equip_new_if_possible(/obj/item/clothing/under/suit/red, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/formal/red, SLOT_W_UNIFORM)
 		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
 		src.equip_new_if_possible(/obj/item/clothing/head/cowboy, SLOT_HEAD)
 
@@ -884,7 +884,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_SHOES)
-		src.equip_new_if_possible(/obj/item/clothing/under/suit/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/under/formal/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
 
 		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
 		src.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)

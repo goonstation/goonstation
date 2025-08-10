@@ -265,7 +265,7 @@
 /obj/item/storage/box/clothing/patient_gowns
 	name = "gowns box"
 	desc = "A box filled with patient gowns."
-	spawn_contents = list(/obj/item/clothing/under/patient_gown = 7)
+	spawn_contents = list(/obj/item/clothing/under/gimmick/patient_gown = 7)
 
 /obj/item/storage/box/health_upgrade_kit
 	name = "health analyzer upgrade box"

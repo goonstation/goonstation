@@ -137,7 +137,7 @@ Contents:
 	limit = 0
 	wages = 0
 //	slot_belt = /obj/item/swords_sheaths/katana
-	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
+	slot_jump = list(/obj/item/clothing/under/cultural/hakama/random)
 	slot_head = list(/obj/item/clothing/head/bandana/random_color)
 	slot_foot = list(/obj/item/clothing/shoes/sandal/magic/wizard)
 	slot_rhan = null

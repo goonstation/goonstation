@@ -237,14 +237,14 @@
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
 			if (H.w_uniform)
-				var/obj/item/clothing/under/scrub/M = H.w_uniform
+				var/obj/item/clothing/under/gimmick/scrub/M = H.w_uniform
 				if (!istype(M))
 					boutput(activator, SPAN_ALERT("You're not wearing medical scrubs!"))
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "scrub-f"
@@ -618,11 +618,11 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
-				else if (istype(M, /obj/item/clothing/under/suit/captain))
+				else if (istype(M, /obj/item/clothing/under/formal/captain))
 					var/prev = M.name
 					M.name = "\improper Commander's suit"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
+					if (istype(M, /obj/item/clothing/under/formal/captain/dress))
 						M.icon_state = "suit-capB-dress"
 						M.item_state = "suit-capB-dress"
 					else
@@ -792,11 +792,11 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
-				else if (istype(M, /obj/item/clothing/under/suit/captain))
+				else if (istype(M, /obj/item/clothing/under/formal/captain))
 					var/prev = M.name
 					M.name = "\improper CentCom suit"
 					M.desc = "A uniform specifically for CENTCOM executives. (Base Item: [prev])"
-					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
+					if (istype(M, /obj/item/clothing/under/formal/captain/dress))
 						M.icon_state = "suit-capR-dress"
 						M.item_state = "suit-capR-dress"
 					else

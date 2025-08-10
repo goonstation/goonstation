@@ -276,8 +276,8 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
 	icon_opened = "syndicate-open"
-	spawn_contents = list(/obj/item/clothing/under/jersey/red,
-	/obj/item/clothing/under/jersey/red,
+	spawn_contents = list(/obj/item/clothing/under/athletic/jersey/red,
+	/obj/item/clothing/under/athletic/jersey/red,
 	/obj/item/clothing/shoes/black = 2,
 	/obj/item/knife/butcher/hunterspear = 2,
 	/obj/item/gun/energy/plasma_gun = 2,
@@ -290,8 +290,8 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_state = "syndicate1"
 	icon_closed = "syndicate1"
 	icon_opened = "syndicate1-open"
-	spawn_contents = list(/obj/item/clothing/under/jersey/green,
-	/obj/item/clothing/under/jersey/green,
+	spawn_contents = list(/obj/item/clothing/under/athletic/jersey/green,
+	/obj/item/clothing/under/athletic/jersey/green,
 	/obj/item/clothing/shoes/black = 2,
 	/obj/item/knife/butcher/hunterspear = 2,
 	/obj/item/gun/energy/plasma_gun = 2,
@@ -316,7 +316,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	name = "wrestling supplies closet"
 	desc = "A handy closet full of everything an aspiring fake showboater wrestler needs to launch his career."
 	spawn_contents = list(/obj/item/storage/belt/wrestling/fake = 3,
-	/obj/item/clothing/under/shorts/random_color = 3,
+	/obj/item/clothing/under/athletic/shorts/random_color = 3,
 	/obj/item/clothing/mask/wrestling/black = 1,
 	/obj/item/clothing/mask/wrestling/blue = 1,
 	/obj/item/clothing/mask/wrestling/green = 1)

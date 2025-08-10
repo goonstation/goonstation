@@ -21,7 +21,7 @@
 		H.unequip_all(TRUE)
 
 		if (id == ROLE_PIRATE_CAPTAIN)
-			H.equip_if_possible(new /obj/item/clothing/under/shirt_pants_b(H), SLOT_W_UNIFORM)
+			H.equip_if_possible(new /obj/item/clothing/under/formal/shirt_pants_b(H), SLOT_W_UNIFORM)
 			H.equip_if_possible(new /obj/item/clothing/suit/armor/pirate_captain_coat(H), SLOT_WEAR_SUIT)
 			H.equip_if_possible(new /obj/item/clothing/head/pirate_captain(H), SLOT_HEAD)
 			H.equip_if_possible(new /obj/item/clothing/shoes/swat/heavy(H), SLOT_SHOES)
@@ -40,7 +40,7 @@
 			var/obj/item/clothing/jumpsuit = pick(/obj/item/clothing/under/gimmick/waldo,
 							/obj/item/clothing/under/misc/serpico,
 							/obj/item/clothing/under/gimmick/guybrush,
-							/obj/item/clothing/under/misc/dirty_vest)
+							/obj/item/clothing/under/athletic/dirty_vest)
 			var/obj/item/clothing/hat = pick(/obj/item/clothing/head/red,
 							/obj/item/clothing/head/bandana/red,
 							/obj/item/clothing/head/pirate_brn,

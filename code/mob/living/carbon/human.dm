@@ -3142,7 +3142,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 ///Returns the number of clown items someone is wearing
 /mob/living/carbon/human/proc/clown_tally()
 	. = 0
-	if(istype(src.w_uniform, /obj/item/clothing/under/misc/clown))
+	if(istype(src.w_uniform, /obj/item/clothing/under/rank/clown))
 		. += 1
 	if(istype(src.shoes, /obj/item/clothing/shoes/clown_shoes))
 		. += 1

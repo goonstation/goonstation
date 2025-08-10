@@ -326,7 +326,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/hop)
-	slot_jump = list(/obj/item/clothing/under/suit/hop)
+	slot_jump = list(/obj/item/clothing/under/formal/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
 	slot_poc1 = list(/obj/item/pocketwatch)
@@ -702,7 +702,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
-	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
+	slot_jump = list(/obj/item/clothing/under/gimmick/scrub = 30,/obj/item/clothing/under/gimmick/scrub/teal = 14,/obj/item/clothing/under/gimmick/scrub/blue = 14,/obj/item/clothing/under/gimmick/scrub/purple = 14,/obj/item/clothing/under/gimmick/scrub/orange = 14,/obj/item/clothing/under/gimmick/scrub/pink = 14)
 	wiki_link = "https://wiki.ss13.co/Medical_Assistant"
 
 // Engineering Jobs
@@ -975,7 +975,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_back = list()
 	slot_belt = list(/obj/item/storage/fanny/funny)
 	slot_mask = list(/obj/item/clothing/mask/clown_hat)
-	slot_jump = list(/obj/item/clothing/under/misc/clown)
+	slot_jump = list(/obj/item/clothing/under/rank/clown)
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
 	slot_poc1 = list(/obj/item/device/pda2/clown)
@@ -1105,7 +1105,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_head = list(/obj/item/clothing/head/mime_bowler)
 	slot_mask = list(/obj/item/clothing/mask/mime)
-	slot_jump = list(/obj/item/clothing/under/misc/mime/alt)
+	slot_jump = list(/obj/item/clothing/under/gimmick/mime/alt)
 	slot_suit = list(/obj/item/clothing/suit/scarf)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -1355,7 +1355,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	request_limit = 1 // limited workspace
 	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
+	slot_jump = list(/obj/item/clothing/under/formal/shirt_pants)
 	slot_card = /obj/item/card/id/civilian
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/satchel)
@@ -1400,7 +1400,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Hollywood Actor"
 	wages = PAY_UNTRAINED
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/suit/purple)
+	slot_jump = list(/obj/item/clothing/under/formal/purple)
 	special_spawn_location = LANDMARK_ACTOR_SPAWN
 
 /datum/job/special/random/medical_specialist
@@ -1413,7 +1413,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/medic)
-	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
+	slot_jump = list(/obj/item/clothing/under/gimmick/scrub/maroon)
 	slot_suit = list(/obj/item/clothing/suit/apron/surgeon)
 	slot_head = list(/obj/item/clothing/head/bouffant)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
@@ -1447,7 +1447,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "VIP"
 	linkcolor = SECURITY_LINK_COLOR
 	request_cost = PAY_EMBEZZLED * 4 // they're on the take
-	slot_jump = list(/obj/item/clothing/under/suit/black)
+	slot_jump = list(/obj/item/clothing/under/formal/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -1533,7 +1533,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/testsubject
 	name = "Test Subject"
 	wages = PAY_DUMBCLOWN
-	slot_jump = list(/obj/item/clothing/under/shorts)
+	slot_jump = list(/obj/item/clothing/under/athletic/shorts)
 	slot_mask = list(/obj/item/clothing/mask/monkey_translator)
 	change_name_on_spawn = TRUE
 	starting_mutantrace = /datum/mutantrace/monkey
@@ -1590,7 +1590,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/coach
 	name = "Coach"
 	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/jersey)
+	slot_jump = list(/obj/item/clothing/under/athletic/jersey)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest/macho)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_foot = list(/obj/item/clothing/shoes/white)
@@ -1602,7 +1602,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/journalist
 	name = "Journalist"
 	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/suit/red)
+	slot_jump = list(/obj/item/clothing/under/formal/red)
 	slot_head = list(/obj/item/clothing/head/fedora)
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_poc1 = list(/obj/item/camera)
@@ -1681,7 +1681,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_card = /obj/item/card/id/medical
 	slot_belt = list(/obj/item/device/pda2/medical)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
+	slot_jump = list(/obj/item/clothing/under/formal/shirt_pants)
 	slot_suit = list(/obj/item/clothing/suit/labcoat)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/storage/pill_bottle/cyberpunk)
@@ -1696,7 +1696,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_card = /obj/item/card/id/medical
 	slot_belt = list(/obj/item/device/pda2/medical)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
+	slot_jump = list(/obj/item/clothing/under/formal/shirt_pants)
 	slot_suit = list(/obj/item/clothing/suit/labcoat)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/tea)
@@ -1721,7 +1721,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Food Critic"
 	wages = PAY_UNTRAINED
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants_br)
+	slot_jump = list(/obj/item/clothing/under/formal/shirt_pants_br)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_poc2 = list(/obj/item/paper)
 	slot_lhan = list(/obj/item/clipboard/with_pen)
@@ -1811,7 +1811,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_back = list()
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/blue)
 	slot_ears = list(/obj/item/device/radio/headset/clown)
-	slot_jump = list(/obj/item/clothing/under/misc/clown/blue)
+	slot_jump = list(/obj/item/clothing/under/gimmick/clown/blue)
 	slot_card = /obj/item/card/id/clown
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/blue)
 	slot_belt = list(/obj/item/storage/fanny/funny)
@@ -1831,7 +1831,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	access_string = "Salesman"
 	slot_head = list(/obj/item/clothing/head/that/purple)
 	slot_ears = list(/obj/item/device/radio/headset)
-	slot_jump = list(/obj/item/clothing/under/suit/purple)
+	slot_jump = list(/obj/item/clothing/under/formal/purple)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/storage/pill_bottle/cyberpunk)
@@ -1905,7 +1905,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/werewolf)
-	slot_jump = list(/obj/item/clothing/under/shorts)
+	slot_jump = list(/obj/item/clothing/under/athletic/shorts)
 	slot_suit = list(/obj/item/clothing/suit/gimmick/werewolf)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_belt = list(/obj/item/device/pda2)
@@ -1938,7 +1938,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
-	slot_jump = list(/obj/item/clothing/under/shorts)
+	slot_jump = list(/obj/item/clothing/under/athletic/shorts)
 	slot_suit = list(/obj/item/clothing/suit/gimmick/hotdog)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset)
@@ -2010,7 +2010,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
+	slot_jump = list(/obj/item/clothing/under/formal/shirt_pants)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_belt = list(/obj/item/device/pda2)
@@ -2174,7 +2174,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	change_name_on_spawn = TRUE
 	access_string = "Staff Assistant"
-	slot_jump = list(/obj/item/clothing/under/shorts/black)
+	slot_jump = list(/obj/item/clothing/under/athletic/shorts/black)
 	slot_suit = list(/obj/item/clothing/suit/bathrobe)
 	slot_head = list(/obj/item/clothing/head/apprentice)
 	slot_foot = list(/obj/item/clothing/shoes/fuzzy)
@@ -2190,7 +2190,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Super Spy"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	slot_jump = list(/obj/item/clothing/under/suit/black)
+	slot_jump = list(/obj/item/clothing/under/formal/black)
 	slot_eyes = list(/obj/item/clothing/glasses/eyepatch)
 	slot_suit = list(/obj/item/clothing/suit/armor/sneaking_suit/costume)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
@@ -2718,7 +2718,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	wages = PAY_UNTRAINED
 	access_string = "Boxer"
 	limit = 4
-	slot_jump = list(/obj/item/clothing/under/shorts)
+	slot_jump = list(/obj/item/clothing/under/athletic/shorts)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_glov = list(/obj/item/clothing/gloves/boxing)
 	change_name_on_spawn = TRUE
@@ -2854,7 +2854,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	name = "Musician"
 	limit = 3
 	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
+	slot_jump = list(/obj/item/clothing/under/formal/pinstripe)
 	slot_head = list(/obj/item/clothing/head/flatcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
@@ -3052,7 +3052,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	limit = 0
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset)
-	slot_jump = list(/obj/item/clothing/under/gimmick/black_wcoat)
+	slot_jump = list(/obj/item/clothing/under/formal/black_wcoat)
 	slot_foot = list(/obj/item/clothing/shoes/dress_shoes)
 	slot_belt = list(/obj/item/device/pda2)
 	items_in_backpack = list(/obj/item/storage/box/box_o_laughs, /obj/item/item_box/assorted/stickers/stickers_limited, /obj/item/currency/spacecash/twothousandfivehundred)
