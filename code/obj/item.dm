@@ -1044,6 +1044,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	src.storage?.storage_item_attack_self(user)
 
+	if (src.artifact?.activated)
+		src.artifact.effect_attack_self(user)
+
 	chokehold?.attack_self(user)
 
 	return

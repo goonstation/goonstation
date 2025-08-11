@@ -80,7 +80,7 @@ const sortMap = [
 
 export const ChemDispenser = () => {
   return (
-    <Window width={570} height={730} theme="ntos">
+    <Window width={580} height={730} theme="ntos">
       <Window.Content scrollable>
         <ReagentDispenser />
         <Beaker />
@@ -180,6 +180,7 @@ export const ReagentDispenser = () => {
               className="chem-dispenser__dispense-buttons"
               align="left"
               width="130px"
+              m={0.3}
               onMouseOver={() => setHoverOverId(reagent.id)}
               onMouseLeave={() => setHoverOverId('')}
               onClick={() => {

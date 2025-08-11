@@ -87,7 +87,7 @@ TYPEINFO(/obj/item/organ/liver/cyber)
 		. = ..()
 
 /obj/item/organ/liver/amphibian
-	name = "amphibian_liver"
+	name = "amphibian liver"
 	desc = "Jesus Christ, this liver's massive... oh. It all makes sense now."
 	icon_state = "amphibian_liver"
 

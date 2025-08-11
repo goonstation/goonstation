@@ -37,4 +37,9 @@
       background-color: #999 !important;
     }
   }
+
+  // Evenly spaced list items
+  .LabeledList__cell {
+    height: 2em;
+  }
 }
