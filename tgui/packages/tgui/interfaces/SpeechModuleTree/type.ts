@@ -28,6 +28,7 @@ export interface ModuleProps {
   id: string;
   auxiliary: BooleanLike;
   atom_ref?: string;
+  aux_ref?: string;
   module_variables: VariableProps[];
   remove_action: string;
 }

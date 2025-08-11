@@ -86,23 +86,24 @@ const Module = (props: ModuleProps) => {
               <Tooltip content={props.id}>
                 <Box
                   pb="1px"
-                  style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+                  maxWidth="10em"
+                  overflow="hidden"
+                  style={{ textOverflow: 'ellipsis' }}
                 >
                   {props.id}
                 </Box>
               </Tooltip>
             </Stack.Item>
             <Stack.Item>
-              <RemoveModuleButton
-                disabled={props.auxiliary}
-                remove_action={props.remove_action}
-                id={props.id}
-                tooltip={
-                  props.auxiliary
-                    ? 'Cannot Remove Module: All subscriptions to this module come from an auxiliary tree. Please remove the module there instead.'
-                    : 'Remove Module Subscription'
-                }
-              />
+              {props.auxiliary ? (
+                <GoToAuxillaryButton aux_ref={props.aux_ref} />
+              ) : (
+                <RemoveModuleButton
+                  remove_action={props.remove_action}
+                  id={props.id}
+                  tooltip="Remove Module Subscription"
+                />
+              )}
             </Stack.Item>
             {!!props.atom_ref && (
               <Stack.Item>
@@ -143,15 +144,27 @@ const AddModuleButton = (props) => {
 };
 
 const RemoveModuleButton = (props) => {
-  const { disabled, remove_action, id, tooltip } = props;
+  const { remove_action, id, tooltip } = props;
   const { act } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Button
-      disabled={disabled}
       onClick={() => act(remove_action, { module_id: id })}
       tooltip={tooltip}
       icon="minus"
+    />
+  );
+};
+
+const GoToAuxillaryButton = (props) => {
+  const { aux_ref } = props;
+  const { act } = useBackend<SpeechModuleTreeProps>();
+
+  return (
+    <Button
+      onClick={() => act('view_module_tree', { ref: aux_ref })}
+      tooltip="Go To Auxiliary Tree"
+      icon="arrow-up-right-from-square"
     />
   );
 };

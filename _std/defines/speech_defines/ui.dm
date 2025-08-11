@@ -35,7 +35,8 @@
 		for (var/_ID as anything in READ_FROM) { \
 			var/list/_MODULE_PROPS = list(); \
 			_MODULE_PROPS["id"] = _ID; \
-			_MODULE_PROPS["auxiliary"] = (READ_FROM[_ID] == src.get_auxiliary_count(_ID, TITLE)); \
+			var/aux_count = src.get_auxiliary_count(_ID, TITLE); \
+			_MODULE_PROPS["auxiliary"] = (READ_FROM[_ID] == aux_count); \
 			_MODULE_PROPS["remove_action"] = REMOVE_ACTION; \
 			\
 			var/list/_COUNT = list(); \
@@ -50,6 +51,42 @@
 				_MODULE_PROPS["atom_ref"] = ref(_MODULE); \
 				if (istype(_MODULE)) { \
 					_MODULE_PROPS["module_variables"] += _MODULE.get_ui_variables(); \
+				} \
+			} \
+			/* Sorry */ \
+			if (aux_count > 0) { \
+				if (istype(src, /datum/speech_module_tree)) { \
+					for (var/datum/speech_module_tree/auxiliary/aux_tree as anything in src.auxiliary_trees) { \
+						if (aux_tree.GetOutputSubcount(combined_id = _ID) > 0) { \
+							_MODULE_PROPS["aux_ref"] = ref(aux_tree); \
+							break; \
+						} else if (aux_tree.GetModifierSubcount(_ID) > 0) { \
+							_MODULE_PROPS["aux_ref"] = ref(aux_tree); \
+							break; \
+						} else if (aux_tree.GetPrefixSubcount(_ID) > 0) { \
+							_MODULE_PROPS["aux_ref"] = ref(aux_tree); \
+							break; \
+						} \
+					} \
+				} else if (istype(src, /datum/listen_module_tree)) { \
+					for (var/datum/listen_module_tree/auxiliary/aux_tree as anything in src.auxiliary_trees) { \
+						if (aux_tree.GetInputSubcount(combined_id =_ID) > 0) { \
+							_MODULE_PROPS["aux_ref"] = ref(aux_tree); \
+							break; \
+						} else if (aux_tree.GetModifierSubcount(_ID) > 0) { \
+							_MODULE_PROPS["aux_ref"] = ref(aux_tree); \
+							break; \
+						} else if (aux_tree.GetEffectSubcount(_ID) > 0) { \
+							_MODULE_PROPS["aux_ref"] = ref(aux_tree); \
+							break; \
+						} else if (aux_tree.GetControlSubcount(_ID) > 0) { \
+							_MODULE_PROPS["aux_ref"] = ref(aux_tree); \
+							break; \
+						} else if (aux_tree.GetKnownLanguageSubcount(_ID) > 0) { \
+							_MODULE_PROPS["aux_ref"] = ref(aux_tree); \
+							break; \
+						} \
+					} \
 				} \
 			} \
 			_SECTION_PROPS["modules"] += list(_MODULE_PROPS); \

@@ -8,12 +8,6 @@
     background-color: var(--section-bg-nested);
   }
   .Section.module--auxiliary {
-    background: repeating-linear-gradient(
-      45deg,
-      var(--section-background),
-      var(--section-background) 10px,
-      var(--section-bg-nested) 10px,
-      var(--section-bg-nested) 20px
-    );
+    background-color: color-mix(in srgb, var(--section-bg-nested), orange 5%);
   }
 }
