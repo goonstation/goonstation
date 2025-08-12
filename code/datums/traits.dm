@@ -484,7 +484,7 @@
 	category = list("language")
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("accent_tyke")
+		owner.bioHolder?.AddEffect("accent_tyke", 0, 0, 0, 1)
 
 // VISION/SENSES - Green Border
 
