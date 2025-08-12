@@ -73,6 +73,11 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 
 	var/datum/client_auth_provider/provider = client_auth_providers[CLIENT_AUTH_PROVIDER_CURRENT]
 	src.client_auth_provider = new provider(src)
+
+	// Vague protection against bad clients
+	if (!src.client_auth_provider.valid)
+		return CLIENT_AUTH_FAILED
+
 	return src.client_auth_provider.start_state
 
 /*
