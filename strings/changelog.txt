@@ -1,3 +1,9 @@
+
+(t)wed aug 13 25
+(u)nova2053
+(p)24420
+(e)|
+(+)Accents from the "German" and "Tyke" traits will not be removed by mutadone.
 (t)wed aug 06 25
 (u)Goonstation Developer Team & Contributors
 (e)🆕|C-Feature

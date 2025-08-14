@@ -38668,9 +38668,7 @@
 /obj/machinery/light_switch/west{
 	pixel_y = 8
 	},
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -8
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -55879,9 +55877,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -4
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
