@@ -71,6 +71,16 @@ function task-lint {
   Write-Output "tgui: prettier check passed"
 }
 
+## Run a linter & fix through all packages
+function task-lint-fix {
+  yarn run tsc
+  Write-Output "tgui: type check passed"
+  yarn run tgui:lint-fix @Args
+  Write-Output "tgui: lint check & fix passed"
+  yarn run tgui:prettier-fix @Args
+  Write-Output "tgui: prettier check & fix  passed"
+}
+
 function task-test {
   yarn run tgui:test
 }
@@ -153,6 +163,13 @@ if ($Args.Length -gt 0) {
     $Rest = $Args | Select-Object -Skip 1
     task-install
     task-lint @Rest
+    exit 0
+  }
+
+    if ($Args[0] -eq "--lint-fix") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-lint-fix @Rest
     exit 0
   }
 
