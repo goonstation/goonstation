@@ -44,7 +44,6 @@ export const PacketVision = () => {
                     maxValue={MAX_FREQ}
                     stepPixelSize={2}
                     format={formatFrequency}
-                    onDrag={(_e, value) => setFrequency(value, false)}
                     onChange={(_e, value) => setFrequency(value, true)}
                   />
                 </Stack.Item>
