@@ -4,10 +4,10 @@ ABSTRACT_TYPE(/datum/dwaine_syscall)
  *	the kernel.
  */
 /datum/dwaine_syscall
-	/// The ID integer for cache lookups.
+	/// The ID integer of this syscall.
 	var/id = null
 	/// The DWAINE kernel that this syscall datum belongs to.
-	var/datum/computer/file/mainframe_program/os/kernel/kernel
+	var/datum/computer/file/mainframe_program/os/kernel/kernel = null
 
 /datum/dwaine_syscall/New(datum/computer/file/mainframe_program/os/kernel/kernel)
 	. = ..()

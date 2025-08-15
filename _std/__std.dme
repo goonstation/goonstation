@@ -86,6 +86,7 @@
 #include "defines\mainframe_defines\_errors.dm"
 #include "defines\mainframe_defines\_filepaths.dm"
 #include "defines\mainframe_defines\_permissions.dm"
+#include "defines\mainframe_defines\_shell.dm"
 #include "defines\mainframe_defines\_syscalls.dm"
 #include "defines\mainframe_defines\mainframe.dm"
 #include "defines\manufacturing.dm"
