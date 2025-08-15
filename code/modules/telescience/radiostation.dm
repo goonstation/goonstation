@@ -703,6 +703,11 @@ ABSTRACT_TYPE(/obj/item/record/random/funk)
 	record_name = "Space Gardener"
 	song = 'sound/radio_station/music/space_gardener.ogg'
 
+/obj/item/record/random/funk/lay_egg_is_true
+	name = "record - \"Lay Egg Is TRUE!!!\""
+	record_name = "Lay Egg Is TRUE!!!"
+	song = 'sound/radio_station/music/lay_egg_is_true.ogg'
+
 ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/record/random/notaquario
 	New()
