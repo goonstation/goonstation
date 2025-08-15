@@ -184,7 +184,7 @@ const ReagentDisplay = (props) => {
                 minValue={1}
                 maxValue={500}
                 step={1}
-                onDrag={(value) => setTransferAmount(value)}
+                onChange={(value) => setTransferAmount(value)}
               />
             </Flex.Item>
             <Flex.Item>

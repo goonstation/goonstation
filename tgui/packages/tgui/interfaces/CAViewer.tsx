@@ -74,7 +74,7 @@ export const CAViewer = () => {
                           stepPixelSize={5}
                           width="39px"
                           step={1}
-                          onDrag={(value) =>
+                          onChange={(value) =>
                             act('settings', {
                               name: typeData[CAType].options[optionName],
                               data: value,

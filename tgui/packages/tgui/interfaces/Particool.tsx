@@ -49,7 +49,8 @@ const ParticleIntegerEntry = (props: ParticleIntegerEntryProps) => {
         value={value}
         stepPixelSize={5}
         width="39px"
-        onDrag={(value) =>
+        tickWhileDragging
+        onChange={(value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -89,7 +90,8 @@ const ParticleMatrixEntry = (props: ParticleMatrixEntryProps) => {
               maxValue={Infinity}
               minValue={-Infinity}
               step={1}
-              onDrag={(v) => {
+              tickWhileDragging
+              onChange={(v) => {
                 value[i] = v;
                 act('modify_particle_value', {
                   new_data: {
@@ -178,7 +180,8 @@ const ParticleFloatNonGenEntry = (props: ParticleFloatNonGenEntryProps) => {
           toFixed(value, numberOfDecimalDigits(particleFloatStep))
         }
         width="80px"
-        onDrag={(value) =>
+        tickWhileDragging
+        onChange={(value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -259,7 +262,8 @@ const configureParticleVectorNonGenEntryVarLen = (len: number) => {
                 value={val}
                 key={i}
                 width="40px"
-                onDrag={(v) => {
+                tickWhileDragging
+                onChange={(v) => {
                   value[i] = v;
                   act('modify_particle_value', {
                     new_data: {

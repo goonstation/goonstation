@@ -191,7 +191,9 @@ const TemperatureRegulator = () => {
           blue: [-Infinity, neutralTemperature - 1], // Specifically want neutralTemperature (293.15) to be considered 'warm'
           red: [neutralTemperature, Infinity],
         }}
-        onDrag={(e, value) => act('set_temp', { inputted_temperature: value })}
+        onChange={(e, value) =>
+          act('set_temp', { inputted_temperature: value })
+        }
       />
     </Section>
   );

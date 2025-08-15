@@ -191,7 +191,8 @@ const DataInputIntegerEntry = (props) => {
         stepPixelSize={5}
         width="39px"
         step={1}
-        onDrag={(value) =>
+        tickWhileDragging
+        onChange={(value) =>
           act('modify_value', {
             name: name,
             value: value,
