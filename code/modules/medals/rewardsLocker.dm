@@ -209,9 +209,9 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "mechanic-reward"
@@ -242,9 +242,9 @@
 					boutput(activator, SPAN_ALERT("You're not wearing medical scrubs!"))
 					return
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "scrub-f"
@@ -501,8 +501,8 @@
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/det))
 					var/prev = M.name
-					M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+					M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 					M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 					M.icon_state = "inspectorj"
 					M.item_state = "viceG"

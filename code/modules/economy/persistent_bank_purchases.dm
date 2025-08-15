@@ -335,7 +335,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	altjumpsuit
 		name = "Alternate Jumpsuit"
 		cost = 1500
-		icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
+		icon = 'icons/obj/clothing/jumpsuits/item_js_rank.dmi'
 		icon_state = "assistant-alt"
 
 		Create(var/mob/living/M)
@@ -380,7 +380,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	altclown
 		name = "Alternate Clown Outfit"
 		cost = 200
-		icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+		icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 		icon_state = "pinkclown"
 
 		Create(var/mob/living/M)
@@ -389,7 +389,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				if (H.mind)
 					if (H.mind.assigned_role == "Clown")
 						var/type = pick("purple","pink","yellow")
-						H.w_uniform.icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+						H.w_uniform.icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 						H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 						H.w_uniform.icon_state = "[type]clown"
 						H.w_uniform.item_state = "[type]clown"
@@ -693,14 +693,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Pride-O-Matic Jumpsuit"
 		cost = 1200
 		path = /obj/item/clothing/under/pride/special
-		icon = 'icons/obj/clothing/uniforms/item_js_pride.dmi'
+		icon = 'icons/obj/clothing/jumpsuits/item_js_pride.dmi'
 		icon_state = "gay"
 
 	fake_waldo
 		name = "Stripe Outfit"
 		cost = 1400
 		path = /obj/item/clothing/under/gimmick/fake_waldo
-		icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+		icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 		icon_state = "waldont1"
 
 	moustache

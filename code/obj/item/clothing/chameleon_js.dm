@@ -1,9 +1,9 @@
 /obj/item/clothing/under/chameleon
 	name = "black jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 	icon_state = "black"
 	item_state = "black"
 	var/list/clothing_choices = list()
@@ -50,9 +50,9 @@
 			src.desc = "Groovy!"
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
-			icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+			icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 			wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-			inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+			inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
@@ -92,9 +92,9 @@
 	var/desc = "A generic jumpsuit with no rank markings."
 	var/icon_state = "black"
 	var/item_state = "black"
-	var/sprite_item = 'icons/obj/clothing/uniforms/item_js.dmi'
+	var/sprite_item = 'icons/obj/clothing/jumpsuits/item_js.dmi'
 	var/sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
-	var/sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+	var/sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 	var/hide_underwear = FALSE
 
 	white
@@ -161,9 +161,9 @@
 		desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
 		icon_state = "assistant"
 		item_state = "assistant"
-		sprite_item = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
+		sprite_item = 'icons/obj/clothing/jumpsuits/item_js_rank.dmi'
 		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
-		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
+		sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js_rank.dmi'
 
 	rank/engineer
 		name = "engineer's jumpsuit"
@@ -302,9 +302,9 @@
 		desc = "The crisp threads of a postmaster."
 		icon_state = "mail"
 		item_state = "mail"
-		sprite_item = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+		sprite_item = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
 		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
-		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+		sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 
 /obj/item/clothing/head/chameleon
 	name = "hat"

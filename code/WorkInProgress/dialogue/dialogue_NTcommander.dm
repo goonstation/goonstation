@@ -316,7 +316,7 @@
 /obj/item/clothing/under/gimmick/seaman
 	name = "seaman's uniform"
 	desc = "Official seaman's uniform of Nanotrasen's naval branch."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "seaman"
 	item_state = "seaman"
@@ -324,7 +324,7 @@
 /obj/item/clothing/under/gimmick/cadet
 	name = "cadet's uniform"
 	desc = "Official cadet's uniform of Nanotrasen's naval branch."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "cadet"
 	item_state = "cadet"
@@ -332,7 +332,7 @@
 /obj/item/clothing/under/gimmick/lieutenant
 	name = "lieutenant's uniform"
 	desc = "Official lieutenant's uniform of Nanotrasen's naval branch."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "lieutenant"
 	item_state = "lieutenant"
@@ -340,7 +340,7 @@
 /obj/item/clothing/under/gimmick/officer
 	name = "officer's uniform"
 	desc = "Officers uniform of Nanotrasen's naval branch."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "officer"
 	item_state = "officer"
@@ -348,7 +348,7 @@
 /obj/item/clothing/under/gimmick/chiefofficer
 	name = "chief officer's uniform"
 	desc = "Uniform awarded to the highest ranking Nanotrasen naval officers."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "chiefofficer"
 	item_state = "chiefofficer"
