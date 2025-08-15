@@ -4,7 +4,7 @@
 /datum/language/binary/heard_not_understood(datum/say_message/message, datum/listen_module_tree/listen_tree)
 	. = ..()
 
-	message.content = src.to_binary(message.content)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(src, PROC_REF(to_binary)))
 
 /datum/language/binary/proc/to_binary(str, corr_prob = 0)
 	. = ""
