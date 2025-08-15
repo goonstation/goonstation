@@ -8,6 +8,7 @@
 
 /datum/client_auth_provider/goonhub/New(client/owner)
 	. = ..()
+	if (!src.valid) return
 	RegisterSignal(owner, COMSIG_CLIENT_CHAT_LOADED, PROC_REF(on_chat_loaded))
 	src.owner.verbs += list(/client/proc/open_goonhub_auth)
 	src.setup_logout()
