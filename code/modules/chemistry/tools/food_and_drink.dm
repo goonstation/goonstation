@@ -28,6 +28,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/dissolve_threshold = 20					//! How digested something needs to be before it dissolves
 	var/heats_into = null						//! Type path of the thing this becomes when heated
 	var/heat_threshold = T0C + 500				//! Temperature required for this to cook from ambient air heat
+	var/is_produce = 0							//! Bonus for food that requires cooperation with a produce job
 	rc_flags = 0
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -95,12 +96,25 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
-					H.sims.affectMotive("Hunger", healing * 6)
+					if (is_produce)
+						while (H.sims.getValue("Hunger") < 75)
+							H.sims.affectMotive("Hunger", healing * 6)
+					else
+						while (H.sims.getValue("Hunger") < 50)
+							H.sims.affectMotive("Hunger", healing * 6)
 					H.sims.affectMotive("Bladder", -healing * 0.2)
 
 			if (quality >= 5)
 				boutput(M, SPAN_NOTICE("That tasted amazing!"))
 				healing *= 2
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.sims)
+						if (!is_produce)
+							while (H.sims.getValue("Hunger") < 75)
+								H.sims.affectMotive("Hunger", healing * 8)
+						else
+							H.sims.affectMotive("Hunger", healing * 10)
 
 			if (src.reagents && src.reagents.has_reagent("THC"))
 				boutput(M, SPAN_NOTICE("Wow this tastes really good man!!"))
@@ -420,7 +434,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					if (!check_favorite_food(H))
 						displease_picky_eater(H)
 					else
-						H.sims?.affectMotive("Hunger", 20)
+						H.sims?.affectMotive("Hunger", 80) // Buffing cause it might not be a produce food
 				else
 					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
 		src.heal(consumer)
