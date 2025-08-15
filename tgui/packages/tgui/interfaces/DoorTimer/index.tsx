@@ -38,7 +38,6 @@ export const DoorTimer = () => {
                         maxValue={data.maxTime}
                         value={data.time}
                         format={(v) => formatTime(v * 10)}
-                        // tickWhileDragging
                         onChange={(_e: unknown, time: number) => {
                           act('set-time', { time, finish: true });
                         }}
