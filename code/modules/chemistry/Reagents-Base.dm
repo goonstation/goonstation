@@ -835,6 +835,7 @@
 						if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
 							if(raw_volume < 10)
 								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
 							else
 								H.bioHolder.RemoveEffect("blood_curse")
 								H.bioHolder.RemoveEffect("blind_curse")
@@ -845,6 +846,7 @@
 						else if(M.hasStatus("art_blood_curse") || M.hasStatus("art_aging_curse") || M.hasStatus("art_nightmare_curse") || M.hasStatus("art_maze_curse") || M.hasStatus("art_displacement_curse") || M.hasStatus("art_light_curse"))
 							if(raw_volume < 10)
 								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
 							else
 								M.delStatus("art_blood_curse")
 								M.delStatus("art_aging_curse")
