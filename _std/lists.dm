@@ -1,7 +1,4 @@
 
-// REMOVE WITH 516
-#define alist list
-
 /* Note about this file:
  * A portion of this code was written by Carnie over at /tg/, back in 2014.
  * We are using the code under the terms of our license, as Carnie can't be

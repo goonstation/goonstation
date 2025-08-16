@@ -365,12 +365,25 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		icon_state = "hos-fancy-alt"
 		item_state = "hos-fancy-alt"
 
-/obj/item/clothing/under/misc/dirty_vest //HoS uniform from the Elite Security era
+/obj/item/clothing/under/misc/dirty_vest  //HoS uniform from the Elite Security era
 	name = "dirty vest"
 	desc = "This outfit has seen better days."
 	icon_state = "vest"
 	item_state = "vest"
 	c_flags = SLEEVELESS
+
+	blackpants
+		icon_state = "vestblack"
+		item_state = "vestblack"
+
+	bluepants
+		icon_state = "vestblue"
+		item_state = "vestblue"
+
+	brownpants
+		icon_state = "vestbrown"
+		item_state = "vestbrown"
+
 
 /obj/item/clothing/under/rank/chief_engineer
 	name = "chief engineer's uniform"
@@ -992,7 +1005,7 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 
 	dan
 		name = "basketball jersey"
-		desc = "A jersey worn by Smokin' Sealpups the during the last Space Olympics. It seems to be advertising something."
+		desc = "A jersey worn by Smokin' Sealpups during the last Space Olympics. It seems to be advertising something."
 		icon_state = "dan_jersey"
 		item_state = "dan_jersey"
 

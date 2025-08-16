@@ -616,7 +616,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
 								continue
 						var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
 					return
 
 	/// Applies or removes the bioeffect associated with the mutantrace
@@ -1191,7 +1191,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			P.setup(src.mob.loc)
 			var/obj/item/I
 			I = src.mob.organHolder.drop_organ("head", src.mob)
-			I.loc = get_turf(src.mob)
+			if (I) I.loc = get_turf(src.mob)
 			var/list/limbs = list()
 			limbs += src.mob.limbs.l_arm?.remove(FALSE)
 			limbs += src.mob.limbs.r_arm?.remove(FALSE)

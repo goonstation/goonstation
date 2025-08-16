@@ -62,7 +62,7 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 			return
 		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 			return
-		if (AM.anchored && !allow_anchored || AM.anchored >= ANCHORED_ALWAYS || (locate(/obj/lattice) in src.parent))
+		if (AM.anchored && !allow_anchored || AM.anchored >= ANCHORED_ALWAYS || (locate(/obj/lattice) in src.parent) || ((locate(/obj/mesh/catwalk) in src.parent)))
 			return
 		if (ismob(AM))
 			var/mob/M = AM
