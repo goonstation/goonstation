@@ -833,21 +833,27 @@
 						var/mob/living/carbon/human/H = M
 						var/removed_curse = FALSE
 						if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
-							H.bioHolder.RemoveEffect("blood_curse")
-							H.bioHolder.RemoveEffect("blind_curse")
-							H.bioHolder.RemoveEffect("weak_curse")
-							H.bioHolder.RemoveEffect("rot_curse")
-							H.bioHolder.RemoveEffect("death_curse")
-							removed_curse = TRUE
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+							else
+								H.bioHolder.RemoveEffect("blood_curse")
+								H.bioHolder.RemoveEffect("blind_curse")
+								H.bioHolder.RemoveEffect("weak_curse")
+								H.bioHolder.RemoveEffect("rot_curse")
+								H.bioHolder.RemoveEffect("death_curse")
+								removed_curse = TRUE
 						else if(M.hasStatus("art_blood_curse") || M.hasStatus("art_aging_curse") || M.hasStatus("art_nightmare_curse") || M.hasStatus("art_maze_curse") || M.hasStatus("art_displacement_curse") || M.hasStatus("art_light_curse"))
-							M.delStatus("art_blood_curse")
-							M.delStatus("art_aging_curse")
-							M.delStatus("art_nightmare_curse")
-							M.delStatus("art_maze_curse")
-							M.delStatus("art_displacement_curse")
-							M.delStatus("art_light_curse")
-							playsound(H, 'sound/effects/lit.ogg', 100, TRUE)
-							removed_curse = TRUE
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+							else
+								M.delStatus("art_blood_curse")
+								M.delStatus("art_aging_curse")
+								M.delStatus("art_nightmare_curse")
+								M.delStatus("art_maze_curse")
+								M.delStatus("art_displacement_curse")
+								M.delStatus("art_light_curse")
+								playsound(H, 'sound/effects/lit.ogg', 100, TRUE)
+								removed_curse = TRUE
 						else
 							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 						if(removed_curse)
