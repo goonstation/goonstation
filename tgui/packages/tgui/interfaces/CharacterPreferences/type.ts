@@ -52,6 +52,15 @@ export interface CharacterPreferencesData {
   underwearStyle: string;
   randomAppearance: BooleanLike;
 
+  jobStaticData: JobStaticData[];
+  jobFavourite: string[];
+  jobsMedPriority: string[];
+  jobsLowPriority: string[];
+  jobsUnwanted: string[];
+
+  antagonistStaticData: AntagonistStaticData[];
+  antagonistPreferences: object;
+
   fontSize: string;
   seeMentorPms: BooleanLike;
   listenOoc: BooleanLike;
@@ -89,6 +98,19 @@ export interface CharacterPreferencesPartData {
   img: string;
 }
 
+export interface JobStaticData {
+  disabled: number;
+  disabled_tooltip?: string;
+  colour: string;
+}
+
+export interface AntagonistStaticData {
+  name: string;
+  variable: string;
+  disabled: number;
+  disabled_tooltip?: string;
+}
+
 export interface CharacterPreferencesTraitStaticData {
   id: string;
   name: string;
@@ -116,6 +138,7 @@ export enum CharacterPreferencesTabKeys {
   Saves,
   General,
   Character,
+  Occupation,
   Traits,
   GameSettings,
 }
