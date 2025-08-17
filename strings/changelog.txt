@@ -1,4 +1,13 @@
 
+(t)fri aug 15 25
+(u)JORJ949
+(p)24397
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Radios will no longer default incorrect prefixes (such as ":hiv"), or prefixes you don't have access to (":z" with a non-syndicate headset) to the general frequency.
+(u)JORJ949
+(p)24433
+(e)🎨🧑‍✈️|C-Sprites, A-Command
+(+)You can now open the captain's coat.
 (t)wed aug 13 25
 (u)nova2053
 (p)24420
