@@ -37,7 +37,6 @@
     "sass": "^1.89.2",
     "sass-embedded": "^1.89.2",
     "sass-loader": "^16.0.5",
-    "string-replace-loader": "^3.2.0",
     "typescript": "=5.8.3",
     "url-loader": "^4.1.1"
   },

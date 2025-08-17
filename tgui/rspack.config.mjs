@@ -136,33 +136,30 @@ export default (env = {}, argv) => {
           oneOf: [
             {
               issuer: /\.(s)?css$/,
-              use: [
-                {
-                  loader: 'string-replace-loader',
-                  options: {
-                    multiple: [{ search: /\r\n/g, replace: '\n', flags: 'g' }],
+              type: 'asset/inline',
+              generator: {
+                encoding: 'base64',
+                transformation: {
+                  transformer: (content) => {
+                    return Buffer.from(
+                      content.toString().replace(/\r\n/g, '\n'),
+                    );
                   },
                 },
-              ],
-              type: 'asset/inline',
+              },
             },
             {
-              use: [
-                {
-                  loader: 'string-replace-loader',
-                  options: {
-                    multiple: [{ search: /\r\n/g, replace: '\n', flags: 'g' }],
+              type: 'asset/resource',
+              generator: {
+                filename: 'assets/[name][ext]',
+                transformation: {
+                  transformer: (content) => {
+                    return Buffer.from(
+                      content.toString().replace(/\r\n/g, '\n'),
+                    );
                   },
                 },
-                {
-                  loader: 'url-loader',
-                  options: {
-                    esModule: false,
-                    outputPath: 'assets/',
-                    publicPath: '/assets/',
-                  },
-                },
-              ],
+              },
             },
           ],
         },
