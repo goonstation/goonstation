@@ -163,9 +163,6 @@ function task-validate-build {
         }
       }
     }
-
-    # Show the diff for debugging
-    Write-Output "Diff: $diff"
     exit 1
   }
   Write-Output "tgui: build is ok"

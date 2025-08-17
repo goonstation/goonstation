@@ -169,9 +169,6 @@ task-validate-build() {
         echo ""
       done
     fi
-
-    # Show the diff for debugging
-    echo "Diff: ${diff}"
     exit 1
   fi
   echo "tgui: build is ok"
