@@ -5,7 +5,7 @@
 ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe
 	name = "fluid pipe"
-	desc = "A pipe. For fluids."
+	desc = "A pipe. For fluids. Necessary to connect fluid machines."
 	icon = 'icons/obj/fluidpipes/fluid_pipe.dmi'
 	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	if(connect_directions) // If we have any remaining directions, look for machines.
 		for(var/direction in cardinal)
 			if(HAS_ANY_FLAGS(direction, connect_directions))
-				for(var/obj/machinery/fluid_pipe_machinery/target in get_step(src,direction))
+				for(var/obj/machinery/fluid_machinery/target in get_step(src,direction))
 					if(target.initialize_directions & get_dir(target,src))
 						target.refresh_network()
 						break
@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 /obj/fluid_pipe/fluid_tank
 	name = "fluid tank"
-	desc = "A big ol' tank of fluid."
+	desc = "A big ol' tank of fluid. Basically a big pipe."
 	icon = 'icons/obj/fluidpipes/fluid_tank.dmi'
 	icon_state = "tank"
 	density = TRUE
@@ -154,7 +154,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/fluid_tank/initialize_dir_vars()
 	src.initialize_directions = src.dir
 
-/obj/fluid_pipe/fluid_tank/attackby(obj/item/I, mob/user) //let's just make these breakable for now
+/obj/fluid_pipe/fluid_tank/attackby(obj/item/I, mob/user)
 	if (I.force)
 		src.visible_message(SPAN_ALERT("[user] hits \the [src] with \a [I]!"))
 		user.lastattacked = get_weakref(src)
@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	/// A list of every pipe we own.
 	var/list/obj/fluid_pipe/pipes
 	/// Connected machines to update whenever our network is merged or destroyed.
-	var/list/obj/machinery/fluid_pipe_machinery/machines
+	var/list/obj/machinery/fluid_machinery/machines
 	/// We're gonna destroy ourselves, discard further attempts to destroy. Currently used to prevent network deletion and creation spam during booms.
 	var/awaiting_removal = FALSE
 
@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 				reagent_overlay_states = states, \
 				queue_updates = FALSE, \
 				target = assuming_network)
-	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in assumed_network.machines)
+	for(var/obj/machinery/fluid_machinery/machine as anything in assumed_network.machines)
 		machine.refresh_network(assuming_network)
 	assuming_network.pipes += assumed_network.pipes
 	assumed_network.pipes.len = 0
@@ -273,7 +273,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
 		pipe.refresh_connections(src.reagents.remove_any_to(src.reagents.total_volume * (pipe.capacity/src.reagents.maximum_volume)))
 		src.reagents.maximum_volume -= pipe.capacity
-	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in src.machines)
+	for(var/obj/machinery/fluid_machinery/machine as anything in src.machines)
 		machine.refresh_network(src)
 	src.awaiting_removal = FALSE
 	qdel(src)
@@ -285,7 +285,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
 		pipe.refresh_connections(src.reagents.remove_any_to(src.reagents.total_volume * (pipe.capacity/src.reagents.maximum_volume)))
 		src.reagents.maximum_volume -= pipe.capacity
-	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in src.machines)
+	for(var/obj/machinery/fluid_machinery/machine as anything in src.machines)
 		machine.refresh_network(src)
 	src.awaiting_removal = FALSE
 	qdel(src)

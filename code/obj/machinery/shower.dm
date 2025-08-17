@@ -31,6 +31,8 @@
 	was_deconstructed_to_frame(mob/user)
 		if (src.on)
 			src.toggle(user)
+		src.network?.machines -= src
+		src.network = null
 
 	attack_ai(mob/user as mob)
 		src.toggle(user)
@@ -65,6 +67,11 @@
 
 	proc/spray()
 		src.last_spray = world.time
+		if(src.network && src.reagents.total_volume <= src.reagents.maximum_volume)
+			var/datum/reagents/fluid = src.pull_from_network(src.network, src.reagents.maximum_volume)
+			fluid?.trans_to(src, fluid.total_volume)
+			src.push_to_network(src.network, fluid)
+
 		if (src?.default_reagent)
 			src.reagents.add_reagent(default_reagent,120)
 			//also add some water for ~wet floor~ immersion
@@ -72,7 +79,6 @@
 				src.reagents.add_reagent("water",40)
 
 		if (src?.reagents.total_volume) //We still have reagents after, I dunno, a potassium reaction
-
 			// "blood - 2.7867e-018" because remove_any() uses ratios (Convair880).
 			for (var/current_id in src.reagents.reagent_list)
 				if (isnull(src.reagents.reagent_list[current_id]))
@@ -91,8 +97,9 @@
 
 			for (var/turf/T in view(1, get_turf(src))) // View and oview are unreliable as heck, apparently?
 				if (!T.ocean_canpass()) continue
-				SPAWN(0)
-					src.reagents.reaction(T, 1, 40)
+				src.reagents.reaction(T, 1, 40)
+				src.reagents.remove_any(40)
+
 				for(var/atom/movable/AM as anything in T)
 					// Added. We don't care about unmodified shower heads, though (Convair880).
 					if (ismob(AM))
@@ -101,8 +108,7 @@
 							if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && length(src.reagents.reagent_list) > 2))
 								logTheThing(LOG_CHEMISTRY, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
 
-					spawn(0)
-						src.reagents.reaction(AM, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
+					src.reagents.reaction(AM, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
 
 		SPAWN(5 SECONDS)
 			if (src?.reagents?.total_volume)
