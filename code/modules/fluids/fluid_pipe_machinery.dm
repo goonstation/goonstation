@@ -195,7 +195,6 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 		boutput(user, SPAN_ALERT("You tried to fill [I] from [src], but nothing came out!"))
 		return
 
-	var/turf/simulated/T = get_turf(src)
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
 	boutput(user, SPAN_NOTICE("You fill [I] with [fluid?.trans_to(I, fluid.total_volume)] units of the contents of [src]."))
 	qdel(fluid)

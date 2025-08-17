@@ -183,7 +183,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(amount > total_volume) amount = total_volume
 		if(amount <= 0) return
 
-		var/datum/reagents/R = new()
+		var/datum/reagents/R = new(amount)
 
 		var/remove_ratio = amount/total_volume
 

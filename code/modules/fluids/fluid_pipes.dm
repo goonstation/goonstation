@@ -18,6 +18,8 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	/// The network we belong to.
 	var/datum/flow_network/network
 	var/exclusionary = FALSE
+	/// Reagent to begin with
+	var/default_reagent = ""
 
 /obj/fluid_pipe/New()
 	..()
@@ -26,7 +28,11 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	src.initialize_dir_vars()
 
 /obj/fluid_pipe/initialize()
-	src.refresh_connections()
+	var/datum/reagents/default
+	if(src.default_reagent)
+		default = new(src.capacity)
+		default.add_reagent(src.default_reagent, src.capacity)
+	src.refresh_connections(default)
 
 /obj/fluid_pipe/onDestroy()
 	src.network.remove_pipe(src)
