@@ -157,7 +157,7 @@ export const ReagentDispenser = () => {
                   minValue={1}
                   maxValue={100}
                   step={1}
-                  onDrag={(value: number) => setAddAmount(value)}
+                  onChange={(value: number) => setAddAmount(value)}
                 />
               </Stack.Item>
             </Stack>
@@ -244,7 +244,7 @@ export const Beaker = () => {
                   minValue={1}
                   maxValue={100}
                   step={1}
-                  onDrag={(value: number) => setRemoveAmount(value)}
+                  onChange={(value: number) => setRemoveAmount(value)}
                 />
               </Stack.Item>
             </Stack>

@@ -171,7 +171,7 @@ const TimeInput = (props: TeamProps) => {
 
   return (
     <NumberInput
-      onDrag={(value) => {
+      onChange={(value) => {
         team === 'white'
           ? setWhiteTimeBuffer(value)
           : setBlackTimeBuffer(value);
