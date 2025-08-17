@@ -19,7 +19,7 @@ There's plenty of friendly people there, capable of answering most of your quest
 The forums are where we get most of our player feedback/suggestions and talk about things in a more longform format. This is also the place to appeal any bans or give admin feedback.
 
 [<img src=".github/assets/wiki.png" alt="Goonhub" width="150" align="left">](https://wiki.ss13.co)
-Our wiki is the place to go for any info you seek on the various constructions, items, game modes, and really just anything in-game. There's also guides for the various jobs you can play!
+Our wiki is the place to go for any info you seek on the various constructions, items, game modes, and really just anything in-game. Check out guides on game mechanics and jobs!
 
 [<img src=".github/assets/goonhub.png" alt="Goonhub" width="150" align="left">](https://goonhub.com)
 Goonhub is the premier place for locating statistics, data about rounds (like funny last words), detailed game maps, medals, players, and all other links pertaining to Goonstation!

@@ -644,9 +644,12 @@
 					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/obj/item/clothing/suit/armor/capcoat/coat = M
+					coat.coat_style = "centcoat"
+					coat.item_state = "centcoat"
+					var/datum/component/toggle_coat/toggle_component = coat.GetComponent(/datum/component/toggle_coat)
+					toggle_component.update_coat_icon()
 					var/prev = M.name
-					M.icon_state = "centcoat"
-					M.item_state = "centcoat"
 					M.name = "commander's coat"
 					M.real_name = "commander's coat"
 					M.desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
@@ -817,9 +820,12 @@
 					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/obj/item/clothing/suit/armor/capcoat/coat = M
+					coat.coat_style = "centcoat-red"
+					coat.item_state = "centcoat-red"
+					var/datum/component/toggle_coat/toggle_component = coat.GetComponent(/datum/component/toggle_coat)
+					toggle_component.update_coat_icon()
 					var/prev = M.name
-					M.icon_state = "centcoat-red"
-					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
 					M.desc = "A luxurious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
@@ -1294,6 +1300,10 @@
 	set popup_menu = 0
 
 	SPAWN(0)
+		if (!src.authenticated)
+			boutput(usr, SPAN_ALERT("You need to be authenticated to claim rewards."))
+			return
+
 		src.verbs -= /client/verb/claimreward
 		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
 		var/list/eligible = list()

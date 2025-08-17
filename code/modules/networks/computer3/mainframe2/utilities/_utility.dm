@@ -31,8 +31,8 @@
 	size = 1
 
 
-/// The absolute path from the root directory of the provided path.
-#define ABSOLUTE_PATH(PATH, CURRENT_PATH) (findtext(PATH, "/", 1, 2) ? PATH : ("[CURRENT_PATH][(CURRENT_PATH == "/") ? "" : "/"][PATH]"))
+
+
 
 /// Parse the output of `getopt` into a list of options with their parameters, and command parameters.
 /proc/optparse(data)
