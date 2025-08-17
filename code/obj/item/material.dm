@@ -653,18 +653,6 @@
 
 // Misc building material
 
-/// This has no material, why does it exist???? Someone replace it
-/obj/item/raw_material/fabric
-	name = "fabric sheet"
-	desc = "Some spun cloth. Useful if you want to make clothing."
-	icon = 'icons/obj/items/materials/materials.dmi'
-	icon_state = "fabric"
-	material_name = "Fabric"
-	scoopable = 0
-
-	get_stack_value()
-		return 0
-
 /obj/item/raw_material/cotton
 	name = "cotton wad"
 	desc = "It's a big puffy white thing. Most likely not a cloud though."

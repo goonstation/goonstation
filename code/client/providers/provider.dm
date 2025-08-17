@@ -1,13 +1,16 @@
 /datum/client_auth_provider
 	var/name = ""
 	var/client/owner = null
+	var/valid = FALSE
 	var/authenticated = FALSE
 	var/start_state = CLIENT_AUTH_SUCCESS
 	var/can_logout = FALSE
 
 /datum/client_auth_provider/New(client/owner)
 	. = ..()
+	if (!isclient(owner)) return
 	src.owner = owner
+	src.valid = TRUE
 
 /datum/client_auth_provider/proc/on_auth()
 	SHOULD_CALL_PARENT(TRUE)

@@ -1454,7 +1454,7 @@
 		hud.set_visible(hud.twohandl, 0)
 		hud.set_visible(hud.twohandr, 0)
 		hud.remove_item(I)
-		hud.add_object(I, HUD_LAYER+2, (src.hand ? hud.layouts[hud.layout_style]["lhand"] : hud.layouts[hud.layout_style]["rhand"]))
+		hud.add_object(I, HUD_LAYER+2, (src.hand ? hud.layouts[hud.layout_style]["lhand"] : hud.layouts[hud.layout_style]["rhand"]),FALSE)
 		switch(src.hand)
 			if(1)//Left
 				src.l_hand = I
@@ -1540,7 +1540,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"], FALSE)
 					return TRUE
 			else
 				if (!src.r_hand)
@@ -1553,7 +1553,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"], FALSE)
 					return TRUE
 		return FALSE
 
@@ -1749,9 +1749,9 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 	if (src.wear_mask)
 		hud.add_other_object(src.wear_mask,hud.layouts[hud.layout_style]["mask"])
 	if (src.l_hand)
-		hud.add_other_object(src.l_hand,hud.layouts[hud.layout_style]["lhand"])
+		hud.add_other_object(src.l_hand,hud.layouts[hud.layout_style]["lhand"],FALSE)
 	if (src.r_hand)
-		hud.add_other_object(src.r_hand,hud.layouts[hud.layout_style]["rhand"])
+		hud.add_other_object(src.r_hand,hud.layouts[hud.layout_style]["rhand"],FALSE)
 	if (src.belt)
 		hud.add_other_object(src.belt,hud.layouts[hud.layout_style]["belt"])
 	if (src.wear_id)
