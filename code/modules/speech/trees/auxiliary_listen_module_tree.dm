@@ -4,11 +4,14 @@
  *	frequently change between atoms with their own trees, such as clients or minds.
  */
 /datum/listen_module_tree/auxiliary
+	/// The name that this auxiliary listen module tree should display on the admin UI.
+	var/display_name = "Aux"
 	/// The listen module tree that this auxiliary listen module tree should add and remove its modules to and from.
 	var/datum/listen_module_tree/target_listen_tree
 
-/datum/listen_module_tree/auxiliary/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/effects = list(), list/controls = list(), list/languages = list(), datum/listen_module_tree/target_listen_tree)
+/datum/listen_module_tree/auxiliary/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/effects = list(), list/controls = list(), list/languages = list(), datum/listen_module_tree/target_listen_tree, display_name)
 	src.request_enable()
+	src.display_name = display_name
 
 	. = ..()
 	src.update_target_listen_tree(target_listen_tree)
