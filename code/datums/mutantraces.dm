@@ -598,7 +598,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
 								continue
 						var/obj/item/organ_get = src.mutant_organs[mutorgan]
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
 					return
 			if("reset") // Make everything mutant back into stock-ass human
 				if(!src.mutant_organs.len)
@@ -616,7 +616,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
 								continue
 						var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
 					return
 
 	/// Applies or removes the bioeffect associated with the mutantrace
@@ -714,6 +714,8 @@ TYPEINFO(/datum/mutantrace/blob)
 	voice_override = "bloop"
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
+
+	ghost_icon_state = "ghost-blob"
 
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
@@ -1112,7 +1114,18 @@ TYPEINFO(/datum/mutantrace/skeleton)
 	icon_state = "skeleton"
 	voice_override = "skelly"
 	mutant_organs = list("left_eye" = /obj/item/organ/eye/skeleton,
-	"right_eye" = /obj/item/organ/eye/skeleton)
+	"right_eye" = /obj/item/organ/eye/skeleton,\
+	"heart"=/obj/item/organ/heart/skeleton,\
+	"appendix"=/obj/item/organ/appendix/skeleton,\
+	"intestines"=/obj/item/organ/intestines/skeleton,\
+	"left_kidney"=/obj/item/organ/kidney/skeleton/left,\
+	"right_kidney"=/obj/item/organ/kidney/skeleton/right,\
+	"liver"=/obj/item/organ/liver/skeleton,\
+	"left_lung"=/obj/item/organ/lung/skeleton/left,\
+	"right_lung"=/obj/item/organ/lung/skeleton/right,\
+	"pancreas"=/obj/item/organ/pancreas/skeleton,\
+	"spleen"=/obj/item/organ/spleen/skeleton,\
+	"stomach"=/obj/item/organ/stomach/skeleton)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
@@ -1178,7 +1191,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			P.setup(src.mob.loc)
 			var/obj/item/I
 			I = src.mob.organHolder.drop_organ("head", src.mob)
-			I.loc = get_turf(src.mob)
+			if (I) I.loc = get_turf(src.mob)
 			var/list/limbs = list()
 			limbs += src.mob.limbs.l_arm?.remove(FALSE)
 			limbs += src.mob.limbs.r_arm?.remove(FALSE)
@@ -1538,6 +1551,8 @@ TYPEINFO(/datum/mutantrace/ithillid)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "gills"
 
+	ghost_icon_state = "ghost-squid"
+
 	say_verb()
 		return "glubs"
 
@@ -1584,6 +1599,8 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "fur"
 	override_limb_icons = TRUE
+
+	ghost_icon_state = "ghost-monkey"
 
 	on_attach(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1716,6 +1733,23 @@ TYPEINFO(/datum/mutantrace/seamonkey)
 	human_compatible = 0
 	uses_human_clothes = 0
 	override_language = LANGUAGE_MARTIAN
+	mutant_organs = list(\
+		"left_eye"=/obj/item/organ/eye/beady,\
+		"right_eye"=/obj/item/organ/eye/beady,\
+		"heart"=/obj/item/organ/heart/martian,\
+		"appendix"=/obj/item/organ/appendix/martian,\
+		"brain"=/obj/item/organ/brain/martian,\
+		"intestines"=/obj/item/organ/intestines/martian,\
+		"left_kidney"=/obj/item/organ/kidney/martian/left,\
+		"right_kidney"=/obj/item/organ/kidney/martian/right,\
+		"liver"=/obj/item/organ/liver/martian,\
+		"left_lung"=/obj/item/organ/lung/martian/left,\
+		"right_lung"=/obj/item/organ/lung/martian/right,\
+		"pancreas"=/obj/item/organ/pancreas/martian,\
+		"spleen"=/obj/item/organ/spleen/martian,\
+		"stomach"=/obj/item/organ/stomach/martian)
+
+	ghost_icon_state = "ghost-martian"
 
 /datum/mutantrace/stupidbaby
 	name = "stupid alien baby"
@@ -1921,6 +1955,21 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
+	mutant_organs = list(\
+		"left_eye"=/obj/item/organ/eye/beady,\
+		"right_eye"=/obj/item/organ/eye/beady,\
+		"heart"=/obj/item/organ/heart/amphibian,\
+		"appendix"=/obj/item/organ/appendix/amphibian,\
+		"brain"=/obj/item/organ/brain/amphibian,\
+		"intestines"=/obj/item/organ/intestines/amphibian,\
+		"left_kidney"=/obj/item/organ/kidney/amphibian/left,\
+		"right_kidney"=/obj/item/organ/kidney/amphibian/right,\
+		"liver"=/obj/item/organ/liver/amphibian,\
+		"left_lung"=/obj/item/organ/lung/amphibian/left,\
+		"right_lung"=/obj/item/organ/lung/amphibian/right,\
+		"pancreas"=/obj/item/organ/pancreas/amphibian,\
+		"spleen"=/obj/item/organ/spleen/amphibian,\
+		"stomach"=/obj/item/organ/stomach/amphibian)
 	special_head = HEAD_FROG
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
@@ -1928,6 +1977,8 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#22EE99"
+
+	ghost_icon_state = "ghost-amphibian"
 
 	say_verb()
 		return "croaks"
@@ -1939,7 +1990,6 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
 			M.bioHolder.AddEffect("accent_chav")
-
 
 	disposing()
 		if(ishuman(src.mob))
@@ -1975,6 +2025,21 @@ TYPEINFO(/datum/mutantrace/amphibian/shelter)
 	jerk = FALSE
 	var/permanent = 0
 	mutant_folder = 'icons/mob/shelterfrog.dmi'
+	mutant_organs = list(\
+		"left_eye"=/obj/item/organ/eye/shelterfrog,\
+		"right_eye"=/obj/item/organ/eye/shelterfrog,\
+		"heart"=/obj/item/organ/heart/amphibian,\
+		"appendix"=/obj/item/organ/appendix/amphibian,\
+		"brain"=/obj/item/organ/brain/amphibian,\
+		"intestines"=/obj/item/organ/intestines/amphibian,\
+		"left_kidney"=/obj/item/organ/kidney/amphibian/left,\
+		"right_kidney"=/obj/item/organ/kidney/amphibian/right,\
+		"liver"=/obj/item/organ/liver/amphibian,\
+		"left_lung"=/obj/item/organ/lung/amphibian/left,\
+		"right_lung"=/obj/item/organ/lung/amphibian/right,\
+		"pancreas"=/obj/item/organ/pancreas/amphibian,\
+		"spleen"=/obj/item/organ/spleen/amphibian,\
+		"stomach"=/obj/item/organ/stomach/amphibian)
 	special_head = HEAD_SHELTER
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/left
@@ -1982,6 +2047,8 @@ TYPEINFO(/datum/mutantrace/amphibian/shelter)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#91b978"
+
+	ghost_icon_state = "ghost-shelterfrog"
 
 TYPEINFO(/datum/mutantrace/kudzu)
 	icon = 'icons/mob/kudzu.dmi'
@@ -2263,6 +2330,7 @@ TYPEINFO(/datum/mutantrace/cow)
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
 				src.mob.update_clothing()
+				. = "<B>[used_name]</B> adjusts [his_or_her(src.mob)] clothing."
 			else
 				.= ..()
 

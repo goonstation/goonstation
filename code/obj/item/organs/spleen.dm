@@ -57,3 +57,22 @@ TYPEINFO(/obj/item/organ/spleen/cyber)
 	robotic = 1
 	edible = 0
 	created_decal = /obj/decal/cleanable/oil
+
+/obj/item/organ/spleen/amphibian
+	name = "amphibian spleen"
+	desc = "Yep. That sure is a spleen analogue."
+	icon_state = "amphibian_spleen"
+
+/obj/item/organ/spleen/skeleton
+	name = "skeleton pancreas"
+	desc = "Is this a spleen? Because it looks like a lump of bone to you."
+	icon_state = "skeleton_spleen"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/spleen/martian
+	name = "purple knob"
+	desc = "This is a spleen, you think."
+	icon_state = "martian_spleen"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

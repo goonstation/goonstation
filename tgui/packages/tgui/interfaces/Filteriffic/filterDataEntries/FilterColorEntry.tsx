@@ -85,7 +85,8 @@ export const FilterColorEntry = (props: FilterColorEntryProps) => {
                       step={0.01}
                       width="50px"
                       format={(v) => toFixed(v, 2)}
-                      onDrag={(v) => {
+                      tickWhileDragging
+                      onChange={(v) => {
                         let retColor = colmatrix;
                         retColor[row * 4 + col] = v;
                         act('transition_filter_value', {
@@ -122,14 +123,14 @@ export const FilterColorEntry = (props: FilterColorEntryProps) => {
         <Input
           value={value}
           width="90px"
-          onInput={(e, value) =>
+          onChange={(value) => {
             act('transition_filter_value', {
               name: filterName,
               new_data: {
                 [name]: value,
               },
-            })
-          }
+            });
+          }}
         />
         <Button
           onClick={() =>

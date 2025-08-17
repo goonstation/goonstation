@@ -640,7 +640,7 @@ datum
 							invisible_people += chosen
 
 				if(counter > 25)                   //some side effects (not using a switch statement so the stages stack)
-					if(M.get_brain_damage() <= 40)
+					if(M.get_brain_damage() <= BRAIN_DAMAGE_MODERATE)
 						M.take_brain_damage(1 * mult) //some amount of brain damage
 					if(probmult(9) && !ON_COOLDOWN(M, "heartbeat_hallucination", 60 SECONDS)) //play some hearbeat sounds
 						M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
@@ -651,7 +651,7 @@ datum
 				if (ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 
-					if(!isnull(invisible_group) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
+					if(!isnull(invisible_group) && (M.get_brain_damage() > BRAIN_DAMAGE_MINOR / 2))          //hits you and knocks you down for a little
 						M.visible_message(SPAN_ALERT("<B>[M]</B> starts convulsing violently!"),\
 											"You feel as if your body is tearing itself apart!")
 						M.setStatusMin("knockdown", 10 SECONDS)

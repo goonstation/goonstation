@@ -326,6 +326,15 @@
 		if(.)
 			return
 
+		var/what_is_changing = "unknown"
+		if (src.eject)
+			if (istype(src.eject, /obj/item/implantcase/access/unlimited) || istype(src.eject, /obj/item/implant/access/infinite))
+				what_is_changing = "unlimited access implant"
+			else if (istype(src.eject,/obj/item/implantcase/access) || istype(src.eject, /obj/item/implant/access))
+				what_is_changing = "limited access implant"
+		else if (istype(src.modify, /obj/item/card/id))
+			what_is_changing = "ID card"
+
 		switch(action)
 			if ("modify")
 				if (src.modify)
@@ -396,7 +405,7 @@
 						else
 							src.modify.access += access_type
 						src.modify.update_name()
-						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>) using [src.scan.registered]'s ID.")
+						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the [what_is_changing] (<b>[src.modify.registered]</b>) using [src.scan.registered]'s ID.")
 
 			if ("pronouns")
 				if (src.authenticated && src.modify)
@@ -417,11 +426,11 @@
 						if(!src.modify || !src.authenticated)
 							return
 						t1 = strip_html(t1, 100, 1)
-						logTheThing(LOG_STATION, usr, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
+						logTheThing(LOG_STATION, usr, "changes the assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 						playsound(src.loc, "keyboard", 50, 1, -15)
 					else
 						src.update_card_accesses(get_access(t1))
-						logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
+						logTheThing(LOG_STATION, usr, "changes the access and assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 					//Wire: This possibly happens after the input() above, so we re-do the initial checks
 					if (src.authenticated && src.modify)
@@ -440,7 +449,7 @@
 					t1 = strip_html(t1, 100, 1)
 
 					if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
-						logTheThing(LOG_STATION, usr, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
+						logTheThing(LOG_STATION, usr, "changes the registered name on the [what_is_changing]  from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 						src.modify.registered = t1
 
 						src.modify.update_name()
@@ -453,7 +462,7 @@
 
 					var/newpin = tgui_input_pin(usr, "Enter a new PIN between [PIN_MIN] and [PIN_MAX].", "ID Computer", null, PIN_MAX, PIN_MIN)
 					if (newpin && (src.authenticated && src.modify == currentcard && (in_interact_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
-						logTheThing(LOG_STATION, usr, "changes the pin on the ID card (<b>[src.modify.registered]</b>) to [src.modify.pin].")
+						logTheThing(LOG_STATION, usr, "changes the pin on the [what_is_changing] (<b>[src.modify.registered]</b>) to [src.modify.pin].")
 						src.modify.pin = newpin
 						playsound(src.loc, "keyboard", 50, 1, -15)
 
@@ -492,7 +501,7 @@
 				var/list/selected_access_list = src.custom_access_list[slot]
 				src.update_card_accesses(selected_access_list.Copy())
 				src.modify.update_name()
-				logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
+				logTheThing(LOG_STATION, usr, "changes the access and assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 			if ("modify")
 				src.modify.update_name()
 			if ("eject")

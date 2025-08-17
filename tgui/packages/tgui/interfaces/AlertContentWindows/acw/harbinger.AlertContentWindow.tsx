@@ -6,8 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  content: (
+const HarbingerContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You become a Harbinger of the Void!</h1>
       <p>1. Spawn your portal and take over the station with your horde</p>
@@ -39,5 +39,9 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Harbinger">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  component: HarbingerContentWindow,
 };

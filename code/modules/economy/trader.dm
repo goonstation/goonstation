@@ -34,7 +34,6 @@
 	var/list/failed_purchase_dialogue = null
 	var/pickupdialogue = null
 	var/pickupdialoguefailure = null
-	var/list/trader_area = null
 	var/doing_a_thing = 0
 	var/log_trades = TRUE
 
@@ -71,7 +70,6 @@
 
 	New()
 		dialogue = new/datum/dialogueMaster/traderGeneric(src)
-		src.trader_area = get_area(src)
 		..()
 
 	anger()
@@ -455,7 +453,7 @@
 		var/pickedloc = 0
 		var/found = 0
 
-		var/list/area_turfs = get_area_turfs(trader_area)
+		var/list/area_turfs = get_area_turfs(get_area(src))
 		if (!area_turfs || !length(area_turfs))
 			area_turfs = get_area_turfs( get_area(src) )
 
@@ -787,10 +785,16 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 /obj/npc/trader/random/contraband
 	commercetype = /datum/commodity/contraband
 	descriptions = list("legitimate goods", "perfectly legitimate goods", "extremely legitimate goods")
+	illegal = TRUE
 
 	New()
 		src.possible_icon_states = list("big_spide[pick("","-red","-blue","-green")]")
 		..()
+		// Prevent non-syndies from purchasing syndicate radio access.
+		for(var/datum/commodity/commodity in src.goods_sell)
+			if(istype(commodity, /datum/commodity/contraband/syndicate_headset))
+				src.goods_sell -= commodity
+				src.goods_illegal |= commodity
 
 //actually this just seems to be robotics upgrades and scrap metal?
 // /obj/npc/trader/random/salvage

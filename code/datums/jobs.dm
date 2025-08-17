@@ -9,6 +9,13 @@
 #define NANOTRASEN_LINK_COLOR "#3348ff"
 #define SYNDICATE_LINK_COLOR "#800"
 
+#define ANNOUNCE_ORDER_CAPTAIN 5
+#define ANNOUNCE_ORDER_HOP 4
+#define ANNOUNCE_ORDER_HOS 3
+#define ANNOUNCE_ORDER_HEADS 2
+#define ANNOUNCE_ORDER_LAST 1
+#define ANNOUNCE_ORDER_NEVER 0
+
 ABSTRACT_TYPE(/datum/job)
 /datum/job
 	var/name = null
@@ -53,7 +60,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/list/receives_implants = null //! List of object paths of implant types given on spawn.
 	var/receives_disk = FALSE //! Job spawns with cloning data disk, can specify a type
 	var/obj/item/clothing/suit/security_badge/badge = null //! Typepath of the badge to spawn the player with
-	var/announce_on_join = FALSE //! On join, send message to all players indicating who is fulfilling the role; primarily for heads of staff
+	var/world_announce_priority = ANNOUNCE_ORDER_NEVER //! On join, send message to all players indicating who is fulfilling the role; ordered by rank, ANNOUNCE_ORDER_NEVER to never announce
 	var/radio_announcement = TRUE //! The announcement computer will send a message when the player joins after round-start.
 	var/list/alt_names = list()
 	var/slot_card = /obj/item/card/id //! Object path of the ID card type to issue player. Overridden by `spawn_id`.
@@ -158,15 +165,7 @@ ABSTRACT_TYPE(/datum/job)
 			if (length(src.receives_implants))
 				for(var/obj/item/implant/implant as anything in src.receives_implants)
 					if(ispath(implant))
-						var/mob/living/carbon/human/H = M
-						var/obj/item/implant/I = new implant(M)
-						if (ispath(I, /obj/item/implant/health) && src.receives_disk && ishuman(M))
-							if (H.back?.storage)
-								var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
-								if (D)
-									var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
-									if (R)
-										R.fields["imp"] = "\ref[I]"
+						new implant(M)
 
 			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))
@@ -241,7 +240,7 @@ ABSTRACT_TYPE(/datum/job)
 		var/round_num = player.get_rounds_participated()
 		if (isnull(round_num)) //fetch failed, assume they're allowed because everything is probably broken right now
 			return TRUE
-		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
+		if (player?.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
 		if (round_num >= min && (round_num <= max || !max))
 			return TRUE
@@ -258,6 +257,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	job_category = JOB_COMMAND
 	unique = TRUE
+	world_announce_priority = ANNOUNCE_ORDER_HEADS
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -273,7 +273,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	high_priority_job = TRUE
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
-	announce_on_join = TRUE
+	world_announce_priority = ANNOUNCE_ORDER_CAPTAIN
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	wiki_link = "https://wiki.ss13.co/Captain"
 
@@ -321,7 +321,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	allow_antag_fallthrough = FALSE
 	receives_miranda = TRUE
-	announce_on_join = TRUE
+	world_announce_priority = ANNOUNCE_ORDER_HOP
 
 
 	slot_back = list(/obj/item/storage/backpack)
@@ -341,7 +341,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	requires_whitelist = TRUE
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
-	announce_on_join = TRUE
+	world_announce_priority = ANNOUNCE_ORDER_HOS
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 	badge = /obj/item/clothing/suit/security_badge
 	show_in_id_comp = FALSE
@@ -386,7 +386,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_engineer")
 	access_string = "Chief Engineer"
-	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -425,7 +424,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_scientist")
 	access_string = "Research Director"
-	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Research_Director"
 
 	slot_back = list(/obj/item/storage/backpack/research)
@@ -451,7 +449,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical")
 	access_string = "Medical Director"
-	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Medical_Director"
 
 	slot_back = list(/obj/item/storage/backpack/medic)
@@ -1013,6 +1010,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
+		M.traitHolder.removeTrait("cyber_incompatible")
 		return M.AIize()
 
 /datum/job/civilian/cyborg
@@ -1036,6 +1034,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		var/mob/living/silicon/S = M.Robotize_MK2()
 		APPLY_ATOM_PROPERTY(S, PROP_ATOM_ROUNDSTART_BORG, "borg")
+		S.traitHolder.removeTrait("cyber_incompatible")
 		return S
 
 // Special Cases
@@ -1197,7 +1196,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 0
 	wages = PAY_IMPORTANT
 	access_string = "Communications Officer"
-	announce_on_join = TRUE
+	world_announce_priority = ANNOUNCE_ORDER_LAST
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
 
 	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
@@ -1210,51 +1209,6 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_poc1 = list(/obj/item/pen/fancy)
 	slot_head = list(/obj/item/clothing/head/sea_captain/comm_officer_hat)
 	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/device/flash)
-
-/datum/job/special/radioshowhost
-	name = "Radio Show Host"
-	wages = PAY_TRADESMAN
-	linkcolor = CIVILIAN_LINK_COLOR
-	access_string = "Radio Show Host"
-#ifdef MAP_OVERRIDE_OSHAN
-	limit = 1
-	special_spawn_location = null
-#elif defined(MAP_OVERRIDE_NADIR)
-	limit = 1
-	special_spawn_location = null
-#else
-	limit = 1
-	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
-#endif
-	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
-	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
-	slot_card = /obj/item/card/id/civilian
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_belt = list(/obj/item/device/pda2)
-	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/coffee)
-	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
-	alt_names = list("Radio Show Host", "Talk Show Host")
-	change_name_on_spawn = TRUE
-	wiki_link = "https://wiki.ss13.co/Radio_Host"
-
-/datum/job/special/souschef
-	name = "Sous-Chef"
-	limit = 1
-	request_limit = 2
-	request_cost = PAY_DOCTORATE * 4
-	wages = PAY_UNTRAINED
-	trait_list = list("training_chef")
-	access_string = "Sous-Chef"
-	requires_supervisor_job = "Chef"
-	slot_belt = list(/obj/item/device/pda2/chef)
-	slot_jump = list(/obj/item/clothing/under/misc/souschef)
-	slot_foot = list(/obj/item/clothing/shoes/chef)
-	slot_head = list(/obj/item/clothing/head/souschefhat)
-	slot_suit = list(/obj/item/clothing/suit/apron)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	wiki_link = "https://wiki.ss13.co/Chef"
 
 /datum/job/special/stowaway
 	name = "Stowaway"
@@ -1379,10 +1333,53 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 	New()
 		..()
-		if (prob(40))
-			limit = 1
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
+
+/datum/job/special/random/radioshowhost
+	name = "Radio Show Host"
+	wages = PAY_TRADESMAN
+	request_cost = PAY_DOCTORATE * 4
+	access_string = "Radio Show Host"
+#ifdef MAP_OVERRIDE_OSHAN
+	special_spawn_location = null
+	linkcolor = CIVILIAN_LINK_COLOR
+	limit = 1
+#elif defined(MAP_OVERRIDE_NADIR)
+	special_spawn_location = null
+	linkcolor = CIVILIAN_LINK_COLOR
+	limit = 1
+#else
+	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
+#endif
+	request_limit = 1 // limited workspace
+	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
+	slot_eyes = list(/obj/item/clothing/glasses/regular)
+	slot_jump = list(/obj/item/clothing/under/shirt_pants)
+	slot_card = /obj/item/card/id/civilian
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/satchel)
+	slot_belt = list(/obj/item/device/pda2)
+	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/coffee)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
+	alt_names = list("Radio Show Host", "Talk Show Host")
+	change_name_on_spawn = TRUE
+	wiki_link = "https://wiki.ss13.co/Radio_Host"
+
+/datum/job/special/random/souschef
+	name = "Sous-Chef"
+	request_cost = PAY_DOCTORATE * 4
+	wages = PAY_UNTRAINED
+	trait_list = list("training_chef")
+	access_string = "Sous-Chef"
+	requires_supervisor_job = "Chef"
+	slot_belt = list(/obj/item/device/pda2/chef)
+	slot_jump = list(/obj/item/clothing/under/misc/souschef)
+	slot_foot = list(/obj/item/clothing/shoes/chef)
+	slot_head = list(/obj/item/clothing/head/souschefhat)
+	slot_suit = list(/obj/item/clothing/suit/apron)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	wiki_link = "https://wiki.ss13.co/Chef"
 
 /datum/job/special/random/hall_monitor
 	name = "Hall Monitor"
@@ -2310,7 +2307,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 
 /datum/job/special/syndicate/weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
-	slot_poc2 = list() //And also no ammo.
+	slot_poc1 = list() //And also no ammo.
 
 //Specialist operatives using nukie class gear
 ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
@@ -3023,7 +3020,6 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_jump = list(/obj/item/clothing/under/rank/assistant)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	announce_on_join = FALSE
 	add_to_manifest = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -3128,3 +3124,10 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 #undef SILICON_LINK_COLOR
 #undef NANOTRASEN_LINK_COLOR
 #undef SYNDICATE_LINK_COLOR
+
+#undef ANNOUNCE_ORDER_CAPTAIN
+#undef ANNOUNCE_ORDER_HOP
+#undef ANNOUNCE_ORDER_HOS
+#undef ANNOUNCE_ORDER_HEADS
+#undef ANNOUNCE_ORDER_LAST
+#undef ANNOUNCE_ORDER_NEVER

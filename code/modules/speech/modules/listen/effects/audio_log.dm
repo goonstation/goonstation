@@ -15,7 +15,7 @@
 		M.unlock_medal("Captain's Log", TRUE)
 
 	if (!audio_log.tape.add_message(message.speaker_to_display, message.content, audio_log.continuous))
-		audio_log.say("Memory full. Have a nice day.", flags = 0, message_params = list("speaker_to_display" = ""))
+		audio_log.say("Memory full. Have a nice day.", message_params = list("speaker_to_display" = ""))
 		audio_log.mode = MODE_OFF
 		audio_log.updateSelfDialog()
 

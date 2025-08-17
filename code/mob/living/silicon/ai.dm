@@ -340,7 +340,6 @@ or don't if it uses a custom topopen overlay
 	src.radio1 = new /obj/item/device/radio(src)
 	src.radio2 = new /obj/item/device/radio(src)
 	src.radio3 = new /obj/item/device/radio/headset/command/ai(src)
-	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
 	src.coreSkin = skinToApply
@@ -391,6 +390,8 @@ or don't if it uses a custom topopen overlay
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio3.icon_tooltip = "Artificial Intelligence"
 		src.radio3.toggle_microphone(FALSE)
+		//Spawn the PDA here after the client is already in the AI.
+		src.internal_pda = new /obj/item/device/pda2/ai(src)
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
 		if (src.brain && src.key)
@@ -415,7 +416,7 @@ or don't if it uses a custom topopen overlay
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
 
-		src.camera = new /obj/machinery/camera/auto/AI(src)
+		src.camera = new /obj/machinery/camera/AI(src)
 		src.camera.c_tag = src.real_name
 		src.camera.network = CAMERA_NETWORK_ROBOTS
 
@@ -1017,7 +1018,7 @@ or don't if it uses a custom topopen overlay
 	if (isghostdrone(user))
 		return list()
 
-	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
+	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name] ([src.get_pronouns()])!</B>")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
 
 	if (isdead(src))
 		. += SPAN_ALERT("[src.name] is nonfunctional...")
@@ -1466,38 +1467,6 @@ or don't if it uses a custom topopen overlay
 			else
 				src.aiRestorePowerRoutine = 0
 
-/mob/living/silicon/ai/process_killswitch()
-	var/message_mob = get_message_mob()
-
-	if(killswitch_at && killswitch)
-		var/killswitch_time = round((killswitch_at - TIME)/10, 1)
-
-		if(killswitch_time <= 10)
-			if(src.client)
-				boutput(message_mob, SPAN_ALERT("<b>Time left until Killswitch: [killswitch_time]</b>"))
-		if(killswitch_time <= 0)
-			if(src.client)
-				boutput(message_mob, SPAN_ALERT("<B>Killswitch Process Complete!</B>"))
-			killswitch = 0
-			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
-			// doink
-			src.brain.take_damage(20,20)
-			if(src.fire_res_on_core)
-				src.TakeDamage( null, src.health)
-			else
-				src.TakeDamage( null, src.health, src.health)
-			src.eject_brain()
-
-
-/mob/living/silicon/ai/process_locks()
-	if(weapon_lock)
-		src.setStatus("unconscious", 5 SECONDS)
-		weaponlock_time --
-		if(weaponlock_time <= 0)
-			if(src.client) boutput(src, SPAN_ALERT("<B>Hibernation Mode Timed Out!</B>"))
-			weapon_lock = 0
-			weaponlock_time = 120
-
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
 		if(src.fire_res_on_core)
@@ -1723,6 +1692,11 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "State Fake Laws"
 	src.state_fake_laws()
+
+/mob/living/silicon/ai/proc/ai_show_fake_laws()
+	set category = "AI Commands"
+	set name = "Show Fake Laws"
+	src.show_fake_laws()
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
@@ -2134,10 +2108,8 @@ or don't if it uses a custom topopen overlay
 	camera_overlay_check(C) //Add static if the camera is disabled
 
 	var/mob/message_mob = src.get_message_mob()
-	if (message_mob.client && message_mob.client.tooltipHolder)
-		for (var/datum/tooltip/t in message_mob.client.tooltipHolder.tooltips)
-			if (t.isStuck)
-				t.hide()
+	if (message_mob.client && message_mob.client.tooltips)
+		message_mob.client.tooltips.hideAllClickTips()
 
 	if (!src.deployed_to_eyecam)
 		src.eye_view()
@@ -2533,8 +2505,7 @@ proc/get_mobs_trackable_by_AI()
 		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
-	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_COMMAND)
 
 	last_announcement = world.time
 
@@ -2860,3 +2831,43 @@ proc/get_mobs_trackable_by_AI()
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
+
+/datum/statusEffect/lockdown/ai
+	id = "lockdown_ai"
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onUpdate(timePassed)
+		. = ..()
+		src.owner.setStatus("unconscious", 5 SECONDS)
+
+/datum/statusEffect/killswitch/ai
+	id = "killswitch_ai"
+	var/mob/living/silicon/ai/ai
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.ai = src.owner
+
+	onUpdate(timePassed)
+		. = ..()
+		var/time_remaining = round((src.duration)/10, 1)
+		var/message_mob = src.ai.get_message_mob()
+
+		if (time_remaining <= 10)
+			if(src.ai.client && message_mob)
+				boutput(message_mob, SPAN_ALERT("<b>Time left until Killswitch: [time_remaining]</b>"))
+
+	do_killswitch()
+		. = ..()
+		src.ai.brain.take_damage(20, 20)
+		src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
+		src.ai.eject_brain()

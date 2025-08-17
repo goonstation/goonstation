@@ -369,6 +369,10 @@
 /obj/proc/receive_silicon_hotkey(var/mob/user)
 	//A wee stub to handle other objects implementing the AI keys
 	//DEBUG_MESSAGE("[src] got a silicon hotkey from [user], containing: [user.client.check_key(KEY_OPEN) ? "KEY_OPEN" : ""] [user.client.check_key(KEY_BOLT) ? "KEY_BOLT" : ""] [user.client.check_key(KEY_SHOCK) ? "KEY_SHOCK" : ""]")
+	if (!isAI(user) && !issilicon(user))
+		return TRUE
+	if (!can_act(user))
+		return TRUE
 	return 0
 
 /obj/proc/mob_flip_inside(var/mob/user)
@@ -446,6 +450,8 @@
 		F.icon_state = "dbox_big"
 	F.w_class = W_CLASS_BULKY
 	if(!QDELETED(src))
+		src.pixel_x = initial(src.pixel_x)
+		src.pixel_y = initial(src.pixel_y)
 		src.was_deconstructed_to_frame(user)
 		F.RegisterSignal(src, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 	return F

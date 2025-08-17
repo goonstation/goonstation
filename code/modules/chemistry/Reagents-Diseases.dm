@@ -94,7 +94,7 @@ datum
 		disease/lungrot
 			name = "lungrot bloom"
 			id = "lungrot_bloom"
-			description = "highly toxic fungal colonies created in the enviroment of a weakened lung."
+			description = "highly toxic fungal colonies created in the environment of a weakened lung."
 			reagent_state = SOLID
 			minimum_to_infect = 7.5
 			fluid_r = 43
@@ -431,6 +431,17 @@ datum
 			transparency = 40
 			minimum_to_infect = 0.4
 			disease = /datum/ailment/parasite/bee_larva
+
+		disease/cluwnespider
+			name = "painbow eggs"
+			id = "painbow_eggs"
+			description = "the yolk of a monstrosity"
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 0
+			disease = /datum/ailment/parasite/cluwnespider
 
 		disease/concentrated_initro // please do not give a recipe, just a thing for testing heart-related things atm
 			name = "concentrated initropidril"

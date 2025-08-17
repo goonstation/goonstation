@@ -15,6 +15,7 @@ TYPEINFO_NEW(/obj/table)
 	density = 1
 	anchored = ANCHORED
 	flags = NOSPLASH
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
@@ -291,7 +292,7 @@ TYPEINFO_NEW(/obj/table)
 		else if (istype(W) && src.place_on(W, user, params))
 			return
 		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
-		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= 40 && rand(1, 10) < 10))
+		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= BRAIN_DAMAGE_MODERATE && rand(1, 10) < 10))
 			return
 
 		else
@@ -853,8 +854,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
 				/obj/item/storage/box/beakerbox,
 				/obj/item/reagent_containers/glass/beaker/large = 2,
-				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner = 2,
+				/obj/item/clothing/glasses/spectro = 2,
+				/obj/item/device/reagentscanner = 3,
 				/obj/item/reagent_containers/dropper/mechanical = 2,
 				/obj/item/reagent_containers/dropper = 2)
 
@@ -863,8 +864,6 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	desc = "Extra supplies for the discerning chemist."
 	drawer_contents = list(/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
-				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner,
 				/obj/item/bunsen_burner,
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
