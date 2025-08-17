@@ -66,7 +66,7 @@ export default (env = {}, argv) => {
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
       publicPath: '/',
-      assetModuleFilename: '[name][ext]', // TODO: check
+      assetModuleFilename: '[name][ext]',
     },
     resolve: {
       pnp: true,
@@ -136,10 +136,24 @@ export default (env = {}, argv) => {
           oneOf: [
             {
               issuer: /\.(s)?css$/,
+              use: [
+                {
+                  loader: 'string-replace-loader',
+                  options: {
+                    multiple: [{ search: /\r\n/g, replace: '\n', flags: 'g' }],
+                  },
+                },
+              ],
               type: 'asset/inline',
             },
             {
               use: [
+                {
+                  loader: 'string-replace-loader',
+                  options: {
+                    multiple: [{ search: /\r\n/g, replace: '\n', flags: 'g' }],
+                  },
+                },
                 {
                   loader: 'url-loader',
                   options: {
