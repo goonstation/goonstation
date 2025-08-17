@@ -155,9 +155,10 @@ function task-validate-build {
       foreach ($file in ($diffFiles -split "`n")) {
         if (-not [string]::IsNullOrWhiteSpace($file)) {
           Write-Output "=== Character-level diff for: $file ==="
-          # --word-diff=color shows character-level changes with colors
-          # --word-diff-regex=. treats each character as a "word"
-          git diff --word-diff=color --word-diff-regex=. "$file" | Select-Object -First 20
+          # Use full repository path for the diff to avoid path issues
+          Push-Location $rootdir
+          git diff --word-diff=color --word-diff-regex=. -- "$file" | Select-Object -First 20
+          Pop-Location
           Write-Output ""
         }
       }

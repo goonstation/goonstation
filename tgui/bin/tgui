@@ -162,9 +162,10 @@ task-validate-build() {
       echo "Attempting to show character-level differences (better for minified files):"
       for file in $(git diff --name-only "${target_dir_name}/*"); do
         echo "=== Character-level diff for: ${file} ==="
-        # --word-diff=color shows character-level changes with colors
-        # --word-diff-regex=. treats each character as a "word"
-        git diff --word-diff=color --word-diff-regex=. "${file}" | head -n 20
+        # Move to root directory to ensure file paths are correct
+        pushd "${root_dir}" > /dev/null
+        git diff --word-diff=color --word-diff-regex=. -- "${file}" | head -n 20
+        popd > /dev/null
         echo ""
       done
     fi
