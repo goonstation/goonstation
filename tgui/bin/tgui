@@ -164,7 +164,7 @@ task-validate-build() {
         echo "=== Character-level diff for: ${file} ==="
         # Move to root directory to ensure file paths are correct
         pushd "${root_dir}" > /dev/null
-        git diff --word-diff=color --word-diff-regex=. -- "${file}" | head -n 20
+        git diff --text --word-diff=color --word-diff-regex=. -- "${file}" | head -n 20
         popd > /dev/null
         echo ""
       done

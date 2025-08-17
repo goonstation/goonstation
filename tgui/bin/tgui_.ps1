@@ -157,7 +157,7 @@ function task-validate-build {
           Write-Output "=== Character-level diff for: $file ==="
           # Use full repository path for the diff to avoid path issues
           Push-Location $rootdir
-          git diff --word-diff=color --word-diff-regex=. -- "$file" | Select-Object -First 20
+          git diff --text --word-diff=color --word-diff-regex=. -- "$file" | Select-Object -First 20
           Pop-Location
           Write-Output ""
         }
