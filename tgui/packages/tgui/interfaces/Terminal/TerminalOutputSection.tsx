@@ -39,7 +39,7 @@ export const TerminalOutputSection = (props: TerminalOutputSectionProps) => {
       container_id="terminalOutput"
     >
       <Box
-        fontFamily="Consolas"
+        fontFamily="Comic Sans MS"
         fill
         color={fontColor}
         dangerouslySetInnerHTML={{ __html: displayHTML }}
