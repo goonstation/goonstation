@@ -21,43 +21,51 @@
 
 	switch (rand(1, 10))
 		if (1)
-			var/list/word_list = splittext(message.content, " ")
-			var/length = length(word_list)
-
-			if (length <= 1)
-				return
-
-			var/stutter_point = rand(round(length / 2), length)
-			word_list.len = stutter_point
-			message.content = jointext(word_list, " ")
-
-			for (var/i in 1 to rand(1, 3))
-				message.content += "-[uppertext(word_list[stutter_point])]"
+			APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(src, PROC_REF(stutter_text)))
 
 		if (2)
-			var/list/word_list = splittext(message.content, " ")
-			var/length = length(word_list)
-
-			if (length <= 1)
-				return
-
-			for (var/i in 1 to length)
-				if (!prob(min(5 * i, 20)))
-					continue
-
-				word_list[i] = pick("*BZZT*","*ERRT*","*WONK*", "*ZORT*", "*BWOP*", "BWEET")
-
-			message.content = jointext(word_list, " ")
+			APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(src, PROC_REF(corrupt_text)))
 
 		if (3)
+			APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(uppertext_wrapper)))
+
+		if (4)
 			message.speaker.visible_message("<span class='combat'><b>[message.speaker]'s speaker crackles oddly!</b></span>")
 			return NO_MESSAGE
 
-		if (4)
-			message.content = uppertext(message.content)
-
 		else // This is default behaviour, but is required to suppress a missing branches warning.
 			return
+
+/datum/speech_module/modifier/bot/bad/proc/stutter_text(string)
+	var/list/word_list = splittext(string, " ")
+	var/length = length(word_list)
+
+	if (length <= 1)
+		return
+
+	var/stutter_point = rand(round(length / 2), length)
+	word_list.len = stutter_point
+	string = jointext(word_list, " ")
+
+	for (var/i in 1 to rand(1, 3))
+		string += "-[uppertext(word_list[stutter_point])]"
+
+	return string
+
+/datum/speech_module/modifier/bot/bad/proc/corrupt_text(string)
+	var/list/word_list = splittext(string, " ")
+	var/length = length(word_list)
+
+	if (length <= 1)
+		return
+
+	for (var/i in 1 to length)
+		if (!prob(min(5 * i, 20)))
+			continue
+
+		word_list[i] = pick("*BZZT*","*ERRT*","*WONK*", "*ZORT*", "*BWOP*", "BWEET")
+
+	return jointext(word_list, " ")
 
 
 /datum/speech_module/modifier/bot/bootleg
@@ -68,7 +76,7 @@
 	if (!.)
 		return
 
-	message.content = uppertext(message.content)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(uppertext_wrapper)))
 	message.message_size_override = 3
 
 	var/font = ""
@@ -84,11 +92,11 @@
 				playsound(message.speaker.loc, 'sound/misc/amusingduck.ogg', 50, 0)
 
 			font = "Comic Sans MS"
-			message.content = pick("WACKA", "QUACK","QUACKY","GAGGLE")
+			message.content = MAKE_CONTENT_MUTABLE(pick("WACKA", "QUACK","QUACKY","GAGGLE"))
 
 	message.format_content_style_prefix = "<font face='[font]'>"
 	message.format_content_style_suffix = "</font>"
-	message.content = "[message.content]!!"
+	message.content += MAKE_CONTENT_MUTABLE("!!")
 
 
 /datum/speech_module/modifier/bot/chef
@@ -99,7 +107,7 @@
 	if (!.)
 		return
 
-	message.content = uppertext(message.content)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(uppertext_wrapper)))
 
 
 /datum/speech_module/modifier/bot/old
@@ -110,7 +118,7 @@
 	if (!.)
 		return
 
-	message.content = uppertext(message.content)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(uppertext_wrapper)))
 	message.format_content_style_prefix = "<span style=\"font-family: 'Consolas', monospace;\">"
 	message.format_content_style_suffix = "</span>"
 
@@ -125,7 +133,8 @@
 
 	var/obj/machinery/bot/secbot/bot = message.speaker
 	if (bot.emagged >= 2)
-		message.content = capitalize(ckeyEx(message.content))
+		APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ckeyEx_wrapper)))
+		APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(capitalize)))
 
 
 /datum/speech_module/modifier/bot/soviet
@@ -136,7 +145,7 @@
 	if (!.)
 		return
 
-	message.content = uppertext(message.content)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(uppertext_wrapper)))
 	message.format_content_style_prefix = "<font face='Curlz MT'>"
 	message.format_content_style_suffix = "</font>"
 
@@ -149,6 +158,6 @@
 	if (!.)
 		return
 
-	message.content = uppertext(message.content)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(uppertext_wrapper)))
 	message.format_content_style_prefix = "<font face='Segoe Script'><i><b>"
 	message.format_content_style_suffix = "</b></i></font>"
