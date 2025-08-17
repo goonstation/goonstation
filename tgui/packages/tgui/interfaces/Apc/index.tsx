@@ -123,7 +123,7 @@ const PoweredAreaApc = (_props: unknown) => {
   );
 };
 
-const UnpoweredAreaApc = (_props, context) => {
+const UnpoweredAreaApc = (_props) => {
   const { data } = useBackend<ApcData>();
   const { area_name, area_requires_power } = data;
   const isAccessPanelVisible = getIsAccessPanelVisible(data);

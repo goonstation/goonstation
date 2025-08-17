@@ -1,5 +1,5 @@
 /obj/machinery/camera
-	name = "security camera"
+	name = "autoname - SS13"
 	desc = "A small, high quality camera equipped with face and ID recognition. It is tied into a computer system, allowing AI and those with access to watch what occurs through it."
 	icon = 'icons/obj/camera.dmi'
 	icon_state = "camera"
@@ -18,7 +18,7 @@
 
 	layer = EFFECTS_LAYER_UNDER_1
 	/// The camera tag which identifies this camera
-	var/c_tag = null
+	var/c_tag = "autotag"
 	var/c_tag_order = 999
 	/// Whether the camera is on or off (bad var name)
 	var/camera_status = TRUE
@@ -27,8 +27,6 @@
 	var/invuln = FALSE
 	/// Cant be snipped by wirecutters
 	var/reinforced = FALSE
-	/// automatically offsets and snaps to perspective walls. Not for televisions or internal cameras.
-	var/sticky = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -76,7 +74,6 @@
 		src.network = CAMERA_NETWORK_AI_ONLY
 		src.color = "#9999cc"
 
-	src.autoposition()
 	src.set_camera_status(TRUE)
 
 	LAZYLISTINIT(src.viewers)
@@ -90,6 +87,18 @@
 
 	if (src.network in /obj/machinery/computer/camera_viewer::camera_networks)
 		src.minimap_types |= MAP_CAMERA_STATION
+
+	if (dd_hasprefix(src.name, "autoname"))
+		var/name_build_string = ""
+		if (src.prefix)
+			name_build_string += "[src.prefix] "
+
+		name_build_string += "camera"
+		if (src.uses_area_name)
+			var/area/A = get_area(src)
+			name_build_string += " - [A.name]"
+
+		src.name = name_build_string
 
 	SPAWN(1 SECOND)
 		addToNetwork()
@@ -324,150 +333,64 @@
 		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
 		add_fingerprint(user)
 
-/obj/machinery/camera/proc/autoposition()
-	// This will eventually be removed after wall cameras are repathed using an UpdatePaths script.
-	switch (src.dir)
-		if (NORTH, SOUTH)
-			src.pixel_x -= 10
-
-		if (EAST, WEST)
-			src.pixel_y += 10
-
-		if (NORTHWEST)
-			src.pixel_y -= 10
-			src.set_dir(WEST)
-
-		if (NORTHEAST)
-			src.pixel_y -= 10
-			src.set_dir(EAST)
-
-		if (SOUTHEAST)
-			src.pixel_x += 10
-			src.set_dir(SOUTH)
-
-		if (SOUTHWEST)
-			src.pixel_x += 10
-			src.set_dir(NORTH)
-
-	if (!src.sticky)
-		return
-
-	var/turf/T = null
-	var/list/directions = null
-	var/pixel_offset = 10 // this will get overridden if jen wall
-
-	T = get_step(src, turn(src.dir, 180)) // lets first check if we can attach to a wall with our dir
-	if (wall_window_check(T))
-		directions = list(turn(src.dir, 180))
-	else
-		directions = cardinal // check each direction
-
-	for (var/D as anything in directions)
-		T = get_step(src, D)
-		if (!wall_window_check(T))
-			continue
-
-		if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
-			pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
-		else
-			src.set_dir(turn(D, 180))
-
-		switch (D) // north facing ones don't need to be offset ofc
-			if (EAST)
-				src.pixel_x = pixel_offset
-			if (WEST)
-				src.pixel_x = -pixel_offset
-			if (NORTH)
-				src.pixel_y = pixel_offset * 2
-
 /// Adds the minimap component for the camera
 /obj/machinery/camera/proc/add_to_minimap()
 	src.AddComponent(/datum/component/minimap_marker/minimap, src.minimap_types, "camera", name=src.c_tag)
 
-/obj/machinery/camera/ranch
-	name = "autoname - ranch"
-	c_tag = "autotag"
-	network = CAMERA_NETWORK_RANCH
-	prefix = "ranch"
-	color = "#AAFF99"
+SET_UP_DIRECTIONALS(/obj/machinery/camera, OFFSETS_CAMERA)
+
+/obj/machinery/camera/cargo
+	name = "autoname - cargo"
+	color = "#daa85c"
+	network = CAMERA_NETWORK_CARGO
+	prefix = "routing"
+
+SET_UP_DIRECTIONALS(/obj/machinery/camera/cargo, OFFSETS_CAMERA)
+
 
 /obj/machinery/camera/mining
 	name = "autoname - mining"
+	color = "#daa85c"
 	network = CAMERA_NETWORK_MINING
 	prefix = "mining"
-	color = "#daa85c"
+
+SET_UP_DIRECTIONALS(/obj/machinery/camera/mining, OFFSETS_CAMERA)
+
+
+/obj/machinery/camera/ranch
+	name = "autoname - ranch"
+	color = "#AAFF99"
+	network = CAMERA_NETWORK_RANCH
+	prefix = "ranch"
+
+SET_UP_DIRECTIONALS(/obj/machinery/camera/ranch, OFFSETS_CAMERA)
+
 
 /obj/machinery/camera/science
 	name = "autoname - science"
+	color = "#efb4e5"
 	network = CAMERA_NETWORK_SCIENCE
 	prefix = "outpost"
-	color = "#efb4e5"
 
-/* ====== Auto Cameras ====== */
+SET_UP_DIRECTIONALS(/obj/machinery/camera/science, OFFSETS_CAMERA)
 
-/obj/machinery/camera/auto
-	name = "autoname"
-	c_tag = "autotag"
-	sticky = TRUE
 
-/obj/machinery/camera/auto/ranch
-	name = "autoname - ranch"
-	network = CAMERA_NETWORK_RANCH
-	prefix = "ranch"
-	color = "#AAFF99"
+/obj/machinery/camera/watchful_eye
+	name = "sensor"
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity."
+	network = "Eye"
 
-/// AI only camera
-/obj/machinery/camera/auto/AI
+SET_UP_DIRECTIONALS(/obj/machinery/camera/watchful_eye, OFFSETS_CAMERA)
+
+
+/obj/machinery/camera/AI
 	name = "autoname - AI"
+	color = "#9999cc"
 	network = CAMERA_NETWORK_AI_ONLY
 	prefix = "AI"
-	color = "#9999cc"
 
-/// Mining outpost cameras
-/obj/machinery/camera/auto/mining
-	name = "autoname - mining"
-	network = CAMERA_NETWORK_MINING
-	prefix = "mining"
-	color = "#daa85c"
 
-/// Science outpost cameras
-/obj/machinery/camera/auto/science
-	name = "autoname - science"
-	network = CAMERA_NETWORK_SCIENCE
-	prefix = "outpost"
-	color = "#efb4e5"
-
-/obj/machinery/camera/auto/cargo
-	name = "autoname - cargo"
-	network = CAMERA_NETWORK_CARGO
-	prefix = "routing"
-	color = "#daa85c"
-
-/// Invisible cameras for V-Space
-/obj/machinery/camera/auto/vspace
-	name = "autoname - V-Space"
-	network = CAMERA_NETWORK_VSPACE
-	prefix = "v-space"
-#ifdef IN_MAP_EDITOR
-	icon = 'icons/misc/buildmode.dmi'
-	icon_state = "buildappearance"
-#endif
-	invisibility = INVIS_ALWAYS
-	anchored = ANCHORED_ALWAYS
-	opacity = 0
-	density = 0
-	invuln = TRUE
-
-	New()
-		. = ..()
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-
-/// cameras for ghost observers
-/obj/machinery/camera/auto/ghost
+/obj/machinery/camera/public
 	name = "autoname - ghost"
 	network = null
 	prefix = "ghost"
@@ -478,36 +401,34 @@
 	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED_ALWAYS
 	opacity = 0
-	density = 0
 	invuln = TRUE
 
-	New()
-		. = ..()
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+/obj/machinery/camera/public/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+/obj/machinery/camera/public/disposing()
+	. = ..()
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
-/// "overhead" cameras
-/obj/machinery/camera/auto/public
-	name = "autoname - entertainment"
-	network = CAMERA_NETWORK_PUBLIC
-	prefix = "entertainment"
+
+/obj/machinery/camera/vspace
+	name = "autoname - V-Space"
+	network = CAMERA_NETWORK_VSPACE
+	prefix = "v-space"
 #ifdef IN_MAP_EDITOR
 	icon = 'icons/misc/buildmode.dmi'
 	icon_state = "buildappearance"
 #endif
 	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED_ALWAYS
+	opacity = 0
+	invuln = TRUE
 
-	New()
-		. = ..()
-		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+/obj/machinery/camera/vspace/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
-	disposing()
-		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-
-
-/obj/machinery/camera/auto/alt
+/obj/machinery/camera/vspace/disposing()
+	. = ..()
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)

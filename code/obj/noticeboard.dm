@@ -93,6 +93,8 @@
 	var/static/data = null
 	var/persistent_id = null
 
+SET_UP_DIRECTIONALS(/obj/noticeboard/persistent, OFFSETS_NOTICEBOARD)
+
 /obj/noticeboard/persistent/north
 	pixel_y = 32
 
