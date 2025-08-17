@@ -128,7 +128,7 @@ function task-validate-build {
     $crlfCheck = git diff --ignore-all-space --ignore-cr-at-eol ../browserassets/src/tgui/*
     if (-not $crlfCheck) {
       Write-Output "Note: The only difference appears to be line endings (LF vs CRLF)."
-      Write-Output "You may want to check your git configuration for core.autocrlf setting."
+      Write-Output "You may want to check your git core.autocrlf config."
 
       # Examine a sample of the differing files to show line endings
       $diffFiles = git diff --name-only ../browserassets/src/tgui/*
@@ -150,7 +150,6 @@ function task-validate-build {
       git diff --name-only ../browserassets/src/tgui/*
 
       Write-Output ""
-      Write-Output "Attempting to show character-level differences (better for minified files):"
       $diffFiles = git diff --name-only ../browserassets/src/tgui/*
       foreach ($file in ($diffFiles -split "`n")) {
         if (-not [string]::IsNullOrWhiteSpace($file)) {
