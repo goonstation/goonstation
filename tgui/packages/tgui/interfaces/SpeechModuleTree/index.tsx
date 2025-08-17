@@ -25,7 +25,7 @@ export const SpeechModuleTree = () => {
   const { data } = useBackend<SpeechModuleTreeProps>();
 
   return (
-    <Window title={data.title} width={660} height={740}>
+    <Window title={data.title} width={661} height={740}>
       <Window.Content scrollable className="SpeechModuleTree">
         <Section>
           <Table>

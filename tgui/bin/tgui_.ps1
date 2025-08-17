@@ -128,7 +128,7 @@ function task-validate-build {
     $crlfCheck = git diff --ignore-all-space --ignore-cr-at-eol ../browserassets/src/tgui/*
     if (-not $crlfCheck) {
       Write-Output "Note: The only difference appears to be line endings (LF vs CRLF)."
-      Write-Output "You may want to check your git configuration for core.autocrlf setting."
+      Write-Output "You may want to check your git core.autocrlf config."
 
       # Examine a sample of the differing files to show line endings
       $diffFiles = git diff --name-only ../browserassets/src/tgui/*
@@ -146,13 +146,22 @@ function task-validate-build {
     } else {
       Write-Output "There are content differences beyond just line endings."
 
-      # Display the number of changed files
-      $changedFiles = (git diff --name-only ../browserassets/src/tgui/* | Measure-Object -Line).Lines
-      Write-Output "Number of changed files: $changedFiles"
-    }
+      Write-Output "Changed files:"
+      git diff --name-only ../browserassets/src/tgui/*
 
-    # Show the diff for debugging
-    Write-Output "Diff: $diff"
+      Write-Output ""
+      $diffFiles = git diff --name-only ../browserassets/src/tgui/*
+      foreach ($file in ($diffFiles -split "`n")) {
+        if (-not [string]::IsNullOrWhiteSpace($file)) {
+          Write-Output "=== Character-level diff for: $file ==="
+          # Use full repository path for the diff to avoid path issues
+          Push-Location $rootdir
+          git diff --text --word-diff=color --word-diff-regex=. -- "$file" | Select-Object -First 20
+          Pop-Location
+          Write-Output ""
+        }
+      }
+    }
     exit 1
   }
   Write-Output "tgui: build is ok"
