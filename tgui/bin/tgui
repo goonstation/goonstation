@@ -137,7 +137,7 @@ task-validate-build() {
     crlfCheck="$(git diff --ignore-all-space --ignore-cr-at-eol --text "${target_dir_name}/*")"
     if [[ -z ${crlfCheck} ]]; then
       echo "Note: The only difference appears to be line endings (LF vs CRLF)."
-      echo "You may want to check your git configuration for core.autocrlf setting."
+      echo "You may want to check your git core.autocrlf config."
 
       # Examine a sample of the differing files to show line endings
       local diffFiles
@@ -155,14 +155,19 @@ task-validate-build() {
     else
       echo "There are content differences beyond just line endings."
 
-      # Display the number of changed files
-      local changedFiles
-      changedFiles="$(git diff --name-only "${target_dir_name}/*" | wc -l)"
-      echo "Number of changed files: ${changedFiles}"
-    fi
+      echo "Changed files:"
+      git diff --name-only "${target_dir_name}/*"
 
-    # Show the diff for debugging
-    echo "Diff: ${diff}"
+      echo ""
+      for file in $(git diff --name-only "${target_dir_name}/*"); do
+        echo "=== Character-level diff for: ${file} ==="
+        # Move to root directory to ensure file paths are correct
+        pushd "${root_dir}" > /dev/null
+        git diff --text --word-diff=color --word-diff-regex=. -- "${file}" | head -n 20
+        popd > /dev/null
+        echo ""
+      done
+    fi
     exit 1
   fi
   echo "tgui: build is ok"
