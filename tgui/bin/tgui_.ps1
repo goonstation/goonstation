@@ -146,9 +146,21 @@ function task-validate-build {
     } else {
       Write-Output "There are content differences beyond just line endings."
 
-      # Display the number of changed files
-      $changedFiles = (git diff --name-only ../browserassets/src/tgui/* | Measure-Object -Line).Lines
-      Write-Output "Number of changed files: $changedFiles"
+      Write-Output "Changed files:"
+      git diff --name-only ../browserassets/src/tgui/*
+
+      Write-Output ""
+      Write-Output "Attempting to show character-level differences (better for minified files):"
+      $diffFiles = git diff --name-only ../browserassets/src/tgui/*
+      foreach ($file in ($diffFiles -split "`n")) {
+        if (-not [string]::IsNullOrWhiteSpace($file)) {
+          Write-Output "=== Character-level diff for: $file ==="
+          # --word-diff=color shows character-level changes with colors
+          # --word-diff-regex=. treats each character as a "word"
+          git diff --word-diff=color --word-diff-regex=. "$file" | Select-Object -First 20
+          Write-Output ""
+        }
+      }
     }
 
     # Show the diff for debugging
