@@ -101,7 +101,7 @@
 	if (!can_reach(user, target))
 		return
 	if(destroying)
-		if(istype(target, /obj/machinery/atmospherics) || istype(target, /obj/fluid_pipe) || istype(target, /obj/machinery/fluid_pipe_machinery))
+		if(istype(target, /obj/machinery/atmospherics) || istype(target, /obj/fluid_pipe) || istype(target, /obj/machinery/fluid_machinery))
 			if(src.exemptedtypes[target.type]) //hilarium
 				actions.start(new /datum/action/bar/hpd_exemption_failure(target, user, src), user)
 				return
@@ -123,7 +123,7 @@
 		else
 			var/obj/fluid_pipe/fluidthingy
 			for(var/obj/device in target)
-				if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_pipe_machinery))
+				if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_machinery))
 					continue
 				fluidthingy = device
 				if((fluidthingy.initialize_directions & directs))
@@ -612,29 +612,29 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 
 	fluidinlet
 		name = "Inlet pump"
-		path = /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/overfloor
+		path = /obj/machinery/fluid_machinery/unary/drain/inlet_pump/overfloor
 		icon_state = "fluidinlet"
 		desc = "Drains between 10-15 units of fluid actively."
 
 	handpump
 		name = "Hand pump"
-		path = /obj/machinery/fluid_pipe_machinery/unary/hand_pump
+		path = /obj/machinery/fluid_machinery/unary/hand_pump
 		icon_state = "handpump"
 		desc = "Pumps out up to 100 units of fluid manually."
 
 	nullifier
 		name = "Nullifier"
-		path = /obj/machinery/fluid_pipe_machinery/unary/nullifier
+		path = /obj/machinery/fluid_machinery/unary/nullifier
 		icon_state = "nullifier"
 		desc = "Disappears up to 50 unit."
 	port
 		name = "Port"
-		path = /obj/machinery/fluid_pipe_machinery/unary/input
+		path = /obj/machinery/fluid_machinery/unary/input
 		icon_state = "port"
 		desc = "Allows pouring in fluids into the network directly and connecting glass plumbing."
 	dispenser
 		name = "Dispenser"
-		path = /obj/machinery/fluid_pipe_machinery/unary/dispenser
+		path = /obj/machinery/fluid_machinery/unary/dispenser
 		icon_state = "dispenser"
 		desc = "Capable of printing patches, vials, and pills."
 
@@ -649,12 +649,12 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/binary)
 
 	fluidpump
 		name = "Fluid pump"
-		path = /obj/machinery/fluid_pipe_machinery/binary/pump
+		path = /obj/machinery/fluid_machinery/binary/pump
 		icon_state = "fluidpump"
 		desc = "Pumps from one network to another at up to 200 units per pump."
 	fluidvalve
 		name = "Fluid valve"
-		path = /obj/machinery/fluid_pipe_machinery/binary/valve
+		path = /obj/machinery/fluid_machinery/binary/valve
 		icon_state = "fluidvalve"
 		desc = "Connects two networks together when the valve is open."
 
@@ -672,7 +672,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/trinary)
 				return WEST|NORTH|EAST
 	filter
 		name = "Fluid Filter"
-		path = /obj/machinery/fluid_pipe_machinery/trinary/filter
+		path = /obj/machinery/fluid_machinery/trinary/filter
 		icon_state = "fluidfilter"
 		desc = "Separates fluid to the side. Requires a beaker with a minimum of 1 unit of the desired chem to filter. The largest volume is chosen."
 

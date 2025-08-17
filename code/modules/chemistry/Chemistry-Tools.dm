@@ -763,7 +763,7 @@ proc/ui_describe_reagents(atom/A)
 			try_adding_container(over_object, usr)
 		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel)) //barrels don't need to be open for condensers because it would be annoying I think
 			try_adding_container(over_object, usr)
-		if (istype(over_object, /obj/machinery/fluid_pipe_machinery/unary/input)) //hehe
+		if (istype(over_object, /obj/machinery/fluid_machinery/unary/input)) //hehe
 			try_adding_container(over_object, usr)
 
 	set_loc(newloc, storage_check)
