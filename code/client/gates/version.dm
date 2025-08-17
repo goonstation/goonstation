@@ -1,6 +1,5 @@
 /datum/client_auth_gate/version
 	check(client/C)
-
 		#ifndef LIVE_SERVER
 		. = TRUE
 		UNLINT(return)
