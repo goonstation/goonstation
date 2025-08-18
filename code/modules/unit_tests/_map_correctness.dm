@@ -21,6 +21,7 @@ proc/check_map_correctness()
 	check_turf_underlays()
 	check_mass_drivers()
 	check_stacked_tables()
+	check_directional_objects()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -228,5 +229,41 @@ proc/check_stacked_tables()
 				continue // we found one dupe, bail
 	if (log_msg)
 		CRASH(log_msg)
+
+proc/check_directional_objects()
+	var/list/log_lines = list()
+	for_by_tcl(directional, /datum/component/directional)
+		if (directional.flags & DOES_NOT_REQUIRE_WALL)
+			continue
+
+		var/atom/A = directional.parent
+		var/turf/T = get_step(A, A.dir)
+		if (!isturf(T))
+			continue
+
+		// The turf is a wall.
+		if (istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall))
+			continue
+
+		// The turf has a window in its contents.
+		if ((locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+			continue
+
+		// The turf has a girder in its contents.
+		if (locate(/obj/structure/girder) in T)
+			continue
+
+		// The turf has a grille in its contents.
+		if (locate(/obj/mesh/grille) in T)
+			continue
+
+		// Escape cameras.
+		if (istype(get_area(T), /area/shuttle/escape))
+			continue
+
+		log_lines += "[A] [A.type] on [A.x], [A.y], [A.z] in [T.loc]"
+
+	if (length(log_lines))
+		CRASH("Directional objects without supporting walls:\n" + jointext(log_lines, "\n"))
 
 #endif
