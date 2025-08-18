@@ -37,6 +37,7 @@ const Story = () => {
             onClick={() =>
               setTimeout(() => {
                 try {
+                  // eslint-disable-next-line sonarjs/code-eval
                   const result = new Function('return (' + code + ')')();
                   if (result && result.then) {
                     logger.log('Promise');

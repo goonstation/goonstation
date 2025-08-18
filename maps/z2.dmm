@@ -1062,7 +1062,7 @@
 /area/hospital/samostrel)
 "afV" = (
 /obj/fakeobject/firealarm_broken{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/unsimulated/floor{
@@ -2090,7 +2090,8 @@
 /area/hospital)
 "akT" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
@@ -3991,7 +3992,7 @@
 /area/hospital/samostrel)
 "atf" = (
 /obj/fakeobject/firealarm_broken{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/unsimulated/floor,
@@ -6920,7 +6921,8 @@
 /area/owlery/gangzone)
 "aJa" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/unsimulated/floor/black{
 	dir = 1
@@ -7168,7 +7170,8 @@
 /area/marsoutpost)
 "aJY" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
@@ -9271,7 +9274,8 @@
 /area/marsoutpost)
 "aQL" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/unsimulated/floor/stairs/wide{
 	dir = 4
@@ -13273,7 +13277,8 @@
 /area/marsoutpost/duststorm)
 "bec" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
@@ -13581,7 +13586,8 @@
 "bfa" = (
 /obj/table/auto,
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/unsimulated/floor/yellow{
 	dir = 4
@@ -23372,13 +23378,6 @@
 	icon_state = "fred1"
 	},
 /area/crunch)
-"bOQ" = (
-/obj/fakeobject/firealarm_broken{
-	dir = 4;
-	pixel_x = -24
-	},
-/turf/unsimulated/floor,
-/area/crunch)
 "bOR" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -24198,7 +24197,7 @@
 /area/crunch)
 "bRv" = (
 /obj/fakeobject/firealarm_broken{
-	dir = 1;
+	dir = 2;
 	pixel_y = -24
 	},
 /turf/unsimulated/floor,
@@ -24235,7 +24234,7 @@
 "bRE" = (
 /obj/table/auto,
 /obj/fakeobject/firealarm_broken{
-	dir = 1;
+	dir = 2;
 	pixel_y = -24
 	},
 /obj/item/c_tube{
@@ -27309,10 +27308,8 @@
 	},
 /area/crunch)
 "cdP" = (
-/obj/item/bballbasket{
-	anchored = 1;
-	dir = 8;
-	pixel_x = -20
+/obj/item/bballbasket/mounted{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "0,3"
@@ -27349,10 +27346,8 @@
 	},
 /area/sim/bball)
 "cdW" = (
-/obj/item/bballbasket{
-	anchored = 1;
-	dir = 4;
-	pixel_x = 20
+/obj/item/bballbasket/mounted{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "c13"
@@ -27488,7 +27483,7 @@
 /area/sim/bball)
 "ceI" = (
 /obj/fakeobject/firealarm_broken{
-	dir = 1;
+	dir = 2;
 	pixel_y = -24
 	},
 /turf/unsimulated/floor,
@@ -61103,7 +61098,8 @@
 	name = "grimy pipe"
 	},
 /obj/fakeobject/firealarm_broken{
-	pixel_y = -24
+	pixel_y = -24;
+	dir = 2
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -61501,7 +61497,8 @@
 	tag = "icon-intact (NORTHWEST)"
 	},
 /obj/fakeobject/firealarm_broken{
-	pixel_y = -24
+	pixel_y = -24;
+	dir = 2
 	},
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
@@ -72098,7 +72095,7 @@
 	name = "grimy pipe"
 	},
 /obj/fakeobject/firealarm_broken{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/unsimulated/floor{
@@ -86089,7 +86086,7 @@ bKw
 bKw
 bKw
 bQi
-bOQ
+cdl
 ciH
 ciV
 cjA
@@ -92678,7 +92675,7 @@ bLn
 bNx
 bLn
 bOu
-bOQ
+cdl
 bPn
 bPE
 bLn

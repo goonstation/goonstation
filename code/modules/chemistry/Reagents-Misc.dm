@@ -3347,7 +3347,7 @@ datum
 						// Real world changeling tests should only happen in containers at a slow pace
 						if (!ON_COOLDOWN(global, "bloodc_logging", 4 SECONDS))
 							var/datum/bioHolder/bioHolder = src.data
-							if(bioHolder && bioHolder.ownerName)
+							if(istype(bioHolder) && bioHolder.ownerName)
 								logTheThing(LOG_COMBAT, bioHolder.ownerName, "Changeling blood reaction in [holder.my_atom] at [log_loc(holder.my_atom)]")
 					else
 						for(var/turf/t in covered)

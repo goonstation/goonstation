@@ -48,6 +48,7 @@
 		if (istext(src.thing_to_spawn)) //if it's a string then it's (hopefully) a job name
 			var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(src.get_spawn_loc())
 			M.initializeBioholder(gender) //try to preserve gender if we can
+			M.job = src.thing_to_spawn
 			SPAWN(0)
 				M.JobEquipSpawned(src.thing_to_spawn)
 			return M
