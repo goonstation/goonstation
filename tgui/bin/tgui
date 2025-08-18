@@ -131,7 +131,43 @@ task-validate-build() {
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
-    echo "Diff: ${diff}"
+
+    # Check if the difference might just be line endings
+    local crlfCheck
+    crlfCheck="$(git diff --ignore-all-space --ignore-cr-at-eol --text "${target_dir_name}/*")"
+    if [[ -z ${crlfCheck} ]]; then
+      echo "Note: The only difference appears to be line endings (LF vs CRLF)."
+      echo "You may want to check your git core.autocrlf config."
+
+      # Examine a sample of the differing files to show line endings
+      local diffFiles
+      diffFiles="$(git diff --name-only "${target_dir_name}/*")"
+      if [[ -n ${diffFiles} ]]; then
+        local sampleFile
+        sampleFile="$(echo "${diffFiles}" | head -n 1)"
+        if [[ -n ${sampleFile} ]]; then
+          echo "Examining line endings in file: ${sampleFile}"
+          if command -v file >/dev/null 2>&1; then
+            file "${sampleFile}"
+          fi
+        fi
+      fi
+    else
+      echo "There are content differences beyond just line endings."
+
+      echo "Changed files:"
+      git diff --name-only "${target_dir_name}/*"
+
+      echo ""
+      for file in $(git diff --name-only "${target_dir_name}/*"); do
+        echo "=== Character-level diff for: ${file} ==="
+        # Move to root directory to ensure file paths are correct
+        pushd "${root_dir}" > /dev/null
+        git diff --text --word-diff=color --word-diff-regex=. -- "${file}"
+        popd > /dev/null
+        echo ""
+      done
+    fi
     exit 1
   fi
   echo "tgui: build is ok"

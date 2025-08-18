@@ -96,7 +96,7 @@ export const SpawnEvent = () => {
                   minValue={0}
                   maxValue={120}
                   step={1}
-                  onDrag={(spawn_delay) =>
+                  onChange={(spawn_delay) =>
                     act('set_spawn_delay', { spawn_delay: spawn_delay * 10 })
                   }
                   disabled={!ask_permission}
@@ -118,7 +118,7 @@ export const SpawnEvent = () => {
                 minValue={1}
                 maxValue={100}
                 step={1}
-                onDrag={(amount) => act('set_amount', { amount })}
+                onChange={(amount) => act('set_amount', { amount })}
               />
               {`/${eligible_player_count} `}
               <Button

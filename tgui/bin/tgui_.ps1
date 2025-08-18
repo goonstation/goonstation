@@ -123,7 +123,45 @@ function task-validate-build {
   if ($diff) {
     Write-Output "Error: our build differs from the build committed into git."
     Write-Output "Please rebuild tgui."
-    Write-Output "Diff: $diff"
+
+    # Check if the difference might just be line endings
+    $crlfCheck = git diff --ignore-all-space --ignore-cr-at-eol ../browserassets/src/tgui/*
+    if (-not $crlfCheck) {
+      Write-Output "Note: The only difference appears to be line endings (LF vs CRLF)."
+      Write-Output "You may want to check your git core.autocrlf config."
+
+      # Examine a sample of the differing files to show line endings
+      $diffFiles = git diff --name-only ../browserassets/src/tgui/*
+      if ($diffFiles) {
+        $sampleFile = $diffFiles -split "`n" | Select-Object -First 1
+        if ($sampleFile) {
+          Write-Output "Examining line endings in file: $sampleFile"
+          $fileContent = Get-Content -Raw $sampleFile
+          $hasLF = $fileContent -match "`n" -and $fileContent -notmatch "`r`n"
+          $hasCRLF = $fileContent -match "`r`n"
+          Write-Output "File contains LF (Unix) line endings: $hasLF"
+          Write-Output "File contains CRLF (Windows) line endings: $hasCRLF"
+        }
+      }
+    } else {
+      Write-Output "There are content differences beyond just line endings."
+
+      Write-Output "Changed files:"
+      git diff --name-only ../browserassets/src/tgui/*
+
+      Write-Output ""
+      $diffFiles = git diff --name-only ../browserassets/src/tgui/*
+      foreach ($file in ($diffFiles -split "`n")) {
+        if (-not [string]::IsNullOrWhiteSpace($file)) {
+          Write-Output "=== Character-level diff for: $file ==="
+          # Use full repository path for the diff to avoid path issues
+          Push-Location $rootdir
+          git diff --text --word-diff=color --word-diff-regex=. -- "$file"
+          Pop-Location
+          Write-Output ""
+        }
+      }
+    }
     exit 1
   }
   Write-Output "tgui: build is ok"

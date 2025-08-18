@@ -74,7 +74,7 @@ export const ReagentDisplay = (props) => {
               minValue={1}
               maxValue={max_volume}
               step={1}
-              onDrag={(value) => set_remove_amount(Math.round(value))}
+              onChange={(value) => set_remove_amount(Math.round(value))}
             />
           </Box>
         </>
@@ -242,7 +242,7 @@ export const AmountInputControl = (props) => {
         minValue={5}
         maxValue={max_amount}
         step={1}
-        onDrag={(value) => set_amount(Math.round(value))}
+        onChange={(value) => set_amount(Math.round(value))}
       />
     </LabeledControls.Item>
   );
