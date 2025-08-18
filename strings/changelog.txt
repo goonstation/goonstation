@@ -1,4 +1,7 @@
 
+(t)sun aug 17 25
+(u)ZeWaka
+(+)Chat and the changelog now support Emoji 16 (even if Windows doesn't...). Enjoy your root vegetables. 🫟
 (t)fri aug 15 25
 (u)JORJ949
 (p)24397
