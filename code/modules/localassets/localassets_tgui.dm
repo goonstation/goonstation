@@ -41,15 +41,15 @@
 /datum/asset/basic/fontawesome
 	local_assets = list(
 		"fa-all.min.css",
-		"fa-regular-400.ttf",
-		"fa-solid-900.ttf"
+		"fa-regular-400.woff2",
+		"fa-solid-900.woff2"
 	)
 
 	init()
 		. = ..()
 		url_map = list(
-			"fa-regular-400.ttf"	= "[resource("css/fonts/fa-regular-400.ttf")]",
-			"fa-solid-900.ttf"		= "[resource("css/fonts/fa-solid-900.ttf")]",
+			"fa-regular-400.woff2"	= "[resource("vendor/fonts/fa-regular-400.woff2")]",
+			"fa-solid-900.woff2"	= "[resource("vendor/fonts/fa-solid-900.woff2")]",
 			"fa-all.min.css"		= "[resource("vendor/css/tgui/fa-all.min.css")]",
 		)
 
