@@ -996,18 +996,3 @@
 				logTheThing(LOG_ADMIN, null, msg)
 				logTheThing(LOG_DIARY, null, msg, "admin")
 				return FALSE
-
-			if ("legacy_discord_auth_callback")
-				var/preauth_ckey = plist["preauth_ckey"]
-
-				for (var/client/C in pre_auth_clients)
-					if (C.ckey == preauth_ckey)
-						if (istype(C.client_auth_provider, /datum/client_auth_provider/goonhub))
-							var/datum/client_auth_provider/goonhub/provider = C.client_auth_provider
-							provider.show_external("authed")
-							return TRUE
-
-				var/msg = "Failed to find pre-auth client for [preauth_ckey] during legacy Discord auth callback"
-				logTheThing(LOG_ADMIN, null, msg)
-				logTheThing(LOG_DIARY, null, msg, "admin")
-				return FALSE

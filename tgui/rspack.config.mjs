@@ -66,7 +66,7 @@ export default (env = {}, argv) => {
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
       publicPath: '/',
-      assetModuleFilename: '[name][ext]', // TODO: check
+      assetModuleFilename: '[name][ext]',
     },
     resolve: {
       pnp: true,
@@ -137,18 +137,29 @@ export default (env = {}, argv) => {
             {
               issuer: /\.(s)?css$/,
               type: 'asset/inline',
-            },
-            {
-              use: [
-                {
-                  loader: 'url-loader',
-                  options: {
-                    esModule: false,
-                    outputPath: 'assets/',
-                    publicPath: '/assets/',
+              generator: {
+                encoding: 'base64',
+                transformation: {
+                  transformer: (content) => {
+                    return Buffer.from(
+                      content.toString().replace(/\r\n/g, '\n'),
+                    );
                   },
                 },
-              ],
+              },
+            },
+            {
+              type: 'asset/resource',
+              generator: {
+                filename: 'assets/[name][ext]',
+                transformation: {
+                  transformer: (content) => {
+                    return Buffer.from(
+                      content.toString().replace(/\r\n/g, '\n'),
+                    );
+                  },
+                },
+              },
             },
           ],
         },
