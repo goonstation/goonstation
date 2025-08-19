@@ -259,7 +259,7 @@ proc/check_directional_objects()
 
 		// Special areas that are permitted invalid directional objects.
 		var/area/area = get_area(T)
-		if (istype(area, /area/shuttle/escape) || istype(area, /area/dmm_suite))
+		if (istype(area, /area/shuttle/escape))
 			continue
 
 		log_lines += "[A] [A.type] on [A.x], [A.y], [A.z] in [T.loc]"
