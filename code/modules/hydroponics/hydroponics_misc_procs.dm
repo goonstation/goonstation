@@ -147,7 +147,7 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 
 
-proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
+proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD, var/pass_alleles = FALSE)
 	if(!PARENT || !CHILD)
 		return
 	// This is a proc used to copy genes from PARENT to CHILD. It's used in a whole bunch
@@ -160,6 +160,15 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 	CHILD.cropsize = PARENT.cropsize
 	CHILD.potency = PARENT.potency
 	CHILD.endurance = PARENT.endurance
+	// if applicable, also pass the alleles from parent to child.
+	if (pass_alleles)
+		CHILD.d_species = PARENT.d_species
+		CHILD.d_growtime = PARENT.d_growtime
+		CHILD.d_harvtime = PARENT.d_harvtime
+		CHILD.d_harvests = PARENT.d_harvests
+		CHILD.d_cropsize = PARENT.d_cropsize
+		CHILD.d_potency = PARENT.d_potency
+		CHILD.d_endurance = PARENT.d_endurance
 	// using the same list as the parent as adding new items is what creates a new list
 	CHILD.commuts = PARENT.commuts
 	if(MUT) CHILD.mutation = new MUT.type(CHILD)
@@ -167,15 +176,16 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
 			checked_strain.on_passing(CHILD)
 
-proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create, charge_quantity = 1)
+proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create,
+						 charge_quantity = 1, randomise_alleles = TRUE)
 	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
 	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
 	charge_quantity = max(charge_quantity, 1) // Assume whoever called this wants a seed regardless, don't deal with returning nulls.
 	var/obj/item/seed/child
 	if (parent_planttype.unique_seed)
-		child = new parent_planttype.unique_seed(location_to_create)
+		child = new parent_planttype.unique_seed(location_to_create, randomise_alleles)
 	else
-		child = new /obj/item/seed(location_to_create)
+		child = new /obj/item/seed(location_to_create, randomise_alleles)
 	child.charges = charge_quantity
 	if (child.charges > 1) child.inventory_counter.update_number(child.charges)
 	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
@@ -199,7 +209,7 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 	child.name = "[seedname] seed"
 	if (charge_quantity > 1) child.name += " packet"
 	//What's missing is transfering genes and the generation
-	HYPpassplantgenes(parent_genes, child_genes)
+	HYPpassplantgenes(parent_genes, child_genes, !randomise_alleles)
 	child.generation = parent_generation
 	//Now the seed it created and we can release it upon the world
 	return child
