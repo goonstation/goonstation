@@ -257,8 +257,9 @@ proc/check_directional_objects()
 		if (locate(/obj/mesh/grille) in T)
 			continue
 
-		// Escape cameras.
-		if (istype(get_area(T), /area/shuttle/escape))
+		// Special areas that are permitted invalid directional objects.
+		var/area/area = get_area(T)
+		if (istype(area, /area/shuttle/escape) || istype(area, /area/dmm_suite))
 			continue
 
 		log_lines += "[A] [A.type] on [A.x], [A.y], [A.z] in [T.loc]"
