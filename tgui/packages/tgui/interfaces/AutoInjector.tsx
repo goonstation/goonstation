@@ -85,7 +85,7 @@ export const AutoInjector = () => {
                 minValue={conditionTreshold.minValue}
                 maxValue={conditionTreshold.maxValue}
                 step={1}
-                onChange={(e, value) =>
+                onChange={(_e, value) =>
                   act('changeConditionValue', { conditionValue: value })
                 }
                 mt="0.5rem"
@@ -103,7 +103,7 @@ export const AutoInjector = () => {
               minValue={1}
               maxValue={reagentData.maxVolume}
               step={1}
-              onChange={(e, value) => act('changeAmount', { amount: value })}
+              onChange={(_e, value) => act('changeAmount', { amount: value })}
             />
           </Section>
         ) : null}
@@ -115,7 +115,7 @@ export const AutoInjector = () => {
             minValue={3}
             maxValue={300}
             step={1}
-            onChange={(e, value) => act('changeMintime', { mintime: value })}
+            onChange={(_e, value) => act('changeMintime', { mintime: value })}
           />
         </Section>
       </Window.Content>

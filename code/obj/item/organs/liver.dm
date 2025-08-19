@@ -85,3 +85,22 @@ TYPEINFO(/obj/item/organ/liver/cyber)
 	on_removal()
 		overloading = 0
 		. = ..()
+
+/obj/item/organ/liver/amphibian
+	name = "amphibian liver"
+	desc = "Jesus Christ, this liver's massive... oh. It all makes sense now."
+	icon_state = "amphibian_liver"
+
+/obj/item/organ/liver/skeleton
+	name = "skeleton liver"
+	desc = "This is a skeleton liver. A clear abomination of God."
+	icon_state = "skeleton_liver"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/liver/martian
+	name = "purple slab"
+	desc = "A rather strange looking martian liver. Or, at least, you think it's a liver."
+	icon_state = "martian_liver"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"
