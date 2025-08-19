@@ -17,11 +17,11 @@ proc/check_map_correctness()
 	check_missing_material()
 	#if !(defined(PREFAB_CHECKING) || defined(RANDOM_ROOM_CHECKING))
 	check_xmas_tree()
+	check_directional_objects()
 	#endif
 	check_turf_underlays()
 	check_mass_drivers()
 	check_stacked_tables()
-	check_directional_objects()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
