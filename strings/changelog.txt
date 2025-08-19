@@ -1,3 +1,21 @@
+
+(t)sun aug 17 25
+(u)ZeWaka
+(+)Chat and the changelog now support Emoji 16 (even if Windows doesn't...). Enjoy your root vegetables. 🫟
+(t)fri aug 15 25
+(u)JORJ949
+(p)24397
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Radios will no longer default incorrect prefixes (such as ":hiv"), or prefixes you don't have access to (":z" with a non-syndicate headset) to the general frequency.
+(u)JORJ949
+(p)24433
+(e)🎨🧑‍✈️|C-Sprites, A-Command
+(+)You can now open the captain's coat.
+(t)wed aug 13 25
+(u)nova2053
+(p)24420
+(e)|
+(+)Accents from the "German" and "Tyke" traits will not be removed by mutadone.
 (t)wed aug 06 25
 (u)Goonstation Developer Team & Contributors
 (e)🆕|C-Feature
