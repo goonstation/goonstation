@@ -365,3 +365,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	name = "Inhibited Potential"
 	desc = "Produce harvested from this plant won't contain special dangerous chemicals"
 	var/list/reagents_to_remove = list("ghostchilijuice", "potassium", "lithium")
+
+/datum/plant_gene_strain/stable_alleles
+	name = "Stable Alleles"
+	desc = "This plant's alleles are more stable, they will be passed down when harvested."

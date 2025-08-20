@@ -143,10 +143,8 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 	return completed_name
 
-
-
-
-/// allele_override: alleles are always passed if TRUE, randomised if FALSE.
+/// allele_override: alleles are always passed if TRUE, randomised if FALSE. If null they're passed only if an appropriate gene strain is present,
+/// otherwise randomised.
 proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD, var/allele_override)
 	if(!PARENT || !CHILD)
 		return
@@ -161,7 +159,7 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD, v
 	CHILD.potency = PARENT.potency
 	CHILD.endurance = PARENT.endurance
 	// if applicable, also pass the alleles from parent to child.
-	if (allele_override)
+	if ((allele_override == null && HYPCheckCommut(PARENT,/datum/plant_gene_strain/stable_alleles)) || allele_override)
 		CHILD.d_species = PARENT.d_species
 		CHILD.d_growtime = PARENT.d_growtime
 		CHILD.d_harvtime = PARENT.d_harvtime

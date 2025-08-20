@@ -264,6 +264,8 @@ ABSTRACT_TYPE(/datum/plant)
 				if (prob(3))
 					HYPaddCommut(DNA,/datum/plant_gene_strain/damage_res)
 			if ("mutadone")
+				if (prob(25))
+					HYPaddCommut(DNA,/datum/plant_gene_strain/stable_alleles)
 				if (DNA.growtime < 0)
 					DNA.growtime++
 				if (DNA.harvtime < 0)
