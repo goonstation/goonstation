@@ -176,8 +176,7 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD, v
 		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
 			checked_strain.on_passing(CHILD)
 
-/// allele_override: alleles are always passed if TRUE, randomised if FALSE. If null they're passed only if an appropriate gene strain is present,
-/// otherwise randomised.
+/// allele_override: alleles are always passed if TRUE, randomised if FALSE.
 proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create,
 						 charge_quantity = 1, var/allele_override)
 	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
