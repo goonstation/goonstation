@@ -435,6 +435,20 @@
 		cooldown = 1 SECOND
 		reload_time = 20 SECONDS
 
+	silenced_22
+		proj = new/datum/projectile/bullet/bullet_22
+		shots = 1
+		current_shots = 10
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
+	makarov
+		proj = new/datum/projectile/bullet/nine_mm_soviet
+		shots = 1
+		current_shots = 8
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
 /datum/limb/gun/energy
 	phaser
 		proj = new/datum/projectile/laser/light
@@ -465,6 +479,13 @@
 		cooldown = 1 SECONDS
 		reload_time = 3 SECONDS
 		spread_angle = 3
+
+	resonator
+		proj = new/datum/projectile/special/piercing/resonator
+		shots = 4
+		current_shots = 4
+		cooldown = 1 SECONDS
+		reload_time = 15 SECONDS
 
 
 /datum/limb/gun/spawner
