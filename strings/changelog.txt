@@ -1,4 +1,9 @@
 
+(t)wed aug 20 25
+(u)cringe
+(p)24227
+(e)🎨💨|C-Sprites, A-Atmospherics
+(*)The HPD now has the gas filter, which is able to filter out a gas.
 (t)sun aug 17 25
 (u)ZeWaka
 (+)Chat and the changelog now support Emoji 16 (even if Windows doesn't...). Enjoy your root vegetables. 🫟
