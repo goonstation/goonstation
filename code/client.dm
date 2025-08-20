@@ -1454,7 +1454,6 @@ var/global/curr_day = null
 		<!doctype HTML>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <style type="text/css">
 * { margin: 0px; padding: 0px; width: 100%; height: 100%; }
 </style>

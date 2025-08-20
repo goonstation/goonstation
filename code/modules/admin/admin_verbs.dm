@@ -1559,7 +1559,7 @@ var/list/fun_images = list()
 				<style type="text/css">
 				@font-face {
 					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
 					text-rendering: optimizeLegibility;
 				}
 				</style>

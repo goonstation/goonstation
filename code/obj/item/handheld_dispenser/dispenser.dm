@@ -514,6 +514,25 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/binary)
 		icon_state = "heatexchanger"
 		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
 
+ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/trinary)
+/datum/pipe_recipe/atmos/machine/trinary
+	get_directions(dir)
+		switch(dir)
+			if(NORTH)
+				return NORTH|EAST|SOUTH
+			if(EAST)
+				return EAST|SOUTH|WEST
+			if(SOUTH)
+				return SOUTH|WEST|NORTH
+			if(WEST)
+				return WEST|NORTH|EAST
+
+	filter
+		name = "Gas Filter"
+		icon_state = "gasfilter"
+		path = /obj/machinery/atmospherics/trinary/filter
+		desc = "A scrubber that filters out a chosen gas to the side."
+
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 /datum/pipe_recipe/fluid/pipe
 	simple
