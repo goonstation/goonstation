@@ -1,5 +1,10 @@
 
 (t)wed aug 20 25
+(u)RubberRats
+(p)24286
+(e)⚖🔬|C-Balance, A-Science
+(+)Curses from artifacts can now be cured by splashing holy water.
+(+)Plaguebringer wraith curses now require at least 10u of holy water to cure
 (u)cringe
 (p)24227
 (e)🎨💨|C-Sprites, A-Atmospherics
