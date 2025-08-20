@@ -545,6 +545,14 @@ TYPEINFO(/obj/item/plantanalyzer)
 		qdel(src.genes)
 		src.genes = null
 
+	should_suppress_attack(var/object, mob/user, params)
+		if (istype(object, /obj/machinery/plantpot))
+			var/obj/machinery/plantpot/pot = object
+			if (pot.current)
+				return TRUE
+			return FALSE
+		if (istype(object, /obj/decorative_pot) && src.icon_state != "trowel_full") // TODO better check, reliant on trowel rework
+			return TRUE
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
 /obj/item/reagent_containers/glass/wateringcan
