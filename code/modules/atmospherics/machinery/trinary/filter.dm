@@ -17,6 +17,7 @@
 	var/frequency = FREQ_FREE
 	/// Radio ID that refers to specifically us.
 	var/net_id = null
+	HELP_MESSAGE_OVERRIDE("Can be configured with a <b>multitool</b>.")
 
 /obj/machinery/atmospherics/trinary/filter/New()
 	..()
