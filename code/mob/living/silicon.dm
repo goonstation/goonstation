@@ -820,13 +820,11 @@ var/global/list/module_editors = list()
 		if (ismob(src.owner))
 			var/mob/M = src.owner
 			if (owner_is_immune())
-				if (M.client)
-					boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b><i> But you were immune! </i>"))
-					logTheThing(LOG_COMBAT, M, "would have died to the killswitch, but they were immune.")
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b><i> But you were immune! </i>"))
+				logTheThing(LOG_COMBAT, M, "would have died to the killswitch, but they were immune.")
 				return FALSE
 			else
-				if (M.client)
-					boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
-					playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
-					logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
+				playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
+				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
 				return TRUE

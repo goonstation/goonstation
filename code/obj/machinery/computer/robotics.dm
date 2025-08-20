@@ -73,8 +73,8 @@
 							return
 						var/datum/statusEffect/killswitch/killswitch_status = robot.setStatus("killswitch_robot", ROBOT_KILLSWITCH_DURATION)
 						var/immune = killswitch_status.owner_is_immune()
-						message_admins(SPAN_ALERT("[key_name(usr)] has activated the [immune ? "fake "]robot self destruct on [key_name(robot)]."))
-						logTheThing(LOG_COMBAT, usr, "has activated the [immune ? "fake "]robot killswitch process on [constructTarget(robot,"combat")]")
+						message_admins(SPAN_ALERT("[key_name(usr)] has activated the [immune ? "fake " : ""]robot self destruct on [key_name(robot)]."))
+						logTheThing(LOG_COMBAT, usr, "has activated the [immune ? "fake " : ""]robot killswitch process on [constructTarget(robot,"combat")]")
 					else
 						boutput(usr, SPAN_ALERT("Access Denied."))
 				return TRUE
