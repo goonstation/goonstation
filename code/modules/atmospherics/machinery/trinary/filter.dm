@@ -185,8 +185,7 @@
 	src.show_ui(usr)
 
 /datum/filter_ui/proc/show_ui(mob/user)
-	if (user.client?.tooltipHolder) // Monke!
-		user.client.tooltipHolder.showClickTip(src.our_filter, list("title" = src.our_filter, "content" = render()))
+	user.client.tooltips.show(TOOLTIP_PINNED, src.our_filter, title = "[src.our_filter]", content = src.render())
 
 /datum/filter_ui/proc/render()
 	return {"
