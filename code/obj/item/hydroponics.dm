@@ -551,7 +551,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 			if (pot.current)
 				return TRUE
 			return FALSE
-		if (istype(object, /obj/decorative_pot) && src.icon_state != "trowel_full") // TODO better check, reliant on trowel rework
+		if (istype(object, /obj/decorative_pot) && holding_plant)
 			return TRUE
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
