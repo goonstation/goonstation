@@ -2912,53 +2912,53 @@ TYPEINFO(/mob)
 
 /mob/proc/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	var/newname
+	default_name ||= src.real_name
 	for (retries, retries > 0, retries--)
 		if(force_instead)
 			newname = default_name
 		else
-			newname = tgui_input_text(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name || src.real_name)
+			newname = tgui_input_text(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name )
 		if (!newname)
-			return
+			src.show_text("Please confirm your name.", "red")
+			continue
+		newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+		newname = remove_bad_name_characters(newname)
+		if (!length(newname) || copytext(newname,1,2) == " ")
+			src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
+			continue
+		if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
+			for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+				var/datum/db_record/R = DB.find_record("id", src.datacore_id)
+				if (R)
+					R["name"] = newname
+					if (R["full_name"])
+						R["full_name"] = newname
+			for (var/obj/item/I in src.contents)
+				var/obj/item/card/id/ID = get_id_card(I)
+				if (!ID)
+					if(length(I.contents)>0)
+						for(var/obj/item/J in I.contents)
+							var/obj/item/card/id/ID_maybe = get_id_card(J)
+							if(!ID_maybe)
+								continue
+							if(ID_maybe && ID_maybe.registered == src.real_name)
+								ID = ID_maybe
+				if(ID)
+					ID.registered = newname
+					ID.update_name()
+			for (var/obj/item/device/pda2/PDA in src.contents)
+				PDA.registered = newname
+				PDA.owner = newname
+				PDA.name = "PDA-[newname]"
+				if(PDA.ID_card)
+					var/obj/item/card/id/ID = PDA.ID_card
+					ID.registered = newname
+					ID.update_name()
+			src.real_name = newname
+			src.UpdateName()
+			return 1
 		else
-			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
-			newname = remove_bad_name_characters(newname)
-			if (!length(newname) || copytext(newname,1,2) == " ")
-				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
-				continue
-			else
-				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-					for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-						var/datum/db_record/R = DB.find_record("id", src.datacore_id)
-						if (R)
-							R["name"] = newname
-							if (R["full_name"])
-								R["full_name"] = newname
-					for (var/obj/item/I in src.contents)
-						var/obj/item/card/id/ID = get_id_card(I)
-						if (!ID)
-							if(length(I.contents)>0)
-								for(var/obj/item/J in I.contents)
-									var/obj/item/card/id/ID_maybe = get_id_card(J)
-									if(!ID_maybe)
-										continue
-									if(ID_maybe && ID_maybe.registered == src.real_name)
-										ID = ID_maybe
-						if(ID)
-							ID.registered = newname
-							ID.update_name()
-					for (var/obj/item/device/pda2/PDA in src.contents)
-						PDA.registered = newname
-						PDA.owner = newname
-						PDA.name = "PDA-[newname]"
-						if(PDA.ID_card)
-							var/obj/item/card/id/ID = PDA.ID_card
-							ID.registered = newname
-							ID.update_name()
-					src.real_name = newname
-					src.UpdateName()
-					return 1
-				else
-					continue
+			continue
 	if (!newname)
 		if (default_name)
 			src.real_name = default_name
