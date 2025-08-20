@@ -71,9 +71,10 @@
 						var/mob/living/silicon/robot/robot = locate(params["mob_ref"])
 						if (QDELETED(robot))
 							return
-						message_admins(SPAN_ALERT("[key_name(usr)] has activated the robot self destruct on [key_name(robot)]."))
-						logTheThing(LOG_COMBAT, usr, "has activated the robot killswitch process on [constructTarget(robot,"combat")]")
-						robot.setStatus("killswitch_robot", ROBOT_KILLSWITCH_DURATION)
+						var/datum/statusEffect/killswitch/killswitch_status = robot.setStatus("killswitch_robot", ROBOT_KILLSWITCH_DURATION)
+						var/immune = killswitch_status.owner_is_immune()
+						message_admins(SPAN_ALERT("[key_name(usr)] has activated the [immune ? "fake "]robot self destruct on [key_name(robot)]."))
+						logTheThing(LOG_COMBAT, usr, "has activated the [immune ? "fake "]robot killswitch process on [constructTarget(robot,"combat")]")
 					else
 						boutput(usr, SPAN_ALERT("Access Denied."))
 				return TRUE
@@ -90,7 +91,7 @@
 				var/mob/living/silicon/robot/robot = locate(params["mob_ref"])
 				if (QDELETED(robot))
 					return
-				if (robot.emagged)
+				if (robot.emagged || robot.syndicate)
 					if (robot.client)
 						boutput(robot, SPAN_NOTICE("<b>Equipment lockdown signal blocked!</b>"))
 						return
@@ -146,7 +147,7 @@
 		))
 
 	for_by_tcl(R, /mob/living/silicon/robot)
-		if(QDELETED(R) || R.shell || R.dependent || R.syndicate)
+		if(QDELETED(R) || R.shell || R.dependent)
 			continue
 		var/datum/statusEffect/killswitch/killswitch_robot_status = R.hasStatus("killswitch_robot")
 		var/datum/statusEffect/lockdown/lockdown_robot_status = R.hasStatus("lockdown_robot")
