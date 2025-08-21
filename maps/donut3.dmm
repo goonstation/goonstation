@@ -37316,10 +37316,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
-"lDL" = (
-/obj/machinery/firealarm/directional/north,
-/turf/space,
-/area/space)
 "lDO" = (
 /obj/machinery/power/data_terminal,
 /obj/decal/stripe_delivery,
@@ -80435,7 +80431,7 @@ rdj
 rdj
 rdj
 rdj
-lDL
+rdj
 rdj
 rdj
 rdj
