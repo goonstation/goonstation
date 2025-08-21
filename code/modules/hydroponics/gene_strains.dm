@@ -367,5 +367,5 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	var/list/reagents_to_remove = list("ghostchilijuice", "potassium", "lithium")
 
 /datum/plant_gene_strain/stable_alleles
-	name = "Stable Alleles"
+	name = "Immutable Alleles"
 	desc = "This plant's alleles are more stable, they will be passed down when harvested."
