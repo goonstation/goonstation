@@ -177,9 +177,13 @@
 		tooltip_rebuild = TRUE
 
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
-		if (!in_interact_range(src, usr)  || BOUNDS_DIST(over_object, usr) > 0 || !can_act(usr))
+		if (!in_interact_range(src, usr) || !can_act(usr))
 			return
+
 		if (istype(over_object,/obj/table))
+			if (BOUNDS_DIST(over_object, usr) > 0)
+				boutput(usr, SPAN_ALERT("You need to be closer to [over_object] to do that."))
+				return
 			if (length(src.contents) < 1)
 				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))
 			else
@@ -190,7 +194,32 @@
 				src.UpdateIcon()
 				params["satchel_dumped"] = TRUE
 				return
+
+		if (istype(over_object, /obj/machinery/disposal))
+			disposals_dump(over_object, usr)
+			return
 		. = ..()
+
+	/// The user tries to place all of the satchel's contents into the given disposal chute.
+	proc/disposals_dump(var/obj/machinery/disposal/chute, mob/user)
+		if (BOUNDS_DIST(chute, user) > 0)
+			boutput(user, SPAN_ALERT("You need to be closer to [chute] to do that."))
+			return
+		if (!src.contents.len)
+			boutput(user, SPAN_ALERT("There's nothing in [src] to dump out!"))
+			return
+		if (!user.is_in_hands(src))
+			boutput(user, SPAN_ALERT("You need to be holding [src] to do that."))
+			return
+		for(var/obj/item/item in src.contents)
+			if (chute.fits_in(item))
+				item.set_loc(chute)
+		user.set_dir(get_dir(user, chute))
+		src.UpdateIcon()
+		src.tooltip_rebuild = TRUE
+		user.visible_message("<b>[user.name]</b> dumps out [src] into [chute].")
+		chute.update()
+		return
 
 	// Don't place the satchel onto the table if we've dumped out its contents with the same command.
 	should_place_on(obj/target, params)
