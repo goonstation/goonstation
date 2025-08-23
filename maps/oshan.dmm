@@ -12510,7 +12510,7 @@
 "aVj" = (
 /obj/rack,
 /obj/item/clothing/head/helmet/space/donk,
-/obj/item/clothing/under/swimsuit/swimsuits/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVm" = (
@@ -45394,7 +45394,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/swimsuit/swimsuits/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "wPq" = (
