@@ -19318,11 +19318,11 @@
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/black,
-/obj/item/clothing/under/swimsuit/red,
-/obj/item/clothing/under/swimsuit/blue,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/black,
+/obj/item/clothing/under/swimsuit/swimsuits/red,
+/obj/item/clothing/under/swimsuit/swimsuits/blue,
 /obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
