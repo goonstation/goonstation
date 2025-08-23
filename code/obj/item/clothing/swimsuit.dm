@@ -177,7 +177,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/swimsuit/frillyswimsuit)
 
 //swim trunks
 
-ABSTRACT_TYPE(/obj/item/clothing/under/misc/swimtrunks)
+ABSTRACT_TYPE(/obj/item/clothing/under/swimsuit/swimtrunks)
 /obj/item/clothing/under/swimsuit/swimtrunks
 	name = "swim trunks"
 	icon_state = "swimtrunks_w"
