@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 		user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."))
 		src.load_item(W, user)
 		src.update_icon() //for subtypes that have a filled iconstate
-		src.ui_interact(user)
+		tgui_process.update_uis(src)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored && isalive(user) && !isintangible(user))
