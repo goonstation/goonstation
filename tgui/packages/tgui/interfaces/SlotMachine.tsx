@@ -54,9 +54,7 @@ const SlotWindow = () => {
 
   return (
     <>
-      <NoticeBox success>
-        <marquee> Wager some credits! </marquee>
-      </NoticeBox>
+      <NoticeBox success>Wager some credits!</NoticeBox>
       <Stack vertical>
         <Stack.Item>
           <strong>Your card: </strong>
@@ -107,7 +105,7 @@ const SlotWindow = () => {
                 value={wager}
                 format={(value) => value + '⪽'}
                 step={1}
-                onDrag={(value) => act('set_wager', { bet: value })}
+                onChange={(value) => act('set_wager', { bet: value })}
               />
             </Stack.Item>
           </Stack>

@@ -5512,12 +5512,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
-"aES" = (
-/obj/machinery/camera{
-	network = "Pathopost"
-	},
-/turf/simulated/floor/sanitary,
-/area/abandonedoutpostthing)
 "aFf" = (
 /obj/machinery/light/worn{
 	dir = 1
@@ -6274,14 +6268,6 @@
 /obj/item/motherboard,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
-"aIu" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
-/turf/simulated/floor,
-/area/h7/control)
 "aIv" = (
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
@@ -6523,16 +6509,6 @@
 	dir = 4
 	},
 /area/h7/asteroid)
-"aJi" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	network = "Pathopost";
-	tag = ""
-	},
-/obj/stool/chair,
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 "aJk" = (
 /obj/decal/floatingtiles{
 	dir = 8
@@ -7003,16 +6979,6 @@
 /obj/machinery/telejam/active,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedmedicalship)
-"aKR" = (
-/obj/machinery/light/small{
-	dir = 1;
-	status = 2
-	},
-/obj/machinery/camera{
-	network = "Pathopost"
-	},
-/turf/simulated/floor/plating/random,
-/area/abandonedoutpostthing)
 "aKS" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -8368,13 +8334,6 @@
 	tag = "icon-catwalk (WEST)"
 	},
 /area/derelict_ai_sat/solar)
-"aPi" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor,
-/area/h7)
 "aPj" = (
 /obj/machinery/light{
 	brightness = 1.2;
@@ -8561,17 +8520,6 @@
 "aPM" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/h7/storage)
-"aPO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
 	},
 /turf/simulated/floor,
 /area/h7/storage)
@@ -9373,15 +9321,6 @@
 /obj/item/plate,
 /turf/simulated/floor/specialroom/bar,
 /area/h7/crew)
-"aSA" = (
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor4"
-	},
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24
-	},
-/turf/simulated/floor,
-/area/h7/crew)
 "aSC" = (
 /turf/simulated/wall/auto/asteroid{
 	dir = 8
@@ -9633,14 +9572,6 @@
 "aTn" = (
 /turf/simulated/wall/auto/asteroid,
 /area/abandonedship)
-"aTo" = (
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24
-	},
-/turf/simulated/floor/green/corner{
-	dir = 4
-	},
-/area/h7)
 "aTp" = (
 /obj/fakeobject/airlock_broken/firelock,
 /obj/cable{
@@ -11049,14 +10980,6 @@
 	dir = 1
 	},
 /area/abandonedoutpostthing)
-"aXy" = (
-/obj/machinery/camera{
-	network = "Pathopost"
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 5
-	},
-/area/abandonedoutpostthing)
 "aXA" = (
 /turf/simulated/floor/stairs/medical,
 /area/abandonedoutpostthing)
@@ -11114,14 +11037,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/iss)
-"aXH" = (
-/obj/machinery/camera{
-	network = "Pathopost"
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/abandonedoutpostthing)
 "aXI" = (
 /obj/stool/chair/green{
 	dir = 4
@@ -11156,12 +11071,6 @@
 "aXN" = (
 /obj/fakeobject/lighttube_broken{
 	dir = 1
-	},
-/turf/simulated/floor,
-/area/h7/lab)
-"aXO" = (
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24
 	},
 /turf/simulated/floor,
 /area/h7/lab)
@@ -11727,14 +11636,6 @@
 	},
 /turf/space,
 /area/space)
-"aZV" = (
-/obj/machinery/camera{
-	network = "Pathopost"
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 1
-	},
-/area/abandonedoutpostthing)
 "aZW" = (
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -11794,15 +11695,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/h7/lab)
-"bae" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/purple/side{
-	dir = 8
-	},
-/area/h7)
 "baf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16103,6 +15995,15 @@
 	},
 /turf/space,
 /area/space)
+"diR" = (
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/abandonedoutpostthing)
 "djW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16211,6 +16112,16 @@
 /obj/item/raw_material/scrap_metal,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
+"duu" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/h7/crew)
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
@@ -16386,6 +16297,12 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/dining)
+"dXk" = (
+/obj/machinery/firealarm/directional/south{
+	layer = 3.5
+	},
+/turf/simulated/floor,
+/area/h7/control)
 "dXK" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/grime,
@@ -16893,6 +16810,15 @@
 /mob/living/critter/robotic/repairbot/helldrone,
 /turf/simulated/floor/black,
 /area/helldrone/core)
+"fyW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm/directional/south{
+	layer = 3.5
+	},
+/turf/simulated/floor,
+/area/h7/storage)
 "fzx" = (
 /obj/machinery/light_switch/north{
 	pixel_y = 30
@@ -18019,6 +17945,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"ihS" = (
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 28;
+	dir = 1
+	},
+/obj/machinery/vending/alcohol,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "iii" = (
 /obj/effects/background_objects/antistes,
 /turf/space,
@@ -19407,13 +19342,6 @@
 	dir = 5
 	},
 /area/derelict_ai_sat)
-"lxr" = (
-/obj/machinery/camera{
-	network = "Pathopost"
-	},
-/mob/living/critter/zombie/scientist,
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 "lxB" = (
 /obj/item/wrench,
 /obj/cable{
@@ -19485,6 +19413,12 @@
 "lEB" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/tug)
+"lED" = (
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/h7)
 "lGg" = (
 /obj/decal/poster/wallsign/poster_sol,
 /turf/simulated/wall/auto/reinforced/old,
@@ -20785,6 +20719,22 @@
 	dir = 8
 	},
 /area/radiostation/hallway)
+"oEI" = (
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/h7/lab)
+"oEN" = (
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
+/turf/simulated/floor/green/corner{
+	dir = 4
+	},
+/area/h7)
 "oEP" = (
 /turf/simulated/floor/carpet/green/standard/edge/se,
 /area/diner/jucer_trader)
@@ -20991,6 +20941,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"pff" = (
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
+	},
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
 "pfi" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -21678,6 +21635,17 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/abandonedship)
+"qKl" = (
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
+	},
+/turf/simulated/floor/plating/random,
+/area/abandonedoutpostthing)
 "qLo" = (
 /obj/decal/timeplug{
 	dir = 4
@@ -22951,6 +22919,10 @@
 	name = "reinforced plating"
 	},
 /area/diner/motel/chemstorage)
+"tGi" = (
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor,
+/area/h7)
 "tHJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -24256,6 +24228,15 @@
 "wFJ" = (
 /turf/simulated/floor/black,
 /area/helldrone)
+"wHR" = (
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/abandonedoutpostthing)
 "wIg" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/snacks/condiment/syrup,
@@ -24644,6 +24625,14 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/radiostation/hallway)
+"xTr" = (
+/obj/machinery/camera/directional/west{
+	network = "Pathopost";
+	pixel_y = 10
+	},
+/obj/stool/chair,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "xTQ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
@@ -24677,14 +24666,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
-"xZp" = (
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 28
-	},
-/obj/machinery/vending/alcohol,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "xZG" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark/spawner/loot,
@@ -24739,6 +24720,15 @@
 	},
 /turf/space,
 /area/abandonedship)
+"ydG" = (
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/abandonedoutpostthing)
 "yel" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/small{
@@ -24773,6 +24763,14 @@
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
+/area/abandonedoutpostthing)
+"ykp" = (
+/obj/machinery/camera/directional/north{
+	network = "Pathopost";
+	pixel_x = -10
+	},
+/mob/living/critter/zombie/scientist,
+/turf/simulated/floor,
 /area/abandonedoutpostthing)
 "ykA" = (
 /obj/stool/chair/comfy/shuttle/brown{
@@ -31845,7 +31843,7 @@ aPI
 aQC
 aQQ
 aOU
-aSA
+duu
 aTK
 aUz
 aTK
@@ -37594,7 +37592,7 @@ biJ
 aQr
 aQr
 aXk
-aXO
+oEI
 aYy
 aYx
 aYx
@@ -37881,7 +37879,7 @@ aGj
 aGj
 aGj
 aGj
-aPO
+fyW
 aFW
 aRn
 aPk
@@ -38791,7 +38789,7 @@ aPT
 aFW
 aNY
 aNY
-aTo
+oEN
 aMu
 aMq
 aMu
@@ -39994,7 +39992,7 @@ aLD
 aMq
 aMu
 aMu
-aPi
+tGi
 aMu
 aMu
 aMu
@@ -40004,7 +40002,7 @@ aMu
 aMq
 aMu
 aMu
-aPi
+tGi
 aMu
 aMu
 aMu
@@ -40014,7 +40012,7 @@ aXX
 aYT
 aZD
 aYT
-bae
+lED
 baM
 bbk
 baM
@@ -40592,7 +40590,7 @@ mvM
 aFI
 aYZ
 aGr
-aIu
+dXk
 aFX
 aLD
 aMu
@@ -74683,7 +74681,7 @@ pHw
 afD
 aeZ
 iDu
-xZp
+ihS
 ijr
 azq
 jCr
@@ -104314,7 +104312,7 @@ aFk
 aDy
 aGb
 aGU
-aJi
+xTr
 aGc
 jtY
 aMD
@@ -104913,7 +104911,7 @@ aab
 aab
 aab
 aDy
-aES
+pff
 aFv
 aDy
 aFg
@@ -105241,7 +105239,7 @@ aDy
 aDy
 aDy
 aDy
-aXy
+wHR
 aYi
 aZb
 aDy
@@ -105547,7 +105545,7 @@ tnF
 aYn
 aDy
 aDy
-aZV
+diR
 bar
 aWH
 aWH
@@ -106449,7 +106447,7 @@ aDy
 aDy
 aDy
 aDy
-aXH
+ydG
 aYh
 aZc
 aDy
@@ -107027,13 +107025,13 @@ aab
 aab
 aab
 aDy
-lxr
+ykp
 aFg
 aFg
 aGd
 aGd
 aDy
-aKR
+qKl
 aMc
 aNr
 aDy

@@ -6,5 +6,5 @@
 /datum/client_auth_gate/guest/get_failure_message(client/C)
 	return {"
 		<h1>Guest Login Denied</h1>
-		Don't forget to log in to your byond account prior to connecting to this server.
+		Don't forget to log in to your Byond account prior to connecting to this server.
 	"}

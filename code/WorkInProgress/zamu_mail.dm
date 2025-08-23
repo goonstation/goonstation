@@ -677,6 +677,13 @@ var/global/mail_types_everyone = list(
 	/obj/item/clothing/glasses/vr/arcade = 2,
 	/obj/item/device/light/zippo = 4,
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 6,
+	/obj/item/paper/postcard/beach = 7,
+	/obj/item/paper/postcard/canyon = 7,
+	/obj/item/paper/postcard/mountain = 7,
+	/obj/item/paper/postcard/lovemd = 7,
+	/obj/item/paper/postcard/mdstatehouse = 7,
+	/obj/item/paper/postcard/moonfootprint = 7,
+	/obj/item/paper/postcard/apollo = 7,
 
 	// mostly taken from gangwar as a "relatively safe list of random hats"
 	/obj/item/clothing/head/biker_cap = 1,
