@@ -36116,9 +36116,9 @@
 	},
 /area/station/hallway/primary/southeast)
 "usS" = (
-/obj/machinery/firealarm/north,
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/cookingmachine/oven,
-/obj/machinery/firealarm/north,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "usX" = (
