@@ -12481,26 +12481,6 @@
 	dir = 6
 	},
 /area/station/medical/medbay/surgery)
-"cYb" = (
-/obj/table/reinforced/auto,
-/obj/machinery/disposal/small{
-	dir = 4;
-	name = "food delivery unit-'Bar'";
-	pixel_x = -5
-	},
-/obj/disposalpipe/trunk/food{
-	dir = 8
-	},
-/obj/machinery/mixer{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/obj/machinery/light_switch/west{
-	pixel_x = -23;
-	pixel_y = -12
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "cYv" = (
 /obj/landmark/start/job/chaplain,
 /turf/simulated/floor/wood{
@@ -12954,12 +12934,6 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/chapel/sanctuary)
-"dty" = (
-/obj/machinery/firealarm/directional/north,
-/obj/submachine/chef_oven,
-/obj/machinery/firealarm/directional/north,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "dtW" = (
 /obj/cable/blue{
 	icon_state = "1-2"

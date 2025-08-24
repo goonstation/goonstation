@@ -44835,15 +44835,6 @@
 	oxygen = 30.8366
 	},
 /area/station/crew_quarters/kitchen/freezer)
-"tCO" = (
-/obj/submachine/chef_oven,
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "tDg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8

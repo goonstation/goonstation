@@ -41112,13 +41112,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/cloner)
-"sec" = (
-/obj/submachine/chef_oven,
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "seK" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
