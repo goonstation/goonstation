@@ -11,7 +11,6 @@
 	var/is_browser = FALSE
 	var/status = TGUI_WINDOW_CLOSED
 	var/locked = FALSE
-	var/interface = null // |GOONSTATION-ADD| Interface string used to find a similar window in the pool
 	var/datum/tgui/locked_by
 	var/datum/subscriber_object
 	var/subscriber_delegate
@@ -48,10 +47,8 @@
  *
  * required client /client
  * required id string A unique window identifier.
- * optional pooled bool
- * optional interface string - used to find a similar window in the pool
  */
-/datum/tgui_window/New(client/client, id, interface, pooled = FALSE) // |GOONSTATION-CHANGE|
+/datum/tgui_window/New(client/client, id, pooled = FALSE)
 	. = ..() // |GOONSTATION-ADD| Probably good I guess
 	src.id = id
 	src.client = client
@@ -60,14 +57,6 @@
 	src.pooled = pooled
 	if(pooled)
 		src.pool_index = TGUI_WINDOW_INDEX(id)
-	src.interface = interface // |GOONSTATION-ADD| Initialize interface string
-
-/datum/tgui_window/disposing() // |GOONSTATION-ADD|
-	src.client = null
-	src.locked_by = null
-	src.subscriber_object = null
-	src.subscriber_delegate = null
-	. = ..()
 
 /**
  * public

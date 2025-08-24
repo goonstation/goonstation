@@ -1254,6 +1254,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 		"hackingProgression" = src.hackingProgression,
 		"hackMessage" = src.hackMessage,
 		"aiControlVar" = src.aiControlDisabled,
+		"aiControlDisabled" = src.aiControlDisabled,
 
 		"noPower" = (src.status & NOPOWER),
 		"powerIsOn" = src.arePowerSystemsOn() && !(src.status & NOPOWER),

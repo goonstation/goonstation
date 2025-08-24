@@ -301,11 +301,11 @@ const ListDisplay = (props) => {
       {filteredItems.map((item, index) => {
         return (
           <Button
-            className="search-item"
-            color={index !== selected ? 'transparent' : undefined}
+            color="transparent"
             fluid
             id={index}
             key={index}
+            className="search-item"
             onClick={() => onClick(index)}
             onDoubleClick={(event) => {
               event.preventDefault();
@@ -355,9 +355,10 @@ const SearchBar = (props) => {
       fluid
       id="search_bar"
       onEnter={(event) => {
+        event.preventDefault();
         act('submit', { entry: filteredItems[selected] });
       }}
-      onChange={(value) => onSearch(value)}
+      onInput={(_, value) => onSearch(value)}
       placeholder="Search..."
       value={searchQuery}
     />

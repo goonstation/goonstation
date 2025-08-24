@@ -703,8 +703,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
 
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/metal/gold
@@ -723,8 +722,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 7)
 		setProperty("thermal", 7)
 
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/metal/silver
@@ -993,8 +991,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "clear [src.name]"
 				setProperty("density", 6)
 				setProperty("hard", 7)
-				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
-				addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
+				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 			if(2)
 				value = 500
 				name = "flawed [src.name]"
@@ -1205,8 +1202,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("electrical", 1)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/crystal/ice

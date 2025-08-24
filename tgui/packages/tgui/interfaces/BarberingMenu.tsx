@@ -58,7 +58,7 @@ export const BarberingMenu = () => {
 };
 
 const HairStyleSearchBox = (props) => {
-  const { onChange } = props;
+  const { onInput } = props;
   return (
     <Stack>
       <Stack.Item>
@@ -67,7 +67,7 @@ const HairStyleSearchBox = (props) => {
       <Stack.Item grow>
         <Input
           style={{ width: '100%' }}
-          onChange={(value) => onChange(value)}
+          onInput={(_e, value) => onInput(value)}
           placeholder="Search..."
         />
       </Stack.Item>
@@ -199,7 +199,7 @@ const Sidebar = (props) => {
     <Section>
       <Stack vertical>
         <Stack.Item>
-          <HairStyleSearchBox onChange={onSearchTextInput} />
+          <HairStyleSearchBox onInput={onSearchTextInput} />
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>

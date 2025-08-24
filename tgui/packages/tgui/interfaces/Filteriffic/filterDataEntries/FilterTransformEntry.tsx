@@ -41,8 +41,7 @@ export const FilterTransformEntry = (props: FilterTransformEntryProps) => {
                       step={0.01}
                       width="50px"
                       format={(v) => toFixed(v, 2)}
-                      tickWhileDragging
-                      onChange={(v) => {
+                      onDrag={(v) => {
                         let retTrans = transMatrix;
                         retTrans[col * 3 + row] = v;
                         act('transition_filter_value', {

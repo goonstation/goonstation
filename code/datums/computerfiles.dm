@@ -278,18 +278,12 @@
 /datum/computer/file/clone
 	name = "Clone Record"
 	extension = "DNA"
-	size = 24 //come on, it's an entire human genome, gotta be at least 24 kilobytes
+	size = 8
 	var/list/fields = list()
 
-/datum/computer/file/clone/proc/operator[](key)
-	return src.fields[key]
-
-/datum/computer/file/clone/proc/operator[]=(key, value)
-	src.fields[key] = value
-
-/datum/computer/file/clone/disposing()
-	fields = null
-	. = ..()
+	disposing()
+		fields = null
+		. = ..()
 
 /datum/computer/file/lrt_data
 	name = "Galactic Position Record"

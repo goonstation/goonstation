@@ -589,7 +589,6 @@ TYPEINFO(/obj/machinery/clonepod)
 			return 0
 		if (user)
 			boutput(user, "You force an emergency ejection.")
-		logTheThing(LOG_STATION, src, "[key_name(src.occupant)] was ejected from [src] being emagged by [key_name(user)]!")
 		src.go_out(1)
 		return 1
 
@@ -746,9 +745,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (!isalive(usr) || iswraith(usr))
 			return
-		var/mob/occupant = src.occupant
-		if (src.go_out())
-			logTheThing(LOG_STATION, src, "[key_name(occupant)] was ejected from [src] by [key_name(usr)]")
+		src.go_out()
 		add_fingerprint(usr)
 		return
 
@@ -798,7 +795,6 @@ TYPEINFO(/obj/machinery/clonepod)
 					step_rand(O) // cogwerks - let's spread that mess instead of having a pile! bahaha
 			if (src.occupant)
 				src.occupant.set_loc(get_turf(src))
-				. = TRUE
 				src.occupant = null
 			src.UpdateIcon()
 			return
@@ -821,7 +817,6 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		src.occupant.changeStatus("unconscious", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
-		. = TRUE
 		if (src.emagged) //huck em
 			src.occupant.throw_at(get_edge_target_turf(src, pick(alldirs)), 10, 3)
 		src.occupant = null

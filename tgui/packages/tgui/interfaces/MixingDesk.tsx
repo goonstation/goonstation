@@ -49,12 +49,12 @@ export const MixingDesk = () => {
           selfClear
           width={20}
           value={message}
-          onEnter={(msg) => {
+          onEnter={(_, msg) => {
             window.focus();
             act('say', { message: msg });
             setMessage('');
           }}
-          onBlur={(msg) => setMessage(msg)}
+          onChange={(_, msg) => setMessage(msg)}
         />
       </Box>
       <br />

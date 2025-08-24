@@ -78,7 +78,7 @@ export const SuppliesSection = () => {
         items={clothes}
         onInstall={handleInstallClothing}
         onEject={handleEjectClothing}
-        title="Clothing"
+        title="Upgrades"
       />
     </Section>
   );

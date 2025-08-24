@@ -38,7 +38,7 @@ export const AIStatuses = (props: AIStatusesProps) => {
           </Table.Cell>
           <Table.Cell collapsing>
             {!item.killswitch_time ? (
-              <NoticeBox inline>
+              <NoticeBox warning inline>
                 <Button
                   disabled={user_is_robot}
                   onClick={() =>

@@ -9,12 +9,12 @@
 	src.channel_name = "[frequency]"
 
 /datum/packet_network/radio/can_send(datum/component/packet_connected/source, datum/signal/signal, range=null)
-	return isnull(source) || !(length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(source.parent, signal))
+	return isnull(source) || !(length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(source.parent))
 
 /datum/packet_network/radio/can_receive(datum/component/packet_connected/target, datum/component/packet_connected/source, datum/signal/signal, range=null)
 	if(isnull(source))
 		return TRUE
-	if(check_for_radio_jammers(target.parent, signal))
+	if(check_for_radio_jammers(target.parent))
 		return FALSE
 	if(!isnull(range) && !IN_RANGE(source.parent, target.parent, range))
 		return FALSE

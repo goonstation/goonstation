@@ -21,7 +21,7 @@ type BookmarksSectionProps = Pick<TeleConsoleData, 'bookmarks'> & {
   targetCoords: [number, number, number];
 };
 
-export const BookmarksSection = (props: BookmarksSectionProps) => {
+export const BookmarksSection = (props: BookmarksSectionProps, context) => {
   const {
     bookmarks,
     maxBookmarks,
@@ -60,6 +60,7 @@ export const BookmarksSection = (props: BookmarksSectionProps) => {
             </LabeledList.Item>
           );
         })}
+        {/* eslint-disable-next-line sonarjs/no-inverted-boolean-check */}
         {!!(bookmarks.length < maxBookmarks) && (
           <LabeledList.Item
             key="new"
@@ -74,9 +75,9 @@ export const BookmarksSection = (props: BookmarksSectionProps) => {
             <Input
               width="100%"
               value={newBookmarkName}
-              onChange={(value: string) => setNewBookmarkName(value)}
+              onInput={(_e, value: string) => setNewBookmarkName(value)}
               placeholder="New bookmark"
-              onEnter={(value: string) => handleAddBookmark(value)}
+              onEnter={(_e, value: string) => handleAddBookmark(value)}
               maxLength={32}
             />
           </LabeledList.Item>

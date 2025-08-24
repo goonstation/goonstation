@@ -360,12 +360,10 @@ TYPEINFO(/obj/item/radiojammer)
 	if(!src.active)
 		.+= " It is off."
 
-/obj/item/radiojammer/proc/signal_jammed(_source, datum/signal/signal)
+/obj/item/radiojammer/proc/signal_jammed()
 	//hoping this isn't too performance heavy if a lot of signals get blocked at once
 	if (!src.GetOverlayImage("jammed_light"))
-		//automatic heartbeat signals: we still want to know when we're jamming them but we probably don't care most of the time
-		var/icon_state = signal.data["command"] == "heartbeat" ? "signal_jammed_heartbeat" : "signal_jammed"
-		src.UpdateOverlays(image(src.icon, icon_state), "jammed_light")
+		src.UpdateOverlays(image(src.icon, "signal_jammed"), "jammed_light")
 	SPAWN(2 DECI SECONDS)
 		src.ClearSpecificOverlays("jammed_light")
 

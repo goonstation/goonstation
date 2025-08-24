@@ -351,6 +351,7 @@
 			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 			C.UpdateOverlays(nanite_overlay, "nanite_heal")
 			C.set_camera_status(TRUE)
+			C.icon_state = "camera"
 
 			SPAWN(5 SECONDS)
 				C.audible_message("[C] makes a soft clicking sound.")
@@ -383,6 +384,7 @@
 					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 					C.UpdateOverlays(nanite_overlay, "nanite_heal")
 					C.set_camera_status(TRUE)
+					C.icon_state = "camera"
 
 					SPAWN(5 SECONDS)
 						C.audible_message("[C] makes a soft clicking sound.")

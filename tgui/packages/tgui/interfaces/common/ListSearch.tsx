@@ -34,7 +34,7 @@ export const ListSearch = (props: ListSearchProps) => {
     searchPlaceholder = 'Search...',
     selectedOption = null,
   } = props;
-  const handleSearch = (value: string) => {
+  const handleSearch = (_e, value: string) => {
     onSearch(value);
   };
   const cn = classes(['list-search-interface', className]);
@@ -44,7 +44,7 @@ export const ListSearch = (props: ListSearchProps) => {
         <Input
           autoFocus={autoFocus}
           fluid
-          onChange={handleSearch}
+          onInput={handleSearch}
           placeholder={searchPlaceholder}
           value={currentSearch}
         />

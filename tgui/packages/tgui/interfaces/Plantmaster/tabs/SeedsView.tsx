@@ -234,15 +234,17 @@ const SeedsTable = (props: SeedsTableProps) => {
               tooltip="Click to rename"
               color="transparent"
               textColor="#FFFFFF"
-              value={item.name}
-              onCommit={(new_name) =>
+              defaultValue={item.name}
+              currentValue={item.name}
+              onCommit={(_e, new_name) =>
                 act('label', {
                   label_ref: item.item_ref,
                   label_new: new_name,
                 })
               }
-              buttonText={truncate(item.name, 10)}
-            />
+            >
+              {truncate(item.name, 10)}
+            </Button.Input>
           </PlantmasterTable.Cell>
           <PlantmasterTable.Cell dominant={!!item.species[1]}>
             {item.species[0]}

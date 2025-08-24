@@ -21,8 +21,6 @@ if [ -f data/hard-reboot ]; then
 	rm data/hard-reboot
 fi
 
-mkdir -p data/triggers
-
 # Apply updates
 bash tools/server/update.sh
 

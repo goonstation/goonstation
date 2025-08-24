@@ -42,7 +42,9 @@ export const MarionetteRemote = () => {
                   {selected_command !== 'step' ? (
                     <Input
                       fluid
-                      onBlur={(data) => act('set_data', { new_data: data })}
+                      onChange={(_, data) =>
+                        act('set_data', { new_data: data })
+                      }
                       value={entered_data}
                       placeholder="Unset..."
                     />

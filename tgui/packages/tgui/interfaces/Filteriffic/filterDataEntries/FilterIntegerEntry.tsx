@@ -27,8 +27,7 @@ export const FilterIntegerEntry = (props: FilterIntegerEntryProps) => {
       stepPixelSize={5}
       step={1}
       width="39px"
-      tickWhileDragging
-      onChange={(value) =>
+      onDrag={(value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {

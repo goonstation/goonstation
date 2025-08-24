@@ -48,7 +48,7 @@ export const PowerMonitor = () => {
                 <LabeledList.Item label="Search">
                   <Input
                     value={search}
-                    onChange={(value) => setSearch(value)}
+                    onInput={(e, value) => setSearch(value)}
                   />
                 </LabeledList.Item>
               </LabeledList>

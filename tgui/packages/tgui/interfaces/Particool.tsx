@@ -49,8 +49,7 @@ const ParticleIntegerEntry = (props: ParticleIntegerEntryProps) => {
         value={value}
         stepPixelSize={5}
         width="39px"
-        tickWhileDragging
-        onChange={(value) =>
+        onDrag={(value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -90,8 +89,7 @@ const ParticleMatrixEntry = (props: ParticleMatrixEntryProps) => {
               maxValue={Infinity}
               minValue={-Infinity}
               step={1}
-              tickWhileDragging
-              onChange={(v) => {
+              onDrag={(v) => {
                 value[i] = v;
                 act('modify_particle_value', {
                   new_data: {
@@ -180,8 +178,7 @@ const ParticleFloatNonGenEntry = (props: ParticleFloatNonGenEntryProps) => {
           toFixed(value, numberOfDecimalDigits(particleFloatStep))
         }
         width="80px"
-        tickWhileDragging
-        onChange={(value) =>
+        onDrag={(value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -262,8 +259,7 @@ const configureParticleVectorNonGenEntryVarLen = (len: number) => {
                 value={val}
                 key={i}
                 width="40px"
-                tickWhileDragging
-                onChange={(v) => {
+                onDrag={(v) => {
                   value[i] = v;
                   act('modify_particle_value', {
                     new_data: {
@@ -406,18 +402,18 @@ const ParticleGeneratorEntry = (props) => {
         <LabeledList>
           <LabeledList.Item label="type">
             <Tooltip position="bottom" content={`${generatorTypes.join(', ')}`}>
-              <Input value={genType} onChange={(val) => setGenType(val)} />
+              <Input value={genType} onInput={(e, val) => setGenType(val)} />
             </Tooltip>
           </LabeledList.Item>
           <LabeledList.Item label="A">
-            <Input value={a} onChange={(val) => setA(val)} />
+            <Input value={a} onInput={(e, val) => setA(val)} />
           </LabeledList.Item>
           <LabeledList.Item label="B">
-            <Input value={b} onChange={(val) => setB(val)} />
+            <Input value={b} onInput={(e, val) => setB(val)} />
           </LabeledList.Item>
           <LabeledList.Item label="Rand Type">
             <Tooltip position="bottom" content={`${randTypes.join(', ')}`}>
-              <Input value={rand} onChange={(val) => setRand(val)} />
+              <Input value={rand} onInput={(e, val) => setRand(val)} />
             </Tooltip>
           </LabeledList.Item>
         </LabeledList>
@@ -427,7 +423,7 @@ const ParticleGeneratorEntry = (props) => {
   );
 };
 
-const ParticleTextEntry = (props) => {
+const ParticleTextEntry = (props, context) => {
   const { value, tooltip, name } = props;
   const { act } = useBackend<ParticoolData>();
 
@@ -436,7 +432,7 @@ const ParticleTextEntry = (props) => {
       <Input
         value={value}
         width="250px"
-        onChange={(value) =>
+        onInput={(e, value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -461,7 +457,7 @@ const ParticleNumListEntry = (props) => {
       <Input
         value={valArr.join(',')}
         width="250px"
-        onChange={(val) =>
+        onInput={(e, val) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -486,7 +482,7 @@ const ParticleListEntry = (props) => {
       <Input
         value={valArr.join(',')}
         width="250px"
-        onChange={(val) =>
+        onInput={(e, val) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -510,7 +506,7 @@ const ParticleColorNonGenEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onChange={(value) =>
+        onInput={(e, value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,

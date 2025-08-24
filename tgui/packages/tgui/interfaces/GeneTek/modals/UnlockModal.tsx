@@ -34,7 +34,7 @@ export const UnlockModal = () => {
           <LabeledList.Item label="Enter Unlock Code">
             <Input
               value={unlockCode}
-              onBlur={(code) => setUnlockCode(code.toUpperCase())}
+              onChange={(_, code) => setUnlockCode(code.toUpperCase())}
             />
           </LabeledList.Item>
           <LabeledList.Divider />

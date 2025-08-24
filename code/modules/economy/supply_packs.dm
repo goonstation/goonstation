@@ -1970,8 +1970,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/circuitboard/cloning)
 	frames = list(/obj/machinery/clone_scanner,
 					/obj/machinery/clonepod,
-					/obj/machinery/clonegrinder,
-					/obj/machinery/disk_rack/clone)
+					/obj/machinery/clonegrinder)
 	cost = PAY_DOCTORATE*20
 	containertype = /obj/storage/crate
 	containername = "Cloning kit"

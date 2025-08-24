@@ -47,8 +47,9 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/allowGenerate)
 "l" = (
-/obj/item/bballbasket/mounted{
-	dir = 1
+/obj/item/bballbasket{
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/noGenerate)

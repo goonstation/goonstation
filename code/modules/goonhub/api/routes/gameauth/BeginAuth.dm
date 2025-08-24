@@ -8,7 +8,6 @@
 	correct_response = /datum/apiModel/BeginAuthResource
 
 	buildBody(
-		timeout,
 		server_id,
 		ckey,
 		key,

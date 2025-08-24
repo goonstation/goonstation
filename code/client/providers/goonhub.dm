@@ -2,19 +2,19 @@
 	name = "Goonhub"
 	start_state = CLIENT_AUTH_PENDING
 	can_logout = TRUE
-	var/timeout = 20 MINUTES
+	var/timeout = 4 MINUTES
 	var/token = ""
 	var/pending_success_message = FALSE
 
 /datum/client_auth_provider/goonhub/New(client/owner)
 	. = ..()
-	if (!src.valid) return
 	RegisterSignal(owner, COMSIG_CLIENT_CHAT_LOADED, PROC_REF(on_chat_loaded))
 	src.owner.verbs += list(/client/proc/open_goonhub_auth)
 	src.setup_logout()
 	src.hide_ui()
+	src.show_wrapper()
 	if (src.begin_auth())
-		src.show_external()
+		src.show_external("login")
 	else
 		logTheThing(LOG_ADMIN, null, "Failed to begin auth for [src.owner]", "admin")
 		src.on_error("Failed to load login window. Please reconnect and try again.")
@@ -36,8 +36,7 @@
 	* * error (string) - The error message
 */
 /datum/client_auth_provider/goonhub/proc/on_error(error)
-	src.owner << output(list2params(list(error)), "mainwindow.authexternal:GoonhubAuth.onError")
-	src.on_auth_failed()
+	src.owner << output(list2params(list(error)), "mainwindow.authwrapper:GoonhubAuth.onError")
 
 /**
 	* On timeout
@@ -46,7 +45,8 @@
 	*/
 /datum/client_auth_provider/goonhub/proc/on_timeout()
 	if (!src.owner || src.authenticated) return
-	src.on_error("You failed to authenticate in time and have been disconnected. Please reconnect and try again.")
+	src.owner << output(null, "mainwindow.authwrapper:GoonhubAuth.onTimeout")
+	src.on_auth_failed()
 
 /**
 	* Begin auth
@@ -58,7 +58,6 @@
 /datum/client_auth_provider/goonhub/proc/begin_auth()
 	var/datum/apiRoute/gameauth/begin/beginAuth = new
 	beginAuth.buildBody(
-		src.timeout / 10,
 		config.server_id,
 		src.owner.ckey,
 		src.owner.key,
@@ -106,7 +105,6 @@
 	src.owner.client_auth_intent.hos = verification["is_hos"]
 	src.owner.client_auth_intent.whitelisted = verification["is_whitelisted"]
 	src.owner.client_auth_intent.can_bypass_cap = verification["can_bypass_cap"]
-	src.owner.client_auth_intent.can_skip_player_login = TRUE
 
 	assign_goonhub_abilities(verification["ckey"], verification)
 
@@ -129,10 +127,6 @@
 
 /datum/client_auth_provider/goonhub/on_logout()
 	src.hide_ui()
-	src.owner << output(list2params(list(
-		"Logged Out",
-		"You have been logged out. Goodbye!"
-	)), "browseroutput:showAuthMessage")
 	. = ..()
 
 /datum/client_auth_provider/goonhub/proc/on_chat_loaded()
@@ -166,16 +160,24 @@
 	winset(src.owner, "menu.auth_logout", "command=\".output authlogout.browser:doLogout\"")
 
 /**
-	* Show external
+	* Show wrapper
 	*
-	* Shows the external auth page
-	*
-	* Arguments:
-	* * route (string) - The route to show
+	* Shows the wrapper UI for the auth process
 	*/
-/datum/client_auth_provider/goonhub/proc/show_external()
-	var/url = "[config.goonhub_url]/game-auth/login?ref=\ref[src]&token=[src.token]"
-	winset(src.owner, "authexternal", list2params(list(
+/datum/client_auth_provider/goonhub/proc/show_wrapper()
+	var/html = grabResource("html/auth/goonhub/wrapper.html")
+	html = replacetext(html, "{$ref}", "\ref[src]")
+	html = replacetext(html, "{$timeout}", src.timeout / 10)
+
+	if (!cdn)
+		src.owner.loadResourcesFromList(list(
+			"browserassets/src/css/goonhub_auth.css",
+			"browserassets/src/js/goonhub_auth.js",
+			"browserassets/src/images/welcome_logo_light.png",
+			"browserassets/src/images/goonhub_auth_bg.jpg",
+		))
+
+	winset(src.owner, "authwrapper", list2params(list(
 		"parent" = "mainwindow",
 		"type" = "browser",
 		"pos" = "0,0",
@@ -184,12 +186,35 @@
 		"anchor2" = "100,100",
 		"background-color" = "#0f0f0f",
 	)))
+
+	src.owner << browse(html, "window=mainwindow.authwrapper")
+
+/**
+	* Show external
+	*
+	* Shows the external auth page
+	*
+	* Arguments:
+	* * route (string) - The route to show
+	*/
+/datum/client_auth_provider/goonhub/proc/show_external(route = "login")
+	var/url = "[config.goonhub_url]/game-auth/[route]?ref=\ref[src]"
+	if (route == "login") url += "&token=[src.token]"
+	winset(src.owner, "authexternal", list2params(list(
+		"parent" = "mainwindow",
+		"type" = "browser",
+		"pos" = "0,0",
+		"size" = "1x1",
+		"background-color" = "#0f0f0f",
+	)))
 	src.owner << browse(
 		{"<html style="background-color: #0f0f0f;"><head><meta http-equiv="refresh" content="0; url=[url]" /></head></html>"},
-		"window=mainwindow.authexternal"
+		"window=mainwindow.authexternal;size=1x1"
 	)
 
 /datum/client_auth_provider/goonhub/proc/hide_ui()
+	if (winexists(src.owner, "mainwindow.authwrapper"))
+		winset(src.owner, "mainwindow.authwrapper", "parent=none")
 	if (winexists(src.owner, "mainwindow.authexternal"))
 		winset(src.owner, "mainwindow.authexternal", "parent=none")
 
@@ -205,4 +230,5 @@
 	if (src.authenticated) return
 	if (istype(src.client_auth_provider, /datum/client_auth_provider/goonhub))
 		var/datum/client_auth_provider/goonhub/provider = src.client_auth_provider
-		provider.show_external()
+		provider.show_wrapper()
+		provider.show_external("login")

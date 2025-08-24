@@ -24,7 +24,7 @@ import {
 import { MESSAGE_TYPES } from './constants';
 import { selectCurrentChatPage } from './selectors';
 
-export const ChatPageSettings = () => {
+export const ChatPageSettings = (props) => {
   const page = useSelector(selectCurrentChatPage);
   const dispatch = useDispatch();
   return (
@@ -34,14 +34,14 @@ export const ChatPageSettings = () => {
           <Input
             width="100%"
             value={page.name}
-            onBlur={(value) => {
+            onChange={(e, value) =>
               dispatch(
                 updateChatPage({
                   pageId: page.id,
                   name: value,
                 }),
-              );
-            }}
+              )
+            }
           />
         </Stack.Item>
         <Stack.Item>

@@ -14,7 +14,7 @@
 			qdel(src)
 
 /obj/ai_frame
-	name = "\improper Asimov 5 Artificial Intelligence"
+	name = "\improper Asimov 5 Artifical Intelligence"
 	desc = "An artificial intelligence unit which requires the brain of a living organism to function as a neural processor."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"

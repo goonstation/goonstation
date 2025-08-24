@@ -154,7 +154,7 @@ type TraitCategoryListProps = {
   traits: CharacterPreferencesTrait[];
 };
 
-const TraitCategoryList = (props: TraitCategoryListProps) => {
+const TraitCategoryList = (props: TraitCategoryListProps, context) => {
   const { category, traits } = props;
 
   if (traits.length === 0) {

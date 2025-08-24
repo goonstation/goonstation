@@ -21,26 +21,25 @@
 *.chunk.*	binary merge=tgui-merge-bundle
 
 # Other text stuff
-*.txt	text eol=lf
-*.md	text eol=lf
-*.html	text eol=lf
-*.css	text eol=lf
-*.scss	text eol=lf
-*.js	text eol=lf
-*.cjs	text eol=lf
-*.json	text eol=lf
-*.ini	text eol=lf
-*.conf	text eol=lf
-*.ps1	text eol=lf
+*.txt	text
+*.md	text
+*.html	text
+*.css	text
+*.scss	text
+*.js	text
+*.cjs	text
+*.json	text
+*.ini	text
+*.conf	text
+*.ps1	text
 *.sh	text eol=lf
-*.bat	text eol=lf
-*.rb	text eol=lf
-*.py	text eol=lf
-*.lua	text eol=lf
-*.cpp	text eol=lf
-*.h		text eol=lf
-*.ps1	text eol=lf
-*.svg	text eol=lf
+*.bat	text
+*.rb	text
+*.py	text
+*.lua	text
+*.cpp	text
+*.h		text
+*.ps1	text
 
 # Other binary stuff
 *.png	binary
@@ -56,6 +55,7 @@
 *.ttf	binary
 *.eot	binary
 *.woff	binary
+*.svg	binary
 *.pdn	binary
 
 ## Force tab indents on dm files

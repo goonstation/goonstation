@@ -39,7 +39,7 @@ export const PollEditorForm = (props: PollEditorFormProps) => {
 
   const handleChangeServer = (value: string) =>
     onSettingsUpdate({ servers: value });
-  const handleChangeTitle = (value: string) =>
+  const handleChangeTitle = (_e: unknown, value: string) =>
     onSettingsUpdate({ title: value });
   const handleChangeExpiry = (newExpiry: ExpiryOptions) =>
     onSettingsUpdate({
@@ -77,7 +77,7 @@ export const PollEditorForm = (props: PollEditorFormProps) => {
               <Input
                 width="100%"
                 placeholder="Title..."
-                onBlur={handleChangeTitle}
+                onChange={handleChangeTitle}
                 value={title}
               />
             </LabeledList.Item>

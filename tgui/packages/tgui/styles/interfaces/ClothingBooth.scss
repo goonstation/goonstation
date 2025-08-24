@@ -8,20 +8,18 @@
     cursor: pointer;
 
     &:hover {
-      background-color: hsl(
-        from var(--color-good) h s calc(l + var(--adjust-hover))
-      );
+      background-color: color.adjust(colors.$good, $lightness: -30%);
     }
 
     &--selected,
     &--selected:hover {
-      background-color: var(--color-good);
+      background-color: colors.$good;
     }
   }
 
   &__swatch-box {
     &:hover {
-      outline: 0.167rem solid var(--color-good);
+      outline: 0.167rem solid colors.$good;
     }
   }
 
@@ -42,6 +40,6 @@
   }
 
   &__groupingtag {
-    border-radius: var(--border-radius-medium);
+    border-radius: base.$border-radius;
   }
 }

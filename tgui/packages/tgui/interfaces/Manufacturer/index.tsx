@@ -250,7 +250,7 @@ export const Manufacturer = () => {
                 <Input
                   placeholder="Search..."
                   width="100%"
-                  onChange={(value) => setSearchData(value)}
+                  onInput={(_, value) => setSearchData(value)}
                 />
               </Stack.Item>
               <Stack.Item>

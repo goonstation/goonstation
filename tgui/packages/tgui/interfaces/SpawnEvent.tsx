@@ -7,6 +7,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
+import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
 interface SpawnEventData {
@@ -96,7 +97,7 @@ export const SpawnEvent = () => {
                   minValue={0}
                   maxValue={120}
                   step={1}
-                  onChange={(spawn_delay) =>
+                  onDrag={(spawn_delay) =>
                     act('set_spawn_delay', { spawn_delay: spawn_delay * 10 })
                   }
                   disabled={!ask_permission}
@@ -118,7 +119,7 @@ export const SpawnEvent = () => {
                 minValue={1}
                 maxValue={100}
                 step={1}
-                onChange={(amount) => act('set_amount', { amount })}
+                onDrag={(amount) => act('set_amount', { amount })}
               />
               {`/${eligible_player_count} `}
               <Button
@@ -128,7 +129,7 @@ export const SpawnEvent = () => {
               {amount_to_spawn === 1 &&
                 spawn_type === 'mob_ref' &&
                 thing_name && (
-                  <Button.Checkbox
+                  <ButtonCheckbox
                     checked={spawn_directly}
                     onClick={() =>
                       act('set_spawn_directly', {
@@ -138,7 +139,7 @@ export const SpawnEvent = () => {
                     tooltip="Puts the ghost mind directly into the original mob instead of copying it."
                   >
                     Spawn as original
-                  </Button.Checkbox>
+                  </ButtonCheckbox>
                 )}
             </LabeledList.Item>
             <LabeledList.Item label="Spawn location">
@@ -166,7 +167,7 @@ export const SpawnEvent = () => {
                   <Button color="red" onClick={() => act('clear_antag')}>
                     x
                   </Button>
-                  <Button.Checkbox
+                  <ButtonCheckbox
                     checked={equip_antag}
                     tooltip="Give antag default equipment and abilities? Will overwrite anything already equipped in those slots."
                     onClick={() =>
@@ -174,7 +175,7 @@ export const SpawnEvent = () => {
                     }
                   >
                     Equip antags
-                  </Button.Checkbox>
+                  </ButtonCheckbox>
                 </>
               )}
               {!!incompatible_antag && (
@@ -187,17 +188,17 @@ export const SpawnEvent = () => {
               )}
             </LabeledList.Item>
             <LabeledList.Item label="DNR">
-              <Button.Checkbox
+              <ButtonCheckbox
                 checked={allow_dnr}
                 tooltip="Allow players who have set DNR to respawn in this event"
                 onClick={() => act('set_allow_dnr', { allow_dnr: !allow_dnr })}
               >
                 Allow DNR players
-              </Button.Checkbox>
+              </ButtonCheckbox>
             </LabeledList.Item>
             {spawn_type === 'job' && (
               <LabeledList.Item label="Manifest">
-                <Button.Checkbox
+                <ButtonCheckbox
                   checked={add_to_manifest}
                   tooltip="Add players spawned by this event to the station manifest"
                   onClick={() =>
@@ -205,7 +206,7 @@ export const SpawnEvent = () => {
                   }
                 >
                   Add to manifest
-                </Button.Checkbox>
+                </ButtonCheckbox>
               </LabeledList.Item>
             )}
             <LabeledList.Item label="Objective text">
@@ -213,7 +214,7 @@ export const SpawnEvent = () => {
                 value={objective_text}
                 fluid
                 height={5}
-                onBlur={(value) =>
+                onChange={(_, value) =>
                   act('set_objective_text', { objective_text: value })
                 }
               />

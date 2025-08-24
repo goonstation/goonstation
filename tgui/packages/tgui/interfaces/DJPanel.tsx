@@ -198,7 +198,7 @@ const KnobZone = memo((props: KnobZoneProps) => {
             minValue={0}
             maxValue={100}
             format={formatDoublePercent}
-            onChange={handleSetVolume}
+            onDrag={handleSetVolume}
             step={1}
           />
         </LabeledControls.Item>
@@ -213,7 +213,7 @@ const KnobZone = memo((props: KnobZoneProps) => {
             }}
             value={volume}
             format={formatDoublePercent}
-            onChange={handleSetVolumeByKnob}
+            onDrag={handleSetVolumeByKnob}
           />
           <Button icon="sync-alt" top="0.3em" onClick={handleResetVolume}>
             Reset
@@ -227,7 +227,7 @@ const KnobZone = memo((props: KnobZoneProps) => {
             minValue={-100}
             maxValue={100}
             format={formatHundredPercent}
-            onChange={handleSetFrequency}
+            onDrag={handleSetFrequency}
           />
         </LabeledControls.Item>
         <LabeledControls.Item label="">
@@ -243,7 +243,7 @@ const KnobZone = memo((props: KnobZoneProps) => {
             }}
             value={frequency}
             format={formatHundredPercent}
-            onChange={handleSetFrequencyByKnob}
+            onDrag={handleSetFrequencyByKnob}
           />
           <Button icon="sync-alt" top="0.3em" onClick={handleResetFrequency}>
             Reset

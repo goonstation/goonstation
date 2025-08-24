@@ -9,13 +9,6 @@
 #define NANOTRASEN_LINK_COLOR "#3348ff"
 #define SYNDICATE_LINK_COLOR "#800"
 
-#define ANNOUNCE_ORDER_CAPTAIN 5
-#define ANNOUNCE_ORDER_HOP 4
-#define ANNOUNCE_ORDER_HOS 3
-#define ANNOUNCE_ORDER_HEADS 2
-#define ANNOUNCE_ORDER_LAST 1
-#define ANNOUNCE_ORDER_NEVER 0
-
 ABSTRACT_TYPE(/datum/job)
 /datum/job
 	var/name = null
@@ -60,7 +53,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/list/receives_implants = null //! List of object paths of implant types given on spawn.
 	var/receives_disk = FALSE //! Job spawns with cloning data disk, can specify a type
 	var/obj/item/clothing/suit/security_badge/badge = null //! Typepath of the badge to spawn the player with
-	var/world_announce_priority = ANNOUNCE_ORDER_NEVER //! On join, send message to all players indicating who is fulfilling the role; ordered by rank, ANNOUNCE_ORDER_NEVER to never announce
+	var/announce_on_join = FALSE //! On join, send message to all players indicating who is fulfilling the role; primarily for heads of staff
 	var/radio_announcement = TRUE //! The announcement computer will send a message when the player joins after round-start.
 	var/list/alt_names = list()
 	var/slot_card = /obj/item/card/id //! Object path of the ID card type to issue player. Overridden by `spawn_id`.
@@ -165,7 +158,15 @@ ABSTRACT_TYPE(/datum/job)
 			if (length(src.receives_implants))
 				for(var/obj/item/implant/implant as anything in src.receives_implants)
 					if(ispath(implant))
-						new implant(M)
+						var/mob/living/carbon/human/H = M
+						var/obj/item/implant/I = new implant(M)
+						if (ispath(I, /obj/item/implant/health) && src.receives_disk && ishuman(M))
+							if (H.back?.storage)
+								var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
+								if (D)
+									var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
+									if (R)
+										R.fields["imp"] = "\ref[I]"
 
 			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))
@@ -257,7 +258,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	job_category = JOB_COMMAND
 	unique = TRUE
-	world_announce_priority = ANNOUNCE_ORDER_HEADS
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -273,7 +273,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	high_priority_job = TRUE
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
-	world_announce_priority = ANNOUNCE_ORDER_CAPTAIN
+	announce_on_join = TRUE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	wiki_link = "https://wiki.ss13.co/Captain"
 
@@ -321,7 +321,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	allow_antag_fallthrough = FALSE
 	receives_miranda = TRUE
-	world_announce_priority = ANNOUNCE_ORDER_HOP
+	announce_on_join = TRUE
 
 
 	slot_back = list(/obj/item/storage/backpack)
@@ -341,7 +341,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	requires_whitelist = TRUE
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
-	world_announce_priority = ANNOUNCE_ORDER_HOS
+	announce_on_join = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 	badge = /obj/item/clothing/suit/security_badge
 	show_in_id_comp = FALSE
@@ -386,6 +386,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_engineer")
 	access_string = "Chief Engineer"
+	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -424,6 +425,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_scientist")
 	access_string = "Research Director"
+	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Research_Director"
 
 	slot_back = list(/obj/item/storage/backpack/research)
@@ -449,6 +451,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical")
 	access_string = "Medical Director"
+	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Medical_Director"
 
 	slot_back = list(/obj/item/storage/backpack/medic)
@@ -1196,7 +1199,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 0
 	wages = PAY_IMPORTANT
 	access_string = "Communications Officer"
-	world_announce_priority = ANNOUNCE_ORDER_LAST
+	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
 
 	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
@@ -3020,6 +3023,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_jump = list(/obj/item/clothing/under/rank/assistant)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	announce_on_join = FALSE
 	add_to_manifest = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -3124,10 +3128,3 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 #undef SILICON_LINK_COLOR
 #undef NANOTRASEN_LINK_COLOR
 #undef SYNDICATE_LINK_COLOR
-
-#undef ANNOUNCE_ORDER_CAPTAIN
-#undef ANNOUNCE_ORDER_HOP
-#undef ANNOUNCE_ORDER_HOS
-#undef ANNOUNCE_ORDER_HEADS
-#undef ANNOUNCE_ORDER_LAST
-#undef ANNOUNCE_ORDER_NEVER

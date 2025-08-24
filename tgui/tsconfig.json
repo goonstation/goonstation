@@ -7,22 +7,30 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": false,
     "jsx": "preserve",
-    "lib": ["DOM", "DOM.Iterable", "ESNext", "ScriptHost"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext",
+      "ScriptHost"
+    ],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
-    "noFallthroughCasesInSwitch": true, // |GOONSTATION-ADD|
-    "noImplicitThis": true, // |GOONSTATION-ADD|
-    // "noUncheckedIndexedAccess": true, // |GOONSTATION-ADD| TODO: enable
-    // "noUnusedLocals": true, // |GOONSTATION-ADD| TODO: enable
-    // "noUnusedParameters": true, // |GOONSTATION-ADD| TODO: enable
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitThis": true,
+    // "noUncheckedIndexedAccess": true, TODO: enable
+    // "noUnusedLocals": true, TODO: enable
+    // "noUnusedParameters": true, TODO: enable
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    "strictBindCallApply": true, // |GOONSTATION-ADD|
+    "strictBindCallApply": true,
     "strictNullChecks": true,
-    "strictPropertyInitialization": true, // |GOONSTATION-ADD|
-    "target": "ESNext"
+    "strictPropertyInitialization": true,
+    "target": "ES5"
   },
-  "include": ["./*.d.ts", "./packages"]
+  "include": [
+    "./*.d.ts",
+    "./packages"
+  ]
 }

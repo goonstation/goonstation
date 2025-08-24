@@ -7,22 +7,21 @@
 const inception = Date.now();
 
 // Runtime detection
-const isNode = process?.release?.name === 'node';
+const isNode = process && process.release && process.release.name === 'node';
 let isChrome = false;
 try {
   isChrome = window.navigator.userAgent.toLowerCase().includes('chrome');
 } catch {}
 
 // Timestamping function
-function getTimestamp() {
+const getTimestamp = () => {
   const timestamp = String(Date.now() - inception)
     .padStart(4, '0')
     .padStart(7, ' ');
   const seconds = timestamp.substr(0, timestamp.length - 3);
   const millis = timestamp.substr(-3);
-
   return `${seconds}.${millis}`;
-}
+};
 
 const getPrefix = (() => {
   if (isNode) {
@@ -48,27 +47,26 @@ const getPrefix = (() => {
       styles.bright,
     ];
   }
-
-  return (ns) => [`${getTimestamp()} ${ns}`];
+  // prettier-ignore
+  return ns => [
+    `${getTimestamp()} ${ns}`,
+  ];
 })();
 
 /**
  * Creates a logger object.
  */
-export function createLogger(ns) {
-  return {
-    log: (...args) => console.log(...getPrefix(ns), ...args),
-    trace: (...args) => console.trace(...getPrefix(ns), ...args),
-    debug: (...args) => console.debug(...getPrefix(ns), ...args),
-    info: (...args) => console.info(...getPrefix(ns), ...args),
-    warn: (...args) => console.warn(...getPrefix(ns), ...args),
-    error: (...args) => console.error(...getPrefix(ns), ...args),
-  };
-}
+export const createLogger = (ns) => ({
+  log: (...args) => console.log(...getPrefix(ns), ...args),
+  trace: (...args) => console.trace(...getPrefix(ns), ...args),
+  debug: (...args) => console.debug(...getPrefix(ns), ...args),
+  info: (...args) => console.info(...getPrefix(ns), ...args),
+  warn: (...args) => console.warn(...getPrefix(ns), ...args),
+  error: (...args) => console.error(...getPrefix(ns), ...args),
+});
 
 /**
  * Explicitly log with chosen namespace.
  */
-export function directLog(ns, ...args) {
+export const directLog = (ns, ...args) =>
   console.log(...getPrefix(ns), ...args);
-}

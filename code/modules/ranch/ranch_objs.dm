@@ -180,24 +180,19 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 /obj/submachine/ranch_feed_grinder
 	name = "feed grinder"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
-	icon_state = "feed_grinder-off"
+	icon_state = "feed_grinder"
 	density = 1
 	anchored = ANCHORED
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
-
 	var/work_cycle = 0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/obj/item/reagent_containers/food/current_food = null
-	var/image/feed_grinder_overlay = null
 
 	New()
 		..()
 		processing_items |= src
-		src.feed_grinder_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "feed_grinder_overlay")
-		src.feed_grinder_overlay.color = "#FFFF00"
 
 	disposing()
 		processing_items.Remove(src)
-		feed_grinder_overlay = null
 		..()
 
 	attackby(obj/item/W, mob/user)
@@ -229,7 +224,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		src.add_item(W)
 
 	proc/add_item(var/obj/item/item)
-		if(istype(item, /obj/item/reagent_containers/food))
+		if(istype(item,/obj/item/reagent_containers/food))
 			item.set_loc(src)
 		else
 			var/obj/item/reagent_containers/food/F = src.preprocess(item)
@@ -282,9 +277,6 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				if(0)
 					if(QDELETED(current_food))
 						current_food = locate(/obj/item/reagent_containers/food) in src.contents
-						src.icon_state = "feed_grinder-on"
-						feed_grinder_overlay.color = current_food.food_color
-						UpdateOverlays(feed_grinder_overlay, "feed_grinder_overlay")
 						work_cycle++
 				if(1 to 2)
 					playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
@@ -298,8 +290,6 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 					make_feed(current_food)
 					current_food = null
 					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
-					src.icon_state = "feed_grinder-off"
-					ClearSpecificOverlays("feed_grinder_overlay")
 					work_cycle = 0
 					return
 

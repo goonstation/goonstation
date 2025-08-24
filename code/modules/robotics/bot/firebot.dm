@@ -60,7 +60,7 @@
 /obj/machinery/bot/firebot/New()
 	..()
 	SPAWN(0.5 SECONDS)
-		if (src && !QDELETED(src))
+		if (src)
 			src.icon_state = "firebot[src.on]"
 			src.AddComponent(/datum/component/proximity)
 
@@ -77,13 +77,12 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client?.tooltips)
-		user.client.tooltips.show(
-			TOOLTIP_PINNED, src,
-			mouse = params,
-			title = "Firebot v1.0 controls",
-			content = dat,
-		)
+	if (user.client?.tooltipHolder)
+		user.client.tooltipHolder.showClickTip(src, list(
+			"params" = params,
+			"title" = "Firebot v1.0 controls",
+			"content" = dat,
+		))
 
 /obj/machinery/bot/firebot/attack_hand(mob/user, params)
 	var/dat
@@ -94,13 +93,12 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client?.tooltips)
-		user.client.tooltips.show(
-			TOOLTIP_PINNED, src,
-			mouse = params,
-			title = "Firebot v1.0 controls",
-			content = dat,
-		)
+	if (user.client?.tooltipHolder)
+		user.client.tooltipHolder.showClickTip(src, list(
+			"params" = params,
+			"title" = "Firebot v1.0 controls",
+			"content" = dat,
+		))
 
 	return
 

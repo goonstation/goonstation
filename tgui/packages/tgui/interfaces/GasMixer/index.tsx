@@ -28,7 +28,7 @@ export const GasMixer = () => {
               <Output />
             </>
           ) : (
-            <NoticeBox>
+            <NoticeBox warning>
               {mixerid} can not be found!
               <br />
               <Button
@@ -40,7 +40,7 @@ export const GasMixer = () => {
             </NoticeBox>
           )
         ) : (
-          <NoticeBox>No mixers connected.</NoticeBox>
+          <NoticeBox warning>No mixers connected.</NoticeBox>
         )}
       </Window.Content>
     </Window>

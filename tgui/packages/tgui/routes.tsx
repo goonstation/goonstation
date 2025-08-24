@@ -53,7 +53,7 @@ const RefreshingWindow = () => {
 */
 
 // Get the component for the current route
-export function getRoutedComponent() {
+export const getRoutedComponent = () => {
   const { suspended, config } = useBackend();
   const { kitchenSink = false } = useDebug();
 
@@ -65,20 +65,20 @@ export function getRoutedComponent() {
     return RefreshingWindow;
   }
   */
-
-  if (process.env.NODE_ENV !== 'production' && kitchenSink) {
-    const { KitchenSink } = require('./debug');
-    return KitchenSink;
+  if (process.env.NODE_ENV !== 'production') {
+    // Show a kitchen sink
+    if (kitchenSink) {
+      return require('./debug').KitchenSink;
+    }
   }
 
-  const name = config?.interface?.name;
+  const name = config?.interface;
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,
     (name: string) => `./${name}.jsx`,
     (name: string) => `./${name}/index.tsx`,
     (name: string) => `./${name}/index.jsx`,
   ];
-
   let esModule;
   while (!esModule && interfacePathBuilders.length > 0) {
     const interfacePathBuilder = interfacePathBuilders.shift()!;
@@ -91,15 +91,12 @@ export function getRoutedComponent() {
       }
     }
   }
-
   if (!esModule) {
     return routingError('notFound', name);
   }
-
   const Component = esModule[name];
   if (!Component) {
     return routingError('missingExport', name);
   }
-
   return Component;
-}
+};

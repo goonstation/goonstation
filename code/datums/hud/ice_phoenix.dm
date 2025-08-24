@@ -1,13 +1,11 @@
 /datum/hud/critter/space_phoenix
 	New()
 		..()
-		var/atom/movable/screen/map = src.create_screen("map", "Show Map", 'icons/mob/critter/nonhuman/spacephoenix.dmi', "map", "SOUTH,EAST", HUD_LAYER_1,
-			tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER))
+		var/atom/movable/screen/map = src.create_screen("map", "Show Map", 'icons/mob/critter/nonhuman/spacephoenix.dmi', "map", "SOUTH,EAST", HUD_LAYER_1)
 		map.desc = "Show a map of the space Z level."
 
 		var/atom/movable/screen/hud/phoenix_return_to_station/return_to_stat = src.create_screen("return_to_station", "Return to Station Z Level", \
-			'icons/mob/critter/nonhuman/spacephoenix.dmi', "return_to_station", "SOUTH+1,EAST", HUD_LAYER_1,
-			tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER))
+		'icons/mob/critter/nonhuman/spacephoenix.dmi', "return_to_station", "SOUTH+1,EAST", HUD_LAYER_1)
 		return_to_stat.desc = "Toggle if you'll travel to the station Z level upon exiting the current level."
 
 	relay_click(id, mob/user, list/params)

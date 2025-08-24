@@ -53,14 +53,16 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		return
 
 	if(src.occupant)
-		if (!ishuman(src.occupant))
-			src.go_out() // stop turning into cyborgs thanks
-		else if (src.eject_full_health_occupant && src.occupant.health >= src.occupant.max_health && !src.occupant.bioHolder.HasEffect("premature_clone"))
-			src.go_out()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-		else if (!isdead(src.occupant))
-			src.process_occupant()
-		src.use_power(src.occupied_power_use, EQUIP)
+		if(!isdead(src.occupant))
+			if (!ishuman(src.occupant))
+				src.go_out() // stop turning into cyborgs thanks
+			if (src.occupant.health < src.occupant.max_health || src.occupant.bioHolder.HasEffect("premature_clone"))
+				src.use_power(src.occupied_power_use, EQUIP)
+				src.process_occupant()
+			else
+				if(src.occupant.mind && src.eject_full_health_occupant)
+					src.go_out()
+					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
 	if(src.air_contents)
 		src.ARCHIVED(temperature) = src.air_contents.temperature

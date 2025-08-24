@@ -193,7 +193,7 @@ export const PlayerPanel = () => {
           autoFocus
           mb={1}
           placeholder="Search..."
-          onChange={(value: string) => setSearch(value)}
+          onInput={(_e, value: string) => setSearch(value)}
           value={search}
         />
         <Table>

@@ -50,8 +50,7 @@ export const PixelOffset = () => {
                   step={1}
                   minValue={-Infinity}
                   maxValue={Infinity}
-                  tickWhileDragging
-                  onChange={(value) => act('set_x', { x: value })}
+                  onDrag={(value) => act('set_x', { x: value })}
                 />
                 <Button
                   icon="sync-alt"
@@ -88,8 +87,7 @@ export const PixelOffset = () => {
                   stepPixelSize={7}
                   minValue={-Infinity}
                   maxValue={Infinity}
-                  tickWhileDragging
-                  onChange={(value) => act('set_y', { y: value })}
+                  onDrag={(value) => act('set_y', { y: value })}
                 />
                 <Button
                   icon="sync-alt"

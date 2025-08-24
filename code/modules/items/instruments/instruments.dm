@@ -91,9 +91,7 @@
 			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
-		//mostly people turn their instrument volume down to avoid the mime with 12 pianos and an autotyper, not the secoff with a whistle
-		var/channel = src.pick_random_note ? VOLUME_CHANNEL_GAME : VOLUME_CHANNEL_INSTRUMENTS
-		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = channel)
+		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 		if (prob(5))
 			if (src.dog_bark)

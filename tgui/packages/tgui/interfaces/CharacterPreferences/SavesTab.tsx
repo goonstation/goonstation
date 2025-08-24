@@ -17,7 +17,7 @@ import {
 import { useBackend } from '../../backend';
 import { CharacterPreferencesData } from './type';
 
-export const SavesTab = (_props) => {
+export const SavesTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>();
 
   return (

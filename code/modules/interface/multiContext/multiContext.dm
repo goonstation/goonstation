@@ -189,15 +189,14 @@
 		src.underlays.Cut()
 		background.icon_state = "[action.getBackground(target, user)]1"
 		src.underlays += background
-		if (usr.client.tooltips && (action != null) && action.use_tooltip)
-			usr.client.tooltips.show(arglist(list(
-				"type" = TOOLTIP_HOVER,
-				"target" = src,
-				"mouse" = params,
+		if (usr.client.tooltipHolder && (action != null) && action.use_tooltip)
+			usr.client.tooltipHolder.showHover(src, list(
+				"params" = params,
 				"title" = action.getName(target, user),
 				"content" = action.getDesc(target, user),
 				"theme" = "stamina",
-			) + action.getTooltipOptions()))
+				"flags" = action.getTooltipFlags()
+			))
 
 	MouseExited(location,control,params)
 		if (usr != user)
@@ -205,8 +204,8 @@
 		src.underlays.Cut()
 		background.icon_state = "[action.getBackground(target, user)]0"
 		src.underlays += background
-		if (usr.client.tooltips && action.use_tooltip)
-			usr.client.tooltips.hide(TOOLTIP_HOVER)
+		if (usr.client.tooltipHolder && action.use_tooltip)
+			usr.client.tooltipHolder.hideHover()
 
 	clicked(list/params)
 		if(action.checkRequirements(target, user)) // Let's just check again, just in case.

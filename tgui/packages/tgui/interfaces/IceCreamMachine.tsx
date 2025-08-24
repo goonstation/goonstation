@@ -53,7 +53,6 @@ export const StandardFlavors = () => {
             }
             name="circle"
             pt={1}
-            mr={1}
             style={{ textShadow: '0 0 3px #000' }}
           />
           {flavor.name}
@@ -124,15 +123,16 @@ export const IceCreamMachine = () => {
       height={255 + bonus_window_height}
     >
       <Window.Content>
-        <Stack vertical>
+        <Stack m="0.25rem" vertical fill>
           <Stack.Item>
             <StandardFlavors />
           </Stack.Item>
           <Stack.Item>
             <BeakerFlavor />
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item m=".25rem">
             <Button
+              mt="0.5rem"
               icon="eject"
               className="chem-dispenser__buttons"
               disabled={!has_cone}

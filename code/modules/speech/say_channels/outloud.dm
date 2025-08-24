@@ -74,8 +74,7 @@
 			if (length(heard_distorted_listen_modules_by_type))
 				var/datum/say_message/distorted_message = message.Copy()
 				distorted_message.flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY
-				APPLY_CALLBACK_TO_MESSAGE_CONTENT(distorted_message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(stars)))
-
+				distorted_message.content = stars(distorted_message.content)
 				src.PassToListeners(distorted_message, heard_distorted_listen_modules_by_type)
 
 			return
@@ -138,7 +137,7 @@
 		if (length(heard_distorted_listen_modules_by_type))
 			var/datum/say_message/distorted_message = message.Copy()
 			distorted_message.flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY
-			APPLY_CALLBACK_TO_MESSAGE_CONTENT(distorted_message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(stars)))
+			distorted_message.content = stars(distorted_message.content)
 
 			src.listener_tick_cache.write_to_cache(message, heard_distorted_listen_modules_by_type, FALSE)
 			src.PassToListeners(distorted_message, heard_distorted_listen_modules_by_type)

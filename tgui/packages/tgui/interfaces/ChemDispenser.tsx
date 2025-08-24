@@ -10,7 +10,6 @@ import { useState } from 'react';
 import {
   AnimatedNumber,
   Box,
-  Button,
   Icon,
   Input,
   Modal,
@@ -22,6 +21,7 @@ import {
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
+import { Button } from '../components';
 import { Window } from '../layouts';
 import {
   MatterState,
@@ -80,7 +80,7 @@ const sortMap = [
 
 export const ChemDispenser = () => {
   return (
-    <Window width={580} height={730} theme="ntos">
+    <Window width={570} height={730} theme="ntos">
       <Window.Content scrollable>
         <ReagentDispenser />
         <Beaker />
@@ -157,7 +157,7 @@ export const ReagentDispenser = () => {
                   minValue={1}
                   maxValue={100}
                   step={1}
-                  onChange={(value: number) => setAddAmount(value)}
+                  onDrag={(value: number) => setAddAmount(value)}
                 />
               </Stack.Item>
             </Stack>
@@ -180,8 +180,7 @@ export const ReagentDispenser = () => {
               className="chem-dispenser__dispense-buttons"
               align="left"
               width="130px"
-              m={0.3}
-              onMouseOver={() => setHoverOverId(reagent.id)}
+              onMouseEnter={() => setHoverOverId(reagent.id)}
               onMouseLeave={() => setHoverOverId('')}
               onClick={() => {
                 act('dispense', {
@@ -244,7 +243,7 @@ export const Beaker = () => {
                   minValue={1}
                   maxValue={100}
                   step={1}
-                  onChange={(value: number) => setRemoveAmount(value)}
+                  onDrag={(value: number) => setRemoveAmount(value)}
                 />
               </Stack.Item>
             </Stack>
@@ -386,7 +385,7 @@ export const ChemGroups = () => {
             <Input
               placeholder="Group Name"
               value={groupName}
-              onChange={(value: string) => setGroupName(value)}
+              onInput={(_e, value: string) => setGroupName(value)}
             />
             <Button
               icon="plus-circle"

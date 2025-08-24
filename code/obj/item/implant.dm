@@ -45,14 +45,14 @@ THROWING DARTS
 	var/uses_radio = 0
 	var/list/mailgroups = null
 	var/net_id = null
-	var/alert_frequency = FREQ_PDA
+	var/pda_alert_frequency = FREQ_PDA
 
 	New()
 		..()
 		if (uses_radio)
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.alert_frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, pda_alert_frequency)
 		if (ismob(src.loc))
 			src.implanted(src.loc)
 
@@ -118,8 +118,6 @@ THROWING DARTS
 			M.update_clothing()
 		src.owner = null
 		src.implanted = 0
-		UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
-		UnregisterSignal(M, COMSIG_MOB_DEATH)
 
 	proc/activate()
 		online = TRUE
@@ -261,8 +259,6 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 	scan_category = IMPLANT_SCAN_CATEGORY_CLONER
-	alert_frequency = FREQ_CLONER_IMPLANT
-	uses_radio = TRUE
 	var/area/scanned_here
 
 	New()
@@ -271,7 +267,6 @@ THROWING DARTS
 
 	implanted(mob/M, mob/I)
 		..()
-		global.processing_items |= src
 		if (!istype(M, /mob/living/carbon/human))
 			return
 		var/mob/living/carbon/human/H = M
@@ -279,18 +274,6 @@ THROWING DARTS
 			return
 		var/image/img = H.prodoc_icons["cloner"]
 		img.icon_state = "implant-cloner"
-
-	process()
-		if (!src.implanted || isdead(src.owner)) //dead silence
-			return
-		var/datum/signal/signal = get_free_signal()
-		signal.data = list(
-			"address_1"="00000000",
-			"command"="heartbeat",
-			"bio_id"= src.owner.bioHolder.Uid,
-			"sender" = src.net_id,
-		)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	on_remove(mob/M)
 		..()
@@ -429,14 +412,14 @@ THROWING DARTS
 		var/myarea = get_area(src)
 		var/list/cloner_areas = list()
 		for(var/obj/item/implant/cloner/cl_implant in src.owner)
-			if(cl_implant.owner != src.owner || !cl_implant.scanned_here)
+			if(cl_implant.owner != src.owner)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
 		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
 		if (he_or_she(src.owner) == "they")
-			message += "they " + (length(cloner_areas) ? "were clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning implant.")
+			message += "they " + (length(cloner_areas) ? "have been clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning record.")
 		else
-			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "was clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning implant.")
+			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "has been clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning record.")
 
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
@@ -881,7 +864,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	var/uses = 1
 	var/expire = TRUE
-	var/inactive = FALSE //Has this implant been overriden on the current implantee
 	var/mob/implant_hacker = null // who is the person mindhacking the implanted person
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
@@ -910,6 +892,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
 			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return FALSE
+		// Same here, basically. Multiple active implants is just asking for trouble.
+		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
+		for (var/obj/item/implant/mindhack/MS in H.implant)
+			var/obj/item/implant/mindhack/Inew = new MS.type(H)
+			H.implant += Inew
+			qdel(MS)
 		return TRUE
 
 	implanted(var/mob/M, var/mob/I)
@@ -920,14 +908,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
 		M.changeStatus("stunned", 10 SECONDS)
 		M.changeStatus("knockdown", 10 SECONDS)
-
-		//Remove any existing mindhack statuses and override existing implants
-		var/mob/living/carbon/human/H = M
-		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
-		for (var/obj/item/implant/mindhack/MS in H.implant)
-			if(MS != src)
-				MS.inactive = TRUE
-		src.inactive = FALSE
 
 		if(M == I)
 			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
@@ -940,10 +920,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove(var/mob/M)
 		..()
 		src.former_implantee = M
-		if(!src.inactive) //If this isn't the implant currently mindhacking the owner don't remove antag status
-			M.delStatus("mindhack")
-			M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
-		src.inactive = FALSE //Set back to normal incase its used again
+		M.delStatus("mindhack")
+		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
 		return
 
 	proc/add_orders(var/orders)
@@ -953,18 +931,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
 
-/obj/item/implant/mindhack/super
-	name = "mindhack DELUXE implant"
-	expire = FALSE
-	uses = 2
-
 /obj/item/implant/marionette
 	name = "marionette implant"
 	desc = "This thing looks really complicated."
 	icon_state = "implant-mh"
 	impcolor = "r"
 	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
-	alert_frequency = FREQ_MARIONETTE_IMPLANT
+	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
 
 	/// A network address that this implant is linked to. Can be null.
 	/// Packets sent by this address skip the passkey requirement, and if the implant burns out,
@@ -1000,7 +973,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		// The `uses_radio` variable only adds a sender component, not a two-way one. So we have to do that manually!
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.alert_frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.pda_alert_frequency)
 		processing_items.Add(src)
 
 	disposing()
@@ -1377,6 +1350,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				M.linked_address = src.net_id
 				user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
 			return TRUE
+
+/obj/item/implant/mindhack/super
+	name = "mindhack DELUXE implant"
+	expire = 0
+	uses = 2
 
 /obj/item/implant/projectile
 	name = "bullet"
@@ -2404,7 +2382,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			else
 				if (P.linked_address)
 					. += "<br>[SPAN_NOTICE("This implant is linked to a remote of network address [P.linked_address].")]"
-				. += "<br>[SPAN_NOTICE("Frequency: [P.alert_frequency]")]"
+				. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
 				. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
 				. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
 

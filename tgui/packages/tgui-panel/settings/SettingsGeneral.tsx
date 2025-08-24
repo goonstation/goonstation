@@ -87,13 +87,13 @@ export function SettingsGeneral(props) {
                 <Input
                   width={'100%'}
                   value={fontFamily}
-                  onBlur={(value) => {
+                  onChange={(e, value) =>
                     dispatch(
                       updateSettings({
                         fontFamily: value,
                       }),
-                    );
-                  }}
+                    )
+                  }
                 />
                 <Button
                   ml={0.5}
@@ -137,7 +137,7 @@ export function SettingsGeneral(props) {
             maxValue={5}
             value={lineHeight}
             format={(value) => toFixed(value, 2)}
-            onChange={(value) =>
+            onDrag={(value) =>
               dispatch(
                 updateSettings({
                   lineHeight: value,

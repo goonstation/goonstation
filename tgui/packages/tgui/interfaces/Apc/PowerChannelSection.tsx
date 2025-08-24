@@ -136,7 +136,7 @@ const PowerChannelItem = (props: PowerChannelItemProps) => {
   );
 };
 
-export const PowerChannelSection = (_props) => {
+export const PowerChannelSection = (_props, context) => {
   const { data } = useBackend<ApcData>();
   const { lastused_total } = data;
   return (

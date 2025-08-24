@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2020 bobbahbrown (https://github.com/bobbahbrown)
+ * Changes: watermelon914 (https://github.com/watermelon914)
  * SPDX-License-Identifier: MIT
  */
 
-@use '../colors.scss';
-@use '../base.scss';
+@use '../colors';
+@use '../base';
 
 .ListInput__Section {
   font-family: Segoe UI Emoji; // pretty emoji in buttons!
@@ -15,20 +16,20 @@
 }
 
 .ListInput__Section .Section__titleText {
-  font-size: 1rem;
+  font-size: base.em(12px);
 }
 
 .ListInput__Loader {
-  position: relative;
   width: 100%;
+  position: relative;
   height: 4px;
 }
 
 .ListInput__LoaderProgress {
   position: absolute;
+  transition:
+    background-color 500ms ease-out,
+    width 500ms ease-out;
+  background-color: colors.bg(colors.$primary);
   height: 100%;
-  background-color: colors.bg(var(--color-primary));
-  transition-property: background-color, width;
-  transition-duration: var(--transition-time-slow);
-  transition-timing-function: ease-out;
 }

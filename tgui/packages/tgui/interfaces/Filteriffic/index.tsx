@@ -46,7 +46,7 @@ export const Filteriffic = () => {
                 <Input
                   value={massApplyPath}
                   width="100px"
-                  onChange={(value) => setMassApplyPath(value)}
+                  onInput={(e, value) => setMassApplyPath(value)}
                 />
                 <Button.Confirm
                   confirmContent="ARE YOU SURE?"

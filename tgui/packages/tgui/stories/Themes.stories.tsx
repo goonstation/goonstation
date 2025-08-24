@@ -6,31 +6,29 @@
 
 import { Input, LabeledList, Section } from 'tgui-core/components';
 
-// todo doesn't work
+import { useSharedState } from '../backend';
 
 export const meta = {
   title: 'Themes',
-  render: (
-    theme: string,
-    setTheme: (value: React.SetStateAction<string>) => void,
-  ) => <Story theme={theme} setTheme={setTheme} />,
+  render: () => <Story />,
 };
 
-function Story(props: {
-  readonly theme: string;
-  readonly setTheme: (value: React.SetStateAction<string>) => void;
-}) {
+const Story = () => {
+  const [theme, setTheme] = useSharedState<string | undefined>(
+    'kitchenSinkTheme',
+    undefined,
+  );
   return (
     <Section>
       <LabeledList>
         <LabeledList.Item label="Use theme">
           <Input
             placeholder="theme_name"
-            value={props.theme}
-            onChange={(value) => props.setTheme(value)}
+            value={theme}
+            onInput={(_e, value) => setTheme(value)}
           />
         </LabeledList.Item>
       </LabeledList>
     </Section>
   );
-}
+};
