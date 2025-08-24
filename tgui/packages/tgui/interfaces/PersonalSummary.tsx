@@ -18,7 +18,7 @@ interface PersonalSummaryData {
 }
 
 interface JobXPSummaryData {
-  current_job: string;
+  current_job: String;
   current_level: number;
   earned_exp: number;
   level_exp: number;
@@ -41,7 +41,7 @@ interface EarnedSpacebuxData {
 
   earned_spacebux: number;
   total_spacebux: number;
-  held_item: string;
+  held_item: String;
 }
 
 export const PersonalSummary = () => {

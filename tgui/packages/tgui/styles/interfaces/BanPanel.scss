@@ -8,26 +8,25 @@
 @use 'sass:color';
 @use '~tgui/styles/base';
 
-.BanPanel {
-  .Layout__content {
-    background-image: none !important; // TODO: Make an 'admin' theme with goon logo bg
-  }
+.Layout__content {
+  background-image: none !important; // TODO: Make an 'admin' theme with goon logo bg
+}
 
-  .CurrentBan {
-    background-color: rgba(0, 255, 0, 0.2);
-    font-weight: bold;
-  }
+.CurrentBan {
+  background-color: rgba(0, 255, 0, 0.2);
+  font-weight: bold;
+}
 
-  .ExpiredBan {
-    background-color: rgba(255, 0, 0, 0.2);
-    font-style: italic;
-  }
+.ExpiredBan {
+  background-color: rgba(255, 0, 0, 0.2);
+  font-style: italic;
+}
 
-  .BanText {
-    padding: 0.25rem;
-  }
+.BanText {
+  padding: 0.25rem;
+}
 
-  a.NoColor {
-    color: inherit;
-  }
+// For an <a> tag with the 'noColor' class, remove the color
+a.NoColor {
+  color: inherit;
 }

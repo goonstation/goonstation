@@ -56,9 +56,7 @@ export const ChemHeater = () => {
                 minValue={0}
                 maxValue={1000}
                 format={(value) => value + ' K'}
-                onChange={(e, value) =>
-                  act('adjustTemp', { temperature: value })
-                }
+                onDrag={(e, value) => act('adjustTemp', { temperature: value })}
               />
             </Stack.Item>
             <Stack.Item grow basis={0} overflow="hidden">

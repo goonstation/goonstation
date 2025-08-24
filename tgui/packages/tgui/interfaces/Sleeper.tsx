@@ -218,10 +218,9 @@ export const Sleeper = () => {
                 minValue={0}
                 maxValue={maxTime / 10}
                 value={curTime / 10}
-                onChange={(e, targetValue) =>
+                onDrag={(e, targetValue) =>
                   act('time_add', { tp: targetValue - curTime / 10 })
                 }
-                tickWhileDragging
               />
             </Flex.Item>
             <Flex.Item>

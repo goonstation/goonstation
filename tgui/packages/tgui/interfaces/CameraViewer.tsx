@@ -69,7 +69,7 @@ export const CameraViewer = () => {
                 <LabeledList.Item label="Search">
                   <Input
                     value={search}
-                    onChange={(value) => setSearch(value)}
+                    onInput={(e, value) => setSearch(value)}
                   />
                 </LabeledList.Item>
               </LabeledList>
@@ -88,7 +88,7 @@ export const CameraViewer = () => {
   );
 };
 
-type SearchableMinimapIconMarkerProps = MinimapMarkerData & { search: string };
+type SearchableMinimapIconMarkerProps = MinimapMarkerData & { search: String };
 
 const SearchableMinimapIconMarker = (
   props: SearchableMinimapIconMarkerProps,

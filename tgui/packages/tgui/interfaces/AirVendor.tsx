@@ -87,7 +87,7 @@ const VendorSection = () => {
                 maxValue={max_pressure}
                 step={10}
                 stepPixelSize={4}
-                onChange={(_e: unknown, value: number) =>
+                onChange={(_e: any, value: number) =>
                   handleChangePressure(value)
                 }
               />
@@ -147,7 +147,7 @@ export const AirVendor = () => {
   const handleCashEject = () => act('returncash');
 
   return (
-    <Window width={350} height={300}>
+    <Window width={350} height={320}>
       <Window.Content>
         <VendorSection />
         <TankSection />

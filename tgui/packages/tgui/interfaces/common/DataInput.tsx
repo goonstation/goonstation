@@ -167,13 +167,13 @@ const DataInputColorEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onChange={(value) => {
+        onInput={(e, value) =>
           act('modify_value', {
             name: name,
             value: value,
             type: type,
-          });
-        }}
+          })
+        }
       />
     </Tooltip>
   );
@@ -191,8 +191,7 @@ const DataInputIntegerEntry = (props) => {
         stepPixelSize={5}
         width="39px"
         step={1}
-        tickWhileDragging
-        onChange={(value) =>
+        onDrag={(value) =>
           act('modify_value', {
             name: name,
             value: value,
@@ -233,13 +232,13 @@ const DataInputTextEntry = (props) => {
       <Input
         value={value}
         width="200px"
-        onChange={(value) => {
+        onInput={(e, value) =>
           act('modify_value', {
             name: name,
             value: value,
             type: type,
-          });
-        }}
+          })
+        }
       />
     </Tooltip>
   );

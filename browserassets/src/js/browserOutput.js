@@ -1165,8 +1165,8 @@ $(function () {
     );
   });
 
-  $('#saveLog').click(async function (e) {
-    var saved = '<!doctype html>';
+  $('#saveLog').click(function (e) {
+    var saved = '';
 
     if (window.XMLHttpRequest) {
       xmlHttp = new XMLHttpRequest();
@@ -1183,44 +1183,11 @@ $(function () {
       'application/x-www-form-urlencoded'
     );
     xmlHttp.send();
+    saved += '<html class="' + opts.currentTheme + '">';
+    saved += '<style>' + xmlHttp.responseText + '</style>';
+    saved += '<body>';
 
-    // translate all images to base64 so they work in the saved log
-    // With love by ZeWaka
-    var $cloned = $messages.clone();
-    var imgPromises = [];
-    $cloned.find('img').each(function () {
-      var img = this;
-      var src = img.src;
-      // Only process http(s) images
-      if (/^https?:\/\//i.test(src)) {
-        var p = fetch(src)
-          .then(function (resp) {
-            return resp.blob();
-          })
-          .then(function (blob) {
-            return new Promise(function (resolve) {
-              var reader = new FileReader();
-              reader.onloadend = function () {
-                img.src = reader.result;
-                resolve();
-              };
-              reader.readAsDataURL(blob);
-            });
-          })
-          .catch(function () {
-            // lol fuck em
-          });
-        imgPromises.push(p);
-      }
-    });
-
-    await Promise.all(imgPromises);
-
-    saved += `<html class="${opts.currentTheme ?? 'theme-default'}">`;
-    saved += `<head><meta charset="utf-8" /><style>${xmlHttp.responseText}</style></head>`;
-    saved += `<body class="${opts.currentTheme ?? 'theme-default'}">`;
-
-    saved += $cloned.html();
+    saved += $messages.html();
     saved += '</body></html>';
 
     var now = new Date();
@@ -1237,35 +1204,7 @@ $(function () {
       now.getMinutes() +
       '.html';
 
-    var blob = new Blob([saved], { type: 'text/html' });
-
-    if (window.showSaveFilePicker) {
-      var accept = {};
-      accept[blob.type] = ['.html'];
-
-      var fileOpts = {
-        suggestedName: filename,
-        types: [
-          {
-            description: 'SS13 file',
-            accept: accept,
-          },
-        ],
-      };
-
-      window
-        .showSaveFilePicker(fileOpts)
-        .then(function (file) {
-          return file.createWritable();
-        })
-        .then(function (writable) {
-          return writable.write(blob).then(function () {
-            return writable.close();
-          });
-        })
-        .catch(function () {});
-    }
-    // ...existing code for msSaveBlob or <a download> if needed...
+    navigator.msSaveBlob(new Blob([saved], { type: 'text/html' }), filename);
   });
 
   $('#highlightTerm').click(function (e) {
@@ -1352,6 +1291,20 @@ $(function () {
    * KICK EVERYTHING OFF
    *
    ******************************************/
+
+  //Do IE check because apparently some luddites still rock XP and IE 8 in the year of our lord 2017
+  var trident = navigator.userAgent.match(/Trident\/(\d)\.\d(?:;|$)/gi);
+  var msie = document.documentMode;
+  if ((msie && msie < 10) || (trident && parseInt(trident) < 6)) {
+    //Trident/6.0 == IE 10
+    $('body').append(
+      '<div class="browser-warning">' +
+        "BYOND uses IE for interfaces and we've detected yours is very old.<br>" +
+        '<strong>Please consider upgrading or some stuff might be broken for you!</strong>' +
+        '<a href="#" class="close"><i class="icon-remove"></i></a>' +
+        '</div>'
+    );
+  }
 
   runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading');
   if ($('#loading').is(':visible')) {

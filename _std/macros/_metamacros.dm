@@ -1,6 +1,3 @@
-/// Used to define macros within macros.
-#define DEFINE #define
-
 
 // zero overhead tuple macros
 // useful when you want to store multiple values in one macro

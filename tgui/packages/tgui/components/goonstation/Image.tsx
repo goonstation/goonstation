@@ -35,7 +35,7 @@ export const Image = (props: Props) => {
 
   const computedStyle = {
     ...computeBoxProps(rest).style,
-    'image-rendering': fixBlur ? 'pixelated' : 'auto',
+    '-ms-interpolation-mode': fixBlur ? 'nearest-neighbor' : 'auto',
     objectFit,
   };
 

@@ -1035,8 +1035,7 @@
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
-	/// is_transformation prevents people from being ghostized by brain swapping, their brain is TRANSFORMING, not being swapped for someone else's
-	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0, is_transformation = FALSE)
+	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 		if (!src.donor || !I || !organ)
 			return 0
 
@@ -1145,19 +1144,18 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				if (!is_transformation)
-					boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
-					src.donor.ghostize()
-					if (newBrain.owner)
-						var/mob/G
-						G = find_ghost_by_key(newBrain?.owner?.key)
-						if (G)
-							if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
-								G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
-								G.ghostize()?.mind?.transfer_to(src.donor)
-							else
-								G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
-								G.mind?.transfer_to(src.donor)
+				boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
+				src.donor.ghostize()
+				if (newBrain.owner)
+					var/mob/G
+					G = find_ghost_by_key(newBrain?.owner?.key)
+					if (G)
+						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+							G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
+							G.ghostize()?.mind?.transfer_to(src.donor)
+						else
+							G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
+							G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain

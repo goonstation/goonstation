@@ -7,9 +7,10 @@
  */
 
 import { ChangeEventHandler, createRef, useCallback, useState } from 'react';
-import { Button, Flex, Input, Section } from 'tgui-core/components';
+import { Flex, Input, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
+import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
 type Tag = [string, string, string];
@@ -131,12 +132,12 @@ export const BugReportForm = () => {
   const handleCancel = useCallback(() => act('cancel'), [act]);
   // TODO: reduce copy-paste
   const handleTitleChange = useCallback(
-    (value: string) =>
+    (_e: unknown, value: string) =>
       setFormState((prevState) => ({ ...prevState, title: value })),
     [],
   );
   const handleDescriptionChange = useCallback(
-    (value: string) =>
+    (_e: unknown, value: string) =>
       setFormState((prevState) => ({ ...prevState, description: value })),
     [],
   );
@@ -146,7 +147,7 @@ export const BugReportForm = () => {
     [],
   );
   const handleExpectedBehaviorChange = useCallback(
-    (value: string) =>
+    (_e: unknown, value: string) =>
       setFormState((prevState) => ({ ...prevState, expectedBehavior: value })),
     [],
   );
@@ -183,7 +184,7 @@ export const BugReportForm = () => {
             <Flex.Item my={2}>
               <h2>Tags</h2>
               {tags.map((tag) => (
-                <Button.Checkbox
+                <ButtonCheckbox
                   key={tag[1]}
                   checked={tag[1] === chosenTag}
                   onClick={() => setTag(tag[1])}
@@ -191,7 +192,7 @@ export const BugReportForm = () => {
                   tooltipPosition="bottom"
                 >
                   {tag[0]}
-                </Button.Checkbox>
+                </ButtonCheckbox>
               ))}
             </Flex.Item>
             <Flex.Item my={2}>
@@ -233,14 +234,14 @@ export const BugReportForm = () => {
             </Flex.Item>
             <Flex.Item my={2}>
               <h2>Is this bug an exploit or related to secret content?</h2>
-              <Button.Checkbox
+              <ButtonCheckbox
                 checked={isSecret}
                 onClick={() => {
                   setIsSecret(!isSecret);
                 }}
               >
                 Exploit / Secret
-              </Button.Checkbox>
+              </ButtonCheckbox>
             </Flex.Item>
             <Flex.Item my={2}>
               <Flex style={{ 'justify-content': 'center' }}>

@@ -57,7 +57,7 @@
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
 	/// sent to the parent object when its handset retracts, see /datum/component/cord
 	#define COMSIG_CORD_RETRACT "cord_retract"
-	/// sent to the signal jamming thing when it successfully blocks a signal (signal)
+	/// sent to the signal jamming thing when it successfully blocks a signal
 	#define COMSIG_SIGNAL_JAMMED "signal_jammed"
 
 // ---- minimap ----

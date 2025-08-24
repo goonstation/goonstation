@@ -74,7 +74,7 @@ export const BarcodeComputer = () => {
                   step={1}
                   stepPixelSize={15}
                   unit={'Barcodes'}
-                  onChange={(value) => setAmount(value)}
+                  onDrag={(value) => setAmount(value)}
                 />
               </Box>
             </Section>

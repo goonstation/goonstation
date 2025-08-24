@@ -6,49 +6,40 @@
  * @license MIT
  */
 
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
 import { createLogger } from './logging.js';
 
 const logger = createLogger('winreg');
 
-/**
- * Query a registry key.
- * @param {string} path
- * @param {string} key
- * @return {Promise<string>}
- */
-export async function regQuery(path, key) {
+export const regQuery = async (path, key) => {
   if (process.platform !== 'win32') {
-    return;
+    return null;
   }
   try {
     const command = `reg query "${path}" /v ${key}`;
     const { stdout } = await promisify(exec)(command);
     const keyPattern = `    ${key}    `;
     const indexOfKey = stdout.indexOf(keyPattern);
-
     if (indexOfKey === -1) {
       logger.error('could not find the registry key');
-      return;
+      return null;
     }
-
     const indexOfEol = stdout.indexOf('\r\n', indexOfKey);
     if (indexOfEol === -1) {
       logger.error('could not find the end of the line');
-      return;
+      return null;
     }
-
     const indexOfValue = stdout.indexOf('    ', indexOfKey + keyPattern.length);
     if (indexOfValue === -1) {
       logger.error('could not find the start of the key value');
-      return;
+      return null;
     }
 
     return stdout.substring(indexOfValue + 4, indexOfEol);
   } catch (err) {
     logger.error(err);
-    return;
+    return null;
   }
-}
+};

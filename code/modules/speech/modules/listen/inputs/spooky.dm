@@ -16,8 +16,8 @@
 		return
 
 	if (prob(hear_message_chance))
-		APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(stutter)))
+		message.content = stutter(message.content)
 	else
-		message.content = MAKE_CONTENT_MUTABLE("You hear muffled speech... but nothing is there...")
+		message.content = "You hear muffled speech... but nothing is there..."
 
 	. = ..()

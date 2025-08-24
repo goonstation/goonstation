@@ -10,14 +10,12 @@
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "h" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
+/obj/machinery/camera,
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "p" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = 10
+/obj/machinery/camera{
+	dir = 10
 	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
@@ -49,8 +47,8 @@
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "T" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
+/obj/machinery/camera{
+	dir = 6
 	},
 /obj/machinery/networked/printer{
 	pixel_x = -2;
@@ -63,8 +61,8 @@
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "X" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
+/obj/machinery/camera{
+	dir = 1
 	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)

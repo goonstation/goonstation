@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { ComponentProps } from 'react';
 import { Box, Button, Section, Tooltip } from 'tgui-core/components';
 
 export const meta = {
@@ -13,7 +12,7 @@ export const meta = {
 };
 
 const Story = () => {
-  const positions: ComponentProps<typeof Button>['tooltipPosition'][] = [
+  const positions = [
     'top',
     'left',
     'right',

@@ -1,5 +1,6 @@
 import { PieceSetupType } from '..';
 
+/* eslint-disable max-len */
 const pieces: PieceSetupType[] = [];
 
 pieces.push({

@@ -462,7 +462,7 @@
 	category =  list("language")
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("accent_german", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_german")
 
 /datum/trait/finnish
 	name = "Finnish Accent"
@@ -484,7 +484,7 @@
 	category = list("language")
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("accent_tyke", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_tyke")
 
 // VISION/SENSES - Green Border
 

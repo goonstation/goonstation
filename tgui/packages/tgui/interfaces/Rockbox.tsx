@@ -36,6 +36,7 @@ export const Rockbox = () => {
                   minValue={1}
                   maxValue={Infinity}
                   step={1}
+                  onDrag={(value) => setTakeAmount(value)}
                   onChange={(value) => setTakeAmount(value)}
                 />
               </Box>
@@ -53,9 +54,9 @@ export const Rockbox = () => {
                     maxValue={Infinity}
                     step={1}
                     format={(value) => value + '⪽'}
-                    onChange={(value) => {
-                      act('set-default-price', { newPrice: value });
-                    }}
+                    onChange={(value) =>
+                      act('set-default-price', { newPrice: value })
+                    }
                   />
                 </Box>
               </Tooltip>
@@ -106,12 +107,12 @@ export const Rockbox = () => {
                           maxValue={Infinity}
                           step={1}
                           format={(value) => value + '⪽'}
-                          onChange={(value) => {
+                          onChange={(value) =>
                             act('set-ore-price', {
                               newPrice: value,
                               ore: currentOre.name,
-                            });
-                          }}
+                            })
+                          }
                           fluid
                         />
                       </Table.Cell>

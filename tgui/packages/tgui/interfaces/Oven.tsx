@@ -201,7 +201,7 @@ export const Oven = () => {
 const OvenDialbuttons = (props) => {
   const { act } = useBackend();
   const { min, max, time } = props;
-  const nodes: React.JSX.Element[] = [];
+  const nodes: JSX.Element[] = [];
   for (let i = min; i <= max; i++) {
     const node = (
       <Button

@@ -26,9 +26,7 @@
   }
 
   &amount:hover {
-    background-color: hsl(
-      from var(--color-bluek) h s calc(l + var(--adjust-hover))
-    );
+    background-color: lighten(colors.$blue, colors.$fg-lightness);
   }
 
   &table {

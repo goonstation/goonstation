@@ -86,7 +86,7 @@ export const SeedFabricator = () => {
                 minValue={1}
                 maxValue={10}
                 step={1}
-                onChange={(value) => setDispenseAmount(value)}
+                onDrag={(value) => setDispenseAmount(value)}
               />
             </Flex.Item>
             <Flex.Item grow={2}>

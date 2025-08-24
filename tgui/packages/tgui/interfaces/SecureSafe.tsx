@@ -61,14 +61,13 @@ const SecureSafeKeyPad = (props) => {
         {KEY_PAD_INPUT_LAYOUT.map((row, rowIndex) => {
           const rowLen = row.length;
           return (
-            <Flex key={`row-${rowIndex}`} justify="space-between">
+            <Flex key={`row-${rowIndex}`} justify="space-between" mt={1}>
               {row.map((input, colIndex) => {
                 return (
                   <Flex.Item
                     key={input}
                     grow={1}
                     mr={colIndex < rowLen - 1 ? 1 : 0}
-                    mt={rowIndex === 0 ? 0 : 1}
                   >
                     <Button
                       fluid
@@ -87,7 +86,7 @@ const SecureSafeKeyPad = (props) => {
           );
         })}
       </Flex.Item>
-      <Flex.Item>
+      <Flex.Item mt={1}>
         <Flex justify="space-between">
           <Flex.Item grow={1} mr={1}>
             <Button
@@ -135,8 +134,8 @@ export const SecureSafe = () => {
   return (
     <Window
       title={capitalize(safeName)}
-      width={210}
-      height={330}
+      width={200}
+      height={328}
       theme={theme || 'retro-dark'}
     >
       <Window.Content>

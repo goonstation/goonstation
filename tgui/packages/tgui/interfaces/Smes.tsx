@@ -136,7 +136,7 @@ export const Smes = () => {
                     step={5}
                     stepPixelSize={4}
                     format={(value) => formatPower(value * POWER_MUL, 1)}
-                    onChange={(e, value) =>
+                    onDrag={(e, value) =>
                       act('set-input', {
                         target: value * POWER_MUL,
                       })
@@ -221,7 +221,7 @@ export const Smes = () => {
                     step={5}
                     stepPixelSize={4}
                     format={(value) => formatPower(value * POWER_MUL, 1)}
-                    onChange={(e, value) =>
+                    onDrag={(e, value) =>
                       act('set-output', {
                         target: value * POWER_MUL,
                       })

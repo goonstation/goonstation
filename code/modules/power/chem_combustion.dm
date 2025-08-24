@@ -237,13 +237,12 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		Air: <A href='byond://?src=\ref[src];air_inlet=-0.10'>\<\<</A> <A href='byond://?src=\ref[src];air_inlet=-0.01'>\<</A> [atmos_inlet * 100]% <A href='byond://?src=\ref[src];air_inlet=0.01'>\></A> <A href='byond://?src=\ref[src];air_inlet=0.1'>\>\></A>
 		"}
 
-		if (user.client.tooltips)
-			user.client.tooltips.show(
-				TOOLTIP_PINNED, src,
-				mouse = params,
-				title = src.name,
-				content = dat,
-			)
+		if (user.client.tooltipHolder)
+			user.client.tooltipHolder.showClickTip(src, list(
+				"params" = params,
+				"title" = src.name,
+				"content" = dat,
+			))
 
 		return
 

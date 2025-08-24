@@ -74,7 +74,7 @@ export const ReagentDisplay = (props) => {
               minValue={1}
               maxValue={max_volume}
               step={1}
-              onChange={(value) => set_remove_amount(Math.round(value))}
+              onDrag={(value) => set_remove_amount(Math.round(value))}
             />
           </Box>
         </>
@@ -242,7 +242,7 @@ export const AmountInputControl = (props) => {
         minValue={5}
         maxValue={max_amount}
         step={1}
-        onChange={(value) => set_amount(Math.round(value))}
+        onDrag={(value) => set_amount(Math.round(value))}
       />
     </LabeledControls.Item>
   );
@@ -387,7 +387,7 @@ export const MakePills = (props) => {
   );
 };
 
-export const MakeBottle = (props) => {
+export const MakeBottle = (props, context) => {
   const { act, data } = useBackend<ChemMasterData>();
 
   const [bottle_amount, set_bottle_amount] = useSharedState(
@@ -575,7 +575,7 @@ export const OperationsSection = (props) => {
           <Input
             value={item_name}
             placeholder={placeholder}
-            onBlur={(value) => {
+            onChange={(e, value) => {
               set_item_name(value);
             }}
             maxLength={data.name_max_len}

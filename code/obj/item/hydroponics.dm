@@ -507,16 +507,6 @@ TYPEINFO(/obj/item/plantanalyzer)
 					return
 				pot.HYPdestroyplant()
 
-	should_suppress_attack(var/object, mob/user, params)
-		if (istype(object, /obj/machinery/plantpot))
-			var/obj/machinery/plantpot/pot = object
-			if (pot.current)
-				return TRUE
-			return FALSE
-		if (istype(object, /obj/decorative_pot) && src.icon_state != "trowel_full") // TODO better check, reliant on trowel rework
-			return TRUE
-
-
 		//check if target is a plant pot to paste in the cosmetic plant overlay
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 

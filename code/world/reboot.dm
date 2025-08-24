@@ -1,5 +1,4 @@
 var/reboot_file_path = "data/restarting"
-var/server_rebuild_file_path = "data/triggers/rebuild"
 
 /proc/Create_reboot_file()
 	file(reboot_file_path) << ""
@@ -18,20 +17,7 @@ var/server_rebuild_file_path = "data/triggers/rebuild"
 
 /proc/Shutdown_server()
 	Create_reboot_file()
-
-	if (global.rebuildServerContainer)
-		// A system service on the host will detect this file and trigger a rebuild of the server container
-		// See tools/server/rebuilder.service for more details
-		if (fexists(server_rebuild_file_path))
-			fdel(server_rebuild_file_path)
-		file(server_rebuild_file_path) << ""
-
-		// Just in case the system service is down, trigger a normal shutdown after waiting a bit
-		SPAWN(2 MINUTES)
-			Shutdown_server()
-
-	else
-		shutdown()
+	shutdown()
 
 /proc/Reboot_server(var/retry)
 	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
@@ -142,14 +128,9 @@ var/server_rebuild_file_path = "data/triggers/rebuild"
 		#endif
 
 	if (!doShutdown)
-		if (global.rebuildServerContainer)
-			ehjax.sendAll(clients, "browseroutput", "hardrestart")
-			logTheThing(LOG_DIARY, null, "Rebuilding server container, triggering shutdown instead of reboot.", "debug")
-			message_admins("Rebuilding server container, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
-			doShutdown = TRUE
-		else if (fexists(global.hardRebootFilePath))
-			//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
-			//this is to avoid memory leaks from leaving the server running for long periods
+		//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
+		//this is to avoid memory leaks from leaving the server running for long periods
+		if (fexists(global.hardRebootFilePath))
 			//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
 			ehjax.sendAll(clients, "browseroutput", "hardrestart")
 			logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")

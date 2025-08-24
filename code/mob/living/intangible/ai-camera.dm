@@ -140,12 +140,10 @@ TYPEINFO(/mob/living/intangible/aieye)
 			src.cancel_camera()
 
 	proc/add_all_statics()
-#ifndef SKIP_CAMERA_COVERAGE
 		if (!src.loc)
 			return
 		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
 			src.client.images |= T.aiImage
-#endif
 
 	proc/remove_all_statics()
 		if (!src.last_client)
@@ -161,12 +159,10 @@ TYPEINFO(/mob/living/intangible/aieye)
 		return turfs
 
 	proc/add_viewport_statics()
-#ifndef SKIP_CAMERA_COVERAGE
 		if (!src.last_client)
 			return
 		for (var/turf/T as anything in src.get_viewport_turfs())
 			src.last_client.images |= T.aiImage
-#endif
 
 	proc/remove_viewport_statics()
 		if (!src.last_client)
@@ -175,7 +171,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 			src.last_client.images -= T.aiImage
 
 	proc/src_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
-#ifndef SKIP_CAMERA_COVERAGE
 		SPAWN(0)
 			var/list/add_block = block(new_turf.x - src.v_width, new_turf.y - src.v_height, new_turf.z, new_turf.x + src.v_width, new_turf.y + src.v_height, new_turf.z) + src.get_viewport_turfs()
 			var/list/remove_block = block(old_turf.x - src.v_width, old_turf.y - src.v_height, old_turf.z, old_turf.x + src.v_width, old_turf.y + src.v_height, old_turf.z)
@@ -185,7 +180,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 			for (var/turf/T as anything in (add_block - remove_block))
 				src.client.images |= T.aiImage
-#endif
 
 	proc/update_statics()	//update seperate from move(). Mostly same code.
 		return

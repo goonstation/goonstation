@@ -4,7 +4,7 @@ import { Box, Tooltip } from 'tgui-core/components';
 const render = createRenderer();
 
 export const ListOfTooltips = () => {
-  const nodes: React.JSX.Element[] = [];
+  const nodes: JSX.Element[] = [];
 
   for (let i = 0; i < 100; i++) {
     nodes.push(

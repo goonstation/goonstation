@@ -65,7 +65,7 @@ export const Timer = () => {
                     maxValue={MAX_TIME}
                     stepPixelSize={1}
                     format={showTime}
-                    tickWhileDragging
+                    onDrag={(_e, value) => setTime(value)}
                     onChange={(_e, value) => setTime(value)}
                   />
                 </Stack.Item>

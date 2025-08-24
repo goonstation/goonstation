@@ -154,25 +154,15 @@
 
 
 //Puts all files in a directory into a list
-/proc/recursiveFileList(dir)
-	var/list/files = list()
-	for (var/i in flist(dir))
-		if (copytext(i, -1) == "/") //Is Directory
-			files += recursiveFileList(dir + i)
-		else //Is file
-			files += "[dir][i]"
-	return files
-
-
-/proc/loadAllLocalResources(dir)
-	for (var/i in flist(dir))
+/proc/recursiveFileLoader(dir)
+	for(var/i in flist(dir))
 		if (copytext(i, -1) == "/") //Is Directory
 			//Skip certain directories
-			if (i == "unused/" || i == "node_modules/" || i == "build/")
+			if (i == "unused/" || i == "html/" || i == "node_modules/" || i == "build/")
 				continue
 			else
 				LAGCHECK(LAG_HIGH)
-				loadAllLocalResources(dir + i)
+				recursiveFileLoader(dir + i)
 		else //Is file
 			if (dir == "browserassets/src/") //skip files in base dir (hardcoding dir name here because im lazy ok)
 				continue
@@ -221,11 +211,3 @@
 	src << browse(s, "window=resourcePreload;titlebar=0;size=1x1;can_close=0;can_resize=0;can_scroll=0;border=0")
 	src.resourcesLoaded = 1
 	return 1
-
-#ifndef LIVE_SERVER
-/client/verb/reloadResources()
-	set hidden = TRUE
-	set name = "Reload Resources"
-	src.resourcesLoaded = FALSE
-	src.loadResources()
-#endif

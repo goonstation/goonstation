@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import {
   Button,
   Dimmer,
@@ -14,7 +14,6 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { clamp } from 'tgui-core/math';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
@@ -23,6 +22,8 @@ import { capitalize } from './common/stringUtils';
 
 // Feel free to adjust this for performance
 const extractablesPerPage = 25;
+
+const clamp = (value, min, max) => Math.min(Math.max(min, value), max);
 
 interface ReagentExtractorData {
   autoextract;
@@ -38,26 +39,26 @@ export const ReagentExtractor = () => {
   const { inserted, storage_tank_1, storage_tank_2 } = containersData;
 
   return (
-    <Window title="Reagent Extractor" width={530} height={740} theme="ntos">
+    <Window title="Reagent Extractor" width={500} height={739} theme="ntos">
       <Window.Content>
         <Stack vertical fill>
           {/* Insertable Container */}
-          <Stack.Item>
+          <Stack.Item basis={19.5}>
             <ReagentDisplay container={inserted} insertable />
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item grow basis="auto">
             <Stack fill>
               {/* Extractables (produce) */}
               <Stack.Item grow>
                 <ExtractableList />
               </Stack.Item>
               {/* Storage Tanks */}
-              <Stack.Item basis={21}>
+              <Stack.Item basis={18}>
                 <Stack vertical fill>
-                  <Stack.Item basis={19} grow>
+                  <Stack.Item basis={19.5} grow>
                     <ReagentDisplay container={storage_tank_1} />
                   </Stack.Item>
-                  <Stack.Item basis={19}>
+                  <Stack.Item basis={19.5}>
                     <ReagentDisplay container={storage_tank_2} />
                   </Stack.Item>
                 </Stack>
@@ -121,8 +122,8 @@ const ReagentDisplay = (props) => {
           return (
             <>
               <Button
-                px="0.4rem"
-                mr="0.4rem"
+                px={0.75}
+                mr={1.5}
                 icon="filter"
                 color="red"
                 tooltip="Isolate"
@@ -134,7 +135,7 @@ const ReagentDisplay = (props) => {
                 }
               />
               <Button
-                px="0.4rem"
+                px={0.75}
                 icon="times"
                 color="red"
                 tooltip="Flush"
@@ -149,7 +150,7 @@ const ReagentDisplay = (props) => {
           );
         }}
       />
-      <Flex wrap justify="center" mt={0.75}>
+      <Flex wrap justify="center">
         <Flex.Item grow />
         <Flex.Item grow basis="auto">
           <Button
@@ -184,7 +185,7 @@ const ReagentDisplay = (props) => {
                 minValue={1}
                 maxValue={500}
                 step={1}
-                onChange={(value) => setTransferAmount(value)}
+                onDrag={(value) => setTransferAmount(value)}
               />
             </Flex.Item>
             <Flex.Item>

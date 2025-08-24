@@ -187,7 +187,8 @@
 /turf/space,
 /area/listeningpost/landing_bay)
 "iQ" = (
-/obj/machinery/firealarm/directional/north{
+/obj/machinery/firealarm{
+	pixel_y = 24;
 	text = "NF"
 	},
 /obj/cable{

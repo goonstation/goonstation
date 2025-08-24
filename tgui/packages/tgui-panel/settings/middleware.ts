@@ -92,5 +92,7 @@ export function settingsMiddleware(store) {
 
     // Save settings to the web storage
     storage.set('panel-settings', settings);
+
+    return;
   };
 }

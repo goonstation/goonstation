@@ -85,7 +85,7 @@
 	process_status()
 	if(status < UI_UPDATE)
 		return FALSE
-	window = tgui_process.request_pooled_window(user, interface) // |GOONSTATION-CHANGE| Different process holder, add interface
+	window = tgui_process.request_pooled_window(user) // |GOONSTATION-CHANGE| Different process holder
 	if(!window)
 		// |GOONSTATION-ADD|
 		if(istype(src_object, /datum/tgui_modal))
@@ -248,11 +248,7 @@
 	json_data["config"] = list(
 		"title" = title,
 		"status" = status,
-		"interface" = list(
-			"name" = interface,
-			// |GOONSTATION-CHANGE| Unsure what "layout" equivalent in Goonstation, if any, is, so commenting out for now
-			// "layout" = user.client.prefs.read_preference(src_object.layout_prefs_used),
-		),
+		"interface" = interface,
 		"refreshing" = refreshing,
 		"window" = list(
 			"key" = window_key,

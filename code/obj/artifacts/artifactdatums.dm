@@ -181,15 +181,6 @@ ABSTRACT_TYPE(/datum/artifact/)
 		ArtifactLogs(user, target, O, "weapon", null, 0)
 		return 0
 
-	/// What the artifact does when you use it in hand
-	proc/effect_attack_self(user)
-		. = FALSE
-		if (!user)
-			return TRUE
-		if (!src.holder.ArtifactSanityCheck())
-			return TRUE
-		src.holder.add_fingerprint(user)
-
 	/// What the artifact does when it is activated and you smack an atom (other than a mob) with it
 	proc/effect_attack_atom(obj/art, mob/living/user, atom/A)
 		. = FALSE

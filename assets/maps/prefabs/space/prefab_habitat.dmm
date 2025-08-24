@@ -170,7 +170,9 @@
 	},
 /area/spacehabitat/beach)
 "D" = (
-/obj/machinery/firealarm/directional/east{
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
 	pixel_y = 1
 	},
 /turf/simulated/floor/engine{

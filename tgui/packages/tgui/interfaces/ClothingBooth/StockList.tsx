@@ -211,7 +211,9 @@ const StockListView = (props: StockListProps) => {
                   <Input
                     autoFocus
                     fluid
-                    onChange={(value: string) => setSearchText(value)}
+                    onInput={(_e: unknown, value: string) =>
+                      setSearchText(value)
+                    }
                     placeholder="Search by name..."
                   />
                 </Stack.Item>

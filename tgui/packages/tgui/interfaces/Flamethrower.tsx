@@ -46,7 +46,7 @@ const PilotLight = (props) => {
             minValue={minTemp}
             maxValue={maxTemp}
             format={(value) => Math.floor(value - freezeTemperature) + ' C'}
-            onChange={(_e, value) =>
+            onChange={(e, value) =>
               act('change_temperature', { temperature: value })
             }
           />

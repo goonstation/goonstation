@@ -166,7 +166,7 @@ export const MinimapController = () => {
                           placeholder="Marker Name"
                           fluid
                           value={name}
-                          onBlur={(value) => setName(value)}
+                          onChange={(e, value) => setName(value)}
                         />
                         <Dropdown
                           selected={icon}
@@ -184,8 +184,7 @@ export const MinimapController = () => {
                               step={1}
                               value={pos_x}
                               format={(value) => 'x, ' + value}
-                              tickWhileDragging
-                              onChange={(value) => setPosX(value)}
+                              onDrag={(value) => setPosX(value)}
                             />
                           </Flex.Item>
                           <Flex.Item>
@@ -196,8 +195,7 @@ export const MinimapController = () => {
                               step={1}
                               value={pos_y}
                               format={(value) => 'y, ' + value}
-                              tickWhileDragging
-                              onChange={(value) => setPosY(value)}
+                              onDrag={(value) => setPosY(value)}
                             />
                           </Flex.Item>
                         </Flex>

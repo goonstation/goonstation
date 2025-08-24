@@ -75,7 +75,7 @@ export const EngineStats = () => {
 
   return (
     <Window
-      height={595}
+      height={560}
       width={760}
       theme="retro-dark"
       title="Engine Statistics"

@@ -6,7 +6,6 @@
 
 import { storage } from 'common/storage';
 import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'common/vector';
-import { BooleanLike } from 'tgui-core/react';
 
 import { createLogger } from './logging';
 
@@ -117,11 +116,10 @@ const storeWindowGeometry = async () => {
 // Recall window geometry from local storage and apply it
 export const recallWindowGeometry = async (
   options: {
-    fancy?: BooleanLike;
+    fancy?: boolean;
     pos?: [number, number];
     size?: [number, number];
-    locked?: BooleanLike;
-    scale?: BooleanLike;
+    locked?: boolean;
   } = {},
 ) => {
   const geometry = options.fancy && (await storage.get(windowKey));
@@ -132,21 +130,9 @@ export const recallWindowGeometry = async (
   let pos = geometry?.pos || options.pos;
   let size = options.size;
   // Convert size from css-pixels to display-pixels
-  if (options.scale && size) {
+  if (size) {
     size = [size[0] * pixelRatio, size[1] * pixelRatio];
   }
-
-  if (!options.scale) {
-    document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
-    document.documentElement.style.setProperty(
-      '--scaling-amount',
-      window.devicePixelRatio.toString(),
-    );
-  } else {
-    document.body.style.zoom = '';
-    document.documentElement.style.setProperty('--scaling-amount', null);
-  }
-
   // Wait until screen offset gets resolved
   await screenOffsetPromise;
   const areaAvailable = getScreenSize();
@@ -221,7 +207,7 @@ export const dragStartHandler = (event) => {
   logger.log('drag start');
   dragging = true;
   dragPointOffset = vecSubtract(
-    [event.screenX * pixelRatio, event.screenY * pixelRatio],
+    [event.screenX, event.screenY],
     getWindowPosition(),
   ) as [number, number];
   // Focus click target
@@ -248,10 +234,10 @@ const dragMoveHandler = (event: MouseEvent) => {
   }
   event.preventDefault();
   setWindowPosition(
-    vecSubtract(
-      [event.screenX * pixelRatio, event.screenY * pixelRatio],
-      dragPointOffset,
-    ) as [number, number],
+    vecSubtract([event.screenX, event.screenY], dragPointOffset) as [
+      number,
+      number,
+    ],
   );
 };
 
@@ -262,7 +248,7 @@ export const resizeStartHandler =
     logger.log('resize start', resizeMatrix);
     resizing = true;
     dragPointOffset = vecSubtract(
-      [event.screenX * pixelRatio, event.screenY * pixelRatio],
+      [event.screenX, event.screenY],
       getWindowPosition(),
     ) as [number, number];
     initialSize = getWindowSize();
@@ -290,7 +276,7 @@ const resizeMoveHandler = (event: MouseEvent) => {
   }
   event.preventDefault();
   const currentOffset = vecSubtract(
-    [event.screenX * pixelRatio, event.screenY * pixelRatio],
+    [event.screenX, event.screenY],
     getWindowPosition(),
   );
   const delta = vecSubtract(currentOffset, dragPointOffset);

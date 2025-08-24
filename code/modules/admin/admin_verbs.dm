@@ -134,6 +134,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
+		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
 		/client/proc/toggle_tracy_profiling,
 
@@ -474,6 +475,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggleResourceCache,
 		/client/proc/debugResourceCache,
 		/client/proc/debug_profiler,
+		/client/proc/cmd_tooltip_debug,
 		/client/proc/deleteJsLogFile,
 		/client/proc/deleteAllJsLogFiles,
 		/client/proc/random_color_matrix,
@@ -483,7 +485,6 @@ var/list/admin_verbs = list(
 		/client/proc/rebuild_flow_networks,
 		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
-		/client/proc/toggle_server_rebuild,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
@@ -1504,8 +1505,8 @@ var/list/fun_images = list()
 
 		LAGCHECK(LAG_LOW)
 
-	logTheThing(LOG_ADMIN, usr ? usr : src, "gave every player a pet [pet_path]!")
-	logTheThing(LOG_DIARY, usr ? usr : src, "gave every player a pet [pet_path]!", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "gave every player a pet [pet_path]!")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "gave every player a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave every player a pet [pet_path]!")
 
 /client/proc/cmd_customgrenade()
@@ -1561,7 +1562,9 @@ var/list/fun_images = list()
 				<style type="text/css">
 				@font-face {
 					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
+					src: url('[resource("css/fonts/Twemoji.eot")]');
+					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
+						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
 					text-rendering: optimizeLegibility;
 				}
 				</style>

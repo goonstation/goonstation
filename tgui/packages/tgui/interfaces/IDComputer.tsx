@@ -64,14 +64,14 @@ export const DeptBox = (props) => {
                     icon="save"
                     tooltip="Save"
                     onClick={() => act('save', { save: index + 1 })}
-                    px="0.4rem"
+                    pl="10px"
                     mx="0.2rem"
                   />
                   <Button
                     icon="check"
                     tooltip="Apply"
                     onClick={() => act('apply', { apply: index + 1 })}
-                    px="0.4rem"
+                    pl="10px"
                     mx="0.2rem"
                     mr="1rem"
                   />

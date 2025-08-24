@@ -9,20 +9,26 @@
 
 /// Cloning Manual -- A big ol' manual.
 /obj/item/paper/Cloning
-	name = "H-86 Cloning Apparatus Manual"
+	name = "H-87 Cloning Apparatus Manual"
 	info = {"<h4>Getting Started</h4>
-	Congratulations, your station has purchased the H-86 industrial cloning device!<br>
-	Using the H-86 is almost as simple as brain surgery! Simply insert a disk into the marked slot (cut corner on the RIGHT hand side), shove the target humanoid into the scanning chamber, and select the scan option to write their genetic data to the disk!<br>
+	Congratulations, your station has purchased the H-87 industrial cloning device!<br>
+	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
 	<b>That's all there is to it!</b><br>
 	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
-	<p>Clone disks should be properly labelled and stored in the provided rack. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which sends a "keep alive!" signal back to the rack. Note: a red warning light indicates a lack of "keep alive!" signal and may indicate the subject's death, unauthorized implant removal, or solar flare interference.
-	<h4>Cloning from a disk</h4>
-	Cloning is as simple as inserting the disk back into the console and hitting the clone button.<br>
-	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-86 has been blocked from cloning crewmembers while they are still alive.<br>
+	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which may be viewed from the cloning console.
+	Profile Deletion has been restricted to \[Station Head\] level access.</p>
+	<h4>Cloning from a profile</h4>
+	Cloning is as simple as pressing the CLONE option to the right of the desired profile.<br>
+	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-87 has been blocked from cloning crewmembers while they are still alive.<br>
 	<br>
 	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (with SPEEDCLONE technology) are roughly 90 seconds.
-	The cloning pod may be unlocked early with any \[Medical\] ID after initial maturation is complete.</p><br>
+	The cloning pod may be unlocked early with any \[Medical Researcher\] ID after initial maturation is complete.</p><br>
 	<i>Please note that resulting clones may have a small DEVELOPMENTAL DEFECT as a result of genetic drift.</i><br>
+	<h4>Profile Management</h4>
+	<p>The H-87 (as well as your station's standard genetics machine) can accept STANDARD DATA DISKETTES.
+	These diskettes are used to transfer genetic information between machines and profiles.
+	A load/save dialog will become available in each profile if a disk is inserted.</p><br>
+	<i>A good diskette is a great way to counter aforementioned genetic drift!</i><br>
 	<br>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
 
@@ -540,7 +546,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	info = {"<center><h2>Finally, my own ship!</h2></center>
 	<hr>
 	<i>This is the begining of my log, I figured since I made it rich after all this time, I ought to recount my thoughts now in a log of sorts.
-	Years of working in a damm cubicle, my only worthwile cash comming from transferring dead crew members credits to my own account.
+	Years of working in a damm cubicle, my only worthwile cash comming from transfering dead crew members credits to my own account.
 	But it has all paid off, I got a beautiful ship, my dog, a whole damm vault, and plenty of room for guests!
 	I even got this bottle of blue label! I was going to save it for my first cruise with others, but I suppose it wont hurt to dip into a bit of it.</i>
 	"}
@@ -655,80 +661,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
 		info = PAPER_IMAGE_RENDER("images/arts/mushroom_station.png")
-
-/obj/item/paper/postcard/beach
-	name = "tropical postcard"
-	desc = {"A postcard depicting a picturesque beach scene. The back side has a groan-worthy pun."}
-	icon_state = "postcard-beach"
-	info = {"Wish you were here to <font color='#0026FF'>sea</font> this!<br><br>
-	National Notary Supply Corporation<br>
-	Image #06019"}
-
-/obj/item/paper/postcard/mountain
-	name = "alpine postcard"
-	desc = {"A postcard depicting a snow-capped mountain emitting a thin column of smoke. There's a bad joke on the back."}
-	icon_state = "postcard-mountain"
-	info = {"Is that mountain supposed to be smoking?<br><br>
-	National Notary Supply Corporation<br>
-	Image #06129"}
-
-/obj/item/paper/postcard/canyon
-	name = "canyon postcard"
-	desc = "A postcard depicting a river flowing through a sun-bleached canyon"
-	icon_state = "postcard-canyon"
-	info = {"Grand Canyon National Park, USA, Earth - River View 1<br>
-	National Notary Supply Corporation<br>
-	Image #05641"}
-
-/obj/item/paper/postcard/lovemd
-	name = "I Love Maryland postcard"
-	desc = "A postcard expressing admiration for the US state of Maryland, abbreviated MD. The back contains a tourist blurb about the state."
-	icon_state = "postcard-maryland" //deliberately uses the "MD" state abbreviation for laffes
-	info = {"There is much to love about the \"Old Line State\", one of the oldest states in the United States.
-	From the majestic Appalachian Mountains to the breath-taking Chesapeake Bay, every inch of Maryland
-	is blessed with natural beauty. Every year, thousands of history buffs make a pilgrimage to Fort McHenry,
-	the site of the battle that inspired the anthem of the United States, and Maryland's warm and generous
-	people welcome such storied institutions and corporations as the United States Naval Academy, John Hopkins
-	University, and National Notary. Truly there is something for everyone in Maryland.<br><br>
-	I Heart Maryland<br>
-	National Notary Supply Corporation<br>
-	Image #01309"}
-
-/obj/item/paper/postcard/mdstatehouse
-	name = "Maryland State House postcard"
-	desc = "A postcard showing the Maryland State House in Annapolis. The back explains the building's significance."
-	icon_state = "postcard-md-state-house"
-	info = {"In addition to hosting the United States Naval Academy and the headquarters of the National
-	Notary Supply Corporation, Annapolis is also the capital of the US state of Maryland. The Maryland
-	State House, depicted on this postcard, is the oldest state legislature building still in continuous use
-	and once served as the national capitol, during the city's nine months as the capital of the United States.
-	<br><br>
-	Maryland State House<br>
-	National Notary Supply Corporation<br>
-	Image #01311"}
-
-/obj/item/paper/postcard/apollo
-	name = "Apollo 11 postcard"
-	desc = "A postcard showing the crew of Apollo 11, the first three modern men to land on the moon."
-	icon_state = "postcard-apollo"
-	info = {"<font face='Arial'><h3>MEET THE MEN WHO MADE A GIANT LEAP FOR MANKIND</h3>
-	When the three crew members of American spaceflight Apollo 11 landed on Earth's moon in July 1969,
-	the roughly 22 hours they spent on the lunar surface would totally reshape human history forever.
-	Their trip to the moon and back rocked the scientific world and paved the way for the ground-breaking
-	discovery of FAAE, the miracle substance popularly known as "plasma". Learn about Apollo 11,
-	plasma, and more at the Museum of Lunar History!<br><br><br><br><br><hr>
-	Printed by Aurora Lithographics<hr></font>"}
-
-/obj/item/paper/postcard/moonfootprint
-	name = "Lunar bootprint postcard"
-	desc = "A postcard telling readers that they should \"see Neil Armstrong's genuine lunar bootprint\" at the Museum of Lunar History"
-	icon_state = "postcard-moon-footprint"
-	info = {"<font face='Arial'><h3>SEE NEIL ARMSTRONG'S GENUINE LUNAR BOOTPRINT</h3>
-	When American astronaut Neil Armstrong took a small step out of the lunar lander on that fateful day
-	in July 20, 1969, he made a giant leap for humankind by becoming one of the first modern humans
-	to set foot on Earth's moon. Retrace his steps and see Neil Armstrong's genuine lunar bootprint,
-	only at the Museum of Lunar History!<br><br><br><br><br><hr>
-	Printed by Aurora Lithographics<hr></font>"}
 
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
@@ -1492,7 +1424,6 @@ proc/spawn_kitchen_note()
 				</tr>
 
 			<tr><td>PDAs</td><td>[format_frequency(FREQ_PDA)]kHz</td></tr>
-			<tr><td>Cloner implants</td><td>[format_frequency(FREQ_CLONER_IMPLANT)]kHz</td></tr>
 			<tr><td>Gas pumps</td><td>[format_frequency(FREQ_PUMP_CONTROL)]kHz</td></tr>
 			<tr><td>Airlocks</td><td>[format_frequency(FREQ_AIRLOCK)]kHz</td></tr>
 			<tr><td>Designated free frequency</td><td>[format_frequency(FREQ_FREE)]kHz</td></tr>

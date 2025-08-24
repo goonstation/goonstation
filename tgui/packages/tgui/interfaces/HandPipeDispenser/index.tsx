@@ -10,7 +10,6 @@ import {
   Box,
   Button,
   Flex,
-  Icon,
   Image,
   Section,
   Stack,
@@ -18,6 +17,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
+import { Icon } from '../../components';
 import { Window } from '../../layouts';
 import { ProductList } from '../common/ProductList';
 import { ByondDir, HandPipeDispenserData, PipeData, Tab } from './type';

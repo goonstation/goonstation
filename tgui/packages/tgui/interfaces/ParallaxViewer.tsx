@@ -108,8 +108,7 @@ const ColorMatrix = (props: ColorMatrixProps) => {
                   step={0.01}
                   width="50px"
                   format={(v) => toFixed(v, 2)}
-                  tickWhileDragging
-                  onChange={(v) => {
+                  onDrag={(v) => {
                     let retColor = colmatrix;
                     retColor[row * 4 + col] = v;
                     act('modify', {
@@ -175,14 +174,14 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
               <Input
                 value={sourceData.icon_state}
                 width="250px"
-                onChange={(value) => {
+                onInput={(e, value) =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
                     type: 'icon_state',
                     value: value,
-                  });
-                }}
+                  })
+                }
               />
             </LabeledList.Item>
 
@@ -193,10 +192,8 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                 maxValue={2}
                 // stepPixelSize={4}
                 step={0.1}
-                format={(v) => toFixed(v, 1)}
                 width="80px"
-                tickWhileDragging
-                onChange={(value) =>
+                onDrag={(value) =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
@@ -231,8 +228,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                     maxValue={900}
                     step={1}
                     width="80px"
-                    tickWhileDragging
-                    onChange={(value) =>
+                    onDrag={(value) =>
                       act('modify', {
                         byondRef: sourceData.byondRef,
                         group: props.group_key,
@@ -250,8 +246,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                     maxValue={360}
                     step={1}
                     width="80px"
-                    tickWhileDragging
-                    onChange={(value) =>
+                    onDrag={(value) =>
                       act('modify', {
                         byondRef: sourceData.byondRef,
                         group: props.group_key,
@@ -274,8 +269,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                 // stepPixelSize={4}
                 step={1}
                 width="80px"
-                tickWhileDragging
-                onChange={(value) =>
+                onDrag={(value) =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
@@ -294,8 +288,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                 // stepPixelSize={4}
                 step={1}
                 width="80px"
-                tickWhileDragging
-                onChange={(value) =>
+                onDrag={(value) =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
@@ -345,14 +338,14 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                   <Input
                     value={sourceData.color}
                     width="90px"
-                    onChange={(value) => {
+                    onInput={(e, value) =>
                       act('modify', {
                         byondRef: sourceData.byondRef,
                         group: props.group_key,
                         type: 'color',
                         value: value,
-                      });
-                    }}
+                      })
+                    }
                   />
                   <Button
                     icon="table-cells"

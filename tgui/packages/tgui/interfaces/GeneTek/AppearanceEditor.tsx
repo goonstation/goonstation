@@ -163,7 +163,7 @@ export const AppearanceEditor = (props) => {
   );
 };
 
-const ColorInput = (params) => {
+const ColorInput = (params, context) => {
   const { color, onChange, fix } = params;
 
   const r = parseInt(color.substr(1, 2), 16);
@@ -191,7 +191,7 @@ const ColorInput = (params) => {
         maxValue={fix ? 190 : 255}
         value={r}
         color="red"
-        onChange={(_e, newR) => onComponentChange(Math.round(newR), g, b)}
+        onChange={(_, newR) => onComponentChange(Math.round(newR), g, b)}
       />
       <Knob
         inline
@@ -200,7 +200,7 @@ const ColorInput = (params) => {
         maxValue={fix ? 190 : 255}
         value={g}
         color="green"
-        onChange={(_e, newG) => onComponentChange(r, Math.round(newG), b)}
+        onChange={(_, newG) => onComponentChange(r, Math.round(newG), b)}
       />
       <Knob
         inline
@@ -209,7 +209,7 @@ const ColorInput = (params) => {
         maxValue={fix ? 190 : 255}
         value={b}
         color="blue"
-        onChange={(_e, newB) => onComponentChange(r, g, Math.round(newB))}
+        onChange={(_, newB) => onComponentChange(r, g, Math.round(newB))}
       />
     </Box>
   );

@@ -562,18 +562,19 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltips && control == "mapwindow.map")
-			usr.client.tooltips.show(
-				TOOLTIP_HOVER, src,
-				mouse = params,
-				title = "Nutrients Meter",
-				content = "[holder.points] Points",
-				theme = src.theme
-			)
+		if (usr.client.tooltipHolder && control == "mapwindow.map")
+			var/theme = src.theme
+
+			usr.client.tooltipHolder.showHover(src, list(
+				"params" = params,
+				"title" = "Nutrients Meter",//src.name,
+				"content" = "[holder.points] Points",//(src.desc ? src.desc : null),
+				"theme" = theme
+			))
 
 	MouseExited()
-		if (usr.client.tooltips)
-			usr.client.tooltips.hide(TOOLTIP_HOVER)
+		if (usr.client.tooltipHolder)
+			usr.client.tooltipHolder.hideHover()
 
 	proc/update()		//getting weird numbers in here
 		cur_meter_location = clamp(round((max(holder?.points,0)/holder?.MAX_POINTS)*11), 0, 11)	//length of meter
@@ -606,18 +607,19 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltips && control == "mapwindow.map")
-			usr.client.tooltips.show(
-				TOOLTIP_HOVER, src,
-				mouse = params,
-				title = "Size of Kudzu Growth",
-				content = "[amount] tiles",
-				theme = src.theme
-			)
+		if (usr.client.tooltipHolder && control == "mapwindow.map")
+			var/theme = src.theme
+
+			usr.client.tooltipHolder.showHover(src, list(
+				"params" = params,
+				"title" = "Size of Kudzu Growth",
+				"content" = "[amount] tiles",
+				"theme" = theme
+			))
 
 	MouseExited()
-		if (usr.client.tooltips)
-			usr.client.tooltips.hide(TOOLTIP_HOVER)
+		if (usr.client.tooltipHolder)
+			usr.client.tooltipHolder.hideHover()
 
 	proc/update()
 		amount = length(kudzu_controller.kudzu)

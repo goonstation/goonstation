@@ -149,7 +149,7 @@ const HelpModal = () => {
   );
 };
 
-const TimeInput = (props: TeamProps) => {
+const TimeInput = (props: TeamProps, context) => {
   const { data } = useBackend<GameClockData>();
 
   const { minTime, maxTime } = data.clockStatic;
@@ -171,7 +171,7 @@ const TimeInput = (props: TeamProps) => {
 
   return (
     <NumberInput
-      onChange={(value) => {
+      onDrag={(value) => {
         team === 'white'
           ? setWhiteTimeBuffer(value)
           : setBlackTimeBuffer(value);
@@ -186,7 +186,7 @@ const TimeInput = (props: TeamProps) => {
   );
 };
 
-const TeamIcon = (props: TeamProps) => {
+const TeamIcon = (props: TeamProps, context) => {
   const { team } = props;
 
   return (
@@ -231,7 +231,7 @@ const SidePart = (props: TeamProps) => {
   );
 };
 
-const MidPart = (_) => {
+const MidPart = (_, context) => {
   const { data, act } = useBackend<GameClockData>();
 
   const [, setConfigModalOpen] = useLocalState('configModalOpen', false);

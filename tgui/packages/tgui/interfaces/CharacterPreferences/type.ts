@@ -65,7 +65,6 @@ export interface CharacterPreferencesData {
   hudThemePreview: string;
   tooltipOption: CharacterPreferencesTooltip;
   scrollWheelTargeting: CharacterPreferencesScrollTarget;
-  middleMouseSwap: BooleanLike;
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;
   viewChangelog: BooleanLike;

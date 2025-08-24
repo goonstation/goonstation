@@ -4,20 +4,22 @@
  * @license MIT
  */
 
-import fs from 'node:fs';
-import { basename } from 'node:path';
-
-import { SourceMapConsumer } from 'source-map';
-import { parse as parseStackTrace } from 'stacktrace-parser';
+import fs from 'fs';
+import { basename } from 'path';
 
 import { createLogger } from '../logging.js';
+import { require } from '../require.js';
 import { resolveGlob } from '../util.js';
+
+const SourceMap = require('source-map');
+const { parse: parseStackTrace } = require('stacktrace-parser');
 
 const logger = createLogger('retrace');
 
+const { SourceMapConsumer } = SourceMap;
 const sourceMaps = [];
 
-export async function loadSourceMaps(bundleDir) {
+export const loadSourceMaps = async (bundleDir) => {
   // Destroy and garbage collect consumers
   while (sourceMaps.length !== 0) {
     const { consumer } = sourceMaps.shift();
@@ -37,9 +39,9 @@ export async function loadSourceMaps(bundleDir) {
     }
   }
   logger.log(`loaded ${sourceMaps.length} source maps`);
-}
+};
 
-export function retrace(stack) {
+export const retrace = (stack) => {
   if (typeof stack !== 'string') {
     logger.log('ERROR: Stack is not a string!', stack);
     return stack;
@@ -78,10 +80,10 @@ export function retrace(stack) {
         return `  at ${methodName}`;
       }
       const compactPath = file
-        .replace(/^rspack:\/\/\/?/, './')
+        .replace(/^webpack:\/\/\/?/, './')
         .replace(/.*node_modules\//, '');
       return `  at ${methodName} (${compactPath}:${lineNumber})`;
     })
     .join('\n');
   return header + '\n' + mappedStack;
-}
+};

@@ -16,7 +16,10 @@ interface PollOptionsSectionProps {
   options: string[];
 }
 
-export const PollOptionsSection = (props: PollOptionsSectionProps) => {
+export const PollOptionsSection = (
+  props: PollOptionsSectionProps,
+  context: unknown,
+) => {
   const {
     onAddOption,
     onChangeOption,
@@ -80,7 +83,7 @@ interface PollOptionListItemProps {
 
 const PollOptionListItem = (props: PollOptionListItemProps) => {
   const { label, onChange, onRemove, onReorder, reordering, value } = props;
-  const handleChange = (value: string) => onChange(value);
+  const handleChange = (e: unknown, value: string) => onChange(value);
   const buttons = (
     <>
       {reordering === 'self' && (
@@ -115,7 +118,7 @@ const PollOptionListItem = (props: PollOptionListItemProps) => {
         width="100%"
         value={value}
         placeholder="Option text..."
-        onBlur={handleChange}
+        onChange={handleChange}
       />
     </LabeledList.Item>
   );
