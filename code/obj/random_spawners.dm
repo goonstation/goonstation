@@ -827,6 +827,7 @@
 	/obj/item/tile/steel)
 
 	rare_items2spawn = list(/obj/item/bluntwrap,
+	/obj/item/device/light/sparkler/firecracker,
 	/obj/item/cell,
 	/obj/item/crowbar,
 	/obj/item/electronics/scanner,
