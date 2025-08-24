@@ -116,6 +116,7 @@
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
 		F["scrollwheel_limb_targeting"] << src.scrollwheel_limb_targeting
+		F["middle_mouse_swap"] << src.middle_mouse_swap
 		F["changelog"] << src.view_changelog
 		F["score"] << src.view_score
 		F["tickets"] << src.view_tickets
@@ -312,6 +313,7 @@
 		// Game setting options, not per-profile
 		F["tooltip"] >> src.tooltip_option
 		F["scrollwheel_limb_targeting"] >> src.scrollwheel_limb_targeting
+		F["middle_mouse_swap"] >> src.middle_mouse_swap
 		if (isnull(src.scrollwheel_limb_targeting))
 			src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 		F["changelog"] >> src.view_changelog
@@ -446,6 +448,9 @@
 		src.tooltip_option = (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS) //For fucks sake.
 		src.keybind_prefs_updated(user)
 
+		winset(user, "tooltip_option_always", "is-checked=[src.tooltip_option == TOOLTIP_ALWAYS]")
+		winset(user, "tooltip_option_alt", "is-checked=[src.tooltip_option == TOOLTIP_ALT]")
+		winset(user, "tooltip_option_never", "is-checked=[src.tooltip_option == TOOLTIP_NEVER]")
 
 		return 1
 

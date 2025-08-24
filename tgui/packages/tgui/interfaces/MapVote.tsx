@@ -60,7 +60,7 @@ export const MapVote = () => {
 
   return (
     <Window height={height} width={width}>
-      <Window.Content>
+      <Window.Content scrollable>
         <Stack wrap justify="space-around">
           {mapList.map((map) => (
             <MapPanel

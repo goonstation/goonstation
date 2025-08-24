@@ -6,7 +6,7 @@
  */
 
 import { capitalize } from 'common/string';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import {
   Button,
   Input,
@@ -67,8 +67,6 @@ export const ChemRequester = () => {
     notes,
     silicon_user,
   } = data;
-  const [notesText, setNotesText] = useState('');
-  const handleNotesInput = useCallback((e, value) => setNotesText(value), []);
   return (
     <Window title="Chemical Request" width={400} height={600}>
       <Window.Content align="center">
@@ -115,15 +113,12 @@ export const ChemRequester = () => {
                 <LabeledList.Item label="Notes">
                   <Input
                     width="100%"
-                    value={notesText}
+                    value={notes}
                     maxLength={65}
-                    onInput={handleNotesInput}
-                    onChange={(e, value) => {
+                    onBlur={(value) => {
                       act('set_notes', { notes: value });
                     }}
-                  >
-                    {notes}
-                  </Input>
+                  />
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
@@ -131,7 +126,7 @@ export const ChemRequester = () => {
               <Button
                 onClick={() => {
                   act('submit');
-                  setNotesText('');
+                  act('set_notes', { notes: '' });
                 }}
               >
                 Submit request

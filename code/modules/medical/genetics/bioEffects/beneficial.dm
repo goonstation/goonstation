@@ -1268,14 +1268,14 @@
 	proc/absorb_tasty_rock(obj/item/rock)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/human = src.owner
-			human.sims.affectMotive("Hunger", rock.w_class * 3)
+			human.sims?.affectMotive("Hunger", rock.w_class * 3)
 		src.gain_material(rock.w_class * 10)
 		qdel(rock)
 
 	proc/absorb_liquid_plasma(amount)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/human = src.owner
-			human.sims.affectMotive("Thirst", amount)
+			human.sims?.affectMotive("Thirst", amount)
 		src.gain_material(amount)
 
 	proc/gain_material(amount)

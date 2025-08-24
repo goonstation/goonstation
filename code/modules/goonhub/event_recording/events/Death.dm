@@ -36,5 +36,5 @@
 			M.get_toxin_damage(),
 			M.get_oxygen_deprivation(),
 			gibbed ? TRUE : FALSE,
-			html_decode(M.last_words)
+			strip_html_tags(html_decode(M.last_words)) //decode, then strip the tags out, otherwise they get rendered as text on the website x.x
 		)
