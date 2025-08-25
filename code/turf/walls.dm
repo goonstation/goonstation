@@ -20,7 +20,6 @@ TYPEINFO(/turf/simulated/wall)
 	default_material = "steel"
 
 	var/health = 100
-	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
 	var/girdermaterial = null
 

@@ -4,6 +4,7 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 
 /// Check if the ID already exists and return it. Else create a new ID.
 /proc/register_id(var/id_text, var/list/reg_list = registered_id_list)
+	RETURN_TYPE(/datum/forensic_id)
 	if(!id_text)
 		return null
 	if(reg_list[id_text])
@@ -28,8 +29,8 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 
 // Store how the forensic text should be displayed... by reference! Might be unnecessary.
 datum/forensic_display
-	var/display_text = null
+	var/text = null
 
-	New(var/id_text = null)
+	New(var/text = null)
 		..()
-		display_text = id_text
+		src.text = text
