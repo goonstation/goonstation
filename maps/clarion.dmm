@@ -720,26 +720,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"aek" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/light,
-/turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/bridge)
 "aem" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -9899,12 +9879,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bQO" = (
@@ -10439,16 +10413,6 @@
 	},
 /area/station/engine/storage)
 "cgF" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta,
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
@@ -13128,15 +13092,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "enL" = (
@@ -13392,20 +13347,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"eyD" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/light,
-/obj/storage/closet/office,
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/light_switch/west{
-	pixel_y = 12
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge)
 "eyF" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -16043,24 +15984,6 @@
 	dir = 9
 	},
 /area/station/quartermaster/office)
-"gri" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/door_control{
-	id = "lockdown";
-	name = "Bridge Lockdown Control";
-	pixel_x = -23;
-	pixel_y = -8;
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west{
-	pixel_y = 6
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/storage/eva)
 "grl" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light/small/floor,
@@ -19585,6 +19508,7 @@
 /area/station/medical/robotics)
 "iQk" = (
 /obj/filing_cabinet,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -20570,9 +20494,6 @@
 	pixel_x = -18;
 	pixel_y = 12
 	},
-/obj/machinery/turretid/ai_chamber{
-	pixel_x = 24
-	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "jHO" = (
@@ -21462,7 +21383,6 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "ksZ" = (
-/obj/machinery/firealarm/north,
 /obj/machinery/teleport/portal_ring,
 /turf/simulated/floor/circuit/purple,
 /area/station/teleporter)
@@ -21477,6 +21397,7 @@
 	name = "Databank - Control";
 	setup_drive_type = /obj/item/disk/data/tape/master
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "ktn" = (
@@ -22015,24 +21936,9 @@
 /area/station/chapel/funeral_parlor)
 "kIY" = (
 /obj/machinery/vending/coffee,
-/obj/item/device/radio/intercom/AI{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/firealarm/directional/north,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -23965,6 +23871,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "lWO" = (
@@ -24460,18 +24367,6 @@
 /obj/storage/secure/closet/fridge,
 /turf/simulated/floor/black,
 /area/station/bridge)
-"mpM" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/computer/announcement/station/captain{
-	dir = 8
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/customs)
 "mpN" = (
 /obj/stone,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
@@ -24730,6 +24625,7 @@
 	pixel_x = 26
 	},
 /obj/storage/secure/closet/command/hop,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/hop)
 "myu" = (
@@ -25377,6 +25273,7 @@
 "mXo" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/camera/directional/west,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
 "mXs" = (
@@ -25438,31 +25335,6 @@
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 5;
-	icon_state = "line2"
-	},
-/obj/table/auto,
-/obj/item/hand_tele{
-	pixel_x = 2;
-	pixel_y = 8
-	},
-/obj/machinery/firealarm/directional/north{
-	pixel_x = -5
-	},
-/obj/machinery/light_switch/south{
-	pixel_x = 10;
-	pixel_y = 28
-	},
-/obj/item/hand_tele{
-	pixel_x = -2;
-	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -27278,7 +27150,6 @@
 /area/station/hallway/primary/south)
 "onn" = (
 /obj/machinery/manufacturer/hop_and_uniform,
-/obj/machinery/firealarm/west,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
@@ -31436,7 +31307,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/firealarm/north,
 /obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -32837,25 +32707,6 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/robotics)
-"szm" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/firealarm/directional/north,
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/crew_quarters/captain)
 "szo" = (
 /obj/table/reinforced/auto,
 /obj/item/satchel/hydro,
@@ -33345,7 +33196,7 @@
 	dir = 4;
 	tag = "icon-chair (EAST)"
 	},
-/obj/machinery/firealarm/north,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "sQc" = (
@@ -34605,18 +34456,6 @@
 /area/station/medical/staff)
 "tIY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/table/wood/auto,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/machinery/firealarm/directional/north,
 /obj/decal/poster/wallsign/framed_award/firstbill{
 	pixel_y = -3;
 	pixel_x = -32
@@ -34717,21 +34556,6 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/firealarm/directional/east,
-/obj/disposalpipe/segment,
-/obj/table/wood/auto,
-/obj/item/card/id/gold/captains_spare,
-/obj/item/pen/fancy,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -38019,7 +37843,6 @@
 	pixel_y = 4;
 	switchon = 1
 	},
-/obj/machinery/firealarm/north,
 /obj/decal/poster/wallsign/framed_award/firstbill{
 	pixel_y = -3;
 	pixel_x = -32
@@ -39733,19 +39556,7 @@
 /obj/machinery/computer/card{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/door/window/westleft,
-/obj/machinery/shower{
-	dir = 4;
-	pixel_y = 6
-	},
-/obj/item/rubberduck,
 /obj/machinery/drainage,
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/bridge/customs)
@@ -39761,13 +39572,13 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/machinery/firealarm/north,
 /obj/table/reinforced/auto,
 /obj/item/circuitboard/robotics,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/camera/directional/north{
 	pixel_x = -13
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "xtb" = (
@@ -77595,7 +77406,7 @@ pwL
 oZG
 qfh
 uuL
-gri
+aRm
 boN
 boN
 vMt
@@ -80008,7 +79819,7 @@ aPQ
 aQY
 aQY
 aQY
-eyD
+aQY
 aQY
 tIY
 oNx
@@ -81220,7 +81031,7 @@ syP
 rMr
 dSk
 kVC
-aek
+edC
 cPd
 kIY
 bem
@@ -82427,7 +82238,7 @@ pZd
 wYg
 wYg
 lHJ
-mpM
+lHJ
 lHJ
 lHJ
 aWW
@@ -82435,7 +82246,7 @@ sPW
 vgM
 sPo
 uLB
-szm
+uyF
 ksZ
 xQo
 pnN
