@@ -22,6 +22,7 @@ import { Window } from '../../layouts';
 import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
 import { GeneralTab } from './GeneralTab';
+import { OccupationTab } from './OccupationTab';
 import { SavesTab } from './SavesTab';
 import { TraitsTab } from './TraitsTab';
 import {
@@ -78,7 +79,10 @@ export const CharacterPreferences = (_props: any) => {
               >
                 Appearance
               </Tabs.Tab>
-              <Tabs.Tab onClick={() => act('open-occupation-window')}>
+              <Tabs.Tab
+                selected={menu === CharacterPreferencesTabKeys.Occupation}
+                onClick={() => setMenu(CharacterPreferencesTabKeys.Occupation)}
+              >
                 Occupation
               </Tabs.Tab>
               <Tabs.Tab
@@ -143,9 +147,13 @@ export const CharacterPreferences = (_props: any) => {
                 </Stack.Item>
               </Stack>
             )}
-            {(menu === CharacterPreferencesTabKeys.GameSettings ||
+            {(menu === CharacterPreferencesTabKeys.Occupation ||
+              menu === CharacterPreferencesTabKeys.GameSettings ||
               menu === CharacterPreferencesTabKeys.Saves) && (
               <Section scrollable fill>
+                {menu === CharacterPreferencesTabKeys.Occupation && (
+                  <OccupationTab />
+                )}
                 {menu === CharacterPreferencesTabKeys.GameSettings && (
                   <GameSettingsTab />
                 )}
