@@ -1,4 +1,61 @@
 
+(t)mon aug 25 25
+(u)JORJ949
+(p)24291
+(e)🗺⚖👮|A-Mapping, C-Balance, A-Security
+(*)Clarion security has been expanded to feel a little less cramped.
+(t)wed aug 20 25
+(u)RubberRats
+(p)24286
+(e)⚖🔬|C-Balance, A-Science
+(+)Curses from artifacts can now be cured by splashing holy water.
+(+)Plaguebringer wraith curses now require at least 10u of holy water to cure
+(u)cringe
+(p)24227
+(e)🎨💨|C-Sprites, A-Atmospherics
+(*)The HPD now has the gas filter, which is able to filter out a gas.
+(t)sun aug 17 25
+(u)ZeWaka
+(+)Chat and the changelog now support Emoji 16 (even if Windows doesn't...). Enjoy your root vegetables. 🫟
+(t)fri aug 15 25
+(u)JORJ949
+(p)24397
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Radios will no longer default incorrect prefixes (such as ":hiv"), or prefixes you don't have access to (":z" with a non-syndicate headset) to the general frequency.
+(u)JORJ949
+(p)24433
+(e)🎨🧑‍✈️|C-Sprites, A-Command
+(+)You can now open the captain's coat.
+(t)wed aug 13 25
+(u)nova2053
+(p)24420
+(e)|
+(+)Accents from the "German" and "Tyke" traits will not be removed by mutadone.
+(t)wed aug 06 25
+(u)Goonstation Developer Team & Contributors
+(e)🆕|C-Feature
+(*)We've updated to BYOND 516! It's now required to play on Goonstation. If you have any issues: check the minor changes for some tips, ask on the Discord, or mentor/adminhelp.
+(+)If you get white browser screens directly after installing and connecting, try closing BYOND and reopening it. If that doesn't work, clear your cache in the BYOND settings menu, under Preferences -> Advanced.
+(+)One common issue is DPI scaling, when you have Windows set to anything except 100% scaling. This can also cause white screens. First, try clearing your BYOND cache. Then maybe try rebooting. If all else fails, right click on dreamseeker.exe in your BYOND installation folder, go to Properties -> Compatibility -> High DPI Settings and mess around there.
+(+)Since BYOND 516 switched to using WebView2, clearing your browser cache works differently now. You can find it at `Documents\BYOND\cache\WebView2`.
+(u)ZeWaka, Mordent, LeahTheTech, Romayne, Sov, RubberRats, Wire
+(e)🪲🔄📄|C-Bug, C-Rework, A-UI
+(*)TGUI (our UI system) has been updated. Everything should look identical, or better. Please report any issues you stumble upon!
+(u)Wire
+(e)🪲🔄📄|C-Bug, C-Rework, A-UI
+(*)Complete rewrite of tooltips for better performance and a host of bug fixes. If you encounter any issues, be sure to submit a bug report! Including screenshots would be helpful.
+(t)mon aug 04 25
+(u)LeahTheTech
+(+)Instruments with only one note (whistles etc.) no longer use the instrument audio channel. Get whistled at.
+(t)sat aug 02 25
+(u)Munien
+(p)24255
+(e)🎨|C-Sprites
+(+)Added a few new tanktop variants to the clothing booth.
+(u)JORJ949
+(p)24139
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)Roundstart head of staff announcements will now be ordered by rank.
 (t)thu jul 31 25
 (u)aloe
 (+)There will now be a confirmation pop-up when you click a server link from the title menu.

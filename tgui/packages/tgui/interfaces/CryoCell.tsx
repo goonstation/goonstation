@@ -49,8 +49,8 @@ interface CryoOccupantData {
   burnDamage: number;
   bruteDamage: number;
   patient_status: number;
-  blood_pressure_rendered: String;
-  blood_pressure_status: String;
+  blood_pressure_rendered: string;
+  blood_pressure_status: string;
   body_temp: number;
   optimal_temp: number;
   embedded_objects: EmbeddedObjects;

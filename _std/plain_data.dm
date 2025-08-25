@@ -22,14 +22,26 @@
 /plain_data/proc/to_list()
 	RETURN_TYPE(/list)
 	. = list()
-	// turns out we are still a subtyle of /datum despite the path
-	var/static/list/var_blacklist = list("tag", "tgui_shared_states", "datum_components", "comp_lookup", "weakref", "disposed", "qdeled", "signal_procs")
+	global.ensure_plain_data_var_blacklist()
 	for(var/var_name in src.vars)
-		if(!issaved(src.vars[var_name]) || (var_name in var_blacklist))
+		if(!issaved(src.vars[var_name]) || global.plain_data_var_blacklist[var_name])
 			continue
 		var/value = src.vars[var_name]
 		_PROCESS_VALUE(value, "[src.type]")
 		.[var_name] = value
+
+var/list/plain_data_var_blacklist
+/// `/plain_data` unfortunately is still a subtype of `/datum`, so some vars require to be blacklisted.
+/proc/ensure_plain_data_var_blacklist()
+	if (length(global.plain_data_var_blacklist))
+		return global.plain_data_var_blacklist
+
+	var/plain_data/blank_data = new()
+	global.plain_data_var_blacklist = list()
+	for(var/var_name in blank_data.vars)
+		global.plain_data_var_blacklist[var_name] = TRUE
+
+	return global.plain_data_var_blacklist
 
 /**
  * Recursively normalizes a list of plain_data and primitive values. Plain_data values are converted to lists, recursively.

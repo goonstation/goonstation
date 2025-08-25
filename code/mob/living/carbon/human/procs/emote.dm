@@ -1106,6 +1106,9 @@
 					message = "<b>[used_name]</b> sniffs and scrunches [his_or_her(src)] face up irritably."
 					maptext_out = "<I>sniffs and scrunches [his_or_her(src)] face up irritably</I>"
 				m_type = 1
+				if (prob(5))
+					message = SPAN_ALERT("<b>[used_name]</b> pushes [his_or_her(src)] finger a bit too far up their nose and pokes their brain. Gross!")
+					src.take_brain_damage(5)
 				if (src.mind)
 					src.add_karma(-1)
 
