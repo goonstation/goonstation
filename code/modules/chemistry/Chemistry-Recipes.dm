@@ -4029,6 +4029,21 @@
 		result_amount = 3
 		mix_phrase = "The mixture gives off a harsh odor."
 
+	gun_infusion
+		name = "Phytoballistic Infusate"
+		id = "gun_infusion"
+		result = "gun_infusion"
+		/*
+		- Blackpowder is both a bullet chemical and a chem that is traditionally mass produced with the help of ingredients sourced from botany.
+		- Glowing slurry is the plant-interface part of the recipe.
+		- Plasma is the sci-fi space-magic chem that makes any of this even quasi-believable.
+		- Extensive research into the first paragraph on Wikipedia suggests bullets are often made from copper.
+		- Gun distillate adds the still as part of the process, and limits accessibility to the more antagonistic behaviours.
+		*/
+		required_reagents = list("blackpowder" = 5, "omega_mutagen" = 3, "plasma" = 2, "copper" = 1, "gun_distillate" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture pops a few times, and then smokes as it settles."
+
 	copper_nitrate
 		name = "Copper Nitrate"
 		id = "copper_nitrate"

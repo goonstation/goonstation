@@ -13,6 +13,7 @@
 	inventory_counter_enabled = TRUE
 	two_handed = TRUE
 	can_dual_wield = FALSE
+	brew_result = list("gun_slop" = 10)
 
 	New()
 		set_current_projectile(new /datum/projectile/paintball)
