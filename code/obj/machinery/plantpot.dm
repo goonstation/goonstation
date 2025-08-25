@@ -1224,7 +1224,8 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /// Handles the generation of seed items
 /obj/machinery/plantpot/proc/HYPharvesting_seeds(datum/HYPharvesting_data/h_data)
-	if (h_data.seedcount > 0) HYPgenerateseedcopy(h_data.pot.plantgenes, h_data.growing, h_data.pot.generation, h_data.pot, h_data.seedcount)
+	if (h_data.seedcount > 0) HYPgenerateseedcopy(h_data.pot.plantgenes, h_data.growing, h_data.pot.generation,
+													h_data.pot, h_data.seedcount)
 
 /// Handles the finalisation of cropcount
 /obj/machinery/plantpot/proc/HYPharvesting_finalise_cropcount(datum/HYPharvesting_data/h_data)
