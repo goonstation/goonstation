@@ -30,8 +30,14 @@ TYPEINFO(/datum/component/directional)
 
 	src.RegisterSignal(A, COMSIG_ATOM_DIR_CHANGED, PROC_REF(update_offsets))
 	src.update_offsets(A, null, A.dir)
+#ifdef CI_RUNTIME_CHECKING
+	START_TRACKING
+#endif
 
 /datum/component/directional/UnregisterFromParent()
+#ifdef CI_RUNTIME_CHECKING
+	STOP_TRACKING
+#endif
 	src.UnregisterSignal(src.parent, COMSIG_ATOM_DIR_CHANGED)
 	. = ..()
 

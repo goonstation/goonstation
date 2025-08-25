@@ -4622,12 +4622,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
-"bsG" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = -17
-	},
-/turf/space,
-/area/space)
 "bsO" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/conveyor/WE{
@@ -4957,9 +4951,6 @@
 "bwk" = (
 /obj/decal/stage_edge{
 	layer = 2.8
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
 	},
 /obj/item/instrument/large/jukebox,
 /turf/simulated/floor/wood/eight{
@@ -11408,12 +11399,6 @@
 /obj/decal/cleanable/robot_debris,
 /turf/space,
 /area/space)
-"dtQ" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = 18
-	},
-/turf/space,
-/area/space)
 "dua" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -15665,6 +15650,9 @@
 "eNZ" = (
 /obj/machinery/phone/wall{
 	pixel_y = 32
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 14
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 1
@@ -43920,6 +43908,9 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "nHm" = (
@@ -55400,6 +55391,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"rke" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "rkf" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -58140,6 +58137,17 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
+"sbp" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/space,
+/area/space)
 "sbq" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -58222,8 +58230,8 @@
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
 "sbY" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
@@ -68712,12 +68720,6 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"vnQ" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/stockex)
 "vnS" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -77535,6 +77537,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"xPp" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
+	},
+/turf/space,
+/area/space)
 "xPx" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -98403,7 +98411,7 @@ sIK
 sIK
 sIK
 gYc
-sbY
+rke
 jhw
 jhw
 jhw
@@ -110166,7 +110174,7 @@ waP
 waP
 gKJ
 nHd
-vnQ
+vSe
 lOJ
 lOJ
 lOJ
@@ -116526,8 +116534,8 @@ osx
 rdj
 rdj
 rdj
-bsG
-aLY
+rdj
+sbp
 rdj
 rdj
 rdj
@@ -116547,8 +116555,8 @@ rdj
 rdj
 rdj
 rdj
+xPp
 rdj
-dtQ
 rdj
 rdj
 rdj
@@ -122248,7 +122256,7 @@ eER
 nMn
 cNt
 xSV
-bBQ
+rVz
 ltD
 ltD
 ltD

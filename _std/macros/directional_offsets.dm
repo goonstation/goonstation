@@ -8,6 +8,7 @@
 
 //------------ Flags ------------//
 #define FORBID_INITIAL_OFFSETS (1 << 0)
+#define DOES_NOT_REQUIRE_WALL (1 << 1)
 
 
 

@@ -7484,11 +7484,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm/directional/east{
-	pixel_y = 4
-	},
 /obj/machinery/light_switch/west{
 	pixel_y = -7
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 4
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/checkpoint/sec_foyer{
@@ -20468,10 +20468,11 @@
 	pixel_y = 8
 	},
 /obj/machinery/drainage,
-/obj/machinery/firealarm/directional/west{
-	pixel_y = -3
-	},
 /obj/stool/bench/purple/auto,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = -3;
+	pixel_x = 24
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -25058,10 +25059,11 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -4
-	},
 /obj/storage/cart/mechcart/breach/acid,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -4;
+	pixel_x = -24
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},

@@ -63215,8 +63215,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_south,
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 10

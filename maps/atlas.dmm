@@ -6719,8 +6719,8 @@
 /obj/item/chem_grenade/metalfoam{
 	pixel_x = 7
 	},
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 9
@@ -12488,10 +12488,10 @@
 /obj/item/reagent_containers/hypospray,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/clothing/glasses/healthgoggles,
-/obj/machinery/camera/directional/east{
-	pixel_y = -10
-	},
 /obj/table/auto,
+/obj/machinery/camera/directional/south{
+	pixel_x = 10
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "icc" = (
@@ -19979,9 +19979,6 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/obj/machinery/firealarm/directional/north{
-	pixel_x = 22
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -19989,6 +19986,10 @@
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
+	},
+/obj/machinery/firealarm/directional/east{
+	pixel_x = 24;
+	pixel_y = -4
 	},
 /turf/simulated/floor/twotone/black{
 	dir = 8
