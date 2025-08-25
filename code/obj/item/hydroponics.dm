@@ -474,38 +474,76 @@ TYPEINFO(/obj/item/plantanalyzer)
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	rand_pos = 1
-	var/image/plantyboi //! The "plant" overlay of the plant
-	var/image/plantyboi_plantoverlay //! The "plantoverlay" of the plant
+
 	var/datum/plantgenes/genes //! The genes of the plant when it was plucked
 	var/grow_level = -1 //! The growth level of the plant when it was plucked
+	var/holding_plant = FALSE //! If the trowel currently holds a plant
+	var/plant_icon //! The "plant" overlay icon of the plant
+	var/plant_icon_state //! The "plant" overlay icon state of the plant
+	var/plantoverlay_icon //! The "plantoverlay" icon of the plant
+	var/plantoverlay_icon_state //! The "plantoverlay" icon state of the plant
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	afterattack(obj/target as obj, mob/user as mob)
+		if (istype(target, /obj/decorative_pot))
+			handle_planting(target)
+			return
 		if(istype(target, /obj/machinery/plantpot))
-			var/obj/machinery/plantpot/pot = target
-			if(pot.current)
-				var/datum/plant/p = pot.current
-				if(p.growthmode == "weed")
-					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!",SPAN_ALERT("The [p.name] is too strong for you traveller..."))
-					return
-				src.genes = pot.plantgenes
-				src.grow_level = pot.grow_level
-				if(pot.GetOverlayImage("plant"))
-					plantyboi = pot.GetOverlayImage("plant")
-					plantyboi.pixel_x = 2
-					src.icon_state = "trowel_full"
-					playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
-					if(pot.GetOverlayImage("plantoverlay"))
-						plantyboi_plantoverlay = pot.GetOverlayImage("plantoverlay")
-						plantyboi_plantoverlay.pixel_x = 2
-					else
-						plantyboi_plantoverlay = null
-				else
-					return
-				pot.HYPdestroyplant()
+			handle_unearthing(target, user)
+			return
+		..()
+
+	proc/handle_icon_setup(var/obj/machinery/plantpot/pot)
+		var/image/overlay_image = pot.GetOverlayImage("plant")
+		if(overlay_image)
+			plant_icon = overlay_image.icon
+			plant_icon_state = overlay_image.icon_state
+			var/image/plantoverlay_image = pot.GetOverlayImage("plantoverlay")
+			if(plantoverlay_image)
+				plantoverlay_icon = plantoverlay_image.icon
+				plantoverlay_icon_state = plantoverlay_image.icon_state
+			else
+				plantoverlay_icon = null
+				plantoverlay_icon_state = null
+			return TRUE
+		return FALSE
+
+	proc/handle_unearthing(var/obj/machinery/plantpot/pot, mob/user)
+		if(!pot.current)
+			return
+		var/datum/plant/p = pot.current
+		if(p.growthmode == "weed")
+			user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!",SPAN_ALERT("The [p.name] is too strong for you traveller..."))
+			return
+		if (!handle_icon_setup(pot))
+			return
+		src.genes = pot.plantgenes
+		src.grow_level = pot.grow_level
+		src.icon_state = "trowel_full"
+		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
+		holding_plant = TRUE
+		pot.HYPdestroyplant()
+
+	proc/handle_planting(obj/decorative_pot/pot)
+		if (!holding_plant)
+			return
+		pot.insert_plant(image(src.plant_icon, src.plant_icon_state), image(src.plantoverlay_icon, src.plantoverlay_icon_state), genes, grow_level)
+		src.empty_trowel()
+		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
+
+	/// Disposes all the trowel's contents and resets its icon state
+	proc/empty_trowel()
+		src.icon_state = "trowel"
+		src.plant_icon = null
+		src.plant_icon_state = null
+		src.plantoverlay_icon = null
+		src.plantoverlay_icon_state = null
+		src.holding_plant = FALSE
+		qdel(src.genes)
+		src.genes = null
 
 	should_suppress_attack(var/object, mob/user, params)
 		if (istype(object, /obj/machinery/plantpot))
@@ -513,11 +551,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 			if (pot.current)
 				return TRUE
 			return FALSE
-		if (istype(object, /obj/decorative_pot) && src.icon_state != "trowel_full") // TODO better check, reliant on trowel rework
+		if (istype(object, /obj/decorative_pot) && holding_plant)
 			return TRUE
-
-
-		//check if target is a plant pot to paste in the cosmetic plant overlay
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
 /obj/item/reagent_containers/glass/wateringcan
