@@ -68,7 +68,7 @@ export const WizardSpellbook = () => {
                   placeholder="Search by name"
                   width="100%"
                   autoSelect
-                  onInput={(_: unknown, value: string) => setSearchQuery(value)}
+                  onChange={(value: string) => setSearchQuery(value)}
                 />
               </Section>
             </Stack.Item>

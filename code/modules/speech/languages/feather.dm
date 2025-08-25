@@ -5,7 +5,7 @@
 /datum/language/feather/heard_not_understood(datum/say_message/message, datum/listen_module_tree/listen_tree)
 	. = ..()
 
-	message.content = src.getWords.Replace(message.content, /datum/language/feather/proc/genFeatherWord)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(src.getWords, TYPE_PROC_REF(/regex, Replace), /datum/language/feather/proc/genFeatherWord))
 
 /datum/language/feather/proc/genFeatherWord(word)
 	. = ""

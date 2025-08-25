@@ -29,7 +29,10 @@ var/global/datum/apiHandler/apiHandler
 			src.enabled = FALSE
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Goonhub endpoint doesn't exist, disabled api handler")
 			logTheThing(LOG_DIARY, null, "API Error: Goonhub endpoint doesn't exist, disabled api handler", "debug")
-
+		if (!config.goonhub_api_token)
+			src.enabled = FALSE
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Goonhub API token is not set, disabled api handler")
+			logTheThing(LOG_DIARY, null, "API Error: Goonhub API token is not set, disabled api handler", "debug")
 
 	/// Build and throw an error exception
 	proc/apiError(list/data, source)
