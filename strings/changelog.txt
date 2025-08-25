@@ -1,4 +1,22 @@
 
+(t)mon aug 25 25
+(u)JORJ949
+(p)24291
+(e)🗺⚖👮|A-Mapping, C-Balance, A-Security
+(*)Clarion security has been expanded to feel a little less cramped.
+(t)wed aug 20 25
+(u)RubberRats
+(p)24286
+(e)⚖🔬|C-Balance, A-Science
+(+)Curses from artifacts can now be cured by splashing holy water.
+(+)Plaguebringer wraith curses now require at least 10u of holy water to cure
+(u)cringe
+(p)24227
+(e)🎨💨|C-Sprites, A-Atmospherics
+(*)The HPD now has the gas filter, which is able to filter out a gas.
+(t)sun aug 17 25
+(u)ZeWaka
+(+)Chat and the changelog now support Emoji 16 (even if Windows doesn't...). Enjoy your root vegetables. 🫟
 (t)fri aug 15 25
 (u)JORJ949
 (p)24397

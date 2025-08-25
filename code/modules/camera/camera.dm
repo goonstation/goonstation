@@ -249,8 +249,11 @@
 		src.UpdateOverlays(null, "on_light")
 		src.UpdateOverlays(null, "on_light_lighting")
 
-	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter) || src.AddComponent(/datum/component/camera_coverage_emitter)
-	emitter.set_active(src.camera_status)
+	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
+	if (emitter)
+		emitter.set_active(src.camera_status)
+	else
+		src.AddComponent(/datum/component/camera_coverage_emitter)
 
 /obj/machinery/camera/proc/update_coverage()
 	PRIVATE_PROC(TRUE)
