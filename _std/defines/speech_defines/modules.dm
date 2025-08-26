@@ -68,6 +68,7 @@
 
 
 //------------ Speech Modifiers ------------//
+#define SPEECH_MODIFIER_ABSTRACT_RADIO_SOURCE "abstract_radio_source"
 #define SPEECH_MODIFIER_ACCENT_ADMIN_BAD "accent_badmin"
 #define SPEECH_MODIFIER_ACCENT_ADMIN_GOOD "accent_goodmin"
 #define SPEECH_MODIFIER_ACCENT_ADMIN_RAINBOW "accent_radmin"

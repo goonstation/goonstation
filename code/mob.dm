@@ -3446,10 +3446,7 @@ TYPEINFO(/mob)
 	src.observing = null
 	src.ghostize()
 
-/// search for any radio device, starting with hands and then equipment
-/// anything else is arbitrarily too deeply hidden and stowed away to get the signal
-/// (more practically, they won't hear it)
-/mob/proc/find_radio()
+/mob/find_radio()
 	if(istype(src.ears, /obj/item/device/radio))
 		return src.ears
 	. = src.find_type_in_hand(/obj/item/device/radio)

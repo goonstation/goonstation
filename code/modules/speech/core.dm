@@ -143,6 +143,11 @@ TYPEINFO(/atom)
 		if (!GET_COOLDOWN(src, "speech_bubble"))
 			src.ClearSpecificOverlays("speech_bubble")
 
+/// Returns the radio device that this atom should use.
+/atom/proc/find_radio()
+	RETURN_TYPE(/obj/item/device/radio)
+	return
+
 
 /// Whether a client controlling this mob can make this mob speak through the use of say wrappers or commands.
 /mob/var/can_use_say = TRUE
