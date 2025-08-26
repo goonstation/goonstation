@@ -17267,6 +17267,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"gSD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "gSF" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -21174,6 +21183,9 @@
 "jDQ" = (
 /obj/stool/chair/office/red,
 /obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -85220,7 +85232,7 @@ vOG
 tKf
 kmj
 rgz
-rgz
+gSD
 vfz
 qzB
 tKu
