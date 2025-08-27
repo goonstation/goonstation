@@ -15,7 +15,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { CharacterPreferencesData } from './type';
+import { AntagonistStaticData, CharacterPreferencesData } from './type';
 
 export const OccupationTab = () => {
   const { act, data } = useBackend<CharacterPreferencesData>();
@@ -92,29 +92,12 @@ export const OccupationTab = () => {
           }}
         >
           {Object.entries(data.antagonistPreferences).map(
-            ([key, value], index) => (
-              <Stack.Item key={index}>
-                <Button.Checkbox
-                  onClick={() =>
-                    act('toggle-antagonist-preference', {
-                      variable: data.antagonistStaticData[key].variable,
-                    })
-                  }
-                  tooltip={
-                    <OccupationTooltip
-                      title={data.antagonistStaticData[key].name}
-                      disabled_tooltip={
-                        data.antagonistStaticData[key].disabled_tooltip
-                      }
-                    />
-                  }
-                  disabled={data.antagonistStaticData[key].disabled}
-                  checked={value}
-                  width="100%"
-                >
-                  {data.antagonistStaticData[key].name}
-                </Button.Checkbox>
-              </Stack.Item>
+            ([antag_id, enabled], index) => (
+              <AntagonistOption
+                key={index}
+                enabled={enabled}
+                {...data.antagonistStaticData[antag_id]}
+              />
             ),
           )}
         </Stack>
@@ -213,6 +196,35 @@ const Occupation = (props) => {
           />
         </Stack.Item>
       </Stack>
+    </Stack.Item>
+  );
+};
+
+const AntagonistOption = (
+  props: AntagonistStaticData & { enabled: boolean },
+) => {
+  const { act } = useBackend<CharacterPreferencesData>();
+
+  return (
+    <Stack.Item>
+      <Button.Checkbox
+        onClick={() =>
+          act('toggle-antagonist-preference', {
+            variable: props.variable,
+          })
+        }
+        tooltip={
+          <OccupationTooltip
+            title={props.name}
+            disabled_tooltip={props.disabled_tooltip}
+          />
+        }
+        disabled={props.disabled}
+        checked={props.enabled}
+        width="100%"
+      >
+        {props.name}
+      </Button.Checkbox>
     </Stack.Item>
   );
 };

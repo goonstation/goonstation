@@ -58,8 +58,8 @@ export interface CharacterPreferencesData {
   jobsLowPriority: string[];
   jobsUnwanted: string[];
 
-  antagonistStaticData: AntagonistStaticData[];
-  antagonistPreferences: object;
+  antagonistStaticData: Record<string, AntagonistStaticData>;
+  antagonistPreferences: Record<string, boolean>;
 
   fontSize: string;
   seeMentorPms: BooleanLike;
