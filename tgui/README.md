@@ -187,9 +187,9 @@ See: [Component Reference](docs/component-reference.md).
 
 ## FontAwesome Icon
 
-For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v6/search?ip=classic&ic=free&o=r)
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v7/search?ip=classic&ic=free&o=r)
 
-For additional font styles you can use, see the [FontAwesome Docs](https://fontawesome.com/v6/docs/web/style/style-cheatsheet#contentHeader)
+For additional font styles you can use, see the [FontAwesome Docs](https://fontawesome.com/v7/docs/web/style/style-cheatsheet#contentHeader)
 
 ## License
 
