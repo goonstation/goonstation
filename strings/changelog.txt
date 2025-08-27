@@ -1,6 +1,11 @@
 
 (t)wed aug 27 25
 (u)LorrMaster
+(p)24260
+(e)⚖💅🔨|C-Balance, C-QoL, A-Player-Actions
+(*)Pug sleuthing now detects all scents at once
+(*)Fish and wearable flowers can be used to spread sleuthing scents
+(u)LorrMaster
 (p)24250
 (e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
 (+)Forensic scan reports have been reformatted
