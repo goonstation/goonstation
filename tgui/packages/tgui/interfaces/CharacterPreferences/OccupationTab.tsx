@@ -95,7 +95,7 @@ export const OccupationTab = () => {
             ([antag_id, enabled], index) => (
               <AntagonistOption
                 key={index}
-                enabled={enabled}
+                checked={enabled}
                 {...data.antagonistStaticData[antag_id]}
               />
             ),
@@ -201,7 +201,7 @@ const Occupation = (props) => {
 };
 
 const AntagonistOption = (
-  props: AntagonistStaticData & { enabled: boolean },
+  props: AntagonistStaticData & { checked: boolean },
 ) => {
   const { act } = useBackend<CharacterPreferencesData>();
 
@@ -220,7 +220,7 @@ const AntagonistOption = (
           />
         }
         disabled={props.disabled}
-        checked={props.enabled}
+        checked={props.checked}
         width="100%"
       >
         {props.name}
