@@ -20,7 +20,6 @@ import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
-import { log } from 'node:console';
 
 const logger = createLogger('backend');
 
@@ -291,7 +290,6 @@ export const backendMiddleware = (store) => {
     }
 
     if (type === 'oversizePayloadResponse') {
-      logger.log('Oversize payload response', payload);
       const { allow } = payload;
       if (allow) {
         store.dispatch(nextPayloadChunk(payload));
@@ -303,13 +301,11 @@ export const backendMiddleware = (store) => {
     if (type === 'acknowlegePayloadChunk') {
       store.dispatch(backendDequeuePayloadQueue(payload));
       store.dispatch(nextPayloadChunk(payload));
-      logger.log('Acknowledged chunk', payload);
     }
 
     if (type === 'nextPayloadChunk') {
       const { id } = payload;
       const chunk = outgoingPayloadQueues[id][0];
-      logger.log('Sending chunk', chunk);
       Byond.sendMessage('payloadChunk', {
         id,
         chunk,
