@@ -101,6 +101,7 @@ TYPEINFO(/obj/item/motherboard)
 				new_computer.state = 1
 				new_computer.anchored = src.anchored
 				new_computer.dir = src.dir
+				new_computer.setMaterial(src.material)
 				new_computer.Attackby(P, user)
 				qdel(src)
 			if (isscrewingtool(P) && mainboard)
