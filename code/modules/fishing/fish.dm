@@ -104,7 +104,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 	afterattack(obj/target, mob/user, flag)
 		. = ..()
-		src.slapsound()
 		src.apply_scent(target)
 
 	pickup(mob/user)
