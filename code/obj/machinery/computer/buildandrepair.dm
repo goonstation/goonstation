@@ -292,6 +292,7 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 			if (!src.circuit)
 				return {"
 					You can insert a circuit board to start assembling a console,
+					or you can insert a motherboard to start assembling a computer,
 					or use a <b>wrench</b> to unanchor it
 				"}
 			else
@@ -336,6 +337,13 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 				src.circuit = P
 				user.drop_item()
 				P.set_loc(src)
+			else if (istype(P, /obj/item/motherboard) && !circuit)
+				var/obj/computer3frame/new_computer = new(src.loc)
+				new_computer.state = STATE_ANCHORED
+				new_computer.anchored = src.anchored
+				new_computer.dir = src.dir
+				new_computer.Attackby(P, user)
+				qdel(src)
 			if (isscrewingtool(P) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, SPAN_NOTICE("You screw the circuit board into place."))
