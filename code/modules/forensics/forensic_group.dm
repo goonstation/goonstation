@@ -146,19 +146,44 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 
 	/// Text proc is seperate for now since sleuthing is obtained via an emote rather than the forensics scanner
 	proc/get_sleuth_text(var/atom/A, var/sleuth_all = FALSE)
-		if(length(src.evidence_list) == 0)
+		var/list/main_scents = list()
+		var/list/datum/forensic_data/basic/other_scents = list()
+		if (isliving(A))
+			var/mob/living/L = A
+			main_scents += L.mind?.color?.id
+		for(var/datum/forensic_data/basic/scent_data in src.evidence_list)
+			if(scent_data.time_end == INFINITY)
+				main_scents += scent_data.evidence.id
+			else
+				other_scents += scent_data
+		if(main_scents.len == 0 && other_scents.len == 0)
 			return null
+
+		var/scent_report = ""
+		if(main_scents.len > 0)
+			scent_report = "[A] mostly smells like "
+		for(var/i in 1 to main_scents.len)
+			if(i == 1)
+				scent_report += main_scents[i]
+			else if(i == main_scents.len)
+				if(main_scents.len == 2)
+					scent_report += " and [main_scents[i]]"
+				else
+					scent_report += ", and [main_scents[i]]"
+			else
+				scent_report += ", [main_scents[i]]"
+		if(scent_report)
+			scent_report = SPAN_NOTICE("<li>[scent_report].</li>")
+
 		if(!sleuth_all)
-			return sleuth_data(A, src.evidence_list[rand(1, length(src.evidence_list))], TRUE)
+			other_scents = list(pick(other_scents))
 
 		var/data_text = ""
-		for(var/i in 1 to length(src.evidence_list))
-			data_text += sleuth_data(A, src.evidence_list[i], i == 1)
-		return data_text
+		for(var/datum/forensic_data/basic/scent in other_scents)
+			data_text += sleuth_data(A, scent.evidence.id, TIME - scent.time_end, !data_text)
+		return scent_report + data_text
 
-	proc/sleuth_data(var/atom/A, var/datum/forensic_data/basic/slueth_data, var/is_first)
-		var/color = slueth_data.evidence.id
-		var/time_since = TIME - slueth_data.time_end
+	proc/sleuth_data(var/atom/A, var/color, var/time_since, var/is_first)
 		var/list/time_since_list = list(0, rand(4,6), rand(8,12), rand(27,33), rand(41,49), rand(55,65))
 		var/color_text
 		if(is_first)
