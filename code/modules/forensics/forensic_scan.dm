@@ -74,17 +74,16 @@
 		var/report = ""
 		// Go through headers in order
 		for(var/i=1; i<= headers.len; i++)
-			report += SPAN_NOTICE("<li><dt>[headers[i]]</dt></li>")
+			report += SPAN_NOTICE("[headers[i]]")
 			for(var/line in src.report_lines[headers[i]])
-				report += "<li><dd>&#x2022; [line]</dd></li>" // Indent line and add a bullent point
+				report += "<li style='padding-left:12px'>[line]</li>" // Indent line and add a bullent point
 		if(!report)
-			report = "<li>&#x2022; No evidence detected.</li>"
+			report = "<li style='padding-left:12px'>No evidence detected.</li>"
 
 		var/report_title = SPAN_SUCCESS(src.title)
 		if(print_hyperlink)
 			report_title += ": [print_hyperlink]"
-		report = "<li>[report_title]</li>" + report
-		report = "<style> dd {margin-left:12px;} </style>" + report // Set the indentation size
+		report = "[report_title]<br>" + report
 		return report
 
 /proc/cmp_forensic_headers(var/headerA, var/headerB)

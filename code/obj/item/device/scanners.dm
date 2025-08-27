@@ -287,7 +287,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		last_scan = scan.build_report()
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [A];'>PRINT REPORT</a> ---" + last_scan
+		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [A];'>PRINT REPORT</a> ---<br>" + last_scan
 		number_of_scans += 1
 
 		boutput(user, scan_output)
