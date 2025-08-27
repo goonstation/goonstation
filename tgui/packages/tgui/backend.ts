@@ -20,7 +20,6 @@ import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
-import { log } from 'node:console';
 
 const logger = createLogger('backend');
 
