@@ -498,7 +498,7 @@
 		remove_oversized_payload(payload_id)
 		on_message(message_type, json_decode(final_payload), list("type" = message_type, "payload" = final_payload, "tgui" = TRUE, "window_id" = id))
 	else
-		SPAWN (1 SECOND)
+		SPAWN(10 SECONDS)
 			remove_oversized_payload(payload_id)
 
 /datum/tgui_window/proc/remove_oversized_payload(payload_id)
