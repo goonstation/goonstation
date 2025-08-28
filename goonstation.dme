@@ -2006,6 +2006,7 @@
 #include "code\modules\speech\modules\listen\modifiers\phone_formatting.dm"
 #include "code\modules\speech\modules\listen\modifiers\radio_formatting.dm"
 #include "code\modules\speech\modules\speech\modifiers\_speech_modifier_parent.dm"
+#include "code\modules\speech\modules\speech\modifiers\abstract_radio_source.dm"
 #include "code\modules\speech\modules\speech\modifiers\accents.dm"
 #include "code\modules\speech\modules\speech\modifiers\bot.dm"
 #include "code\modules\speech\modules\speech\modifiers\bradbury.dm"
