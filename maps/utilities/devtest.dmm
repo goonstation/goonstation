@@ -87,6 +87,11 @@
 /obj/machinery/crema_switch,
 /turf/simulated/floor,
 /area/station/devzone)
+"co" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/white,
+/area/station/devzone)
 "ct" = (
 /obj/machinery/recharge_station,
 /obj/landmark/start/job/cyborg,
@@ -1216,10 +1221,6 @@
 "xx" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor,
-/area/station/devzone)
-"xC" = (
-/obj/submachine/chef_oven,
-/turf/simulated/floor/white,
 /area/station/devzone)
 "xE" = (
 /turf/simulated/floor,
@@ -2808,11 +2809,6 @@
 	dir = 10
 	},
 /area/station/devzone)
-"Yr" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/turf/simulated/floor/white,
-/area/station/devzone)
 "Yx" = (
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2855,6 +2851,10 @@
 /area/station/devzone)
 "Zk" = (
 /obj/item/instrument/large/jukebox,
+/turf/simulated/floor/white,
+/area/station/devzone)
+"Zu" = (
+/obj/machinery/cookingmachine/oven,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "Zx" = (
@@ -3266,9 +3266,9 @@ kz
 NU
 Ni
 NG
-Yr
+co
 Ni
-xC
+Zu
 bv
 Xm
 Xd

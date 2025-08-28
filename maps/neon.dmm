@@ -3708,19 +3708,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/radiostation/podbay)
-"cSL" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/landmark/bill_spawn,
-/obj/item/storage/wall{
-	pixel_y = -24
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "cSU" = (
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker,
@@ -8260,6 +8247,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
+"fUi" = (
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "fUt" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -10032,6 +10023,10 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/lounge)
+"hhE" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
 "hhG" = (
 /obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/black,
@@ -15078,6 +15073,23 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
+"kNE" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/landmark/bill_spawn,
+/obj/item/storage/wall{
+	pixel_y = -24
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "kNF" = (
 /obj/table/wood/round/auto,
 /obj/machinery/recharger{
@@ -19282,10 +19294,6 @@
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
-"nUR" = (
-/obj/submachine/chef_oven,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "nUZ" = (
 /obj/storage/secure/closet/medical{
 	name = "secure haloperidol storage"
@@ -19671,6 +19679,15 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"ofJ" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/machinery/phone/wall{
+	pixel_x = 24;
+	pixel_y = 6
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "ofQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25046,10 +25063,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"sdZ" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
 "seb" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 8
@@ -26698,14 +26711,6 @@
 /obj/mapping_helper/access/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
-"tnR" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/obj/machinery/light_switch/west,
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "toi" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/purple,
@@ -27585,15 +27590,6 @@
 	dir = 4
 	},
 /area/station/engine/elect)
-"tTp" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/obj/machinery/phone/wall{
-	pixel_x = 24;
-	pixel_y = 6
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "tTw" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -31325,6 +31321,11 @@
 /obj/item/storage/pill_bottle/antirad,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
+"wur" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "wuK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
@@ -32861,6 +32862,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"xBv" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/obj/machinery/light_switch/west,
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "xBF" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Shower";
@@ -33814,11 +33823,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"ykD" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "ykF" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
@@ -77624,9 +77628,9 @@ tjm
 ijA
 ijA
 oXW
-nUR
+fUi
 aKH
-ykD
+wur
 sXd
 oXW
 dTQ
@@ -79897,9 +79901,9 @@ eht
 uoU
 mGu
 jCV
-tnR
+xBv
 gpi
-cSL
+kNE
 tHr
 kqr
 kqr
@@ -80801,7 +80805,7 @@ gmJ
 fHv
 eht
 wam
-tTp
+ofJ
 lRv
 yjG
 bYv
@@ -97030,7 +97034,7 @@ pJo
 xjN
 dQP
 wSX
-sdZ
+hhE
 vYT
 aar
 eaj
@@ -97634,7 +97638,7 @@ pJo
 eoh
 dQP
 dQP
-sdZ
+hhE
 wPz
 dQP
 dQP

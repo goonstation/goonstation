@@ -1,0 +1,2 @@
+/obj/machinery/mixer : /obj/machinery/cookingmachine/mixer{@OLD}
+/obj/submachine/chef_oven : /obj/machinery/cookingmachine/oven{@OLD}
