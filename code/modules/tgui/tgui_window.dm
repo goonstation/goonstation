@@ -317,6 +317,10 @@
 /datum/tgui_window/proc/send_message(type, payload, force)
 	if(!client)
 		return
+
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	var/message = TGUI_CREATE_MESSAGE(type, payload)
 	// Place into queue if window is still loading
 	if(!force && status != TGUI_WINDOW_READY)
@@ -339,6 +343,10 @@
 /datum/tgui_window/proc/send_raw_message(message, force)
 	if(!client)
 		return
+
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	// Place into queue if window is still loading
 	if(!force && status != TGUI_WINDOW_READY)
 		if(!message_queue)
@@ -391,6 +399,9 @@
  * Callback for handling incoming tgui messages.
  */
 /datum/tgui_window/proc/on_message(type, list/payload, list/href_list) // |GOONSTATION-CHANGE| Explicit list for payload/href_list
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	// Status can be READY if user has refreshed the window.
 	if(type == "ready" && status == TGUI_WINDOW_READY)
 		// Resend the assets
@@ -484,6 +495,7 @@
 		"type" = message_type,
 		"count" = chunk_count,
 		"chunks" = list(),
+		"timeout" = 1.25 SECONDS + TIME // |GOONSTATION-CHANGE|
 	)
 
 /datum/tgui_window/proc/append_payload_chunk(payload_id, chunk)
@@ -492,14 +504,30 @@
 		return
 	var/list/chunks = payload["chunks"]
 	chunks += chunk
-	if(length(chunks) >= payload["count"])
+	if(length(chunks) < payload["count"]) // |GOONSTATION-CHANGE| Extend timeout on incomplete payloads, flip logic
+		payload["timeout"] = 1.25 SECONDS + TIME // |GOONSTATION-CHANGE|
+	else
+		payload["timeout"] = 0 // |GOONSTATION-CHANGE|
 		var/message_type = payload["type"]
 		var/final_payload = chunks.Join()
 		remove_oversized_payload(payload_id)
 		on_message(message_type, json_decode(final_payload), list("type" = message_type, "payload" = final_payload, "tgui" = TRUE, "window_id" = id))
-	else
-		SPAWN(10 SECONDS)
-			remove_oversized_payload(payload_id)
 
 /datum/tgui_window/proc/remove_oversized_payload(payload_id)
 	oversized_payloads -= payload_id
+
+// |GOONSTATION-ADD| Lazy sweep expired oversized payloads (no timers 😿😿😿)
+/datum/tgui_window/proc/prune_oversized_payloads()
+	if(!length(oversized_payloads))
+		return
+	var/list/to_remove = list()
+	for(var/pid in oversized_payloads)
+		var/list/payload = oversized_payloads[pid]
+		if(!islist(payload))
+			to_remove += pid
+			continue
+		var/timeout = payload["timeout"]
+		if(isnum(timeout) && (timeout <= TIME))
+			to_remove += pid
+	for(var/pid in to_remove)
+		remove_oversized_payload(pid)
