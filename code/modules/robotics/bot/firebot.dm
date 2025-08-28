@@ -60,7 +60,7 @@
 /obj/machinery/bot/firebot/New()
 	..()
 	SPAWN(0.5 SECONDS)
-		if (src)
+		if (src && !QDELETED(src))
 			src.icon_state = "firebot[src.on]"
 			src.AddComponent(/datum/component/proximity)
 

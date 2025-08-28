@@ -5,11 +5,8 @@
 	logTheThing(LOG_DEBUG, C, "failed to pass gate check: [src]")
 	src.show_fail_message(C)
 
-	if (C.mob)
-		C.on_auth_failed()
-	else
-		logTheThing(LOG_DEBUG, C, "was made into an unauthed mob due to failing gate check")
-		C.mob = new /mob/unauthed(C)
+	if (C.mob) C.on_auth_failed()
+	else C.mob = new /mob/unauthed(C)
 
 /datum/client_auth_gate/proc/get_failure_message(client/C)
 	return ""
@@ -23,7 +20,6 @@
 		<!doctype html>
 		<html>
 			<head>
-				<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 				<meta name="color-scheme" content="[C.darkmode ? "dark" : "light"]" />
 				<title>Login Failed</title>
 				<style>

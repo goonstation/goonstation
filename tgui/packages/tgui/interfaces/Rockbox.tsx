@@ -36,7 +36,6 @@ export const Rockbox = () => {
                   minValue={1}
                   maxValue={Infinity}
                   step={1}
-                  onDrag={(value) => setTakeAmount(value)}
                   onChange={(value) => setTakeAmount(value)}
                 />
               </Box>

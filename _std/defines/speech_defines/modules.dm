@@ -68,6 +68,7 @@
 
 
 //------------ Speech Modifiers ------------//
+#define SPEECH_MODIFIER_ABSTRACT_RADIO_SOURCE "abstract_radio_source"
 #define SPEECH_MODIFIER_ACCENT_ADMIN_BAD "accent_badmin"
 #define SPEECH_MODIFIER_ACCENT_ADMIN_GOOD "accent_goodmin"
 #define SPEECH_MODIFIER_ACCENT_ADMIN_RAINBOW "accent_radmin"
@@ -219,12 +220,12 @@
 
 
 //------------ Listen Modifiers ------------//
+#define LISTEN_MODIFIER_BRAIN_DAMAGE "brain_damage_hearing"
 #define LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS "chat_context_flags"
 #define LISTEN_MODIFIER_CLOWN_DISBELIEF "clown_disbelief"
 #define LISTEN_MODIFIER_MOB_MODIFIERS "mob_modifiers"
 #define LISTEN_MODIFIER_PHONE "phone_formatting"
 #define LISTEN_MODIFIER_RADIO "radio_formatting"
-#define LISTEN_MODIFIER_BRAIN_DAMAGE "brain_damage_hearing"
 
 
 //------------ Listen Effects ------------//
