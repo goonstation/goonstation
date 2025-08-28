@@ -1023,9 +1023,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "plasmastone"
 	name = "plasmastone"
 	desc = "Plasma in its solid state."
-	color = list(0.50, 0.25, 0.25, 0.00,\
-				0.25, 0.00, 0.25, 0.00,\
-				0.35, 0.25, 0.45, 0.00,\
+	color = list(0.50, 0.10, 0.25, 0.00,\
+				0.15, 0.00, 0.15, 0.00,\
+				0.25, 0.10, 0.50, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
 	texture = "plasmastone"

@@ -477,8 +477,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
-		if (!isturf(location))
-			animate_flash_color_fill_inherit(location, "#69e46f", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, 1)
 		return
 
