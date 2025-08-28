@@ -1,4 +1,9 @@
 
+(t)thu aug 28 25
+(u)JORJ949
+(p)24528
+(e)💅💡|C-QoL, A-Station-Systems
+(*)Computer and Console frames convert into each other depending on if a Circuitboard or Motherboard is inserted.
 (t)wed aug 27 25
 (u)LeahTheTech
 (p)24530
