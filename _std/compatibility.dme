@@ -1,6 +1,6 @@
 
 // Compatibility checks
-#if ((DM_VERSION < 515) || (DM_VERSION > 516)) && !defined(SPACEMAN_DMM)
+#if ((DM_VERSION < 516) || (DM_VERSION > 516)) && !defined(SPACEMAN_DMM)
 	// #if (DM_VERSION  516)
 	// 	#warn ======================================================================================
 	// 	#warn  Building the game with BYOND 517 will not work as expected, and is **NOT SUPPORTED**

@@ -616,7 +616,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
 								continue
 						var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
 					return
 
 	/// Applies or removes the bioeffect associated with the mutantrace
@@ -1191,7 +1191,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			P.setup(src.mob.loc)
 			var/obj/item/I
 			I = src.mob.organHolder.drop_organ("head", src.mob)
-			I.loc = get_turf(src.mob)
+			if (I) I.loc = get_turf(src.mob)
 			var/list/limbs = list()
 			limbs += src.mob.limbs.l_arm?.remove(FALSE)
 			limbs += src.mob.limbs.r_arm?.remove(FALSE)
@@ -2457,7 +2457,9 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (src.mob.hasStatus("poisoned"))
 			boutput(src.mob, SPAN_ALERT("You're sick and definitely aren't up for sleuthing!"))
 			return
-		var/atom/A = tgui_input_list(src.mob, "What would you like to sleuth?", "Sleuthing", src.mob.get_targets(1, "both"), 20 SECONDS)
+		var/list/targets = src.mob.get_targets(1, "both")
+		targets += src.mob // Pugs can smell themselves
+		var/atom/A = tgui_input_list(src.mob, "What would you like to sleuth?", "Sleuthing", targets, 20 SECONDS)
 		if (!A)
 			return
 		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
@@ -2466,16 +2468,19 @@ TYPEINFO(/datum/mutantrace/pug)
 		. = list("<B>[used_name]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
 
 		var/sleuth_text = ""
-		if (isliving(A))
-			var/mob/living/L = A
-			if (L.mind?.color)
-				sleuth_text = SPAN_NOTICE("<li>[L] mostly smells like \a [L.mind.color.id].</li>")
 		if(A.forensic_holder)
 			var/datum/forensic_group/basic_list/sleuth/sleuth_group = A.forensic_holder.get_group(FORENSIC_GROUP_SLEUTH)
 			if(istype(sleuth_group))
-				sleuth_text += sleuth_group.get_sleuth_text(A, FALSE)
+				sleuth_text = sleuth_group.get_sleuth_text(A, TRUE)
+
+		// If no sleuth group is found.
 		if(!sleuth_text)
-			sleuth_text = SPAN_NOTICE("Smells like \a [A], alright.")
+			if (isliving(A))
+				var/mob/living/L = A
+				if(L.mind?.color)
+					sleuth_text = SPAN_NOTICE("[A] mostly smells like \a [L.mind.color.id].")
+			if(!sleuth_text)
+				sleuth_text = SPAN_NOTICE("Smells like \a [A], alright.")
 		boutput(src.mob, sleuth_text)
 
 	proc/sneeze()

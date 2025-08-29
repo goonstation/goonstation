@@ -42,7 +42,7 @@
 				<span class='name' data-ctx='[mind_ref]'>\
 		"}
 		distorted_message.speaker_to_display = radioGarbleText(distorted_message.speaker_to_display, FLOCK_RADIO_GARBLE_CHANCE)
-		distorted_message.content = radioGarbleText(distorted_message.content, FLOCK_RADIO_GARBLE_CHANCE)
+		APPLY_CALLBACK_TO_MESSAGE_CONTENT(distorted_message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(radioGarbleText), FLOCK_RADIO_GARBLE_CHANCE))
 
 		PASS_MESSAGE_TO_SAY_CHANNEL(src.distorted_flock_channel, distorted_message)
 
@@ -97,9 +97,10 @@
 /datum/speech_module/output/bundled/flock_say/system/get_styling(datum/say_message/message)
 	message.flags |= SAYFLAG_NO_MAPTEXT
 	message.flags &= ~SAYFLAG_HAS_QUOTATION_MARKS
-	message.speaker_to_display = "\[SYSTEM\]"
+	message.speaker_to_display = @"[SYSTEM]"
 	message.say_verb = "alerts"
-	message.content = gradientText("#3cb5a3", "#124e43", "\"[message.content]\"")
+	message.content = "[MAKE_CONTENT_MUTABLE("\"")][message.content][MAKE_CONTENT_MUTABLE("\"")]"
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(immutable_gradientText), "#3cb5a3", "#124e43"))
 
 	return list(
 		"classes" = "flocksay bold italics",
@@ -152,7 +153,7 @@
 
 	message.speaker_to_display ||= message.speaker.name
 	message.speaker_to_display = radioGarbleText(message.speaker_to_display, FLOCK_RADIO_GARBLE_CHANCE)
-	message.content = radioGarbleText(message.content, FLOCK_RADIO_GARBLE_CHANCE)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(radioGarbleText), FLOCK_RADIO_GARBLE_CHANCE))
 
 	message.format_speaker_prefix = {"\
 		<span class='game flocksay sentient'>\

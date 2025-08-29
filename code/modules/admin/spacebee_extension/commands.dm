@@ -820,7 +820,6 @@
 		message_admins("[user] (Discord) [logMessage]")
 		system.reply(logMessage)
 
-
 /datum/spacebee_extension_command/state_based/confirmation/renamestation
 	name = "renamestation"
 	help_message = "Rename the station."
