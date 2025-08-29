@@ -737,7 +737,6 @@ looks@=leuks
 lore@=lear
 lose@=tyne
 loses@=tynes
-lost@=tint
 lot@=wheen
 loud@=lood
 louse@=cootie
