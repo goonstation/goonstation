@@ -15504,7 +15504,7 @@
 /area/timewarp/ship)
 "bPC" = (
 /obj/fakeobject/shuttlethruster{
-	dir = 8
+	dir = 4
 	},
 /turf/space,
 /area/diner/tug)

@@ -1,4 +1,23 @@
 
+(t)thu aug 28 25
+(u)JORJ949
+(p)24528
+(e)💅💡|C-QoL, A-Station-Systems
+(*)Computer and Console frames convert into each other depending on if a Circuitboard or Motherboard is inserted.
+(t)wed aug 27 25
+(u)LeahTheTech
+(p)24530
+(e)🧱|A-Materials
+(+)Tweaked radioactive material effects behind the scenes, they should look a lot more consistent and less blue now.
+(u)LorrMaster
+(p)24260
+(e)⚖💅🔨|C-Balance, C-QoL, A-Player-Actions
+(*)Pug sleuthing now detects all scents at once
+(*)Fish and wearable flowers can be used to spread sleuthing scents
+(u)LorrMaster
+(p)24250
+(e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
+(+)Forensic scan reports have been reformatted
 (t)mon aug 25 25
 (u)JORJ949
 (p)24291
