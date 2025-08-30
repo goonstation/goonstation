@@ -12650,7 +12650,6 @@
 /obj/machinery/shipalert{
 	dir = 1
 	},
-/obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
 "dSm" = (
