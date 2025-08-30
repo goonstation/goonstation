@@ -6,7 +6,7 @@
 	desc = "A big red button that alerts the station Security team that there's a crisis at your location. On the bottom someone has scribbled 'oh shit button', cute."
 	icon_state = "panic_button"
 	w_class = W_CLASS_TINY
-	object_flags = NO_GHOSTCRITTER
+	object_flags = parent_type::object_flags | NO_GHOSTCRITTER
 	var/net_id = null
 	var/alert_group = list(MGD_SECURITY, MGA_CRISIS)
 
