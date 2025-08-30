@@ -10804,7 +10804,7 @@
 	name = "E.V.A. Security Shield";
 	opacity = 0
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "cuD" = (
 /obj/disposalpipe/segment{
@@ -16658,6 +16658,18 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/quarters_west)
+"gZF" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "gZJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -20903,13 +20915,11 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "jYl" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/landmark/halloween,
+/obj/disposalpipe/loafer/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "jYE" = (
@@ -31418,10 +31428,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
-"rHm" = (
-/obj/disposalpipe/loafer/horizontal,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "rHq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34456,10 +34462,6 @@
 /area/station/medical/staff)
 "tIY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/framed_award/firstbill{
-	pixel_y = -3;
-	pixel_x = -32
-	},
 /obj/machinery/light_switch/north{
 	pixel_x = 10;
 	pixel_y = 28
@@ -77721,7 +77723,7 @@ boN
 boN
 boN
 bpf
-rHm
+bxN
 wzQ
 brc
 bso
@@ -78925,7 +78927,7 @@ aCW
 pGS
 aCW
 wGP
-aCW
+gZF
 aCW
 pGS
 hST
