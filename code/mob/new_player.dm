@@ -266,10 +266,7 @@ TYPEINFO(/mob/new_player)
 				else
 					AttemptLateSpawn(JOB)
 
-		if(href_list["preferences"])
-			if (!src.ready_play)
-				client.preferences.process_link(src, href_list)
-		else if(!href_list["late_join"])
+		if(!href_list["late_join"])
 			new_player_panel()
 
 	proc/IsSiliconAvailableForLateJoin(var/mob/living/silicon/S)
