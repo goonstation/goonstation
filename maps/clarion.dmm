@@ -13104,6 +13104,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
+"ekC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "elh" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -15568,9 +15577,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
 "fZE" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 15
@@ -17887,6 +17893,9 @@
 "hOM" = (
 /obj/machinery/firealarm/directional/south,
 /obj/storage/cart/forensic/detective,
+/obj/machinery/camera/directional/south{
+	pixel_x = 10
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "hPp" = (
@@ -22318,6 +22327,9 @@
 "kTC" = (
 /obj/stool/chair/office/red,
 /obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -33651,6 +33663,9 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/machinery/firealarm/directional/north{
+	pixel_x = 9
+	},
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -33798,6 +33813,10 @@
 	},
 /obj/machinery/chem_master{
 	dir = 8
+	},
+/obj/machinery/firealarm/directional/east{
+	pixel_x = 24;
+	pixel_y = 9
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -39439,9 +39458,6 @@
 	dir = 8;
 	pixel_x = 21;
 	pixel_y = 5
-	},
-/obj/machinery/firealarm/directional/north{
-	pixel_x = 24
 	},
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/corner/sw,
@@ -84723,7 +84739,7 @@ vOG
 tKf
 kmj
 rgz
-rgz
+ekC
 vfz
 qzB
 tKu
