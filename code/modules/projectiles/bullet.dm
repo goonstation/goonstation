@@ -2497,12 +2497,13 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	projectile_speed = 20
 	implanted = /obj/item/implant/projectile/produce
 	var/obj/decal/hit_decal
+	var/obj/item/item_left
 
 	// TODO, move this somewhere so it's more generic
-	proc/randomize_edge_offset(atom/target, dir, max_variation = 8)
+	/// Gives an atom an offset around a directed edge
+	proc/randomize_edge_offset(atom/target, dir, max_variation = 8, edge_offset = 13)
 		var/pixel_x = 0
 		var/pixel_y = 0
-		var/edge_offset = 13
 
 		if(dir & NORTH)
 			pixel_y = edge_offset
@@ -2537,19 +2538,24 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 		var/mob/living/target = hit
 		if (target && target.reagents && O.reagents)
 			O.reagents.reaction(target, TOUCH)
+		var/turf/turf = get_turf(hit)
 		if (hit_decal)
-			var/turf/turf = get_turf(hit)
 			var/obj/decal/new_decal = new hit_decal
 			new_decal.set_loc(turf)
 			new_decal.setup(turf)
+		if (item_left)
+			var/obj/item/item = new item_left
+			if (!ismob(hit))
+				turf = get_step(hit, reverse_dir(angle))
+				randomize_edge_offset(item, angle)
+			item.set_loc(turf)
 
 	banana
 		hit_decal = /obj/decal/cleanable/bananasplat
-		on_hit(atom/hit, angle, obj/projectile/O)
-			..()
-			var/obj/peel = new /obj/item/bananapeel
-			var/turf/turf = get_turf(hit)
-			if (!ismob(hit))
-				turf = get_step(hit, reverse_dir(angle))
-				randomize_edge_offset(peel, angle)
-			peel.set_loc(turf)
+		item_left = /obj/item/reagent_containers/food/snacks/banana_peel
+
+	fruit
+		hit_decal = /obj/decal/cleanable/fruitsplat
+
+	vegetable
+		hit_decal = /obj/decal/cleanable/vegesplat
