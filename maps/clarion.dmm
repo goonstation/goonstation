@@ -642,6 +642,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/button/area,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -10841,6 +10842,8 @@
 /obj/machinery/alarm{
 	pixel_y = 25
 	},
+/obj/machinery/door_control/bolter/new_walls/east,
+/obj/mapping_helper/button/area,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "csP" = (
@@ -23419,6 +23422,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/button/area,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -29392,6 +29396,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/button/area,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "pZi" = (
@@ -30717,6 +30722,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/button/area,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "rcG" = (
@@ -38275,6 +38281,8 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
+/obj/machinery/door_control/bolter/new_walls/east,
+/obj/mapping_helper/button/area,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/hop)
 "wvn" = (
