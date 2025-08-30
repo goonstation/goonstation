@@ -92,12 +92,12 @@ jobs:
           tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile random rooms
-        if: "${{ matrix.map }} == 'RANDOM_ROOMS'"
+        if: matrix.map == 'RANDOM_ROOMS'
         run: |
           tools/ci/dm.sh -DCIBUILD -DRANDOM_ROOM_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile with RP_MODE
-        if: matrix.map== 'RP_MODE'
+        if: matrix.map == 'RP_MODE'
         run: |
           tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
 

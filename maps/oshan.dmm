@@ -7831,12 +7831,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
-"aBQ" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = 10
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "aBR" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -8294,6 +8288,9 @@
 	},
 /area/station/science/teleporter)
 "aDy" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = -10
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 9
 	},
@@ -8566,9 +8563,6 @@
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "aEo" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 8
 	},
@@ -15191,6 +15185,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/emergency)
 "biJ" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
 /turf/simulated/floor/stairs/wide,
 /area/station/engine/engineering)
 "biK" = (
@@ -30225,15 +30222,6 @@
 	dir = 5
 	},
 /area/station/turret_protected/Zeta)
-"cNB" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = -27
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/mining/staff_room)
 "cOa" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -30806,6 +30794,12 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
+"dwX" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "dwY" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light_switch/auto,
@@ -36298,8 +36292,8 @@
 /obj/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/pocket/oxygen,
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
@@ -41729,6 +41723,10 @@
 "rxZ" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/light/incandescent/warm/very,
+/obj/machinery/camera/directional/east{
+	pixel_y = 5;
+	pixel_x = 10
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "ryT" = (
@@ -45426,9 +45424,6 @@
 	},
 /obj/machinery/light_switch/west{
 	pixel_y = -4
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -84816,7 +84811,7 @@ cjb
 bvx
 bvx
 bvx
-cNB
+wwC
 rxZ
 bwd
 bAN
@@ -99260,7 +99255,7 @@ cfp
 vYY
 azP
 ayd
-aBQ
+ayd
 fVO
 aDr
 aDr
@@ -99562,7 +99557,7 @@ cXN
 fFG
 bvv
 lTa
-ayd
+dwX
 aCF
 chC
 chC

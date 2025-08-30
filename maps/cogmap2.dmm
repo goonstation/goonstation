@@ -8996,9 +8996,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aBI" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
 	},
@@ -9009,6 +9006,9 @@
 /area/station/chapel/sanctuary)
 "aBJ" = (
 /obj/table/wood/auto,
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
