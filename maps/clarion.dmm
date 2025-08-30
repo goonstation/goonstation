@@ -11022,6 +11022,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
 "czL" = (
@@ -15302,6 +15305,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "fPs" = (
@@ -15562,6 +15568,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
 "fZE" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 15
@@ -16178,6 +16187,9 @@
 	dir = 8;
 	icon_state = "pipe-j2"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/hallway/primary/south)
 "gwc" = (
@@ -16551,6 +16563,18 @@
 	icon_state = "yellowblackcorner"
 	},
 /area/station/hallway/primary/southeast)
+"gQp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "gQM" = (
 /obj/machinery/light{
 	dir = 8;
@@ -16596,15 +16620,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"gSD" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/station/security/main)
 "gSF" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -17748,6 +17763,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"hJL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/storage/eva)
 "hKv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17866,9 +17887,6 @@
 "hOM" = (
 /obj/machinery/firealarm/directional/south,
 /obj/storage/cart/forensic/detective,
-/obj/machinery/camera/directional/south{
-	pixel_x = 10
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "hPp" = (
@@ -19536,6 +19554,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/hallway/primary/south)
@@ -22297,9 +22318,6 @@
 "kTC" = (
 /obj/stool/chair/office/red,
 /obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -22728,6 +22746,12 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"lgU" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/storage/eva)
 "lhu" = (
 /obj/machinery/power/data_terminal,
 /obj/cable/yellow{
@@ -26283,6 +26307,9 @@
 /area/station/turret_protected/Zeta)
 "nFC" = (
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/hallway/primary/south)
 "nGj" = (
@@ -33356,6 +33383,10 @@
 /area/station/medical/medbay/surgery)
 "sWs" = (
 /obj/reagent_dispensers/fueltank,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
 "sWw" = (
@@ -33616,10 +33647,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm/directional/north{
-	pixel_x = 9;
-	pixel_y = 30
-	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
@@ -33771,10 +33798,6 @@
 	},
 /obj/machinery/chem_master{
 	dir = 8
-	},
-/obj/machinery/firealarm/directional/east{
-	pixel_x = 24;
-	pixel_y = 9
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -36652,6 +36675,9 @@
 	opacity = 0
 	},
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "vfU" = (
@@ -39413,6 +39439,9 @@
 	dir = 8;
 	pixel_x = 21;
 	pixel_y = 5
+	},
+/obj/machinery/firealarm/directional/north{
+	pixel_x = 24
 	},
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/corner/sw,
@@ -78931,7 +78960,7 @@ guH
 nFC
 vfT
 cyY
-iMr
+lgU
 ckU
 aQY
 bTP
@@ -78946,7 +78975,7 @@ aCW
 wGP
 gZF
 aCW
-pGS
+gQp
 hST
 cKt
 dSY
@@ -79233,7 +79262,7 @@ cDd
 wsu
 aRm
 cXQ
-iMr
+hJL
 irz
 aQY
 wQA
@@ -84694,7 +84723,7 @@ vOG
 tKf
 kmj
 rgz
-gSD
+rgz
 vfz
 qzB
 tKu
