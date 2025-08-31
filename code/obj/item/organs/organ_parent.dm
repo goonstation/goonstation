@@ -313,6 +313,11 @@
 		if (robotic)
 			src.take_damage(20, 20, 20)
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.donor_DNA)
+			scan.add_text("[src.organ_name]'s DNA: [src.donor_DNA]")
+
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)
 			return

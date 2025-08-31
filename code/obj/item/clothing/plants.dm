@@ -1,19 +1,76 @@
-/obj/item/clothing/head/rafflesia
-	name = "rafflesia"
-	desc = "Usually referred to as corpseflower due to its horrid odor. Perfect for masking the smell of your stinky head."
-	icon_state = "rafflesiahat"
-	item_state = "rafflesiahat"
 
 /obj/item/clothing/head/flower
 	name = "flower"
 	desc = "A pretty nice flower... you shouldn't see this, though."
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
+	flags = SUPPRESSATTACK
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
+	var/datum/forensic_id/scent_A = null
+	var/datum/forensic_id/scent_B = null
+
+	New()
+		..()
+		src.set_sleuth_scent()
+		apply_scent(src)
+
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		apply_scent(target)
+		var/waves = pick("waves","shakes","flutters","twirls","whirls","dances")
+		var/around = pick("around","by","about","all over","beside","throughout")
+		user.visible_message("[user] [waves] \the [src] [around] \the [target].")
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 20, TRUE, 0, 2)
+
+	equipped(mob/user, slot)
+		..()
+		apply_scent(user)
+
+	unequipped(mob/user)
+		. = ..()
+		apply_scent(user)
+
+	pickup(mob/user)
+		. = ..()
+		apply_scent(user)
+
+	dropped(mob/user)
+		. = ..()
+		src.apply_scent(user)
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
 		return src
 
+	proc/set_sleuth_scent()
+		return
+
+	proc/apply_scent(var/atom/target)
+		if(!src.scent_A)
+			return
+		var/datum/forensic_data/basic/data_A = new(scent_A, flags = FORENSIC_FAKE)
+		if(target == src)
+			data_A.time_end = INFINITY
+		target.add_evidence(data_A, FORENSIC_GROUP_SLEUTH)
+
+		if(!src.scent_B)
+			return
+		var/datum/forensic_data/basic/data_B = new(scent_B, flags = FORENSIC_FAKE)
+		if(target == src)
+			data_B.time_end = INFINITY
+		target.add_evidence(data_B, FORENSIC_GROUP_SLEUTH)
+
+/obj/item/clothing/head/flower/rafflesia
+	name = "rafflesia"
+	desc = "Usually referred to as corpseflower due to its horrid odor. Perfect for masking the smell of your stinky head."
+	icon_state = "rafflesiahat"
+	item_state = "rafflesiahat"
+
+	set_sleuth_scent()
+		scent_A = register_id("drab dark brown") // Sleuth color unique to this flower
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		return src
 
 /obj/item/clothing/head/flower/gardenia
 	name = "gardenia"
@@ -21,11 +78,18 @@
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
 
+	set_sleuth_scent()
+		scent_A = register_id(pick_string("colors.txt", "colors")) // White flowers == any color?)
+
 /obj/item/clothing/head/flower/bird_of_paradise
 	name = "bird of paradise"
 	desc = "Bird of Paradise flowers, or Crane Flowers, are named for their resemblance to the ACTUAL birds of the same name. Both look great sitting on your head either way."
 	icon_state = "flower_bop"
 	item_state = "flower_bop"
+
+	set_sleuth_scent()
+		scent_A = register_id("fuzzy orange")
+		scent_B = register_id("sky blue")
 
 /obj/item/clothing/head/flower/hydrangea
 	name = "hydrangea"
@@ -33,20 +97,35 @@
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
 
+	set_sleuth_scent()
+		scent_A = register_id("dusty grey")
+
 /obj/item/clothing/head/flower/hydrangea/pink
 	name = "pink hydrangea"
 	icon_state = "flower_hyd-pink"
 	item_state = "flower_hyd-pink"
+
+	set_sleuth_scent()
+		scent_A = register_id("dusty grey")
+		scent_B = register_id("candy pink")
 
 /obj/item/clothing/head/flower/hydrangea/blue
 	name = "blue hydrangea"
 	icon_state = "flower_hyd-blue"
 	item_state = "flower_hyd-blue"
 
+	set_sleuth_scent()
+		scent_A = register_id("dusty grey")
+		scent_B = register_id("sapphire blue")
+
 /obj/item/clothing/head/flower/hydrangea/purple
 	name = "purple hydrangea"
 	icon_state = "flower_hyd-purple"
 	item_state = "flower_hyd-purple"
+
+	set_sleuth_scent()
+		scent_A = register_id("dusty grey")
+		scent_B = register_id("amethyst purple")
 
 /obj/item/clothing/head/flower/lavender
 	name = "lavender"
@@ -57,6 +136,9 @@
 	New()
 		src.create_reagents(100)
 		..()
+
+	set_sleuth_scent()
+		scent_A = register_id("lavender purple")
 
 /obj/item/clothing/head/flower/rose
 	name = "rose"
@@ -140,9 +222,14 @@
 			SPAWN(0.1 SECONDS)
 				user.drop_item(src, FALSE)
 
+	set_sleuth_scent()
+		scent_A = register_id("blood red")
+
 /obj/item/clothing/head/flower/rose/poisoned
 	///Trick roses don't poison on attack, only on pickup
 	var/trick = FALSE
+	flags = 0
+	hide_attack = ATTACK_VISIBLE
 	attack(mob/M, mob/user, def_zone)
 		if (!..() || is_incapacitated(M) || src.trick)
 			return
@@ -164,6 +251,9 @@
 		//DO NOT add the SECONDS define to this, bioHolders are cursed and don't believe in ticks
 		M.bioHolder?.AddEffect("mute", timeleft = 40, do_stability = FALSE, magical = TRUE)
 
+	set_sleuth_scent()
+		scent_A = register_id("jade green")
+
 /obj/item/clothing/head/flower/rose/holorose
 	name = "holo rose"
 	desc = "A holographic display of a Rose. This one likes to be called "
@@ -175,6 +265,9 @@
 		for(var/mob/living/silicon/M in mobs)
 			possible_names += M
 		return possible_names
+
+	set_sleuth_scent()
+		return // holorose has no scent
 
 // Pumpkin hats
 

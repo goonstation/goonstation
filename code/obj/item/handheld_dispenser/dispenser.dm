@@ -472,8 +472,8 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		icon_state = "heatexchanger"
 		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
 
-ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
-/datum/pipe_recipe/machine/binary
+ABSTRACT_TYPE(/datum/pipe_recipe/machine/trinary)
+/datum/pipe_recipe/machine/trinary
 	get_directions(dir)
 		switch(dir)
 			if(NORTH)
