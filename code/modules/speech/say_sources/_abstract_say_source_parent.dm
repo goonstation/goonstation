@@ -8,14 +8,15 @@ TYPEINFO(/atom/movable/abstract_say_source)
 /atom/movable/abstract_say_source
 	name = "Unknown"
 
+	open_to_sound = FALSE
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	say_language = LANGUAGE_ENGLISH
+
 	speech_verb_say = "says"
 	speech_verb_ask = null
 	speech_verb_exclaim = null
 	speech_verb_stammer = null
 	speech_verb_gasp = null
-
-	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-	say_language = LANGUAGE_ENGLISH
 
 
 /**
@@ -23,13 +24,14 @@ TYPEINFO(/atom/movable/abstract_say_source)
  *	message datum to a radio object, broadcasting the message as a packet.
  */
 TYPEINFO(/atom/movable/abstract_say_source/radio)
-	start_speech_outputs = list(SPEECH_OUTPUT_EQUIPPED)
+	start_speech_prefixes = list(SPEECH_PREFIX_RADIO_GENERAL, SPEECH_PREFIX_RADIO)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ABSTRACT_RADIO_SOURCE)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
 
 /atom/movable/abstract_say_source/radio
-	default_speech_output_channel = SAY_CHANNEL_EQUIPPED
-
 	var/radio_type = /obj/item/device/radio
-	var/obj/item/device/radio/radio
+	var/radio_prefix = ";"
+	var/obj/item/device/radio/radio = null
 	var/default_frequency = R_FREQ_DEFAULT
 	var/radio_chat_class = RADIOCL_STANDARD
 	var/radio_icon = null
@@ -49,8 +51,8 @@ TYPEINFO(/atom/movable/abstract_say_source/radio)
 	src.radio.icon_tooltip = src.radio_icon_tooltip
 
 /atom/movable/abstract_say_source/radio/disposing()
-	qdel(src.radio)
-	src.radio = null
-
+	QDEL_NULL(src.radio)
 	. = ..()
 
+/atom/movable/abstract_say_source/radio/find_radio()
+	return src.radio
