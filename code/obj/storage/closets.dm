@@ -28,7 +28,7 @@ TYPEINFO(/obj/storage/closet)
 		STOP_TRACKING
 
 	attackby(obj/item/I, mob/user)
-		if (I.force > 0 && user.a_intent == INTENT_HARM && !src.open)
+		if (I?.force > 0 && user.a_intent == INTENT_HARM && !src.open)
 			user.lastattacked = get_weakref(src)
 			src.bash(I, user)
 		else
