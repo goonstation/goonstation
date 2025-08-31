@@ -1097,6 +1097,14 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Catherine McFluffums"
 		icon_state = "catherinemcfluffums"
 		ckey = "outbackcatgirl"
+	superbongotime
+		name = "\improper Laylith Blackwing"
+		icon_state = "laylithblackwing"
+		ckey = "superbongotime"
+	raccoonpope
+		name = "\improper Cynthia Xeonyr"
+		icon_state = "cynthiaxeonyr"
+		ckey = "raccoonpope"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
