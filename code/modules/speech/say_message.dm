@@ -220,12 +220,6 @@
 	// If the message should not strip HTML, make the HTML tags immutable.
 	if (src.flags & SAYFLAG_IGNORE_HTML)
 		message = MAKE_HTML_TAGS_IMMUTABLE(message)
-	// Check for URLs.
-	else if (global.url_regex.Find(message))
-		if (ismob(src.speaker))
-			boutput(src.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-
-		return
 
 	// Declare the message mutable.
 	message = MAKE_CONTENT_MUTABLE(message)
