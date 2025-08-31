@@ -509,7 +509,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 /datum/speech_module/modifier/accent/void
 	id = SPEECH_MODIFIER_ACCENT_VOID
-	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(voidSpeak))
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(voidSpeak), TRUE)
 
 
 /datum/speech_module/modifier/accent/vowelitis
