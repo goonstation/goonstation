@@ -1,5 +1,9 @@
 
 (t)sat aug 30 25
+(u)Calphrick
+(p)24395
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Changed one of the materials needed for the cyborg teleport upgrade.
 (u)LeahTheTech
 (p)24537
 (e)⛔|C-Removal
