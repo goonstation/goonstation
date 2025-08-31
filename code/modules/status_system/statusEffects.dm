@@ -3554,6 +3554,12 @@
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
 
+	onAdd()
+		..()
+		if(istype(src.owner, /obj/vehicle))
+			var/obj/vehicle/V = src.owner
+			V.stop()
+
 /datum/statusEffect/pod_corrosion
 	id = "pod_corrosion"
 	effect_quality = STATUS_QUALITY_NEGATIVE
