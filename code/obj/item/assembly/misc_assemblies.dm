@@ -80,13 +80,18 @@ Contains:
 	if(new_target)
 		to_set_up_items += new_target
 		src.target = new_target
+	var/contraband_carry_to_set = 0
+	var/contraband_gun_to_set = 0
 	for(var/obj/item/checked_item in to_set_up_items)
 		checked_item.set_loc(src)
 		checked_item.master = src
 		checked_item.layer = initial(checked_item.layer)
 		src.w_class = max(src.w_class, checked_item.w_class)
+		contraband_carry_to_set = max(contraband_carry_to_set, GET_ATOM_PROPERTY(checked_item,PROP_MOVABLE_VISIBLE_CONTRABAND))
+		contraband_gun_to_set = max(contraband_gun_to_set, GET_ATOM_PROPERTY(checked_item,PROP_MOVABLE_VISIBLE_GUNS))
 		if(user)
 			checked_item.add_fingerprint(user)
+	src.AddComponent(/datum/component/contraband, contraband_carry_to_set, contraband_gun_to_set)
 	//now, to set up the assembly, we have to send the signals in the correct order like a normal assembly would be created
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
@@ -398,6 +403,9 @@ Contains:
 	src.target = null
 	src.target_item_prefix = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
@@ -449,6 +457,9 @@ Contains:
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	src.w_class = max(src.w_class, manipulated_item.w_class)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 	boutput(user, "You attach the [src.name] to the [manipulated_item.name].")
 	//Since we completed the assembly, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
@@ -496,6 +507,9 @@ Contains:
 			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, to_combine_atom)
 	//Last but not least, we update our icon, w_class and name
 	src.w_class = max(src.w_class, manipulated_item.w_class)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE
@@ -520,6 +534,7 @@ Contains:
 	manipulated_frame.add_fingerprint(user)
 	var/obj/item/mousetrap_roller/new_roller = new /obj/item/mousetrap_roller(get_turf(user), src, to_combine_atom)
 	new_roller.name = "roller/[src.name]" // Roller/mousetrap/igniter/plutonium 239-pipebomb-assembly, gotta love those names
+	new_roller.AddComponent(/datum/component/contraband, GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS))
 	user.put_in_hand_or_drop(new_roller)
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [new_roller.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
@@ -540,6 +555,7 @@ Contains:
 	src.add_fingerprint(user)
 	to_combine_atom.add_fingerprint(user)
 	var/obj/item/clothing/suit/armor/suicide_bomb/new_suicide_vest = new /obj/item/clothing/suit/armor/suicide_bomb(get_turf(user), src, to_combine_atom)
+	new_suicide_vest.AddComponent(/datum/component/contraband, GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS))
 	user.put_in_hand_or_drop(new_suicide_vest)
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [new_suicide_vest.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
