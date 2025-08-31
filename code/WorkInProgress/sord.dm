@@ -27,7 +27,7 @@
 			return
 		logTheThing(LOG_COMBAT, parent_assembly.last_armer, "'s [parent_assembly] triggers at [log_loc(parent_assembly)]")
 		playsound(parent_assembly, 'sound/items/security_alert.ogg', 30)
-		parent_assembly.visible_message(SPAN_ALERT("The [parent_assembly] sets off an alarm!"), "You hear an alarm go off!")
+		parent_assembly.visible_message(SPAN_ALERT("[parent_assembly] sets off an alarm!"), "You hear an alarm go off!")
 		src.triggerpanicbutton()
 
 /// ----------------------------------------------
