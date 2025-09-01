@@ -39648,6 +39648,10 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
+"cRx" = (
+/obj/noticeboard/directional/north,
+/turf/unsimulated/floor,
+/area/drone/office)
 "cRz" = (
 /obj/shrub,
 /turf/unsimulated/grass,
@@ -71656,10 +71660,6 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
-"rpQ" = (
-/obj/noticeboard/directional/north,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/drone/office)
 "rqo" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -72159,7 +72159,7 @@
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
 "rFL" = (
-/obj/noticeboard/directional/north,
+/obj/noticeboard/directional/east,
 /turf/unsimulated/floor/red/side,
 /area/crunch)
 "rGr" = (
@@ -72425,8 +72425,7 @@
 	c_tag = "NT/SCI #41903";
 	desc = "";
 	invisibility = 100;
-	network = "Minerva5";
-	
+	network = "Minerva5"
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/black,
@@ -80130,8 +80129,7 @@
 	c_tag = "NT/ADMIN/SCI #51352";
 	desc = "";
 	invisibility = 100;
-	network = "Minerva5";
-	
+	network = "Minerva5"
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/carpet{
@@ -119484,8 +119482,8 @@ bjj
 bjX
 bjj
 bjX
-rpQ
-bmh
+rZe
+cRx
 bmh
 bmI
 tib
