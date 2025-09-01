@@ -356,6 +356,9 @@ To remove:
 // sliiiiiiiightly faster if you don't care about the value
 #define HAS_ATOM_PROPERTY(target, property) (target.atom_properties?[GET_PROP_NAME(property)] ? TRUE : FALSE)
 
+// use this to check if an atom got a property from a specific source
+#define HAS_ATOM_PROPERTY_FROM_SOURCE(target, property, source) (target.atom_properties?[GET_PROP_NAME(property)] ? (source in target.atom_properties[GET_PROP_NAME(property)][ATOM_PROPERTY_SOURCES_LIST]) : FALSE)
+
 
 #define APPLY_ATOM_PROPERTY_MAX(target, property, do_update, update_macro, source, value) \
 	do { \
