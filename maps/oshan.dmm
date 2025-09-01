@@ -11836,6 +11836,7 @@
 	codes_txt = "delivery;dir=8"
 	},
 /obj/decal/stripe_caution,
+/obj/noticeboard/persistent/brig/directional/north,
 /turf/simulated/floor,
 /area/station/security/processing)
 "aSC" = (
@@ -32191,7 +32192,6 @@
 /obj/item/storage/firstaid/regular{
 	pixel_x = -6
 	},
-/obj/noticeboard/persistent/brig/directional/north,
 /turf/simulated/floor,
 /area/station/security/processing)
 "fiN" = (

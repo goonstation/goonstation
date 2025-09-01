@@ -5863,6 +5863,7 @@
 /area/station/crew_quarters/fitness)
 "axr" = (
 /obj/submachine/ice_cream_dispenser,
+/obj/noticeboard/persistent/bar/directional/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "axu" = (
@@ -21392,11 +21393,6 @@
 "bCo" = (
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
-"bCp" = (
-/obj/noticeboard/persistent/bar/directional/north,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/bar)
 "bCF" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -62952,16 +62948,6 @@
 /obj/machinery/sleeper/compact,
 /turf/unsimulated/floor/shuttle/white,
 /area/shuttle/arrival/station)
-"xca" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/noticeboard/persistent/brig/directional/north,
-/turf/simulated/floor,
-/area/station/security/main)
 "xce" = (
 /obj/shrub{
 	dir = 10
@@ -64488,6 +64474,7 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
+/obj/noticeboard/persistent/brig/directional/north,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -95454,7 +95441,7 @@ aJd
 tFP
 lXN
 nho
-xca
+dEj
 aJd
 aJd
 tpY
@@ -113876,7 +113863,7 @@ prD
 cOx
 iNm
 iNm
-bCp
+iNm
 lQi
 iNm
 iNm
