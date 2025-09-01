@@ -394,10 +394,10 @@
 
 /datum/manufacture/bullet_9mm_frangible
 	name = "9mm Frangible Rounds"
-	item_requirements = list("metal" = 10,
-							 "conductive" = 25,
+	item_requirements = list("conductive" = 25,
+							 "rubber" = 15,
 							 "plastic" = 15,
-							 "rubber" = 15)
+							 "metal" = 10)
 	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
 	create = 1
 	time = 15 SECONDS
