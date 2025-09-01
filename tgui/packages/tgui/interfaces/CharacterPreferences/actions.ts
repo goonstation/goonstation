@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2025
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license MIT
+ */
+
 type Act = (action: string, payload?: object) => void;
 
 export const openJobWikiPage = (act: Act, job: string) =>

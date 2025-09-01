@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2025
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license MIT
+ */
+
 import { useCallback, useContext, useMemo } from 'react';
 import { Modal } from 'tgui-core/components';
 

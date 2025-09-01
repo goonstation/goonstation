@@ -2,6 +2,7 @@
  * @file
  * @copyright 2025
  * @author Mr. Moriarty (https://github.com/Mister-Moriarty)
+ * @author Mordent (https://github.com/mordent-goonstation)
  * @license MIT
  */
 

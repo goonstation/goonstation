@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2025
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license MIT
+ */
+
 import { createContext, useState } from 'react';
 
 import { useConstant } from '../../common/hooks';
