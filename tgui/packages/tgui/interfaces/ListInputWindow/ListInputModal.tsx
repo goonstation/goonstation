@@ -96,7 +96,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
   };
   // User presses a letter key and searchbar is visible
   // |goonstation-change| send any text input to the search bar
-  const onFocusSearch = (letter) => {
+  const onFocusSearch = (letter: string) => {
     let searchBarInput = getSearchBar();
     if (!searchBarInput) {
       return;
@@ -254,9 +254,10 @@ export const ListInputModal = (props: ListInputModalProps) => {
           <ListDisplay
             filteredItems={filteredItems}
             onClick={onClick}
+            onDoubleClick={on_selected}
             onFocusSearch={onFocusSearch}
             searchBarVisible={searchBarVisible}
-            selected={selected}
+            selectedIndex={selected}
             capitalize={capitalize}
           />
         </Stack.Item>
@@ -280,18 +281,28 @@ export const ListInputModal = (props: ListInputModalProps) => {
   );
 };
 
+interface ListDisplayProps {
+  filteredItems: string[];
+  onClick: (itemIndex: number) => void;
+  onDoubleClick: (entry: string) => void;
+  onFocusSearch: (letter: string) => void;
+  searchBarVisible: boolean;
+  selectedIndex: number;
+  capitalize: boolean;
+}
+
 /**
  * Displays the list of selectable items.
  * If a search query is provided, filters the items.
  */
-const ListDisplay = (props) => {
-  const { act } = useBackend();
+const ListDisplay = (props: ListDisplayProps) => {
   const {
     filteredItems,
     onClick,
+    onDoubleClick,
     onFocusSearch,
     searchBarVisible,
-    selected,
+    selectedIndex,
     capitalize,
   } = props;
 
@@ -302,15 +313,12 @@ const ListDisplay = (props) => {
         return (
           <Button
             className="search-item"
-            color={index !== selected ? 'transparent' : undefined}
+            color={index !== selectedIndex ? 'transparent' : undefined}
             fluid
-            id={index}
+            id={`${index}`}
             key={index}
             onClick={() => onClick(index)}
-            onDoubleClick={(event) => {
-              event.preventDefault();
-              act('submit', { entry: filteredItems[selected] });
-            }}
+            onDoubleClick={() => onDoubleClick(item)}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
               if (searchBarVisible && event.key.length === 1) {
@@ -323,7 +331,7 @@ const ListDisplay = (props) => {
                 onFocusSearch(char);
               }
             }}
-            selected={index === selected}
+            selected={index === selectedIndex}
             style={{
               animation: 'none',
               transition: 'none',
