@@ -5,71 +5,103 @@
  * @license MIT
  */
 
-import {
-  Box,
-  Button,
-  LabeledList,
-  Section,
-  Stack,
-  Tooltip,
-} from 'tgui-core/components';
+import { PropsWithChildren, useContext } from 'react';
+import { Box, Button, Section, Stack, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { AntagonistStaticData, CharacterPreferencesData } from './type';
+import * as occupationActions from './actions';
+import {
+  OccupationControl,
+  OccupationControlContents,
+} from './components/OccupationControl';
+import { ModalContext } from './modals/ModalContext';
+import {
+  type AntagonistStaticData,
+  type CharacterPreferencesData,
+  JobPriority,
+} from './type';
+
+const NO_OP = () => {};
 
 export const OccupationTab = () => {
+  const { setOccupationModalOptions } = useContext(ModalContext);
   const { act, data } = useBackend<CharacterPreferencesData>();
-
+  const { jobFavourite, jobStaticData } = data;
+  const favoriteJob = jobFavourite ? jobStaticData[jobFavourite] : undefined;
   return (
     <>
-      <Section title="Job Preferences">
-        <Stack height="2em" mb="2em" align="center" justify="space-between">
-          <Stack.Item width="50%" pt="2.5px">
-            <LabeledList>
-              <LabeledList.Item
-                label={
-                  <Tooltip content="This is for the one job that you like the most - the game will always try to get you into this job first if it can. You might not always get your favorite job, especially if it's a single-slot role like a Head, but don't be discouraged if you don't get it - it's just luck of the draw. You might get it next time.">
-                    Favourite Job:
-                  </Tooltip>
-                }
-                verticalAlign="middle"
-              >
-                {data.jobFavourite ? (
-                  <Occupation
-                    job_title={data.jobFavourite}
-                    priority_level={1}
-                  />
-                ) : (
-                  'None'
-                )}
-              </LabeledList.Item>
-            </LabeledList>
-          </Stack.Item>
-          <Stack.Item>
-            <Button
-              onClick={() => act('reset-all-jobs-priorities')}
-              color="red"
+      <Section
+        title="Job Preferences"
+        buttons={
+          <Button onClick={() => act('reset-all-jobs-priorities')} color="red">
+            Reset All Job Preferences
+          </Button>
+        }
+      >
+        <Section
+          title={
+            <Tooltip content="This is for the one job that you like the most - the game will always try to get you into this job first if it can. You might not always get your favorite job, especially if it's a single-slot role like a Head, but don't be discouraged if you don't get it - it's just luck of the draw. You might get it next time.">
+              Favorite Job
+            </Tooltip>
+          }
+        >
+          {favoriteJob ? (
+            <OccupationControl
+              color={favoriteJob.colour}
+              onChangePriorityLevel={(newPriorityLevel) =>
+                occupationActions.setJobPriorityLevel(
+                  act,
+                  jobFavourite,
+                  JobPriority.Favorite,
+                  newPriorityLevel,
+                )
+              }
+              onMenuOpen={() =>
+                setOccupationModalOptions({
+                  hasWikiLink: !!favoriteJob.wiki_link,
+                  occupation: jobFavourite,
+                  priorityLevel: JobPriority.Favorite,
+                  required: !!favoriteJob.required,
+                })
+              }
+              priorityLevel={JobPriority.Favorite}
+              required={!!favoriteJob.required}
+              tooltip={
+                <DisabledTooltip title={jobFavourite}>
+                  {favoriteJob.disabled_tooltip}
+                </DisabledTooltip>
+              }
             >
-              Reset All Job Preferences
-            </Button>
-          </Stack.Item>
-        </Stack>
+              <OccupationControlContents occupationName={jobFavourite} />
+            </OccupationControl>
+          ) : (
+            <OccupationControl
+              disabled
+              onChangePriorityLevel={NO_OP}
+              onMenuOpen={NO_OP}
+              priorityLevel={JobPriority.Favorite}
+              tooltip="Select a job from those below."
+            >
+              None
+            </OccupationControl>
+          )}
+        </Section>
         <Stack>
-          <PrioritySection
+          <PrioritySectionItem
             title="Medium Priority"
             priority_level={2}
             tooltip="Medium Priority Jobs are any jobs that you would like to play that aren't your favorite. People with jobs in this category get priority over those who have the same job in their Low Priority bracket. It's best to put jobs here that you actively enjoy playing and wouldn't mind ending up with if you don't get your favorite."
             occupations={data.jobsMedPriority}
           />
           <Stack.Divider />
-          <PrioritySection
+          <PrioritySectionItem
             title="Low Priority"
             priority_level={3}
             tooltip="Low Priority Jobs are jobs that you don't mind doing. When the game is finding candidates for a job, it will try to fill it with Medium Priority players first, then Low Priority players if there are still free slots."
             occupations={data.jobsLowPriority}
           />
           <Stack.Divider />
-          <PrioritySection
+          <PrioritySectionItem
             title="Unwanted Jobs"
             priority_level={4}
             tooltip="Unwanted Jobs are jobs that you absolutely don't want to have. The game will never give you a job you list here. The 'Staff Assistant' role can't be put here, however, as it's the fallback job if there are no other openings."
@@ -84,119 +116,163 @@ export const OccupationTab = () => {
           </Tooltip>
         }
       >
-        <Stack
-          g="2px"
+        <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
           }}
         >
           {Object.entries(data.antagonistPreferences).map(
-            ([antag_id, enabled], index) => (
+            ([antag_id, enabled]) => (
               <AntagonistOption
-                key={index}
+                key={antag_id}
                 checked={enabled}
                 {...data.antagonistStaticData[antag_id]}
               />
             ),
           )}
-        </Stack>
+        </div>
       </Section>
     </>
   );
 };
 
-const PrioritySection = (props) => {
-  const { title, priority_level, tooltip, occupations } = props;
+interface PrioritySectionProps {
+  title: string;
+  priority_level: number;
+  tooltip: string;
+  occupations: string[];
+}
 
+const PrioritySectionItem = (props: PrioritySectionProps) => {
+  const { title, priority_level, tooltip, occupations } = props;
+  const { act, data } = useBackend<CharacterPreferencesData>();
+  const { setOccupationModalOptions } = useContext(ModalContext);
   return (
-    <Stack.Item grow overflow="hidden">
+    <Stack.Item grow>
       <Section title={<Tooltip content={tooltip}>{title}</Tooltip>}>
-        <Stack vertical g="2px">
-          {occupations?.map((occupation, index) => (
-            <Occupation
-              key={index}
-              job_title={occupation}
-              priority_level={priority_level}
-            />
-          ))}
+        <Stack vertical g={0.5}>
+          {occupations?.map((occupation) => {
+            const jobStaticData = data.jobStaticData[occupation];
+            if (!jobStaticData) {
+              return null;
+            }
+            const { colour, disabled, disabled_tooltip, required, wiki_link } =
+              jobStaticData;
+            return (
+              <Stack.Item key={occupation}>
+                <OccupationControl
+                  color={colour}
+                  disabled={!!disabled}
+                  onChangePriorityLevel={(newPriorityLevel) =>
+                    occupationActions.setJobPriorityLevel(
+                      act,
+                      occupation,
+                      priority_level,
+                      newPriorityLevel,
+                    )
+                  }
+                  onMenuOpen={() =>
+                    setOccupationModalOptions({
+                      hasWikiLink: !!wiki_link,
+                      occupation,
+                      priorityLevel: priority_level,
+                      required: !!required,
+                    })
+                  }
+                  priorityLevel={priority_level}
+                  required={!!required}
+                  tooltip={
+                    <DisabledTooltip title={occupation}>
+                      {disabled_tooltip}
+                    </DisabledTooltip>
+                  }
+                >
+                  <OccupationControlContents occupationName={occupation} />
+                </OccupationControl>
+              </Stack.Item>
+            );
+          })}
         </Stack>
       </Section>
     </Stack.Item>
   );
 };
 
-const Occupation = (props) => {
+interface OccupationControlProps {
+  job_title: string;
+  priority_level: number;
+}
+
+const OccupationControl2 = (props: OccupationControlProps) => {
   const { job_title, priority_level } = props;
   const { act, data } = useBackend<CharacterPreferencesData>();
-
+  const jobStaticData = data.jobStaticData[job_title];
+  const { disabled, colour, disabled_tooltip } = jobStaticData;
   return (
-    <Stack.Item>
-      <Stack g="3px">
-        <Stack.Item>
-          <Button
-            onClick={() =>
-              act('increase-job-priority', {
-                job: job_title,
-                priority: priority_level,
-              })
-            }
-            disabled={
-              data.jobStaticData[job_title].disabled || priority_level === 1
-            }
-            color={data.jobStaticData[job_title].colour}
-            icon="chevron-left"
-            align="left"
-          />
-        </Stack.Item>
-        <Stack.Item grow minWidth="0px">
-          <Button
-            onClick={() =>
-              act('set-job-priority', {
-                job: job_title,
-                priority: priority_level,
-              })
-            }
-            tooltip={
-              <OccupationTooltip
-                title={job_title}
-                disabled_tooltip={
-                  data.jobStaticData[job_title].disabled_tooltip
-                }
-              />
-            }
-            disabled={data.jobStaticData[job_title].disabled}
-            color={data.jobStaticData[job_title].colour}
-            width="100%"
-          >
+    <Stack g={0.5}>
+      <Stack.Item>
+        <Button
+          onClick={() =>
+            act('set-job-priority', {
+              job: job_title,
+              priority: priority_level - 1,
+            })
+          }
+          disabled={disabled || priority_level === JobPriority.Favorite}
+          color={colour}
+          icon="chevron-left"
+          align="left"
+        />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Button
+          onClick={() =>
+            act('set-job-priority', {
+              job: job_title,
+              priority: priority_level,
+            })
+          }
+          tooltip={
+            <DisabledTooltip title={job_title}>
+              {disabled_tooltip}
+            </DisabledTooltip>
+          }
+          disabled={disabled}
+          color={colour}
+          fluid
+          align="center"
+        >
+          {job_title === 'clown' ? (
             <Box
               overflow="hidden"
-              textAlign="center"
-              fontFamily={job_title === 'Clown' && 'Comic Sans MS'}
-              fontSize={job_title === 'Clown' && '13px'}
+              style={{
+                fontFamily: 'Comic Sans MS',
+                fontSize: '13px',
+              }}
             >
               {job_title}
             </Box>
-          </Button>
-        </Stack.Item>
-        <Stack.Item>
-          <Button
-            onClick={() =>
-              act('decrease-job-priority', {
-                job: job_title,
-                priority: priority_level,
-              })
-            }
-            disabled={
-              data.jobStaticData[job_title].disabled || priority_level === 4
-            }
-            color={data.jobStaticData[job_title].colour}
-            icon="chevron-right"
-            align="right"
-          />
-        </Stack.Item>
-      </Stack>
-    </Stack.Item>
+          ) : (
+            job_title
+          )}
+        </Button>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          onClick={() =>
+            act('set-job-priority', {
+              job: job_title,
+              priority: priority_level + 1,
+            })
+          }
+          disabled={disabled || priority_level === JobPriority.Unwanted}
+          color={colour}
+          icon="chevron-right"
+          align="right"
+        />
+      </Stack.Item>
+    </Stack>
   );
 };
 
@@ -206,42 +282,42 @@ const AntagonistOption = (
   const { act } = useBackend<CharacterPreferencesData>();
 
   return (
-    <Stack.Item>
-      <Button.Checkbox
-        onClick={() =>
-          act('toggle-antagonist-preference', {
-            variable: props.variable,
-          })
-        }
-        tooltip={
-          <OccupationTooltip
-            title={props.name}
-            disabled_tooltip={props.disabled_tooltip}
-          />
-        }
-        disabled={props.disabled}
-        checked={props.checked}
-        width="100%"
-      >
-        {props.name}
-      </Button.Checkbox>
-    </Stack.Item>
+    <Button.Checkbox
+      onClick={() =>
+        act('toggle-antagonist-preference', {
+          variable: props.variable,
+        })
+      }
+      tooltip={
+        <DisabledTooltip title={props.name}>
+          {props.disabled_tooltip}
+        </DisabledTooltip>
+      }
+      disabled={props.disabled}
+      checked={props.checked}
+      ellipsis
+    >
+      {props.name}
+    </Button.Checkbox>
   );
 };
 
-const OccupationTooltip = (props) => {
-  const { title, disabled_tooltip } = props;
+interface DisabledTooltipProps {
+  title: string;
+}
 
+const DisabledTooltip = (props: PropsWithChildren<DisabledTooltipProps>) => {
+  const { children, title } = props;
   return (
     <>
       <Box bold textAlign="center">
         {title}
       </Box>
-      {!!disabled_tooltip && (
+      {!!children && (
         <Box
           mt="0.5em"
           dangerouslySetInnerHTML={{
-            __html: `<b>Disabled:</b> ${disabled_tooltip}`,
+            __html: `<b>Disabled:</b> ${children}`,
           }}
         />
       )}

@@ -88,7 +88,6 @@ var/list/removed_jobs = list(
 
 	var/mentor = FALSE
 	var/see_mentor_pms = TRUE // do they wanna disable mentor pms?
-	var/antispam = FALSE
 
 	var/datum/traitPreferences/traitPreferences = new
 
@@ -875,18 +874,14 @@ var/list/removed_jobs = list(
 					src.profile_modified = TRUE
 					return TRUE
 
-			if ("set-job-priority")
-				src.SetJob(usr, params["priority"], params["job"], 0)
-				src.profile_modified = TRUE
-				return TRUE
+			if ("open-job-wiki")
+				var/datum/job/J = find_job_in_controller_by_string(params["job"])
+				if (istype(J) && J.wiki_link)
+					ui.user << link(J.wiki_link)
+				return FALSE
 
-			if ("increase-job-priority")
-				src.SetJob(usr, params["priority"], params["job"], params["priority"] - 1)
-				src.profile_modified = TRUE
-				return TRUE
-
-			if ("decrease-job-priority")
-				src.SetJob(usr, params["priority"], params["job"], params["priority"] + 1)
+			if ("set-job-priority-level")
+				src.SetJob(usr, params["fromPriority"], params["job"], params["toPriority"])
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1438,6 +1433,8 @@ var/list/removed_jobs = list(
 				job_static_data[job_datum.name] ||= list()
 				job_static_data[job_datum.name]["disabled"] = FALSE
 				job_static_data[job_datum.name]["colour"] = colour_map[job_datum.linkcolor] || "blue"
+				job_static_data[job_datum.name]["wiki_link"] = job_datum.wiki_link
+				job_static_data[job_datum.name]["required"] = job_datum.cant_allocate_unwanted
 
 				// If the user cannot play as this job.
 				var/reason_tooltip = null
@@ -1524,8 +1521,6 @@ var/list/removed_jobs = list(
 		)
 
 	proc/SetJob(mob/user, occ=1, job="Captain", level = 0)
-		if (src.antispam)
-			return
 		switch (occ)
 			if (1)
 				if (src.job_favorite != job)
@@ -1599,35 +1594,16 @@ var/list/removed_jobs = list(
 				src.jobs_unwanted += job
 			return
 
-		src.antispam = TRUE
-
 		var/picker = "Low Priority"
 		var/datum/job/J = find_job_in_controller_by_string(job)
-		if (level == 0)
-			var/list/valid_actions = list("Favorite", "Medium Priority", "Low Priority", "Unwanted")
-			if (J.wiki_link)
-				valid_actions += "Show Wiki Page"
-
-			switch (occ)
-				if (1) valid_actions -= "Favorite"
-				if (2) valid_actions -= "Medium Priority"
-				if (3) valid_actions -= "Low Priority"
-				if (4) valid_actions -= "Unwanted"
-
-			picker = tgui_input_list(usr, "Which bracket would you like to move this job to?", "Job Preferences", valid_actions)
-			if (!picker)
-				src.antispam = FALSE
-				return
-		else
-			switch (level)
-				if (1) picker = "Favorite"
-				if (2) picker = "Medium Priority"
-				if (3) picker = "Low Priority"
-				if (4) picker = "Unwanted"
+		switch (level)
+			if (1) picker = "Favorite"
+			if (2) picker = "Medium Priority"
+			if (3) picker = "Low Priority"
+			if (4) picker = "Unwanted"
 
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
 			boutput(user, SPAN_ALERT("<b>[job] cannot be set to Unwanted.</b>"))
-			src.antispam = FALSE
 			return
 
 		var/successful_move = FALSE
@@ -1653,8 +1629,6 @@ var/list/removed_jobs = list(
 				if (occ == 1)
 					src.job_favorite = null
 				successful_move = TRUE
-			if ("Show Wiki Page")
-				user << link(J.wiki_link)
 
 		if (successful_move)
 			switch (occ)
@@ -1663,7 +1637,6 @@ var/list/removed_jobs = list(
 				if (3) src.jobs_low_priority -= job
 				if (4) src.jobs_unwanted -= job
 
-		src.antispam = FALSE
 		return 1
 
 	proc/copy_to(mob/living/character, mob/user, ignore_randomizer = FALSE, skip_post_new_stuff = FALSE)

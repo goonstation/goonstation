@@ -22,6 +22,8 @@ import { Window } from '../../layouts';
 import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
 import { GeneralTab } from './GeneralTab';
+import { useModalContext } from './modals/ModalContext';
+import { OccupationModal } from './modals/OccupationModal';
 import { OccupationTab } from './OccupationTab';
 import { SavesTab } from './SavesTab';
 import { TraitsTab } from './TraitsTab';
@@ -36,7 +38,9 @@ let nextRotateTime = 0;
 export const CharacterPreferences = (_props: any) => {
   const { act, data } = useBackend<CharacterPreferencesData>();
   const [menu, setMenu] = useState(CharacterPreferencesTabKeys.General);
-
+  const [ModalContext, modalContextValue, modalContextState] =
+    useModalContext();
+  const { occupationModal } = modalContextState;
   const handleKeyDown = (e) => {
     if (
       (menu === CharacterPreferencesTabKeys.General ||
@@ -60,117 +64,122 @@ export const CharacterPreferences = (_props: any) => {
 
   return (
     <Window width={600} height={750} title="Character Setup">
-      <Window.Content onKeyDown={handleKeyDown}>
-        <Stack vertical fill>
-          <Stack.Item>
-            <SavesAndProfile />
-          </Stack.Item>
-          <Stack.Item>
-            <Tabs>
-              <Tabs.Tab
-                selected={menu === CharacterPreferencesTabKeys.General}
-                onClick={() => setMenu(CharacterPreferencesTabKeys.General)}
-              >
-                General
-              </Tabs.Tab>
-              <Tabs.Tab
-                selected={menu === CharacterPreferencesTabKeys.Character}
-                onClick={() => setMenu(CharacterPreferencesTabKeys.Character)}
-              >
-                Appearance
-              </Tabs.Tab>
-              <Tabs.Tab
-                selected={menu === CharacterPreferencesTabKeys.Occupation}
-                onClick={() => setMenu(CharacterPreferencesTabKeys.Occupation)}
-              >
-                Occupation
-              </Tabs.Tab>
-              <Tabs.Tab
-                selected={menu === CharacterPreferencesTabKeys.Traits}
-                onClick={() => setMenu(CharacterPreferencesTabKeys.Traits)}
-              >
-                Traits
-              </Tabs.Tab>
-              <Tabs.Tab
-                selected={menu === CharacterPreferencesTabKeys.GameSettings}
-                onClick={() =>
-                  setMenu(CharacterPreferencesTabKeys.GameSettings)
-                }
-              >
-                Game Settings
-              </Tabs.Tab>
-              <Tabs.Tab
-                selected={menu === CharacterPreferencesTabKeys.Saves}
-                onClick={() => setMenu(CharacterPreferencesTabKeys.Saves)}
-              >
-                Cloud Saves
-              </Tabs.Tab>
-            </Tabs>
-          </Stack.Item>
-          <Stack.Item grow={1}>
-            {(menu === CharacterPreferencesTabKeys.General ||
-              menu === CharacterPreferencesTabKeys.Character) && (
-              <Stack fill>
-                <Stack.Item basis={0} grow={1}>
-                  <Section scrollable fill>
-                    {menu === CharacterPreferencesTabKeys.General && (
-                      <GeneralTab />
-                    )}
-                    {menu === CharacterPreferencesTabKeys.Character && (
-                      <CharacterTab />
-                    )}
-                  </Section>
-                </Stack.Item>
-                <Stack.Item>
-                  <Section fill>
-                    <ByondUi
-                      params={{
-                        id: data.preview,
-                        type: 'map',
-                      }}
-                      style={{
-                        width: '64px',
-                        height: '128px',
-                      }}
-                    />
-                    <Box textAlign="center" mt="5px">
-                      <Button
-                        icon="chevron-left"
-                        onClick={() => act('rotate-counter-clockwise')}
+      <ModalContext value={modalContextValue}>
+        <Window.Content onKeyDown={handleKeyDown}>
+          <Stack vertical fill>
+            <Stack.Item>
+              <SavesAndProfile />
+            </Stack.Item>
+            <Stack.Item>
+              <Tabs>
+                <Tabs.Tab
+                  selected={menu === CharacterPreferencesTabKeys.General}
+                  onClick={() => setMenu(CharacterPreferencesTabKeys.General)}
+                >
+                  General
+                </Tabs.Tab>
+                <Tabs.Tab
+                  selected={menu === CharacterPreferencesTabKeys.Character}
+                  onClick={() => setMenu(CharacterPreferencesTabKeys.Character)}
+                >
+                  Appearance
+                </Tabs.Tab>
+                <Tabs.Tab
+                  selected={menu === CharacterPreferencesTabKeys.Occupation}
+                  onClick={() =>
+                    setMenu(CharacterPreferencesTabKeys.Occupation)
+                  }
+                >
+                  Occupation
+                </Tabs.Tab>
+                <Tabs.Tab
+                  selected={menu === CharacterPreferencesTabKeys.Traits}
+                  onClick={() => setMenu(CharacterPreferencesTabKeys.Traits)}
+                >
+                  Traits
+                </Tabs.Tab>
+                <Tabs.Tab
+                  selected={menu === CharacterPreferencesTabKeys.GameSettings}
+                  onClick={() =>
+                    setMenu(CharacterPreferencesTabKeys.GameSettings)
+                  }
+                >
+                  Game Settings
+                </Tabs.Tab>
+                <Tabs.Tab
+                  selected={menu === CharacterPreferencesTabKeys.Saves}
+                  onClick={() => setMenu(CharacterPreferencesTabKeys.Saves)}
+                >
+                  Cloud Saves
+                </Tabs.Tab>
+              </Tabs>
+            </Stack.Item>
+            <Stack.Item grow={1}>
+              {(menu === CharacterPreferencesTabKeys.General ||
+                menu === CharacterPreferencesTabKeys.Character) && (
+                <Stack fill>
+                  <Stack.Item basis={0} grow={1}>
+                    <Section scrollable fill>
+                      {menu === CharacterPreferencesTabKeys.General && (
+                        <GeneralTab />
+                      )}
+                      {menu === CharacterPreferencesTabKeys.Character && (
+                        <CharacterTab />
+                      )}
+                    </Section>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Section fill>
+                      <ByondUi
+                        params={{
+                          id: data.preview,
+                          type: 'map',
+                        }}
+                        style={{
+                          width: '64px',
+                          height: '128px',
+                        }}
                       />
-                      <Button
-                        icon="chevron-right"
-                        onClick={() => act('rotate-clockwise')}
-                      />
-                    </Box>
-                  </Section>
-                </Stack.Item>
-              </Stack>
-            )}
-            {(menu === CharacterPreferencesTabKeys.Occupation ||
-              menu === CharacterPreferencesTabKeys.GameSettings ||
-              menu === CharacterPreferencesTabKeys.Saves) && (
-              <Section scrollable fill>
-                {menu === CharacterPreferencesTabKeys.Occupation && (
-                  <OccupationTab />
-                )}
-                {menu === CharacterPreferencesTabKeys.GameSettings && (
-                  <GameSettingsTab />
-                )}
-                {menu === CharacterPreferencesTabKeys.Saves && <SavesTab />}
+                      <Box textAlign="center" mt="5px">
+                        <Button
+                          icon="chevron-left"
+                          onClick={() => act('rotate-counter-clockwise')}
+                        />
+                        <Button
+                          icon="chevron-right"
+                          onClick={() => act('rotate-clockwise')}
+                        />
+                      </Box>
+                    </Section>
+                  </Stack.Item>
+                </Stack>
+              )}
+              {(menu === CharacterPreferencesTabKeys.Occupation ||
+                menu === CharacterPreferencesTabKeys.GameSettings ||
+                menu === CharacterPreferencesTabKeys.Saves) && (
+                <Section scrollable fill>
+                  {menu === CharacterPreferencesTabKeys.Occupation && (
+                    <OccupationTab />
+                  )}
+                  {menu === CharacterPreferencesTabKeys.GameSettings && (
+                    <GameSettingsTab />
+                  )}
+                  {menu === CharacterPreferencesTabKeys.Saves && <SavesTab />}
+                </Section>
+              )}
+              {menu === CharacterPreferencesTabKeys.Traits && <TraitsTab />}
+            </Stack.Item>
+            <Stack.Item>
+              <Section>
+                <Button.Confirm onClick={() => act('reset')}>
+                  Reset All
+                </Button.Confirm>
               </Section>
-            )}
-            {menu === CharacterPreferencesTabKeys.Traits && <TraitsTab />}
-          </Stack.Item>
-          <Stack.Item>
-            <Section>
-              <Button.Confirm onClick={() => act('reset')}>
-                Reset All
-              </Button.Confirm>
-            </Section>
-          </Stack.Item>
-        </Stack>
-      </Window.Content>
+            </Stack.Item>
+          </Stack>
+        </Window.Content>
+        {occupationModal && <OccupationModal {...occupationModal} />}
+      </ModalContext>
     </Window>
   );
 };

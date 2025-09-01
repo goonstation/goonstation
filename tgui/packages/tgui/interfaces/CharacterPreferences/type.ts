@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 export interface CharacterPreferencesData {
   isMentor: BooleanLike;
@@ -52,8 +52,8 @@ export interface CharacterPreferencesData {
   underwearStyle: string;
   randomAppearance: BooleanLike;
 
-  jobStaticData: JobStaticData[];
-  jobFavourite: string[];
+  jobStaticData: Record<string, JobStaticData>;
+  jobFavourite: string;
   jobsMedPriority: string[];
   jobsLowPriority: string[];
   jobsUnwanted: string[];
@@ -99,9 +99,11 @@ export interface CharacterPreferencesPartData {
 }
 
 export interface JobStaticData {
-  disabled: number;
-  disabled_tooltip?: string;
   colour: string;
+  disabled: BooleanLike;
+  disabled_tooltip?: string;
+  required: BooleanLike;
+  wiki_link?: string;
 }
 
 export interface AntagonistStaticData {
@@ -153,4 +155,28 @@ export enum CharacterPreferencesScrollTarget {
   Never = 1, // SCROLL_TARGET_NEVER
   Hover = 2, // SCROLL_TARGET_HOVER
   Always = 3, // SCROLL_TARGET_ALWAYS
+}
+
+export enum JobPriority {
+  Favorite = 1,
+  Medium = 2,
+  Low = 3,
+  Unwanted = 4,
+}
+
+export interface OccupationModalOptions {
+  occupation: string;
+  hasWikiLink: boolean;
+  priorityLevel: number;
+  required: boolean;
+}
+
+export interface ModalContextValue {
+  setOccupationModalOptions: (
+    options: OccupationModalOptions | undefined,
+  ) => void;
+}
+
+export interface ModalContextState {
+  occupationModal: OccupationModalOptions | undefined;
 }

@@ -1,0 +1,125 @@
+import { PropsWithChildren, useCallback, useMemo } from 'react';
+import { Box, Button, Stack } from 'tgui-core/components';
+
+import { JobPriority } from '../type';
+
+interface OccupationControlProps {
+  color?: string;
+  disabled?: boolean;
+  hasWikiLink?: boolean;
+  onChangePriorityLevel: (newPriorityLevel: number) => void;
+  onMenuOpen: () => void;
+  priorityLevel: number;
+  required?: boolean;
+  tooltip?: React.ReactNode;
+}
+
+export function OccupationControl(
+  props: PropsWithChildren<OccupationControlProps>,
+) {
+  const {
+    children,
+    color,
+    disabled,
+    onChangePriorityLevel,
+    onMenuOpen,
+    priorityLevel,
+    required,
+    tooltip,
+  } = props;
+  const handleIncreasePriorityLevel = useCallback(
+    () =>
+      priorityLevel > JobPriority.Favorite &&
+      onChangePriorityLevel(priorityLevel - 1),
+    [onChangePriorityLevel, priorityLevel],
+  );
+  const handleDecreasePriorityLevel = useCallback(
+    () =>
+      priorityLevel < JobPriority.Unwanted &&
+      onChangePriorityLevel(priorityLevel + 1),
+    [onChangePriorityLevel, priorityLevel],
+  );
+  const decreaseButtonProps = useMemo(
+    () => getDecreaseButtonProps(!!disabled, priorityLevel, !!required),
+    [disabled, priorityLevel, required],
+  );
+  return (
+    <Stack g={0.5}>
+      <Stack.Item>
+        <Button
+          color={color}
+          disabled={disabled || priorityLevel === JobPriority.Favorite}
+          icon="chevron-left"
+          onClick={handleIncreasePriorityLevel}
+          tooltip={!disabled ? 'Increase Priority' : undefined}
+        />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Button
+          textAlign="center"
+          color={color}
+          disabled={disabled}
+          fluid
+          onClick={onMenuOpen}
+          tooltip={tooltip}
+        >
+          {children}
+        </Button>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          color={color}
+          icon="chevron-right"
+          onClick={handleDecreasePriorityLevel}
+          {...decreaseButtonProps}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+}
+
+function getDecreaseButtonProps(
+  disabled: boolean,
+  priorityLevel: JobPriority,
+  required: boolean,
+) {
+  if (disabled || priorityLevel === JobPriority.Unwanted) {
+    return {
+      disabled: true,
+      tooltip: undefined,
+    };
+  }
+  if (required && priorityLevel === JobPriority.Low) {
+    return {
+      disabled: true,
+      tooltip: 'Cannot be set to Unwanted',
+    };
+  }
+  return {
+    disabled: false,
+    tooltip: 'Decrease Priority',
+  };
+}
+
+interface OccupationControlContentsProps {
+  occupationName: string;
+}
+
+export function OccupationControlContents(
+  props: OccupationControlContentsProps,
+) {
+  const { occupationName } = props;
+  return occupationName === 'Clown' ? (
+    <Box
+      overflow="hidden"
+      style={{
+        fontFamily: 'Comic Sans MS',
+        fontSize: '13px',
+      }}
+    >
+      {occupationName}
+    </Box>
+  ) : (
+    occupationName
+  );
+}
