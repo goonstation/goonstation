@@ -31,7 +31,7 @@ TYPEINFO(/datum/component/contraband)
 			var/obj/item/I = owner
 			var/mob/M = I.loc
 			//if this component gives contraband porperties to the carrier of the item, we should update these as well
-			if (HAS_ATOM_PROPERTY_FROM_SOURCE(M,PROP_MOVABLE_CONTRABAND_OVERRIDE, src) || HAS_ATOM_PROPERTY_FROM_SOURCE(M,PROP_MOVABLE_VISIBLE_GUNS, src))
+			if (HAS_ATOM_PROPERTY_FROM_SOURCE(M,PROP_MOVABLE_VISIBLE_CONTRABAND, src) || HAS_ATOM_PROPERTY_FROM_SOURCE(M,PROP_MOVABLE_VISIBLE_GUNS, src))
 				src.equipped(I, M, I.equipped_in_slot)
 
 		else if(ismovable(owner.loc))
