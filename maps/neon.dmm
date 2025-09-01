@@ -18542,7 +18542,7 @@
 /obj/item/heat_dowsing,
 /obj/storage/crate,
 /obj/machinery/light/incandescent,
-/obj/noticeboard/persistent/chapel/directional/east,
+/obj/noticeboard/persistent/engineering/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
