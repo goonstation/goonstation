@@ -214,6 +214,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
 			return
+		if (src.hasStatus("teleporting"))
+			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
 		src.last_relaymove_time = world.time
