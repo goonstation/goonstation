@@ -797,6 +797,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	wages = PAY_TRADESMAN
 	trait_list = list("training_miner")
 	access_string = "Miner"
+	invalid_antagonist_roles = list(ROLE_VAMPIRE)
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_mask = list(/obj/item/clothing/mask/breath)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
