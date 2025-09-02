@@ -338,7 +338,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
       <Flex.Item>
         <Tabs fluid>
           <Tabs.Tab
-            key="marked_edit"
             textColor="black"
             backgroundColor={previewSelected === 'Edit' ? 'grey' : 'white'}
             selected={previewSelected === 'Edit'}
@@ -347,7 +346,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             Edit
           </Tabs.Tab>
           <Tabs.Tab
-            key="marked_preview"
             textColor="black"
             backgroundColor={previewSelected === 'Preview' ? 'grey' : 'white'}
             selected={previewSelected === 'Preview'}
@@ -359,7 +357,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             Preview
           </Tabs.Tab>
           <Tabs.Tab
-            key="marked_done"
             textColor="black"
             backgroundColor={
               previewSelected === 'confirm'
@@ -385,8 +382,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             {previewSelected === 'confirm' ? 'Confirm' : 'Save'}
           </Tabs.Tab>
           <Tabs.Tab
-            key="marked_help"
-            textColor={'black'}
+            textColor="black"
             backgroundColor="white"
             icon="question-circle-o"
             onMouseOver={() => setShowingHelpTip(true)}
