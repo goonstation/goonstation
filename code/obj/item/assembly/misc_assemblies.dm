@@ -308,6 +308,7 @@ Contains:
 	src.target = null
 	src.additional_components = null
 	src.last_armer = null
+	src.chargeable_component = null
 	..()
 
 /obj/item/assembly/attack_self(mob/user)
@@ -457,6 +458,7 @@ Contains:
 	src.special_construction_identifier = null
 	src.target = null
 	src.target_item_prefix = null
+	src.chargeable_component = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
@@ -486,6 +488,7 @@ Contains:
 	src.trigger = null
 	src.applier = null
 	src.target = null
+	src.chargeable_component = null
 	qdel(src)
 
 
