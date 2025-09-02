@@ -69,7 +69,7 @@
 	/// Current gas for processing
 	var/datum/gas_mixture/air_contents
 	/// bodge factor for power generation
-	var/power_multiplier = 1
+	var/power_multiplier = 2
 
 	var/obj/machinery/atmospherics/unary/node/input
 	var/obj/machinery/atmospherics/unary/node/output
@@ -466,7 +466,7 @@
 	proc/SetStator(var/obj/item/turbine_component/stator/NewStator)
 		NewStator.set_loc(src)
 		src.current_stator = NewStator
-		src.power_multiplier = max(0.2, 0.2 * src.current_stator.material.getProperty("electrical"))
+		src.power_multiplier = max(0.4, 0.4 * src.current_stator.material.getProperty("electrical"))
 
 	proc/UpdateHealthIndicators(prevHealth)
 		//handle particles
