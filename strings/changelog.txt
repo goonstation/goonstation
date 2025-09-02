@@ -1,5 +1,9 @@
 
 (t)tue sep 02 25
+(u)Lord_Earthfire
+(p)24553
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Panic buttons can now be used to create assemblies with any commonly used trigger (e.g. mousetraps, signalers, timers or health analyzers)
 (u)LeahTheTech
 (p)24558
 (e)🔨|A-Player-Actions
