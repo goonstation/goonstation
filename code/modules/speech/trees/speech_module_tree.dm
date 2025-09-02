@@ -151,6 +151,12 @@
 		logTheThing(LOG_ADMIN, message.speaker, "[message.speaker] tried to say \"[message.original_content]\" but it was garbled into \"[message.content]\", which is uncool by the following effects: [jointext(modifier_ids, ", ")]. The uncool words were garbled.")
 		message.content = replacetext(message.content, global.phrase_log.uncool_words, pick("urr", "blargh", "der", "hurr", "pllt"))
 
+	// Check for URLs if we're an IC channel, let people paste wiki links at each other in LOOC if they want to
+	if (!global.SpeechManager.GetSayChannelInstance(message.output_module_channel).allows_urls && global.url_regex.Find(message.content))
+		if (ismob(message.speaker))
+			boutput(message.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		return
+
 	// Apply sayflag message manipulation.
 	global.SpeechManager.ApplyMessageModifierPreprocessing(message)
 
