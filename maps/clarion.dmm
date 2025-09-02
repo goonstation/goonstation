@@ -1123,7 +1123,7 @@
 /turf/simulated/floor/damaged4,
 /area/station/mining/staff_room)
 "akR" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
+/obj/machinery/nuclear_reactor/prefilled/normal,
 /obj/cable/orange,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -15673,7 +15673,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "fJb" = (
-/obj/machinery/atmospherics/binary/reactor_turbine,
+/obj/machinery/reactor_turbine,
 /obj/cable/orange,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)

@@ -12,8 +12,8 @@
 	var/static/list/atmosmachinesforcreation = null
 	var/static/list/icon/cache = list()
 	var/static/list/exemptedtypes = typecacheof(list(/obj/machinery/atmospherics/binary/circulatorTemp,
-		/obj/machinery/atmospherics/binary/nuclear_reactor,
-		/obj/machinery/atmospherics/binary/reactor_turbine,
+		/obj/machinery/nuclear_reactor,
+		/obj/machinery/reactor_turbine,
 		/obj/machinery/atmospherics/unary/cryo_cell))
 	var/const/silicon_cost_multiplier = 200
 	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple

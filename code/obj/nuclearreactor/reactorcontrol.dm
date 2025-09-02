@@ -10,7 +10,7 @@
 	icon_state = "engine"
 	density = TRUE
 	anchored = ANCHORED
-	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine_handle = null
+	var/obj/machinery/reactor_turbine/turbine_handle = null
 	var/list/history
 	var/const/history_max = 50
 
@@ -30,7 +30,7 @@
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/N in powernet.nodes)
-				if(istype(N.master,/obj/machinery/atmospherics/binary/reactor_turbine))
+				if(istype(N.master,/obj/machinery/reactor_turbine))
 					src.turbine_handle = N.master
 					break
 			return
@@ -111,7 +111,7 @@
 	icon_state = "reactor_stats"
 	density = TRUE
 	anchored = ANCHORED
-	var/obj/machinery/atmospherics/binary/nuclear_reactor/reactor_handle = null
+	var/obj/machinery/nuclear_reactor/reactor_handle = null
 
 	process()
 		. = ..()
@@ -120,7 +120,7 @@
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/netlink/N in powernet.nodes)
-				if(istype(N.master,/obj/machinery/atmospherics/binary/nuclear_reactor))
+				if(istype(N.master,/obj/machinery/nuclear_reactor))
 					src.reactor_handle = N.master
 
 
