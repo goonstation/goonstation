@@ -19,13 +19,16 @@ import { ModalContext } from './modals/ModalContext';
 import {
   type AntagonistStaticData,
   type CharacterPreferencesData,
-  JobPriority,
+  PriorityLevel,
 } from './type';
 
 const NO_OP = () => {};
 
 export const OccupationTab = () => {
-  const { setOccupationModalOptions } = useContext(ModalContext);
+  const {
+    setOccupationPriorityModalOptions,
+    showResetOccupationPreferencesModal,
+  } = useContext(ModalContext);
   const { act, data } = useBackend<CharacterPreferencesData>();
   const { jobFavourite, jobStaticData } = data;
   const favoriteJob = jobFavourite ? jobStaticData[jobFavourite] : undefined;
@@ -34,7 +37,10 @@ export const OccupationTab = () => {
       <Section
         title="Job Preferences"
         buttons={
-          <Button onClick={() => act('reset-all-jobs-priorities')} color="red">
+          <Button
+            onClick={() => showResetOccupationPreferencesModal(true)}
+            color="red"
+          >
             Reset All Job Preferences
           </Button>
         }
@@ -53,19 +59,19 @@ export const OccupationTab = () => {
                 occupationActions.setJobPriorityLevel(
                   act,
                   jobFavourite,
-                  JobPriority.Favorite,
+                  PriorityLevel.Favorite,
                   newPriorityLevel,
                 )
               }
               onMenuOpen={() =>
-                setOccupationModalOptions({
+                setOccupationPriorityModalOptions({
                   hasWikiLink: !!favoriteJob.wiki_link,
                   occupation: jobFavourite,
-                  priorityLevel: JobPriority.Favorite,
+                  priorityLevel: PriorityLevel.Favorite,
                   required: !!favoriteJob.required,
                 })
               }
-              priorityLevel={JobPriority.Favorite}
+              priorityLevel={PriorityLevel.Favorite}
               required={!!favoriteJob.required}
               tooltip={
                 <DisabledTooltip title={jobFavourite}>
@@ -80,7 +86,7 @@ export const OccupationTab = () => {
               disabled
               onChangePriorityLevel={NO_OP}
               onMenuOpen={NO_OP}
-              priorityLevel={JobPriority.Favorite}
+              priorityLevel={PriorityLevel.Favorite}
               tooltip="Select a job from those below."
             >
               None
@@ -148,7 +154,7 @@ interface PrioritySectionProps {
 const PrioritySectionItem = (props: PrioritySectionProps) => {
   const { title, priority_level, tooltip, occupations } = props;
   const { act, data } = useBackend<CharacterPreferencesData>();
-  const { setOccupationModalOptions } = useContext(ModalContext);
+  const { setOccupationPriorityModalOptions } = useContext(ModalContext);
   return (
     <Stack.Item grow>
       <Section title={<Tooltip content={tooltip}>{title}</Tooltip>}>
@@ -174,7 +180,7 @@ const PrioritySectionItem = (props: PrioritySectionProps) => {
                     )
                   }
                   onMenuOpen={() =>
-                    setOccupationModalOptions({
+                    setOccupationPriorityModalOptions({
                       hasWikiLink: !!wiki_link,
                       occupation,
                       priorityLevel: priority_level,

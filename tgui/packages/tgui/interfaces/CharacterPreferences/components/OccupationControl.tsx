@@ -9,7 +9,7 @@
 import { PropsWithChildren, useCallback, useMemo } from 'react';
 import { Box, Button, Stack } from 'tgui-core/components';
 
-import { JobPriority } from '../type';
+import { PriorityLevel } from '../type';
 
 interface OccupationControlProps {
   color?: string;
@@ -37,13 +37,13 @@ export function OccupationControl(
   } = props;
   const handleIncreasePriorityLevel = useCallback(
     () =>
-      priorityLevel > JobPriority.Favorite &&
+      priorityLevel > PriorityLevel.Favorite &&
       onChangePriorityLevel(priorityLevel - 1),
     [onChangePriorityLevel, priorityLevel],
   );
   const handleDecreasePriorityLevel = useCallback(
     () =>
-      priorityLevel < JobPriority.Unwanted &&
+      priorityLevel < PriorityLevel.Unwanted &&
       onChangePriorityLevel(priorityLevel + 1),
     [onChangePriorityLevel, priorityLevel],
   );
@@ -56,7 +56,7 @@ export function OccupationControl(
       <Stack.Item>
         <Button
           color={color}
-          disabled={disabled || priorityLevel === JobPriority.Favorite}
+          disabled={disabled || priorityLevel === PriorityLevel.Favorite}
           icon="chevron-left"
           onClick={handleIncreasePriorityLevel}
           tooltip={!disabled ? 'Increase Priority' : undefined}
@@ -88,16 +88,16 @@ export function OccupationControl(
 
 function getDecreaseButtonProps(
   disabled: boolean,
-  priorityLevel: JobPriority,
+  priorityLevel: PriorityLevel,
   required: boolean,
 ) {
-  if (disabled || priorityLevel === JobPriority.Unwanted) {
+  if (disabled || priorityLevel === PriorityLevel.Unwanted) {
     return {
       disabled: true,
       tooltip: undefined,
     };
   }
-  if (required && priorityLevel === JobPriority.Low) {
+  if (required && priorityLevel === PriorityLevel.Low) {
     return {
       disabled: true,
       tooltip: 'Cannot be set to Unwanted',

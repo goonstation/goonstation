@@ -23,7 +23,8 @@ import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
 import { GeneralTab } from './GeneralTab';
 import { useModalContext } from './modals/ModalContext';
-import { OccupationModal } from './modals/OccupationModal';
+import { OccupationPriorityModal } from './modals/OccupationPriorityModal';
+import { ResetOccupationPreferencesModal } from './modals/ResetOccupationPreferencesModal';
 import { OccupationTab } from './OccupationTab';
 import { SavesTab } from './SavesTab';
 import { TraitsTab } from './TraitsTab';
@@ -38,9 +39,10 @@ let nextRotateTime = 0;
 export const CharacterPreferences = (_props: any) => {
   const { act, data } = useBackend<CharacterPreferencesData>();
   const [menu, setMenu] = useState(CharacterPreferencesTabKeys.General);
-  const [ModalContext, modalContextValue, modalContextState] =
+  const [modalContextValue, modalContextState, ModalContext] =
     useModalContext();
-  const { occupationModal } = modalContextState;
+  const { occupationModal, resetOccupationPreferencesModal } =
+    modalContextState;
   const handleKeyDown = (e) => {
     if (
       (menu === CharacterPreferencesTabKeys.General ||
@@ -178,7 +180,8 @@ export const CharacterPreferences = (_props: any) => {
             </Stack.Item>
           </Stack>
         </Window.Content>
-        {occupationModal && <OccupationModal {...occupationModal} />}
+        {occupationModal && <OccupationPriorityModal {...occupationModal} />}
+        {resetOccupationPreferencesModal && <ResetOccupationPreferencesModal />}
       </ModalContext>
     </Window>
   );

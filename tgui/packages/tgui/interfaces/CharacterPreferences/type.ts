@@ -157,14 +157,14 @@ export enum CharacterPreferencesScrollTarget {
   Always = 3, // SCROLL_TARGET_ALWAYS
 }
 
-export enum JobPriority {
+export enum PriorityLevel {
   Favorite = 1,
   Medium = 2,
   Low = 3,
   Unwanted = 4,
 }
 
-export interface OccupationModalOptions {
+export interface OccupationPriorityModalOptions {
   occupation: string;
   hasWikiLink: boolean;
   priorityLevel: number;
@@ -172,11 +172,13 @@ export interface OccupationModalOptions {
 }
 
 export interface ModalContextValue {
-  setOccupationModalOptions: (
-    options: OccupationModalOptions | undefined,
+  setOccupationPriorityModalOptions: (
+    options: OccupationPriorityModalOptions | undefined,
   ) => void;
+  showResetOccupationPreferencesModal: (show: boolean | undefined) => void;
 }
 
 export interface ModalContextState {
-  occupationModal: OccupationModalOptions | undefined;
+  occupationModal: OccupationPriorityModalOptions | undefined;
+  resetOccupationPreferencesModal: boolean | undefined;
 }

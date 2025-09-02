@@ -11,7 +11,8 @@ import { useConstant } from '../../common/hooks';
 import type { ModalContextState, ModalContextValue } from '../type';
 
 const stubModalContextType: ModalContextValue = {
-  setOccupationModalOptions: () => undefined,
+  setOccupationPriorityModalOptions: () => undefined,
+  showResetOccupationPreferencesModal: () => undefined,
 };
 
 export const ModalContext = createContext(stubModalContextType);
@@ -20,14 +21,20 @@ export const useModalContext = () => {
   const [modalContextState, setModalContextState] = useState<ModalContextState>(
     () => ({
       occupationModal: undefined,
+      resetOccupationPreferencesModal: undefined,
     }),
   );
   const modalContextValue = useConstant<ModalContextValue>(() => ({
-    setOccupationModalOptions: (options) =>
+    setOccupationPriorityModalOptions: (options) =>
       setModalContextState((prev) => ({
         ...prev,
         occupationModal: options,
       })),
+    showResetOccupationPreferencesModal: (show) =>
+      setModalContextState((prev) => ({
+        ...prev,
+        resetOccupationPreferencesModal: show,
+      })),
   }));
-  return [ModalContext, modalContextValue, modalContextState] as const;
+  return [modalContextValue, modalContextState, ModalContext] as const;
 };

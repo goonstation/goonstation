@@ -16,3 +16,6 @@ export const setJobPriorityLevel = (
   fromPriority: number,
   toPriority: number,
 ) => act('set-job-priority-level', { job, fromPriority, toPriority });
+
+export const resetJobPriorityLevels = (act: Act, toPriority: number) =>
+  act('reset-all-jobs-priorities', { toPriority });

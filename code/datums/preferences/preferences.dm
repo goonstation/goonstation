@@ -886,16 +886,15 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("reset-all-jobs-priorities")
-				switch (tgui_input_list(usr, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted")))
-					if ("Medium Priority")
+				switch (params["toPriority"])
+					if (2)
 						src.ResetAllPrefsToMed(usr)
-					if ("Low Priority")
+					if (3)
 						src.ResetAllPrefsToLow(usr)
-					if ("Unwanted")
+					if (4)
 						src.ResetAllPrefsToUnwanted(usr)
 					else
 						return TRUE
-
 				src.profile_modified = TRUE
 				return TRUE
 
