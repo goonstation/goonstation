@@ -250,7 +250,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
     return rm;
   });
 
-  const { data } = useBackend<PaperSheetEditData>();
+  const { act, data } = useBackend<PaperSheetEditData>();
   const { text, penColor, penFont, isCrayon, fieldCounter, editUsr } = data;
 
   const createPreview = (value, doFields = false) => {
@@ -326,7 +326,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
   };
 
   const finalUpdate = (newText: string) => {
-    const { act } = useBackend();
     const finalProcessing = createPreview(newText, true);
     act('save', finalProcessing);
     setTextAreaText('');
@@ -404,7 +403,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             fluid
             textColor={textColor}
             fontFamily={fontFamily}
-            height={window.innerHeight - 60 + 'px'}
+            height="100%"
             backgroundColor={backgroundColor}
             onChange={onInputHandler}
             onKeyDown={onKeyDownHandler}
