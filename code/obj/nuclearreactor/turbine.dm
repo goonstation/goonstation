@@ -103,6 +103,8 @@
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
+		QDEL_NULL(src.input)
+		QDEL_NULL(src.output)
 
 	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 		if(mat1.getTexture()) //sigh

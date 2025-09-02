@@ -98,6 +98,8 @@
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
+		QDEL_NULL(src.input)
+		QDEL_NULL(src.output)
 
 	proc/MarkGridForUpdate()
 		src._comp_grid_overlay_update = TRUE
