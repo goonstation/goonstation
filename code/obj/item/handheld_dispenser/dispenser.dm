@@ -90,10 +90,10 @@
 	if (!can_reach(user, target))
 		return
 	if(destroying)
+		if(src.exemptedtypes[target.type]) //hilarium
+			actions.start(new /datum/action/bar/hpd_exemption_failure(target, user, src), user)
+			return
 		if(istype(target, /obj/machinery/atmospherics))
-			if(src.exemptedtypes[target.type]) //hilarium
-				actions.start(new /datum/action/bar/hpd_exemption_failure(target, user, src), user)
-				return
 			SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(destroy_item), list(user, target),\
 			 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
