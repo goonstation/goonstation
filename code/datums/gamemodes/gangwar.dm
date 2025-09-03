@@ -579,8 +579,10 @@
 	proc/select_gang_uniform()
 		// Jumpsuit Selection.
 		var/temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
-
+		var/frustration = 0
 		while (!src.uniform_list[temporary_jumpsuit])
+			if (frustration++ > 10)
+				return FALSE
 			boutput(src.leader.current , SPAN_ALERT("That uniform has been claimed by another gang."))
 			temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
 
@@ -594,11 +596,14 @@
 			var/temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
 
 			while(!src.headwear_list[temporary_headwear])
+				if (frustration++ > 10)
+					return FALSE
 				boutput(src.leader.current , SPAN_ALERT("That mask or hat has been claimed by another gang."))
 				temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
 
 			src.headwear = src.headwear_list[temporary_headwear]
 			src.headwear_list -= temporary_headwear
+		return TRUE
 
 	proc/num_tiles_controlled()
 		return src.tiles_controlled
