@@ -156,7 +156,7 @@
 /obj/proc/check_implanted_access(mob/M)
 	var/has_access = 0
 	for (var/obj/item/implant/access/I in M)
-		if (I.owner != M)
+		if (I.owner != M || !I.online)
 			continue
 		if (check_access(I.access))
 			has_access = I.used()
