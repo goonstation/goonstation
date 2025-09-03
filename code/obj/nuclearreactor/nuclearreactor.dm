@@ -87,10 +87,10 @@
 		src._light_turf = get_turf(src)
 		src._light_turf.add_medium_light("reactor_light", list(255,255,255,255))
 		_comp_grid_overlay_update = TRUE
-		UpdateGasVolume()
-		UpdateIcon()
 		src.input = new /obj/machinery/atmospherics/unary/node{dir = WEST}(get_step(get_steps(src, WEST, 2), SOUTH))
 		src.output = new /obj/machinery/atmospherics/unary/node{dir = EAST}(get_step(get_steps(src, EAST, 2), NORTH))
+		UpdateGasVolume()
+		UpdateIcon()
 
 	disposing()
 		new /obj/fakeobject/nuclear_reactor_destroyed(src.loc)
