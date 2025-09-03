@@ -3866,3 +3866,30 @@
 		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/implants_disabled
+	id = "implants_disabled"
+	name = "Implants overloaded"
+	desc = "Your implants are painfully overloaded!"
+	maxDuration = 60 SECONDS
+	icon_state = "implants_disabled"
+
+	preCheck(mob/living/M)
+		return ..() && istype(M) && length(M.implant)
+
+	onAdd()
+		..()
+		src.owner.UpdateParticles(new /particles/rack_spark, src.id)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				implant.deactivate()
+
+	onRemove()
+		..()
+		src.owner.UpdateParticles(null, src.id)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				implant.activate()
+
