@@ -1100,7 +1100,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	name = "trash bag"
 	desc = "A flimsy bag for filling with things that are no longer wanted."
 	icon = 'icons/obj/janitor.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
 	icon_state = "trashbag-f"
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY

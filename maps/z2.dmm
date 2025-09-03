@@ -72525,12 +72525,12 @@
 	camera_networks = list("Minerva5");
 	pixel_x = -3
 	},
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera{
 	c_tag = "NT/SCI #41903";
 	desc = "";
 	invisibility = 100;
 	network = "Minerva5";
-	pixel_x = -10
+	
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/black,
@@ -77499,12 +77499,12 @@
 	camera_networks = list("Minerva5");
 	pixel_y = 6
 	},
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera{
 	c_tag = "NT/ADMIN/SCI #51352";
 	desc = "";
 	invisibility = 100;
 	network = "Minerva5";
-	pixel_x = -10
+	
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/carpet{

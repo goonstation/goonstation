@@ -74,9 +74,10 @@ TYPEINFO(/datum/component/radioactive)
 			if(isnull(src._turf_glow))
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
 			src._turf_glow.color = color //we can do this because overlays take a copy of the image and do not preserve the link between them
+			src._turf_glow.alpha = 50
 			PA.AddOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
 		else
-			PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
+			PA.add_filter("radiation_outline_\ref[src]", 10, outline_filter(size=1.3, color=color))
 
 	proc/process()
 		if(QDELETED(parent) || !parent.datum_components)

@@ -13,13 +13,9 @@
 	for (var/type in src.listeners)
 		listen_modules_by_type[type] ||= list()
 		for (var/datum/listen_module/input/input as anything in src.listeners[type])
-			// If the outermost listener of the listener and the speaker match, the listener may hear the message.
-			if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
-				// If the outermost listener's loc is the speaker, the listener may hear the message.
-				if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
-					// If the speaker's loc is the listener, the listener may hear the message.
-					if (message.message_origin.loc != input.parent_tree.listener_origin)
-						continue
+			// Determine whether the message can be heard based on a shared loc chain.
+			if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+				continue
 
 			listen_modules_by_type[type] += input
 
