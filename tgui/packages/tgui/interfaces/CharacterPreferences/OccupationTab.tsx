@@ -156,7 +156,7 @@ const PrioritySectionItem = (props: PrioritySectionProps) => {
   const { act, data } = useBackend<CharacterPreferencesData>();
   const { setOccupationPriorityModalOptions } = useContext(ModalContext);
   return (
-    <Stack.Item grow>
+    <Stack.Item grow overflow="hidden">
       <Section title={<Tooltip content={tooltip}>{title}</Tooltip>}>
         <Stack vertical g={0.5}>
           {occupations?.map((occupation) => {

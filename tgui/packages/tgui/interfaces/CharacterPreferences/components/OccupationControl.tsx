@@ -62,12 +62,12 @@ export function OccupationControl(
           tooltip={!disabled ? 'Increase Priority' : undefined}
         />
       </Stack.Item>
-      <Stack.Item grow>
+      <Stack.Item grow minWidth="0px">
         <Button
+          fluid
           textAlign="center"
           color={color}
           disabled={disabled}
-          fluid
           onClick={onMenuOpen}
           tooltip={tooltip}
         >
@@ -128,6 +128,6 @@ export function OccupationControlContents(
       {occupationName}
     </Box>
   ) : (
-    occupationName
+    <Box overflow="hidden">{occupationName}</Box>
   );
 }
