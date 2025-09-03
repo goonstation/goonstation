@@ -715,7 +715,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "cerenkite"
 	name = "cerenkite"
 	desc = "Cerenkite is a highly radioactive metal."
-	color = null // "#CDBDFF"
+	color = list(0.00, 0.00, 1.00, 0.00,\
+				1.00, 1.00, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
