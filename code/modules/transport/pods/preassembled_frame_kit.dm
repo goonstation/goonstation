@@ -10,8 +10,6 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 		boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 		var/obj/O = new frame_type( get_turf(user) )
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
 		O.forensic_holder = src.forensic_holder
 		qdel(src)
 
@@ -273,8 +271,6 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	var/obj/O
 	if (src.stage >= BUILD_STEP_ARMOR)
 		O = new src.armor_type( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
 		O.forensic_holder = src.forensic_holder
 		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
@@ -282,8 +278,6 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 
 	O = new src.box_type( get_turf(src) )
 	logTheThing(LOG_STATION, user, "deconstructs [src] in [get_area(user)] ([log_loc(user)])")
-	O.fingerprints = src.fingerprints
-	O.fingerprints_full = src.fingerprints_full
 	O.forensic_holder = src.forensic_holder
 	qdel(src)
 

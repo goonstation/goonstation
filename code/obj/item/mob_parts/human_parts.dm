@@ -14,7 +14,6 @@
 	skintoned = TRUE
 	hitsound = 'sound/impact_sounds/meat_smack.ogg'
 	var/original_DNA = null
-	var/original_fprints = null
 	var/show_on_examine = FALSE
 	var/mimic_edible = TRUE
 
@@ -166,17 +165,15 @@
 		return 1
 
 	remove(var/show_message = 1)
-		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
+		if ((isnull(src.original_DNA)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
-				src.original_fprints = src.original_holder.bioHolder.fingerprints
 		return ..()
 
 	sever(mob/user)
-		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
+		if ((isnull(src.original_DNA)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
-				src.original_fprints = src.original_holder.bioHolder.fingerprints
 		return ..()
 
 	attach(mob/living/carbon/human/attachee, mob/attacher, both_legs)
@@ -187,7 +184,6 @@
 					src.original_holder = attachee // Now it does
 					if (src.original_holder?.bioHolder)
 						src.original_DNA = src.original_holder.bioHolder.Uid
-						src.original_fprints = src.original_holder.bioHolder.fingerprints
 					return
 				if(src.original_DNA != attachee.bioHolder.Uid) // Limb isnt ours
 					src.limb_is_transplanted = TRUE
@@ -368,12 +364,10 @@
 			I.set_loc(holder.loc)
 		. = ..()
 
-	on_forensic_scan(datum/forensic_scan/scan)
-		. = ..()
-		if(src.original_fprints)
-			scan.add_text("Arm's fingerprints: [src.original_fprints]")
-
-
+	get_limb_print()
+		if(holder?.bioHolder?.default_fingerprints)
+			return holder.bioHolder.default_fingerprints.id
+		return build_id_fingerprint(FORENSIC_CHARS_FINGERPRINTS)
 
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
@@ -646,6 +640,9 @@
 		if (src.remove_object)
 			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
 
+	get_limb_print()
+		return null
+
 /obj/item/parts/human_parts/arm/right/item
 	name = "right item arm"
 	decomp_affected = FALSE
@@ -771,6 +768,9 @@
 	on_holder_examine()
 		if (src.remove_object)
 			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
+
+	get_limb_print()
+		return null
 
 /obj/item/parts/human_parts/arm/left/brullbar
 	name = "left brullbar arm"
@@ -1050,7 +1050,8 @@
 		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
 		newlimb.original_DNA = src.original_DNA
 		newlimb.original_holder = src.original_holder
-		newlimb.original_fprints = src.original_fprints
+		newlimb.forensic_holder = src.forensic_holder
+		newlimb.limb_print = src.limb_print
 		qdel(src)
 
 	remove(show_message)
@@ -1059,7 +1060,8 @@
 		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
 		newlimb.original_DNA = src.original_DNA
 		newlimb.original_holder = src.original_holder
-		newlimb.original_fprints = src.original_fprints
+		newlimb.forensic_holder = src.forensic_holder
+		newlimb.limb_print = src.limb_print
 		qdel(src)
 
 /obj/item/parts/human_parts/arm/right/abomination
@@ -1088,7 +1090,8 @@
 		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
 		newlimb.original_DNA = src.original_DNA
 		newlimb.original_holder = src.original_holder
-		newlimb.original_fprints = src.original_fprints
+		newlimb.forensic_holder = src.forensic_holder
+		newlimb.limb_print = src.limb_print
 		qdel(src)
 
 	remove(show_message)
@@ -1097,7 +1100,8 @@
 		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
 		newlimb.original_DNA = src.original_DNA
 		newlimb.original_holder = src.original_holder
-		newlimb.original_fprints = src.original_fprints
+		newlimb.forensic_holder = src.forensic_holder
+		newlimb.limb_print = src.limb_print
 		qdel(src)
 
 /obj/item/parts/human_parts/arm/left/zombie

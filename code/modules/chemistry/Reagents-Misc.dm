@@ -36,12 +36,7 @@ datum
 			proc/explode(var/list/covered_turf, expl_reason)
 				var/turf/T = pick(covered_turf)
 				message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [log_loc(T)].")
-				var/context = "???"
-				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprints_full
-					var/list/fh = holder.my_atom.fingerprints_full
-
-					if (length(fh)) //Wire: Fix for: bad text or out of bounds
-						context = "Fingerprints: [jointext(fh, "")]"
+				var/context = holder.my_atom.get_adminprints()
 
 				logTheThing(LOG_COMBAT, usr, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [log_loc(T)]. Context: [context].")
 				explosion_new(usr, T, (12.5 * min(volume, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat

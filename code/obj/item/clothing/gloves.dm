@@ -20,7 +20,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/activeweapon = 0 // Used for gloves that can be toggled to turn into a weapon (example, bladed gloves)
 
 	var/hide_prints = 1 // Seems more efficient to do this with one global proc and a couple of vars (Convair880).
-	var/scramble_prints = 0
 	var/material_prints = null
 	var/no_prints = FALSE // Specifically used so worn gloves cannot be scanned unless removed first
 
@@ -163,15 +162,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		else
 
-			if (src.scramble_prints)
-				data += corruptText(prints, 20)
-
-			else // Seems a bit redundant to return both (Convair880).
-
-				if (src.material_prints)
-					data += src.material_prints
-				else
-					data += "unknown fiber material"
+			if (src.material_prints)
+				data += src.material_prints
+			else
+				data += "unknown fiber material"
 
 		if (get_glove_ID)
 			data += " (Glove ID: [src.glove_ID])" // Space is required for formatting (Convair880).
@@ -290,7 +284,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "lgloves"
 	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
 	protective_temperature = 310
-	scramble_prints = 1
 	fingertip_color = "#f3f3f3"
 	setupProperties()
 		..()
@@ -317,7 +310,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "latex"
 	item_state = "lgloves"
 	desc = "Custom made gloves."
-	scramble_prints = 1
 
 	insulating
 		onMaterialChanged()

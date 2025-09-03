@@ -178,12 +178,8 @@
 		if (skin_target)
 			var/obj/item/reagent_containers/glass/bucket/red/new_bucket = new /obj/item/reagent_containers/glass/bucket/red(get_turf(activator))
 			new_bucket.reagents = skin_target.reagents
-			new_bucket.fingerprints = skin_target.fingerprints
-			new_bucket.fingerprints_full = skin_target.fingerprints_full
 			new_bucket.fingerprintslast = skin_target.fingerprintslast
 			skin_target.reagents = null
-			skin_target.fingerprints = null
-			skin_target.fingerprints_full = null
 			skin_target.fingerprintslast = null
 			// Update borg's bucket in their module, don't drop it
 			if (issilicon(activator))
@@ -1215,11 +1211,7 @@
 		var/obj/item/clothing/head/helmet/welding/skin_target = activator.find_type_in_hand(/obj/item/clothing/head/helmet/welding)
 		if (skin_target)
 			var/obj/item/clothing/head/helmet/welding/fire/new_helmet = new /obj/item/clothing/head/helmet/welding/fire(get_turf(activator))
-			new_helmet.fingerprints = skin_target.fingerprints
-			new_helmet.fingerprints_full = skin_target.fingerprints_full
 			new_helmet.fingerprintslast = skin_target.fingerprintslast
-			skin_target.fingerprints = null
-			skin_target.fingerprints_full = null
 			skin_target.fingerprintslast = null
 			qdel(skin_target)
 			activator.put_in_hand_or_drop(new_helmet)

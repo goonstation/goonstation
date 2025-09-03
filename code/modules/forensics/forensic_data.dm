@@ -19,6 +19,10 @@
 		RETURN_TYPE(/datum/forensic_data)
 		return null
 
+	proc/get_minutes_since(var/time, var/since_start = FALSE)
+		var/data_time = since_start ? time_end : time_start
+		return TO_MINUTES((time - data_time) * -1)
+
 // Generic evidence that can be stored as an ID + optional value. Don't forget to set the flags.
 /datum/forensic_data/basic
 	var/static/datum/forensic_display/disp_empty = new("@F")
@@ -64,3 +68,67 @@
 		data_copy.time_end = src.time_end
 		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
 		return data_copy
+
+/datum/forensic_data/adminprint
+	var/datum/forensic_id/clientKey = null
+
+	New(var/ckey)
+		..()
+		src.clientKey = clientKey
+
+	get_text()
+		var/mins_start = src.get_minutes_since(TIME, TRUE)
+		var/mins_end = src.get_minutes_since(TIME)
+		return src.clientKey.id + SPAN_SUBTLE("([mins_end] - [mins_start] mins ago)")
+
+	get_copy()
+		var/datum/forensic_data/adminprint/data_copy = new(src.clientKey)
+		data_copy.time_start = src.time_start
+		data_copy.time_end = src.time_end
+		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
+		return data_copy
+
+/datum/forensic_data/fingerprint
+	var/datum/forensic_id/print = null
+	var/datum/forensic_id/fibers = null
+	var/datum/forensic_id/print_mask = null
+
+	New(var/datum/forensic_id/print, var/datum/forensic_id/fibers, var/datum/forensic_id/print_mask, var/flags = 0)
+		..()
+		src.print = print
+		src.fibers = fibers
+		src.print_mask = print_mask
+		src.flags = flags
+
+	get_text()
+		var/fprint_text = get_masked_print()
+		var/fibers_text = fibers?.id
+		if(fprint_text && fibers_text)
+			if(src.print_mask)
+				fprint_text = SPAN_SUBTLE(fprint_text)
+
+			return "[fprint_text] ([fibers_text])"
+		return fprint_text + fibers_text
+
+	get_copy()
+		var/datum/forensic_data/fingerprint/data_copy = new(src.print, src.fibers, src.print_mask, src.flags)
+		data_copy.time_start = src.time_start
+		data_copy.time_end = src.time_end
+		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
+		return data_copy
+
+	proc/get_masked_print()
+		if(!src.print)
+			return ""
+		if(!src.print_mask)
+			return src.print.id
+		var/masked_print = ""
+		for(var/i in 1 to length(src.print_mask.id))
+			var/char = copytext(src.print_mask.id, i, i+1)
+			if(is_hex(char))
+				var/index = hex2num(char)
+				index += floor(index / 4) + 1
+				masked_print += copytext(src.print.id, index, index + 1)
+			else
+				masked_print += char
+		return masked_print
