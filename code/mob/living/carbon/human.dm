@@ -3293,8 +3293,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
 		arrestState = ARREST_STATE_ARREST
 	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
-		var/obj/item/implant/counterrev/implant = locate in src.implant
-		if (implant.online)
+		var/obj/item/implant/counterrev/implant = locate() in src.implant
+		if (implant?.online)
 			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
 			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 				arrestState = ARREST_STATE_REVHEAD
