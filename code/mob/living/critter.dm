@@ -56,7 +56,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/list/inhands = list()
 	var/list/healthlist = list()
 
-	var/list/implants = list()
 	var/can_implant = TRUE
 
 	var/death_text = null // can use %src%
@@ -192,10 +191,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	equipment.len = 0
 	equipment = null
 
-	for(var/obj/item/I in implants)
+	for(var/obj/item/I in implant)
 		I.dispose()
-	implants.len = 0
-	implants = null
+	implant.len = 0
+	implant = null
 
 	for(var/damage_type in healthlist)
 		var/datum/healthHolder/hh = healthlist[damage_type]

@@ -249,8 +249,7 @@
 		return TRUE
 	proc/confirm(mob/M)
 		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
-		antag_role.gang.select_gang_uniform()
-		return TRUE
+		return antag_role.gang.select_gang_uniform()
 
 	proc/after_cast(mob/M, area/area, datum/antagonist/gang_leader/antag_role)
 		for(var/datum/mind/member in antag_role.gang.members)
