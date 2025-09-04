@@ -62650,6 +62650,12 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
+"knq" = (
+/obj/machinery/disk_rack/office{
+	name = "stash rack"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "knY" = (
 /obj/lattice,
 /obj/machinery/vending/cola/red,
@@ -72529,8 +72535,7 @@
 	c_tag = "NT/SCI #41903";
 	desc = "";
 	invisibility = 100;
-	network = "Minerva5";
-	
+	network = "Minerva5"
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/black,
@@ -77426,17 +77431,6 @@
 	dir = 8
 	},
 /area/iomoon/base)
-"vOS" = (
-/obj/table/flock/auto,
-/obj/item/paper{
-	icon_state = "paper";
-	info = "<i>It's just the word \"CAW\" written over and over in increasingly shaky handwriting.</i>";
-	name = "The secret to Flock balance";
-	pixel_w = 1;
-	pixel_y = -1
-	},
-/turf/unsimulated/floor/feather,
-/area/centcom/offices/leah)
 "vPQ" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -77503,8 +77497,7 @@
 	c_tag = "NT/ADMIN/SCI #51352";
 	desc = "";
 	invisibility = 100;
-	network = "Minerva5";
-	
+	network = "Minerva5"
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/carpet{
@@ -156290,7 +156283,7 @@ nwN
 dnK
 niJ
 wel
-xxs
+knq
 vCK
 xyS
 wel
@@ -156896,7 +156889,7 @@ liR
 wel
 hqN
 obN
-vOS
+xxs
 wel
 dxw
 dyi
