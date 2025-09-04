@@ -1,4 +1,9 @@
 
+(t)thu sep 04 25
+(u)JORJ949
+(p)24579
+(e)⚖📨|C-Balance, A-Logistics
+(+)Vampires can no longer be assigned the Miner job.
 (t)tue sep 02 25
 (u)Lord_Earthfire
 (p)24553
