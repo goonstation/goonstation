@@ -100,6 +100,7 @@
 	return 1
 
 /datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
+	logTheThing(LOG_GAMEMODE, src, "begins using random crew members to fill gang roster.")
 	var/num_teams = length(src.gangs)
 	var/num_people_needed = 0
 	if(num_teams == 0)
@@ -109,21 +110,21 @@
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=GLOBAL_PROC_REF(can_join_gangs), force_fill = FALSE)
+		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, force_fill = FALSE)
 	var/num_people_available = min(num_people_needed, length(candidates))
 	var/people_added_per_gang = round(num_people_available / num_teams)
+	logTheThing(LOG_GAMEMODE, src, "assigning [people_added_per_gang] members each to [length(src.gangs)] gangs from a pool of [num_people_available] crew members.")
 	num_people_available = people_added_per_gang * num_teams
 	shuffle_list(candidates)
 	var/i = 1
+	var/gang_count = 0
 	for(var/datum/gang/gang in src.gangs)
+		gang_count++
 		for(var/j in 1 to people_added_per_gang)
 			var/datum/mind/candidate = candidates[i++]
+			logTheThing(LOG_GAMEMODE, src, "assigned [candidate.ckey] to gang #[gang_count]")
 			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
 			traitors |= candidate
-
-/proc/can_join_gangs(mob/M) //stupid frickin 515 call syntax making me make this a global grumble grumble
-	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
-	. = !job || job.can_join_gangs
 
 /datum/game_mode/gang/send_intercept()
 	..(src.traitors)
@@ -578,8 +579,10 @@
 	proc/select_gang_uniform()
 		// Jumpsuit Selection.
 		var/temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
-
+		var/frustration = 0
 		while (!src.uniform_list[temporary_jumpsuit])
+			if (frustration++ > 10)
+				return FALSE
 			boutput(src.leader.current , SPAN_ALERT("That uniform has been claimed by another gang."))
 			temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
 
@@ -593,11 +596,14 @@
 			var/temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
 
 			while(!src.headwear_list[temporary_headwear])
+				if (frustration++ > 10)
+					return FALSE
 				boutput(src.leader.current , SPAN_ALERT("That mask or hat has been claimed by another gang."))
 				temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
 
 			src.headwear = src.headwear_list[temporary_headwear]
 			src.headwear_list -= temporary_headwear
+		return TRUE
 
 	proc/num_tiles_controlled()
 		return src.tiles_controlled
@@ -1302,7 +1308,7 @@
 		spraycan.empty = TRUE
 		spraycan.icon_state = "spraycan_crushed_gang"
 		spraycan.setItemSpecial(/datum/item_special/simple)
-		spraycan.tooltip_rebuild = 1
+		spraycan.tooltip_rebuild = TRUE
 		gang.add_points(GANG_SPRAYPAINT_INSTANT_SCORE, M, showText = TRUE)
 		if(sprayOver)
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
@@ -1452,7 +1458,7 @@
 			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
 			spraycan.icon_state = "spraycan_crushed"
 			spraycan.setItemSpecial(/datum/item_special/simple)
-			spraycan.tooltip_rebuild = 1
+			spraycan.tooltip_rebuild = TRUE
 
 
 /obj/ganglocker
@@ -2220,7 +2226,7 @@
 			for(var/obj/item/plant/herb/cannabis/herb in satchel.contents)
 				insert_item(herb,user)
 				satchel.UpdateIcon()
-				satchel.tooltip_rebuild = 1
+				satchel.tooltip_rebuild = TRUE
 				hadcannabis = 1
 
 			if(hadcannabis)
@@ -2342,7 +2348,7 @@
 			return
 
 		var/datum/job/job = find_job_in_controller_by_string(target.mind.assigned_role)
-		if(job && !job.can_join_gangs)
+		if(job && (!job.can_be_antag(ROLE_GANG_MEMBER) || !job.can_be_antag(ROLE_GANG_LEADER)))
 			boutput(target, SPAN_ALERT("You are too responsible to join a gang!"))
 			return
 
@@ -2866,11 +2872,11 @@
 		src.heatTracker = null
 		qdel(heatTracker)
 
-	/// Look for & remember players in this gang's sight range
+	/// Look for & remember players in this tag's sight range
 	proc/find_players()
 		for(var/mob/M in range(GANG_TAG_SIGHT_RANGE, src.loc))
 			if (IN_EUCLIDEAN_RANGE(src,M,GANG_TAG_SIGHT_RANGE))
-				if(M.client && isalive(M))
+				if(M.client && isalive(M) && !isganger(M))
 					mobs[M] = TRUE //remember mob
 
 	/// Adds heat to this tag based upon how many mobs it's remembered. Then forgets all mobs it's seen and cools down.

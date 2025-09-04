@@ -1523,7 +1523,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 		proc/setup_process_signal()
 			set waitfor = FALSE
-			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, 0)
 			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
 
 		proc/update_text()
@@ -1642,7 +1642,7 @@ Other Goonstation servers:[serverList]</span>"})
 	matter_remove_light_fixture = 1
 	time_remove_light_fixture = 0
 
-
+	forbidden_walltypes = list()
 
 
 
@@ -1792,7 +1792,7 @@ Other Goonstation servers:[serverList]</span>"})
 	name = "admin spacebux store setup object"
 	desc = "An admin can click on this to set stuff up."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "DONGS"
 	var/tmp/set_up = FALSE

@@ -725,7 +725,7 @@
 				BORG.compborg_lose_limb(BORG.part_head)
 			else
 				user.visible_message(SPAN_COMBAT("<b>[user] pounds on [BORG.name]'s head furiously!</B>"))
-				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
 					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
@@ -734,12 +734,12 @@
 
 	else if (isAI(target))
 		user.visible_message(SPAN_COMBAT("<b>[user] [pick("wails", "pounds", "slams")] on [target]'s terminal furiously!</B>"))
-		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 		damage = 10
 
 	else
 		user.visible_message(SPAN_COMBAT("<b>[user] smashes [target] furiously!</B>"))
-		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 		damage = 10
 		if (!target.anchored && prob(30))
 			user.visible_message(SPAN_COMBAT("<b>...and sends [him_or_her(target)] flying!</B>"))
@@ -754,7 +754,7 @@
 		random_brute_damage(target, damage)
 		target.UpdateDamageIcon()
 
-	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] for [damage] damage at [log_loc(user)].")
 	return
 
 /////////////////////////////////////////////////////// attackResult datum ////////////////////////////////////////
@@ -879,7 +879,7 @@
 		if (!(suppress & SUPPRESS_LOGS))
 			if (!length(logs))
 				if (!istype(src, /datum/attackResults/disarm))
-					logs = list("punches [constructTarget(target,"combat")]")
+					logs = list("punches [constructTarget(target,"combat")] for [src.damage] damage")
 
 //Pod wars friendly fire check
 #if defined(MAP_OVERRIDE_POD_WARS)

@@ -8,7 +8,6 @@
 ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic
 	name = "aquatic mobcritter"
-	real_name = "aquatic mobcritter"
 	desc = "No, you should not be seeing this!"
 	icon = 'icons/misc/sea_critter.dmi'
 	density = 0
@@ -182,7 +181,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/fish
 	name = "fish"
-	real_name = "fish"
 	desc = "Goes well with chips."
 	icon_state = "clownfish"
 	base_move_delay = 3
@@ -386,7 +384,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/king_crab
 	name = "king crab"
-	real_name = "king crab"
 	desc = "This doesn't look tasty at all. It probably has spectacular levels of mercury and lead and who knows what else."
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "king_crab"
@@ -524,7 +521,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/fish/jellyfish
 	name = "jellyfish"
-	real_name = "jellyfish"
 	desc = "Squishy"
 	icon = 'icons/misc/sea_critter.dmi'
 	icon_state = "jellyfish"
@@ -571,7 +567,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/shark
 	name = "space shark"
-	real_name = "space shark"
 	desc = "This is the third most terrifying thing you've ever laid eyes on."
 	icon = 'icons/misc/banshark.dmi'
 	icon_state = "banshark1"

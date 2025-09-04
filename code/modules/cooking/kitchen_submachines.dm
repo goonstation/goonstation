@@ -469,11 +469,20 @@ TYPEINFO(/obj/submachine/chef_oven)
 			"cook_time" = src.cooktime
 		)
 
-	ui_act(action, params)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
 		if (.)
 			return
 		. = TRUE
+
+		if (action == "open_recipe_book") // this can be opened even while cooking
+			usr.Browse(recipe_html, "window=recipes;size=500x700")
+			return
+
+		if (src.working)
+			boutput(ui.user, SPAN_NOTICE("You can't mess with [src] while it's cooking!"))
+			return
+
 		switch (action)
 			if ("set_time")
 				src.time = params["time"]
@@ -488,8 +497,6 @@ TYPEINFO(/obj/submachine/chef_oven)
 				var/obj/item/thing_to_eject = src.contents[params["ejected_item"]]
 				if (thing_to_eject)
 					thing_to_eject.set_loc(src.loc)
-			if ("open_recipe_book")
-				usr.Browse(recipe_html, "window=recipes;size=500x700")
 
 	proc/get_content_icons()
 		if (!length(src.contents))
@@ -759,6 +766,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
 			src.recipes += new /datum/cookingrecipe/oven/brownie_batch(src)
 			src.recipes += new /datum/cookingrecipe/oven/rice_bowl(src)
+			src.recipes += new /datum/cookingrecipe/oven/flan(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
@@ -977,7 +985,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
-		src.ui_interact(user)
+		tgui_process.update_uis(src)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored && isalive(user) && !isintangible(user))
@@ -1225,7 +1233,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					amtload++
 				S.UpdateIcon()
 				boutput(user, SPAN_NOTICE("[amtload] items loaded from satchel!"))
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 			return
 		else
 			var/proceed = 0

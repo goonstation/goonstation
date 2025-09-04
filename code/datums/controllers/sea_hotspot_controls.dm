@@ -97,7 +97,6 @@
 <html>
 <head>
 	[map_currently_underwater?"<title>Trench Map</title>":"<title>Mining Map</title>"]
-	<meta http-equiv="X-UA-Compatible" content="IE=edge;">
 	<style type="text/css">
 		body {
 			background: black;
@@ -1106,7 +1105,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 				if (BOUNDS_DIST(src, H.center.turf()) == 0)
 					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
-					src.say("Hotspot pinned.")
+					src.the_item.say("Hotspot pinned.", flags = SAYFLAG_IGNORE_POSITION)
 
 			for (var/mob/M in get_turf(src))
 				if (isliving(M) && !isintangible(M) && M != jumper)

@@ -174,7 +174,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					if (src.fits_in(O))
 						O.set_loc(src)
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				src.update()
 				return
@@ -217,7 +217,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					boutput(user, SPAN_ALERT("That won't fit!"))
 					return
 				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
-				qdel(G)
 		else
 			if (istype(mag))
 				actions.stopId(/datum/action/magPickerHold, user)
@@ -944,12 +943,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if(target == user)
 				msg = "[user.name] climbs into the [chute]."
 				boutput(user, "You climb into the [chute].")
+
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
 				if(istype(chute, /obj/machinery/disposal/brig))
 					user.unlock_medal("Suitable? How about the Oubliette?!", 1)
 				logTheThing(LOG_COMBAT, user, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
+				if (length(target.grabbed_by))
+					for (var/obj/item/grab/grab in target.grabbed_by)
+						qdel(grab)
 			else
 				..()
 				return
@@ -971,7 +974,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			interrupt(INTERRUPT_ALWAYS)
 			return FALSE
 		return TRUE
-
 
 #undef DISPOSAL_REPAIR_STEP_FIXED
 #undef DISPOSAL_REPAIR_STEP_SCREWDRIVER

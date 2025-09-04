@@ -40,6 +40,7 @@ var/global
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
+	list/pre_auth_clients = list()
 	list/clients = list()
 	list/donator_ckeys = list()
 	list/online_donator_ckeys = list()
@@ -263,7 +264,6 @@ var/global
 
 	diary = null
 	diary_name = null
-	hublog = null
 	game_version = "Goonstation 13 (r" + ORIGIN_REVISION + ")"
 
 	master_mode = "traitor"
@@ -485,6 +485,7 @@ var/global
 	list/valid_modes = list("secret","action","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
+	rebuildServerContainer = FALSE
 
 	datum/minimap_renderer/minimap_renderer
 	list/minimap_marker_targets = list()
@@ -535,7 +536,7 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
-	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD)
+	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD, R_FREQ_SALVAGER)
 	///base movedelay threshold for slipping
 	base_slip_delay = BASE_SPEED_SUSTAINED
 

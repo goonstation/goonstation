@@ -56,6 +56,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/burger/chicken
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/ranch_chicken/spicy = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy, //:melterfrog:
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock = /obj/item/reagent_containers/food/snacks/burger/flockburger)
 	category = "Burgers"
 
@@ -1349,6 +1350,15 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/pie/fish
 	category = "Pies"
 
+/datum/cookingrecipe/mixer/raw_flan
+	ingredients = list(\
+		/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
+		/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
+		/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
+		/obj/item/reagent_containers/food/drinks/milk = 1)
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/ingredient/raw_flan
+
 /datum/cookingrecipe/mixer/custard
 	ingredients = list(\
 	/obj/item/reagent_containers/food/drinks/milk = 1,
@@ -2127,3 +2137,8 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/katsu_curry
+
+/datum/cookingrecipe/oven/flan
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/raw_flan = 1)
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/flan

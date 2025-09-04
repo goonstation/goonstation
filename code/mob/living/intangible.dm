@@ -27,6 +27,8 @@ TYPEINFO(/mob/living/intangible)
 		return
 	can_strip()
 		return 0
+	can_eat()
+		return FALSE
 	can_use_hands()
 		return 0
 	is_active()

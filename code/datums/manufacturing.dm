@@ -1695,6 +1695,13 @@
 	time = 50 SECONDS
 	category = "Component"
 
+/datum/manufacture/clone_rack
+	name = "Clone Rack"
+	item_outputs = list(/obj/machinery/disk_rack/clone)
+	item_requirements = list("metal" = 30, "conductive" = 10)
+	create = 1
+	time = 40 SECONDS
+
 /datum/manufacture/shell_frame
 	name = "AI Shell Frame"
 	item_requirements = list("metal_dense" = 12)
@@ -1974,7 +1981,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	name = "Teleport Upgrade"
 	item_requirements = list("conductive" = 10,
 							 "dense" = 1,
-							 "energy_high" = 10)//Okayenoughroundstartteleportborgs.Fuck.
+							 "telecrystal" = 10)//Okayenoughroundstartteleportborgs.Fuck.
 	item_outputs = list(/obj/item/roboupgrade/teleport)
 	create = 1
 	time = 120 SECONDS
@@ -2378,7 +2385,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	category = "Resource"
 
 /datum/manufacture/mender
-	name = "Auto Mender"
+	name = "Auto Mender (x2)"
 	item_requirements = list("metal_dense" = 5,
 							 "crystal" = 4,
 							 "gold" = 5)

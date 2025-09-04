@@ -73,18 +73,20 @@ TYPEINFO(/mob/new_player)
 			if (!isnull(P.round_join_time) && isnull(P.round_leave_time)) //they likely died but didnt d/c b4 respawn
 				P.log_leave_time()
 
+		src.client?.load_pregame()
+		close_spawn_windows()
 		new_player_panel()
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
 
-
+		#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
 		// byond members get a special join message :]
 		if (src.client?.IsByondMember())
 			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
 			var/num = rand(1,16)
 			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(num in msgs_which_are_gifs) ? "gif" : "jpg"]")
 			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
-
+		#endif
 
 		if (src.ckey && !adminspawned)
 			if ("[src.ckey]" in spawned_in_keys)
@@ -113,7 +115,7 @@ TYPEINFO(/mob/new_player)
 					qdel(src)
 
 			else
-				spawned_in_keys += "[src.ckey]"
+				if (src.client.authenticated) spawned_in_keys += "[src.ckey]"
 				for (var/sound in global.dj_panel.preloaded_sounds)
 					src.client << load_resource(sound, -1)
 
@@ -145,22 +147,13 @@ TYPEINFO(/mob/new_player)
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
 			SPAWN(0)
 				if(isclient(src.last_client))
-					winshow(src.last_client, "pregameBrowser", 0)
 					src.last_client << browse("", "window=pregameBrowser")
+					winshow(src.last_client, "pregameBrowser", FALSE)
 		return
 
 	verb/new_player_panel()
 		set src = usr
 		src.update_joinmenu()
-		#ifndef NO_PREGAME_HTML
-		if(pregameHTML && client)
-			winshow(client, "pregameBrowser", 1)
-			client << browse(pregameHTML, "window=pregameBrowser")
-			src.pregameBrowserLoaded = TRUE
-		else if(client)
-			winshow(src.last_client, "pregameBrowser", 0)
-			src.last_client << browse("", "window=pregameBrowser")
-		#endif
 
 	Stat()
 		..()
@@ -249,7 +242,17 @@ TYPEINFO(/mob/new_player)
 						else if (S.syndicate)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-						S.job = "Cyborg"
+						if (isAI(S))
+							S.job = "AI"
+							S.mind.assigned_role = "AI"
+						else
+							S.job = "Cyborg"
+							S.mind.assigned_role = "Cyborg"
+						S.traitHolder.removeTrait("cyber_incompatible")
+						S.mind.join_time = world.time
+						logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
+						ticker.minds += S.mind
+
 						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						S.apply_roundstart_events()
 						S.show_laws()
@@ -295,11 +298,27 @@ TYPEINFO(/mob/new_player)
 		global.latespawning.lock()
 
 		if (JOB && (force || job_controls.check_job_eligibility(src, JOB, STAPLE_JOBS | SPECIAL_JOBS)))
-			var/mob/character = create_character(JOB, JOB.allow_traitors)
+			var/mob/character = create_character(JOB, JOB.can_roll_antag)
 			if (isnull(character))
 				global.latespawning.unlock()
 				return
 			JOB.assigned++
+			if (JOB.player_requested || JOB == job_controls.priority_job)
+				SPAWN(0) // don't pause late spawning for this
+					var/limit_reached = JOB.limit <= JOB.assigned
+					var/list/req_prio = list()
+					if (JOB.player_requested)
+						req_prio += "requested"
+					if (JOB == job_controls.priority_job)
+						req_prio += "priority"
+					var/message = "RoleControl notification: [english_list(req_prio, "")] role [JOB.name] hired[limit_reached ? " (limit reached, clearing [english_list(req_prio, "")] status)" : ""]"
+					if (JOB.player_requested && limit_reached)
+						JOB.player_requested = FALSE
+					if (JOB == job_controls.priority_job && limit_reached)
+						job_controls.priority_job = null
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="COMMAND-MAILBOT", "group"=list(MGD_COMMAND), "sender"="00000000", "message"=message)
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 			if (JOB.counts_as)
 				var/datum/job/other = find_job_in_controller_by_string(JOB.counts_as)
 				other.assigned++
@@ -441,7 +460,6 @@ TYPEINFO(/mob/new_player)
 
 			if (ticker && character.mind)
 				character.mind.join_time = world.time
-				//ticker.implant_skull_key() // This also checks if a key has been implanted already or not. If not then it'll implant a random sucker with a key.
 				if (!(character.mind in ticker.minds))
 					logTheThing(LOG_DEBUG, character, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
 					ticker.minds += character.mind
@@ -693,6 +711,9 @@ a.latejoin-card:hover {
 			if (job_controls.allow_special_jobs)
 				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
 
+				for(var/datum/job/daily/J in job_controls.special_jobs)
+					dat += LateJoinLink(J)
+
 				for(var/datum/job/special/J in job_controls.special_jobs)
 					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
 					dat += LateJoinLink(J)
@@ -743,6 +764,9 @@ a.latejoin-card:hover {
 	proc/create_character(var/datum/job/J, var/allow_late_antagonist = 0)
 		if (!src || !src.mind || !src.client)
 			return null
+#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+		src.client.preferences.savefile_load(src.client)
+#endif
 		if (!J)
 			J = find_job_in_controller_by_string(src.mind.assigned_role)
 
@@ -819,7 +843,7 @@ a.latejoin-card:hover {
 					// Check if they have this antag type enabled. If not, too bad!
 					// get_preference_for_role can't handle antag types under 'misc' like wrestler or wolf, so we need to special case those
 					var/antag_enabled = new_character.client?.preferences.vars[get_preference_for_role(bad_type) || get_preference_for_role(ROLE_MISC)]
-					if (antag_enabled)
+					if (antag_enabled && J.can_be_antag(bad_type))
 						if ((!livingtraitor && prob(40)) || (livingtraitor && !ticker.mode.latejoin_only_if_all_antags_dead && prob(4)))
 							makebad(new_character, bad_type)
 							new_character.mind.late_special_role = TRUE
@@ -881,9 +905,9 @@ a.latejoin-card:hover {
 			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
@@ -904,9 +928,9 @@ a.latejoin-card:hover {
 			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if (ticker)
@@ -966,9 +990,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".observe_round"
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
@@ -1020,7 +1044,7 @@ a.latejoin-card:hover {
 #define JOINMENU_VERTICAL_OFFSET_PER_BUTTON 56
 
 /mob/new_player/proc/update_joinmenu()
-	if (!client)
+	if (!client || !client.authenticated)
 		return
 
 	// super conservative with client checks as we *really* don't want to crash here
@@ -1081,14 +1105,15 @@ a.latejoin-card:hover {
 	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
 
 	// ready tutorial / cancel ready tutorial
-	if (src.ready_play) // disabled tutorial
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
-	else if (src.ready_tutorial) // hide ready tutorial, show cancel here
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=false")
-		if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
-	else // show ready tutorial
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
-	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
+	if (global.newbee_tutorial_enabled)
+		if (src.ready_play) // disabled tutorial
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
+		else if (src.ready_tutorial) // hide ready tutorial, show cancel here
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=false")
+			if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+		else // show ready tutorial
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+		current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
 
 	if(client) winset(src, "joinmenu", "size=240x[current_vertical_offset]")
 

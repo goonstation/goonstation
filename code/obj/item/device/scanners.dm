@@ -231,7 +231,11 @@ TYPEINFO(/obj/item/device/detective_scanner)
 
 					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 					P.info = scans[index]
-					P.name = "forensic readout"
+					var/print_title = href_list["title"]
+					if (print_title)
+						P.name = print_title
+					else
+						P.name = "forensic readout"
 
 
 	attack_self(mob/user as mob)
@@ -265,7 +269,8 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if(distancescan)
 			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant forensic scan of [target]."))
-				last_scan = scan_forensic(target, visible = 1)
+				var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
+				last_scan = scan.build_report()
 				boutput(user, last_scan)
 				src.add_fingerprint(user)
 
@@ -278,10 +283,11 @@ TYPEINFO(/obj/item/device/detective_scanner)
 
 		if (scans == null)
 			scans = new/list(maximum_scans)
-		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		var/datum/forensic_scan/scan = scan_forensic(A, visible = TRUE)
+		last_scan = scan.build_report()
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = last_scan + "<br>---- <a href='byond://?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [A];'>PRINT REPORT</a> ---<br>" + last_scan
 		number_of_scans += 1
 
 		boutput(user, scan_output)
@@ -449,11 +455,11 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 			boutput(user, SPAN_NOTICE("Organ scanner [src.organ_scan ? "enabled" : "disabled"]."))
 
 	attackby(obj/item/W, mob/user)
-		addUpgrade(src, W, user, src.reagent_upgrade)
+		addUpgrade(W, user, src.reagent_upgrade)
 		..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
+		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR) && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> slips and drops [src]'s sensors on the floor!"))
 			user.show_message("Analyzing Results for [SPAN_NOTICE("The floor:<br>&emsp; Overall Status: Healthy")]", 1)
 			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
@@ -694,7 +700,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)
-		addUpgrade(src, W, user, src.analyzer_upgrade)
+		addUpgrade(W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button))
@@ -739,7 +745,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 	throw_range = 10
 
 ///////////////// method to upgrade an analyzer if the correct upgrade cartridge is used on it /////////////////
-/obj/item/device/analyzer/proc/addUpgrade(obj/item/device/src as obj, obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
+/obj/item/device/analyzer/proc/addUpgrade(obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
 	if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade) || istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade) || istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 		//Health Analyzers
 		if (istype(src, /obj/item/device/analyzer/healthanalyzer))

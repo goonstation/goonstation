@@ -17,9 +17,9 @@ package-lock.json
 /../browserassets/src/tgui/**/*
 !/../browserassets/src/tgui/*.html
 /coverage
-# |GOONSTATION-ADD|
+# |GOONSTATION-CHANGE| We keep our built assets in browserassets
 !/../browserassets/src/tgui/*.js
 !/../browserassets/src/tgui/*.css
 
-# Editor Files
+# Editor Files |GOONSTATION-ADD| I guess someone uses non-standard tooling :)
 *.idea/*

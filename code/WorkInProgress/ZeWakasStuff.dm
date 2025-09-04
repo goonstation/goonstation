@@ -28,6 +28,12 @@ sound time adjustment, SOUND_UPDATE offset var, query with query
 atoms can be rendered by reference in browser
 */
 
+/* 516 stuff
+
+wv2 memes
+
+*/
+
 // find lagging shitters
 // for\(var/([\w/]*)\)
 
@@ -268,5 +274,9 @@ atoms can be rendered by reference in browser
 	desc = "Oh wow, you finally found the end of the rainbow."
 	icon_state = "rainbow"
 
+
+/proc/zewakadownloadshit(mob/M)
+	var/mob/user = usr || M
+	user << ftp(file("data/missing_inhand_item_states.txt"))
 
 //th3*vqoE

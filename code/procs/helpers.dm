@@ -359,6 +359,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
+///Strip out weird illegal characters that TGUI discards anyway, see `\improper` and other Byond lunacy
+/proc/strip_illegal_characters(text)
+	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
+	return whitelistedWords.Replace("[text]", "")
+
 ///Cleans up data passed in from network packets for display so it doesn't mess with formatting
 /proc/tidy_net_data(var/t)
 	. = isnum(t) ? t : strip_html(t)
@@ -597,6 +602,15 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 /proc/IsGuestKey(key)
 	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
+/**
+ * Returns true if the given client is a local client
+ */
+/proc/IsLocalClient(client/C)
+	#ifdef LIVE_SERVER
+	. = FALSE
+	#else
+	. = !C.address || C.address == world.host || C.address == "127.0.0.1"
+	#endif
 
 /**
  * Returns f, ensured that it's a valid frequency
@@ -997,6 +1011,18 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		output = "[output][n_letter]"
 		pos++
 	return copytext(sanitize(output), 1, MAX_MESSAGE_LEN)
+
+
+// Some BYOND builtins don't work with `PROC_REF`, so they need to be wrapped.
+/proc/replacetext_wrapper(haystack, needle, replacement, start = 1, end = 0)
+	return replacetext(haystack, needle, replacement, start, end)
+
+/proc/uppertext_wrapper(string)
+	return uppertext(string)
+
+/proc/ckeyEx_wrapper(string)
+	return ckeyEx(string)
+
 
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
 	if(!M || !M.client)
@@ -2212,7 +2238,7 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 /// Repeat a gradient between two colors across text.
 /// Note: This is inaccurate because its a linear transformation, but human eyes do not perceive color this way.
-/proc/gradientText(color_1, color_2, message)
+/proc/gradientText(color_1, color_2, message, mutable_tags = FALSE)
 	var/list/color_list_1 = rgb2num(color_1)
 	var/list/color_list_2 = rgb2num(color_2)
 
@@ -2247,8 +2273,13 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 			dir = -1
 
 		var/col = rgb(r1 + delta_r*coeff, g1 + delta_g*coeff, b1 + delta_b*coeff)
-		var/chars = copytext(message, i, i + 3)
-		result += "<span style='color:[col]'>[chars]</span>"
+		if (mutable_tags)
+			result += MAKE_CONTENT_IMMUTABLE("<span style='color:[col]'>")
+			result += copytext(message, i, i + 3)
+			result += MAKE_CONTENT_IMMUTABLE("</span>")
+
+		else
+			result += "<span style='color:[col]'>[copytext(message, i, i + 3)]</span>"
 
 	. = jointext(result, "")
 
@@ -2448,6 +2479,10 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
+		M.hasStatus("lockdown_robot") || \
+		M.hasStatus("lockdown_ai") || \
+		M.hasStatus("no_power_robot") || \
+		M.hasStatus("no_cell_robot") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup

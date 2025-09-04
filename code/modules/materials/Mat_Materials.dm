@@ -574,6 +574,35 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 1)
 
 
+/datum/material/metal/veranium
+	mat_id = "veranium"
+	name = "veranium"
+	desc = "It looks to be sparking."
+	color = "#8effdd"
+
+	New()
+		..()
+		setProperty("electrical", 4)
+		setProperty("thermal", 1)
+		setProperty("density", 4)
+		setProperty("chemical", 2)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+
+/datum/material/metal/voltite
+	mat_id = "voltite"
+	name = "voltite"
+	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
+	color = "#389fff"
+
+	New()
+		..()
+		setProperty("electrical", 9)
+		setProperty("density", 4)
+		setProperty("thermal", 1)
+		setProperty("hard", 1)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
+
 /datum/material/metal/steel
 	mat_id = "steel"
 	name = "steel"
@@ -674,7 +703,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
 
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
 
 /datum/material/metal/gold
@@ -693,7 +723,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 7)
 		setProperty("thermal", 7)
 
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
 
 /datum/material/metal/silver
@@ -962,7 +993,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "clear [src.name]"
 				setProperty("density", 6)
 				setProperty("hard", 7)
-				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
+				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
+				addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 			if(2)
 				value = 500
 				name = "flawed [src.name]"
@@ -1173,7 +1205,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("electrical", 1)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
 
 /datum/material/crystal/ice
@@ -1908,7 +1941,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
 	name = "plutonium 239"
-	canMix = 0 //Can not be easily modified.
 	desc = "Weapons grade refined plutonium."
 	color = "#230e4d"
 
@@ -1920,6 +1952,36 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+
+/datum/material/metal/yuranite
+	mat_id = "yuranite"
+	name = "yuranite"
+	desc = "Deadly uranium, often used for weapons of mass destruction."
+	color = "#e6ff01"
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 7)
+		setProperty("hard", 5)
+		setProperty("n_radioactive", 3)
+		setProperty("radioactive", 4)
+		setProperty("thermal", 3)
+		setProperty("electrical", 4)
+
+/datum/material/metal/neutrite
+	mat_id = "neutrite"
+	name = "neutrite"
+	desc = "A metal right on the brink of instability, waiting for something to push it past its limit."
+	color = "#7898ca"
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 7)
+		setProperty("hard", 2)
+		setProperty("electrical", 5)
+		setProperty("n_radioactive", 5)
 
 /// Material for bundles of glowsticks as fuel rods
 /datum/material/metal/glowstick

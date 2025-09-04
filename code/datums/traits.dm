@@ -462,7 +462,7 @@
 	category =  list("language")
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("accent_german")
+		owner.bioHolder?.AddEffect("accent_german", 0, 0, 0, 1)
 
 /datum/trait/finnish
 	name = "Finnish Accent"
@@ -484,7 +484,7 @@
 	category = list("language")
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("accent_tyke")
+		owner.bioHolder?.AddEffect("accent_tyke", 0, 0, 0, 1)
 
 // VISION/SENSES - Green Border
 
@@ -1113,6 +1113,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	proc/turnOn(mob/owner)
 		for(var/image/I as anything in global.clown_disbelief_images)
 			owner.client.images += I
+		owner.ensure_listen_tree().AddListenModifier(LISTEN_MODIFIER_CLOWN_DISBELIEF)
 
 	proc/examined(mob/owner, mob/examiner, list/lines)
 		if(examiner.job == "Clown")
@@ -1127,6 +1128,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	proc/turnOff(mob/owner)
 		for(var/image/I as anything in global.clown_disbelief_images)
 			owner.last_client.images -= I
+		owner.ensure_listen_tree().RemoveListenModifier(LISTEN_MODIFIER_CLOWN_DISBELIEF)
 
 
 /datum/trait/unionized
@@ -1188,7 +1190,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		var/mob/living/carbon/human/H = owner
 		var/cyber_rejected = FALSE
 		for (var/obj/item/parts/P in list(H.limbs.l_arm, H.limbs.r_arm, H.limbs.l_leg, H.limbs.r_leg))
-			if (P.kind_of_limb & LIMB_ROBOT)
+			if (isrobolimb(P))
 				boutput(H, SPAN_ALERT("Your body is incompatible with [P] and rejects it!"))
 				P.sever()
 				cyber_rejected = TRUE
@@ -1294,6 +1296,27 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "clutz"
 	points = 2
 	afterlife_blacklisted = TRUE
+
+/datum/trait/butterfingers
+	name = "Butterfingers"
+	desc = "You have difficulty keeping hold of things."
+	id = "butterfingers"
+	icon_state = "butterfingers"
+	points = 2
+	afterlife_blacklisted = TRUE
+
+	onLife(var/mob/owner, var/mult)
+		if(!can_act(owner) || !istype(owner))
+			return
+		if(!probmult(10))
+			return
+		var/obj/item/target_item = owner.equipped() //prioritise actively held items
+		if(!target_item)
+			target_item = owner.find_type_in_hand(/obj/item)
+		if(!target_item || target_item.cant_drop)
+			return
+		owner.drop_item(target_item)
+		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> accidentally drops [target_item]!"))
 
 /datum/trait/leftfeet
 	name = "Two left feet"

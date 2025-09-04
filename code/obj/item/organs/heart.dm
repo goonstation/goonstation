@@ -15,7 +15,6 @@
 	item_state = "heart"
 	surgery_flags = SURGERY_SNIPPING | SURGERY_SAWING | SURGERY_CUTTING
 	region = RIBS
-	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
 	var/list/diseases = null
 	var/body_image = null // don't have time to completely refactor this, but, what name does the heart icon have in human.dmi?
 	var/transplant_XP = 5
@@ -188,3 +187,22 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 		[SPAN_BOLD("ID:")] Resource repository<br>\
 		[SPAN_BOLD("System Integrity:")] [src.resources]<br>\
 		[SPAN_BOLD("###=-")]")]"}
+
+/obj/item/organ/heart/amphibian
+	name = "amphibian heart"
+	desc = "A heart you ripped out of an amphibian. Grody."
+	icon_state = "heart_amphibian"
+
+/obj/item/organ/heart/skeleton
+	name = "skeleton heart"
+	desc = "A supposed skeleton heart. At least it has ventricles."
+	icon_state = "heart_skeleton"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/heart/martian
+	name = "lavender heap"
+	desc = "You're pretty sure this is supposed to be a heart."
+	icon_state = "heart_martian"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

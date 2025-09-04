@@ -390,6 +390,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/orange/blood
 	name = "blood orange"
 	desc = "Juicy."
+	icon_state = "orange-blood"
 
 	make_reagents()
 		..()
@@ -730,7 +731,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
-		M.bodytemperature -= DNA?.get_effective_value("potency")
+		M.changeBodyTemp(-DNA?.get_effective_value("potency"))
 		boutput(M, SPAN_ALERT("You feel cold!"))
 
 /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
@@ -756,7 +757,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, SPAN_ALERT("Fuck! Your mouth feels like it's on fire!"))
-		M.bodytemperature += (DNA?.get_effective_value("potency") * 5)
+		M.changeBodyTemp(DNA?.get_effective_value("potency") * 5)
 
 
 /obj/item/reagent_containers/food/snacks/plant/lettuce

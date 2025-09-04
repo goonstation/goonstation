@@ -45,6 +45,8 @@
 				playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
 				machine.add_fingerprint(src.holder.owner)
 				machine.visible_message(SPAN_ALERT("\The [machine] sparks as [src.holder.owner] strikes it!"))
+				var/datum/abilityHolder/arcfiend/AH = src.holder
+				AH.machines_overloaded++
 			else
 				boutput(src.holder.owner, SPAN_ALERT("\The [machine] couldn't be overloaded!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN

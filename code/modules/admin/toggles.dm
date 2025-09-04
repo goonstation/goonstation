@@ -11,7 +11,6 @@ var/list/server_toggles_tab_verbs = list(
 /client/proc/toggle_banlogin_announcements,
 /client/proc/toggle_literal_disarm,
 /client/proc/toggle_spooky_light_plane,\
-/client/proc/toggle_cloning_with_records,
 /client/proc/toggle_random_job_selection,
 /client/proc/toggle_tracy_profiling,
 /datum/admins/proc/toggleooc,
@@ -1253,19 +1252,6 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_DIARY, usr, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
 	message_admins("[key_name(usr)] toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
 
-/client/proc/toggle_cloning_with_records()
-	set name = "Toggle Cloning With Records"
-	set desc = "toggles the cloning method between record and non-record"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	cloning_with_records = !cloning_with_records
-
-	logTheThing(LOG_ADMIN, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
-	logTheThing(LOG_DIARY, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
-	message_admins("[key_name(usr)] toggled the cloning with records [cloning_with_records ? "on" : "off"]")
-
 /client/proc/toggle_random_job_selection()
 	set name = "Toggle Random Job Selection"
 	set desc = "toggles random job rolling at the start of the round; preferences will be ignored. Has no effect on latejoins."
@@ -1304,3 +1290,22 @@ client/proc/toggle_ghost_respawns()
 		change_ghost_invisibility(INVIS_GHOST)
 		message_admins("[key_name(usr)] made ghosts invisible.")
 	logTheThing(LOG_ADMIN, usr, "toggled ghost (in)visibility")
+
+/client/proc/toggle_tutorial_enabled()
+	set name = "Toggle Tutorial Enabled"
+	set desc = "Toggle whether people can start the tutorial"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	global.newbee_tutorial_enabled = !global.newbee_tutorial_enabled
+
+	logTheThing(LOG_ADMIN, usr, "[global.newbee_tutorial_enabled ? "enabled" : "disabled"] the tutorial.")
+	message_admins("[key_name(usr)] [global.newbee_tutorial_enabled ? "enabled" : "disabled"] the tutorial.")
+
+	for (var/mob/new_player/player in mobs)
+		if (!global.newbee_tutorial_enabled)
+			if (player.ready_tutorial == TRUE)
+				boutput(player, SPAN_ALERT("An administrator has disabled the tutorial for this round!"))
+			player.ready_tutorial = FALSE
+		player.update_joinmenu()

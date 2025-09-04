@@ -46,6 +46,12 @@ TYPEINFO(/obj/item/card/emag)
 	attack()	//Fucking attack messages up in this joint.
 		return
 
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		..()
+		if(!hit_atom || !thr)
+			return
+		hit_atom.emag_act(thr.user, src)
+
 /obj/item/card/emag/attack_self(mob/user as mob)
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return
@@ -79,7 +85,7 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "id_basic"
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
-	flags = TABLEPASS | ATTACK_SELF_DELAY
+	flags = TABLEPASS | ATTACK_SELF_DELAY | SUPPRESSATTACK
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
 	var/datum/pronouns/pronouns = null

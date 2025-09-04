@@ -27,14 +27,16 @@ TYPEINFO(/atom)
 	/// This atom's speech module tree. Lazy loaded on the first `say()` call.
 	var/tmp/datum/speech_module_tree/speech_tree = null
 
-	// Listen Variables:
-	/// Whether objects inside of this atom should be able to hear messages that could be heard by this atom.
+	// Soundproofing Variables:
+	/// Whether this atom should allow messages to pass from its loc to its contents and vice versa.
 	var/open_to_sound = TRUE
+	/// Determines how greatly this atom affects the styling of a message spoken inside of it. See `LISTEN_INPUT_EARS`.
+	var/soundproofing = 5
 
 	// Speech Output Variables:
 	/// The default channel that this atom will attempt to send unprefixed say messages to.
 	var/default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-	/// The default output language for say messages to be sent in.
+	/// The default language for say messages to be sent in.
 	var/say_language = LANGUAGE_ENGLISH
 
 	// Speech Verb Variables:
@@ -141,6 +143,11 @@ TYPEINFO(/atom)
 		if (!GET_COOLDOWN(src, "speech_bubble"))
 			src.ClearSpecificOverlays("speech_bubble")
 
+/// Returns the radio device that this atom should use.
+/atom/proc/find_radio()
+	RETURN_TYPE(/obj/item/device/radio)
+	return
+
 
 /// Whether a client controlling this mob can make this mob speak through the use of say wrappers or commands.
 /mob/var/can_use_say = TRUE
@@ -159,7 +166,7 @@ TYPEINFO(/atom)
 	/// This client's auxiliary speech module tree.
 	var/datum/speech_module_tree/auxiliary/speech_tree
 
-/client/New()
+/client/post_auth()
 	. = ..()
 
 	src.ensure_listen_tree()
@@ -172,7 +179,7 @@ TYPEINFO(/atom)
 	if (src.listen_tree)
 		return src.listen_tree
 
-	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, null, src.mob.listen_tree)
+	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, null, src.mob.listen_tree, src.key)
 
 	if (src.preferences.listen_ooc)
 		src.toggle_ooc(TRUE, TRUE)
@@ -192,7 +199,7 @@ TYPEINFO(/atom)
 	if (src.speech_tree)
 		return src.speech_tree
 
-	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree)
+	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree, src.key)
 	if (src.holder && !src.player_mode)
 		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
 

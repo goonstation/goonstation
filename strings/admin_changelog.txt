@@ -1,3 +1,9 @@
+(t)sun aug 10 25
+(u)Mr. Moriarty & ZeWaka
+(*)Added speech and listen module tree admin panels to the Player Options panel.
+(t)wed jun 18 25
+(u)LeahTheTech
+(*)Added reset cooldown buttons to the ability and bioeffect managers.
 (t)fri apr 11 25
 (u)glowbold
 (*)Added a "Stabilize" option to admin mob interaction and player panel. Heals people just above crit and cures them of most immediately fatal issues.

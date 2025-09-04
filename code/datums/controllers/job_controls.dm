@@ -6,6 +6,7 @@ var/datum/job_controller/job_controls
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
 	var/datum/job/created/job_creator = null
+	var/datum/job/priority_job = null
 
 	var/loaded_save = 0
 	var/last_client = null
@@ -38,7 +39,9 @@ var/datum/job_controller/job_controls
 			if (initial(variety_job_path.day) == time2text(world.realtime,"Day"))
 				src.staple_jobs += new variety_job_path(src)
 			else
-				src.hidden_jobs += new variety_job_path(src)
+				var/datum/job/not_daily_job = new variety_job_path(src)
+				not_daily_job.limit = 0
+				src.special_jobs += not_daily_job
 
 		for (var/datum/job/J in src.staple_jobs)
 			// Cull any of those nasty null jobs from the category heads
@@ -85,15 +88,7 @@ var/datum/job_controller/job_controls
 			return
 		// antag job exemptions
 		if(player.mind?.is_antagonist())
-			if ((!job.allow_traitors && player.mind.special_role))
-				return
-			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
-				return
-			else if (istype(ticker?.mode, /datum/game_mode/revolution) && job.cant_spawn_as_rev)
-				return
-			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
-				return
-			else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+			if (!job.can_be_antag(player.mind.special_role))
 				return
 		// job ban check
 		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
@@ -159,13 +154,8 @@ var/datum/job_controller/job_controls
 			var/datum/job/job = find_job_in_controller_by_string(player_preferences.job_favorite)
 			if (job)
 				// antag fall through flag set check
-				if ((!job.allow_traitors && player.mind.special_role))
+				if (!job.can_be_antag(player.mind.special_role))
 					player.antag_fallthrough = TRUE
-				else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
-					player.antag_fallthrough = TRUE
-				else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
-					player.antag_fallthrough = TRUE
-
 				// try to assign fav job
 				if (check_job_eligibility(player, job, STAPLE_JOBS))
 					player.mind.assigned_role = job.name
@@ -221,7 +211,7 @@ var/datum/job_controller/job_controls
 		dat += "<A href='byond://?src=\ref[src];SetSpawnLoc=1'>Spawn Location:</A> [src.job_creator.special_spawn_location]<br>"
 		dat += "<A href='byond://?src=\ref[src];SpawnId=1'>Spawns with ID:</A> [src.job_creator.spawn_id ? "Yes" : "No"]<br>"
 		dat += "<A href='byond://?src=\ref[src];EditObjective=1'>Custom Objective:</A> [src.job_creator.objective][src.job_creator.objective ? (" (Crew Objective)") : ""]<br>"
-		dat += "<A href='byond://?src=\ref[src];ToggleAnnounce=1'>Head of Staff-style Announcement:</A> [src.job_creator.announce_on_join?"Yes":"No"]<br>"
+		dat += "<A href='byond://?src=\ref[src];EditAnnounce=1'>Head of Staff-style Announcement Priority:</A> [src.job_creator.world_announce_priority ? src.job_creator.world_announce_priority : "Never"]<br>"
 		dat += "<A href='byond://?src=\ref[src];ToggleRadioAnnounce=1'>Radio Announcement:</A> [src.job_creator.radio_announcement?"Yes":"No"]<br>"
 		dat += "<A href='byond://?src=\ref[src];ToggleManifest=1'>Add To Manifest:</A> [src.job_creator.add_to_manifest?"Yes":"No"]<br>"
 		dat += "<A href='byond://?src=\ref[src];EditMob=1'>Mob Type:</A> [src.job_creator.mob_type]<br>"
@@ -937,8 +927,9 @@ var/datum/job_controller/job_controls
 					src.job_creator.objective = input
 			src.job_creator()
 
-		if(href_list["ToggleAnnounce"])
-			src.job_creator.announce_on_join = !src.job_creator.announce_on_join
+		if(href_list["EditAnnounce"])
+			var/input = input("5 = Captain, 2 = Heads, 1 = Other, 0 = Don't announce", "Enter job announcement priority") as num
+			src.job_creator.world_announce_priority = input
 			src.job_creator()
 
 		if(href_list["ToggleRadioAnnounce"])
@@ -1052,7 +1043,7 @@ var/datum/job_controller/job_controls
 	JOB.special_spawn_location = src.job_creator.special_spawn_location
 	JOB.bio_effects = src.job_creator.bio_effects
 	JOB.objective = src.job_creator.objective
-	JOB.announce_on_join = src.job_creator.announce_on_join
+	JOB.world_announce_priority = src.job_creator.world_announce_priority
 	JOB.radio_announcement = src.job_creator.radio_announcement
 	JOB.add_to_manifest = src.job_creator.add_to_manifest
 	JOB.receives_implants = src.job_creator.receives_implants
@@ -1088,9 +1079,6 @@ var/datum/job_controller/job_controls
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
 	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
-	#ifndef MAP_OVERRIDE_MANTA
-	excluded_strings += "Communications Officer"
-	#endif
 	if (string in excluded_strings)
 		return null
 	var/list/results = list()
@@ -1098,7 +1086,7 @@ var/datum/job_controller/job_controls
 		if (latejoin_only)
 			if (J.no_late_join)
 				continue
-			if (J.limit == 0)
+			if (J.limit == 0 && J.request_limit == 0)
 				continue
 		if (J.match_to_string(string, case_sensitive))
 			results += J
@@ -1107,7 +1095,7 @@ var/datum/job_controller/job_controls
 			if (latejoin_only)
 				if (J.no_late_join)
 					continue
-				if (J.limit == 0)
+				if (J.limit == 0 && J.request_limit == 0)
 					continue
 			if (J.match_to_string(string, case_sensitive))
 				results += J

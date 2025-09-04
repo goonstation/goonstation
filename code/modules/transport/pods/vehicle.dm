@@ -494,43 +494,43 @@
 		var/damage = src.calculate_shielded_dmg(round(P.power, 1.0))
 
 		var/hitsound = null
+		var/volume = 35
 
-		if(istype(P.proj_data, /datum/projectile/bullet/foamdart)) // foam darts shouldn't hurt
+		if (istype(P.proj_data, /datum/projectile/bullet/foamdart)) // foam darts shouldn't hurt
 			hitsound = 'sound/impact_sounds/Glass_Hit_1.ogg'
+		else if (P.proj_data?.shot_sound)
+			hitsound = P.proj_data.shot_sound
 		else
-			switch(P.proj_data.damage_type)
-				if(D_KINETIC)
-					src.health -= damage/1.7
-					hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
-				if(D_PIERCING)
-					src.health -= damage/1
-					hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
-				if(D_ENERGY)
-					src.health -= damage/1.5
-					hitsound = 'sound/impact_sounds/Energy_Hit_3.ogg'
-				if(D_SLASHING)
-					src.health -= damage/2
-					hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
-				if(D_BURNING)
-					src.material_trigger_on_temp(5000)
-					src.health -= damage/3
-					hitsound = 'sound/items/Welder.ogg'
-				if(D_SPECIAL) //blob
-					src.health -= damage
-					hitsound = 'sound/impact_sounds/Slimy_Hit_2.ogg'
-			checkhealth()
+			volume = 30
+		switch(P.proj_data.damage_type)
+			if(D_KINETIC)
+				src.health -= damage/1.7
+				hitsound ||= 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+			if(D_PIERCING)
+				src.health -= damage/1
+				hitsound ||= 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
+			if(D_ENERGY)
+				src.health -= damage/1.5
+				hitsound ||= 'sound/impact_sounds/Energy_Hit_3.ogg'
+			if(D_SLASHING)
+				src.health -= damage/2
+				hitsound ||= 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+			if(D_BURNING)
+				src.material_trigger_on_temp(5000)
+				src.health -= damage/3
+				hitsound ||= 'sound/items/Welder.ogg'
+			if(D_SPECIAL) //blob
+				src.health -= damage
+				hitsound ||= 'sound/impact_sounds/Slimy_Hit_2.ogg'
+		checkhealth()
 		if(P.proj_data && P.proj_data.disruption) //ZeWaka: Fix for null.disruption
 			src.disrupt(P.proj_data.disruption, P)
 
 		src.visible_message(SPAN_ALERT("<b>[P]<b> hits [src]!"))
 
 		for(var/mob/M in src)
-			if(P.proj_data.shot_sound)
-				M.playsound_local(src, P.proj_data.shot_sound, vol=35)
-			M.playsound_local(src, hitsound, vol=30)
+			M.playsound_local(src, hitsound, vol=volume)
 			shake_camera(M, 1, 8)
-
-
 
 		//IF DAMAGE IS ENOUGH, PICK MOB AND SHOOT THAT GUY
 		//means the bullet went into the pod instead of hitting the exterior
@@ -549,7 +549,18 @@
 		src.health -= power * 3
 		checkhealth()
 
-	get_desc()
+	get_desc(dist, mob/user)
+		. = ..()
+		var/list/visible_parts = list()
+		var/obj/item/shipcomponent/engine/engine = src.get_part(POD_PART_ENGINE)
+		if (istype(engine))
+			visible_parts += "[engine.name]"
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
+		if (istype(main_weapon))
+			visible_parts += "[main_weapon.name]"
+		if (length(visible_parts))
+			. += "It looks like it has [english_list(visible_parts)] installed."
+
 		if (src.keyed > 0)
 			var/t = strings("descriptors.txt", "keyed")
 			var/t_ind = clamp(round(keyed/10), 0, 10)
@@ -572,6 +583,15 @@
 		qdel(P)
 		return
 
+	proc/get_random_part()
+		var/list/actually_installed_parts = list()
+		for (var/id in src.installed_parts)
+			if (src.installed_parts[id])
+				actually_installed_parts += src.installed_parts[id]
+		if (!length(actually_installed_parts))
+			return null
+		return pick(actually_installed_parts)
+
 	proc/disrupt(disruption, obj/projectile/P)
 		if(disruption <= 0 || !length(src.installed_parts))
 			return
@@ -579,7 +599,9 @@
 		if(pilot)
 			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-		var/obj/item/shipcomponent/S = src.installed_parts[pick(src.installed_parts)]
+		var/obj/item/shipcomponent/S = src.get_random_part()
+		if (!S)
+			return
 		if (istype(S, /obj/item/shipcomponent/engine))
 			disruption += 40
 
@@ -592,8 +614,14 @@
 			else
 				S.deactivate()
 				S.disrupted = TRUE
-				SPAWN(2 SECONDS)
+				SPAWN(3 SECONDS)
 					S.disrupted = FALSE
+
+	overload_act()
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+		src.disrupt(100) //you managed to punch a pod, you get full disruption
+		src.disrupt(100)
+		return TRUE
 
 	emp_act()
 		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
@@ -916,8 +944,6 @@
 
 	if (ejectee.client)
 		ejectee.detach_hud(myhud)
-		if (ejectee.client.tooltipHolder)
-			ejectee.client.tooltipHolder.inPod = 0
 
 	ejectee.override_movement_controller = null
 
@@ -1044,8 +1070,6 @@
 		M.attach_hud(myhud)
 		if(ishuman(M))
 			myhud.check_hud_layout(M)
-		if (M.client.tooltipHolder)
-			M.client.tooltipHolder.inPod = 1
 
 	src.add_fingerprint(M)
 
@@ -1126,7 +1150,15 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		var/was_seen_boarding = FALSE
+		if (istype(V, /obj/machinery/vehicle/tank/car)) // you can drive pods drunk, but not cars. space law.
+			was_seen_boarding = seen_by_camera(owner)
+
 		V.finish_board_pod(owner)
+
+		if (was_seen_boarding && V.pilot == owner && ishuman(owner) && owner.hasStatus("drunk"))
+			var/mob/living/carbon/human/H = owner
+			H.apply_automated_arrest("DUI.", "Drove while inebriated.", requires_camera_seen = FALSE)
 
 /datum/action/bar/icon/eject_pod
 	duration = 50
@@ -1589,10 +1621,12 @@
 		return
 	sec_part.Use(usr)
 
-/obj/machinery/vehicle/proc/open_hangar()
+/obj/machinery/vehicle/proc/toggle_hangar_door(var/pass)
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
-	if(comms)
-		comms.rc_ship.open_hangar(usr)
+	if(!comms)
+		return
+	comms.rc_ship.toggle_hangar_door(usr, pass)
+
 
 /obj/machinery/vehicle/proc/return_to_station()
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
@@ -1850,11 +1884,11 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 			if(1) //dies
 				shipdeath()
 			if(2) //fuel tank explodes??
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, SPAN_ALERT("The fuel tank of your escape sub explodes!"))
 				explosion(src, src.loc, 2, 3, 4, 6)
 			if(3) //falls apart
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, SPAN_ALERT("Your escape sub is falling apart around you!"))
 				while(src)
 					step(src,src.dir)
@@ -1866,7 +1900,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 					if(prob(10)) shipdeath()
 					sleep(0.4 SECONDS)
 			if(4) //flies off course
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, SPAN_ALERT("Your escape sub is veering out of control!"))
 				while(src)
 					if(prob(10)) src.dir = turn(dir,pick(90,-90))
@@ -1880,7 +1914,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 				boutput(pilot, SPAN_ALERT("Your escape sub sputters to a halt!"))
 			if(6)
 				boutput(pilot, SPAN_ALERT("Your escape sub explosively decompresses, hurling you into the ocean!"))
-				pilot.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
@@ -1916,7 +1950,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 					sleep(speed)
 			if(8)
 				boutput(pilot, SPAN_ALERT("Your escape sub starts to drive around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!"))
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				var/spin_dir = pick(90,-90)
 				while(src)
 					src.dir = turn(dir,spin_dir)

@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 			announcement += " Central Command has prohibited further recalls."
 		else
 			announcement += " Please recall the shuttle to extend the shift."
-		command_alert(announcement,"Shift Shuttle Update")
+		command_alert(announcement,"Shift Shuttle Update", alert_origin=ALERT_GENERAL)
 		shuttle_last_auto_call = ticker.round_elapsed_ticks
 		if (!shuttle_initial_auto_call_done)
 			shuttle_initial_auto_call_done = 1
@@ -183,9 +183,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 				continue
 			var/datum/job/job = find_job_in_controller_by_string(C.mob.job)
 			if (job)
-				if(!job.allow_traitors)
-					continue
-				if (!job.can_join_gangs && (type == ROLE_GANG_LEADER || type == ROLE_GANG_MEMBER))
+				if(!job.can_be_antag(type))
 					continue
 		else
 			continue
