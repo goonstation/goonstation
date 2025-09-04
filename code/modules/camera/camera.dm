@@ -28,15 +28,6 @@
 	/// Cant be snipped by wirecutters
 	var/reinforced = FALSE
 
-	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
-	var/obj/machinery/camera/c_north = null
-	var/obj/machinery/camera/c_east = null
-	var/obj/machinery/camera/c_west = null
-	var/obj/machinery/camera/c_south = null
-
-	/// Here's a list of cameras pointing to this camera for reprocessing purposes
-	var/list/obj/machinery/camera/referrers = list()
-
 	/// Should this camera have a light?
 	var/has_light = TRUE
 	/// Robust light
@@ -117,33 +108,6 @@
 
 	if (global.camnets && global.camnets[network])
 		global.camnets[network].Remove(src)
-
-	if (c_north)
-		c_north.referrers -= src
-		c_north = null
-	if (c_east)
-		c_east.referrers -= src
-		c_east = null
-	if (c_south)
-		c_south.referrers -= src
-		c_south = null
-	if (c_west)
-		c_west.referrers -= src
-		c_west = null
-
-	global.dirty_cameras |= src.referrers
-	global.camnet_needs_rebuild = TRUE
-
-	for (var/obj/machinery/camera/C as anything in referrers)
-		if (C.c_north == src)
-			C.c_north = null
-		if (C.c_east == src)
-			C.c_east = null
-		if (C.c_south == src)
-			C.c_south = null
-		if (C.c_west == src)
-			C.c_west = null
-	src.referrers = null
 	..()
 
 /obj/machinery/camera/attackby(obj/item/W, mob/user)
@@ -269,20 +233,6 @@
 		var/list/net = list()
 		net.Add(src)
 		camnets[network] = net
-
-/obj/machinery/camera/proc/addToReferrers(var/obj/machinery/camera/C) //Safe addition
-	referrers |= C
-
-/obj/machinery/camera/proc/removeNode(var/obj/machinery/camera/node) //Completely remove a node from this camera
-	for(var/N in list("c_north", "c_east", "c_south", "c_west"))
-		if(node == vars[N])
-			vars[N] = null
-	node.referrers -= src
-
-/obj/machinery/camera/proc/hasNode(var/obj/machinery/camera/node)
-	if(!istype(node)) return 0
-	. = 0
-	. = (node == c_north) + (node == c_east) + (node == c_south) + (node == c_west)
 
 /// Connect a viewer to this camera
 /obj/machinery/camera/proc/connect_viewer(var/mob/viewer)
