@@ -1,4 +1,10 @@
 
+(t)fri sep 05 25
+(u)Lord_Earthfire
+(p)24578
+(e)🆕🎨📦⚙|C-Feature, C-Sprites, A-Game-Objects, A-Internal
+(*)Hand teles can now be build into assemblies.
+(+)Components in assemblies that uses energy cells can now have their cells swapped while in the assembly or be charged in chargers by putting the assembly in the charger.
 (t)thu sep 04 25
 (u)Mr. Moriarty & Mordent
 (p)24451
