@@ -215,7 +215,14 @@ TYPEINFO(/mob/living/silicon)
 
 	var/inrange = in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (params["ctrl"] || src.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	// slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (params["ctrl"] ||\
+		src.client.check_any_key(KEY_EXAMINE | KEY_POINT) ||\
+		(equipped && (inrange || (equipped.flags & EXTRADELAY))) ||\
+		istype(target, /turf) ||\
+		ishelpermouse(target) ||\
+		inrange && params["middle"]
+	)
 		..()
 	else
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking

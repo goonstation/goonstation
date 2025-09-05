@@ -115,6 +115,7 @@ export const AlertModal = () => {
     >
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
+        scrollable={!!content_window}
         onKeyDown={(e) => {
           const keyCode = window.event ? e.which : e.keyCode;
           /**

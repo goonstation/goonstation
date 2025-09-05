@@ -121,7 +121,7 @@ export const MusicInstrument = () => {
                     minValue={-24}
                     maxValue={24}
                     value={keyOffset}
-                    onDrag={(e, v) => setKeyOffset(v)}
+                    onChange={(e, v) => setKeyOffset(v)}
                     title="Keybind offset"
                   />
                   <span>Offset</span>
@@ -137,7 +137,7 @@ export const MusicInstrument = () => {
                     maxValue={100}
                     title="Volume"
                     value={volume}
-                    onDrag={(e, v) => setVolume(v)}
+                    onChange={(e, v) => setVolume(v)}
                   />
                   <span>Volume</span>
                 </Box>
@@ -149,7 +149,7 @@ export const MusicInstrument = () => {
                     maxValue={12}
                     title="Transpose"
                     value={transpose}
-                    onDrag={(e, v) => setTranspose(v)}
+                    onChange={(e, v) => setTranspose(v)}
                   />
                   <span>Transpose</span>
                 </Box>
@@ -161,7 +161,7 @@ export const MusicInstrument = () => {
                 <Input
                   className="instrument__input_keyorder"
                   value={noteKeysOrder.join('')}
-                  onInput={(e, v) => setNoteKeysOrder(v.split(''))}
+                  onChange={(v) => setNoteKeysOrder(v.split(''))}
                 />
                 <Box className="instrument__instructions" fontSize="0.8em" bold>
                   Type in the order you wish the keybindings to be placed

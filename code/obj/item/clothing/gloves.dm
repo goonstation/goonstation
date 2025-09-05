@@ -149,6 +149,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		..()
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.glove_ID)
+			scan.add_text("Glove ID: [src.glove_ID] [src.material_prints ? "([src.material_prints])" : null]")
+
 	proc/distort_prints(var/prints as text, var/get_glove_ID = 1) // Ditto (Convair880).
 
 		var/data = null

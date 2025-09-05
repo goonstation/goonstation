@@ -485,6 +485,7 @@ var/global
 	list/valid_modes = list("secret","action","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
+	rebuildServerContainer = FALSE
 
 	datum/minimap_renderer/minimap_renderer
 	list/minimap_marker_targets = list()

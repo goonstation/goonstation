@@ -25,7 +25,7 @@
 	RegisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(draw_cord), TRUE)
 
 /datum/component/cord/proc/draw_cord(datum/component/complexsignal/outermost_movable/component)
-	if(QDELETED(src.handset) || (BOUNDS_DIST(src.parent, src.handset) > 0))
+	if(QDELETED(src.handset) || (BOUNDS_DIST(src.parent, src.handset) > range))
 		SEND_SIGNAL(src.parent, COMSIG_CORD_RETRACT)
 		return
 	var/handset_offset_x = -7
