@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery)
 /// Returns a reagents datum containing a scaled amount of fluid linear to fullness of network or null if no fluid in network. Quantized to QUANTIZATION_UNITS units.
 /// Can return null on an empty network.
 /obj/machinery/fluid_machinery/proc/pull_from_network(datum/flow_network/network, maximum = 100)
-	return network.reagents.remove_any_to(clamp(round(REAGENT_MOVEMENT_CONSTANT * maximum * (network.reagents.total_volume / network.reagents.maximum_volume), QUANTIZATION_UNITS), MINIMUM_REAGENT_MOVED, maximum), TRUE)
+	return network.reagents.remove_any_to(max(round(maximum * (network.reagents.total_volume / network.reagents.maximum_volume), QUANTIZATION_UNITS), MINIMUM_REAGENT_MOVED), TRUE)
 
 /// Accepts an input network and the reagents datum to add to the network.
 /// Returns TRUE on complete addition to network and deletion of reagents datum. Returns FALSE if reagents remaining and reagents not deleted.
