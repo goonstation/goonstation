@@ -1,4 +1,21 @@
 
+(t)thu sep 04 25
+(u)Mr. Moriarty & Mordent
+(p)24451
+(e)🆕📄🐣|C-Feature, A-UI, A-Respawning
+(*)The job preferences window has been converted to TGUI and integrated into the Character Setup panel.
+(u)SnugglyCactus
+(p)23962
+(e)🆕🎨💊💪|C-Feature, C-Sprites, A-Medical, A-Traits
+(+)Added trait "Defect Prone"; cloning's going to get a bit weirder.
+(u)LorrMaster
+(p)24349
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Updated how various materials impact object appearance.
+(u)JORJ949
+(p)24579
+(e)⚖📨|C-Balance, A-Logistics
+(+)Vampires can no longer be assigned the Miner job.
 (t)tue sep 02 25
 (u)Lord_Earthfire
 (p)24553
