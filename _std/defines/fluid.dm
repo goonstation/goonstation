@@ -4,6 +4,8 @@
 
 
 #define MINIMUM_REAGENT_MOVED 0.1
+// multiplied against fluid movement. increase to pull fluid faster
+#define REAGENT_MOVEMENT_CONSTANT 2
 #define QUANTIZATION_UNITS 0.1
 
 

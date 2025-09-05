@@ -37,6 +37,18 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/onDestroy()
 	src.network.remove_pipe(src)
 
+/obj/fluid_pipe/disposing()
+	if (network)
+		var/datum/flow_network/net = src.network
+		var/turf/T = get_turf(src)
+		var/datum/reagents/fluid = net.reagents.remove_any_to(net.reagents.total_volume * (src.capacity/net.reagents.maximum_volume))
+		fluid?.trans_to(T, fluid.total_volume)
+		net.reagents.maximum_volume -= src.capacity
+		net.pipes -= src
+		src.network = null
+		net.rebuild_network_force()
+	..()
+
 /// Accepts a reagents datum to start with.
 /// Replaces our network with a new one and relooks for pipes to connect to.
 /obj/fluid_pipe/proc/refresh_connections(datum/reagents/flow_network/leftover)

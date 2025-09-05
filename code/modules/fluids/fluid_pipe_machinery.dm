@@ -11,13 +11,15 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery)
 
 /// Accepts an input network and an ideal amount of fluid to pull from network.
 /// Returns a reagents datum containing a scaled amount of fluid linear to fullness of network or null if no fluid in network. Quantized to QUANTIZATION_UNITS units.
+/// Can return null on an empty network.
 /obj/machinery/fluid_machinery/proc/pull_from_network(datum/flow_network/network, maximum = 100)
-	return network.reagents.remove_any_to(max(MINIMUM_REAGENT_MOVED, round(maximum * (network.reagents.total_volume / network.reagents.maximum_volume), QUANTIZATION_UNITS)), TRUE)
+	return network.reagents.remove_any_to(clamp(round(REAGENT_MOVEMENT_CONSTANT * maximum * (network.reagents.total_volume / network.reagents.maximum_volume), QUANTIZATION_UNITS), MINIMUM_REAGENT_MOVED, maximum), TRUE)
 
 /// Accepts an input network and the reagents datum to add to the network.
 /// Returns TRUE on complete addition to network and deletion of reagents datum. Returns FALSE if reagents remaining and reagents not deleted.
 /obj/machinery/fluid_machinery/proc/push_to_network(datum/flow_network/network, datum/reagents/topush)
-	topush?.trans_to(network, topush.total_volume, 1, FALSE)
+	if (isnull(topush)) return TRUE
+	topush.trans_to(network, topush.total_volume, 1, FALSE)
 	if(topush.total_volume)
 		return FALSE
 	qdel(topush)
@@ -62,7 +64,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 	src.initialize()
 
 /obj/machinery/fluid_machinery/unary/nullifier
-	name = "Nullifier"
+	name = "nullifier"
 	icon_state = "nullifier"
 	desc = "You're not really sure where the fluids go, but it probably doesn't matter."
 	HELP_MESSAGE_OVERRIDE("Removes up to 50 units per cycle.")
@@ -76,7 +78,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 	qdel(fluid)
 
 /obj/machinery/fluid_machinery/unary/input
-	name = "Port"
+	name = "port"
 	desc = "A big ol' hole for pouring in fluids."
 	icon_state = "port"
 	flags = NOSPLASH | OPENCONTAINER
@@ -105,23 +107,8 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 			T.active_liquid.group.drain(T.active_liquid, amount, src.network)
 			playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
 
-/obj/machinery/fluid_machinery/unary/drain/passive
-	name = "Passive drain"
-	icon_state = "drain"
-	drain_min = 2
-	drain_max = 7
-
-/obj/machinery/fluid_machinery/unary/drain/passive/process()
-	src.drain()
-
-/obj/machinery/fluid_machinery/unary/drain/passive/big
-	name = "Passive drain"
-	icon_state = "drainbig"
-	drain_min = 6
-	drain_max = 14
-
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump
-	name = "Inlet Pump"
+	name = "inlet pump"
 	icon_state = "inlet0"
 	desc = "A powered and togglable drainage pipe."
 	HELP_MESSAGE_OVERRIDE("Pulls anywhere from 10 to 15 units from a turf.")
@@ -165,7 +152,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	level = OVERFLOOR
 
 /obj/machinery/fluid_machinery/unary/hand_pump
-	name = "Hand Pump"
+	name = "hand pump"
 	icon_state = "output0"
 	desc = "A hand-operated pump."
 	flags = NOSPLASH
@@ -180,6 +167,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 		return
 	var/turf/simulated/T = get_turf(src)
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
+	if (isnull(fluid)) return
 	fluid?.trans_to(T, fluid.total_volume)
 	qdel(fluid)
 
@@ -200,12 +188,12 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 		return
 
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
-	boutput(user, SPAN_NOTICE("You fill [I] with [fluid?.trans_to(I, fluid.total_volume)] units of the contents of [src]."))
+	boutput(user, SPAN_NOTICE("You fill [I] with [fluid.trans_to(I, fluid.total_volume)] units of the contents of [src]."))
 	qdel(fluid)
 	playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
 /obj/machinery/fluid_machinery/unary/dispenser
-	name = "Dispenser"
+	name = "dispenser"
 	icon_state = "dispenser"
 	desc = "Dispenses patches, pills, and vials when filled to the set amount or when prompted."
 	HELP_MESSAGE_OVERRIDE("You can use a <b>multitool</b> to modify its settings.")
@@ -224,6 +212,11 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 		if("pills")
 			var/obj/item/reagent_containers/pill/P = new(get_turf(src))
 			src.reagents.trans_to(P, src.amount)
+			var/datum/color/average = P.reagents.get_average_color()
+			P.color_overlay = image('icons/obj/items/pills.dmi', "pill0")
+			P.color_overlay.color = average.to_rgb()
+			P.color_overlay.alpha = P.color_overlay_alpha
+			P.overlays += P.color_overlay
 			src.visible_message("[src] ejects a pill.")
 		if("vials")
 			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src))
@@ -268,7 +261,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 /obj/machinery/fluid_machinery/unary/dispenser/process()
 	if (!src.network) return
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.max)
-	fluid.trans_to(src, src.max)
+	fluid?.trans_to(src, src.max)
 	src.push_to_network(src.network, fluid)
 	src.reagents.handle_reactions()
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[src.reagents.total_volume]")
@@ -277,7 +270,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	src.dispense()
 
 /obj/machinery/fluid_machinery/unary/node
-	name = "Node"
+	name = "node"
 	desc = "Used for connecting non-fluid machinery to fluid pipes, AKA, YOU SHOULDNT SEE THIS."
 	invisibility = INVIS_ALWAYS
 
@@ -327,7 +320,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 
 
 /obj/machinery/fluid_machinery/binary/pump
-	name = "Fluid Pump"
+	name = "fluid pump"
 	desc = "Pulls from one side, pushes to the other."
 	HELP_MESSAGE_OVERRIDE("You can use a <b>multitool</b> to connect MechComp. This pump moves up to 200 units per pump.")
 	icon_state = "pump0"
@@ -381,7 +374,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	FLICK("actuallypump", src)
 
 /obj/machinery/fluid_machinery/binary/valve
-	name = "Fluid Valve"
+	name = "fluid valve"
 	desc = "Separates two fluid pipe networks."
 	icon_state = "valve0"
 	var/on = FALSE
@@ -468,7 +461,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 	src.initialize()
 
 /obj/machinery/fluid_machinery/trinary/filter
-	name = "Reagent Filter"
+	name = "reagent filter"
 	desc = "Filters out a specific reagent."
 	HELP_MESSAGE_OVERRIDE("Can be loaded with a <b>beaker</b>, which must contain at least 1 unit of a reagent. The most plentiful reagent is chosen for filtering.")
 	icon_state = "filter0"
@@ -481,13 +474,16 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 	if(!istype(B))
 		return
 
-	if(src.beaker)
-		boutput(user, "A beaker is already loaded into the machine.")
-
 	var/reagent_to_filter = B.reagents.get_master_reagent_id()
 	if(!B.reagents.has_reagent(reagent_to_filter, 1))
 		boutput(user, "[B] doesn't have enough of any reagent!")
 		return
+
+	if(src.beaker)
+		user?.put_in_hand_or_drop(src.beaker)
+		boutput(user, "You swap the [B] with the [src.beaker] already loaded into the machine.")
+		src.beaker = null
+
 	user.u_equip(B)
 	src.beaker = B
 	B.set_loc(src)
@@ -510,11 +506,14 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 		src.beaker = null
 		return
 	var/datum/reagents/removed = src.pull_from_network(src.network1, src.pullrate)
+	if (isnull(removed))
+		FLICK("filtering", src)
+		return
 	var/datum/reagents/filtered = new(removed.get_reagent_amount(reagent_to_filter))
 	filtered.add_reagent(reagent_to_filter, filtered.maximum_volume, donotreact = TRUE)
 	removed.remove_reagent(reagent_to_filter, filtered.maximum_volume)
 	if(!src.push_to_network(src.network2, filtered))
-		filtered.trans_to_direct(removed, filtered.total_volume)
+		src.push_to_network(src.network1, filtered)
 	if(!src.push_to_network(src.network3, removed))
 		src.push_to_network(src.network1, removed)
 	FLICK("filtering", src)

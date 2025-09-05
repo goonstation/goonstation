@@ -1543,6 +1543,9 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/fluid = A
 		reagents = fluid.group?.reagents
+	else if (istype(A, /obj/fluid_pipe))
+		var/obj/fluid_pipe/pipe = A
+		reagents = pipe.network.reagents
 	else if(!A.reagents)
 		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
 		reagents = A.reagents

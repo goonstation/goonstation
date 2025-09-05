@@ -645,7 +645,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		name = "Nullifier"
 		path = /obj/machinery/fluid_machinery/unary/nullifier
 		icon_state = "nullifier"
-		desc = "Disappears up to 50 unit."
+		desc = "Removes up to 50 units per cycle."
 	port
 		name = "Port"
 		path = /obj/machinery/fluid_machinery/unary/input

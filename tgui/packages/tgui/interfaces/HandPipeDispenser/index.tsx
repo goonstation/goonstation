@@ -39,7 +39,7 @@ export const HandPipeDispenser = () => {
   const [tab, setTab] = useSharedState('tab', Tab.AtmosPipes);
   const RESOURCE_ICON_NAME = issilicon ? 'bolt' : 'boxes-stacked';
   return (
-    <Window width={450} height={350}>
+    <Window width={525} height={350}>
       <Flex height="100%">
         <Flex.Item fill>
           <Section
