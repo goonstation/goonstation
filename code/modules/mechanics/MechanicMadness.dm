@@ -2964,6 +2964,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 		..()
 		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
 			return
+		return_if_overlay_or_effect(AM)
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return
 		LIGHT_UP_HOUSING
