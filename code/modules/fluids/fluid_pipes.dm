@@ -46,6 +46,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 		net.reagents.maximum_volume -= src.capacity
 		net.pipes -= src
 		src.network = null
+		src.set_loc(null)
 		net.rebuild_network_force()
 	..()
 
