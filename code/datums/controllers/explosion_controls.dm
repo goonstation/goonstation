@@ -139,7 +139,6 @@ var/datum/explosion_controller/explosions
 			deferred_powernet_objs = list()
 			makepowernets()
 
-		rebuild_camera_network()
 		next_turf_safe = FALSE
 
 	proc/process()
