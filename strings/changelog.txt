@@ -1,6 +1,10 @@
 
 (t)sat sep 06 25
 (u)glowbold
+(p)24563
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Both secured and unsecured closets can be busted open.
+(u)glowbold
 (p)24535
 (e)🆕💊|C-Feature, A-Medical
 (+)When a gene scanning computer is destroyed, the saved mutations and chromosomes are stored to the genetics circuit board.
