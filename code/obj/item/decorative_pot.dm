@@ -27,9 +27,6 @@ TYPEINFO(/obj/decorative_pot)
 
 		/// Inserts a new plant into the pot, overriding any previous.
 		proc/insert_plant(var/image/plant_image, var/image/plant_overlay_image, var/datum/plantgenes/genes, var/grow_level)
-				if (src.holding_plant)
-						// This probably introduces more bugs than it fixes.
-						src.ClearAllOverlays()
 				src.holding_plant = TRUE
 				if (plant_image)
 						plant_image.pixel_x = 2
