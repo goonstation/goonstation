@@ -1,5 +1,9 @@
 
 (t)sat sep 06 25
+(u)RubberRats
+(p)24525
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The Razorbill-180 should no longer leave floating ghost bullets on point-blank
 (u)Lord_Earthfire
 (p)24554
 (e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
