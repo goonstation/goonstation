@@ -868,7 +868,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				R["sex"] = target.gender
 				R["pronouns"] = target.get_pronouns().name
 				R["age"] = target.bioHolder.age
-				if (!target.gloves?.hide_prints)
+				if (!target.gloves?.print_mask)
 					R["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print]"
 					R["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print]"
 				R["p_stat"] = "Active"
@@ -886,7 +886,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			src.active1["pronouns"] = target.get_pronouns().name
 			src.active1["age"] = target.bioHolder.age
 			/////Fingerprint record update
-			if (!target.gloves?.hide_prints)
+			if (target.gloves?.print_mask && target.gloves?.print_mask.id != "0123-4567-89AB-CDEF")
 				src.active1["fingerprint_right"] = "Unknown"
 				src.active1["fingerprint_left"] = "Unknown"
 			else

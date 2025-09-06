@@ -25,6 +25,12 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 			registered_id_list[id_text] = src
 		..()
 
+/proc/build_id(var/list/char_list, var/id_length)
+	var/new_id = ""
+	for(var/i in 1 to id_length)
+		new_id += pick(char_list)
+	return new_id
+
 /proc/build_id_norepeat(var/list/char_list, var/id_length)
 	if(id_length > char_list.len)
 		id_length = char_list.len

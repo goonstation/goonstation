@@ -3359,7 +3359,7 @@ mob/living/carbon/human/has_genetics()
 
 /mob/living/carbon/human/on_forensic_scan(datum/forensic_scan/scan)
 	..()
-	if(!src.gloves?.hide_prints)
+	if(!src.gloves?.print_mask || src.gloves?.print_mask == "0123-4567-89AB-CDEF")
 		var/datum/forensic_id/print_right = src.limbs?.r_arm?.limb_print
 		var/datum/forensic_id/print_left = src.limbs?.l_arm?.limb_print
 		if(print_right || print_left)
@@ -3372,8 +3372,8 @@ mob/living/carbon/human/has_genetics()
 			else
 				scan.add_text("Fingerprints (Right): [print_right.id]")
 				scan.add_text("Fingerprints (Left): [print_left.id]")
-	if(src.gloves)
-		scan.add_text("Subject's Glove ID: [src.gloves.glove_ID] [src.gloves.material_prints ? "([src.gloves.material_prints])" : null]")
+	if(src.gloves?.fibers)
+		scan.add_text("Subject's Glove ID: ([src.gloves.fibers.id])")
 	if(src.bioHolder.Uid)
 		scan.add_text("Subject's DNA: [src.bioHolder.Uid]")
 
@@ -3412,8 +3412,8 @@ mob/living/carbon/human/has_genetics()
 	if(!print)
 		return null
 	if(src.gloves && !ignore_gloves)
-		fibers = register_id("temp fibers: likil")
-		mask = register_id("(...135...)")
+		fibers = src.gloves.fibers
+		mask = src.gloves.print_mask
 	var/fprint_flags = FORENSIC_REMOVE_CLEANING
 	var/datum/forensic_data/fingerprint/new_fprint = new(print, fibers, mask, fprint_flags)
 	return new_fprint

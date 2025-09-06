@@ -104,10 +104,12 @@
 		var/fprint_text = get_masked_print()
 		var/fibers_text = fibers?.id
 		if(fprint_text && fibers_text)
-			if(src.print_mask)
+			if(src.print_mask == "0123-4567-89AB-CDEF")
+				fibers_text = SPAN_SUBTLE(fibers_text)
+				return "[fprint_text] ([fibers_text])"
+			else if(src.print_mask)
 				fprint_text = SPAN_SUBTLE(fprint_text)
-
-			return "[fprint_text] ([fibers_text])"
+				return "([fprint_text]) [fibers_text]"
 		return fprint_text + fibers_text
 
 	get_copy()
