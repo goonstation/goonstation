@@ -452,6 +452,10 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, attackatom, attacker, meleeorthrow)
 		return
 
+	/// Some materials have their own icon file
+	proc/get_icon_file()
+		return 'icons/obj/items/materials/materials.dmi'
+
 //Material definitions
 /datum/material/interpolated
 	mat_id = "imcoderium"
@@ -564,6 +568,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 4)
 		setProperty("thermal", 4)
 
+	get_icon_file()
+		return 'icons/obj/items/materials/rocks.dmi'
+
 
 /datum/material/metal/electrum
 	mat_id = "electrum"
@@ -656,6 +663,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 2)
 		setProperty("hard", 2)
 
+	get_icon_file()
+		return 'icons/obj/items/materials/pharosium.dmi'
+
 
 /datum/material/metal/cobryl
 	mat_id = "cobryl"
@@ -673,6 +683,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("hard", 2)
 		setProperty("chemical", 8)
+
+	get_icon_file()
+		return 'icons/obj/items/materials/cobryl.dmi'
 
 
 
@@ -693,6 +706,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/bohrum())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
+	get_icon_file()
+		return 'icons/obj/items/materials/bohrum.dmi'
+
 
 /datum/material/metal/mauxite
 	mat_id = "mauxite"
@@ -710,6 +726,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/mauxite())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
+	get_icon_file()
+		return 'icons/obj/items/materials/mauxite.dmi'
+
 
 /datum/material/metal/cerenkite
 	mat_id = "cerenkite"
@@ -724,13 +743,15 @@ ABSTRACT_TYPE(/datum/material/metal)
 	New()
 		..()
 		value = 200
-
 		material_flags |= MATERIAL_ENERGY
 		setProperty("electrical", 6)
 		setProperty("radioactive", 5)
 		setProperty("hard", 2)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/cerenkite())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
+
+	get_icon_file()
+		return 'icons/obj/items/materials/cerenkite.dmi'
 
 
 /datum/material/metal/syreline
@@ -746,13 +767,15 @@ ABSTRACT_TYPE(/datum/material/metal)
 	New()
 		..()
 		value = 400
-
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
+
+	get_icon_file()
+		return 'icons/obj/items/materials/syreline.dmi'
 
 
 /datum/material/metal/gold
@@ -882,6 +905,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 8)
 		setProperty("chemical", 9)
 
+	get_icon_file()
+		return 'icons/obj/items/materials/iridium.dmi'
+
 
 /datum/material/metal/negativematter
 	mat_id = "negativematter"
@@ -956,6 +982,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/molitz_exp())
 
+	get_icon_file()
+		return 'icons/obj/items/materials/molitz.dmi'
+
 	beta
 		mat_id = "molitz_b"
 		name = "molitz beta"
@@ -1000,6 +1029,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/claretine())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
+	get_icon_file()
+		return 'icons/obj/items/materials/claretine.dmi'
+
 
 /datum/material/crystal/erebite
 	mat_id = "erebite"
@@ -1021,6 +1053,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/generic_explode_attack(33))
 		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/generic_explode_attack(33))
 		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/generic_explode_attack(33))
+
+	get_icon_file()
+		return 'icons/obj/items/materials/erebite.dmi'
 
 
 /datum/material/crystal/plasmastone
@@ -1048,6 +1083,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
+
+	get_icon_file()
+		return 'icons/obj/items/materials/plasmastone.dmi'
 
 
 /datum/material/crystal/plasmaglass
@@ -1219,6 +1257,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", 4)
 		setProperty("chemical", 9)
 
+	get_icon_file()
+		return 'icons/obj/items/materials/uqill.dmi'
+
 
 // hi it me cirr im doing dumb
 /datum/material/crystal/gnesis //Feather
@@ -1266,6 +1307,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/telecrystal_entered())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/telecrystal_onattack())
 
+	get_icon_file()
+		return 'icons/obj/items/materials/telecrystal.dmi'
 
 
 /datum/material/crystal/miracle
@@ -1283,6 +1326,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("reflective", rand(1, 9))
 		setProperty("chemical", rand(1, 8))
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
+
+	get_icon_file()
+		return 'icons/obj/items/materials/miracle.dmi'
 
 
 /datum/material/crystal/starstone
@@ -1326,6 +1372,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
+
+	get_icon_file()
+		return 'icons/obj/items/materials/ice.dmi'
 
 ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
@@ -1454,6 +1503,9 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 3)
 		setProperty("density", 2)
 
+	get_icon_file()
+		return 'icons/obj/items/materials/char.dmi'
+
 
 /datum/material/organic/koshmarite
 	mat_id = "koshmarite"
@@ -1468,6 +1520,9 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("reflective", 6)
 		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
+
+	get_icon_file()
+		return 'icons/obj/items/materials/koshmarite.dmi'
 
 
 /datum/material/organic/viscerite
@@ -1493,6 +1548,9 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("chemical", 6)
 		setProperty("flammable", 2)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
+
+	get_icon_file()
+		return 'icons/obj/items/materials/viscerite.dmi'
 
 /datum/material/organic/tensed_viscerite
 	mat_id = "tensed_viscerite"
@@ -1579,6 +1637,9 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_METAL
 		setProperty("density", 2)
 		setProperty("hard", 6)
+
+	get_icon_file()
+		return 'icons/obj/items/materials/chitin.dmi'
 
 
 /datum/material/organic/beeswax
@@ -1875,10 +1936,10 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("thermal", 1)
 		setProperty("flammable", 1)
 
-
-	New()
-		..()
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_itchy_onlife())
+
+	get_icon_file()
+		return 'icons/obj/items/materials/fibrilith.dmi'
 
 
 /datum/material/fabric/spidersilk
@@ -2065,6 +2126,9 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+
+	get_icon_file()
+		return 'icons/obj/items/materials/plutonium.dmi'
 
 /datum/material/metal/yuranite
 	mat_id = "yuranite"
