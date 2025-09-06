@@ -237,10 +237,10 @@ ABSTRACT_TYPE(/datum/job)
 		if (!min && !max)
 			return TRUE
 
-		var/round_num = player.get_rounds_participated()
+		var/round_num = player?.get_rounds_participated()
 		if (isnull(round_num)) //fetch failed, assume they're allowed because everything is probably broken right now
 			return TRUE
-		if (player?.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
+		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
 		if (round_num >= min && (round_num <= max || !max))
 			return TRUE
@@ -797,6 +797,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	wages = PAY_TRADESMAN
 	trait_list = list("training_miner")
 	access_string = "Miner"
+	invalid_antagonist_roles = list(ROLE_VAMPIRE)
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_mask = list(/obj/item/clothing/mask/breath)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)

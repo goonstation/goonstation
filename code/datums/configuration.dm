@@ -86,7 +86,7 @@
 	var/allowRotatingFullLogs = 0
 
 	//Maximum number of 1kb TGUI chunks for large payloads
-	var/tgui_max_chunk_count = 32
+	var/tgui_max_chunk_count = 64
 
 	/// Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0

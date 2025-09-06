@@ -990,7 +990,8 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 	was_harmed(mob/M, obj/item/weapon, special, intent)
 		. = ..()
-		M.add_karma(-1)
+		if(M)
+			M.add_karma(-1)
 
 	proc/play_dead(var/addtime = 0)
 		if (addtime > 0) // we're adding more time

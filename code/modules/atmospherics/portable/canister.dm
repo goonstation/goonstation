@@ -166,7 +166,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			UpdateOverlays(atmos_dmi, "holding")
 		else
 			UpdateOverlays(null, "holding")
-		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
+
+		var/tank_pressure = air_contents ? MIXTURE_PRESSURE(air_contents) : 0
 
 		if (tank_pressure < 10)
 			atmos_dmi.icon_state = "can-o0"

@@ -231,7 +231,11 @@ TYPEINFO(/obj/item/device/detective_scanner)
 
 					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 					P.info = scans[index]
-					P.name = "forensic readout"
+					var/print_title = href_list["title"]
+					if (print_title)
+						P.name = print_title
+					else
+						P.name = "forensic readout"
 
 
 	attack_self(mob/user as mob)
@@ -265,7 +269,8 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if(distancescan)
 			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant forensic scan of [target]."))
-				last_scan = scan_forensic(target, visible = 1)
+				var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
+				last_scan = scan.build_report()
 				boutput(user, last_scan)
 				src.add_fingerprint(user)
 
@@ -278,10 +283,11 @@ TYPEINFO(/obj/item/device/detective_scanner)
 
 		if (scans == null)
 			scans = new/list(maximum_scans)
-		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		var/datum/forensic_scan/scan = scan_forensic(A, visible = TRUE)
+		last_scan = scan.build_report()
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = last_scan + "<br>---- <a href='byond://?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [A];'>PRINT REPORT</a> ---<br>" + last_scan
 		number_of_scans += 1
 
 		boutput(user, scan_output)
