@@ -16,15 +16,15 @@
 
 	src.cache_tick = world.time
 
-	var/is_in_mob = "[ismob(message.message_origin.loc)]"
+	var/use_range_check = isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message))
 	src.cached_listeners_by_range_message_origin ||= list()
 	src.cached_listeners_by_range_message_origin[message.message_origin] ||= list()
 
-	if (is_in_mob)
-		src.cached_listeners_by_range_message_origin[message.message_origin][is_in_mob] = listeners
+	if (use_range_check)
+		src.cached_listeners_by_range_message_origin[message.message_origin]["[use_range_check]"] ||= list()
+		src.cached_listeners_by_range_message_origin[message.message_origin]["[use_range_check]"]["[message.heard_range]"] = listeners
 	else
-		src.cached_listeners_by_range_message_origin[message.message_origin][is_in_mob] ||= list()
-		src.cached_listeners_by_range_message_origin[message.message_origin][is_in_mob]["[message.heard_range]"] = listeners
+		src.cached_listeners_by_range_message_origin[message.message_origin]["[use_range_check]"] = listeners
 
 /// Attempt to retrieve a list of listeners by type, if it exists.
 /datum/listener_tick_cache/proc/read_from_cache(datum/say_message/message)
@@ -37,12 +37,12 @@
 		src.cached_listeners_by_range_message_origin = null
 		return
 
-	var/is_in_mob = "[ismob(message.message_origin.loc)]"
-	var/list/list/cached_listeners_by_range = src.cached_listeners_by_range_message_origin[message.message_origin][is_in_mob]
+	var/use_range_check = isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message))
+	var/list/list/cached_listeners_by_range = src.cached_listeners_by_range_message_origin[message.message_origin]["[use_range_check]"]
 	if (!cached_listeners_by_range)
 		return
 
-	if (is_in_mob)
+	if (!use_range_check)
 		return cached_listeners_by_range
 
 	. = cached_listeners_by_range["[message.heard_range]"]
@@ -62,5 +62,5 @@
 
 				.[type] += input
 
-		src.cached_listeners_by_range_message_origin[message.message_origin][is_in_mob][message.heard_range] = .
+		src.cached_listeners_by_range_message_origin[message.message_origin]["[use_range_check]"]["[message.heard_range]"] = .
 		return
