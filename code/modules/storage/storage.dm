@@ -266,7 +266,7 @@
 /// after attacking an object with the storage item
 /datum/storage/proc/storage_item_after_attack(atom/target, mob/user, reach)
 	var/obj/O = target
-	if (O.anchored)
+	if (istype(O) && O.anchored)
 		return
 	// if item is stored, drop storage and take it out
 	if (target in src.get_contents())
