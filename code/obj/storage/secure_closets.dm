@@ -1,4 +1,3 @@
-ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
@@ -59,18 +58,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 				attack_particle(user,src)
 				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 40, 1) //quiet, no hit twitch
 			else
-				var/damage
-				var/damage_text
-				if (I.force < 10)
-					damage = round(I.force * 0.6)
-					damage_text = " It's not very effective."
-				else
-					damage = I.force
-				user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src] with [I]! [damage_text]"))
-				attack_particle(user,src)
-				hit_twitch(src)
-				take_damage(clamp(damage, 1, 20), user, I, null)
-				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+				src.bash(I, user)
 		else
 			..()
 
@@ -126,42 +114,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
 		logTheThing(LOG_STATION, user, "[src.anchored ? "unanchored" : "anchored"] [log_object(src)] at [log_loc(src)]")
-
-	proc/take_damage(var/amount, var/mob/M = null, obj/item/I = null, var/obj/projectile/P = null)
-		if (!isnum(amount) || amount <= 0)
-			return
-		src._health -= amount
-		if(_health <= 0)
-			_health = 0
-			if (P)
-				var/shooter_data = null
-				var/vehicle
-				if (P.mob_shooter)
-					shooter_data = P.mob_shooter
-				else if (ismob(P.shooter))
-					var/mob/PS = P.shooter
-					shooter_data = PS
-				var/obj/machinery/vehicle/V
-				if (istype(P.shooter,/obj/machinery/vehicle/))
-					V = P.shooter
-					if (!shooter_data)
-						shooter_data = V.pilot
-					vehicle = 1
-				if(shooter_data)
-					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
-				else
-					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
-			else if (M)
-				logTheThing(LOG_COMBAT, M, "broke open [log_object(src)] with [log_object(I)] at [log_loc(src)]")
-			else
-				logTheThing(LOG_COMBAT, src, "was broken open by an unknown cause at [log_loc(src)]")
-			break_open()
-
-	proc/break_open(var/obj/projectile/P)
-		src.welded = 0
-		src.unlock()
-		src.open()
-		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
 	Crossed(atom/movable/AM) //copy pasted from closet because inheritence is a lie
 		. = ..()
