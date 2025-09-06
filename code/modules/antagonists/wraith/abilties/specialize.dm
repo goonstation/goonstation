@@ -6,7 +6,11 @@
 	pointCost = 150
 	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 	special_screen_loc = "NORTH-1,EAST"
+#ifdef RP_MODE
+	var/static/list/paths = list("Rot" = 1, "Trickster" = 3)
+#else
 	var/static/list/paths = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
+#endif
 	var/list/paths_buttons = list()
 
 
@@ -20,8 +24,8 @@
 		if (!object.contextActions)
 			object.contextActions = list()
 
-		for(var/i in 1 to 3)
-			var/datum/contextAction/wraith_evolve_button/newcontext = new /datum/contextAction/wraith_evolve_button(i)
+		for(var/name in src.paths)
+			var/datum/contextAction/wraith_evolve_button/newcontext = new /datum/contextAction/wraith_evolve_button(src.paths[name])
 			object.contextActions += newcontext
 
 	cast()
