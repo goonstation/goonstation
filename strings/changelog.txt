@@ -1,5 +1,9 @@
 
 (t)sat sep 06 25
+(u)JORJ949
+(p)24157
+(e)💅💊|C-QoL, A-Medical
+(+)Wheelchair parts can now be crafted at the medical fabricator
 (u)glowbold
 (p)24563
 (e)⚖📦|C-Balance, A-Game-Objects
