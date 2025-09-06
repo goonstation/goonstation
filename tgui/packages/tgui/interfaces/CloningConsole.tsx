@@ -29,7 +29,7 @@ import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goonstation/HealthStat';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
-import { DiskButton } from './DiskRack/DiskButton';
+import { DiskDrive } from './common/DiskDrive';
 
 interface CloningConsoleData {
   allowDeadScan: BooleanLike;
@@ -374,17 +374,24 @@ const StatusSection = () => {
         <Button
           icon="user-plus"
           align="center"
-          color={'good'}
+          color="good"
           onClick={() => act('clone')}
         >
           Clone
         </Button>
         <Divider />
-        <Stack vertical textAlign="center">
-          <Stack.Item>
-            <DiskButton diskColor={diskColor} diskName={diskName} />
+        <Stack vertical>
+          <Stack.Item align="center">
+            <DiskDrive
+              onEject={() => act('diskAction')}
+              onInsert={() => act('diskAction')}
+            >
+              {disk && (
+                <DiskDrive.Disk color={diskColor}>{diskName}</DiskDrive.Disk>
+              )}
+            </DiskDrive>
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item align="center">
             <Box>
               <Icon
                 color={!disk || diskReadOnly ? 'bad' : 'good'}
