@@ -1,5 +1,9 @@
 
 (t)sat sep 06 25
+(u)EmeraldCrow
+(p)24562
+(e)🎨|C-Sprites
+(+)Adds two new figurines (for raccoonpope and SuperBongoTime) to the game.
 (u)JORJ949
 (p)24157
 (e)💅💊|C-QoL, A-Medical
