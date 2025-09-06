@@ -6,8 +6,8 @@
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
-
-	lobby_titlecard = pick(list(new/datum/titlecard/nightshade, new/datum/titlecard/nightshade_2))
+	var/titlecard_type = pick(childrentypesof(/datum/titlecard/nightshade))
+	lobby_titlecard = new titlecard_type
 
 	lobby_titlecard.set_pregame_html()
 

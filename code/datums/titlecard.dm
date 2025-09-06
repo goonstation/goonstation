@@ -22,14 +22,6 @@
 	hehe
 		image_url = "images/titlecards/hehe_titlecard.png"
 
-	nightshade
-		image_url = "images/titlecards/nightshade2024_titlecard.png"
-		pixelated = FALSE
-
-	nightshade_2
-		image_url = "images/titlecards/nightshade2024_titlecard2.png"
-		pixelated = FALSE
-
 	disaster
 		overlay_image_url = "images/titlecards/disaster_titlecard.gif"
 		is_game_mode = TRUE
@@ -37,6 +29,27 @@
 	battleroyale
 		overlay_image_url = "images/titlecards/battleroyale_titlecard.png"
 		is_game_mode = TRUE
+
+/datum/titlecard/nightshade
+	nightshade_1
+		image_url = "images/titlecards/nightshade25_titlecard_1.png"
+		pixelated = FALSE
+
+	nightshade_2
+		image_url = "images/titlecards/nightshade25_titlecard_2.png"
+		pixelated = FALSE
+
+	nightshade_3
+		image_url = "images/titlecards/nightshade25_titlecard_3.png"
+		pixelated = FALSE
+
+	nightshade_5
+		image_url = "images/titlecards/nightshade25_titlecard_5.png"
+		pixelated = FALSE
+
+	nightshade_postit
+		image_url = "images/titlecards/nightshade2024postit5.png"
+		pixelated = FALSE
 
 /datum/titlecard/proc/set_pregame_html()
 	var/html = grabResource("html/pregame.html")
