@@ -291,7 +291,7 @@
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
+/obj/machinery/nuclear_reactor/prefilled/normal,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "agu" = (
@@ -31383,7 +31383,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "nCb" = (
-/obj/machinery/atmospherics/binary/reactor_turbine,
+/obj/machinery/reactor_turbine,
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
