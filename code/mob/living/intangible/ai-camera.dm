@@ -100,6 +100,10 @@ TYPEINFO(/mob/living/intangible/aieye)
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 		.=..()
 
+	clear_offline_indicator()
+		..()
+		src.mainframe.clear_offline_indicator()
+
 	isAIControlled()
 		return 1
 
