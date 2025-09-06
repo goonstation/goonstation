@@ -1,5 +1,9 @@
 
 (t)sat sep 06 25
+(u)JORJ949
+(p)24605
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Limb and Trinket bounties will now be marked as destroyed in spy uplinks when their target item is destroyed.
 (u)RubberRats
 (p)24525
 (e)🪲📦|C-Bug, A-Game-Objects
