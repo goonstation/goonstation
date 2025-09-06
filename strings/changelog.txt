@@ -1,5 +1,9 @@
 
 (t)sat sep 06 25
+(u)glowbold
+(p)24535
+(e)🆕💊|C-Feature, A-Medical
+(+)When a gene scanning computer is destroyed, the saved mutations and chromosomes are stored to the genetics circuit board.
 (u)JORJ949
 (p)24605
 (e)💅🧛|C-QoL, A-Gamemodes
