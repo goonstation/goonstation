@@ -39,6 +39,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	var/repressure_speed = 0.1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	power_usage = 100
+	_health = LOCKER_HEALTH_AVERAGE // TODO: balance health
+	_max_health = LOCKER_HEALTH_AVERAGE
 
 	var/is_processing = 1 //optimization thingy. kind of dumb. mbc fault. only process chute when flushed or recharging.
 
@@ -134,6 +136,29 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	proc/fits_in(atom/movable/AM)
 		return TRUE
 
+	proc/bash(obj/item/I, mob/user)
+		user.lastattacked = get_weakref(src)
+		var/damage
+		var/damage_text
+		if (I.force < 10)
+			damage = round(I.force * 0.6)
+			damage_text = " It's not very effective."
+		else
+			damage = I.force
+		user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src]! [damage_text]"))
+		attack_particle(user,src)
+		hit_twitch(src)
+		src.take_damage(clamp(damage, 1, 20), user, I, null)
+		playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+
+	proc/take_damage(amount, mob/user, obj/item/I, obj/projectile/P)
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			src.set_broken()
+
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
 		var/obj/item/storage/mechanics/mechitem = null
@@ -158,6 +183,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 						src.update()
 					else
 						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
+			return
+		// snowest of snowflake
+		if (islivingobject(user) && I.force > 0)
+			src.bash(I, user)
+			update()
 			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
@@ -218,6 +248,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					return
 				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
 		else
+			if (src._health < src._max_health && iswrenchingtool(I))
+				src.visible_message("[user] uses [I] to tighten the retaining screws on [src], repairing it.")
+				src._health = src._max_health // TODO: balance, actionbar
 			if (istype(mag))
 				actions.stopId(/datum/action/magPickerHold, user)
 			else if (!src.fits_in(I) || !user.drop_item())
