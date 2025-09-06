@@ -124,6 +124,7 @@
 				F = new /obj/item/paper/folded/ball(user)
 			F.info = src.info
 			F.old_desc = src.desc
+			F.icon_old = src.icon
 			F.old_icon_state = src.icon_state
 			F.stamps = src.stamps
 			F.setMaterial(src.material)
@@ -876,6 +877,8 @@
 			src.UpdateOverlays(stamp_overlay, "stamps_[i % PAPER_MAX_STAMPS_OVERLAYS]")
 			i++
 		if(src.old_icon_state)
+			if(src.icon_old)
+				src.icon = icon_old
 			src.icon_state = src.old_icon_state
 		else
 			if(src.info)

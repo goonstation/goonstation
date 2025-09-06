@@ -294,6 +294,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				boutput(user, "There are no scans stored inside \the [src]'s memory banks.")
 			else
 				boutput(user, "You can only tell that the scanned data is marked as '[src.print_type]'.")
+
 	proc/faith_print(var/mob/user) // Bible can print using faith instead of paper
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
@@ -451,8 +452,10 @@ TYPEINFO(/obj/machinery/photocopier)
 	proc/create_paper(var/list/paper_info)
 		var/obj/item/paper/P = new/obj/item/paper(src)
 		P.name = paper_info["name"]
-		P.icon = paper_info["icon"]
-		P.icon_state = paper_info["icon_state"]
+		if(paper_info["icon"])
+			P.icon = paper_info["icon"]
+		if(P.is_valid_icon_state(paper_info["icon_state"]))
+			P.icon_state = paper_info["icon_state"]
 		P.desc = paper_info["desc"]
 		P.info = paper_info["info"]
 		var/list/new_stamps = paper_info["stamps"]
@@ -478,8 +481,10 @@ TYPEINFO(/obj/machinery/photocopier)
 		var/obj/item/paper/manufacturer_blueprint/bp = new/obj/item/paper/manufacturer_blueprint(src, M)
 		bp.name = bp_info["name"]
 		bp.desc = bp_info["desc"]
-		bp.icon = bp_info["icon"]
-		bp.icon_state = bp_info["icon_state"]
+		if(bp_info["icon"])
+			bp.icon = bp_info["icon"]
+		if(bp.is_valid_icon_state(bp_info["icon_state"]))
+			bp.icon_state = bp_info["icon_state"]
 		bp.item_state = bp_info["item_state"]
 		bp.info = bp_info["info"]
 		bp.override_name_desc = bp_info["override"]
@@ -499,11 +504,15 @@ TYPEINFO(/obj/machinery/photocopier)
 		P.fullImage.transform = oldtransform
 		P.fullImage.pixel_y = 0
 		return P
+
 	proc/create_wanted_poster(var/list/poster_info)
 		var/obj/item/poster/titled_photo/W = new/obj/item/poster/titled_photo(src)
 		W.name = poster_info["name"]
 		W.desc = poster_info["desc"]
-		W.icon_state = poster_info["icon_state"]
+		if(poster_info["icon"])
+			W.icon = poster_info["icon"]
+		if(W.is_valid_icon_state(poster_info["icon_state"]))
+			W.icon_state = poster_info["icon_state"]
 		W.poster_image = poster_info["poster_image"]
 		W.poster_image_old = poster_info["poster_image_old"]
 		W.photo = poster_info["photo"] = W.photo
@@ -518,12 +527,15 @@ TYPEINFO(/obj/machinery/photocopier)
 		var/list/plist = poster_info["plist"]
 		W.plist = plist?.Copy()
 		return W
+
 	proc/create_booklet()
 		var/obj/item/paper_booklet/B = new/obj/item/paper_booklet(src)
 		B.name = src.print_info["name"]
 		B.desc = src.print_info["desc"]
-		B.icon = src.print_info["icon"]
-		B.icon_state = src.print_info["icon_state"]
+		if(src.print_info["icon"])
+			B.icon = src.print_info["icon"]
+		if(B.is_valid_icon_state(src.print_info["icon_state"]))
+			B.icon_state = src.print_info["icon_state"]
 		var/page_count = src.print_info["page_count"]
 		for(var/i=1, i<= page_count, i++)
 			var/list/sub_info = src.print_info["page_[i]"]
@@ -531,12 +543,15 @@ TYPEINFO(/obj/machinery/photocopier)
 			P.set_loc(B)
 			B.pages += P
 		return B
+
 	proc/create_folder() // Create a folder with the scanned items (for ai_peek() while a folder is scanned)
 		var/obj/item/folder/F = new/obj/item/folder(src)
 		F.name = src.print_info["name"]
 		F.desc = src.print_info["desc"]
-		F.icon = src.print_info["icon"]
-		F.icon_state = src.print_info["icon_state"]
+		if(src.print_info["icon"])
+			F.icon = src.print_info["icon"]
+		if(F.is_valid_icon_state(src.print_info["icon_state"]))
+			F.icon_state = src.print_info["icon_state"]
 		var/page_count = src.print_info["page_count"]
 		for(var/i=1, i<= page_count, i++)
 			var/list/sub_info = src.print_info["page_[i]"]
@@ -546,6 +561,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		F.is_virtual = TRUE
 		F.tooltip_rebuild = TRUE
 		return F
+
 	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper into the copier here
 		if (istype(w, /obj/item/paper))
 			if (istype(w, /obj/item/paper/book) || istype(w, /obj/item/paper/newspaper))
@@ -576,6 +592,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				P.amount_left = 0
 				P.update()
 				boutput(user, "You load the paper into \the [src].")
+
 	proc/try_put_in_folder(var/obj/item/w)
 		for(var/obj/item/folder/F in src.loc.contents)
 			if(F.contents.len < FOLDER_MAX_ITEMS)
@@ -633,6 +650,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.use_state = 2
 		user.drop_item()
 		w.set_loc(src)
+
 	proc/scan_subitem(var/obj/item/w) // For items with multiple pages.
 		var/list/sheet_info = new/list()
 		if (istype(w, /obj/item/paper))
@@ -645,6 +663,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			var/obj/item/photo/P = w
 			sheet_info = scan_photo_data(P)
 		return sheet_info
+
 	proc/scan_paper(var/obj/item/paper/P, var/mob/user)
 		scan_setup(P, user)
 		src.icon_state = "papper"
@@ -664,6 +683,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		effects_scanning(P)
 		src.print_info = scan_paper_data(P)
 		src.print_type = src.print_info["print_type"]
+
 	proc/scan_paper_data(var/obj/item/paper/P)
 		var/list/scan_info = new/list()
 		if (istype(P, /obj/item/paper/manufacturer_blueprint))
@@ -717,6 +737,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			scan_info["overlays"] = P.overlays
 			scan_info["print_type"] = "paper"
 		return scan_info
+
 	proc/scan_paper_blueprint(var/obj/item/paper/manufacturer_blueprint/bp)
 		var/list/scan_info = new/list()
 		scan_info["name"] = bp.name
@@ -729,6 +750,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		scan_info["override"] = bp.override_name_desc
 		scan_info["print_type"] = "blueprint"
 		return scan_info
+
 	proc/scan_photo(var/obj/item/photo/P, var/mob/user)
 		// Photo: index 1 is name, index 2 is desc, index 3 is fullImage, index 4 is fullIcon
 		scan_setup(P, user)
@@ -824,6 +846,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		effects_scanning(W)
 		src.print_info = scan_poster_data(W)
 		src.print_type = src.print_info["print_type"]
+
 	proc/scan_poster_data(var/obj/item/poster/titled_photo/W)
 		var/list/scan_info = new/list()
 		scan_info["name"] = W.name
@@ -843,6 +866,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		scan_info["plist"] = W.plist?.Copy()
 		scan_info["print_type"] = "poster_wanted"
 		return scan_info
+
 	proc/scan_booklet(var/obj/item/paper_booklet/B, var/mob/user)
 		scan_setup(B, user)
 		src.icon_state = "scan_news"
@@ -858,6 +882,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			src.print_info["page_[i]"] = scan_subitem(P)
 		src.sheets_per_item = B.pages.len
 		src.print_type = "booklet"
+
 	proc/scan_folder(var/obj/item/folder/F, var/mob/user)
 		scan_setup(F, user)
 		src.icon_state = "papper"
@@ -908,6 +933,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["stamps"] = null
 		src.print_info["form_fields"] = list()
 		src.print_info["field_counter"] = 1
+		src.print_info["icon"] = 'icons/obj/writing.dmi'
 		src.print_info["icon_state"] = "paper_blank"
 		src.print_info["sizex"] = 0
 		src.print_info["sizey"] = 0
@@ -925,6 +951,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		w.set_loc(get_turf(src))
 		src.visible_message("\The [src] finishes scanning and opens automatically!")
 		src.use_state = 1
+
 	proc/reset_all()
 		// Clear the scanning data, usually before a new scan.
 		src.print_info = list()

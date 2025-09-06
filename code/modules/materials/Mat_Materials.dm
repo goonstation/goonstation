@@ -550,7 +550,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "rock"
 	name = "stone"
 	desc = "Near useless asteroid rock with some traces of random metals."
-	color = "#ACACAC"
+	color = list(0.60, 0.60, 0.60, 0.00,\
+				0.35, 0.35, 0.35, 0.00,\
+				0.25, 0.25, 0.25, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	texture = "rock"
 
 	New()
@@ -565,7 +569,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "electrum"
 	name = "electrum"
 	desc = "Highly conductive alloy of gold and silver."
-	color = "#44ACAC"
+	color = list(0.55, 0.475, 0.275, 0.00,\
+				0.35, 0.325, 0.15, 0.00,\
+				0.45, 0.425, 0.20, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -607,6 +615,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "steel"
 	name = "steel"
 	desc = "Terrestrial steel from Earth."
+	color = list(0.522, 0.162, 0.162, 0.00,\
+				0.324, 0.684, 0.324, 0.00,\
+				0.054, 0.054, 0.414, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00) // Desaturate and darken slightly
 	New()
 		..()
 		setProperty("density", 4)
@@ -616,7 +629,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "copper"
 	name = "copper"
 	desc = "Copper is a terrestrial conductive metal from proto-Dan mines. It is inferior to pharosium."
-	color = "#B87333" //the hex value known as copper in RGB colorspace
+	color = list( 0.80, 0.30, 0.00, 0.00,\
+				0.40, 0.20, 0.10, 0.00,\
+				0.60, 0.20, 0.30, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	New()
 		..()
 		setProperty("electrical", 6)
@@ -628,7 +645,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "pharosium"
 	name = "pharosium"
 	desc = "Pharosium is a conductive metal."
-	color = "#E39362"
+	color = list(0.60, 0.30, 0.20, 0.00,\
+				0.40, 0.20, 0.10, 0.00,\
+				0.50, 0.20, 0.20, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	New()
 		..()
 		setProperty("electrical", 7)
@@ -640,7 +661,12 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "cobryl"
 	name = "cobryl"
 	desc = "Cobryl is a somewhat valuable metal."
-	color = "#84D5F0"
+	color = list(0.50, 0.50, 0.65, 0.00,\
+				0.40, 0.40, 0.50, 0.00,\
+				0.45, 0.45, 0.55, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+
 	New()
 		..()
 		value = 175
@@ -654,30 +680,46 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "bohrum"
 	name = "bohrum"
 	desc = "Bohrum is a heavy and highly durable metal."
-	color = "#3D692D"
+	color = list(0.50, 0.00, 0.00, 0.00,\
+				0.25, 0.75, 0.25, 0.00,\
+				0.00, 0.00, 0.50, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	New()
 		..()
 		setProperty("density", 6)
 		setProperty("hard", 5)
 		setProperty("chemical", 7)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/bohrum())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/metal/mauxite
 	mat_id = "mauxite"
 	name = "mauxite"
 	desc = "Mauxite is a sturdy common metal."
-	color = "#534747"
+	color = list(1.00, 0.00, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 0.00,\
+				0.00, 1.00, 1.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	New()
 		..()
 		setProperty("density", 4)
 		setProperty("hard", 3)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/mauxite())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/metal/cerenkite
 	mat_id = "cerenkite"
 	name = "cerenkite"
 	desc = "Cerenkite is a highly radioactive metal."
-	color = "#CDBDFF"
+	color = list(0.00, 0.00, 1.00, 0.00,\
+				1.00, 1.00, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -687,13 +729,19 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 5)
 		setProperty("hard", 2)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/cerenkite())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/metal/syreline
 	mat_id = "syreline"
 	name = "syreline"
 	desc = "Syreline is an extremely valuable and coveted metal."
-	color = "#FAF5D4"
+	color = list(0.70, 0.70, 0.40, 0.00,\
+				0.60, 0.60, 0.40, 0.00,\
+				0.50, 0.50, 0.30, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.2, -0.2, 0.00, 0.00)
 
 	New()
 		..()
@@ -711,7 +759,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "gold"
 	name = "gold"
 	desc = "A somewhat valuable and conductive metal."
-	color = "#F5BE18"
+	color = list(0.60, 0.45, 0.00, 0.00,\
+				0.40, 0.35, 0.00, 0.00,\
+				0.50, 0.45, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -731,7 +783,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "silver"
 	name = "silver"
 	desc = "A slightly valuable and conductive metal."
-	color = "#C1D1D2"
+	color = list(0.50, 0.50, 0.55, 0.00,\
+				0.30, 0.30, 0.325, 0.00,\
+				0.40, 0.40, 0.40, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -794,13 +850,18 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "spacelag"
 	name = "spacelag"
 	desc = "*BUFFERING*"
-	color = "#3F3A38"
+	color = list(-0.15, -0.25, -0.15, 0.00,\
+				-0.25, -0.25, -0.25, 0.00,\
+				-0.15, -0.25, -0.15, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.30, 0.25, 0.30, 0.00)
 
 	New()
 		..()
 		setProperty("density", 8)
 		setProperty("hard", 1)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/spacelag_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/spacelag_remove())
 
 
 /datum/material/metal/iridiumalloy
@@ -808,7 +869,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "iridium alloy"
 	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
-	color = "#756596"
+	color = list(0.45, 0.40, 0.65, 0.00,\
+				0.45, 0.40, 0.65, 0.00,\
+				0.35, 0.35, 0.65, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -835,13 +900,19 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "soulsteel"
 	name = "soulsteel"
 	desc = "A metal imbued with souls. Creepy."
-	color = "#73DFF0"
+	color = list(0.50, 1.00, 1.00, 0.00,\
+				0.00, 0.00, 0.00, 0.00,\
+				0.50, 0.00, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
 		material_flags|= MATERIAL_ENERGY
 		setProperty("density", 4)
 		setProperty("hard", 2)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/soulsteel())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
@@ -912,13 +983,22 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "claretine"
 	name = "claretine"
 	desc = "Claretine is a highly conductive salt."
-	color = "#C2280A"
+	color = list(0.6, 0.00, 0.00, 0.00,\
+				0.40, 0.20, 0.20, 0.00,\
+				0.20, 0.10, 0.20, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	texture = "claretine"
+	texture_blend = BLEND_ADD
+
 
 	New()
 		..()
 		setProperty("density", 3)
 		setProperty("hard", 1)
 		setProperty("electrical", 8)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/claretine())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/crystal/erebite
@@ -947,7 +1027,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "plasmastone"
 	name = "plasmastone"
 	desc = "Plasma in its solid state."
-	color = "#A114FF"
+	color = list(0.50, 0.10, 0.25, 0.00,\
+				0.15, 0.00, 0.15, 0.00,\
+				0.25, 0.10, 0.50, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	texture = "plasmastone"
+	texture_blend = BLEND_INSET_OVERLAY
 
 	New()
 		..()
@@ -1113,7 +1199,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "uqill"
 	name = "uqill"
 	desc = "Uqill is a rare and very dense stone."
-	color = "#0F0A08"
+	color = list(0.15, 0.15, 0.15, 0.00,\
+				0.15, 0.15, 0.15, 0.00,\
+				0.15, 0.15, 0.15, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	alpha = 255
 
 	transparent // For bulletproof windows.
@@ -1159,7 +1249,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "telecrystal"
 	name = "telecrystal"
 	desc = "Telecrystal is a gemstone with space-warping properties."
-	color = "#4C14F5"
+	color = list(0.50, 0.25, 0.25, 0.00,\
+				0.25, 0.00, 0.25, 0.00,\
+				0.35, 0.25, 0.45, 0.00,\
+				0.00, 0.00, 0.00, 0.39,\
+				0.00, 0.00, 0.00, 0.00)
 	alpha = 100
 
 	New()
@@ -1195,7 +1289,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "starstone"
 	name = "starstone"
 	desc = "An extremely rare jewel."
-	color = "#B5E0FF"
+	color = list(0.45, 0.50, 0.50, 0.00,\
+				0.20, 0.20, 0.20, 0.00,\
+				0.30, 0.35, 0.40, 0.00,\
+				0.00, 0.00, 0.00, 0.31,\
+				0.00, 0.15, 0.25, 0.00)
 	alpha = 80
 	value = 1000
 
@@ -1376,7 +1474,13 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "viscerite"
 	name = "viscerite"
 	desc = "A disgusting flesh-like material. Ugh. What the hell is this?"
-	color = "#D04FFF"
+	color = list(0.60, 0.40, 0.60, 0.00,\
+				0.60, 0.40, 0.60, 0.00,\
+				0.60, 0.40, 0.60, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.10, -0.20, -0.10, 0.00)
+	texture = "viscerite"
+	texture_blend = BLEND_DEFAULT
 
 	edible_exact = 0.6 //Just barely edible.
 	edible = 1
@@ -1408,8 +1512,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "bone"
 	name = "bone"
 	desc = "Bone is pretty spooky stuff."
-	color = "#DDDDDD"
-
+	color = list(0.75, 0.70, 0.65, 0.00,\
+				0.55, 0.50, 0.45, 0.00,\
+				0.65, 0.60, 0.55, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.20, -0.20, -0.20, 0.00)
 	New()
 		..()
 		setProperty("density", 3)
@@ -1491,7 +1598,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "honey"
 	name = "refined honey" //Look calling both the globs and the material just "honey" isn't helping people's confusion wrt making clone pods
 	desc = ""
-	color = "#f1da10"
+	color = list(0.80, 0.45, 0.00, 0.00,\
+				0.50, 0.35, 0.00, 0.00,\
+				0.55, 0.35, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	edible_exact = TRUE
 	edible = TRUE
 
@@ -1502,6 +1613,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("flammable", 4)
 		// addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_honey())
 		// maybe make it sticky somehow?
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/honey_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/honey_remove())
 
 
 /datum/material/organic/frozenfart

@@ -320,7 +320,7 @@
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
-		J.toggle()
+		J.toggle(the_mob)
 		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
