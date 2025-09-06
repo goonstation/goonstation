@@ -19,6 +19,7 @@
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
+	open_to_sound = FALSE
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
