@@ -44,7 +44,7 @@
 	src.sys_folder = null
 	src.processing_drivers = null
 
-	if (src.master.os == src)
+	if (src.master?.os == src)
 		src.master.os = null
 
 	for (var/datum/dwaine_syscall/syscall as anything in src.syscalls)
@@ -459,13 +459,10 @@
 
 		src.initialize_driver(special_driver)
 
-	// Iterate through current devices and use that to create active device files.
+	// Iterate through current devices and create drivers for them.
 	for (var/i in src.master.terminals)
 		var/datum/terminal_connection/conn = src.master.terminals[i]
-		if (!istype(conn))
-			continue
-
-		if (conn.term_type == "HUI_TERMINAL")
+		if (!istype(conn) || (conn.term_type == "HUI_TERMINAL"))
 			continue
 
 		var/conn_type = lowertext(conn.term_type)
