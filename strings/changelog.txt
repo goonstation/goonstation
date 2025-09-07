@@ -1,4 +1,38 @@
 
+(t)sun sep 07 25
+(u)glowbold
+(p)24594
+(e)🆕⚖🐁|C-Feature, C-Balance, A-Critters
+(*)Living objects attempt to destroy common hiding places.
+(t)sat sep 06 25
+(u)EmeraldCrow
+(p)24562
+(e)🎨|C-Sprites
+(+)Adds two new figurines (for raccoonpope and SuperBongoTime) to the game.
+(u)JORJ949
+(p)24157
+(e)💅💊|C-QoL, A-Medical
+(+)Wheelchair parts can now be crafted at the medical fabricator
+(u)glowbold
+(p)24563
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Both secured and unsecured closets can be busted open.
+(u)glowbold
+(p)24535
+(e)🆕💊|C-Feature, A-Medical
+(+)When a gene scanning computer is destroyed, the saved mutations and chromosomes are stored to the genetics circuit board.
+(u)JORJ949
+(p)24605
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Limb and Trinket bounties will now be marked as destroyed in spy uplinks when their target item is destroyed.
+(u)RubberRats
+(p)24525
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The Razorbill-180 should no longer leave floating ghost bullets on point-blank
+(u)Lord_Earthfire
+(p)24554
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Assemblies will now be considered contraband, if they have anything on them that is considered contraband
 (t)fri sep 05 25
 (u)Lord_Earthfire
 (p)24578

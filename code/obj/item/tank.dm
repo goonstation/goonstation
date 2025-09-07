@@ -363,8 +363,13 @@ ABSTRACT_TYPE(/obj/item/tank)
 		return " [log_atmos(src)]"
 
 	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//lets make them contraband 4, like pipebombs
+		var/singletank_bomb_contraband_level = 4
 		//we need to add the new icon for the plasma tank
 		parent_assembly.target_item_prefix = "plasma"
+		// we update the contraband now to reflect the newly added tank
+		APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_GUNS, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), singletank_bomb_contraband_level))
+		SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 
 	/// ----------------------------------------------
 

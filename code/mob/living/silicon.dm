@@ -708,6 +708,10 @@ var/global/list/module_editors = list()
 	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
 		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
 
+/mob/living/silicon/clear_offline_indicator()
+	..()
+	src.mainframe?.clear_offline_indicator()
+
 /datum/statusEffect/low_power
 	id = "low_power"
 	name = "Low Power"
