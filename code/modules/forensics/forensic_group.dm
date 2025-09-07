@@ -207,6 +207,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 /datum/forensic_group/adminprints // Chain of custody for admins
 	var/list/datum/forensic_data/adminprint/print_list = list() // All the players who touched this
 	var/datum/forensic_data/adminprint/last_print = null // The last player to touch this thing
+	category = FORENSIC_GROUP_ADMINPRINTS
 	group_flags = 0
 
 	disposing()

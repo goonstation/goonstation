@@ -35,11 +35,17 @@
 	if(src.forensic_holder)
 		src.forensic_holder.remove_evidence(removal_flags)
 
-/atom/proc/get_adminprints(var/admin_client)
-	var/datum/forensic_group/adminprints/aprints_group = src.forensic_holder.get_group(FORENSIC_GROUP_ADMINPRINTS)
+/atom/proc/get_adminprints()
+	var/datum/forensic_group/adminprints/aprints_group = src.forensic_holder.get_group(FORENSIC_GROUP_ADMINPRINTS, TRUE)
 	if(!istype(aprints_group))
 		return "<b>No admin forensics found on [src].</b>"
 	return "<b>Hidden Adminprints on [src]:</b>" + aprints_group.get_adminprints()
+
+/atom/proc/get_last_ckey(var/admin_client)
+	var/datum/forensic_group/adminprints/aprints_group = src.forensic_holder.get_group(FORENSIC_GROUP_ADMINPRINTS, TRUE)
+	if(istype(aprints_group) && aprints_group.last_print)
+		return aprints_group.last_print.clientKey.id
+	return "None"
 
 /atom/movable
 	var/tracked_blood = null // list(bDNA, btype, color, count)
@@ -60,6 +66,9 @@
 /atom/proc/add_fingerprint(mob/living/M, hidden_only = FALSE)
 	if (!ismob(M) || isnull(M.key))
 		return
+	if(M.client?.ckey)
+		var/datum/forensic_data/adminprint/aprint_data = new(register_id(M.client.ckey))
+		src.forensic_holder.add_evidence(aprint_data, FORENSIC_GROUP_ADMINPRINTS, TRUE)
 	if (src.flags & NOFPRINT)
 		return
 	if(ishuman(M))

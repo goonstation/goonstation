@@ -21,7 +21,7 @@
 
 	proc/get_minutes_since(var/time, var/since_start = FALSE)
 		var/data_time = since_start ? time_end : time_start
-		return TO_MINUTES((time - data_time) * -1)
+		return TO_MINUTES(time) - TO_MINUTES(data_time)
 
 // Generic evidence that can be stored as an ID + optional value. Don't forget to set the flags.
 /datum/forensic_data/basic
@@ -72,14 +72,16 @@
 /datum/forensic_data/adminprint
 	var/datum/forensic_id/clientKey = null
 
-	New(var/ckey)
+	New(var/datum/forensic_id/clientKey)
 		..()
 		src.clientKey = clientKey
 
 	get_text()
 		var/mins_start = src.get_minutes_since(TIME, TRUE)
 		var/mins_end = src.get_minutes_since(TIME)
-		return src.clientKey.id + SPAN_SUBTLE("([mins_end] - [mins_start] mins ago)")
+		if(mins_start == mins_end)
+			return src.clientKey.id + SPAN_SUBTLE(" ([mins_end] mins ago)")
+		return src.clientKey.id + SPAN_SUBTLE(" ([mins_end] to [mins_start] mins ago)")
 
 	get_copy()
 		var/datum/forensic_data/adminprint/data_copy = new(src.clientKey)
