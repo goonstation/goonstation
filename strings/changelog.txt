@@ -1,4 +1,9 @@
 
+(t)sun sep 07 25
+(u)glowbold
+(p)24594
+(e)🆕⚖🐁|C-Feature, C-Balance, A-Critters
+(*)Living objects attempt to destroy common hiding places.
 (t)sat sep 06 25
 (u)EmeraldCrow
 (p)24562
