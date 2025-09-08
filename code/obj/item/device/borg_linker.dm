@@ -67,13 +67,11 @@ TYPEINFO(/obj/item/device/borg_linker)
 		if(sillycon.law_rack_connection == src.linked_rack)
 			boutput(user, SPAN_ALERT("[sillycon] is already connected to the linked rack!"))
 			return
-		if(sillycon.syndicate || sillycon.emagged)
-			boutput(user, SPAN_ALERT("The link port sparks violently! It didn't work!"))
-			logTheThing(LOG_STATION, sillycon, "[constructName(user)] tried to connect [sillycon] to the rack [constructName(src.linked_rack)] but they are [sillycon.emagged ? "emagged" : "syndicate"], so it failed.")
-			elecflash(user,power=2)
-			return
 		if(istype(sillycon, /mob/living/silicon/robot) || istype(sillycon, /mob/living/silicon/ai))
-			var/description = "Target is [sillycon.law_rack_connection ? "connected to rack at [get_area(sillycon.law_rack_connection)]" : "not connected to a rack"]. "
+			var/area_to_tell = get_area(sillycon.law_rack_connection)
+			if(sillycon.syndicate) // You have to complete the actionbar and get shocked to find this out
+				area_to_tell = get_area(ticker.ai_law_rack_manager.default_ai_rack) || "AI Upload Chamber"
+			var/description = "Target is [sillycon.law_rack_connection ? "connected to rack at [area_to_tell]" : "not connected to a rack"]. "
 			description += "Reconnect to rack at [get_area(src.linked_rack)]?"
 			var/raw = tgui_alert(user, description, "Linker", list("Yes", "No"))
 			if (raw == "Yes")
@@ -91,6 +89,11 @@ TYPEINFO(/obj/item/device/borg_linker)
 
 	proc/link_to_rack(var/mob/living/silicon/sillycon, mob/user)
 		if(!sillycon || !istype(sillycon))
+			return
+		if(sillycon.syndicate || sillycon.emagged)
+			boutput(user, SPAN_ALERT("The link port sparks violently! It didn't work!"))
+			logTheThing(LOG_STATION, sillycon, "[constructName(user)] tried to connect [sillycon] to the rack [constructName(src.linked_rack)] but they are [sillycon.emagged ? "emagged" : "syndicate"], so it failed.")
+			elecflash(user,power=2)
 			return
 		sillycon.set_law_rack(src.linked_rack, user)
 
