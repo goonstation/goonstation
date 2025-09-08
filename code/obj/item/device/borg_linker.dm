@@ -64,7 +64,8 @@ TYPEINFO(/obj/item/device/borg_linker)
 		if(sillycon.shell || sillycon.dependent)
 			boutput(user, SPAN_ALERT("You need to reprogram the AI's mainframe!"))
 			return
-		if(sillycon.law_rack_connection == src.linked_rack)
+		//Syndicate cyborgs are totally not real guys they're connected to the default rack you gotta believe me they're not a syndieborg i swear
+		if((sillycon.law_rack_connection == src.linked_rack) || (sillycon.syndicate && src.linked_rack == ticker.ai_law_rack_manager.default_ai_rack))
 			boutput(user, SPAN_ALERT("[sillycon] is already connected to the linked rack!"))
 			return
 		if(istype(sillycon, /mob/living/silicon/robot) || istype(sillycon, /mob/living/silicon/ai))
