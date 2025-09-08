@@ -1,4 +1,253 @@
 
+(t)sun sep 07 25
+(u)glowbold
+(p)24594
+(e)🆕⚖🐁|C-Feature, C-Balance, A-Critters
+(*)Living objects attempt to destroy common hiding places.
+(t)sat sep 06 25
+(u)EmeraldCrow
+(p)24562
+(e)🎨|C-Sprites
+(+)Adds two new figurines (for raccoonpope and SuperBongoTime) to the game.
+(u)JORJ949
+(p)24157
+(e)💅💊|C-QoL, A-Medical
+(+)Wheelchair parts can now be crafted at the medical fabricator
+(u)glowbold
+(p)24563
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Both secured and unsecured closets can be busted open.
+(u)glowbold
+(p)24535
+(e)🆕💊|C-Feature, A-Medical
+(+)When a gene scanning computer is destroyed, the saved mutations and chromosomes are stored to the genetics circuit board.
+(u)JORJ949
+(p)24605
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Limb and Trinket bounties will now be marked as destroyed in spy uplinks when their target item is destroyed.
+(u)RubberRats
+(p)24525
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The Razorbill-180 should no longer leave floating ghost bullets on point-blank
+(u)Lord_Earthfire
+(p)24554
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Assemblies will now be considered contraband, if they have anything on them that is considered contraband
+(t)fri sep 05 25
+(u)Lord_Earthfire
+(p)24578
+(e)🆕🎨📦⚙|C-Feature, C-Sprites, A-Game-Objects, A-Internal
+(*)Hand teles can now be build into assemblies.
+(+)Components in assemblies that uses energy cells can now have their cells swapped while in the assembly or be charged in chargers by putting the assembly in the charger.
+(t)thu sep 04 25
+(u)Mr. Moriarty & Mordent
+(p)24451
+(e)🆕📄🐣|C-Feature, A-UI, A-Respawning
+(*)The job preferences window has been converted to TGUI and integrated into the Character Setup panel.
+(u)SnugglyCactus
+(p)23962
+(e)🆕🎨💊💪|C-Feature, C-Sprites, A-Medical, A-Traits
+(+)Added trait "Defect Prone"; cloning's going to get a bit weirder.
+(u)LorrMaster
+(p)24349
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Updated how various materials impact object appearance.
+(u)JORJ949
+(p)24579
+(e)⚖📨|C-Balance, A-Logistics
+(+)Vampires can no longer be assigned the Miner job.
+(t)tue sep 02 25
+(u)Lord_Earthfire
+(p)24553
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Panic buttons can now be used to create assemblies with any commonly used trigger (e.g. mousetraps, signalers, timers or health analyzers)
+(u)LeahTheTech
+(p)24558
+(e)🔨|A-Player-Actions
+(+)You can send URLs in OOC and LOOC channels again and out loud on classic.
+(t)sat aug 30 25
+(u)Calphrick
+(p)24395
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Changed one of the materials needed for the cyborg teleport upgrade.
+(u)LeahTheTech
+(p)24537
+(e)⛔|C-Removal
+(+)The scots accent has been made very slightly less incomprehensible.
+(t)thu aug 28 25
+(u)JORJ949
+(p)24528
+(e)💅💡|C-QoL, A-Station-Systems
+(*)Computer and Console frames convert into each other depending on if a Circuitboard or Motherboard is inserted.
+(t)wed aug 27 25
+(u)LeahTheTech
+(p)24530
+(e)🧱|A-Materials
+(+)Tweaked radioactive material effects behind the scenes, they should look a lot more consistent and less blue now.
+(u)LorrMaster
+(p)24260
+(e)⚖💅🔨|C-Balance, C-QoL, A-Player-Actions
+(*)Pug sleuthing now detects all scents at once
+(*)Fish and wearable flowers can be used to spread sleuthing scents
+(u)LorrMaster
+(p)24250
+(e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
+(+)Forensic scan reports have been reformatted
+(t)mon aug 25 25
+(u)JORJ949
+(p)24291
+(e)🗺⚖👮|A-Mapping, C-Balance, A-Security
+(*)Clarion security has been expanded to feel a little less cramped.
+(t)wed aug 20 25
+(u)RubberRats
+(p)24286
+(e)⚖🔬|C-Balance, A-Science
+(+)Curses from artifacts can now be cured by splashing holy water.
+(+)Plaguebringer wraith curses now require at least 10u of holy water to cure
+(u)cringe
+(p)24227
+(e)🎨💨|C-Sprites, A-Atmospherics
+(*)The HPD now has the gas filter, which is able to filter out a gas.
+(t)sun aug 17 25
+(u)ZeWaka
+(+)Chat and the changelog now support Emoji 16 (even if Windows doesn't...). Enjoy your root vegetables. 🫟
+(t)fri aug 15 25
+(u)JORJ949
+(p)24397
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Radios will no longer default incorrect prefixes (such as ":hiv"), or prefixes you don't have access to (":z" with a non-syndicate headset) to the general frequency.
+(u)JORJ949
+(p)24433
+(e)🎨🧑‍✈️|C-Sprites, A-Command
+(+)You can now open the captain's coat.
+(t)wed aug 13 25
+(u)nova2053
+(p)24420
+(e)|
+(+)Accents from the "German" and "Tyke" traits will not be removed by mutadone.
+(t)wed aug 06 25
+(u)Goonstation Developer Team & Contributors
+(e)🆕|C-Feature
+(*)We've updated to BYOND 516! It's now required to play on Goonstation. If you have any issues: check the minor changes for some tips, ask on the Discord, or mentor/adminhelp.
+(+)If you get white browser screens directly after installing and connecting, try closing BYOND and reopening it. If that doesn't work, clear your cache in the BYOND settings menu, under Preferences -> Advanced.
+(+)One common issue is DPI scaling, when you have Windows set to anything except 100% scaling. This can also cause white screens. First, try clearing your BYOND cache. Then maybe try rebooting. If all else fails, right click on dreamseeker.exe in your BYOND installation folder, go to Properties -> Compatibility -> High DPI Settings and mess around there.
+(+)Since BYOND 516 switched to using WebView2, clearing your browser cache works differently now. You can find it at `Documents\BYOND\cache\WebView2`.
+(u)ZeWaka, Mordent, LeahTheTech, Romayne, Sov, RubberRats, Wire
+(e)🪲🔄📄|C-Bug, C-Rework, A-UI
+(*)TGUI (our UI system) has been updated. Everything should look identical, or better. Please report any issues you stumble upon!
+(u)Wire
+(e)🪲🔄📄|C-Bug, C-Rework, A-UI
+(*)Complete rewrite of tooltips for better performance and a host of bug fixes. If you encounter any issues, be sure to submit a bug report! Including screenshots would be helpful.
+(t)mon aug 04 25
+(u)LeahTheTech
+(+)Instruments with only one note (whistles etc.) no longer use the instrument audio channel. Get whistled at.
+(t)sat aug 02 25
+(u)Munien
+(p)24255
+(e)🎨|C-Sprites
+(+)Added a few new tanktop variants to the clothing booth.
+(u)JORJ949
+(p)24139
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)Roundstart head of staff announcements will now be ordered by rank.
+(t)thu jul 31 25
+(u)aloe
+(+)There will now be a confirmation pop-up when you click a server link from the title menu.
+(t)wed jul 30 25
+(u)LeahTheTech + Glowbold
+(p)24194
+(e)🗺🎨⚖🔄⛔📄📦💡|A-Mapping, C-Sprites, C-Balance, C-Rework, C-Removal, A-UI, A-Game-Objects, A-Station-Systems
+(*)The cloning console now stores all its records on floppy disks, two racks of which can be found in cloning.
+(+)Disk racks can be placed side-by-side by clicking on them with a frame.
+(+)Cloner implants send a heartbeat signal back to the cloning rack, if the implant is removed or the person dies the rack will display a flashing red light next to their disk.
+(+)Floppy disks can be labelled with a pen as well as hand labellers.
+(t)tue jul 29 25
+(u)Mr. Moriarty
+(p)24247
+(e)🗺🎨🔎💅📦|A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-Game-Objects
+(*)Every single camera has been remapped. Please report any cameras that aren't offset onto walls or that are facing the wrong way.
+(u)SnugglyCactus
+(p)24197
+(e)🎨|C-Sprites
+(+)Added organ variants for skeletons, amphibians, and martians. Selling your kidney has never been so fun.
+(u)RubberRats
+(p)24089
+(e)🪲🎨📄📦|C-Bug, C-Sprites, A-UI, A-Game-Objects
+(+)Replacing the paint dispenser's service panel with non-authentic parts degrades its color-accuracy slightly.
+(t)mon jul 28 25
+(u)RubberRats
+(p)24215
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The barberang should more reliably drop any hair it takes.
+(u)TheGeneralJay
+(p)24233
+(e)🗺💅|A-Mapping, C-QoL
+(*)Standardized available equipment that spawns in robotics across each map. See minor changes for details.
+(+)All current-rotation robotics departments have been equipped with blinds (yay, crime!), anesthetic storage lockers, sinks, modules, and other minor QoL tweaks.
+(t)sat jul 26 25
+(u)Mr. Moriarty
+(p)24211
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited security cameras.
+(u)LeahTheTech + Flourish
+(*)Added almost legal firecrackers that explode when thrown. Available from Josh or as a random trinket/junk spawn.
+(t)fri jul 25 25
+(u)Studenterhue
+(p)24133
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)You can now receive postcards in the mail! There are seven in all, two of which also appear in the Museum of Lunar History.
+(u)LeahTheTech
+(*)Added preferences option to re-enable legacy middle mouse behaviour. Sigh...
+(u)glowbold
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Arcfiends have objectives for hearts stopped, machines overloaded, and total power gained.
+(t)thu jul 24 25
+(u)Colossus
+(p)24156
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether no longer works on a 10 unit threshold, always behaving on the fast depletion mode.
+(t)mon jul 21 25
+(u)glowbold
+(e)⚖🤖|A-Balance, A-Silicons
+(+)Singularity containment fields fling Silicons away.
+(t)sat jul 19 25
+(u)LeahTheTech
+(p)24158
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Middle mouse now attempts to open/close any large storage objects (lockers, crates) on the turf you click on.
+(t)fri jul 18 25
+(u)glowbold
+(p)23716
+(e)🆕🗺🔧📦|C-Feature, A-Mapping, A-Tooling, A-Game-Objects
+(+)Loudspeakers can be damaged by explosions, gunfire, hitting with heavy items, and excessive microphone feedback. They can be repaired with a screwdriver.
+(u)LeahTheTech
+(+)Acid drones now drop a flask of random acid.
+(+)Loudspeakers now cause audible disorient when they break.
+(u)JORJ949
+(p)23884
+(e)🪲🧑‍✈️|C-Bug, A-Command
+(*)The Captain's Bonsai now uses health like other bushes, but is very fragile and only has 5hp!
+(u)JORJ949
+(p)23921
+(e)🆕💪|C-Feature, A-Traits
+(*)The Clown Disbelief trait now stops you from hearing strange squeaky voices (anything a clown says).
+(u)JORJ949
+(p)24129
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)You can now edit the range on a syndicate signal jammer with either a screwing or pulsing tool, allowing for more precisely jammed crime dens.
+(u)LeahTheTech
+(p)24142
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)The Super! Grapple Friend pickpocket gun can now steal headsets, masks and glasses (in order) and plant them back.
+(t)mon jul 14 25
+(u)JORJ949
+(p)24005
+(e)🆕🧑‍✈️|C-Feature, A-Command
+(+)ID Computer access has been renamed to Personnel Management
+(u)JORJ949
+(p)24117
+(e)💅📄🎩|C-QoL, A-UI, A-Clothing
+(*)Added a new "Use Satchel" option to character setup to automatically turn the backpack you spawn with into a satchel!
 (t)sun jul 13 25
 (u)RubberRats
 (p)23929

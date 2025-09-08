@@ -109,6 +109,12 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		if(linked.working || working) return 1
 		else return 0
 
+	proc/is_established()
+		if(linked == null) get_link()
+		if(linked == null) return FALSE
+		if(!linked.maintaining_bridge && !maintaining_bridge) return FALSE
+		return TRUE
+
 	proc/establish_bridge()
 		if(linked == null) get_link()
 		if(linked == null) return
@@ -264,6 +270,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 	var/working = 0
 	var/state_str = ""
+	var/established = FALSE
 
 	req_access = list(access_heads)
 
@@ -363,29 +370,28 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		working = C.is_working()
 		icon_state = "airbr[working]"
 		state_str = C.get_state_string()
+		established = C.is_established()
 
 	attack_hand(var/mob/user, params)
 		if (..(user, params))
 			return
 
-		update_status()
-
-		var/dat = {"
-		<b>Controller Status:</b><BR>
-		[state_str]<BR><BR>
-		[working ? "Working..." : "Idle..."]<BR><BR>
-		<b>Airbridge Control:</b><BR>
-		<A href='byond://?src=\ref[src];create=1'>Establish</A><BR>
-		<A href='byond://?src=\ref[src];remove=1'>Retract</A><BR>
-		<A href='byond://?src=\ref[src];air=1'>Pressurize</A><BR>
-		"}
-
-		if (user.client?.tooltipHolder) // BAD MONKEY!
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			update_status()
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				title = src.name,
+				content = alist(
+					"file" = "airbridge_controller.eta",
+					"data" = alist(
+						"src" = "\ref[src]",
+						"state_has_error" = startswith(state_str, "ERROR"),
+						"established" = established,
+						"state_str" = state_str,
+						"working" = working,
+					)
+				),
+			)
 
 		return
 

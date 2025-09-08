@@ -57,7 +57,8 @@
 		scan_atom(atom/A as mob|obj|turf|area)
 			if(..())
 				return
-			. = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+			var/datum/forensic_scan/scan = scan_forensic(A, visible = TRUE)
+			. = scan.build_report()
 
 	//Reagent scanning program
 	reagent_scan

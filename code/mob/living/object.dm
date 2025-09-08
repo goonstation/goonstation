@@ -409,7 +409,10 @@
 		holder.move_to(holder.target)
 	else
 		if(!ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay))
-			holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
+			var/atom/movable/thing_to_attack = holder.target
+			if (isobj(thing_to_attack.loc))
+				thing_to_attack = thing_to_attack.loc
+			holder.owner.weapon_attack(thing_to_attack, holder.owner.equipped(), TRUE)
 
 /datum/aiTask/timed/targeted/living_object/frustration_check()
 	. = 0
@@ -431,10 +434,12 @@
 	if (!istype(item, /obj/item/attackdummy)) // marginally more performant- don't bother if we're a possessed non item
 		if (istype(item, /obj/item/baton))
 			var/obj/item/baton/bat = item
-			if (is_incapacitated(src.holder.target) || !(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)) // they're down or we're out of juice, let's harm baton
+			// they're down, hiding, or we're out of juice - let's harm baton
+			if (is_incapacitated(src.holder.target) || !isturf(src.holder.target.loc) || !(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 				if (bat.is_active) // uh oh, we're on. turn off
 					spooker.self_interact()
-				spooker.set_a_intent(INTENT_HARM)
+				if (spooker.intent != INTENT_HARM)
+					spooker.set_a_intent(INTENT_HARM)
 				bat.flipped = TRUE
 
 			else // they're up and we have charge, let's try to stun
@@ -445,7 +450,8 @@
 							spooker.self_interact()
 					spooker.self_interact()
 
-				spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
+				if (spooker.intent != INTENT_DISARM)
+					spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
 				bat.flipped = FALSE
 			bat.UpdateIcon()
 

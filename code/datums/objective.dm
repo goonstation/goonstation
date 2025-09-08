@@ -1431,15 +1431,37 @@ ABSTRACT_TYPE(/datum/objective/madness)
 /////////////////////////////////////////////////////////
 
 /datum/objective/specialist/powerdrain // this is basically just a repurposed vamp objective, but it should work.
-	var/powergoal
+	var/power_goal
 
 	set_up()
-		powergoal = rand(350,400) * 10
-		explanation_text = "Accumulate at least [powergoal] units of charge in total."
+		power_goal = rand(350,400) * 10
+		explanation_text = "Accumulate at least [power_goal] units of charge in total."
 
 	check_completion()
 		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
-		return (antag_datum?.ability_holder?.lifetime_energy >= powergoal)
+		return (antag_datum?.ability_holder?.lifetime_energy >= power_goal)
+
+/datum/objective/specialist/machineoverload
+	var/overload_goal
+
+	set_up()
+		overload_goal = rand(13, 17)
+		explanation_text = "Overload at least [overload_goal] machines with your Discharge ability."
+
+	check_completion()
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.machines_overloaded >= overload_goal)
+
+/datum/objective/specialist/heartstopper
+	var/heart_goal
+
+	set_up()
+		heart_goal = rand (2,4)
+		explanation_text = "Stop at least [heart_goal] hearts with your Jolt ability."
+
+	check_completion()
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.hearts_stopped >= heart_goal)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
@@ -1522,8 +1544,17 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	escape_choices = list(/datum/objective/escape/survive)
 
 /datum/objective_set/arcfiend
-	objective_list = list(/datum/objective/specialist/powerdrain)
+	objective_list = list(/datum/objective/specialist/powerdrain, /datum/objective/specialist/machineoverload, /datum/objective/specialist/heartstopper)
 	escape_choices = list(/datum/objective/escape)
+
+/datum/objective_set/arcfiend/drain_overload
+	objective_list = list(/datum/objective/specialist/powerdrain, /datum/objective/specialist/machineoverload)
+
+/datum/objective_set/arcfiend/overload_kill
+	objective_list = list(/datum/objective/specialist/machineoverload, /datum/objective/specialist/heartstopper)
+
+/datum/objective_set/arcfiend/kill_drain
+	objective_list = list(/datum/objective/specialist/powerdrain, /datum/objective/specialist/heartstopper)
 
 /datum/objective_set/salvager
 	objective_list = list(/datum/objective/specialist/salvager/machinery, /datum/objective/specialist/salvager/steal)

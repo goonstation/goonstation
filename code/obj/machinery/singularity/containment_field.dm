@@ -1,6 +1,6 @@
 
 /obj/machinery/containment_field
-	name = "Containment Field"
+	name = "containment field"
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
@@ -87,7 +87,7 @@
 			return
 
 	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
-	boutput(user, SPAN_ALERT("<B>You feel a powerful shock course through your body sending you flying!</B>"))
+	boutput(user, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
@@ -97,31 +97,35 @@
 	if(user.getStatusDuration("knockdown") < shock_damage * 10)	user.changeStatus("knockdown", shock_damage/4 SECONDS)
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
-		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user.name] was disintegrated by the [src.name]!</b>"))
 		logTheThing(LOG_COMBAT, user, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
 		user.elecgib()
 		return
 	else
-		var/throwdir = get_dir(src, get_step_away(user, src))
-		if (get_turf(user) == get_turf(src))
-			if (prob(50))
-				throwdir = turn(throwdir,90)
-			else
-				throwdir = turn(throwdir,-90)
-		var/atom/target = get_edge_target_turf(user, throwdir)
-		user.throw_at(target, 200, 4)
-		for(var/mob/M in AIviewers(src))
-			if(M == user)	continue
-			M.show_message(SPAN_ALERT("[user.name] was shocked by the [src.name]!"), 3, SPAN_ALERT("You hear a heavy electrical crack"), 2)
+		src.field_throw(user)
 
 	src.gen_primary.power -= 3
 	src.gen_secondary.power -= 3
 	return
 
+/obj/machinery/containment_field/proc/field_throw(mob/user)
+	var/throwdir = get_dir(src, get_step_away(user, src))
+	if (get_turf(user) == get_turf(src))
+		if (prob(50))
+			throwdir = turn(throwdir,90)
+		else
+			throwdir = turn(throwdir,-90)
+	var/atom/target = get_edge_target_turf(user, throwdir)
+	user.throw_at(target, 200, 4)
+	playsound(src, 'sound/effects/elec_bzzz.ogg', 25, 1, -1)
+	user.visible_message(SPAN_ALERT("[user.name] is repelled by \the [src]!"), SPAN_ALERT("You're repelled by \the [src]!"), SPAN_ALERT("You hear a heavy electrical crack!"))
+
 /obj/machinery/containment_field/Bumped(atom/O)
 	. = ..()
 	if(iscarbon(O))
 		shock(O)
+	else if (issilicon(O))
+		src.field_throw(O)
 
 /obj/machinery/containment_field/Cross(atom/movable/mover)
 	. = ..()
@@ -132,3 +136,5 @@
 	. = ..()
 	if(iscarbon(AM))
 		shock(AM)
+	else if (issilicon(AM))
+		src.field_throw(AM)

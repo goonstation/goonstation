@@ -73,6 +73,12 @@
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/station/devzone)
+"bS" = (
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/east,
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "cj" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor,
@@ -150,15 +156,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
-"du" = (
-/obj/landmark/start/job/AI,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/map/light/brighterwhite,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "dx" = (
 /obj/machinery/door/poddoor/buff{
 	dir = 1;
@@ -287,6 +284,13 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
+"fL" = (
+/obj/item/rcd/construction/safe/admin_crimes,
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "fN" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -335,6 +339,10 @@
 	},
 /turf/space,
 /area/station/devzone)
+"gP" = (
+/obj/map/light/brighterwhite,
+/turf/simulated/floor,
+/area/supply/spawn_point)
 "gQ" = (
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor,
@@ -439,18 +447,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/devzone)
-"ib" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/glow,
-/area/space)
 "ic" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -479,21 +475,6 @@
 /obj/machinery/vehicle/miniputt/gold,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
-"ip" = (
-/obj/machinery/mining_magnet{
-	pixel_x = 16
-	},
-/obj/machinery/magnet_chassis{
-	pixel_x = 16
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "iA" = (
 /obj/disposalpipe/loafer/horizontal{
 	dir = 1
@@ -586,6 +567,12 @@
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
 /area/station/devzone)
+"kz" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
 "kI" = (
 /obj/forcefield/energyshield/perma{
 	dir = 1
@@ -622,6 +609,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"lb" = (
+/obj/machinery/lawrack/syndicate,
 /turf/simulated/floor,
 /area/station/devzone)
 "ld" = (
@@ -831,10 +822,6 @@
 /obj/machinery/vehicle/pod,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
-"py" = (
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "pE" = (
 /obj/machinery/door_control{
 	id = "tele";
@@ -970,10 +957,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"rY" = (
-/obj/machinery/computer/robotics,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "se" = (
 /obj/landmark/start/job/head_of_security,
 /turf/simulated/floor,
@@ -1229,9 +1212,6 @@
 /obj/submachine/chef_oven,
 /turf/simulated/floor/white,
 /area/station/devzone)
-"xE" = (
-/turf/simulated/floor,
-/area/supply/spawn_point)
 "xK" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -1313,6 +1293,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/devzone)
+"zh" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "zk" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1382,9 +1366,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/devzone)
-"Aa" = (
-/turf/simulated/floor,
-/area/supply/sell_point)
 "Ae" = (
 /obj/disposalpipe/type_sensing_outlet/drone_factory{
 	dir = 4
@@ -1494,6 +1475,12 @@
 /area/station/devzone)
 "Bs" = (
 /obj/machinery/computer/announcement/station,
+/turf/simulated/floor,
+/area/station/devzone)
+"Bw" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "Cf" = (
@@ -1729,7 +1716,6 @@
 /turf/simulated/floor/white,
 /area/station/devzone)
 "FT" = (
-/obj/machinery/lawrack,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
@@ -1737,15 +1723,17 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/landmark/start/job/AI,
 /turf/simulated/floor,
-/area/station/turret_protected/ai)
+/area/station/devzone)
 "FV" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/apc/autoname_east,
+/mob/living/silicon/hivebot/eyebot,
+/obj/machinery/recharge_station,
 /turf/simulated/floor,
-/area/station/turret_protected/ai)
+/area/station/devzone)
 "Gi" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor/white,
@@ -2262,12 +2250,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"OU" = (
-/obj/machinery/vending/monkey/genetics,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/turf/simulated/floor/blue/checker,
-/area/station/devzone)
 "Pb" = (
 /obj/machinery/computer/magnet,
 /turf/simulated/floor,
@@ -2361,6 +2343,22 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/space)
+"Qm" = (
+/obj/machinery/mining_magnet{
+	pixel_x = 16
+	},
+/obj/machinery/magnet_chassis{
+	pixel_x = 16
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"Qx" = (
+/obj/map/light/brighterwhite,
+/turf/simulated/floor,
+/area/supply/sell_point)
 "Qy" = (
 /obj/decal/tile_edge/line/red{
 	dir = 8;
@@ -2422,6 +2420,15 @@
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"RQ" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/space)
 "RV" = (
 /turf/simulated/floor/engine{
 	dir = 4;
@@ -2473,20 +2480,6 @@
 	dir = 1
 	},
 /area/station/devzone)
-"SI" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/debug_generator{
-	generating = 100000
-	},
-/obj/map/light/brighterwhite,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "SQ" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -2503,6 +2496,14 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"Tp" = (
+/obj/item/storage/box/diskbox,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "Tu" = (
 /turf/unsimulated/floor/engine/caution/east,
@@ -2522,6 +2523,10 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"TK" = (
+/obj/machinery/lawrack,
+/turf/simulated/floor,
 /area/station/devzone)
 "TM" = (
 /obj/landmark/start/job/research_director,
@@ -2630,15 +2635,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
-"Wg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Wj" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor,
@@ -2725,16 +2721,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
-"Xu" = (
-/obj/item/rcd/construction/safe/admin_crimes,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Xx" = (
 /obj/forcefield/energyshield/perma{
 	dir = 6
@@ -2762,14 +2748,9 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/devzone)
-"XI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor/orangeblack,
+"XM" = (
+/obj/machinery/computer/robotics,
+/turf/simulated/floor,
 /area/station/devzone)
 "XR" = (
 /obj/submachine/weapon_vendor/fishing/portable,
@@ -2867,6 +2848,9 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/debug_generator{
+	generating = 100000
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -3265,7 +3249,7 @@ hR
 NE
 Yx
 Yx
-XI
+kz
 NU
 Ni
 NG
@@ -3279,7 +3263,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 Yx
 "}
 (10,1,1) = {"
@@ -3403,7 +3387,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 Hy
 UD
 UD
@@ -3445,7 +3429,7 @@ Nu
 ys
 ys
 Yx
-Wg
+Bw
 Yx
 Yx
 Yx
@@ -3532,7 +3516,7 @@ ia
 zT
 Yx
 Yx
-Yx
+ng
 ng
 Kr
 ng
@@ -3575,11 +3559,11 @@ Bq
 hI
 dG
 Yx
-Yx
 ng
+fU
 Du
 qc
-fU
+zh
 ng
 Yx
 "}
@@ -3618,8 +3602,8 @@ ys
 Mo
 Yx
 Yx
-Yx
 ng
+vd
 vd
 wk
 vd
@@ -3661,11 +3645,11 @@ IX
 jz
 vr
 Yx
-Yx
 ng
-wy
-vd
 oG
+wy
+Tp
+vd
 ng
 Yx
 "}
@@ -3704,8 +3688,8 @@ kV
 kV
 Yx
 Yx
-Yx
 ng
+vd
 vd
 PU
 zF
@@ -3747,11 +3731,11 @@ kV
 bw
 Yx
 Yx
-Yx
 ng
-OU
-Er
+bS
 Gn
+Er
+vd
 ng
 Yx
 "}
@@ -3764,12 +3748,12 @@ Yx
 Yx
 Yx
 Yx
-Yx
 ng
 Yx
 EV
 wY
 DU
+ng
 ng
 ng
 ng
@@ -3807,7 +3791,6 @@ Yx
 Yx
 Yx
 Yx
-Yx
 ng
 HZ
 YU
@@ -3817,12 +3800,13 @@ ng
 cj
 LN
 ng
-Aa
+Qx
 hc
 Yx
 XB
 ng
-py
+TK
+Yx
 FT
 hS
 ii
@@ -3850,7 +3834,6 @@ Yx
 Yx
 Yx
 Yx
-Yx
 ng
 Yx
 dq
@@ -3865,9 +3848,10 @@ bi
 Xb
 he
 ng
-du
-SI
-XI
+XM
+Yx
+kV
+kz
 kV
 kV
 kV
@@ -3881,7 +3865,7 @@ uE
 ng
 La
 Vg
-XI
+kz
 Yx
 "}
 (24,1,1) = {"
@@ -3902,13 +3886,13 @@ ng
 ng
 ng
 ng
-ng
-xE
+gP
 ag
 wg
 ZD
 ng
-rY
+lb
+Yx
 FV
 ng
 LH
@@ -4326,7 +4310,7 @@ Yx
 Yx
 Yx
 Yx
-Wg
+Bw
 Yx
 Yx
 Yx
@@ -4385,7 +4369,7 @@ Yx
 ft
 Yx
 ZZ
-Xu
+fL
 Kx
 Yx
 ZZ
@@ -4469,7 +4453,7 @@ ng
 Yx
 uF
 Id
-Wg
+Bw
 iP
 Yx
 Yx
@@ -4483,7 +4467,7 @@ ng
 Rq
 Be
 Rq
-XI
+kz
 Yx
 "}
 (38,1,1) = {"
@@ -4921,7 +4905,7 @@ rz
 rz
 rS
 kI
-ip
+Qm
 Yx
 qg
 hR
@@ -5034,7 +5018,7 @@ rx
 rz
 rx
 rz
-ib
+RQ
 rz
 rx
 rz
@@ -5359,7 +5343,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 ng
 ng
 ng

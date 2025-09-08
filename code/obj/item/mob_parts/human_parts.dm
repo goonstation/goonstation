@@ -208,6 +208,11 @@
 			return
 		..()
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.original_DNA)
+			scan.add_text("[src]'s DNA: [src.original_DNA]")
+
 	/// Determines what the limb's skin tone should be
 	proc/colorize_limb_icon()
 		if (!src.skintoned) return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
@@ -362,6 +367,12 @@
 			holder.u_equip(I)
 			I.set_loc(holder.loc)
 		. = ..()
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.original_fprints)
+			scan.add_text("Arm's fingerprints: [src.original_fprints]")
+
 
 
 /obj/item/parts/human_parts/arm/left
@@ -582,7 +593,7 @@
 				//H.update_clothing()
 				H.update_body()
 				H.update_inhands()
-				H.hud.add_other_object(H.l_hand,H.hud.layouts[H.hud.layout_style]["lhand"])
+				H.hud.add_other_object(H.l_hand,H.hud.layouts[H.hud.layout_style]["lhand"],FALSE)
 
 
 	proc/remove_from_mob(delete = 0)
@@ -712,7 +723,7 @@
 				H.update_body()
 				H.set_body_icon_dirty()
 				H.update_inhands()
-				H.hud.add_other_object(H.r_hand,H.hud.layouts[H.hud.layout_style]["rhand"])
+				H.hud.add_other_object(H.r_hand,H.hud.layouts[H.hud.layout_style]["rhand"],FALSE)
 
 	proc/remove_from_mob(delete = 0)
 		if (isitem(remove_object))

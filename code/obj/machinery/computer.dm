@@ -85,6 +85,7 @@
 		A.circuit = M
 		A.anchored = ANCHORED
 		src.special_deconstruct(A, user)
+		src.save_board_data(M)
 		qdel(src)
 
 	///Put the code for finding the stuff your computer needs in this proc
@@ -94,6 +95,13 @@
 	///Special changes for deconstruction can be added by overriding this
 	proc/special_deconstruct(var/obj/computerframe/frame as obj, mob/user)
 
+	///save custom data to a circuit board
+	proc/save_board_data(obj/item/circuitboard/circuitboard)
+
+	///Load custom data from a circuit board
+	proc/load_board_data(obj/item/circuitboard/circuitboard)
+		if(isnull(circuitboard.saved_data))
+			return TRUE // no data to load
 
 /*
 /obj/machinery/computer/airtunnel
