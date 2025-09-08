@@ -462,30 +462,6 @@ or don't if it uses a custom topopen overlay
 
 
 /mob/living/silicon/ai/attackby(obj/item/W, mob/user)
-	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
-		var/obj/item/device/borg_linker/linker = W
-		if(src.dismantle_stage<2)
-			boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
-			return
-
-		if(!src.law_rack_connection)
-			boutput(src,"[src.name] is not connected to a law rack")
-		else
-			var/area/A = get_area(src.law_rack_connection)
-			boutput(user, "[src.name] is connected to a law rack at [A.name].")
-
-		if(!linker.linked_rack)
-			return
-
-		if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-			if(src.law_rack_connection)
-				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
-				if (raw == "Yes")
-					src.set_law_rack(linker.linked_rack, user)
-		else
-			boutput(user,"Linker lost connection to the stored law rack!")
-		return
-
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)

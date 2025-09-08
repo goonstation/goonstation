@@ -304,12 +304,6 @@
 				else
 					boutput(user,"There's no damage to repair!")
 			return
-		else if (istype(I,/obj/item/device/borg_linker) && !issilicon(user))
-			var/obj/item/device/borg_linker/linker = I
-			linker.linked_rack = src
-			var/area/A = get_area(src.loc)
-			boutput(user,"Linker: Linked to law rack at "+ A.name)
-			return
 		else if (istype(I, /obj/item/aiModule) && !issilicon(user))
 			var/obj/item/aiModule/AIM = I
 			var/inserted = FALSE

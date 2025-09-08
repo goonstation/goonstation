@@ -1076,38 +1076,6 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (user.a_intent == INTENT_HARM || is_special)
 			..()
 			return
-		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
-			var/obj/item/device/borg_linker/linker = W
-			if(!opened)
-				boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
-				return
-			if(isshell(src) || src.part_head.ai_interface)
-				boutput(user,"You need to use this on the AI core directly!")
-				return
-
-			if(!src.law_rack_connection)
-				boutput(src,"[src.name] is not connected to a law rack")
-			else
-				var/area/A = get_area(src.law_rack_connection)
-				boutput(user, "[src.name] is connected to a law rack at [A.name].")
-
-			if(!linker.linked_rack)
-				return
-
-			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-				if(src.emagged || src.syndicate)
-					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing(LOG_STATION, src, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
-					elecflash(src,power=2)
-					return
-				if(src.law_rack_connection)
-					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
-					if (raw == "Yes")
-						src.set_law_rack(linker.linked_rack, user)
-			else
-				boutput(user,"Linker lost connection to the stored law rack!")
-			return
-
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
