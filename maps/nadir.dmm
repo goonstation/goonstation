@@ -7172,11 +7172,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
-"doE" = (
-/turf/simulated/floor/engine/caution/corner{
-	dir = 8
-	},
-/area/shuttle/sea_elevator/upper)
 "doO" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
@@ -7481,24 +7476,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"dwt" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/firealarm/directional/east{
-	pixel_y = 4
-	},
-/obj/machinery/light_switch/west{
-	pixel_y = -7
-	},
-/turf/simulated/floor/redblack,
-/area/station/security/checkpoint/sec_foyer{
-	name = "Secure Release Foyer"
-	})
 "dwx" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
@@ -17607,6 +17584,19 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"hIO" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/storage/cart/mechcart/breach/acid,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -4;
+	pixel_x = -24
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/storage)
 "hJD" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer{
@@ -20470,21 +20460,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/east)
-"iVM" = (
-/obj/machinery/shower{
-	dir = 4;
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/machinery/drainage,
-/obj/machinery/firealarm/directional/west{
-	pixel_y = -3
-	},
-/obj/stool/bench/purple/auto,
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "iWu" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -25063,18 +25038,6 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"kQN" = (
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -4
-	},
-/obj/storage/cart/mechcart/breach/acid,
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
-/area/station/engine/storage)
 "kQV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25541,6 +25504,24 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"lbe" = (
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
+/obj/machinery/door_control{
+	id = "nadir_minetop";
+	name = "Loading Door Control";
+	pixel_y = 24;
+	pixel_x = 8
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28;
+	pixel_x = -6
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/mining/staff_room)
 "lbg" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light_switch/west,
@@ -35363,24 +35344,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"pqb" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
-/obj/machinery/door_control{
-	id = "nadir_minetop";
-	name = "Loading Door Control";
-	pixel_y = 24;
-	pixel_x = 8
-	},
-/obj/decal/poster/miners_almanac{
-	pixel_y = 28;
-	pixel_x = -6
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "pqp" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/item/reagent_containers/food/drinks/bottle/empty/square{
@@ -41933,6 +41896,11 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"sBF" = (
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/shuttle/sea_elevator/upper)
 "sBQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42805,6 +42773,24 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/market)
+"sSI" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -7
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 4
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/checkpoint/sec_foyer{
+	name = "Secure Release Foyer"
+	})
 "sSN" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/orangeblack/side,
@@ -50080,6 +50066,22 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
+"wko" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/drainage,
+/obj/stool/bench/purple/auto,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = -3;
+	pixel_x = 24
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "wkp" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/yellowblack/corner,
@@ -93531,7 +93533,7 @@ mGH
 jwf
 hdz
 uiQ
-dwt
+sSI
 qxw
 imD
 eGM
@@ -103164,7 +103166,7 @@ gpP
 uRX
 uXm
 nzD
-iVM
+wko
 ioB
 viK
 eLX
@@ -107392,7 +107394,7 @@ gdf
 woS
 gdf
 aXs
-pqb
+lbe
 wtb
 tYz
 dYV
@@ -107992,7 +107994,7 @@ bzJ
 lsj
 tXW
 fNc
-doE
+sBF
 rNu
 wGJ
 ahN
@@ -110745,7 +110747,7 @@ eFY
 lbH
 lbg
 ycd
-kQN
+hIO
 vTc
 cbG
 eGv
