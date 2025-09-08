@@ -404,8 +404,8 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 		else
 			src.icon_state = src.icon_idle
 
+	//this proc is used in the secret submodule, don't remove it
 	proc/food_crime(mob/user, obj/item/food)
-		user.show_text("you did a food crime")
 		// logTheThing(LOG_STATION, src, "[key_name(user)] commits a horrible food crime, creating [food] with quality [food.quality].")
 
 	custom_suicide = TRUE
