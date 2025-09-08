@@ -257,6 +257,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 	var/static/tmp/recipe_html = null // see: create_oven_recipe_html()
 	var/icon_idle = "oven_off"
 	var/icon_active = "oven_bake"
+	var/mob/last_used //last person to activate the oven
 
 	//these are for recipe previews
 	var/list/possible_recipe_ingredients = list()
@@ -352,10 +353,14 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 	cooking_power()
 		return src.cooktime / 10 * (src.heat == OVEN_HIGH ? 2 : 1)
 
+	start_cook()
+		. = ..()
+		src.last_used = usr
+
 	finish_cook()
+		var/obj/item/output
 		// If emagged produce random output.
 		if (emagged)
-			var/obj/item/output
 			// Enforce GIGO and prevent infinite reuse
 			var/contentsok = TRUE
 			for(var/obj/item/I in src.contents)
@@ -384,7 +389,12 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 				output = new /obj/item/reagent_containers/food/snacks/yuck
 			output.quality = 0
 			return output
-		. = ..()
+		else
+			output = ..()
+		if (istype(output, /obj/item/reagent_containers/food/snacks/yuck))
+			src.food_crime(src.last_used, output)
+		src.last_used = null
+		return output
 
 	update_icon()
 		if (!src || !istype(src))
@@ -394,6 +404,9 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 		else
 			src.icon_state = src.icon_idle
 
+	proc/food_crime(mob/user, obj/item/food)
+		user.show_text("you did a food crime")
+		// logTheThing(LOG_STATION, src, "[key_name(user)] commits a horrible food crime, creating [food] with quality [food.quality].")
 
 	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
