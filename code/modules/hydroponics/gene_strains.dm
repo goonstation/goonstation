@@ -58,6 +58,9 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	proc/override_crop(datum/HYPharvesting_data/h_data)
 		return FALSE
 
+	proc/crop_post_harvest(datum/HYPharvesting_data/h_data, var/atom/crop, var/quality_status)
+		return
+
 /datum/plant_gene_strain/temporary_splice_stabilizer
 	name = "Temporary Spliceability"
 	desc = "This seed was stabilized using advanced technology to be spliced once and won't be able to be spliced afterwards."
@@ -379,11 +382,18 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	name = "Kinetically-Expressive Genome"
 	desc = "Produce harvested from this plant will be smaller and much more ballistically capable, but its lifespan is extremely limited."
 
-	override_crop(datum/HYPharvesting_data/h_data)
+/* 	override_crop(datum/HYPharvesting_data/h_data)
 		var/obj/item/crop = h_data.pot.pick_type(h_data.getitem)
 		if (!ispath(crop, /obj/item)) // only override items
 			return FALSE
-		return /obj/item/ammo/bullets/produce
+		return /obj/item/ammo/bullets/produce */
+
+	crop_post_harvest(var/datum/HYPharvesting_data/h_data, var/atom/crop, var/quality_status)
+		if (!istype(crop, /obj/item))
+			return
+		var/obj/item/cropitem = crop
+		var/obj/item/ammo/bullets/thingammo/cropbullet = cropitem.convert_to_ammo()
+		cropbullet.scale_plant_bullet(h_data, cropitem, quality_status)
 
 	manipulate_harvest_data(datum/HYPharvesting_data/h_data)
 		h_data.dont_rename_crop = TRUE

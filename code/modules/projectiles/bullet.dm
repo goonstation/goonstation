@@ -2552,7 +2552,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 
 	banana
 		hit_decal = /obj/decal/cleanable/bananasplat
-		item_left = /obj/item/reagent_containers/food/snacks/banana_peel
+		//item_left = /obj/item/reagent_containers/food/snacks/banana_peel
 
 	fruit
 		hit_decal = /obj/decal/cleanable/fruitsplat

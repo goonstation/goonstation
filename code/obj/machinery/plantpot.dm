@@ -1081,6 +1081,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			//last but not least, we give the mob a proper name
 			CROP_MOB.name = HYPgenerate_produce_name(CROP_MOB, h_data.pot, h_data.growing, quality["score"], quality["status"], h_data.dont_rename_crop)
 
+		for(var/datum/plant_gene_strain/strain in h_data.DNA.commuts)
+			strain.crop_post_harvest(h_data, CROP, quality["status"])
+
 		if(((h_data.growing.isgrass || (h_data.growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(h_data.getitem,/obj/item/seed/) && !HYPCheckCommut(h_data.DNA,/datum/plant_gene_strain/seedless) && (h_data.growing.force_seed_on_harvest >= 0 ))
 			// Same shit again. This isn't so much the crop as it is giving you seeds
 			// incase you couldn't get them otherwise, though.

@@ -145,6 +145,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/tmp/last_processing_tick = -1
 
 	var/brew_result = null //! What reagent will it make if it's brewable?
+	var/obj/item/ammo/converted_ammo_type = /obj/item/ammo/bullets/thingammo // If converted into ammo, what type of ammo does it become?
 
 	var/list/tooltip_options = list()
 
@@ -1869,6 +1870,11 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 ///This will be called when the item is build into a /obj/item/assembly on get_admin_log_message(). Use this for additional information for logging.
 /obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
 	return
+
+/obj/item/proc/convert_to_ammo()
+	var/obj/item/ammo/bullet = new converted_ammo_type(src)
+	bullet.loc = src.loc
+	return bullet
 
 ///Called during attackby() to determine whether the default attack message should be suppressed.
 ///Override this to add logic for suppressing the default attack message, or override it with a custom one.
