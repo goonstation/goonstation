@@ -53,10 +53,6 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	proc/manipulate_harvest_data(datum/HYPharvesting_data/h_data)
 		return
 
-	/// This proc is called whenever the plant is harvested. Override and return a type to change what the current harvest produces.
-	/// Returning null will just result in the harvest failing.
-	proc/override_crop(datum/HYPharvesting_data/h_data)
-		return FALSE
 
 	proc/crop_post_harvest(datum/HYPharvesting_data/h_data, var/atom/crop, var/quality_status)
 		return
@@ -381,12 +377,6 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 /datum/plant_gene_strain/gun_genome
 	name = "Kinetically-Expressive Genome"
 	desc = "Produce harvested from this plant will be smaller and much more ballistically capable, but its lifespan is extremely limited."
-
-/* 	override_crop(datum/HYPharvesting_data/h_data)
-		var/obj/item/crop = h_data.pot.pick_type(h_data.getitem)
-		if (!ispath(crop, /obj/item)) // only override items
-			return FALSE
-		return /obj/item/ammo/bullets/produce */
 
 	crop_post_harvest(var/datum/HYPharvesting_data/h_data, var/atom/crop, var/quality_status)
 		if (!istype(crop, /obj/item))

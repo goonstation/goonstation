@@ -1050,7 +1050,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				var/obj/item/manipulated_item = CROP_ITEM
 				CROP_ITEM = manipulated_item.HYPsetup_DNA(h_data.DNA, h_data.pot, h_data.growing, quality["status"], h_data)
 
-			//last but not least, we give the mob a proper name
+			//we give the crop a proper name
 			CROP_ITEM.name = HYPgenerate_produce_name(CROP_ITEM, h_data.pot, h_data.growing, quality["score"], quality["status"], h_data.dont_rename_crop)
 
 			CROP_ITEM.quality = quality["score"]
@@ -1064,10 +1064,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				var/obj/critter/C = CROP_ITEM
 				C.friends = C.friends | h_data.pot.contributors
 
-
 		if(istype(CROP, /mob))
-			// Start up the loop of grabbing all our produce. Remember, each iteration of
-			// this loop is for one item each.
 			var/obj/CROP_MOB = CROP
 			CROP_MOB.set_loc(h_data.pot)
 
@@ -1112,7 +1109,6 @@ TYPEINFO(/obj/machinery/plantpot)
 /// Handles stat bonuses and negatives associated with gene strains
 /obj/machinery/plantpot/proc/HYPharvesting_gene_strains(datum/HYPharvesting_data/h_data)
 	if(h_data.DNA.commuts)
-		var getitem_override
 		for(var/datum/plant_gene_strain/G in h_data.DNA.commuts)
 			// And ones that mess with the quality of crops.
 			// Unstable isn't here because it'd be less random outside the loop.
@@ -1134,10 +1130,6 @@ TYPEINFO(/obj/machinery/plantpot)
 				else
 					h_data.harvest_cap *= Y.yield_mult
 					h_data.harvest_cap += Y.yield_mod
-			// check for any gene strains that want to override regular item generation
-			getitem_override = G.override_crop(h_data)
-			if (getitem_override != FALSE)
-				h_data.getitem = getitem_override
 			// let the gene strain edit other harvest data
 			G.manipulate_harvest_data(h_data)
 

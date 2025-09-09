@@ -1002,22 +1002,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	color = "#fef2c2"
 	slippery = 10
 
-/obj/decal/cleanable/vegesplat
-	name = "smeared vegetable flesh"
-	desc = "As you gaze upon this unceremoniously tenebrous sight the fleeting wind seems to stir upon your ears. It whispers \"shenanigans\"."
+/obj/decal/cleanable/plantsplat
+	name = "smeared produce flesh"
+	desc = "I think this was supposed to be lunch."
 	icon = 'icons/obj/decals/blood/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	color = "#21c036"
-	slippery = 10
-
-/obj/decal/cleanable/fruitsplat
-	name = "smeared fruit flesh"
-	desc = "As you gaze upon this unceremoniously tenebrous sight the fleeting wind seems to stir upon your ears. It whispers \"shenanigans\"."
-	icon = 'icons/obj/decals/blood/blood.dmi'
-	icon_state = "floor1"
-	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	color = "#16c024"
 	slippery = 10
 
 /obj/decal/cleanable/eggsplat

@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	var/crop_prefix = ""	// Prefix for crop name when harvested ("rainbow" melon)
 	var/crop_suffix = ""	// Suffix for crop name when harvested (bamboo "shoot")
 	food_effects = list("food_cold", "food_disease_resist")
+	converted_ammo_type = /obj/item/ammo/bullets/thingammo/plant
 
 	New()
 		..()
@@ -166,6 +167,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	slice_amount = 3
 	brew_result = list("juice_tomato"=20)
+	converted_ammo_type = /obj/item/ammo/bullets/thingammo/tomato
 
 	make_reagents()
 		..()
@@ -1012,6 +1014,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 	brew_result = list("juice_banana"=20)
+	converted_ammo_type = /obj/item/ammo/bullets/thingammo/banana
 
 	make_reagents()
 		..()
@@ -1278,6 +1281,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 0
 	food_color = "#F0E68C"
 	brew_result = list("vodka"=20)
+	converted_ammo_type = /obj/item/ammo/bullets/thingammo/potato
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))

@@ -2550,12 +2550,20 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 				randomize_edge_offset(item, angle)
 			item.set_loc(turf)
 
+	plant
+		hit_decal = /obj/decal/cleanable/plantsplat
+
 	banana
 		hit_decal = /obj/decal/cleanable/bananasplat
-		//item_left = /obj/item/reagent_containers/food/snacks/banana_peel
+		item_left = /obj/item/bananapeel
 
-	fruit
-		hit_decal = /obj/decal/cleanable/fruitsplat
+	egg
+		hit_decal = /obj/decal/cleanable/eggsplat
 
-	vegetable
-		hit_decal = /obj/decal/cleanable/vegesplat
+	tomato
+		hit_decal = /obj/decal/cleanable/tomatosplat
+
+	potato
+		hit_decal = /obj/decal/cleanable/potatosplat
+
+
