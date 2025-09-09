@@ -14,7 +14,7 @@
 	var/transfer_rate = 200
 
 	/// Radio frequency to operate on.
-	var/frequency = null
+	var/frequency = FREQ_FREE
 	/// Radio ID we respond to for multicast.
 	var/id = null
 	/// Radio ID that refers to specifically us.
@@ -41,9 +41,13 @@
 	if(!on)
 		return FALSE
 
-	var/transfer_ratio = max(1, transfer_rate/air1.volume)
+	if(src.transfer_rate <= 0)
+		src.visible_message(SPAN_ALERT("The [src] turns off automatically due to a zero transfer rate."))
+		src.on = FALSE
+		UpdateIcon()
+		return FALSE
 
-	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
+	var/datum/gas_mixture/removed = air1.remove_ratio(src.transfer_rate/air1.volume)
 
 	air2.merge(removed)
 
