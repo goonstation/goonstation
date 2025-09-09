@@ -1,4 +1,4 @@
-// Macro to quickly add syndicate-specific descriptions to stealth items to make them easily identifiable to traitors (and spiefs who use their gear)
+// Adds a syndicate only description to any type. syndie_desc is shown to syndies and spiefs, alt_desc is shown to everyone else, both are optional.
 #define SYNDICATE_STEALTH_DESCRIPTION(TYPE, syndie_desc, alt_desc) \
 	TYPE/get_desc(dist, mob/user) { \
 		..(); \
