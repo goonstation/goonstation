@@ -41,12 +41,6 @@
 	if(!on)
 		return FALSE
 
-	if(src.transfer_rate <= 0)
-		src.visible_message(SPAN_ALERT("The [src] turns off automatically due to a zero transfer rate."))
-		src.on = FALSE
-		UpdateIcon()
-		return FALSE
-
 	var/datum/gas_mixture/removed = air1.remove_ratio(src.transfer_rate/air1.volume)
 
 	air2.merge(removed)
