@@ -1,6 +1,6 @@
 /// Shoves transfer_rate volume of gas from air1 to air2
 /// Max volume flow rate.
-#define MAX_VOLUME 1000
+#define MAX_VOLUME 200
 
 /obj/machinery/atmospherics/binary/volume_pump
 	name = "Gas pump"
