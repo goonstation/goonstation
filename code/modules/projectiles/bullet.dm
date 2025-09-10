@@ -2499,36 +2499,6 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	var/obj/decal/hit_decal
 	var/obj/item/item_left
 
-	// TODO, move this somewhere so it's more generic
-	/// Gives an atom an offset around a directed edge
-	proc/randomize_edge_offset(atom/target, dir, max_variation = 8, edge_offset = 13)
-		var/pixel_x = 0
-		var/pixel_y = 0
-
-		if(dir & NORTH)
-			pixel_y = edge_offset
-		else if(dir & SOUTH)
-			pixel_y = -edge_offset
-
-		if(dir & EAST)
-			pixel_x = edge_offset
-		else if(dir & WEST)
-			pixel_x = -edge_offset
-
-		if(dir & (NORTH|SOUTH))
-			pixel_x += rand(-max_variation, max_variation)
-		else if(dir & (EAST|WEST))
-			pixel_y += rand(-max_variation, max_variation)
-		else
-			pixel_x += rand(-max_variation, max_variation) * 0.7
-			pixel_y += rand(-max_variation, max_variation) * 0.7
-
-		pixel_x = clamp(pixel_x, -edge_offset, edge_offset)
-		pixel_y = clamp(pixel_y, -edge_offset, edge_offset)
-
-		target.pixel_x = pixel_x
-		target.pixel_y = pixel_y
-
 	tick(var/obj/projectile/O)
 		O.transform = O.transform.Turn(83)
 		return
@@ -2546,8 +2516,8 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 		if (item_left)
 			var/obj/item/item = new item_left
 			if (!ismob(hit))
-				turf = get_step(hit, reverse_dir(angle))
-				randomize_edge_offset(item, angle)
+				turf = search_for_edge(turf, reverse_dir(angle), get_search_direction(O.angle, angle))
+				randomize_edge_offset(item, get_dir(turf, hit))
 			item.set_loc(turf)
 
 	plant

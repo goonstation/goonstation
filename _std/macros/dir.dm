@@ -16,7 +16,6 @@ var/global/list/modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 var/global/list/dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
 /// Assoc. list of dirs like `"[NORTH]" = "NORTH"`, useful for screen_loc
 var/global/list/dirvalues = list("[NORTH]" = "NORTH", "[SOUTH]" = "SOUTH", "[EAST]" = "EAST", "[WEST]" = "WEST", "[NORTHEAST]" = "NORTHEAST", "[SOUTHEAST]" = "SOUTHEAST", "[SOUTHWEST]" = "SOUTHWEST", "[NORTHWEST]" = "NORTHWEST")
-//var/global/list/reverse_dirs = list(NORTH = SOUTH, SOUTH = NORTH, EAST = WEST, WEST = EAST, NORTHEAST = SOUTHWEST, SOUTHEAST = NORTHWEST, SOUTHWEST = NORTHWEST, NORTHWEST = SOUTHEAST)
 /// Returns the lowercase english word for a direction (num)
 /proc/dir_to_dirname(dir)
 	return lowertext(global.dirvalues["[dir]"])
@@ -121,6 +120,63 @@ proc/angle_to_vector(ang)
 	.= list()
 	. += cos(ang)
 	. += sin(ang)
+
+/// Gives an atom an offset around a directed edge
+proc/randomize_edge_offset(atom/target, dir, max_variation = 8, edge_offset = 13)
+	var/pixel_x = 0
+	var/pixel_y = 0
+
+	if(dir & NORTH)
+		pixel_y = edge_offset
+	else if(dir & SOUTH)
+		pixel_y = -edge_offset
+
+	if(dir & EAST)
+		pixel_x = edge_offset
+	else if(dir & WEST)
+		pixel_x = -edge_offset
+
+	if(dir & (NORTH|SOUTH))
+		pixel_x += rand(-max_variation, max_variation)
+	else if(dir & (EAST|WEST))
+		pixel_y += rand(-max_variation, max_variation)
+	else
+		pixel_x += rand(-max_variation, max_variation) * 0.7
+		pixel_y += rand(-max_variation, max_variation) * 0.7
+
+	pixel_x = clamp(pixel_x, -edge_offset, edge_offset)
+	pixel_y = clamp(pixel_y, -edge_offset, edge_offset)
+
+	target.pixel_x = pixel_x
+	target.pixel_y = pixel_y
+
+proc/get_search_direction(original_angle, ideal_dir)
+	var/cw_angle = angle_to_dir(turn(ideal_dir, 45))
+	var/ccw_angle = angle_to_dir(turn(ideal_dir, -45))
+
+	var/diff_cw = angle_difference(original_angle, cw_angle)
+	var/diff_ccw = angle_difference(original_angle, ccw_angle)
+
+	if(diff_cw < diff_ccw)
+		return 1
+	else
+		return -1
+
+proc/search_for_edge(var/turf/turf, dir, clockwise)
+	var/turf/endturf = get_step(turf, dir)
+	var/step = 1
+	var/test_dir = dir
+	while (!checkTurfPassable(endturf) && step < 8)
+		test_dir = turn(dir, (45 * clockwise * step))
+		endturf = get_step(turf, test_dir)
+		step++
+	return endturf
+
+proc/angle_difference(a, b)
+	var/difference = abs(a - b)
+	if(difference > 180)
+		difference = 360 - difference
+	return difference
 
 /// Calculates the angle you need to pass to the turn proc to get dir_to from dir_from
 /// turn(dir, turn_needed(dir, dir_to)) = dir_to
