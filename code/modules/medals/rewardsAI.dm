@@ -72,9 +72,3 @@ datum/achievementReward/aicase/ai_salvage
 	desc = "Replaces your AI core with a model originating from the Eastern Bloc."
 	required_medal = "My Bologna Has A First Name" //placeholder bc there's no directly soviet related medals and meat has some soviet stuff in it ig
 	aiskin = "soviet"
-
-/datum/achievementReward/aicase/ai_regal
-	title = "(AI Core Skin) Regal"
-	desc = "Plates your AI Core in an outfit fit for a monarch."
-	required_medal = "Captain's Log"
-	aiskin = "regal"
