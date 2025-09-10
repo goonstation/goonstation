@@ -1,4 +1,5 @@
 // Allow CSS custom properties in React style props.
+// eslint-disable-next-line react/no-typos
 import 'react'; // module augmentation
 
 declare module 'react' {
