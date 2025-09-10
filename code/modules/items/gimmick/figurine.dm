@@ -1105,6 +1105,14 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Cynthia Xeonyr"
 		icon_state = "cynthiaxeonyr"
 		ckey = "raccoonpope"
+	ovaiggy
+		name = "\improper Sachie Blunt"
+		icon_state = "sachieblunt"
+		ckey = "ovaiggy"
+	ithebinman
+		name = "\improper The Mucus Man"
+		icon_state = "themucusman"
+		ckey = "ithebinman"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
