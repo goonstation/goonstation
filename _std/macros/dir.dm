@@ -154,19 +154,20 @@ proc/randomize_edge_offset(atom/target, dir, max_variation = 8, edge_offset = 13
 	target.pixel_x = pixel_x
 	target.pixel_y = pixel_y
 
-proc/get_search_direction(original_angle, ideal_dir)
-	var/cw_angle = angle_to_dir(turn(ideal_dir, 45))
-	var/ccw_angle = angle_to_dir(turn(ideal_dir, -45))
-
-	var/diff_cw = angle_difference(original_angle, cw_angle)
-	var/diff_ccw = angle_difference(original_angle, ccw_angle)
-
-	if(diff_cw < diff_ccw)
-		return 1
+/// Given a starting direction, returns the best rotation direction towards the angle
+proc/get_shortest_rotation(angle, starting_dir)
+	var/start_angle = dir_to_angle(starting_dir)
+	var/clockwise_diff = (angle - start_angle)
+	if(clockwise_diff < 0)
+		clockwise_diff += 360
+	if(clockwise_diff > 180)
+		return CLOCKWISE
 	else
-		return -1
+		return COUNTERCLOCKWISE
 
-proc/search_for_edge(var/turf/turf, dir, clockwise)
+/// Searches rotationally around the given turf and returns the first passable turf found, checking the given direction first.
+/// If no passable turf is found, returns the turf in the given direction.
+proc/get_adjacent_passable(var/turf/turf, dir, clockwise)
 	var/turf/endturf = get_step(turf, dir)
 	var/step = 1
 	var/test_dir = dir
@@ -175,12 +176,6 @@ proc/search_for_edge(var/turf/turf, dir, clockwise)
 		endturf = get_step(turf, test_dir)
 		step++
 	return endturf
-
-proc/angle_difference(a, b)
-	var/difference = abs(a - b)
-	if(difference > 180)
-		difference = 360 - difference
-	return difference
 
 /// Calculates the angle you need to pass to the turn proc to get dir_to from dir_from
 /// turn(dir, turn_needed(dir, dir_to)) = dir_to
