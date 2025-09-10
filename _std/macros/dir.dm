@@ -16,6 +16,7 @@ var/global/list/modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 var/global/list/dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
 /// Assoc. list of dirs like `"[NORTH]" = "NORTH"`, useful for screen_loc
 var/global/list/dirvalues = list("[NORTH]" = "NORTH", "[SOUTH]" = "SOUTH", "[EAST]" = "EAST", "[WEST]" = "WEST", "[NORTHEAST]" = "NORTHEAST", "[SOUTHEAST]" = "SOUTHEAST", "[SOUTHWEST]" = "SOUTHWEST", "[NORTHWEST]" = "NORTHWEST")
+
 /// Returns the lowercase english word for a direction (num)
 /proc/dir_to_dirname(dir)
 	return lowertext(global.dirvalues["[dir]"])
