@@ -2516,7 +2516,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 		if (item_left)
 			var/obj/item/item = new item_left
 			if (!ismob(hit))
-				turf = search_for_edge(turf, reverse_dir(angle), get_search_direction(O.angle, angle))
+				turf = get_adjacent_passable(turf, reverse_dir(angle), get_shortest_rotation(O.angle, angle))
 				randomize_edge_offset(item, get_dir(turf, hit))
 			item.set_loc(turf)
 
