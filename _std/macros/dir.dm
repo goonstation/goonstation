@@ -3,6 +3,9 @@
 #define SOUTHEAST_UNIQUE (1<<8)
 #define NORTHEAST_UNIQUE (1<<9)
 
+#define CLOCKWISE 1
+#define COUNTERCLOCKWISE -1
+
 /// Never Soggy Eat Waffles
 var/global/list/cardinal = list(NORTH, SOUTH, EAST, WEST)
 /// Diagonal directions
