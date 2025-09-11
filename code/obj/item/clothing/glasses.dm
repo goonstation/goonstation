@@ -85,9 +85,9 @@
 		setProperty("disorient_resist_eye", 100)
 
 	attackby(obj/item/I, mob/user)
-		if ((isscrewingtool(I) || istype(I, /obj/item/pen)) && !pinhole)
-			pinhole = 1
-			block_vision = 0
+		if ((isscrewingtool(I) || istype(I, /obj/item/pen)) && !src.pinhole)
+			src.pinhole = TRUE
+			src.block_vision = FALSE
 			boutput(user,SPAN_NOTICE("You poked two holes into the blindfold, now you can pretend that you can see without seeing"))
 			return
 		. = ..()
