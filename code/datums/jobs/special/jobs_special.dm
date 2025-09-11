@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	name = "Mime"
 	limit = 1
 	request_limit = 2
-	linkcolor = SILICON_LINK_COLOR // greyscale mimes
+	ui_colour = TGUI_COLOUR_GREY
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
 	request_cost = PAY_DOCTORATE * 4
 	trait_list = list("training_mime")
@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/vice_officer
 	name = "Vice Officer"
-	linkcolor = SECURITY_LINK_COLOR
+	ui_colour = TGUI_COLOUR_RED
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Vice Officer"
@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/forensic_technician
 	name = "Forensic Technician"
-	linkcolor = SECURITY_LINK_COLOR
+	ui_colour = TGUI_COLOUR_RED
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Forensic Technician"
@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/toxins_researcher
 	name = "Toxins Researcher"
-	linkcolor = RESEARCH_LINK_COLOR
+	ui_colour = TGUI_COLOUR_PURPLE
 	limit = 0
 	wages = PAY_DOCTORATE
 	trait_list = list("training_scientist")
@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/chemist
 	name = "Chemist"
-	linkcolor = RESEARCH_LINK_COLOR
+	ui_colour = TGUI_COLOUR_PURPLE
 	limit = 0
 	wages = PAY_DOCTORATE
 	trait_list = "training_scientist"
@@ -138,7 +138,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/atmospheric_technician
 	name = "Atmospherish Technician"
-	linkcolor = ENGINEERING_LINK_COLOR
+	ui_colour = TGUI_COLOUR_ORANGE
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Atmospheric Technician"
@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/datum/job/special)
 		src.limit = rand(0,3)
 
 /datum/job/special/pirate
-	linkcolor = SYNDICATE_LINK_COLOR
+	ui_colour = TGUI_COLOUR_CRIMSON
 	name = "Space Pirate"
 	limit = 0
 	wages = 0
@@ -329,7 +329,7 @@ ABSTRACT_TYPE(/datum/job/special)
 		rank = ROLE_PIRATE_CAPTAIN
 
 /datum/job/special/juicer_specialist
-	linkcolor = "#cc8899"
+	ui_colour = TGUI_COLOUR_PINK
 	name = "Juicer Security"
 	limit = 0
 	wages = 0
@@ -346,7 +346,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_miner")
 	access_string = "Head of Mining"
-	linkcolor = COMMAND_LINK_COLOR
+	ui_colour = TGUI_COLOUR_GREEN
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/mining)
@@ -358,7 +358,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/machoman
 	name = "Macho Man"
-	linkcolor = "#9E0E4D"
+	ui_colour = TGUI_COLOUR_VIOLET
 	limit = 0
 	slot_ears = list()
 	slot_card = null
@@ -374,7 +374,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/meatcube
 	name = "Meatcube"
-	linkcolor = SECURITY_LINK_COLOR
+	ui_colour = TGUI_COLOUR_RED
 	limit = 0
 	can_roll_antag = FALSE
 	slot_ears = list()
@@ -392,7 +392,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/ghostdrone
 	name = "Drone"
-	linkcolor = SILICON_LINK_COLOR
+	ui_colour = TGUI_COLOUR_GREY
 	limit = 0
 	wages = 0
 	can_roll_antag = FALSE
@@ -475,7 +475,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily/lawyer
 	day = "Thursday"
 	name = "Lawyer"
-	linkcolor = SECURITY_LINK_COLOR
+	ui_colour = TGUI_COLOUR_RED
 	wages = PAY_DOCTORATE
 	access_string = "Lawyer"
 	limit = 4
@@ -570,7 +570,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 
 /datum/job/slasher
 	name = "The Slasher"
-	linkcolor = "#02020d"
+	ui_colour = TGUI_COLOUR_BLACK
 	limit = 0
 	slot_ears = list()
 	slot_card = null
@@ -621,7 +621,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
-		linkcolor = NANOTRASEN_LINK_COLOR
+		ui_colour = TGUI_COLOUR_NAVY
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
@@ -664,7 +664,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	syndicate
 		name = "Syndicate Pod Pilot"
-		linkcolor = SYNDICATE_LINK_COLOR
+		ui_colour = TGUI_COLOUR_CRIMSON
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
