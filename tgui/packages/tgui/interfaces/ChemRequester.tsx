@@ -52,6 +52,7 @@ const ReagentSearch = (props) => {
       options={filteredReagents}
       onSearch={setSearchText}
       onSelect={handleSelectReagent}
+      selectedOptions={[]}
     />
   );
 };

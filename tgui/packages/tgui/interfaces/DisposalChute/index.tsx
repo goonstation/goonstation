@@ -168,7 +168,7 @@ const DestinationSearch = (props: DestinationSearchProps) => {
       onSearch={setSearchText}
       onSelect={handleSelectDestination}
       options={filteredDestinations}
-      selectedOption={destinationTag}
+      selectedOptions={destinationTag ? [destinationTag] : []}
     />
   );
 };
