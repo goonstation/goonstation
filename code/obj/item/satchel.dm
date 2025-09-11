@@ -180,13 +180,14 @@
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 		if (!in_interact_range(src, usr)  || BOUNDS_DIST(over_object, usr) > 0 || !can_act(usr))
 			return
-		if (istype(over_object,/obj/table))
+		if (istype(over_object,/obj/table) || istype(over_object, /obj/surgery_tray))
+			var/obj/table = over_object
 			if (length(src.contents) < 1)
 				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))
 			else
 				usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
 				for (var/obj/item/thing in src.contents)
-					thing.set_loc(over_object.loc)
+					table.place_on(thing)
 				src.tooltip_rebuild = TRUE
 				src.UpdateIcon()
 				params["satchel_dumped"] = TRUE

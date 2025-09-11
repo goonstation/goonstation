@@ -1077,6 +1077,10 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 
 				falling?.throw_at(target, 1, 1)
 
+	place_on(obj/item/W as obj, mob/user, params)
+		. = ..()
+		if (.)
+			src.attach(W)
 
 	attackby(obj/item/W, mob/user, params)
 		if (iswrenchingtool(W))
@@ -1087,7 +1091,6 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 			return ..()
 		else if (src.place_on(W, user, params))
 			user.show_text("You place [W] on [src].")
-			src.attach(W)
 			return
 		else
 			return ..()
