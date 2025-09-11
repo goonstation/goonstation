@@ -19942,11 +19942,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"buq" = (
-/obj/submachine/chef_oven,
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "buz" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36952,6 +36947,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"dOC" = (
+/obj/machinery/cookingmachine/oven,
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "dOG" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -45708,6 +45708,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"kjz" = (
+/obj/machinery/cookingmachine/oven,
+/obj/landmark/bill_spawn,
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "kke" = (
 /obj/fireworksbox,
 /obj/machinery/loudspeaker,
@@ -47159,15 +47168,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"lwM" = (
-/obj/submachine/chef_oven,
-/obj/landmark/bill_spawn,
-/obj/noticeboard/persistent{
-	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen"
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "lxQ" = (
 /obj/item/device/radio/intercom/security{
 	dir = 8
@@ -48574,11 +48574,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
-"mBW" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "mCe" = (
 /obj/cable,
 /obj/storage/crate,
@@ -54168,6 +54163,11 @@
 	dir = 8
 	},
 /area/station/engine/hotloop)
+"qCs" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "qCB" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -58973,6 +58973,20 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"ufV" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
 "ugf" = (
 /obj/machinery/light{
 	dir = 8;
@@ -63210,20 +63224,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
-"xjn" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_south,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
 "xjC" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -114222,7 +114222,7 @@ agr
 aie
 aie
 aiY
-buq
+dOC
 alg
 alg
 ryN
@@ -114826,7 +114826,7 @@ acT
 aie
 aie
 aiZ
-lwM
+kjz
 alg
 spb
 alg
@@ -115735,7 +115735,7 @@ qzb
 aiZ
 jNg
 jrc
-mBW
+qCs
 eCT
 nQn
 fts
@@ -119067,7 +119067,7 @@ pYK
 pYK
 axC
 tVl
-xjn
+ufV
 aqZ
 bUx
 sQL

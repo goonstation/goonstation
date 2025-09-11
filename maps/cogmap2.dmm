@@ -4988,14 +4988,6 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating/damaged3,
 /area/station/hallway/secondary/construction)
-"aqM" = (
-/obj/decal/cleanable/cobweb2,
-/obj/submachine/chef_oven{
-	desc = "Still works, sorta.";
-	name = "grungy oven"
-	},
-/turf/simulated/floor/grime,
-/area/station/hallway/secondary/construction)
 "aqN" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/black,
@@ -5909,18 +5901,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"ats" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/obj/item/device/radio/intercom/catering,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"att" = (
-/obj/submachine/chef_oven,
-/obj/machinery/light_switch/north,
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "atu" = (
 /obj/submachine/chef_sink,
 /obj/disposalpipe/segment/produce,
@@ -8995,24 +8975,6 @@
 	icon_state = "fpurple3"
 	},
 /area/station/chapel/sanctuary)
-"aBI" = (
-/obj/stool/chair/pew/fancy/right{
-	dir = 1
-	},
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fpurple2"
-	},
-/area/station/chapel/sanctuary)
-"aBJ" = (
-/obj/table/wood/auto,
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/chapel/sanctuary)
 "aBK" = (
 /obj/mic_stand,
 /turf/simulated/floor/wood{
@@ -9735,23 +9697,6 @@
 	icon_state = "fpurple2"
 	},
 /area/station/crew_quarters/bar)
-"aDx" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"aDy" = (
-/obj/submachine/chef_oven,
-/obj/disposalpipe/segment/food{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "aDz" = (
 /obj/machinery/disposal{
 	name = "Lay-Z Chef Prison Food Chute"
@@ -51878,6 +51823,14 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/research_outpost/chamber)
+"djM" = (
+/obj/decal/cleanable/cobweb2,
+/obj/machinery/cookingmachine/oven{
+	desc = "Still works, sorta.";
+	name = "grungy oven"
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/secondary/construction)
 "djN" = (
 /obj/machinery/r_door_control/podbay/medsci{
 	id = "hangar_research2"
@@ -58487,6 +58440,15 @@
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
 	})
+"iQy" = (
+/obj/stool/chair/pew/fancy/right{
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fpurple2"
+	},
+/area/station/chapel/sanctuary)
 "iQz" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
@@ -66402,6 +66364,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"pYM" = (
+/obj/machinery/cookingmachine/oven,
+/obj/disposalpipe/segment/food{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "pYP" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	id = "cloning"
@@ -69763,6 +69734,15 @@
 	dir = 10
 	},
 /area/station/hallway/secondary/exit)
+"tjn" = (
+/obj/table/wood/auto,
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/chapel/sanctuary)
 "tjp" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -70086,6 +70066,12 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/southwest)
+"tuT" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/item/device/radio/intercom/catering,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "tvu" = (
 /obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
@@ -70823,6 +70809,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"uhC" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "uir" = (
 /obj/table/wood/round/auto,
 /obj/machinery/computer/television/small{
@@ -74571,6 +74565,12 @@
 	icon_state = "carpetSE"
 	},
 /area/station/security/hos)
+"ykp" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/light_switch/north,
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "ykv" = (
 /obj/cable/orange{
 	icon_state = "2-8"
@@ -100106,7 +100106,7 @@ amd
 anp
 aon
 osq
-aqM
+djM
 gTd
 ath
 auF
@@ -104638,14 +104638,14 @@ aoz
 apF
 aqX
 vTP
-ats
+tuT
 auP
 awl
 kQh
 axJ
 aAR
 auT
-aDx
+uhC
 ase
 aFR
 aHD
@@ -104940,14 +104940,14 @@ aoA
 apF
 aqY
 vTP
-att
+ykp
 auP
 awm
 rsO
 azy
 auT
 aAU
-aDy
+pYM
 ase
 wIl
 aHE
@@ -123367,7 +123367,7 @@ avE
 ary
 ayJ
 aAh
-aBI
+iQy
 ary
 irY
 alM
@@ -123669,7 +123669,7 @@ avF
 arx
 ayK
 aod
-aBJ
+tjn
 aCV
 aod
 alM

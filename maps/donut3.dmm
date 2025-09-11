@@ -3591,19 +3591,6 @@
 	},
 /turf/simulated/floor/airless/plating/jen,
 /area/station/turret_protected/AIbaseoutside)
-"baK" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
-/obj/machinery/mixer,
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/asylum/kitchen)
 "baL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4948,15 +4935,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
-"bwk" = (
-/obj/decal/stage_edge{
-	layer = 2.8
-	},
-/obj/item/instrument/large/jukebox,
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
-/area/station/crew_quarters/cafeteria)
 "bww" = (
 /obj/storage/closet/office,
 /obj/decal/stripe_caution,
@@ -6340,6 +6318,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"bSc" = (
+/obj/decal/stage_edge{
+	layer = 2.8
+	},
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/cafeteria)
 "bSj" = (
 /obj/decal/cleanable/blood{
 	icon_state = "drip2b"
@@ -10205,6 +10192,19 @@
 	dir = 6
 	},
 /area/station/engine/inner)
+"cYS" = (
+/obj/machinery/disposal/small{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
 "cYW" = (
 /obj/decal/tile_edge/check/red{
 	dir = 4;
@@ -15647,17 +15647,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
-"eNZ" = (
-/obj/machinery/phone/wall{
-	pixel_y = 32
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = 14
-	},
-/turf/simulated/floor/wood/eight{
-	dir = 1
-	},
-/area/station/crew_quarters/cafeteria)
 "eOa" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -18347,6 +18336,14 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/northwest)
+"fFC" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
 "fFG" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/black,
@@ -21183,6 +21180,17 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/northwest)
+"gzR" = (
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 14
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 1
+	},
+/area/station/crew_quarters/cafeteria)
 "gzY" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/wall/auto/jen/red,
@@ -33333,6 +33341,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
+"kpn" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "kpv" = (
 /obj/decorative_pot{
 	anchored = 1
@@ -34298,6 +34312,19 @@
 	dir = 9
 	},
 /area/station/medical/research)
+"kFq" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
 "kFs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
@@ -39096,16 +39123,6 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"mcT" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/machinery/mixer,
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/crew_quarters/kitchen)
 "mcV" = (
 /turf/simulated/floor/wood/six,
 /area/station/library/reading2)
@@ -39388,6 +39405,17 @@
 	icon_state = "red2"
 	},
 /area/station/maintenance/outer/west)
+"mic" = (
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access = null
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/plating/jen,
+/area/station/medical/dome)
 "miA" = (
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/white/checker2{
@@ -43900,19 +43928,6 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
 /turf/simulated/floor/black,
 /area/station/security/main)
-"nHd" = (
-/obj/machinery/disposal/small{
-	dir = 1;
-	pixel_y = 24
-	},
-/obj/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/stockex)
 "nHm" = (
 /obj/railing/orange{
 	dir = 1
@@ -44119,17 +44134,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
-"nKQ" = (
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/plating/jen,
-/area/station/medical/dome)
 "nKY" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -58229,12 +58233,6 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
-"sbY" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "sck" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -62179,12 +62177,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"toq" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "toz" = (
 /obj/table/reinforced/auto,
 /obj/item/robot_module{
@@ -64356,6 +64348,13 @@
 /obj/machinery/light/small/sticky/greenish,
 /turf/simulated/floor/greenwhite/corner,
 /area/station/medical/cdc)
+"tVM" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "tVN" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -66056,6 +66055,12 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
+"uzJ" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "uzQ" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/decal/stripe_caution,
@@ -67680,6 +67685,16 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/hallway/primary/east)
+"uXC" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
 "uYi" = (
 /obj/submachine/chem_extractor{
 	dir = 4
@@ -70764,14 +70779,6 @@
 	dir = 4
 	},
 /area/station/medical/breakroom)
-"vSP" = (
-/obj/submachine/chef_oven{
-	dir = 8
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/asylum/kitchen)
 "vSS" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
@@ -72976,13 +72983,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/outer/east)
-"wAj" = (
-/obj/submachine/chef_oven{
-	dir = 8
-	},
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "wAm" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -96605,7 +96605,7 @@ gYc
 sIK
 sIK
 sIK
-sbY
+uzJ
 gYc
 sIK
 sIK
@@ -110173,7 +110173,7 @@ waP
 waP
 waP
 gKJ
-nHd
+cYS
 vSe
 lOJ
 lOJ
@@ -121342,7 +121342,7 @@ kgb
 wwp
 rNI
 qHy
-bwk
+bSc
 lvl
 aca
 ebH
@@ -121642,7 +121642,7 @@ rxO
 btZ
 pQh
 pQh
-eNZ
+gzR
 qHy
 eEy
 rnx
@@ -122237,7 +122237,7 @@ ddn
 wNW
 aag
 pQh
-mcT
+uXC
 egr
 nmd
 dJO
@@ -122543,7 +122543,7 @@ rbK
 rTC
 bPz
 wZX
-toq
+kpn
 bPz
 pzp
 gtq
@@ -123449,7 +123449,7 @@ ptw
 jQw
 kkc
 mBc
-wAj
+tVM
 kkc
 mWU
 oFm
@@ -129879,7 +129879,7 @@ hum
 uaz
 uaz
 gBK
-nKQ
+mic
 tOH
 bUC
 kaI
@@ -149360,7 +149360,7 @@ fDv
 hfR
 pul
 lon
-baK
+kFq
 sDu
 wwE
 wwE
@@ -150570,7 +150570,7 @@ tdb
 tdb
 tdb
 tdb
-vSP
+fFC
 wwE
 rdj
 rdj

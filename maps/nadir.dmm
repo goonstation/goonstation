@@ -7476,24 +7476,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"dwt" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light_switch/west{
-	pixel_y = -7
-	},
-/obj/machinery/firealarm/directional/west{
-	pixel_y = 4
-	},
-/turf/simulated/floor/redblack,
-/area/station/security/checkpoint/sec_foyer{
-	name = "Secure Release Foyer"
-	})
 "dwx" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
@@ -9451,13 +9433,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"ers" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer{
-	pixel_y = 4
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "erz" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -14405,6 +14380,17 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergency)
+"gxq" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "gxB" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -17598,6 +17584,19 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"hIO" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/storage/cart/mechcart/breach/acid,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -4;
+	pixel_x = -24
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/storage)
 "hJD" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer{
@@ -20461,22 +20460,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/east)
-"iVM" = (
-/obj/machinery/shower{
-	dir = 4;
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/machinery/drainage,
-/obj/stool/bench/purple/auto,
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -3;
-	pixel_x = 24
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "iWu" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -25055,19 +25038,6 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"kQN" = (
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/storage/cart/mechcart/breach/acid,
-/obj/machinery/firealarm/directional/west{
-	pixel_y = -4;
-	pixel_x = -24
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
-/area/station/engine/storage)
 "kQV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37341,6 +37311,13 @@
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
+"qng" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "qnB" = (
 /obj/stool/bar,
 /obj/disposalpipe/segment/horizontal,
@@ -41098,13 +41075,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/cloner)
-"sec" = (
-/obj/submachine/chef_oven,
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "seK" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -42803,6 +42773,24 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/market)
+"sSI" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -7
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 4
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/checkpoint/sec_foyer{
+	name = "Secure Release Foyer"
+	})
 "sSN" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/orangeblack/side,
@@ -45492,6 +45480,15 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"udK" = (
+/obj/machinery/door_control{
+	id = "kitchen";
+	name = "Kitchen Shutter Control";
+	pixel_y = 24
+	},
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "udR" = (
 /obj/machinery/vending/alcohol/with_ammo,
 /obj/decal/cleanable/dirt/jen,
@@ -48550,15 +48547,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
-"vAs" = (
-/obj/machinery/door_control{
-	id = "kitchen";
-	name = "Kitchen Shutter Control";
-	pixel_y = 24
-	},
-/obj/submachine/chef_oven,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "vAE" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/arcade,
@@ -50078,6 +50066,22 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
+"wko" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/drainage,
+/obj/stool/bench/purple/auto,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = -3;
+	pixel_x = 24
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "wkp" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/yellowblack/corner,
@@ -89881,7 +89885,7 @@ oNg
 hWN
 oLJ
 iHN
-vAs
+udK
 bhF
 maE
 jpW
@@ -90183,7 +90187,7 @@ oNg
 vyr
 oLJ
 iHN
-sec
+gxq
 rCD
 tTz
 ssc
@@ -91391,7 +91395,7 @@ oNg
 hEe
 gbZ
 iHN
-ers
+qng
 maE
 bsw
 mjF
@@ -93529,7 +93533,7 @@ mGH
 jwf
 hdz
 uiQ
-dwt
+sSI
 qxw
 imD
 eGM
@@ -103162,7 +103166,7 @@ gpP
 uRX
 uXm
 nzD
-iVM
+wko
 ioB
 viK
 eLX
@@ -110743,7 +110747,7 @@ eFY
 lbH
 lbg
 ycd
-kQN
+hIO
 vTc
 cbG
 eGv

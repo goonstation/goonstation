@@ -593,14 +593,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
-"acE" = (
-/obj/laser_sink/mirror,
-/obj/machinery/firealarm/directional/west{
-	pixel_x = -24;
-	pixel_y = -8
-	},
-/turf/simulated/floor/caution/west,
-/area/station/engine/ptl)
 "acG" = (
 /obj/window/auto/reinforced,
 /turf/simulated/floor/engine,
@@ -31079,6 +31071,14 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
+"eZL" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 6;
+	pixel_x = 5
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "eZN" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -32497,12 +32497,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
-"gbQ" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "gcw" = (
 /obj/stool/chair{
 	dir = 4
@@ -32737,6 +32731,21 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/south)
+"gjH" = (
+/obj/machinery/disposal/mail/autoname/mining,
+/obj/disposalpipe/trunk/mail/west,
+/obj/machinery/light_switch/east{
+	pixel_y = -6
+	},
+/obj/machinery/light,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = 8;
+	pixel_x = 24
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 6
+	},
+/area/station/mining/staff_room)
 "gjN" = (
 /obj/table/auto,
 /obj/random_item_spawner/tableware,
@@ -32829,6 +32838,14 @@
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
+"gmU" = (
+/obj/laser_sink/mirror,
+/obj/machinery/firealarm/directional/west{
+	pixel_x = -24;
+	pixel_y = -8
+	},
+/turf/simulated/floor/caution/west,
+/area/station/engine/ptl)
 "gnh" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
@@ -38269,6 +38286,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/mining/magnet)
+"jVi" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "jVv" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -41733,6 +41760,12 @@
 /area/station/routing/medsci{
 	name = "Research Router"
 	})
+"moX" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "mph" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crematorium"
@@ -45677,6 +45710,36 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
+"pkA" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire{
+	pixel_x = -3
+	},
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 3
+	},
+/obj/item/tank/air,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/machinery/light_switch/north,
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/monitoring)
 "pkC" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6
@@ -46434,6 +46497,20 @@
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
+"pKY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/dome)
 "pLb" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
@@ -48470,20 +48547,6 @@
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
-"raY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/dome)
 "rbi" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -48588,21 +48651,6 @@
 	dir = 1
 	},
 /area/station/engine/monitoring)
-"rgh" = (
-/obj/machinery/disposal/mail/autoname/mining,
-/obj/disposalpipe/trunk/mail/west,
-/obj/machinery/light_switch/east{
-	pixel_y = -6
-	},
-/obj/machinery/light,
-/obj/machinery/firealarm/directional/east{
-	pixel_y = 8;
-	pixel_x = 24
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 6
-	},
-/area/station/mining/staff_room)
 "rgv" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating,
@@ -52804,36 +52852,6 @@
 "ugD" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
-"ugN" = (
-/obj/rack,
-/obj/item/clothing/suit/hazard/fire{
-	pixel_x = -3
-	},
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/firefighter{
-	pixel_x = 3
-	},
-/obj/item/tank/air,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/machinery/light_switch/north,
-/obj/item/chem_grenade/firefighting{
-	pixel_x = -7;
-	pixel_y = -4
-	},
-/obj/item/chem_grenade/firefighting{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/machinery/firealarm/directional/west{
-	pixel_y = -8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
-/area/station/engine/monitoring)
 "uhe" = (
 /obj/decal/cleanable/dirt,
 /mob/living/critter/small_animal/mouse,
@@ -54665,14 +54683,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"vnl" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer{
-	pixel_y = 6;
-	pixel_x = 5
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "vnw" = (
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
@@ -57439,16 +57449,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"xfa" = (
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "xft" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
@@ -95012,7 +95012,7 @@ iTv
 iTv
 iTv
 iTv
-raY
+pKY
 iTv
 iTv
 iTv
@@ -102237,7 +102237,7 @@ arI
 asK
 atY
 lot
-ugN
+pkA
 mwo
 lHJ
 lGH
@@ -105235,7 +105235,7 @@ aaa
 acc
 ace
 aco
-acE
+gmU
 acW
 adr
 agk
@@ -106518,7 +106518,7 @@ bki
 xYT
 jAk
 bzk
-rgh
+gjH
 coJ
 mRv
 bDA
@@ -116161,8 +116161,8 @@ iNb
 aUM
 jOn
 eQk
-gbQ
-xfa
+moX
+jVi
 tYy
 ppQ
 mPi
@@ -116468,7 +116468,7 @@ jdC
 qUu
 qUu
 ncP
-vnl
+eZL
 dUm
 uzb
 xpA

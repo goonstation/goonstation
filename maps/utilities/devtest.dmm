@@ -87,6 +87,11 @@
 /obj/machinery/crema_switch,
 /turf/simulated/floor,
 /area/station/devzone)
+"co" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/white,
+/area/station/devzone)
 "ct" = (
 /obj/machinery/recharge_station,
 /obj/landmark/start/job/cyborg,
@@ -455,6 +460,14 @@
 /area/station/devzone)
 "id" = (
 /obj/machinery/computer/secure_data/detective_computer,
+/turf/simulated/floor,
+/area/station/devzone)
+"ie" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/silicon/hivebot/eyebot,
+/obj/machinery/recharge_station,
 /turf/simulated/floor,
 /area/station/devzone)
 "ii" = (
@@ -1208,10 +1221,6 @@
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor,
 /area/station/devzone)
-"xC" = (
-/obj/submachine/chef_oven,
-/turf/simulated/floor/white,
-/area/station/devzone)
 "xK" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -1714,25 +1723,6 @@
 "FQ" = (
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/white,
-/area/station/devzone)
-"FT" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/landmark/start/job/AI,
-/turf/simulated/floor,
-/area/station/devzone)
-"FV" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/mob/living/silicon/hivebot/eyebot,
-/obj/machinery/recharge_station,
-/turf/simulated/floor,
 /area/station/devzone)
 "Gi" = (
 /obj/machinery/chem_heater,
@@ -2532,6 +2522,17 @@
 /obj/landmark/start/job/research_director,
 /turf/simulated/floor,
 /area/station/devzone)
+"TT" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/landmark/start/job/AI,
+/turf/simulated/floor,
+/area/station/devzone)
 "TY" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -2634,6 +2635,19 @@
 	setup_tag = "BOTTOM"
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"Wf" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/debug_generator{
+	generating = 100000
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Wj" = (
 /obj/submachine/weapon_vendor/security,
@@ -2792,11 +2806,6 @@
 	dir = 10
 	},
 /area/station/devzone)
-"Yr" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/turf/simulated/floor/white,
-/area/station/devzone)
 "Yx" = (
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2841,18 +2850,9 @@
 /obj/item/instrument/large/jukebox,
 /turf/simulated/floor/white,
 /area/station/devzone)
-"Zx" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/debug_generator{
-	generating = 100000
-	},
-/turf/simulated/floor/plating/jen,
+"Zu" = (
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/white,
 /area/station/devzone)
 "Zz" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -3253,9 +3253,9 @@ kz
 NU
 Ni
 NG
-Yr
+co
 Ni
-xC
+Zu
 bv
 Xm
 Xd
@@ -3807,7 +3807,7 @@ XB
 ng
 TK
 Yx
-FT
+TT
 hS
 ii
 Ic
@@ -3893,7 +3893,7 @@ ZD
 ng
 lb
 Yx
-FV
+ie
 ng
 LH
 dQ
@@ -3920,7 +3920,7 @@ Cf
 Qg
 Xt
 ng
-Zx
+Wf
 hL
 hL
 Cn
