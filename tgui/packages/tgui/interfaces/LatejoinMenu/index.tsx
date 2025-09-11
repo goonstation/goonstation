@@ -194,8 +194,6 @@ const disabled_content = (
     <Icon name="slash" />
   </Icon.Stack>
 );
-const overflowed_content = (slot_count: number) =>
-  `+${slot_count - (MAX_SLOTS - 2)}`;
 
 interface SlotProps {
   open: boolean;
@@ -204,7 +202,7 @@ interface SlotProps {
 
 function GenerateSlotArray(props: JobData) {
   const unclosed_content = props.disabled ? disabled_content : open_content;
-
+  const slot_overflow = props.slot_count - MAX_SLOTS;
   const slots_to_show =
     props.slot_limit < 0
       ? MAX_SLOTS
@@ -226,10 +224,20 @@ function GenerateSlotArray(props: JobData) {
     }
   }
 
-  if (props.slot_count > MAX_SLOTS - 1) {
-    out[MAX_SLOTS - 1].open = false;
+  // If a slot overflow exists, show the total number of extra slots on the final slot.
+  if (slot_overflow > 0) {
+    out[MAX_SLOTS - 1].children = `+${1 + slot_overflow}`;
+  }
+
+  // If slots are still available, ensure that the final slot is open/disabled.
+  // This is calculated from `slot_overflow + 1` as the overflow will instead be displayed on the penultimate slot.
+  if (
+    slot_overflow + 1 > 0 &&
+    (props.slot_count < props.slot_limit || props.slot_limit < 0)
+  ) {
+    out[MAX_SLOTS - 1].open = true;
     out[MAX_SLOTS - 1].children = unclosed_content;
-    out[MAX_SLOTS - 2].children = overflowed_content(props.slot_count);
+    out[MAX_SLOTS - 2].children = `+${2 + slot_overflow}`;
   }
 
   return out;
