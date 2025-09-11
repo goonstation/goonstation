@@ -78,10 +78,19 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 	nudge_compatible = FALSE
+	var/pinhole = FALSE
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 100)
+
+	attackby(obj/item/I, mob/user)
+		if ((isscrewingtool(I) || istype(I, /obj/item/pen)) && !pinhole)
+			pinhole = 1
+			block_vision = 0
+			boutput(user,SPAN_NOTICE("You poked two holes into the blindfold, now you can pretend that you can see without seeing"))
+			return
+		. = ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target) && user.a_intent != INTENT_HARM) //ishuman() works on monkeys too apparently.
