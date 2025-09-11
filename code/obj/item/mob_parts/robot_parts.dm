@@ -371,7 +371,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state = "head-screen"
 	material_amt = ROBOT_SCREEN_METAL_COST
 	max_health = 90
-	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","nervous","ditzy","annoyed","skull","eye","sly","elated","blush","battery","error","loading","pong","hypnotized")
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","nervous","ditzy","annoyed","skull","eye","sly","elated","blush","battery","error","loading","pong","hypnotized","excited","upset","sob","yell","squint","fisheye","plead","hearteye","snooze","sulk","concern","pout","chill","scream","pensive","smug","blank","music","heart","exclaim","question")
 	var/smashed = FALSE
 
 	update_icon(...)
