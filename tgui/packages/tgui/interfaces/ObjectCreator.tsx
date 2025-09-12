@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Button,
@@ -27,28 +27,35 @@ interface ObjectCreatorData {
   world_max_x: number;
   world_max_y: number;
   world_max_z: number;
+  picked_x?: number;
+  picked_y?: number;
+  picked_z?: number;
 }
 
 export const ObjectCreator = () => {
   const { data, act } = useBackend<ObjectCreatorData>();
-  const [filter, setFilter] = useState('');
   const [selected, setSelected] = useState<string[]>([]);
   const [offsetType, setOffsetType] = useState<'relative' | 'absolute'>(
     'relative',
   );
-  const [x, setX] = useState(0); // Default to 0 for relative coordinates
+  const [x, setX] = useState(0);
   const [y, setY] = useState(0);
   const [z, setZ] = useState(0);
   const [count, setCount] = useState(1);
   const [dir, setDir] = useState<ByondDir>(ByondDir.South);
 
-  const MAX_SELECTION = 5;
+  // Update coordinates when picked from backend
+  useEffect(() => {
+    const { picked_x, picked_y, picked_z } = data;
+    if (picked_x && picked_y && picked_z) {
+      setOffsetType('absolute');
+      setX(picked_x);
+      setY(picked_y);
+      setZ(picked_z);
+    }
+  }, [data.picked_x, data.picked_y, data.picked_z]);
 
-  const filtered = useMemo(() => {
-    if (!filter) return data.types;
-    const f = filter.toLowerCase();
-    return data.types.filter((t) => t.toLowerCase().includes(f));
-  }, [filter, data.types]);
+  const MAX_SELECTION = 5;
 
   const toggleSelect = (path: string) => {
     setSelected((prev) => {
@@ -60,7 +67,7 @@ export const ObjectCreator = () => {
     });
   };
 
-  const spawn = () => {
+  const spawnShit = () => {
     if (!selected.length) return;
     act('spawn', {
       types: selected,
@@ -74,33 +81,48 @@ export const ObjectCreator = () => {
   };
 
   return (
-    <Window width={550} height={725} title={`Create ${data.root || ''}`}>
+    <Window width={550} height={705} title={`${data.root} Spawner`}>
       <Window.Content>
         <Section title="Select types">
           <ListSearch
-            currentSearch={filter}
-            onSearch={(v) => setFilter(v)}
-            onSelect={(option) => toggleSelect(option)}
-            options={filtered}
+            fuzzy="smart"
+            onSelect={toggleSelect}
+            options={data.types}
             selectedOptions={selected}
             multipleSelect
             noResultsPlaceholder="No matches."
             virtualize
             height="28rem"
           />
-          <Box mt={1} height={1} fontSize={0.8} color="label">
-            Selected: {selected.length}
-            {!!selected.length && (
-              <Button ml={1} icon="times" onClick={() => setSelected([])}>
+          <Stack mt={1}>
+            <Stack.Item align="center">
+              <Box fontSize={0.8} color="label" minWidth="5em">
+                Selected: {selected.length}
+              </Box>
+            </Stack.Item>
+            <Stack.Item align="center">
+              <Button
+                icon="times"
+                onClick={() => setSelected([])}
+                disabled={!selected.length}
+              >
                 Clear
               </Button>
-            )}
-          </Box>
-          {selected.length >= MAX_SELECTION && (
-            <NoticeBox danger>
-              Maximum selection limit ({MAX_SELECTION}) reached.
-            </NoticeBox>
-          )}
+            </Stack.Item>
+            <Stack.Item grow>
+              <NoticeBox
+                danger
+                mb={0}
+                style={{
+                  // Done like this so no layout shift when appearing
+                  visibility:
+                    selected.length >= MAX_SELECTION ? 'visible' : 'hidden',
+                }}
+              >
+                Maximum selection limit ({MAX_SELECTION}) reached.
+              </NoticeBox>
+            </Stack.Item>
+          </Stack>
         </Section>
         <Section title="Spawn Settings">
           <LabeledList>
@@ -174,6 +196,16 @@ export const ObjectCreator = () => {
                     onChange={setZ}
                   />
                 </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="location-crosshairs"
+                    tooltip="Pick coordinate on screen"
+                    onClick={() => {
+                      act('pick_coordinate');
+                    }}
+                    width={2}
+                  />
+                </Stack.Item>
               </Stack>
             </LabeledList.Item>
             <LabeledList.Item label="Count">
@@ -192,7 +224,7 @@ export const ObjectCreator = () => {
             <Button
               disabled={!selected.length}
               icon="cube"
-              onClick={spawn}
+              onClick={spawnShit}
               tooltip={
                 selected.length
                   ? 'Spawn selected types'

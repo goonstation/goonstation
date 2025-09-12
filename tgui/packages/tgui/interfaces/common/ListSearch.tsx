@@ -6,6 +6,8 @@
  */
 
 import { classes } from 'common/react';
+import { useFuzzySearch } from 'tgui-core/fuzzysearch';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -20,20 +22,21 @@ import { Placeholder } from '../../components';
 interface ListSearchProps {
   autoFocus?: boolean;
   className?: string;
-  currentSearch: string;
-  /** Height of the list area. Default: 30rem */
+  /** Enable fuzzy search with specified matching strategy. Default: 'off' */
+  fuzzy?: 'off' | 'smart' | 'aggressive';
+  /** Height of the list area. Default: `30rem` */
   height?: string | number;
   noResultsPlaceholder?: string;
-  onSearch: (value: string) => void;
-  // onSelect is called with the option clicked; parent decides how to update selectedOptions
+  /** `onSelect` is called with the option clicked; parent decides how to update `selectedOptions` */
   onSelect: (value: string) => void;
   options: string[];
   searchPlaceholder?: string;
-  selectedOptions: string[];
-  /** Allow toggling multiple selections and show checkboxes. Default: False */
+  selectedOptions?: string[];
+  /** Allow toggling multiple selections and show checkboxes. Default: `false` */
   multipleSelect?: boolean;
+  /** Use virtual list rendering if past `virtualizeThreshold` or `true` - pass `false` to fully disable */
   virtualize?: boolean | undefined;
-  /** Default threshold is 250 */
+  /** Default threshold is `250` */
   virtualizeThreshold?: number;
 }
 
@@ -41,10 +44,9 @@ export const ListSearch = (props: ListSearchProps) => {
   const {
     autoFocus,
     className,
-    currentSearch,
+    fuzzy,
     height = '30rem',
     noResultsPlaceholder,
-    onSearch,
     onSelect,
     options,
     searchPlaceholder = 'Search...',
@@ -53,13 +55,27 @@ export const ListSearch = (props: ListSearchProps) => {
     virtualize,
     virtualizeThreshold = 250,
   } = props;
+
+  // Internal search state
+  const [searchText, setSearchText] = useState('');
+
+  // Always use fuzzy search, defaulting to "off" if not specified
+  const fuzzySearch = useFuzzySearch({
+    searchArray: options,
+    matchStrategy: fuzzy || 'off',
+    getSearchString: (item) => item,
+  });
+
   const handleSearch = (value: string) => {
-    onSearch(value);
+    fuzzySearch.setQuery(value);
+    setSearchText(value);
   };
-  const cn = classes(['list-search-interface', className]);
 
   const renderOptions = () => {
-    if (options.length === 0) {
+    const displayOptions =
+      searchText.trim() !== '' ? fuzzySearch.results : options;
+
+    if (displayOptions.length === 0) {
       return (
         <Placeholder mx={1} py={0.5}>
           {noResultsPlaceholder}
@@ -67,7 +83,7 @@ export const ListSearch = (props: ListSearchProps) => {
       );
     }
 
-    const children = options.map((option) => {
+    const children = displayOptions.map((option) => {
       const isSelected = selectedOptions.includes(option);
       return (
         <div
@@ -102,13 +118,20 @@ export const ListSearch = (props: ListSearchProps) => {
     const shouldVirtualize =
       virtualize === false
         ? false
-        : virtualize === true || options.length > virtualizeThreshold;
+        : virtualize === true || displayOptions.length > virtualizeThreshold;
 
     if (shouldVirtualize) {
-      return <VirtualList>{children}</VirtualList>;
+      // key prop based on length to force remount when filtered
+      return (
+        <VirtualList key={`vlist-${displayOptions.length}`}>
+          {children}
+        </VirtualList>
+      );
     }
     return children;
   };
+
+  const cn = classes(['list-search-interface', className]);
 
   return (
     <Stack className={cn} vertical fill>
@@ -118,7 +141,7 @@ export const ListSearch = (props: ListSearchProps) => {
           fluid
           onChange={handleSearch}
           placeholder={searchPlaceholder}
-          value={currentSearch}
+          value={searchText}
         />
       </Stack.Item>
       <Stack.Item grow>

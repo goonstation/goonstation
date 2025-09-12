@@ -2,6 +2,9 @@
 	var/datum/admins/admin_holder
 	var/root_type
 	var/list/type_strings
+	var/picked_x
+	var/picked_y
+	var/picked_z
 
 /datum/object_creator/New(datum/admins/A, root)
 	..()
@@ -10,10 +13,8 @@
 		return
 	root_type = root || /obj
 	type_strings = list()
-	for (var/T in concrete_typesof(root_type)) // no. no abstracts. bad.
-		var/typeinfo/atom/typeinfo = get_type_typeinfo(T)
-		if(!typeinfo.admin_spawnable) // bad.
-			continue
+	// no abstract or hidden types
+	for (var/T in filtered_concrete_typesof(root_type, /proc/filter_admin_spawnable))
 		type_strings += "[T]"
 
 /datum/object_creator/ui_state(mob/user)
@@ -22,17 +23,24 @@
 /datum/object_creator/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "ObjectCreator", "Object Creator")
+		ui = new(user, src, "ObjectCreator", "Spawner")
 		ui.open()
 
 /datum/object_creator/ui_static_data(mob/user)
-	var/list/data = list()
-	data["types"] = type_strings
-	data["root"] = "[root_type]"
-	data["world_max_x"] = world.maxx
-	data["world_max_y"] = world.maxy
-	data["world_max_z"] = world.maxz
-	return data
+	. = list()
+	.["types"] = type_strings
+	.["root"] = "[root_type]"
+	.["world_max_x"] = world.maxx
+	.["world_max_y"] = world.maxy
+	.["world_max_z"] = world.maxz
+
+/datum/object_creator/ui_data(mob/user)
+	. = list()
+	if (src.picked_x && src.picked_y && src.picked_z)
+		.["picked_x"] = src.picked_x
+		.["picked_y"] = src.picked_y
+		.["picked_z"] = src.picked_z
+
 
 /datum/object_creator/ui_act(action, list/params)
 	. = ..()
@@ -115,6 +123,13 @@
 			// 		break
 			// 	LAGCHECK(LAG_LOW)
 			return TRUE
+		if ("pick_coordinate")
+			var/turf/T = pick_ref(usr)
+			if (isturf(T))
+				src.picked_x = T.x
+				src.picked_y = T.y
+				src.picked_z = T.z
+				return TRUE
 
 /datum/object_creator/proc/admin_can_spawn()
 	if(!admin_holder || admin_holder.level < LEVEL_ADMIN)
