@@ -1,4 +1,6 @@
-
+(t)fri sep 12 25
+(u)LeahTheTech
+(+)EMPing an AI core now has a 50% chance to eject them back to their mainframe or forcefully enable text mode for 15 seconds.
 (t)wed sep 10 25
 (u)EmeraldCrow
 (p)24619
