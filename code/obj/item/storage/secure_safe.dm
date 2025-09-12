@@ -161,6 +161,9 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	. = TRUE
 
 
+/obj/item/storage/secure/ui_state(action, params)
+	. = tgui_physical_state // safes require physical access
+
 /obj/item/storage/secure/proc/add_input(var/key)
 	var/key_len = length(key)
 	var/guess_len = length(src.guess)

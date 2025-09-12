@@ -9381,9 +9381,6 @@
 	},
 /area/station/medical/staff)
 "bbn" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bbo" = (
@@ -9391,6 +9388,9 @@
 /obj/machinery/disposal/morgue,
 /obj/disposalpipe/trunk/morgue{
 	dir = 1
+	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
@@ -14161,16 +14161,6 @@
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/south)
-"bGb" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b"
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/space,
-/area/station/solar/aisat)
 "bGc" = (
 /obj/machinery/power/solar/south,
 /obj/cable/yellow,
@@ -17230,6 +17220,18 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
+"drZ" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/solar/aisat)
 "dsA" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -22540,7 +22542,6 @@
 	dir = 4;
 	req_access = null
 	},
-/obj/mapping_helper/access/medlab,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
@@ -22551,6 +22552,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "gJU" = (
@@ -31748,12 +31750,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/camera/directional/east{
-	c_tag = "South Primary Hallway Midport";
-	pixel_y = -10
-	},
 /obj/machinery/light/emergency{
 	dir = 1
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -32287,6 +32288,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"mxG" = (
+/obj/machinery/camera/directional/south,
+/turf/space,
+/area/space)
 "mye" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -42724,6 +42729,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
+"stj" = (
+/obj/machinery/camera/directional/north,
+/turf/space,
+/area/space)
 "stw" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
@@ -46041,6 +46050,13 @@
 	icon_state = "fred6"
 	},
 /area/station/crew_quarters/jazz)
+"upg" = (
+/obj/machinery/camera/directional/west{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/turf/space,
+/area/space)
 "upv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46067,16 +46083,6 @@
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/science/hall)
-"uqb" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/turf/space,
-/area/space)
 "uqY" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -73737,7 +73743,7 @@ aag
 bFh
 tXT
 bGc
-uqb
+aag
 bFh
 tXT
 bGc
@@ -75243,7 +75249,7 @@ bEL
 bEL
 bEL
 bEL
-aaa
+stj
 bFh
 tXT
 bGc
@@ -114797,7 +114803,7 @@ aaa
 aaa
 aaa
 aaa
-tZs
+aaa
 aaa
 aaa
 aaa
@@ -115402,7 +115408,7 @@ aaa
 aaa
 adQ
 aaa
-aaa
+upg
 aaa
 aaa
 aaa
@@ -120235,7 +120241,7 @@ bBj
 dgJ
 bCK
 aaa
-tZs
+aaa
 aaa
 bBj
 dgJ
@@ -120838,7 +120844,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+tZs
 lTZ
 aaa
 aaa
@@ -124731,7 +124737,7 @@ aaa
 kQf
 aaa
 aaa
-mxn
+aaa
 dzq
 lTZ
 aaa
@@ -124782,7 +124788,7 @@ xEZ
 nEX
 ecY
 rFC
-aaa
+stj
 lTZ
 aaa
 aaa
@@ -124800,9 +124806,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
+mxG
 dzq
-aTC
+aaa
 aaa
 aaa
 aaa
@@ -125051,7 +125057,7 @@ aaa
 aaa
 aaa
 aaa
-mxn
+aaa
 fjg
 roy
 xTj
@@ -125086,7 +125092,7 @@ tni
 bHp
 roy
 nkh
-aTC
+aaa
 aaa
 aaa
 aaa
@@ -125337,7 +125343,7 @@ aaa
 aaa
 aaa
 dzq
-lTZ
+drZ
 aaa
 aaa
 aaa
@@ -125355,7 +125361,7 @@ aaa
 aaa
 aaa
 lTZ
-aaa
+mxG
 rFC
 sNX
 bvy
@@ -129296,7 +129302,7 @@ aaa
 aaa
 aaa
 lTZ
-aaa
+upg
 aaa
 aaa
 aaa
@@ -129601,7 +129607,7 @@ mLL
 roy
 roy
 acl
-bGb
+bRR
 aaa
 rFC
 brv
@@ -129899,7 +129905,7 @@ bBj
 wYC
 bCK
 aaa
-gRl
+aaa
 aaa
 bBj
 wYC
@@ -134732,7 +134738,7 @@ adQ
 aaa
 aaa
 aaa
-aaa
+tZs
 aaa
 adQ
 aaa
@@ -135334,7 +135340,7 @@ aaa
 aaa
 aaa
 aaa
-gRl
+aaa
 aaa
 aaa
 aaa

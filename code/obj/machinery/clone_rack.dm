@@ -83,7 +83,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 
 /obj/machinery/disk_rack/proc/insert_disk(index, obj/item/disk/data/floppy/disk, mob/user)
 	src.disks[index] = disk
-	user.drop_item(disk)
+	user?.drop_item(disk)
 	disk.set_loc(src)
 	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 	src.UpdateIcon()
@@ -186,6 +186,14 @@ TYPEINFO(/obj/machinery/disk_rack)
 	src.emagged = TRUE
 	src.processing_tier = PROCESSING_32TH
 	return TRUE
+
+
+/obj/machinery/disk_rack/office
+	New()
+		. = ..()
+		var/i = 1
+		for (var/type in childrentypesof(/obj/item/disk/data/floppy/office))
+			src.insert_disk(i++, new type)
 
 /obj/spawner/clone_rack
 	icon = 'icons/obj/disk_rack.dmi'

@@ -90,6 +90,7 @@
 	free_resources = list()
 	malfunction = TRUE
 	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
+	mechanics_type_override = /obj/machinery/manufacturer/general
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -216,6 +217,7 @@
 		/datum/manufacture/glasses,
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
+		/datum/manufacture/wheelchair,
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,

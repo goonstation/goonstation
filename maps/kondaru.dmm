@@ -594,10 +594,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "acE" = (
-/obj/machinery/firealarm/directional/east{
+/obj/laser_sink/mirror,
+/obj/machinery/firealarm/directional/west{
+	pixel_x = -24;
 	pixel_y = -8
 	},
-/obj/laser_sink/mirror,
 /turf/simulated/floor/caution/west,
 /area/station/engine/ptl)
 "acG" = (
@@ -48478,7 +48479,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medlab,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -48593,10 +48594,11 @@
 /obj/machinery/light_switch/east{
 	pixel_y = -6
 	},
-/obj/machinery/firealarm/directional/west{
-	pixel_y = 8
-	},
 /obj/machinery/light,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = 8;
+	pixel_x = 24
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 6
 	},
@@ -52816,9 +52818,6 @@
 	pixel_y = 10
 	},
 /obj/machinery/light_switch/north,
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -8
-	},
 /obj/item/chem_grenade/firefighting{
 	pixel_x = -7;
 	pixel_y = -4
@@ -52826,6 +52825,10 @@
 /obj/item/chem_grenade/firefighting{
 	pixel_x = -4;
 	pixel_y = -4
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
