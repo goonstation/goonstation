@@ -56,8 +56,9 @@ export const ListSearch = (props: ListSearchProps) => {
     virtualizeThreshold = 250,
   } = props;
 
-  // Internal search state
   const [searchText, setSearchText] = useState('');
+  const [isEndWordSearch, setIsEndWordSearch] = useState(false);
+  const [effectiveSearchTerm, setEffectiveSearchTerm] = useState('');
 
   // Always use fuzzy search, defaulting to "off" if not specified
   const fuzzySearch = useFuzzySearch({
@@ -67,13 +68,31 @@ export const ListSearch = (props: ListSearchProps) => {
   });
 
   const handleSearch = (value: string) => {
-    fuzzySearch.setQuery(value);
+    // Update search text
     setSearchText(value);
+
+    // Check if this is an end word boundary search
+    const isEndWord = value.endsWith('$');
+    setIsEndWordSearch(isEndWord);
+
+    // Set effective search term without the $ if present
+    const effectiveTerm = isEndWord ? value.slice(0, -1) : value;
+    setEffectiveSearchTerm(effectiveTerm);
+
+    // Update fuzzy search with the effective term
+    fuzzySearch.setQuery(effectiveTerm);
   };
 
   const renderOptions = () => {
-    const displayOptions =
-      searchText.trim() !== '' ? fuzzySearch.results : options;
+    let displayOptions =
+      effectiveSearchTerm.trim() === '' ? options : fuzzySearch.results;
+
+    // Apply additional end-of-word boundary filtering if $ is used
+    if (isEndWordSearch && effectiveSearchTerm.trim() !== '') {
+      displayOptions = displayOptions.filter((option) =>
+        option.endsWith(effectiveSearchTerm),
+      );
+    }
 
     if (displayOptions.length === 0) {
       return (

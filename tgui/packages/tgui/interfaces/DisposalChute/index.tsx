@@ -6,7 +6,6 @@
  * @license ISC
  */
 
-import { useState } from 'react';
 import {
   Box,
   Button,
@@ -58,7 +57,7 @@ export const DisposalChute = () => {
     <Window title={name} width={355} height={destinations ? 350 : 140}>
       <Window.Content
         className="disposal-chute-interface"
-        scrollable={!!destinations}
+        // scrollable={!!destinations}
       >
         <Stack vertical>
           <Stack.Item>
@@ -160,6 +159,7 @@ const DestinationSearch = (props: DestinationSearchProps) => {
     <ListSearch
       autoFocus
       fuzzy="smart"
+      height={12}
       onSelect={handleSelectDestination}
       options={destinations}
       selectedOptions={destinationTag ? [destinationTag] : []}

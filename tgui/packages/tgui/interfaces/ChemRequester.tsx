@@ -6,6 +6,7 @@
  */
 
 import { capitalize } from 'common/string';
+import { useMemo } from 'react';
 import {
   Button,
   Input,
@@ -19,7 +20,6 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { IDCard } from './common/IDCard';
 import { ListSearch } from './common/ListSearch';
-import { useMemo } from 'react';
 
 interface ChemRequesterData {
   chemicals;
