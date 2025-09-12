@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import {
   Box,
   Button,
+  Dropdown,
   LabeledList,
   NoticeBox,
   NumberInput,
@@ -43,6 +44,7 @@ export const ObjectCreator = () => {
   const [z, setZ] = useState(0);
   const [count, setCount] = useState(1);
   const [dir, setDir] = useState<ByondDir>(ByondDir.South);
+  const [effect, setEffect] = useState<string>('None');
 
   // Update coordinates when picked from backend
   useEffect(() => {
@@ -77,6 +79,7 @@ export const ObjectCreator = () => {
       z,
       direction: dir,
       count,
+      effect,
     });
   };
 
@@ -111,130 +114,152 @@ export const ObjectCreator = () => {
               </Button>
             </Stack.Item>
             <Stack.Item grow>
-              <NoticeBox
-                danger
-                mb={0}
-                style={{
-                  // Done like this so no layout shift when appearing
-                  visibility:
-                    selected.length >= MAX_SELECTION ? 'visible' : 'hidden',
-                }}
-              >
-                Maximum selection limit ({MAX_SELECTION}) reached.
-              </NoticeBox>
+              {(() => {
+                const showMax = selected.length >= MAX_SELECTION;
+                const showTurfWarn =
+                  !showMax && data.root === '/turf' && selected.length > 1;
+                const visible = showMax || showTurfWarn;
+                const message = showMax
+                  ? `Maximum selection limit (${MAX_SELECTION}) reached.`
+                  : 'Multiple turfs may work strange! 💀';
+                return (
+                  <NoticeBox
+                    mb={0}
+                    danger={showMax}
+                    style={{ visibility: visible ? 'visible' : 'hidden' }}
+                  >
+                    {message}
+                  </NoticeBox>
+                );
+              })()}
             </Stack.Item>
           </Stack>
         </Section>
         <Section title="Spawn Settings">
-          <LabeledList>
-            <LabeledList.Item label="Offset Type">
-              <Stack>
-                <Stack.Item>
-                  <Button.Checkbox
-                    checked={offsetType === 'absolute'}
-                    onClick={() => {
-                      setOffsetType('absolute');
-                      // Reset to default coordinates for absolute mode
-                      setX(1);
-                      setY(1);
-                      setZ(1);
-                    }}
-                  >
-                    Absolute
-                  </Button.Checkbox>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button.Checkbox
-                    checked={offsetType === 'relative'}
-                    onClick={() => {
-                      setOffsetType('relative');
-                      // Reset to default coordinates for relative mode
-                      setX(0);
-                      setY(0);
-                      setZ(0);
-                    }}
-                  >
-                    Relative
-                  </Button.Checkbox>
-                </Stack.Item>
-              </Stack>
-            </LabeledList.Item>
-            <LabeledList.Item label="Coordinates">
-              <Stack>
-                <Stack.Item>
+          <Stack align="start">
+            <Stack.Item grow>
+              <LabeledList>
+                <LabeledList.Item label="Offset Type">
+                  <Stack>
+                    <Stack.Item>
+                      <Button.Checkbox
+                        checked={offsetType === 'absolute'}
+                        onClick={() => {
+                          setOffsetType('absolute');
+                          // Reset to default coordinates for absolute mode
+                          setX(1);
+                          setY(1);
+                          setZ(1);
+                        }}
+                      >
+                        Absolute
+                      </Button.Checkbox>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button.Checkbox
+                        checked={offsetType === 'relative'}
+                        onClick={() => {
+                          setOffsetType('relative');
+                          // Reset to default coordinates for relative mode
+                          setX(0);
+                          setY(0);
+                          setZ(0);
+                        }}
+                      >
+                        Relative
+                      </Button.Checkbox>
+                    </Stack.Item>
+                  </Stack>
+                </LabeledList.Item>
+                <LabeledList.Item label="Coordinates">
+                  <Stack>
+                    <Stack.Item>
+                      <NumberInput
+                        width={4}
+                        value={x}
+                        minValue={
+                          offsetType === 'absolute' ? 1 : -1 * data.world_max_x
+                        }
+                        maxValue={data.world_max_x}
+                        step={1}
+                        onChange={setX}
+                      />
+                    </Stack.Item>
+                    <Stack.Item>
+                      <NumberInput
+                        width={4}
+                        value={y}
+                        minValue={
+                          offsetType === 'absolute' ? 1 : -1 * data.world_max_y
+                        }
+                        maxValue={data.world_max_y}
+                        step={1}
+                        onChange={setY}
+                      />
+                    </Stack.Item>
+                    <Stack.Item>
+                      <NumberInput
+                        width={4}
+                        value={z}
+                        minValue={
+                          offsetType === 'absolute' ? 1 : -1 * data.world_max_z
+                        }
+                        maxValue={data.world_max_z}
+                        step={1}
+                        onChange={setZ}
+                      />
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        icon="location-crosshairs"
+                        tooltip="Pick turf coordinate on screen"
+                        onClick={() => {
+                          act('pick_coordinate');
+                        }}
+                        width={2}
+                      />
+                    </Stack.Item>
+                  </Stack>
+                </LabeledList.Item>
+                <LabeledList.Item label="Count">
                   <NumberInput
                     width={4}
-                    value={x}
-                    minValue={
-                      offsetType === 'absolute' ? 1 : -1 * data.world_max_x
-                    }
-                    maxValue={data.world_max_x}
+                    minValue={1}
+                    maxValue={100}
                     step={1}
-                    onChange={setX}
+                    value={count}
+                    onChange={setCount}
                   />
-                </Stack.Item>
-                <Stack.Item>
-                  <NumberInput
-                    width={4}
-                    value={y}
-                    minValue={
-                      offsetType === 'absolute' ? 1 : -1 * data.world_max_y
-                    }
-                    maxValue={data.world_max_y}
-                    step={1}
-                    onChange={setY}
+                </LabeledList.Item>
+                <DirWidget dir={dir} onChange={setDir} />
+              </LabeledList>
+              <Box mt={1}>
+                <Button
+                  disabled={!selected.length}
+                  icon="cube"
+                  onClick={spawnShit}
+                  tooltip={
+                    selected.length
+                      ? 'Spawn selected types'
+                      : 'Select at least one type'
+                  }
+                >
+                  Spawn
+                </Button>
+              </Box>
+            </Stack.Item>
+            <Stack.Item>
+              <LabeledList>
+                <LabeledList.Item label="Effect">
+                  <Dropdown
+                    options={['None', 'Blink', 'Supplydrop']}
+                    selected={effect}
+                    onSelected={setEffect}
                   />
-                </Stack.Item>
-                <Stack.Item>
-                  <NumberInput
-                    width={4}
-                    value={z}
-                    minValue={
-                      offsetType === 'absolute' ? 1 : -1 * data.world_max_z
-                    }
-                    maxValue={data.world_max_z}
-                    step={1}
-                    onChange={setZ}
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    icon="location-crosshairs"
-                    tooltip="Pick turf coordinate on screen"
-                    onClick={() => {
-                      act('pick_coordinate');
-                    }}
-                    width={2}
-                  />
-                </Stack.Item>
-              </Stack>
-            </LabeledList.Item>
-            <LabeledList.Item label="Count">
-              <NumberInput
-                width={4}
-                minValue={1}
-                maxValue={100}
-                step={1}
-                value={count}
-                onChange={setCount}
-              />
-            </LabeledList.Item>
-            <DirWidget dir={dir} onChange={setDir} />
-          </LabeledList>
-          <Box mt={1}>
-            <Button
-              disabled={!selected.length}
-              icon="cube"
-              onClick={spawnShit}
-              tooltip={
-                selected.length
-                  ? 'Spawn selected types'
-                  : 'Select at least one type'
-              }
-            >
-              Spawn
-            </Button>
-          </Box>
+                </LabeledList.Item>
+              </LabeledList>
+            </Stack.Item>
+          </Stack>
         </Section>
       </Window.Content>
     </Window>

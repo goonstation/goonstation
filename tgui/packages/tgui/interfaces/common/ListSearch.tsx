@@ -6,7 +6,6 @@
  */
 
 import { classes } from 'common/react';
-import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 import { useState } from 'react';
 import {
   Box,
@@ -16,6 +15,7 @@ import {
   Stack,
   VirtualList,
 } from 'tgui-core/components';
+import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
 import { Placeholder } from '../../components';
 

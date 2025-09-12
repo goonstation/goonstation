@@ -74,6 +74,7 @@
 				tgui_alert(usr, "Spawning of these objects is blocked:\n" + jointext(removed_paths, "\n"))
 				logTheThing(LOG_ADMIN, usr, "tried to spawn blocked objects: [english_list(removed_paths)]", "admin")
 				return
+			var/effect = params["effect"] || "None"
 			var/offset_type = params["offset_type"]
 			var/x
 			var/y
@@ -104,26 +105,9 @@
 			if(!spawn_turf)
 				tgui_alert(usr, "Cannot spawn stuff at ([spawn_x], [spawn_y], [spawn_z]): invalid turf.")
 				return
-			for(var/i = 1, i <= count, i++)
-				for(var/path in paths)
-					var/atom/thing
-					if(ispath(path, /turf))
-						thing = spawn_turf.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
-						thing.set_dir(direction)
-					else
-						new /dmm_suite/preloader(spawn_turf, list("dir" = direction))
-						thing = new path(spawn_turf)
-						if(isobj(thing))
-							var/obj/O = thing
-							O.initialize(TRUE)
-				LAGCHECK(LAG_LOW)
-			logTheThing(LOG_ADMIN, usr, "created [count] [english_list(paths)] at [log_loc(spawn_turf)]", "admin")
-			// for(var/path in paths)
-			// 	if(ispath(path, /mob))
-			// 		message_admins("[key_name(usr)] created [length(count) > 1 ? "a" : count] [english_list(paths, 1)]")
-			// 		break
-			// 	LAGCHECK(LAG_LOW)
-			return TRUE
+			src.spawn_with_effect(paths, spawn_turf, direction, count, effect, usr)
+			logTheThing(LOG_ADMIN, usr, "created [count] [english_list(paths)] at [log_loc(spawn_turf)] (effect: [effect])", "admin")
+			return
 		if ("pick_coordinate")
 			var/turf/T = pick_ref(usr)
 			if (isturf(T))
@@ -140,3 +124,47 @@
 		tgui_alert(admin_holder.owner, "Object spawning is disabled on this server.")
 		return FALSE
 	return TRUE
+
+/datum/object_creator/proc/spawn_with_effect(list/paths, turf/T, dir, count, effect, mob/user)
+	if(!T || !paths || !length(paths))
+		return
+	var/is_supply = (effect == "Supplydrop")
+	var/list/turf/turf_paths = list()
+	var/list/atom/movable/non_turf_paths = list()
+	for(var/P in paths) // If we support turfs as well as atoms some day
+		if(ispath(P, /turf))
+			turf_paths += P
+		else
+			non_turf_paths += P
+	if(is_supply && length(turf_paths))
+		// Spawn turfs right away BEFORE pod so final turf exists when items land.
+		for(var/i = 1, i <= count, i++)
+			for(var/path in turf_paths)
+				var/turf/new_turf = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+				new_turf?.set_dir(dir)
+			LAGCHECK(LAG_LOW)
+	// Handle supplydrop separately (we do NOT spawn atoms now; pod spawns them later)
+	if(is_supply && length(non_turf_paths))
+		for(var/i = 1, i <= count, i++)
+			new/obj/effect/supplymarker/safe(T, 3 SECONDS, non_turf_paths, TRUE)
+		return
+	// Non-supplydrop effects: spawn everything, then run effect once total
+	for(var/i = 1, i <= count, i++)
+		for(var/path in paths)
+			var/atom/thing
+			if(ispath(path, /turf))
+				thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+				thing?.set_dir(dir)
+			else
+				new /dmm_suite/preloader(T, list("dir" = dir))
+				thing = new path(T)
+				if(isobj(thing))
+					var/obj/O = thing
+					O.initialize(TRUE)
+			if(thing && (isobj(thing) || ismob(thing) || isturf(thing)))
+				thing.set_dir(dir)
+		LAGCHECK(LAG_LOW)
+	// Apply effects after all groups spawned
+	if(effect == "Blink")
+		blink(T)
+	return

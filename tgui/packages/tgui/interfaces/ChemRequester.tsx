@@ -5,7 +5,6 @@
  * @license MIT
  */
 
-import { capitalize } from 'common/string';
 import { useMemo } from 'react';
 import {
   Button,
