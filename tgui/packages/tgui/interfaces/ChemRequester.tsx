@@ -33,7 +33,7 @@ interface ChemRequesterData {
 
 const ReagentSearch = (props: Partial<ChemRequesterData>) => {
   const { act } = useBackend();
-  const { chemicals } = props;
+  const { chemicals, selected_reagent } = props;
   const reagentNames = useMemo(() => {
     return Object.keys(chemicals).sort();
   }, [chemicals]);
@@ -49,8 +49,9 @@ const ReagentSearch = (props: Partial<ChemRequesterData>) => {
     <ListSearch
       autoFocus
       fuzzy="smart"
-      height={25}
+      height={26}
       options={reagentNames}
+      selectedOptions={selected_reagent ? [selected_reagent] : []}
       onSelect={handleSelectReagent}
     />
   );
@@ -81,20 +82,10 @@ export const ChemRequester = () => {
               />
             </Stack.Item>
             <Stack.Item>
-              {!selected_reagent && (
-                <Section height={28} fill scrollable>
-                  <ReagentSearch chemicals={chemicals} />
-                </Section>
-              )}
-              {!!selected_reagent && (
-                <Button
-                  onClick={() => {
-                    act('set_reagent', { reagent: null });
-                  }}
-                >
-                  {capitalize(selected_reagent)}
-                </Button>
-              )}
+              <ReagentSearch
+                chemicals={chemicals}
+                selected_reagent={selected_reagent}
+              />
             </Stack.Item>
             <Stack.Item>
               <LabeledList>

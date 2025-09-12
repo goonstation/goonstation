@@ -55,7 +55,7 @@ export const ObjectCreator = () => {
     }
   }, [data.picked_x, data.picked_y, data.picked_z]);
 
-  const MAX_SELECTION = 5;
+  const MAX_SELECTION = 7;
 
   const toggleSelect = (path: string) => {
     setSelected((prev) => {
@@ -88,11 +88,12 @@ export const ObjectCreator = () => {
             fuzzy="smart"
             onSelect={toggleSelect}
             options={data.types}
+            height={28}
             selectedOptions={selected}
             multipleSelect
+            searchPlaceholder="Search... (Append $ for ends-with)"
             noResultsPlaceholder="No matches."
             virtualize
-            height="28rem"
           />
           <Stack mt={1}>
             <Stack.Item align="center">
@@ -199,7 +200,7 @@ export const ObjectCreator = () => {
                 <Stack.Item>
                   <Button
                     icon="location-crosshairs"
-                    tooltip="Pick coordinate on screen"
+                    tooltip="Pick turf coordinate on screen"
                     onClick={() => {
                       act('pick_coordinate');
                     }}

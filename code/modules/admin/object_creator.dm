@@ -5,6 +5,7 @@
 	var/picked_x
 	var/picked_y
 	var/picked_z
+	var/const/max_types = 7
 
 /datum/object_creator/New(datum/admins/A, root)
 	..()
@@ -53,8 +54,8 @@
 			var/list/types = params["types"]
 			if (!islist(types) || !length(types))
 				return
-			if (length(types) > 5)
-				tgui_alert(usr, "Select five or fewer types only.")
+			if (length(types) > max_types)
+				tgui_alert(usr, "Select [max_types] or fewer types only.")
 				return
 			var/list/dirty_paths = types
 			var/list/paths = list()
