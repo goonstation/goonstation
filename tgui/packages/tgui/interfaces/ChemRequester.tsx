@@ -6,7 +6,6 @@
  */
 
 import { capitalize } from 'common/string';
-import { useState } from 'react';
 import {
   Button,
   Input,
@@ -20,6 +19,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { IDCard } from './common/IDCard';
 import { ListSearch } from './common/ListSearch';
+import { useMemo } from 'react';
 
 interface ChemRequesterData {
   chemicals;
@@ -31,28 +31,27 @@ interface ChemRequesterData {
   silicon_user;
 }
 
-const ReagentSearch = (props) => {
+const ReagentSearch = (props: Partial<ChemRequesterData>) => {
   const { act } = useBackend();
   const { chemicals } = props;
-  const [searchText, setSearchText] = useState('');
-  const filteredReagents = Object.keys(chemicals).filter((chemical) =>
-    chemical.includes(searchText),
-  );
-  const handleSelectReagent = (reagent) => {
+  const reagentNames = useMemo(() => {
+    return Object.keys(chemicals).sort();
+  }, [chemicals]);
+
+  const handleSelectReagent = (reagent: string) => {
     act('set_reagent', {
       reagent_name: reagent,
       reagent_id: chemicals[reagent],
     });
-    setSearchText('');
   };
+
   return (
     <ListSearch
       autoFocus
-      currentSearch={searchText}
-      options={filteredReagents}
-      onSearch={setSearchText}
+      fuzzy="smart"
+      height={25}
+      options={reagentNames}
       onSelect={handleSelectReagent}
-      selectedOptions={[]}
     />
   );
 };
@@ -69,7 +68,7 @@ export const ChemRequester = () => {
     silicon_user,
   } = data;
   return (
-    <Window title="Chemical Request" width={400} height={600}>
+    <Window title="Chemical Request" width={350} height={485}>
       <Window.Content align="center">
         {!!card && (
           <Stack vertical>
@@ -83,7 +82,7 @@ export const ChemRequester = () => {
             </Stack.Item>
             <Stack.Item>
               {!selected_reagent && (
-                <Section height={36} fill scrollable>
+                <Section height={28} fill scrollable>
                   <ReagentSearch chemicals={chemicals} />
                 </Section>
               )}
