@@ -148,26 +148,20 @@ interface DestinationSearchProps {
 }
 
 const DestinationSearch = (props: DestinationSearchProps) => {
-  const { destinations = [], destinationTag } = props;
+  const { destinations, destinationTag } = props;
   const { act } = useBackend();
 
-  const [searchText, setSearchText] = useState('');
   const handleSelectDestination = (destination: string) =>
     act('select-destination', {
       destination,
     });
 
-  const filteredDestinations = destinations.filter((destination) =>
-    destination.includes(searchText),
-  );
-
   return (
     <ListSearch
       autoFocus
-      currentSearch={searchText}
-      onSearch={setSearchText}
+      fuzzy="smart"
       onSelect={handleSelectDestination}
-      options={filteredDestinations}
+      options={destinations}
       selectedOptions={destinationTag ? [destinationTag] : []}
     />
   );
