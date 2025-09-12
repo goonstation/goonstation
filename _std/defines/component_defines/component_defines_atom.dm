@@ -141,7 +141,7 @@
 	#define COMSIG_ITEM_EQUIPPED "itm_equip"
 	/// When an item is unequipped (user)
 	#define COMSIG_ITEM_UNEQUIPPED "itm_unequip"
-	/// When an item is picked up (user)
+	/// When an item is picked up (user) - the item is not always in the user's hands
 	#define COMSIG_ITEM_PICKUP "itm_pickup"
 	/// When an item is dropped (user)
 	#define COMSIG_ITEM_DROPPED "itm_drop"
