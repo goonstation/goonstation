@@ -24,7 +24,7 @@
 /datum/object_creator/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "ObjectCreator", "Spawner")
+		ui = new(user, src, "AdminObjectSpawner", "Spawner")
 		ui.open()
 
 /datum/object_creator/ui_static_data(mob/user)

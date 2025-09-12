@@ -22,7 +22,7 @@ import { ByondDir, DIR_TO_ANGLE } from '../common/directions';
 import { Window } from '../layouts';
 import { ListSearch } from './common/ListSearch';
 
-interface ObjectCreatorData {
+interface AdminObjectSpawnerData {
   types: string[];
   root: string; // textual path ("/obj" | "/mob" | "/turf")
   world_max_x: number;
@@ -33,8 +33,8 @@ interface ObjectCreatorData {
   picked_z?: number;
 }
 
-export const ObjectCreator = () => {
-  const { data, act } = useBackend<ObjectCreatorData>();
+export const AdminObjectSpawner = () => {
+  const { data, act } = useBackend<AdminObjectSpawnerData>();
   const [selected, setSelected] = useState<string[]>([]);
   const [offsetType, setOffsetType] = useState<'relative' | 'absolute'>(
     'relative',
@@ -315,4 +315,4 @@ const DirWidget = ({
   );
 };
 
-export default ObjectCreator;
+export default AdminObjectSpawner;
