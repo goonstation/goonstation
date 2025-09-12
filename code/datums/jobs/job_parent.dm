@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/name = null
 	var/list/alias_names = null
 	var/initial_name = null
-	var/linkcolor = "#0FF"
+	var/ui_colour = TGUI_COLOUR_TEAL
 
 	/// Job starting wages
 	var/wages = 0

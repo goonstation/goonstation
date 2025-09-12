@@ -88,7 +88,7 @@
 	name = "Salvager"
 	wages = 0
 	limit = 0
-	linkcolor = "#acbb27"
+	ui_colour = TGUI_COLOUR_YELLOW
 	slot_ears = list() // So they don't get a default headset and stuff first.
 	slot_card = null
 	slot_glov = list()
