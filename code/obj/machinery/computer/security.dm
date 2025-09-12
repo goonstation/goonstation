@@ -16,8 +16,6 @@
 	var/list/camera_networks = list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_RANCH, CAMERA_NETWORK_CARGO, CAMERA_NETWORK_SCIENCE)
 
 	// TODO: CHUI camera viewer feature: Favorite cameras (max: 8)
-	// TODO: CHUI camera viewer feature: Camera movement D-pad
-	// TODO: CHUI camera viewer feature: WASD/Arrow key camera movement
 	// TODO: CHUI camera viewer feature: Set viewporrt
 	// TODO: Feature: Clicking a camera in the minimap opens the camera
 	// TODO: Feature: Indicate the currently viewed camera on the minimap
