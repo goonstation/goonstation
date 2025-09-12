@@ -24,13 +24,14 @@ interface ListSearchProps {
   className?: string;
   /** Enable fuzzy search with specified matching strategy. Default: 'off' */
   fuzzy?: 'off' | 'smart' | 'aggressive';
-  /** Height of the list area. Default: `30rem` */
-  height?: string | number;
-  noResultsPlaceholder?: string;
+  // I could not get this to work without a height prop despite spending hours. Feel free to try again.
+  /** Height of the list area. */
+  height: string | number;
   /** `onSelect` is called with the option clicked; parent decides how to update `selectedOptions` */
   onSelect: (value: string) => void;
   options: string[];
   searchPlaceholder?: string;
+  noResultsPlaceholder?: string;
   selectedOptions?: string[];
   /** Allow toggling multiple selections and show checkboxes. Default: `false` */
   multipleSelect?: boolean;
@@ -59,8 +60,6 @@ export const ListSearch = (props: ListSearchProps) => {
   const [searchText, setSearchText] = useState('');
   const [isEndWordSearch, setIsEndWordSearch] = useState(false);
   const [effectiveSearchTerm, setEffectiveSearchTerm] = useState('');
-
-  // Always use fuzzy search, defaulting to "off" if not specified
   const fuzzySearch = useFuzzySearch({
     searchArray: options,
     matchStrategy: fuzzy || 'off',
@@ -68,10 +67,8 @@ export const ListSearch = (props: ListSearchProps) => {
   });
 
   const handleSearch = (value: string) => {
-    // Update search text
     setSearchText(value);
 
-    // Check if this is an end word boundary search
     const isEndWord = value.endsWith('$');
     setIsEndWordSearch(isEndWord);
 
@@ -79,7 +76,6 @@ export const ListSearch = (props: ListSearchProps) => {
     const effectiveTerm = isEndWord ? value.slice(0, -1) : value;
     setEffectiveSearchTerm(effectiveTerm);
 
-    // Update fuzzy search with the effective term
     fuzzySearch.setQuery(effectiveTerm);
   };
 
@@ -164,11 +160,9 @@ export const ListSearch = (props: ListSearchProps) => {
         />
       </Stack.Item>
       <Stack.Item grow>
-        <Box height={height}>
-          <Section fill scrollable>
-            {renderOptions()}
-          </Section>
-        </Box>
+        <Section height={height} fill scrollable>
+          {renderOptions()}
+        </Section>
       </Stack.Item>
     </Stack>
   );
