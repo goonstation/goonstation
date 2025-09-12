@@ -145,7 +145,7 @@ var/global/datum/region_allocator/region_allocator = new
 			if(!isnull(main_area) && T)
 				main_area.contents += T
 			for(var/atom/movable/AM in T)
-				if(!istype(AM, /obj/overlay/tile_effect))
+				if(!istype(AM, /atom/movable/light/robust_light))
 					qdel(AM)
 
 	proc/move_movables_to(atom/destination)
