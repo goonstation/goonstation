@@ -1013,12 +1013,12 @@ TYPEINFO(/obj/machinery/plantpot)
 		quality["score"] += rand(10,-10)
 
 /// helper method for picking the item type of produce
-/obj/machinery/plantpot/proc/pick_type(datum/HYPharvesting_data/h_data)
+/obj/machinery/plantpot/proc/pick_type(var/item)
 	var/itemtype = null
-	if(istype(h_data.getitem, /list))
-		itemtype = pick(h_data.getitem)
+	if(istype(item, /list))
+		itemtype = pick(item)
 	else
-		itemtype = h_data.getitem
+		itemtype = item
 	return itemtype
 
 /// Handles the generation of mobs/items during harvests
@@ -1035,7 +1035,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		//Now we can create an item or mob
 		// Marquesas: I thought of everything and couldn't find another way, but we need this for synthlimbs.
 		// Okay, I meanwhile realized there might be another way but this looks cleaner. IMHO.
-		var/itemtype = pick_type(h_data)
+		var/itemtype = pick_type(h_data.getitem)
 		var/atom/CROP = new itemtype
 
 		if(istype(CROP, /obj))
@@ -1048,9 +1048,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			//This proc calls HYPadd_harvest_reagents on it's respectable items
 			if(istype(CROP_ITEM, /obj/item))
 				var/obj/item/manipulated_item = CROP_ITEM
-				CROP_ITEM = manipulated_item.HYPsetup_DNA(h_data.DNA, h_data.pot, h_data.growing, quality["status"])
+				CROP_ITEM = manipulated_item.HYPsetup_DNA(h_data.DNA, h_data.pot, h_data.growing, quality["status"], h_data)
 
-			//last but not least, we give the mob a proper name
+			//we give the crop a proper name
 			CROP_ITEM.name = HYPgenerate_produce_name(CROP_ITEM, h_data.pot, h_data.growing, quality["score"], quality["status"], h_data.dont_rename_crop)
 
 			CROP_ITEM.quality = quality["score"]
@@ -1064,10 +1064,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				var/obj/critter/C = CROP_ITEM
 				C.friends = C.friends | h_data.pot.contributors
 
-
 		if(istype(CROP, /mob))
-			// Start up the loop of grabbing all our produce. Remember, each iteration of
-			// this loop is for one item each.
 			var/obj/CROP_MOB = CROP
 			CROP_MOB.set_loc(h_data.pot)
 
@@ -1080,6 +1077,9 @@ TYPEINFO(/obj/machinery/plantpot)
 
 			//last but not least, we give the mob a proper name
 			CROP_MOB.name = HYPgenerate_produce_name(CROP_MOB, h_data.pot, h_data.growing, quality["score"], quality["status"], h_data.dont_rename_crop)
+
+		for(var/datum/plant_gene_strain/strain in h_data.DNA.commuts)
+			strain.crop_post_harvest(h_data, CROP, quality["status"])
 
 		if(((h_data.growing.isgrass || (h_data.growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(h_data.getitem,/obj/item/seed/) && !HYPCheckCommut(h_data.DNA,/datum/plant_gene_strain/seedless) && (h_data.growing.force_seed_on_harvest >= 0 ))
 			// Same shit again. This isn't so much the crop as it is giving you seeds
@@ -1130,6 +1130,8 @@ TYPEINFO(/obj/machinery/plantpot)
 				else
 					h_data.harvest_cap *= Y.yield_mult
 					h_data.harvest_cap += Y.yield_mod
+			// let the gene strain edit other harvest data
+			G.manipulate_harvest_data(h_data)
 
 /// Handles mutation crop produce
 /obj/machinery/plantpot/proc/HYPharvesting_mutated_crops(datum/HYPharvesting_data/h_data)
@@ -1238,6 +1240,19 @@ TYPEINFO(/obj/machinery/plantpot)
 	h_data.cropcount = round(max(h_data.cropcount, 0))
 
 /////////////////// end of HYPharvesting helper methods ///////////////////
+
+/// Gets the actual crop of the growing plant, depending on whether it's mutated or not
+/obj/machinery/plantpot/proc/fetch_actual_crop()
+	if(!src.current)
+		return null
+	var/datum/plantmutation/mutation = src.plantgenes?.mutation
+	if(mutation && mutation.crop)
+		return mutation.crop
+	if(src.current.crop)
+		return src.current.crop
+	if(mutation && !mutation.crop)
+		logTheThing(LOG_DEBUG, null, "<b>I Said No/Hydroponics:</b> Plant mutation [mutation.type] has no crop configured for plant [src.current.type]")
+	return null
 
 /obj/machinery/plantpot/proc/HYPmutateplant(var/severity = 1)
 	// This proc is for mutating the plant - gene strains, mutant variants and plain old

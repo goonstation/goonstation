@@ -19,6 +19,10 @@
 	inventory_counter_enabled = 1
 	///Can this ammo be cooked off by heating?
 	var/cookable = TRUE
+	///Jammy ammo cannot be reloaded until the remaining ammo is 0.
+	///For simulating ammo types that aren't fit for purpose
+	var/jammy_ammo = FALSE
+
 
 	proc
 		swap(var/obj/item/ammo/A)
@@ -214,6 +218,8 @@
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
+		if (K.ammo?.jammy_ammo && K.ammo.amount_left > 0)
+			return AMMO_RELOAD_JAMMED
 		if (A.amount_left < 1)
 			return AMMO_RELOAD_SOURCE_EMPTY // Magazine's empty.
 		if (K.ammo.amount_left >= K.max_ammo_capacity)
@@ -307,14 +313,11 @@
 			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
 				//shoot in a truly random direction
 				shoot_projectile_relay_pixel_spread(src, src.ammo_type, src, rand(-32, 32), rand(-32, 32), 360)
-				if(src.delete_on_reload && src.amount_left <= 0)
-					qdel(src)
-					return
 				if (prob(30) && src.use(1)) //small chance to do two per tick
 					sleep(0.3 SECONDS)
 					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
-					if(src.delete_on_reload && src.amount_left <= 0) //I don't like repeating code, but this is needed to catch if it empties on the second firing
-						qdel(src)
+				if(src.delete_on_reload && src.amount_left <= 0)
+					qdel(src)
 
 
 //no caliber:
@@ -1533,6 +1536,97 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_dynamic = 1
 	icon_short = "455"
 	icon_empty = "speedloader_empty"
+
+/obj/item/ammo/bullets/thingammo
+	name = "Thing Bullet"
+	desc = "Something has gone wrong, submit a bug report."
+	ammo_type = new/datum/projectile/bullet/produce
+	icon_state = "flintlock_ammo_pouch"
+	max_amount = 1
+	amount_left = 1
+	ammo_cat = AMMO_PISTOL_22
+	delete_on_reload = TRUE
+	force_new_current_projectile = TRUE
+	jammy_ammo = TRUE
+	rand_pos = TRUE
+	refillable = FALSE
+	var/obj/item/source_thing
+
+	var/armour_pierce_multi = 0.0015
+	var/base_dissipation_rate = 5.5
+	var/proj_speed_multi = 0.03
+
+	New(var/obj/item/thing)
+		..()
+		if (!thing)
+			return
+		src.name = thing.name + "-shaped bullet"
+		src.desc = "This [thing.name] looks like it would fit inside a pistol, with enough force."
+		src.icon = thing.icon
+		src.icon_state = thing.icon_state
+		src.ammo_type.icon_state = thing.icon_state
+		src.ammo_type.icon = thing.icon
+		// Bullet-size the sprites
+		src.force = thing.force
+		src.transform *= 0.5
+		// use the base item's melee hit type
+		src.ammo_type.hit_type = thing.hit_type
+		// use the base item's inhands if applicable
+		if (thing.inhand_image_icon && thing.item_state)
+			src.set_new_inhand_image_icon(thing.inhand_image_icon)
+			src.item_state = thing.item_state
+		// for now the original item is stored within the bullet, the plan is for generic bullets to drop the original thing after they've been fired
+		// however since the bullets only exist for plants right now, they'll be deleted after the scaling is completed.
+		src.loc = thing.loc
+		thing.loc = src
+		source_thing = thing
+
+	proc/scale_plant_bullet(var/datum/HYPharvesting_data/h_data, var/obj/item/crop, var/quality_status)
+		src.ammo_type.reagent_payload = crop.reagents?.get_all_reagent_ids()
+		// Increase the bullet's damage by the endurance.
+		src.ammo_type.damage = round(get_scaled_damage(h_data.DNA.endurance), 1)
+		// Increase armour-piercing by the potency.
+		src.ammo_type.armor_ignored = h_data.DNA.potency * src.armour_pierce_multi
+		// Reduce dissipation rate by lifespan.
+		// This is balanced around the fact that lifespan is practically impossible to raise, so if that changes consider using the subsequent line.
+		// And maybe set the base dissipation rate up to ~10.
+		src.ammo_type.dissipation_rate = max(1, src.base_dissipation_rate / ((1.0001 + (h_data.DNA.harvests / 2))))
+		//src.ammo_type.dissipation_rate = src.base_dissipation_rate / ((1.0001 + (h_data.DNA.harvests / 100)) * 2)
+		// Combine both speed stats into one modifier, and then use it to increase the projectile speed .
+		var/proj_speed_modifier = (h_data.DNA.growtime + h_data.DNA.harvtime)
+		src.ammo_type.projectile_speed = src.ammo_type.projectile_speed + (proj_speed_modifier * proj_speed_multi)
+
+		if (quality_status == "jumbo")
+			src.ammo_type.damage *= 1.3
+			src.ammo_type.shot_sound = 'sound/weapons/9x19NATO.ogg'
+		// This seems to be necessary to make make the damage update properly
+		src.ammo_type.generate_stats()
+		UpdateIcon()
+		qdel(source_thing)
+		source_thing = null
+		return src
+
+	// breakpoints for this current formula, input = output: <-30 = 1, 0 = 17, 100 = 44, 200 = 66, 300 = 80, 640 = 100, 1000 = 120
+	proc/get_scaled_damage(x)
+		x += 100
+		if (x <= 0)
+			return 1
+		return (log(x / 68.8590961441749) / 0.0220758504333)
+
+	banana
+		ammo_type = new/datum/projectile/bullet/produce/banana
+
+	plant
+		ammo_type = new/datum/projectile/bullet/produce/plant
+
+	potato
+		ammo_type = new/datum/projectile/bullet/produce/potato
+
+	tomato
+		ammo_type = new/datum/projectile/bullet/produce/tomato
+
+	egg
+		ammo_type = new/datum/projectile/bullet/produce/egg
 
 //////////////////////////////////// Power cells for eguns //////////////////////////
 

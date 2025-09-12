@@ -52,6 +52,7 @@ ABSTRACT_TYPE(/datum/plant)
 	var/unique_seed = null // Does this plant produce a paticular instance of seeds?
 	var/seedcolor = "#000000" // color on the seed packet, if applicable
 	var/hybrid = 0 // used for seed manipulator stuff
+	var/datum/projectile/bullet/produce/bullet // The unique bullet type that this plant uses for the gun_infusion strain, if any
 
 	var/static/base64_preview_cache = list() // Base64 preview images for plant types, for use in ui interfaces.
 
@@ -276,6 +277,11 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.potency++
 				if (DNA.endurance < 0)
 					DNA.endurance++
+			if ("gun_infusion")
+				HYPaddCommut(DNA,/datum/plant_gene_strain/gun_genome)
+				HYPaddCommut(DNA,/datum/plant_gene_strain/seedless)
+				S.charges = 1
+
 		for (var/datum/plantmutation/mutation in src.mutations)
 			if (reagent in mutation.infusion_reagents)
 				if (HYPmutationcheck_full(DNA, mutation) && prob(mutation.infusion_chance))
