@@ -48479,7 +48479,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medlab,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
