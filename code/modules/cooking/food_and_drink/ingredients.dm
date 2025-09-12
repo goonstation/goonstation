@@ -392,6 +392,11 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	mat_changename = "honey"
 	default_material = "honey"
 
+	New()
+		..()
+		src.clear_filters() //Overrides the wave-filter normally applied to materials made of honey.
+
+
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"
 	desc = "A blob of nutritive gel for larval bees."
