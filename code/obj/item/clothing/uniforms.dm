@@ -306,6 +306,24 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	icon_state = "captain"
 	item_state = "captain"
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/cable_coil))
+			if(istype(src.loc, /mob))
+				boutput(user, "You need a flat surface to do that!") //Not while worn.
+				return
+			var/obj/item/cable_coil/coil = W
+			if (coil.use(3))
+				user.visible_message(SPAN_NOTICE("[user] adds wiring to the [src]!"))
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+				var/obj/item/ai_plating_kit/regal/result = new(user.loc)
+				user.put_in_hand_or_drop(result)
+				qdel(src)
+			else
+				boutput(user, "You need at least three lengths of cable to add to [src]!")
+		else
+			..()
+
+
 	fancy
 		icon_state = "captain-fancy"
 		item_state = "captain-fancy"
