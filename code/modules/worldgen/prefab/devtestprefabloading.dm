@@ -35,9 +35,8 @@
 			var/dmm_suite/asset_loader = new
 			boutput(user, SPAN_ALERT("LOADING PREFAB."))
 			asset_loader.read_map(file2text(choice), landmark.x+1, landmark.y+1, landmark.z)
-			boutput(user, SPAN_ALERT("PREFAB LOADED."))
-
 			for(var/turf/T as anything in block(landmark.x+1, landmark.y+1, landmark.z, landmark.x+19, landmark.y+19, landmark.z))
 				for(var/obj/O in T)
 					O.initialize(FALSE)
 					O.UpdateIcon()
+			boutput(user, SPAN_ALERT("PREFAB LOADED."))
