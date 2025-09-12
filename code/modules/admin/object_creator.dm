@@ -5,7 +5,7 @@
 	var/picked_x
 	var/picked_y
 	var/picked_z
-	var/const/max_types = 7
+	var/const/max_types = 10
 
 /datum/object_creator/New(datum/admins/A, root)
 	..()
@@ -25,6 +25,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "AdminObjectSpawner", "Spawner")
+		ui.set_autoupdate(FALSE) // No need to resend the client 15,000 types no thank you
 		ui.open()
 
 /datum/object_creator/ui_static_data(mob/user)
@@ -41,7 +42,6 @@
 		.["picked_x"] = src.picked_x
 		.["picked_y"] = src.picked_y
 		.["picked_z"] = src.picked_z
-
 
 /datum/object_creator/ui_act(action, list/params)
 	. = ..()
@@ -114,16 +114,16 @@
 				src.picked_x = T.x
 				src.picked_y = T.y
 				src.picked_z = T.z
-				return TRUE
+				. = TRUE
 
 /datum/object_creator/proc/admin_can_spawn()
+	. = TRUE
 	if(!admin_holder || admin_holder.level < LEVEL_ADMIN)
 		tgui_alert(admin_holder.owner, "You need to be at least an Adminstrator to spawn objects.")
 		return FALSE
 	if(!config.allow_admin_spawning)
 		tgui_alert(admin_holder.owner, "Object spawning is disabled on this server.")
 		return FALSE
-	return TRUE
 
 /datum/object_creator/proc/spawn_with_effect(list/paths, turf/T, dir, count, effect, mob/user)
 	if(!T || !paths || !length(paths))
@@ -138,18 +138,18 @@
 			non_turf_paths += P
 	if(is_supply && length(turf_paths))
 		// Spawn turfs right away BEFORE pod so final turf exists when items land.
-		for(var/i = 1, i <= count, i++)
+		for(var/i in 1 to count)
 			for(var/path in turf_paths)
 				var/turf/new_turf = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
 				new_turf?.set_dir(dir)
 			LAGCHECK(LAG_LOW)
 	// Handle supplydrop separately (we do NOT spawn atoms now; pod spawns them later)
 	if(is_supply && length(non_turf_paths))
-		for(var/i = 1, i <= count, i++)
+		for(var/i in 1 to count)
 			new/obj/effect/supplymarker/safe(T, 3 SECONDS, non_turf_paths, TRUE)
 		return
 	// Non-supplydrop effects: spawn everything, then run effect once total
-	for(var/i = 1, i <= count, i++)
+	for(var/i in 1 to count)
 		for(var/path in paths)
 			var/atom/thing
 			if(ispath(path, /turf))
@@ -164,7 +164,10 @@
 			if(thing && (isobj(thing) || ismob(thing) || isturf(thing)))
 				thing.set_dir(dir)
 		LAGCHECK(LAG_LOW)
-	// Apply effects after all groups spawned
+	// Effects that go after spawning
 	if(effect == "Blink")
 		blink(T)
-	return
+	else if(effect == "Poof")
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(T)
+		playsound(T, 'sound/effects/poff.ogg', 50, TRUE)

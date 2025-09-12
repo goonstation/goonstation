@@ -57,7 +57,7 @@ export const AdminObjectSpawner = () => {
     }
   }, [data.picked_x, data.picked_y, data.picked_z]);
 
-  const MAX_SELECTION = 7;
+  const MAX_SELECTION = 10;
 
   const toggleSelect = (path: string) => {
     setSelected((prev) => {
@@ -126,6 +126,7 @@ export const AdminObjectSpawner = () => {
                   <NoticeBox
                     mb={0}
                     danger={showMax}
+                    // Show/hide but keep height to avoid layout shift
                     style={{ visibility: visible ? 'visible' : 'hidden' }}
                   >
                     {message}
@@ -146,7 +147,6 @@ export const AdminObjectSpawner = () => {
                         checked={offsetType === 'absolute'}
                         onClick={() => {
                           setOffsetType('absolute');
-                          // Reset to default coordinates for absolute mode
                           setX(1);
                           setY(1);
                           setZ(1);
@@ -160,7 +160,6 @@ export const AdminObjectSpawner = () => {
                         checked={offsetType === 'relative'}
                         onClick={() => {
                           setOffsetType('relative');
-                          // Reset to default coordinates for relative mode
                           setX(0);
                           setY(0);
                           setZ(0);
@@ -252,7 +251,7 @@ export const AdminObjectSpawner = () => {
               <LabeledList>
                 <LabeledList.Item label="Effect">
                   <Dropdown
-                    options={['None', 'Blink', 'Supplydrop']}
+                    options={['None', 'Blink', 'Poof', 'Supplydrop']}
                     selected={effect}
                     onSelected={setEffect}
                   />
