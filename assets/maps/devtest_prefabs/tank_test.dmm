@@ -1,0 +1,670 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aH" = (
+/obj/item/shipcomponent/mainweapon/foamer,
+/turf/simulated/floor,
+/area/station/devzone)
+"bk" = (
+/obj/item/shipcomponent/secondary_system/tractor_beam,
+/turf/simulated/floor,
+/area/station/devzone)
+"bm" = (
+/obj/item/shipcomponent/mainweapon/rockdrills,
+/turf/simulated/floor,
+/area/station/devzone)
+"br" = (
+/obj/item/shipcomponent/mainweapon/precursor,
+/turf/simulated/floor,
+/area/station/devzone)
+"dF" = (
+/obj/machinery/vehicle/tank/minisub/civilian,
+/turf/simulated/floor,
+/area/station/devzone)
+"fC" = (
+/obj/machinery/vehicle/tank/minisub/syndisub,
+/turf/simulated/floor,
+/area/station/devzone)
+"gi" = (
+/obj/item/shipcomponent/mainweapon/hammer_railgun,
+/turf/simulated/floor,
+/area/station/devzone)
+"gT" = (
+/obj/item/shipcomponent/engine/scout,
+/turf/simulated/floor,
+/area/station/devzone)
+"ha" = (
+/turf/simulated/floor,
+/area/station/devzone)
+"ie" = (
+/obj/item/shipcomponent/mainweapon/phaser/short,
+/turf/simulated/floor,
+/area/station/devzone)
+"il" = (
+/obj/item/shipcomponent/mainweapon/laser,
+/turf/simulated/floor,
+/area/station/devzone)
+"iq" = (
+/obj/item/shipcomponent/secondary_system/lock/bioscan,
+/turf/simulated/floor,
+/area/station/devzone)
+"jt" = (
+/obj/item/shipcomponent/mainweapon/constructor/stocked,
+/turf/simulated/floor,
+/area/station/devzone)
+"kC" = (
+/obj/item/shipcomponent/mainweapon/gun_9mm,
+/turf/simulated/floor,
+/area/station/devzone)
+"kD" = (
+/obj/item/shipcomponent/mainweapon/disruptor,
+/turf/simulated/floor,
+/area/station/devzone)
+"ms" = (
+/obj/item/shipcomponent/secondary_system/storage,
+/turf/simulated/floor,
+/area/station/devzone)
+"mD" = (
+/obj/item/shipcomponent/secondary_system/cargo,
+/turf/simulated/floor,
+/area/station/devzone)
+"nM" = (
+/obj/item/shipcomponent/secondary_system/cloak,
+/turf/simulated/floor,
+/area/station/devzone)
+"pz" = (
+/obj/item/shipcomponent/mainweapon/taser,
+/turf/simulated/floor,
+/area/station/devzone)
+"qi" = (
+/obj/item/shipcomponent/engine/zero,
+/turf/simulated/floor,
+/area/station/devzone)
+"qq" = (
+/obj/machinery/vehicle/tank/car/security,
+/turf/simulated/floor,
+/area/station/devzone)
+"qM" = (
+/obj/item/shipcomponent/engine/hermes,
+/turf/simulated/floor,
+/area/station/devzone)
+"rh" = (
+/obj/item/shipcomponent/mainweapon/gun,
+/turf/simulated/floor,
+/area/station/devzone)
+"sk" = (
+/obj/item/shipcomponent/secondary_system/auto_repair_kit,
+/turf/simulated/floor,
+/area/station/devzone)
+"ux" = (
+/obj/item/shipcomponent/secondary_system/weapons_loader,
+/turf/simulated/floor,
+/area/station/devzone)
+"vM" = (
+/obj/item/shipcomponent/secondary_system/crash,
+/turf/simulated/floor,
+/area/station/devzone)
+"wh" = (
+/obj/machinery/vehicle/tank/minisub,
+/turf/simulated/floor,
+/area/station/devzone)
+"wH" = (
+/obj/item/shipcomponent/secondary_system/thrusters/lateral,
+/turf/simulated/floor,
+/area/station/devzone)
+"wU" = (
+/obj/item/shipcomponent/engine,
+/turf/simulated/floor,
+/area/station/devzone)
+"yb" = (
+/obj/item/shipcomponent/mainweapon/maser,
+/turf/simulated/floor,
+/area/station/devzone)
+"yp" = (
+/obj/machinery/vehicle/tank/minisub/mining,
+/turf/simulated/floor,
+/area/station/devzone)
+"yS" = (
+/obj/item/shipcomponent/mainweapon/gun_22,
+/turf/simulated/floor,
+/area/station/devzone)
+"Ar" = (
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars,
+/turf/simulated/floor,
+/area/station/devzone)
+"Ck" = (
+/obj/item/shipcomponent/mainweapon/artillery,
+/turf/simulated/floor,
+/area/station/devzone)
+"Dy" = (
+/obj/item/shipcomponent/secondary_system/shielding/heavy,
+/turf/simulated/floor,
+/area/station/devzone)
+"DA" = (
+/obj/item/shipcomponent/mainweapon/syndicate_purge_system,
+/obj/item/sword_core,
+/turf/simulated/floor,
+/area/station/devzone)
+"DF" = (
+/obj/item/shipcomponent/mainweapon/bad_mining,
+/turf/simulated/floor,
+/area/station/devzone)
+"EF" = (
+/obj/item/shipcomponent/mainweapon/salvo_rockets,
+/turf/simulated/floor,
+/area/station/devzone)
+"EH" = (
+/obj/machinery/vehicle/tank/minisub/industrial,
+/turf/simulated/floor,
+/area/station/devzone)
+"Fa" = (
+/obj/item/shipcomponent/mainweapon/minigun,
+/turf/simulated/floor,
+/area/station/devzone)
+"FN" = (
+/obj/item/shipcomponent/secondary_system/lock/pw_id,
+/turf/simulated/floor,
+/area/station/devzone)
+"FZ" = (
+/obj/item/shipcomponent/secondary_system/lock,
+/turf/simulated/floor,
+/area/station/devzone)
+"GO" = (
+/obj/machinery/vehicle/tank/minisub/black,
+/turf/simulated/floor,
+/area/station/devzone)
+"Jw" = (
+/obj/item/shipcomponent/mainweapon/artillery/lower_ammo,
+/turf/simulated/floor,
+/area/station/devzone)
+"KC" = (
+/obj/item/shipcomponent/mainweapon/russian,
+/turf/simulated/floor,
+/area/station/devzone)
+"KH" = (
+/obj/item/shipcomponent/mainweapon/phaser/burst_phaser,
+/turf/simulated/floor,
+/area/station/devzone)
+"Lt" = (
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars,
+/turf/simulated/floor,
+/area/station/devzone)
+"Mr" = (
+/obj/item/shipcomponent/mainweapon/disruptor_light,
+/turf/simulated/floor,
+/area/station/devzone)
+"Ni" = (
+/obj/item/shipcomponent/mainweapon/light_longrange,
+/turf/simulated/floor,
+/area/station/devzone)
+"NE" = (
+/obj/item/shipcomponent/secondary_system/thrusters/afterburner,
+/turf/simulated/floor,
+/area/station/devzone)
+"NG" = (
+/obj/machinery/vehicle/tank/minisub/secsub,
+/turf/simulated/floor,
+/area/station/devzone)
+"NO" = (
+/obj/item/shipcomponent/mainweapon/mining,
+/turf/simulated/floor,
+/area/station/devzone)
+"Oo" = (
+/obj/item/shipcomponent/engine/helios,
+/turf/simulated/floor,
+/area/station/devzone)
+"Oq" = (
+/obj/item/shipcomponent/secondary_system/trailblazer,
+/turf/simulated/floor,
+/area/station/devzone)
+"Pg" = (
+/obj/machinery/vehicle/tank/minisub/heavy,
+/turf/simulated/floor,
+/area/station/devzone)
+"QA" = (
+/obj/item/shipcomponent/secondary_system/syndicate_rewind_system,
+/obj/item/sword_core,
+/turf/simulated/floor,
+/area/station/devzone)
+"RF" = (
+/obj/item/shipcomponent/mainweapon/laser/short,
+/turf/simulated/floor,
+/area/station/devzone)
+"RU" = (
+/obj/item/shipcomponent/secondary_system/shielding/light,
+/turf/simulated/floor,
+/area/station/devzone)
+"Se" = (
+/obj/item/shipcomponent/mainweapon/phaser,
+/turf/simulated/floor,
+/area/station/devzone)
+"Tr" = (
+/obj/item/shipcomponent/secondary_system/gps,
+/turf/simulated/floor,
+/area/station/devzone)
+"Tt" = (
+/obj/item/shipcomponent/engine/escape,
+/turf/simulated/floor,
+/area/station/devzone)
+"VW" = (
+/obj/item/shipcomponent/mainweapon/laser_ass,
+/turf/simulated/floor,
+/area/station/devzone)
+"XY" = (
+/obj/machinery/vehicle/tank/minisub/engineer,
+/turf/simulated/floor,
+/area/station/devzone)
+"Yt" = (
+/obj/item/shipcomponent/secondary_system/repair,
+/turf/simulated/floor,
+/area/station/devzone)
+"Yu" = (
+/obj/item/shipcomponent/secondary_system/orescoop,
+/turf/simulated/floor,
+/area/station/devzone)
+"YE" = (
+/obj/item/shipcomponent/secondary_system/gunner_support,
+/turf/simulated/floor,
+/area/station/devzone)
+"ZO" = (
+/obj/machinery/vehicle/tank/car,
+/turf/simulated/floor,
+/area/station/devzone)
+
+(1,1,1) = {"
+wU
+Tt
+Oo
+qM
+gT
+qi
+Ck
+Jw
+DF
+jt
+kD
+Mr
+aH
+rh
+yS
+kC
+gi
+il
+RF
+"}
+(2,1,1) = {"
+Lt
+wh
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+VW
+"}
+(3,1,1) = {"
+Ar
+GO
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+Ni
+"}
+(4,1,1) = {"
+ha
+dF
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+yb
+"}
+(5,1,1) = {"
+ha
+XY
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+Fa
+"}
+(6,1,1) = {"
+ha
+Pg
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+NO
+"}
+(7,1,1) = {"
+ha
+EH
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+Se
+"}
+(8,1,1) = {"
+ha
+yp
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+KH
+"}
+(9,1,1) = {"
+ha
+NG
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ie
+"}
+(10,1,1) = {"
+ha
+fC
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+br
+"}
+(11,1,1) = {"
+ha
+ZO
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+bm
+"}
+(12,1,1) = {"
+ha
+qq
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+KC
+"}
+(13,1,1) = {"
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+EF
+"}
+(14,1,1) = {"
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+DA
+"}
+(15,1,1) = {"
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+pz
+"}
+(16,1,1) = {"
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+"}
+(17,1,1) = {"
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+"}
+(18,1,1) = {"
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+ha
+Oq
+"}
+(19,1,1) = {"
+sk
+mD
+nM
+vM
+Tr
+YE
+FZ
+iq
+FN
+Yu
+Yt
+ux
+Dy
+RU
+ms
+QA
+NE
+wH
+bk
+"}

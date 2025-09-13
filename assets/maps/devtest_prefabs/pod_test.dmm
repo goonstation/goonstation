@@ -1,0 +1,721 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"be" = (
+/obj/machinery/vehicle/miniputt/soviputt,
+/turf/space,
+/area/station/devzone)
+"bx" = (
+/obj/machinery/vehicle/pod_smooth/iridium,
+/turf/space,
+/area/station/devzone)
+"du" = (
+/obj/item/shipcomponent/secondary_system/gunner_support,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"et" = (
+/obj/item/shipcomponent/secondary_system/cloak,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"eu" = (
+/obj/item/shipcomponent/mainweapon/gun,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"eH" = (
+/obj/machinery/vehicle/pod_smooth/sy_robust,
+/turf/space,
+/area/station/devzone)
+"fj" = (
+/obj/item/shipcomponent/engine/escape,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"ft" = (
+/obj/item/shipcomponent/engine/hermes,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"fy" = (
+/obj/machinery/vehicle/miniputt/indyputt/armed,
+/turf/space,
+/area/station/devzone)
+"fR" = (
+/obj/machinery/vehicle/pod_smooth/syndicate,
+/turf/space,
+/area/station/devzone)
+"gc" = (
+/obj/item/shipcomponent/mainweapon/phaser/short,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"hr" = (
+/obj/machinery/vehicle/pod_smooth/sy_light,
+/turf/space,
+/area/station/devzone)
+"hJ" = (
+/obj/machinery/vehicle/miniputt/armed,
+/turf/space,
+/area/station/devzone)
+"ir" = (
+/obj/item/shipcomponent/secondary_system/shielding/heavy,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"iA" = (
+/obj/item/shipcomponent/engine/zero,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"iH" = (
+/obj/item/shipcomponent/mainweapon/precursor,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"iU" = (
+/obj/item/shipcomponent/secondary_system/cargo,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"jv" = (
+/obj/item/shipcomponent/mainweapon/disruptor,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"jy" = (
+/obj/item/shipcomponent/secondary_system/syndicate_rewind_system,
+/obj/item/sword_core,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"jE" = (
+/obj/item/shipcomponent/mainweapon/salvo_rockets,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"jH" = (
+/turf/space,
+/area/station/devzone)
+"kR" = (
+/obj/item/shipcomponent/mainweapon/artillery/lower_ammo,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"lS" = (
+/obj/item/shipcomponent/engine,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"mB" = (
+/obj/item/shipcomponent/secondary_system/crash,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"mF" = (
+/obj/machinery/vehicle/pod_smooth/industrial,
+/turf/space,
+/area/station/devzone)
+"mM" = (
+/obj/item/shipcomponent/mainweapon/foamer,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"nc" = (
+/obj/item/shipcomponent/mainweapon/rockdrills,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"nG" = (
+/obj/machinery/vehicle/miniputt/sy_robust,
+/turf/space,
+/area/station/devzone)
+"nX" = (
+/obj/item/shipcomponent/secondary_system/shielding/light,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"oy" = (
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"pR" = (
+/obj/item/shipcomponent/mainweapon/phaser,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"qj" = (
+/obj/item/shipcomponent/mainweapon/light_longrange,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"qK" = (
+/obj/item/shipcomponent/mainweapon/artillery,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"qO" = (
+/obj/item/shipcomponent/secondary_system/trailblazer,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"qT" = (
+/obj/item/shipcomponent/secondary_system/lock/bioscan,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"rv" = (
+/obj/item/shipcomponent/mainweapon/bad_mining,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"si" = (
+/obj/machinery/vehicle/pod_smooth/nt_robust,
+/turf/space,
+/area/station/devzone)
+"sl" = (
+/obj/machinery/vehicle/miniputt/nanoputt,
+/turf/space,
+/area/station/devzone)
+"tC" = (
+/obj/item/shipcomponent/mainweapon/disruptor_light,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"un" = (
+/obj/item/shipcomponent/mainweapon/maser,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"uI" = (
+/obj/item/shipcomponent/mainweapon/laser/short,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"vi" = (
+/obj/item/shipcomponent/secondary_system/thrusters/afterburner,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"vs" = (
+/turf/unsimulated/floor,
+/area/station/devzone)
+"vT" = (
+/obj/item/shipcomponent/secondary_system/lock,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"wx" = (
+/obj/item/shipcomponent/mainweapon/hammer_railgun,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"wT" = (
+/obj/machinery/vehicle/pod_smooth/black,
+/turf/space,
+/area/station/devzone)
+"zJ" = (
+/obj/item/shipcomponent/mainweapon/gun_22,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"zR" = (
+/obj/item/shipcomponent/secondary_system/storage,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Bg" = (
+/obj/machinery/vehicle/miniputt/gold,
+/turf/space,
+/area/station/devzone)
+"BK" = (
+/obj/machinery/vehicle/miniputt/syndiputt,
+/turf/space,
+/area/station/devzone)
+"Dd" = (
+/obj/item/shipcomponent/mainweapon/constructor/stocked,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Df" = (
+/obj/item/shipcomponent/secondary_system/tractor_beam,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Dx" = (
+/obj/item/shipcomponent/secondary_system/auto_repair_kit,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Fe" = (
+/obj/item/shipcomponent/mainweapon/syndicate_purge_system,
+/obj/item/sword_core,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"FH" = (
+/obj/item/shipcomponent/engine/scout,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"GT" = (
+/obj/machinery/vehicle/miniputt/nt_robust,
+/turf/space,
+/area/station/devzone)
+"Id" = (
+/obj/item/shipcomponent/mainweapon/laser,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"IH" = (
+/obj/item/shipcomponent/mainweapon/mining,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"IJ" = (
+/obj/machinery/vehicle/pod_smooth/gold,
+/turf/space,
+/area/station/devzone)
+"Jp" = (
+/obj/machinery/vehicle/miniputt/iridium,
+/turf/space,
+/area/station/devzone)
+"Kj" = (
+/obj/machinery/vehicle/miniputt/nt_light,
+/turf/space,
+/area/station/devzone)
+"Kp" = (
+/obj/machinery/vehicle/pod_smooth/nt_light,
+/turf/space,
+/area/station/devzone)
+"KV" = (
+/obj/item/shipcomponent/secondary_system/orescoop,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"LK" = (
+/obj/item/shipcomponent/mainweapon/minigun,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Me" = (
+/obj/item/shipcomponent/mainweapon/gun_9mm,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Mm" = (
+/obj/item/shipcomponent/mainweapon/russian,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Ov" = (
+/obj/machinery/vehicle/pod_smooth/light,
+/turf/space,
+/area/station/devzone)
+"Oy" = (
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"OM" = (
+/obj/item/shipcomponent/mainweapon/phaser/burst_phaser,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Pt" = (
+/obj/item/shipcomponent/secondary_system/thrusters/lateral,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Qp" = (
+/obj/machinery/vehicle/miniputt/wizard,
+/turf/space,
+/area/station/devzone)
+"Rj" = (
+/obj/machinery/vehicle/miniputt/sy_light,
+/turf/space,
+/area/station/devzone)
+"RV" = (
+/obj/item/shipcomponent/mainweapon/laser_ass,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Tz" = (
+/obj/item/shipcomponent/secondary_system/repair,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Uj" = (
+/obj/machinery/vehicle/miniputt/black,
+/turf/space,
+/area/station/devzone)
+"VO" = (
+/obj/item/shipcomponent/secondary_system/weapons_loader,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Ye" = (
+/obj/item/shipcomponent/secondary_system/gps,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"YE" = (
+/obj/item/shipcomponent/secondary_system/lock/pw_id,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"YJ" = (
+/obj/item/shipcomponent/engine/helios,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Zj" = (
+/obj/item/shipcomponent/mainweapon/taser,
+/turf/unsimulated/floor,
+/area/station/devzone)
+
+(1,1,1) = {"
+lS
+fj
+YJ
+ft
+FH
+iA
+qK
+kR
+rv
+Dd
+jv
+tC
+mM
+eu
+zJ
+Me
+wx
+Id
+uI
+"}
+(2,1,1) = {"
+oy
+hJ
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+Ov
+RV
+"}
+(3,1,1) = {"
+Oy
+Uj
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+qj
+"}
+(4,1,1) = {"
+vs
+Bg
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+wT
+un
+"}
+(5,1,1) = {"
+vs
+fy
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+LK
+"}
+(6,1,1) = {"
+vs
+Jp
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+IJ
+IH
+"}
+(7,1,1) = {"
+vs
+sl
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+pR
+"}
+(8,1,1) = {"
+vs
+Kj
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+mF
+OM
+"}
+(9,1,1) = {"
+vs
+GT
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+gc
+"}
+(10,1,1) = {"
+vs
+be
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+bx
+iH
+"}
+(11,1,1) = {"
+vs
+Rj
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+nc
+"}
+(12,1,1) = {"
+vs
+nG
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+Kp
+Mm
+"}
+(13,1,1) = {"
+vs
+BK
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jE
+"}
+(14,1,1) = {"
+vs
+Qp
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+si
+Fe
+"}
+(15,1,1) = {"
+vs
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+Zj
+"}
+(16,1,1) = {"
+vs
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+hr
+vs
+"}
+(17,1,1) = {"
+vs
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+fR
+jH
+eH
+jH
+jH
+jH
+jH
+vs
+"}
+(18,1,1) = {"
+vs
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+jH
+qO
+"}
+(19,1,1) = {"
+Dx
+iU
+et
+mB
+Ye
+du
+vT
+qT
+YE
+KV
+Tz
+VO
+ir
+nX
+zR
+jy
+vi
+Pt
+Df
+"}

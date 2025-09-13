@@ -2227,6 +2227,7 @@
 #include "code\modules\worldgen\mapgen\biomes\_biome.dm"
 #include "code\modules\worldgen\mapgen\biomes\VoidGenerator.dm"
 #include "code\modules\worldgen\prefab\allocated.dm"
+#include "code\modules\worldgen\prefab\devtestprefabloading.dm"
 #include "code\modules\worldgen\prefab\engines.dm"
 #include "code\modules\worldgen\prefab\listening_post.dm"
 #include "code\modules\worldgen\prefab\mapPrefab.dm"
