@@ -1361,6 +1361,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "salt"
 	sample_verb = "scrape"
 	var/health = 30
+	var/bump_stacks = 0
 
 	New()
 		..()
@@ -1376,6 +1377,27 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/turf/T = get_turf(src)
 		if (T)
 			updateSurroundingSalt(T)
+
+	/// When a wraith or similar bumps into this, returns TRUE if destroyed
+	proc/wraith_bump(mob/living/intangible/wraith/wraith)
+		if (ON_COOLDOWN(src, "wraith_bumped", 1 SECOND))
+			return
+		hit_twitch(src)
+		src.bump_stacks += 1
+		if (src.bump_stacks >= 3)
+			new /obj/effects/impact_energy/smoke(get_turf(src))
+			qdel(src)
+			boutput(wraith, SPAN_NOTICE("You force your way past the holy barrier, losing some of your life force in the process."))
+			return TRUE
+		global.processing_items |= src
+		boutput(wraith, SPAN_NOTICE("The salt stings, but it gives a little as you exert your will against it..."))
+		return FALSE
+
+	process()
+		if (!GET_COOLDOWN(src, "wraith_bumped"))
+			src.bump_stacks -= 1
+			if (src.bump_stacks <= 0)
+				global.processing_items -= src
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
