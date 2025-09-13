@@ -174,7 +174,7 @@ export const AdminObjectSpawner = () => {
                   <Stack>
                     <Stack.Item>
                       <NumberInput
-                        width={4}
+                        width={3}
                         value={x}
                         minValue={
                           offsetType === 'absolute' ? 1 : -1 * data.world_max_x
@@ -186,7 +186,7 @@ export const AdminObjectSpawner = () => {
                     </Stack.Item>
                     <Stack.Item>
                       <NumberInput
-                        width={4}
+                        width={3}
                         value={y}
                         minValue={
                           offsetType === 'absolute' ? 1 : -1 * data.world_max_y
@@ -198,7 +198,7 @@ export const AdminObjectSpawner = () => {
                     </Stack.Item>
                     <Stack.Item>
                       <NumberInput
-                        width={4}
+                        width={3}
                         value={z}
                         minValue={
                           offsetType === 'absolute' ? 1 : -1 * data.world_max_z
@@ -222,7 +222,7 @@ export const AdminObjectSpawner = () => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Count">
                   <NumberInput
-                    width={4}
+                    width={3}
                     minValue={1}
                     maxValue={100}
                     step={1}
