@@ -8,7 +8,7 @@
 	var/icon_state = "hair"						// the icon state of the HUD object
 	var/obj/item/item							// the item being worn in this slot
 
-	var/list/type_filters = list()				// a list of parent types whose subtypes are equippable
+	var/list/slot_flag = null
 	var/atom/movable/screen/hud/screenObj				// ease of life
 
 	var/mob/holder = null
@@ -29,9 +29,8 @@
 
 
 	proc/can_equip(var/obj/item/I)
-		for (var/T in type_filters)
-			if (istype(I, T))
-				return 1
+		if (I.equipment_slot & src.slot_flag)
+			return 1
 		return 0
 
 	proc/equip(var/obj/item/I)
@@ -76,7 +75,7 @@
 
 	head
 		name = "head"
-		type_filters = list(/obj/item/clothing/head)
+		slot_flag = SLOT_FLAG_HEAD
 		icon = 'icons/mob/hud_human.dmi'
 		icon_state = "hair"
 		armor_coverage = HEAD
@@ -115,14 +114,14 @@
 
 	suit
 		name = "suit"
-		type_filters = list(/obj/item/clothing/suit)
+		slot_flag = SLOT_FLAG_SUIT
 		icon = 'icons/mob/hud_human.dmi'
 		icon_state = "armor"
 		armor_coverage = TORSO
 
 	ears
 		name = "ears"
-		type_filters = list(/obj/item/device/radio)
+		slot_flag = SLOT_FLAG_EARS
 		icon = 'icons/mob/hud_human.dmi'
 		icon_state = "ears"
 

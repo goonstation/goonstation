@@ -6,10 +6,10 @@
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	equipment_slot = SLOT_FLAG_HEAD
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf", "flubber", "martian", "blob")
 	wear_layer = MOB_HEAD_LAYER2
-	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
@@ -1621,6 +1621,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "earsheadband"
 	w_class = W_CLASS_TINY
+	equipment_slot = SLOT_FLAG_HEAD | SLOT_FLAG_EARS
 	throwforce = 0
 
 	attackby(obj/item/W, mob/user)
@@ -1635,6 +1636,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 				H.wear_image_icon = src.wear_image_icon
 				H.wear_image = src.wear_image
 				H.desc = "Someone has taped a radio headset underneath the headband."
+				H.equipment_slot |= SLOT_FLAG_HEAD
 				qdel(src)
 			else
 				user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
@@ -1645,6 +1647,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 				H.wear_image = src.wear_image
 				H.wear_layer = MOB_FULL_SUIT_LAYER
 				H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+				H.equipment_slot |= SLOT_FLAG_HEAD
 				qdel(src)
 		else
 			return

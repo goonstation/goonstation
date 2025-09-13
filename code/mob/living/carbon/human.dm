@@ -1810,11 +1810,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			if ((I.c_flags & ONBELT) && src.w_uniform)
 				return TRUE
 		if (SLOT_WEAR_ID)
-			if (istype(I, /obj/item/card/id) && src.w_uniform)
-				return TRUE
-			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
-				return TRUE
-			if (istype(I, /obj/item/clothing/lanyard) && src.w_uniform)
+			if ((I.equipment_slot & SLOT_FLAG_ID) && src.w_uniform)
 				return TRUE
 		if (SLOT_BACK)
 			if (I.c_flags & ONBACK)
@@ -1822,7 +1818,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 		if (SLOT_WEAR_MASK) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (!src.organHolder.head)
 				return FALSE
-			if (istype(I, /obj/item/clothing/mask))
+			if (istype(I, /obj/item/clothing) && I.equipment_slot & SLOT_FLAG_MASK)
 				var/obj/item/clothing/M = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
@@ -1832,22 +1828,22 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 		if (SLOT_EARS)
 			if (!src.organHolder.head)
 				return FALSE
-			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
+			if (I.equipment_slot & SLOT_FLAG_EARS)
 				return TRUE
 		if (SLOT_GLASSES)
 			if (!src.organHolder.head)
 				return FALSE
-			if (istype(I, /obj/item/clothing/glasses))
+			if (I.equipment_slot & SLOT_FLAG_GLASSES)
 				return TRUE
 		if (SLOT_GLOVES)
 			if ((!src.limbs.l_arm) && (!src.limbs.r_arm))
 				return FALSE
-			if (istype(I, /obj/item/clothing/gloves))
+			if (I.equipment_slot & SLOT_FLAG_GLOVES)
 				return TRUE
 		if (SLOT_HEAD)
 			if (!src.organHolder.head)
 				return FALSE
-			if (istype(I, /obj/item/clothing/head))
+			if (I.equipment_slot & SLOT_FLAG_HEAD)
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
@@ -1859,7 +1855,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 		if (SLOT_SHOES)
 			if ((!src.limbs.l_leg) && (!src.limbs.r_leg))
 				return FALSE
-			if (istype(I, /obj/item/clothing/shoes))
+			if (I.equipment_slot & SLOT_FLAG_SHOES)
 				var/obj/item/clothing/SH = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SH.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
@@ -1867,7 +1863,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 				else
 					return TRUE
 		if (SLOT_WEAR_SUIT)
-			if (istype(I, /obj/item/clothing/suit))
+			if (I.equipment_slot & SLOT_FLAG_SUIT)
 				var/obj/item/clothing/SU = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SU.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
@@ -1875,7 +1871,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 				else
 					return TRUE
 		if (SLOT_W_UNIFORM)
-			if (istype(I, /obj/item/clothing/under))
+			if (I.equipment_slot & SLOT_FLAG_UNIFORM)
 				var/obj/item/clothing/U = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in U.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")

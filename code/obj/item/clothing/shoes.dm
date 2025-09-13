@@ -8,6 +8,7 @@
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	wear_image_icon = 'icons/mob/clothing/feet.dmi'
+	equipment_slot = SLOT_FLAG_SHOES
 	var/chained = 0
 	var/laces = LACES_NORMAL // Laces for /obj/item/gun/energy/pickpocket harass mode.
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!

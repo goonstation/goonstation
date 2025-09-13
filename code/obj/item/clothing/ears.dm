@@ -7,6 +7,7 @@
 	wear_image_icon = 'icons/mob/clothing/ears.dmi'
 	w_class = W_CLASS_TINY
 	wear_layer = MOB_EARS_LAYER
+	equipment_slot = SLOT_FLAG_EARS
 	throwforce = 2
 	block_hearing_when_worn = HEARING_BLOCKED
 

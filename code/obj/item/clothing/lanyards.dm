@@ -4,6 +4,7 @@
 	icon = 'icons/obj/clothing/item_ids.dmi'
 	wear_image_icon = 'icons/mob/clothing/card.dmi'
 	icon_state = "lanyard"
+	equipment_slot = SLOT_FLAG_ID
 	var/registered = null
 	var/assignment = null
 	var/access = list()

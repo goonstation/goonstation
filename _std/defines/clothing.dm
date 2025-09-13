@@ -21,6 +21,19 @@
 
 var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT, SLOT_WEAR_ID, SLOT_EARS, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_L_STORE, SLOT_R_STORE)
 
+// Bitflag for what slots a clothing can be put into
+#define SLOT_FLAG_BACK						(1<<0) // currently unused
+#define SLOT_FLAG_MASK						(1<<1) // MUST be obj/item/clothing/mask
+#define SLOT_FLAG_BELT						(1<<2) // currently unused
+#define SLOT_FLAG_ID						(1<<3)
+#define SLOT_FLAG_EARS						(1<<4) // MUST be obj/item/clothing
+#define SLOT_FLAG_GLASSES					(1<<5) // MUST be obj/item/clothing/glasses
+#define SLOT_FLAG_GLOVES					(1<<6) // MUST be obj/item/clothing/gloves
+#define SLOT_FLAG_HEAD						(1<<7) // MUST be obj/item/clothing/head
+#define SLOT_FLAG_SHOES						(1<<8) // MUST be obj/item/clothing/shoes
+#define SLOT_FLAG_SUIT						(1<<9) // MUST be obj/item/clothing/suit
+#define SLOT_FLAG_UNIFORM					(1<<10)// MUST be obj/item/clothing/under
+
 // bitflags for clothing parts
 #define HEAD			1
 #define TORSO			2
@@ -69,6 +82,8 @@ var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, S
 #define ONBELT						(1<<18)
 /// block miasma inhalations (sterile mask)
 #define BLOCKMIASMA					(1<<19)
+/// covers the person's hair
+#define COVERSHAIR					(1<<20)
 
 //Suit blood flags
 #define SUITBLOOD_ARMOR 1

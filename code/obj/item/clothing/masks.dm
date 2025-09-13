@@ -10,6 +10,7 @@
 	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
+	equipment_slot = SLOT_FLAG_MASK
 	var/is_muzzle = FALSE
 	var/use_bloodoverlay = 1
 	var/stapled = 0

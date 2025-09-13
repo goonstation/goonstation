@@ -1271,7 +1271,6 @@
 /datum/equipmentHolder/flockAbsorption
 	show_on_holder = 0
 	name = "disintegration reclaimer"
-	type_filters = list(/obj/item)
 	icon = 'icons/mob/flock_ui.dmi'
 	icon_state = "absorber"
 	var/instant_absorb = FALSE

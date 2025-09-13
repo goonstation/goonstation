@@ -9,6 +9,7 @@
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	c_flags = ONBELT
+	equipment_slot = SLOT_FLAG_ID | SLOT_FLAG_BELT
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/datum/db_record/accessed_record = null // the bank account on the id card

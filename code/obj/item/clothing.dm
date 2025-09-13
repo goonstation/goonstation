@@ -11,6 +11,8 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	//for clothing that covers other clothing from examines
 	var/hides_from_examine = 0
 
+	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
+
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/c_flags = null // these don't need to be in the general flags when they only apply to clothes  :I
 	// mbc moived c flags up to item bewcause some wearaables things are items and not clothign :)
@@ -146,6 +148,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 
 ABSTRACT_TYPE(/obj/item/clothing/under)
 /obj/item/clothing/under
+	equipment_slot = SLOT_FLAG_UNIFORM
 	equipped(var/mob/user, var/slot)
 		..()
 		playsound(src.loc, 'sound/items/zipper.ogg', 30, 0.2, pitch = 2)
