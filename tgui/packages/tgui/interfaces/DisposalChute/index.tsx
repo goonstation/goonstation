@@ -6,7 +6,6 @@
  * @license ISC
  */
 
-import { useState } from 'react';
 import {
   Box,
   Button,
@@ -58,7 +57,7 @@ export const DisposalChute = () => {
     <Window title={name} width={355} height={destinations ? 350 : 140}>
       <Window.Content
         className="disposal-chute-interface"
-        scrollable={!!destinations}
+        // scrollable={!!destinations}
       >
         <Stack vertical>
           <Stack.Item>
@@ -148,27 +147,22 @@ interface DestinationSearchProps {
 }
 
 const DestinationSearch = (props: DestinationSearchProps) => {
-  const { destinations = [], destinationTag } = props;
+  const { destinations, destinationTag } = props;
   const { act } = useBackend();
 
-  const [searchText, setSearchText] = useState('');
   const handleSelectDestination = (destination: string) =>
     act('select-destination', {
       destination,
     });
 
-  const filteredDestinations = destinations.filter((destination) =>
-    destination.includes(searchText),
-  );
-
   return (
     <ListSearch
       autoFocus
-      currentSearch={searchText}
-      onSearch={setSearchText}
+      fuzzy="smart"
+      height={12}
       onSelect={handleSelectDestination}
-      options={filteredDestinations}
-      selectedOption={destinationTag}
+      options={destinations}
+      selectedOptions={destinationTag ? [destinationTag] : []}
     />
   );
 };
