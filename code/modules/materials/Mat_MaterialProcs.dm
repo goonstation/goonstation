@@ -626,6 +626,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/atom/owner)
 		var/added_mat_id = owner.material.getID()
+		if(!owner.mat_changeappearance)
+			return
 		if(endswith(owner.icon_state, "$$[added_mat_id]")) // Ignore if it is a material version of a sprite
 			return
 		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
