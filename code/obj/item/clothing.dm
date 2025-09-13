@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	//for clothing that covers other clothing from examines
 	var/hides_from_examine = 0
 
-	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
+	var/seal_hair = 0 // if 1 it forms a seal so no hair can stick out
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/c_flags = null // these don't need to be in the general flags when they only apply to clothes  :I
