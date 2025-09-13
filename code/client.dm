@@ -1557,3 +1557,6 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 /// Flashes the window in the Windows titlebar
 /client/proc/flash_window(times = -1)
 	winset(src, "mainwindow", "flash=[times]")
+
+/client/proc/set_text_mode(value = FALSE)
+	winset(src, "mapwindow.map", "text-mode=[value ? "true" : "false"]")
