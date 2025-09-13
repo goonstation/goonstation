@@ -681,6 +681,7 @@
 #include "code\modules\admin\jobban.dm"
 #include "code\modules\admin\lag_hacks.dm"
 #include "code\modules\admin\loginnotice.dm"
+#include "code\modules\admin\object_creator.dm"
 #include "code\modules\admin\oocban.dm"
 #include "code\modules\admin\part_modifier.dm"
 #include "code\modules\admin\player_options.dm"
