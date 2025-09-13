@@ -1439,7 +1439,7 @@
 	category = "Resource"
 
 /datum/manufacture/implant_antirot
-	name = "Anti-Rot Implant"
+	name = "Rot-bust Implant"
 	item_requirements = list("conductive" = 2,
 							 "crystal" = 2)
 	item_outputs = list(/obj/item/implantcase/antirot)

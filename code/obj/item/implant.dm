@@ -661,7 +661,7 @@ THROWING DARTS
 
 // used to be a dumb joke (rotbusttec)
 /obj/item/implant/antirot
-	name = "\improper Anti-Rot implant"
+	name = "\improper Rot-bust implant"
 	icon_state = "implant-r"
 	impcolor = "r"
 
@@ -2481,7 +2481,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	implant_type = /obj/item/implant/robust
 
 /obj/item/implantcase/antirot
-	name = "glass case - 'Anti-Rot'"
+	name = "glass case - 'Rot-bust'"
 	implant_type = /obj/item/implant/antirot
 
 /obj/item/implantcase/access
@@ -2588,7 +2588,7 @@ TYPEINFO(/obj/item/gun/implanter)
 
 /obj/item/gun/implanter
 	name = "implant gun"
-	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor or Anti-Rot implants. Right?"
+	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor or Rot-bust implants. Right?"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "implant"
 	contraband = 1
