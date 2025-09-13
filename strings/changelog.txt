@@ -1,6 +1,10 @@
 
 (t)sat sep 13 25
 (u)LeahTheTech
+(p)24651
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(*)Spirit candles can now be activated twice before being used up, but reveal the wraith for a shorter time.
+(u)LeahTheTech
 (p)24644
 (e)⚖🧛|C-Balance, A-Gamemodes
 (*)Salt no longer reveals wraiths, instead it blocks them and can be shoved through for a small health cost.
