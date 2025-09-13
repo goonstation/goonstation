@@ -45,7 +45,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 	var/last_life_update = 0
 	var/const/life_tick_spacing = LIFE_PROCESS_TICK_SPACING
 	/// standard duration of an involuntary haunt action
-	var/forced_haunt_duration = 30 SECOND
+	var/forced_haunt_duration = 15 SECONDS
 	var/death_icon_state = "wraith-die"
 	var/last_typing = null
 	var/list/area/booster_locations = list()	//Zones in which you get more points
