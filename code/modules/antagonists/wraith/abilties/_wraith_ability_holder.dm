@@ -81,7 +81,6 @@
 			var/obj/decal/cleanable/saltpile/salt = locate() in T
 			if (salt)
 				if (!ON_COOLDOWN(T, "wraith_ability_block", 2 SECONDS))
-					// particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 1, T))
 					salt.add_filter("wraith_ability_block", 1, outline_filter(2, "#000"))
 					animate(salt.filters[length(salt.filters)], alpha = 0, time = 0)
 					animate(alpha = 255, time = 0.5 SECONDS)
