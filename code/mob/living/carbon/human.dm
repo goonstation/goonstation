@@ -1818,7 +1818,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 		if (SLOT_WEAR_MASK) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (!src.organHolder.head)
 				return FALSE
-			if (istype(I, /obj/item/clothing) && I.equipment_slot & SLOT_FLAG_MASK)
+			if (I.equipment_slot & SLOT_FLAG_MASK)
 				var/obj/item/clothing/M = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
