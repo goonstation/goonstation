@@ -832,11 +832,27 @@ or don't if it uses a custom topopen overlay
 	src.update_appearance()
 
 /mob/living/silicon/ai/emp_act()
-	if (prob(30))
-		if (prob(50))
-			src.cancel_camera()
-		else
-			src.ai_call_shuttle()
+	if (prob(50))
+		src.cancel_camera()
+		SPAWN(1 DECI SECOND)
+			src.eyecam?.return_mainframe()
+			boutput(src, SPAN_ALERT(SPAN_BOLD("CONNECTION TO REMOTE TIMED OUT.")))
+	else
+		var/client/client = src.client
+		if (!client && src.deployed_to_eyecam)
+			client = src.eyecam.client
+		if (!client && src.deployed_shell)
+			client = src.deployed_shell.client
+		if (!client || winget(client,  "mapwindow.map", "text-mode") == "true")
+			return
+		boutput(client, SPAN_ALERT(SPAN_BOLD("CATASTROPHIC PANIC IN VISION KERNEL AT ADDR [NUM_TO_ADDR(rand(1, 2000000))]. REVERTING TO TEXT DISPLAY MODE.")))
+		client.set_text_mode(TRUE)
+		var/datum/player/player = client.player
+		SPAWN(15 SECONDS)
+			if (client)
+				client.set_text_mode(FALSE)
+			else
+				LAZYLISTADDUNIQUE(player.login_queue, TYPE_PROC_REF(/client, set_text_mode))
 
 /mob/living/silicon/ai/restrained()
 	return 0
