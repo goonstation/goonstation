@@ -115,7 +115,8 @@ ABSTRACT_TYPE(/obj/item)
 	var/tooltip_flags = null
 	var/item_function_flags = null
 	var/force_use_as_tool = 0
-	var/equipment_slot = null
+	var/equipment_slot = null // read _std/defines/clothing.dm for information on what flags can be given without runtimes
+
 
 	var/block_hearing_when_worn = HEARING_NORMAL
 	//fuck me mbc why you do this | | ok i did it to reduce type checking in a proc that gets called A LOT and idk what else to do ok help
