@@ -730,6 +730,94 @@ Only trained personnel should operate station systems. Follow all procedures car
 	only at the Museum of Lunar History!<br><br><br><br><br><hr>
 	Printed by Aurora Lithographics<hr></font>"}
 
+/obj/item/paper/postcard/shelterfrogking //by SnugglyCactus
+	name = "\"Remember Who You Are\""
+	desc ="A postcard with an iconic scene from... The Shelterfrog King? Huh?"
+	icon_state = "postcard-shelter-king"
+	info = {"<i>Remember who you are.</i>
+	<br><br>
+	The Shelterfrog King - Remember Who You Are<br>
+	National Notary Supply Corporation<br>
+	Image #25322"}
+
+/obj/item/paper/postcard/cowbee //by Whele
+	name = "\"Ride 'Em, Cowbee!\""
+	desc = "A postcard featuring a rugged-looking cowpoke in front of a gorgeous sunset. An obligatory cactus stands tall in the center."
+	icon_state = "postcard-cowbee"
+	info = {"Ride 'Em, Cowbee!<br>
+	National Notary Supply Corporation<br>
+	Image #25316"}
+
+/obj/item/paper/postcard/believe //by Scientifically
+	name ="\"Believe\""
+	desc = "A postcard showing a painting of a UFO above a forest, with the caption \"Believe\"."
+	icon_state = "postcard-believe"
+	info = {"Ancient aliens, it's all true,<br>
+	I'm an expert just like you!
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/postcard/silicongreeting //by Mailman T
+	name = "\"A Silicon Greeting\""
+	desc = "A postcard with some cyborgs. You can't tell what the message on the back says since it is written in binary."
+	icon_state = "postcard-silicon-greeting"
+	info = {"<font face='Courier New'>1001110 1101001 1100011 1100101 100000
+			1100010 1101001 1101110 1100001 1110010 1111001 100000 1100011
+			1101111 1101110 1110110 1100101 1110010 1110100 1100101 1110010</font>"}
+
+/obj/item/paper/postcard/thundrando //by Shiiba
+	name = "\"Greetings from Thundrando!\""
+	desc = "...Thundrando? What kind of name is that?"
+	icon_state = "postcard-thundrando"
+	info = {"<font color='#1A378D'>Greetings from Thundrando!</font>"}
+
+/obj/item/paper/postcard/pumpkinpatch //by IncendiaryCrocs
+	name = "pumpkin patch postcard"
+	desc = {"A postcard with some spooky pumpkins, set against a night sky.
+			The back contains a sinister letter, written as if from their point of view."}
+	icon_state = "postcard-pumpkin-patch"
+	info = {"Wishing you many terrifying honks.<br><br>
+	Many Disgraces,<br>
+	The Pumpkin Patch
+	<br><br>
+	Pumpkins #13<br>
+	National Notary Supply Corporation<br>
+	Image #25334"}
+
+/obj/item/paper/postcard/chicago //by Frank_Stein
+	name = "Chicago postcard"
+	desc = "A postcard showing the city of Chicago on Earth, most of it blocked out by a big hot dog. The back has a terrible tourist slogan."
+	icon_state = "postcard-chicago"
+	info = {"<font face='Comic Sans MS'>Visit Chicago! Try the hot dogs!</font>
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/postcard/sadcrab //by Elskrises
+	name = "\"Greetings from the Rave Beach.\""
+	desc = {"An image of the amazing Rave Beach. It even has an adorable crab playing a violin! Wait, is that crab crying?
+			The back of the card has a message in messy, shaky writing."}
+	icon_state = "postcard-sad-crab"
+	info = {"<font face='Brush Script MT' size=4>Cherish your happiest memories.</font>"}
+
+/obj/item/paper/postcard/spacequebec //by Gamb1t
+	name = "\"De Magnifique Vacances!\""
+	desc = {"A postcard featuring a pair of mountains by a lake on the chilly planet Mundus.
+			The back features images of frontier vacationers hiking, camping, and skiing."}
+	icon_state = "postcard-space-quebec"
+	info = {"Visit beautiful Space Quebec!
+	<br><br>
+	"De Magnifique Vacances!"<br>
+	National Notary Supply Corporation<br>
+	Image #25304"}
+
+/obj/item/paper/postcard/pyramid //by RubberRats
+	name = "New Memphis postcard"
+	desc = "A postcard with a ground-view photograph of the BonkTek Consortium's massive pyramid-shaped shopping center on the planet Fatuus."
+	icon_state = "postcard-pyramid"
+	info = {"<font face='Arial'>Greetings from New Memphis, home of the BonkTek Pyramid!
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
