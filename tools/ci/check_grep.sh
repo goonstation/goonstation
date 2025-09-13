@@ -68,7 +68,7 @@ if grep -P 'as anything in o?(range|hearers)' */**/*.dm;	then
     st=1
 fi;
 
-if grep -P 'colour' */**/*; then
+if grep -P 'colour' */**/*.dm; then
 	echo "ERROR: BRITISH DETECTED - please use the american spelling of color for consistency."
 	st=1
 fi;
