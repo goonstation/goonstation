@@ -60,6 +60,8 @@
 	var/antag_tokens = null
 	/// Newbee Tutorial
 	var/datum/tutorial_base/regional/newbee/tutorial = null
+	/// A list of procs to call on the client on next login, used for when you need to guarantee clearing a clientside effect (ie textmode)
+	var/list/login_queue = null
 
 	/// starts setup, adds by_type list entry for this datum
 	New(key)
@@ -81,9 +83,15 @@
 
 	/// stuff that should only be done when the client is known to be valid
 	proc/on_client_authenticated()
-		if (src.ckey in mentors) src.mentor = TRUE
-		if (!src.cached_round_stats) src.cache_round_stats()
-		SPAWN(0) src.cloudSaves.fetch()
+		if (src.ckey in mentors)
+			src.mentor = TRUE
+		if (!src.cached_round_stats)
+			src.cache_round_stats()
+		for (var/proc_name in src.login_queue)
+			call(src.client, proc_name)()
+		src.login_queue = null
+		SPAWN(0)
+			src.cloudSaves.fetch()
 
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()
