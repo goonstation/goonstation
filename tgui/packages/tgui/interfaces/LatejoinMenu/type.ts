@@ -20,6 +20,7 @@ export interface DepartmentData {
 export interface JobData {
   job_name: string;
   priority_role: BooleanLike;
+  player_requested: BooleanLike;
   has_wiki_link: boolean;
   job_ref: string;
   silicon_latejoin?: string;

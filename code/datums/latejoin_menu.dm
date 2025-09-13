@@ -129,7 +129,8 @@ var/datum/latejoin_menu/latejoin_menu = new()
 		slot_count = max(slot_count, J.limit)
 
 	.["job_name"] = J.name
-	.["priority_role"] = J.is_highlighted()
+	.["priority_role"] = (global.job_controls.priority_job == J)
+	.["player_requested"] = J.player_requested
 	.["has_wiki_link"] = !!J.wiki_link
 	.["job_ref"] = ref(J)
 	.["colour"] = J.ui_colour
@@ -157,6 +158,7 @@ var/datum/latejoin_menu/latejoin_menu = new()
 		var/list/silicon_job_props = list()
 		silicon_job_props["job_name"] = job_name
 		silicon_job_props["priority_role"] = FALSE
+		silicon_job_props["player_requested"] = FALSE
 		silicon_job_props["has_wiki_link"] = !!J.wiki_link
 		silicon_job_props["job_ref"] = ref(J)
 		silicon_job_props["silicon_latejoin"] = ref(silicon_latejoin)

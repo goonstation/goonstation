@@ -75,27 +75,27 @@ const DepartmentSection = (props: DepartmentData) => {
   );
 };
 
-const PriorityRoleTooltip = () => {
-  return (
-    <Box
-      mt="0.5em"
-      dangerouslySetInnerHTML={{
-        __html:
-          '<b>Priority Role:</b> This job has been marked as a priority role by the Command Staff, meaning that the station is in need of them.',
-      }}
-    />
-  );
-};
-
 const JobOption = (props: JobData) => {
   const { setJobModalOptions } = useContext(ModalContext);
 
   return (
     <Stack.Item>
-      <Stack g={0.5}>
+      <Stack
+        g={0.5}
+        style={
+          !!props.priority_role || !!props.player_requested
+            ? {
+                borderRadius: '2px',
+                outlineStyle: 'solid',
+                outlineWidth: '2px',
+                outlineColor: 'var(--color-gold)',
+              }
+            : {}
+        }
+      >
         <Stack.Item grow>
           <Button
-            tooltip={!!props.priority_role && <PriorityRoleTooltip />}
+            tooltip={getJobOptionTooltip({ ...props })}
             onClick={() =>
               setJobModalOptions({
                 job_name: props.job_name,
@@ -119,7 +119,33 @@ const JobOption = (props: JobData) => {
   );
 };
 
-function JobContents(props: JobData) {
+const PRIORITY_ROLE_TOOLTIP =
+  '<b>Priority Role:</b> This job has been marked as a priority role by the Command Staff, meaning that the station is in need of them.';
+const REQUESTED_ROLE_TOOLTIP =
+  '<b>Requested Role:</b> This job has had additional slots opened by the Command Staff.';
+
+function getJobOptionTooltip(props: JobData) {
+  if (!props.priority_role && !props.player_requested) {
+    return;
+  }
+
+  const tooltip = [
+    !!props.priority_role && PRIORITY_ROLE_TOOLTIP,
+    !!props.player_requested && REQUESTED_ROLE_TOOLTIP,
+  ]
+    .filter(Boolean)
+    .join('<br><br>');
+
+  return (
+    <Box
+      dangerouslySetInnerHTML={{
+        __html: `${tooltip}`,
+      }}
+    />
+  );
+}
+
+const JobContents = (props: JobData) => {
   return (
     <Stack>
       {!!props.priority_role && (
@@ -127,12 +153,17 @@ function JobContents(props: JobData) {
           <Icon name="star" />
         </Stack.Item>
       )}
+      {!!props.player_requested && (
+        <Stack.Item align="center">
+          <Icon name="user-plus" />
+        </Stack.Item>
+      )}
       <Stack.Item {...getJobContentsProps(props.job_name)}>
         {props.job_name}
       </Stack.Item>
     </Stack>
   );
-}
+};
 
 function getJobContentsProps(job_name: string) {
   if (job_name === 'Clown') {

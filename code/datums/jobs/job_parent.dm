@@ -187,10 +187,6 @@ ABSTRACT_TYPE(/datum/job)
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
-	/// Is this job highlighted for latejoiners
-	proc/is_highlighted()
-		return job_controls.priority_job == src || src.player_requested
-
 	proc/can_be_antag(var/role)
 		if (!src.can_roll_antag)
 			return FALSE
