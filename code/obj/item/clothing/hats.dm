@@ -1636,7 +1636,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 				H.wear_image_icon = src.wear_image_icon
 				H.wear_image = src.wear_image
 				H.desc = "Someone has taped a radio headset underneath the headband."
-				H.equipment_slot |= SLOT_FLAG_HEAD
 				qdel(src)
 			else
 				user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
@@ -1647,7 +1646,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 				H.wear_image = src.wear_image
 				H.wear_layer = MOB_FULL_SUIT_LAYER
 				H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
-				H.equipment_slot |= SLOT_FLAG_HEAD
 				qdel(src)
 		else
 			return
