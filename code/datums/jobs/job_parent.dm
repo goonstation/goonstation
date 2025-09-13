@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/name = null
 	var/list/alias_names = null
 	var/initial_name = null
-	var/linkcolor = "#0FF"
+	var/ui_colour = TGUI_COLOUR_TEAL
 
 	/// Job starting wages
 	var/wages = 0
@@ -186,10 +186,6 @@ ABSTRACT_TYPE(/datum/job)
 				M.choose_name(3, src.name, default)
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
-
-	/// Is this job highlighted for latejoiners
-	proc/is_highlighted()
-		return job_controls.priority_job == src || src.player_requested
 
 	proc/can_be_antag(var/role)
 		if (!src.can_roll_antag)
