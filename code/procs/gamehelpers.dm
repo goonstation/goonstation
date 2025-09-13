@@ -316,7 +316,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		Depth = newDepth
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
-	if (ismob(Center.loc))
+	if (ismob(Center?.loc))
 		. |= Center.loc
 	for(var/mob/living/intangible/aieye/eye in .)
 		. -= eye
