@@ -114,11 +114,6 @@ TYPEINFO(/atom)
 	RETURN_TYPE(/datum/say_message)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if (ismob(src)) //overrides are illegal, istype(src) is kind of valid here??
-		var/mob/self = src
-		if (!self.mind) //shut UP npcs
-			flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY
-
 	if (dd_hasprefix(message, "*"))
 		src.emote(copytext(message, 2), TRUE)
 		return
