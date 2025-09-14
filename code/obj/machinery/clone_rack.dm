@@ -192,7 +192,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	New()
 		. = ..()
 		var/i = 1
-		for (var/type in concrete_typesof(/obj/item/disk/data/floppy/office))
+		for (var/type in childrentypesof(/obj/item/disk/data/floppy/office))
 			src.insert_disk(i++, new type)
 
 /obj/spawner/clone_rack

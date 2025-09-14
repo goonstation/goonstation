@@ -2593,8 +2593,7 @@ var/global/night_mode_enabled = 0
 	logTheThing(LOG_ADMIN, usr, "has toggled [constructTarget(C.mob,"admin")]'s text mode to [!is_text]")
 	logTheThing(LOG_DIARY, usr, "has toggled [constructTarget(C.mob,"diary")]'s text mode to [!is_text]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
-	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
-
+	C.set_text_mode(!is_text)
 
 /client/proc/retreat_to_office()
 	set name = "Retreat To Office"
