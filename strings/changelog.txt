@@ -1,4 +1,10 @@
 
+(t)sun sep 14 25
+(u)Studenterhue
+(p)24653
+(e)🎨|C-Sprites
+(+)Congratulations to SnugglyCactus, Whele, Scientifically, Mailman T, Shiiba, and IncendiaryCrocs for winning the Goonstation Summer 2025 Seasonal Contest! Now, when you open your mail, you may find the postcards they made.
+(+)Frank_Stein, Elskrises, RubberRats, and Gamb1t did not win, but their postcards were so cool that they too appear in the mail loot pool for all jobs now, at slightly lower spawn rates.
 (t)sat sep 13 25
 (u)LeahTheTech
 (p)24651
