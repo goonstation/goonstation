@@ -121,7 +121,6 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
 	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
-	var/list/connected_robots = list()
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
@@ -416,7 +415,7 @@ or don't if it uses a custom topopen overlay
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
 
-		src.camera = new /obj/machinery/camera/auto/AI(src)
+		src.camera = new /obj/machinery/camera/AI(src)
 		src.camera.c_tag = src.real_name
 		src.camera.network = CAMERA_NETWORK_ROBOTS
 
@@ -833,11 +832,27 @@ or don't if it uses a custom topopen overlay
 	src.update_appearance()
 
 /mob/living/silicon/ai/emp_act()
-	if (prob(30))
-		if (prob(50))
-			src.cancel_camera()
-		else
-			src.ai_call_shuttle()
+	if (prob(50))
+		src.cancel_camera()
+		SPAWN(1 DECI SECOND)
+			src.eyecam?.return_mainframe()
+			boutput(src, SPAN_ALERT(SPAN_BOLD("CONNECTION TO REMOTE TIMED OUT.")))
+	else
+		var/client/client = src.client
+		if (!client && src.deployed_to_eyecam)
+			client = src.eyecam.client
+		if (!client && src.deployed_shell)
+			client = src.deployed_shell.client
+		if (!client || winget(client,  "mapwindow.map", "text-mode") == "true")
+			return
+		boutput(client, SPAN_ALERT(SPAN_BOLD("CATASTROPHIC PANIC IN VISION KERNEL AT ADDR [NUM_TO_ADDR(rand(1, 2000000))]. REVERTING TO TEXT DISPLAY MODE.")))
+		client.set_text_mode(TRUE)
+		var/datum/player/player = client.player
+		SPAWN(15 SECONDS)
+			if (client)
+				client.set_text_mode(FALSE)
+			else
+				LAZYLISTADDUNIQUE(player.login_queue, TYPE_PROC_REF(/client, set_text_mode))
 
 /mob/living/silicon/ai/restrained()
 	return 0
@@ -2108,10 +2123,8 @@ or don't if it uses a custom topopen overlay
 	camera_overlay_check(C) //Add static if the camera is disabled
 
 	var/mob/message_mob = src.get_message_mob()
-	if (message_mob.client && message_mob.client.tooltipHolder)
-		for (var/datum/tooltip/t in message_mob.client.tooltipHolder.tooltips)
-			if (t.isStuck)
-				t.hide()
+	if (message_mob.client && message_mob.client.tooltips)
+		message_mob.client.tooltips.hideAllClickTips()
 
 	if (!src.deployed_to_eyecam)
 		src.eye_view()

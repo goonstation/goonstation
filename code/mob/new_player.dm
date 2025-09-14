@@ -74,6 +74,7 @@ TYPEINFO(/mob/new_player)
 				P.log_leave_time()
 
 		src.client?.load_pregame()
+		close_spawn_windows()
 		new_player_panel()
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
@@ -265,10 +266,7 @@ TYPEINFO(/mob/new_player)
 				else
 					AttemptLateSpawn(JOB)
 
-		if(href_list["preferences"])
-			if (!src.ready_play)
-				client.preferences.process_link(src, href_list)
-		else if(!href_list["late_join"])
+		if(!href_list["late_join"])
 			new_player_panel()
 
 	proc/IsSiliconAvailableForLateJoin(var/mob/living/silicon/S)

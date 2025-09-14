@@ -73,6 +73,27 @@
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/station/devzone)
+"bP" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/machinery/door_control{
+	id = "crusher";
+	name = "Disposals Doors";
+	pixel_y = 24
+	},
+/obj/machinery/conveyor_switch{
+	id = "garbage";
+	position = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"bS" = (
+/obj/window/crystal/reinforced/north,
+/obj/window/crystal/reinforced/east,
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "cj" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor,
@@ -150,15 +171,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
-"du" = (
-/obj/landmark/start/job/AI,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/map/light/brighterwhite,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "dx" = (
 /obj/machinery/door/poddoor/buff{
 	dir = 1;
@@ -208,6 +220,13 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor,
 /area/station/devzone)
+"dN" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "dQ" = (
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Control";
@@ -224,6 +243,14 @@
 "eg" = (
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"eo" = (
+/obj/machinery/conveyor/ES{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "eq" = (
 /obj/railing/red{
@@ -287,6 +314,13 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
+"fL" = (
+/obj/item/rcd/construction/safe/admin_crimes,
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "fN" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -335,6 +369,10 @@
 	},
 /turf/space,
 /area/station/devzone)
+"gP" = (
+/obj/map/light/brighterwhite,
+/turf/simulated/floor,
+/area/supply/spawn_point)
 "gQ" = (
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor,
@@ -420,6 +458,14 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"hU" = (
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "hX" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -439,18 +485,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/devzone)
-"ib" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/glow,
-/area/space)
 "ic" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -479,20 +513,12 @@
 /obj/machinery/vehicle/miniputt/gold,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
-"ip" = (
-/obj/machinery/mining_magnet{
-	pixel_x = 16
+"iv" = (
+/obj/disposalpipe/switch_junction/right/west{
+	mail_tag = "cafeteria";
+	name = "cafeteria mail junction"
 	},
-/obj/machinery/magnet_chassis{
-	pixel_x = 16
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "iA" = (
 /obj/disposalpipe/loafer/horizontal{
@@ -510,6 +536,17 @@
 /obj/item/storage/belt/utility/prepared/ceshielded,
 /turf/simulated/floor,
 /area/station/devzone)
+"iQ" = (
+/obj/disposalpipe/trunk/mail/north,
+/obj/machinery/disposal/mail/autoname/chapel,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"ja" = (
+/obj/disposalpipe/junction{
+	name = "transport pipe"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "je" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 8;
@@ -517,6 +554,13 @@
 	},
 /obj/item/storage/belt/utility/prepared/ceshielded,
 /turf/simulated/floor,
+/area/station/devzone)
+"jp" = (
+/obj/disposalpipe/switch_junction/left/east{
+	mail_tag = "QM";
+	name = "QM mail junction"
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "ju" = (
 /obj/machinery/navbeacon/mule/medbay_north/south,
@@ -568,6 +612,12 @@
 /obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/station/devzone)
+"kb" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "ko" = (
 /obj/machinery/conveyor/WE{
 	id = "ghostdrone"
@@ -585,6 +635,12 @@
 "kv" = (
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
+/area/station/devzone)
+"kz" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "kI" = (
 /obj/forcefield/energyshield/perma{
@@ -624,10 +680,30 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"lb" = (
+/obj/machinery/lawrack/syndicate,
+/turf/simulated/floor,
+/area/station/devzone)
 "ld" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip,
 /turf/simulated/floor/white,
+/area/station/devzone)
+"lj" = (
+/obj/machinery/crusher/slow,
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"lo" = (
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "lp" = (
 /obj/landmark/start/latejoin,
@@ -692,9 +768,20 @@
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor,
 /area/station/devzone)
+"mG" = (
+/obj/disposalpipe/switch_junction/right/west{
+	mail_tag = "kitchen";
+	name = "kitchen mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "mH" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"mQ" = (
+/obj/disposalpipe/segment/mail/bent/west,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "nd" = (
 /obj/machinery/computer/general_alert,
@@ -705,6 +792,18 @@
 /area/station/devzone)
 "ng" = (
 /turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"nn" = (
+/obj/machinery/disposal/mail/autoname/engineering,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"np" = (
+/obj/disposalpipe/switch_junction/right/west{
+	mail_tag = "janitor";
+	name = "janitor mail junction"
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "nB" = (
 /obj/machinery/espresso_machine,
@@ -790,6 +889,11 @@
 /obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"oF" = (
+/obj/machinery/disposal/mail/autoname/research/chemistry,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "oG" = (
 /obj/storage/secure/closet/animal,
 /turf/simulated/floor/blue/checker,
@@ -831,10 +935,6 @@
 /obj/machinery/vehicle/pod,
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
-"py" = (
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "pE" = (
 /obj/machinery/door_control{
 	id = "tele";
@@ -858,6 +958,18 @@
 	dir = 5
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"pZ" = (
+/obj/machinery/disposal/mail/autoname/security,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"qa" = (
+/obj/disposalpipe/switch_junction/right/west{
+	mail_tag = "bridge";
+	name = "bridge mail junction"
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "qc" = (
 /obj/machinery/computer/cloning,
@@ -970,10 +1082,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"rY" = (
-/obj/machinery/computer/robotics,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "se" = (
 /obj/landmark/start/job/head_of_security,
 /turf/simulated/floor,
@@ -993,6 +1101,20 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/devzone)
+"sG" = (
+/obj/machinery/door/poddoor/pyro{
+	autoclose = 1;
+	id = "crusher";
+	layer = 4;
+	name = "Crusher Door"
+	},
+/obj/machinery/conveyor/NE{
+	move_lag = 30;
+	id = "garbage";
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "sJ" = (
 /obj/storage/cart/medcart,
 /obj/item/reagent_containers/syringe/haloperidol,
@@ -1005,6 +1127,10 @@
 	id = "ghostdrone"
 	},
 /turf/simulated/floor,
+/area/station/devzone)
+"sR" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "te" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -1044,11 +1170,27 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
+"tR" = (
+/obj/disposalpipe/segment/mail/bent/east,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "tS" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
+/area/station/devzone)
+"ug" = (
+/obj/machinery/conveyor/EW{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door{
+	dir = 8
+	},
+/obj/railing/red/reinforced,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "ux" = (
 /obj/machinery/light,
@@ -1229,9 +1371,6 @@
 /obj/submachine/chef_oven,
 /turf/simulated/floor/white,
 /area/station/devzone)
-"xE" = (
-/turf/simulated/floor,
-/area/supply/spawn_point)
 "xK" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -1313,6 +1452,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/devzone)
+"zh" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "zk" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1382,9 +1525,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/devzone)
-"Aa" = (
-/turf/simulated/floor,
-/area/supply/sell_point)
 "Ae" = (
 /obj/disposalpipe/type_sensing_outlet/drone_factory{
 	dir = 4
@@ -1446,6 +1586,18 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/space)
+"AG" = (
+/obj/machinery/conveyor/EW{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/disposaloutlet/west{
+	throw_range = 1
+	},
+/obj/disposalpipe/trunk/regular,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "AI" = (
 /obj/machinery/door/poddoor/buff{
 	dir = 4;
@@ -1496,6 +1648,18 @@
 /obj/machinery/computer/announcement/station,
 /turf/simulated/floor,
 /area/station/devzone)
+"Bw" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"Ca" = (
+/obj/disposalpipe/switch_junction/left/north{
+	name = "undeliverable mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "Cf" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/orangeblack,
@@ -1537,6 +1701,13 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/devzone)
+"CH" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "CI" = (
 /obj/item/device/analyzer/atmospheric/upgraded,
 /turf/simulated/floor,
@@ -1547,6 +1718,18 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
+/area/station/devzone)
+"Da" = (
+/obj/machinery/conveyor/EW{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"Db" = (
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Di" = (
 /turf/simulated/floor/engine{
@@ -1655,6 +1838,16 @@
 /obj/machinery/atmospherics/unary/vent,
 /turf/space,
 /area/station/devzone)
+"EL" = (
+/obj/machinery/disposal/mail/autoname/public/cafeteria,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"ER" = (
+/obj/disposalpipe/trunk/regular/east,
+/obj/machinery/disposal,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "EU" = (
 /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/overfloor{
 	dir = 4
@@ -1729,7 +1922,6 @@
 /turf/simulated/floor/white,
 /area/station/devzone)
 "FT" = (
-/obj/machinery/lawrack,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
@@ -1737,15 +1929,17 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/landmark/start/job/AI,
 /turf/simulated/floor,
-/area/station/turret_protected/ai)
+/area/station/devzone)
 "FV" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/apc/autoname_east,
+/mob/living/silicon/hivebot/eyebot,
+/obj/machinery/recharge_station,
 /turf/simulated/floor,
-/area/station/turret_protected/ai)
+/area/station/devzone)
 "Gi" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor/white,
@@ -1888,6 +2082,11 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor,
+/area/station/devzone)
+"Jb" = (
+/obj/machinery/disposal/mail/autoname/bridge,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Jq" = (
 /obj/disposalpipe/segment{
@@ -2040,6 +2239,13 @@
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor,
 /area/station/devzone)
+"Ln" = (
+/obj/disposalpipe/switch_junction/left/east{
+	mail_tag = "medbay";
+	name = "medbay mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "Lo" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/cable{
@@ -2124,6 +2330,13 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
+"MN" = (
+/obj/disposalpipe/switch_junction/left/east{
+	mail_tag = "chapel";
+	name = "chapel mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "MR" = (
 /obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk{
@@ -2131,6 +2344,22 @@
 	name = "factory pipe"
 	},
 /turf/simulated/floor,
+/area/station/devzone)
+"MT" = (
+/obj/disposalpipe/switch_junction/left/east{
+	mail_tag = "security";
+	name = "security mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"MV" = (
+/obj/railing/red/reinforced{
+	dir = 1
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "MY" = (
 /obj/landmark/magnet_center{
@@ -2202,6 +2431,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"Or" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "Oz" = (
 /obj/machinery/power/debug_generator{
 	generating = 10
@@ -2262,12 +2495,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"OU" = (
-/obj/machinery/vending/monkey/genetics,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/turf/simulated/floor/blue/checker,
-/area/station/devzone)
 "Pb" = (
 /obj/machinery/computer/magnet,
 /turf/simulated/floor,
@@ -2319,6 +2546,10 @@
 /obj/traitorifier/virtual/wizard,
 /turf/simulated/floor,
 /area/station/devzone)
+"PE" = (
+/obj/disposalpipe/segment/mail/bent/south,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "PF" = (
 /obj/landmark/start/job/clown,
 /turf/simulated/floor,
@@ -2361,12 +2592,58 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/space)
+"Ql" = (
+/obj/disposalpipe/switch_junction/right/west{
+	mail_tag = "hydroponics";
+	name = "hydroponics mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"Qm" = (
+/obj/machinery/mining_magnet{
+	pixel_x = 16
+	},
+/obj/machinery/magnet_chassis{
+	pixel_x = 16
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"Qx" = (
+/obj/map/light/brighterwhite,
+/turf/simulated/floor,
+/area/supply/sell_point)
 "Qy" = (
 /obj/decal/tile_edge/line/red{
 	dir = 8;
 	icon_state = "line2"
 	},
 /turf/simulated/floor/white,
+/area/station/devzone)
+"QI" = (
+/obj/machinery/disposal/mail/autoname/kitchen,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"QL" = (
+/obj/disposalpipe/switch_junction/left/east{
+	mail_tag = "chemistry";
+	name = "chemistry mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"QV" = (
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door{
+	dir = 8
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Rj" = (
 /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/overfloor{
@@ -2422,6 +2699,22 @@
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"RK" = (
+/obj/disposalpipe/switch_junction/right/west{
+	mail_tag = "engineering";
+	name = "engineering mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"RQ" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/space)
 "RV" = (
 /turf/simulated/floor/engine{
 	dir = 4;
@@ -2473,20 +2766,13 @@
 	dir = 1
 	},
 /area/station/devzone)
-"SI" = (
-/obj/cable{
-	icon_state = "0-8"
+"SN" = (
+/obj/disposalpipe/trunk/mail/north,
+/obj/disposaloutlet/north{
+	name = "undeliverable mail outlet"
 	},
-/obj/machinery/power/debug_generator{
-	generating = 100000
-	},
-/obj/map/light/brighterwhite,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "SQ" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -2503,6 +2789,14 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"Tp" = (
+/obj/item/storage/box/diskbox,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "Tu" = (
 /turf/unsimulated/floor/engine/caution/east,
@@ -2523,9 +2817,25 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
+"TK" = (
+/obj/machinery/lawrack,
+/turf/simulated/floor,
+/area/station/devzone)
 "TM" = (
 /obj/landmark/start/job/research_director,
 /turf/simulated/floor,
+/area/station/devzone)
+"TN" = (
+/obj/disposalpipe/switch_junction/left/east{
+	mail_tag = "bar";
+	name = "bar mail junction"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"TR" = (
+/obj/machinery/disposal/mail/autoname/medbay,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "TY" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -2578,6 +2888,11 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"UZ" = (
+/obj/machinery/disposal/mail/autoname/janitor,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "Vd" = (
 /obj/submachine/weapon_vendor/syndicate,
 /turf/simulated/floor,
@@ -2619,6 +2934,11 @@
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/devzone)
+"VV" = (
+/obj/machinery/disposal/mail/autoname/bar,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "VZ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/cable{
@@ -2629,15 +2949,6 @@
 	setup_tag = "BOTTOM"
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/devzone)
-"Wg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
 /area/station/devzone)
 "Wj" = (
 /obj/submachine/weapon_vendor/security,
@@ -2680,6 +2991,11 @@
 /obj/item/bee_egg_carton,
 /obj/item/bee_egg_carton,
 /turf/simulated/floor/grass/random,
+/area/station/devzone)
+"WY" = (
+/obj/machinery/disposal/mail/autoname/hydroponics,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Xa" = (
 /obj/machinery/vehicle/tank/minisub/mining,
@@ -2725,16 +3041,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
-"Xu" = (
-/obj/item/rcd/construction/safe/admin_crimes,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Xx" = (
 /obj/forcefield/energyshield/perma{
 	dir = 6
@@ -2762,14 +3068,9 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/devzone)
-"XI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor/orangeblack,
+"XM" = (
+/obj/machinery/computer/robotics,
+/turf/simulated/floor,
 /area/station/devzone)
 "XR" = (
 /obj/submachine/weapon_vendor/fishing/portable,
@@ -2868,6 +3169,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/debug_generator{
+	generating = 100000
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Zz" = (
@@ -2876,6 +3180,11 @@
 	},
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor,
+/area/station/devzone)
+"ZB" = (
+/obj/machinery/disposal/mail/autoname/qm,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "ZD" = (
 /obj/machinery/conveyor_switch{
@@ -3265,7 +3574,7 @@ hR
 NE
 Yx
 Yx
-XI
+kz
 NU
 Ni
 NG
@@ -3279,7 +3588,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 Yx
 "}
 (10,1,1) = {"
@@ -3403,7 +3712,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 Hy
 UD
 UD
@@ -3445,7 +3754,7 @@ Nu
 ys
 ys
 Yx
-Wg
+Bw
 Yx
 Yx
 Yx
@@ -3532,7 +3841,7 @@ ia
 zT
 Yx
 Yx
-Yx
+ng
 ng
 Kr
 ng
@@ -3575,11 +3884,11 @@ Bq
 hI
 dG
 Yx
-Yx
 ng
+fU
 Du
 qc
-fU
+zh
 ng
 Yx
 "}
@@ -3618,8 +3927,8 @@ ys
 Mo
 Yx
 Yx
-Yx
 ng
+vd
 vd
 wk
 vd
@@ -3661,11 +3970,11 @@ IX
 jz
 vr
 Yx
-Yx
 ng
-wy
-vd
 oG
+wy
+Tp
+vd
 ng
 Yx
 "}
@@ -3704,8 +4013,8 @@ kV
 kV
 Yx
 Yx
-Yx
 ng
+vd
 vd
 PU
 zF
@@ -3747,11 +4056,11 @@ kV
 bw
 Yx
 Yx
-Yx
 ng
-OU
-Er
+bS
 Gn
+Er
+vd
 ng
 Yx
 "}
@@ -3764,12 +4073,12 @@ Yx
 Yx
 Yx
 Yx
-Yx
 ng
 Yx
 EV
 wY
 DU
+ng
 ng
 ng
 ng
@@ -3807,7 +4116,6 @@ Yx
 Yx
 Yx
 Yx
-Yx
 ng
 HZ
 YU
@@ -3817,12 +4125,13 @@ ng
 cj
 LN
 ng
-Aa
+Qx
 hc
 Yx
 XB
 ng
-py
+TK
+Yx
 FT
 hS
 ii
@@ -3850,7 +4159,6 @@ Yx
 Yx
 Yx
 Yx
-Yx
 ng
 Yx
 dq
@@ -3865,9 +4173,10 @@ bi
 Xb
 he
 ng
-du
-SI
-XI
+XM
+Yx
+kV
+kz
 kV
 kV
 kV
@@ -3881,7 +4190,7 @@ uE
 ng
 La
 Vg
-XI
+kz
 Yx
 "}
 (24,1,1) = {"
@@ -3902,13 +4211,13 @@ ng
 ng
 ng
 ng
-ng
-xE
+gP
 ag
 wg
 ZD
 ng
-rY
+lb
+Yx
 FV
 ng
 LH
@@ -4238,15 +4547,15 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
 ng
-Yx
-Yx
+ER
+ER
+ER
+tR
+Db
+Ca
+SN
+ng
 Yx
 Yx
 Yx
@@ -4281,15 +4590,15 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
 ng
-Yx
-Yx
+CH
+ja
+lo
+MT
+pZ
+mG
+QI
+ng
 Yx
 Yx
 Yx
@@ -4324,18 +4633,18 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Wg
-Yx
-Yx
-Yx
 ng
-Yx
+Or
+bP
+kb
+QL
+oF
+np
+UZ
+ng
 bE
 Yx
 zw
-Yx
 ng
 VO
 Lf
@@ -4367,25 +4676,25 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
 ng
-Yx
+eo
+sG
+kb
+jp
+ZB
+Ql
+WY
+ng
 YV
 wn
 Mp
-Yx
 ng
 Id
 Yx
 ft
 Yx
 ZZ
-Xu
+fL
 Kx
 Yx
 ZZ
@@ -4410,18 +4719,18 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
 ng
-PF
+ug
+lj
+MV
+MN
+iQ
+RK
+nn
+ng
 id
-Yx
+PF
 Cq
-Yx
 ng
 Yx
 od
@@ -4453,23 +4762,23 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
 ng
-Yx
+Da
+QV
+kb
+TN
+VV
+iv
+EL
+ng
 nd
 gQ
 pb
-Yx
 ng
 Yx
 uF
 Id
-Wg
+Bw
 iP
 Yx
 Yx
@@ -4483,7 +4792,7 @@ ng
 Rq
 Be
 Rq
-XI
+kz
 Yx
 "}
 (38,1,1) = {"
@@ -4496,18 +4805,18 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
 ng
-Yx
+Da
+hU
+kb
+Ln
+TR
+qa
+Jb
+ng
 Af
 Yx
 Bs
-Yx
 ng
 Yx
 Yx
@@ -4539,15 +4848,15 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
 ng
-Yx
-Yx
+AG
+sR
+dN
+PE
+Db
+mQ
+Es
+ng
 Yx
 Yx
 Yx
@@ -4921,7 +5230,7 @@ rz
 rz
 rS
 kI
-ip
+Qm
 Yx
 qg
 hR
@@ -5034,7 +5343,7 @@ rx
 rz
 rx
 rz
-ib
+RQ
 rz
 rx
 rz
@@ -5359,7 +5668,7 @@ ng
 ng
 ng
 ng
-XI
+kz
 ng
 ng
 ng

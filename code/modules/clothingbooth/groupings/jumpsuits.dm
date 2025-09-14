@@ -78,9 +78,15 @@
 	)
 
 /datum/clothingbooth_grouping/dirty_vest
-	item_paths = list(/datum/clothingbooth_item/w_uniform/dirty_vest)
+	name = "Dirty Vest"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/dirty_vest/,
+		/datum/clothingbooth_item/w_uniform/dirty_vest/blackpants,
+		/datum/clothingbooth_item/w_uniform/dirty_vest/bluepants,
+		/datum/clothingbooth_item/w_uniform/dirty_vest/brownpants
+	)
 	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/dress_shirt_wcoat

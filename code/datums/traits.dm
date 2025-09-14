@@ -462,7 +462,7 @@
 	category =  list("language")
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("accent_german")
+		owner.bioHolder?.AddEffect("accent_german", 0, 0, 0, 1)
 
 /datum/trait/finnish
 	name = "Finnish Accent"
@@ -484,7 +484,7 @@
 	category = list("language")
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("accent_tyke")
+		owner.bioHolder?.AddEffect("accent_tyke", 0, 0, 0, 1)
 
 // VISION/SENSES - Green Border
 
@@ -760,7 +760,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "training_chaplain"
 
 	var/faith = FAITH_STARTING
-	///multiplier for faith gain only - faith losses ignore this
+	/// multiplier for faith gain only - faith losses ignore this
 	var/faith_mult = 1
 
 	New()
@@ -1170,6 +1170,17 @@ TYPEINFO(/datum/trait/partyanimal)
 	disability_name = "Clone Instability"
 	disability_desc = "Genetic structure incompatible with cloning"
 
+/datum/trait/defect_prone
+	name = "Defect Prone"
+	desc = "You gain more cloning defects than normal."
+	id = "defect_prone"
+	icon_state = "defect_prone"
+	points = 1
+	category = list("cloner_stuff")
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Fragmentary Cloning"
+	disability_desc = "Genetic structure significantly more likely to result in defects upon cloning."
+
 /datum/trait/cyber_incompatible
 	name = "Cyber-Incompatible"
 	desc = "All cybernetic limbs and organs will fail, including cyborgification."
@@ -1368,6 +1379,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	onAdd(mob/living/owner)
 		if (istype(owner))
 			owner.remove_lifeprocess(/datum/lifeprocess/faith)
+		// If they're a chaplain, reduce their faith gain rate
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 0.2
 

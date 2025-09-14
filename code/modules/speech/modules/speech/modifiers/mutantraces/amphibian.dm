@@ -1,7 +1,3 @@
-/datum/speech_module/modifier/mutantrace/amphibian
+/datum/speech_module/modifier/mutantrace/repeated_letter/amphibian
 	id = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
-
-/datum/speech_module/modifier/mutantrace/amphibian/process(datum/say_message/message)
-	. = message
-
-	message.content = replacetext(message.content, "r", stutter("rrr"))
+	target_letter = "r"

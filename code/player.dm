@@ -60,13 +60,18 @@
 	var/antag_tokens = null
 	/// Newbee Tutorial
 	var/datum/tutorial_base/regional/newbee/tutorial = null
+	/// A list of procs to call on the client on next login, used for when you need to guarantee clearing a clientside effect (ie textmode)
+	var/list/login_queue = null
 
 	/// starts setup, adds by_type list entry for this datum
 	New(key)
 		..()
 		START_TRACKING
+		src.key = key
+		src.ckey = ckey(key)
+		src.tag = "player-[src.ckey]"
+		src.last_death_time = world.timeofday
 		src.cloudSaves = new /datum/cloudSaves(src)
-		src.setup(key)
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
@@ -76,21 +81,21 @@
 			src.client = null
 		..()
 
-	/// sets up vars, caches player stats
-	proc/setup(key)
-		src.key = key
-		src.ckey = ckey(key)
-		src.tag = "player-[src.ckey]"
-		if (src.ckey in mentors) src.mentor = TRUE
-		src.cache_round_stats()
-		src.last_death_time = world.timeofday
-
+	/// stuff that should only be done when the client is known to be valid
+	proc/on_client_authenticated()
+		if (src.ckey in mentors)
+			src.mentor = TRUE
+		if (!src.cached_round_stats)
+			src.cache_round_stats()
+		for (var/proc_name in src.login_queue)
+			call(src.client, proc_name)()
+		src.login_queue = null
 		SPAWN(0)
 			src.cloudSaves.fetch()
 
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()
-		if (!roundId || !src.client || src.id) return
+		if (!roundId || !src.client) return
 		var/datum/apiModel/Tracked/PlayerResource/playerResponse
 		try
 			var/datum/apiRoute/players/login/playerLogin = new
@@ -121,8 +126,7 @@
 
 	/// blocking version of cache_round_stats, queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats_blocking()
-		if (!src.ckey || !src.client?.authenticated)
-			return FALSE
+		if (!src.ckey) return FALSE
 
 		var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 		try
@@ -265,6 +269,7 @@
 
 	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/unlock_medal_sync(medal_name, announce=FALSE)
+		if (!medal_name) return FALSE
 		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
 
 		try
@@ -299,6 +304,7 @@
 
 	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/clear_medal(medal_name)
+		if (!medal_name) return FALSE
 		var/datum/apiRoute/players/medals/delete/deleteMedal = new
 		deleteMedal.buildBody(src.id ? src.id : null, src.ckey, medal_name)
 

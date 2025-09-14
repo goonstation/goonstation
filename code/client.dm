@@ -94,7 +94,7 @@
 
 	var/datum/chatOutput/chatOutput = null
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
-	var/datum/tooltipHolder/tooltipHolder = null
+	var/datum/tooltips/tooltips = null
 
 	var/datum/keybind_menu/keybind_menu = null
 
@@ -231,8 +231,7 @@
 
 	src.loadResources()
 	src.initSizeHelpers()
-	src.tooltipHolder = new /datum/tooltipHolder(src)
-	src.tooltipHolder.clearOld()
+	src.tooltips = new /datum/tooltips(src)
 	src.initialize_interface()
 
 	if (isnewplayer(src.mob))
@@ -254,9 +253,10 @@
 	src.send_lobby_text()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
-	src.player.id = src.client_auth_intent.player_id || 0
-	src.player.record_login()
-	src.player.setup(src.key)
+	src.player = make_player(src.key)
+	src.player.id = src.client_auth_intent.player_id || src.player.id
+	if (!src.client_auth_intent.can_skip_player_login) src.player.record_login()
+	src.player.on_client_authenticated()
 
 	if (isnewplayer(src.mob))
 		var/mob/new_player/new_player = src.mob
@@ -769,9 +769,13 @@ var/global/curr_day = null
 	set hidden = 1
 	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
-	if (server)
-		boutput(src, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
-		src << link(game_server.url)
+	if (game_server)
+		if (tgui_alert(src, "Are you sure you want to switch to [game_server.name]?", "Server Change Confirmation", list("Yes", "No"), 30 SECONDS) == "Yes")
+			if (istype(src.mob, /mob/new_player)) // just in case
+				boutput(src, "<h3>[SPAN_SUCCESS("You are being redirected to [game_server.name]...")]</h3>")
+				src << link(game_server.url)
+			else
+				boutput(src, "<h3>[SPAN_ALERT("You're already in the round, switch servers the normal way!")]</h3>")
 
 /client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
 	set name = "Download Sprite"
@@ -1287,11 +1291,20 @@ var/global/curr_day = null
 	else
 		src.ignore_sound_flags |= SOUND_VOX
 
-
 /client/verb/set_hand_ghosts()
 	set hidden = 1
 	set name = "set-hand-ghosts"
 	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
+/client/verb/set_tooltip_option(val as text)
+	set hidden = 1
+	set name = "set-tooltip-option"
+	if (val == "always")
+		src.preferences.tooltip_option = TOOLTIP_ALWAYS
+	else if (val == "alt")
+		src.preferences.tooltip_option = TOOLTIP_ALT
+	else if (val == "never")
+		src.preferences.tooltip_option = TOOLTIP_NEVER
 
 /client/verb/disable_colorblind_modes()
 	set hidden = TRUE
@@ -1374,7 +1387,7 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "window-resize-event"
 
-	src.resizeTooltipEvent()
+	src.tooltips?.onResize()
 
 	//tell the interface helpers to recompute data
 	src.mapSizeHelper?.update()
@@ -1441,7 +1454,6 @@ var/global/curr_day = null
 		<!doctype HTML>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <style type="text/css">
 * { margin: 0px; padding: 0px; width: 100%; height: 100%; }
 </style>
@@ -1545,3 +1557,6 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 /// Flashes the window in the Windows titlebar
 /client/proc/flash_window(times = -1)
 	winset(src, "mainwindow", "flash=[times]")
+
+/client/proc/set_text_mode(value = FALSE)
+	winset(src, "mapwindow.map", "text-mode=[value ? "true" : "false"]")
