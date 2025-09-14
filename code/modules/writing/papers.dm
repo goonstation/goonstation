@@ -759,7 +759,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 /obj/item/paper/postcard/silicongreeting //by Mailman T
 	name = "\"A Silicon Greeting\""
-	desc = "A postcard with some cyborgs. You can't tell what the message on the back says since it is written in binary."
+	desc = "A postcard with some cyborgs. It has a message on the back written in binary."
 	icon_state = "postcard-silicon-greeting"
 	info = {"<font face='Courier New'>1001110 1101001 1100011 1100101 100000
 			1100010 1101001 1101110 1100001 1110010 1111001 100000 1100011
