@@ -693,7 +693,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/honey_add
 	execute(var/atom/location)
-		if(endswith(location.icon_state, "$$honey"))
+		if(endswith(location.icon_state, "$$honey") || ("honey" in location.get_typeinfo().mat_appearances_to_ignore))
 			return
 		var/offset = 0
 		if(!isturf(location))
