@@ -1,5 +1,9 @@
 
 (t)sun sep 14 25
+(u)JORJ949
+(p)24479
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Added a new captainly "Regal" AI skin available via a plating kit made by adding wires to a captain's uniform.
 (u)Studenterhue
 (p)24653
 (e)🎨|C-Sprites
