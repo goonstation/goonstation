@@ -9357,6 +9357,20 @@
 	dir = 8
 	},
 /area/station/medical/staff)
+"bbn" = (
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
+"bbo" = (
+/obj/machinery/light_switch/south,
+/obj/machinery/disposal/morgue,
+/obj/disposalpipe/trunk/morgue{
+	dir = 1
+	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
 "bbq" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -19706,9 +19720,6 @@
 /obj/machinery/sheet_extruder,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
-"eVb" = (
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
 "eVc" = (
 /obj/machinery/loudspeaker,
 /obj/shrub{
@@ -22540,24 +22551,6 @@
 /obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
-"gJN" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/access/medlab,
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/dome)
 "gJU" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/floppy,
@@ -25217,20 +25210,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
-"ikO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/emergency{
-	dir = 1
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 5
-	},
-/area/station/hallway/primary/south)
 "ilw" = (
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
@@ -31745,6 +31724,20 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"mil" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 1
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/hallway/primary/south)
 "mip" = (
 /obj/stool/chair/office/red,
 /obj/cable{
@@ -32937,6 +32930,24 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"mRI" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "mRT" = (
 /obj/strip_door,
 /obj/machinery/conveyor/SN{
@@ -37271,17 +37282,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"pnb" = (
-/obj/machinery/light_switch/south,
-/obj/machinery/disposal/morgue,
-/obj/disposalpipe/trunk/morgue{
-	dir = 1
-	},
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
 "pnl" = (
 /obj/voting_box,
 /obj/disposalpipe/segment/mail{
@@ -67346,7 +67346,7 @@ aKS
 aKS
 aKS
 aXp
-gJN
+mRI
 aXp
 aXp
 bjx
@@ -68546,7 +68546,7 @@ haX
 jJu
 aWZ
 tWq
-eVb
+bbn
 nYb
 aWS
 nha
@@ -68848,7 +68848,7 @@ kbX
 vvx
 bao
 bsG
-pnb
+bbo
 bch
 bch
 bch
@@ -80958,7 +80958,7 @@ iMh
 bsJ
 buI
 bvN
-ikO
+mil
 iwv
 ebu
 wdK

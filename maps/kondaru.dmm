@@ -593,6 +593,14 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"acE" = (
+/obj/laser_sink/mirror,
+/obj/machinery/firealarm/directional/west{
+	pixel_x = -24;
+	pixel_y = -8
+	},
+/turf/simulated/floor/caution/west,
+/area/station/engine/ptl)
 "acG" = (
 /obj/window/auto/reinforced,
 /turf/simulated/floor/engine,
@@ -28942,21 +28950,6 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/southwest)
-"dKp" = (
-/obj/machinery/disposal/mail/autoname/mining,
-/obj/disposalpipe/trunk/mail/west,
-/obj/machinery/light_switch/east{
-	pixel_y = -6
-	},
-/obj/machinery/light,
-/obj/machinery/firealarm/directional/east{
-	pixel_y = 8;
-	pixel_x = 24
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 6
-	},
-/area/station/mining/staff_room)
 "dKw" = (
 /obj/shrub{
 	dir = 1;
@@ -33449,6 +33442,20 @@
 	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
+"gHt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/dome)
 "gHX" = (
 /obj/mesh/catwalk,
 /obj/machinery/oreaccumulator,
@@ -34311,36 +34318,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"hjx" = (
-/obj/rack,
-/obj/item/clothing/suit/hazard/fire{
-	pixel_x = -3
-	},
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/firefighter{
-	pixel_x = 3
-	},
-/obj/item/tank/air,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/machinery/light_switch/north,
-/obj/item/chem_grenade/firefighting{
-	pixel_x = -7;
-	pixel_y = -4
-	},
-/obj/item/chem_grenade/firefighting{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/machinery/firealarm/directional/west{
-	pixel_y = -8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
-/area/station/engine/monitoring)
 "hjz" = (
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/orangeblack/side{
@@ -48456,20 +48433,6 @@
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
-"raY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medlab,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/dome)
 "rbi" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -48574,6 +48537,21 @@
 	dir = 1
 	},
 /area/station/engine/monitoring)
+"rgh" = (
+/obj/machinery/disposal/mail/autoname/mining,
+/obj/disposalpipe/trunk/mail/west,
+/obj/machinery/light_switch/east{
+	pixel_y = -6
+	},
+/obj/machinery/light,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = 8;
+	pixel_x = 24
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 6
+	},
+/area/station/mining/staff_room)
 "rgv" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating,
@@ -52798,6 +52776,36 @@
 "ugD" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
+"ugN" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire{
+	pixel_x = -3
+	},
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 3
+	},
+/obj/item/tank/air,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/machinery/light_switch/north,
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/monitoring)
 "uhe" = (
 /obj/decal/cleanable/dirt,
 /mob/living/critter/small_animal/mouse,
@@ -56643,14 +56651,6 @@
 	dir = 8
 	},
 /area/station/science/chemistry)
-"wLr" = (
-/obj/laser_sink/mirror,
-/obj/machinery/firealarm/directional/west{
-	pixel_x = -24;
-	pixel_y = -8
-	},
-/turf/simulated/floor/caution/west,
-/area/station/engine/ptl)
 "wLG" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -94964,7 +94964,7 @@ iTv
 iTv
 iTv
 iTv
-raY
+gHt
 iTv
 iTv
 iTv
@@ -102189,7 +102189,7 @@ arI
 asK
 atY
 lot
-hjx
+ugN
 mwo
 lHJ
 lGH
@@ -105187,7 +105187,7 @@ aaa
 acc
 ace
 aco
-wLr
+acE
 acW
 adr
 agk
@@ -106470,7 +106470,7 @@ bki
 xYT
 jAk
 bzk
-dKp
+rgh
 coJ
 mRv
 bDA

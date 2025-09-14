@@ -4007,15 +4007,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction2)
-"bhS" = (
-/obj/decal/stage_edge{
-	layer = 2.8
-	},
-/obj/item/instrument/large/jukebox,
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
-/area/station/crew_quarters/cafeteria)
 "bhW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -4926,6 +4917,15 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"bwk" = (
+/obj/decal/stage_edge{
+	layer = 2.8
+	},
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/cafeteria)
 "bww" = (
 /obj/storage/closet/office,
 /obj/decal/stripe_caution,
@@ -15554,6 +15554,17 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"eNZ" = (
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 14
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 1
+	},
+/area/station/crew_quarters/cafeteria)
 "eOa" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -29307,12 +29318,6 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/station/chapel/funeral_parlor)
-"jfY" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "jgj" = (
 /obj/table/glass/auto,
 /obj/machinery/coffeemaker/medbay{
@@ -39904,19 +39909,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"mtc" = (
-/obj/machinery/disposal/small{
-	dir = 1;
-	pixel_y = 24
-	},
-/obj/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/stockex)
 "mtr" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -43863,6 +43855,19 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
 /turf/simulated/floor/black,
 /area/station/security/main)
+"nHd" = (
+/obj/machinery/disposal/small{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
 "nHm" = (
 /obj/railing/orange{
 	dir = 1
@@ -44069,17 +44074,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
-"nKQ" = (
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null
-	},
-/obj/mapping_helper/access/medlab,
-/turf/simulated/floor/plating/jen,
-/area/station/medical/dome)
 "nKY" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -44861,17 +44855,6 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
-"nVq" = (
-/obj/machinery/phone/wall{
-	pixel_y = 32
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = 14
-	},
-/turf/simulated/floor/wood/eight{
-	dir = 1
-	},
-/area/station/crew_quarters/cafeteria)
 "nVt" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
@@ -58194,6 +58177,12 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
+"sbY" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "sck" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -73039,6 +73028,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"wAZ" = (
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access = null
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/plating/jen,
+/area/station/medical/dome)
 "wBl" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -96554,7 +96554,7 @@ gYc
 sIK
 sIK
 sIK
-jfY
+sbY
 gYc
 sIK
 sIK
@@ -110122,7 +110122,7 @@ waP
 waP
 waP
 gKJ
-mtc
+nHd
 vSe
 lOJ
 lOJ
@@ -121291,7 +121291,7 @@ kgb
 wwp
 rNI
 qHy
-bhS
+bwk
 lvl
 aca
 ebH
@@ -121591,7 +121591,7 @@ rxO
 btZ
 pQh
 pQh
-nVq
+eNZ
 qHy
 eEy
 rnx
@@ -129828,7 +129828,7 @@ hum
 uaz
 uaz
 gBK
-nKQ
+wAZ
 tOH
 bUC
 kaI
