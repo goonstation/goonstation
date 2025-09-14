@@ -31,10 +31,7 @@
 	src.handler = new
 	src.handler.plane = PLANE_BLACKNESS
 	src.handler.mouse_opacity = 0
-	src.handler.set_position(src.minimap_id,1,1)
-
 	src.minimap = minimap
-	src.minimap.screen_loc = "[src.minimap_id]:1,1"
 	src.handler.vis_contents += src.minimap
 
 /atom/movable/minimap_ui_handler/disposing()
@@ -54,6 +51,9 @@
 		ui = new(user, src, "Minimap")
 		ui.open()
 
+	if (!(src.handler.screen_loc && minimap.screen_loc))
+		RegisterSignal(ui.window, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(set_screen_loc))
+
 /atom/movable/minimap_ui_handler/ui_static_data(mob/user)
 	. = list(
 		"title" = src.tgui_title,
@@ -67,6 +67,12 @@
 /atom/movable/minimap_ui_handler/ui_close(mob/user)
 	src.remove_client(user?.client)
 	. = ..()
+
+// set the map and click handler positions only after window is ready to avoid the byondui scaling race condition bug
+/atom/movable/minimap_ui_handler/proc/set_screen_loc(datum/tgui_window/window, client/C)
+	src.handler.set_position(src.minimap_id,1,1)
+	src.minimap.screen_loc = "[src.minimap_id]:1,1"
+	UnregisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE)
 
 /// Adds a subscribed client.
 /atom/movable/minimap_ui_handler/proc/add_client(client/viewer)

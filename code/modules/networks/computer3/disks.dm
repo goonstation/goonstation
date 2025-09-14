@@ -465,3 +465,11 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 		newfolder.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
 		newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
 		newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
+
+/obj/item/disk/data/floppy/office
+	var/label = ""
+
+	New()
+		. = ..()
+		src.name_suffix("([src.label])")
+		src.UpdateName()
