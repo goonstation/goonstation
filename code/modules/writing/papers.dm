@@ -738,7 +738,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<br><br>
 	The Shelterfrog King - Remember Who You Are<br>
 	National Notary Supply Corporation<br>
-	Image #25322"}
+	Image #25222"}
 
 /obj/item/paper/postcard/cowbee //by Whele
 	name = "\"Ride 'Em, Cowbee!\""
@@ -746,7 +746,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "postcard-cowbee"
 	info = {"Ride 'Em, Cowbee!<br>
 	National Notary Supply Corporation<br>
-	Image #25316"}
+	Image #25216"}
 
 /obj/item/paper/postcard/believe //by Scientifically
 	name ="\"Believe\""
@@ -782,7 +782,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<br><br>
 	Pumpkins #13<br>
 	National Notary Supply Corporation<br>
-	Image #25334"}
+	Image #25234"}
 
 /obj/item/paper/postcard/chicago //by Frank_Stein
 	name = "Chicago postcard"
@@ -808,7 +808,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<br><br>
 	"De Magnifique Vacances!"<br>
 	National Notary Supply Corporation<br>
-	Image #25304"}
+	Image #25204"}
 
 /obj/item/paper/postcard/pyramid //by RubberRats
 	name = "New Memphis postcard"
