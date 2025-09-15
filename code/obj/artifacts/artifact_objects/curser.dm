@@ -148,23 +148,14 @@
 		for (var/mob/L as anything in src.active_cursees)
 			L.delStatus(src.chosen_curse)
 			if (do_playsound)
-				playsound(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
-		src.active_cursees = list()
+				playsound(L, 'sound/effects/lit.ogg', 100, TRUE)
+
+	proc/curse_cleanup()
 		src.blood_curse_active = FALSE
 		src.aging_curse_active = FALSE
 		src.disp_curse_active = FALSE
 		if (src.maze)
 			QDEL_NULL(src.maze)
-
-	proc/lift_curse_specific(do_playsound, mob/living/L)
-		if ((L in src.active_cursees) && length(src.active_cursees) == 1)
-			src.lift_curse(do_playsound)
-			return
-		if (do_playsound)
-			L.playsound_local(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
-		if (L in src.active_cursees)
-			L.delStatus(src.active_cursees[L])
-		src.active_cursees -= L
 
 	// maze width is only defined in this proc, if changed, care needs to be taken for other values used
 	// also note, loaded rooms (x1, y1) location is at the bottom left of the room, not the middle
@@ -192,7 +183,7 @@
 		T = src.maze.get_center()
 		var/area/A = get_area(T)
 		A.name = "unknown pocket dimension"
-		A.teleport_blocked = 2
+		A.teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 		A.allowed_restricted_z = TRUE
 
 		logTheThing(LOG_STATION, src.holder, "Maze created for Curser artifact [src.holder] with center point [log_loc(T)]")
@@ -324,8 +315,7 @@
 
 	Crossed(atom/movable/AM)
 		if (!src.density && AM.hasStatus("art_maze_curse"))
-			var/datum/statusEffect/art_curse/maze/curse = AM.getStatusList()["art_maze_curse"]
-			curse.linked_curser.lift_curse_specific(TRUE, AM)
+			AM.delStatus("art_maze_curse")
 		else
 			return ..()
 
@@ -371,6 +361,9 @@
 		icon_state = "4"
 
 /*********** DISPLACEMENT CURSE STUFF *************/
+
+TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_DISPLACED_SOUL)
 
 /mob/living/intangible/art_curser_displaced_soul
 	var/list/statusUiElements = list()
@@ -427,11 +420,6 @@
 				src.client?.screen += U
 				pos_x -= spacing
 				animate_buff_in(U)
-
-	say()
-		if (!ON_COOLDOWN(src, "displaced_soul_speak", 2 SECONDS))
-			src.visible_message(SPAN_ALERT("\The [src.name]'s mouth moves, but you can't tell what they're saying!"), SPAN_ALERT("Nothing comes out of your mouth!"))
-		return
 
 	click(atom/target)
 		if (src.client?.check_key(KEY_EXAMINE))

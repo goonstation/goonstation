@@ -49,6 +49,7 @@ TYPEINFO(/obj/item/motherboard)
 		max_peripherals = 3
 		metal_given = 3
 		glass_needed = 1
+		object_flags = NO_BLOCK_TABLE
 
 
 	azungarcomputer_upper
@@ -95,6 +96,14 @@ TYPEINFO(/obj/item/motherboard)
 				src.mainboard = P
 				user.drop_item()
 				P.set_loc(src)
+			else if (istype(P, /obj/item/circuitboard) && !mainboard && istype_exact(src,/obj/computer3frame))
+				var/obj/computerframe/new_computer = new(src.loc)
+				new_computer.state = 1
+				new_computer.anchored = src.anchored
+				new_computer.dir = src.dir
+				new_computer.setMaterial(src.material)
+				new_computer.Attackby(P, user)
+				qdel(src)
 			if (isscrewingtool(P) && mainboard)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, SPAN_NOTICE("You screw the mainboard into place."))
@@ -107,8 +116,6 @@ TYPEINFO(/obj/item/motherboard)
 				src.icon_state = "0"
 				mainboard.set_loc(src.loc)
 				src.mainboard = null
-			if (istype(P, /obj/item/circuitboard))
-				boutput(user, SPAN_ALERT("This is the wrong type of frame, it won't fit!"))
 
 		if(2)
 			if (isscrewingtool(P) && mainboard && (!peripherals.len))

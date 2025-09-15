@@ -379,7 +379,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	icon_state = "eye-camera"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
-	var/camera_network = "public"
+	var/camera_network = CAMERA_NETWORK_PUBLIC
 	default_material = "pharosium"
 	iris_color = "#0d0558"
 
@@ -500,7 +500,15 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 			if(user)
 				boutput(user, SPAN_ALERT("The internal monitor's network limiter shorts, fusing to \the [src] and making the lens opaque!"))
 			src.visible_message(SPAN_ALERT("<B>[src] sparks and shudders oddly!</B>"))
-			src.viewer.network = list("public", "telesci", "SS13", "ranch", "Zeta", "Mining")
+			src.viewer.camera_networks = list(
+				CAMERA_NETWORK_STATION,
+				CAMERA_NETWORK_PUBLIC,
+				CAMERA_NETWORK_RANCH,
+				CAMERA_NETWORK_MINING,
+				CAMERA_NETWORK_SCIENCE,
+				CAMERA_NETWORK_TELESCI,
+				CAMERA_NETWORK_CARGO,
+			)
 			src.emagged = TRUE
 			src.provides_sight = FALSE
 
@@ -552,6 +560,18 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/pug
 	name = "pug eye"
 	desc = "Poor guy."
+
+/obj/item/organ/eye/shelterfrog
+	name = "shelterfrog eye"
+	desc = "Oh, wow, this thing is huge. Like, larger than its owner's brain huge."
+	icon_state = "eye-shelterfrog"
+	change_iris = 0
+
+/obj/item/organ/eye/beady
+	name = "beady eye"
+	desc = "Looks like you're keeping a beady eye on this thing."
+	icon_state = "eye-beady"
+	change_iris = 0
 
 /obj/item/organ/eye/glass
 	name = "glass eye"

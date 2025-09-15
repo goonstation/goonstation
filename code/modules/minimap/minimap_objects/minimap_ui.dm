@@ -31,10 +31,7 @@
 	src.handler = new
 	src.handler.plane = PLANE_BLACKNESS
 	src.handler.mouse_opacity = 0
-	src.handler.set_position(src.minimap_id,1,1)
-
 	src.minimap = minimap
-	src.minimap.screen_loc = "[src.minimap_id]:1,1"
 	src.handler.vis_contents += src.minimap
 
 /atom/movable/minimap_ui_handler/disposing()
@@ -54,6 +51,9 @@
 		ui = new(user, src, "Minimap")
 		ui.open()
 
+	if (!(src.handler.screen_loc && minimap.screen_loc))
+		RegisterSignal(ui.window, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(set_screen_loc))
+
 /atom/movable/minimap_ui_handler/ui_static_data(mob/user)
 	. = list(
 		"title" = src.tgui_title,
@@ -67,6 +67,12 @@
 /atom/movable/minimap_ui_handler/ui_close(mob/user)
 	src.remove_client(user?.client)
 	. = ..()
+
+// set the map and click handler positions only after window is ready to avoid the byondui scaling race condition bug
+/atom/movable/minimap_ui_handler/proc/set_screen_loc(datum/tgui_window/window, client/C)
+	src.handler.set_position(src.minimap_id,1,1)
+	src.minimap.screen_loc = "[src.minimap_id]:1,1"
+	UnregisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE)
 
 /// Adds a subscribed client.
 /atom/movable/minimap_ui_handler/proc/add_client(client/viewer)
@@ -138,7 +144,8 @@
 			"can_be_deleted" = marker.can_be_deleted_by_player,
 			"marker" = marker,
 			"index" = length(minimap_markers_list) + 1,
-			"icon_state" = marker.icon_state
+			"icon_state" = marker.icon_state,
+			"target_ref" = "\ref[marker.target]",
 		)))
 
 	. = list(
@@ -234,3 +241,26 @@
 	if (!ui)
 		ui = new(user, src, "GeneralAlert")
 		ui.open()
+
+/atom/movable/minimap_ui_handler/minimap_controller/camera_viewer
+
+/atom/movable/minimap_ui_handler/minimap_controller/camera_viewer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "CameraViewer")
+		ui.open()
+
+/atom/movable/minimap_ui_handler/minimap_controller/camera_viewer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	switch (action)
+		if ("view_camera")
+			var/obj/machinery/camera/chosen_camera = locate(params["target_ref"])
+			if (!istype(chosen_camera))
+				return
+			if(!chosen_camera.connect_viewer(ui.user))
+				boutput(ui.user, SPAN_ALERT("Unable to connect to camera!"))
+
+
+/atom/movable/minimap_ui_handler/minimap_controller/camera_viewer/ui_close(mob/user)
+	. = ..()
+	user.set_eye(null)

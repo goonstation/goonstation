@@ -231,7 +231,11 @@ TYPEINFO(/obj/item/device/detective_scanner)
 
 					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 					P.info = scans[index]
-					P.name = "forensic readout"
+					var/print_title = href_list["title"]
+					if (print_title)
+						P.name = print_title
+					else
+						P.name = "forensic readout"
 
 
 	attack_self(mob/user as mob)
@@ -265,30 +269,28 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if(distancescan)
 			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant forensic scan of [target]."))
-				last_scan = scan_forensic(target, visible = 1)
-				boutput(user, last_scan)
-				src.add_fingerprint(user)
+				scan_target(target, user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-
 		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
-
 		user.visible_message(SPAN_ALERT("<b>[user]</b> has scanned [A]."))
+		scan_target(A, user)
 
+
+	proc/scan_target(var/atom/target, var/mob/user)
 		if (scans == null)
 			scans = new/list(maximum_scans)
-		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
+		last_scan = scan.build_report()
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [target];'>PRINT REPORT</a> ---<br>" + last_scan
 		number_of_scans += 1
-
 		boutput(user, scan_output)
-		src.add_fingerprint(user)
 
-		if(!active && istype(A, /obj/decal/cleanable/blood))
-			var/obj/decal/cleanable/blood/B = A
+		if(!active && istype(target, /obj/decal/cleanable/blood))
+			var/obj/decal/cleanable/blood/B = target
 			if(B.dry > 0) //Fresh blood is -1
 				boutput(user, SPAN_ALERT("Targeted blood is too dry to be useful!"))
 				return
@@ -449,11 +451,11 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 			boutput(user, SPAN_NOTICE("Organ scanner [src.organ_scan ? "enabled" : "disabled"]."))
 
 	attackby(obj/item/W, mob/user)
-		addUpgrade(src, W, user, src.reagent_upgrade)
+		addUpgrade(W, user, src.reagent_upgrade)
 		..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
+		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR) && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> slips and drops [src]'s sensors on the floor!"))
 			user.show_message("Analyzing Results for [SPAN_NOTICE("The floor:<br>&emsp; Overall Status: Healthy")]", 1)
 			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
@@ -467,8 +469,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		boutput(user, scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
-		scan_health_overhead(target, user)
-
+		DISPLAY_MAPTEXT(target, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, target)
 		update_medical_record(target)
 
 		if (isdead(target))
@@ -695,7 +696,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)
-		addUpgrade(src, W, user, src.analyzer_upgrade)
+		addUpgrade(W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button))
@@ -740,7 +741,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 	throw_range = 10
 
 ///////////////// method to upgrade an analyzer if the correct upgrade cartridge is used on it /////////////////
-/obj/item/device/analyzer/proc/addUpgrade(obj/item/device/src as obj, obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
+/obj/item/device/analyzer/proc/addUpgrade(obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
 	if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade) || istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade) || istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 		//Health Analyzers
 		if (istype(src, /obj/item/device/analyzer/healthanalyzer))
@@ -1209,14 +1210,5 @@ TYPEINFO(/obj/item/device/appraisal)
 		if (sell_value > 0)
 			playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
 
-		if (user.client && !user.client.preferences?.flying_chat_hidden)
-			var/image/chat_maptext/chat_text = null
-			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
-			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
 
-			if (chat_text)
-				// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
-				chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-				// don't bother bumping up other things
-				chat_text.show_to(user.client)
-
+		DISPLAY_MAPTEXT(A, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/appraisal, sell_value)

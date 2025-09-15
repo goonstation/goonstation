@@ -8,6 +8,7 @@
 	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	soundproofing = 20
 	var/maxitems = 50
 	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	var/list/allowed = null
@@ -48,7 +49,7 @@
 			if (length(src.contents) == src.maxitems)
 				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			boutput(user, SPAN_ALERT("[src] is full!"))
 
@@ -61,7 +62,7 @@
 				I.add_fingerprint(user)
 			boutput(user, SPAN_NOTICE("You empty out [src]."))
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else ..()
 
 	attack_hand(mob/user)
@@ -93,7 +94,7 @@
 					SPAN_NOTICE("You take \a [getItem.name] from [src]."))
 					user.put_in_hand_or_drop(getItem)
 					src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return ..(user)
 
 	proc/search_through(mob/user as mob)
@@ -173,14 +174,35 @@
 			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
 		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
 		src.UpdateIcon()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
-	// Don't dump the satchel onto the table if using drag-and-drop to dump out other contents.
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (!in_interact_range(src, usr)  || BOUNDS_DIST(over_object, usr) > 0 || !can_act(usr))
+			return
+		if (istype(over_object,/obj/table))
+			if (length(src.contents) < 1)
+				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))
+			else
+				usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
+				for (var/obj/item/thing in src.contents)
+					thing.set_loc(over_object.loc)
+				src.tooltip_rebuild = TRUE
+				src.UpdateIcon()
+				params["satchel_dumped"] = TRUE
+				return
+		. = ..()
+
+	// Don't place the satchel onto the table if we've dumped out its contents with the same command.
 	should_place_on(obj/target, params)
-		if (istype(target, /obj/table) && islist(params) && params["dragged"] && length(src.contents) > 0)
+		if (istype(target, /obj/table) && islist(params) && params["satchel_dumped"])
 			return FALSE
 		. = ..()
 
+	should_suppress_attack(var/object, mob/user)
+		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
+		if (istype(object, /obj/table) && (user.get_brain_damage() <= BRAIN_DAMAGE_MODERATE && rand(1, 10) < 10))
+			return TRUE
+		..()
 
 	proc/split_stack_into_satchel(var/obj/item/item_to_split, mob/user)
 		// This proc splits an object with multiple stacks and stuff it into the satchel until either
@@ -326,6 +348,18 @@
 			..()
 			allowed = list(/obj/item/random_mail)
 
+		large
+			name = "large mail satchel"
+			desc = "A leather satchel for carrying around mail. This one happens to be <em>really</em> big."
+			icon_state = "mailsatchel-large"
+			maxitems = 100
+
+		compressed
+			name = "spatially-compressed mail satchel"
+			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding mail."
+			icon_state = "mailsatchel-compressed"
+			maxitems = 250
+
 	figurines
 		name = "figurine case"
 		desc = "A cool plastic case for storing little figurines!"
@@ -383,5 +417,5 @@
 			var/obj/item/toy/figure/F = new()
 			F.set_loc(src)
 			src.UpdateIcon()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 

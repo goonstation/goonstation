@@ -124,13 +124,7 @@ client/proc/replace_space_exclusive()
 
 			var/turf/orig = locate(S.x, S.y, S.z)
 
-#if defined(MOVING_SUB_MAP)
-			var/turf/space/fluid/manta/T = orig.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
-#elif defined(UNDERWATER_MAP)
 			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
-#else //space map
-			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
-#endif
 
 #ifdef UNDERWATER_MAP
 			T.name = ocean_name
@@ -153,15 +147,6 @@ client/proc/replace_space_exclusive()
 		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
-
-
-client/proc/update_ocean_lighting()
-	ADMIN_ONLY
-	SPAWN(0)
-		for(var/turf/space/fluid/S in world)
-			S.update_light()
-			LAGCHECK(LAG_REALTIME)
-		message_admins("Finished space light update!!!")
 
 
 client/proc/dereplace_space()

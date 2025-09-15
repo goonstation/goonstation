@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   Flex,
+  Icon,
   Image,
   Section,
   Stack,
@@ -17,12 +18,10 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
-import { Icon } from '../../components';
+import { ByondDir } from '../../common/directions';
 import { Window } from '../../layouts';
 import { ProductList } from '../common/ProductList';
-import { ByondDir, HandPipeDispenserData, PipeData, Tab } from './type';
-
-const RESOURCE_ICON_NAME = 'boxes-stacked';
+import { HandPipeDispenserData, PipeData, Tab } from './type';
 
 export const HandPipeDispenser = () => {
   const { act, data } = useBackend<HandPipeDispenserData>();
@@ -34,8 +33,10 @@ export const HandPipeDispenser = () => {
     selectedcost,
     resources,
     selecteddesc,
+    issilicon,
   } = data;
   const [tab, setTab] = useSharedState('tab', Tab.AtmosPipes);
+  const RESOURCE_ICON_NAME = issilicon ? 'bolt' : 'boxes-stacked';
   return (
     <Window width={450} height={350}>
       <Flex height="100%">

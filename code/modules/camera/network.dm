@@ -6,19 +6,11 @@
 	var/list/counts_by_tag = list()
 	var/list/obj/machinery/camera/first_cam_by_tag = list()
 	for (var/obj/machinery/camera/C as anything in cameras)
-		var/area/where = get_area(C)
-		var/name_build_string = ""
 		var/tag_we_use = null
-		if (dd_hasprefix(C.name, "autoname"))
-			if (C.prefix)
-				name_build_string += "[C.prefix] "
-			name_build_string += "camera"
-			if (C.uses_area_name)
-				name_build_string += " - [where.name]"
-			C.name = name_build_string
 
 		if (isnull(C.c_tag) || dd_hasprefix(C.c_tag, "autotag"))
-			tag_we_use = where.name
+			var/area/A = get_area(C)
+			tag_we_use = A.name
 		else
 			tag_we_use = C.c_tag
 
@@ -31,6 +23,7 @@
 				first_cam_by_tag[tag_we_use].c_tag = "[tag_we_use] 1"
 			counts_by_tag[tag_we_use]++
 			C.c_tag = "[tag_we_use] [counts_by_tag[tag_we_use]]"
+		C.add_to_minimap()
 
 /proc/build_camera_network()
 	var/list/obj/machinery/camera/cameras = by_type[/obj/machinery/camera]
@@ -107,7 +100,17 @@
 				candidate.vars[rec_var] = C
 				C.addToReferrers(candidate)
 
-/// Return true if mob is on a turf with camera coverage
-/proc/seen_by_camera(var/mob/M)
-	var/turf/T = get_turf(M)
+/// Return true if atom is a turf or on a turf with camera coverage
+/proc/seen_by_camera(var/atom/atom)
+	if(isarea(atom) || !atom)
+		return FALSE
+	if(!isturf(atom) && !isturf(atom.loc)) //Not on a turf, probably in a locker or something
+		return FALSE
+	#ifdef SKIP_CAMERA_COVERAGE
+	return TRUE
+	#else
+	var/turf/T = atom
+	if(!istype(T))
+		T = get_turf(atom)
 	. = (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
+	#endif

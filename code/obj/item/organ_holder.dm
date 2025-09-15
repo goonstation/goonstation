@@ -553,12 +553,16 @@
 				src.left_eye = new /obj/item/organ/eye/synth(src.donor, src)
 			else
 				src.left_eye = new /obj/item/organ/eye/left(src.donor, src)
+			if (src.head)
+				src.head.left_eye = left_eye
 			organ_list["left_eye"] = left_eye
 		if (!src.right_eye)
 			if (prob(2) || all_synth)
 				src.right_eye = new /obj/item/organ/eye/synth(src.donor, src)
 			else
 				src.right_eye = new /obj/item/organ/eye/right(src.donor, src)
+			if (src.head)
+				src.head.right_eye = right_eye
 			organ_list["right_eye"] = right_eye
 
 		if (!src.chest)
@@ -741,9 +745,9 @@
 						W.set_loc(myHead)
 						myHead.wear_mask = W
 					if (isskeleton(src.donor) && myHead.head_type == HEAD_SKELETON) // must be skeleton AND have skeleton head
-						src.donor.set_eye(myHead)
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						S.set_head(myHead)
+						S.head_moved(TRUE) // update tracking
 
 				myHead.set_loc(location)
 				myHead.update_head_image()
@@ -1031,7 +1035,8 @@
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
-	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
+	/// is_transformation prevents people from being ghostized by brain swapping, their brain is TRANSFORMING, not being swapped for someone else's
+	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0, is_transformation = FALSE)
 		if (!src.donor || !I || !organ)
 			return 0
 
@@ -1104,7 +1109,7 @@
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
 							S.set_head(newHead)
-							H.set_eye(null)
+							S.head_moved() // update tracking
 					else
 						H.set_eye(null)
 
@@ -1140,18 +1145,19 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
-				src.donor.ghostize()
-				if (newBrain.owner)
-					var/mob/G
-					G = find_ghost_by_key(newBrain?.owner?.key)
-					if (G)
-						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
-							G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
-							G.ghostize()?.mind?.transfer_to(src.donor)
-						else
-							G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
-							G.mind?.transfer_to(src.donor)
+				if (!is_transformation)
+					boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
+					src.donor.ghostize()
+					if (newBrain.owner)
+						var/mob/G
+						G = find_ghost_by_key(newBrain?.owner?.key)
+						if (G)
+							if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+								G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
+								G.ghostize()?.mind?.transfer_to(src.donor)
+							else
+								G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
+								G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
@@ -1161,12 +1167,7 @@
 					var/mob/living/carbon/human/H = src.head.linked_human
 					if (H && (!isskeleton(src.donor) && H != src.donor))
 						var/datum/mutantrace/skeleton/S = H?.mutantrace
-						if (!QDELETED(S))
-							S.head_tracker = null
-						H.set_eye(null)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_SPEECH_BUBBLE)
+						S.set_head(null)
 
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src

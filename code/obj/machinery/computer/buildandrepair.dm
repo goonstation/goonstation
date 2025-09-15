@@ -33,11 +33,10 @@ TYPEINFO(/obj/item/circuitboard)
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
-	var/id = null
-	var/frequency = null
 	var/computertype = null
 	var/powernet = null
-	var/list/records = null
+	/// Custom data saved to the on-board memory chip from its computer type
+	var/saved_data = null
 
 	New()
 		. = ..()
@@ -47,21 +46,30 @@ TYPEINFO(/obj/item/circuitboard)
 		STOP_TRACKING
 		. = ..()
 
+	get_desc(dist, mob/user)
+		if (!isnull(saved_data))
+			. += "This one has an onboard memory chip."
+
 /obj/item/circuitboard/security
-	name = "circuit board (security cameras)"
-	computertype = /obj/machinery/computer/security
+	name = "circuit board (security camera viewer)"
+	computertype = /obj/machinery/computer/camera_viewer
 	icon_state = "circuit_security"
 /obj/item/circuitboard/security_tv
 	name = "circuit board (security television)"
-	computertype = /obj/machinery/computer/security/wooden_tv
+	computertype = /obj/machinery/computer/television
 	icon_state = "circuit_security"
-/obj/item/circuitboard/small_tv
+/obj/item/circuitboard/public_tv
 	name = "circuit board (television)"
-	computertype = /obj/machinery/computer/security/wooden_tv/small
+	computertype = /obj/machinery/computer/television/public
 	icon_state = "circuit_civilian"
-/obj/item/circuitboard/communications
-	name = "circuit board (communications)"
-	computertype = /obj/machinery/computer/communications
+/obj/item/circuitboard/cargo_tv
+	name = "circuit board (routing depot monitor)"
+	computertype = /obj/machinery/computer/television/cargo
+	icon_state = "circuit_engineering"
+/obj/item/circuitboard/small_tv
+	name = "circuit board (small television)"
+	computertype = /obj/machinery/computer/television/small
+	icon_state = "circuit_civilian"
 
 // ID Card computers
 /obj/item/circuitboard/card
@@ -100,14 +108,6 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch
 	icon_state = "circuit_engineering"
-/obj/item/circuitboard/air_management
-	name = "circuit board (atmospheric monitor)"
-	computertype = /obj/machinery/computer/general_air_control
-	icon_state = "circuit_engineering"
-/obj/item/circuitboard/injector_control
-	name = "circuit board (injector control)"
-	computertype = /obj/machinery/computer/general_air_control/fuel_injection
-	icon_state = "circuit_engineering"
 /obj/item/circuitboard/general_alert
 	name = "circuit board (general alert)"
 	computertype = /obj/machinery/computer/general_alert
@@ -135,6 +135,7 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (genetics)"
 	computertype = /obj/machinery/computer/genetics
 	icon_state = "circuit_medical"
+
 /obj/item/circuitboard/tetris
 	name = "circuit board (Robustris Pro)"
 	computertype = /obj/machinery/computer/tetris
@@ -295,6 +296,7 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 			if (!src.circuit)
 				return {"
 					You can insert a circuit board to start assembling a console,
+					or you can insert a motherboard to start assembling a computer,
 					or use a <b>wrench</b> to unanchor it
 				"}
 			else
@@ -339,6 +341,14 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 				src.circuit = P
 				user.drop_item()
 				P.set_loc(src)
+			else if (istype(P, /obj/item/motherboard) && !circuit)
+				var/obj/computer3frame/new_computer = new(src.loc)
+				new_computer.state = STATE_ANCHORED
+				new_computer.anchored = src.anchored
+				new_computer.dir = src.dir
+				new_computer.setMaterial(src.material)
+				new_computer.Attackby(P, user)
+				qdel(src)
 			if (isscrewingtool(P) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, SPAN_NOTICE("You screw the circuit board into place."))
@@ -396,12 +406,8 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 				boutput(user, SPAN_NOTICE("You connect the monitor."))
 				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
 				B.set_dir(src.dir)
-				if (circuit.id)
-					B.id = circuit.id
-				if (circuit.records)
-					B.records = circuit.records
-				if (circuit.frequency)
-					B.frequency = circuit.frequency
+				B.load_board_data(src.circuit)
+
 				logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 				qdel(src)
 

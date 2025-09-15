@@ -89,7 +89,7 @@
 			src.set_armer(user)
 		else
 			src.icon_state = "mousetrap"
-			if (user && (user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
+			if (user && (user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
 					which_hand = "r_arm"
@@ -128,7 +128,7 @@
 				critter.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
 				return
 		if (src.armed)
-			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
+			if ((user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
 					which_hand = "r_arm"
@@ -308,7 +308,7 @@
 		src.payload.transform *= 0.75
 		src.payload.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
 		src.vis_contents += src.payload
-		if(istype(src.payload.applier, /obj/item/gimmickbomb/butt))
+		if(istype(src.payload.applier, /obj/item/clothing/head/butt) || istype(src.payload.target, /obj/item/clothing/head/butt))
 			src.buttbomb = TRUE
 
 

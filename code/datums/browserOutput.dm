@@ -97,12 +97,16 @@ var/global
 				"browserassets/src/css/fonts/fontawesome-webfont.eot",
 				"browserassets/src/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/src/css/fonts/fontawesome-webfont.woff",
+				"browserassets/src/css/fonts/twemoji.woff2",
 				"browserassets/src/vendor/css/font-awesome.css",
 				"browserassets/src/css/browserOutput.css"
 			)
 			src.owner.loadResourcesFromList(chatResources)
 
-		src.owner << browse(grabResource("html/browserOutput.html"), "window=browseroutput")
+		var/html = grabResource("html/browserOutput.html")
+		html = replacetext(html, "{theme}", src.owner.darkmode ? "theme-dark" : "theme-default")
+		src.owner << browse(html, "window=browseroutput")
+		winshow(src.owner, "browseroutput", TRUE)
 
 		if (src.loadAttempts < 5) //To a max of 5 load attempts
 			SPAWN(20 SECONDS) //20 seconds
@@ -121,13 +125,14 @@ var/global
 	if (src.owner && !src.loaded)
 		src.loaded = 1
 		winset(src.owner, "browseroutput", "is-disabled=false")
-		//if (src.owner.holder)
 		src.loadAdmin()
 		if (src.messageQueue)
 			for (var/list/message in src.messageQueue)
 				boutput(src.owner, message["message"], message["group"])
 		src.messageQueue = null
 		src.sendClientData()
+		SEND_SIGNAL(src.owner, COMSIG_CLIENT_CHAT_LOADED, src)
+
 		/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
 		SPAWN(1 MINUTE) //60 seconds
 			if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
@@ -141,13 +146,14 @@ var/global
 		ehjax.send(src.owner, "browseroutput", url_encode(data))
 
 /datum/chatOutput/proc/changeTheme(theme)
+	if (!src.loaded) return
 	var/data = json_encode(list("changeTheme" = theme))
 	ehjax.send(src.owner, "browseroutput", url_encode(data))
 
 /// Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()
 	//Fix for Cannot read null.ckey (how!?)
-	if (!src.owner) return
+	if (!src.owner || !src.owner.authenticated) return
 
 	//Get dem deets
 	var/list/deets = list("clientData" = list())
@@ -159,7 +165,7 @@ var/global
 
 /// Called by client, sent data to investigate (cookie history so far)
 /datum/chatOutput/proc/analyzeClientData(cookie = "")
-	if (!cookie) return
+	if (!cookie || !src.owner.authenticated) return
 	if (cookie != "none")
 		// Hotfix patch, credit to https://github.com/yogstation13/Yogstation/pull/9951
 		var/regex/json_decode_crasher = regex("^\\s*(\[\\\[\\{\\}\\\]]\\s*){5,}")
@@ -183,8 +189,12 @@ var/global
 			var/list/checkBan = null
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
 				var/list/row = src.connectionHistory[i]
-				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
-					return
+				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"]))
+					// Passed malformed history object
+					continue
+				if (row["ckey"] == src.owner.ckey && row["ip"] == src.owner.address && row["compid"] == src.owner.computer_id)
+					// Skip checking own data (as the player is logged in and thus already passed a ban check)
+					continue
 				checkBan = bansHandler.check(row["ckey"], row["compid"], row["ip"])
 				if (checkBan)
 					found = row
@@ -340,7 +350,7 @@ var/global
 	return copytext(partial[2], 3, -5)
 
 
-/proc/bicon(obj)
+/proc/bicon(obj, scale = 1)
 
 	var/baseData
 	if (isicon(obj))
@@ -386,8 +396,10 @@ var/global
 				return
 
 			baseData = icon2base64(icon, iconKey)
-
-		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon' src='data:image/png;base64,[baseData]' />"
+		var/pixelation_mode = "image-rendering: pixelated"
+		var/width = scale == 1 ? "" : " width: [world.icon_size * scale]px;"
+		var/height = scale == 1 ? "" :  "height: [world.icon_size * scale]px;"
+		return "<img style='position: relative; left: -1px; bottom: -3px;[width][height] [pixelation_mode]' class='icon' src='data:image/png;base64,[baseData]' />"
 
 /proc/boutput(target = null, message = "", group = "", forceScroll=FALSE)
 	if (isnull(target))
@@ -397,6 +409,8 @@ var/global
 
 	if (target == world)
 		for (var/client/C in clients)
+			if (istype(C.mob, /mob/living/carbon/human/tutorial))
+				continue
 			boutput(C, message, group, forceScroll)
 		return
 
@@ -423,9 +437,7 @@ var/global
 		C = target
 	else if (ismob(target))
 		var/mob/M = target
-		if (M.boutput_relay_mob)
-			boutput(M.boutput_relay_mob, message, group, forceScroll)
-		else if(istype(M, /mob/living/silicon/ai))
+		if(istype(M, /mob/living/silicon/ai))
 			var/mob/living/silicon/ai/AI = M
 			if(AI.deployed_to_eyecam)
 				C = AI.eyecam?.client

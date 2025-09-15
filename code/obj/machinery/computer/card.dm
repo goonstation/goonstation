@@ -21,7 +21,7 @@
 	var/list/supply_access_list = list(access_cargo, access_supply_console, access_mining, access_mining_outpost)
 	var/list/research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics, access_pathology)
-	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
+	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket, access_fine_small, access_fine_large)
 	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser, access_money)
 	var/list/allowed_access_list
 	var/departmentcomp = FALSE
@@ -36,7 +36,7 @@
 
 /obj/machinery/computer/card/New()
 	..()
-	src.allowed_access_list = civilian_access_list + engineering_access_list + supply_access_list + research_access_list + command_access_list + security_access_list - access_maxsec - access_armory
+	src.allowed_access_list = civilian_access_list + engineering_access_list + supply_access_list + research_access_list + medical_access_list + command_access_list + security_access_list
 /obj/machinery/computer/card/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id1"
@@ -241,7 +241,7 @@
 		)
 
 		.["icons"] = list(
-			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id")),
+			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id_basic")),
 			list(style = "civilian", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
 			list(style = "engineering", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
 			list(style = "research", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
@@ -326,6 +326,15 @@
 		if(.)
 			return
 
+		var/what_is_changing = "unknown"
+		if (src.eject)
+			if (istype(src.eject, /obj/item/implantcase/access/unlimited) || istype(src.eject, /obj/item/implant/access/infinite))
+				what_is_changing = "unlimited access implant"
+			else if (istype(src.eject,/obj/item/implantcase/access) || istype(src.eject, /obj/item/implant/access))
+				what_is_changing = "limited access implant"
+		else if (istype(src.modify, /obj/item/card/id))
+			what_is_changing = "ID card"
+
 		switch(action)
 			if ("modify")
 				if (src.modify)
@@ -395,8 +404,8 @@
 							src.modify.access -= access_type
 						else
 							src.modify.access += access_type
-						src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
-						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>) using [src.scan.registered]'s ID.")
+						src.modify.update_name()
+						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the [what_is_changing] (<b>[src.modify.registered]</b>) using [src.scan.registered]'s ID.")
 
 			if ("pronouns")
 				if (src.authenticated && src.modify)
@@ -412,24 +421,16 @@
 				if (src.authenticated && src.modify)
 					var/t1 = params["assign"]
 
-					if(t1 == "Head of Security")
-						return
-
 					if (t1 == "Custom Assignment")
 						t1 = tgui_input_text(usr, "Enter a custom job assignment.", "Assignment")
 						if(!src.modify || !src.authenticated)
 							return
 						t1 = strip_html(t1, 100, 1)
-						logTheThing(LOG_STATION, usr, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
+						logTheThing(LOG_STATION, usr, "changes the assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 						playsound(src.loc, "keyboard", 50, 1, -15)
 					else
-						// preserve accesses which are otherwise unobtainable
-						var/bonus_access = list()
-						for (var/access in src.modify.access)
-							if (!(access in get_all_accesses())) //fuck this proc name
-								bonus_access += list(access)
-						src.modify.access = get_access(t1) + bonus_access
-						logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
+						src.update_card_accesses(get_access(t1))
+						logTheThing(LOG_STATION, usr, "changes the access and assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 					//Wire: This possibly happens after the input() above, so we re-do the initial checks
 					if (src.authenticated && src.modify)
@@ -438,7 +439,7 @@
 					if (params["style"])
 						update_card_style(params["style"])
 
-					src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+					src.modify.update_name()
 
 			if ("reg")
 				if (src.authenticated)
@@ -448,10 +449,10 @@
 					t1 = strip_html(t1, 100, 1)
 
 					if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
-						logTheThing(LOG_STATION, usr, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
+						logTheThing(LOG_STATION, usr, "changes the registered name on the [what_is_changing]  from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 						src.modify.registered = t1
 
-						src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+						src.modify.update_name()
 
 						playsound(src.loc, "keyboard", 50, 1, -15)
 
@@ -461,7 +462,7 @@
 
 					var/newpin = tgui_input_pin(usr, "Enter a new PIN between [PIN_MIN] and [PIN_MAX].", "ID Computer", null, PIN_MAX, PIN_MIN)
 					if (newpin && (src.authenticated && src.modify == currentcard && (in_interact_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
-						logTheThing(LOG_STATION, usr, "changes the pin on the ID card (<b>[src.modify.registered]</b>) to [src.modify.pin].")
+						logTheThing(LOG_STATION, usr, "changes the pin on the [what_is_changing] (<b>[src.modify.registered]</b>) to [src.modify.pin].")
 						src.modify.pin = newpin
 						playsound(src.loc, "keyboard", 50, 1, -15)
 
@@ -498,11 +499,11 @@
 				var/slot = text2num_safe(params["apply"])
 				src.modify.assignment = src.custom_names[slot]
 				var/list/selected_access_list = src.custom_access_list[slot]
-				src.modify.access = selected_access_list.Copy()
-				src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
-				logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
+				src.update_card_accesses(selected_access_list.Copy())
+				src.modify.update_name()
+				logTheThing(LOG_STATION, usr, "changes the access and assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 			if ("modify")
-				src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+				src.modify.update_name()
 			if ("eject")
 				if (istype(src.eject,/obj/item/implantcase/access))
 					var/obj/item/implantcase/access/A = src.eject
@@ -520,7 +521,7 @@
 	proc/update_card_style(band_color)
 		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
 			if (band_color == "none")
-				src.modify.icon_state = "id"
+				src.modify.icon_state = "id_basic"
 			if (band_color == "civilian")
 				src.modify.icon_state = "id_civ"
 			if (band_color == "engineering")
@@ -533,6 +534,19 @@
 				src.modify.icon_state = "id_sec"
 			if (band_color == "command")
 				src.modify.icon_state = "id_com"
+
+	proc/update_card_accesses(var/list/access_list)
+		for(var/access in access_list) //Remove accesses this computer cannot give
+			if(!(access in src.allowed_access_list))
+				access_list -= access
+
+		for (var/access in src.modify.access)
+			if (access in access_list)
+				continue
+			if (!(access in get_all_accesses())) // preserve accesses which are otherwise unobtainable
+				access_list += access
+				continue
+		src.modify.access = access_list
 
 	proc/try_authenticate()
 		if ((!( src.authenticated ) && (src.scan || ((issilicon(usr) || isAI(usr)) && !isghostdrone(usr))) && (src.modify || src.mode)))
@@ -650,7 +664,7 @@
 	supply_access_list = list(access_cargo)
 	medical_access_list = list(access_medical)
 	research_access_list = list(access_research, access_chemistry, access_researchfoyer)
-	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit)
+	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket, access_fine_small, access_fine_large)
 	command_access_list = list(access_eva)
 
 #undef ID_COMPUTER_DEPARTMENT_ENGINEERING

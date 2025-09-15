@@ -6,8 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  content: (
+const TricksterContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You become a Trickster!</h1>
       <p>1. Spread mischief and distrust among the crew</p>
@@ -51,5 +51,9 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Trickster">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  component: TricksterContentWindow,
 };

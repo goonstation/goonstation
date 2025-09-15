@@ -1,3 +1,10 @@
+TYPEINFO(/mob)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /mob
 	density = 1
 	layer = MOB_LAYER
@@ -8,8 +15,17 @@
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
+	open_to_sound = FALSE
+
+	speech_verb_say = "says"
+	speech_verb_ask = "asks"
+	speech_verb_exclaim = "exclaims"
+	speech_verb_stammer = "stammers"
+	speech_verb_gasp = "gasps"
+
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/tmp/datum/mind/mind
-	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
 
@@ -23,8 +39,6 @@
 
 	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/stamina_bar/stamina_bar = null
-
-	var/robot_talk_understand = 0
 
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = null
@@ -77,7 +91,6 @@
 	var/incrit = 0
 	var/timeofdeath = 0
 	var/fakeloss = 0
-	var/fakedead = 0
 	var/health = 100
 	var/max_health = 100
 	var/bodytemperature = T0C + 37
@@ -108,7 +121,6 @@
 	var/network_device = null
 	var/Vnetwork = null
 	var/lastDamageIconUpdate
-	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
 
 	var/list/movement_modifiers = list()
@@ -137,10 +149,7 @@
 
 	var/nodamage = 0
 
-	var/spellshield = 0
-
 	var/voice_name = "unidentifiable voice"
-	var/voice_message = null
 	var/oldname = null
 	var/mob/oldmob = null
 	var/datum/mind/oldmind = null
@@ -148,15 +157,8 @@
 	var/attack_alert = 0 // should we message admins when attacking another player?
 	var/suicide_alert = 0 // should we message admins when dying/dead?
 
-	var/speechverb_say = "says"
-	var/speechverb_ask = "asks"
-	var/speechverb_exclaim = "exclaims"
-	var/speechverb_stammer = "stammers"
-	var/speechverb_gasp = "gasps"
-	var/speech_void = 0
 	var/now_pushing = null //temp. var used for bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
-	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
@@ -234,7 +236,6 @@
 	var/being_controlled = FALSE
 	///Lazy inited list of custom vomit behaviours from reagents, organs etc.
 	var/list/datum/vomit_behavior/vomit_behaviors = null
-
 	/// if this mob can interface with pod context menu by left clicking
 	var/can_interface_with_pods = TRUE
 
@@ -272,7 +273,6 @@
 
 	src.lastattacked = get_weakref(src) //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new(null, src)
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -341,9 +341,6 @@
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
 
-	qdel(chat_text)
-	chat_text = null
-
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
 	if (src.ghost?.corpse == src)
@@ -353,7 +350,7 @@
 		LAZYLISTREMOVE(observers, TO)
 		TO.ghostize()
 
-	for(var/mob/m in src) //zoldorfs, aieyes, other terrible code
+	for(var/mob/m in src) //aieyes, other terrible code
 		if(m.observing == src)
 			m.stopObserving()
 		else
@@ -457,9 +454,9 @@
 		return
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
-	if(isnull(src.client.tg_layout))
+	if(isclient(src.client) && isnull(src.client?.tg_layout))
 		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
-	src.client.set_layout(src.client.tg_layout)
+	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -483,13 +480,13 @@
 	src.last_client = src.client
 	src.apply_camera(src.client)
 	src.update_cursor()
-	if(src.client.preferences)
+	if(src.client?.preferences)
 		src.reset_keymap()
 
-	src.client.mouse_pointer_icon = src.cursor
+	if (isclient(src.client)) src.client.mouse_pointer_icon = src.cursor
 
-	src.lastKnownIP = src.client.address
-	src.computer_id = src.client.computer_id
+	src.lastKnownIP = src.client?.address
+	src.computer_id = src.client?.computer_id
 
 	world.update_status()
 
@@ -523,7 +520,7 @@
 
 	src.need_update_item_abilities = 1
 
-	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
+	var/atom/illumplane = src.client?.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
@@ -726,7 +723,7 @@
 
 			else if (tmob.a_intent == "help" && src.a_intent == "help" \
 				&& tmob.canmove && src.canmove \
-				&& !tmob.buckled && !src.buckled \
+				&& !tmob.buckled?.anchored && !src.buckled?.anchored \
 				&& !src.throwing && !tmob.throwing \
 				&& !(src.pulling && src.pulling.density) && !(tmob.pulling && tmob.pulling.density)) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
@@ -745,6 +742,11 @@
 
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
+
+				if(tmob.buckled)
+					tmob.buckled.set_loc(oldloc)
+				if(src.buckled)
+					src.buckled.set_loc(newloc)
 
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
@@ -777,8 +779,6 @@
 			victim.deliver_move_trigger("bump")
 			var/was_in_space = istype(victim.loc, /turf/space)
 			var/was_in_fire = locate(/atom/movable/hotspot) in victim.loc
-			if (victim.buckled && !victim.buckled.anchored)
-				step(victim.buckled, t)
 			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into space.")
 			else if (!was_in_fire && (locate(/atom/movable/hotspot) in victim.loc))
@@ -795,7 +795,6 @@
 			var/list/pulling = list()
 			if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || src.pulling == src) // fucks sake
 				src.remove_pulling()
-				//hud.update_pulling() // FIXME
 			else
 				pulling += src.pulling
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
@@ -909,30 +908,36 @@
 	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
 		src.equipped().intent_switch_trigger(src)
 
+/// Set movement intent variable on a mob
+/mob/proc/set_m_intent(intent)
+	if (!intent)
+		return
+	src.m_intent = intent
+
 // medals
 
 /mob/proc/revoke_medal(title)
-	src.mind.get_player().clear_medal(title)
+	src.mind?.get_player().clear_medal(title)
 
 /mob/proc/unlock_medal(title, announce=FALSE)
 	set waitfor = 0
 	if (!src.client)
 		return
-	src.mind.get_player().unlock_medal(title, announce)
+	src.mind?.get_player().unlock_medal(title, announce)
 
 /mob/proc/has_medal(medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
 #ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
 	return TRUE
 #else
-	return src.mind.get_player().has_medal(medal)
+	return src.mind?.get_player().has_medal(medal)
 #endif
 
 /mob/verb/list_medals()
 	set name = "Medals"
 
-	if (IsGuestKey(src.key))
-		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to view your medals."))
 		return
 
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
@@ -961,6 +966,9 @@
 /mob/verb/setdnr()
 	set name = "Set DNR"
 	set desc = "Set yourself as Do Not Resuscitate."
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to set DNR."))
+		return
 	if(isadmin(src))
 		src.mind.get_player()?.dnr = !src.mind.get_player()?.dnr
 		boutput(src, SPAN_ALERT("DNR status [src.mind.get_player()?.dnr ? "set" : "removed"]!"))
@@ -1087,7 +1095,7 @@
 	return
 
 // for mobs without organs
-/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+/mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss=FALSE)
 	hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
@@ -1216,12 +1224,10 @@
 
 /mob/proc/death(gibbed = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins(SPAN_ALERT("Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)]."))
-	//if(src.mind && !gibbed)
-	//	src.mind.death_icon = getFlatIcon(src,SOUTH) crew photo stuff
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
 		src.damn()
 		return
@@ -1230,8 +1236,10 @@
 		src.suicide_alert = 0
 	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
-	//stop piloting pods or whatever
+	// stop piloting pods or whatever
 	src.override_movement_controller = null
+	// stop pulling shit!!
+	src.remove_pulling()
 
 
 /mob/proc/restrained()
@@ -1507,7 +1515,7 @@
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 
-	if (!( abandon_allowed ))
+	if (!( abandon_allowed ) || !src.mind)
 		return
 
 	if(!isobserver(usr) || !(ticker))
@@ -1526,6 +1534,7 @@
 	set desc = "Displays the window to edit your character preferences"
 	set category = "Commands"
 
+	if (!src.mind) return
 	client.preferences.ShowChoices(src)
 
 /mob/verb/cmd_rules()
@@ -1544,6 +1553,7 @@
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
+	if (!src.mind) return
 	src.set_eye(null)
 	src.remove_dialogs()
 	if (!isliving(src))
@@ -1557,6 +1567,8 @@
 	set name = "Show Credits"
 	set desc = "Open the crew credits window"
 	set category = "Commands"
+
+	if (!src.mind) return
 
 	if (global.current_state < GAME_STATE_FINISHED)
 		boutput(src, SPAN_NOTICE("The game hasn't finished yet!"))
@@ -1697,7 +1709,7 @@
 
 /// Adds a 20-length color matrix to the mob's list of color matrices
 /// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
-/mob/proc/apply_color_matrix(list/cmatrix, label)
+/mob/proc/apply_color_matrix(list/cmatrix, label, animate = 0)
 	if (!cmatrix || !label)
 		return
 
@@ -1706,10 +1718,10 @@
 
 	LAZYLISTADDASSOC(src.color_matrices, label, cmatrix)
 
-	src.update_active_matrix()
+	src.update_active_matrix(animate)
 
 /// Removes whichever matrix is associated with the label. Must be a string!
-/mob/proc/remove_color_matrix(label)
+/mob/proc/remove_color_matrix(label, animate = 0)
 	if (!label || !length(src.color_matrices))
 		return
 
@@ -1720,11 +1732,12 @@
 	else
 		LAZYLISTREMOVE(src.color_matrices, label)
 
-	src.update_active_matrix()
+	src.update_active_matrix(animate)
 
 /// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
 /// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
-/mob/proc/update_active_matrix()
+/// If animate is present, animate the transition for that many DS
+/mob/proc/update_active_matrix(animate = 0)
 	if (!length(src.color_matrices))
 		src.active_color_matrix = null
 	else
@@ -1739,7 +1752,10 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	src.client?.set_color(src.active_color_matrix, src.respect_view_tint_settings)
+	if (animate)
+		src.client?.animate_color(src.active_color_matrix, animate, respect_view_tint_settings = src.respect_view_tint_settings)
+	else
+		src.client?.set_color(src.active_color_matrix, src.respect_view_tint_settings)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
@@ -1760,6 +1776,20 @@
 
 	return temperature
 
+/// Change the mob's body temperature without leaving the specified bounds
+/mob/proc/changeBodyTemp(var/amount, var/min_temp = 0 KELVIN, var/max_temp = INFINITY)
+	if(amount <= 0)
+		if(src.bodytemperature <= min_temp) // Keep body temp as is if below min
+			return
+		src.bodytemperature += amount
+		if(src.bodytemperature < min_temp)
+			src.bodytemperature = min_temp
+	else
+		if(src.bodytemperature >= max_temp)  // Keep body temp as is if above max
+			return
+		src.bodytemperature += amount
+		if(src.bodytemperature > max_temp)
+			src.bodytemperature = max_temp
 
 //Gets rid of the mob without all the messy fuss of a gib
 /mob/proc/remove()
@@ -1806,7 +1836,7 @@
 
 	if (src.client) // I feel like every player should be ghosted when they get gibbed
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 		if (!isnull(newmob) && give_medal)
 			newmob.unlock_medal("Gore Fest", 1)
 
@@ -1907,7 +1937,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (animation)
 		animation.delaydispose()
@@ -1979,7 +2009,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (bdna && btype)
 		partygibs(src.loc, bdna, btype) // For forensics (Convair880).
@@ -2027,7 +2057,7 @@
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	if (bdna && btype)
 		gibs(src.loc, null, bdna, btype) // For forensics (Convair880).
@@ -2070,7 +2100,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	elecflash(src.loc,exclude_center = 0)
 
@@ -2098,7 +2128,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 
@@ -2172,7 +2202,7 @@
 		sleep(duration+5)
 		src.death(TRUE)
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 		qdel(floorcluwne)
 		qdel(src)
@@ -2206,7 +2236,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob?.corpse = null
+		if (newmob) newmob.corpse = null
 
 	var/list/ejectables = list_ejectables()
 
@@ -2796,6 +2826,8 @@
 	return mobs
 
 /mob/get_examine_tag(mob/examiner)
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		return null
 	return src.name_tag
 
 /mob/proc/protected_from_space()
@@ -2880,53 +2912,53 @@
 
 /mob/proc/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	var/newname
+	default_name ||= src.real_name
 	for (retries, retries > 0, retries--)
 		if(force_instead)
 			newname = default_name
 		else
-			newname = tgui_input_text(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name || src.real_name)
+			newname = tgui_input_text(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name )
 		if (!newname)
-			return
+			src.show_text("Please confirm your name.", "red")
+			continue
+		newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+		newname = remove_bad_name_characters(newname)
+		if (!length(newname) || copytext(newname,1,2) == " ")
+			src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
+			continue
+		if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
+			for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+				var/datum/db_record/R = DB.find_record("id", src.datacore_id)
+				if (R)
+					R["name"] = newname
+					if (R["full_name"])
+						R["full_name"] = newname
+			for (var/obj/item/I in src.contents)
+				var/obj/item/card/id/ID = get_id_card(I)
+				if (!ID)
+					if(length(I.contents)>0)
+						for(var/obj/item/J in I.contents)
+							var/obj/item/card/id/ID_maybe = get_id_card(J)
+							if(!ID_maybe)
+								continue
+							if(ID_maybe && ID_maybe.registered == src.real_name)
+								ID = ID_maybe
+				if(ID)
+					ID.registered = newname
+					ID.update_name()
+			for (var/obj/item/device/pda2/PDA in src.contents)
+				PDA.registered = newname
+				PDA.owner = newname
+				PDA.name = "PDA-[newname]"
+				if(PDA.ID_card)
+					var/obj/item/card/id/ID = PDA.ID_card
+					ID.registered = newname
+					ID.update_name()
+			src.real_name = newname
+			src.UpdateName()
+			return 1
 		else
-			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
-			newname = remove_bad_name_characters(newname)
-			if (!length(newname) || copytext(newname,1,2) == " ")
-				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
-				continue
-			else
-				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-					for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-						var/datum/db_record/R = DB.find_record("id", src.datacore_id)
-						if (R)
-							R["name"] = newname
-							if (R["full_name"])
-								R["full_name"] = newname
-					for (var/obj/item/I in src.contents)
-						var/obj/item/card/id/ID = get_id_card(I)
-						if (!ID)
-							if(length(I.contents)>0)
-								for(var/obj/item/J in I.contents)
-									var/obj/item/card/id/ID_maybe = get_id_card(J)
-									if(!ID_maybe)
-										continue
-									if(ID_maybe && ID_maybe.registered == src.real_name)
-										ID = ID_maybe
-						if(ID)
-							ID.registered = newname
-							ID.update_name()
-					for (var/obj/item/device/pda2/PDA in src.contents)
-						PDA.registered = newname
-						PDA.owner = newname
-						PDA.name = "PDA-[newname]"
-						if(PDA.ID_card)
-							var/obj/item/card/id/ID = PDA.ID_card
-							ID.registered = newname
-							ID.update_name()
-					src.real_name = newname
-					src.UpdateName()
-					return 1
-				else
-					continue
+			continue
 	if (!newname)
 		if (default_name)
 			src.real_name = default_name
@@ -2970,6 +3002,8 @@
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
+
+	src.client?.tooltips?.onMove(src.move_dir)
 
 /mob/proc/on_centcom()
 	. = FALSE
@@ -3412,10 +3446,7 @@
 	src.observing = null
 	src.ghostize()
 
-/// search for any radio device, starting with hands and then equipment
-/// anything else is arbitrarily too deeply hidden and stowed away to get the signal
-/// (more practically, they won't hear it)
-/mob/proc/find_radio()
+/mob/find_radio()
 	if(istype(src.ears, /obj/item/device/radio))
 		return src.ears
 	. = src.find_type_in_hand(/obj/item/device/radio)
@@ -3470,3 +3501,12 @@
 	if (src.bioHolder?.mobAppearance)
 		return src.bioHolder.mobAppearance.s_tone
 	return "#042069"
+
+/mob/proc/update_movement_modifiers()
+	process_movespeed_update()
+
+/mob/proc/scald_temp()
+	return src.base_body_temp + (src.temp_tolerance * 4)
+
+/mob/proc/frostburn_temp()
+	return src.base_body_temp - (src.temp_tolerance * 4)

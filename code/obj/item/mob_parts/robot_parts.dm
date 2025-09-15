@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			..()
 
 	reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
-		if (!src.can_reinforce(M, need_reinforced))
+		if (!src.can_reinforce(M, user, need_reinforced))
 			return
 
 		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
@@ -1267,7 +1267,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				borg.death()
 				qdel(src)
 				return
-			if ( brain.owner  &&  (jobban_isbanned(brain.owner.current,"Cyborg") || brain.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
+			// job-banned, DNR, or cyber-incompatible
+			if ((brain.owner && (jobban_isbanned(brain.owner.current,"Cyborg") || brain.owner.get_player().dnr)) || brain.cyber_incompatible)
 				src.visible_message(SPAN_ALERT("The brain inside [src] disintegrates!"))
 				borg.part_head.brain = null
 				qdel(brain)

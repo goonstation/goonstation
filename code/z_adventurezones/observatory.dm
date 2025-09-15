@@ -2,7 +2,7 @@
 	name = "Observatory Hub"
 	icon_state = "yellow"
 	requires_power = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/observatory
 
 /obj/item/device/audio_log/observatory01

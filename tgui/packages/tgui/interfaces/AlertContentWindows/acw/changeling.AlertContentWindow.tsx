@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Changeling Tips',
-  content: (
+const ChangelingContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a changeling!</h1>
       <img
@@ -29,7 +28,9 @@ export const acw: AlertContentWindow = {
         Using some of the powers requires you to expend some <em>DNA points</em>
         .<br />
         To acquire more, you will have to absorb new victims. Any living victim
-        that you absorb will be forced into your <em>hivemind</em>.
+        that you absorb will be forced into your <em>hivemind</em>. You can
+        telepathically speak to your hivemind using the <em>:hive</em> speech
+        prefix.
         <span className="small indent">
           <em>Absorb DNA</em>, to steal the DNA of your victims. They must be
           grabbed firmly.
@@ -65,9 +66,6 @@ export const acw: AlertContentWindow = {
           <br />
           <em>Mimic Voice</em>, to speak in the voice of other crew members.
           <br />
-          <em>Speak to Hivemind</em>, to telepathically speak with those that
-          you have collected into your hivemind.
-          <br />
           <em>Handspider</em>, to transfer a consciousness from your hivemind
           into a weak scouting critter.
           <br />
@@ -79,7 +77,7 @@ export const acw: AlertContentWindow = {
           <br />
           <em>Horror Form</em>, you turn into a shambling abomination with a
           special set of abilities. See the{' '}
-          <a href="http://wiki.ss13.co/Changeling#Shambling_Abomination">
+          <a href="https://wiki.ss13.co/Changeling#Shambling_Abomination">
             the wiki
           </a>
           .<br />
@@ -117,5 +115,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Changeling">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Changeling Tips',
+  component: ChangelingContentWindow,
 };

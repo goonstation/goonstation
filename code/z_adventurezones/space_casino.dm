@@ -61,7 +61,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 		/obj/item/hand_tele,
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/gimmickbomb/hotdog,
-		/obj/item/card/id/captains_spare,
+		/obj/item/card/id/gold/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
 		/mob/living/critter/brullbar, // have fun!
 		/obj/item/artifact/teleport_wand,
@@ -76,7 +76,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 
 		if(roll > (max_roll - uses * 20)) // failure chances increase by 2% every roll
 			src.emag_act(null, null) // bye bye!
-			prize_type = /obj/item/gimmickbomb/butt/prearmed
+			prize_type = /obj/item/assembly/time_ignite_butt/prearmed
 			exclamation = "Big Loser! Goodbye! "
 			win_sound = 'sound/musical_instruments/Trombone_Failiure.ogg'
 			return

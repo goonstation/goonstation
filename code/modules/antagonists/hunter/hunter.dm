@@ -2,6 +2,7 @@
 	id = ROLE_HUNTER
 	display_name = "hunter"
 	antagonist_icon = "predator"
+	wiki_link = "https://wiki.ss13.co/Hunter"
 
 	/// The ability holder of this hunter, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/hunter/ability_holder
@@ -125,6 +126,10 @@
 								if (isnpcmonkey(H))
 									skull_value = 0
 									skull_desc = "A meaningless trophy from a lab monkey. You feel disgusted to even look at it."
+								if (isfrog(H))
+									skull_type = /obj/item/skull/frog
+									skull_value = 2
+									skull_desc = "A trophy taken from an amphibian. A meaningless oddity at best."
 
 						// Everything's still default, so check for assigned_role. Could be a lizard captain or whatever.
 						if (isnull(skull_type) && skull_value == default_skull_value && skull_desc == default_skull_desc)
@@ -368,7 +373,7 @@
 	src.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(src), SLOT_SHOES)
 	src.equip_if_possible(new /obj/item/device/radio/headset(src), SLOT_EARS)
 	src.equip_if_possible(new /obj/item/storage/backpack(src), SLOT_BACK)
-	src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(src), SLOT_L_STORE)
+	src.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(src), SLOT_L_STORE)
 	src.equip_if_possible(new /obj/item/cloaking_device/hunter(src), SLOT_R_STORE)
 	src.equip_if_possible(new /obj/item/knife/butcher/hunterspear(src), SLOT_IN_BACKPACK)
 	src.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(src), SLOT_IN_BACKPACK)

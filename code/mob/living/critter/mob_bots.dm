@@ -2,17 +2,20 @@
  * Playable bots
  */
 ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
+TYPEINFO(/mob/living/critter/robotic/bot)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_SILICONCHAT, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/critter/robotic/bot
 	name = "base bot mob (you should never see me)"
 	icon = 'icons/obj/bots/aibots.dmi'
 	blood_id = "oil"
-	speechverb_say = "beeps"
-	speechverb_gasp = "warbles"
-	speechverb_stammer = "bleeps"
-	speechverb_exclaim = "boops"
-	speechverb_ask = "bloops"
+	speech_verb_say = "beeps"
+	speech_verb_gasp = "warbles"
+	speech_verb_stammer = "bleeps"
+	speech_verb_exclaim = "boops"
+	speech_verb_ask = "bloops"
 	stepsound = "step_plating"
-	robot_talk_understand = TRUE
 	hand_count = 1
 	can_burn = FALSE
 	dna_to_absorb = 0
@@ -82,7 +85,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 
 	cleanbot
 		name = "cleanbot"
-		real_name = "cleanbot"
 		desc = "A little cleaning robot, he looks so excited!"
 		icon_state = "cleanbot1"
 		icon_state_base = "cleanbot"
@@ -130,6 +132,21 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
 
 ABSTRACT_TYPE(/datum/targetable/critter/bot)
+/datum/targetable/critter/bot
+
+	/// Propel user in opposite direction
+	proc/propel_bot(var/turf/target)
+		var/mob/bot = holder.owner
+		if (istype(bot.loc, /turf/space))
+			bot.inertia_dir = get_dir_accurate(target, bot)
+			step(bot, bot.inertia_dir)
+		else if(bot.buckled && !bot.buckled.anchored )
+			var/wooshdir = get_dir_accurate(target, bot)
+			SPAWN(0)
+				for(var/i = 1, (bot?.buckled && !bot.buckled.anchored && i <= rand(3,5)), i++)
+					step(bot.buckled, wooshdir)
+					sleep(rand(1,3))
+
 /datum/targetable/critter/bot/mop_floor
 	name = "Mop Floor"
 	desc = "Clean the floor of dirt and other grime."
@@ -260,7 +277,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 /mob/living/critter/robotic/bot/firebot
 	name = "firebot"
-	real_name = "firebot"
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
 	icon_state = "firebot1"
 	icon_state_base = "firebot"
@@ -341,6 +357,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				R.add_reagent(reagent_key, spray_reagents[reagent_key], temp_new = spray_temperature)
 			W.spray_at(my_target, R, 1)
 
+		src.propel_bot(T)
+
 	fuel
 		name = "Spray Burning Fuel"
 		desc = "Spray burning fuel all over the place. Highly flammable but near useless in flooded areas."
@@ -398,4 +416,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			if (GET_DIST(holder.owner,F) > max_fire_range)
 				continue
 			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
+
+		src.propel_bot(T)
 

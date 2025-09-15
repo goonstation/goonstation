@@ -567,6 +567,26 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.color = debug_color_of(artists[1])
 			img.app.desc = built.Join("<br/>")
 
+	turbine_shafts
+		name = "turbine shafts"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/obj/turbine_shaft/shaft = locate() in theTurf
+			if (!shaft)
+				img.app.alpha = 0
+				return
+			img.app.color = debug_color_of(shaft.network)
+
+	currents
+		name = "currents"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/obj/effects/current/current = locate() in theTurf
+			if (!current)
+				img.app.alpha = 0
+				return
+			img.app.icon = 'icons/effects/effects.dmi'
+			img.app.icon_state = "arrow"
+			img.app.dir = current.dir
+
 	powernet
 		name = "power networks"
 		help = {"red - contains 0 (no powernet), that's probably bad<br>white - contains multiple powernets<br>other - coloured based on the single powernet<br>numbers - ids of all powernets on the tile"}
@@ -1663,16 +1683,17 @@ proc/info_overlay_choices()
 			var/y = text2num(splittext(offs[2], ":")[1])
 			var/image/im = usr.client.infoOverlayImages["[x]-[y]"]
 			if(im?.desc)
-				usr.client.tooltipHolder.transient.show(src, list(
-					"params" = params,
-					"title" = "Diagnostics",
-					"content" = (im.desc)
-				))
+				usr.client.tooltips.show(
+					TOOLTIP_HOVER, src,
+					mouse = params,
+					title = "Diagnostics",
+					content = (im.desc)
+				)
 		else
 			.=..()
 	MouseExited()
 		if(usr.client.activeOverlay)
-			usr.client.tooltipHolder.transient.hide()
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 		else
 			.=..()
 

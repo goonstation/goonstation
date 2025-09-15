@@ -39,13 +39,8 @@ TYPEINFO(/atom)
 	/// Should points thrown at this take into account the click pixel value
 	var/pixel_point = FALSE
 
-	/// If hear_talk is triggered on this object, make my contents hear_talk as well
-	var/open_to_sound = 0
-
 	var/interesting = ""
 	var/stops_space_move = 0
-	/// Anything can speak... if it can speak
-	var/obj/chat_maptext_holder/chat_text
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
@@ -128,7 +123,7 @@ TYPEINFO(/atom)
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_suffixes))
 			if (length(src.name_suffixes) >= src.num_allowed_suffixes)
 				src.remove_suffixes(1)
-			src.name_suffixes += strip_html(text_to_add)
+			src.name_suffixes += strip_html_tags(text_to_add)
 		if (return_suffixes)
 			var/amt_suffixes = 0
 			for (var/i in src.name_suffixes)
@@ -196,16 +191,13 @@ TYPEINFO(/atom)
 
 		fingerprints_full = null
 		tag = null
+		src.forensic_holder = null
 
 		if(length(src.statusEffects))
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
-
-		if (!isnull(chat_text))
-			qdel(chat_text)
-			chat_text = null
 
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
@@ -483,6 +475,11 @@ TYPEINFO(/atom/movable)
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
 
+	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
+	/// if an object type can be built somewhere, before instantiating the object itself.
+	proc/can_build(turf/T)
+		return TRUE
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/tmp/turf/last_turf = 0
@@ -498,7 +495,6 @@ TYPEINFO(/atom/movable)
 	/// Temporary value to smuggle newloc to Uncross during Move-related procs
 	var/tmp/atom/movement_newloc = null
 
-	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
 
@@ -549,10 +545,6 @@ TYPEINFO(/atom/movable)
 
 
 /atom/movable/disposing()
-	if (temp_flags & MANTA_PUSHING)
-		mantaPushList.Remove(src)
-		temp_flags &= ~MANTA_PUSHING
-
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
 
@@ -716,6 +708,7 @@ TYPEINFO(/atom/movable)
 		user.set_pulling(src)
 
 		SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
+		SEND_SIGNAL(src, COMSIG_MOB_PULL_TRIGGER, user)
 
 /atom/movable/set_dir(new_dir)
 	..()
@@ -863,15 +856,17 @@ TYPEINFO(/atom/movable)
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	PROTECTED_PROC(TRUE)
-	if (src.storage?.storage_item_attack_by(W, user))
+	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
+	W.material_on_attack_use(user, src)
 	src.material_trigger_when_attacked(W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
-		var/hits = src
-		if (!src.name && isobj(src)) //shut up
-			var/obj/self = src
-			hits = "\the [self.real_name]"
-		user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
+	if (silent)
+		return
+	var/hits = src
+	if (!src.name && isobj(src)) // shut up
+		var/obj/self = src
+		hits = "\the [self.real_name]"
+	user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
@@ -1418,3 +1413,12 @@ TYPEINFO(/atom/movable)
 ///Should this atom emit particles when hit by a projectile, when the projectile is of the given type
 /atom/proc/does_impact_particles(var/kinetic_impact = TRUE)
 	return TRUE
+
+///Removes anything that is glued to this atom
+/atom/proc/unglue_attached_to()
+	var/atom/Aloc = isturf(src) ? src : src.loc
+	for(var/atom/movable/AM in Aloc)
+		var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+		// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
+		if(glued_comp?.glued_to == src && !isnull(glued_comp.glue_removal_time))
+			qdel(glued_comp)

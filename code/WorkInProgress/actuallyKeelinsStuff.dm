@@ -3106,8 +3106,10 @@ var/list/lag_list = new/list()
 	name = "Spawn ID card"
 	desc = "Allows you to spawn an id card with a certain access level."
 	used(atom/user, atom/target)
-		var/obj/item/card/id/blank_deluxe/D = new/obj/item/card/id/blank_deluxe(get_turf(target))
+		var/obj/item/card/id/gold/D = new/obj/item/card/id/gold(get_turf(target))
 		D.access = get_access(input(usr) in get_all_jobs() + "Club member")
+		D.registered = "Member"
+		D.assignment = "Member"
 		return
 
 /datum/engibox_mode/fwall
@@ -3301,7 +3303,7 @@ var/list/lag_list = new/list()
 			return
 		var/dat = "Engie-box modes:<BR><BR>"
 		for(var/datum/engibox_mode/D in modes)
-			dat += "<A href='?src=\ref[src];set_mode=\ref[D]'>[D.name]</A> [active_mode == D ? "<<<" : ""]<BR>"
+			dat += "<A href='byond://?src=\ref[src];set_mode=\ref[D]'>[D.name]</A> [active_mode == D ? "<<<" : ""]<BR>"
 			dat += "[D.desc]<BR><BR>"
 		user.Browse(dat, "window=engibox;can_minimize=0;can_resize=0;size=250x600")
 		onclose(user, "window=engibox")
@@ -3318,8 +3320,10 @@ var/list/lag_list = new/list()
 				active_mode.saved_var = input(usr,"Enter ID","ID","MyId") as text
 				if(!active_mode.saved_var || isnull(active_mode.saved_var)) active_mode = null
 
-			if(istype(active_mode,/datum/engibox_mode/transmute)) //You only have yourself to blame for this. This shitty code is the fault of whoever changed this!!!
-				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","brullbarhide","cotton","fibrilith")
+			// Get a list of every material ID
+			if(istype(active_mode,/datum/engibox_mode/transmute))
+				var/datum/engibox_mode/transmute/transmute_mode = src.active_mode
+				transmute_mode.mat_id = input(usr,"Select material","material","gold") in global.material_cache
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null

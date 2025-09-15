@@ -260,7 +260,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						boutput(ui.user, SPAN_ALERT("No viable seeds found in [I]."))
 					else
 						boutput(ui.user, SPAN_NOTICE("Extracted [give] seeds from [I]."))
-						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give)
+						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give, allele_override = TRUE)
 						if (!src.output_externally)
 							src.seeds.Add(S)
 						else
@@ -546,7 +546,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else
 					boutput(user, SPAN_ALERT("No items were loaded from the satchel!"))
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				src.update_static_data_for_all_viewers()
 				tgui_process.update_uis(src)
 		else ..()
@@ -797,10 +797,10 @@ TYPEINFO(/obj/submachine/seed_vendor)
 				var/is_uncut = src.wires & APCWireColorToFlag[fabwires[wiredesc]]
 				pdat += "[wiredesc] wire: "
 				if(!is_uncut)
-					pdat += "<a href='?src=\ref[src];cutwire=[fabwires[wiredesc]]'>Mend</a>"
+					pdat += "<a href='byond://?src=\ref[src];cutwire=[fabwires[wiredesc]]'>Mend</a>"
 				else
-					pdat += "<a href='?src=\ref[src];cutwire=[fabwires[wiredesc]]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[fabwires[wiredesc]]'>Pulse</a> "
+					pdat += "<a href='byond://?src=\ref[src];cutwire=[fabwires[wiredesc]]'>Cut</a> "
+					pdat += "<a href='byond://?src=\ref[src];pulsewire=[fabwires[wiredesc]]'>Pulse</a> "
 				pdat += "<br>"
 
 			pdat += "<br>"

@@ -320,7 +320,7 @@
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
-		J.toggle()
+		J.toggle(the_mob)
 		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
@@ -906,16 +906,15 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = (src.desc ? src.desc : null)
-			))
+		usr.client?.tooltips?.show(
+			TOOLTIP_HOVER, src,
+			mouse = params,
+			title = src.name,
+			content = (src.desc ? src.desc : null)
+		)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		usr.client?.tooltips?.hide(TOOLTIP_HOVER)
 
 	disposing() //probably best to do this?
 		if (src.the_item)
@@ -986,4 +985,18 @@
 		bandana.icon_state = "[initial(bandana.icon_state)][bandana.is_pulled_down ? "_down" : ""]"
 		if (H.wear_mask == bandana)
 			H.update_clothing()
+		..()
+
+
+/obj/ability_button/toggle_scope
+	name = "Toggle Scope"
+	icon_state = "scope_off"
+
+	execute_ability()
+		var/datum/component/holdertargeting/sniper_scope/scope = the_item.GetComponent(/datum/component/holdertargeting/sniper_scope)
+		SEND_SIGNAL(the_item, COMSIG_SCOPE_ENABLED, the_mob, !scope.enabled)
+		if (scope.enabled)
+			icon_state = "scope_on"
+		else
+			icon_state = "scope_off"
 		..()

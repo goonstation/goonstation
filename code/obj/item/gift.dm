@@ -47,7 +47,7 @@
 						boutput(user, SPAN_NOTICE("You need more paper!"))
 						return
 					src.amount -= a_used
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 					user.drop_item()
 					qdel(W)
 					var/obj/item/clothing/head/apprentice/A = new /obj/item/clothing/head/apprentice(src.loc)
@@ -68,7 +68,7 @@
 				return
 			else
 				src.amount -= a_used
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				user.drop_item()
 				var/obj/item/gift/G = W.gift_wrap(src.style)
 				G.add_fingerprint(user)
@@ -101,7 +101,7 @@
 			var/obj/spresent/present = new /obj/spresent (target.loc)
 			present.icon_state = "strange-[src.style]"
 			src.amount -= 2
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			target.set_loc(present)
 		else
@@ -243,7 +243,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/old_grenade/spawner/banana,
 	/obj/item/old_grenade/spawner/cheese_sandwich,
 	/obj/item/old_grenade/spawner/banana_corndog,
-	/obj/item/gimmickbomb/butt,
+	/obj/item/assembly/time_ignite_butt,
 	/obj/item/instrument/bikehorn,
 	/obj/item/instrument/bikehorn/dramatic,
 	/obj/item/instrument/bikehorn/airhorn,

@@ -317,7 +317,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			return 0
 
 /obj/deployable_turret/pod_wars/nt/activated
-	anchored=1
+	anchored=ANCHORED
 	active=1
 	deconstructable = FALSE
 
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			return 0
 
 /obj/deployable_turret/pod_wars/sy/activated
-	anchored=1
+	anchored=ANCHORED
 	active=1
 	deconstructable = FALSE
 	north
@@ -501,7 +501,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 //OK look, I made these objects, but I probably didn't need to. Setting the frequencies is done in the job equip.
 //Mainly I did it to give them the icon_override vars. Don't spawn these unless you want to set their secure frequencies yourself, because that's what you'd have to do. -Kyle
 /obj/item/device/radio/headset/pod_wars
-	protected_radio = 1
+	protected_radio = TRUE
 	var/team = 0
 
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
@@ -519,12 +519,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 #endif
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
-	name = "radio headset"
+	name = "nanotrasen headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a NanoTrasen frequency"
-	icon_state = "headset"
-	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
-	secure_classes = list(RADIOCL_COMMAND)
-	secure_colors = list("#0099cc")
+	icon_state = "command headset"
+	chat_class = RADIOCL_COMMAND
+	secure_frequencies = list("g" = R_FREQ_NANOTRASEN)
+	secure_classes = list("g" = RADIOCL_NANOTRASEN)
 	icon_override = "nt"
 	icon_tooltip = "NanoTrasen"
 	team = TEAM_NANOTRASEN
@@ -534,7 +534,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		icon_tooltip = "NanoTrasen Commander"
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen/comtac
-	name = "military headset"
+	name = "nanotrasen military headset"
 	icon_state = "radio" // blue enough
 	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 
@@ -543,13 +543,13 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		setProperty("disorient_resist_ear", 100)
 
 /obj/item/device/radio/headset/pod_wars/syndicate
-	name = "radio headset"
+	name = "syndicate headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a Syndicate frequency"
-	icon_state = "headset"
+	icon_state = "sec headset"
+	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
-	secure_classes = list(RADIOCL_SYNDICATE)
-	secure_colors = list("#ff69b4")
-	protected_radio = 1
+	secure_classes = list("g" = RADIOCL_NANOTRASEN)
+	protected_radio = TRUE
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate"
 	team = TEAM_SYNDICATE
@@ -559,7 +559,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		icon_tooltip = "Syndicate Commander"
 
 /obj/item/device/radio/headset/pod_wars/syndicate/comtac
-	name = "military headset"
+	name = "syndicate military headset"
 	icon_state = "comtac"
 	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 
@@ -891,8 +891,10 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	desc = "A collection of parts that can be used to make some kind of barricade."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "barricade"
-	var/object_type = /obj/barricade 		//object to deploy
-	var/build_duration = 2 SECONDS
+	var/object_type = /obj/barricade 		//!object to deploy
+	var/build_duration = 2 SECONDS			//!how long it takes to deploy it
+
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy the barricade on solid ground. Cannot be picked back up once deployed.")
 
 	New(loc)
 		..()
@@ -1113,7 +1115,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	/obj/item/reagent_containers/mender/burn,
 	/obj/item/reagent_containers/hypospray/emagged, // maybe fine. it'll be fine. i'm sure it's fine.
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
-	/obj/item/robodefibrillator,
+	/obj/item/robodefibrillator/recharging,
 	/obj/item/clothing/glasses/healthgoggles/upgraded,
 	/obj/item/suture )
 
@@ -1204,6 +1206,19 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	item_state = "nanotrasen_pilot"
 	team_num = TEAM_NANOTRASEN
 
+/obj/item/clothing/suit/space/pod_wars/NT/medic
+	name = "nanotrsen pod medic suit"
+	desc = "A space suit worn by Nanotrasen pod medics."
+	icon_state = "nanotrasen_medic"
+	item_state = "nanotrasen_pilot"
+
+
+/obj/item/clothing/suit/space/pod_wars/NT/eng
+	name = "nanotrasen pod engineer suit"
+	desc = "A space suit worn by Nanotrasen pod engineers."
+	icon_state = "nanotrasen_eng"
+	item_state = "nanotrasen_pilot"
+
 /obj/item/clothing/suit/space/pod_wars/NT/commander
 	name = "commander's great coat"
 	icon_state = "ntcommander_coat"
@@ -1238,6 +1253,19 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	team_num = TEAM_SYNDICATE
+
+/obj/item/clothing/suit/space/pod_wars/SY/medic
+	name = "syndicate pod medic suit"
+	desc = "A space suit worn by Syndicate pod medics."
+	icon_state = "syndicate_medic"
+	item_state = "space_suit_syndicate"
+
+
+/obj/item/clothing/suit/space/pod_wars/SY/eng
+	name = "syndicate pod engineer suit"
+	desc = "A space suit worn by Syndicate pod engineers."
+	icon_state = "syndicate_eng"
+	item_state = "space_suit_syndicate"
 
 /obj/item/clothing/suit/space/pod_wars/SY/commander
 	name = "commander's great coat"

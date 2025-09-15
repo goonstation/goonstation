@@ -1,16 +1,20 @@
 /*
 Contains:
--Base Tank
--Anesthetic/N2O Tank
--Jetpacks
--Oxygen Tank
--Emergency Oxygen Tank
--Air Tank
--Plasma Tank
+- Base Tanks
+	- Oxygen, Plasma, Air, Empty, Anesthetic subtypes
+- Jetpacks
+	- Mk2, Syndicate, Micro subtypes
+- Pocket Tanks
+	- Oxygen, Plasma, Air, Empty subtypes
+- Extended Pocket Tanks
+	- Oxygen, Plasma, Air, Empty subtypes
+- Mini Tanks
+	- Oxygen, Plasma, Air, Empty subtypes
 */
 
 #define TANK_VOLUME 70 LITERS //! The volume of a normal tank in litres
 
+ABSTRACT_TYPE(/obj/item/tank)
 /obj/item/tank
 	name = "tank"
 	desc = "A portable tank for holding pressurized gas. It can be worn on the back, or hooked up to a compatible receptacle."
@@ -325,154 +329,6 @@ Contains:
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
 
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/empty
-	name = "gas tank"
-	icon_state = "empty"
-
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/anesthetic
-	name = "gas tank (sleeping agent)"
-	icon_state = "anesthetic"
-	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
-	distribute_pressure = 81
-
-	New()
-		..()
-		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
-
-////////////////////////////////////////////////////////////
-
-TYPEINFO(/obj/item/tank/jetpack)
-	mats = 16
-
-/obj/item/tank/jetpack
-	name = "jetpack (oxygen)"
-	w_class = W_CLASS_BULKY
-	force = 8
-	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
-	distribute_pressure = 17
-	compatible_with_TTV = FALSE
-	abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
-
-	/// Is our propulsion enabled?
-	var/on = FALSE
-
-	// base_icon_state is used when updating the jetpack's icon, with "1" or "0" appended depending on if the jetpack is on or not
-	// jetpacks have special behavior on Manta, hence the overrides here
-	#if defined(MAP_OVERRIDE_MANTA)
-	icon_state = "jetpack_mag0"
-	item_state = "jetpack_mag"
-	c_flags = IS_JETPACK | ONBACK
-	var/base_icon_state = "jetpack_mag"
-	#else
-	icon_state = "jetpack0"
-	item_state = "jetpack"
-	var/base_icon_state = "jetpack"
-	#endif
-
-	New()
-		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
-		return
-
-	update_wear_image(mob/living/carbon/human/H, override)
-		src.wear_image.overlays = list(image(src.wear_image.icon, "[override ? "back-" : ""][base_icon_state][on]"))
-
-	proc/toggle()
-		src.on = !(src.on)
-		src.icon_state = "[base_icon_state][src.on]"
-		boutput(usr, SPAN_NOTICE("You [src.on ? "" : "de"]activate [src]'s propulsion."))
-		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
-		UpdateIcon()
-		if (ismob(src.loc))
-			var/mob/M = src.loc
-			M.update_clothing() // Immediately update the worn icon
-		return
-
-	proc/allow_thrust(num, mob/user)
-		#if defined(MAP_OVERRIDE_MANTA)
-		if (MagneticTether != 1)
-			return 0
-		#endif
-
-		if (!(src.on))
-			return 0
-		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
-			return 0
-
-		var/datum/gas_mixture/G = src.air_contents.remove(num)
-
-		if (G.oxygen >= 0.01)
-			return 1
-		if (G.toxins > 0.001)
-			if (user)
-				var/d = G.toxins / 2
-				d = min(abs(user.health + 100), d, 25)
-				user.TakeDamage("chest", 0, d)
-			return (G.oxygen >= 0.0075 ? 0.5 : 0)
-		else
-			if (G.oxygen >= 0.0075)
-				return 0.5
-			else
-				return 0
-
-/obj/item/tank/jetpack/jetpackmk2
-	name = "jetpack MKII (oxygen)"
-	icon_state = "jetpack_mk2_0"
-	base_icon_state = "jetpack_mk2_"
-	item_state = "jetpack_mk2_0"
-	desc = "Suitable for underwater work, this back-mounted DPV lets you glide through the ocean depths with ease."
-	extra_desc = "It comes pre-loaded with oxygen, which is used for internals as well as to power its propulsion system."
-	abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
-
-	toggle()
-		. = ..()
-		if (src.on)
-			src.setProperty("negate_fluid_speed_penalty", 0.6)
-		else
-			src.delProperty("negate_fluid_speed_penalty")
-		if (ismob(src.loc))
-			var/mob/M = src.loc
-			M.update_equipped_modifiers()
-
-
-/obj/item/tank/jetpack/syndicate
-	name = "jetpack (oxygen)"
-	icon_state = "sjetpack_mag0"
-	base_icon_state = "sjetpack_mag"
-	item_state = "redjetpack"
-	extra_desc = "It's painted in a sinister yet refined shade of red."
-
-	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-TYPEINFO(/obj/item/tank/jetpack/micro)
-	mats = 8
-
-/obj/item/tank/jetpack/micro
-	name = "micro-lite jetpack (oxygen)"
-	icon_state = "microjetpack0"
-	item_state = "microjetpack"
-	base_icon_state = "microjetpack"
-	extra_desc = "This one is the smaller variant, suitable for shorter ranged activities."
-	force = 6
-
-	New()
-		..()
-		src.air_contents.volume = 30
-		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
-		return
-////////////////////////////////////////////////////////////
-
 /obj/item/tank/oxygen
 	name = "gas tank (oxygen)"
 	icon_state = "oxygen"
@@ -484,104 +340,8 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/emergency_oxygen
-	name = "pocket oxygen tank"
-	icon_state = "pocket_oxtank"
-	flags = TABLEPASS | CONDUCT
-	c_flags = null
-	health = 5
-	w_class = W_CLASS_TINY
-	stamina_damage = 20
-	stamina_cost = 8
-	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
-	distribute_pressure = 17
-	compatible_with_TTV = FALSE
-
-	New()
-		..()
-		src.air_contents.volume = 3
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
-		return
-
-/obj/item/tank/emergency_oxygen/extended
-	name = "extended capacity pocket oxygen tank"
-	desc = "An extended capacity version of the pocket emergency oxygen tank."
-	icon_state = "ex_pocket_oxtank"
-	var/default_fill_mols = ONE_ATMOSPHERE * 60 / (R_IDEAL_GAS_EQUATION * T20C) //I think this is mols???
-
-	New()
-		..()
-		src.air_contents.volume = 6
-		src.air_contents.oxygen = src.default_fill_mols
-		return
-
-	empty
-
-		New()
-			..()
-			src.air_contents.oxygen = null
-			return
-	plasma
-		name = "extended capacity plasma tank"
-		desc = "A standard extended capacity oxygen tank that someone has filled with plasma. Wow!"
-		icon_state = "ex_pocket_plastank"
-
-		New()
-			..()
-			src.air_contents.oxygen = null
-			src.air_contents.toxins = src.default_fill_mols
-
-
-/obj/item/tank/mini_oxygen
-	name = "mini oxygen tank"
-	icon_state = "mini_oxtank"
-	item_state = "mini_oxtank"
-	flags = TABLEPASS | CONDUCT
-	c_flags = ONBELT
-	health = 5
-	w_class = W_CLASS_NORMAL
-	force = 4
-	stamina_damage = 30
-	stamina_cost = 16
-	desc = "A personal oxygen tank meant to keep you alive in an emergency. This one hooks directly to your jumpsuit's belt. To use, put on a secure mask and open the tank's release valve."
-	wear_image_icon = 'icons/mob/clothing/belt.dmi'
-	distribute_pressure = 17
-	compatible_with_TTV = FALSE
-
-	New()
-		..()
-		src.air_contents.volume = 15
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
-		return
-
-	empty
-		New()
-			..()
-			src.air_contents.oxygen = null
-			return
-
-
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/air
-	name = "gas tank (air mix)"
-	icon_state = "airmix"
-	item_state = "airmix"
-	extra_desc = "The white paintwork indicates a breathable air mix."
-	distribute_pressure = 81
-
-	New()
-		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
-		return
-
-////////////////////////////////////////////////////////////
-
 /obj/item/tank/plasma
-	name = "gas tank (BIOHAZARD)"
+	name = "gas tank (plasma)"
 	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
 	icon_state = "plasma"
 	item_state = "plasma"
@@ -603,8 +363,13 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		return " [log_atmos(src)]"
 
 	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//lets make them contraband 4, like pipebombs
+		var/singletank_bomb_contraband_level = 4
 		//we need to add the new icon for the plasma tank
 		parent_assembly.target_item_prefix = "plasma"
+		// we update the contraband now to reflect the newly added tank
+		APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_GUNS, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), singletank_bomb_contraband_level))
+		SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 
 	/// ----------------------------------------------
 
@@ -664,10 +429,255 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		if(src.master) qdel(src.master)
 		qdel(src)
 
-/obj/item/tank/mini_plasma
-	name = "mini plasma tank"
-	icon_state = "mini_plastank"
-	item_state = "mini_plastank"
+/obj/item/tank/air
+	name = "gas tank (air mix)"
+	icon_state = "airmix"
+	item_state = "airmix"
+	extra_desc = "The white paintwork indicates a breathable air mix."
+	distribute_pressure = 81
+
+	New()
+		..()
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		return
+/obj/item/tank/empty
+	name = "gas tank"
+	icon_state = "empty"
+
+/obj/item/tank/anesthetic
+	name = "gas tank (sleeping agent)"
+	icon_state = "anesthetic"
+	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
+	distribute_pressure = 81
+
+	New()
+		..()
+		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+
+// ==== JETPACKS ====
+
+TYPEINFO(/obj/item/tank/jetpack)
+	mats = 16
+/obj/item/tank/jetpack
+	name = "jetpack (oxygen)"
+	w_class = W_CLASS_BULKY
+	force = 8
+	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
+	distribute_pressure = 17
+	compatible_with_TTV = FALSE
+	abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
+
+	/// Is our propulsion enabled?
+	var/on = FALSE
+
+	// base_icon_state is used when updating the jetpack's icon, with "1" or "0" appended depending on if the jetpack is on or not
+	icon_state = "jetpack0"
+	item_state = "jetpack"
+	var/base_icon_state = "jetpack"
+
+	New()
+		..()
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon, "[override ? "back-" : ""][base_icon_state][on]"))
+
+	proc/toggle()
+		src.on = !(src.on)
+		src.icon_state = "[base_icon_state][src.on]"
+		boutput(usr, SPAN_NOTICE("You [src.on ? "" : "de"]activate [src]'s propulsion."))
+		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
+		UpdateIcon()
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.update_clothing() // Immediately update the worn icon
+		return
+
+	proc/allow_thrust(num, mob/user)
+		if (!(src.on))
+			return 0
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
+			return 0
+
+		var/datum/gas_mixture/G = src.air_contents.remove(num)
+
+		if (G.oxygen >= 0.01)
+			return 1
+		if (G.toxins > 0.001)
+			if (user)
+				var/d = G.toxins / 2
+				d = min(abs(user.health + 100), d, 25)
+				user.TakeDamage("chest", 0, d)
+			return (G.oxygen >= 0.0075 ? 0.5 : 0)
+		else
+			if (G.oxygen >= 0.0075)
+				return 0.5
+			else
+				return 0
+
+/obj/item/tank/jetpack/jetpackmk2
+	name = "jetpack MKII (oxygen)"
+	icon_state = "jetpack_mk2_0"
+	base_icon_state = "jetpack_mk2_"
+	item_state = "jetpack_mk2_0"
+	desc = "Suitable for underwater work, this back-mounted DPV lets you glide through the ocean depths with ease."
+	extra_desc = "It comes pre-loaded with oxygen, which is used for internals as well as to power its propulsion system."
+	abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
+
+	toggle()
+		. = ..()
+		if (src.on)
+			src.setProperty("negate_fluid_speed_penalty", 0.6)
+		else
+			src.delProperty("negate_fluid_speed_penalty")
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.update_equipped_modifiers()
+
+/obj/item/tank/jetpack/syndicate
+	name = "jetpack (oxygen)"
+	icon_state = "sjetpack_mag0"
+	base_icon_state = "sjetpack_mag"
+	item_state = "redjetpack"
+	extra_desc = "It's painted in a sinister yet refined shade of red."
+
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+TYPEINFO(/obj/item/tank/jetpack/micro)
+	mats = 8
+/obj/item/tank/jetpack/micro
+	name = "micro-lite jetpack (oxygen)"
+	icon_state = "microjetpack0"
+	item_state = "microjetpack"
+	base_icon_state = "microjetpack"
+	extra_desc = "This one is the smaller variant, suitable for shorter ranged activities."
+	force = 6
+
+
+	New()
+		..()
+		src.air_contents.volume = 30
+		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+// ==== POCKET TANKS ====
+ABSTRACT_TYPE(/obj/item/tank/pocket)
+/obj/item/tank/pocket
+	name = "pocket tank"
+	desc = "A tiny personal tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	flags = TABLEPASS | CONDUCT
+	c_flags = null
+	health = 5
+	w_class = W_CLASS_TINY
+	stamina_damage = 20
+	stamina_cost = 8
+	compatible_with_TTV = FALSE
+
+	New()
+		..()
+		src.air_contents.volume = 3
+
+/obj/item/tank/pocket/oxygen
+	name = "pocket tank (oxygen)"
+	icon_state = "pocket_oxtank"
+	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+/obj/item/tank/pocket/plasma
+	name = "pocket tank (plasma)"
+	icon_state = "pocket_plasma"
+	extra_desc = "The bright orange paintwork indicates that it contains plasma."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.toxins = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+/obj/item/tank/pocket/air
+	name = "pocket tank (air mix)"
+	icon_state = "pocket_airmix"
+	extra_desc = "The white paintwork indicates a breathable air mix."
+	distribute_pressure = 81
+
+	New()
+		..()
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		return
+
+/obj/item/tank/pocket/empty
+	name = "pocket tank"
+	icon_state = "pocket_empty"
+	extra_desc = "The dull grey paintwork indicates that it may not contain anything."
+
+// ==== EXTENDED POCKET TANKS ====
+ABSTRACT_TYPE(/obj/item/tank/pocket/extended)
+/obj/item/tank/pocket/extended
+	name = "extended capacity pocket tank"
+	desc = "An extended capacity version of the pocket emergency tank. To use, put on a secure mask and open the tank's release valve."
+	var/default_fill_mols = ONE_ATMOSPHERE * 60 / (R_IDEAL_GAS_EQUATION * T20C) //I think this is mols???
+
+	New()
+		..()
+		src.air_contents.volume = 6
+
+/obj/item/tank/pocket/extended/oxygen
+	name = "extended capacity pocket tank (oxygen)"
+	icon_state = "ex_pocket_oxtank"
+	extra_desc = "The bright yellow and deep blue paintwork indicates that it contains oxygen."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.oxygen = src.default_fill_mols
+
+/obj/item/tank/pocket/extended/plasma
+	name = "extended capacity pocket tank (plasma)"
+	icon_state = "ex_pocket_plastank"
+	extra_desc = "The bright yellow and orange paintwork indicates that it contains plasma."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.toxins = src.default_fill_mols
+
+/obj/item/tank/pocket/extended/air
+	name = "extended capacity pocket tank (air mix)"
+	icon_state = "ex_pocket_airmix"
+	extra_desc = "The bright yellow and white paintwork indicates that it contains a breathable airmix."
+	distribute_pressure = 81
+
+	New()
+		..()
+		src.air_contents.oxygen = src.default_fill_mols * O2STANDARD
+		src.air_contents.nitrogen = src.default_fill_mols * N2STANDARD
+
+/obj/item/tank/pocket/extended/empty
+	name = "extended capacity pocket tank"
+	icon_state = "ex_pocket_empty"
+	extra_desc = "The bright yellow and dull grey paintwork indicates that it may not contain anything."
+
+// ==== MINI TANKS ====
+ABSTRACT_TYPE(/obj/item/tank/mini)
+/obj/item/tank/mini
+	name = "mini tank"
+	icon_state = "mini_empty"
+	item_state = "mini_empty"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
@@ -675,10 +685,40 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	force = 4
 	stamina_damage = 30
 	stamina_cost = 16
-	desc = "This orange gas tank is used to contain toxic, volatile plasma. This one hooks directly to your jumpsuit's belt."
+	desc = "A belt-worn tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
 	compatible_with_TTV = FALSE
+
+	New()
+		..()
+		src.air_contents.volume = 15
+
+/obj/item/tank/mini/oxygen
+	name = "mini tank (oxygen)"
+	icon_state = "mini_oxtank"
+	item_state = "mini_oxtank"
+	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	empty // for printed mini tanks
+		New()
+			..()
+			src.air_contents.oxygen = null
+			return
+
+/obj/item/tank/mini/plasma
+	name = "mini tank (plasma)"
+	icon_state = "mini_plastank"
+	item_state = "mini_plastank"
+	extra_desc = "The bright orange paintwork indicates that it contains plasma."
+	compatible_with_TTV = FALSE
+	distribute_pressure = 17
 
 	New()
 		..()
@@ -686,10 +726,27 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		src.air_contents.toxins = (ONE_ATMOSPHERE) * 100 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
-	empty
+	empty // for printed mini tanks
 		New()
 			..()
 			src.air_contents.toxins = null
 			return
+
+/obj/item/tank/mini/air
+	name = "mini tank (air mix)"
+	icon_state = "mini_airmix"
+	item_state = "mini_airmix"
+	extra_desc = "The white paintwork indicates a breathable air mix."
+	distribute_pressure = 81
+
+	New()
+		..()
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+
+
+/obj/item/tank/mini/empty
+	icon_state = "mini_empty"
+	item_state = "mini_empty"
 
 #undef TANK_VOLUME

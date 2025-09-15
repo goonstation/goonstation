@@ -88,7 +88,7 @@ var/list/pw_rewards_tier3 = null
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
-		if (player.ready && player.mind)
+		if (player.ready_play && player.mind)
 			readied_minds += player.mind
 
 	if (islist(readied_minds))
@@ -403,6 +403,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		board?.bar_SY.points = team.points
 		animate(board.bar_SY, transform = M1, pixel_x = offset, time = 10)
 
+	board.desc = "NT Points: [board?.bar_NT.points]\n SY Points: [board?.bar_SY.points]"
+
 //check which team they are on and iff they are a commander for said team. Deduct/award points
 //Oh man, this is fucking bad. Before I had my "system" set up where I just check for the mind.special_role,
 //I should fix this soon, but it works good enough for now... -kyle 4/20/21
@@ -652,13 +654,13 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	icon = 'icons/misc/128x32.dmi'
 	icon_state = "pw_backboard"
 	screen_loc = "NORTH, CENTER"
+	show_tooltip = TRUE
 	var/atom/movable/screen/border = null
 	var/atom/movable/screen/pw_score_bar/bar_NT = null
 	var/atom/movable/screen/pw_score_bar/bar_SY = null
 
 	var/list/control_points
 
-	var/theme = null
 	alpha = 150
 
 	//builds all the pieces and adds em to the score_board whose sprite is the backboard
@@ -698,22 +700,6 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 			if (true_name == C.true_name)
 				C.change_color(team_num)
 				break;	//Only ever gonna be one of em.
-
-
-	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = "NT Points: [bar_NT.points]\n SY Points: [bar_SY.points]",
-				"theme" = theme
-			))
-
-	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
 
 /atom/movable/screen/pw_score_bar
 	icon = 'icons/misc/128x32.dmi'
@@ -831,15 +817,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	New()
 		..()
 		/obj/item/shipcomponent/mainweapon/phaser/short
-
-		src.m_w_system = new weapon_type( src )
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
-
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock/pw_id( src )
-		src.lock.ship = src
-		src.components += src.lock
-
+		src.install_part(null, new weapon_type(src), POD_PART_MAIN_WEAPON)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/pw_id(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -850,10 +829,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		// src.sensors = new /obj/item/shipcomponent/sensor/mining( src )
 		// src.sensors.ship = src
 		// src.components += src.sensors
-
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/orescoop( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/orescoop(src), POD_PART_SECONDARY)
 
 
 	nanotrasen

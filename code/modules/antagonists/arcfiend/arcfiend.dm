@@ -2,6 +2,7 @@
 	id = ROLE_ARCFIEND
 	display_name = "arcfiend"
 	antagonist_icon = "arcfiend"
+	wiki_link = "https://wiki.ss13.co/Arcfiend"
 
 	/// The ability holder of this arcfiend, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/arcfiend/ability_holder
@@ -40,7 +41,8 @@
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/arcfiend)
 
 	assign_objectives()
-		new /datum/objective_set/arcfiend(src.owner, src)
+		var/datum/objective_set/objective_set_path = pick(typesof(/datum/objective_set/arcfiend))
+		new objective_set_path(src.owner, src)
 
 	handle_round_end()
 		. = ..()
@@ -58,4 +60,8 @@
 				"name" = "Hearts Stopped",
 				"value" = "[src.ability_holder.hearts_stopped] hearts",
 			),
+			list(
+				"name" = "Machines Overloaded",
+				"value" = "[src.ability_holder.machines_overloaded] machines",
+			)
 		)

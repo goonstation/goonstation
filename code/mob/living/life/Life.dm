@@ -257,9 +257,6 @@
 				continue
 			L.Process(environment)
 
-		for (var/obj/item/implant/I in src.implant)
-			I.on_life(life_mult)
-
 		update_item_abilities()
 
 		if (!isdead(src)) //still breathing
@@ -395,8 +392,6 @@
 		if (src.health < 0)
 			death()
 
-	process_killswitch()
-	process_locks()
 	update_canmove()
 
 	for (var/obj/item/parts/robot_parts/part in src.contents)
@@ -420,9 +415,7 @@
 			// sure keep trying to use power i guess.
 			use_power()
 
-
 	hud.update()
-	process_killswitch()
 
 /mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -452,14 +445,6 @@
 	if (hud)
 		hud.update_charge()
 		hud.update_tools()
-
-/mob/living/intangible/seanceghost/Life(parent)
-	if (..(parent))
-		return 1
-	if (!src.abilityHolder)
-		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
-	else if (src.health < src.max_health)
-		src.health++
 
 /mob/living/object/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

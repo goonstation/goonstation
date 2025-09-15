@@ -20,7 +20,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	layer = FLUID_LAYER
 	flags = UNCRUSHABLE | OPENCONTAINER
 
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 	var/finalcolor = "#ffffff"
 	color = "#ffffff"
@@ -57,7 +57,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	var/last_depth_level = 0
 	var/touched_channel = 0
 
-	var/list/wall_overlay_images = 0 //overlay bits onto a wall to make the water look deep. This is a cache of those overlays.
+	var/list/wall_overlay_images = null //overlay bits onto a wall to make the water look deep. This is a cache of those overlays.
 	//var/list/floated_atoms = 0 //list of atoms we triggered a float anim on (cleanup later on qdel())
 
 	var/is_setup = 0
@@ -557,8 +557,11 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if ((color_changed || last_icon != icon_state) && last_spread_was_blocked)
 			src.update_perspective_overlays()
 
+		if (src.icon_state == "15" && src.last_depth_level >= 2)
+			src.icon_state = "15-lines"
+
 	proc/update_perspective_overlays() // fancy perspective overlaying
-		if (icon_state != "15") return
+		if (icon_state != "15" && icon_state != "15-lines") return
 		var/blocked = 0
 		for( var/dir in cardinal )
 			if (dir == SOUTH) //No south perspective
@@ -611,6 +614,10 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			src.ClearAllOverlays()
 		else if(key && wall_overlay_images && wall_overlay_images[key])
 			src.ClearSpecificOverlays(key)
+
+		if (!src.last_depth_level < 2)
+			if (src.icon_state == "15-lines")
+				src.icon_state = "15"
 
 	proc/debug_search()
 		var/list/C = src.get_connected_fluids()
@@ -676,7 +683,27 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			I.color = F.finalcolor
 			I.alpha = F.finalalpha
 		src.show_submerged_image(F.my_depth_level)
+
+	if (F.my_depth_level == 1 && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING) && !src.throwing)
+		new /obj/decal/puddle_ripple(null, F)
+
 	..()
+
+/obj/decal/puddle_ripple
+	icon = 'icons/obj/fluid.dmi'
+	icon_state = "ripple"
+	plane = PLANE_DEFAULT
+	blend_mode = BLEND_INSET_OVERLAY
+
+	New(newLoc, obj/fluid/fluid)
+		..()
+		src.pixel_x += rand(-10, 10)
+		src.pixel_y += rand(-10, 10)
+		src.loc = fluid
+		fluid.vis_contents += src
+		SPAWN(1 SECOND)
+			fluid.vis_contents -= src
+			qdel(src)
 
 /mob/living/ExitedFluid(obj/fluid/F as obj)
 	if (src.is_submerged == 0) return

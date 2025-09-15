@@ -359,6 +359,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
+///Strip out weird illegal characters that TGUI discards anyway, see `\improper` and other Byond lunacy
+/proc/strip_illegal_characters(text)
+	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
+	return whitelistedWords.Replace("[text]", "")
+
 ///Cleans up data passed in from network packets for display so it doesn't mess with formatting
 /proc/tidy_net_data(var/t)
 	. = isnum(t) ? t : strip_html(t)
@@ -418,25 +423,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	var/start = length(text) - length(suffix)
 	if(start)
 		. = findtext(text, suffix, start, null) //was findtextEx
-
-/**
- * Given a message, returns a list containing the radio prefix and the message,
- * so that the message can be manipulated seperately in various functions.
- */
-/proc/separate_radio_prefix_and_message(var/message)
-	var/prefix = null
-
-	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-		prefix = copytext(message, 1, 4)
-		message = copytext(message, 4)
-	else if (dd_hasprefix(message, ":"))
-		prefix = copytext(message, 1, 3)
-		message = copytext(message, 3)
-	else if (dd_hasprefix(message, ";"))
-		prefix = ";"
-		message = copytext(message, 2)
-
-	return list(prefix, message)
 
 /proc/dd_centertext(message, length)
 	. = length(message)
@@ -616,6 +602,15 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 /proc/IsGuestKey(key)
 	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
+/**
+ * Returns true if the given client is a local client
+ */
+/proc/IsLocalClient(client/C)
+	#ifdef LIVE_SERVER
+	. = FALSE
+	#else
+	. = !C.address || C.address == world.host || C.address == "127.0.0.1"
+	#endif
 
 /**
  * Returns f, ensured that it's a valid frequency
@@ -669,12 +664,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/ghostdrone/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
-	for(var/mob/zoldorf/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/intangible/seanceghost/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 
@@ -1023,6 +1012,18 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		pos++
 	return copytext(sanitize(output), 1, MAX_MESSAGE_LEN)
 
+
+// Some BYOND builtins don't work with `PROC_REF`, so they need to be wrapped.
+/proc/replacetext_wrapper(haystack, needle, replacement, start = 1, end = 0)
+	return replacetext(haystack, needle, replacement, start, end)
+
+/proc/uppertext_wrapper(string)
+	return uppertext(string)
+
+/proc/ckeyEx_wrapper(string)
+	return ckeyEx(string)
+
+
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
 	if(!M || !M.client)
 		return
@@ -1125,14 +1126,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			return "northwest"
 		if(SOUTHWEST)
 			return "southwest"
-
-// Marquesas: added an extra parameter to fix issue with changeling.
-// Unfortunately, it has to be this extra parameter, otherwise the spawn(0) in the mob say will
-// cause the mob's name to revert from the one it acquired for mimic voice.
-/atom/proc/hear_talk(mob/M as mob, text, real_name, lang_id)
-	if (src.open_to_sound)
-		for(var/obj/O in src)
-			O.hear_talk(M,text,real_name, lang_id)
 
 /**
  * Returns true if given value is a hex value
@@ -1381,7 +1374,7 @@ proc/outermost_movable(atom/movable/target)
 	else if(ghostjump)
 		text += "<a href='byond://winset?command=.ghostjump [x] [y] [z]' title='Jump to Coords'>[x],[y],[z]</a>"
 	else
-		text += "<a href='?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
+		text += "<a href='byond://?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
 	return text
 
 // hi I'm haine -throws more crap onto the pile-
@@ -1584,7 +1577,7 @@ proc/formatTimeText(var/timeValue as num)
 /proc/antag_token_list() //List of all players redeeming antagonist tokens
 	var/list/token_list = list()
 	for(var/mob/new_player/player in mobs)
-		if((player.client) && (player.ready) && ((player.client.using_antag_token)))
+		if((player.client) && (player.ready_play) && ((player.client.using_antag_token)))
 			token_list += player.mind
 	if (!token_list.len)
 		return 0
@@ -1935,7 +1928,7 @@ proc/countJob(rank)
 				if (L.nodamage)
 					. = TRUE
 			else
-				if (L.nodamage || L.spellshield)
+				if (L.nodamage || L.hasStatus("spellshield"))
 					. = TRUE
 		if (source && istype(source, /obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -2245,7 +2238,7 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 /// Repeat a gradient between two colors across text.
 /// Note: This is inaccurate because its a linear transformation, but human eyes do not perceive color this way.
-/proc/gradientText(color_1, color_2, message)
+/proc/gradientText(color_1, color_2, message, mutable_tags = FALSE)
 	var/list/color_list_1 = rgb2num(color_1)
 	var/list/color_list_2 = rgb2num(color_2)
 
@@ -2280,8 +2273,13 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 			dir = -1
 
 		var/col = rgb(r1 + delta_r*coeff, g1 + delta_g*coeff, b1 + delta_b*coeff)
-		var/chars = copytext(message, i, i + 3)
-		result += "<span style='color:[col]'>[chars]</span>"
+		if (mutable_tags)
+			result += MAKE_CONTENT_IMMUTABLE("<span style='color:[col]'>")
+			result += copytext(message, i, i + 3)
+			result += MAKE_CONTENT_IMMUTABLE("</span>")
+
+		else
+			result += "<span style='color:[col]'>[copytext(message, i, i + 3)]</span>"
 
 	. = jointext(result, "")
 
@@ -2481,6 +2479,10 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
+		M.hasStatus("lockdown_robot") || \
+		M.hasStatus("lockdown_ai") || \
+		M.hasStatus("no_power_robot") || \
+		M.hasStatus("no_cell_robot") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
@@ -2563,6 +2565,18 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		. += point - prev
 		prev = point
 
+/**Replaces tokens in an input string with a desired replacement token from a text file. Primarily used for accents and similar speech modifiers.
+ * Tokens are separated by whitespace.
+*/
+/proc/find_replace_in_string(input, text_file_path = "language/pirate.txt")
+	var/list/tokens = splittext(input, regex("\\b", "i"))
+	var/list/modded_tokens = list()
+	for (var/token in tokens)
+		var/replacement = strings(text_file_path, lowertext(token), 1)
+		if (replacement)
+			token = replacetext(token, lowertext(token), replacement)
+		modded_tokens += token
+	. = jointext(modded_tokens, "")
 
 /// Returns the sum of densities of all atoms in the given turf including the turf itself
 proc/total_density(turf/T)
@@ -2584,37 +2598,15 @@ proc/total_cross(turf/T, atom/movable/mover)
 // Used to send a message to all ghosts when something Interesting has happened
 // Any message sent to this should just be a funny comment on something logged elsewhere,
 // so they probably don't need to be logged here again (e.g. death alerts)
-proc/message_ghosts(var/message, show_wraith = FALSE)
-	if (!message)
-		return
 
-	var/rendered = SPAN_DEADSAY("[message]")
-	for (var/client/C)
-		if (C.deadchatoff) continue
-		if (!C.mob) continue
-		var/mob/M = C.mob
-		if (istype(M, /mob/new_player)) continue
+var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
 
-		// If an admin, show message
-		if (M.try_render_chat_to_admin(C, rendered))
-			// admin saw message, no need to continue tests
-			continue
+/proc/message_ghosts(message, show_wraith = FALSE)
+	var/list/mob/living/intangible/wraith/wraiths = list()
+	for (var/datum/antagonist/antagonist_datum as anything in global.get_all_antagonists(ROLE_WRAITH))
+		wraiths[antagonist_datum.owner.current] = TRUE
 
-		// Skip forced-observers (hivemind, etc)
-		if (istype(M, /mob/dead/target_observer))
-			var/mob/dead/target_observer/tobserver = M
-			if(!tobserver.is_respawnable)
-				continue
-
-		// Skip the wraith if show_wraith is off or they have deadchat off
-		if (iswraith(M))
-			var/mob/living/intangible/wraith/the_wraith = M
-			if (!show_wraith || !the_wraith.hearghosts)
-				continue
-
-		// Otherwise, output to ghosts
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
-			boutput(M, rendered)
+	global.deadchat_announcer.say(message, flags = SAYFLAG_IGNORE_HTML, message_params = list("atom_listeners_to_be_excluded" = wraiths))
 
 /// Find a client based on ckey
 /proc/find_client(ckey)

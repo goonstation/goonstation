@@ -99,13 +99,28 @@ TYPEINFO(/datum/component/glue_ready)
 			return FALSE
 
 	var/datum/component/glued/maybe_glued_component = glued_to.GetComponent(/datum/component/glued)
+	var/depth = 0
 	while(istype(maybe_glued_component))
+		depth++
 		if(maybe_glued_component.glued_to == thing_glued)
 			if(user)
 				boutput(user, SPAN_ALERT("You can't glue [thing_glued] to [glued_to] because [glued_to] is already glued to [thing_glued]."))
 			return FALSE
 		maybe_glued_component = maybe_glued_component.glued_to.GetComponent(/datum/component/glued)
+
+	depth += src.potential_glue_height(thing_glued)
+
+	if (depth >= 10)
+		boutput(user, SPAN_ALERT("There's just too much glue here, any more and it might collapse into a gluegularity!"))
+		return
 	return TRUE
+
+///How deep is the stack already glued to this object
+/datum/component/glue_ready/proc/potential_glue_height(atom/movable/gluing)
+	var/height = 1
+	for (var/atom/movable/glued in gluing.attached_objs)
+		height += src.potential_glue_height(glued)
+	return height
 
 /datum/component/glue_ready/proc/glue_things(atom/movable/glued_to, atom/movable/thing_glued, mob/user=null, mob/log_user=null)
 	if(isnull(log_user))
@@ -116,7 +131,10 @@ TYPEINFO(/datum/component/glue_ready)
 		maybe_sticker = glued_to
 	if(!gluability_check(glued_to, thing_glued, user))
 		return
-	thing_glued.AddComponent(/datum/component/glued, glued_to, src.dries_up_timestamp - TIME, src.glue_removal_time)
+	var/new_timestamp = null
+	if (src.dries_up_timestamp)
+		new_timestamp = src.dries_up_timestamp - TIME
+	thing_glued.AddComponent(/datum/component/glued, glued_to, new_timestamp, src.glue_removal_time)
 	var/turf/T = get_turf(glued_to)
 	if(user)
 		T.visible_message(SPAN_NOTICE("[user] glues [thing_glued] to [glued_to]."))

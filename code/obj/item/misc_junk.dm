@@ -381,12 +381,12 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			src.emagged = 1
 		return 1
 
-	attackby(obj/item/reagent_containers/ecig_refill_cartridge/E, mob/usr) //you may call this redundantly overdoing it. I say fuck you
+	attackby(obj/item/reagent_containers/ecig_refill_cartridge/E, mob/user) //you may call this redundantly overdoing it. I say fuck you
 		if (istype(E, /obj/item/reagent_containers/ecig_refill_cartridge))
 			if (!E.reagents.total_volume)
-				usr.show_text("\The [src] is empty.", "red")
+				user.show_text("\The [src] is empty.", "red")
 				return
-			usr.show_text("You refill the [src] with the cartridge.", "red")
+			user.show_text("You refill the [src] with the cartridge.", "red")
 			E.reagents.trans_to(src, 50)
 			src.reagents.add_reagent("nicotine", 50)
 			qdel(E) //this technically implies that vapes infinitely eat these refills. I say the catriges are made of pure nicotine and are slowly absorbed
@@ -481,6 +481,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	density = 1
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell"
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_WRENCH
 	var/last_ring = 0
 

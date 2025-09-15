@@ -285,11 +285,18 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/turf/T in view(1, attacked))
 			harmless_smoke_puff(get_turf(T))
 
-/datum/materialProc/gold_add
+/datum/materialProc/sparkles_add
 	desc = "It's very shiny."
-	execute(var/location)
+	execute(var/atom/location)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
 			particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(location))
+		return
+
+/datum/materialProc/sparkles_remove
+	desc = "All that glitters is not gold."
+	execute(var/atom/location)
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
+			particleMaster.RemoveSystem(/datum/particleSystem/sparkles, location)
 		return
 
 /datum/materialProc/telecrystal_entered
@@ -470,26 +477,28 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, 1)
 		return
 
 /datum/materialProc/radioactive_remove
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		if (!isturf(location))
+			animate(location)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 		return
 
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		if (!isturf(location))
+			animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, 1)
 		return
 
 /datum/materialProc/n_radioactive_remove
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		if (!isturf(location))
+			animate(location)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 		return
@@ -551,8 +560,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/mob/M, var/obj/item/I, mult)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
-			if (C.bodytemperature > 0)
-				C.bodytemperature -= 2
+			C.changeBodyTemp(-2 KELVIN)
 			if (C.bodytemperature > T0C && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
@@ -591,7 +599,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				var/mob/living/object/OB = new/mob/living/object(owner.loc, owner, mobenter)
 				OB.health = 8
 				OB.max_health = 8
-				OB.canspeak = 0
+				OB.can_use_say = FALSE
 				OB.show_antag_popup("soulsteel")
 
 /datum/materialProc/reflective_onbullet
@@ -611,10 +619,102 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate_levitate(owner)
 		return
 
+// Apply HSL colorspace filter. Typically used for turning everything into a single color while still having some grayscale remaining.
+/datum/materialProc/add_color_hsl
+	max_generations = 0 // No need to apply the same single-color visuals to the subtypes
+	var/list/color_matrix = null
+
+	execute(var/atom/owner)
+		var/added_mat_id = owner.material.getID()
+		if(!owner.mat_changeappearance)
+			return
+		if(endswith(owner.icon_state, "$$[added_mat_id]")) // Ignore if it is a material version of a sprite
+			return
+		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
+			return
+		var/color_filter = color_matrix_filter(color_matrix, FILTER_COLOR_HSL)
+		owner.add_filter("[added_mat_id]_color", 5, color_filter)
+		return
+
+	bohrum
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.60, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.33, 0.10, 0.00, 0.00)
+
+	claretine
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.60, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.00, 0.10, 0.00, 0.00)
+
+	cerenkite
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.40, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.60, 0.10, 0.00, 0.00)
+
+	mauxite
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.35, 0.00, 0.00,\
+							0.00, 0.00, 0.90, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.00, 0.05, -0.10, 0.00)
+
+	soulsteel
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.80, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.00, 0.20, 0.00, 0.00)
+
+/datum/materialProc/remove_color_hsl
+	execute(atom/owner)
+		var/removed_mat_id = owner.material.getID()
+		owner.remove_filter("[removed_mat_id]_color")
+
 /datum/materialProc/spacelag_add
 	execute(atom/owner)
+		if(endswith(owner.icon_state, "$$spacelag"))
+			return
 		if (!isturf(owner))
 			animate_lag(owner)
+			var/outline_filter = outline_filter(1, "#003800", OUTLINE_SHARP) // Outline color gets changed by material color
+			owner.add_filter("spacelag_outline", 20, outline_filter)
+		return
+
+/datum/materialProc/spacelag_remove
+	execute(var/atom/location)
+		location.remove_filter("spacelag_outline")
+		return
+
+/datum/materialProc/honey_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$honey") || ("honey" in location.get_typeinfo().mat_appearances_to_ignore))
+			return
+		var/offset = 0
+		if(!isturf(location))
+			offset = rand()
+		var/wave_filter = wave_filter(16, 16, 1, offset, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		location.add_filter("honey_wave", 20, wave_filter)
+
+		var/list/honey_matrix = list(0.00, 0.00, 0.00, 0.00,\
+									0.00, 0.30, 0.00, 0.00,\
+									0.00, 0.00, 1.00, 0.00,\
+									0.00, 0.00, 0.00, 1.00,\
+									0.10, 0.70, 0.00, 0.00)
+		var/color_filter = color_matrix_filter(honey_matrix, FILTER_COLOR_HSL)
+		location.add_filter("honey_color", 21, color_filter)
+		return
+
+/datum/materialProc/honey_remove
+	execute(var/atom/location)
+		location.remove_filter("honey_color")
+		location.remove_filter("honey_wave")
+		return
 
 /datum/materialProc/temp_miraclium
 	execute(var/atom/location, var/temp)
@@ -793,3 +893,41 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
 		else
 			I.material.removeProperty("n_radioactive")
+
+/datum/materialProc/shock_life
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
+			return
+		if (istype(L))
+			L.shock(I, src.wattage, "All", 1, FALSE)
+
+/datum/materialProc/arcflash_life
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_arcflash", rand(cd_min, cd_max)))
+			return
+		if (!istype(L))
+			return
+		if (!isturf(L.loc) || prob(10))
+			L.shock(I, src.wattage, "All", 1.5, TRUE)
+		else
+			arcFlashTurf(L, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), src.wattage, 100)

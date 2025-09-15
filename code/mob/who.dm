@@ -6,6 +6,7 @@
 	var/list/whoAdmins = list()
 	var/list/whoMentors = list()
 	var/list/whoNormies = list()
+	var/list/whoPreAuth = list()
 
 	for (var/client/C as anything in clients)
 		if (!C || !C.mob) continue
@@ -13,7 +14,7 @@
 		//Admins
 		if (C.holder)
 			if (usr.client.holder) //The viewer is an admin, we can show them stuff
-				var/thisW = "<a href='?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='adminooc text-normal'>"
+				var/thisW = "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='adminooc text-normal'>"
 				if (C.stealth)
 					if (C.fakekey)
 						thisW += "<i>[C.key] (stealthed as [C.fakekey])</i>"
@@ -44,7 +45,7 @@
 		else if (C.can_see_mentor_pms())
 			var/thisW
 			if (usr.client.holder)
-				thisW += "<a href='?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='mentorooc text-normal'>"
+				thisW += "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='mentorooc text-normal'>"
 			else
 				thisW += "<span class='mentorooc text-normal'>"
 
@@ -55,12 +56,18 @@
 		else
 			var/thisW
 			if (usr.client.holder)
-				thisW += "<a href='?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='ooc text-normal'>"
+				thisW += "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='ooc text-normal'>"
 			else
 				thisW += "<span class='ooc text-normal'>"
 
 			thisW += C.key + (usr.client.holder ? "</a>" : "</span>")
 			whoNormies += thisW
+
+	// Pre-auth clients
+	if (isadmin(usr))
+		for (var/client/C as anything in pre_auth_clients)
+			if (!C) continue
+			whoPreAuth += "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='ooc text-normal'>[C.ckey]</a>"
 
 	if (length(whoAdmins))
 		sortList(whoAdmins, /proc/cmp_text_asc)
@@ -77,6 +84,11 @@
 		rendered += "<b>Normal:</b>"
 		for (var/aNormie in whoNormies)
 			rendered += aNormie
+	if (length(whoPreAuth))
+		sortList(whoPreAuth, /proc/cmp_text_asc)
+		rendered += "<b>Pre-auth:</b>"
+		for (var/aPreAuth in whoPreAuth)
+			rendered += aPreAuth
 
 	rendered += "<b>Total Players: [length(whoAdmins) + length(whoMentors) + length(whoNormies)]</b>"
 	rendered += "</div>"

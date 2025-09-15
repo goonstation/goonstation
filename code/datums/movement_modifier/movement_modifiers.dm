@@ -139,6 +139,9 @@
 /datum/movement_modifier/robot_mag_upgrade
 	additive_slowdown = 0.5
 
+/datum/movement_modifier/robot_no_power
+	multiplicative_slowdown = 1.5
+
 // robot heads
 /datum/movement_modifier/robot_part/light_head
 	additive_slowdown = -0.1
@@ -326,3 +329,15 @@
 
 /datum/movement_modifier/healbot
 	additive_slowdown = -0.4
+
+/datum/movement_modifier/mimic
+	additive_slowdown = 0
+
+/datum/movement_modifier/mimic/mimic_fast
+	additive_slowdown = -0.4
+
+/datum/movement_modifier/mimic/mimic_slow
+	additive_slowdown = 2
+
+/datum/movement_modifier/mimic/mimic_superslow
+	additive_slowdown = 5

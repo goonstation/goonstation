@@ -1,7 +1,12 @@
-name: "Close stale PRs"
+name: "Close stale PRs and unreproduced issues"
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "45 0,12 * * *"
+
+permissions:
+  issues: write
+  pull-requests: write
+  actions: write
 
 jobs:
   stale:
@@ -21,6 +26,9 @@ jobs:
           days-before-issue-stale: -1
           days-before-issue-close: 30
           only-issue-labels: "S-Needs-Reproducing"
+          stale-issue-label: "S-Needs-Reproducing"
           exempt-issue-labels: "E-Verified"
           ignore-issue-updates: true
           close-issue-reason: "not_planned"
+          remove-issue-stale-when-updated: false
+          operations-per-run: 100

@@ -538,7 +538,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		for (var/mob/M in contents)
 			if (isliving(M))
 				var/mob/living/L = M
-				for (var/i = 1 SECOND, i <= src.settime; i += 1 SECOND)
+				for (var/i = 1 SECOND; i <= src.settime; i += 1 SECOND)
 					sleep(1 SECOND)
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
@@ -734,17 +734,18 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		dat += "[state_str]<BR>"
 		dat += "Set Time: [linked ? (linked.settime / (1 SECOND)) : "--"] seconds<BR>"
 		dat += "<b>Tanning Bed Control:</b><BR>"
-		dat += "<A href='?src=\ref[src];toggle=1'>Activate Tanning Bed</A><BR>"
-		dat += "<A href='?src=\ref[src];timer=1'>Delayed Activation</A><BR>"
-		dat += "<A href='?src=\ref[src];settime=1'>Increase Time</A><BR>"
-		dat += "<A href='?src=\ref[src];unsettime=1'>Decrease Time</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];toggle=1'>Activate Tanning Bed</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];timer=1'>Delayed Activation</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];settime=1'>Increase Time</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];unsettime=1'>Decrease Time</A><BR>"
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = src.name,
+				content = dat,
+			)
 
 		return
 

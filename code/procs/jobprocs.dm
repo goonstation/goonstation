@@ -54,9 +54,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (!istype(player) || !player.mind) continue
 		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND))
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
-		if (player.ready && !player.mind.assigned_role)
+		if (player.ready_play && !player.mind.assigned_role)
 			unassigned += player
-
+	var/inital_ready = length(unassigned) // Doing this here cause other job allocations take away
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
 	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
@@ -171,7 +171,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				picks = FindPromotionCandidates(research_staff, command_job)
 			else if (istype(command_job, /datum/job/command/medical_director))
 				picks = FindPromotionCandidates(medical_staff, command_job)
-			else if (istype(command_job, /datum/job/command/head_of_security))
+			else if (istype(command_job, /datum/job/command/head_of_security) && inital_ready > 10)
 				picks = FindPromotionCandidates(security_officers, command_job)
 			if (!length(picks))
 				continue
@@ -283,6 +283,20 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	//H.head?.setMaterial(getMaterial("jean"))
 	//#endif
 
+// So that the heads of staff are announced in order of rank and not by whoever's equipped first
+/// List of heads of staff to be announced containing lists with name, job and priority indexed
+/var/global/list/unannounced_heads_of_staff = list()
+/proc/announce_heads_of_staff()
+	if(!length(unannounced_heads_of_staff) || !unannounced_heads_of_staff)
+		return
+	sortList(unannounced_heads_of_staff, GLOBAL_PROC_REF(cmp_announce_levels))
+	for(var/list/to_announce in unannounced_heads_of_staff)
+		boutput(world, "<b>[to_announce["name"]] is the [to_announce["job"]]!</b>")
+	unannounced_heads_of_staff = list()
+
+/proc/cmp_announce_levels(var/list/listA, var/list/listB)
+	return listB["priority"] - listA["priority"]
+
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn, skip_manifest = FALSE)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
@@ -290,9 +304,14 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		boutput(src, SPAN_ALERT("<b>Something went wrong setting up your rank and equipment! Report this to a coder.</b>"))
 		return
 
-	if (JOB.announce_on_join)
+	if (JOB.world_announce_priority)
+		var/list/L = list()
+		L["name"] = src.name
+		L["job"] = JOB.name
+		L["priority"] = JOB.world_announce_priority
+		unannounced_heads_of_staff += list(L)
 		SPAWN(1 SECOND)
-			boutput(world, "<b>[src.name] is the [JOB.name]!</b>")
+			announce_heads_of_staff()
 	boutput(src, "<B>You are the [JOB.name].</B>")
 	src.job = JOB.name
 	src.mind.assigned_role = JOB.name
@@ -333,7 +352,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		// because that's what the player is, not the one we were initially given.
 
 		src = possible_new_mob // let's hope this breaks nothing
-
+		src.job = JOB.name
 
 	if (!skip_manifest && ishuman(src) && JOB.add_to_manifest)
 		// Manifest stuff
@@ -379,7 +398,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 						for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
 							qdel(snappedDrone)
 						V.finish_board_pod(src)
-						V.life_support?.activate()
+						V.get_part(POD_PART_LIFE_SUPPORT)?.activate()
 
 				#undef MAX_ALLOWED_ITERATIONS
 
@@ -479,10 +498,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
 			random_pod_codes -= V
-			if (V?.lock?.code)
-				boutput(src, SPAN_NOTICE("The unlock code to your pod ([V]) is: [V.lock.code]"))
+			var/obj/item/shipcomponent/secondary_system/lock/lock_part = V?.get_part(POD_PART_LOCK)
+			if (lock_part?.code)
+				boutput(src, SPAN_NOTICE("The unlock code to your pod ([V]) is: [lock_part.code]"))
 				if (src.mind)
-					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
+					src.mind.store_memory("The unlock code to your pod ([V]) is: [lock_part.code]")
 
 		var/mob/current_mob = src // this proc does the sin of overwriting src, but it turns out that SPAWN doesn't care and uses the OG src, hence this
 		SPAWN(0)
@@ -560,13 +580,13 @@ Equip items from body traits.
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
 		var/obj/item/tank/good_air
 		if (extended_tank)
-			good_air = new /obj/item/tank/emergency_oxygen/extended/plasma(src)
+			good_air = new /obj/item/tank/pocket/extended/plasma(src)
 			// TODO: antagonists spawn tanks in the left pocket by practice(copy/paste), not pattern
-			if (istype(src.l_store, /obj/item/tank/emergency_oxygen/extended))
+			if (istype(src.l_store, /obj/item/tank/pocket/extended/oxygen))
 				qdel(src.l_store)
 			src.equip_if_possible(good_air, SLOT_L_STORE)
 		else
-			good_air = new /obj/item/tank/mini_plasma(src)
+			good_air = new /obj/item/tank/mini/plasma(src)
 			src.put_in_hand_or_stow(good_air, delete_item=FALSE)
 		if (!good_air.using_internal())//set tank ON
 			good_air.toggle_valve()
@@ -602,27 +622,29 @@ Equip items from body traits.
 				SPAWN(0)
 					if(!isnull(src.traitHolder))
 						R.fields["traits"] = src.traitHolder.copy()
-
-				R.fields["imp"] = null
+				var/obj/item/implant/cloner/implant = new(src)
+				implant.scanned_here = locate(/area/centcom/reconstitutioncenter) || null
+				R.fields["imp"] = implant
 				R.fields["mind"] = src.mind
 				D.root.add_file(R)
 
-				D.name = "data disk - '[src.real_name]'"
+				D.name_suffix("([src.real_name])")
+				D.UpdateName()
 
-			if(JOB.receives_badge)
-				var/obj/item/clothing/suit/security_badge/badge
-				if (ispath(JOB.receives_badge))
-					badge = new JOB.receives_badge(src)
-				else
-					badge = new /obj/item/clothing/suit/security_badge(src)
+			if(JOB.badge)
+				var/obj/item/clothing/suit/security_badge/badge = new JOB.badge(src)
 				if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
 					src.equip_if_possible(badge, SLOT_IN_BACKPACK)
 				badge.badge_owner_name = src.real_name
 				badge.badge_owner_job = src.job
 
 	if (src.traitHolder?.hasTrait("pilot"))
-		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
+		var/obj/item/tank/extra_air
+		if (src.traitHolder.hasTrait("plasmalungs"))
+			extra_air = new /obj/item/tank/mini/plasma(src.loc)
+		else
+			extra_air = new /obj/item/tank/mini/oxygen(src.loc)
+		src.force_equip(extra_air, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
 		src.force_equip(SSW, SLOT_IN_BACKPACK, TRUE)
@@ -634,7 +656,12 @@ Equip items from body traits.
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
 		src.force_equip(SHS, SLOT_IN_BACKPACK, TRUE)
 		#endif
-		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
+		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
+			src.stow_in_available(src.wear_mask)
+		if(!src.wear_mask)
+			src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/device/pda2/pda = locate() in src
@@ -677,9 +704,10 @@ Equip items from body traits.
 	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
 		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("wheelchair"))
-		var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
-		trinket = the_chair
-		the_chair.buckle_in(src, src)
+		SPAWN(0) // Ensures wheelchair spawns with you even if you aren't latejoining at arrivals.
+			var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+			trinket = the_chair
+			the_chair.buckle_in(src, src)
 	else
 		trinket = new T(src)
 
@@ -688,6 +716,7 @@ Equip items from body traits.
 	if (trinket)
 		src.trinket = get_weakref(trinket)
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
+		trinket.real_name = trinket.name
 		trinket.quality = rand(5,80)
 		trinkets_to_equip += trinket
 
@@ -695,6 +724,7 @@ Equip items from body traits.
 	if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
 		var/obj/item/device/light/zippo/smoker_zippo = new(src)
 		smoker_zippo.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [smoker_zippo.name]"
+		smoker_zippo.real_name = smoker_zippo.name
 		smoker_zippo.quality = rand(5,80)
 		trinkets_to_equip += smoker_zippo
 
@@ -759,7 +789,11 @@ Equip items from body traits.
 		C.pronouns = src.get_pronouns()
 
 		if(!src.equip_if_possible(C, SLOT_WEAR_ID))
-			src.equip_if_possible(C, SLOT_IN_BACKPACK)
+			if(istype((src.wear_id), /obj/item/device/pda2))
+				var/obj/item/device/pda2/pda = src.wear_id
+				pda.insert_id_card(C, src)
+			else
+				src.equip_if_possible(C, SLOT_IN_BACKPACK)
 
 		if(src.pin)
 			C.pin = src.pin
@@ -941,5 +975,6 @@ var/list/trinket_safelist = list(
 	/obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 	/obj/item/seed/alien,
 	/obj/item/boarvessel,
-	/obj/item/boarvessel/forgery
+	/obj/item/boarvessel/forgery,
+	/obj/item/device/light/sparkler/firecracker
 )

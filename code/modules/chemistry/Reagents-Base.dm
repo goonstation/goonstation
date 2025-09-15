@@ -431,7 +431,11 @@
 		if(!M) M = holder.my_atom
 		if(holder.has_reagent("epinephrine"))
 			holder.remove_reagent("epinephrine", 2 * mult)
-		M.take_toxin_damage(1 * mult)
+		var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = M.bioHolder?.GetEffect("plasma_metabolism")
+		if (!plasma_bioeffect)
+			M.take_toxin_damage(1 * mult)
+		else
+			plasma_bioeffect.absorb_liquid_plasma(mult)
 		..()
 		return
 
@@ -811,13 +815,6 @@
 		var/mob/living/M = target
 		if(istype(M))
 			var/list/covered = holder.covered_turf()
-			if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
-				var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
-				if(M in pz.brandlist)
-					pz.brandlist -= M
-					boutput(M,SPAN_SUCCESS("<b>The feeling of an otherworldly presence passes...</b>"))
-				for(var/mob/zoldorf/Z in M)
-					Z.set_loc(Z.homebooth)
 			if (isvampire(M))
 				M.emote("scream")
 				for(var/mob/O in AIviewers(M, null))
@@ -834,12 +831,34 @@
 				else
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
+						var/removed_curse = FALSE
 						if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
-							H.bioHolder.RemoveEffect("blood_curse")
-							H.bioHolder.RemoveEffect("blind_curse")
-							H.bioHolder.RemoveEffect("weak_curse")
-							H.bioHolder.RemoveEffect("rot_curse")
-							H.bioHolder.RemoveEffect("death_curse")
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+							else
+								H.bioHolder.RemoveEffect("blood_curse")
+								H.bioHolder.RemoveEffect("blind_curse")
+								H.bioHolder.RemoveEffect("weak_curse")
+								H.bioHolder.RemoveEffect("rot_curse")
+								H.bioHolder.RemoveEffect("death_curse")
+								removed_curse = TRUE
+						else if(M.hasStatus("art_blood_curse") || M.hasStatus("art_aging_curse") || M.hasStatus("art_nightmare_curse") || M.hasStatus("art_maze_curse") || M.hasStatus("art_displacement_curse") || M.hasStatus("art_light_curse"))
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+							else
+								M.delStatus("art_blood_curse")
+								M.delStatus("art_aging_curse")
+								M.delStatus("art_nightmare_curse")
+								M.delStatus("art_maze_curse")
+								M.delStatus("art_displacement_curse")
+								M.delStatus("art_light_curse")
+								playsound(H, 'sound/effects/lit.ogg', 100, TRUE)
+								removed_curse = TRUE
+						else
+							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
+						if(removed_curse)
 							H.visible_message("[H] screams as some black smoke exits their body.")
 							H.emote("scream")
 							random_burn_damage(H, 5)
@@ -849,8 +868,6 @@
 								if (S)
 									S.set_up(5, 0, T, null, "#3b3b3b")
 									S.start()
-						else
-							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 					else
 						boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 					M.take_brain_damage(0 - clamp(volume, 0, 10))

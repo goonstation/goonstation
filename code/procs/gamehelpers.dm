@@ -292,7 +292,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	. = list()
 
 	var/turf/T = get_turf(center)
-	if(length(T?.camera_coverage_emitters))
+	if(seen_by_camera(T))
 		for_by_tcl(theAI, /mob/living/silicon/ai)
 			if (theAI.deployed_to_eyecam)
 				var/mob/living/intangible/aieye/AIeye = theAI.eyecam
@@ -309,13 +309,15 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		if((M.target in .) || (M.target == center))
 			. += M
 
-/proc/AIviewers(Depth=world.view,Center=usr)
+/proc/AIviewers(Depth=world.view, atom/movable/Center=usr)
 	if (istype(Depth, /atom))
 		var/newDepth = isnum(Center) ? Center : world.view
 		Center = Depth
 		Depth = newDepth
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	if (ismob(Center?.loc))
+		. |= Center.loc
 	for(var/mob/living/intangible/aieye/eye in .)
 		. -= eye
 
@@ -336,113 +338,6 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 /proc/generate_net_id(var/atom/the_atom)
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
-
-#define CLUWNE_NOISE_DELAY 5 SECONDS
-
-/proc/process_accents(var/mob/living/carbon/human/H, var/message)
-	// Separate the radio prefix (if it exists) and message so the accent can't destroy the prefix
-	var/prefixAndMessage = separate_radio_prefix_and_message(message)
-	var/prefix = prefixAndMessage[1]
-	message = prefixAndMessage[2]
-	//Stores a human readable list of effects on the speech for admin logging. Please append to this list if you add more stuff here.
-	var/messageEffects = list()
-	var/wasUncool = phrase_log.is_uncool(message)
-
-	if (!H || !istext(message))
-		return
-
-	if (H.bioHolder)
-		var/datum/bioEffect/speech/S = null
-		for(var/X in H.bioHolder.effects)
-			S = H.bioHolder.GetEffect(X)
-			if (istype(S,/datum/bioEffect/speech/) && !(H.speech_void && !istype(S,/datum/bioEffect/speech/void)))
-				message = S.OnSpeak(message)
-				messageEffects += S
-
-	if (H.grabbed_by && length(H.grabbed_by))
-		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
-			if (RM.state > 0)
-				message = mufflespeech(message)
-				messageEffects += "Muffled by [H.grabbed_by]"
-				break
-
-	var/do_laugh = FALSE
-	if (iscluwne(H))
-		message = honk(message)
-		messageEffects += "Cluwne Honk"
-		do_laugh = TRUE
-
-	if (ishorse(H))
-		message = neigh(message)
-		messageEffects += "Horse"
-		do_laugh = TRUE
-
-	if (do_laugh && !ON_COOLDOWN(H, "cluwne laugh", CLUWNE_NOISE_DELAY))
-		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
-
-	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
-		if((H.reagents.get_reagent_amount("ethanol") > 125 && prob(20)))
-			message = say_superdrunk(message)
-			messageEffects += "Superdrunk"
-		else
-			message = say_drunk(message)
-			messageEffects += "Drunk"
-
-	var/datum/ailment_data/disease/berserker = H.find_ailment_by_type(/datum/ailment/disease/berserker/)
-	if (istype(berserker,/datum/ailment_data/disease/) && berserker.stage > 1)
-		if (prob(10))
-			message = say_furious(message)
-			messageEffects += "Furious"
-		message = replacetext(message, ".", "!")
-		message = replacetext(message, ",", "!")
-		message = replacetext(message, "?", "!")
-		message = uppertext(message)
-		messageEffects += "Berserk"
-		var/addexc = rand(2,6)
-		while (addexc > 0)
-			message += "!"
-			--addexc
-
-	if(H.bioHolder && H.bioHolder.genetic_stability < 50)
-		if (prob(40))
-			message = say_gurgle(message)
-			messageEffects += "Gurgle"
-
-	if(!isdead(H))
-		message = H.mutantrace.say_filter(message)
-		messageEffects += "[H.mutantrace] say_filter()"
-
-	if(HasturPresent == 1)
-		message = replacetext(message, "Hastur", "????")
-		message = replacetext(message, "H.a.s.t.u.r", "????")
-		message = replacetext(message, "H.astur", "????")
-		message = replacetext(message, "H.a.stur", "????")
-		message = replacetext(message, "H.a.s.tur", "????")
-		message = replacetext(message, "H.a.s.t.ur", "????")
-		message = replacetext(message, "H-a-s-t-u-r", "????")
-		message = replacetext(message, "H-astur", "????")
-		message = replacetext(message, "H-a-stur", "????")
-		message = replacetext(message, "H-a-s-tur", "????")
-		message = replacetext(message, "H-a-s-t-ur", "????")
-		message = replacetext(message, "H a s t u r", "????")
-		message = replacetext(message, "H astur", "????")
-		message = replacetext(message, "H a s tur", "????")
-		message = replacetext(message, "H a s t ur", "????")
-		messageEffects += "Hastur"
-
-#ifdef CANADADAY
-	if (prob(30))
-		message = replacetext(message, "?", " Eh?")
-		messageEffects += "Canada Day eh?"
-#endif
-
-	if(phrase_log.is_uncool(message) && !wasUncool)
-		logTheThing(LOG_ADMIN, H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
-		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
-	return prefix + message
-
-#undef CLUWNE_NOISE_DELAY
-
 
 /mob/proc/get_equipped_items()
 	. = list()
@@ -782,7 +677,7 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 					words |= (M.real_name ? M.real_name : M.name)
 			if (1 to 5)
 				// fake wraith
-				words |= call(/mob/living/intangible/wraith/proc/make_name)()
+				words |= global.get_singleton(/datum/wraith_name_generator/wraith).generate_name()
 			if (6 to 10)
 				// fake blob (heh)
 				var/blobname = phrase_log.random_phrase("name-blob")
