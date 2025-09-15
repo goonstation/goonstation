@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 	desc = "A big ol' hole for pouring in fluids."
 	icon_state = "port"
 	flags = NOSPLASH | OPENCONTAINER
-	HELP_MESSAGE_OVERRIDE("You can connect glass plumping to this machine.")
+	HELP_MESSAGE_OVERRIDE("You can connect glass plumbing to this machine.")
 
 /obj/machinery/fluid_machinery/unary/input/initialize()
 	..()

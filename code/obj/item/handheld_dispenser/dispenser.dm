@@ -175,11 +175,11 @@
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = TRUE
-	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
 	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
 	var/obj/machinery/atmospherics/device = new recipe.path(target)
 	device.initialize(TRUE)
+	user.visible_message(SPAN_NOTICE("[user] places [device]."))
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
@@ -193,7 +193,7 @@
 	else if(!src.resources)
 		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
 		return
-	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
+	user.visible_message(SPAN_NOTICE("[user] destroys [target]."))
 	logTheThing(LOG_STATION, user, "destroys a [target] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	if(istype(target, /obj/machinery/atmospherics/binary/valve))
 		var/obj/machinery/atmospherics/binary/valve/O = target
