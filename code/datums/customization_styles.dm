@@ -808,7 +808,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 
 			straightened_long
 
-				name = "Long Straight"
+				name = "Straightened shoulder-length"
 				id = "straightened_long"
 				gender = MASCULINE | FEMININE
 
