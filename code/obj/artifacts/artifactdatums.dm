@@ -79,6 +79,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/examine_hint = null
 	/// The artifact will have strange behaviour during teleportationy interactions, namely with the cargo tele and telecrystal
 	var/teleportationally_unstable = FALSE
+	var/teleportationally_unstable_chance = 8 // percent chance for artifacts to spawn teleportationally unstable
 
 	/// ID of the cargo tech skimming a cut of the sale
 	var/obj/item/card/id/scan = null
