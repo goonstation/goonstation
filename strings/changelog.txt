@@ -1,4 +1,9 @@
 
+(t)mon sep 15 25
+(u)Lord_Earthfire
+(p)24657
+(e)|
+(+)Multitools in assemblies will now shock the tile they are on when activated, akin to using their special attack.
 (t)sun sep 14 25
 (u)JORJ949
 (p)24646
