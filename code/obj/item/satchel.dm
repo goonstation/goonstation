@@ -164,7 +164,7 @@
 				I.add_fingerprint(user)
 				if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					I.set_loc(src)
-					SEND_SIGNAL(I, COMSIG_ITEM_PICKUP, user)
+					SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)
