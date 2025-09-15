@@ -1876,7 +1876,7 @@
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "agX" = (
 /obj/submachine/cargopad/robotics,
@@ -29711,6 +29711,9 @@
 "cmb" = (
 /obj/item/weldingtool,
 /obj/item/screwdriver,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "cmc" = (
@@ -34270,19 +34273,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
-"hMp" = (
-/obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/camera/directional/east,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/staff)
 "hMq" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hos,
@@ -34424,6 +34414,15 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
+"iao" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/north)
 "ibb" = (
 /obj/noticeboard/persistent/engineering/directional/north,
 /turf/simulated/floor/yellow,
@@ -38344,6 +38343,15 @@
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor,
 /area/station/security/processing)
+"mXr" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "mXH" = (
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
@@ -41948,6 +41956,19 @@
 /obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
+"rBr" = (
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/staff)
 "rCV" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -42678,6 +42699,13 @@
 	},
 /turf/space/fluid,
 /area/evilreaver)
+"sFT" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/north)
 "sGx" = (
 /obj/machinery/computer/tetris,
 /turf/simulated/floor/carpet/arcade,
@@ -86467,22 +86495,22 @@ afq
 axA
 aiU
 afq
-afq
-afq
-afq
-afq
+arv
+asD
+asD
+asD
 cmb
-afq
-afq
-afq
-afq
-afq
-afq
-afq
-afq
-xHH
-ayt
-azt
+asD
+asD
+asD
+asD
+asD
+asD
+asD
+asD
+iao
+mXr
+azM
 aAJ
 sIS
 fwi
@@ -86769,7 +86797,7 @@ axA
 axA
 afq
 llv
-afq
+sFT
 afq
 afq
 afq
@@ -89485,7 +89513,7 @@ aGj
 afI
 oqn
 oen
-hMp
+rBr
 qqc
 ajE
 aja
