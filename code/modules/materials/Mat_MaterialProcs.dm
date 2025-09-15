@@ -329,7 +329,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 						playsound(target.loc, "warp", 50)
 					return
 				. = get_offset_target_turf(get_turf(attacked), rand(-2, 2), rand(-2, 2))
-				playsound(target.loc, "warp", 50)
+				playsound(target.loc, "warp", 50) // No cooldown on this one because the teleportyness makes it difficult to spam already
 				if(attacker.is_that_in_this(target))
 					attacker.drop_item(target)
 				target.set_loc(.)
