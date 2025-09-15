@@ -1788,7 +1788,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/robotics)
 "agB" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/psychiatrist)
 "agD" = (
 /obj/cable{
@@ -2009,9 +2009,6 @@
 	dir = 1
 	},
 /area/station/medical/research)
-"ahC" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/morgue)
 "ahD" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -33605,7 +33602,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "gLD" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2)
 "gMB" = (
 /obj/table/reinforced/chemistry/auto/firstaid,
@@ -44565,9 +44562,6 @@
 /obj/fishing_pool/portable,
 /turf/simulated/floor/green,
 /area/station/maintenance/northwest)
-"vBf" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/medbay/treatment1)
 "vCf" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -88001,10 +87995,10 @@ gLD
 gLD
 gLD
 gLD
-vBf
-vBf
-vBf
-vBf
+aeH
+aeH
+aeH
+aeH
 akC
 aln
 ahc
@@ -91923,14 +91917,14 @@ nll
 exn
 afq
 agA
-afx
-afx
-ahC
-ahC
-ahC
-ahC
-ahC
-ahC
+agA
+agA
+chD
+chD
+chD
+chD
+chD
+chD
 ahS
 akG
 alp
