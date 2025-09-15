@@ -2173,6 +2173,7 @@
 "aih" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "aii" = (
@@ -3045,14 +3046,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "alg" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/pharmacy)
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "ali" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating/random,
@@ -3327,21 +3323,18 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ami" = (
-/obj/disposalpipe/junction/right/south,
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
 /area/station/medical/staff)
 "amj" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/cable{
@@ -4693,6 +4686,7 @@
 /area/station/chapel/sanctuary)
 "aqR" = (
 /obj/cabinet/chemistry,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aqT" = (
@@ -6175,7 +6169,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/medical/medbay/restroom)
 "awe" = (
 /turf/simulated/floor/white,
@@ -12500,6 +12494,9 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/dropper/mechanical,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aUP" = (
@@ -31740,6 +31737,13 @@
 "exn" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"eyX" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "ezJ" = (
 /obj/machinery/firealarm/directional/east,
 /obj/disposalpipe/trunk/east,
@@ -32654,11 +32658,6 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "fxu" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
-	mail_tag = "therapist"
-	},
-/obj/disposalpipe/trunk/mail/west,
 /obj/blind_switch/area/east{
 	pixel_y = 4
 	},
@@ -33446,6 +33445,7 @@
 /obj/table/auto,
 /obj/item/hand_labeler,
 /obj/item/storage/box/diskbox,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -34857,10 +34857,7 @@
 /turf/space/fluid,
 /area/space)
 "iDs" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "iDU" = (
@@ -35515,11 +35512,11 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "jxZ" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/white/checker2{
+	dir = 5
 	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay/cloner)
 "jyd" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm/directional/west,
@@ -35610,7 +35607,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
 /area/station/medical/dome)
 "jEy" = (
 /obj/table/auto,
@@ -35838,6 +35837,16 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/grime,
 /area/iss)
+"jQU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/switch_junction/left/west{
+	mail_tag = "pharmacy";
+	name = "pharmacy mail router"
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
 "jTG" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -36453,7 +36462,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/green,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
 /area/station/medical/research)
 "kHg" = (
 /obj/crevice{
@@ -36701,6 +36712,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"kZV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "lar" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -37679,6 +37697,7 @@
 	dir = 4
 	},
 /obj/spawner/clone_rack,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -37725,6 +37744,7 @@
 "mlk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "mlH" = (
@@ -38436,6 +38456,7 @@
 /area/station/maintenance/south)
 "mZD" = (
 /obj/machinery/light/incandescent/cool,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "nab" = (
@@ -38666,9 +38687,12 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "nlh" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
+/obj/machinery/disposal/mail/small/autoname{
+	dir = 1;
+	mail_tag = "pharmacy";
+	pixel_y = 32
 	},
+/obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "nll" = (
@@ -43578,14 +43602,11 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "tTr" = (
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "tTu" = (
@@ -90104,7 +90125,7 @@ ajD
 aqR
 bWj
 bWj
-alg
+cgy
 jTS
 eih
 ajD
@@ -90406,7 +90427,7 @@ ajD
 rOl
 bWj
 sSO
-alg
+cgy
 bWj
 ang
 jYh
@@ -90709,19 +90730,19 @@ nlh
 iDs
 uay
 tTr
-bWj
-ang
+iDs
+eyX
 aih
 mkE
-apH
-fcV
-aqY
+kZV
+jxZ
+alg
 gwP
 mlk
 mZD
-awe
-ayA
-azA
+awn
+ciu
+jQU
 aAM
 atw
 aCx
@@ -91008,7 +91029,7 @@ mTa
 nTW
 ajD
 aUO
-jxZ
+bWj
 pVK
 xfi
 dKk
