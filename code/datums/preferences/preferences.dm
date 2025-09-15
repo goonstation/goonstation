@@ -184,7 +184,7 @@ var/list/removed_jobs = list(
 			"traitsData" = traitsData,
 		)
 
-		. += src.GetJobStaticData(usr)
+		. += src.GetJobStaticData(user)
 
 	ui_data(mob/user)
 		var/client/client = ismob(user) ? user.client : user
