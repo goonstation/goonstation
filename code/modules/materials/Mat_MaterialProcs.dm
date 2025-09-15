@@ -320,7 +320,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		var/turf/T = get_turf(attacked)
 		var/mob/attacked_mob = attacked
-		if (istype(attacked, /obj)) // teleportationally unstable artifacts react to telecrystals so that scientists can determine that they are
+		if (isobj(attacked)) // teleportationally unstable artifacts react to telecrystals so that scientists can determine that they are
 			var/obj/target = attacked
 			if (target.artifact?.activated && target.artifact?.teleportationally_unstable)
 				attacker.visible_message(SPAN_ALERT("[attacked] reacts to [owner]!"))
