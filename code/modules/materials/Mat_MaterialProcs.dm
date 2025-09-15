@@ -325,6 +325,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if (target.artifact?.activated && target.artifact?.teleportationally_unstable)
 				attacker.visible_message(SPAN_ALERT("[attacked] reacts to [owner]!"))
 				if (target.anchored) // anchored artis shouldn't move, but there should still be feedback for the purpose of reactivity testing
+					if (!ON_COOLDOWN(attacked, "telecrystal_warp", 3 SECONDS)) // reduce potential for sound spam
+						playsound(target.loc, "warp", 50)
 					return
 				. = get_offset_target_turf(get_turf(attacked), rand(-2, 2), rand(-2, 2))
 				playsound(target.loc, "warp", 50)
