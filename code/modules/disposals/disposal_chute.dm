@@ -115,7 +115,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		. = ..()
 
-	HELP_MESSAGE_OVERRIDE("Place held satches, boxes, and bags by clicking with the <b>Disarm</b>, <b>Grab</b>, or <b>Harm</b> intent.")
+	HELP_MESSAGE_OVERRIDE("Place held boxes and bags by clicking with the <b>Disarm</b>, <b>Grab</b>, or <b>Harm</b> intent. \n \
+							Dump satchel contents by click-dragging onto this.")
 
 	get_help_message(dist, mob/user)
 		. = ..()
