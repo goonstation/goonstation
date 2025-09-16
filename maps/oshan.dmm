@@ -2197,7 +2197,7 @@
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/medical/staff)
 "aip" = (
@@ -37336,7 +37336,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
@@ -39791,11 +39790,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "oJF" = (
-/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
 	},
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/medical/staff)
 "oJP" = (
@@ -43617,7 +43616,6 @@
 	id = "hallway_door";
 	name = "Medbay Staff Area"
 	},
-/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
