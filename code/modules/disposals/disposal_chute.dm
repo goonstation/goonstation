@@ -277,7 +277,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
 
-		if (!length(target.storage?.get_contents()))
+		if (!target.storage)
+			return
+		else if (!length(target.storage.get_contents()))
 			boutput(user, SPAN_ALERT("There's nothing in [target] to empty out!"))
 			return
 		else if (!istype(target, /obj/item/storage/mechanics) && user.is_in_hands(target))
