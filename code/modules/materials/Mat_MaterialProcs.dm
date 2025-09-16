@@ -490,8 +490,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
-		if (!isturf(location))
-			animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, 1)
 		return
 
@@ -501,11 +499,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate(location)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
-		return
-
-/datum/materialProc/erebite_flash
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#FF7711",-1,10)
 		return
 
 /datum/materialProc/erebite_temp
@@ -655,6 +648,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 							0.00, 0.00, 0.00, 1.00,\
 							0.60, 0.10, 0.00, 0.00)
 
+	erebite
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 1.00, 0.00, 0.00,\
+							0.00, 0.00, 0.75, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.06, 0.50, 0.00, 0.00)
+
+	koshmarite
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 1.50, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.80, 0.00, -0.15, 0.00)
+
 	mauxite
 		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
 							0.00, 0.35, 0.00, 0.00,\
@@ -662,12 +669,26 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 							0.00, 0.00, 0.00, 1.00,\
 							0.00, 0.05, -0.10, 0.00)
 
+	neutronium
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 0.75, 0.00, 0.00,\
+							0.00, 0.00, 1.50, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.58, 0.30, 0.00, 0.00)
+
 	soulsteel
 		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
 							0.00, 0.80, 0.00, 0.00,\
 							0.00, 0.00, 1.00, 0.00,\
 							0.00, 0.00, 0.00, 1.00,\
 							0.00, 0.20, 0.00, 0.00)
+
+	veranium
+		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
+							0.00, 1.50, 0.00, 0.00,\
+							0.00, 0.00, 1.00, 0.00,\
+							0.00, 0.00, 0.00, 1.00,\
+							0.16, 0.00, 0.00, 0.00)
 
 /datum/materialProc/remove_color_hsl
 	execute(atom/owner)

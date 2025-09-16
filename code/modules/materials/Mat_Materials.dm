@@ -133,6 +133,8 @@ ABSTRACT_TYPE(/datum/material)
 		return src.suffixes.Copy()
 
 	proc/getTexture()
+		if(islist(src.texture))
+			return pick(src.texture)
 		return src.texture
 
 	proc/getTextureBlendMode()
@@ -510,17 +512,13 @@ ABSTRACT_TYPE(/datum/material)
 			src.texture = mat1.texture
 			src.texture_blend = mat1.texture_blend
 		else if (mat1.texture && mat2.texture)
-			if(mat1.generation == mat2.generation)
-				//Mat1 has higher priority in this case. Optional: implement some shitty blended texture thing. probably a bad idea.
+			if(mat1.generation <= mat2.generation)
+				// Optional: implement some shitty blended texture thing. probably a bad idea.
 				src.texture = mat1.texture
 				src.texture_blend = mat1.texture_blend
 			else
-				if(mat1.generation < mat2.generation)
-					src.texture = mat1.texture
-					src.texture_blend = mat1.texture_blend
-				else
-					src.texture = mat2.texture
-					src.texture_blend = mat2.texture_blend
+				src.texture = mat2.texture
+				src.texture_blend = mat2.texture_blend
 		//
 
 		src.material_flags = mat1.material_flags | mat2.material_flags
@@ -586,7 +584,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "veranium"
 	name = "veranium"
 	desc = "It looks to be sparking."
-	color = "#8effdd"
+	color = list(0.75, 0.00, 0.00, 0.00,\
+				0.25, 1.00, 0.25, 0.00,\
+				0.00, 0.00, 0.75, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.20, -0.10, -0.20, 0.00)
 
 	New()
 		..()
@@ -595,6 +597,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("chemical", 2)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/veranium())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 /datum/material/metal/voltite
 	mat_id = "voltite"
@@ -816,7 +820,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "neutronium"
 	name = "neutronium"
 	desc = "Neutrons condensed into a solid form."
-	color = "#043e9b"
+	color = list(1.00, 0.50, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 0.00,\
+				0.00, 0.50, 1.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 	alpha = 255
 
 	New()
@@ -826,7 +834,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 3)
 		setProperty("electrical", 7)
 		setProperty("n_radioactive", 8)
-
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/neutronium())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 // Special Metals
@@ -835,12 +844,15 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "slag"
 	name = "slag"
 	desc = "A by-product left over after material has been processed."
-	color = "#26170F"
+	color = list(0.30, 0.15, 0.00, 0.00,\
+				0.20, 0.10, 0.00, 0.00,\
+				0.25, 0.10, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
 
 	New()
 		..()
 		value = 10
-
 		setProperty("density", 2) //fucked up values for fucked up material but not silly putty
 		setProperty("hard", 2)
 		setProperty("electrical", 2)
@@ -989,7 +1001,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
 	texture = "claretine"
-	texture_blend = BLEND_ADD
+	texture_blend = BLEND_DEFAULT
 
 
 	New()
@@ -1005,7 +1017,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "erebite"
 	name = "erebite"
 	desc = "Erebite is an extremely volatile high-energy mineral."
-	color = "#FF3700"
+	color = list(1.00, 0.00, 0.25, 0.00,\
+				0.25, 0.75, 0.00, 0.00,\
+				0.25, 0.00, 0.65, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.10, -0.15, -0.20, 0.00)
 
 	New()
 		..()
@@ -1015,7 +1031,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
 
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/erebite_flash())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/erebite())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
+
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/erebite_temp())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/erebite_exp())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/generic_explode_attack(33))
@@ -1033,7 +1051,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
 	texture = "plasmastone"
-	texture_blend = BLEND_INSET_OVERLAY
+	texture_blend = BLEND_ADD
 
 	New()
 		..()
@@ -1446,7 +1464,13 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "char"
 	name = "char"
 	desc = "Char is a fossil energy source similar to coal."
-	color = "#555555"
+	color = list(0.20, 0.20, 0.20, 0.00,\
+				0.10, 0.10, 0.10, 0.00,\
+				0.15, 0.15, 0.15, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	texture = list("char_a","char_b","char_c","char_d")
+	texture_blend = BLEND_DEFAULT
 
 	New()
 		..()
@@ -1459,7 +1483,13 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "koshmarite"
 	name = "koshmarite"
 	desc = "An unusual dense pulsating stone. You feel uneasy just looking at it."
-	color = "#600066"
+	color = list(1.00, 0.00, 0.25, 0.00,\
+				0.00, 0.75, 0.00, 0.00,\
+				0.25, 0.00, 1.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.10, -0.20, -0.10, 0.00)
+	texture = "koshmarite"
+	texture_blend = BLEND_DEFAULT
 
 	New()
 		..()
@@ -1468,6 +1498,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("reflective", 6)
 		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/koshmarite())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/organic/viscerite
@@ -1528,8 +1560,13 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "wood"
 	name = "wood"
 	desc = "Wood from some sort of tree."
-	color = "#331f16"
-	texture_blend = BLEND_ADD
+	color = list(0.30, 0.20, 0.15, 0.00,\
+				0.30, 0.20, 0.15, 0.00,\
+				0.25, 0.15, 0.10, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.05, 0.00, -0.10, 0.00)
+	texture = "wood"
+	texture_blend = BLEND_DEFAULT
 
 	New()
 		..()
@@ -1557,7 +1594,13 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "cardboard"
 	name = "cardboard"
 	desc = "Perfect for making boxes."
-	color = "#d3b173"
+	color = list(0.30, 0.20, 0.15, 0.00,\
+				0.30, 0.20, 0.15, 0.00,\
+				0.25, 0.15, 0.10, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.15, 0.15, 0.10, 0.00)
+	texture = "cardboard"
+	texture_blend = BLEND_DEFAULT
 
 	New()
 		..()
@@ -1865,7 +1908,13 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "fibrilith"
 	name = "fibrilith"
 	desc = "Fibrilith is an odd fibrous crystal known for its high tensile strength. Seems a bit similar to asbestos."
-	color = "#E0FFF6"
+	color = list(0.40, 0.30, 0.40, 0.00,\
+				0.40, 0.30, 0.40, 0.00,\
+				0.40, 0.30, 0.40, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.10, 0.00, 0.00, 0.00)
+	texture = "fibrilith"
+	texture_blend = BLEND_DEFAULT
 
 	New()
 		..()
@@ -1899,7 +1948,13 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "carbonfibre"
 	name = "carbon nanofiber"
 	desc = "Carbon Nanofibers are highly graphitic carbon nanomaterials with excellent mechanical properties, electrical conductivity and thermal conductivity."
-	color = "#333333"
+	color = list(0.20, 0.20, 0.20, 0.00,\
+				0.10, 0.10, 0.10, 0.00,\
+				0.15, 0.15, 0.15, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	texture = "hex_lattice"
+	texture_blend = BLEND_ADD
 
 	New()
 		..()
@@ -2013,7 +2068,11 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "synthrubber"
 	name = "synthrubber"
 	desc = "A type of synthetic rubber. Quite garish, really."
-	color = "#FF0000" //But this is red okay.
+	color = list(0.35, 0.00, 0.00, 0.00,\
+				0.25, 0.00, 0.00, 0.00,\
+				0.30, 0.00, 0.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.25, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -2041,7 +2100,11 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "plastic"
 	name = "plastic"
 	desc = "A synthetic material made of polymers. Great for polluting oceans."
-	color = "#baccd3"
+	color = list(2.00, -0.25, -0.25, 0.00,\
+				-0.25, 2.00, -0.25, 0.00,\
+				-0.25, -0.25, 2.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00) // Increase saturation and brightness
 
 	New()
 		..()
