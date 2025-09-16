@@ -103,6 +103,20 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"aw" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/yellowblack{
+	dir = 6
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "aC" = (
 /obj/machinery/light/small/cool{
 	dir = 8;
@@ -227,47 +241,26 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"be" = (
-/obj/decal/stage_edge/alt{
-	color = "#222222"
+"bb" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
 	},
-/obj/noticeboard{
-	desc = "A board for shaming fellow workers.";
-	name = "SHAME BOARD"
+/obj/fakeobject/cpucontroller,
+/turf/unsimulated/floor/shiny/white,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"bc" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
 	},
-/obj/item/paper{
-	desc = "Looks like one of the Technicians got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Left a malfunctioning SMES unit at his service desk without following proper energy isolation and lockout procedures. AGAIN! </b>";
-	name = "Joff Muncey, Repair Technician";
-	pixel_x = 2;
-	pixel_y = 29
-	},
-/obj/item/paper{
-	desc = "Looks like some of the Sales team got called out.";
-	icon_state = "postit-writing";
-	info = "<b>The sales techs didn't flush their garbage disposal ALL WEEK. It's attracting ants!! Does plant cleanliness mean NOTHING to you?</b>";
-	name = "Gordon Baade & Sue Zhang, Sales Technicians";
-	pixel_x = -7;
-	pixel_y = 28
-	},
-/obj/item/paper{
-	desc = "Looks like one of the Janitors got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Hurry up and take care of these damned ants! </b>";
-	name = "Tedward Benson, Janitor";
-	pixel_x = -2;
-	pixel_y = 26
-	},
-/obj/item/paper{
-	desc = "Looks like one of the Engineers got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Borrowed GLEN's wrench, didn't return it for weeks!</b>";
-	name = "Jimmy Li, Engineer";
-	pixel_x = 7;
-	pixel_y = 28
-	},
-/turf/unsimulated/floor/yellowblack,
+/turf/unsimulated/floor/carpet/grime,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -279,24 +272,6 @@
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/yellowblack,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"bg" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/table/wood/auto/desk,
-/obj/item/storage/secure/sbriefcase{
-	pixel_y = 5
-	},
-/obj/item/pen/typewriter,
-/turf/unsimulated/floor/carpet{
-	color = "green"
-	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -589,17 +564,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"cs" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/engine,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "cv" = (
 /turf/unsimulated/floor/marble/black,
 /area/solarium{
@@ -785,6 +749,20 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"dn" = (
+/obj/decal/stage_edge/alt{
+	color = "#222222"
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/yellowblack,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "dp" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -841,21 +819,6 @@
 	icon_state = "wall_trans"
 	},
 /turf/space,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"dB" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/machinery/disposal{
-	pixel_y = 13
-	},
-/obj/disposalpipe/trunk/west,
-/turf/unsimulated/floor/sanitary/blue,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -1013,6 +976,22 @@
 "et" = (
 /obj/stool/bench/yellow/auto,
 /turf/unsimulated/floor/carpet/red/standard/edge/se,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"eu" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/mob/living/critter/fermid{
+	health_burn_vuln = 0.35
+	},
+/turf/unsimulated/floor/plating{
+	icon_state = "plating_jen"
+	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -1373,6 +1352,17 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"fM" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/engine,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "fP" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/owlmaint,
@@ -1625,6 +1615,18 @@
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"gV" = (
+/obj/item/storage/wall/toolshelf,
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/shiny,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -1896,17 +1898,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"ie" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/yellowblack,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "ih" = (
 /obj/table/wood/auto/desk,
 /obj/item/paper{
@@ -2149,25 +2140,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"iY" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/table/wood/auto/desk,
-/obj/item/paper/intelligence_report{
-	color = "red";
-	icon_state = "paper";
-	info = "<b>Report on Site 6 Incident - Io Thermocouple Rig </b><br><br>This information is for the eyes of Xiang | Giesel security managers only. If you are not authorized to read this report, please report to your security manager for debriefing.</i><br><br> A severe radiological incident has occured at our thermocouple facility on Io. There are no detected survivors. <br> Upon engineering analysis, we were able to identify a likely root cause. NanoTrasen's interference with the artifact anchors within the Io Flux Channel have long coincided with increased instabilities to the magnetic field, plasma torus and radiation belts within the Jovian-Ionian system. There is a 65.49% calculated probability that NanoTrasen is somehow to blame for the loss of our Ionian facility. Litigation is pending."
-	},
-/turf/unsimulated/floor/carpet{
-	color = "red"
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "iZ" = (
 /obj/fakeobject/pipe/heat{
 	dir = 4
@@ -2204,6 +2176,23 @@
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"jf" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_y = 16
+	},
+/obj/table/reinforced/chemistry/auto/firstaid{
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/sanitary/white,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -2249,21 +2238,6 @@
 	},
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"js" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/some,
-/turf/unsimulated/floor/carpet{
-	color = "gray"
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -2413,6 +2387,28 @@
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"jV" = (
+/obj/railing/yellow/reinforced{
+	dir = 8
+	},
+/obj/cable/conduit{
+	dir = 4
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/fakeobject/pipe/radioactive{
+	color = "yellow";
+	desc = "This pipe is kinda warm, despite the name. Huh.";
+	name = "coolant pipe"
+	},
+/turf/unsimulated/floor/industrial,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -2734,18 +2730,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"lr" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/stool/bench/yellow/auto,
-/turf/unsimulated/floor/yellowblack,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "ls" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 8;
@@ -3001,21 +2985,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"mF" = (
-/obj/decal/stage_edge/alt{
-	color = "#222222"
-	},
-/obj/stool/chair/pew/fancy/center,
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/terrazzo/black,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "mJ" = (
 /obj/item/storage/firstaid/regular/emergency{
 	pixel_x = 7;
@@ -3082,20 +3051,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"mS" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/decal/tile_edge/line/purple{
-	icon_state = "line3"
-	},
-/turf/unsimulated/floor/shiny/white,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "mU" = (
 /obj/fakeobject/pipe/radioactive{
 	color = "yellow";
@@ -3113,6 +3068,34 @@
 	},
 /obj/item/casing/small,
 /turf/unsimulated/floor/industrial,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"mW" = (
+/obj/table/reinforced/bar/auto{
+	name = "dinette counter"
+	},
+/obj/decal/tile_edge/check/white{
+	dir = 4;
+	icon_state = "check1"
+	},
+/obj/decal/tile_edge/check/white{
+	dir = 8;
+	icon_state = "check1"
+	},
+/obj/noticeboard/directional/north{
+	desc = "A board for shaming fellow workers.";
+	name = "SHAME BOARD"
+	},
+/obj/item/paper{
+	desc = "It's a menu of the last meals served here.";
+	icon_state = "paper";
+	info = "<h3>Shen Kuo Cafe</h3><h4>Today's Menu</h4><hr><br><p>Today's Theme: Culinary Eggcellence! </p><ul><li>Hardboiled Egg</li><li>Deviled Egg</li><li>Egg Salad</li><li>Egg on Toast</li></ul>";
+	name = "Menu";
+	pixel_x = -4;
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/wood/two,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -3519,6 +3502,21 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"oE" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/storage/closet/esdjacket{
+	anchored = 1;
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/shiny,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "oF" = (
 /obj/stool/chair/comfy/green{
 	dir = 8
@@ -3561,6 +3559,21 @@
 	icon_state = "check1"
 	},
 /turf/unsimulated/floor/engine,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"oS" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/some,
+/turf/unsimulated/floor/carpet{
+	color = "gray"
+	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -3933,17 +3946,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"qb" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/engine/caution/south,
-/area/russian/radiation{
-	name = "Reactor Core"
-	})
 "qf" = (
 /obj/stool/bench/yellow/auto,
 /turf/unsimulated/floor/black/corner{
@@ -3983,6 +3985,21 @@
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/wood/five,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"qn" = (
+/obj/decal/stage_edge/alt{
+	color = "#222222"
+	},
+/obj/stool/chair/pew/fancy/center,
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/terrazzo/black,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -4163,21 +4180,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"rc" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/storage/closet/esdjacket{
-	anchored = 1;
-	pixel_y = 16
-	},
-/turf/unsimulated/floor/shiny,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "rf" = (
 /obj/decal/cleanable/blood/drip,
 /turf/unsimulated/floor/yellowblack{
@@ -4275,28 +4277,6 @@
 	name = "pump"
 	},
 /turf/unsimulated/floor/sanitary/blue,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"rA" = (
-/obj/railing/yellow/reinforced{
-	dir = 8
-	},
-/obj/cable/conduit{
-	dir = 4
-	},
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/fakeobject/pipe/radioactive{
-	color = "yellow";
-	desc = "This pipe is kinda warm, despite the name. Huh.";
-	name = "coolant pipe"
-	},
-/turf/unsimulated/floor/industrial,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -5077,6 +5057,24 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"uA" = (
+/obj/machinery/disposal{
+	pixel_y = 13
+	},
+/obj/disposalpipe/trunk/north{
+	pixel_y = 16
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/reagent_dispensers/cleanable/ants,
+/turf/unsimulated/floor/black/side,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "uC" = (
 /obj/table/mauxite/auto,
 /obj/item/storage/toolbox/electrical/mechanic_spawn,
@@ -5095,6 +5093,21 @@
 /turf/unsimulated/floor/engine/glow/blue,
 /area/russian/radiation{
 	name = "Reactor Core"
+	})
+"uL" = (
+/obj/railing/yellow/reinforced{
+	dir = 8
+	},
+/obj/shrub,
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/black/side,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
 	})
 "uP" = (
 /obj/decal/stage_edge/alt{
@@ -5290,6 +5303,20 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"vI" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/mob/living/critter/fermid{
+	health_burn_vuln = 0.35
+	},
+/turf/unsimulated/floor/carpet/red/standard/edge/north,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "vM" = (
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/carpet/green,
@@ -5349,6 +5376,20 @@
 "wd" = (
 /obj/machinery/light/small/floor/warm/very,
 /turf/unsimulated/floor/terrazzo/black,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"wh" = (
+/obj/machinery/beamline/spectrometer{
+	icon_state = "spectrometer-1"
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/shiny/white,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -5610,20 +5651,6 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"xj" = (
-/obj/machinery/beamline/spectrometer{
-	icon_state = "spectrometer-1"
-	},
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/shiny/white,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -5959,32 +5986,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"yy" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/yellowblack{
-	dir = 10
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"yA" = (
-/obj/item/storage/wall/toolshelf,
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/shiny,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "yC" = (
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/solarium{
@@ -6227,23 +6228,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"zs" = (
-/obj/railing/yellow/reinforced,
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/shrub{
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/yellowblack{
-	dir = 8
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "zt" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -6474,20 +6458,6 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/sanitary/white,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"AC" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/yellowblack{
-	dir = 6
-	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -6872,25 +6842,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"BO" = (
-/obj/railing/yellow/reinforced{
-	dir = 4
-	},
-/obj/shrub,
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/unsimulated/floor/black/side,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "BP" = (
 /obj/machinery/computer/card/portable{
 	pixel_y = 10
@@ -6909,6 +6860,25 @@
 	pixel_y = 16
 	},
 /turf/unsimulated/floor/wood/three,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"BU" = (
+/obj/railing/yellow/reinforced{
+	dir = 4
+	},
+/obj/shrub,
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/black/side,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -7347,23 +7317,6 @@
 /area/russian/radiation{
 	name = "Reactor Core"
 	})
-"Ee" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_y = 16
-	},
-/obj/table/reinforced/chemistry/auto/firstaid{
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/sanitary/white,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "Eg" = (
 /obj/reagent_dispensers/cleanable/ants,
 /obj/item/kitchen/utensil/knife/plastic{
@@ -7404,20 +7357,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"Eo" = (
-/obj/decal/stage_edge/alt{
-	color = "#222222"
-	},
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/yellowblack,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "Eq" = (
 /obj/decoration/bookcase{
 	pixel_y = 16
@@ -7429,6 +7368,19 @@
 "Ev" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/wall/auto/adventure/old/reinforced,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"Ez" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/glassblock/transparent_grey{
+	alpha = 50
+	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -7625,34 +7577,6 @@
 	},
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/industrial,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Fj" = (
-/obj/table/reinforced/bar/auto{
-	name = "dinette counter"
-	},
-/obj/decal/tile_edge/check/white{
-	dir = 4;
-	icon_state = "check1"
-	},
-/obj/decal/tile_edge/check/white{
-	dir = 8;
-	icon_state = "check1"
-	},
-/obj/noticeboard{
-	desc = "A board for shaming fellow workers.";
-	name = "SHAME BOARD"
-	},
-/obj/item/paper{
-	desc = "It's a menu of the last meals served here.";
-	icon_state = "paper";
-	info = "<h3>Shen Kuo Cafe</h3><h4>Today's Menu</h4><hr><br><p>Today's Theme: Culinary Eggcellence! </p><ul><li>Hardboiled Egg</li><li>Deviled Egg</li><li>Egg Salad</li><li>Egg on Toast</li></ul>";
-	name = "Menu";
-	pixel_x = -4;
-	pixel_y = 26
-	},
-/turf/unsimulated/floor/wood/two,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -8039,6 +7963,20 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"GY" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/yellowblack{
+	dir = 10
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "Hb" = (
 /obj/decal/stage_edge/alt{
 	color = "#222222"
@@ -8094,6 +8032,17 @@
 /obj/item/clothing/suit/jacket/plastic,
 /obj/item/clothing/suit/jacket/plastic,
 /turf/unsimulated/floor/minitiles/black,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"Ho" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/yellowblack,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -8417,6 +8366,21 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"ID" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/machinery/disposal{
+	pixel_y = 13
+	},
+/obj/disposalpipe/trunk/west,
+/turf/unsimulated/floor/sanitary/blue,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "IH" = (
 /obj/submachine/chef_sink{
 	dir = 8;
@@ -8463,40 +8427,11 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"Jb" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/glassblock/transparent_grey{
-	alpha = 50
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "Jd" = (
 /obj/decoration/pottedfern{
 	pixel_y = 12
 	},
 /turf/unsimulated/floor/minitiles/black,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Je" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/mob/living/critter/fermid{
-	health_burn_vuln = 0.35
-	},
-/turf/unsimulated/floor/plating{
-	icon_state = "plating_jen"
-	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -9194,19 +9129,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"Mb" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/logo_xg{
-	icon_state = "logo_xg15"
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "Mc" = (
 /turf/unsimulated/floor/sanitary,
 /area/solarium{
@@ -9274,25 +9196,6 @@
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg14"
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Mw" = (
-/obj/fakeobject/robotpedestal,
-/obj/machinery/power/tracker{
-	pixel_y = 6
-	},
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/unsimulated/floor/black/side,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -9842,6 +9745,19 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"NZ" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/logo_xg{
+	icon_state = "logo_xg15"
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "Oa" = (
 /obj/decal/poster/wallsign/stencil/right/one,
 /obj/decal/poster/wallsign/stencil/left/two,
@@ -9880,20 +9796,6 @@
 	},
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Of" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/mob/living/critter/fermid{
-	health_burn_vuln = 0.35
-	},
-/turf/unsimulated/floor/carpet/red/standard/edge/north,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -9968,6 +9870,17 @@
 	pixel_x = -12
 	},
 /turf/unsimulated/floor/engine,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"OE" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/minitiles/black,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -10431,6 +10344,50 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"QQ" = (
+/obj/decal/stage_edge/alt{
+	color = "#222222"
+	},
+/obj/noticeboard/directional/north{
+	desc = "A board for shaming fellow workers.";
+	name = "SHAME BOARD"
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Technicians got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Left a malfunctioning SMES unit at his service desk without following proper energy isolation and lockout procedures. AGAIN! </b>";
+	name = "Joff Muncey, Repair Technician";
+	pixel_x = 2;
+	pixel_y = 29
+	},
+/obj/item/paper{
+	desc = "Looks like some of the Sales team got called out.";
+	icon_state = "postit-writing";
+	info = "<b>The sales techs didn't flush their garbage disposal ALL WEEK. It's attracting ants!! Does plant cleanliness mean NOTHING to you?</b>";
+	name = "Gordon Baade & Sue Zhang, Sales Technicians";
+	pixel_x = -7;
+	pixel_y = 28
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Janitors got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Hurry up and take care of these damned ants! </b>";
+	name = "Tedward Benson, Janitor";
+	pixel_x = -2;
+	pixel_y = 26
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Engineers got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Borrowed GLEN's wrench, didn't return it for weeks!</b>";
+	name = "Jimmy Li, Engineer";
+	pixel_x = 7;
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/yellowblack,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "QT" = (
 /obj/lattice/directional_icons{
 	dir = 9
@@ -10450,17 +10407,6 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/five,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"QX" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/minitiles/black,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -10580,18 +10526,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"Rt" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/fakeobject/cpucontroller,
-/turf/unsimulated/floor/shiny/white,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "Ru" = (
 /obj/railing/yellow/reinforced{
 	dir = 4
@@ -10672,6 +10606,24 @@
 /obj/disposalpipe/segment/vertical,
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 9
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"RK" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/table/wood/auto/desk,
+/obj/item/storage/secure/sbriefcase{
+	pixel_y = 5
+	},
+/obj/item/pen/typewriter,
+/turf/unsimulated/floor/carpet{
+	color = "green"
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -10800,6 +10752,23 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"Sl" = (
+/obj/railing/yellow/reinforced,
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/shrub{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/yellowblack{
+	dir = 8
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "Sq" = (
 /obj/decoration/pottedfern{
 	pixel_y = 12
@@ -10849,6 +10818,18 @@
 	pixel_y = -10
 	},
 /turf/unsimulated/floor/sanitary/blue,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"Sy" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/stool/bench/yellow/auto,
+/turf/unsimulated/floor/yellowblack,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -11014,6 +10995,17 @@
 /turf/unsimulated/floor/minitiles/black,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
+	})
+"Tk" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/turf/unsimulated/floor/engine/caution/south,
+/area/russian/radiation{
+	name = "Reactor Core"
 	})
 "Tl" = (
 /obj/rack,
@@ -11186,9 +11178,42 @@
 	},
 /turf/space,
 /area/space)
+"TS" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line3"
+	},
+/turf/unsimulated/floor/shiny/white,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "TW" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"TX" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/table/wood/auto/desk,
+/obj/item/paper/intelligence_report{
+	color = "red";
+	icon_state = "paper";
+	info = "<b>Report on Site 6 Incident - Io Thermocouple Rig </b><br><br>This information is for the eyes of Xiang | Giesel security managers only. If you are not authorized to read this report, please report to your security manager for debriefing.</i><br><br> A severe radiological incident has occured at our thermocouple facility on Io. There are no detected survivors. <br> Upon engineering analysis, we were able to identify a likely root cause. NanoTrasen's interference with the artifact anchors within the Io Flux Channel have long coincided with increased instabilities to the magnetic field, plasma torus and radiation belts within the Jovian-Ionian system. There is a 65.49% calculated probability that NanoTrasen is somehow to blame for the loss of our Ionian facility. Litigation is pending."
+	},
+/turf/unsimulated/floor/carpet{
+	color = "red"
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -11521,24 +11546,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"Vr" = (
-/obj/machinery/disposal{
-	pixel_y = 13
-	},
-/obj/disposalpipe/trunk/north{
-	pixel_y = 16
-	},
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/obj/reagent_dispensers/cleanable/ants,
-/turf/unsimulated/floor/black/side,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "Vs" = (
 /obj/storage/closet/dresser/random,
 /obj/item/ammo/bullets/bullet_9mm,
@@ -11702,6 +11709,25 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 6
 	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"Wh" = (
+/obj/fakeobject/robotpedestal,
+/obj/machinery/power/tracker{
+	pixel_y = 6
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "XG6/SHENKUO";
+	desc = "";
+	network = "XG6";
+	pixel_x = 2
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/black/side,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -11907,17 +11933,6 @@
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/sanitary/white,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"WY" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/carpet/grime,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -12508,21 +12523,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"Zu" = (
-/obj/railing/yellow/reinforced{
-	dir = 8
-	},
-/obj/shrub,
-/obj/machinery/camera/directional/north{
-	c_tag = "XG6/SHENKUO";
-	desc = "";
-	network = "XG6";
-	pixel_x = 2
-	},
-/turf/unsimulated/floor/black/side,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "Zw" = (
 /obj/decal/tile_edge/check/orange{
 	dir = 1;
@@ -13066,7 +13066,7 @@ Wu
 Oa
 ew
 RT
-WY
+bc
 xU
 HS
 HS
@@ -13465,7 +13465,7 @@ Os
 Yf
 RY
 cq
-Je
+eu
 gl
 VO
 EZ
@@ -13582,7 +13582,7 @@ sR
 eR
 yG
 Wm
-Vr
+uA
 gY
 WH
 WH
@@ -13650,7 +13650,7 @@ Hn
 Am
 gA
 Yf
-dB
+ID
 Pp
 pk
 Yf
@@ -13706,7 +13706,7 @@ Zm
 RC
 Zm
 Vb
-lr
+Sy
 jK
 Zh
 mz
@@ -13971,7 +13971,7 @@ RY
 gU
 Jg
 pg
-Ee
+jf
 ol
 ZQ
 ZQ
@@ -14138,12 +14138,12 @@ Id
 KT
 Cp
 RT
-yy
+GY
 lf
 JR
 Qa
 RT
-zs
+Sl
 WB
 CY
 WE
@@ -14237,7 +14237,7 @@ FM
 Yf
 Yf
 Yf
-Mb
+NZ
 TW
 wu
 sY
@@ -14336,14 +14336,14 @@ mw
 mw
 nm
 pg
-js
+oS
 OI
 bs
 xK
 xK
 Lr
 Wf
-Of
+vI
 yq
 yX
 Lc
@@ -14518,7 +14518,7 @@ Va
 Va
 Va
 RT
-Zu
+uL
 TD
 WH
 WH
@@ -14575,7 +14575,7 @@ lf
 yR
 QU
 RT
-iY
+TX
 Hl
 Zf
 Yy
@@ -14786,7 +14786,7 @@ SK
 ym
 PT
 Vb
-ie
+Ho
 lf
 JR
 lt
@@ -14834,7 +14834,7 @@ Yf
 RY
 iZ
 WP
-rc
+oE
 MM
 WL
 WL
@@ -14882,7 +14882,7 @@ ew
 ew
 ew
 RT
-Jb
+Ez
 Li
 Li
 RT
@@ -15295,7 +15295,7 @@ lf
 JR
 QU
 RT
-mF
+qn
 wd
 eN
 hN
@@ -15626,7 +15626,7 @@ Yf
 RY
 iZ
 WP
-yA
+gV
 qt
 WL
 WL
@@ -15637,7 +15637,7 @@ Bt
 pV
 wp
 pg
-Rt
+bb
 fv
 sL
 sL
@@ -15746,7 +15746,7 @@ ew
 ew
 ew
 RT
-Jb
+Ez
 Li
 Li
 RT
@@ -15794,7 +15794,7 @@ oj
 Gd
 HK
 Vb
-Eo
+dn
 Rk
 JR
 lt
@@ -16003,7 +16003,7 @@ cT
 EX
 WP
 yC
-Fj
+mW
 Gq
 yC
 Iv
@@ -16102,7 +16102,7 @@ oF
 xR
 zq
 RT
-BO
+BU
 TD
 WH
 WH
@@ -16154,12 +16154,12 @@ Fm
 Lp
 fc
 yC
-be
+QQ
 Rk
 JR
 lt
 RT
-bg
+RK
 KA
 Ps
 YS
@@ -16429,7 +16429,7 @@ Cx
 tQ
 rs
 pg
-xj
+wh
 fv
 sL
 Pd
@@ -16442,7 +16442,7 @@ tr
 Xn
 Ta
 RT
-AC
+aw
 Rk
 JR
 PR
@@ -16490,7 +16490,7 @@ Yf
 RY
 iZ
 WP
-cs
+fM
 nh
 WL
 WL
@@ -17018,7 +17018,7 @@ RY
 WP
 WP
 WP
-rA
+jV
 mU
 Fd
 HG
@@ -17030,7 +17030,7 @@ fh
 FF
 BJ
 WP
-QX
+OE
 EF
 Wf
 ih
@@ -17038,7 +17038,7 @@ Wp
 cy
 jQ
 Yf
-Mw
+Wh
 TD
 WH
 pp
@@ -17151,7 +17151,7 @@ WP
 WP
 pW
 WP
-mS
+TS
 sL
 WP
 pW
@@ -17281,7 +17281,7 @@ Os
 Yf
 RY
 WP
-cs
+fM
 CQ
 xv
 zg
@@ -17303,7 +17303,7 @@ Zl
 Hw
 xK
 JB
-qb
+Tk
 ZW
 Fl
 Ed

@@ -1372,6 +1372,17 @@
 /obj/machinery/turret,
 /turf/simulated/floor/blueblack/corner,
 /area/station/turret_protected/ai)
+"bbB" = (
+/obj/machinery/disposal/brig{
+	name = "ejector chute"
+	},
+/obj/disposalpipe/trunk/ejection{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/noticeboard/persistent/security_foyer/directional/north,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "bbD" = (
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
@@ -2324,6 +2335,13 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/ce)
+"bQq" = (
+/obj/machinery/vending/medical,
+/obj/noticeboard/persistent/medbay/directional/north,
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/medical/medbay)
 "bQs" = (
 /obj/table/auto,
 /obj/machinery/networked/printer{
@@ -3482,6 +3500,13 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"cKG" = (
+/obj/table/wood/auto,
+/obj/noticeboard/persistent/chapel/directional/west,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
 "cKH" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 8;
@@ -5766,13 +5791,6 @@
 /obj/lattice,
 /turf/space/fluid,
 /area/space)
-"eoh" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
-/obj/noticeboard,
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
 "eot" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical{
@@ -10023,10 +10041,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/lounge)
-"hhE" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
 "hhG" = (
 /obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/black,
@@ -13845,15 +13859,6 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
-"jRd" = (
-/obj/machinery/light/incandescent,
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = "engineering";
-	pixel_y = -24
-	},
-/turf/simulated/floor/yellow/side,
-/area/station/engine/engineering)
 "jRN" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -15415,6 +15420,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/studio)
+"kYi" = (
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/storage/crate,
+/obj/machinery/light/incandescent,
+/obj/noticeboard/persistent/engineering/directional/east,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/engineering)
 "kYz" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/navbeacon/mule/research_north/west,
@@ -18549,24 +18573,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"nnG" = (
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/storage/crate,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/engineering)
 "noF" = (
 /obj/decal/cleanable/oil{
 	icon_state = "floor6"
@@ -21156,6 +21162,13 @@
 "pqm" = (
 /turf/unsimulated/floor/green/corner,
 /area/station/crewquarters/cryotron)
+"pqx" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/noticeboard/directional/north,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
 "pqY" = (
 /turf/unsimulated/floor/green/side{
 	dir = 8
@@ -21943,16 +21956,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/bridge/execrestroom)
-"pQv" = (
-/obj/machinery/vending/medical,
-/obj/noticeboard/persistent{
-	name = "Medbay persistent notice board";
-	persistent_id = "medbay"
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/station/medical/medbay)
 "pQx" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/hair_dye_dispenser,
@@ -23130,18 +23133,6 @@
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"qKk" = (
-/obj/table/wood/auto,
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-	persistent_id = "chapel";
-	pixel_y = 8;
-	pixel_x = -32
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
-/area/station/chapel/sanctuary)
 "qKs" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/plating,
@@ -24773,22 +24764,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"rVW" = (
-/obj/machinery/disposal/brig{
-	name = "ejector chute"
-	},
-/obj/disposalpipe/trunk/ejection{
-	dir = 8
-	},
-/obj/machinery/light/incandescent/warm,
-/obj/noticeboard/persistent{
-	name = "Security Foyer persistent notice board";
-	persistent_id = "security foyer";
-	pixel_y = 6;
-	pixel_x = 32
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
 "rVX" = (
 /obj/machinery/navbeacon/mule/crewA_north,
 /turf/simulated/floor/carpet{
@@ -25063,6 +25038,10 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"sdZ" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
 "seb" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 8
@@ -74176,7 +74155,7 @@ vVG
 eAP
 kTn
 hAH
-pQv
+bQq
 hZh
 iHL
 sjx
@@ -79880,7 +79859,7 @@ meM
 nYB
 bpk
 cDx
-qKk
+cKG
 lfU
 fqX
 qNe
@@ -83855,7 +83834,7 @@ wcx
 urY
 pLB
 vMj
-rVW
+bbB
 iue
 tJZ
 fwH
@@ -85010,7 +84989,7 @@ miS
 gWB
 kHs
 aAG
-jRd
+vng
 eIR
 iOX
 iOX
@@ -85609,7 +85588,7 @@ evo
 wmq
 wmq
 iSW
-nnG
+kYi
 yej
 ecg
 gkR
@@ -97034,7 +97013,7 @@ pJo
 xjN
 dQP
 wSX
-hhE
+sdZ
 vYT
 aar
 eaj
@@ -97635,10 +97614,10 @@ qpn
 qpn
 qpn
 pJo
-eoh
+pqx
 dQP
 dQP
-hhE
+sdZ
 wPz
 dQP
 dQP

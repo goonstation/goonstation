@@ -3213,6 +3213,13 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
+"wb" = (
+/obj/noticeboard/directional/north,
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wc" = (
 /obj/machinery/door/airlock/gannets/maintenance,
 /obj/mapping_helper/access/syndie_shuttle,
@@ -3250,13 +3257,6 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
 /turf/unsimulated/floor/industrial,
-/area/syndicate_station{
-	name = "Decirprevo Tanker";
-	color = "aqua"
-	})
-"wz" = (
-/obj/noticeboard,
-/turf/simulated/floor/circuit/off,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
 	color = "aqua"
@@ -3627,18 +3627,6 @@
 "zg" = (
 /obj/machinery/drainage/big,
 /turf/unsimulated/floor/pool/blue,
-/area/syndicate_station{
-	name = "Decirprevo Tanker";
-	color = "aqua"
-	})
-"zl" = (
-/obj/machinery/cookingmachine/oven,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/black,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
 	color = "aqua"
@@ -7428,6 +7416,18 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
+"ZD" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ZM" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -7739,7 +7739,7 @@ tT
 WK
 De
 De
-zl
+ZD
 Gk
 Og
 Og
@@ -8215,7 +8215,7 @@ aD
 Yd
 HQ
 Gk
-wz
+wb
 bH
 bH
 bH

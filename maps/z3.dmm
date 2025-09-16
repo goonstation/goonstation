@@ -9491,16 +9491,6 @@
 	},
 /turf/simulated/floor,
 /area/h7/crew)
-"aSU" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/noticeboard{
-	name = "Complaint Board";
-	pixel_y = 24
-	},
-/turf/simulated/floor,
-/area/h7/crew)
 "aSV" = (
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
@@ -15494,6 +15484,12 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/timewarp/ship)
+"bPC" = (
+/obj/fakeobject/shuttlethruster{
+	dir = 4
+	},
+/turf/space,
+/area/diner/tug)
 "bPI" = (
 /obj/stool,
 /turf/simulated/floor/carpet/arcade,
@@ -19608,6 +19604,11 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"lPW" = (
+/obj/stool/chair/blue,
+/obj/noticeboard/directional/north,
+/turf/simulated/floor/green/checker,
+/area/radiostation/green)
 "lQg" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -20242,12 +20243,6 @@
 	dir = 1
 	},
 /area/radiostation/hallway)
-"nll" = (
-/obj/fakeobject/shuttlethruster{
-	dir = 4
-	},
-/turf/space,
-/area/diner/tug)
 "nlG" = (
 /obj/lattice,
 /obj/cable{
@@ -20524,11 +20519,6 @@
 	},
 /turf/space,
 /area/salyut)
-"nWz" = (
-/obj/stool/chair/blue,
-/obj/noticeboard,
-/turf/simulated/floor/green/checker,
-/area/radiostation/green)
 "nYg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/salyut)
@@ -23228,6 +23218,15 @@
 /obj/item/paper/bores_part_two,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"utv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/noticeboard/directional/north{
+	name = "Complaint Board"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
 "uvN" = (
 /obj/fakeobject/shuttleengine{
 	dir = 4;
@@ -32749,7 +32748,7 @@ aOU
 ogr
 aRi
 aOU
-aSU
+utv
 aTK
 aTK
 aTK
@@ -66827,9 +66826,9 @@ aaa
 aaa
 aaa
 aaa
-nll
-nll
-nll
+bPC
+bPC
+bPC
 aaa
 aaa
 aaa
@@ -106057,7 +106056,7 @@ adF
 obG
 aaa
 eLA
-nWz
+lPW
 adJ
 cbs
 hBh
