@@ -129,7 +129,7 @@
 		return
 
 	var/term_type = lowertext(conn.term_type)
-	if (dd_hasprefix(term_type , "pnet_"))
+	if (dd_hasprefix(term_type, "pnet_"))
 		term_type = copytext(term_type, 6)
 
 	if (term_type == "hui_terminal")
@@ -417,16 +417,14 @@
 	user.dispose()
 	return FALSE
 
-/// Log out all users, terminating any programs they are using, and removing all user record files
+/// Log out all users, terminating any programs that they are using, and removing all user record files.
 /datum/computer/file/mainframe_program/os/kernel/proc/logout_all_users(disconnect = FALSE)
 	for (var/user_id in src.users)
 		var/datum/mainframe2_user_data/user = src.users[user_id]
-		if (!istype(user))
-			continue
-		if (!istype(user.user_file))
+		if (!istype(user) || !istype(user.user_file))
 			continue
 
-		logout_user(user, disconnect)
+		src.logout_user(user, disconnect)
 
 /// Initialise all drivers, setting up driver data and initialising them individually.
 /datum/computer/file/mainframe_program/os/kernel/proc/initialize_drivers()
@@ -546,45 +544,3 @@
 
 		if (ignore_user_file_setting || (user.user_file.fields["accept_msg"] == "1"))
 			src.message_term("MSG from \[[sender_name]]: [message]", user_id, "multiline")
-
-
-/**
- *	The user login manager is responsible for passing user login credentials from the user to the kernel to be authenticated,
- *	displaying the daily welcome message to the user, and for notifying the user in the event of a login failure.
- */
-/datum/computer/file/mainframe_program/login
-	name = "Login"
-	size = 2
-	executable = 0
-
-	var/motd = "Welcome to DWAINE System VI!|nCopyright 2050 Thinktronic Systems, LTD."
-	var/setup_filename_motd = "motd"
-
-/datum/computer/file/mainframe_program/login/initialize()
-	if (..())
-		return
-
-	var/datum/computer/file/record/record = src.signal_program(1, list("command" = DWAINE_COMMAND_CONFGET, "fname" = src.setup_filename_motd))
-	if (istype(record))
-		src.motd = jointext(record.fields, "|n")
-		src.motd = copytext(src.motd, 1, 255)
-	else
-		src.motd = initial(src.motd)
-
-	src.message_user("[src.motd]|nPlease enter card and \"term_login\"", "multiline")
-
-/datum/computer/file/mainframe_program/login/receive_progsignal(sendid, list/data, datum/computer/file/record/file)
-	if (..() || (data["command"] != DWAINE_COMMAND_RECVFILE) || !istype(file))
-		return ESIG_GENERIC
-
-	if (!src.useracc)
-		return ESIG_NOUSR
-
-	if (!file.fields["registered"] || !file.fields["assignment"])
-		return ESIG_GENERIC
-
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_ULOGIN, "name" = file.fields["registered"])) != ESIG_SUCCESS)
-		src.message_user("Error: Login failure. Please try again.")
-		return ESIG_GENERIC
-
-	mainframe_prog_exit
