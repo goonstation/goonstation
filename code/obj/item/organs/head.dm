@@ -19,6 +19,7 @@
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
+	open_to_sound = FALSE
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
@@ -655,3 +656,6 @@
 		if(!skip_update)
 			src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something
+
+	find_radio()
+		return astype(src.ears, /obj/item/device/radio)
