@@ -1,4 +1,145 @@
 
+(t)mon sep 15 25
+(u)Lord_Earthfire
+(p)24657
+(e)|
+(+)Multitools in assemblies will now shock the tile they are on when activated, akin to using their special attack.
+(t)sun sep 14 25
+(u)JORJ949
+(p)24646
+(e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
+(+)Law Linkers now show the location of their linked rack on examine.
+(u)JORJ949
+(p)24479
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Added a new captainly "Regal" AI skin available via a plating kit made by adding wires to a captain's uniform.
+(u)Studenterhue
+(p)24653
+(e)🎨|C-Sprites
+(+)Congratulations to SnugglyCactus, Whele, Scientifically, Mailman T, Shiiba, and IncendiaryCrocs for winning the Goonstation Summer 2025 Seasonal Contest! Now, when you open your mail, you may find the postcards they made.
+(+)Frank_Stein, Elskrises, RubberRats, and Gamb1t did not win, but their postcards were so cool that they too appear in the mail loot pool for all jobs now, at slightly lower spawn rates.
+(t)sat sep 13 25
+(u)LeahTheTech
+(p)24651
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(*)Spirit candles can now be activated twice before being used up, but reveal the wraith for a shorter time.
+(u)LeahTheTech
+(p)24644
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Salt no longer reveals wraiths, instead it blocks them and can be shoved through for a small health cost.
+(*)Salt now blocks wraith abilities based on line of sight.
+(t)fri sep 12 25
+(u)LeahTheTech
+(+)EMPing an AI core now has a 50% chance to eject them back to their mainframe or forcefully enable text mode for 15 seconds.
+(t)wed sep 10 25
+(u)EmeraldCrow
+(p)24619
+(e)🎨|C-Sprites
+(+)Adds figurines for ovaiggy (Sachie Blunt) and ithebinman (The Mucus Man). Go visit your local figurine dispenser today!
+(t)tue sep 09 25
+(u)cringe
+(p)24624
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)wall igniters now accept mechcomp igniting
+(t)sun sep 07 25
+(u)glowbold
+(p)24594
+(e)🆕⚖🐁|C-Feature, C-Balance, A-Critters
+(*)Living objects attempt to destroy common hiding places.
+(t)sat sep 06 25
+(u)EmeraldCrow
+(p)24562
+(e)🎨|C-Sprites
+(+)Adds two new figurines (for raccoonpope and SuperBongoTime) to the game.
+(u)JORJ949
+(p)24157
+(e)💅💊|C-QoL, A-Medical
+(+)Wheelchair parts can now be crafted at the medical fabricator
+(u)glowbold
+(p)24563
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Both secured and unsecured closets can be busted open.
+(u)glowbold
+(p)24535
+(e)🆕💊|C-Feature, A-Medical
+(+)When a gene scanning computer is destroyed, the saved mutations and chromosomes are stored to the genetics circuit board.
+(u)JORJ949
+(p)24605
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Limb and Trinket bounties will now be marked as destroyed in spy uplinks when their target item is destroyed.
+(u)RubberRats
+(p)24525
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The Razorbill-180 should no longer leave floating ghost bullets on point-blank
+(u)Lord_Earthfire
+(p)24554
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Assemblies will now be considered contraband, if they have anything on them that is considered contraband
+(t)fri sep 05 25
+(u)Lord_Earthfire
+(p)24578
+(e)🆕🎨📦⚙|C-Feature, C-Sprites, A-Game-Objects, A-Internal
+(*)Hand teles can now be build into assemblies.
+(+)Components in assemblies that uses energy cells can now have their cells swapped while in the assembly or be charged in chargers by putting the assembly in the charger.
+(t)thu sep 04 25
+(u)Mr. Moriarty & Mordent
+(p)24451
+(e)🆕📄🐣|C-Feature, A-UI, A-Respawning
+(*)The job preferences window has been converted to TGUI and integrated into the Character Setup panel.
+(u)SnugglyCactus
+(p)23962
+(e)🆕🎨💊💪|C-Feature, C-Sprites, A-Medical, A-Traits
+(+)Added trait "Defect Prone"; cloning's going to get a bit weirder.
+(u)LorrMaster
+(p)24349
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Updated how various materials impact object appearance.
+(u)JORJ949
+(p)24579
+(e)⚖📨|C-Balance, A-Logistics
+(+)Vampires can no longer be assigned the Miner job.
+(t)tue sep 02 25
+(u)Lord_Earthfire
+(p)24553
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Panic buttons can now be used to create assemblies with any commonly used trigger (e.g. mousetraps, signalers, timers or health analyzers)
+(u)LeahTheTech
+(p)24558
+(e)🔨|A-Player-Actions
+(+)You can send URLs in OOC and LOOC channels again and out loud on classic.
+(t)sat aug 30 25
+(u)Calphrick
+(p)24395
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Changed one of the materials needed for the cyborg teleport upgrade.
+(u)LeahTheTech
+(p)24537
+(e)⛔|C-Removal
+(+)The scots accent has been made very slightly less incomprehensible.
+(t)thu aug 28 25
+(u)JORJ949
+(p)24528
+(e)💅💡|C-QoL, A-Station-Systems
+(*)Computer and Console frames convert into each other depending on if a Circuitboard or Motherboard is inserted.
+(t)wed aug 27 25
+(u)LeahTheTech
+(p)24530
+(e)🧱|A-Materials
+(+)Tweaked radioactive material effects behind the scenes, they should look a lot more consistent and less blue now.
+(u)LorrMaster
+(p)24260
+(e)⚖💅🔨|C-Balance, C-QoL, A-Player-Actions
+(*)Pug sleuthing now detects all scents at once
+(*)Fish and wearable flowers can be used to spread sleuthing scents
+(u)LorrMaster
+(p)24250
+(e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
+(+)Forensic scan reports have been reformatted
+(t)mon aug 25 25
+(u)JORJ949
+(p)24291
+(e)🗺⚖👮|A-Mapping, C-Balance, A-Security
+(*)Clarion security has been expanded to feel a little less cramped.
 (t)wed aug 20 25
 (u)RubberRats
 (p)24286

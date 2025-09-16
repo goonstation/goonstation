@@ -495,7 +495,6 @@ TYPEINFO(/atom/movable)
 	/// Temporary value to smuggle newloc to Uncross during Move-related procs
 	var/tmp/atom/movement_newloc = null
 
-	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
 
@@ -859,6 +858,7 @@ TYPEINFO(/atom/movable)
 	PROTECTED_PROC(TRUE)
 	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
+	W.material_on_attack_use(user, src)
 	src.material_trigger_when_attacked(W, user, 1)
 	if (silent)
 		return
