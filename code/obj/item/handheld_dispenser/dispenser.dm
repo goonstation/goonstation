@@ -613,7 +613,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 		glass
 			name = "See-through fluid tank"
 			path = /obj/fluid_pipe/fluid_tank/see_fluid
-			cost = 7
+			cost = 11
 			desc = "A very large tank capable of holding 10000 units. This one has a glass view!"
 			icon_state = "tank-view"
 
