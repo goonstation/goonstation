@@ -602,7 +602,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
 	tank
 		name = "Fluid tank"
 		path = /obj/fluid_pipe/fluid_tank
-		cost = 6
+		cost = 10
 		icon = 'icons/obj/fluidpipes/fluid_tank.dmi'
 		icon_state = "tank"
 		desc = "A very large tank capable of holding 4000 units"
