@@ -39,6 +39,7 @@ export interface CharacterPreferencesData {
   pdaColor: string;
   pdaRingtone: string;
   useSatchel: BooleanLike;
+  preferredUplink: string;
   skinTone: string;
   specialStyle: string;
   eyeColor: string;
