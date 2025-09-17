@@ -1,4 +1,13 @@
 
+(t)tue sep 16 25
+(u)Lord_Earthfire
+(p)24661
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Geiger counter can now be added as triggers into assemblies. They will trigger whenever the wearer is affected by radiation. Turn a monkey into a radiation-detector for mechcomp today!
+(u)Lord_Earthfire
+(p)24662
+(e)⚖🔄📦💡|C-Balance, C-Rework, A-Game-Objects, A-Station-Systems
+(+)Proximity sensors have a small cooldown between activations
 (t)mon sep 15 25
 (u)Lord_Earthfire
 (p)24657
