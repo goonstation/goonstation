@@ -206,6 +206,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				S.UpdateIcon()
 				S.tooltip_rebuild = TRUE
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+				playsound(src.loc, 'sound/effects/chute_place.ogg', 50, 1)
 				src.update()
 				return
 		if(istype(I, /obj/item/storage/mechanics))
@@ -229,6 +230,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					I.storage.transfer_stored_item(O, src, user = user)
 			user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
+			playsound(src.loc, 'sound/effects/chute_place.ogg', 50, 1)
 			src.update()
 			return
 
@@ -256,6 +258,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
+			playsound(src.loc, 'sound/effects/chute_place.ogg', 50, 1, -26)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
@@ -319,6 +322,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			var/obj/item/I = MO
 			I.set_loc(src)
 			update()
+			playsound(src.loc, 'sound/effects/chute_place.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("\The [I] lands cleanly in \the [src]!"))
 
 		else if (istype(MO, /mob/living))
