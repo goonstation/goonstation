@@ -96,7 +96,7 @@
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()
 		if (!roundId || !src.client) return
-		var/datum/apiModel/Tracked/PlayerResource/playerResponse
+		var/datum/apiModel/Tracked/Player/playerResponse
 		try
 			var/datum/apiRoute/players/login/playerLogin = new
 			playerLogin.buildBody(

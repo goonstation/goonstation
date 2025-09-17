@@ -1316,6 +1316,7 @@
 #include "code\modules\goonhub\api\models\medals\HasMedalResource.dm"
 #include "code\modules\goonhub\api\models\medals\MedalResource.dm"
 #include "code\modules\goonhub\api\models\numbersstation\NumbersStationPasswordResource.dm"
+#include "code\modules\goonhub\api\models\playeradmins\PlayerAdmin.dm"
 #include "code\modules\goonhub\api\models\players\GetPlayerSaves.dm"
 #include "code\modules\goonhub\api\models\players\PlayerAntagResource.dm"
 #include "code\modules\goonhub\api\models\players\PlayerCompIdsResource.dm"
