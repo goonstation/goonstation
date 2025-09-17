@@ -219,7 +219,6 @@
 		src.tooltip_rebuild = TRUE
 		user.visible_message("<b>[user.name]</b> dumps out [src] into [chute].")
 		chute.update()
-		return
 
 	// Don't place the satchel onto the table if we've dumped out its contents with the same command.
 	should_place_on(obj/target, params)
