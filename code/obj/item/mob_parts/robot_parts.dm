@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			..()
 
 	reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
-		if (!src.can_reinforce(M, need_reinforced))
+		if (!src.can_reinforce(M, user, need_reinforced))
 			return
 
 		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))

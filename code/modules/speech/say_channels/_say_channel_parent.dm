@@ -26,6 +26,8 @@ ABSTRACT_TYPE(/datum/say_channel)
 	var/suppress_hear_sound = FALSE
 	/// Whether the speaker of a message sent through this channel should display a speech bubble on sending a message.
 	var/suppress_speech_bubble = FALSE
+	/// Do we allow URLs to be sent in this channel?
+	var/allows_urls = FALSE
 
 /datum/say_channel/New()
 	. = ..()

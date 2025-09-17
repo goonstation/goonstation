@@ -7,7 +7,6 @@
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
 	circuit_type = /obj/item/circuitboard/robotics
-	id = 0
 	var/perma = 0
 
 	light_r =0.85
@@ -131,7 +130,15 @@
 
 /obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj, mob/user)
 	logTheThing(LOG_STATION, src, "is deconstructed by [key_name(user)] at [log_loc(src)]")
-	frame.circuit.id = src.id
+
+/obj/machinery/computer/robotics/save_board_data(obj/item/circuitboard/circuitboard)
+	. = ..()
+	circuitboard.saved_data = src.id
+
+/obj/machinery/computer/robotics/load_board_data(obj/item/circuitboard/circuitboard)
+	if(..())
+		return
+	src.id = circuitboard.saved_data
 
 /obj/machinery/computer/robotics/proc/update_silicon_statuses()
 	var/list/ais = list()
