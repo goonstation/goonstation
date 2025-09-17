@@ -5861,11 +5861,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"axr" = (
-/obj/submachine/ice_cream_dispenser,
-/obj/noticeboard/persistent/bar/directional/north,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/bar)
 "axu" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -19214,6 +19209,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
+"bqx" = (
+/obj/machinery/cookingmachine/oven,
+/obj/landmark/bill_spawn,
+/obj/noticeboard/persistent/kitchen/directional/north,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "bqA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19849,11 +19850,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"buq" = (
-/obj/submachine/chef_oven,
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "buz" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36825,6 +36821,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"dOC" = (
+/obj/machinery/cookingmachine/oven,
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "dOG" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -48486,11 +48487,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
-"mBW" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "mCe" = (
 /obj/cable,
 /obj/storage/crate,
@@ -51845,12 +51841,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"oWl" = (
-/obj/submachine/chef_oven,
-/obj/landmark/bill_spawn,
-/obj/noticeboard/persistent/kitchen/directional/north,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "oXH" = (
 /obj/table/wood/auto,
 /obj/decal/cleanable/desk_clutter{
@@ -52161,6 +52151,18 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"pge" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/noticeboard/persistent/brig/directional/north,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "pgo" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -54083,6 +54085,11 @@
 	dir = 8
 	},
 /area/station/engine/hotloop)
+"qCs" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "qCB" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -54171,20 +54178,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
-"qGo" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_south,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
 "qGN" = (
 /obj/mesh/catwalk{
 	dir = 5
@@ -56696,6 +56689,11 @@
 /obj/random_item_spawner/med_tool,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
+"sBh" = (
+/obj/submachine/ice_cream_dispenser,
+/obj/noticeboard/persistent/bar/directional/north,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "sBA" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -63157,6 +63155,20 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"xjn" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
 "xjC" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -64467,18 +64479,6 @@
 /obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"yjq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/obj/noticeboard/persistent/brig/directional/north,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "yku" = (
 /obj/machinery/power/terminal,
 /obj/cable/orange{
@@ -95743,7 +95743,7 @@ fZG
 aho
 dON
 asX
-yjq
+pge
 fDN
 vaa
 pgN
@@ -114156,7 +114156,7 @@ agr
 aie
 aie
 aiY
-buq
+dOC
 alg
 alg
 ryN
@@ -114165,7 +114165,7 @@ tSy
 wVZ
 kCu
 wiO
-axr
+sBh
 fqw
 qQJ
 tvH
@@ -114760,7 +114760,7 @@ acT
 aie
 aie
 aiZ
-oWl
+bqx
 alg
 spb
 alg
@@ -115669,7 +115669,7 @@ qzb
 aiZ
 jNg
 jrc
-mBW
+qCs
 eCT
 nQn
 fts
@@ -119001,7 +119001,7 @@ pYK
 pYK
 axC
 tVl
-qGo
+xjn
 aqZ
 bUx
 sQL

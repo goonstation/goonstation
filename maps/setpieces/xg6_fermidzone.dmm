@@ -264,50 +264,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"be" = (
-/obj/decal/stage_edge/alt{
-	color = "#222222"
-	},
-/obj/noticeboard/directional/north{
-	desc = "A board for shaming fellow workers.";
-	name = "SHAME BOARD"
-	},
-/obj/item/paper{
-	desc = "Looks like one of the Technicians got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Left a malfunctioning SMES unit at his service desk without following proper energy isolation and lockout procedures. AGAIN! </b>";
-	name = "Joff Muncey, Repair Technician";
-	pixel_x = 2;
-	pixel_y = 29
-	},
-/obj/item/paper{
-	desc = "Looks like some of the Sales team got called out.";
-	icon_state = "postit-writing";
-	info = "<b>The sales techs didn't flush their garbage disposal ALL WEEK. It's attracting ants!! Does plant cleanliness mean NOTHING to you?</b>";
-	name = "Gordon Baade & Sue Zhang, Sales Technicians";
-	pixel_x = -7;
-	pixel_y = 28
-	},
-/obj/item/paper{
-	desc = "Looks like one of the Janitors got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Hurry up and take care of these damned ants! </b>";
-	name = "Tedward Benson, Janitor";
-	pixel_x = -2;
-	pixel_y = 26
-	},
-/obj/item/paper{
-	desc = "Looks like one of the Engineers got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Borrowed GLEN's wrench, didn't return it for weeks!</b>";
-	name = "Jimmy Li, Engineer";
-	pixel_x = 7;
-	pixel_y = 28
-	},
-/turf/unsimulated/floor/yellowblack,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "bf" = (
 /obj/item/poster{
 	desc = "Janet Habicht, Operations Manager. Last seen at XG-5 'Su Song' Thermocouple Site. Missing in Action following radiological disaster. Reward offered for information.";
@@ -3112,6 +3068,34 @@
 	},
 /obj/item/casing/small,
 /turf/unsimulated/floor/industrial,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"mW" = (
+/obj/table/reinforced/bar/auto{
+	name = "dinette counter"
+	},
+/obj/decal/tile_edge/check/white{
+	dir = 4;
+	icon_state = "check1"
+	},
+/obj/decal/tile_edge/check/white{
+	dir = 8;
+	icon_state = "check1"
+	},
+/obj/noticeboard/directional/north{
+	desc = "A board for shaming fellow workers.";
+	name = "SHAME BOARD"
+	},
+/obj/item/paper{
+	desc = "It's a menu of the last meals served here.";
+	icon_state = "paper";
+	info = "<h3>Shen Kuo Cafe</h3><h4>Today's Menu</h4><hr><br><p>Today's Theme: Culinary Eggcellence! </p><ul><li>Hardboiled Egg</li><li>Deviled Egg</li><li>Egg Salad</li><li>Egg on Toast</li></ul>";
+	name = "Menu";
+	pixel_x = -4;
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/wood/two,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -7287,18 +7271,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"DL" = (
-/obj/submachine/chef_oven{
-	pixel_y = 16
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/unsimulated/floor/wood/three,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "DO" = (
 /obj/mesh/grille/steel,
 /obj/railing/yellow/reinforced,
@@ -7605,34 +7577,6 @@
 	},
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/industrial,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Fj" = (
-/obj/table/reinforced/bar/auto{
-	name = "dinette counter"
-	},
-/obj/decal/tile_edge/check/white{
-	dir = 4;
-	icon_state = "check1"
-	},
-/obj/decal/tile_edge/check/white{
-	dir = 8;
-	icon_state = "check1"
-	},
-/obj/noticeboard/directional/north{
-	desc = "A board for shaming fellow workers.";
-	name = "SHAME BOARD"
-	},
-/obj/item/paper{
-	desc = "It's a menu of the last meals served here.";
-	icon_state = "paper";
-	info = "<h3>Shen Kuo Cafe</h3><h4>Today's Menu</h4><hr><br><p>Today's Theme: Culinary Eggcellence! </p><ul><li>Hardboiled Egg</li><li>Deviled Egg</li><li>Egg Salad</li><li>Egg on Toast</li></ul>";
-	name = "Menu";
-	pixel_x = -4;
-	pixel_y = 26
-	},
-/turf/unsimulated/floor/wood/two,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -8804,6 +8748,18 @@
 /turf/unsimulated/floor/carpet{
 	color = "green"
 	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"KC" = (
+/obj/machinery/cookingmachine/oven{
+	pixel_y = 16
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/wood/three,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -10385,6 +10341,50 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"QQ" = (
+/obj/decal/stage_edge/alt{
+	color = "#222222"
+	},
+/obj/noticeboard/directional/north{
+	desc = "A board for shaming fellow workers.";
+	name = "SHAME BOARD"
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Technicians got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Left a malfunctioning SMES unit at his service desk without following proper energy isolation and lockout procedures. AGAIN! </b>";
+	name = "Joff Muncey, Repair Technician";
+	pixel_x = 2;
+	pixel_y = 29
+	},
+/obj/item/paper{
+	desc = "Looks like some of the Sales team got called out.";
+	icon_state = "postit-writing";
+	info = "<b>The sales techs didn't flush their garbage disposal ALL WEEK. It's attracting ants!! Does plant cleanliness mean NOTHING to you?</b>";
+	name = "Gordon Baade & Sue Zhang, Sales Technicians";
+	pixel_x = -7;
+	pixel_y = 28
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Janitors got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Hurry up and take care of these damned ants! </b>";
+	name = "Tedward Benson, Janitor";
+	pixel_x = -2;
+	pixel_y = 26
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Engineers got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Borrowed GLEN's wrench, didn't return it for weeks!</b>";
+	name = "Jimmy Li, Engineer";
+	pixel_x = 7;
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/yellowblack,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -16003,7 +16003,7 @@ cT
 EX
 WP
 yC
-Fj
+mW
 Gq
 yC
 Iv
@@ -16154,7 +16154,7 @@ Fm
 Lp
 fc
 yC
-be
+QQ
 Rk
 JR
 lt
@@ -16290,7 +16290,7 @@ oM
 sL
 sL
 WP
-DL
+KC
 tA
 Sz
 wi

@@ -8467,6 +8467,19 @@
 /obj/machinery/disposal/small/west,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
+"aWU" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "aWW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22551,6 +22564,24 @@
 /obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
+"gJN" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "gJU" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/floppy,
@@ -32930,24 +32961,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"mRI" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/plating,
-/area/station/medical/dome)
 "mRT" = (
 /obj/strip_door,
 /obj/machinery/conveyor/SN{
@@ -34104,6 +34117,25 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/stockex)
+"nyd" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter";
+	icon_state = "4"
+	},
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/machinery/light/incandescent{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "nyC" = (
 /obj/warp_beacon{
 	name = "Hangar Beacon"
@@ -35488,25 +35520,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"oqe" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter";
-	icon_state = "4"
-	},
-/obj/machinery/mixer{
-	pixel_y = 5;
-	pixel_x = -4
-	},
-/obj/machinery/light/incandescent{
-	dir = 8;
-	nostick = 1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "oqw" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/light/emergency{
@@ -42214,20 +42227,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"sft" = (
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/obj/submachine/chef_oven,
-/obj/machinery/disposal/small/north{
-	pixel_y = 32;
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/disposalpipe/trunk/food,
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "sfv" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -42473,6 +42472,20 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
+"sna" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/disposal/small/north{
+	pixel_y = 32;
+	name = "Lay-Z Chef Prison Food Chute"
+	},
+/obj/disposalpipe/trunk/food,
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "snf" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
@@ -44817,15 +44830,6 @@
 	oxygen = 30.8366
 	},
 /area/station/crew_quarters/kitchen/freezer)
-"tCO" = (
-/obj/submachine/chef_oven,
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "tDg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -67346,7 +67350,7 @@ aKS
 aKS
 aKS
 aXp
-mRI
+gJN
 aXp
 aXp
 bjx
@@ -69774,7 +69778,7 @@ bjm
 yhb
 kIu
 ant
-oqe
+nyd
 jhM
 stw
 bht
@@ -70676,7 +70680,7 @@ aXp
 vLP
 arN
 bjm
-sft
+sna
 wPd
 hiA
 qur
@@ -70978,7 +70982,7 @@ aXp
 qow
 arN
 bjm
-tCO
+aWU
 tvz
 xmV
 jgY

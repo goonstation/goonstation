@@ -12214,26 +12214,6 @@
 	dir = 6
 	},
 /area/station/medical/medbay/surgery)
-"cYb" = (
-/obj/table/reinforced/auto,
-/obj/machinery/disposal/small{
-	dir = 4;
-	name = "food delivery unit-'Bar'";
-	pixel_x = -5
-	},
-/obj/disposalpipe/trunk/food{
-	dir = 8
-	},
-/obj/machinery/mixer{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/obj/machinery/light_switch/west{
-	pixel_x = -23;
-	pixel_y = -12
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "cYv" = (
 /obj/landmark/start/job/chaplain,
 /turf/simulated/floor/wood{
@@ -12704,12 +12684,6 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/chapel/sanctuary)
-"dty" = (
-/obj/machinery/firealarm/directional/north,
-/obj/submachine/chef_oven,
-/obj/machinery/firealarm/directional/north,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "dtW" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -12947,6 +12921,26 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
+"dEN" = (
+/obj/table/reinforced/auto,
+/obj/machinery/disposal/small{
+	dir = 4;
+	name = "food delivery unit-'Bar'";
+	pixel_x = -5
+	},
+/obj/disposalpipe/trunk/food{
+	dir = 8
+	},
+/obj/machinery/cookingmachine/mixer{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/machinery/light_switch/west{
+	pixel_x = -23;
+	pixel_y = -12
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "dFo" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/hallway/secondary/exit)
@@ -21268,14 +21262,6 @@
 	tag = "icon-yellowblackcorner (WEST)"
 	},
 /area/station/hallway/primary/south)
-"jGn" = (
-/obj/submachine/chef_oven,
-/obj/landmark/bill_spawn,
-/obj/machinery/alarm{
-	pixel_y = 23
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "jGv" = (
 /obj/machinery/light,
 /obj/machinery/vending/monkey/kitchen,
@@ -22001,6 +21987,14 @@
 	dir = 4
 	},
 /area/station/storage/tools)
+"kjy" = (
+/obj/machinery/cookingmachine/oven,
+/obj/landmark/bill_spawn,
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "kjz" = (
 /obj/machinery/vehicle/escape_pod{
 	dir = 1
@@ -36112,6 +36106,12 @@
 	icon_state = "yellowblack"
 	},
 /area/station/hallway/primary/southeast)
+"usS" = (
+/obj/machinery/firealarm/directional/north,
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "usX" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -83952,10 +83952,10 @@ uEz
 jLS
 vfH
 ayX
-jGn
+kjy
 aAB
 iBu
-cYb
+dEN
 yaU
 ayX
 aFM
@@ -84254,7 +84254,7 @@ tvG
 tgJ
 oKd
 ayX
-dty
+usS
 sSe
 aAC
 aAC

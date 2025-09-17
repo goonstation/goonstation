@@ -1,10 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/railing/red/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/dirt,
-/area/station/devzone)
 "ag" = (
 /obj/machinery/conveyor/NS{
 	id = "cargosell"
@@ -35,15 +29,6 @@
 "bi" = (
 /obj/machinery/computer/supplycomp,
 /turf/simulated/floor,
-/area/station/devzone)
-"bv" = (
-/obj/submachine/ice_cream_dispenser,
-/obj/item/storage/box/ic_cones,
-/obj/item/storage/box/popsicle_sticks,
-/obj/railing/red/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/freezer,
 /area/station/devzone)
 "bw" = (
 /obj/machinery/networked/storage/scanner,
@@ -88,6 +73,11 @@
 "ck" = (
 /obj/machinery/crema_switch,
 /turf/simulated/floor,
+/area/station/devzone)
+"co" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/white,
 /area/station/devzone)
 "ct" = (
 /obj/machinery/recharge_station,
@@ -224,6 +214,12 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"ee" = (
+/obj/railing/red/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "eo" = (
 /obj/machinery/conveyor/ES{
 	id = "garbage";
@@ -231,12 +227,6 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/devzone)
-"eq" = (
-/obj/railing/red/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor,
 /area/station/devzone)
 "eu" = (
 /obj/stool/chair/office{
@@ -278,10 +268,6 @@
 /obj/submachine/cargopad/robotics,
 /turf/simulated/floor/bluewhite,
 /area/station/devzone)
-"fL" = (
-/obj/item/rcd/construction/safe/admin_crimes,
-/turf/simulated/floor,
-/area/station/devzone)
 "fN" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -306,6 +292,11 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
+"fZ" = (
+/obj/machinery/plantpot,
+/obj/railing/red/reinforced,
+/turf/simulated/floor/grass/random,
+/area/station/devzone)
 "gd" = (
 /obj/landmark/antagonist/wizard,
 /obj/landmark/antagonist/operative,
@@ -313,6 +304,13 @@
 /obj/landmark/antagonist/pirate/captain,
 /obj/landmark/antagonist/pirate/first_mate,
 /turf/unsimulated/floor/blue,
+/area/station/devzone)
+"gg" = (
+/obj/machinery/gibber/output_east,
+/obj/railing/red/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/freezer,
 /area/station/devzone)
 "gF" = (
 /obj/machinery/teleport/portal_ring,
@@ -593,10 +591,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
-"kI" = (
-/obj/machinery/nanofab/nuclear,
-/turf/simulated/floor,
-/area/station/devzone)
 "kV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -632,13 +626,13 @@
 /obj/landmark/start/latejoin,
 /turf/unsimulated/floor/blue,
 /area/station/devzone)
+"lB" = (
+/obj/machinery/nanofab/nuclear,
+/turf/simulated/floor,
+/area/station/devzone)
 "lH" = (
 /obj/machinery/vending/mechanics,
 /turf/simulated/floor/plating/jen,
-/area/station/devzone)
-"lK" = (
-/obj/railing/red/reinforced,
-/turf/simulated/floor/grass/random,
 /area/station/devzone)
 "lP" = (
 /obj/disposalpipe/block_sensing_outlet{
@@ -659,10 +653,6 @@
 "ma" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/simulated/floor/white,
-/area/station/devzone)
-"mb" = (
-/obj/submachine/cargopad/magnet,
-/turf/simulated/floor,
 /area/station/devzone)
 "mc" = (
 /obj/item/places_pipes,
@@ -696,6 +686,11 @@
 	name = "kitchen mail junction"
 	},
 /turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"mP" = (
+/obj/landmark/start/job/quartermaster,
+/obj/submachine/cargopad/qm,
+/turf/simulated/floor,
 /area/station/devzone)
 "mQ" = (
 /obj/disposalpipe/segment/mail/bent/west,
@@ -784,13 +779,6 @@
 /obj/landmark/start/job/bartender,
 /turf/simulated/floor/white,
 /area/station/devzone)
-"oa" = (
-/obj/stove,
-/obj/item/soup_pot,
-/obj/item/ladle,
-/obj/railing/red/reinforced,
-/turf/simulated/floor/white,
-/area/station/devzone)
 "oc" = (
 /obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{
 	dir = 4
@@ -835,6 +823,10 @@
 /obj/storage/secure/closet/animal,
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
+"oI" = (
+/obj/machinery/clothingbooth/free,
+/turf/simulated/floor,
+/area/station/devzone)
 "oL" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/record/radio/host{
@@ -852,9 +844,11 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"oR" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+"oT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "oY" = (
 /obj/submachine/seed_vendor,
@@ -989,20 +983,18 @@
 	icon_state = "engine_caution_west"
 	},
 /area/station/devzone)
-"rz" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/orangeblack,
+"rC" = (
+/obj/machinery/deep_fryer,
+/obj/railing/red/reinforced,
+/turf/simulated/floor/white,
+/area/station/devzone)
+"rD" = (
+/turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "rG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
-/turf/simulated/floor,
-/area/station/devzone)
-"rS" = (
-/obj/machinery/arc_electroplater,
 /turf/simulated/floor,
 /area/station/devzone)
 "rX" = (
@@ -1089,6 +1081,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"tK" = (
+/obj/machinery/arc_electroplater,
+/turf/simulated/floor,
+/area/station/devzone)
 "tL" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -1137,22 +1133,11 @@
 /obj/machinery/bot/firebot,
 /turf/simulated/floor,
 /area/station/devzone)
-"uO" = (
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 4;
-	frequency = 1229;
-	id = "Chamber Two Outlet";
-	target_pressure = 1000
+"uR" = (
+/obj/railing/red/reinforced{
+	dir = 4
 	},
-/obj/machinery/activation_button/ignition_switch{
-	id = "burn";
-	pixel_x = -24;
-	pixel_y = -8
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/dirt,
 /area/station/devzone)
 "vd" = (
 /turf/simulated/floor/blue/checker,
@@ -1203,11 +1188,6 @@
 "wn" = (
 /obj/landmark/start/job/captain,
 /turf/simulated/floor,
-/area/station/devzone)
-"wp" = (
-/obj/machinery/deep_fryer,
-/obj/railing/red/reinforced,
-/turf/simulated/floor/white,
 /area/station/devzone)
 "wy" = (
 /obj/machinery/clonepod,
@@ -1266,9 +1246,11 @@
 /obj/machinery/chemicompiler_stationary,
 /turf/simulated/floor/engine,
 /area/station/devzone)
-"xC" = (
-/obj/submachine/chef_oven,
-/turf/simulated/floor/white,
+"xG" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/station/devzone)
 "xK" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -1328,12 +1310,6 @@
 /obj/window/reinforced/south,
 /turf/simulated/floor/white,
 /area/station/devzone)
-"yN" = (
-/obj/railing/red/reinforced,
-/obj/item/paper_bin,
-/obj/item/device/light/zippo/syndicate,
-/turf/simulated/floor/grass/random,
-/area/station/devzone)
 "yX" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/bluewhite{
@@ -1382,6 +1358,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/devzone)
+"zO" = (
+/obj/submachine/cargopad/magnet,
+/turf/simulated/floor,
+/area/station/devzone)
 "zT" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -1397,21 +1377,6 @@
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
-/area/station/devzone)
-"zY" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/obj/machinery/door_control{
-	id = "tox_vent1";
-	name = "Chamber One Exhaust";
-	pixel_x = -23;
-	pixel_y = 8
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/blue,
 /area/station/devzone)
 "Ae" = (
 /obj/disposalpipe/type_sensing_outlet/drone_factory{
@@ -1535,6 +1500,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"BD" = (
+/obj/railing/red/reinforced,
+/turf/simulated/floor/grass/random,
+/area/station/devzone)
 "Ca" = (
 /obj/disposalpipe/switch_junction/left/north{
 	name = "undeliverable mail junction"
@@ -1610,6 +1579,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/devzone)
+"CV" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/station/devzone)
 "Da" = (
 /obj/machinery/conveyor/EW{
 	id = "garbage";
@@ -1668,6 +1641,10 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/turf/simulated/floor,
+/area/station/devzone)
+"DC" = (
+/obj/item/device/matanalyzer,
 /turf/simulated/floor,
 /area/station/devzone)
 "DE" = (
@@ -1822,11 +1799,6 @@
 /obj/machinery/chem_heater,
 /turf/simulated/floor/white,
 /area/station/devzone)
-"Gj" = (
-/obj/machinery/plantpot,
-/obj/railing/red/reinforced,
-/turf/simulated/floor/grass/random,
-/area/station/devzone)
 "Gn" = (
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/blue/checker,
@@ -1870,10 +1842,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"Hy" = (
-/obj/machinery/clothingbooth/free,
-/turf/simulated/floor,
-/area/station/devzone)
 "HA" = (
 /obj/storage/crate/robotparts,
 /obj/item/sheet/steel/fullstack,
@@ -1897,10 +1865,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/devzone)
-"HJ" = (
-/obj/item/device/matanalyzer,
-/turf/simulated/floor,
 /area/station/devzone)
 "HL" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -1938,6 +1902,15 @@
 "II" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/white,
+/area/station/devzone)
+"IW" = (
+/obj/submachine/ice_cream_dispenser,
+/obj/item/storage/box/ic_cones,
+/obj/item/storage/box/popsicle_sticks,
+/obj/railing/red/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/freezer,
 /area/station/devzone)
 "IX" = (
 /obj/machinery/networked/test_apparatus/electrobox,
@@ -2040,15 +2013,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"KD" = (
-/obj/railing/red/reinforced{
-	dir = 4
-	},
-/obj/railing/red/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/dirt,
-/area/station/devzone)
 "KV" = (
 /obj/machinery/networked/telepad,
 /obj/cable{
@@ -2112,12 +2076,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"LJ" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/station/devzone)
 "LM" = (
 /obj/machinery/manufacturer/mechanic,
 /turf/simulated/floor,
@@ -2128,6 +2086,13 @@
 /area/station/devzone)
 "LY" = (
 /turf/unsimulated/floor/engine/caution/north,
+/area/station/devzone)
+"Md" = (
+/obj/stove,
+/obj/item/soup_pot,
+/obj/item/ladle,
+/obj/railing/red/reinforced,
+/turf/simulated/floor/white,
 /area/station/devzone)
 "Mo" = (
 /obj/submachine/chef_sink,
@@ -2238,6 +2203,25 @@
 	dir = 4
 	},
 /area/station/devzone)
+"NL" = (
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/storage/crate/bloody,
+/obj/railing/red/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/devzone)
 "NU" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
@@ -2316,12 +2300,6 @@
 /turf/unsimulated/floor/engine/caution/corner{
 	dir = 8
 	},
-/area/station/devzone)
-"Pf" = (
-/obj/railing/red/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor,
 /area/station/devzone)
 "Pl" = (
 /obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{
@@ -2565,8 +2543,22 @@
 	icon_state = "engine_caution_north"
 	},
 /area/station/devzone)
-"TI" = (
-/turf/simulated/floor/engine/vacuum,
+"TG" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4;
+	frequency = 1229;
+	id = "Chamber Two Outlet";
+	target_pressure = 1000
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "burn";
+	pixel_x = -24;
+	pixel_y = -8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/red,
 /area/station/devzone)
 "TK" = (
 /obj/machinery/lawrack,
@@ -2617,6 +2609,12 @@
 /obj/item/plate,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/white,
+/area/station/devzone)
+"Uw" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/green,
 /area/station/devzone)
 "UD" = (
 /turf/simulated/floor/engine,
@@ -2744,6 +2742,25 @@
 /obj/machinery/hydro_mister,
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
+"WE" = (
+/obj/item/rcd/construction/safe/admin_crimes,
+/turf/simulated/floor,
+/area/station/devzone)
+"WK" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "tox_vent1";
+	name = "Chamber One Exhaust";
+	pixel_x = -23;
+	pixel_y = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/blue,
+/area/station/devzone)
 "WN" = (
 /obj/machinery/conveyor/NW{
 	id = "test"
@@ -2763,40 +2780,18 @@
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
-"Xb" = (
-/obj/landmark/start/job/quartermaster,
-/obj/submachine/cargopad/qm,
-/turf/simulated/floor,
-/area/station/devzone)
-"Xd" = (
-/obj/machinery/gibber/output_east,
+"Xg" = (
+/obj/railing/red/reinforced{
+	dir = 4
+	},
 /obj/railing/red/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/freezer,
+/turf/simulated/floor/dirt,
 /area/station/devzone)
 "Xk" = (
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor,
-/area/station/devzone)
-"Xm" = (
-/obj/item/reagent_containers/food/fish/bass,
-/obj/item/reagent_containers/food/fish/bass,
-/obj/item/reagent_containers/food/fish/carp,
-/obj/item/reagent_containers/food/fish/carp,
-/obj/item/reagent_containers/food/fish/salmon,
-/obj/item/reagent_containers/food/fish/salmon,
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/storage/crate/bloody,
-/obj/railing/red/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/freezer,
 /area/station/devzone)
 "Xo" = (
 /obj/cable{
@@ -2868,11 +2863,6 @@
 	dir = 10
 	},
 /area/station/devzone)
-"Yr" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/turf/simulated/floor/white,
-/area/station/devzone)
 "Yx" = (
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2882,11 +2872,11 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/devzone)
-"YG" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
+"YL" = (
+/obj/railing/red/reinforced{
+	dir = 4
 	},
-/turf/simulated/floor/green,
+/turf/simulated/floor,
 /area/station/devzone)
 "YM" = (
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -2915,6 +2905,10 @@
 /area/station/devzone)
 "Zk" = (
 /obj/item/instrument/large/jukebox,
+/turf/simulated/floor/white,
+/area/station/devzone)
+"Zu" = (
+/obj/machinery/cookingmachine/oven,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "Zx" = (
@@ -2947,6 +2941,12 @@
 	id = "cargosell"
 	},
 /turf/simulated/floor,
+/area/station/devzone)
+"ZQ" = (
+/obj/railing/red/reinforced,
+/obj/item/paper_bin,
+/obj/item/device/light/zippo/syndicate,
+/turf/simulated/floor/grass/random,
 /area/station/devzone)
 "ZX" = (
 /obj/landmark/start/job/security_assistant,
@@ -2994,9 +2994,9 @@ Yx
 Yx
 Yx
 Yx
-Pf
-Pf
-Pf
+YL
+YL
+YL
 Yx
 Yx
 Yx
@@ -3036,7 +3036,7 @@ jP
 Vk
 jP
 jP
-Gj
+fZ
 eL
 eL
 eL
@@ -3079,7 +3079,7 @@ jP
 Vk
 jP
 Wr
-Gj
+fZ
 eL
 wj
 eL
@@ -3122,7 +3122,7 @@ Vk
 Vk
 Vk
 Vk
-lK
+BD
 JJ
 sg
 eL
@@ -3165,10 +3165,10 @@ Vk
 oY
 Li
 rm
-aa
-KD
-KD
-eq
+uR
+Xg
+Xg
+ee
 uE
 Yx
 Yx
@@ -3207,7 +3207,7 @@ Ag
 WX
 Vk
 Vk
-yN
+ZQ
 JJ
 sg
 eL
@@ -3250,7 +3250,7 @@ Ni
 PL
 Ni
 aV
-oa
+Md
 eL
 PH
 eL
@@ -3293,7 +3293,7 @@ nZ
 ma
 Ni
 Nd
-wp
+rC
 eL
 eL
 eL
@@ -3334,12 +3334,12 @@ kz
 NU
 Ni
 NG
-Yr
+co
 Ni
-xC
-bv
-Xm
-Xd
+Zu
+IW
+NL
+gg
 Yx
 Yx
 ng
@@ -3386,7 +3386,7 @@ nf
 Yx
 Yx
 ng
-Hy
+oI
 ng
 Yx
 "}
@@ -3866,8 +3866,8 @@ Yx
 (22,1,1) = {"
 Yx
 ng
-rS
-kI
+tK
+lB
 Yx
 Zx
 hL
@@ -3926,7 +3926,7 @@ Fg
 DP
 qI
 bi
-Xb
+mP
 he
 ng
 Yx
@@ -4040,7 +4040,7 @@ Yx
 ng
 Yx
 Yx
-HJ
+DC
 Es
 Es
 Es
@@ -4239,7 +4239,7 @@ Fo
 HL
 Lq
 MJ
-oR
+CV
 Dk
 ng
 xp
@@ -4282,7 +4282,7 @@ dr
 Zd
 Lq
 MJ
-oR
+CV
 Dk
 ng
 te
@@ -4323,7 +4323,7 @@ Zd
 oc
 Fo
 Rj
-TI
+rD
 Pl
 Fo
 UW
@@ -4365,7 +4365,7 @@ xK
 yc
 Pm
 Fo
-LJ
+xG
 wJ
 hF
 hx
@@ -4408,9 +4408,9 @@ nI
 aS
 Rw
 OO
-uO
+TG
 aS
-zY
+WK
 dg
 TY
 ng
@@ -4450,7 +4450,7 @@ Yx
 Kx
 Yx
 ZZ
-fL
+WE
 Kx
 mc
 ZZ
@@ -5141,7 +5141,7 @@ Yx
 Yx
 Yx
 Yx
-YG
+Uw
 Yx
 Yx
 Yx
@@ -5500,7 +5500,7 @@ cJ
 (60,1,1) = {"
 Yx
 ng
-mb
+zO
 Kf
 qH
 qH
@@ -5562,25 +5562,25 @@ ng
 ng
 ng
 ng
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
-rz
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
+oT
 Yx
 "}
 (62,1,1) = {"
