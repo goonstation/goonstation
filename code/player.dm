@@ -1,3 +1,6 @@
+///Assoc list of ckeys to player datums
+var/global/list/players = list()
+
 /// for client variables and stuff that has to persist between connections
 /datum/player
 	/// the ID of the player as provided by the Goonhub API
@@ -69,6 +72,7 @@
 		START_TRACKING
 		src.key = key
 		src.ckey = ckey(key)
+		global.players[src.ckey] = src
 		src.tag = "player-[src.ckey]"
 		src.last_death_time = world.timeofday
 		src.cloudSaves = new /datum/cloudSaves(src)
@@ -76,6 +80,7 @@
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
 		STOP_TRACKING
+		global.players -= src.ckey
 		if (src.client)
 			src.client.player = null
 			src.client = null
@@ -365,8 +370,7 @@
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
 	RETURN_TYPE(/datum/player)
-	var/datum/player/player = locate("player-[ckey(key)]")
-	return player
+	return global.players[ckey(key)]
 
 /// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections)
 /proc/make_player(key)
