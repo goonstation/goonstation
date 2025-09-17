@@ -205,7 +205,7 @@
 		if (BOUNDS_DIST(chute, user) > 0)
 			boutput(user, SPAN_ALERT("You need to be closer to [chute] to do that."))
 			return
-		if (!src.contents.len)
+		if (!length(src.contents))
 			boutput(user, SPAN_ALERT("There's nothing in [src] to dump out!"))
 			return
 		if (!user.is_in_hands(src))
