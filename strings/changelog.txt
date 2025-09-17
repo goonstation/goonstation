@@ -1,3 +1,33 @@
+
+(t)mon sep 15 25
+(u)Lord_Earthfire
+(p)24657
+(e)|
+(+)Multitools in assemblies will now shock the tile they are on when activated, akin to using their special attack.
+(t)sun sep 14 25
+(u)JORJ949
+(p)24646
+(e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
+(+)Law Linkers now show the location of their linked rack on examine.
+(u)JORJ949
+(p)24479
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Added a new captainly "Regal" AI skin available via a plating kit made by adding wires to a captain's uniform.
+(u)Studenterhue
+(p)24653
+(e)🎨|C-Sprites
+(+)Congratulations to SnugglyCactus, Whele, Scientifically, Mailman T, Shiiba, and IncendiaryCrocs for winning the Goonstation Summer 2025 Seasonal Contest! Now, when you open your mail, you may find the postcards they made.
+(+)Frank_Stein, Elskrises, RubberRats, and Gamb1t did not win, but their postcards were so cool that they too appear in the mail loot pool for all jobs now, at slightly lower spawn rates.
+(t)sat sep 13 25
+(u)LeahTheTech
+(p)24651
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(*)Spirit candles can now be activated twice before being used up, but reveal the wraith for a shorter time.
+(u)LeahTheTech
+(p)24644
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Salt no longer reveals wraiths, instead it blocks them and can be shoved through for a small health cost.
+(*)Salt now blocks wraith abilities based on line of sight.
 (t)fri sep 12 25
 (u)LeahTheTech
 (+)EMPing an AI core now has a 50% chance to eject them back to their mainframe or forcefully enable text mode for 15 seconds.
