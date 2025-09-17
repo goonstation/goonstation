@@ -22,7 +22,7 @@
 				if (thr.bonus_throwforce >= 45)
 					thr.thing.visible_message("<b>[thr.thing]<b> smashes through the [wall.name].")
 					logTheThing(LOG_COMBAT, thr.thing, " smashed a wall at [log_loc(wall)].")
-					girder.dismantle_wall(1)
+					wall.dismantle_wall(1)
 					return
 				else
 					thr.thing.visible_message("<b>[thr.thing]<b> smashes against the [wall.name].")
