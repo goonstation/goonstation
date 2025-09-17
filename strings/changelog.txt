@@ -1,4 +1,9 @@
 
+(t)tue sep 16 25
+(u)Lord_Earthfire
+(p)24662
+(e)⚖🔄📦💡|C-Balance, C-Rework, A-Game-Objects, A-Station-Systems
+(+)Proximity sensors have a small cooldown between activations
 (t)mon sep 15 25
 (u)Lord_Earthfire
 (p)24657
