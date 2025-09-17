@@ -98,7 +98,7 @@
 			throw_type = THROW_PHASE
 
 		if(prob(75))
-			dir = pick(EAST, WEST, NORTH, SOUTH)
+			dir = pick(cardinal)
 			random_dir_every_time = 0
 		else
 			random_dir_every_time = 1
