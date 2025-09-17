@@ -3801,10 +3801,10 @@
 	},
 /area/station/hallway/primary/central)
 "aFD" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	dir = null
 	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aFI" = (
@@ -13315,6 +13315,15 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"eqy" = (
+/obj/rack,
+/obj/item/tank/jetpack/micro,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space,
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/orangeblack,
+/area/station/ai_monitored/storage/eva)
 "eqC" = (
 /obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
@@ -21307,6 +21316,14 @@
 	},
 /turf/space,
 /area/space)
+"kfw" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "kgx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21580,6 +21597,7 @@
 /area/station/turret_protected/ai_upload)
 "ksZ" = (
 /obj/machinery/teleport/portal_ring,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/circuit/purple,
 /area/station/teleporter)
 "ktn" = (
@@ -23996,7 +24014,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "lXB" = (
@@ -24592,6 +24612,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary/blue,
 /area/station/bridge/execrestroom)
 "muF" = (
@@ -27236,6 +27257,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -30049,6 +30071,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/Zeta)
 "qxD" = (
@@ -32868,7 +32891,14 @@
 	},
 /obj/machinery/door_control/east{
 	id = "lockdown";
-	name = "Bridge Lockdown Control"
+	name = "Bridge Lockdown Control";
+	pixel_y = 10
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = -10
+	},
+/obj/blind_switch/east{
+	pixel_y = -2
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -34560,10 +34590,6 @@
 /area/station/medical/staff)
 "tIY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/light_switch/north{
-	pixel_x = 10;
-	pixel_y = 28
-	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "tJd" = (
@@ -35690,6 +35716,10 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"uvD" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "uvI" = (
 /turf/simulated/floor/carpet/red/fancy/innercorner/west,
 /area/station/science/lobby)
@@ -77527,7 +77557,7 @@ aRm
 mXo
 pwL
 oZG
-qfh
+eqy
 uuL
 aRm
 boN
@@ -79351,7 +79381,7 @@ fPl
 sQQ
 uhO
 fSz
-fPl
+kfw
 fPl
 vDV
 mOc
@@ -81163,7 +81193,7 @@ biT
 hzb
 lgA
 biT
-hzb
+uvD
 xZa
 bem
 jns
