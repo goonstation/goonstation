@@ -60,13 +60,13 @@
 
 /datum/hud/pod/disposing()
 	src.master = null
+	src.leave_pod = null
+	src.sensor_lock = null
+	src.tracking = null
 	src.delete_hud_zone("main_panel")
 	src.delete_hud_zone("healthbar_panel")
 	src.delete_hud_zone("exit_panel")
 	src.delete_hud_zone("tracking_panel")
-	QDEL_NULL(src.leave_pod)
-	QDEL_NULL(src.sensor_lock)
-	QDEL_NULL(src.tracking)
 
 	. = ..()
 
