@@ -47,8 +47,13 @@ Mixer Control
 			FALSE \
 	)
 
-	special_deconstruct(obj/computerframe/frame as obj)
-		frame.circuit.frequency = src.frequency
+	save_board_data(obj/item/circuitboard/circuitboard)
+		circuitboard.saved_data = src.frequency
+
+	load_board_data(obj/item/circuitboard/circuitboard)
+		if(..())
+			return
+		src.frequency = circuitboard.saved_data
 
 	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))

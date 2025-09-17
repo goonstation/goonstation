@@ -198,6 +198,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 	relaymove(mob/user as mob, dir)
 		if(!src.rider || user != src.rider)
 			return
+		if(src.hasStatus("teleporting"))
+			return
 
 		src.dir = user.dir
 

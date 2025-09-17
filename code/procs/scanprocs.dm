@@ -256,7 +256,7 @@
 //takes string input, for name in organholder.organ_list and checks if the organholder has anything
 //obfuscate, if true then don't show the exact organ health amount. Minor damage, moderate damage, severe damage, critical damage
 /proc/organ_health_scan(var/input, var/mob/living/carbon/human/H, var/obfuscate = 0)
-	var/obj/item/organ/O = H.organHolder.organ_list[input]
+	var/obj/item/organ/O = H.organHolder?.organ_list[input]
 	if (istype(O))
 		var/damage = O.get_damage()
 		if (obfuscate)

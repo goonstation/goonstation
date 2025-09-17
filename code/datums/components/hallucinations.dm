@@ -310,6 +310,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.visible_creation = visible_creation
 
 	do_mob_tick(mob,mult)
+		if (!src.parent_mob.client)
+			return ..()
 		if(probmult(image_prob))
 			//pick a non dense turf in view
 			var/list/atom/potentials = list()
@@ -323,16 +325,13 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 					for(var/type in src.target_list)
 						if(istype(A, type))
 							potentials += A
-			if(!length(potentials)) return
+			if(!length(potentials))
+				return
 			var/atom/halluc_loc = pick(potentials)
-			var/image/halluc = new /image()
 			var/image/copyfrom = pick(src.image_list)
-			halluc.appearance = copyfrom.appearance
-			halluc.loc = halluc_loc
-			halluc.override = src.override
-			parent_mob.client?.images += halluc
+			var/datum/component/halluc_image/component = halluc_loc.AddComponent(/datum/component/halluc_image, parent_mob.client, copyfrom, src.override)
 			SPAWN(src.image_time SECONDS)
-				qdel(halluc)
+				component.RemoveComponent()
 		. = ..()
 
 	CheckDupeComponent(timeout, image_list, target_list, range, image_prob, image_time, override, visible_creation)
@@ -348,6 +347,47 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			return TRUE //no duplicate
 		else
 			return FALSE //create a new hallucination
+
+/datum/component/halluc_image
+	var/image/copyfrom
+	var/client/viewer_client
+	var/override = TRUE
+
+	var/image/current_image
+
+	Initialize(viewer_client, image/copyfrom, override = TRUE)
+		. = ..()
+		if(. == COMPONENT_INCOMPATIBLE)
+			return .
+		src.viewer_client = viewer_client
+		src.copyfrom = copyfrom
+		src.override = override
+
+	RegisterWithParent()
+		RegisterSignal(src.parent, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup_drop))
+		RegisterSignal(src.parent, COMSIG_ITEM_DROPPED, PROC_REF(on_pickup_drop))
+		src.make_image()
+
+	UnregisterFromParent()
+		UnregisterSignal(src.parent, COMSIG_ITEM_PICKUP)
+		UnregisterSignal(src.parent, COMSIG_ITEM_DROPPED)
+
+	proc/on_pickup_drop()
+		SPAWN(0)
+			src.make_image()
+
+	proc/make_image()
+		qdel(src.current_image)
+		src.current_image = new /image()
+		src.current_image.appearance = copyfrom.appearance
+		src.current_image.loc = src.parent
+		var/atom/movable/AM_parent = src.parent
+		src.current_image.plane = AM_parent.plane
+		src.current_image.layer = AM_parent.layer
+		src.current_image.override = src.override
+		src.viewer_client.images += src.current_image
+
+
 
 //#########################################################
 //                     FAKE SINGULO
