@@ -113,7 +113,6 @@
 	. = ..()
 
 /datum/client_auth_provider/goonhub/post_auth()
-	src.owner.client_auth_intent.ckey_preauth = src.owner.ckey
 	src.owner.key = src.owner.client_auth_intent.key
 
 	if (isnewplayer(src.owner.mob))
