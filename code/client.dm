@@ -154,7 +154,7 @@
 	src.mob?.move_dir = 0
 
 	if (player_capa && src.authenticated)
-		player_cap_grace[src.ckey] = TIME + 2 MINUTES
+		player_cap_grace[src.client_auth_intent.ckey_preauth] = TIME + 2 MINUTES
 	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
