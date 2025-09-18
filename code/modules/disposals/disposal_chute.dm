@@ -41,6 +41,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	power_usage = 100
 	_health = LOCKER_HEALTH_AVERAGE // TODO: balance health
 	_max_health = LOCKER_HEALTH_AVERAGE
+	var/item_insert_sounds = list('sound/effects/chute_place_1.ogg', 'sound/effects/chute_place_2.ogg', 'sound/effects/chute_place_3.ogg')
 
 	var/is_processing = 1 //optimization thingy. kind of dumb. mbc fault. only process chute when flushed or recharging.
 
@@ -660,7 +661,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if (W_CLASS_BUBSIAN)
 				pitch = 0.1
 				volume = 400
-		playsound(src.loc, 'sound/effects/chute_place_1.ogg', volume, 1, extrarange, pitch)
+		playsound(src.loc, pick(item_insert_sounds), volume, 1, extrarange, pitch)
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
