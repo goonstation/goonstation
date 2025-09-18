@@ -372,12 +372,14 @@ var/global/list/players = list()
 	RETURN_TYPE(/datum/player)
 	return global.players[ckey(key)]
 
-/// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections)
-/proc/make_player(key)
+/// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections).
+/// optional client arg for if you want to associate a client for 'real' players (vs fake clientless players for discord commands).
+/proc/make_player(key, client = null)
 	RETURN_TYPE(/datum/player)
-	var/datum/player/player = find_player(key) // just double check so that we don't get any dupes
+	var/datum/player/player = find_player(key)
 	if (!player)
 		player = new(key)
+	player.client = client
 	return player
 
 /proc/record_player_playtime()
