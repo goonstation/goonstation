@@ -35,6 +35,8 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  */
 /datum/client_auth_intent
 	var/ckey = null
+	// preauth ckey, saved here as post_auth() may overwrite with a key appended by provider suffix such as -D
+	var/ckey_preauth = null
 	var/key = null
 	var/player_id = null
 	var/admin = FALSE

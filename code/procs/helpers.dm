@@ -2464,7 +2464,7 @@ proc/client_has_cap_grace(var/client/C)
 	logTheThing(LOG_DEBUG, C, "<b>PCAP Grace:</b> Checking PCAP grace for [C.ckey]...")
 	if (C.ckey in player_cap_grace)
 		.= (player_cap_grace[C.ckey] > TIME)
-		logTheThing(LOG_DEBUG, C, "<b>PCAP Grace:</b> Found PCAP grace for [C.ckey]. Current time: [TIME], Grace time: player_cap_grace[C.ckey], Result: [(player_cap_grace[C.ckey] > TIME) ? "PASS" : "FAIL"]")
+		logTheThing(LOG_DEBUG, C, "<b>PCAP Grace:</b> Found PCAP grace for [C.ckey]. Current time: [TIME], Grace time: [player_cap_grace[C.ckey]], Result: [(player_cap_grace[C.ckey] > TIME) ? "PASS" : "FAIL"]")
 
 
 //TODO: refactor the below two into one proc
