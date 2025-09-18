@@ -3,10 +3,13 @@
 	associated_datum = /datum/artifact/flinger
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
+		. = ..(A, thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/unit = A
-			unit.do_disorient(stamina_damage = 40, knockdown = 10, stunned = 10, disorient = 0, remove_stamina_below_zero = 1)
+			unit.do_disorient(thr.bonus_throwforce * 2, knockdown = thr.bonus_throwforce/10, disorient = 60)
 			random_brute_damage(unit, thr.bonus_throwforce, 1)
+			if(thr.bonus_throwforce >= 20)
+				unit.emote("scream")
 			playsound(unit, pick(list('sound/impact_sounds/Generic_Hit_1.ogg', 'sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Generic_Hit_3.ogg')), 40, TRUE)
 		if(iswall(A))
 			var/turf/simulated/wall/wall = A
@@ -66,7 +69,7 @@
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
-	activated = 0
+	activated = 1
 	activ_text = "begins to build tension."
 	deact_text = "relaxes."
 	react_xray = list(11,70,90,9,"FIBROUS")
@@ -74,54 +77,54 @@
 	var/throwforce = 1
 	var/recharge_time = 600
 	var/recharging = FALSE
-	var/dir = SOUTH
+	var/fling_dir = SOUTH
 	var/random_dir_every_time = FALSE
 	var/chain_flings = 1
 	var/throw_type = 1
 
 	post_setup()
 		. = ..()
-		recharge_time = rand(1,10) * 10
-		range = rand(1, 15)
-		throwforce = rand(1, 50)
+		src.recharge_time = rand(1,10) * 10
+		src.range = rand(1, 15)
+		src.throwforce = rand(1, 50)
 
 		if(artitype.name == "eldritch")
 			//Eldritch artifacts hurt more.
-			range = range*2
-			throwforce = throwforce*2
+			src.range = src.range*2
+			src.throwforce = src.throwforce*2
 			//And if they hurt bad enough.. They just cruise through walls.
-			if(throwforce >= 90)
-				throw_type = THROW_THROUGH_WALL
+			if(src.throwforce >= 90)
+				src.throw_type = THROW_THROUGH_WALL
 		if(artitype.name == "wizard")
 			//Silly phasing wizards
-			throw_type = THROW_PHASE
+			src.throw_type = THROW_PHASE
 
 		if(prob(75))
-			dir = pick(cardinal)
-			random_dir_every_time = FALSE
+			src.fling_dir = pick(cardinal)
+			src.random_dir_every_time = FALSE
 		else
-			random_dir_every_time = TRUE
+			src.random_dir_every_time = TRUE
 			for (var/i = 0, i < 5, i += 1)
 				if(prob(30))
-					chain_flings += 1
+					src.chain_flings += 1
 				else
 					break
 		if(prob(5))
-			recharge_time = 0
+			src.recharge_time = 0
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
 		if (!user)
 			return
-		if (recharging)
+		if (src.recharging)
 			boutput(user, SPAN_ALERT("The artifact twitches, but nothing else happens."))
 			return
-		if (recharge_time > 0)
-			recharging = TRUE
+		if (src.recharge_time > 0)
+			src.recharging = TRUE
 		var/turf/T = get_turf(O)
 		if(iscarbon(user))
-			var/remaining_flings = chain_flings
+			var/remaining_flings = src.chain_flings
 			fling(O)
 			for (var/i = 0, i < remaining_flings, i += 1)
 				SPAWN(10*i)
@@ -129,8 +132,8 @@
 
 			O.ArtifactFaultUsed(user)
 
-		SPAWN(recharge_time + chain_flings * 20) //Prevents the artifact from being activated while being thrown around.
-			recharging = FALSE
+		SPAWN(src.recharge_time + src.chain_flings * 20) //Prevents the artifact from being activated while being thrown around.
+			src.recharging = FALSE
 			T.visible_message("<b>[O]</b> tenses up again!")
 
 	proc/fling(var/obj/O)
@@ -139,15 +142,13 @@
 
 		var/turf/T = get_turf(O)
 		T.visible_message("<b>[O]</b> lunges!")
+		playsound(O.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, -1)
 
-		var/turf/stepper = O.loc
-		playsound(stepper, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, -1)
+		if(src.random_dir_every_time)
+			src.fling_dir = pick(cardinal)
 
-		if(random_dir_every_time)
-			dir = pick(cardinal)
-
-		var/turf/target = get_edge_target_turf(O, dir)
-		var/datum/thrown_thing/thr = O.throw_at(target, range, 1, bonus_throwforce=throwforce, throw_type=throw_type)
+		var/turf/target = get_edge_target_turf(O, src.fling_dir)
+		var/datum/thrown_thing/thr = O.throw_at(target, src.range, 1, bonus_throwforce=src.throwforce, throw_type=src.throw_type)
 		thr?.user = O
 
 
