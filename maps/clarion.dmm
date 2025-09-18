@@ -1122,11 +1122,6 @@
 	},
 /turf/simulated/floor/damaged4,
 /area/station/mining/staff_room)
-"akR" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
-/obj/cable/orange,
-/turf/simulated/floor/engine,
-/area/station/engine/core/nuclear)
 "akZ" = (
 /obj/railing/orange/reinforced{
 	dir = 1;
@@ -15657,11 +15652,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
-"fJb" = (
-/obj/machinery/atmospherics/binary/reactor_turbine,
-/obj/cable/orange,
-/turf/simulated/floor/engine,
-/area/station/engine/core/nuclear)
 "fJr" = (
 /obj/machinery/firealarm/directional/north,
 /obj/disposalpipe/segment/mail{
@@ -22672,6 +22662,11 @@
 /obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor,
 /area/station/security/equipment)
+"kHF" = (
+/obj/machinery/reactor_turbine,
+/obj/cable/orange,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "kHI" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
@@ -39933,6 +39928,11 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"xlJ" = (
+/obj/machinery/nuclear_reactor/prefilled/normal,
+/obj/cable/orange,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "xlK" = (
@@ -75243,7 +75243,7 @@ xYl
 lCc
 lCc
 lCc
-fJb
+kHF
 iyw
 qgG
 xLR
@@ -76757,7 +76757,7 @@ gbZ
 lCc
 lCc
 lCc
-akR
+xlJ
 iyw
 iyw
 iyw
