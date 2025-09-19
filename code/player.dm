@@ -379,7 +379,8 @@ var/global/list/players = list()
 	var/datum/player/player = find_player(key)
 	if (!player)
 		player = new(key)
-	player.client = client
+	if (!isnull(client))
+		player.client = client
 	return player
 
 /proc/record_player_playtime()
