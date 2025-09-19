@@ -495,7 +495,7 @@
 		for(var/atom/limb in list(l_arm, r_arm, l_leg, r_leg))
 			var/list/limb_name_parts = splittext(limb.name, "'s")
 			if(length(limb_name_parts) == 2)
-				limb.name = "[user_name]'s [limb_name_parts[2]]"
+				limb.name = "[user_name]’s [limb_name_parts[2]]"
 
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)

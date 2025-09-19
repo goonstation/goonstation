@@ -135,18 +135,18 @@
 			if(the_id && the_id:registered == target.real_name)
 				if (istype(the_id, /obj/item/card/id))
 					the_id:assignment = "Lawyer"
-					the_id:name = "[target.real_name]'s ID Card (Lawyer)"
+					the_id:name = "[target.real_name]’s ID Card (Lawyer)"
 				else if (istype(the_id, /obj/item/device/pda2))
 					the_id:assignment = "Lawyer"
 					the_id:ID_card:assignment = "Lawyer"
-					the_id:ID_card:name = "[target.real_name]'s ID Card (Lawyer)"
+					the_id:ID_card:name = "[target.real_name]’s ID Card (Lawyer)"
 				else if (istype(the_id, /obj/item/clothing/lanyard))
 					the_id:assignment = "Lawyer"
 					var/obj/item/clothing/lanyard/lanyard = the_id
 					var/obj/item/card/id/id_card = lanyard.get_stored_id()
 					if (id_card)
 						id_card.assignment = "Lawyer"
-						id_card.name = "[target.real_name]'s ID Card (Lawyer)"
+						id_card.name = "[target.real_name]’s ID Card (Lawyer)"
 				target.wear_id = the_id
 
 			for(var/obj/item/W in target)
