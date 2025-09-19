@@ -79,6 +79,8 @@
 				if (length(src.contents) > 1)
 					if (user.a_intent == INTENT_GRAB)
 						getItem = src.search_through(user)
+						if (!getItem) // prevents the satchel teleporting back to the hand if the search is cancelled
+							return
 
 					else
 						user.visible_message(SPAN_NOTICE("<b>[user]</b> rummages through \the [src]."),\
@@ -125,6 +127,9 @@
 		sortList(satchel_contents, /proc/cmp_text_asc)
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
 		if (!chosenItem || !(satchel_contents[chosenItem] in src.contents))
+			return
+		if (!user.is_in_hands(src))
+			boutput(user, SPAN_ALERT("You could have sworn [src] was just in your hand a moment ago."))
 			return
 		return satchel_contents[chosenItem]
 
