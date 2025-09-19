@@ -270,6 +270,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// mouse drop another mob or self
 	//
 	MouseDrop_T(atom/target, mob/user)
+		play_item_insert_sound(null)
 		//jesus fucking christ
 		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(target, src) > 0 || isAI(user) || is_incapacitated(user) || isghostcritter(user) || !src.fits_in(target))
 			return
@@ -654,7 +655,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				pitch = 0.8
 				volume = 100
 			if (W_CLASS_HUGE)
-				pitch = 0.4
+				pitch = 0.5
 				volume = 300
 			if (W_CLASS_GIGANTIC)
 				pitch = 0.3
