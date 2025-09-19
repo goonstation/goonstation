@@ -1535,10 +1535,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "speedloader_empty"
 
 //////////////////////////////////// Power cells for eguns //////////////////////////
+TYPEINFO(/obj/item/ammo/power_cell)
+	/// Charge overlay `icon_state`s. Must be ordered ascending. Not used after `New()`, edit `charge_overlays` for live changes.
+	var/charge_overlay_states = list("cell_1/5", "cell_2/5", "cell_3/5", "cell_4/5", "cell_5/5")
 
 /obj/item/ammo/power_cell
 	name = "Power Cell"
-	desc = "A power cell that holds a max of 100PU"
+	desc = null // updated in `New()`
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 10000
@@ -1548,15 +1551,21 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	var/recharge_rate = 0
 	var/recharge_delay = 0
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
-	var/unusualCell = 0
+	var/unusualCell = FALSE
 	var/rechargable = TRUE
 	var/component_type = /datum/component/power_cell
+	/// Charge overlay images. Populated in `New()`. Would ideally be static or in typeinfo, but both approaches have issues.
+	var/charge_overlays = null
 
 	New()
 		..()
 		AddComponent(src.component_type, max_charge, charge, recharge_rate, recharge_delay, rechargable)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
+
+		src.charge_overlays = list()
+		for (var/state in src.get_typeinfo().charge_overlay_states)
+			src.charge_overlays += image(src.icon, state)
 		UpdateIcon()
 
 	disposing()
@@ -1568,25 +1577,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		return
 
 	update_icon()
-		if (src.artifact || src.unusualCell) return
-		overlays = null
+		if (src.artifact || src.unusualCell)
+			return
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
-			ratio = round(ratio, 20)
+			// ratio [0-1] of charge remaining
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			// convert ratio to index of correct state
+			var/state_idx = round(ratio * length(src.charge_overlays), 1)
+			if (state_idx > 0)
+				UpdateOverlays(src.charge_overlays[state_idx], "charge_overlay", retain_cache=TRUE)
+			else
+				ClearSpecificOverlays(TRUE, "charge_overlay")
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
-			switch(ratio)
-				if(20)
-					overlays += "cell_1/5"
-				if(40)
-					overlays += "cell_2/5"
-				if(60)
-					overlays += "cell_3/5"
-				if(80)
-					overlays += "cell_4/5"
-				if(100)
-					overlays += "cell_5/5"
-			return
 
 	examine()
 		if (src.artifact)
