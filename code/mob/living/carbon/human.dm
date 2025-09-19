@@ -2420,8 +2420,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
-	W.name = "[real_name]'s hair"
-	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
+	W.name = "[real_name]’s hair"
+	W.real_name = "[real_name]’s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 
