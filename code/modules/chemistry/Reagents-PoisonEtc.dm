@@ -675,7 +675,7 @@ datum
 								else
 									B = new/obj/critter/domestic_bee(H.loc)
 
-								B.name = "[H.real_name]'s heart"
+								B.name = "[H.real_name]’s heart"
 								B.desc = "[H.real_name]'s heart is flying off. Better catch it quick!"
 								B.beeMom = H
 								B.beeKid = DEFAULT_BLOOD_COLOR
@@ -756,7 +756,7 @@ datum
 								else
 									B = new/obj/critter/domestic_bee/queen(H.loc)
 
-								B.name = "[H.real_name]'s heart"
+								B.name = "[H.real_name]’s heart"
 								B.desc = "[H.real_name]'s heart is flying off. What kind of heart problems did they have!?"
 								B.beeMom = H
 								B.beeKid = DEFAULT_BLOOD_COLOR
