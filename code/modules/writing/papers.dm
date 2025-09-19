@@ -927,14 +927,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
 	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
 
-//is this a bit extra? Yeess but I wanted it on a random table okay!
-proc/spawn_kitchen_note()
-	for_by_tcl(table, /obj/table)
-		if (istype(get_area(table), /area/station/crew_quarters/kitchen) && prob(50))
-			var/type = pick(concrete_typesof(/obj/item/paper/recipe) - /obj/item/paper/recipe)
-			new type(get_turf(table))
-			return
-
 /obj/item/paper/recipe/tandoori
 	name = "stained recipe clipping"
 	desc = "It's creased and worn, and smells a little like dried blood."
@@ -1532,8 +1524,6 @@ proc/spawn_kitchen_note()
 		pixel_y = rand(-8, 8)
 		info = PAPER_IMAGE_RENDER("images/arts/xg_tapes.png")
 
-#undef IMAGE_OFFSET_X
-#undef IMAGE_OFFSET_Y
 
 /obj/item/paper/wanderpoem
 	name = "A freshly written poem"
@@ -1713,3 +1703,20 @@ proc/spawn_kitchen_note()
 	name = "stern note"
 	info = {"so um. i spent all of our money that we were told not to spend, only after reading our leadership's note. we are so fucked. anyways, i
 	went out for a short bit and will be back in a day's time.<br><br>no, you are the one who is fucked. i'm out of here."}
+
+/obj/item/paper/hair_fall
+	name = "hairstyle flyer"
+	icon_state = "hair_fall"
+	desc = "The latest frontier hairstyle fashion for fall 2053."
+
+	sizex = 1213 + IMAGE_OFFSET_X
+	sizey = 762 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
+
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/hairstyles_fall.png")
+
+#undef IMAGE_OFFSET_X
+#undef IMAGE_OFFSET_Y
