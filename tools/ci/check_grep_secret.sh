@@ -58,5 +58,3 @@ if grep -P "(?<!UNLINT\().*name = .*\"\[.*\]'s" */**/*.dm;   then
 	echo "ERROR: Using an apostrophe in a name like [mob]'s brain may cause Byond to get confused between the two objects in click verbs etc. Please use ’ (U+2019) instead."
 
 exit $st
-
-exit $st
