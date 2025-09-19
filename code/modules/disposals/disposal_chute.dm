@@ -260,7 +260,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
-			play_item_insert_sound(I, -26)
+			play_item_insert_sound(I, user)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
@@ -270,7 +270,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// mouse drop another mob or self
 	//
 	MouseDrop_T(atom/target, mob/user)
-		play_item_insert_sound(null)
 		//jesus fucking christ
 		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(target, src) > 0 || isAI(user) || is_incapacitated(user) || isghostcritter(user) || !src.fits_in(target))
 			return
@@ -639,7 +638,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (!direct)
 			return src.loc?.return_air()
 
-	proc/play_item_insert_sound(var/obj/item/itm, var/extrarange = 0)
+	/// Plays the item insert sound with variations depending on item. If user is given, plays localised and with a lower volume, to imply sneakyness
+	proc/play_item_insert_sound(var/obj/item/itm, var/mob/user = null)
 		var/pitch
 		var/volume = 50
 		switch(itm.w_class)
@@ -663,7 +663,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if (W_CLASS_BUBSIAN)
 				pitch = 0.1
 				volume = 400
-		playsound(src.loc, pick(item_insert_sounds), volume, 1, extrarange, pitch)
+		if (user)
+			volume = min(volume * 0.5, 20)
+			user.playsound_local(src.loc, pick(item_insert_sounds), volume, 1, 0, pitch)
+		else
+			playsound(src, pick(item_insert_sounds), volume, 1, 0, pitch)
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
