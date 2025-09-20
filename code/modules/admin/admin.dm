@@ -1494,6 +1494,20 @@ var/global/noir = 0
 					logTheThing(LOG_DIARY, usr, "killed [constructTarget(M,"diary")]", "admin")
 				return
 
+		if ("accessspeechtree")
+			if (src.level < LEVEL_PA)
+				return
+
+			var/mob/M = locate(href_list["target"])
+			M.ensure_speech_tree().ui_interact(usr)
+
+		if ("accesslistentree")
+			if (src.level < LEVEL_PA)
+				return
+
+			var/atom/A = locate(href_list["target"])
+			A.ensure_listen_tree().ui_interact(usr)
+
 		if ("addreagent")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -2135,108 +2149,6 @@ var/global/noir = 0
 					onlineAdmins.Add(C)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Adminstrator to promote or demote.")
-
-		if ("object_list")
-			if (src.level >= LEVEL_SA)
-				if (config.allow_admin_spawning && (src.state == 2 || src.level >= LEVEL_SA))
-					var/atom/loc = usr.loc
-
-					var/type = href_list["type"]
-					var/dirty_paths
-					if (istext(type))
-						dirty_paths = list(type)
-					else if (islist(type))
-						dirty_paths = type
-
-					var/paths = list()
-					var/removed_paths = list()
-					for (var/dirty_path in dirty_paths)
-						var/path = text2path(dirty_path)
-						if (!path)
-							removed_paths += dirty_path
-						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
-							removed_paths += dirty_path
-						else if (ispath(path, /mob) && src.level < LEVEL_SA)
-							removed_paths += dirty_path
-						else
-							paths += path
-						LAGCHECK(LAG_LOW)
-
-					if (!paths)
-						return
-					else if (length(paths) > 5)
-						tgui_alert(usr,"Select five or less object types only, you colossal ass!")
-						return
-					else if (length(removed_paths))
-						tgui_alert(usr,"Spawning of these objects is blocked:\n" + jointext(removed_paths, "\n"))
-						return
-
-					var/list/offset = splittext(href_list["offset"],",")
-					var/number = clamp(text2num(href_list["object_count"]), 1, 100)
-					var/X = length(offset) > 0 ? text2num(offset[1]) : 0
-					var/Y = length(offset) > 1 ? text2num(offset[2]) : 0
-					var/Z = length(offset) > 2 ? text2num(offset[3]) : 0
-					var/direction = text2num(href_list["one_direction"]) // forgive me
-
-					for (var/i = 1 to number)
-						switch (href_list["offset_type"])
-							if ("absolute")
-								for (var/path in paths)
-									var/atom/thing
-									if(ispath(path, /turf))
-										var/turf/T = locate(0 + X,0 + Y,0 + Z)
-										thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
-										thing.set_dir(direction ? direction : SOUTH)
-									else
-										new /dmm_suite/preloader(locate(X, Y, Z), list("dir" = direction ? direction : SOUTH))
-										thing = new path(locate(X, Y, Z))
-										if(isobj(thing))
-											var/obj/O = thing
-											O.initialize(TRUE)
-									LAGCHECK(LAG_LOW)
-
-							if ("relative")
-								if (loc)
-									for (var/path in paths)
-										var/atom/thing
-										if(ispath(path, /turf))
-											var/turf/T = locate(loc.x + X,loc.y + Y,loc.z + Z)
-											thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
-											thing.set_dir(direction ? direction : SOUTH)
-										else
-											new /dmm_suite/preloader(locate(loc.x + X,loc.y + Y,loc.z + Z), list("dir" = direction ? direction : SOUTH))
-											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-											if(isobj(thing))
-												var/obj/O = thing
-												O.initialize(TRUE)
-										LAGCHECK(LAG_LOW)
-								else
-									return
-
-						sleep(-1)
-
-					if (number == 1)
-						logTheThing(LOG_ADMIN, usr, "created a [english_list(paths)]")
-						logTheThing(LOG_DIARY, usr, "created a [english_list(paths)]", "admin")
-						for(var/path in paths)
-							if(ispath(path, /mob))
-								message_admins("[key_name(usr)] created a [english_list(paths, 1)]")
-								break
-							LAGCHECK(LAG_LOW)
-					else
-						logTheThing(LOG_ADMIN, usr, "created [number] [english_list(paths)]")
-						logTheThing(LOG_DIARY, usr, "created [number] [english_list(paths)]", "admin")
-						for(var/path in paths)
-							if(ispath(path, /mob))
-								message_admins("[key_name(usr)] created [number] [english_list(paths, 1)]")
-								break
-							LAGCHECK(LAG_LOW)
-					return
-				else
-					tgui_alert(usr,"Object spawning is currently disabled for anyone below the rank of Administrator.")
-					return
-			else
-				tgui_alert(usr,"You need to be at least an Adminstrator to spawn objects.")
 
 		if ("polymorph")
 			if (src.level >= LEVEL_SA) //gave SA+ restricted polymorph
@@ -4190,6 +4102,11 @@ var/global/noir = 0
 
 	return chosen
 
+/// Filter proc for admin_spawnable types
+/proc/filter_admin_spawnable(type)
+	var/typeinfo/datum/typeinfo = get_type_typeinfo(type)
+	return typeinfo.admin_spawnable
+
 /proc/get_matches(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
 	var/list/types
 	if(use_concrete_types)
@@ -4201,8 +4118,7 @@ var/global/noir = 0
 
 	for(var/path in types)
 		if(only_admin_spawnable)
-			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
-			if(!typeinfo.admin_spawnable)
+			if(!filter_admin_spawnable(path))
 				continue
 		if(findtext("[path]$", object))
 			matches += "[path]"

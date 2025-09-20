@@ -1,9 +1,9 @@
 /obj/item/clothing/under/gimmick/bowling
 	name = "bowling suit"
 	desc = "Who's up for some bowling?"
-	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_athletic.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_athletic.dmi'
 	icon_state = "bowling"
 	item_state = "bowling"
 	item_function_flags = IMMUNE_TO_ACID

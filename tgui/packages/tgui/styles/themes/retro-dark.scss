@@ -3,67 +3,42 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+.theme-retro-dark:root {
+  // Vars
+  --darkorange: #301f0a;
+  --lightorange: #fda751;
+  --lightlightorange: color-mix(in srgb, var(--lightorange), white 30%);
 
-$darkorange: #301f0a;
-$lightorange: #fda751;
-
-@use '../colors' with (
-  $primary: $lightorange,
-  $label: #ff0000,
-
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base' with (
-  $color-fg: color.scale($lightorange, $whiteness: +30%),
-  $color-bg: $darkorange
-);
-
-.theme-retro-dark {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
-
-  // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': color.scale($lightorange, $whiteness: +30%),
-      'color-disabled': #5e5e5e,
-      'color-selected': #226d0f,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00,
-      'color-transparent-text': $lightorange
-    )
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('background-color': rgba(68, 46, 26, 0.5))
-  );
-  @include meta.load-css(
-    '../components/Knob.scss',
-    $with: ('ring-color': $lightorange)
-  );
-  @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': $lightorange)
-  );
-  @include meta.load-css(
-    '../components/BlockQuote.scss',
-    $with: ('color-default': $lightorange)
-  );
-  @include meta.load-css(
-    '../components/NumberInput.scss',
-    $with: ('border-color': color.scale($lightorange, $lightness: +10%))
-  );
-  @include meta.load-css('../components/Section.scss');
+  // Base
+  --color-base: var(--darkorange);
+  --color-primary: var(--lightlightorange);
+  --base-gradient-spread: 0;
+  --color-text: var(--lightlightorange);
 
   // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($darkorange, $whiteness: +10%))
+  --titlebar-background: color-mix(in srgb, var(--darkorange), white 5%);
+  .TitleBar__close {
+    --button-background-danger: hsl(10, 100%, 30%);
+  }
+
+  // Components
+  --button-color: var(--darkorange);
+  --button-background-default: var(--lightlightorange);
+  --button-background-selected: #226d0f;
+  --button-background-caution: hsl(30, 85%, 40%);
+  --button-background-danger: hsl(60, 100%, 30%);
+
+  --progress-bar-background: rgba(68, 46, 26, 0.5);
+
+  --input-background: #0a0a0a;
+
+  --ring-color: var(--lightorange);
+
+  --blockquote-color: var(--lightorange);
+
+  --number-input-border-color: color-mix(
+    in srgb,
+    var(--lightorange),
+    white 10%
   );
 }

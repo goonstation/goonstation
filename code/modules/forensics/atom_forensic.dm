@@ -12,10 +12,32 @@
 	// -------------------- New Stuff -----------
 	var/datum/forensic_holder/forensic_holder = new() //! A place to store forensic information related to this atom
 
+/// Called before a forensics scan. You can change how the scan works here.
+/atom/proc/on_forensic_scan(var/datum/forensic_scan/scan)
+	src.forensic_holder.copy_to(scan.holder, scan.is_admin)
+	if(src.reagents)
+		src.reagents.on_forensic_scan_reagent(scan)
+
+	// Transfer old forensics to new forensics for scan
+	for(var/fingerprint in src.fingerprints)
+		scan.add_text(fingerprint, FORENSIC_HEADER_FINGERPRINTS)
+	if(src.blood_DNA)
+		var/list/DNA = params2list(src.blood_DNA)
+		for(var/i in DNA)
+			scan.add_text(i, FORENSIC_HEADER_DNA)
+	if(src.interesting)
+		scan.add_text(src.interesting, FORENSIC_HEADER_NOTES)
+	return
+
 /// Add forensic evidence to this atom's forensic_holder
-/atom/proc/add_evidence(var/datum/forensic_data/data, var/category = FORENSIC_GROUP_NOTE)
+/atom/proc/add_evidence(var/datum/forensic_data/data, var/category = FORENSIC_GROUP_NOTES)
 	if(src.forensic_holder)
 		src.forensic_holder.add_evidence(data, category)
+
+/atom/proc/remove_evidence(var/removal_flags)
+	removal_flags &= FORENSIC_REMOVE_ALL
+	if(src.forensic_holder)
+		src.forensic_holder.remove_evidence(removal_flags)
 
 /atom/movable
 	var/tracked_blood = null // list(bDNA, btype, color, count)
@@ -59,7 +81,7 @@
 		src.fingerprintslast = M.key
 	if(M.mind?.color)
 		var/datum/forensic_data/basic/color_data = new(M.mind.color, flags = 0)
-		src.forensic_holder.add_evidence(color_data, FORENSIC_GROUP_SLEUTH)
+		src.add_evidence(color_data, FORENSIC_GROUP_SLEUTH)
 
 /// Add a fingerprint to an atom directly. Doesn't interact with hidden prints at all
 /atom/proc/add_fingerprint_direct(print)
@@ -154,6 +176,8 @@
 
 // Was clean_blood. Reworked the proc to take care of other forensic evidence as well (Convair880).
 /atom/proc/clean_forensic()
+	src.remove_evidence(FORENSIC_REMOVE_CLEANING)
+
 	if (!src)
 		return
 	if (src.flags & NOFPRINT)
@@ -225,7 +249,7 @@
 
 			M.add_forensic_trace("fprints", M.fingerprints)
 			M.fingerprints = null // Foreign fingerprints on the mob.
-			M.gunshot_residue = 0 // Only humans can have residue at the moment.
+
 			if (M.makeup || M.spiders)
 				M.makeup = null
 				M.makeup_color = null

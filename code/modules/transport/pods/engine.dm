@@ -31,6 +31,19 @@
 			boutput(usr, "[ship.ship_message("No plasma located inside of the fuel tank!")]")
 			src.deactivate()
 			return
+
+		var/usage = 10/3000 // minimum usage @ 0.0333 moles consumed per 100W per tick
+		var/datum/gas_mixture/consumed = ship.fueltank?.remove_air(usage)
+		var/toxins = consumed?.toxins
+		if(isnull(toxins))
+			toxins = 0
+		if(consumed)
+			ship.fueltank?.assume_air(consumed)
+			if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+				boutput(usr, "[ship.ship_message("Insufficient plasma located inside of the fuel tank!")]")
+				src.deactivate()
+				return
+
 		ship.powercapacity = src.powergenerated
 		src.ship.speedmod *= src.engine_speed
 

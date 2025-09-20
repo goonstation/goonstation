@@ -215,7 +215,14 @@ TYPEINFO(/mob/living/silicon)
 
 	var/inrange = in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (params["ctrl"] || src.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	// slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (params["ctrl"] ||\
+		src.client.check_any_key(KEY_EXAMINE | KEY_POINT) ||\
+		(equipped && (inrange || (equipped.flags & EXTRADELAY))) ||\
+		istype(target, /turf) ||\
+		ishelpermouse(target) ||\
+		inrange && params["middle"]
+	)
 		..()
 	else
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -462,7 +469,7 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 /proc/borgify_name(var/start_name = "Robot")
@@ -700,6 +707,10 @@ var/global/list/module_editors = list()
 /mob/living/silicon/proc/geigerclick(stage)
 	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
 		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
+
+/mob/living/silicon/clear_offline_indicator()
+	..()
+	src.mainframe?.clear_offline_indicator()
 
 /datum/statusEffect/low_power
 	id = "low_power"
