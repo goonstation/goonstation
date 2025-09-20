@@ -1,4 +1,24 @@
 
+(t)sat sep 20 25
+(u)TemThrush
+(p)24694
+(e)🎨|C-Sprites
+(*)Added 14 new long hairstyles into the game, see minor changes for the list!
+(+)New hairstyle options are; Long Poofy, Med Curls, Long Straight, Royal Curls, Poofy Wave, Wild Wave, Symmetrical Bob, Choppy Long, Himecut, Wild Bedhead, Sway, Longer Curls, Curly Twists, and Straightened Shoulder-Length.
+(t)wed sep 17 25
+(u)JORJ949
+(p)24549
+(e)🗺🔄|A-Mapping, C-Rework
+(*)Clarion's Bridge has been reworked.
+(t)tue sep 16 25
+(u)Lord_Earthfire
+(p)24661
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Geiger counter can now be added as triggers into assemblies. They will trigger whenever the wearer is affected by radiation. Turn a monkey into a radiation-detector for mechcomp today!
+(u)Lord_Earthfire
+(p)24662
+(e)⚖🔄📦💡|C-Balance, C-Rework, A-Game-Objects, A-Station-Systems
+(+)Proximity sensors have a small cooldown between activations
 (t)mon sep 15 25
 (u)Lord_Earthfire
 (p)24657
