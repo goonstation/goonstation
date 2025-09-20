@@ -3739,10 +3739,11 @@ TYPEINFO(/mob/living/silicon/robot)
 
 	do_killswitch()
 		. = ..()
-		// Pop the head compartment open and eject the brain
-		var/mob/living/silicon/robot/robot = src.owner
-		robot.eject_brain(fling = TRUE)
-		robot.update_appearance()
-		robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
+		if(.)
+			// Pop the head compartment open and eject the brain
+			var/mob/living/silicon/robot/robot = src.owner
+			robot.eject_brain(fling = TRUE)
+			robot.update_appearance()
+			robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 #undef can_step_sfx
