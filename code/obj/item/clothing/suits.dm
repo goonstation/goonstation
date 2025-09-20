@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	wear_layer = MOB_ARMOR_LAYER
+	equipment_slot = SLOT_FLAG_SUIT
 	var/fire_resist = T0C+100
 	/// If TRUE the suit will hide whoever is wearing it's hair
 	var/over_hair = FALSE
