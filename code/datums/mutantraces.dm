@@ -714,6 +714,7 @@ TYPEINFO(/datum/mutantrace/blob)
 	voice_override = "bloop"
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
+	dna_mutagen_banned = FALSE
 
 	ghost_icon_state = "ghost-blob"
 
@@ -1733,6 +1734,7 @@ TYPEINFO(/datum/mutantrace/seamonkey)
 	human_compatible = 0
 	uses_human_clothes = 0
 	override_language = LANGUAGE_MARTIAN
+	dna_mutagen_banned = FALSE
 	mutant_organs = list(\
 		"left_eye"=/obj/item/organ/eye/beady,\
 		"right_eye"=/obj/item/organ/eye/beady,\
@@ -1952,6 +1954,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3
+	dna_mutagen_banned = FALSE
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
