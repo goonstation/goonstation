@@ -752,9 +752,7 @@
 		if (movement_controller)
 			movement_controller.dispose()
 
-		myhud.detach_all_clients()
-		myhud.master = null
-		myhud = null
+		QDEL_NULL(src.myhud)
 
 		if (pilot)
 			pilot = null
