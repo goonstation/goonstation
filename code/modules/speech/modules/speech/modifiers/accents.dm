@@ -51,6 +51,9 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	id = SPEECH_MODIFIER_ACCENT_FRENCH
 	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(tabarnak))
 
+/datum/speech_module/modifier/accent/frog
+	id = SPEECH_MODIFIER_ACCENT_FROG
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(frogify))
 
 /datum/speech_module/modifier/accent/german
 	id = SPEECH_MODIFIER_ACCENT_GERMAN
