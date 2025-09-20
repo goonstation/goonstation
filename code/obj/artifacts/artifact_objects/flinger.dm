@@ -45,7 +45,7 @@
 	var/random_dir_every_time = FALSE
 	var/chain_flings = 1
 	var/throw_type = 1
-	var/cooldowns = null
+	var/cooldowns = new/list()
 	var/throw_target = THROW_TARGET_SELF
 
 	post_setup()
