@@ -1,6 +1,6 @@
 /// Shoves transfer_rate volume of gas from air1 to air2
 /// Max volume flow rate.
-#define MAX_VOLUME 1000
+#define MAX_VOLUME 200
 
 /obj/machinery/atmospherics/binary/volume_pump
 	name = "Gas pump"
@@ -14,7 +14,7 @@
 	var/transfer_rate = 200
 
 	/// Radio frequency to operate on.
-	var/frequency = null
+	var/frequency = FREQ_FREE
 	/// Radio ID we respond to for multicast.
 	var/id = null
 	/// Radio ID that refers to specifically us.
@@ -41,9 +41,7 @@
 	if(!on)
 		return FALSE
 
-	var/transfer_ratio = max(1, transfer_rate/air1.volume)
-
-	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
+	var/datum/gas_mixture/removed = air1.remove_ratio(src.transfer_rate/air1.volume)
 
 	air2.merge(removed)
 
