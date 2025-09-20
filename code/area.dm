@@ -3795,12 +3795,16 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 	CanEnter(atom/movable/A)
 		var/mob/living/M = A
-		if(istype(M) && M.mind && !(M.mind.get_antagonist(ROLE_WIZARD) || M.mind.special_role == ROLE_WIZARD || M.mind.get_antagonist(ROLE_BASKETBALL_WIZARD) || M.mind.special_role == ROLE_BASKETBALL_WIZARD || M.mind.assigned_role == "Santa Claus)"))
-			if(M.client && M.client.holder)
-				return TRUE
+		if(istype(M) && M.mind && !src.lives_here(M) && !isadmin(M) && !ismob(M.loc)) //Wizards and anyone in a wizard (headspiders) only!
 			boutput(M, SPAN_ALERT("A magical barrier prevents you from entering!")) //or something
 			return FALSE
 		return TRUE
+
+	proc/lives_here(mob/living/M)
+		if (!istype(M) || !M.mind) return TRUE
+		if (M.mind.get_antagonist(ROLE_WIZARD) || M.mind.special_role == ROLE_WIZARD) return TRUE
+		if (M.mind.get_antagonist(ROLE_BASKETBALL_WIZARD) || M.mind.special_role == ROLE_BASKETBALL_WIZARD) return TRUE
+		if (M.mind.assigned_role == "Santa Claus") return TRUE
 
 /area/wizard_station_space
 	name = "Wizard's Den Space"
