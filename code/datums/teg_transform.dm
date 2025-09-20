@@ -161,4 +161,4 @@ datum/teg_transformation
 			/*  2*25 / 75 = 0.66 -2  = -1.34 		 TERRIBAD */
 			/* Use above offset * 10 to put it in the -20 to 40 ballpark */
 			efficiency_shift = (2 * electrical_conductivity / thermal_conductivity) - 2 //center on zero
-			src.teg.semiconductor.efficiency_offset = clamp(efficiency_shift*10, -20, 40) //scale shift by 10 which gets it in the ballpark!
+			src.teg.semiconductor.efficiency_offset = clamp(efficiency_shift*10, -20, 48) //scale shift by 10 which gets it in the ballpark!
