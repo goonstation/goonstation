@@ -1,3 +1,6 @@
+#define THROW_TARGET_SELF 0
+#define THROW_TARGET_USER 1
+
 /obj/artifact/flinger
 	name = "artifact flinger"
 	associated_datum = /datum/artifact/flinger
@@ -5,24 +8,21 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		. = ..(A, thr)
 		if(iscarbon(A))
-			var/mob/living/carbon/unit = A
+			var/mob/living/carbon/impacted_person = A
 			if(thr.bonus_throwforce >= 20)
-				unit.emote("scream")
-			if(thr.bonus_throwforce >= 90)
-				unit.gib()
-				logTheThing(LOG_COMBAT, thr.thing, " gibbed [unit.name] at [log_loc(unit)].")
+				impacted_person.emote("scream")
 		else if(iswall(A))
 			if (thr.bonus_throwforce >= 35)
 				playsound(thr.thing.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				for (var/mob/N in AIviewers(thr.thing, null))
-					if (N.client)
-						shake_camera(N, 4, 8, 0.5)
+				for (var/mob/M in AIviewers(thr.thing, null))
+					if (M.client)
+						shake_camera(M, 4, 8, 0.5)
 		else if(istype(A, /obj/structure/girder))
 			if (thr.bonus_throwforce >= 35)
 				playsound(thr.thing.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				for (var/mob/N in AIviewers(thr.thing, null))
-					if (N.client)
-						shake_camera(N, 4, 1, 8)
+				for (var/mob/M in AIviewers(thr.thing, null))
+					if (M.client)
+						shake_camera(M, 4, 1, 8)
 
 /datum/artifact/flinger
 	associated_object = /obj/artifact/flinger
@@ -45,12 +45,14 @@
 	var/random_dir_every_time = FALSE
 	var/chain_flings = 1
 	var/throw_type = 1
+	var/cooldowns = null
+	var/throw_target = THROW_TARGET_SELF
 
 	post_setup()
 		. = ..()
 		src.recharge_time = rand(1,10) * 10
 		src.range = rand(1, 15)
-		src.throwforce = rand(1, 50)
+		src.throwforce = rand(15, 50)
 
 		if(artitype.name == "eldritch")
 			//Eldritch artifacts hurt more.
@@ -62,14 +64,16 @@
 		if(artitype.name == "wizard")
 			//Silly phasing wizards
 			src.throw_type = THROW_PHASE
+		if(artitype.name == "precursor")
+			src.throw_target = THROW_TARGET_USER
 
-		if(prob(75))
+		if(prob(25))
 			src.fling_dir = pick(cardinal)
 			src.random_dir_every_time = FALSE
 		else
 			src.random_dir_every_time = TRUE
 			for (var/i = 0, i < 5, i += 1)
-				if(prob(30))
+				if(prob(50))
 					src.chain_flings += 1
 				else
 					break
@@ -81,38 +85,43 @@
 			return
 		if (!user)
 			return
-		if (src.recharging)
+		if(!ON_COOLDOWN(src, "artifact_fling", src.recharge_time + src.chain_flings * 20))
+			var/turf/T = get_turf(O)
+			if(iscarbon(user))
+				var/remaining_flings = src.chain_flings
+				switch(src.throw_target)
+					if(THROW_TARGET_SELF)
+						fling(O, O)
+					if(THROW_TARGET_USER)
+						fling(O, user)
+				for (var/i = 0, i < remaining_flings, i += 1)
+					SPAWN(10*i)
+						switch(src.throw_target)
+							if(THROW_TARGET_SELF)
+								fling(O, O)
+							if(THROW_TARGET_USER)
+								fling(O, user)
+				O.ArtifactFaultUsed(user)
+				SPAWN(src.recharge_time + src.chain_flings * 20) //Prevents the artifact from being activated while being thrown around.
+					T.visible_message("<b>[O]</b> tenses up again!")
+		else
 			boutput(user, SPAN_ALERT("The artifact twitches, but nothing else happens."))
 			return
-		if (src.recharge_time > 0)
-			src.recharging = TRUE
-		var/turf/T = get_turf(O)
-		if(iscarbon(user))
-			var/remaining_flings = src.chain_flings
-			fling(O)
-			for (var/i = 0, i < remaining_flings, i += 1)
-				SPAWN(10*i)
-					fling(O)
 
-			O.ArtifactFaultUsed(user)
-
-		SPAWN(src.recharge_time + src.chain_flings * 20) //Prevents the artifact from being activated while being thrown around.
-			src.recharging = FALSE
-			T.visible_message("<b>[O]</b> tenses up again!")
-
-	proc/fling(var/obj/O)
-		if(O.throwing)
+	proc/fling(var/obj/thrower, var/obj/being_thrown)
+		if(being_thrown.throwing)
 			return
 
-		var/turf/T = get_turf(O)
-		T.visible_message("<b>[O]</b> lunges!")
-		playsound(O.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, -1)
+		var/turf/T = get_turf(thrower)
+		T.visible_message("<b>[thrower]</b> lunges!")
+		playsound(being_thrown.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, -1)
 
 		if(src.random_dir_every_time)
 			src.fling_dir = pick(cardinal)
 
-		var/turf/target = get_edge_target_turf(O, src.fling_dir)
-		var/datum/thrown_thing/thr = O.throw_at(target, src.range, 1, bonus_throwforce=src.throwforce, throw_type=src.throw_type)
-		thr?.user = O
+		var/turf/target = get_edge_target_turf(being_thrown, src.fling_dir)
+		var/datum/thrown_thing/thr = being_thrown.throw_at(target, src.range, 1, bonus_throwforce=src.throwforce, throw_type=src.throw_type)
+		thr?.user = thrower
 
-
+#undef THROW_TARGET_SELF
+#undef THROW_TARGET_USER
