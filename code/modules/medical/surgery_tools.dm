@@ -1077,6 +1077,10 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 
 				falling?.throw_at(target, 1, 1)
 
+	place_on(obj/item/W as obj, mob/user, params)
+		. = ..()
+		if (.)
+			src.attach(W)
 
 	attackby(obj/item/W, mob/user, params)
 		if (iswrenchingtool(W))
@@ -1087,7 +1091,6 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 			return ..()
 		else if (src.place_on(W, user, params))
 			user.show_text("You place [W] on [src].")
-			src.attach(W)
 			return
 		else
 			return ..()
@@ -1119,11 +1122,11 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
 		SPAWN(0)
-			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP), PROC_REF(detach))
+			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_STORED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP), PROC_REF(detach))
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
-		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP))
+		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_STORED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP))
 
 	proc/toggle_brake(mob/user)
 		src.anchored = !src.anchored

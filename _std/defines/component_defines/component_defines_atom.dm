@@ -171,6 +171,8 @@
 	#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
 	/// When the item in hand is twirl emoted and spun in hand. (user, item)
 	#define COMSIG_ITEM_TWIRLED "itm_twirled"
+	/// After an item has been placed into another item (backpack, satchel, toolbox, etc)
+	#define COMSIG_ITEM_STORED "itm_stored"
 	/// When an item reacting to being seen in a storage or dumped out of it (e.g. mousetraps)
 	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
 	/// Send out to every item directly in and on the person on no-suicide-death
