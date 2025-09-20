@@ -2320,8 +2320,22 @@ TYPEINFO(/obj/item/cargotele)
 		if(!mob_teled)
 			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
 
-		cargo.set_loc(get_turf(src.target))
-		target.receive_cargo(cargo)
+		// teleportation instability causes targets to get sent randomly
+		var/obj/submachine/cargopad/pad
+		var/turf/turf
+		if (cargo.artifact?.activated && cargo.artifact.teleportationally_unstable)
+			if (prob(30))
+				turf = get_random_station_turf()
+			else
+				pad = pick(global.cargo_pad_manager.pads)
+				turf = get_turf(pad)
+		else
+			pad = src.target
+			turf = get_turf(pad)
+
+		cargo.set_loc(turf)
+		pad?.receive_cargo(cargo)
+
 		elecflash(src)
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user

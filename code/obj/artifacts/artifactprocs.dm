@@ -95,6 +95,8 @@
 		var/obj/item/I = src
 		I.item_state = appearance.name
 
+	A.teleportationally_unstable = prob(A.teleportationally_unstable_chance)
+
 	A.fx_image = new
 	A.fx_image.icon = src.icon
 	A.fx_image.icon_state = src.icon_state + "fx"
