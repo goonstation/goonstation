@@ -2810,5 +2810,6 @@ proc/area_table_spawn(area_type, spawn_type)
 	for_by_tcl(table, /obj/table)
 		if (istype(get_area(table), area_type))
 			tables += table
-
+	if (!length(tables)) //no tables FUCK
+		return
 	new spawn_type(get_turf(pick(tables)))
