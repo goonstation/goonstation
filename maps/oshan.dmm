@@ -8702,7 +8702,7 @@
 /area/station/hallway/primary/west)
 "aEJ" = (
 /obj/storage/closet/wardrobe/green,
-/obj/item/clothing/under/swimsuit/green,
+/obj/item/clothing/under/swimsuit/swimsuits/green,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aEK" = (
@@ -8711,7 +8711,7 @@
 /area/station/crew_quarters/locker)
 "aEL" = (
 /obj/storage/closet/wardrobe/mixed,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/window_blinds/cog2/left{
 	dir = 8;
 	pixel_x = 32
@@ -8721,7 +8721,7 @@
 "aEM" = (
 /obj/storage/closet/wardrobe/blue,
 /obj/machinery/light/incandescent/cool,
-/obj/item/clothing/under/swimsuit/blue,
+/obj/item/clothing/under/swimsuit/swimsuits/blue,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aEO" = (
@@ -8873,7 +8873,7 @@
 "aFs" = (
 /obj/storage/closet/wardrobe/white,
 /obj/machinery/light/incandescent/cool,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/window_blinds/cog2/left{
 	dir = 8;
 	pixel_x = 32
@@ -9019,7 +9019,7 @@
 /area/station/crew_quarters/sauna)
 "aFW" = (
 /obj/storage/closet/wardrobe/pink,
-/obj/item/clothing/under/swimsuit/purple,
+/obj/item/clothing/under/swimsuit/swimsuits/purple,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aFX" = (
@@ -9032,7 +9032,7 @@
 /area/station/crew_quarters/locker)
 "aFY" = (
 /obj/storage/closet/wardrobe/grey,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/window_blinds/cog2/left{
 	dir = 8;
 	pixel_x = 32
@@ -9176,7 +9176,7 @@
 /area/station/hallway/primary/west)
 "aGz" = (
 /obj/storage/closet/wardrobe/yellow,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aGA" = (
@@ -9335,7 +9335,7 @@
 /area/station/engine/engineering)
 "aHc" = (
 /obj/storage/closet/wardrobe/black,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/window_blinds/cog2/left{
 	dir = 8;
 	pixel_x = 32
@@ -12065,7 +12065,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aTr" = (
-/obj/item/clothing/under/swimsuit/green,
+/obj/item/clothing/under/swimsuit/swimsuits/green,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aTs" = (
@@ -12464,7 +12464,7 @@
 "aVj" = (
 /obj/rack,
 /obj/item/clothing/head/helmet/space/donk,
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVm" = (
@@ -45350,7 +45350,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "wPq" = (
