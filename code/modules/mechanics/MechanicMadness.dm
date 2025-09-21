@@ -334,6 +334,9 @@
 	attackby(obj/item/W, mob/user)
 		if(iswrenchingtool(W)) // prevent unanchoring
 			return FALSE
+		if(istype(W, /obj/item/storage/mechanics/housing_handheld))
+			src.attack_hand()
+			return FALSE
 		. = ..()
 
 	attack_hand(mob/user)
