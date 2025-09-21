@@ -75,7 +75,7 @@
 
 /datum/bioEffect/speech/frog
 	name = "Frontal Gyrus Alteration Type-Fr"
-	desc = "Forces the language center of the subject's brain to construct sentences in in the matter of Abzuians."
+	desc = "Forces the language center of the subject's brain to construct sentences in a truly ribbeting manner."
 	id = "accent_frog"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = TRUE
