@@ -99,9 +99,9 @@
 	//what if all our issues are due to the key we're trying to assign to already being logged in on a stale client that has yet to del?
 	for (var/client/C as anything in global.clients)
 		if (C.key == verification["key"])
-			src.on_error("Your requested key [C.key] is already logged in on this server!")
-			logTheThing(LOG_DEBUG, src.owner, "During goonhub auth, client [src.owner] requested key [C.key], which is already in use by client [C]")
-			return
+			del(C)
+			logTheThing(LOG_DEBUG, src.owner, "During goonhub auth, client [src.owner] requested key [C.key], which is already in use by client [C]. Assuming the old one is a stale client and deleting.")
+			break
 
 	src.pending_success_message = TRUE
 	src.owner.verbs -= list(/client/proc/open_goonhub_auth)

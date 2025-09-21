@@ -610,7 +610,7 @@
 	sname = "9mm frangible"
 	name = "9mm frangible magazine"
 	desc = "Some 9mm incapacitating bullets, made of plastic with rubber tips. Despite being sublethal, they can still do damage."
-	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	icon_state = "pistol_clip"	//9mm_clip that exists already. Available from hacked manufacturers, 'cause these bullets are not good.
 	amount_left = 18
 	max_amount = 18
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
@@ -624,7 +624,7 @@
 	sname = "9x19mm Soft Point"
 	name = "9mm Soft Point magazine"
 	desc = "A magazine full of 9x19mm ammunition. This particular load has the lead core exposed at the tip for increased expansion."
-	icon_state = "pistol_magazine"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	icon_state = "pistol_magazine"
 	amount_left = 12
 	max_amount = 12
 	ammo_type = new/datum/projectile/bullet/nine_mm_surplus
