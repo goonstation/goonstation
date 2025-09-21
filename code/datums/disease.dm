@@ -165,12 +165,18 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (probmult(stage_prob) && stage < master.max_stages)
-			stage++
+		stage_increment(mult)
 
 		master.stage_act(affected_mob, src, mult)
 
 		return 0
+
+	proc/stage_increment(mult)
+		if (probmult(src.stage_prob) && src.stage < master.max_stages)
+			src.stage++
+			return TRUE
+		return FALSE
+
 
 	proc/scan_info()
 		var/text = "<span class='alert'><b>"
@@ -318,17 +324,61 @@
 	var/associated_reagent = null
 	var/last_reagent_dose = 0
 	var/withdrawal_duration = 4800
-	var/max_severity = "HIGH"
+	var/severity = HIGH_ADDICTION_SEVERITY
+	var/addiction_meter
+	var/depletion_rate = 0
+	var/stage_satisfied = FALSE // Used for non-addicted addictive reagents, which can cure one level of addiction per level of addiction increased
 
 	copy_other(datum/ailment_data/addiction/other)
 		..()
 		src.associated_reagent = other.associated_reagent
 		src.withdrawal_duration = other.withdrawal_duration
-		src.max_severity = other.max_severity
+		src.severity = other.severity
 
 	New()
 		..()
 		master = get_disease_from_path(/datum/ailment/addiction)
+
+	stage_increment()
+		// don't start feeling symptoms if we've had a dose in the last ~3 minutes, worsened with the state of the addiction
+		if (last_reagent_dose + 2000 - (addiction_meter * 10) > world.timeofday)
+			return FALSE
+		. = ..()
+		if (.)
+			stage_satisfied = FALSE
+
+	proc/metabolised_addictive_reagent(var/datum/reagent/reagent, var/rate)
+		// The minimum rate means that patches with less than 1 unit of the addictive reagent won't work to satisfy addiction.
+		// This is useful because dose logic is very binary and exploitable by microdosing with ludicrously small volumes
+		if (src.severity < reagent.addiction_severity || rate < 0.05)
+			return
+		if (src.associated_reagent == reagent.name)
+			src.last_reagent_dose = world.timeofday
+			src.addiction_meter += rate
+			if (src.stage > 1)
+				src.stage = 1
+				src.stage_satisfied = FALSE
+			return
+		else
+			src.addiction_meter += depletion_rate * 2
+			if (!src.stage_satisfied && src.stage > 1)
+				src.stage -= 1
+				src.stage_satisfied = TRUE
+
+	proc/ingested_addictive_reagent(var/datum/reagent/reagent, var/volume)
+		if (src.severity < reagent.addiction_severity && volume >= 0.1)
+			return
+		if (src.associated_reagent == reagent.name)
+			src.last_reagent_dose = world.timeofday
+			src.affected_mob.make_jittery(-5)
+			if (src.stage > 1)
+				boutput(src.affected_mob, SPAN_NOTICE("<b>That's the good stuff! But how long can it last?</b>"))
+				src.stage = 1
+				src.stage_satisfied = FALSE
+		else if (src.stage > 1 && !src.stage_satisfied)
+			src.stage -= 1
+			src.stage_satisfied = TRUE
+			boutput(src.affected_mob, SPAN_NOTICE("<b>That takes a bit of the edge off, but not much.</b>"))
 
 /datum/ailment_data/parasite
 	var/was_setup = 0

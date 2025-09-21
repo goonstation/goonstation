@@ -27,7 +27,7 @@ datum
 		var/fluid_g = 255
 		var/addiction_prob = 0 // per-tick chance that addiction will surface
 		var/addiction_min = 10 // how high the tally for this addiction needs to be before addiction_prob starts rolling
-		var/max_addiction_severity = "HIGH" // HIGH = barfing, stuns, etc, LOW = twitching, getting tired
+		var/addiction_severity = HIGH_ADDICTION_SEVERITY // HIGH = barfing, stuns, etc, LOW = twitching, getting tired
 		var/dispersal = 4 // The range at which this disperses from a grenade. Should be lower for heavier particles (and powerful stuff).
 		var/volatility = 0 // Volatility determines effectiveness in pipebomb. This is 0 for a bad additive, otherwise a positive number which linerally affects explosive power.
 		var/reacting = 0 // fuck off chemist spam
@@ -186,13 +186,9 @@ datum
 							H.sims.affectMotive("Hygiene", hygiene_change)
 
 				if(INGEST)
-					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
-					if (AD)
-						M.make_jittery(-5)
-						AD.last_reagent_dose = world.timeofday
-						if (AD.stage != 1)
-							boutput(M, SPAN_NOTICE("<b>You feel slightly better, but for how long?</b>"))
-							AD.stage = 1
+					if (src.addiction_prob && M.ailments && length(M.ailments) < 5)
+						for(var/datum/ailment_data/addiction/Addictn in M.ailments)
+							Addictn.ingested_addictive_reagent(src, volume)
 
 			M.material_trigger_on_chems(src, volume)
 			for(var/atom/A in M)
@@ -231,7 +227,7 @@ datum
 				. += 0.001
 
 		//mult is used to handle realtime metabolizations over byond time
-		proc/on_mob_life(var/mob/M, var/mult = 1)
+		proc/on_mob_life(var/mob/M, var/mult = 1) ///
 			SHOULD_CALL_PARENT(TRUE)
 			if (!M || !M.reagents)
 				return
@@ -316,39 +312,35 @@ datum
 
 
 		proc/handle_addiction(var/mob/living/M, var/rate, var/addProb)
-			//DEBUG_MESSAGE("[src.id].handle_addiction([M],[rate])")
-			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
+			var/datum/ailment_data/addiction/addiction
+			for(var/datum/ailment_data/addiction/Addictn in M.ailments)
+				Addictn.metabolised_addictive_reagent(src, rate)
+				if (Addictn.associated_reagent == src.name)
+					addiction = Addictn
+			if (addiction)
+				return addiction
+/* 			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 			if (AD)
 				//DEBUG_MESSAGE("already have [AD.name]")
-				return AD
-			//DEBUG_MESSAGE("addProb [addProb]")
+				AD.metabolised_addicted_reagent(rate)
+				return AD */
 			if (isliving(M))
 				var/mob/living/H = M
 				if (H.traitHolder.hasTrait("strongwilled"))
 					addProb /= 2
 					rate /= 2
-					//DEBUG_MESSAGE("strongwilled: addProb [addProb], rate [rate]")
 				if (H.traitHolder.hasTrait("addictive_personality"))
 					addProb *= 2
 					rate *= 2
-					//DEBUG_MESSAGE("addictive_personality: addProb [addProb], rate [rate]")
 			if (!holder.addiction_tally)
 				holder.addiction_tally = list()
-			//DEBUG_MESSAGE("holder.addiction_tally\[src.id\] = [holder.addiction_tally[src.id]]")
 			holder.addiction_tally[src.id] += rate
 			var/current_tally = holder.addiction_tally[src.id]
-			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
 			if (addiction_min < current_tally && isliving(M) && prob(addProb))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
-				AD = get_disease_from_path(/datum/ailment/addiction).setup_strain()
-				AD.associated_reagent = src.name
-				AD.last_reagent_dose = world.timeofday
-				AD.name = "[src.name] addiction"
-				AD.affected_mob = M
-				AD.max_severity = src.max_addiction_severity
-				M.contract_disease(/datum/ailment/addiction, null, AD, TRUE)
-				//DEBUG_MESSAGE("became addicted: [AD.name]")
-				return AD
+				addiction = get_disease_from_path(/datum/ailment/addiction).setup_strain(src, current_tally, M)
+				M.contract_disease(/datum/ailment/addiction, null, addiction, TRUE)
+				return addiction
 			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
 				boutput(M, SPAN_ALERT("You think it might be time to hold back on [src.name] for a bit..."))
 			return
