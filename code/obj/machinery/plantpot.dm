@@ -1232,13 +1232,9 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /// Handles the finalisation of cropcount
 /obj/machinery/plantpot/proc/HYPharvesting_finalise_cropcount(datum/HYPharvesting_data/h_data)
-	// only apply the yield multiplier and minimum if the count is likely to be positive, this allows prior modifiers to zero crop count without
-	// this overriding it back to 1.
 	var/cropsize = h_data.DNA?.get_effective_value("cropsize")
-	if (h_data.cropcount > 0)
+	if (cropsize > 0)
 		h_data.cropcount *= (1 + ((cropsize * h_data.growing.yield_multi) / 100))
-		// It's too easy for low-output plants to have no cropcount at barely-negative yield values, so yield shouldn't be able to zero cropcount by itself.
-		h_data.cropcount = max(h_data.cropcount, 1)
 	// A higher output for plants with higher base output helps retains some personality.
 	h_data.harvest_cap += h_data.growing.cropsize
 	 // Introduce some variance at the end.
