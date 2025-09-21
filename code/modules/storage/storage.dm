@@ -359,6 +359,7 @@
 	I.stored = src
 
 	src.add_contents_extra(I, user, visible)
+	SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
 
 /// For adding an item by trying to stack it with other items.
 /// Returns the item the input was stacked into if that happened, returns W
