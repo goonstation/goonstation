@@ -29,7 +29,7 @@
 	type_name = "Flinger"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
-	validtypes = list("martian","precursor","wizard","eldritch", "silicon")
+	validtypes = list("martian" ,"precursor" ,"wizard" ,"eldritch", "ancient")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
