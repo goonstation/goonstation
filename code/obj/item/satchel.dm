@@ -188,7 +188,7 @@
 			if (length(src.contents) < 1)
 				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))
 			else
-        var/obj/table = over_object
+				var/obj/table = over_object
 				usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
 				for (var/obj/item/thing in src.contents)
 					table.place_on(thing)
