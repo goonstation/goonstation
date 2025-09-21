@@ -2581,7 +2581,7 @@ proc/get_mobs_trackable_by_AI()
 	. = ..()
 	src.camera.c_tag = src.real_name
 	src.eyecam.UpdateName()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 // For if an AI needs to disconnect, make their core a latejoin one
@@ -2884,6 +2884,7 @@ proc/get_mobs_trackable_by_AI()
 
 	do_killswitch()
 		. = ..()
-		src.ai.brain.take_damage(20, 20)
-		src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
-		src.ai.eject_brain()
+		if (.)
+			src.ai.brain.take_damage(20, 20)
+			src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
+			src.ai.eject_brain()
