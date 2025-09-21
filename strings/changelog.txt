@@ -1,5 +1,9 @@
 
 (t)sun sep 21 25
+(u)Egregorious
+(p)24669
+(e)💅🔨📦|C-QoL, A-Player-Actions, A-Game-Objects
+(+)Dumping the contents of mining, produce and mail satchels into a chute is now performed by click-dragging.
 (u)JORJ949
 (p)24655
 (e)⚖📦🤖|C-Balance, A-Game-Objects, A-Silicons
