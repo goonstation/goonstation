@@ -1,6 +1,10 @@
 
 (t)sun sep 21 25
 (u)NibChocolateeny
+(p)24223
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)New Research indicates that splicing the Invasive Growth gene into-non creepers will cause them to spread via budding; they do not have a chance to mutate initially when spreading to new trays.
+(u)NibChocolateeny
 (p)24346
 (e)🆕🔎⚖📦|C-Feature, C-Code-Quality, C-Balance, A-Game-Objects
 (*)9mm Frangible Rounds can be fabricated from hacked general fabricators, but you'll need a lot of plastic to make them.
