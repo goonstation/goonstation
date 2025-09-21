@@ -1,5 +1,9 @@
 
 (t)sun sep 21 25
+(u)NibChocolateeny
+(p)24346
+(e)🆕🔎⚖📦|C-Feature, C-Code-Quality, C-Balance, A-Game-Objects
+(*)9mm Frangible Rounds can be fabricated from hacked general fabricators, but you'll need a lot of plastic to make them.
 (u)JORJ949
 (p)24488
 (e)⚖🤖|C-Balance, A-Silicons
