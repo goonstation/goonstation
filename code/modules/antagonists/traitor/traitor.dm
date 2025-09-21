@@ -50,10 +50,10 @@
 			H.show_antag_popup("traitorhard")
 			return
 
-		var/preferred_uplink = H.client?.preferences.preferred_uplink || "PDA"
+		var/preferred_uplink = H.client?.preferences.preferred_uplink || PREFERRED_UPLINK_PDA
 		// step 1 of uplinkification: find a source! Prioritize the preferred option, then PDA, then headset, then give up and just spawn one.
 		if(preferred_uplink != "Standalone") //Standalone uplink, skip finding pda or headset
-			var/preference_to_type = list("PDA" = /obj/item/device/pda2, "Radio" = /obj/item/device/radio)
+			var/preference_to_type = list(PREFERRED_UPLINK_PDA = /obj/item/device/pda2, PREFERRED_UPLINK_RADIO = /obj/item/device/radio)
 			var/found_uplink_data = src.find_uplink(H, preference_to_type[preferred_uplink])
 			if(!found_uplink_data) // Couldn't find preferred, let's try PDA
 				found_uplink_data = src.find_uplink(H, /obj/item/device/pda2)

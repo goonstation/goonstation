@@ -74,7 +74,7 @@ var/list/removed_jobs = list(
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
 	var/use_satchel //Automatically convert backpack to satchel?
-	var/preferred_uplink = "PDA" //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
+	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -546,12 +546,12 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-uplink")
-				if (isnull(src.preferred_uplink) || src.preferred_uplink == "Standalone")
-					src.preferred_uplink = "PDA"
-				else if (src.preferred_uplink == "PDA")
-					src.preferred_uplink = "Radio"
+				if (isnull(src.preferred_uplink) || src.preferred_uplink == PREFERRED_UPLINK_STANDALONE)
+					src.preferred_uplink = PREFERRED_UPLINK_PDA
+				else if (src.preferred_uplink == PREFERRED_UPLINK_PDA)
+					src.preferred_uplink = PREFERRED_UPLINK_RADIO
 				else
-					src.preferred_uplink = "Standalone"
+					src.preferred_uplink = PREFERRED_UPLINK_STANDALONE
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1742,7 +1742,7 @@ var/list/removed_jobs = list(
 		if (src.AH.s_tone == null || src.AH.s_tone == "#FFFFFF" || src.AH.s_tone == "#ffffff")
 			src.AH.s_tone = "#FEFEFE"
 		if (!src.preferred_uplink)
-			src.preferred_uplink = "PDA"
+			src.preferred_uplink = PREFERRED_UPLINK_PDA
 
 	proc/keybind_prefs_updated(var/client/C)
 		if (!isclient(C))
