@@ -133,7 +133,7 @@
 		return ..()
 
 	proc/CustomiseSkeleton(var/mob/living/carbon/human/target, var/is_monkey)
-		src.name = "[capitalize(target)]'s skeleton"
+		src.name = "[capitalize(target)]’s skeleton"
 		src.desc = "A horrible skeleton, raised from the corpse of [target] by a wizard."
 		src.revivalChance = 100
 		LAZYLISTADDUNIQUE(src.faction, FACTION_WIZARD)

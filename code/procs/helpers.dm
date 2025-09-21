@@ -2802,3 +2802,14 @@ proc/pick_reagent(mob/user)
 	else
 		user.show_text("No reagents matching that name", "red")
 		return null
+
+
+/// Spawn one of `spawn_type` on a random table in `area_type`
+proc/area_table_spawn(area_type, spawn_type)
+	var/list/tables = list()
+	for_by_tcl(table, /obj/table)
+		if (istype(get_area(table), area_type))
+			tables += table
+	if (!length(tables)) //no tables FUCK
+		return
+	new spawn_type(get_turf(pick(tables)))

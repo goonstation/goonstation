@@ -122,7 +122,11 @@
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
 	load_intraround_eggs()
-	spawn_kitchen_note()
+
+	area_table_spawn(/area/station/crew_quarters/kitchen, pick(childrentypesof(/obj/item/paper/recipe)))
+#ifdef SEASON_AUTUMN
+	area_table_spawn(/area/station/crew_quarters/barber_shop, /obj/item/paper/hair_fall)
+#endif
 
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
