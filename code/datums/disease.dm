@@ -340,12 +340,12 @@
 		master = get_disease_from_path(/datum/ailment/addiction)
 
 	stage_increment()
-		// don't start feeling symptoms if we've had a dose in the last ~3 minutes, worsened with the state of the addiction
-		if (last_reagent_dose + 2000 - (addiction_meter * 10) > world.timeofday)
+		// don't start feeling symptoms if we've had a dose in the last ~2 minutes, worsened with the state of the addiction
+		if (src.last_reagent_dose + (2 MINUTES) - (src.addiction_meter * 5) > world.timeofday)
 			return FALSE
 		. = ..()
 		if (.)
-			stage_satisfied = FALSE
+			src.stage_satisfied = FALSE
 
 	proc/metabolised_addictive_reagent(var/datum/reagent/reagent, var/rate)
 		// The minimum rate means that patches with less than 1 unit of the addictive reagent won't work to satisfy addiction.
@@ -360,7 +360,7 @@
 				src.stage_satisfied = FALSE
 			return
 		else
-			src.addiction_meter += depletion_rate * 2
+			src.addiction_meter += src.depletion_rate * 2
 			if (!src.stage_satisfied && src.stage > 1)
 				src.stage -= 1
 				src.stage_satisfied = TRUE
