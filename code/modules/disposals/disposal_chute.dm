@@ -41,8 +41,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	power_usage = 100
 	_health = LOCKER_HEALTH_AVERAGE // TODO: balance health
 	_max_health = LOCKER_HEALTH_AVERAGE
-	var/item_insert_sounds = list('sound/effects/chute_place_1.ogg', 'sound/effects/chute_place_2.ogg', 'sound/effects/chute_place_3.ogg', \
-									'sound/effects/chute_place_4.ogg')
 
 	var/is_processing = 1 //optimization thingy. kind of dumb. mbc fault. only process chute when flushed or recharging.
 
@@ -208,7 +206,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				S.UpdateIcon()
 				S.tooltip_rebuild = TRUE
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				play_item_insert_sound(I)
+				src.play_item_insert_sound(I)
 				src.update()
 				return
 		if(istype(I, /obj/item/storage/mechanics))
@@ -232,7 +230,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					I.storage.transfer_stored_item(O, src, user = user)
 			user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
-			play_item_insert_sound(I)
+			src.play_item_insert_sound(I)
 			src.update()
 			return
 
@@ -260,7 +258,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
-			play_item_insert_sound(I, user)
+			src.play_item_insert_sound(I, user)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
@@ -324,7 +322,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			var/obj/item/I = MO
 			I.set_loc(src)
 			update()
-			play_item_insert_sound(I)
+			src.play_item_insert_sound(I)
 			src.visible_message(SPAN_ALERT("\The [I] lands cleanly in \the [src]!"))
 
 		else if (istype(MO, /mob/living))
@@ -640,7 +638,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 	/// Plays the item insert sound with variations depending on item. If user is given, plays localised and with a lower volume, to imply sneakyness
 	proc/play_item_insert_sound(var/obj/item/itm, var/mob/user = null)
-		var/pitch
+		var/pitch = 1
 		var/volume = 50
 		switch(itm.w_class)
 			if (W_CLASS_TINY)
@@ -649,8 +647,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if (W_CLASS_SMALL)
 				pitch = 1.1
 				volume = 40
-			if (W_CLASS_NORMAL)
-				pitch = 1
 			if (W_CLASS_BULKY)
 				pitch = 0.8
 				volume = 100
@@ -665,9 +661,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				volume = 400
 		if (user)
 			volume = min(volume * 0.5, 20)
-			user.playsound_local(src.loc, pick(item_insert_sounds), volume, 1, 0, pitch)
+			user.playsound_local(src.loc, "chute_insert", volume, 1, 0, pitch)
 		else
-			playsound(src, pick(item_insert_sounds), volume, 1, 0, pitch)
+			playsound(src, "chute_insert", volume, 1, 0, pitch)
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
