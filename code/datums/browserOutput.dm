@@ -97,8 +97,7 @@ var/global
 				"browserassets/src/css/fonts/fontawesome-webfont.eot",
 				"browserassets/src/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/src/css/fonts/fontawesome-webfont.woff",
-				"browserassets/src/css/fonts/Twemoji.eot",
-				"browserassets/src/css/fonts/Twemoji.ttf",
+				"browserassets/src/css/fonts/twemoji.woff2",
 				"browserassets/src/vendor/css/font-awesome.css",
 				"browserassets/src/css/browserOutput.css"
 			)
@@ -216,7 +215,7 @@ var/global
 					ircbot.export_async("admin", ircmsg)
 
 				//Add evasion ban details
-				var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
+				var/datum/apiModel/Tracked/Ban/ban = checkBan["ban"]
 				bansHandler.addDetails(
 					ban.id,
 					TRUE,
@@ -397,8 +396,7 @@ var/global
 				return
 
 			baseData = icon2base64(icon, iconKey)
-		//kind of hacky, remove when we don't need to support 515 anymore
-		var/pixelation_mode = usr?.client?.byond_version >= 516 ? "image-rendering: pixelated" : "-ms-interpolation-mode: nearest-neighbor"
+		var/pixelation_mode = "image-rendering: pixelated"
 		var/width = scale == 1 ? "" : " width: [world.icon_size * scale]px;"
 		var/height = scale == 1 ? "" :  "height: [world.icon_size * scale]px;"
 		return "<img style='position: relative; left: -1px; bottom: -3px;[width][height] [pixelation_mode]' class='icon' src='data:image/png;base64,[baseData]' />"

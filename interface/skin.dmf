@@ -371,6 +371,39 @@ menu "menu"
 		can-check = true
 		saved-params = "is-checked"
 	elem
+		name = ""
+		command = ""
+		category = "&Interface"
+		saved-params = "is-checked"
+	elem "tooltip_option_always"
+		name = "&Show tooltips always"
+		command = "set-tooltip-option always"
+		category = "&Interface"
+		group = "tooltip_option"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
+	elem "tooltip_option_alt"
+		name = "&Show tooltips when holding ALT"
+		command = "set-tooltip-option alt"
+		category = "&Interface"
+		group = "tooltip_option"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
+	elem "tooltip_option_never"
+		name = "&Never show tooltips"
+		command = "set-tooltip-option never"
+		category = "&Interface"
+		group = "tooltip_option"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
+	elem "tooltip_reload"
+		name = "&Reload tooltips"
+		command = "Reload-Tooltips"
+		category = "&Interface"
+	elem
 		name = "&Accessibility"
 		command = ""
 		category = "&Game"
@@ -524,43 +557,6 @@ window "blank-map"
 		title = "Viewport"
 		statusbar = false
 		can-minimize = false
-
-window "camera_console"
-	elem "camera_console"
-		type = MAIN
-		pos = 281,0
-		size = 330x250
-		anchor1 = none
-		anchor2 = none
-		is-visible = false
-		saved-params = "pos;size;is-minimized;is-maximized"
-		title = "Camera Console"
-		statusbar = false
-		can-resize = false
-	elem "camlist"
-		type = OUTPUT
-		pos = 16,8
-		size = 296x200
-		anchor1 = none
-		anchor2 = none
-		font-family = "monospace"
-		font-size = 14
-		text-color = #00aa00
-		background-color = #1b1e1b
-		saved-params = "max-lines"
-		link-color = #00aa00
-		visited-color = #19a319
-	elem "exitbutton"
-		type = BUTTON
-		pos = 240,216
-		size = 72x24
-		anchor1 = none
-		anchor2 = none
-		text-color = #ffffff
-		background-color = #b80e12
-		saved-params = "is-checked"
-		text = "EXIT"
-		command = ""
 
 window "compx"
 	elem "compx"
@@ -918,7 +914,7 @@ window "mapwindow"
 		saved-params = "icon-size"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
-		style = "body { font-family: 'Verdana'; font-size: 7px; }\n.vga { font-family: 'PxPlus IBM VGA9'; font-size: 12px; } .ps2p { font-family: 'Press Start 2P'; font-size: 6px; }\n.pixel { font-family: 'Small Fonts'; font-size: 7px; }\n.xfont { font-family: 'XFont 6x9'; font-size: 6px; }\n.ol{ -dm-text-outline: 1px black; }\n.sh { text-shadow: 1px 1px 0 black; }\n.l { text-align: left; }\n.c { text-align: center; }\n.r { text-align: right; }\n.vt { vertical-align: top; }\n.vm { vertical-align: middle; }\n.vb { vertical-align: bottom; }\n.reliq { font-family: 'Inhuman BB'; font-size: 12px; } a:hover {color: white}"
+		style = "body { font-family: 'Verdana'; font-size: 7px; }\n.vga { font-family: 'PxPlus IBM VGA9'; font-size: 12px; } .ps2p { font-family: 'Press Start 2P'; font-size: 6px; }\n.pixel { font-family: 'Small Fonts'; font-size: 7px; }\n.xfont { font-family: 'XFont 6x9'; font-size: 6px; }\n.ol{ -dm-text-outline: 1px black; }\n.sh { text-shadow: 1px 1px 0 black; }\n.l { text-align: left; }\n.c { text-align: center; }\n.r { text-align: right; }\n.vt { vertical-align: top; }\n.vm { vertical-align: middle; }\n.vb { vertical-align: bottom; }\n a:hover {color: white}"
 		link-color = none
 		visited-color = none
 		highlight-color = none
@@ -1048,7 +1044,7 @@ window "rpane"
 		anchor2 = none
 		is-visible = false
 		saved-params = "is-checked"
-		text = "Text"
+		text = "Chat"
 		command = ".winset \"rpanewindow.left=;\""
 		is-checked = true
 		group = "rpanemode"
@@ -1073,7 +1069,7 @@ window "rpane"
 		anchor2 = none
 		is-visible = false
 		saved-params = "is-checked"
-		text = "Info"
+		text = "Commands"
 		command = ".winset \"rpanewindow.left=infowindow\""
 		group = "rpanemode"
 		button-type = pushbox
@@ -1154,7 +1150,7 @@ window "browserwindow"
 		size = 640x499
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
+		background-color = #fff
 		is-default = true
 		saved-params = ""
 		show-history = true

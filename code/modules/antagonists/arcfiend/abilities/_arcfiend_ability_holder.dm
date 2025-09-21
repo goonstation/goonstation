@@ -10,6 +10,8 @@
 	var/lifetime_energy = 0
 	/// Number of hearts stopped with Jolt
 	var/hearts_stopped = 0
+	/// Total number of machines overloaded
+	var/machines_overloaded = 0
 
 	onAbilityStat()
 		..()

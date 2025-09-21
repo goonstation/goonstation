@@ -33,7 +33,7 @@
 				src.donor = nholder.donor
 			if (src.donor)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
+				src.name = "[src.donor_name]’s [initial(src.name)]"
 
 	disposing()
 		..()
@@ -100,7 +100,7 @@
 			W.change_stack_amount(-1)
 			user.visible_message("<b>[user]</b> jams a rod into the bottom of [src]. Welp.",\
 			"You jam a rod into the bottom of [src]. Welp.")
-			var/obj/item/reagent_containers/food/drinks/skull_chalice/C 
+			var/obj/item/reagent_containers/food/drinks/skull_chalice/C
 
 			if (src.icon_state == "skull_crystal" || istype(src, /obj/item/skull/crystal))
 				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/crystal(src.loc)
@@ -265,3 +265,9 @@
 	desc = "Fuck that's creepy."
 	icon_state = "skull_noface"
 	value = -1
+
+/obj/item/skull/frog // Amphibians.
+	name = "amphibian skull"
+	desc = "Looks like it... croaked."
+	icon_state = "skull_frog"
+	value = 2

@@ -181,11 +181,33 @@ ABSTRACT_TYPE(/datum/artifact/)
 		ArtifactLogs(user, target, O, "weapon", null, 0)
 		return 0
 
+	/// What the artifact does when you use it in hand
+	proc/effect_attack_self(user)
+		. = FALSE
+		if (!user)
+			return TRUE
+		if (!src.holder.ArtifactSanityCheck())
+			return TRUE
+		src.holder.add_fingerprint(user)
+
+	/// What the artifact does when it is activated and you smack an atom (other than a mob) with it
+	proc/effect_attack_atom(obj/art, mob/living/user, atom/A)
+		. = FALSE
+		if (!art || !user || !A)
+			return TRUE
+		if (!art.ArtifactSanityCheck())
+			return TRUE
+		if (BOUNDS_DIST(user, A) > 0)
+			return TRUE
+		art.add_fingerprint(user)
+
 	/// What the artifact does after you clicked some tile with it when activated.
-	/// Basically like afterattack() for activated artifacts.
+	/// Acts like a ranged afterattack() for activated artifacts.
 	proc/effect_click_tile(var/obj/O,var/mob/living/user,var/turf/T)
 		if (!O || !user || !T)
 			return 1
+		if (!O.ArtifactSanityCheck())
+			return TRUE
 		if (!user.in_real_view_range(T))
 			return 1
 		else if (!user.client && GET_DIST(T,user) > world.view) // idk, SOMEhow someone would find a way

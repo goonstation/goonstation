@@ -161,7 +161,7 @@
 	proc/close_storage_menus() // still ugly but probably quite better performing
 		for(var/mob/chump in src.users)
 			for(var/datum/hud/storage/hud in chump.huds)
-				if(hud.master==src.storage) hud.close.clicked()
+				if(hud.master==src.storage) hud.close_button.clicked()
 		src.users = list() // gee golly i hope garbage collection does its job
 		return TRUE
 
@@ -2964,6 +2964,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 		..()
 		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
 			return
+		return_if_overlay_or_effect(AM)
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return
 		LIGHT_UP_HOUSING
@@ -3531,7 +3532,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	proc/toggleAutoFloor(obj/item/W as obj, mob/user as mob)
 		src.floorResults = !src.floorResults
-		boutput(user, SPAN_NOTICE("Results will <b>[src.autoEval ? "be" : "not be"] floor()ed</b>."))
+		boutput(user, SPAN_NOTICE("Results will <b>[src.floorResults ? "be" : "not be"] floor()ed</b>."))
 		tooltip_rebuild = TRUE
 		return TRUE
 

@@ -178,6 +178,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	desc = "A luxurious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
 	icon_state = "capcoat"
 	item_state = "capcoat"
+	coat_style = "capcoat"
 	hides_from_examine = 0
 
 	setupProperties()
@@ -187,17 +188,23 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.9)
 
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
 	centcomm //coat version of the centcom armour
 		name = "commander's coat"
 		desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
 		icon_state = "centcoat"
 		item_state = "centcoat"
+		coat_style = "centcoat"
 
 	centcommred //for the red reward
 		name = "commander's coat"
 		desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
 		icon_state = "centcoat-red"
 		item_state = "centcoat-red"
+		coat_style = "centcoat-red"
 
 /obj/item/clothing/suit/armor/hopcoat
 	name = "Head of Personnel's naval coat"

@@ -45,7 +45,7 @@ export const PowerTransmissionLaser = () => {
   const { data } = useBackend<PowerTransmissionLaserData>();
   const { storedBalance, name = 'Power Transmission Laser' } = data;
   return (
-    <Window title={name} width={310} height={485}>
+    <Window title={name} width={320} height={490}>
       <Window.Content>
         <Status />
         <InputControls />
@@ -95,7 +95,7 @@ const Status = () => {
   );
 };
 
-const InputControls = (props, context) => {
+const InputControls = (props) => {
   const { act, data } = useBackend<PowerTransmissionLaserData>();
   const {
     isChargingEnabled,
@@ -151,7 +151,7 @@ const InputControls = (props, context) => {
           minValue={0}
           maxValue={999}
           value={inputNumber}
-          onDrag={(e, setInput) => act('setInput', { setInput })}
+          onChange={(e, setInput) => act('setInput', { setInput })}
         />
         <Button selected={inputMultiplier === 1} onClick={() => act('inputW')}>
           W
@@ -237,7 +237,7 @@ const OutputControls = () => {
           maxValue={isEmagged ? 0 : 999}
           ranges={{ bad: [-Infinity, -1] }}
           value={outputNumber}
-          onDrag={(e, setOutput) => act('setOutput', { setOutput })}
+          onChange={(e, setOutput) => act('setOutput', { setOutput })}
         />
         <Button
           selected={outputMultiplier === 10 ** 6}

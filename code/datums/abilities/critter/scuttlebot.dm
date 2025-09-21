@@ -175,4 +175,5 @@
 			return
 
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner]</b> has scanned [target]."))
-		boutput(holder.owner, scan_forensic(target, visible = 1))
+		var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
+		boutput(holder.owner, scan.build_report())
