@@ -50,7 +50,7 @@
 
 	post_setup()
 		. = ..()
-		src.recharge_time = rand(1,10) * 10
+		src.recharge_time = rand(1,10) //in seconds
 		src.range = rand(1, 15)
 		src.throwforce = rand(15, 50)
 
@@ -85,7 +85,7 @@
 			return
 		if (!user)
 			return
-		if(!ON_COOLDOWN(src, "artifact_fling", src.recharge_time + src.chain_flings * 20))
+		if(!ON_COOLDOWN(src, "artifact_fling", src.recharge_time + src.chain_flings * 0.2 SECONDS))
 			var/turf/T = get_turf(O)
 			if(iscarbon(user))
 				var/remaining_flings = src.chain_flings
@@ -95,14 +95,14 @@
 					if(THROW_TARGET_USER)
 						fling(O, user)
 				for (var/i = 0, i < remaining_flings, i += 1)
-					SPAWN(10*i)
+					SPAWN(0.1*i SECONDS)
 						switch(src.throw_target)
 							if(THROW_TARGET_SELF)
 								fling(O, O)
 							if(THROW_TARGET_USER)
 								fling(O, user)
 				O.ArtifactFaultUsed(user)
-				SPAWN(src.recharge_time + src.chain_flings * 20) //Prevents the artifact from being activated while being thrown around.
+				SPAWN(src.recharge_time + src.chain_flings * 0.2 SECONDS) //Prevents the artifact from being activated while being thrown around.
 					T.visible_message("<b>[O]</b> tenses up again!")
 		else
 			boutput(user, SPAN_ALERT("The artifact twitches, but nothing else happens."))
