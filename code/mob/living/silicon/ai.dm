@@ -2581,7 +2581,7 @@ proc/get_mobs_trackable_by_AI()
 	. = ..()
 	src.camera.c_tag = src.real_name
 	src.eyecam.UpdateName()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 // For if an AI needs to disconnect, make their core a latejoin one
