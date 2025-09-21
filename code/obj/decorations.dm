@@ -421,12 +421,12 @@
 		icon_state = "shrub-dead"
 
 //It'll show up on multitools
-SYNDICATE_STEALTH_DESCRIPTION(/obj/shrub/syndicateplant, "The latest in syndicate spy technology.", "Is that an antenna?")
 TYPEINFO(/obj/shrub/syndicateplant)
 	mats = 2
 /obj/shrub/syndicateplant
 	var/net_id
 	is_syndicate = TRUE
+	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.", "Is that an antenna?")
 
 	New()
 		. = ..()
