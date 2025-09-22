@@ -1234,8 +1234,7 @@ TYPEINFO(/obj/machinery/plantpot)
 /// Handles the finalisation of cropcount
 /obj/machinery/plantpot/proc/HYPharvesting_finalise_cropcount(datum/HYPharvesting_data/h_data)
 	var/cropsize = h_data.DNA?.get_effective_value("cropsize")
-	if (cropsize > 0)
-		h_data.cropcount *= (1 + ((cropsize * h_data.growing.yield_multi) / 100))
+	h_data.cropcount *= (1 + ((cropsize * h_data.growing.yield_multi) / 100))
 	// A higher output for plants with higher base output helps retains some personality.
 	h_data.harvest_cap += h_data.growing.cropsize
 	 // Introduce some variance at the end.
