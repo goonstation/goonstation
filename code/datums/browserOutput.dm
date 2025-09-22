@@ -224,6 +224,7 @@ var/global
 					isnull(found["compid"]) ? null : src.owner.computer_id,
 					isnull(found["ip"]) ? null : src.owner.address
 				)
+				del(src.owner)
 	src.cookieSent = 1
 
 /datum/chatOutput/proc/getContextFlags()
