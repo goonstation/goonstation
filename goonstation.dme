@@ -73,6 +73,7 @@
 #include "code\client\gates\version.dm"
 #include "code\client\gates\whitelist.dm"
 #include "code\client\providers\byond.dm"
+#include "code\client\providers\dummy.dm"
 #include "code\client\providers\goonhub.dm"
 #include "code\client\providers\provider.dm"
 #include "code\datums\admin_changelog.dm"
