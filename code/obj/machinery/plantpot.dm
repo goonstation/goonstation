@@ -1237,8 +1237,8 @@ TYPEINFO(/obj/machinery/plantpot)
 	h_data.cropcount *= (1 + ((cropsize * h_data.growing.yield_multi) / 100))
 	// A higher output for plants with higher base output helps retains some personality.
 	h_data.harvest_cap += h_data.growing.cropsize
-	 // Introduce some variance at the end.
-	h_data.cropcount *= rand(base_cropcount_consistency + h_data.cropcount_consistency, 100) / 100
+	// Introduce some variance at the end.
+	h_data.cropcount = src.harvesting_variance(h_data)
 	// Max harvest amount for all plants is capped. If we've got higher output
 	// than the cap it's probably through gene manipulation, so reward the player
 	// with greater chances for an extra harvest if this is the case.
@@ -1248,6 +1248,16 @@ TYPEINFO(/obj/machinery/plantpot)
 		h_data.cropcount = h_data.harvest_cap
 
 	h_data.cropcount = round(max(h_data.cropcount, 0), 1)
+
+/obj/machinery/plantpot/proc/harvesting_variance(datum/HYPharvesting_data/h_data)
+	// Get a random number between the minimum possible variance and the uncapped cropcount to use as the varianced cropcount.
+	// This means variance always has a chance to reduce the cropcount by the maximum amount, but that increasing yield past the cap will also
+	// always increase the chances of a bigger harvest.
+	var/lower_bound = round(h_data.cropcount * ((src.base_cropcount_consistency + h_data.cropcount_consistency) / 100), 1)
+	var/upper_bound = round(h_data.cropcount, 1)
+	if (upper_bound < lower_bound) // Just in case something raises consistency above 100%
+		return upper_bound
+	return rand(lower_bound, upper_bound)
 
 /////////////////// end of HYPharvesting helper methods ///////////////////
 
