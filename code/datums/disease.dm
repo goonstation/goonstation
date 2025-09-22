@@ -323,7 +323,6 @@
 /datum/ailment_data/addiction
 	var/associated_reagent = null
 	var/last_reagent_dose = 0
-	var/withdrawal_duration = 4800
 	var/severity = HIGH_ADDICTION_SEVERITY
 	var/addiction_meter
 	var/depletion_rate = 0
@@ -332,24 +331,32 @@
 	copy_other(datum/ailment_data/addiction/other)
 		..()
 		src.associated_reagent = other.associated_reagent
-		src.withdrawal_duration = other.withdrawal_duration
 		src.severity = other.severity
+		src.addiction_meter = other.addiction_meter
+		src.depletion_rate = other.depletion_rate
+		src.stage_satisfied = other.stage_satisfied
 
 	New()
 		..()
 		master = get_disease_from_path(/datum/ailment/addiction)
 
 	stage_increment()
-		// don't start feeling symptoms if we've had a dose in the last ~2 minutes, worsened with the state of the addiction
-		if (src.last_reagent_dose + (2 MINUTES) - (src.addiction_meter * 5) > world.timeofday)
+		// don't start feeling symptoms until ~2 minutes after our last dose has worn off, worsened with the state of the addiction
+		if (src.last_reagent_dose + (2 MINUTES) - ((src.addiction_meter SECONDS) / 2) > world.timeofday)
 			return FALSE
 		. = ..()
 		if (.)
 			src.stage_satisfied = FALSE
 
+	/// Returns how much extra metabolisation of the addictive reagent we get from our current addiction level
+	proc/get_additional_metabolisation(var/mult)
+		// 0.1 unit extra metabolised per tick per 10 units of addiction meter. Round it to 2 decimal places for niceness.
+		return round((src.addiction_meter * 0.01 * mult) * 100, 1) / 100
+
 	proc/metabolised_addictive_reagent(var/datum/reagent/reagent, var/rate)
-		// The minimum rate means that patches with less than 1 unit of the addictive reagent won't work to satisfy addiction.
-		// This is useful because dose logic is very binary and exploitable by microdosing with ludicrously small volumes
+		// The minimum rate means that patches with less than ~1 unit of the addictive reagent usually won't work to satisfy addiction.
+		// This is useful because dose logic is very binary and exploitable by microdosing with ludicrously small volumes.
+		// Although the lag multiplier makes this inconsistent.
 		if (src.severity < reagent.addiction_severity || rate < 0.05)
 			return
 		if (src.associated_reagent == reagent.name)
@@ -378,7 +385,9 @@
 		else if (src.stage > 1 && !src.stage_satisfied)
 			src.stage -= 1
 			src.stage_satisfied = TRUE
-			boutput(src.affected_mob, SPAN_NOTICE("<b>That takes a bit of the edge off, but not much.</b>"))
+			// don't want every addiction spamming this message whenever any addictive reagent is taken
+			if (!ON_COOLDOWN(src.affected_mob, "minor_addiction_relief", 2 SECONDS))
+				boutput(src.affected_mob, SPAN_NOTICE("<b>That takes the edge off, but not much.</b>"))
 
 /datum/ailment_data/parasite
 	var/was_setup = 0

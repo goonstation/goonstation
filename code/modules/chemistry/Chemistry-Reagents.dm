@@ -248,7 +248,9 @@ datum
 						H.sims.affectMotive("Energy", energy_value)
 
 			if (addiction_prob)
-				src.handle_addiction(M, deplRate, addiction_prob)
+				var/datum/ailment_data/addiction/addiction = src.handle_addiction(M, deplRate, addiction_prob)
+				if (addiction)
+					deplRate += addiction.get_additional_metabolisation(mult)
 
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
