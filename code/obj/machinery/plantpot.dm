@@ -1254,7 +1254,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	// Get a random number between the minimum possible variance and the uncapped cropcount, to use as the varianced cropcount.
 	// This means variance always has a chance to reduce the cropcount by the maximum amount, but that increasing yield past the cap will also
 	// always increase the chances of a bigger harvest.
-	var/lower_bound = round(h_data.cropcount * ((src.base_cropcount_consistency + h_data.cropcount_consistency) / 100), 1)
+	var/lower_bound = round(min(h_data.cropcount, h_data.harvest_cap) * ((src.base_cropcount_consistency + h_data.cropcount_consistency) / 100), 1)
 	var/upper_bound = round(h_data.cropcount, 1)
 	if (upper_bound < lower_bound) // Just in case something raises consistency above 100%
 		return upper_bound
