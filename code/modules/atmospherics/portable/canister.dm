@@ -138,6 +138,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	. = ..()
 	if (src.det)
 		. = "You can use <b>wirecutters</b> or <b>multitool</b> to attempt to defuse the bomb."
+	if (src.destroyed)
+		. = "You can use a <b>welding tool</b> to disassemble the broken canister."
 	else
 		. = "Use a <b>wrench</b> to attach or detach from an atmospherics port."
 

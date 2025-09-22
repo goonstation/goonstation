@@ -202,7 +202,7 @@
 					interrupt(INTERRUPT_ALWAYS)
 					return
 			if (CANISTER_CONNECT)
-				if(C.can_connect(possible_port))
+				if(!C.destroyed && C.can_connect(possible_port))
 					playsound(C, 'sound/items/Ratchet.ogg', 50, TRUE)
 					ownerMob.visible_message(SPAN_NOTICE("[owner] begins connecting \the [C] to the port."))
 				else
