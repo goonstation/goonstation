@@ -163,6 +163,7 @@
 #include "macros\client.dm"
 #include "macros\cooldown.dm"
 #include "macros\debug.dm"
+#include "macros\descriptions.dm"
 #include "macros\dir.dm"
 #include "macros\directional_offsets.dm"
 #include "macros\dist.dm"

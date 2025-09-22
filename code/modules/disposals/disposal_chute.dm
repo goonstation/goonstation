@@ -115,7 +115,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		. = ..()
 
-	HELP_MESSAGE_OVERRIDE("Drag held boxes and bags onto this to empty them out.")
+	HELP_MESSAGE_OVERRIDE("Drag held boxes, bags, and satchels onto this to empty them out.")
 
 	get_help_message(dist, mob/user)
 		. = ..()
@@ -190,24 +190,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
-		if (istype(I,/obj/item/satchel/) && I.contents.len)
-			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if (!in_interact_range(src, user))
-				boutput(user, SPAN_ALERT("You need to be closer to the chute to do that."))
-				return
-			if (action == "Empty it into the Chute")
-				var/obj/item/satchel/S = I
-				for(var/obj/item/O in S.contents)
-					if (src.fits_in(O))
-						O.set_loc(src)
-				S.UpdateIcon()
-				S.tooltip_rebuild = TRUE
-				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				src.update()
-				return
-
 		// Mousedropping storage items will dump the contents during MouseDrop_T instead
 		if (istype(I, /obj/item/storage/mechanics) || (islist(params) && params["dragged"]))
 			return

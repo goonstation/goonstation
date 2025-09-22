@@ -455,7 +455,7 @@ TYPEINFO(/mob)
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(isclient(src.client) && isnull(src.client?.tg_layout))
-		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
+		src.client?.tg_layout = winget(src.client, "menu.tg_layout", "is-checked") == "true" // winget sleeps :{
 	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)

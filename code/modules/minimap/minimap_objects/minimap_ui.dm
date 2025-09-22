@@ -50,9 +50,10 @@
 	if (!ui)
 		ui = new(user, src, "Minimap")
 		ui.open()
-
-	if (!(src.handler.screen_loc && minimap.screen_loc))
 		RegisterSignal(ui.window, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(set_screen_loc))
+		//possible fix for scaling issue
+		src.handler.screen_loc = null
+		src.minimap.screen_loc = null
 
 /atom/movable/minimap_ui_handler/ui_static_data(mob/user)
 	. = list(
