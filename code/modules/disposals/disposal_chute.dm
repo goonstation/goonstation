@@ -313,7 +313,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		else if (istype(MO, /mob/living))
 			var/mob/living/H = MO
 			H.visible_message(SPAN_ALERT("<B>[H] falls into the disposal outlet!</B>"))
-			play_item_insert_sound(H)
+			src.play_item_insert_sound(H)
 			logTheThing(LOG_COMBAT, H, "is thrown into a [src.name] at [log_loc(src)].")
 			H.set_loc(src)
 			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
