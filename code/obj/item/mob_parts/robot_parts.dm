@@ -1338,7 +1338,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		return
 
 /obj/item/parts/robot_parts/robot_frame/syndicate
+	tooltip_flags = REBUILD_USER
 	syndicate = TRUE
+	SYNDICATE_STEALTH_DESCRIPTION("The law connection light is blinking a sinister syndicate red.", null)
 
 // UPGRADES
 // Cyborg
