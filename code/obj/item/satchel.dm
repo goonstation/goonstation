@@ -164,6 +164,7 @@
 				I.add_fingerprint(user)
 				if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					I.set_loc(src)
+					SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)
@@ -180,16 +181,17 @@
 		if (!in_interact_range(src, usr) || !can_act(usr))
 			return
 
-		if (istype(over_object,/obj/table))
+		if (istype(over_object,/obj/table) || istype(over_object, /obj/surgery_tray))
 			if (BOUNDS_DIST(over_object, usr) > 0)
 				boutput(usr, SPAN_ALERT("You need to be closer to [over_object] to do that."))
 				return
 			if (length(src.contents) < 1)
 				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))
 			else
+				var/obj/table = over_object
 				usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
 				for (var/obj/item/thing in src.contents)
-					thing.set_loc(over_object.loc)
+					table.place_on(thing)
 				src.tooltip_rebuild = TRUE
 				src.UpdateIcon()
 				params["satchel_dumped"] = TRUE
