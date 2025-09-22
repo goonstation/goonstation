@@ -43,6 +43,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	name = "teleport pad"
 	anchored = ANCHORED
 	density = 0
+	pass_unstable = FALSE
 	layer = FLOOR_EQUIP_LAYER1
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"

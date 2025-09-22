@@ -211,8 +211,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	var/obj/dummy/light_overlay // Light overlay object to place in `src.vis_contents`
 
-	pass_unstable = TRUE
-
 	New()
 		..()
 		inserted_lamp = new light_type()
@@ -723,6 +721,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 	name = "tripod light"
 	desc = "A large portable light tripod."
 	density = 1
+	pass_unstable = TRUE
 	anchored = ANCHORED
 	icon_state = "tripod1"
 	base_state = "tripod"

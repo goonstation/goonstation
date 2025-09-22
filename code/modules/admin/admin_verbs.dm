@@ -1293,6 +1293,8 @@ var/list/fun_images = list()
 	if(confirm == "Cancel")
 		return
 
+	tgui_alert(src.mob, "Make sure you have Display -> Icon Settings set to 'Stretch To Fit'!", "Stretch To Fit", list("Proceed"))
+
 	//Viewport size
 	var/viewport_width = world.maxx / 10
 	var/viewport_height = world.maxy / 10

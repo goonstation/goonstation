@@ -222,6 +222,7 @@
 	icon_state = "shrub"
 	anchored = ANCHORED
 	density = 0
+	pass_unstable = FALSE
 	layer = EFFECTS_LAYER_UNDER_1
 	flags = FLUID_SUBMERGE
 	text = "<font color=#5c5>s"
@@ -475,6 +476,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	health = 5 //Fragile tree
 	anchored = ANCHORED
 	density = 1
+	pass_unstable = TRUE
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
 
@@ -607,6 +609,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "ppot0"
 	anchored = ANCHORED
 	density = 0
+	pass_unstable = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER
 
 	New()
@@ -649,6 +652,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "blindsH-o"
 	anchored = ANCHORED
 	density = 0
+	pass_unstable = FALSE
 	opacity = 0
 	layer = EFFECTS_LAYER_UNDER_3 // below lights, above windoors
 	var/base_state = "blindsH"
@@ -789,6 +793,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "blind1"
 	anchored = ANCHORED
 	density = 0
+	pass_unstable = FALSE
 	var/on = 0
 	var/id = null
 
@@ -920,6 +925,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "light0"
 	anchored = ANCHORED
 	density = 0
+	pass_unstable = FALSE
 	var/on = FALSE
 	var/id = null
 
@@ -991,6 +997,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "occupancy-1"
 	anchored = ANCHORED
 	density = 0
+	pass_unstable = FALSE
 	opacity = 0
 	layer = FLY_LAYER+1.01 // just above windows
 	var/base_state = "occupancy"
@@ -1064,6 +1071,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "disco0"
 	anchored = ANCHORED
 	density = 0
+	pass_unstable = FALSE
 	layer = 6
 	var/on = 0
 	///List of dummy objects that contain the actual light overlays
@@ -1158,7 +1166,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	mouse_opacity = 0
 	opacity = 0
 	anchored = ANCHORED_ALWAYS
-	density = 0
+	pass_unstable = FALSE
 	plane = PLANE_SPACE
 
 	x3
@@ -1296,7 +1304,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		icon = 'icons/obj/large/160x160.dmi'
 		icon_state = "earthrise"
 
-obj/decoration
+/obj/decoration
+	pass_unstable = FALSE
 
 
 obj/decoration/decorativeplant

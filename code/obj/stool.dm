@@ -34,6 +34,7 @@
 	var/securable = 0
 	var/list/scoot_sounds = null
 	var/parts_type = /obj/item/furniture_parts/stool
+	pass_unstable = FALSE
 	material_amt = 0.1
 
 	New()

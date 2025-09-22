@@ -33,6 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	desc = "The smaller, more numerous sibling of the SMES. Controls the power of entire rooms, and if the generator goes offline, can supply electricity from an internal cell."
 	icon_state = "apc0"
 	anchored = ANCHORED
+	pass_unstable = FALSE
 	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
