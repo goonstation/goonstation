@@ -278,7 +278,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					user.drop_item()
 					secS.set_loc(src)
 					actions.interrupt(user, INTERRUPT_ACT)
-          src.play_item_insert_sound(target)
+					src.play_item_insert_sound(target)
 					src.update()
 					return
 			for(var/obj/item/O in target.storage.get_contents())
