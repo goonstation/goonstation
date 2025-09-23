@@ -219,6 +219,7 @@
 		user.set_dir(get_dir(user, chute))
 		src.UpdateIcon()
 		src.tooltip_rebuild = TRUE
+		chute.play_item_insert_sound(src)
 		user.visible_message("<b>[user.name]</b> dumps out [src] into [chute].")
 		chute.update()
 
