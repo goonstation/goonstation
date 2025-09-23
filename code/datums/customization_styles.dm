@@ -455,6 +455,26 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "shaggy"
 				gender = MASCULINE | FEMININE
 
+			blunt_pomp
+				name = "Blunt Pompadour"
+				id = "blunt_pomp"
+				gender = MASCULINE | FEMININE
+
+			big_pomp
+				name = "Big Pompadour"
+				id = "big_pomp"
+				gender = MASCULINE
+
+			duck_ass
+				name = "Ducktail"
+				id = "duck_ass"
+				gender = MASCULINE
+
+			pageboy
+				name = "Pageboy"
+				id = "pageboy"
+				gender = MASCULINE | FEMININE
+
 			cockatielbang
 				name = "Bangs: Cockatiel"
 				id = "cockatielbang"
@@ -778,7 +798,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "royal_curls"
 				gender = FEMININE
 
-			med_Curly
+			med_curly
 				name = "Med Curls"
 				id = "med_Curly"
 				gender = MASCULINE | FEMININE
@@ -817,6 +837,17 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Symmetrical Bob"
 				id = "symm_bob"
 				gender = MASCULINE | FEMININE
+
+			ringlets
+				name = "Ringlets"
+				id = "ringlet"
+				gender = FEMININE
+
+			ringlets_short //yeah, I know, it's so it shows up next to the normal ringlet hairstyle
+				name = "Short Ringlets"
+				id = "ringlet_short"
+				gender = FEMININE
+
 		hairup
 			bun
 				name = "Bun"
@@ -944,6 +975,31 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "wavy_tail_half"
 				random_allowed = FALSE
 
+			crown_braid
+				name = "Crown Braid"
+				id = "crown_braid"
+				gender = FEMININE
+
+			high_bun
+				name = "High Bun"
+				id = "high_bun"
+				gender = FEMININE
+
+			massive_braids
+				name = "Massive Braids"
+				id = "mega_braids"
+				gender = FEMININE
+
+			chignon
+				name = "Chignon"
+				id = "chignon"
+				gender = FEMININE
+
+			french_twist
+				name = "French Twist"
+				id = "french_twist"
+				gender = FEMININE
+
 		gimmick
 			afroHA
 				name = "Afro: Alternating Halves"
@@ -957,6 +1013,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			ewave_s
 				name = "Elegant Wave"
 				id = "ewave_s"
+			omegapomp
+				name = "Colossal Pompadour"
+				id = "omegapomp"
 			flames
 				name = "Flame Hair"
 				id = "flames"
