@@ -278,12 +278,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						break
 				T = null
 
-	Cross(atom/movable/mover)
+	// Let people shoot out lights if they're aiming at them
+	Crossed(atom/movable/mover)
 		. = ..()
-		if(istype(mover, /obj/projectile))
-			var/obj/projectile/P = mover
-			if(P.called_target == src && P.proj_data?.damage > 5)
-				. = FALSE
+		var/obj/projectile/P = astype(mover)
+		if(P?.called_target == src && P?.proj_data?.damage > 5)
+			P.collide(src)
 
 	bullet_act(obj/projectile/P)
 		. = ..()
