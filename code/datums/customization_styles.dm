@@ -450,7 +450,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "short_dreads"
 				gender = MASCULINE | FEMININE
 
-			Shaggy
+			shaggy
 				name = "Shaggy"
 				id = "shaggy"
 				gender = MASCULINE | FEMININE
