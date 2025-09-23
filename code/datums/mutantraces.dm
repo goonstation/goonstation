@@ -84,6 +84,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// Should stable mutagen not copy from this mutant?
 	var/dna_mutagen_banned = TRUE
 	/// Should a genetics terminal be able to remove this mutantrace?
+	var/persists_on_clone = TRUE
+	/// Should this mutantrace be clonable? (see thralls as a relevant example)
 	var/genetics_removable = TRUE
 	/// Should they be able to walk on shards barefoot
 	var/can_walk_on_shards = FALSE
@@ -310,7 +312,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.blood_color_changed = TRUE
 
 		src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
-		if (!src.dna_mutagen_banned)
+		if (src.persists_on_clone)
 			AH.original_mutant_race = src
 		if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
 			MakeMutantDimorphic(M)
@@ -490,7 +492,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			AH.s_tone = AH.s_tone_original
 
 		AH.mutant_race = src
-		if (!src.dna_mutagen_banned)
+		if (src.persists_on_clone)
 			AH.original_mutant_race = src
 		AH.body_icon = src.mutant_folder
 		AH.body_icon_state = src.icon_state
@@ -714,6 +716,7 @@ TYPEINFO(/datum/mutantrace/blob)
 	voice_override = "bloop"
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
+	persists_on_clone = FALSE
 
 	ghost_icon_state = "ghost-blob"
 
@@ -926,6 +929,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	movement_modifier = /datum/movement_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
+	persists_on_clone = FALSE
 	var/strain = 0
 
 	//this is terrible, but I do anyway.
@@ -1073,6 +1077,7 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 	special_head = HEAD_VAMPTHRALL
 	jerk = TRUE
 	genetics_removable = FALSE
+	persists_on_clone = FALSE
 
 	on_attach(var/mob/living/carbon/human/M)
 		..()
@@ -1280,6 +1285,7 @@ TYPEINFO(/datum/mutantrace/abomination)
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
 	self_click_fluff = "disgusting writhing appendages"
+	persists_on_clone = FALSE
 
 	var/last_drain = 0
 	var/drains_dna_on_life = 1
@@ -2092,6 +2098,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/kudzu/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | TORSO_HAS_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS | BUILT_FROM_PIECES)
 	override_attack = 1
+	persists_on_clone = FALSE
 
 	mutant_abilityholder = /datum/abilityHolder/kudzu
 	mutant_abilities = list(
