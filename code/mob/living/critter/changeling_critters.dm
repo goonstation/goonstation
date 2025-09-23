@@ -701,7 +701,7 @@ TYPEINFO(/mob/living/critter/changeling)
 			H.setStatusMin("unconscious", 10 SECONDS)
 			logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 		else //The only way we can fail is if they are immune to disease (ling/vamp/thrall/zombie/godmode) or they already have a headspider
-			boutput(user, SPAN_ALERT("[H]'s inhuman nature renders us unable to infect their form."))
+			boutput(src, SPAN_ALERT("[H]'s inhuman nature renders us unable to infect their form."))
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))
