@@ -1,5 +1,9 @@
 
 (t)mon sep 22 25
+(u)Egregorious
+(p)24686
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added sfx for putting things into chutes. If the action does have an associated chat message, noone else will hear the sound except you.
 (u)JORJ949
 (p)24672
 (e)🆕📄🧛|C-Feature, A-UI, A-Gamemodes
