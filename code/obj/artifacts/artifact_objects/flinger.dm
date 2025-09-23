@@ -77,7 +77,7 @@
 					src.chain_flings += 1
 				else
 					break
-		src.recharge_time += (src.chain_flings*0.2) SECONDS
+		src.recharge_time += (src.chain_flings*0.2) SECONDS //Prevents the artifact from being activated while being thrown around.
 		if(prob(5))
 			src.recharge_time = 0
 
@@ -103,7 +103,7 @@
 							if(THROW_TARGET_USER)
 								fling(O, user)
 				O.ArtifactFaultUsed(user)
-				SPAWN(src.recharge_time) //Prevents the artifact from being activated while being thrown around.
+				SPAWN(src.recharge_time)
 					T.visible_message("<b>[O]</b> tenses up again!")
 		else
 			boutput(user, SPAN_ALERT("The artifact twitches, but nothing else happens."))
