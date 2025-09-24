@@ -1,5 +1,23 @@
 
+(t)wed sep 24 25
+(u)Kanthes
+(p)24683
+(e)🆕🔬|C-Feature, A-Science
+(*)Added the Flinger large artifact.
+(t)mon sep 22 25
+(u)Egregorious
+(p)24686
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added sfx for putting things into chutes. If the action does have an associated chat message, noone else will hear the sound except you.
+(u)JORJ949
+(p)24672
+(e)🆕📄🧛|C-Feature, A-UI, A-Gamemodes
+(*)Added a "Preferred Uplink" option under the general character setup tab. The uplink received when rolling Traitor or Head Revolutionary will try to reflect this option.
 (t)sun sep 21 25
+(u)JORJ949
+(p)24685
+(e)⚖🤖|C-Balance, A-Silicons
+(*)AI Cores can now survive on their internal cell for only 25 minutes, down from 100 minutes.
 (u)NibChocolateeny
 (p)24223
 (e)💅🌱|C-QoL, A-Hydroponics

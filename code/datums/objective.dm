@@ -161,25 +161,25 @@ proc/create_fluff(datum/mind/target)
 	var/obj/item/steal_target
 	var/target_name
 	set_up()
-		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
-		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
+		var/list/items = list("Head of Security\'s beret", "Monsieur Stirstir\'s beret", "Detective\'s DetGadget hat", "horse mask", "Captain\'s authentication disk",
+		"\'freeform\' AI module", "gene power module", "mainframe memory board", "RD\'s yellow cake", "CE\'s aurora MKII utility belt", "much coveted Gooncode", "HoP\'s golden crayon")
 
 		if(!countJob("Head of Security"))
 			items.Remove("Head of Security\'s beret")
 		if(!countJob("Captain"))
-			items.Remove("authentication disk")
+			items.Remove("Captain\'s authentication disk")
 		if(!countJob("Chief Engineer"))
-			items.Remove("aurora MKII utility belt")
+			items.Remove("CE\'s aurora MKII utility belt")
 
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
 				steal_target = /obj/item/clothing/head/hos_hat
-			if("prisoner\'s beret")
+			if("Monsieur Stirstir\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
-			if("DetGadget hat")
+			if("Detective\'s DetGadget hat")
 				steal_target = /obj/item/clothing/head/det_hat/gadget
-			if("authentication disk")
+			if("Captain\'s authentication disk")
 				steal_target = /obj/item/disk/data/floppy/read_only/authentication
 			if("\'freeform\' AI module")
 				steal_target = /obj/item/aiModule/freeform
@@ -187,15 +187,15 @@ proc/create_fluff(datum/mind/target)
 				steal_target = /obj/item/cloneModule/genepowermodule
 			if("mainframe memory board")
 				steal_target = /obj/item/disk/data/memcard/main2
-			if("yellow cake")
+			if("RD\'s yellow cake")
 				steal_target = /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
-			if("aurora MKII utility belt")
+			if("CE\'s aurora MKII utility belt")
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
 			if("horse mask")
 				steal_target = /obj/item/clothing/mask/horse_mask
-			if("golden crayon")
+			if("HoP\'s golden crayon")
 				steal_target = /obj/item/pen/crayon/golden
 
 		explanation_text = "Steal the [target_name] and have it anywhere on you at the end of the shift."
