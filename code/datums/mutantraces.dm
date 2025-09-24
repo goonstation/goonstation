@@ -84,9 +84,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// Should stable mutagen not copy from this mutant?
 	var/dna_mutagen_banned = TRUE
 	/// Should a genetics terminal be able to remove this mutantrace?
-	var/persists_on_clone = TRUE
-	/// Should this mutantrace be clonable? (see thralls as a relevant example)
 	var/genetics_removable = TRUE
+	/// Should this mutantrace be kept upon cloning?
+	var/persists_on_clone = TRUE
 	/// Should they be able to walk on shards barefoot
 	var/can_walk_on_shards = FALSE
 	var/icon_state = "blank_c"
@@ -716,7 +716,6 @@ TYPEINFO(/datum/mutantrace/blob)
 	voice_override = "bloop"
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
-	persists_on_clone = FALSE
 
 	ghost_icon_state = "ghost-blob"
 
