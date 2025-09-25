@@ -1400,7 +1400,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 // Spy (theft) objectives                              //
 /////////////////////////////////////////////////////////
 
-/datum/objective/spy_theft/assasinate
+/datum/objective/spy_theft/assasinate //Unused
 	explanation_text = "Eliminate all other antagonists."
 
 	check_completion()
@@ -1410,6 +1410,20 @@ ABSTRACT_TYPE(/datum/objective/madness)
 			if (!src.is_target_eliminated(M))
 				return FALSE
 		return TRUE
+
+/datum/objective/spy_theft/steal
+	medal_name = "Professional Thief"
+	var/steal_goal
+
+	set_up()
+		src.steal_goal = rand(5,8)
+		explanation_text = "Steal at least [src.steal_goal] items in total via your uplink."
+
+	check_completion()
+		var/datum/antagonist/spy_thief/antag_datum = owner.get_antagonist(ROLE_SPY_THIEF)
+		if(!antag_datum?.stolen_items)
+			return FALSE
+		return (length(antag_datum.stolen_items) >= src.steal_goal)
 
 /////////////////////////////////////////////////////////
 // Battle Royale objective                             //
@@ -1624,22 +1638,17 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive)
 
-/datum/objective_set/spy_theft/bodyguard_gimmick
-	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/gimmick)
-	escape_choices = list(/datum/objective/escape/survive)
+// Spy Thieves
 
-/datum/objective_set/spy_theft/bodyguard_steal
-	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/steal)
-	escape_choices = list(/datum/objective/escape)
+/datum/objective_set/spy_theft
+	objective_list = list(/datum/objective/spy_theft/steal,/datum/objective/regular/steal)
+	escape_choices = list(/datum/objective/escape, /datum/objective/escape/survive)
 
-/datum/objective_set/spy_theft/bodyguard_and_kill
-	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape)
+/datum/objective_set/spy_theft/bodyguard
+	objective_list = list(/datum/objective/spy_theft/steal,/datum/objective/regular/assassinate/bodyguard)
 
 /datum/objective_set/spy_theft/assassin
-	objective_list = list(/datum/objective/regular/assassinate,/datum/objective/regular/assassinate,/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape)
+	objective_list = list(/datum/objective/spy_theft/steal,/datum/objective/regular/assassinate)
 
-/datum/objective_set/spy_theft/stealy
-	objective_list = list(/datum/objective/regular/gimmick,/datum/objective/regular/steal)
-	escape_choices = list(/datum/objective/escape)
+/datum/objective_set/spy_theft/gimmick
+	objective_list = list(/datum/objective/spy_theft/steal,/datum/objective/regular/gimmick)
