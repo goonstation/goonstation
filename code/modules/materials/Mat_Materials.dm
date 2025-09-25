@@ -719,9 +719,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "cerenkite"
 	name = "cerenkite"
 	desc = "Cerenkite is a highly radioactive metal."
-	color = list(0.00, 0.00, 1.00, 0.00,\
+	color = list(0.00, 0.00, 0.00, 0.00,\
 				1.00, 1.00, 0.00, 0.00,\
-				0.00, 0.00, 0.00, 0.00,\
+				0.00, 0.00, 1.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
 
@@ -1017,11 +1017,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "erebite"
 	name = "erebite"
 	desc = "Erebite is an extremely volatile high-energy mineral."
-	color = list(1.00, 0.00, 0.25, 0.00,\
-				0.25, 0.75, 0.00, 0.00,\
-				0.25, 0.00, 0.65, 0.00,\
+	color = list(0.75, 0.00, 0.00, 0.00,\
+				0.25, 0.50, 0.00, 0.00,\
+				0.25, 0.00, 0.50, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
-				-0.10, -0.15, -0.20, 0.00)
+				-0.05, -0.10, -0.15, 0.00)
 
 	New()
 		..()
@@ -1464,11 +1464,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "char"
 	name = "char"
 	desc = "Char is a fossil energy source similar to coal."
-	color = list(0.20, 0.20, 0.20, 0.00,\
+	color = list(0.30, 0.30, 0.30, 0.00,\
 				0.10, 0.10, 0.10, 0.00,\
-				0.15, 0.15, 0.15, 0.00,\
+				0.20, 0.20, 0.20, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
-				0.00, 0.00, 0.00, 0.00)
+				-0.10, -0.10, -0.10, 0.00)
 	texture = list("char_a","char_b","char_c","char_d")
 	texture_blend = BLEND_DEFAULT
 
@@ -1565,7 +1565,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 				0.25, 0.15, 0.10, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.05, 0.00, -0.10, 0.00)
-	texture = "wood"
+	texture = list("wood_a","wood_b","wood_c")
 	texture_blend = BLEND_DEFAULT
 
 	New()
@@ -1594,11 +1594,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "cardboard"
 	name = "cardboard"
 	desc = "Perfect for making boxes."
-	color = list(0.30, 0.20, 0.15, 0.00,\
+	color = list(0.35, 0.25, 0.20, 0.00,\
+				0.35, 0.25, 0.20, 0.00,\
 				0.30, 0.20, 0.15, 0.00,\
-				0.25, 0.15, 0.10, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
-				0.15, 0.15, 0.10, 0.00)
+				0.10, 0.10, 0.05, 0.00)
 	texture = "cardboard"
 	texture_blend = BLEND_DEFAULT
 
@@ -1948,9 +1948,9 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "carbonfibre"
 	name = "carbon nanofiber"
 	desc = "Carbon Nanofibers are highly graphitic carbon nanomaterials with excellent mechanical properties, electrical conductivity and thermal conductivity."
-	color = list(0.20, 0.20, 0.20, 0.00,\
+	color = list(0.30, 0.30, 0.30, 0.00,\
 				0.10, 0.10, 0.10, 0.00,\
-				0.15, 0.15, 0.15, 0.00,\
+				0.20, 0.20, 0.20, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
 	texture = "hex_lattice"
