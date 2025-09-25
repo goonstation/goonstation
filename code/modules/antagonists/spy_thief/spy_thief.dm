@@ -141,6 +141,14 @@
 
 		return list(
 			list(
+				"name" = "Total Items Stolen",
+				"value" = "[length(stolen_items)] items",
+			),
+			list(
+				"name" = "Total Items Redeemed",
+				"value" = "[length(redeemed_items)] items",
+			),
+			list(
 				"name" = "Stolen Items",
 				"type" = "itemList",
 				"value" = stolen_items,
