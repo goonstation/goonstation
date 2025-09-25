@@ -89,7 +89,8 @@
 			src.pinhole = TRUE
 			src.block_vision = FALSE
 			boutput(user, SPAN_NOTICE("You poked two holes into the blindfold, now you can pretend that you can see without seeing"))
-		. = ..()
+		else
+			. = ..()
 
 	get_desc()
 		if (src.pinhole)
