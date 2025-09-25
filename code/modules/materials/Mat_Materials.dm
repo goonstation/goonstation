@@ -59,6 +59,8 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/applyColor = TRUE
 	/// The color of the material
 	VAR_PROTECTED/color = "#FFFFFF"
+	/// A secondary HSL colorspace matrix. Typically used for turning all non-grayscale colors into a single color, or having a secondary highlight color.
+	var/list/hsl_color = null
 	/// The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
 	VAR_PROTECTED/alpha = 255
 
@@ -106,6 +108,9 @@ ABSTRACT_TYPE(/datum/material)
 		for(var/datum/material_property/propPath as anything in concrete_typesof(/datum/material_property))
 			if(initial(propPath.default_value) > 0)
 				src.setProperty(initial(propPath.id), initial(propPath.default_value))
+		if(src.hsl_color)
+			addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl())
+			addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 	//getters for all the protected vars
 	proc/getID()
@@ -477,14 +482,7 @@ ABSTRACT_TYPE(/datum/material)
 		src.desc = "This is an alloy of [mat1.name] and [mat2.name]"
 		src.mat_id = "([mat1.getID()]+[mat2.getID()])"
 		src.alpha = round(mat1.alpha *left_bias+ mat2.alpha * bias)
-		if(islist(mat1.color) || islist(mat2.color))
-			var/list/colA = normalize_color_to_matrix(mat1.color)
-			var/list/colB = normalize_color_to_matrix(mat2.color)
-			src.color = list()
-			for(var/i in 1 to length(colA))
-				src.color += colA[i] *left_bias+ colB[i] * bias
-		else
-			src.color = rgb(round(GetRedPart(mat1.color) *left_bias+ GetRedPart(mat2.color) * bias), round(GetGreenPart(mat1.color) *left_bias+ GetGreenPart(mat2.color) * bias), round(GetBluePart(mat1.color) *left_bias+ GetBluePart(mat2.color) * bias))
+		src.calculate_color(mat1, mat2, bias)
 		src.properties = mergeProperties(mat1.properties, mat2.properties, bias)
 
 		src.edible_exact = mat1.edible_exact * left_bias + mat2.edible_exact * bias
@@ -527,6 +525,28 @@ ABSTRACT_TYPE(/datum/material)
 		src.parent_materials.Add(mat2)
 
 		//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	proc/calculate_color(var/datum/material/mat1,var/datum/material/mat2,var/bias)
+		var/left_bias = 1 - bias
+		if(islist(mat1.color) || islist(mat2.color))
+			var/list/colA = normalize_color_to_matrix(mat1.color)
+			var/list/colB = normalize_color_to_matrix(mat2.color)
+			src.color = list()
+			for(var/i in 1 to length(colA))
+				src.color += colA[i] *left_bias+ colB[i] * bias
+		else
+			src.color = rgb(round(GetRedPart(mat1.color) *left_bias+ GetRedPart(mat2.color) * bias), round(GetGreenPart(mat1.color) *left_bias+ GetGreenPart(mat2.color) * bias), round(GetBluePart(mat1.color) *left_bias+ GetBluePart(mat2.color) * bias))
+
+		if(mat1.hsl_color || mat2.hsl_color)
+			var/list/colA = mat1.hsl_color ? mat1.hsl_color : COLOR_MATRIX_IDENTITY
+			var/list/colB = mat2.hsl_color ? mat2.hsl_color : COLOR_MATRIX_IDENTITY
+			src.hsl_color = list()
+			for(var/i in 1 to length(colA))
+				src.hsl_color += colA[i] *left_bias+ colB[i] * bias
+			if(src.hsl_color[1] < 1)
+				src.hsl_color[1] = 0 // Don't use an incomplete color wheel
+			addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl())
+			addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 // Metals
@@ -589,6 +609,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.00, 0.00, 0.75, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				-0.20, -0.10, -0.20, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 1.50, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.16, 0.00, 0.00, 0.00)
 
 	New()
 		..()
@@ -597,8 +622,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("chemical", 2)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/veranium())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 /datum/material/metal/voltite
 	mat_id = "voltite"
@@ -689,14 +712,17 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.00, 0.00, 0.50, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.60, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.33, 0.10, 0.00, 0.00)
+
 	New()
 		..()
 		setProperty("density", 6)
 		setProperty("hard", 5)
 		setProperty("chemical", 7)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/bohrum())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
-
 
 /datum/material/metal/mauxite
 	mat_id = "mauxite"
@@ -707,12 +733,16 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.00, 1.00, 1.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.35, 0.00, 0.00,\
+					0.00, 0.00, 0.90, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.05, -0.10, 0.00)
+
 	New()
 		..()
 		setProperty("density", 4)
 		setProperty("hard", 3)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/mauxite())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 /datum/material/metal/cerenkite
@@ -724,6 +754,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.00, 0.00, 1.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.60, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.60, 0.20, 0.00, 0.00)
 
 	New()
 		..()
@@ -733,9 +768,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 5)
 		setProperty("hard", 2)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/cerenkite())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
-
 
 /datum/material/metal/syreline
 	mat_id = "syreline"
@@ -825,6 +857,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.00, 0.50, 1.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
+	hsl_color =	list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.75, 0.00, 0.00,\
+					0.00, 0.00, 1.50, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.58, 0.30, 0.00, 0.00)
 	alpha = 255
 
 	New()
@@ -834,8 +871,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 3)
 		setProperty("electrical", 7)
 		setProperty("n_radioactive", 8)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/neutronium())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 
 // Special Metals
@@ -917,14 +952,17 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.50, 0.00, 0.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
+	hsl_color =	list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.80, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.20, 0.00, 0.00)
 
 	New()
 		..()
 		material_flags|= MATERIAL_ENERGY
 		setProperty("density", 4)
 		setProperty("hard", 2)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/soulsteel())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
@@ -1000,6 +1038,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				0.20, 0.10, 0.20, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.60, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.10, 0.00, 0.00)
 	texture = "claretine"
 	texture_blend = BLEND_DEFAULT
 
@@ -1009,9 +1052,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 1)
 		setProperty("electrical", 8)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/claretine())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
-
 
 /datum/material/crystal/erebite
 	mat_id = "erebite"
@@ -1022,6 +1062,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				0.25, 0.00, 0.50, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				-0.05, -0.10, -0.15, 0.00)
+	hsl_color =	list(0.00, 0.00, 0.00, 0.00,\
+				0.00, 1.00, 0.00, 0.00,\
+				0.00, 0.00, 0.75, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.14, 0.50, 0.00, 0.00)
 
 	New()
 		..()
@@ -1030,9 +1075,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", 3)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
-
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/erebite())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
 
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/erebite_temp())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/erebite_exp())
@@ -1488,6 +1530,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 				0.25, 0.00, 1.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				-0.10, -0.20, -0.10, 0.00)
+	hsl_color =	list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 1.50, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.80, 0.00, -0.15, 0.00)
 	texture = "koshmarite"
 	texture_blend = BLEND_DEFAULT
 
@@ -1498,9 +1545,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("reflective", 6)
 		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl/koshmarite())
-		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/remove_color_hsl())
-
 
 /datum/material/organic/viscerite
 	mat_id = "viscerite"
@@ -1646,6 +1690,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 				0.55, 0.35, 0.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.30, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.10, 0.70, 0.00, 0.00)
 	edible_exact = TRUE
 	edible = TRUE
 
