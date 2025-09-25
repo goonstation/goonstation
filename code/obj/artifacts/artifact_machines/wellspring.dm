@@ -34,8 +34,8 @@
 				src.payload_reagents = list("water") //water on mars, get it?
 			if ("eldritch")
 				src.payload_reagents = list("blood")
-			//if ("lattice") //Looks like Gnesis can't form liquids.
-			//	src.payload_reagents = list("flockdrone_fluid", "water")
+			//if ("lattice")
+			//	src.payload_reagents = list("flockdrone_fluid", "water") //Looks like Gnesis can't form liquids.
 		src.payload_amount = rand(100, 750)
 		src.payload_cooldown = rand(1, 10) SECONDS
 
