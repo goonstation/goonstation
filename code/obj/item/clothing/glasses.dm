@@ -90,11 +90,10 @@
 			src.block_vision = FALSE
 			boutput(user, SPAN_NOTICE("You poked two holes into the blindfold, now you can pretend that you can see without seeing"))
 		. = ..()
+
 	get_desc()
 		if (src.pinhole)
 			. = "Wait? There are tiny holes in it!"
-
-
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target) && user.a_intent != INTENT_HARM) //ishuman() works on monkeys too apparently.
