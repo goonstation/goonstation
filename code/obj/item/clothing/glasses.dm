@@ -93,7 +93,7 @@
 
 	get_desc()
 		if (src.pinhole)
-			. = "Wait? There are tiny holes in it!"
+			. += " Wait? There are tiny holes in it!"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target) && user.a_intent != INTENT_HARM) //ishuman() works on monkeys too apparently.
