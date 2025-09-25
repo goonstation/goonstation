@@ -619,6 +619,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/atom/owner)
 		var/added_mat_id = owner.material.getID()
+		if(!owner.mat_changeappearance)
+			return
 		if(endswith(owner.icon_state, "$$[added_mat_id]")) // Ignore if it is a material version of a sprite
 			return
 		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
@@ -712,7 +714,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/honey_add
 	execute(var/atom/location)
-		if(endswith(location.icon_state, "$$honey"))
+		if(endswith(location.icon_state, "$$honey") || ("honey" in location.get_typeinfo().mat_appearances_to_ignore))
 			return
 		var/offset = 0
 		if(!isturf(location))

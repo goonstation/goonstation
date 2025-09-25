@@ -7,17 +7,12 @@
 	src.rank = response["rank"]
 
 /datum/apiModel/Tracked/GameAdminRank/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.rank) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
+		isnull(src.rank)
 	)
 		return FALSE
 
 /datum/apiModel/Tracked/GameAdminRank/ToList()
 	. = ..()
-	.["id"] = src.id
 	.["rank"] = src.rank
-	.["created_at"] = src.created_at
-	.["updated_at"] = src.updated_at

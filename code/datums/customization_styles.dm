@@ -318,30 +318,39 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			salty
 				name = "Salty"
 				id = "salty"
+				gender = MASCULINE | FEMININE
 			wolfcut
 				name = "Wolfcut"
 				id = "wolfcut"
+				gender = MASCULINE | FEMININE
 			brushed
 				name = "Brushed"
 				id = "brushed"
+				gender = MASCULINE | FEMININE
 			walnut
 				name = "Walnut"
 				id = "walnut"
+				gender = MASCULINE | FEMININE
 			mop
 				name = "Mop"
 				id = "mop"
+				gender = MASCULINE | FEMININE
 			acorn
 				name = "Acorn"
 				id = "acorn"
+				gender = MASCULINE | FEMININE
 			curtain
 				name = "Curtain"
 				id = "curtain"
+				gender = MASCULINE | FEMININE
 			scott
 				name = "Scott"
 				id = "scott"
+				gender = MASCULINE | FEMININE
 			curly_bob
 				name = "Curly Bob"
 				id = "curly_bob"
+				gender = MASCULINE | FEMININE
 			curly_bob_fade
 				name = "Curly Bob: Faded"
 				id = "curly_bob_fade"
@@ -349,9 +358,11 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			charming
 				name = "Charming"
 				id = "charming"
+				gender = MASCULINE | FEMININE
 			spoon
 				name = "Spoon"
 				id = "spoon"
+				gender = MASCULINE | FEMININE
 			spoonbangs
 				name = "Bangs: Spoon"
 				id = "spoonbangs"
@@ -359,6 +370,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			messy_waves
 				name = "Messy Waves"
 				id = "messy_waves"
+				gender = MASCULINE | FEMININE
 			messy_waves_half
 				name = "Messy Waves: Split"
 				id = "messy_waves_half"
@@ -366,66 +378,82 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			blunt_bob
 				name = "Blunt Bob"
 				id = "blunt_bob"
+				gender = MASCULINE | FEMININE
 
 			jelly
 				name = "Jelly"
 				id = "jelly"
+				gender = MASCULINE | FEMININE
 
 			cockatiel
 				name = "Cockatiel"
 				id = "cockatiel"
+				gender = MASCULINE | FEMININE
 
 			combed_fringe
 				name = "Combed Fringe"
 				id = "combed_fringe"
+				gender = MASCULINE | FEMININE
 
 			slicked_back
 				name = "Slicked Back"
 				id = "slicked_back"
+				gender = MASCULINE | FEMININE
 
 			asym_bob
 				name = "Asymmetrical Bob"
 				id = "asym_bob"
+				gender = MASCULINE | FEMININE
 
 			side_curls
 				name = "Side-Part Curls"
 				id = "side_curls"
+				gender = MASCULINE | FEMININE
 
 			messy_fringe
 				name = "Messy Fringe"
 				id = "messy_fringe"
+				gender = MASCULINE | FEMININE
 
 			aristocrat
 				name = "Aristocrat"
 				id = "aristocrat"
+				gender = MASCULINE | FEMININE
 
 			brushed_bob
 				name = "Brushed Bob"
 				id = "brushed_bob"
+				gender = MASCULINE | FEMININE
 
 			short_shag
 				name = "Short Shag"
 				id = "short_shag"
+				gender = MASCULINE | FEMININE
 
 			luxury_bob
 				name = "Luxurious Bob"
 				id = "luxury_bob"
+				gender = MASCULINE | FEMININE
 
 			wavy_front
 				name = "Wavy Front"
 				id = "wavy_front"
+				gender = MASCULINE | FEMININE
 
 			poofy_bob
 				name = "Poofy Bob"
 				id = "poofy_bob"
+				gender = MASCULINE | FEMININE
 
 			short_dreads
 				name = "Short Dreads"
 				id = "short_dreads"
+				gender = MASCULINE | FEMININE
 
 			Shaggy
 				name = "Shaggy"
 				id = "shaggy"
+				gender = MASCULINE | FEMININE
 
 			cockatielbang
 				name = "Bangs: Cockatiel"
@@ -720,6 +748,75 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			willow_fade
 				name = "Willow: Faded"
 				id = "willow_fade"
+			hime
+				name = "Himecut"
+				id = "hime"
+				gender = FEMININE
+			wild_bedhead
+				name = "Wild Bedhead"
+				id = "wild_bedhead"
+				gender = MASCULINE | FEMININE
+			straight_long
+				name = "Long Straight"
+				id = "straight_long"
+				gender = MASCULINE | FEMININE
+			choppy_long
+				name = "Choppy Long"
+				id = "choppy_long"
+				gender = MASCULINE | FEMININE
+			sway
+				name = "Sway"
+				id = "sway"
+				gender = MASCULINE | FEMININE
+
+			poofy_long
+				name = "Long Poofy"
+				id = "poofy_long"
+				gender = MASCULINE | FEMININE
+			royal_curls
+				name = "Royal Curls"
+				id = "royal_curls"
+				gender = FEMININE
+
+			med_Curly
+				name = "Med Curls"
+				id = "med_Curly"
+				gender = MASCULINE | FEMININE
+
+			poofy_wave
+
+				name = "Poofy Wave"
+				id = "poofy_wave"
+				gender = FEMININE
+
+			longer_curls
+				name = "Longer Curls"
+				id = "longer_curls"
+				gender = MASCULINE | FEMININE
+
+			wild_waves
+
+				name = "Wild Wave"
+				id = "wild_waves"
+				gender = MASCULINE | FEMININE
+
+			curly_twists
+
+				name = "Curly Twists"
+				id = "curly_twists"
+				gender = FEMININE
+
+			straightened_long
+
+				name = "Straightened shoulder-length"
+				id = "straightened_long"
+				gender = MASCULINE | FEMININE
+
+			symm_bob
+
+				name = "Symmetrical Bob"
+				id = "symm_bob"
+				gender = MASCULINE | FEMININE
 		hairup
 			bun
 				name = "Bun"
