@@ -879,11 +879,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "slag"
 	name = "slag"
 	desc = "A by-product left over after material has been processed."
-	color = list(0.30, 0.15, 0.00, 0.00,\
-				0.20, 0.10, 0.00, 0.00,\
-				0.25, 0.10, 0.00, 0.00,\
-				0.00, 0.00, 0.00, 1.00,\
-				0.00, 0.00, 0.00, 0.00)
+	color = "#26170F"
 
 	New()
 		..()
