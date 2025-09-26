@@ -86,7 +86,7 @@
 	var/static/cool_color = ""
 	New()
 		// If admin-spawned, let them set the style
-		if (usr && ishuman(usr))
+		if (usr && isadmin(usr))
 			if (!ON_COOLDOWN(usr, "wig_attacher_config", 10 SECONDS))
 				cool_color = randomize_hair_color(pick(list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D", "#D8C078", "#E3CC88",
 															"#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")))
