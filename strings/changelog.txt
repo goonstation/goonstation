@@ -1,4 +1,9 @@
 
+(t)fri sep 26 25
+(u)JORJ949
+(p)24748
+(e)💅📄|C-QoL, A-UI
+(*)Antagonist summary item names (Including wizard spells and blob upgrades) are now hidden behind a tooltip available by hovering over the item's icon.
 (t)wed sep 24 25
 (u)Kanthes
 (p)24683
