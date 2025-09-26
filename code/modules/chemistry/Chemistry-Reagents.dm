@@ -227,7 +227,7 @@ datum
 				. += 0.001
 
 		//mult is used to handle realtime metabolizations over byond time
-		proc/on_mob_life(var/mob/M, var/mult = 1) ///
+		proc/on_mob_life(var/mob/M, var/mult = 1)
 			SHOULD_CALL_PARENT(TRUE)
 			if (!M || !M.reagents)
 				return
@@ -248,9 +248,7 @@ datum
 						H.sims.affectMotive("Energy", energy_value)
 
 			if (addiction_prob)
-				var/datum/ailment_data/addiction/addiction = src.handle_addiction(M, deplRate, addiction_prob)
-				if (addiction)
-					deplRate += addiction.get_additional_metabolisation(mult)
+				deplRate += src.handle_addiction(M, deplRate, addiction_prob, mult)
 
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
@@ -267,7 +265,6 @@ datum
 		///This calculates the depletion rate of a chem. In case you want to modify the result of the chems normal depletion rate
 		proc/calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
 			SHOULD_CALL_PARENT(TRUE)
-
 			var/resulting_depletion = src.depletion_rate * mult
 			if (isliving(affected_mob))
 				var/mob/living/living_mob = affected_mob
@@ -311,21 +308,19 @@ datum
 				M.take_toxin_damage(severity * mult)
 			return effect
 
-
-
-		proc/handle_addiction(var/mob/living/M, var/rate, var/addProb)
-			var/datum/ailment_data/addiction/addiction
-			for(var/datum/ailment_data/addiction/Addictn in M.ailments)
-				Addictn.metabolised_addictive_reagent(src, rate)
-				if (Addictn.associated_reagent == src.name)
-					addiction = Addictn
+		/// returns
+		proc/handle_addiction(var/mob/living/M, var/rate, var/addProb, var/mult)
+			var/datum/ailment_data/addiction/addiction = M.addicted_to_reagent(src)
 			if (addiction)
-				return addiction
-/* 			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
-			if (AD)
-				//DEBUG_MESSAGE("already have [AD.name]")
-				AD.metabolised_addicted_reagent(rate)
-				return AD */
+				// Get extra metabolisation from addiction level
+				// I don't like this being inline, but it's a few less proc calls for the life loop I guess
+				. = round(addiction.addiction_meter * addiction.extra_metabolisation * mult, 0.01)
+			// Metabolisation effects for addictive reagents for all addictions
+			for(var/datum/ailment_data/addiction/ad in M.ailments)
+				ad.metabolised_addictive_reagent(src, rate + .)
+			if (addiction)
+				return
+			. = 0
 			if (isliving(M))
 				var/mob/living/H = M
 				if (H.traitHolder.hasTrait("strongwilled"))
@@ -342,7 +337,7 @@ datum
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
 				addiction = get_disease_from_path(/datum/ailment/addiction).setup_strain(src, current_tally, M)
 				M.contract_disease(/datum/ailment/addiction, null, addiction, TRUE)
-				return addiction
+				return
 			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
 				boutput(M, SPAN_ALERT("You think it might be time to hold back on [src.name] for a bit..."))
 			return

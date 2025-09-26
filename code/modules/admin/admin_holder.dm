@@ -178,6 +178,7 @@
 			"Manage Traits",\
 			"Add Reagents",\
 			"Check Reagents",\
+			"Change Addictions",\
 			"View Variables",\
 			"Get Thing",\
 			"Follow Thing",\

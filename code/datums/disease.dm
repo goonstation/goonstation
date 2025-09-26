@@ -327,6 +327,7 @@
 	var/addiction_meter
 	var/depletion_rate = 0
 	var/stage_satisfied = FALSE // Used for non-addicted addictive reagents, which can cure one level of addiction per level of addiction increased
+	var/extra_metabolisation = 0.01 // How many extra units of the addicted reagent are depleted per tick per point of addiction_meter
 
 	copy_other(datum/ailment_data/addiction/other)
 		..()
@@ -340,6 +341,10 @@
 		..()
 		master = get_disease_from_path(/datum/ailment/addiction)
 
+	stage_act(var/mult)
+		src.addiction_meter += affected_mob.reagents?.addiction_cache
+		..()
+
 	stage_increment()
 		// don't start feeling symptoms until ~2 minutes after our last dose has worn off, worsened with the state of the addiction
 		if (src.last_reagent_dose + (2 MINUTES) - ((src.addiction_meter SECONDS) / 2) > world.timeofday)
@@ -348,11 +353,6 @@
 		if (.)
 			src.stage_satisfied = FALSE
 
-	/// Returns how much extra metabolisation of the addictive reagent we get from our current addiction level
-	proc/get_additional_metabolisation(var/mult)
-		// 0.1 unit extra metabolised per tick per 10 units of addiction meter. Round it to 2 decimal places for niceness.
-		return round((src.addiction_meter * 0.01 * mult) * 100, 1) / 100
-
 	proc/metabolised_addictive_reagent(var/datum/reagent/reagent, var/rate)
 		// The minimum rate means that patches with less than ~1 unit of the addictive reagent usually won't work to satisfy addiction.
 		// This is useful because dose logic is very binary and exploitable by microdosing with ludicrously small volumes.
@@ -360,7 +360,7 @@
 		if (src.severity < reagent.addiction_severity || rate < 0.05)
 			return
 		if (src.associated_reagent == reagent.name)
-			src.last_reagent_dose = world.timeofday
+			src.last_reagent_dose = TIME
 			src.addiction_meter += rate
 			if (src.stage > 1)
 				src.stage = 1
@@ -376,7 +376,7 @@
 		if (src.severity < reagent.addiction_severity && volume >= 0.1)
 			return
 		if (src.associated_reagent == reagent.name)
-			src.last_reagent_dose = world.timeofday
+			src.last_reagent_dose = TIME
 			src.affected_mob.make_jittery(-5)
 			if (src.stage > 1)
 				boutput(src.affected_mob, SPAN_NOTICE("<b>That's the good stuff! But how long can it last?</b>"))
