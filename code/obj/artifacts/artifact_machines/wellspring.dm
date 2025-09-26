@@ -13,7 +13,7 @@
 	type_name = "Wellspring"
 	rarity_weight = 350
 	react_xray = list(5,65,20,11,"HOLLOW")
-	validtypes = list("ancient", "martian", "eldritch")
+	validtypes = list("ancient", "martian", "eldritch", "precursor", "wizard")
 	//validtypes = list("ancient", "martian", "eldritch", "lattice")
 	validtriggers = list(/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/force, /datum/artifact_trigger/heat, /datum/artifact_trigger/cold, /datum/artifact_trigger/radiation, /datum/artifact_trigger/electric, /datum/artifact_trigger/language)
 	activated = 0
@@ -29,11 +29,15 @@
 		. = ..()
 		switch(artitype.name)
 			if ("ancient")
-				src.payload_reagent = pick("fuel", "charcoal", "silicate", "graphene_compound")
+				src.payload_reagent = pick("fuel", "goodnanites")
 			if ("martian")
 				src.payload_reagent = pick("water")
 			if ("eldritch")
-				src.payload_reagent = pick("blood", "sewage")
+				src.payload_reagent = pick("blood")
+			if ("precursor")
+				src.payload_reagent = pick("ephedrine")
+			if ("wizard")
+				src.payload_reagent = pick("reversium", "fliptonium")
 			//if ("lattice")
 			//	src.payload_reagent = pick("flockdrone_fluid") //Looks like Gnesis can't form liquids.
 		src.payload_amount = rand(100, 3000)
