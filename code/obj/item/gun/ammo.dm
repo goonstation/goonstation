@@ -1583,6 +1583,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 	proc/scale_plant_bullet(var/datum/HYPharvesting_data/h_data, var/obj/item/crop, var/quality_status)
 		src.ammo_type.reagent_payload = crop.reagents?.get_all_reagent_ids()
+		// Really gross to hardcode a special case for cyanide like this, but it is uniquely a strong poison with 100% skin absorbtion.
+		// This doesn't prevent it from being a deadly payload, it's just not a ridiculous quantity with each bullet.
+		if (src.ammo_type?.reagent_payload["cyanide"])
+			src.ammo_type.reagent_payload["cyanide"] *= 0.1
 		// Increase the bullet's damage by the endurance.
 		src.ammo_type.damage = round(get_scaled_damage(h_data.DNA.endurance), 1)
 		// Increase armour-piercing by the potency.
