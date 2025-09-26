@@ -115,7 +115,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		SPAWN(0) //Delay PDA spawning until the client is in the borg, so it respects preferences
 			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
-			src.internal_pda.name = "[src]'s Internal PDA Unit"
+			src.internal_pda.name = "[src]’s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
@@ -778,7 +778,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.real_name = borgify_name("Cyborg")
 
 		src.UpdateName()
-		src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+		src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 		src.internal_pda.owner = "[src.name]"
 
 	Login()
@@ -790,7 +790,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.real_name == "Cyborg")
 			src.real_name = borgify_name(src.real_name)
 			src.UpdateName()
-			src.internal_pda?.name = "[src.name]'s Internal PDA Unit"
+			src.internal_pda?.name = "[src.name]’s Internal PDA Unit"
 			src.internal_pda?.owner = "[src]"
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
@@ -3739,10 +3739,11 @@ TYPEINFO(/mob/living/silicon/robot)
 
 	do_killswitch()
 		. = ..()
-		// Pop the head compartment open and eject the brain
-		var/mob/living/silicon/robot/robot = src.owner
-		robot.eject_brain(fling = TRUE)
-		robot.update_appearance()
-		robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
+		if(.)
+			// Pop the head compartment open and eject the brain
+			var/mob/living/silicon/robot/robot = src.owner
+			robot.eject_brain(fling = TRUE)
+			robot.update_appearance()
+			robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 #undef can_step_sfx

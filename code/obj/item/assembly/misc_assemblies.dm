@@ -73,6 +73,7 @@ Contains:
 	RegisterSignal(src, COMSIG_CELL_CHARGE, PROC_REF(do_charge))
 	RegisterSignal(src, COMSIG_CELL_TRY_SWAP, PROC_REF(try_cell_swap))
 	RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(do_cell_swap))
+	RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(on_geiger_tick))
 	..()
 
 /obj/item/assembly/proc/set_up_new(var/mob/user, var/obj/item/new_trigger, var/obj/item/new_applier, var/obj/item/new_target)
@@ -147,6 +148,10 @@ Contains:
 /obj/item/assembly/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
 	//we relay the signal to the trigger, in case of mousetraps
 	SEND_SIGNAL(src.trigger, COMSIG_MOVABLE_FLOOR_REVEALED, revealed_turf)
+
+/obj/item/assembly/proc/on_geiger_tick(var/affected_assembly, var/stage)
+	//we relay the signal to the trigger, in case of geiger counter
+	SEND_SIGNAL(src.trigger, COMSIG_MOB_GEIGER_TICK, stage)
 
 /obj/item/assembly/proc/on_storage_interaction(var/affected_assembly, var/mob/user)
 	//we relay the signal to the trigger, in case of mousetraps

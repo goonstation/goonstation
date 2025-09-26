@@ -62,6 +62,9 @@ TYPEINFO(/mob/new_player)
 		..()
 
 	Login()
+		if (!src.client)
+			logTheThing(LOG_DEBUG, src, "new_player/Login called with null client. This is likely due to someone trying to log in with an in-use key.")
+			return
 		..()
 
 		if(!mind)

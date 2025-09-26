@@ -33,7 +33,7 @@
 				src.donor = nholder.donor
 			if (src.donor)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
+				src.name = "[src.donor_name]’s [initial(src.name)]"
 
 	disposing()
 		..()
