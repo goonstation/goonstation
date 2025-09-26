@@ -141,20 +141,12 @@
 
 		return list(
 			list(
-				"name" = "Total Items Stolen",
-				"value" = "[length(stolen_items)] items",
-			),
-			list(
-				"name" = "Total Items Redeemed",
-				"value" = "[length(redeemed_items)] items",
-			),
-			list(
-				"name" = "Stolen Items",
+				"name" = "[length(stolen_items)] Stolen Items",
 				"type" = "itemList",
 				"value" = stolen_items,
 			),
 			list(
-				"name" = "Redeemed Items",
+				"name" = "[length(redeemed_items)] Redeemed Items",
 				"type" = "itemList",
 				"value" = redeemed_items,
 			),
