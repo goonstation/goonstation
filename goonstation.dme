@@ -110,6 +110,7 @@
 #include "code\datums\inventory.dm"
 #include "code\datums\ircbot.dm"
 #include "code\datums\jsErrorHandler.dm"
+#include "code\datums\latejoin_menu.dm"
 #include "code\datums\limb.dm"
 #include "code\datums\limiter.dm"
 #include "code\datums\manufacturing.dm"

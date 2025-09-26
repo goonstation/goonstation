@@ -2,7 +2,7 @@
 
 ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
-	linkcolor = COMMAND_LINK_COLOR
+	ui_colour = TGUI_COLOUR_GREEN
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
