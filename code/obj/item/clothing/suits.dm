@@ -377,6 +377,21 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
 
+/obj/item/clothing/suit/hazard/bio_suit/rd
+	name = "research director's bio suit"
+	desc = "A special, form fitted, suit that protects against biological contamination."
+	item_state = "biosuit_rd"
+	icon_state = "biosuit_rd"
+	armor_icon = "armorbio_rd"
+
+	setupProperties()
+		..()
+		delProperty("movespeed")
+
+	armor()
+		. = ..()
+		src.delProperty("movespeed")
+
 TYPEINFO(/obj/item/clothing/suit/hazard/bio_suit/armored)
 	pre_armored = TRUE
 /obj/item/clothing/suit/hazard/bio_suit/armored

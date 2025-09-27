@@ -1,5 +1,7 @@
 
 (t)fri sep 26 25
+(u)Sord
+(+)The Research Director now gets a special bio suit in their main locker.
 (u)JORJ949
 (p)24748
 (e)💅📄|C-QoL, A-UI
