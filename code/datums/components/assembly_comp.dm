@@ -99,6 +99,14 @@ TYPEINFO(/datum/component/assembly)
 		return COMPONENT_INCOMPATIBLE
 	. = ..(TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
 
+/datum/component/assembly/trigger_applier_assembly/attackby(var/atom/affected_parent, var/atom/to_combine_atom, var/mob/user, var/params, var/is_special)
+	if(to_combine_atom.GetComponents(/datum/component/assembly/trigger_applier_assembly))
+		//If the item used to attack you can also be a trigger for an assembly, we don't continue here.
+		//At this point, the component of to_combine_atom should already turned this item into an assembly
+		//this guarantees that the item you use in your hand for an assembly will always turn out to be the trigger
+		return FALSE
+	return try_combination(to_combine_atom, user)
+
 /datum/component/assembly/trigger_applier_assembly/try_combination(var/atom/checked_atom, var/mob/user)
 	if(istype(checked_atom, src.parent.type))
 		//We don't want something like a signaller-signaller assembly. That would be akward to use

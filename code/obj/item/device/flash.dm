@@ -13,6 +13,7 @@ TYPEINFO(/obj/item/device/flash)
 	throw_range = 10
 	click_delay = COMBAT_CLICK_DELAY
 	flags = TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
@@ -465,6 +466,11 @@ TYPEINFO(/obj/item/device/flash)
 
 
 /obj/item/device/flash/cyborg
+
+/obj/item/device/flash/cyborg/New()
+	..()
+	// don't turn your borg modules into assemblies, please
+	src.RemoveComponentsOfType(/datum/component/assembly/trigger_applier_assembly)
 
 /obj/item/device/flash/cyborg/process_burnout(mob/user)
 	return
