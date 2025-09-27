@@ -383,6 +383,7 @@ TYPEINFO(/obj/item/device/flash)
 
 
 /obj/item/device/flash/cyborg
+	tool_flags = null
 
 /obj/item/device/flash/cyborg/New()
 	..()
@@ -429,62 +430,71 @@ TYPEINFO(/obj/item/device/flash/revolution)
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."
 	icon_state = "rev_flash"
 	animation_type = "rev_flash2"
+	tool_flags = null
 
-	process_burnout(mob/user as mob)
-		return
+/obj/item/device/flash/revolution/New()
+	. = ..()
+	// indestructable flashes probably shouldn't be turned into flash/cell-assemblies...
+	src.RemoveComponentsOfType(/datum/component/assembly/trigger_applier_assembly)
 
-	emp_act()
-		return
+/obj/item/device/flash/revolution/process_burnout(mob/user as mob)
+	return
 
-	attackby(obj/item/W, mob/user)
-		return
+/obj/item/device/flash/revolution/emp_act()
+	return
 
-	on_counterrev(mob/living/M, mob/user)
-		. = ..()
-		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, TRUE, 0, 0.6)
-		user.show_text("Hold still to override . . . ", "red")
-		actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
+/obj/item/device/flash/revolution/attackby(obj/item/W, mob/user)
+	return
+
+/obj/item/device/flash/revolution/on_counterrev(mob/living/M, mob/user)
+	. = ..()
+	playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, TRUE, 0, 0.6)
+	user.show_text("Hold still to override . . . ", "red")
+	actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
 
 /obj/item/device/flash/conspiracy
+	tool_flags = null
 	///How long between successful conversions
 	var/convert_cooldown = 1 MINUTE
 	///How long the (private) actionbar is to convert
 	var/convert_duration = 2 SECONDS
 
-	New()
-		. = ..()
-		src.desc += " There's something weird about this one..."
+/obj/item/device/flash/conspiracy/New()
+	. = ..()
+	src.desc += " There's something weird about this one..."
+	// indestructable flashes probably shouldn't be turned into flash/cell-assemblies...
+	src.RemoveComponentsOfType(/datum/component/assembly/trigger_applier_assembly)
 
-	process_burnout(mob/user as mob)
+/obj/item/device/flash/conspiracy/process_burnout(mob/user as mob)
+	return
+
+/obj/item/device/flash/conspiracy/emp_act()
+	return
+
+/obj/item/device/flash/conspiracy/attackby(obj/item/W, mob/user)
+	return
+
+/obj/item/device/flash/conspiracy/convert(mob/living/M, mob/user)
+	if (!isconspirator(user)) //it's just a regular flash to them
 		return
-
-	emp_act()
+	if (isconspirator(M) || issilicon(M) || !M.mind)
 		return
-
-	attackby(obj/item/W, mob/user)
+	var/current_cooldown = GET_COOLDOWN(global, "conspiracy_convert")
+	if (current_cooldown)
+		boutput(user, SPAN_ALERT("[src] still needs to recharge before it can convert another. Time left: [current_cooldown/10]s"))
 		return
+	var/mob/living/carbon/human/H = M
+	if (istype(H) && H.eyes_protected_from_light())
+		return
+	if (src.convert_duration)
+		actions.start(new /datum/action/bar/private/icon/callback(user, M, src.convert_duration, PROC_REF(finish_conversion), list(M, user), src.icon, src.icon_state, SPAN_ALERT("[M]'s eyes glaze over for a second..."), INTERRUPT_ATTACKED | INTERRUPT_STUNNED, src), user)
+	else //skip actionbar
+		src.finish_conversion(M, user)
 
-	convert(mob/living/M, mob/user)
-		if (!isconspirator(user)) //it's just a regular flash to them
-			return
-		if (isconspirator(M) || issilicon(M) || !M.mind)
-			return
-		var/current_cooldown = GET_COOLDOWN(global, "conspiracy_convert")
-		if (current_cooldown)
-			boutput(user, SPAN_ALERT("[src] still needs to recharge before it can convert another. Time left: [current_cooldown/10]s"))
-			return
-		var/mob/living/carbon/human/H = M
-		if (istype(H) && H.eyes_protected_from_light())
-			return
-		if (src.convert_duration)
-			actions.start(new /datum/action/bar/private/icon/callback(user, M, src.convert_duration, PROC_REF(finish_conversion), list(M, user), src.icon, src.icon_state, SPAN_ALERT("[M]'s eyes glaze over for a second..."), INTERRUPT_ATTACKED | INTERRUPT_STUNNED, src), user)
-		else //skip actionbar
-			src.finish_conversion(M, user)
-
-	proc/finish_conversion(mob/living/M, mob/user)
-		M.mind?.add_antagonist(ROLE_CONSPIRATOR, source = ANTAGONIST_SOURCE_CONVERTED)
-		M.setStatus("knockdown", 5 SECONDS)
-		ON_COOLDOWN(global, "conspiracy_convert", src.convert_cooldown)
-		for (var/datum/mind/antag in ticker.mode.traitors)
-			if (antag.get_antagonist(ROLE_CONSPIRATOR))
-				antag.current.setStatus("conspiracy_convert", src.convert_cooldown)
+/obj/item/device/flash/conspiracy/proc/finish_conversion(mob/living/M, mob/user)
+	M.mind?.add_antagonist(ROLE_CONSPIRATOR, source = ANTAGONIST_SOURCE_CONVERTED)
+	M.setStatus("knockdown", 5 SECONDS)
+	ON_COOLDOWN(global, "conspiracy_convert", src.convert_cooldown)
+	for (var/datum/mind/antag in ticker.mode.traitors)
+		if (antag.get_antagonist(ROLE_CONSPIRATOR))
+			antag.current.setStatus("conspiracy_convert", src.convert_cooldown)
