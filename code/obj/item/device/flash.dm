@@ -34,94 +34,181 @@ TYPEINFO(/obj/item/device/flash)
 	var/max_flash_power = 0
 	var/min_flash_power = 0
 
-	cyborg
-		process_burnout(mob/user)
-			return
+/obj/item/device/flash/New()
+	..()
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE, PROC_REF(assembly_on_attack_override))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE, PROC_REF(assembly_do_attack_override))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
+	// Flash + assembly-applier -> flash/Applier-Assembly
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
-		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-			..()
-			var/mob/living/silicon/robot/R = user
-			if (istype(R))
-				R.cell.use(300)
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-		attack_self(mob/user as mob, flag)
-			..()
-			var/mob/living/silicon/robot/R = user
-			if (istype(R))
-				R.cell.use(150)
+/obj/item/device/flash/assembly_get_part_examine_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	return src.get_bulb_status_message()
 
-	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (!src.emagged)
-			if (user)
-				user.show_text("You use the card to poke a hole in the back of the [src]. That may not have been a very good idea.", "blue")
-			src.emagged = 1
-			src.desc += " There seems to be a tiny hole drilled into the back of it."
-			return 1
-		else
-			if (user)
-				user.show_text("There already seems to be some modifications done to the device.", "red")
+/obj/item/device/flash/proc/handle_assembly_flash_animation(var/obj/item/assembly/parent_assembly)
+	if(!parent_assembly)
+		return
+	//if someone knows a way to call animate() or something like flick on overlays, let me know.
+	//This should be changed if e.g. assembly icons get generated from vis content or something which supports more functions
+	if(parent_assembly.trigger == src)
+		parent_assembly.trigger_icon_prefix = "[src.animation_type]"
+		parent_assembly.update_icon()
+		SPAWN(4)
+			parent_assembly.trigger_icon_prefix = "[src.icon_state]"
+			parent_assembly.update_icon()
+	if(parent_assembly.applier == src)
+		parent_assembly.applier_icon_prefix = "[src.animation_type]"
+		parent_assembly.update_icon()
+		SPAWN(4)
+			parent_assembly.applier_icon_prefix = "[src.icon_state]"
+			parent_assembly.update_icon()
 
-	demag(var/mob/user)
-		if (!src.emagged)
-			return 0
+/obj/item/device/flash/proc/assembly_activation(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/mob/user)
+	if(src.do_pre_flash_checks(null, user, parent_assembly))
+		src.flash_area(user, parent_assembly.applier)
+		//The flash in an assembly as a trigger will trigger its applier. Got a flash/igniter/pipebomb-Assembly? Get exploded, nerd!
+		SPAWN(0)
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src
+			signal.data["message"] = "ACTIVATE"
+			parent_assembly.receive_signal(signal)
+
+/obj/item/device/flash/proc/assembly_application(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+	if(src.do_pre_flash_checks(null, null, parent_assembly))
+		src.flash_area(null, parent_assembly.target)
+
+/obj/item/device/flash/proc/assembly_setup(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	//if this is build in as trigger, we make the assembly able to attack with the flash
+	if(is_build_in && parent_assembly.trigger == src)
+		parent_assembly.set_attacking_component(src)
+
+/obj/item/device/flash/proc/assembly_removal(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/mob/user)
+	//we need to remove the attacking component, if the flash was it
+	if(parent_assembly.attacking_component == src)
+		parent_assembly.remove_attacking_component()
+
+/obj/item/device/flash/proc/assembly_on_attack_override(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/mob/target, var/mob/user, var/def_zone, var/is_special, var/params)
+	if(!src.do_pre_flash_checks(target, user, parent_assembly))
+		//if these checks fail, we make the assembly override fail and stop the attack
+		return TRUE
+
+/obj/item/device/flash/proc/assembly_do_attack_override(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/mob/target, var/mob/user, var/def_zone, var/is_special, var/params)
+	parent_assembly.add_fingerprint(user)
+	src.flash_mob(target, user, parent_assembly.applier)
+	//The flash in an assembly as a trigger will trigger its applier. Got a flash/igniter/pipebomb-Assembly? Get exploded, nerd!
+	SPAWN(0)
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src
+		signal.data["message"] = "ACTIVATE"
+		parent_assembly.receive_signal(signal)
+	//we need to send true here to override the attack-parent
+	return TRUE
+
+/// ----------------------------------------------
+
+/obj/item/device/flash/emag_act(var/mob/user, var/obj/item/card/emag/E)
+	if (!src.emagged)
 		if (user)
-			user.show_text("You fill the strange hole in the back of the [src].", "blue")
-		src.emagged = 0
-		src.desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
+			user.show_text("You use the card to poke a hole in the back of the [src]. That may not have been a very good idea.", "blue")
+		src.emagged = 1
+		src.desc += " There seems to be a tiny hole drilled into the back of it."
 		return 1
+	else
+		if (user)
+			user.show_text("There already seems to be some modifications done to the device.", "red")
 
-	get_desc()
-		. = ..()
-		if (src.status == 0)
-			. += "\nThe bulb has been burnt out"
-		else
-			switch(src.use)
-				if(0 to 4)
-					. += "\nThe bulb is in perfect condition."
-				if(4 to 6)
-					. += "\nThe bulb is in good condition"
-				if(6 to 8)
-					. += "\nThe bulb is in decent condition"
-				if(8 to 10)
-					. += "\nThe bulb is in bad condition"
-				else
-					. += "\nThe bulb is in terrible condition"
+/obj/item/device/flash/demag(var/mob/user)
+	if (!src.emagged)
+		return 0
+	if (user)
+		user.show_text("You fill the strange hole in the back of the [src].", "blue")
+	src.emagged = 0
+	src.desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
+	return 1
 
-	Exited(Obj, newloc)
-		. = ..()
-		if(Obj == src.cell)
-			qdel(src) //cannot un-turboflash
+/obj/item/device/flash/proc/get_bulb_status_message()
+	var/output = ""
+	if (src.status == 0)
+		output = "\nThe bulb has been burnt out"
+	else
+		switch(src.use)
+			if(0 to 4)
+				output = "\nThe bulb is in perfect condition."
+			if(4 to 6)
+				output = "\nThe bulb is in good condition"
+			if(6 to 8)
+				output = "\nThe bulb is in decent condition"
+			if(8 to 10)
+				output = "\nThe bulb is in bad condition"
+			else
+				output = "\nThe bulb is in terrible condition"
+	return output
+
+/obj/item/device/flash/get_desc()
+	. = ..()
+	. += src.get_bulb_status_message()
+
+/obj/item/device/flash/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		qdel(src) //cannot un-turboflash
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
-/obj/item/device/flash/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	if(isghostcritter(user)) return
-	src.flash_mob(target, user)
+/obj/item/device/flash/attack(var/mob/target, var/mob/user, var/def_zone, var/is_special = FALSE, var/params = null)
+	if(src.do_pre_flash_checks(target, user, src))
+		src.add_fingerprint(user)
+		src.flash_mob(target, user)
+	// Some after attack stuff.
+	user.lastattacked = get_weakref(target)
+	target.lastattacker = get_weakref(user)
+	target.lastattackertime = world.time
 
-// Tweaked attack and attack_self to reduce the amount of duplicate code. Turboflashes to be precise (Convair880).
-/obj/item/device/flash/proc/flash_mob(mob/living/M as mob, mob/user as mob)
-	src.add_fingerprint(user)
-	var/turf/t = get_turf(user)
-	if (t.loc:sanctuary)
-		user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!"))
+/obj/item/device/flash/attack_self(var/mob/user)
+	if(src.do_pre_flash_checks(null, user, src))
+		src.add_fingerprint(user)
+		src.flash_area(user)
+
+/obj/item/device/flash/proc/do_pre_flash_checks(var/mob/living/target, var/mob/user, var/obj/item/used_item)
+	if(user && isghostcritter(user))
+		user.visible_message(SPAN_ALERT("your feeble nature is unable to handle [used_item]!"))
 		return
-	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], but slips and drops it!"))
+	if(!used_item)
+		used_item = src
+	var/turf/t = get_turf(user)
+	if (target && t.loc:sanctuary)
+		user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [used_item], cannot quite comprehend the forces at play!"))
+		return
+	if (user && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
+		user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [used_item], but slips and drops it!"))
+		JOB_XP(user, "Clown", 1)
 		user.drop_item()
 		return
 	if (src.status == 0)
 		boutput(user, SPAN_ALERT("The bulb has been burnt out!"))
 		return
+	return TRUE
 
+
+// Tweaked attack and attack_self to reduce the amount of duplicate code. Turboflashes to be precise (Convair880).
+/obj/item/device/flash/proc/flash_mob(var/mob/living/M, var/mob/user, var/obj/item/modifier_item)
+	var/item_in_use = src
+	if(src.master)
+		item_in_use = src.master
 	// Handle turboflash power cell.
 	var/flash_power = 0
 	if (src.turboflash)
 		if (!src.cell)
-			user.show_text("[src] doesn't seem to be connected to a power cell.", "red")
+			user.show_text("[item_in_use] doesn't seem to be connected to a power cell.", "red")
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
-			user.visible_message(SPAN_ALERT("[user]'s flash/cell assembly violently explodes!"))
-			logTheThing(LOG_COMBAT, user, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
-			var/turf/T = get_turf(src.loc)
+			user.visible_message(SPAN_ALERT("[user]'s [item_in_use] violently explodes!"))
+			logTheThing(LOG_COMBAT, user, "tries to blind [constructTarget(M,"combat")] with [item_in_use] (erebite power cell) at [log_loc(user)].")
+			var/turf/T = get_turf(src)
 			explosion(src, T, 0, 1, 2, 2)
 			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
@@ -150,8 +237,11 @@ TYPEINFO(/obj/item/device/flash)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	FLICK(src.animation_type, src)
+	playsound(item_in_use, 'sound/weapons/flash.ogg', 100, TRUE)
+	if(src.master)
+		src.handle_assembly_flash_animation(src.master)
+	else
+		FLICK(src.animation_type, src)
 	if (!src.turboflash)
 		src.use++
 
@@ -186,10 +276,10 @@ TYPEINFO(/obj/item/device/flash)
 	if (!blind_success)
 		blind_msg_target = " but your eyes are protected!"
 		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
-	M.visible_message(SPAN_ALERT("[user] blinds [M] with \the [src][blind_msg_others]"), SPAN_ALERT("[user] blinds you with \the [src][blind_msg_target]"))
-	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
+	M.visible_message(SPAN_ALERT("[user] blinds [M] with \the [item_in_use][blind_msg_others]"), SPAN_ALERT("[user] blinds you with \the [item_in_use][blind_msg_target]"))
+	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [item_in_use] at [log_loc(user)].")
 	if (src.emagged)
-		logTheThing(LOG_COMBAT, user, "blinds themself with [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds themself with [item_in_use] at [log_loc(user)].")
 
 	// Handle bulb wear.
 	if (src.turboflash)
@@ -202,26 +292,14 @@ TYPEINFO(/obj/item/device/flash)
 	else
 		src.process_burnout(user)
 
-	// Some after attack stuff.
-	user.lastattacked = get_weakref(M)
-	M.lastattacker = get_weakref(user)
-	M.lastattackertime = world.time
+
 
 	return
 
-/obj/item/device/flash/attack_self(mob/user as mob)
-	if(isghostcritter(user)) return
-	src.add_fingerprint(user)
-
-	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
-		user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], but slips and drops it!"))
-		user.drop_item()
-		JOB_XP(user, "Clown", 1)
-		return
-	if (status == 0)
-		boutput(user, SPAN_ALERT("The bulb has been burnt out!"))
-		return
-
+/obj/item/device/flash/proc/flash_area(var/mob/user, var/obj/item/modifier_item)
+	var/item_in_use = src
+	if(src.master)
+		item_in_use = src.master
 	// Handle turboflash power cell.
 	if (src.turboflash)
 		if (!src.cell)
@@ -240,10 +318,13 @@ TYPEINFO(/obj/item/device/flash)
 			return
 
 	// Play animations.
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	FLICK(src.animation_type, src)
+	playsound(item_in_use, 'sound/weapons/flash.ogg', 100, TRUE)
+	if(src.master)
+		src.handle_assembly_flash_animation(src.master)
+	else
+		FLICK(src.animation_type, src)
 
-	if (isrobot(user))
+	if (user && isrobot(user))
 		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
@@ -277,7 +358,8 @@ TYPEINFO(/obj/item/device/flash)
 	if (src.turboflash)
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
-		boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
+		if(user)
+			boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
 		set_icon_state("turboflash3")
 		src.name = "depleted flash/cell assembly"
 	else
@@ -323,9 +405,17 @@ TYPEINFO(/obj/item/device/flash)
 	tooltip_rebuild = TRUE
 	if (prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
-		boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
+		if(user)
+			boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
 		set_icon_state("flash3")
 		name = "depleted flash"
+		if(istype(src.master,/obj/item/assembly))
+			var/obj/item/assembly/checked_assembly = src.master
+			if(checked_assembly.trigger == src) //in case a flash is used for something else than a trigger
+				checked_assembly.trigger_icon_prefix = "flash3"
+			if(checked_assembly.applier == src) //in case a flash is used for something else than a applier
+				checked_assembly.applier_icon_prefix = "flash3"
+			checked_assembly.UpdateIcon()
 
 	return
 
@@ -372,6 +462,25 @@ TYPEINFO(/obj/item/device/flash)
 	if(iscarbon(src.loc))
 		src.AttackSelf()
 	return
+
+
+/obj/item/device/flash/cyborg
+
+/obj/item/device/flash/cyborg/process_burnout(mob/user)
+	return
+
+/obj/item/device/flash/cyborg/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	..()
+	var/mob/living/silicon/robot/R = user
+	if (istype(R))
+		R.cell.use(300)
+
+/obj/item/device/flash/cyborg/attack_self(mob/user as mob, flag)
+	..()
+	var/mob/living/silicon/robot/R = user
+	if (istype(R))
+		R.cell.use(150)
+
 
 // The Turboflash - A flash combined with a charged energy cell to make a bigger, meaner flash (That dies after one use).
 TYPEINFO(/obj/item/device/flash/turbo)
