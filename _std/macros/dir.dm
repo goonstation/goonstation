@@ -3,6 +3,9 @@
 #define SOUTHEAST_UNIQUE (1<<8)
 #define NORTHEAST_UNIQUE (1<<9)
 
+#define CLOCKWISE 1
+#define COUNTERCLOCKWISE -1
+
 /// Never Soggy Eat Waffles
 var/global/list/cardinal = list(NORTH, SOUTH, EAST, WEST)
 /// Diagonal directions
@@ -20,6 +23,14 @@ var/global/list/dirvalues = list("[NORTH]" = "NORTH", "[SOUTH]" = "SOUTH", "[EAS
 /// Returns the lowercase english word for a direction (num)
 /proc/dir_to_dirname(dir)
 	return lowertext(global.dirvalues["[dir]"])
+
+/// Gets the reverse direction of the direction given. SOUTH returns NORTH, SOUTHEAST returns NORTHWEST, etc.
+/proc/reverse_dir(dir)
+    if(dir & (NORTH|SOUTH))
+        dir ^= (NORTH|SOUTH)
+    if(dir & (EAST|WEST))
+        dir ^= (EAST|WEST)
+    return dir
 
 /// Returns the direction (num) of a given lowercase english direction
 proc/dirname_to_dir(dirname)
@@ -113,6 +124,58 @@ proc/angle_to_vector(ang)
 	.= list()
 	. += cos(ang)
 	. += sin(ang)
+
+/// Gives an atom an offset around a directed edge
+proc/randomize_edge_offset(atom/target, dir, max_variation = 8, edge_offset = 13)
+	var/pixel_x = 0
+	var/pixel_y = 0
+
+	if(dir & NORTH)
+		pixel_y = edge_offset
+	else if(dir & SOUTH)
+		pixel_y = -edge_offset
+
+	if(dir & EAST)
+		pixel_x = edge_offset
+	else if(dir & WEST)
+		pixel_x = -edge_offset
+
+	if(dir & (NORTH|SOUTH))
+		pixel_x += rand(-max_variation, max_variation)
+	else if(dir & (EAST|WEST))
+		pixel_y += rand(-max_variation, max_variation)
+	else
+		pixel_x += rand(-max_variation, max_variation) * 0.7
+		pixel_y += rand(-max_variation, max_variation) * 0.7
+
+	pixel_x = clamp(pixel_x, -edge_offset, edge_offset)
+	pixel_y = clamp(pixel_y, -edge_offset, edge_offset)
+
+	target.pixel_x = pixel_x
+	target.pixel_y = pixel_y
+
+/// Given a starting direction, returns the best rotation direction towards the angle
+proc/get_shortest_rotation(angle, starting_dir)
+	var/start_angle = dir_to_angle(starting_dir)
+	var/clockwise_diff = (angle - start_angle)
+	if(clockwise_diff < 0)
+		clockwise_diff += 360
+	if(clockwise_diff > 180)
+		return CLOCKWISE
+	else
+		return COUNTERCLOCKWISE
+
+/// Searches rotationally around the given turf and returns the first passable turf found, checking the given direction first.
+/// If no passable turf is found, returns the turf in the given direction.
+proc/get_adjacent_passable(var/turf/turf, dir, clockwise)
+	var/turf/endturf = get_step(turf, dir)
+	var/step = 1
+	var/test_dir = dir
+	while (!checkTurfPassable(endturf) && step < 8)
+		test_dir = turn(dir, (45 * clockwise * step))
+		endturf = get_step(turf, test_dir)
+		step++
+	return endturf
 
 /// Calculates the angle you need to pass to the turn proc to get dir_to from dir_from
 /// turn(dir, turn_needed(dir, dir_to)) = dir_to

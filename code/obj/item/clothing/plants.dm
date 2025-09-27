@@ -1,4 +1,3 @@
-
 /obj/item/clothing/head/flower
 	name = "flower"
 	desc = "A pretty nice flower... you shouldn't see this, though."
@@ -76,7 +75,6 @@
 	name = "gardenia"
 	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent."
 	icon_state = "flower_gard"
-	item_state = "flower_gard"
 
 	set_sleuth_scent()
 		scent_A = register_id(pick_string("colors.txt", "colors")) // White flowers == any color?)
@@ -85,7 +83,6 @@
 	name = "bird of paradise"
 	desc = "Bird of Paradise flowers, or Crane Flowers, are named for their resemblance to the ACTUAL birds of the same name. Both look great sitting on your head either way."
 	icon_state = "flower_bop"
-	item_state = "flower_bop"
 
 	set_sleuth_scent()
 		scent_A = register_id("fuzzy orange")
@@ -95,7 +92,6 @@
 	name = "hydrangea"
 	desc = " Hydrangeas act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline. They are popular ornamental flowers due to their colorful pastel blooms; this one has been trimmed nicely for wear as an accessory."
 	icon_state = "flower_hyd"
-	item_state = "flower_hyd"
 
 	set_sleuth_scent()
 		scent_A = register_id("dusty grey")
@@ -103,7 +99,6 @@
 /obj/item/clothing/head/flower/hydrangea/pink
 	name = "pink hydrangea"
 	icon_state = "flower_hyd-pink"
-	item_state = "flower_hyd-pink"
 
 	set_sleuth_scent()
 		scent_A = register_id("dusty grey")
@@ -112,7 +107,6 @@
 /obj/item/clothing/head/flower/hydrangea/blue
 	name = "blue hydrangea"
 	icon_state = "flower_hyd-blue"
-	item_state = "flower_hyd-blue"
 
 	set_sleuth_scent()
 		scent_A = register_id("dusty grey")
@@ -121,7 +115,6 @@
 /obj/item/clothing/head/flower/hydrangea/purple
 	name = "purple hydrangea"
 	icon_state = "flower_hyd-purple"
-	item_state = "flower_hyd-purple"
 
 	set_sleuth_scent()
 		scent_A = register_id("dusty grey")
@@ -131,7 +124,6 @@
 	name = "lavender"
 	desc = "Lavender is usually used as an ingredient or as a source of essential oil; you can tuck a sprig behind your ear for that garden aesthetic too."
 	icon_state = "flower_lav"
-	item_state = "flower_lav"
 
 	New()
 		src.create_reagents(100)
@@ -277,7 +269,6 @@
 	icon_state = "pumpkinlatte"
 	c_flags = COVERSEYES | COVERSMOUTH
 	see_face = FALSE
-	item_state = "pumpkinlatte"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/light/flashlight))
