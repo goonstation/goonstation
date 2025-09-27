@@ -556,6 +556,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	type_name = "Bomb (radioactive)"
 	rarity_weight = 90
 	react_xray = list(12,75,30,11,"SHIELDED")
+	touch_descriptors = list("Your fingers continue to tingle after touching it.")
 	var/explosion_strength = 1
 	var/nuclear_fallout_cooldown = 10 SECONDS
 	var/nuclear_fallout_amount = 5
