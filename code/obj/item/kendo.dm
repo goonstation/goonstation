@@ -269,4 +269,4 @@
 	name = "uwagi and hakama box"
 	desc = "A box full of sets of uwagi and hakama!"
 	icon_state = "box"
-	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random=7)
+	spawn_contents = list(/obj/item/clothing/under/cultural/hakama/random=7)
