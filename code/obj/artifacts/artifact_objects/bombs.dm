@@ -544,3 +544,48 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 #undef NO_EFFECT
 #undef MAKE_HUMAN_MATERIAL
 #undef MAKE_HUMAN_STATUE
+
+// radioactive bomb
+
+/obj/machinery/artifact/bomb/radioactive
+	name = "artifact radioactive bomb"
+	associated_datum = /datum/artifact/bomb/radioactive
+
+/datum/artifact/bomb/radioactive
+	associated_object = /obj/machinery/artifact/bomb/radioactive
+	type_name = "Bomb (radioactive)"
+	rarity_weight = 90
+	react_xray = list(12,75,30,11,"SHIELDED")
+	var/explosion_strength = 1
+	var/nuclear_fallout_cooldown = 10 SECONDS
+	var/nuclear_fallout_amount = 5
+
+	New()
+		..()
+		//We don't need a big explosion, it's just to make a point.
+		src.explosion_strength = rand(50, 150)
+		src.nuclear_fallout_cooldown = rand(1, 10) SECONDS
+		src.nuclear_fallout_amount = rand(2, 10)
+
+	post_setup()
+		. = ..()
+		src.react_xray[1] = round(src.explosion_strength/3, 1)
+
+	deploy_payload(var/obj/O)
+		if (..())
+			return
+		explosion_new(O, get_turf(O), src.explosion_strength, TRUE, 0, 360, TRUE, flash_radiation_multiplier=1)
+		//Big blast of neutrons when it explodes.
+		for(var/i = 1 to src.nuclear_fallout_amount * 10)
+			shoot_projectile_XY(O, new /datum/projectile/neutron(100), rand(-10,10), rand(-10,10))
+
+		//O.ArtifactDestroyed()
+		//Oh, you thought it left no trace?
+
+	effect_process(var/obj/O)
+		if(..())
+			return
+		if(src.blewUp)
+			if(!ON_COOLDOWN(O, "nuclear_fallout", src.nuclear_fallout_cooldown))
+				for(var/i = 1 to src.nuclear_fallout_amount)
+					shoot_projectile_XY(O, new /datum/projectile/neutron(100), rand(-10,10), rand(-10,10))
