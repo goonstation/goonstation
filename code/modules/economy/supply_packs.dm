@@ -1305,16 +1305,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Obon Festival Crate"
 	desc = {"Contains traditional Space Japanese robes and fireworks for the observance of Obon; a syncretic summer festival fusing indigenous Japanese spiritual beliefs
 			with the Buddhist tradition of reverence for the dead."}
-	contains = list(/obj/item/clothing/under/gimmick/yukata/plain/gray,
-					/obj/item/clothing/under/gimmick/yukata/plain/black,
-					/obj/item/clothing/under/gimmick/yukata/plain/cream,
-					/obj/item/clothing/under/gimmick/yukata/plain/navy,
-					/obj/item/clothing/under/gimmick/yukata/plain/teal,
-					/obj/item/clothing/under/gimmick/yukata/floral/blue,
-					/obj/item/clothing/under/gimmick/yukata/floral/orange,
-					/obj/item/clothing/under/gimmick/yukata/floral/yellow,
-					/obj/item/clothing/under/gimmick/yukata/floral/red,
-					/obj/item/clothing/under/gimmick/yukata/floral/black,
+	contains = list(/obj/item/clothing/under/cultural/yukata/plain/gray,
+					/obj/item/clothing/under/cultural/yukata/plain/black,
+					/obj/item/clothing/under/cultural/yukata/plain/cream,
+					/obj/item/clothing/under/cultural/yukata/plain/navy,
+					/obj/item/clothing/under/cultural/yukata/plain/teal,
+					/obj/item/clothing/under/cultural/yukata/floral/blue,
+					/obj/item/clothing/under/cultural/yukata/floral/orange,
+					/obj/item/clothing/under/cultural/yukata/floral/yellow,
+					/obj/item/clothing/under/cultural/yukata/floral/red,
+					/obj/item/clothing/under/cultural/yukata/floral/black,
 					/obj/item/clothing/shoes/sandal = 10,
 					/obj/fireworksbox = 2,
 					/obj/item/firework = 5)

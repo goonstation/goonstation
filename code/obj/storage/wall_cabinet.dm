@@ -231,17 +231,17 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/sailormoon = 1,
 	/obj/item/clothing/under/gimmick/princess = 1,
 	/obj/item/clothing/under/gimmick/maid = 1,
-	/obj/item/clothing/under/gimmick/kilt = 1)
+	/obj/item/clothing/under/cultural/kilt = 1)
 
 /obj/item/storage/wall/clothingrack/clothes1
 	base_icon_state = "01"
-	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
+	spawn_contents = list(/obj/item/clothing/under/cultural/hakama/random = 1,
 	/obj/item/clothing/under/gimmick/sweater = 1,
 	/obj/item/clothing/under/gimmick/mario = 1,
 	/obj/item/clothing/under/gimmick/odlaw = 1,
 	/obj/item/clothing/under/gimmick/sealab = 1,
 	/obj/item/clothing/under/misc/hitman = 1,
-	/obj/item/clothing/under/misc/america = 1)
+	/obj/item/clothing/under/cultural/america = 1)
 
 /obj/item/storage/wall/clothingrack/dresses2
 	base_icon_state = "dress2"
@@ -255,7 +255,7 @@ TYPEINFO(/obj/item/storage/wall)
 
 /obj/item/storage/wall/clothingrack/clothes2
 	base_icon_state = "02"
-	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
+	spawn_contents = list(/obj/item/clothing/under/cultural/hakama/random = 1,
 	/obj/item/clothing/under/gimmick/toga = 1,
 	/obj/item/clothing/suit/mj_suit = 1,
 	/obj/item/clothing/under/gimmick/mj_clothes = 1,

@@ -3733,7 +3733,7 @@
 /obj/landmark/start/job/assistant,
 /obj/decal/cleanable/dirt,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/under/misc/america,
+/obj/item/clothing/under/cultural/america,
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "amF" = (
@@ -18043,7 +18043,7 @@
 /area/space)
 "bdI" = (
 /obj/storage/closet/dresser/random,
-/obj/item/clothing/under/misc/america,
+/obj/item/clothing/under/cultural/america,
 /obj/item/clothing/suit/jacket/plastic/random_color,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)

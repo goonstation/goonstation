@@ -30530,7 +30530,7 @@
 /area/dojo)
 "cpu" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/hakama/random,
+/obj/item/clothing/under/cultural/hakama/random,
 /obj/item/clothing/head/bandana/random_color,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
@@ -47962,7 +47962,7 @@
 /area/centcom/offices/gannets)
 "dxD" = (
 /obj/rack,
-/obj/item/clothing/under/gimmick/kilt{
+/obj/item/clothing/under/cultural/kilt{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -64327,7 +64327,7 @@
 "lHb" = (
 /obj/decal/cleanable/sakura,
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/yukata/plain/black,
+/obj/item/clothing/under/cultural/yukata/plain/black,
 /obj/item/clothing/suit/hoodie/black,
 /obj/item/clothing/suit/hoodie/white,
 /obj/item/clothing/suit/armor/hoscape,
@@ -73487,7 +73487,7 @@
 /area/syndicate_station/battlecruiser)
 "sGw" = (
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/hakama/random,
+/obj/item/clothing/under/cultural/hakama/random,
 /obj/item/clothing/head/bandana/random_color,
 /obj/item/clothing/head/helmet/men,
 /obj/item/clothing/head/helmet/men,

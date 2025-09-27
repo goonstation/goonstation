@@ -2867,7 +2867,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/tricolor
 	name = "Tricolor Jumpsuit"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
-	item_outputs = list(/obj/item/clothing/under/misc/tricolor)
+	item_outputs = list(/obj/item/clothing/under/cultural/tricolor)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"

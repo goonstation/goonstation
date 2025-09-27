@@ -498,7 +498,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/anthy,
 		/obj/item/clothing/under/gimmick/butler,
 		/obj/item/clothing/under/gimmick/maid,
-		/obj/item/clothing/under/gimmick/kilt,
+		/obj/item/clothing/under/cultural/kilt,
 		/obj/item/clothing/under/gimmick/wedding_dress,
 		/obj/item/clothing/under/gimmick/psyche,
 		/obj/item/clothing/under/gimmick/dolan,
@@ -515,7 +515,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/mario/waluigi,
 		/obj/item/clothing/under/gimmick/mario,
 		/obj/item/clothing/under/gimmick/shirtnjeans,
-		/obj/item/clothing/under/gimmick/hakama/random)
+		/obj/item/clothing/under/cultural/hakama/random)
 	jumpsuit = new suit_type(battler)
 	jumpsuit.setProperty("coldprot", 5)
 	jumpsuit.setProperty("heatprot", 5)
