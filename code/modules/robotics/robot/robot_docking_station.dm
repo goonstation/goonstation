@@ -704,7 +704,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)
-				R.internal_pda.name = "[R.name]'s Internal PDA Unit"
+				R.internal_pda.name = "[R.name]’s Internal PDA Unit"
 				R.internal_pda.owner = "[R.name]"
 			. = TRUE
 		if("occupant-eject")

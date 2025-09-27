@@ -1,3 +1,103 @@
+
+(t)fri sep 26 25
+(u)Sord
+(+)The Research Director now gets a special bio suit in their main locker.
+(u)JORJ949
+(p)24748
+(e)💅📄|C-QoL, A-UI
+(*)Antagonist summary item names (Including wizard spells and blob upgrades) are now hidden behind a tooltip available by hovering over the item's icon.
+(t)wed sep 24 25
+(u)Kanthes
+(p)24683
+(e)🆕🔬|C-Feature, A-Science
+(*)Added the Flinger large artifact.
+(t)mon sep 22 25
+(u)Egregorious
+(p)24686
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added sfx for putting things into chutes. If the action does have an associated chat message, noone else will hear the sound except you.
+(u)JORJ949
+(p)24672
+(e)🆕📄🧛|C-Feature, A-UI, A-Gamemodes
+(*)Added a "Preferred Uplink" option under the general character setup tab. The uplink received when rolling Traitor or Head Revolutionary will try to reflect this option.
+(t)sun sep 21 25
+(u)JORJ949
+(p)24685
+(e)⚖🤖|C-Balance, A-Silicons
+(*)AI Cores can now survive on their internal cell for only 25 minutes, down from 100 minutes.
+(u)NibChocolateeny
+(p)24223
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)New Research indicates that splicing the Invasive Growth gene into-non creepers will cause them to spread via budding; they do not have a chance to mutate initially when spreading to new trays.
+(u)NibChocolateeny
+(p)24346
+(e)🆕🔎⚖📦|C-Feature, C-Code-Quality, C-Balance, A-Game-Objects
+(*)9mm Frangible Rounds can be fabricated from hacked general fabricators, but you'll need a lot of plastic to make them.
+(u)JORJ949
+(p)24488
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Syndicate Cyborgs will now appear on the robotics console, but are immune to the effects of lockdowns and killswitches.
+(u)Egregorious
+(p)24669
+(e)💅🔨📦|C-QoL, A-Player-Actions, A-Game-Objects
+(+)Dumping the contents of mining, produce and mail satchels into a chute is now performed by click-dragging.
+(u)JORJ949
+(p)24655
+(e)⚖📦🤖|C-Balance, A-Game-Objects, A-Silicons
+(+)Law Linkers now come connected to the default law rack.
+(u)Kubius
+(p)24682
+(e)⚖|C-Balance
+(+)Interdictor component material costs have received across-the-board reductions.
+(t)sat sep 20 25
+(u)TemThrush
+(p)24694
+(e)🎨|C-Sprites
+(*)Added 14 new long hairstyles into the game, see minor changes for the list!
+(+)New hairstyle options are; Long Poofy, Med Curls, Long Straight, Royal Curls, Poofy Wave, Wild Wave, Symmetrical Bob, Choppy Long, Himecut, Wild Bedhead, Sway, Longer Curls, Curly Twists, and Straightened Shoulder-Length.
+(t)wed sep 17 25
+(u)JORJ949
+(p)24549
+(e)🗺🔄|A-Mapping, C-Rework
+(*)Clarion's Bridge has been reworked.
+(t)tue sep 16 25
+(u)Lord_Earthfire
+(p)24661
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Geiger counter can now be added as triggers into assemblies. They will trigger whenever the wearer is affected by radiation. Turn a monkey into a radiation-detector for mechcomp today!
+(u)Lord_Earthfire
+(p)24662
+(e)⚖🔄📦💡|C-Balance, C-Rework, A-Game-Objects, A-Station-Systems
+(+)Proximity sensors have a small cooldown between activations
+(t)mon sep 15 25
+(u)Lord_Earthfire
+(p)24657
+(e)|
+(+)Multitools in assemblies will now shock the tile they are on when activated, akin to using their special attack.
+(t)sun sep 14 25
+(u)JORJ949
+(p)24646
+(e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
+(+)Law Linkers now show the location of their linked rack on examine.
+(u)JORJ949
+(p)24479
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Added a new captainly "Regal" AI skin available via a plating kit made by adding wires to a captain's uniform.
+(u)Studenterhue
+(p)24653
+(e)🎨|C-Sprites
+(+)Congratulations to SnugglyCactus, Whele, Scientifically, Mailman T, Shiiba, and IncendiaryCrocs for winning the Goonstation Summer 2025 Seasonal Contest! Now, when you open your mail, you may find the postcards they made.
+(+)Frank_Stein, Elskrises, RubberRats, and Gamb1t did not win, but their postcards were so cool that they too appear in the mail loot pool for all jobs now, at slightly lower spawn rates.
+(t)sat sep 13 25
+(u)LeahTheTech
+(p)24651
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(*)Spirit candles can now be activated twice before being used up, but reveal the wraith for a shorter time.
+(u)LeahTheTech
+(p)24644
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Salt no longer reveals wraiths, instead it blocks them and can be shoved through for a small health cost.
+(*)Salt now blocks wraith abilities based on line of sight.
 (t)fri sep 12 25
 (u)LeahTheTech
 (+)EMPing an AI core now has a 50% chance to eject them back to their mainframe or forcefully enable text mode for 15 seconds.

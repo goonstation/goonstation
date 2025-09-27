@@ -257,7 +257,9 @@
 	/obj/item/places_pipes/research,
 	/obj/item/rcd_ammo/big,
 	/obj/item/circuitboard/card/research,
-	/obj/item/circuitboard/announcement/research)
+	/obj/item/circuitboard/announcement/research,
+	/obj/item/clothing/suit/hazard/bio_suit/rd,
+	/obj/item/clothing/head/bio_hood/rd)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has

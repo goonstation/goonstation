@@ -856,7 +856,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			gibs(S.loc, null, bdna, btype)
 
 			S.set_mutantrace(/datum/mutantrace/skeleton)
-			S.real_name = "[S.name]'s skeleton"
+			S.real_name = "[S.name]’s skeleton"
 			S.name = S.real_name
 			S.update_body()
 			S.UpdateName()

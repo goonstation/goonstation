@@ -42,7 +42,7 @@
 				playsound(holder.owner, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 				R.emote("scream")
 				var/obj/item/parts/robot_parts/chest/chestpunt = new R.part_chest.type(R.loc)
-				chestpunt.name = "[R.name]'s [chestpunt.name]"
+				chestpunt.name = "[R.name]’s [chestpunt.name]"
 				R.compborg_lose_limb(R.part_chest)
 
 				for (var/I = 1, I <= 5 && chestpunt && step(chestpunt ,direction, 1), I++)
