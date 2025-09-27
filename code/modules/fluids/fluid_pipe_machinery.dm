@@ -81,11 +81,15 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 	desc = "A big ol' hole for pouring in fluids."
 	icon_state = "port"
 	flags = NOSPLASH | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
-	HELP_MESSAGE_OVERRIDE("You can connect glass plumbing to this machine.")
+	HELP_MESSAGE_OVERRIDE("You can connect glass plumbing to this machine. Can pull 100 units from a screwed barrel per cycle.")
+	var/obj/reagent_dispensers/chemicalbarrel/connectedcontainer = null
 
 /obj/machinery/fluid_machinery/unary/input/initialize()
 	..()
 	src.reagents = src.network?.reagents || new(0)
+
+/obj/machinery/fluid_machinery/unary/input/process()
+	src.connectedcontainer?.reagents.trans_to(src, 100)
 
 /obj/machinery/fluid_machinery/unary/input/get_chemical_effect_position()
 	return 0
@@ -107,7 +111,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 			playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
 
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump
-	name = "inlet pump"
+	name = "inlet drain"
 	icon_state = "inlet0"
 	desc = "A powered and togglable drainage pipe."
 	HELP_MESSAGE_OVERRIDE("Pulls anywhere from 10 to 15 units from a turf.")
@@ -157,7 +161,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	icon_state = "output0"
 	desc = "A hand-operated pump."
 	flags = NOSPLASH
-	HELP_MESSAGE_OVERRIDE("Click with an open container to pour into it. Outputs up to 100 units. Use a wrench to change max output.")
+	HELP_MESSAGE_OVERRIDE("Click with an open container to pour into it. Outputs up to 100 units. Use a <b>wrench</b> to change max output.")
 
 	var/maxpullrate = 100
 	var/pullrate = 100
@@ -206,7 +210,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	icon_state = "dripper"
 	desc = "A modified hand pump, it passively drips fluid onto the floor or, if it has, into containers, but at a low rate."
 	flags = NOSPLASH
-	HELP_MESSAGE_OVERRIDE("Can connect glass plumbing from this machine. Drips up to 30 units at a time. Use a wrench to change max output.")
+	HELP_MESSAGE_OVERRIDE("Can connect glass plumbing from this machine. Drips up to 30 units at a time. Use a <b>wrench</b> to change max output.")
 
 	var/maxpullrate = 30
 	var/pullrate = 30

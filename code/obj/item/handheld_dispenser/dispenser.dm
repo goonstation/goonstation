@@ -644,7 +644,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		return dir
 
 	fluidinlet
-		name = "Inlet pump"
+		name = "Inlet drain"
 		path = /obj/machinery/fluid_machinery/unary/drain/inlet_pump/overfloor
 		icon_state = "fluidinlet"
 		desc = "Drains between 10-15 units of fluid actively."
@@ -664,7 +664,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		name = "Port"
 		path = /obj/machinery/fluid_machinery/unary/input
 		icon_state = "port"
-		desc = "Allows pouring in fluids into the network directly and connecting glass plumbing."
+		desc = "Allows pouring in fluids into the network directly and connecting glass plumbing. Can pull 100 units from a screwed barrel per cycle."
 	dispenser
 		name = "Dispenser"
 		path = /obj/machinery/fluid_machinery/unary/dispenser
