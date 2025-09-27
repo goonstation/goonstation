@@ -145,7 +145,7 @@
 		parent_assembly.applier_icon_prefix = "cell"
 	if(parent_assembly.target == src)
 		//we need to displace the icon a bit more
-		parent_assembly.icon_base_offset = 4
+		parent_assembly.icon_base_offset = 3
 
 /obj/item/cell/proc/assembly_removal(var/manipulated_cell, var/obj/item/assembly/parent_assembly, var/mob/user)
 	//we need to reset the base icon offset
