@@ -1,4 +1,9 @@
 
+(t)sat sep 27 25
+(u)JORJ949
+(p)24743
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Spy thieves now have a "Steal items via uplink" objective, the "Professional Thief" medal is now tied to this objective.
 (t)fri sep 26 25
 (u)Sord
 (+)The Research Director now gets a special bio suit in their main locker.
