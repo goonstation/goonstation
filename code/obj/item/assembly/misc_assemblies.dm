@@ -921,6 +921,21 @@ Contains:
 	icon_state = "Pipe_Wired_Syndicate"
 	pipebomb_path = /obj/item/pipebomb/bomb/miniature_syndicate
 
+
+
+/////////////////////////////////////////////////// flash/cell assemblies ////////////////////////////////////
+
+/obj/item/assembly/flash_cell
+	secured = TRUE
+	var/new_cell_charge = 7500
+
+/obj/item/assembly/flash_cell/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/device/flash(src)
+	var/obj/item/cell/new_applier = new /obj/item/cell(src)
+	new_applier.charge = src.new_cell_charge
+	src.set_up_new(null, new_trigger, new_applier)
+
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
 
 ABSTRACT_TYPE(/datum/pipeshotrecipe)

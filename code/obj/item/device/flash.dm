@@ -416,25 +416,11 @@ obj/item/device/flash/cyborg/handle_animations(var/mob/user, var/obj/item_in_use
 	if (istype(R))
 		R.cell.use(150)
 
-
-// The Turboflash - A flash combined with a charged energy cell to make a bigger, meaner flash (That dies after one use).
-TYPEINFO(/obj/item/device/flash/turbo)
-	mats = 0
-
-/obj/item/device/flash/turbo
-	name = "flash/cell assembly"
-	desc = "A common stun weapon with a power cell hastily wired into it. Looks dangerous."
-	icon_state = "turboflash"
-	animation_type = "turboflash2"
-	max_flash_power = 5000
-	min_flash_power = 500
-
-
 /obj/item/storage/box/turbo_flash_kit
 	name = "\improper Box of flash/cell assemblies."
 	desc = "A box filled with five dangerous looking flash/cell assemblies."
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/device/flash/turbo = 5)
+	spawn_contents = list(/obj/item/assembly/flash_cell = 5)
 
 TYPEINFO(/obj/item/device/flash/revolution)
 	mats = 0
