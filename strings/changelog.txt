@@ -1,5 +1,7 @@
 
 (t)sat sep 27 25
+(u)LeahTheTech
+(+)Saying something will now once again bump up the maptext of people around you. Yes this was a feature, you weren't going crazy.
 (u)JORJ949
 (p)24743
 (e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes

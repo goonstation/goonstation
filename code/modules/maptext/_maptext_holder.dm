@@ -44,6 +44,10 @@
 
 	. = ..()
 
+/// Push all maptext lines upwards.
+/atom/movable/maptext_holder/proc/bump_up(text_height)
+	animate(src, pixel_y = src.pixel_y + text_height, time = MAPTEXT_FADE_IN_DURATION, flags = ANIMATION_PARALLEL)
+
 /// Adds a line of maptext to this maptext holder, displays it, animates it scrolling in, and queues its removal.
 /atom/movable/maptext_holder/proc/add_line(image/maptext/text)
 	// Notify the parent maptext manager if this is the first line of maptext added.
@@ -72,8 +76,21 @@
 	text.alpha = 0
 	text.pixel_y += text_height - MAPTEXT_FADE_IN_DISTANCE
 
-	// Push all maptext lines upwards.
-	animate(src, pixel_y = src.pixel_y + text_height, time = MAPTEXT_FADE_IN_DURATION, flags = ANIMATION_PARALLEL)
+	src.bump_up(text_height)
+
+	var/turf/T = get_turf(src.parent.parent)
+	for(var/i = 0; i < 2; i++)
+		T = get_step(T, WEST)
+	for(var/i = 0; i < 5; i++)
+		//this is restricted to mobs only for performance reasons, and living mobs only to not let ghosts interfere
+		for(var/mob/living/other_mob in T)
+			if(other_mob == src.parent.parent)
+				continue
+			for (var/client/client in other_mob.maptext_manager?.maptext_holders_by_client)
+				var/atom/movable/maptext_holder/holder = other_mob.maptext_manager.maptext_holders_by_client[client]
+				holder.bump_up(text_height)
+		T = get_step(T, EAST)
+
 	// Animate the new line's fade-in.
 	animate(text, alpha = target_alpha, pixel_y = target_pixel_y, time = MAPTEXT_FADE_IN_DURATION, flags = ANIMATION_PARALLEL)
 
