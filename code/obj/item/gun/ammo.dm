@@ -1618,19 +1618,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		return (log(x / 68.8590961441749) / 0.0220758504333)
 
 	banana
-		ammo_type = new/datum/projectile/bullet/produce/banana
+		ammo_type = new/datum/projectile/bullet/produce/plant/banana
 
 	plant
 		ammo_type = new/datum/projectile/bullet/produce/plant
 
 	potato
-		ammo_type = new/datum/projectile/bullet/produce/potato
+		ammo_type = new/datum/projectile/bullet/produce/plant/potato
 
 	tomato
-		ammo_type = new/datum/projectile/bullet/produce/tomato
+		ammo_type = new/datum/projectile/bullet/produce/plant/tomato
 
 	egg
-		ammo_type = new/datum/projectile/bullet/produce/egg
+		ammo_type = new/datum/projectile/bullet/produce/plant/egg
 
 //////////////////////////////////// Power cells for eguns //////////////////////////
 

@@ -2524,21 +2524,17 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 		hit_decal = /obj/decal/cleanable/plantsplat
 		hit_mob_sound = 'sound/effects/small_splat.ogg'
 
-	banana
-		hit_decal = /obj/decal/cleanable/bananasplat
-		item_left = /obj/item/bananapeel
-		hit_mob_sound = 'sound/effects/small_splat.ogg'
+		banana
+			hit_decal = /obj/decal/cleanable/bananasplat
+			item_left = /obj/item/bananapeel
 
-	egg
-		hit_decal = /obj/decal/cleanable/eggsplat
-		hit_mob_sound = 'sound/effects/small_splat.ogg'
+		egg
+			hit_decal = /obj/decal/cleanable/eggsplat
 
-	tomato
-		hit_decal = /obj/decal/cleanable/tomatosplat
-		hit_mob_sound = 'sound/effects/small_splat.ogg'
+		tomato
+			hit_decal = /obj/decal/cleanable/tomatosplat
 
-	potato
-		hit_decal = /obj/decal/cleanable/potatosplat
-		hit_mob_sound = 'sound/effects/small_splat.ogg'
+		potato
+			hit_decal = /obj/decal/cleanable/potatosplat
 
 
