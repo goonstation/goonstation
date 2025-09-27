@@ -587,5 +587,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		if(src.blewUp)
 			if(!ON_COOLDOWN(O, "nuclear_fallout", src.nuclear_fallout_cooldown))
+				var/turf/location = get_turf(O)
+				location.visible_message("<b>[O]</b> spews out radiation!")
 				for(var/i = 1 to src.nuclear_fallout_amount)
 					shoot_projectile_XY(O, new /datum/projectile/neutron(100), rand(-10,10), rand(-10,10))
