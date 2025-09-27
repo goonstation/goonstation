@@ -90,18 +90,23 @@ TYPEINFO(/datum/component/assembly)
 			return src.override_combination(checked_atom, user)
 
 /// This component handles the creation of modular trigger-applier-assemblies
+TYPEINFO(/datum/component/assembly)
+	initialization_args = list(
+		ARG_INFO("override_component", DATA_INPUT_TYPE, "path or list of items that will trigger this proc when used on. This is an override special assemblies for e.g. flash/cell assemblies"),
+	)
+
 /datum/component/assembly/trigger_applier_assembly
 	to_combine_item = TOOL_ASSEMBLY_APPLIER
 	valid_assembly_proc = null
 
-/datum/component/assembly/trigger_applier_assembly/Initialize()
+/datum/component/assembly/trigger_applier_assembly/Initialize(var/override_component = null)
 	if(!src.parent)
 		return COMPONENT_INCOMPATIBLE
-	. = ..(TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
+	. = ..(override_component ? override_component : TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
 
 /datum/component/assembly/trigger_applier_assembly/attackby(var/atom/affected_parent, var/atom/to_combine_atom, var/mob/user, var/params, var/is_special)
-	if(to_combine_atom.GetComponents(/datum/component/assembly/trigger_applier_assembly))
-		//If the item used to attack you can also be a trigger for an assembly, we don't continue here.
+	if((length(to_combine_atom.GetComponents(/datum/component/assembly/trigger_applier_assembly)) > 0) && isassemblyapplier(src.parent))
+		//If the item used to attack you can also be trigger and a applier for an assembly, we don't continue here.
 		//At this point, the component of to_combine_atom should already turned this item into an assembly
 		//this guarantees that the item you use in your hand for an assembly will always turn out to be the trigger
 		return FALSE

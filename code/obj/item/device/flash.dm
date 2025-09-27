@@ -19,7 +19,6 @@ TYPEINFO(/obj/item/device/flash)
 	item_state = "electronic"
 
 	var/status = 1 // Bulb still functional?
-	var/secure = 1 // Access panel still secured?
 	var/use = 0 // Times the flash has been used.
 	var/emagged = 0 // Booby Trapped?
 
@@ -30,10 +29,8 @@ TYPEINFO(/obj/item/device/flash)
 
 	var/animation_type = "flash2"
 
-	var/turboflash = 0 // Turbo flash-specific vars.
-	var/obj/item/cell/cell = null
-	var/max_flash_power = 0
-	var/min_flash_power = 0
+	var/max_flash_power = 5000
+	var/min_flash_power = 500
 
 /obj/item/device/flash/New()
 	..()
@@ -43,6 +40,8 @@ TYPEINFO(/obj/item/device/flash)
 	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE, PROC_REF(assembly_on_attack_override))
 	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE, PROC_REF(assembly_do_attack_override))
 	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
+	// Flash + cell -> flash/cell-Assembly
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly, /obj/item/cell)
 	// Flash + assembly-applier -> flash/Applier-Assembly
 	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
@@ -84,6 +83,9 @@ TYPEINFO(/obj/item/device/flash)
 		src.flash_area(null, parent_assembly.target)
 
 /obj/item/device/flash/proc/assembly_setup(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	if(parent_assembly.applier == src)
+		// trigger/flash-Assembly + cell -> trigger/flash/cell assembly
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/cell), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
 	//if this is build in as trigger, we make the assembly able to attack with the flash
 	if(is_build_in && parent_assembly.trigger == src)
 		parent_assembly.set_attacking_component(src)
@@ -154,12 +156,6 @@ TYPEINFO(/obj/item/device/flash)
 	. = ..()
 	. += src.get_bulb_status_message()
 
-/obj/item/device/flash/Exited(Obj, newloc)
-	. = ..()
-	if(Obj == src.cell)
-		qdel(src) //cannot un-turboflash
-
-//I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(var/mob/target, var/mob/user, var/def_zone, var/is_special = FALSE, var/params = null)
 	if(src.do_pre_flash_checks(target, user, src))
 		src.add_fingerprint(user)
@@ -194,6 +190,33 @@ TYPEINFO(/obj/item/device/flash)
 		return
 	return TRUE
 
+//this proc handles flash/cell assembly power drain and calculation.
+//it returns the new cell power
+/obj/item/device/flash/proc/handle_power_cell_boost(var/mob/target, var/mob/user, var/obj/item/item_in_use, var/obj/item/cell/manipulated_cell)
+	var/power_output = 1
+	if(istype(manipulated_cell, /obj/item/cell/erebite))
+		if(user)
+			user.visible_message(SPAN_ALERT("[user]'s [item_in_use] violently explodes!"))
+		logTheThing(LOG_COMBAT, user, "tries to blind [target ? "[constructTarget(target,"combat")] " : ""]with [item_in_use] (erebite power cell) at [log_loc(src)].")
+		var/turf/T = get_turf(src)
+		explosion(src, T, 0, 1, 2, 2)
+		SPAWN(0.1 SECONDS)
+			if(src && istype(src.master,/obj/item/assembly))
+				qdel(src.master)
+			else
+				qdel(src)
+		return 0
+	if (manipulated_cell && manipulated_cell.charge >= min_flash_power)
+		power_output = min(2,1 + (manipulated_cell.charge / max_flash_power))
+		manipulated_cell.use(src.max_flash_power)
+	return power_output
+
+/obj/item/device/flash/proc/handle_animations(var/mob/user, var/obj/item_in_use)
+	playsound(item_in_use, 'sound/weapons/flash.ogg', 100, TRUE)
+	if(src.master)
+		src.handle_assembly_flash_animation(src.master)
+	else
+		FLICK(src.animation_type, src)
 
 // Tweaked attack and attack_self to reduce the amount of duplicate code. Turboflashes to be precise (Convair880).
 /obj/item/device/flash/proc/flash_mob(var/mob/living/M, var/mob/user, var/obj/item/modifier_item)
@@ -201,51 +224,14 @@ TYPEINFO(/obj/item/device/flash)
 	if(src.master)
 		item_in_use = src.master
 	// Handle turboflash power cell.
-	var/flash_power = 0
-	if (src.turboflash)
-		if (!src.cell)
-			user.show_text("[item_in_use] doesn't seem to be connected to a power cell.", "red")
-			return
-		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
-			user.visible_message(SPAN_ALERT("[user]'s [item_in_use] violently explodes!"))
-			logTheThing(LOG_COMBAT, user, "tries to blind [constructTarget(M,"combat")] with [item_in_use] (erebite power cell) at [log_loc(user)].")
-			var/turf/T = get_turf(src)
-			explosion(src, T, 0, 1, 2, 2)
-			SPAWN(0.1 SECONDS)
-				if (src) qdel(src)
-			return
-		if (src.cell)
-			if (src.cell.charge < min_flash_power)
-				user.show_text("[src] seems to be out of power.", "red")
-				return
-			else
-				flash_power = src.cell.charge / max_flash_power
-				if (flash_power > 1)
-					flash_power = 1
-				flash_power++
-	else
-		flash_power = 1
-
+	var/flash_power = 1
+	if (istype(modifier_item, /obj/item/cell))
+		flash_power = src.handle_power_cell_boost(M, user, item_in_use, modifier_item)
+	if (flash_power == 0)
+		//our erebite cell blew up, no flash for you
+		return
 	// Play animations.
-	if (isrobot(user))
-		SPAWN(0)
-			var/atom/movable/overlay/animation = new(user.loc)
-			animation.layer = user.layer + 1
-			animation.icon_state = "blank"
-			animation.icon = 'icons/mob/mob.dmi'
-			animation.master = user
-			FLICK("blspell", animation)
-			sleep(0.5 SECONDS)
-			qdel(animation)
-
-	playsound(item_in_use, 'sound/weapons/flash.ogg', 100, TRUE)
-	if(src.master)
-		src.handle_assembly_flash_animation(src.master)
-	else
-		FLICK(src.animation_type, src)
-	if (!src.turboflash)
-		src.use++
-
+	src.handle_animations(user, item_in_use)
 	// Calculate target damage.
 	var/animation_duration
 	var/weakened
@@ -253,7 +239,7 @@ TYPEINFO(/obj/item/device/flash)
 	var/eye_damage
 	var/burning
 
-	if (src.turboflash)
+	if (flash_power > 1)
 		animation_duration = 60
 		weakened = (10 + src.stun_mod) * flash_power
 		eye_blurry = src.eye_damage_mod + rand(2, (4 * flash_power))
@@ -268,9 +254,8 @@ TYPEINFO(/obj/item/device/flash)
 	var/blind_success = M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 	if (src.emagged)
 		user.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
-
+	// handling rev conversion
 	convert(M,user)
-
 	// Log entry.
 	var/blind_msg_target = "!"
 	var/blind_msg_others = "!"
@@ -281,20 +266,9 @@ TYPEINFO(/obj/item/device/flash)
 	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [item_in_use] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing(LOG_COMBAT, user, "blinds themself with [item_in_use] at [log_loc(user)].")
-
 	// Handle bulb wear.
-	if (src.turboflash)
-		status = 0
-		src.cell.use(min(src.cell.charge, max_flash_power))
-		boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
-		set_icon_state("turboflash3")
-		src.name = "depleted flash/cell assembly"
-
-	else
-		src.process_burnout(user)
-
-
-
+	src.use++
+	src.process_burnout(user, flash_power)
 	return
 
 /obj/item/device/flash/proc/flash_area(var/mob/user, var/obj/item/modifier_item)
@@ -302,40 +276,15 @@ TYPEINFO(/obj/item/device/flash)
 	if(src.master)
 		item_in_use = src.master
 	// Handle turboflash power cell.
-	if (src.turboflash)
-		if (!src.cell)
-			user.show_text("[src] doesn't seem to be connected to a power cell.", "red")
-			return
-		if (src.cell && src.cell.charge < min_flash_power)
-			user.show_text("[src] seems to be out of power.", "red")
-			return
-		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
-			user.visible_message(SPAN_ALERT("[user]'s flash/cell assembly violently explodes!"))
-			logTheThing(LOG_COMBAT, user, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
-			var/turf/T = get_turf(src.loc)
-			explosion(src, T, 0, 1, 2, 2)
-			SPAWN(0.1 SECONDS)
-				if (src) qdel(src)
-			return
-
+	var/flash_power = 1
+	if (istype(modifier_item, /obj/item/cell))
+		flash_power = src.handle_power_cell_boost(null, user, item_in_use, modifier_item)
+	if (flash_power == 0)
+		//our erebite cell blew up, no flash for you
+		return
 	// Play animations.
-	playsound(item_in_use, 'sound/weapons/flash.ogg', 100, TRUE)
-	if(src.master)
-		src.handle_assembly_flash_animation(src.master)
-	else
-		FLICK(src.animation_type, src)
-
-	if (user && isrobot(user))
-		SPAWN(0)
-			var/atom/movable/overlay/animation = new(user.loc)
-			animation.layer = user.layer + 1
-			animation.icon_state = "blank"
-			animation.icon = 'icons/mob/mob.dmi'
-			animation.master = user
-			FLICK("blspell", animation)
-			sleep(0.5 SECONDS)
-			qdel(animation)
-
+	src.handle_animations(user, item_in_use)
+	// Handle turboflash power cell.
 	// Flash target mobs.
 	for (var/atom/A in oviewers((3 + src.range_mod), get_turf(src)))
 		var/mob/living/M
@@ -346,27 +295,16 @@ TYPEINFO(/obj/item/device/flash)
 		else if (ismob(A))
 			M = A
 		if (M)
-			if (src.turboflash)
+			if (flash_power > 1)
 				M.apply_flash(35, 0, 0, 25)
 			else
 				var/dist = GET_DIST(get_turf(src),M)
 				dist = min(dist,4)
 				dist = max(dist,1)
 				M.apply_flash(20, knockdown = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
-
-
 	// Handle bulb wear.
-	if (src.turboflash)
-		status = 0
-		src.cell.use(min(src.cell.charge, max_flash_power))
-		if(user)
-			boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
-		set_icon_state("turboflash3")
-		src.name = "depleted flash/cell assembly"
-	else
-		src.use++
-		src.process_burnout(user)
-
+	src.use++
+	src.process_burnout(user, flash_power)
 	return
 
 /obj/item/device/flash/proc/convert(mob/living/M as mob, mob/user as mob)
@@ -402,9 +340,10 @@ TYPEINFO(/obj/item/device/flash)
 /obj/item/device/flash/proc/on_counterrev(mob/living/M, mob/user)
 	user.show_text("There seems to be something preventing [M] from revolting.", "red")
 
-/obj/item/device/flash/proc/process_burnout(mob/user as mob)
+/obj/item/device/flash/proc/process_burnout(var/mob/user, var/flash_power)
 	tooltip_rebuild = TRUE
-	if (prob(max(0,((use-5)*10) + burn_mod)))
+	//if the flash power was greater than 1, we used a cell and thus this thing can burn out
+	if (flash_power > 1 || prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
 		if(user)
 			boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
@@ -417,30 +356,8 @@ TYPEINFO(/obj/item/device/flash)
 			if(checked_assembly.applier == src) //in case a flash is used for something else than a applier
 				checked_assembly.applier_icon_prefix = "flash3"
 			checked_assembly.UpdateIcon()
-
+			checked_assembly.UpdateName()
 	return
-
-
-/obj/item/device/flash/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/cell) && !src.secure)
-		boutput(user, SPAN_NOTICE("You combine [W] and [src]..."))
-		var/obj/item/device/flash/turbo/T = new /obj/item/device/flash/turbo(user.loc)
-		T.cell = W
-		user.drop_item()
-		W.set_loc(T)
-
-		if(!src.status)
-			T.set_icon_state("turboflash3")
-			T.status = 0
-
-		qdel(src)
-		return
-	else if (isscrewingtool(W))
-		boutput(user, SPAN_NOTICE("You [src.secure ? "unscrew" : "secure"] the access panel."))
-		secure = !secure
-	else
-		return ..()
-
 
 /obj/item/device/flash/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	switch (event)
@@ -475,6 +392,18 @@ TYPEINFO(/obj/item/device/flash)
 /obj/item/device/flash/cyborg/process_burnout(mob/user)
 	return
 
+obj/item/device/flash/cyborg/handle_animations(var/mob/user, var/obj/item_in_use)
+	..()
+	SPAWN(0)
+		var/atom/movable/overlay/animation = new(user.loc)
+		animation.layer = user.layer + 1
+		animation.icon_state = "blank"
+		animation.icon = 'icons/mob/mob.dmi'
+		animation.master = user
+		FLICK("blspell", animation)
+		sleep(0.5 SECONDS)
+		qdel(animation)
+
 /obj/item/device/flash/cyborg/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	..()
 	var/mob/living/silicon/robot/R = user
@@ -497,33 +426,9 @@ TYPEINFO(/obj/item/device/flash/turbo)
 	desc = "A common stun weapon with a power cell hastily wired into it. Looks dangerous."
 	icon_state = "turboflash"
 	animation_type = "turboflash2"
-	turboflash = 1
 	max_flash_power = 5000
 	min_flash_power = 500
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			if(!src.cell)
-				src.cell = new /obj/item/cell(src)
-				src.cell.maxcharge = max_flash_power
-				src.cell.charge = src.cell.maxcharge
-		return
-
-	attackby(obj/item/W, mob/user)
-		if (!W)
-			return
-		if (iswrenchingtool(W) && !(src.secure))
-			boutput(user, "You disassemble [src]!")
-			var/obj/item/device/flash/F = new /obj/item/device/flash(get_turf(src))
-			if(!src.status)
-				F.status = 0
-				F.set_icon_state("flash3")
-			src.cell.set_loc(get_turf(src)) //Do this last as removing the cell deletes the turboflash
-		else if (isscrewingtool(W))
-			boutput(user, SPAN_NOTICE("You [src.secure ? "unscrew" : "secure"] the access panel."))
-			secure = !secure
-		return
 
 /obj/item/storage/box/turbo_flash_kit
 	name = "\improper Box of flash/cell assemblies."
