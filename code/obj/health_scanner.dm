@@ -2,9 +2,11 @@
 TYPEINFO(/obj/health_scanner)
 	mats = list("conductive" = 5,
 				"crystal" = 2)
+ABSTRACT_TYPE(/obj/health_scanner)
 /obj/health_scanner
 	icon = 'icons/obj/items/device.dmi'
 	anchored = ANCHORED
+	pass_unstable = FALSE
 	var/id = 0.0 // who are we?
 	var/partner_range = 3 // how far away should we look?
 	var/find_in_range = 1
