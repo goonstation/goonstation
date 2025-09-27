@@ -16,6 +16,7 @@
 	icon_override = "civ"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
+	equipment_slot = SLOT_FLAG_EARS
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
 	var/obj/item/device/radio_upgrade/wiretap = null

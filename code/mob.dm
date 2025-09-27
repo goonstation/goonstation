@@ -117,7 +117,7 @@ TYPEINFO(/mob)
 	var/obj/item/back = null
 	var/obj/item/tank/internal = null
 	var/obj/item/clothing/mask/wear_mask = null
-	var/obj/item/clothing/ears/ears = null
+	var/obj/item/clothing/ears = null
 	var/network_device = null
 	var/Vnetwork = null
 	var/lastDamageIconUpdate
