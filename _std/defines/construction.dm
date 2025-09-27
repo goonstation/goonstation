@@ -28,6 +28,11 @@
 #define RAILING_UNFASTEN 1
 #define RAILING_FASTEN 2
 
+//canister defines
+#define CANISTER_DISASSEMBLE 0
+#define CANISTER_DISCONNECT 1
+#define CANISTER_CONNECT 2
+
 //deconstruction_flags
 
 #define DECON_NONE 0
