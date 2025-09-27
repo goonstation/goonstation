@@ -74,14 +74,13 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 /obj/machinery/fluid_machinery/unary/nullifier/process()
 	if(!src.network) return
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
-	src.use_power(100 WATTS * fluid?.total_volume, ENVIRON)
 	qdel(fluid)
 
 /obj/machinery/fluid_machinery/unary/input
 	name = "port"
 	desc = "A big ol' hole for pouring in fluids."
 	icon_state = "port"
-	flags = NOSPLASH | OPENCONTAINER
+	flags = NOSPLASH | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	HELP_MESSAGE_OVERRIDE("You can connect glass plumbing to this machine.")
 
 /obj/machinery/fluid_machinery/unary/input/initialize()
@@ -117,6 +116,9 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	drain_min = 10
 	drain_max = 15
 
+/obj/machinery/fluid_machinery/unary/drain/inlet_pump/proc/activate()
+
+
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/attack_hand(mob/user)
 	interact_particle(user, src)
 	src.on = !src.on
@@ -136,7 +138,6 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	if(!src.on)
 		return
 	src.drain()
-	src.use_power(100 WATTS, ENVIRON)
 
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/hide(intact)
 	src.icon_state = "inlet[src.on][CHECKHIDEPIPE(src) ? "h" : null]"
@@ -156,8 +157,9 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	icon_state = "output0"
 	desc = "A hand-operated pump."
 	flags = NOSPLASH
-	HELP_MESSAGE_OVERRIDE("Click with an open container to pour into it. Outputs up to 100 units.")
+	HELP_MESSAGE_OVERRIDE("Click with an open container to pour into it. Outputs up to 100 units. Use a wrench to change max output.")
 
+	var/maxpullrate = 100
 	var/pullrate = 100
 
 /obj/machinery/fluid_machinery/unary/hand_pump/attack_hand(mob/user)
@@ -172,6 +174,12 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	qdel(fluid)
 
 /obj/machinery/fluid_machinery/unary/hand_pump/attackby(obj/item/I, mob/user)
+	if (iswrenchingtool(I))
+		var/inp = tgui_input_number(user, "Please enter dispense amount (Will round to [QUANTIZATION_UNITS]):", "Dispense Amount", src.pullrate, src.maxpullrate, MINIMUM_REAGENT_MOVED)
+		if (!inp) return
+		src.pullrate = clamp(round(inp, QUANTIZATION_UNITS), MINIMUM_REAGENT_MOVED, src.maxpullrate)
+		return
+
 	if(!I.is_open_container(TRUE))
 		return
 
@@ -192,11 +200,131 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	qdel(fluid)
 	playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
+
+/obj/machinery/fluid_machinery/unary/dripper
+	name = "dripper"
+	icon_state = "dripper"
+	desc = "A modified hand pump, it passively drips fluid onto the floor or, if it has, into containers, but at a low rate."
+	flags = NOSPLASH
+	HELP_MESSAGE_OVERRIDE("Can connect glass plumbing from this machine. Drips up to 30 units at a time. Use a wrench to change max output.")
+
+	var/maxpullrate = 30
+	var/pullrate = 30
+	//me when i steal code :3
+	var/list/connected_containers //! the containers currently connected to the condenser
+	var/max_amount_of_containers = 4
+
+/obj/machinery/fluid_machinery/unary/dripper/proc/try_adding_container(var/obj/container, var/mob/user)
+	if (!isturf(container.loc)) //if the condenser or container isn't on the floor you cannot hook it up
+		return
+	if (BOUNDS_DIST(src, user) > 0)
+		boutput(user, SPAN_ALERT("The [src.name] is too for away for you to mess with it!"))
+		return
+	if (GET_DIST(container, src) > 1)
+		usr.show_text("The [src.name] is too far away from the [container.name]!", "red")
+		return
+	if(length(src.connected_containers) >= src.max_amount_of_containers)
+		boutput(user, SPAN_ALERT("The [src.name] can only be connected to [max_amount_of_containers] containers!"))
+	else
+		boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
+	add_container(container)
+
+/obj/machinery/fluid_machinery/unary/dripper/proc/add_line(var/obj/container)
+	var/datum/lineResult/result = drawLineImg(src, container, "condenser", "condenser_end", src.pixel_x + 9, src.pixel_y - 2, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+	result.lineImage.pixel_x = -src.pixel_x
+	result.lineImage.pixel_y = -src.pixel_y
+	result.lineImage.layer = src.layer+0.01
+	src.AddOverlays(result.lineImage, "tube\ref[container]")
+
+/obj/machinery/fluid_machinery/unary/dripper/proc/add_container(var/obj/container)
+	//this is a mess but we need it to disconnect if ANYTHING happens
+	if (!(container in src.connected_containers))
+		RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
+		RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container_xsig))
+		RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+	add_line(container)
+	LAZYLISTADD(src.connected_containers, container)
+
+/obj/machinery/fluid_machinery/unary/dripper/proc/remove_container(var/obj/container)
+	while (container in src.connected_containers)
+		LAZYLISTREMOVE(src.connected_containers, container)
+	src.ClearSpecificOverlays("tube\ref[container]")
+	UnregisterSignal(container, COMSIG_ATTACKHAND)
+	UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
+	UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
+
+/obj/machinery/fluid_machinery/unary/dripper/proc/remove_container_xsig(datum/component/complexsignal, old_movable, new_movable)
+	src.remove_container(complexsignal.parent)
+
+/obj/machinery/fluid_machinery/unary/dripper/proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+	src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+
+/obj/machinery/fluid_machinery/unary/dripper/proc/remove_all_containers()
+	for(var/obj/container in src.connected_containers)
+		remove_container(container)
+
+/obj/machinery/fluid_machinery/unary/dripper/mouse_drop(atom/over_object, src_location, over_location)
+	if(over_object == src)
+		return
+	if (istype(over_object, /obj/item/reagent_containers) && (over_object.is_open_container()))
+		try_adding_container(over_object, usr)
+	if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel)) //barrels don't need to be open for condensers because it would be annoying I think
+		try_adding_container(over_object, usr)
+	if (istype(over_object, /obj/machinery/fluid_machinery/unary/input)) //hehe
+		try_adding_container(over_object, usr)
+
+/obj/machinery/fluid_machinery/unary/dripper/attack_hand(var/mob/user)
+	if(length(src.connected_containers))
+		src.remove_all_containers()
+		boutput(user, SPAN_ALERT("You remove all connections to the [src.name]."))
+	..()
+
+/obj/machinery/fluid_machinery/unary/dripper/get_desc()
+	. += "<br>[SPAN_NOTICE("Current Max Drip Amount: [src.pullrate].")]"
+
+/obj/machinery/fluid_machinery/unary/dripper/attackby(obj/item/I, mob/user)
+	if (iswrenchingtool(I))
+		var/inp = tgui_input_number(user, "Please enter drip amount (Will round to [QUANTIZATION_UNITS]):", "Dispense Amount", src.pullrate, src.maxpullrate, MINIMUM_REAGENT_MOVED)
+		if (!inp) return
+		src.pullrate = clamp(round(inp, QUANTIZATION_UNITS), MINIMUM_REAGENT_MOVED, src.maxpullrate)
+
+/obj/machinery/fluid_machinery/unary/dripper/process()
+	if(!src.network)
+		return
+	var/turf/simulated/T = get_turf(src)
+	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
+	if (isnull(fluid)) return
+	if (isnull(src.connected_containers))
+		fluid.trans_to(T, fluid.total_volume)
+		qdel(fluid)
+		return
+
+	var/list/non_full_containers = list()
+	for(var/obj/container as anything in connected_containers)
+		if(container.reagents.maximum_volume > container.reagents.total_volume) //don't bother with this if it's already full, move onto other containers
+			non_full_containers.Add(container)
+	if(!length(non_full_containers))	//all full? backflow!!
+		src.push_to_network(src.network, fluid)
+		return
+	var/divided_amount = (fluid.total_volume / length(non_full_containers)) //cut the reagents needed into chunks
+	for(var/obj/container as anything in non_full_containers)
+		var/remaining_container_space = container.reagents.maximum_volume - container.reagents.total_volume
+		if(remaining_container_space < divided_amount) 	//if there's more reagent to add than the beaker can hold...
+			fluid.trans_to(container, remaining_container_space) //...add what we can to the beaker...
+			if ((length(non_full_containers) - 1))
+				divided_amount = (divided_amount - remaining_container_space) / (length(non_full_containers) - 1) //...then run the loop again with the remaining reagent, evenly distributing to remaining containers
+			else
+				src.push_to_network(src.network, fluid) // or if we ran out of containers, shove it back into the network
+		else
+			fluid.trans_to(container, divided_amount)
+	qdel(fluid)
+
+
 /obj/machinery/fluid_machinery/unary/dispenser
 	name = "dispenser"
 	icon_state = "dispenser"
-	desc = "Dispenses patches, pills, and vials when filled to the set amount or when prompted."
-	HELP_MESSAGE_OVERRIDE("You can use a <b>multitool</b> to modify its settings.")
+	desc = "Fills itself with fluid and dispenses patches, pills, and vials when reaching the set amount or when prompted to."
+	HELP_MESSAGE_OVERRIDE("FYou can use a <b>multitool</b> to modify its settings.")
 	var/automatic = TRUE
 	var/max = 50
 	var/min = 1
@@ -256,7 +384,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Automatic dispensing", PROC_REF(set_automatic))
 
 /obj/machinery/fluid_machinery/unary/dispenser/get_desc()
-		. += "<br>[SPAN_NOTICE("Automatic: [src.automatic ? "true" : "false"]. Dispense Amount: [src.amount]. Dispensing: [src.itemtodispense]")]"
+	. += "<br>[SPAN_NOTICE("Automatic: [src.automatic ? "true" : "false"]. Dispense Amount: [src.amount]. Dispensing: [src.itemtodispense]")]"
 
 /obj/machinery/fluid_machinery/unary/dispenser/process()
 	if (!src.network) return
@@ -370,7 +498,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 
 	var/datum/reagents/removed_fluid = src.pull_from_network(src.network1, src.pumprate)
 	if(!src.push_to_network(src.network2, removed_fluid))
-		removed_fluid.trans_to(network1, removed_fluid.total_volume)
+		removed_fluid.trans_to(src.network1, removed_fluid.total_volume)
 	FLICK("actuallypump", src)
 
 /obj/machinery/fluid_machinery/binary/valve

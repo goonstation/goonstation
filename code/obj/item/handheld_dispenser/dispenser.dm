@@ -161,13 +161,26 @@
 		boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
 		return
 	var/directs = recipe.get_directions(direction)
-	for(var/obj/machinery/atmospherics/device in target)
-		if((device.initialize_directions & directs))
-			boutput(user, SPAN_ALERT("Something is occupying that direction!"))
-			return
-		if(recipe.exclusionary && device.exclusionary)
-			boutput(user, SPAN_ALERT("Something is occupying that space!"))
-			return
+	if(istype(src.selection, /datum/pipe_recipe/atmos))
+		for(var/obj/machinery/atmospherics/device in target)
+			if((device.initialize_directions & directs))
+				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+				return
+			if(selection.exclusionary && device.exclusionary)
+				boutput(user, SPAN_ALERT("Something is occupying that space!"))
+				return
+	else
+		var/obj/fluid_pipe/fluidthingy
+		for(var/obj/device in target)
+			if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_machinery))
+				continue
+			fluidthingy = device
+			if((fluidthingy.initialize_directions & directs))
+				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+				return
+			if(selection.exclusionary && fluidthingy.exclusionary)
+				boutput(user, SPAN_ALERT("Something is occupying that space!"))
+				return
 	if (S?.cell)
 		S.cell.use(recipe.cost * silicon_cost_multiplier)
 	else
@@ -177,7 +190,7 @@
 	src.tooltip_rebuild = TRUE
 	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
-	var/obj/machinery/atmospherics/device = new recipe.path(target)
+	var/obj/device = new recipe.path(target)
 	device.initialize(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] places [device]."))
 	src.UpdateIcon()
@@ -234,33 +247,34 @@
 /obj/item/places_pipes/ui_static_data(mob/user)
 	. = list(
 	)
+	var/siliconmodifier = issilicon(user) ? silicon_cost_multiplier : 1
 	for (var/name in atmospipesforcreation)
 		var/datum/pipe_recipe/recipe = src.atmospipesforcreation[name]
 		.["atmospipes"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost * (issilicon(user) ? silicon_cost_multiplier : 1),
+			"cost" = recipe.cost * siliconmodifier,
 			))
 	for (var/name in src.atmosmachinesforcreation)
 		var/datum/pipe_recipe/recipe = src.atmosmachinesforcreation[name]
 		.["atmosmachines"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost * (issilicon(user) ? silicon_cost_multiplier : 1),
+			"cost" = recipe.cost * siliconmodifier,
 			))
 	for (var/name in src.fluidpipesforcreation)
 		var/datum/pipe_recipe/recipe = src.fluidpipesforcreation[name]
 		.["fluidpipes"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost,
+			"cost" = recipe.cost * siliconmodifier,
 			))
 	for (var/name in src.fluidmachinesforcreation)
 		var/datum/pipe_recipe/recipe = src.fluidmachinesforcreation[name]
 		.["fluidmachines"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost,
+			"cost" = recipe.cost * siliconmodifier,
 			))
 	.["issilicon"] = issilicon(user)
 
@@ -656,6 +670,11 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		path = /obj/machinery/fluid_machinery/unary/dispenser
 		icon_state = "dispenser"
 		desc = "Capable of printing patches, vials, and pills."
+	dripper
+		name = "Dripper"
+		path = /obj/machinery/fluid_machinery/unary/dripper
+		icon_state = "dripper"
+		desc = "Passively drips up to 30 units onto the floor, or into connected containers."
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/binary)
 /datum/pipe_recipe/fluid/machine/binary
