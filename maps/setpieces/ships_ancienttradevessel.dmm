@@ -2118,7 +2118,7 @@
 /obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
-/obj/item/clothing/under/gimmick/kilt,
+/obj/item/clothing/under/cultural/kilt,
 /obj/item/paper/businesscard/bonktek{
 	pixel_y = -12
 	},

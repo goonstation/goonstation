@@ -1119,12 +1119,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	icon_state = "dinerdress-pink"
 	item_state = "dinerdress-pink"
 
-/obj/item/clothing/under/gimmick/kilt
-	name = "kilt"
-	desc = "Traditional Scottish clothing. A bit drafty in here, isn't it?"
-	icon_state = "kilt"
-	item_state = "kilt"
-
 /obj/item/clothing/under/gimmick/ziggy
 	name = "familiar jumpsuit"
 	desc = "A bold jumpsuit, reminiscent of a long lost, but very loved celebrity from long ago."
@@ -1199,14 +1193,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A fiery flame shirt even Guy Fieri would be envious of."
 	icon_state = "flame"
 	item_state = "flame"
-	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-
-/obj/item/clothing/under/misc/america
-	name = "american pride shirt"
-	desc = "I am a REAL AMERICAN, I fight for the rights of every man!"
-	icon_state = "america"
-	item_state = "america"
 	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 

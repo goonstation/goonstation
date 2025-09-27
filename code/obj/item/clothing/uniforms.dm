@@ -1710,12 +1710,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
     icon_state = "bubble"
     item_state = "bubble"
 
-/obj/item/clothing/under/misc/tricolor
-    name = "Tricolor Jumpsuit"
-    desc = "A jumpsuit that shows you're serious about pizza."
-    icon_state = "tricolor"
-    item_state = "tricolor"
-
 // WALPVRGIS fashion
 
 /obj/item/clothing/under/misc/casdressblk
