@@ -48,6 +48,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	var/report_freq = FREQ_HYDRO //Radio channel to report plant status/death/whatever.
 	var/net_id = null
 
+	var/base_cropcount_consistency = 70 // The base lower-bounds for cropcount consistency, used during harvesting.
 	var/health_warning = 0
 	var/harvest_warning = 0
 	var/water_level = 4 // Used for efficiency in the UpdateIcon proc with water level changing
@@ -905,7 +906,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(hydro_controls)
 		src.recently_harvested = 1
 		src.harvest_warning = 0
-		h_data.harvest_cap = 10
+		h_data.harvest_cap = hydro_controls.max_harvest_cap
 		SPAWN(hydro_controls.delay_between_harvests)
 			src.recently_harvested = 0
 	else
@@ -919,7 +920,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	// harvest time again.
 	src.growth = max(0, h_data.growing.HYPget_growth_to_matured(h_data.DNA))
 	// setup initial crop size
-	h_data.cropcount = h_data.growing.cropsize + h_data.DNA?.get_effective_value("cropsize")
+	h_data.cropcount = h_data.growing.cropsize
 	// handle bonuses and negatives to do with the plant's health
 	HYPharvesting_health_bonuses(h_data)
 	// Figure out what crop we use - the base crop or a mutation crop.
@@ -1151,20 +1152,23 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(h_data.pot.health >= h_data.growing.starthealth * 2 && prob(30))
 		boutput(h_data.user, SPAN_NOTICE("This looks like a good harvest!"))
 		h_data.base_quality_score += 5
-		var/bonus = rand(1,3)
-		h_data.cropcount += bonus
-		h_data.harvest_cap += bonus
+		h_data.cropcount += 1
+		h_data.harvest_cap += 1
+		h_data.cropcount_consistency += 10
 		// Good health levels bump the harvest amount up a bit and increase jumbo chances.
 	if(h_data.pot.health >= h_data.growing.starthealth * 4 && prob(30))
 		boutput(h_data.user, SPAN_NOTICE("It's a bumper crop!"))
 		h_data.base_quality_score += 10
-		var/bonus = rand(2,5)
-		h_data.cropcount += bonus
-		h_data.harvest_cap += bonus
+		h_data.cropcount += 2
+		h_data.harvest_cap += 2
+		h_data.cropcount_consistency += 20
 		// This is if the plant health is absolutely excellent.
 	if(h_data.pot.health <= h_data.growing.starthealth / 2 && prob(70))
 		boutput(h_data.user, SPAN_ALERT("This is kind of a crappy harvest..."))
 		h_data.base_quality_score -= 12
+		h_data.cropcount *= 0.6
+		h_data.harvest_cap -= h_data.cropcount
+		h_data.cropcount_consistency -= 20
 		// And this is if you've neglected the plant!
 
 /// Handles the tracking of future harvests for the plant
@@ -1229,14 +1233,33 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /// Handles the finalisation of cropcount
 /obj/machinery/plantpot/proc/HYPharvesting_finalise_cropcount(datum/HYPharvesting_data/h_data)
+	var/cropsize = h_data.DNA?.get_effective_value("cropsize")
+	h_data.cropcount *= (1 + ((cropsize * h_data.growing.yield_multi) / 100))
+	// A higher output for plants with higher base output helps retains some personality.
+	h_data.harvest_cap += h_data.growing.cropsize
+	// Introduce some variance at the end.
+	h_data.cropcount = src.harvest_consistency(h_data)
+	// Max harvest amount for all plants is capped. If we've got higher output
+	// than the cap it's probably through gene manipulation, so reward the player
+	// with greater chances for an extra harvest if this is the case.
+	// The cap is defined in hydro_controls and can be edited by coders on the fly.
 	if(h_data.cropcount > h_data.harvest_cap)
 		h_data.extra_harvest_chance += h_data.cropcount - h_data.harvest_cap
 		h_data.cropcount = h_data.harvest_cap
-		// Max harvest amount for all plants is capped. If we've got higher output
-		// than the cap it's probably through gene manipulation, so reward the player
-		// with greater chances for an extra harvest if this is the case.
-		// The cap is defined in hydro_controls and can be edited by coders on the fly.
-	h_data.cropcount = round(max(h_data.cropcount, 0))
+
+	h_data.cropcount = round(max(h_data.cropcount, 0), 1)
+
+/// Handles how consistency affects cropcount
+/obj/machinery/plantpot/proc/harvest_consistency(datum/HYPharvesting_data/h_data)
+	// Get a random number between the minimum possible variance and the uncapped cropcount, to use as the varianced cropcount.
+	// This means variance always has a chance to reduce the cropcount by the maximum amount, but that increasing yield past the cap will also
+	// always increase the chances of a bigger harvest.
+	var/total_consistency = src.base_cropcount_consistency + h_data.cropcount_consistency
+	if (total_consistency >= 100)
+		return h_data.cropcount
+	var/lower_bound = round(min(h_data.cropcount, h_data.harvest_cap) * (total_consistency / 100), 1)
+	var/upper_bound = round(h_data.cropcount, 1)
+	return rand(lower_bound, upper_bound)
 
 /////////////////// end of HYPharvesting helper methods ///////////////////
 
@@ -1272,11 +1295,6 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.health += src.plantgenes?.get_effective_value("harvests") * 2
 		// If we have a single-harvest vegetable plant, the harvests gene (which is otherwise
 		// useless) adds 2 health for every point. This works negatively also!
-
-	if(growing.cropsize + SDNA?.get_effective_value("cropsize") > 30)
-		src.health += (growing.cropsize + SDNA?.get_effective_value("cropsize")) - 30
-		// If we have a total crop yield above the maximum harvest size, we add it to the
-		// plant's starting health.
 
 	if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
 		src.AddComponent(/datum/component/proximity)
@@ -1639,8 +1657,10 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 	var/dont_rename_crop
 	/// The number of items this harvest produces
 	var/cropcount = 0
+	// Addition to the lower bounds of the cropcount variance. A value of 1 reduces the max possible loss by 1%, negative values do the opposite.
+	var/cropcount_consistency = 0
 	/// The maximum number of items that this harvest produces
-	var/harvest_cap
+	var/harvest_cap = 10
 	/// The number of seeds this harvest produced
 	var/seedcount = 0
 	/// The base quality score of all produce from the plant
