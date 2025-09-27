@@ -86,9 +86,8 @@
 		for(var/mob/living/other_mob in T)
 			if(other_mob == src.parent.parent)
 				continue
-			for (var/client/client in other_mob.maptext_manager?.maptext_holders_by_client)
-				var/atom/movable/maptext_holder/holder = other_mob.maptext_manager.maptext_holders_by_client[client]
-				holder.bump_up(text_height)
+			var/atom/movable/maptext_holder/holder = other_mob.maptext_manager?.maptext_holders_by_client?[src.client]
+			holder?.bump_up(text_height)
 		T = get_step(T, EAST)
 
 	// Animate the new line's fade-in.
