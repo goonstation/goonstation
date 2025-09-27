@@ -197,7 +197,7 @@ var/global/game_force_started = FALSE
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()
 
-#ifdef RP_MODE
+#if defined(RP_MODE) || defined(NIGHTSHADE)
 	global.toggle_looc_allowed(TRUE)
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	global.toggle_ooc_allowed(FALSE)

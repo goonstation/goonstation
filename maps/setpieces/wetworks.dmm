@@ -2389,11 +2389,11 @@
 /obj/storage/closet/wardrobe/mixed{
 	name = "guest lockers"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/head/goggles/blue{
