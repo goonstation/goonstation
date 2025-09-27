@@ -263,10 +263,9 @@ Contains:
 		src.throwforce = target.throwforce
 		src.stamina_damage = target.stamina_damage
 		src.stamina_cost = target.stamina_cost
+		src.click_delay = target.click_delay
 		if(target.flags & ATTACK_SELF_DELAY)
 			src.flags |= ATTACK_SELF_DELAY
-			src.click_delay = target.click_delay
-
 
 ///This proc returns most attack-related behaviour back to what it was
 /obj/item/assembly/proc/remove_attacking_component()
