@@ -215,7 +215,11 @@
 		if (!length(src.contents))
 			boutput(user, SPAN_ALERT("There's nothing in [src] to dump out!"))
 			return
-		if (!isrobot(user) && !user.is_in_hands(src))
+		if (isrobot(user))
+			var/mob/living/silicon/robot/borg = user
+			if (!(src in borg.equipped_list()))
+				return
+		else if (!user.is_in_hands(src))
 			boutput(user, SPAN_ALERT("You need to be holding [src] to do that."))
 			return
 		for(var/obj/item/item in src.contents)
