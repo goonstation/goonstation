@@ -8,11 +8,13 @@ TYPEINFO(/datum/component/deconstructing)
 /datum/component/deconstructing
 	var/base_duration = 2 SECONDS
 	var/complexity_mult = 1 //! How much complexity affects deconstruction time
+	var/contextLayout
 
 	Initialize(baseDuration=2 SECONDS, complexityMult=1)
 		..()
 		src.base_duration = baseDuration
 		src.complexity_mult = complexityMult
+		src.contextLayout = new/datum/contextLayout/flexdefault()
 
 	///
 	proc/finish_decon(atom/target, mob/user, atom/deconstructor)
@@ -57,7 +59,7 @@ TYPEINFO(/datum/component/deconstructing)
 			var/decon_time = (decon_complexity * 2.5 SECONDS * src.complexity_mult) + src.base_duration
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,decon_tool,decon_time), user)
 		else
-			user.showContextActions(O.decon_contexts, O)
+			user.showContextActions(O.decon_contexts, O, src.contextLayout)
 			boutput(user, SPAN_ALERT("You need to use some tools on [target] before it can be deconstructed."))
 		return ATTACK_PRE_DONT_ATTACK
 
