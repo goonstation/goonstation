@@ -139,7 +139,7 @@ TYPEINFO(/obj/item/device/chameleon)
 			if(!testIcon) //weird edgecases
 				return
 
-			if (!cham)
+			if (!cham || src.cham.qdeled || src.cham.disposed)
 				cham = new(src)
 				cham.master = src
 
