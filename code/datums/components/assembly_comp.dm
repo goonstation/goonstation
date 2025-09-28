@@ -122,12 +122,23 @@ TYPEINFO(/datum/component/assembly)
 	. = ..()
 
 /datum/component/assembly/trigger_applier_assembly/override_combination(var/atom/checked_atom, var/mob/user)
+	var/obj/item/item_to_be_trigger = src.parent
+	var/obj/item/item_to_be_applier = checked_atom
+	// Here, we take care of the special case that both items can be triggers and appliers. In that case, we open a context menu and ask how we want to build the assembly
+	if((length(checked_atom.GetComponents(/datum/component/assembly/trigger_applier_assembly)) > 0) && isassemblyapplier(src.parent))
+		var/input_action = input(user, "Which item do you want to be the trigger of the assembly?") in list("[src.parent]","[checked_atom]","Never Mind")
+		if(!input_action || input_action == "Never Mind" || !src.delayed_combination_valid_check(checked_atom, user))
+			return TRUE
+		// if our checked atom was selected, we have to swap the components places in the assembly. Else, just continue with what we were trying to do.
+		if(input_action == "[checked_atom]")
+			item_to_be_trigger = checked_atom
+			item_to_be_applier = src.parent
 	// here, we want to create our new assembly
 	user.u_equip(checked_atom)
 	user.u_equip(src.parent)
 	var/obj/item/assembly/product = new /obj/item/assembly(get_turf(src.parent))
 	//we set up the new assembly with its corresponding proc
-	product.set_up_new(user, src.parent, checked_atom)
+	product.set_up_new(user, item_to_be_trigger, item_to_be_applier)
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [product.name] was created at [log_loc(product)]. Created by: [key_name(user)];[product.get_additional_logging_information(user)]")
 	if(product.requires_admin_messaging())
@@ -137,3 +148,9 @@ TYPEINFO(/datum/component/assembly)
 	user.put_in_hand_or_drop(product)
 	boutput(user, SPAN_NOTICE("You finish the construction of [product.name]."))
 	return TRUE
+
+
+/datum/component/assembly/trigger_applier_assembly/proc/delayed_combination_valid_check(var/obj/item/checked_item, var/mob/user)
+	// we check here if we can still reach both items and they weren't build into assemblies at a different point
+	var/obj/item/checked_parent = src.parent
+	return (checked_parent && checked_item && !QDELETED(checked_item) && !QDELETED(checked_parent) && can_reach(user, checked_item) && can_reach(user, checked_parent) && !istype(checked_item.loc, /obj/item/assembly) && !istype(checked_parent.loc, /obj/item/assembly))
