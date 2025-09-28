@@ -88,6 +88,9 @@
 				var/atom/movable/maptext_holder/holder = other_mob.maptext_manager?.maptext_holders_by_client?[src.client]
 				if (holder)
 					var/image/maptext/blank_line = NEW_MAPTEXT(/image/maptext)
+					blank_line.maptext = text.maptext
+					blank_line.maptext_height = text.maptext_height
+					blank_line.alpha = 0
 					holder.add_line(blank_line, TRUE)
 			T = get_step(T, EAST)
 
