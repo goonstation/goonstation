@@ -22,6 +22,7 @@
 	var/payload_reagent = "water"
 	var/payload_amount = 1
 	var/payload_cooldown = 1 SECONDS
+	var/payload_duration = 60 SECONDS
 	var/cooldowns = new/list()
 
 	post_setup()
@@ -39,6 +40,12 @@
 				src.payload_reagent = pick("reversium", "mugwort", "fliptonium")
 		src.payload_amount = rand(100, 3000)
 		src.payload_cooldown = rand(1, 10) SECONDS
+		src.payload_duration = rand(5, 10) * 60 SECONDS
+
+	effect_activate(var/obj/O)
+		if (..())
+			return
+		ON_COOLDOWN(src, "payload_duration", src.payload_duration)
 
 	effect_process(var/obj/O)
 		if (..())
@@ -48,3 +55,5 @@
 			O.reagents.add_reagent(src.payload_reagent, src.payload_amount)
 			location.visible_message("<b>[O]</b> pulses.")
 			O.reagents.reaction(location, 1, src.payload_amount, can_spawn_fluid=1)
+		if(!ON_COOLDOWN(src, "payload_duration", src.payload_duration))
+			O.ArtifactDeactivated()
