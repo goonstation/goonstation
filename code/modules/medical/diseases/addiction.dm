@@ -33,30 +33,21 @@
 	stage_act(var/mob/living/affected_mob, var/datum/ailment_data/addiction/D, mult)
 		if (..())
 			return
-		/* if (prob(20) && (world.timeofday > (D.last_reagent_dose + D.withdrawal_duration)))
-			boutput(affected_mob, SPAN_NOTICE("You no longer feel reliant on [D.associated_reagent]!"))
-			affected_mob.ailments -= D
-			qdel(D)
-			return */
 		D.addiction_meter -= D.depletion_rate * mult
 		if (D.addiction_meter <= 0)
 			boutput(affected_mob, SPAN_NOTICE("You no longer feel reliant on [D.associated_reagent]!"))
 			affected_mob.ailments -= D
 			qdel(D)
 			return
-		/* if (affected_mob.reagents && affected_mob.reagents.has_reagent(D.associated_reagent))
-			D.last_reagent_dose = world.timeofday
-			D.stage = 1
-			return */
 		switch(D.stage)
 			if (2)
-				stage_two_effects(affected_mob)
+				stage_two_effects(affected_mob, D)
 			if (3)
-				stage_three_effects(affected_mob)
+				stage_three_effects(affected_mob, D)
 			if (4)
-				stage_four_effects(affected_mob)
+				stage_four_effects(affected_mob, D)
 			if (5)
-				stage_five_effects(affected_mob)
+				stage_five_effects(affected_mob, D)
 
 	proc/stage_two_effects(var/mob/living/affected_mob, var/datum/ailment_data/addiction/D)
 		if (prob(8))
