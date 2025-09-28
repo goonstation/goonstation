@@ -79,7 +79,8 @@ TYPEINFO(/obj/item/device/flash)
 			parent_assembly.receive_signal(signal)
 
 /obj/item/device/flash/proc/assembly_application(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
-	if(src.do_pre_flash_checks(null, null, parent_assembly))
+	//no rapid firing flash appliers
+	if(!ON_COOLDOWN(src, "flash_applier", src.click_delay) && src.do_pre_flash_checks(null, null, parent_assembly))
 		src.flash_area(null, parent_assembly.target)
 
 /obj/item/device/flash/proc/assembly_setup(var/manipulated_flash, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
