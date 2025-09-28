@@ -11,6 +11,11 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	limit = 0
 #endif
 
+	New()
+		. = ..()
+		if(prob(80))
+			src.limit = 0
+
 /datum/job/special/halloween/blue_clown
 	name = "Blue Clown"
 	wages = PAY_DUMBCLOWN
