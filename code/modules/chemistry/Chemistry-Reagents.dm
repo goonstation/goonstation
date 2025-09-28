@@ -329,9 +329,7 @@ datum
 				if (H.traitHolder.hasTrait("addictive_personality"))
 					addProb *= 2
 					rate *= 2
-			if (!holder.addiction_tally)
-				holder.addiction_tally = list()
-			holder.addiction_tally[src.id] += rate
+			LAZYLISTADDASSOC(holder.addiction_tally, src.id, rate)
 			var/current_tally = holder.addiction_tally[src.id]
 			if (addiction_min < current_tally && isliving(M) && prob(addProb))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
