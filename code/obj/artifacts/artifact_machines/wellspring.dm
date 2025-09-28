@@ -9,17 +9,16 @@
 
 /datum/artifact/wellspring
 	associated_object = /obj/machinery/artifact/wellspring
+	type_size = ARTIFACT_SIZE_LARGE
 
 	type_name = "Wellspring"
 	rarity_weight = 350
-	react_xray = list(5,65,20,11,"HOLLOW")
+	react_xray = list(5,65,20,11,"LIQUID RESERVOIR")
 	validtypes = list("ancient", "martian", "eldritch", "precursor", "wizard")
-	//validtypes = list("ancient", "martian", "eldritch", "lattice")
 	validtriggers = list(/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/force, /datum/artifact_trigger/heat, /datum/artifact_trigger/cold, /datum/artifact_trigger/radiation, /datum/artifact_trigger/electric, /datum/artifact_trigger/language)
 	activated = 0
 	activ_text = "begins to flood the area with liquid!"
 	deact_text = "stops flooding."
-	touch_descriptors = list("It feels damp.")
 	var/payload_reagent = "water"
 	var/payload_amount = 1
 	var/payload_cooldown = 1 SECONDS
@@ -28,18 +27,16 @@
 	post_setup()
 		. = ..()
 		switch(artitype.name)
-			if ("ancient")
-				src.payload_reagent = pick("fuel", "goodnanites")
-			if ("martian")
-				src.payload_reagent = pick("water")
-			if ("eldritch")
-				src.payload_reagent = pick("blood")
-			if ("precursor")
-				src.payload_reagent = pick("ephedrine")
-			if ("wizard")
-				src.payload_reagent = pick("reversium", "fliptonium")
-			//if ("lattice")
-			//	src.payload_reagent = pick("flockdrone_fluid") //Looks like Gnesis can't form liquids.
+            if ("ancient")
+                src.payload_reagent = pick("fuel", "goodnanites")
+            if ("martian")
+                src.payload_reagent = pick("water", "viscerite_viscera", "martian_flesh", "hemolymph")
+            if ("eldritch")
+                src.payload_reagent = pick("blood", "bloodc", "black_goop", "sewage")
+            if ("precursor")
+                src.payload_reagent = pick("ephedrine", "cryostylane") //cryo fluid?
+            if ("wizard")
+                src.payload_reagent = pick("reversium", "mugwort", "fliptonium")
 		src.payload_amount = rand(100, 3000)
 		src.payload_cooldown = rand(1, 10) SECONDS
 
