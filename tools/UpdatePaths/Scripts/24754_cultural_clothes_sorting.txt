@@ -1,0 +1,13 @@
+/obj/item/clothing/under/gimmick/hakama : /obj/item/clothing/under/cultural/hakama{@OLD}
+
+/obj/item/clothing/under/gimmick/hakama/random : /obj/item/clothing/under/cultural/hakama/random{@OLD}
+
+/obj/item/clothing/under/gimmick/yukata : /obj/item/clothing/under/cultural/yukata{@OLD}
+/obj/item/clothing/under/gimmick/yukata/@SUBTYPES : /obj/item/clothing/under/cultural/yukata/@SUBTYPES{@OLD}
+
+/obj/item/clothing/under/misc/america : /obj/item/clothing/under/cultural/america{@OLD}
+
+/obj/item/clothing/under/misc/tricolor : /obj/item/clothing/under/cultural/tricolor{@OLD}
+
+/obj/item/clothing/under/gimmick/kilt : /obj/item/clothing/under/cultural/kilt{@OLD}
+
