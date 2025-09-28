@@ -1020,10 +1020,10 @@ var/global/game_force_started = FALSE
 
 	var/list/players = list()
 	for (var/mob/M as anything in mobs)
-		if (jobban_isbanned(M, "Syndicate"))
-			continue
 		var/datum/player/player = M.mind?.get_player()
 		if (!player || (player in players))
+			continue
+		if (jobban_isbanned(M, "Syndicate"))
 			continue
 		players += player
 		//also scale by how long they've been in the round, no joining at the end just for the chance
