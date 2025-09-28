@@ -1020,6 +1020,8 @@ var/global/game_force_started = FALSE
 
 	var/list/players = list()
 	for (var/mob/M as anything in mobs)
+		if (jobban_isbanned(M, "Syndicate"))
+			continue
 		var/datum/player/player = M.mind?.get_player()
 		if (!player || (player in players))
 			continue
