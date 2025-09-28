@@ -935,11 +935,27 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "caphat"
 	item_function_flags = IMMUNE_TO_ACID
 
-/obj/item/clothing/mask/skull
+/obj/item/clothing/mask/skull // Human/Default Skull
 	name = "skull mask"
 	desc = "A spooky skull mask. You're getting the heebie-jeebies just looking at it!"
 	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull"
+	item_state = "death"
+	see_face = FALSE
+
+/obj/item/clothing/mask/skull_menacing // Vampire Skull
+	name = "menacing skull mask"
+	desc = "An eerie skull mask, still glowing with otherworldly power."
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_menacing"
+	item_state = "death"
+	see_face = FALSE
+
+/obj/item/clothing/mask/skullA // Changeling Skull
+	name = "odd skull mask"
+	desc = "Don't ask why you can see through the skull without any eyeholes."
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skullA"
 	item_state = "death"
 	see_face = FALSE
 
