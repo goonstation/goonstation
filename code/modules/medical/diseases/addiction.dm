@@ -6,7 +6,7 @@
 	max_stages = 5
 	stage_prob = 3
 	cure_flags = CURE_CUSTOM
-	cure_desc = "Time"
+	cure_desc = "Time, moderation"
 	affected_species = list("Human")
 	strain_type = /datum/ailment_data/addiction
 
