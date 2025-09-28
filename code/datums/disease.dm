@@ -347,7 +347,7 @@
 
 	stage_increment()
 		// don't start feeling symptoms until ~2 minutes after our last dose has worn off, worsened with the state of the addiction
-		if (src.last_reagent_dose + (2 MINUTES) - ((src.addiction_meter SECONDS) / 2) > world.timeofday)
+		if (TIME < src.last_reagent_dose + (2 MINUTES) - ((src.addiction_meter SECONDS) / 2))
 			return FALSE
 		. = ..()
 		if (.)
