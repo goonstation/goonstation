@@ -560,13 +560,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/explosion_strength = 1
 	var/nuclear_fallout_cooldown = 10 SECONDS
 	var/nuclear_fallout_amount = 5
+	var/nuclear_fallout_decay_rate = 0.90
 
 	New()
 		..()
-		//We don't need a big explosion, it's just to make a point.
-		src.explosion_strength = rand(50, 150)
+		src.explosion_strength = rand(25, 75)
 		src.nuclear_fallout_cooldown = rand(1, 10) SECONDS
-		src.nuclear_fallout_amount = rand(2, 10)
+		src.nuclear_fallout_amount = rand(6, 30)
 
 	post_setup()
 		. = ..()
@@ -580,9 +580,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		for(var/i = 1 to src.nuclear_fallout_amount * 10)
 			shoot_projectile_XY(O, new /datum/projectile/neutron(100), rand(-10,10), rand(-10,10))
 
-		//O.ArtifactDestroyed()
-		//Oh, you thought it left no trace?
-
 	effect_process(var/obj/O)
 		if(..())
 			return
@@ -590,5 +587,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if(!ON_COOLDOWN(O, "nuclear_fallout", src.nuclear_fallout_cooldown))
 				var/turf/location = get_turf(O)
 				location.visible_message("<b>[O]</b> spews out radiation!")
-				for(var/i = 1 to src.nuclear_fallout_amount)
+				for(var/i = 1 to floor(src.nuclear_fallout_amount))
 					shoot_projectile_XY(O, new /datum/projectile/neutron(100), rand(-10,10), rand(-10,10))
+				src.nuclear_fallout_amount = src.nuclear_fallout_amount * src.nuclear_fallout_decay_rate
+				if(floor(src.nuclear_fallout_amount) < 1)
+					O.ArtifactDestroyed()
