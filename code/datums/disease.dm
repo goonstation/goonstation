@@ -353,11 +353,10 @@
 		if (.)
 			src.stage_satisfied = FALSE
 
-	proc/metabolised_addictive_reagent(var/datum/reagent/reagent, var/rate)
+	proc/metabolised_addictive_reagent(var/datum/reagent/reagent, var/rate, var/mult)
 		// The minimum rate means that patches with less than ~1 unit of the addictive reagent usually won't work to satisfy addiction.
 		// This is useful because dose logic is very binary and exploitable by microdosing with ludicrously small volumes.
-		// Although the lag multiplier makes this inconsistent.
-		if (src.severity < reagent.addiction_severity || rate < 0.05)
+		if (src.severity < reagent.addiction_severity || rate < 0.04 * mult)
 			return
 		if (src.associated_reagent == reagent.name)
 			src.last_reagent_dose = TIME

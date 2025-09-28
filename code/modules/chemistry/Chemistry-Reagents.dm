@@ -317,7 +317,7 @@ datum
 				. = round(addiction.addiction_meter * addiction.extra_metabolisation * mult, 0.01)
 			// Metabolisation effects for addictive reagents for all addictions
 			for(var/datum/ailment_data/addiction/ad in M.ailments)
-				ad.metabolised_addictive_reagent(src, rate + .)
+				ad.metabolised_addictive_reagent(src, rate + ., mult)
 			if (addiction)
 				return
 			. = 0
