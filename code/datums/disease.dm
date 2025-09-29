@@ -336,6 +336,7 @@
 		src.addiction_meter = other.addiction_meter
 		src.depletion_rate = other.depletion_rate
 		src.stage_satisfied = other.stage_satisfied
+		src.extra_metabolisation = other.extra_metabolisation
 
 	New()
 		..()
