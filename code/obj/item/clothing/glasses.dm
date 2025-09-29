@@ -718,7 +718,7 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	item_state = "spectro_monocle"
 	desc = "Such a dapper eyepiece! And a practical one at that."
 
-// Glasses that allow the wearer to get a full reagent report for containers
+// Glasses that allow the wearer to scan plants & seeds
 TYPEINFO(/obj/item/clothing/glasses/phyto)
 	mats = 6
 
