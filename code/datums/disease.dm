@@ -372,7 +372,7 @@
 				src.stage_satisfied = TRUE
 
 	proc/ingested_addictive_reagent(var/datum/reagent/reagent, var/volume)
-		if (src.severity < reagent.addiction_severity || volume < 0.1)
+		if (reagent.addiction_severity < src.severity || volume < 0.1)
 			return
 		if (src.associated_reagent == reagent.name)
 			src.last_reagent_dose = TIME
