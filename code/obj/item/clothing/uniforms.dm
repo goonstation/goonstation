@@ -700,6 +700,19 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 		icon_state = "clown-dress"
 		item_state = "clown-dress"
 
+	autumn
+		name = "autumn clown suit"
+		desc = "Lets you celebrate the season while still remaining autumnomous."
+		icon_state = "clown_autumn"
+		item_state = "clown_autumn"
+
+	winter
+		name = "winter clown suit"
+		desc = "Lets you stay nice and warm while keeping that festive atmosphere. Actually kinda breezy, not very comfortable for the cold at all, but it still looks festive."
+		icon_state = "clown_winter"
+		item_state = "clown_winter"
+
+
 /obj/item/clothing/under/misc/mimefancy
 	name = "fancy mime suit"
 	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
@@ -2146,29 +2159,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/tea_party_dress)
 	name = "yellow tea party dress"
 	icon_state = "tea_party_dress-yellow"
 	item_state = "tea_party_dress-yellow"
-
-
-//Seasonal Stuff
-
-/obj/item/clothing/under/gimmick/clown_autumn
-	name = "autumn clown suit"
-	desc = "Lets you celebrate the season while still remaining autumnomous."
-	icon_state = "clown_autumn"
-	item_state = "clown_autumn"
-
-	New()
-		..()
-		AddComponent(/datum/component/clown_disbelief_item)
-
-/obj/item/clothing/under/gimmick/clown_winter
-	name = "winter clown suit"
-	desc = "Lets you stay nice and warm while keeping that festive atmosphere. Actually kinda breezy, not very comfortable for the cold at all, but it still looks festive."
-	icon_state = "clown_winter"
-	item_state = "clown_winter"
-
-	New()
-		..()
-		AddComponent(/datum/component/clown_disbelief_item)
 
 // New chaplain stuff
 
