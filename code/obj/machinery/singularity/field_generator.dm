@@ -52,7 +52,10 @@ TYPEINFO(/obj/machinery/field_generator)
 	//			src.active = 0
 	//			icon_state = "Field_Gen"
 				boutput(user, "You are unable to turn off the field generator, wait till it powers down.")
-	//			src.cleanup()
+	//			src.cleanup(NORTH)
+	//			src.cleanup(SOUTH)
+	//			src.cleanup(EAST)
+	//			src.cleanup(WEST)
 			else
 				set_active(1)
 				icon_state = "Field_Gen +a"
@@ -386,6 +389,10 @@ TYPEINFO(/obj/machinery/field_generator)
 
 	if(sigcommand == "deactivate" && src.active)
 		src.set_active(0)
+		src.cleanup(NORTH)
+		src.cleanup(SOUTH)
+		src.cleanup(EAST)
+		src.cleanup(WEST)
 		icon_state = "Field_Gen"
 
 	return
