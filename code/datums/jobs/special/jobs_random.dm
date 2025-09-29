@@ -411,6 +411,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_lhan = list(/obj/item/pet_carrier)
 	items_in_backpack = list(/obj/item/storage/box/mousetraps)
+	access_string = "Staff Assistant"
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/vehiclemechanic
