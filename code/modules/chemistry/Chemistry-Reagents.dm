@@ -186,7 +186,7 @@ datum
 							H.sims.affectMotive("Hygiene", hygiene_change)
 
 				if(INGEST)
-					if (src.addiction_prob && M.ailments && length(M.ailments) < 5)
+					if (src.addiction_prob && M.ailments)
 						for(var/datum/ailment_data/addiction/Addictn in M.ailments)
 							Addictn.ingested_addictive_reagent(src, volume)
 
