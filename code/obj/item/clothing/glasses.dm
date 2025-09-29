@@ -718,6 +718,33 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	item_state = "spectro_monocle"
 	desc = "Such a dapper eyepiece! And a practical one at that."
 
+// Glasses that allow the wearer to get a full reagent report for containers
+TYPEINFO(/obj/item/clothing/glasses/phyto)
+	mats = 6
+
+/obj/item/clothing/glasses/phyto
+	name = "phytoscopic analyzer goggles"
+	icon_state = "phyto"
+	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
+	desc = "Goggles with a modified variant of the Raman spectroscope for rapid qualitative and quantitative analysis of botanical samples."
+	color_r = 0.6
+	color_g = 0.85
+	color_b = 1
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 5)
+
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTO, src)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_PHYTO, src)
+
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
 	name = "goggles"

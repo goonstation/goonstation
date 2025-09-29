@@ -15,6 +15,11 @@ ABSTRACT_TYPE(/obj/item/plant)
 		..()
 		make_reagents()
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTO))
+			boutput(user, scan_plant(src, user))
+
 	proc/make_reagents()
 		if (!src.reagents)
 			src.create_reagents(100)
