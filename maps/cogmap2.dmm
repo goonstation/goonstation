@@ -52633,7 +52633,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "doL" = (
-/obj/item/skull/odd,
+/obj/item/skull/changeling,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "doM" = (

@@ -35119,7 +35119,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/spacehabitat/owlery)
 "kVk" = (
-/obj/item/skull/odd,
+/obj/item/skull/changeling,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "kVL" = (
@@ -51786,7 +51786,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "qea" = (
-/obj/item/skull/odd,
+/obj/item/skull/changeling,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/spacehabitat/owlery)
 "qed" = (
