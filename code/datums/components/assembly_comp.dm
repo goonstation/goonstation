@@ -126,11 +126,11 @@ TYPEINFO(/datum/component/assembly)
 	var/obj/item/item_to_be_applier = checked_atom
 	// Here, we take care of the special case that both items can be triggers and appliers. In that case, we open a context menu and ask how we want to build the assembly
 	if((length(checked_atom.GetComponents(/datum/component/assembly/trigger_applier_assembly)) > 0) && isassemblyapplier(src.parent))
-		var/input_action = input(user, "Which item do you want to be the trigger of the assembly?") in list("[src.parent]","[checked_atom]","Never Mind")
+		var/input_action = input(user, "Which item should be activated if the assembly triggers?") in list("[src.parent]","[checked_atom]","Never Mind")
 		if(!input_action || input_action == "Never Mind" || !src.delayed_combination_valid_check(checked_atom, user))
 			return TRUE
-		// if our checked atom was selected, we have to swap the components places in the assembly. Else, just continue with what we were trying to do.
-		if(input_action == "[checked_atom]")
+		// if our parent was selected, we have to swap the components places in the assembly. Else, just continue with what we were trying to do.
+		if(input_action == "[src.parent]")
 			item_to_be_trigger = checked_atom
 			item_to_be_applier = src.parent
 	// here, we want to create our new assembly
