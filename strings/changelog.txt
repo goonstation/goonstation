@@ -1,4 +1,9 @@
 
+(t)mon sep 29 25
+(u)Calphrick
+(p)24691
+(e)🔄👽|C-Rework, A-Mutantraces
+(*)Reworked the shelterfrog accent.
 (t)sat sep 27 25
 (u)LeahTheTech
 (+)Saying something will now once again bump up the maptext of people around you. Yes this was a feature, you weren't going crazy.
