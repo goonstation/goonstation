@@ -327,6 +327,7 @@
 	var/addiction_meter
 	var/depletion_rate = 0
 	var/stage_satisfied = FALSE // Used for non-addicted addictive reagents, which can cure one level of addiction per level of addiction increased
+	var/tick_satisfied = FALSE // Used for non-addicted addictive reagents, so that only one of them increases the addiction meter per tick
 	var/extra_metabolisation = 0.01 // How many extra units of the addicted reagent are depleted per tick per point of addiction_meter
 
 	copy_other(datum/ailment_data/addiction/other)
@@ -344,6 +345,7 @@
 
 	stage_act(var/mult)
 		src.addiction_meter += affected_mob.reagents?.addiction_cache
+		src.tick_satisfied = FALSE
 		..()
 
 	stage_increment()
@@ -366,7 +368,8 @@
 				src.stage = 1
 				src.stage_satisfied = FALSE
 			return
-		else
+		else if (!src.tick_satisfied)
+			src.tick_satisfied = TRUE
 			src.addiction_meter += src.depletion_rate * 2
 			if (!src.stage_satisfied && src.stage > 1)
 				src.stage -= 1
