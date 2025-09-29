@@ -86,7 +86,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /obj/machinery/plantpot/get_desc(dist, mob/user)
 	. = ..()
-	if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTO))
+	if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION))
 		boutput(user, scan_plant(src, user))
 
 /obj/machinery/plantpot/proc/post_alert(var/list/alert_data)

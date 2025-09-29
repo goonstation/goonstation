@@ -72,7 +72,7 @@ ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 		if (dist >= 2)
 			return
 
-		if (iskudzuman(user) || HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTO))
+		if (iskudzuman(user) || HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION))
 			. = scan_plant(src, user, visible = 0) // Replaced with global proc (Convair880).
 
 	proc/docolor() //bleh, used when unpooling

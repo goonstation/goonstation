@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/obj/item/plant)
 
 	get_desc(dist, mob/user)
 		. = ..()
-		if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTO))
+		if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION))
 			boutput(user, scan_plant(src, user))
 
 	proc/make_reagents()

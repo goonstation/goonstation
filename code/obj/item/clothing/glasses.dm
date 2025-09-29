@@ -739,11 +739,11 @@ TYPEINFO(/obj/item/clothing/glasses/phyto)
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTO, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_PHYTO, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src)
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
