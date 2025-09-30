@@ -153,4 +153,4 @@ TYPEINFO(/datum/component/assembly)
 /datum/component/assembly/trigger_applier_assembly/proc/delayed_combination_valid_check(var/obj/item/checked_item, var/mob/user)
 	// we check here if we can still reach both items and they weren't build into assemblies at a different point
 	var/obj/item/checked_parent = src.parent
-	return (checked_parent && checked_item && !QDELETED(checked_item) && !QDELETED(checked_parent) && can_reach(user, checked_item) && can_reach(user, checked_parent) && !istype(checked_item.loc, /obj/item/assembly) && !istype(checked_parent.loc, /obj/item/assembly))
+	return (can_reach(user, checked_item) && can_reach(user, checked_parent) && !istype(checked_item.loc, /obj/item/assembly) && !istype(checked_parent.loc, /obj/item/assembly))
