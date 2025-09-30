@@ -297,6 +297,18 @@
 		icon_state = "spacelight-e"
 		see_face = TRUE
 
+	chiefengineer
+		name = "chief engineer's light space helmet"
+		desc = "A lightweight engineering space helmet that has been modified to protect the wearer from environmental hazards."
+		icon_state = "spacelight-ce"
+		see_face = TRUE
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 15)
+			setProperty("radprot", 15)
+			setProperty("meleeprot_head", 3)
+
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
 	icon_state = "syndicate"

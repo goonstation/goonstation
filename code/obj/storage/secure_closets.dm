@@ -329,8 +329,8 @@
 		/obj/item/clothing/head/helmet/space/engineer/diving,
 		/obj/item/clothing/shoes/flippers
 	#else
-		/obj/item/clothing/suit/space/light/engineer,
-		/obj/item/clothing/head/helmet/space/light/engineer,
+		/obj/item/clothing/suit/space/light/chiefengineer,
+		/obj/item/clothing/head/helmet/space/light/chiefengineer,
 	#endif
 	)
 

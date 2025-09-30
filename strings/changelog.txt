@@ -1,5 +1,8 @@
 
 (t)tue sep 30 25
+(u)Sord
+(+)The Chief Engineer now gets a special, slightly more environmentally protective, version of the light engineering space suit in their locker. The manufactured version remains the same.
+(+)The CE also now gets stomper boots in their locker on Neon like they should have.
 (u)Kanthes
 (p)24755
 (e)🆕🔬|C-Feature, A-Science

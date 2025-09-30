@@ -1590,6 +1590,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		icon_state = "spacelight-e"
 		item_state = "es_suit"
 
+	chiefengineer
+		name = "chief engineer's light space suit"
+		desc = "A lightweight engineering spacesuit custom modified by the Chief Engineer to protect from more environmental hazards."
+		icon_state = "spacelight-ce"
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 20)
+			setProperty("radprot", 20)
+			setProperty("meleeprot", 2)
+			setProperty("rangedprot", 0.2) // better than 0
+
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving
