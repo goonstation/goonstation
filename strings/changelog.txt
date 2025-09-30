@@ -1,4 +1,9 @@
 
+(t)tue sep 30 25
+(u)Kanthes
+(p)24755
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds the artifact bomb (radioactive) variant.
 (t)mon sep 29 25
 (u)Calphrick
 (p)24691
