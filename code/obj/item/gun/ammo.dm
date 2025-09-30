@@ -1551,7 +1551,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	rand_pos = TRUE
 	refillable = FALSE
 	var/obj/item/source_thing
-
+	var/static/list/threshholds = 	 list(-50, 0, 40, 100, 250, 9000)
+	var/static/list/scaling_values = list(0, 10, 30, 50, 80, 300)
 	var/armour_pierce_multi = 0.0015
 	var/base_dissipation_rate = 5.5
 	var/proj_speed_multi = 0.03
@@ -1588,7 +1589,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		if (src.ammo_type?.reagent_payload["cyanide"])
 			src.ammo_type.reagent_payload["cyanide"] *= 0.1 * clamp(length(src.ammo_type.reagent_payload) - 1, 1, 10)
 		// Increase the bullet's damage by the endurance.
-		src.ammo_type.damage = round(get_scaled_damage(h_data.DNA.endurance), 1)
+		src.ammo_type.damage = round(get_scaled_damage(h_data.DNA.endurance, threshholds, scaling_values), 1)
 		// Increase armour-piercing by the potency.
 		src.ammo_type.armor_ignored = h_data.DNA.potency * src.armour_pierce_multi
 		// Reduce dissipation rate by lifespan.
@@ -1610,12 +1611,28 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		source_thing = null
 		return src
 
-	// breakpoints for this current formula, input = output: <-30 = 1, 0 = 17, 100 = 44, 200 = 66, 300 = 80, 640 = 100, 1000 = 120
-	proc/get_scaled_damage(x)
-		x += 100
-		if (x <= 0)
-			return 1
-		return (log(x / 68.8590961441749) / 0.0220758504333)
+	// "We have logarithmic scaling at home"
+	proc/get_scaled_damage(input, list/input_thresholds, list/output_values)
+		if(!input_thresholds || !output_values || input_thresholds.len != output_values.len)
+			return 0
+
+		if(input <= input_thresholds[1])
+			return output_values[1]
+
+		if(input >= input_thresholds[length(input_thresholds)])
+			return output_values[length(output_values)]
+
+		for(var/i = 2; i <= min(length(input_thresholds), length(output_values)); i++)
+			if(input <= input_thresholds[i])
+				var/prev_in = input_thresholds[i-1]
+				var/next_in = input_thresholds[i]
+				var/prev_out = output_values[i-1]
+				var/next_out = output_values[i]
+
+				var/t = (input - prev_in) / (next_in - prev_in)
+				return lerp(prev_out, next_out, t)
+
+		return output_values[output_values.len]
 
 	banana
 		ammo_type = new/datum/projectile/bullet/produce/plant/banana
