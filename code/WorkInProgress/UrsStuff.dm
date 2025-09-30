@@ -66,7 +66,8 @@
 	desc = "A light that gets brighter at night."
 	light_type = /obj/item/light/bulb/neutral
 	New()
-		var/list/light_outside = rgb2num(CENTCOM_LIGHT,COLORSPACE_HSL)
+		var/centcom_color = daynight_controllers[AMBIENT_LIGHT_SRC_EARTH]?.light.color
+		var/list/light_outside = rgb2num(centcom_color,COLORSPACE_HSL)
 		brightness = (1 - (light_outside[3]/255))*1.3
 		. = ..()
 
