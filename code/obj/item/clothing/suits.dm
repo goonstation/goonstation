@@ -1556,7 +1556,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
-	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
+	icon_state = "spacelight-civ"
 	item_state = "es_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS

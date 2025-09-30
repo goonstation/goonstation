@@ -271,7 +271,7 @@
 /obj/item/clothing/head/helmet/space/light // Similar stats to normal space helmets, but way less armor or slowdown
 	name = "light space helmet"
 	desc = "A lightweight space helmet."
-	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
+	icon_state = "spacelight-civ"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	see_face = FALSE
 	item_state = "s_helmet"
