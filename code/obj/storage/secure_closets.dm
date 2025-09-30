@@ -321,6 +321,8 @@
 		/obj/item/circuitboard/announcement/engineering,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
+	#elif defined(MAP_OVERRIDE_NEON)
+		/obj/item/clothing/shoes/stomp_boots,
 	#endif
 	#ifdef UNDERWATER_MAP
 		/obj/item/clothing/suit/space/diving/engineering,
