@@ -1,5 +1,9 @@
 
 (t)tue sep 30 25
+(u)JORJ949
+(p)24780
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The limit of 2 poltergeists per wraith is now present on all servers, rather than just RP.
 (u)Sord
 (+)The Chief Engineer now gets a special, slightly more environmentally protective, version of the light engineering space suit in their locker. The manufactured version remains the same.
 (+)The CE also now gets stomper boots in their locker on Neon like they should have.
