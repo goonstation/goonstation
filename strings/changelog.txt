@@ -1,4 +1,9 @@
 
+(t)wed oct 01 25
+(u)JORJ949
+(p)24726
+(e)🪲💊|C-Bug, A-Medical
+(+)Fixed the Gene Booth making all your clicks be empty hands, allowing you to deconstruct it and bash it (50 hp) to force the occupant out (doesn't break the booth).
 (t)tue sep 30 25
 (u)LeahTheTech
 (+)You can put bread in the AI law rack now. I mean you shouldn't, but you can.
