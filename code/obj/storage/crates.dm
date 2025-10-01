@@ -256,13 +256,13 @@
 	/obj/item/clothing/shoes/clown_shoes/autumn,
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,
-	/obj/item/clothing/under/gimmick/clown_autumn,
+	/obj/item/clothing/under/misc/clown/autumn,
 	#endif
 	#ifdef SEASON_WINTER
 	/obj/item/clothing/shoes/clown_shoes/winter,
 	/obj/item/clothing/head/clown_winter_hat,
 	/obj/item/clothing/mask/clown_hat/winter,
-	/obj/item/clothing/under/gimmick/clown_winter,
+	/obj/item/clothing/under/misc/clown/winter,
 	#endif
 	/obj/item/storage/box/balloonbox)
 
