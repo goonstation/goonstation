@@ -1,5 +1,9 @@
 
 (t)wed oct 01 25
+(u)JORJ949
+(p)24715
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Syndicate operatives can now identify syndicate robot frames and conversion chambers at a glance
 (u)Nexusuxen
 (p)24722
 (e)🪲📦|C-Bug, A-Game-Objects
