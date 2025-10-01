@@ -1,7 +1,3 @@
-/// Returns a stringified number with its associated +/- sign.
-#define SIGNED(NUM) (NUM >= 0 ? "+[NUM]" : "[NUM]")
-
-
 /*
  * File is mainly for `/datum/hud_zone`-related functions
  */
@@ -95,17 +91,17 @@
 	var/screen_loc_horizontal = src.horizontal_edge
 	var/horizontal_offset_adjusted = (relative_pos_horizontal + src.horizontal_offset)
 	if (screen_loc_horizontal == "EAST")
-		screen_loc_horizontal += SIGNED(-horizontal_offset_adjusted)
+		screen_loc_horizontal += SIGNED_NUM_STRING(-horizontal_offset_adjusted)
 	else
-		screen_loc_horizontal += SIGNED(horizontal_offset_adjusted)
+		screen_loc_horizontal += SIGNED_NUM_STRING(horizontal_offset_adjusted)
 
 	// Elements added with a north edge move down, elements with a south edge move up.
 	var/screen_loc_vertical = src.vertical_edge
 	var/vertical_offset_adjusted = (relative_pos_vertical + src.vertical_offset)
 	if (screen_loc_vertical == "NORTH")
-		screen_loc_vertical += SIGNED(-vertical_offset_adjusted)
+		screen_loc_vertical += SIGNED_NUM_STRING(-vertical_offset_adjusted)
 	else
-		screen_loc_vertical += SIGNED(vertical_offset_adjusted)
+		screen_loc_vertical += SIGNED_NUM_STRING(vertical_offset_adjusted)
 
 	element.screen_obj.screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
 	src.horizontal_offset += element.width
@@ -282,6 +278,3 @@
 
 	var/new_loc = "[x_loc], [y_loc]"
 	element.screen_obj.screen_loc = new_loc
-
-
-#undef SIGNED
