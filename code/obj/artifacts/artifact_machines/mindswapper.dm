@@ -6,12 +6,13 @@
 	associated_object = /obj/machinery/artifact/mindswapper
 	type_name = "Mindswapper"
 	type_size = ARTIFACT_SIZE_LARGE
-	rarity_weight = 365
-	validtypes = list("eldritch")
+	rarity_weight = 50 //Powerful effect, thus rare.
+	validtypes = list("martian" ,"precursor" ,"wizard" ,"eldritch", "ancient")
 	validtriggers = list(/datum/artifact_trigger/carbon_touch)
+	//validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	activ_text = "extends several antennas!"
 	deact_text = "retracts its antennas."
-	react_xray = list(15,75,90,3,"???ERROR???")
+	react_xray = list(15,75,90,3,"ANTENNAS")
 	var/mob/living/carbon/human/last_touched_body
 	var/mindswap_cooldown = 30 SECONDS
 	var/cooldowns = list()
