@@ -471,10 +471,12 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				appearance_flags |= RESET_COLOR
 				user.show_message(SPAN_NOTICE("You poke a tiny pinhole into [src]!"))
 				return
+		return ..()
 
 	get_desc ()
 		if (src.pinhole)
 			. += " Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
+
 
 	attack_self(mob/user)
 
