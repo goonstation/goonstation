@@ -543,7 +543,7 @@
 				return
 			else
 				boutput(usr, SPAN_ALERT("<b>You replace the [S] ..."))
-				del(S)
+				qdel(S)
 		if(target && BOUNDS_DIST(target, src) == 0)
 			var/obj/decal/cleanable/ritualSigil/R = new/obj/decal/cleanable/ritualSigil(target, C.type)
 			R.color = src.color
