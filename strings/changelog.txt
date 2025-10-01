@@ -1,4 +1,54 @@
 
+(t)wed oct 01 25
+(u)JORJ949
+(p)24715
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Syndicate operatives can now identify syndicate robot frames and conversion chambers at a glance
+(u)Nexusuxen
+(p)24722
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Neutrons from fallout TTVs now properly spawn
+(u)TheGeneralJay
+(p)24560
+(e)💅💊|C-QoL, A-Medical
+(+)The cloning mindhack module now bypasses the puritan trait.
+(u)JORJ949
+(p)24726
+(e)🪲💊|C-Bug, A-Medical
+(+)Fixed the Gene Booth making all your clicks be empty hands, allowing you to deconstruct it and bash it (50 hp) to force the occupant out (doesn't break the booth).
+(t)tue sep 30 25
+(u)LeahTheTech
+(+)You can put bread in the AI law rack now. I mean you shouldn't, but you can.
+(u)JORJ949
+(p)24780
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The limit of 2 poltergeists per wraith is now present on all servers, rather than just RP.
+(u)Sord
+(+)The Chief Engineer now gets a special, slightly more environmentally protective, version of the light engineering space suit in their locker. The manufactured version remains the same.
+(+)The CE also now gets stomper boots in their locker on Neon like they should have.
+(u)Kanthes
+(p)24755
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds the artifact bomb (radioactive) variant.
+(t)mon sep 29 25
+(u)Calphrick
+(p)24691
+(e)🔄👽|C-Rework, A-Mutantraces
+(*)Reworked the shelterfrog accent.
+(t)sat sep 27 25
+(u)LeahTheTech
+(+)Saying something will now once again bump up the maptext of people around you. Yes this was a feature, you weren't going crazy.
+(u)JORJ949
+(p)24743
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Spy thieves now have a "Steal items via uplink" objective, the "Professional Thief" medal is now tied to this objective.
+(t)fri sep 26 25
+(u)Sord
+(+)The Research Director now gets a special bio suit in their main locker.
+(u)JORJ949
+(p)24748
+(e)💅📄|C-QoL, A-UI
+(*)Antagonist summary item names (Including wizard spells and blob upgrades) are now hidden behind a tooltip available by hovering over the item's icon.
 (t)wed sep 24 25
 (u)Kanthes
 (p)24683
