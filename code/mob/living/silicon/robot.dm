@@ -284,8 +284,10 @@ TYPEINFO(/mob/living/silicon/robot)
 						chest.cell = src.cell
 						src.cell = null
 						chest.cell.set_loc(chest)
-
-			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			var/frame_type = /obj/item/parts/robot_parts/robot_frame
+			if(src.syndicate)
+				frame_type = /obj/item/parts/robot_parts/robot_frame/syndicate
+			var/obj/item/parts/robot_parts/robot_frame/frame =  new frame_type(T)
 			frame.setMaterial(src.frame_material)
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
