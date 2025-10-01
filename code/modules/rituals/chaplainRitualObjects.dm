@@ -797,369 +797,369 @@
 		"}
 		return ..()
 
-// #ifdef HALLOWEEN
-// obj/eldritch_altar
-// 	name = "eldritch altar"
-// 	desc = "A strange altar with strangely familiar symbols etched into it.. Seems to have <b>two<b> different symbols on either side of it. It looks, uhh spooky."
-// 	icon = 'icons/obj/spooky.dmi'
-// 	icon_state = "altar-sleep"
-// 	density = 1
-// 	anchored = UNANCHORED
-// 	flags = NOSPLASH
-// 	event_handler_flags = USE_FLUID_ENTER
-// 	layer = OBJ_LAYER-0.1
-// 	pixel_x = -16
-// 	var/the_guy						//the guy trying to get the chalk
-// 	var/spacebux_value				//How much spacebux they put in for this try
-// 	var/sacrifice_value				//value of the sacrifice to get the
+#ifdef HALLOWEEN
+obj/eldritch_altar
+	name = "eldritch altar"
+	desc = "A strange altar with strangely familiar symbols etched into it.. Seems to have <b>two<b> different symbols on either side of it. It looks, uhh spooky."
+	icon = 'icons/obj/spooky.dmi'
+	icon_state = "altar-sleep"
+	density = 1
+	anchored = UNANCHORED
+	flags = NOSPLASH
+	event_handler_flags = USE_FLUID_ENTER
+	layer = OBJ_LAYER-0.1
+	pixel_x = -16
+	var/the_guy						//the guy trying to get the chalk
+	var/spacebux_value				//How much spacebux they put in for this try
+	var/sacrifice_value				//value of the sacrifice to get the
 
-// 	var/active = 0
-// 	var/uses						//How many times this has been used successfully to get an item this has this round.
-// 	var/const/max_uses = 3
-// 	var/list/used_by				//list of ckeys that have used this successfully this round.
-// 	var/list/reward_item_pool
+	var/active = 0
+	var/uses						//How many times this has been used successfully to get an item this has this round.
+	var/const/max_uses = 3
+	var/list/used_by				//list of ckeys that have used this successfully this round.
+	var/list/reward_item_pool
 
-// 	var/spacebux_consumed_round		//amount of spacebux consumed this round.
-// 	var/spacebux_consumed_total
+	var/spacebux_consumed_round		//amount of spacebux consumed this round.
+	var/spacebux_consumed_total
 
-// 	//not very efficient, but hey, it's a gimmick item...
-// 	var/list/left_offerings = list()
-// 	var/list/right_offerings = list()
+	//not very efficient, but hey, it's a gimmick item...
+	var/list/left_offerings = list()
+	var/list/right_offerings = list()
 
-// 	New()
-// 		..()
-// 		used_by = list()
-// 		reward_item_pool = list(/obj/item/paper/rituals, /obj/item/sacdagger,/obj/item/thaumometer, /obj/item/ritualskull, /obj/item/ritualChalk/randomColor, /obj/item/ritualChalk)
-// 		spacebux_consumed_total = world.load_intra_round_value("altar_spacebux_consumed")
-// 		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, PROC_REF(save_spacebux_consumed))
+	New()
+		..()
+		used_by = list()
+		reward_item_pool = list(/obj/item/paper/rituals, /obj/item/sacdagger,/obj/item/thaumometer, /obj/item/ritualskull, /obj/item/ritualChalk/randomColor, /obj/item/ritualChalk)
+		spacebux_consumed_total = world.load_intra_round_value("altar_spacebux_consumed")
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, PROC_REF(save_spacebux_consumed))
 
-// 	proc/save_spacebux_consumed()
-// 		world.save_intra_round_value("altar_spacebux_consumed", spacebux_consumed_total+spacebux_consumed_round)
-// 		message_admins("spooktober altar destroyed {[spacebux_consumed_round]} spacebux this round. Server Total: {[spacebux_consumed_total+spacebux_consumed_round]}.")
-// 		logTheThing(LOG_DEBUG, null, "kyle - spooktober altar destroyed {[spacebux_consumed_round]} spacebux this round, {[spacebux_consumed_total+spacebux_consumed_round]} total.(On this server)")
+	proc/save_spacebux_consumed()
+		world.save_intra_round_value("altar_spacebux_consumed", spacebux_consumed_total+spacebux_consumed_round)
+		message_admins("spooktober altar destroyed {[spacebux_consumed_round]} spacebux this round. Server Total: {[spacebux_consumed_total+spacebux_consumed_round]}.")
+		logTheThing(LOG_DEBUG, null, "kyle - spooktober altar destroyed {[spacebux_consumed_round]} spacebux this round, {[spacebux_consumed_total+spacebux_consumed_round]} total.(On this server)")
 
-// 	//you can only slam
-// 	attackby(obj/item/W, mob/user, params)
-// 		if(W.cant_drop) return
-// 		if (istype(W, /obj/item/grab))
-// 			var/obj/item/grab/G = W
-// 			if (!G.affecting || G.affecting.buckled)
-// 				return
-// 			if (G.state == GRAB_PASSIVE)
-// 				boutput(user, SPAN_ALERT("You need a tighter grip!"))
-// 				return
-// 			G.affecting.set_loc(src.loc)
+	//you can only slam
+	attackby(obj/item/W, mob/user, params)
+		if(W.cant_drop) return
+		if (istype(W, /obj/item/grab))
+			var/obj/item/grab/G = W
+			if (!G.affecting || G.affecting.buckled)
+				return
+			if (G.state == GRAB_PASSIVE)
+				boutput(user, SPAN_ALERT("You need a tighter grip!"))
+				return
+			G.affecting.set_loc(src.loc)
 
-// 			if (!G.affecting.hasStatus("knockdown"))
-// 				G.affecting.changeStatus("knockdown", 3 SECONDS)
-// 				G.affecting.force_laydown_standup()
-// 			src.visible_message(SPAN_ALERT("<b>[G.assailant] slams [G.affecting] onto \the [src]!</b>"))
-// 			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-// 			qdel(W)
-// 			return
-// 		else
-// 			handle_offering(W, user, params)
-
-
-// 			// place_on(W, user, params)
-
-// 	attack_hand(mob/user)
-// 		if (user.is_hulk() && user:a_intent != INTENT_HELP)
-// 			user.visible_message(SPAN_ALERT("[user] tries to destroy the table!"))
-// 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-// 			user.bioHolder.RemoveEffect("hulk")
-// 			user.changeStatus("knockdown", 30 SECONDS)
-// 			boutput(user, SPAN_ALERT("<b>We are not amused [user]..."))
-// 			SPAWN(1 SECONDS)
-// 				playsound(src.loc, 'sound/effects/dramatic.ogg', 100, 1)
-
-// 			SPAWN(5 SECONDS)
-// 				if (ishuman(user))
-// 					var/mob/living/carbon/human/H = user
-// 					H.sever_limb("l_arm")
-// 					H.sever_limb("r_arm")
-// 			message_admins("Someone tried to hulk smash the eldritch altar. Hopefully it was funny. - Kyle")
-
-// 		else if (ishuman(user))
-// 			var/mob/living/carbon/human/H = user
-// 			if (H.a_intent == INTENT_HARM)
-// 				H.changeStatus("knockdown", 6 SECONDS)
-// 				boutput(user, SPAN_ALERT("<b>[user], this is a sacred altar, show a little respect..."))
-// 				playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_3.ogg', 100, 1)
-// 				take_bleeding_damage(H, H, rand(5,15), DAMAGE_STAB)
-
-// 				//start taking their organs...
-// 				var/count = 0
-// 				while (BOUNDS_DIST(H, src) == 0)
-// 					sleep(2 SECONDS)
-// 					var/organ
-// 					if (BOUNDS_DIST(H, src) == 0 && count <= 4)
-// 						organ = H.organHolder.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
-// 					if (!organ)
-// 						break;
-// 				return
-// 			//attempt to activate the thing
-// 			try{
-// 				attempt_activate(user)
-// 			} catch (var/e){
-// 				. = e
-// 				logTheThing(LOG_DEBUG, null, "kyle - spooktober altar broke: [e].")
-// 				//clear offerings
-// 				for (var/obj/O in left_offerings)
-// 					src.vis_contents -= O
-// 					O.vis_flags = initial(O.vis_flags)
-// 					qdel(O)
-// 				for (var/obj/O in right_offerings)
-// 					src.vis_contents -= O
-// 					O.vis_flags = initial(O.vis_flags)
-// 					qdel(O)
-
-// 				right_offerings.len = 0
-// 				left_offerings.len = 0
-// 				src.contents.len = 0
-
-// 				active = 0
-// 			}
-
-// 		//if (place hand on sacrificum), Start removing organs for the sacrifice. Start with the arms that touches it.
+			if (!G.affecting.hasStatus("knockdown"))
+				G.affecting.changeStatus("knockdown", 3 SECONDS)
+				G.affecting.force_laydown_standup()
+			src.visible_message(SPAN_ALERT("<b>[G.assailant] slams [G.affecting] onto \the [src]!</b>"))
+			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			qdel(W)
+			return
+		else
+			handle_offering(W, user, params)
 
 
+			// place_on(W, user, params)
 
-// 	proc/handle_offering(var/obj/item/W, var/mob/user, var/params)
-// 		var/side = "left"
-// 		if (params)
-// 			var/pixel_coord_x = text2num(params["icon-x"])
-// 			var/vis_x = text2num(params["vis-x"])
-// 			if (!isnull(vis_x))
-// 				pixel_coord_x += vis_x + 16
-// 			side = (pixel_coord_x > 32) ? "right" : "left"		//left is sacrifice, right is spacebux
+	attack_hand(mob/user)
+		if (user.is_hulk() && user:a_intent != INTENT_HELP)
+			user.visible_message(SPAN_ALERT("[user] tries to destroy the table!"))
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			user.bioHolder.RemoveEffect("hulk")
+			user.changeStatus("knockdown", 30 SECONDS)
+			boutput(user, SPAN_ALERT("<b>We are not amused [user]..."))
+			SPAWN(1 SECONDS)
+				playsound(src.loc, 'sound/effects/dramatic.ogg', 100, 1)
 
-// 			W.pixel_x = pixel_coord_x - 16
-// 			W.pixel_y = rand(2, 12)
+			SPAWN(5 SECONDS)
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					H.sever_limb("l_arm")
+					H.sever_limb("r_arm")
+			message_admins("Someone tried to hulk smash the eldritch altar. Hopefully it was funny. - Kyle")
 
-// 		user.drop_item()
-// 		W.set_loc(src)
-// 		W.vis_flags = VIS_INHERIT_ID
-// 		// W.transform = matrix(0.75, MATRIX_SCALE)	//idk about scaling em down. would be a weird thing I guess. Even if I think it looks neater
-// 		src.vis_contents += W
-// 		animate_float(W, loopnum = -1, floatspeed = 15)
-// 		switch(side)
-// 			if ("left")
-// 				left_offerings += W
-// 			if ("right")
-// 				right_offerings += W
-// 		boutput(user, SPAN_NOTICE("<b>You place [W] on the [side] side of [src]."))
+		else if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.a_intent == INTENT_HARM)
+				H.changeStatus("knockdown", 6 SECONDS)
+				boutput(user, SPAN_ALERT("<b>[user], this is a sacred altar, show a little respect..."))
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_3.ogg', 100, 1)
+				take_bleeding_damage(H, H, rand(5,15), DAMAGE_STAB)
 
+				//start taking their organs...
+				var/count = 0
+				while (BOUNDS_DIST(H, src) == 0)
+					sleep(2 SECONDS)
+					var/organ
+					if (BOUNDS_DIST(H, src) == 0 && count <= 4)
+						organ = H.organHolder.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
+					if (!organ)
+						break;
+				return
+			//attempt to activate the thing
+			try{
+				attempt_activate(user)
+			} catch (var/e){
+				. = e
+				logTheThing(LOG_DEBUG, null, "kyle - spooktober altar broke: [e].")
+				//clear offerings
+				for (var/obj/O in left_offerings)
+					src.vis_contents -= O
+					O.vis_flags = initial(O.vis_flags)
+					qdel(O)
+				for (var/obj/O in right_offerings)
+					src.vis_contents -= O
+					O.vis_flags = initial(O.vis_flags)
+					qdel(O)
 
-// 	proc/attempt_activate(var/mob/M)
-// 		if (active)
-// 			// SPAWN(2 SECONDS)
-// 			// 	active = 0
-// 			return
-// 		FLICK("altar-awake", src)
-// 		//here we loop through all the offerings and tally them.
-// 		var/tally_strength = 0
-// 		var/tally_spacebux = 0
-// 		//this means nothing on either side.
-// 		if((islist(left_offerings) && !length(left_offerings)) && (islist(right_offerings) && !length(right_offerings)))
-// 			//hurt user maybe
-// 			M.changeStatus("knockdown", 6 SECONDS)
-// 			//todo hitpunch sound. threatening message
+				right_offerings.len = 0
+				left_offerings.len = 0
+				src.contents.len = 0
 
-// 			M.throw_at(get_edge_target_turf(src, get_dir(src, M)), 2, 1)
-// 			boutput(M, SPAN_ALERT("<b>Uhhh [M], Stop wasting my time, why are you activating my altar without offering a sacrifice..."))
-// 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
-// 			random_brute_damage(M, rand(10,30))
-// 			return
+				active = 0
+			}
 
-// 		active = 1
-// 		for(var/obj/O in left_offerings)
-// 			if(istype(O,/obj/item/currency/spacecash))
-// 				tally_strength += round(O:amount / 1000)
-
-// 			if(istype(O,/obj/item/parts/human_parts))
-// 				var/obj/item/parts/human_parts/part = O
-// 				if(part.kind_of_limb & (LIMB_PLANT | LIMB_ROBOT)) continue //Can't sacrifice robot or syntharms
-
-// 				tally_strength += 1
-
-// 			if(istype(O,/obj/item/organ))
-// 				var/obj/item/organ/organ = O
-// 				if (organ.robotic || organ.synthetic || organ.broken) continue
-// 				var/mult = 1
-// 				if (organ.get_damage() > organ.fail_damage)
-// 					mult = 0.5
-// 				tally_strength += 1*mult
-
-// 			// if(istype(O,/obj/item/spiritshard))
-// 			// 	var/obj/item/spiritshard/S = O
-// 			// 	tally_strength += S.storedStrength
-// 			//doing this cause of vis_contents bugs. make it be worth a bit less.
-// 			if (istype(O, /obj/item/currency/spacebux))
-// 				var/obj/item/currency/spacebux/S = O
-// 				if (S.spent) continue
-// 				tally_spacebux += (S.amount*0.75)
+		//if (place hand on sacrificum), Start removing organs for the sacrifice. Start with the arms that touches it.
 
 
 
-// 		for (var/obj/item/currency/spacebux/S in right_offerings)
-// 			if (S.spent) continue
-// 			tally_spacebux += S.amount
+	proc/handle_offering(var/obj/item/W, var/mob/user, var/params)
+		var/side = "left"
+		if (params)
+			var/pixel_coord_x = text2num(params["icon-x"])
+			var/vis_x = text2num(params["vis-x"])
+			if (!isnull(vis_x))
+				pixel_coord_x += vis_x + 16
+			side = (pixel_coord_x > 32) ? "right" : "left"		//left is sacrifice, right is spacebux
+
+			W.pixel_x = pixel_coord_x - 16
+			W.pixel_y = rand(2, 12)
+
+		user.drop_item()
+		W.set_loc(src)
+		W.vis_flags = VIS_INHERIT_ID
+		// W.transform = matrix(0.75, MATRIX_SCALE)	//idk about scaling em down. would be a weird thing I guess. Even if I think it looks neater
+		src.vis_contents += W
+		animate_float(W, loopnum = -1, floatspeed = 15)
+		switch(side)
+			if ("left")
+				left_offerings += W
+			if ("right")
+				right_offerings += W
+		boutput(user, SPAN_NOTICE("<b>You place [W] on the [side] side of [src]."))
 
 
-// 		// Here we pick the item based on the tallied numbers
-// 		var/path_to_spawn
-// 		var/chalk_use_mult = 0.25
+	proc/attempt_activate(var/mob/M)
+		if (active)
+			// SPAWN(2 SECONDS)
+			// 	active = 0
+			return
+		FLICK("altar-awake", src)
+		//here we loop through all the offerings and tally them.
+		var/tally_strength = 0
+		var/tally_spacebux = 0
+		//this means nothing on either side.
+		if((islist(left_offerings) && !length(left_offerings)) && (islist(right_offerings) && !length(right_offerings)))
+			//hurt user maybe
+			M.changeStatus("knockdown", 6 SECONDS)
+			//todo hitpunch sound. threatening message
 
-// 		var/select_item = tally_spacebux + min(min(tally_strength*300, 1900), tally_spacebux)
+			M.throw_at(get_edge_target_turf(src, get_dir(src, M)), 2, 1)
+			boutput(M, SPAN_ALERT("<b>Uhhh [M], Stop wasting my time, why are you activating my altar without offering a sacrifice..."))
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
+			random_brute_damage(M, rand(10,30))
+			return
 
-// 		switch(select_item)
-// 			if (-INFINITY to 300)
-// 				//nothing, harm the user for their insolence
-// 				M.changeStatus("knockdown", 10 SECONDS)
-// 				M.throw_at(get_edge_target_turf(src, get_dir(src, M)), 3, 1)
-// 				var/pick = pick("Sickening", "Gross", "Disgraceful", "Boring", "Sad", "Disappointing", "Disgusting", "Weird")
-// 				boutput(M, SPAN_ALERT("<b>You call that an offering [M]? [pick]..."))
+		active = 1
+		for(var/obj/O in left_offerings)
+			if(istype(O,/obj/item/currency/spacecash))
+				tally_strength += round(O:amount / 1000)
 
-// 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
-// 				M.throw_at(get_edge_target_turf(src, get_dir(src, M)), 1, 1)
+			if(istype(O,/obj/item/parts/human_parts))
+				var/obj/item/parts/human_parts/part = O
+				if(part.kind_of_limb & (LIMB_PLANT | LIMB_ROBOT)) continue //Can't sacrifice robot or syntharms
 
-// 			if (101 to 400)
-// 				path_to_spawn =  /obj/item/ritualskull
-// 			if (401 to 800)
-// 				path_to_spawn = /obj/item/paper/rituals
-// 			if (801 to 1300)
-// 				path_to_spawn = /obj/item/thaumometer
-// 			if (1301 to 1992)
-// 				path_to_spawn =  /obj/item/sacdagger
-// 			if (1993 to 4000)
-// 				path_to_spawn = /obj/item/ritualChalk/randomColor
-// 				chalk_use_mult = 0.5
-// 			if (4001 to 6500)
-// 				path_to_spawn = /obj/item/ritualChalk/randomColor
-// 				chalk_use_mult = 0.75
-// 			if (6501 to INFINITY)
-// 				path_to_spawn = /obj/item/ritualChalk
-// 				chalk_use_mult = 2
+				tally_strength += 1
 
-// 		var/obj/obj_to_spawn
-// 		if (!isnull(path_to_spawn))
-// 			obj_to_spawn = new path_to_spawn(src.loc)
+			if(istype(O,/obj/item/organ))
+				var/obj/item/organ/organ = O
+				if (organ.robotic || organ.synthetic || organ.broken) continue
+				var/mult = 1
+				if (organ.get_damage() > organ.fail_damage)
+					mult = 0.5
+				tally_strength += 1*mult
 
-// 		if (!istype(get_area(src), /area/station/chapel))
-// 			tally_strength = tally_strength*0.70
-// 		tally_strength = round(tally_strength)
-
-// 		var/uses = 0
-// 		switch(tally_strength)
-// 			if (-INFINITY to 0) uses = 30
-// 			if (1 to 3) uses = 90
-// 			if (4 to 6) uses = 180
-// 			if (7 to 13) uses = 300
-// 			if (14 to 21) uses = 270
-// 			if (22 to 29) uses = 220
-// 			if (30 to 49) uses = 190
-// 			if (50 to INFINITY) uses = 500
-// 		if (ispath(path_to_spawn, /obj/item/ritualChalk))
-// 			var/obj/item/ritualChalk/chalk = obj_to_spawn
-// 			uses = round(uses*chalk_use_mult)
-// 			chalk.uses = uses
-// 			var/obj/manual = new/obj/item/paper/rituals(src.loc)
-// 			SPAWN(3 SECONDS)
-// 				manual.throw_at(M, 7, 0.4)
-
-// 		if (!isnull(obj_to_spawn))
-// 			spawn_animation1(obj_to_spawn)
-// 			SPAWN(2 SECONDS)
-// 				obj_to_spawn.throw_at(M, 7, 2)
-
-// 		var/shard_power = 1
-// 		if (select_item > 2500)
-// 			if (M.health < 0)
-// 				if (M.health < -100)
-// 					shard_power = 8
-// 				else
-// 					shard_power = 5
-// 			else
-// 				shard_power = min((M.max_health-M.health/M.max_health)*5, 5)
-
-// 			var/obj/item/spiritshard/shard = new(src.loc,newRitualVars(shard_power, shard_power))
-// 			SPAWN(rand(1,40))
-// 				var/turf/rand_target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
-// 				shard.throw_at(rand_target, rand(2,7), 1)
-
-// 		//destroy items in lists.
+			// if(istype(O,/obj/item/spiritshard))
+			// 	var/obj/item/spiritshard/S = O
+			// 	tally_strength += S.storedStrength
+			//doing this cause of vis_contents bugs. make it be worth a bit less.
+			if (istype(O, /obj/item/currency/spacebux))
+				var/obj/item/currency/spacebux/S = O
+				if (S.spent) continue
+				tally_spacebux += (S.amount*0.75)
 
 
-// 		//just look through both lists, play an animation and remove em.
-// 		//again, let me be lazy. DON'T LOOK AT THIS CODE, ESPECIALLY THE SLEEPS. DON'T! - Kyle
-// 		for (var/obj/O in left_offerings)
-// 			sleep(rand(0,2))
-// 			SPAWN(-1)
-// 				leaving_animation(O)
-// 				src.vis_contents -= O
-// 				O.vis_flags = initial(O.vis_flags)
-// 				sleep(15)
-// 				qdel(O)
-// 		for (var/obj/O in right_offerings)
-// 			sleep(rand(0,2))
-// 			if (istype(O, /obj/item/currency/spacebux))
-// 				var/obj/item/currency/spacebux/S = O
-// 				S.spent = 1
-// 			SPAWN(-1)
-// 				leaving_animation(O)
-// 				src.vis_contents -= O
-// 				O.vis_flags = initial(O.vis_flags)
-// 				sleep(15)
-// 				qdel(O)
-// 		spacebux_consumed_round += tally_spacebux
-// 		//right_offerings = list()
-// 		//left_offerings = list()
-// 		//src.contents = list()
-// 		right_offerings.len = 0
-// 		left_offerings.len = 0
-// 		src.contents.len = 0
+
+		for (var/obj/item/currency/spacebux/S in right_offerings)
+			if (S.spent) continue
+			tally_spacebux += S.amount
 
 
-// 		//if successfull. spawn item and show archive spacebux
-// 		active = 0
+		// Here we pick the item based on the tallied numbers
+		var/path_to_spawn
+		var/chalk_use_mult = 0.25
 
-// 	proc/get_spacebux()
+		var/select_item = tally_spacebux + min(min(tally_strength*300, 1900), tally_spacebux)
 
-// 	proc/get_sacrifices()
+		switch(select_item)
+			if (-INFINITY to 300)
+				//nothing, harm the user for their insolence
+				M.changeStatus("knockdown", 10 SECONDS)
+				M.throw_at(get_edge_target_turf(src, get_dir(src, M)), 3, 1)
+				var/pick = pick("Sickening", "Gross", "Disgraceful", "Boring", "Sad", "Disappointing", "Disgusting", "Weird")
+				boutput(M, SPAN_ALERT("<b>You call that an offering [M]? [pick]..."))
 
-// 	// hear_talk(mob/M as mob, text, real_name)
-// 	// 	if (lowertext(text) == "sacrificum")
-// 	// 		attempt_activate(M)
-// 	// 	return
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
+				M.throw_at(get_edge_target_turf(src, get_dir(src, M)), 1, 1)
 
-// 	//stolen from talbe, this is kinda a table of sorts...
-// 	Cross(atom/movable/mover)
-// 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
-// 			return 1
-// 		else
-// 			return 0
+			if (101 to 400)
+				path_to_spawn =  /obj/item/ritualskull
+			if (401 to 800)
+				path_to_spawn = /obj/item/paper/rituals
+			if (801 to 1300)
+				path_to_spawn = /obj/item/thaumometer
+			if (1301 to 1992)
+				path_to_spawn =  /obj/item/sacdagger
+			if (1993 to 4000)
+				path_to_spawn = /obj/item/ritualChalk/randomColor
+				chalk_use_mult = 0.5
+			if (4001 to 6500)
+				path_to_spawn = /obj/item/ritualChalk/randomColor
+				chalk_use_mult = 0.75
+			if (6501 to INFINITY)
+				path_to_spawn = /obj/item/ritualChalk
+				chalk_use_mult = 2
 
-// 	disposing()
-// 		world.save_intra_round_value("altar_spacebux_consumed", spacebux_consumed_total+spacebux_consumed_round)
-// 		UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
-// 		..()
+		var/obj/obj_to_spawn
+		if (!isnull(path_to_spawn))
+			obj_to_spawn = new path_to_spawn(src.loc)
 
-// 	//the altar doesn't tolerate getting harmed, it just leaves.
-// 	ex_act(severity)
-// 		if (severity)
-// 			leaving_animation(src)
-// 			SPAWN(1.5 SECONDS)
-// 				qdel(src)
+		if (!istype(get_area(src), /area/station/chapel))
+			tally_strength = tally_strength*0.70
+		tally_strength = round(tally_strength)
 
-// 	blob_act(var/power)
-// 		leaving_animation(src)
-// 		SPAWN(1.5 SECONDS)
-// 			qdel(src)
+		var/uses = 0
+		switch(tally_strength)
+			if (-INFINITY to 0) uses = 30
+			if (1 to 3) uses = 90
+			if (4 to 6) uses = 180
+			if (7 to 13) uses = 300
+			if (14 to 21) uses = 270
+			if (22 to 29) uses = 220
+			if (30 to 49) uses = 190
+			if (50 to INFINITY) uses = 500
+		if (ispath(path_to_spawn, /obj/item/ritualChalk))
+			var/obj/item/ritualChalk/chalk = obj_to_spawn
+			uses = round(uses*chalk_use_mult)
+			chalk.uses = uses
+			var/obj/manual = new/obj/item/paper/rituals(src.loc)
+			SPAWN(3 SECONDS)
+				manual.throw_at(M, 7, 0.4)
 
-// 	meteorhit()
-// 		leaving_animation(src)
-// 		SPAWN(1.5 SECONDS)
-// 			qdel(src)
+		if (!isnull(obj_to_spawn))
+			spawn_animation1(obj_to_spawn)
+			SPAWN(2 SECONDS)
+				obj_to_spawn.throw_at(M, 7, 2)
 
-// #endif
+		var/shard_power = 1
+		if (select_item > 2500)
+			if (M.health < 0)
+				if (M.health < -100)
+					shard_power = 8
+				else
+					shard_power = 5
+			else
+				shard_power = min((M.max_health-M.health/M.max_health)*5, 5)
+
+			var/obj/item/spiritshard/shard = new(src.loc,newRitualVars(shard_power, shard_power))
+			SPAWN(rand(1,40))
+				var/turf/rand_target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+				shard.throw_at(rand_target, rand(2,7), 1)
+
+		//destroy items in lists.
+
+
+		//just look through both lists, play an animation and remove em.
+		//again, let me be lazy. DON'T LOOK AT THIS CODE, ESPECIALLY THE SLEEPS. DON'T! - Kyle
+		for (var/obj/O in left_offerings)
+			sleep(rand(0,2))
+			SPAWN(-1)
+				leaving_animation(O)
+				src.vis_contents -= O
+				O.vis_flags = initial(O.vis_flags)
+				sleep(15)
+				qdel(O)
+		for (var/obj/O in right_offerings)
+			sleep(rand(0,2))
+			if (istype(O, /obj/item/currency/spacebux))
+				var/obj/item/currency/spacebux/S = O
+				S.spent = 1
+			SPAWN(-1)
+				leaving_animation(O)
+				src.vis_contents -= O
+				O.vis_flags = initial(O.vis_flags)
+				sleep(15)
+				qdel(O)
+		spacebux_consumed_round += tally_spacebux
+		//right_offerings = list()
+		//left_offerings = list()
+		//src.contents = list()
+		right_offerings.len = 0
+		left_offerings.len = 0
+		src.contents.len = 0
+
+
+		//if successfull. spawn item and show archive spacebux
+		active = 0
+
+	proc/get_spacebux()
+
+	proc/get_sacrifices()
+
+	// hear_talk(mob/M as mob, text, real_name)
+	// 	if (lowertext(text) == "sacrificum")
+	// 		attempt_activate(M)
+	// 	return
+
+	//stolen from talbe, this is kinda a table of sorts...
+	Cross(atom/movable/mover)
+		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
+			return 1
+		else
+			return 0
+
+	disposing()
+		world.save_intra_round_value("altar_spacebux_consumed", spacebux_consumed_total+spacebux_consumed_round)
+		UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
+		..()
+
+	//the altar doesn't tolerate getting harmed, it just leaves.
+	ex_act(severity)
+		if (severity)
+			leaving_animation(src)
+			SPAWN(1.5 SECONDS)
+				qdel(src)
+
+	blob_act(var/power)
+		leaving_animation(src)
+		SPAWN(1.5 SECONDS)
+			qdel(src)
+
+	meteorhit()
+		leaving_animation(src)
+		SPAWN(1.5 SECONDS)
+			qdel(src)
+
+#endif
