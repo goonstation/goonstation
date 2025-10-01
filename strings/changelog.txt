@@ -1,5 +1,9 @@
 
 (t)wed oct 01 25
+(u)TheGeneralJay
+(p)24560
+(e)💅💊|C-QoL, A-Medical
+(+)The cloning mindhack module now bypasses the puritan trait.
 (u)JORJ949
 (p)24726
 (e)🪲💊|C-Bug, A-Medical
