@@ -22,8 +22,8 @@
 		src.pod_hud.remove_client(user.client)
 		return
 
-	if (is_incapacitated(user))
-		boutput(user, SPAN_ALERT("Not when you are incapacitated."))
+	if (!can_act(user))
+		boutput(user, SPAN_ALERT("Not when you are incapacitated or restrained."))
 		return
 
 	src.on_click(user)
