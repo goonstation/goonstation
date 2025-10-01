@@ -74,6 +74,8 @@
 	on_mob_life(var/mob/M, var/mult = 1)
 		if(!M) M = holder.my_atom
 		M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
+		if (isfrog(M))
+			M.changeStatus("poisoned", 8 SECONDS * mult)
 		..()
 		return
 
