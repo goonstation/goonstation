@@ -665,12 +665,12 @@
 
 	Del()
 		if(ritualComponent)
-			del(ritualComponent)
+			qdel(ritualComponent)
 		return ..()
 
 	disposing()
 		if(ritualComponent)
-			del(ritualComponent)
+			qdel(ritualComponent)
 		return ..()
 
 
@@ -692,7 +692,7 @@
 				// invisibility = INVIS_ALWAYS
 				alpha = 0
 				mouse_opacity = 0
-				del(src)
+				qdel(src)
 			else
 				// invisibility = INVIS_NONE
 				alpha = 255
