@@ -3,7 +3,6 @@
 	config_tag = "gang"
 	regular = FALSE
 
-	antag_token_support = TRUE
 	var/list/datum/gang/gangs = list()
 
 	var/const/setup_min_teams = 2
@@ -50,16 +49,6 @@
 
 	if (!length(leaders_possible))
 		return 0
-
-
-	token_players = antag_token_list()
-	for(var/datum/mind/tplayer in token_players)
-		if (!length(token_players))
-			break
-		src.traitors += tplayer
-		token_players.Remove(tplayer)
-		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
-		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	src.traitors |= chosen_leader
