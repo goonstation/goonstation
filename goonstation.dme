@@ -2332,6 +2332,7 @@
 #include "code\obj\artifacts\artifact_machines\grav_well.dm"
 #include "code\obj\artifacts\artifact_machines\heal_field.dm"
 #include "code\obj\artifacts\artifact_machines\madness.dm"
+#include "code\obj\artifacts\artifact_machines\mindswapper.dm"
 #include "code\obj\artifacts\artifact_machines\plant_helper.dm"
 #include "code\obj\artifacts\artifact_machines\robot.dm"
 #include "code\obj\artifacts\artifact_machines\turret.dm"
