@@ -1,10 +1,10 @@
-/obj/machinery/artifact/mindswapper
-	name = "mindswapper"
-	associated_datum = /datum/artifact/mindswapper
+/obj/machinery/artifact/mindscrambler
+	name = "mindscrambler"
+	associated_datum = /datum/artifact/mindscrambler
 
-/datum/artifact/mindswapper
-	associated_object = /obj/machinery/artifact/mindswapper
-	type_name = "Mindswapper"
+/datum/artifact/mindscrambler
+	associated_object = /obj/machinery/artifact/mindscrambler
+	type_name = "mindscrambler"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 50 //Powerful effect, thus rare.
 	validtypes = list("martian" ,"precursor" ,"wizard" ,"eldritch", "ancient")
@@ -13,9 +13,11 @@
 	activ_text = "extends several antennas!"
 	deact_text = "retracts its antennas."
 	react_xray = list(15,75,90,3,"ANTENNAS")
-	var/mob/living/carbon/human/last_touched_body
-	var/mindswap_cooldown = 30 SECONDS
-	var/cooldowns = list()
+	var/can_previous_targets_scramble_again = TRUE
+	var/list/remembered_bodies = new/list()
+	var/mob/living/carbon/human/last_activating_body
+	var/mindscramble_cooldown = 30 SECONDS
+	var/list/cooldowns = new/list()
 
 	post_setup()
 		..()
@@ -23,31 +25,72 @@
 	effect_touch(obj/O, mob/living/user)
 		. = ..()
 		var/turf/T = get_turf(O)
-		//Is the thing that touched a valid target? //TODO add monkeys
-		if(!GET_COOLDOWN(src, "mindswap"))
-			if(ishuman(user) && isalive(user))
-				var/mob/living/carbon/human/H = user
-				if(H.mind && H != src.last_touched_body)
-					//Does the person who last touched still exist?
-					if(src.last_touched_body)
-						if(isalive(src.last_touched_body) && src.last_touched_body.mind)
-							ON_COOLDOWN(src, "mindswap", src.mindswap_cooldown)
-							//TODO add some creepy animation and sound effects.
-							T.visible_message("<b>[O]</b>'s antennas glow!")
-							boutput(user, SPAN_ALERT("[O] drags you out of your body!"))
-							boutput(src.last_touched_body, SPAN_ALERT("[O] drags you out of your body!"))
-							H.mind.swap_with(src.last_touched_body)
-							SPAWN(src.mindswap_cooldown)
-								T.visible_message("<b>[O]</b>'s antennas become active again!")
-					//Remember the last valid person to touch the artifact.
-					src.last_touched_body = H
-					boutput(src.last_touched_body, SPAN_ALERT("[O] peers into your mind!"))
-				else
-					boutput(user, SPAN_ALERT("[O] rejects your soul!"))
-					return
-			else
-				boutput(user, SPAN_ALERT("[O] rejects your soul!"))
-				return
-		else
+		//Various rejection criteria.
+		if(GET_COOLDOWN(src, "mind_scramble"))
 			T.visible_message("<b>[O]</b>'s antennas remain inactive.")
+			return
+		if(!isalive(user) || !ishuman(user))
+			T.visible_message("<b>[O]</b>'s antennas remain inactive.")
+			return
+		var/mob/living/carbon/human/H = user
+		if(!H.mind)
+			T.visible_message("<b>[O]</b>'s antennas remain inactive.")
+			return
+		if(H in src.remembered_bodies)
+			T.visible_message("<b>[O]</b>'s antennas blink.")
+			boutput(user, SPAN_ALERT("[O] rejects your soul. It already remembers you."))
+			return
+		if(H == src.last_activating_body)
+			T.visible_message("<b>[O]</b>'s antennas blink.")
+			boutput(user, SPAN_ALERT("[O] rejects your soul. It already remembers you from last time."))
+			return
 
+		//Clear out non-legal targets.
+		var/list/remembered_bodies_holder = src.remembered_bodies
+		for (var/mob/living/carbon/human/remembered_body in remembered_bodies_holder)
+			if(!remembered_body.mind)
+				src.remembered_bodies.Remove(remembered_body)
+				continue
+			if(!isalive(remembered_body))
+				src.remembered_bodies.Remove(remembered_body)
+				continue
+
+		//Add the toucher
+		src.remembered_bodies.Add(H)
+		src.last_activating_body = H
+		T.visible_message("<b>[O]</b>'s antennas glow!")
+		boutput(H, SPAN_ALERT("[O] peers into your mind!"))
+
+		//We don't scramble if there's only 1 body.
+		if(length(src.remembered_bodies) == 1)
+			return
+
+		//SCRAMBLE TIME!
+		T.visible_message("<b>[O]</b>'s antennas flash!")
+		//Sattolo's algorithm. Randomizes the list ensuring nobody keeps the same position as before.
+		var/list/new_bodies = new/list()
+		for (var/i in src.remembered_bodies)
+			new_bodies.Add(i)
+		var/position_one = length(src.remembered_bodies)
+		var/position_two
+		while (position_one > 1)
+			position_one = position_one - 1
+			position_two = rand(0, position_one - 1)
+			new_bodies.Swap(position_one+1, position_two+1)
+
+		//Perform the swaps, ensuring nobody gets swapped multiple times.
+		var/nr_of_bodies = length(new_bodies)
+		for (var/i = 1 to nr_of_bodies)
+			if(!(new_bodies[i] == src.remembered_bodies[i]))
+				for (var/j = i + 1 to nr_of_bodies)
+					if(src.remembered_bodies[j] == new_bodies[i])
+						var/mob/living/carbon/human/swap_human = src.remembered_bodies[i]
+						boutput(src.remembered_bodies[i], SPAN_ALERT("[O] drags you out of your body!"))
+						boutput(src.remembered_bodies[j], SPAN_ALERT("[O] drags you out of your body!"))
+						swap_human.mind.swap_with(src.remembered_bodies[j])
+						src.remembered_bodies.Swap(i, j)
+						break
+
+		ON_COOLDOWN(src, "mind_scramble", src.mindscramble_cooldown)
+		SPAWN(src.mindscramble_cooldown)
+			T.visible_message("<b>[O]</b>'s antennas become active again!")
