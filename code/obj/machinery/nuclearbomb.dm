@@ -484,7 +484,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		creepify_station()
 
 		if(!istype(gamemode)) //The station exploded, the cinematic has played, end the round naturally instead of forcing a reboot
-			ticker?.mode?.force_round_finished = TRUE
+			ticker.mode.force_round_finished = TRUE
 
 	proc/change_status_display()
 		var/datum/signal/status_signal = get_free_signal()
