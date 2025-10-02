@@ -34953,7 +34953,7 @@
 /area/owlery/staffhall)
 "cDN" = (
 /obj/table/reinforced/auto,
-/obj/item/device/flash/turbo,
+/obj/item/assembly/flash_cell,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cDO" = (
@@ -57262,7 +57262,7 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/item/device/flash/turbo{
+/obj/item/assembly/flash_cell{
 	pixel_x = -2;
 	pixel_y = 5
 	},
