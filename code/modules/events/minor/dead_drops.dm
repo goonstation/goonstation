@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 				/obj/item/gun/kinetic/pistol=25,
 				/obj/item/radiojammer=25,
 				/obj/item/tool/omnitool=10,
-				/obj/item/device/flash/turbo=5,
+				/obj/item/assembly/flash_cell=5,
 				/obj/item/handcuffs/guardbot=5
 				)
 
@@ -339,7 +339,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 	items_max = 5
 	items = list(/obj/item/card/id/syndicate=100,
 			/obj/item/gun/kinetic/pistol=25,
-			/obj/item/device/flash/turbo=5
+			/obj/item/assembly/flash_cell=5
 			)
 
 

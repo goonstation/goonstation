@@ -12188,9 +12188,9 @@
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
@@ -35119,7 +35119,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/spacehabitat/owlery)
 "kVk" = (
-/obj/item/skull/odd,
+/obj/item/skull/changeling,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "kVL" = (
@@ -39145,7 +39145,7 @@
 /obj/decal/cleanable/rust/jen,
 /obj/item/scpgnome,
 /obj/random_item_spawner/chompskey{
-	where_to_spawn = list(list(105,167),list(205,144),list(193,97),list(118,104),list(146,190),list(95,146),list(95,139),list(169,192))
+	where_to_spawn = list(list(105,167),list(205,144),list(194,96),list(118,104),list(147,191),list(95,146),list(95,139),list(169,192))
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -51786,7 +51786,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "qea" = (
-/obj/item/skull/odd,
+/obj/item/skull/changeling,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/spacehabitat/owlery)
 "qed" = (
@@ -78639,9 +78639,9 @@
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1

@@ -7499,24 +7499,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"dwt" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light_switch/west{
-	pixel_y = -7
-	},
-/obj/machinery/firealarm/directional/west{
-	pixel_y = 4
-	},
-/turf/simulated/floor/redblack,
-/area/station/security/checkpoint/sec_foyer{
-	name = "Secure Release Foyer"
-	})
 "dwx" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
@@ -8872,6 +8854,49 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
+"eax" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
+/area/station/crew_quarters/pool)
 "eaE" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -11305,6 +11330,17 @@
 /obj/rack/organized/techstorage_eng/transception,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
+"fhw" = (
+/obj/machinery/light/small/floor/cool,
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "fhA" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
@@ -20449,22 +20485,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/east)
-"iVM" = (
-/obj/machinery/shower{
-	dir = 4;
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/machinery/drainage,
-/obj/stool/bench/purple/auto,
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -3;
-	pixel_x = 24
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "iWu" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -22585,49 +22605,6 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
-"jRm" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
-/turf/simulated/floor/bluewhite/corner{
-	dir = 1
-	},
-/area/station/crew_quarters/pool)
 "jRv" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/plating,
@@ -25050,19 +25027,6 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"kQN" = (
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/storage/cart/mechcart/breach/acid,
-/obj/machinery/firealarm/directional/west{
-	pixel_y = -4;
-	pixel_x = -24
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
-/area/station/engine/storage)
 "kQV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38102,6 +38066,19 @@
 /area/iss{
 	name = "Drop Capsule"
 	})
+"qDl" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/storage/cart/mechcart/breach/acid,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -4;
+	pixel_x = -24
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/storage)
 "qDE" = (
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Research";
@@ -39468,6 +39445,22 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/garden/owlery)
+"rqR" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/drainage,
+/obj/stool/bench/purple/auto,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = -3;
+	pixel_x = 24
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "rrd" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -48127,17 +48120,6 @@
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
-"vum" = (
-/obj/machinery/light/small/floor/cool,
-/obj/fakeobject/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
-/obj/item/clothing/under/gimmick/donkini,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "vuv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/diplomat)
@@ -48395,6 +48377,24 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"vyv" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -7
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 4
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/checkpoint/sec_foyer{
+	name = "Secure Release Foyer"
+	})
 "vyD" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -79644,7 +79644,7 @@ bzS
 syI
 kQE
 cuH
-vum
+fhw
 tjr
 lmL
 sdl
@@ -91615,7 +91615,7 @@ bRa
 vTs
 xYW
 dtE
-jRm
+eax
 jCJ
 jBH
 xYW
@@ -93493,7 +93493,7 @@ mGH
 jwf
 hdz
 uiQ
-dwt
+vyv
 qxw
 imD
 eGM
@@ -103126,7 +103126,7 @@ gpP
 uRX
 uXm
 nzD
-iVM
+rqR
 ioB
 viK
 eLX
@@ -110707,7 +110707,7 @@ eFY
 lbH
 lbg
 ycd
-kQN
+qDl
 vTc
 cbG
 eGv

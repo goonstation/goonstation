@@ -12024,9 +12024,9 @@
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
@@ -34900,7 +34900,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cBU" = (
-/obj/item/skull/odd,
+/obj/item/skull/changeling,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cBV" = (

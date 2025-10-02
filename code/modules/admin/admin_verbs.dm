@@ -1494,7 +1494,7 @@ var/list/fun_images = list()
 		if(!istype(L) || isdead(L))
 			continue
 		var/obj/Pet = new pet_path(get_turf(L))
-		Pet.name = "[L]'s pet [Pet.name]"
+		Pet.name = "[L]’s pet [Pet.name]"
 
 		//Pets should probably not attack their owner
 		if (istype(Pet, /obj/critter))
@@ -2154,6 +2154,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.addreagents(A)
 		if("Check Reagents")
 			C.cmd_admin_check_reagents(A)
+		if ("Adjust Addictions")
+			C.cmd_change_addiction(A)
 		if("View Variables")
 			C.debug_variables(A)
 		if("View Fingerprints")
