@@ -1,5 +1,9 @@
 
 (t)thu oct 02 25
+(u)Kanthes
+(p)24805
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds a Wellspring artifact type that floods the area with reagents.
 (u)WyrdDoe & Ribbie
 (p)24757
 (e)🎨🔊|C-Sprites, C-Sound
