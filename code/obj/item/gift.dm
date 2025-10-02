@@ -330,7 +330,8 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/storage/pill_bottle/cyberpunk,
 	/obj/item/toy/sword,
 	/obj/item/stg_box,
-	/obj/item/clothing/suit/jacket/plastic/random_color)
+	/obj/item/clothing/suit/jacket/plastic/random_color,
+	/obj/item/record/lay_egg_is_true)
 
 var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/stimpack,

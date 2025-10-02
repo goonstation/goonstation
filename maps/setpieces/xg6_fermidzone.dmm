@@ -11754,7 +11754,7 @@
 /obj/item/skull,
 /obj/item/skull,
 /obj/item/skull,
-/obj/item/skull/strange,
+/obj/item/skull/hunter,
 /obj/storage/crate/classcrate/xg{
 	desc = "A hefty attache case.";
 	locked = 1;

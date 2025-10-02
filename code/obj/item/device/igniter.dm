@@ -77,7 +77,8 @@ TYPEINFO(/obj/item/device/igniter)
 
 /obj/item/device/igniter/proc/assembly_overlay_addition(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/passed_overlay_offset)
 	if(parent_assembly.special_construction_identifier == "canbomb")
-		parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
+		var/image/temp_image = image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
+		parent_assembly.overlays += temp_image
 /// ----------------------------------------------
 
 
