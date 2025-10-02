@@ -1,5 +1,11 @@
 
 (t)wed oct 01 25
+(u)Egregorious
+(p)24767
+(e)🔄💊⚗|C-Rework, A-Medical, A-Chemistry
+(*)Addiction strength and withdrawal symptoms are now independent, you can cure your addiction while taking sufficiently small (under 5 unit) doses to calm symptoms when needed
+(*)Any addictive reagent of the same severity as you're addicted to can be used to prevent withdrawal symptoms from worsening, but this is bad for it in the long term
+(*)The worse your addiction gets, the more quickly your body will metabolise that reagent, reducing its effectiveness
 (u)JORJ949
 (p)24715
 (e)💅📦|C-QoL, A-Game-Objects
