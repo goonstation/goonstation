@@ -56841,14 +56841,13 @@
 	},
 /area/station/hallway/primary/east)
 "wOR" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 8
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},

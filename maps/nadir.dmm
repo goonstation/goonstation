@@ -1525,9 +1525,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/stool/chair/red{
-	dir = 8
-	},
+/obj/machinery/computer/announcement/station/security/department,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -35454,7 +35452,7 @@
 /area/abandonedmedicalship/robot_trader)
 "psM" = (
 /obj/stool/chair/red{
-	dir = 8
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/security/secwing)

@@ -22947,6 +22947,8 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
+/obj/item/reagent_containers/syringe/haloperidol,
+/obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -23497,13 +23499,13 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "bwd" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/syringe/haloperidol,
-/obj/random_item_spawner/desk_stuff,
 /obj/machinery/light_switch/north{
 	dir = 4;
 	pixel_x = 22;
 	pixel_y = 0
+	},
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 8
 	},
 /turf/simulated/floor/red/side{
 	dir = 4

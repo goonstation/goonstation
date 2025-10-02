@@ -20831,6 +20831,7 @@
 /obj/decoration/clock{
 	pixel_y = 32
 	},
+/obj/machinery/computer/announcement/station/security/department,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "gwb" = (

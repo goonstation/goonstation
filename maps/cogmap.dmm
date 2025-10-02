@@ -46876,6 +46876,9 @@
 /area/station/chapel/sanctuary)
 "lmP" = (
 /obj/machinery/light/emergency,
+/obj/stool/chair/red{
+	dir = 4
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "lnh" = (
@@ -47931,6 +47934,9 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 8
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
