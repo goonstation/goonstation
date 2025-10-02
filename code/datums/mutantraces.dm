@@ -2031,7 +2031,6 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			else ..()
 
 	onLife(var/mult = 1)
-		src.mob.fluid_absorbtion(5)
 		if (src.mob.hasStatus("poisoned")) // allows frogs to "tox out" (amphibian reaction to environmental toxins)
 			if(prob(20))
 				src.mob.setStatusMin("knockdown", 4 SECONDS)
