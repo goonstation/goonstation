@@ -243,6 +243,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/allow_underwater = FALSE
 	var/syndi_camo_color = null
 	var/ambient_color
+	var/day_night_cycle = 120 MINUTES
 	var/startTime
 	var/generates_solid_ground = TRUE
 
@@ -295,8 +296,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 		if(src.ambient_color)
 			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-				station_repair.ambient_obj.color = src.ambient_color
+				var/datum/daynight_controller/terrainify/terrainify_cycle = daynight_controllers[AMBIENT_LIGHT_SRC_TERRAINIFY]
+				if(istype(terrainify_cycle))
+					terrainify_cycle.initialize(src.ambient_color, "#000", src.day_night_cycle)
+					station_repair.ambient_obj = terrainify_cycle.light
+				else
+					station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
+					station_repair.ambient_obj.color = src.ambient_color
 			else
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = src.ambient_color
@@ -556,6 +562,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Mining"=list("None","Normal","Rich"), "Bioluminescent Algae Coverage"=list("None", "Normal", "Heavy", "Extreme", "All"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Asteroid"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#222222"
+	day_night_cycle = 0
 
 	New()
 		..()
@@ -601,6 +608,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list()
 	additional_toggles = list()
 	ambient_color = "#222222"
+	day_night_cycle = 0
 	generates_solid_ground = FALSE
 
 	New()
@@ -981,7 +989,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into a swamp"
 	additional_options = list("Rain"=list("No", "Yes", "Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
-	ambient_color = "#222222"
+	ambient_color = "#666"
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#6f7026", nuke_op_color_matrix[3])
@@ -1030,7 +1038,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into Mars.  A sprawl of stand, stone, and an unyielding wind."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=FALSE, "Duststorm"=TRUE, "Prefabs"=FALSE)
-	ambient_color = "#222222"
+	ambient_color = "#999"
 
 	convert_station_level(params, mob/user)
 		if(..())
@@ -1172,7 +1180,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into a colder snowy place"
 	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"), "Season"=list("None", "Winter"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
-	ambient_color = "#222222"
+	ambient_color = "#999"
 	parallax_render_source_group = /datum/parallax_render_source_group/planet/snow
 
 	New()
@@ -1203,7 +1211,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into a lush and wooden place"
 	additional_options = list("Mining"=list("None", "Normal", "Rich"), "Season"=list("None", "Autumn"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Spooky"=FALSE, "Re-Entry"=FALSE)
-	ambient_color = "#211"
+	ambient_color = "#988"
 	parallax_render_source_group = /datum/parallax_render_source_group/planet/forest
 
 	New()
