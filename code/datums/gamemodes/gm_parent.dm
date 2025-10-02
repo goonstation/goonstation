@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	var/regular = TRUE
 	var/probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	var/crew_shortage_enabled = 1
+	var/force_round_finished = FALSE //Force the ticker to immediately declare the round as finished
 
 	var/shuttle_available = 1 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
 	var/shuttle_available_threshold = 12000 // 20 min. Only works when shuttle_available == SHUTTLE_AVAILABLE_DELAY.
@@ -70,6 +71,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 			shuttle_initial_auto_call_done = 1
 
 /datum/game_mode/proc/check_finished()
+	if(src.force_round_finished)
+		return 1
 	if(emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
 		return 1
 	return 0
