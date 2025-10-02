@@ -2484,3 +2484,57 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 3, 0, TRUE)
+
+/datum/projectile/bullet/produce
+	name = "organic pellet"
+	damage = 12
+	shot_sound = 'sound/weapons/smg_shot.ogg'
+	casing = null
+	impact_image_state = "bullethole-small"
+	scale = 0.5
+	dissipation_rate = 10
+	maximum_reagent_payload = 1000
+	projectile_speed = 20
+	implanted = /obj/item/implant/projectile/produce
+	var/obj/decal/hit_decal
+	var/obj/item/item_left
+
+	tick(var/obj/projectile/O)
+		O.transform = O.transform.Turn(83)
+		return
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		..()
+		var/mob/living/target = hit
+		if (target && target.reagents && O.reagents)
+			O.reagents.reaction(target, TOUCH)
+		var/turf/turf = get_turf(hit)
+		if (hit_decal)
+			var/obj/decal/new_decal = new hit_decal
+			new_decal.set_loc(turf)
+			new_decal.setup(turf)
+		if (item_left)
+			var/obj/item/item = new item_left
+			if (!ismob(hit))
+				turf = get_adjacent_passable(turf, reverse_dir(angle), get_shortest_rotation(O.angle, angle))
+				randomize_edge_offset(item, get_dir(turf, hit))
+			item.set_loc(turf)
+
+	plant
+		hit_decal = /obj/decal/cleanable/plantsplat
+		hit_mob_sound = 'sound/effects/small_splat.ogg'
+
+		banana
+			hit_decal = /obj/decal/cleanable/bananasplat
+			item_left = /obj/item/bananapeel
+
+		egg
+			hit_decal = /obj/decal/cleanable/eggsplat
+
+		tomato
+			hit_decal = /obj/decal/cleanable/tomatosplat
+
+		potato
+			hit_decal = /obj/decal/cleanable/potatosplat
+
+
