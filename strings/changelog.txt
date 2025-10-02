@@ -1,5 +1,9 @@
 
 (t)thu oct 02 25
+(u)Lord_Earthfire
+(p)24809
+(e)🆕📦📡|C-Feature, A-Game-Objects, A-AI
+(+)Clowns found a method to turn the AI lawrack into a toaster!
 (u)Kanthes
 (p)24805
 (e)🆕🔬|C-Feature, A-Science
