@@ -16505,7 +16505,7 @@
 "bnJ" = (
 /obj/map/light/cyan,
 /obj/rack/precursor,
-/obj/item/skull/peculiar{
+/obj/item/skull/wizard{
 	pixel_x = -2;
 	pixel_y = 11
 	},
@@ -53985,7 +53985,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSU" = (
-/obj/machinery/bot/skullbot/gold,
+/obj/machinery/bot/skullbot/macho,
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/specialroom/gym,
 /area/afterlife/bar)
@@ -64174,7 +64174,7 @@
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
 /obj/item/clothing/gloves/ring/gold,
-/obj/item/skull/gold,
+/obj/item/skull/macho,
 /obj/item/sticker/gold_star,
 /turf/unsimulated/floor/black/side{
 	dir = 8
@@ -66649,7 +66649,7 @@
 /area/hospital/samostrel)
 "nCH" = (
 /obj/rack/precursor,
-/obj/item/skull/noface{
+/obj/item/skull/cluwne{
 	pixel_x = -2;
 	pixel_y = 11
 	},
@@ -70626,7 +70626,7 @@
 /obj/stool/chair/comfy/throne_gold{
 	anchored = 1
 	},
-/obj/item/skull/gold,
+/obj/item/skull/macho,
 /obj/item/clothing/head/crown{
 	rarity = 5;
 	name = "crown of the underworld";

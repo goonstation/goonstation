@@ -4357,7 +4357,7 @@
 	},
 /area/salyut)
 "atu" = (
-/obj/item/skull/strange,
+/obj/item/skull/hunter,
 /turf/simulated/floor/plating,
 /area/salyut)
 "atv" = (
