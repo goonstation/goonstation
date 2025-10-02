@@ -1,5 +1,9 @@
 
 (t)thu oct 02 25
+(u)WyrdDoe & Ribbie
+(p)24757
+(e)🎨🔊|C-Sprites, C-Sound
+(+)Added a new track to the easter egg drops.
 (u)Lord_Earthfire
 (p)24761
 (e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
