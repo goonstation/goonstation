@@ -139,14 +139,6 @@
 				else
 					logTheThing(LOG_ADMIN, null, "Law Rack Corruption added supplied AI law to law number [law_number]: [picked_law]")
 					message_admins("Law Rack Corruption added supplied law [law_number]: [picked_law]")
-				// last, but not least, toast all laws
-
-/* Law Rack Toasting */
-	proc/toast_all_racks(var/update_laws = TRUE)
-		for(var/obj/machinery/lawrack/R in src.registered_racks)
-			R.toast_laws()
-			if (update_laws)
-				R.UpdateLaws()
 
 
 /* General ai_law functions */
