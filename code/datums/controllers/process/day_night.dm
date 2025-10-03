@@ -15,7 +15,8 @@
 
 	doWork()
 		var/i
-		for(var/datum/daynight_controller/controller in daynight_controllers)
+		for(var/id in daynight_controllers)
+			var/datum/daynight_controller/controller = daynight_controllers[id]
 			controller:process()
 			if (!(i++ % 10))
 				scheck()
