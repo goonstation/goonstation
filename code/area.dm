@@ -3457,7 +3457,7 @@ ABSTRACT_TYPE(/area/station/chapel)
 
 	New()
 		..()
-		src.therapy = new(src, list("training_chaplain"))
+		src.therapy = new(src, list("training_chaplain"), list("atheist"))
 
 	on_mob_entered(var/mob/enteringM)
 		..()
