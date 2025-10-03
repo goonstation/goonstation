@@ -811,8 +811,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Wow this really looks like a noise marine helmet. But it's not!"
 	icon_state = "nm_helm"
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
-	c_flags = COVERSEYES | COVERSMOUTH
-	seal_hair = 1
+	c_flags = COVERSEYES | COVERSMOUTH | COVERSHAIR
 	see_face = FALSE
 
 /obj/item/clothing/suit/power
@@ -1051,9 +1050,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A familiar, yet legally distinct helmet."
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	hides_from_examine = C_GLASSES|C_EARS|C_MASK
-	seal_hair = 1
 	see_face = FALSE
 
 /obj/item/clothing/suit/armor/sneaking_suit
@@ -1525,9 +1523,8 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	name = "red skull mask and cowl"
 	desc = "Looking at this fills you with joy! You're not sure why. That's kind of a weird thing to feel about something that looks like this."
 	icon_state = "joyful"
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	hides_from_examine = C_MASK|C_GLASSES|C_EARS
-	seal_hair = 1
 
 /obj/item/clothing/under/rotten
 	name = "suit and vest"
@@ -1632,9 +1629,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/head/werewolf
 	name = "werewolf mask"
 	desc = "The mask of a wolfman getup."
-	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS | COVERSHAIR
 	hides_from_examine = C_GLASSES|C_MASK|C_EARS
-	seal_hair = 1
 	icon_state = "wwmask"
 
 /obj/item/clothing/suit/gimmick/werewolf/odd
@@ -1662,17 +1658,15 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/head/abomination
 	name = "abomination mask"
 	desc =  "The abomination mask straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
-	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS | COVERSHAIR
 	hides_from_examine = C_EARS
-	seal_hair = 1
 	icon_state = "abommask"
 
 /obj/item/clothing/head/zombie
 	name = "zombie mask"
 	desc = "The mask of a zombie. Man, they really captured the discolouration of rotten flesh."
-	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS | COVERSHAIR
 	hides_from_examine = C_EARS
-	seal_hair = 1
 	icon_state = "zombmask"
 
 /obj/item/clothing/suit/gimmick/hotdog
@@ -1782,14 +1776,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "This hat looks patently ridiculous. Is this what passes for fashionable in the Commonwealth of Free Worlds?"
 	icon_state = "cwhat"
 	item_state = "cwhat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/fthat
 	name = "trader's headwear"
 	desc = "Why in the name of space would anyone trade with someone who wears a hat that looks this dumb? Yuck."
 	icon_state = "fthat"
 	item_state = "fthat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/gloves/handcomp
 	name = "Compudyne 0451 Handcomp"
@@ -1904,9 +1898,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "Wow! It's just like the real thing!"
 	icon_state = "big_lizard"
 	item_state = "big_lizard"
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
-	seal_hair = 1
 	see_face = FALSE
 
 

@@ -561,7 +561,7 @@
 	ClearSpecificOverlays(TRUE, "hair_one", "hair_two", "hair_three", "hair_special_one", "hair_special_two", "hair_special_three")
 
 	var/obj/item/clothing/suit/back_clothing = src.back // typed version of back to check hair sealage; might not be clothing, we check type below
-	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) \
+	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.c_flags & COVERSHAIR) \
 						|| (src.wear_suit && src.wear_suit.body_parts_covered & HEAD) || (istype(back_clothing) && back_clothing.over_hair))
 	var/hooded = (src.wear_suit && src.wear_suit.hooded)
 	var/obj/item/organ/head/my_head
@@ -740,7 +740,7 @@
 	UpdateOverlays(i_l_hand, "i_l_hand")
 
 /mob/living/carbon/human/proc/update_hair_layer()
-	if ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) || (src.wear_suit && src.wear_suit.body_parts_covered & HEAD))
+	if ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.c_flags & COVERSHAIR) || (src.wear_suit && src.wear_suit.body_parts_covered & HEAD))
 		src.image_cust_one?.layer = MOB_HAIR_LAYER1
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1
