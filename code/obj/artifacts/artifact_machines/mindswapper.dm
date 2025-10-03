@@ -30,8 +30,8 @@
 	associated_object = /obj/machinery/artifact/mindscrambler
 	type_name = "mindscrambler"
 	type_size = ARTIFACT_SIZE_LARGE
-	rarity_weight = 50 //Powerful effect, thus rare.
-	validtypes = list("martian" ,"precursor" ,"wizard" ,"eldritch", "ancient")
+	rarity_weight = 100 //Powerful effect, thus rare.
+	validtypes = list("eldritch") //Straight up evil.
 	validtriggers = list(/datum/artifact_trigger/carbon_touch)
 	//validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	activ_text = "extends several antennas!"
