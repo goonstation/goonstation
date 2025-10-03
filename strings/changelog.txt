@@ -1,5 +1,8 @@
 
 (t)thu oct 02 25
+(u)Emily
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(*)Egg Cartons now have improved functionality. Produce Satchels no longer hold eggs. Buy more empty cartons at QM.
 (u)Lord_Earthfire
 (p)24809
 (e)🆕📦📡|C-Feature, A-Game-Objects, A-AI
