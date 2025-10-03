@@ -134,11 +134,7 @@ TYPEINFO(/obj/machinery/shipalert)
 		return FALSE
 	//alert and siren
 	if (announce)
-#ifdef MAP_OVERRIDE_MANTA
-		command_alert("This is not a drill. This is not a drill. General Quarters, General Quarters. All hands man your battle stations. Crew without military training shelter in place. Set material condition '[rand(1, 100)]-[pick_string("station_name.txt", "militaryLetters")]' throughout the ship. The route of travel is forward and up to starboard, down and aft to port. Prepare for hostile contact.", "NSS Manta - General Quarters")
-#else
-		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station: [reason]. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
-#endif
+		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station: <b>[end_sentence(reason)]</b><br>Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
 		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
 	//toggle on
 	shipAlertState = SHIP_ALERT_BAD

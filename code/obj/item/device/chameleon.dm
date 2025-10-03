@@ -139,7 +139,7 @@ TYPEINFO(/obj/item/device/chameleon)
 			if(!testIcon) //weird edgecases
 				return
 
-			if (!cham)
+			if (!cham || src.cham.qdeled || src.cham.disposed)
 				cham = new(src)
 				cham.master = src
 
@@ -152,7 +152,7 @@ TYPEINFO(/obj/item/device/chameleon)
 			cham.icon = testIcon
 			cham.set_dir(target.dir)
 			can_use = 1
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			user.show_text("\The [target] is not compatible with the scanner.", "red")
 
@@ -163,6 +163,12 @@ TYPEINFO(/obj/item/device/chameleon)
 		if (!anim)
 			anim = new(src)
 
+		if (!src.cham || src.cham.qdeled || src.cham.disposed) //Stop sending people to nullspace after the dummy is destroyed >:(
+			boutput(user, SPAN_ALERT("[src] detects an error in its projection registry and performs an emergency factory reset!"))
+			src.disrupt()
+			src.cham = null
+			src.can_use = FALSE //Go scan something to get a new dummy object
+			return
 		if (active) //active_dummy)
 			active = 0
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
@@ -199,10 +205,10 @@ TYPEINFO(/obj/item/device/chameleon)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
 			can_use = 0
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			SPAWN(10 SECONDS)
 				can_use = 1
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 
 /obj/item/device/chameleon/bomb
 	name = "chameleon bomb"

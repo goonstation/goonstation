@@ -50,7 +50,6 @@ todo: add more small animals!
 ABSTRACT_TYPE(/mob/living/critter/small_animal)
 /mob/living/critter/small_animal
 	name = "critter"
-	real_name = "critter"
 	desc = "you shouldn't be seeing this!"
 	density = FALSE
 	custom_gib_handler = /proc/gibs
@@ -99,8 +98,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
-		if (src.real_name == "critter")
-			src.real_name = src.name
 		if (src.random_name)
 			src.randomize_name()
 
@@ -150,7 +147,6 @@ proc/filter_carrier_pets(var/type)
 
 /mob/living/critter/small_animal/mouse
 	name = "space mouse"
-	real_name = "space mouse"
 	desc = "A mouse.  In space."
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
@@ -396,7 +392,6 @@ proc/filter_carrier_pets(var/type)
 
 /mob/living/critter/small_animal/cat
 	name = "space cat"
-	real_name = "space cat"
 	desc = "A cat. In space."
 	icon_state = "cat1"
 	icon_state_dead = "cat1-dead"
@@ -752,7 +747,6 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 
 /mob/living/critter/small_animal/dog
 	name = "space dog"
-	real_name = "space dog"
 	desc = "A dog. In space."
 	icon_state = "pug"
 	icon_state_dead = "pug-lying"
@@ -896,7 +890,6 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 /mob/living/critter/small_animal/dog/reverse
 	name = "god ecaps"
-	real_name = "god ecaps"
 	icon_state = "gup"
 	icon_state_dead = "pug-lying"
 	dogtype = "gup"
@@ -945,7 +938,6 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 /mob/living/critter/small_animal/dog/george
 	name = "George"
-	real_name = "George"
 	desc = "Good dog."
 	icon_state = "george"
 	icon_state_dead = "george-lying"
@@ -998,7 +990,8 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 	was_harmed(mob/M, obj/item/weapon, special, intent)
 		. = ..()
-		M.add_karma(-1)
+		if(M)
+			M.add_karma(-1)
 
 	proc/play_dead(var/addtime = 0)
 		if (addtime > 0) // we're adding more time
@@ -1055,7 +1048,6 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 /mob/living/critter/small_animal/dog/illegal
 	name = "highly illegal dog"
-	real_name = "highly illegal dog"
 	desc = "A highly illegal dog. In space."
 	icon_state = "illegal"
 	icon_state_dead = "illegal-lying"
@@ -1066,7 +1058,6 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 /mob/living/critter/small_animal/dog/patrick
 	name = "patrick"
-	real_name = "patrick"
 	desc = "patrick. In space."
 	icon_state = "patrick"
 	icon_state_dead = "patrick-dead"
@@ -1077,7 +1068,6 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 /mob/living/critter/small_animal/dog/blair
 	name = "Blair"
-	real_name = "Blair"
 	icon_state = "pug"
 	dogtype = "pug"
 	is_pet = 2
@@ -1103,7 +1093,6 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 /mob/living/critter/small_animal/bird
 	name = "space parrot"
-	real_name = "space parrot"
 	desc = "A spacefaring species of parrot."
 	icon = 'icons/misc/bird.dmi'
 	icon_state = "parrot"
@@ -1379,7 +1368,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/cassowary
 	name = "cassowary"
-	real_name = "cassowary"
 	desc = "An exotic bird from the far away land of Space Australia."
 	icon_state = "cassowary"
 	icon_state_dead = "cassowary-dead"
@@ -1393,7 +1381,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/penguin
 	name = "penguin"
-	real_name = "penguin"
 	desc = "Its a penguin. They like the cold."
 	icon_state = "penguin"
 	icon_state_dead = "penguin-dead"
@@ -1411,7 +1398,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/owl
 	name = "space owl"
-	real_name = "space owl"
 	desc = "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings."
 	icon_state = "smallowl"
 	icon_state_dead = "smallowl-dead"
@@ -1489,7 +1475,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/turkey
 	name = "space turkey"
-	real_name = "space turkey"
 	desc = "A turkey that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "then"
 	icon_state_dead = "then-dead"
@@ -1548,7 +1533,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/timberdoodle
 	name = "space timberdoodle"
-	real_name = "space timberdoodle"
 	desc = "More commonly known as a woodcock, the timberdoodle is a small bird within the <i>scolopacidae</i> family. It is commonly hunted for sport."
 	species = "doodle"
 	icon_state = "doodle"
@@ -1586,7 +1570,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/seagull
 	name = "space gull"
-	real_name = "space gull"
 	desc = "A spacefaring species of bird from the <i>Laridae</i> family."
 	icon_state = "gull"
 	icon_state_dead = "gull-dead"
@@ -1604,7 +1587,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/seagull/gannet  // they're technically not gulls but they're gunna use basically all the same var settings so, um
 	name = "space gannet"
-	real_name = "space gannet"
 	desc = "A spacefaring species of <i>morus bassanus</i>."
 	icon_state = "gannet"
 	icon_state_dead = "gannet-dead"
@@ -1615,7 +1597,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/crow
 	name = "space crow"
-	real_name = "space crow"
 	desc = "A spacefaring species of bird from the <i>Corvidae</i> family."
 	icon_state = "crow"
 	icon_state_dead = "crow-dead"
@@ -1654,7 +1635,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/goose
 	name = "space goose"
-	real_name = "space goose"
 	desc = "An offshoot species of <i>branta canadensis</i> adapted for space."
 	icon_state = "goose"
 	icon_state_dead = "goose-dead"
@@ -1724,7 +1704,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/goose/swan
 	name = "space swan"
-	real_name = "space swan"
 	desc = "An offshoot species of <i>cygnus olor</i> adapted for space."
 	icon_state = "swan"
 	icon_state_dead = "swan-dead"
@@ -1743,7 +1722,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/sparrow
 	name = "space sparrow"
-	real_name = "space sparrow"
 	desc = "A little bird. How cute."
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
@@ -1831,7 +1809,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/sparrow/robin
 	name = "space robin"
-	real_name = "space robin"
 	desc = "It's a little far from home."
 	icon_state = "robin"
 	icon_state_dead = "robin-dead"
@@ -1869,7 +1846,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/cockroach
 	name = "cockroach"
-	real_name = "cockroach"
 	blood_id = "hemolymph"
 	desc = "An unpleasant insect that lives in filthy places."
 	icon_state = "roach"
@@ -1967,7 +1943,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/scorpion
 	name = "scorpion"
-	real_name = "scorpion"
 	blood_id = "hemolymph"
 	desc = "Ack! Get it away! AAAAAAAA."
 	icon_state = "spacescorpion"
@@ -2100,7 +2075,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/rattlesnake
 	name = "rattlesnake"
-	real_name = "rattlesnake"
 	blood_id = "blood"
 	desc = "A snake. With a rattle. A rattlesnake."
 	icon_state = "rattlesnake"
@@ -2248,7 +2222,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/cockroach/robo
 	name = "roboroach"
-	real_name = "roboroach"
 	blood_id = "oil"
 	desc = "The vermin of the future!"
 	health_brute = 10
@@ -2294,7 +2267,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/meatslinky // ferrets for wire
 	name = "space ferret"
-	real_name = "space ferret"
 	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "ferret"
 	icon_state_dead = "ferret-dead"
@@ -2369,7 +2341,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/frog
 	name = "frog"
-	real_name = "frog"
 	desc = "Ribbit."
 	icon_state = "frog"
 	icon_state_dead = "frog-dead"
@@ -2431,7 +2402,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/opossum
 	name = "space opossum"
-	real_name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "possum"
 	icon_state_dead = "possum-dead"
@@ -2534,7 +2504,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/opossum/morty
 	name = "Morty"
-	real_name = "Morty"
 	is_pet = TRUE
 	player_can_spawn_with_pet = FALSE
 
@@ -2544,7 +2513,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/armadillo
 	name = "space armadillo"
-	real_name = "space armadillo"
 	desc = "A armadillo that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "armadillo"
 	icon_state_dead = "armadillo-dead"
@@ -2687,7 +2655,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/iguana
 	name = "space iguana"
-	real_name = "space iguana"
 	desc = "An iguana that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "iguana1"
 	icon_state_dead = "iguana1-dead"
@@ -2801,7 +2768,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/seal
 	name = "seal"
-	real_name = "seal"
 	desc = "Did you know, that when it snows, its eyes become large and the light that you shine can be seen?"
 	icon_state = "seal"
 	icon_state_dead = "seal-dead"
@@ -2917,7 +2883,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/walrus
 	name = "walrus"
-	real_name = "walrus"
 	desc = "Usually found in the Arctic on Earth, this particular walrus specimen seems to thrive in space."
 	icon_state = "walrus"
 	icon_state_dead = "walrus-dead"
@@ -2955,7 +2920,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 // vOv  it's in pets_small_animals.dm so it gets to live here too!
 /mob/living/critter/small_animal/floateye
 	name = "floating thing"
-	real_name = "floating thing"
 	desc = "You have never seen something like this before."
 	icon_state = "floateye"
 	icon_state_dead = "floateye-dead"
@@ -2998,7 +2962,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bat // in objcritter form this is a large animal but I don't care I'm making it a small thing now
 	name = "bat"
-	real_name = "bat"
 	desc = "skreee!"
 	hand_count = 2
 	icon_state = "bat"
@@ -3062,7 +3025,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bat/angry
 	name = "angry bat"
-	real_name = "angry bat"
 	desc = "It doesn't look too happy!"
 	icon_state = "scarybat"
 	health_brute = 25
@@ -3073,7 +3035,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bat/doctor
 	name = "Dr. Acula"
-	real_name = "Dr. Acula"
 	desc = "If you ask nicely he might even write you a preskreeeption!"
 	icon_state = "batdoctor"
 	icon_state_dead = "batdoctor-dead"
@@ -3086,7 +3047,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bat/rina //for Jan's office
 	name = "Tiny Bat Rina"
-	real_name = "Tiny Bat Rina"
 	desc = "Why does this little bat have a purple ponytail?"
 	icon = 'icons/misc/janstuff.dmi'
 	icon_state = "batrina"
@@ -3125,7 +3085,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/wasp
 	name = "space wasp"
-	real_name = "space wasp"
 	desc = "A wasp in space."
 	icon_state = "wasp"
 	icon_state_dead = "wasp-dead"
@@ -3250,7 +3209,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/raccoon
 	name = "space raccoon"
-	real_name = "space raccoon"
 	desc = "A raccoon that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "raccoon"
 	icon_state_dead = "raccoon-dead"
@@ -3322,7 +3280,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/slug
 	name = "slug"
-	real_name = "slug"
 	desc = "It doesn't have any arms or legs so it's kind of like a snake, but it's gross and unthreatening instead of cool and dangerous."
 	icon_state = "slug"
 	icon_state_dead = "slug-dead"
@@ -3362,7 +3319,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/slug/snail
 	name = "snail"
-	real_name = "snail"
 	desc = "It's basically just a slug with a shell on it. This makes it less gross."
 	icon_state = "snail"
 	icon_state_dead = "snail-dead"
@@ -3374,7 +3330,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/slug/snail/diner
 	name = "Snaily Softserve"
-	real_name = "snaildiner"
 	desc = "It's Snaily Softserve! She's a bit slimy and slow, but she means well."
 	icon_state = "snail"
 	icon_state_dead = "snail-dead"
@@ -3412,7 +3367,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/butterfly
 	name = "butterfly"
-	real_name = "butterfly"
 	blood_id = "hemolymph"
 	desc = "It's a beautiful butterfly! How did it get here?"
 	hand_count = 2
@@ -3497,7 +3451,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 // What do you mean moths arent butterflies. SHUT UP. GO AWAY.
 /mob/living/critter/small_animal/butterfly/moth
 	name = "moth"
-	real_name = "moth"
 	desc = "Ew a moth. Hope it doesn't get into the wardrobe."
 	blood_id = "hemolymph"
 	player_can_spawn_with_pet = TRUE
@@ -3514,7 +3467,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/fly
 	name = "fly"
-	real_name = "fly"
 	desc = "It's a pesky housefly! How'd it get into space? No clue."
 	hand_count = 2
 	icon_state = "fly"
@@ -3580,7 +3532,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/mosquito
 	name = "mosquito"
-	real_name = "mosquito"
 	desc = "It's a pesky mosquito! How'd it get into space? No clue."
 	hand_count = 2
 	icon_state = "sqwibby"
@@ -3646,7 +3597,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/lobsterman
 	name = "lobster"
-	real_name = "lobster"
 	desc = "An unpleasantly humanoid lobster."
 	icon_state = "lobsterman"
 	var/start_icon = "lobsterman"
@@ -3706,7 +3656,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/lobsterman/rock
 	name = "rock lobster"
-	real_name = "rock lobster"
 	icon_state = "lobsterman-rock"
 	start_icon = "lobsterman-rock"
 	icon_state_dead = "lobsterman-dead"
@@ -3718,7 +3667,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/boogiebot
 	name = "Boogiebot"
-	real_name = "Boogiebot"
 	desc = "A robot that looks ready to get down at any moment."
 	flags = TABLEPASS | DOORPASS
 	butcherable = BUTCHER_NOT_ALLOWED // TODO: move this to robotic critter
@@ -3836,7 +3784,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/plush
 	name = "plush toy"
-	real_name = "plush toy"
 	desc = "In your heart of hearts, you knew that they were real. And you never stopped believing!"
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = TRUE
@@ -3900,7 +3847,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/figure
 	name = "collectible figure"
-	real_name = "collectible figure"
 	desc = SPAN_ALERT("<b>WARNING: CHOKING HAZARD</b> - Small parts. Not for children under 3 years.")
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = TRUE
@@ -4011,7 +3957,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/mouse/weak/mentor
 	name = "mentor mouse"
-	real_name = "mentor mouse"
 	desc = "A helpful mentor in the form of a mouse. Click to put them in your pocket so they can help you."
 	var/status_name = "mentor_mouse"
 	var/is_admin = 0
@@ -4196,7 +4141,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
-	real_name = "admin mouse"
 	desc = "A helpful (?) admin in the form of a mouse. Click to put them in your pocket so they can help you."
 	status_name = "admin_mouse"
 	is_admin = 1
@@ -4247,7 +4191,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/crab
 	name = "crab"
-	real_name = "crab"
 	desc = "Snip snap"
 	icon_state = "crab"
 	blood_id = "hemolymph"
@@ -4301,7 +4244,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/crab/party
 	name = "party crab"
-	real_name = "party crab"
 	desc = "This crab is having way more fun than you."
 	icon_state = "crab_party"
 	can_hat = FALSE
@@ -4384,7 +4326,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/trilobite
 	name = "trilobite"
-	real_name = "trilobite"
 	blood_id = "hemolymph"
 	desc = "This is an alien trilobite."
 	icon_state = "trilobite"
@@ -4467,7 +4408,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/hallucigenia
 	name = "hallucigenia"
-	real_name = "hallucigenia"
 	desc = "This is an alien hallucigenia."
 	icon_state = "hallucigenia"
 	icon_state_dead = "hallucigenia-dead"
@@ -4529,7 +4469,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/pikaia
 	name = "pikaia"
-	real_name = "pikaia"
 	desc = "This is an alien pikaia."
 	icon_state = "pikaia"
 	icon_state_dead = "pikaia-dead"
@@ -4720,7 +4659,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/bunny
 	name = "space bunny"
-	real_name = "space bunny"
 	desc = "A little bunny.  In space."
 	flags = TABLEPASS
 	fits_under_table = 1
@@ -4802,7 +4740,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/bunny/hare
 	name = "space hare"
-	real_name = "space hare"
 	desc = "A spry hare.  In space."
 	icon_state = "hare"
 	health_brute = 14
@@ -4818,7 +4755,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/large_jellyfish
 	name = "jellyfish"
-	real_name = "jellyfish"
 	desc = "An oversized and over-aggressive jellyfish. Oh no."
 	icon = 'icons/misc/sea_critter.dmi'
 	icon_state = "jellyfish_large"
@@ -4885,7 +4821,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 
 /mob/living/critter/small_animal/large_jellyfish/grabby
 	name = "jellyfish"
-	real_name = "jellyfish"
 	desc = "An oversized and over-aggressive jellyfish. Oh no."
 	icon = 'icons/misc/sea_critter.dmi'
 	icon_state = "jellyfish_large"

@@ -134,6 +134,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	icon_state = "darkgreen"
 	casecolor = "darkgreen"
 
+/obj/machinery/portable_atmospherics/canister/get_help_message(dist, mob/user)
+	. = ..()
+	if (src.det)
+		. = "You can use <b>wirecutters</b> or <b>multitool</b> to attempt to defuse the bomb."
+	else
+		. = "Use a <b>wrench</b> to attach or detach from an atmospherics port."
+
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
@@ -159,7 +166,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			UpdateOverlays(atmos_dmi, "holding")
 		else
 			UpdateOverlays(null, "holding")
-		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
+
+		var/tank_pressure = air_contents ? MIXTURE_PRESSURE(air_contents) : 0
 
 		if (tank_pressure < 10)
 			atmos_dmi.icon_state = "can-o0"

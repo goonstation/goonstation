@@ -439,14 +439,17 @@
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
 	check_wclass = 1
 	color = "#ff9933"
-	satchel_compatible = FALSE
+	satchel_variant = null
 
 /obj/item/device/radio/headset/salvager
-	protected_radio = TRUE // Ops can spawn with the deaf trait.
+	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew. The headset is covered in scratch marks and the screws look nearly stripped."
+	protected_radio = TRUE
+	secure_frequencies = list("z" = R_FREQ_SALVAGER)
+	secure_classes = list("z" = RADIOCL_SALVAGER)
 
 /obj/item/device/powersink/salvager
 	desc = "A nulling power sink which drains energy from electrical systems.  Installed with high capacity cells to steal away power."
-	drain_rate = 45000		// amount of power to drain per tick
+	drain_rate = 100000		// amount of power to drain per tick
 	max_power = 2e7		// maximum power that can be drained before exploding
 	color = list(1,0,0,-0.00168067,0.998559,0.00168067,0.213445,0.182953,0.786555)
 
@@ -462,9 +465,10 @@
 	process()
 		var/previous_drain_rate = drain_rate
 		//... decentivize non-station power...
-		if(!istype(get_area(src), /area/station))
+		var/on_station = istype(get_area(src), /area/station)
+		if(!on_station)
 			src.light.set_color(0.5, 0.2, 0.2)
-			drain_rate *= 0.3
+			drain_rate *= 0.15
 		else
 			src.light.set_color(1, 1, 1)
 		. = ..()
@@ -472,7 +476,7 @@
 			var/datum/powernet/PN = attached.get_powernet()
 			if(PN)
 				if(!ON_COOLDOWN(src,"noise",rand(1 SECOND, 5 SECONDS)))
-					playsound(src,'sound/machines/engine_highpower.ogg', 70, 1, 3, -2)
+					playsound(src,'sound/machines/engine_highpower.ogg', on_station ? 70 : 50, 1, 3, -2)
 		drain_rate = previous_drain_rate
 
 
@@ -625,7 +629,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if(prob(25))
+		if(device && prob(25))
 			elecflash(device)
 
 	onStart()
@@ -645,15 +649,16 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 			target.set_loc(destination)
 			showswirl(target)
 			elecflash(src)
-			device.charges--
-			device.UpdateIcon()
-			if(device.charges <= 0)
-				if(prob(33))
-					boutput(target, SPAN_ALERT("\The [device] disintegrates!  Well, I guess there are more where that came from."))
-					target.u_equip(device)
-					qdel(device)
-				else
-					boutput(target, SPAN_ALERT("\The [device] lights stop flashing!  Must need more fuel?"))
+			if(device)
+				device.charges--
+				device.UpdateIcon()
+				if(device.charges <= 0)
+					if(prob(33))
+						boutput(target, SPAN_ALERT("\The [device] disintegrates!  Well, I guess there are more where that came from."))
+						target.u_equip(device)
+						qdel(device)
+					else
+						boutput(target, SPAN_ALERT("\The [device] lights stop flashing!  Must need more fuel?"))
 
 /obj/item/clothing/glasses/salvager
 	name = "\improper S.A.V. goggles"
@@ -674,18 +679,8 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 /obj/item/device/radio_upgrade/salvager
 	name = "private radio channel upgrade"
 	desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
-	secure_frequencies = null
-	secure_classes = null
-
-	pickup(mob/user)
-		. = ..()
-		if(secure_frequencies || secure_classes)
-			return
-		var/datum/antagonist/salvager/SA = user?.mind?.get_antagonist(ROLE_SALVAGER)
-		if(SA)
-			var/salv_freq = SA.pick_radio_freq()
-			src.secure_frequencies = list("z" = salv_freq)
-			src.secure_classes = list(RADIOCL_OTHER)
+	secure_frequencies = list("z" = R_FREQ_SALVAGER)
+	secure_classes = list("z" = RADIOCL_SALVAGER)
 
 
 /obj/salvager_putt_spawner
@@ -829,7 +824,27 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
 
+/obj/marker/salvager_teleport
+	icon_state = "X"
+	icon = 'icons/misc/mark.dmi'
+	name = "Salvager Teleport Marker"
+	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED
+	opacity = 0
 
+	Crossed(atom/movable/AM)
+		. = ..()
+
+		if(ismob(AM))
+			var/mob/M = AM
+
+			if(M.mind?.get_antagonist(ROLE_SALVAGER))
+				if(length(landmarks[LANDMARK_SALVAGER_TELEPORTER]))
+					SPAWN(0.5 SECONDS)
+						if(src.loc == M.loc)
+							actions.start(new /datum/action/bar/private/salvager_tele(M, null), M)
+				else
+					boutput(M, SPAN_ALERT("Something is wrong..."))
 
 
 // Stubs for the public

@@ -1,0 +1,36 @@
+.led-red {
+  width: 16px;
+  height: 16px;
+  background-color: #940;
+  border-radius: 50%;
+  box-shadow:
+    #000 0 -1px 7px 1px,
+    inset #600 0 -1px 9px,
+    #f00 0 1px 12px;
+}
+
+.led-red.flashing {
+  animation: lit 0.65s linear infinite;
+  animation-direction: alternate;
+}
+
+@keyframes lit {
+  0% {
+    box-shadow:
+      #000 0 -1px 7px 1px,
+      inset #600 0 -1px 9px,
+      #f00 0 1px 12px;
+  }
+  70% {
+    box-shadow:
+      #000 0 -1px 7px 1px,
+      inset #600 0 -1px 9px,
+      #f00 0 1px 12px;
+  }
+  100% {
+    box-shadow:
+      #a80101 0 -1px 2px 1px,
+      inset rgb(255, 0, 0) 0 -1px 20px,
+      #f00 0 4px 20px;
+  }
+}

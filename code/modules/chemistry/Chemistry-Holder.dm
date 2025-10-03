@@ -41,6 +41,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	var/inert = 0
 
 	var/list/addiction_tally = null
+	/// Cache for misc addiction changes, this value will be added to every addiction's meter and then reset to 0 every life tick
+	var/addiction_cache = 0
 
 	var/tmp/list/datum/chemical_reaction/possible_reactions = list()
 	var/tmp/list/datum/chemical_reaction/active_reactions = list()
@@ -636,7 +638,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					total_volume += current_reagent.volume
 		if(isitem(my_atom))
 			var/obj/item/I = my_atom
-			I.tooltip_rebuild = 1
+			I.tooltip_rebuild = TRUE
 		return 0
 
 	proc/clear_reagents()
@@ -1238,6 +1240,14 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	proc/is_airborne()
 		return FALSE
+
+	proc/on_forensic_scan_reagent(datum/forensic_scan/scan)
+		if(src.has_reagent("blood"))
+			var/datum/reagent/blood/B = src.reagent_list["blood"]
+			if (B && istype(B.data, /datum/bioHolder))
+				var/datum/bioHolder/BH = B.data
+				if (BH.Uid)
+					scan.add_text("[BH.Uid] (Reagents)", FORENSIC_HEADER_DNA)
 
 ///////////////////////////////////////////////////////////////////////////////////
 

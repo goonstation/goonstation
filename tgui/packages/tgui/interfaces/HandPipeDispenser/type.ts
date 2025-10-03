@@ -21,15 +21,8 @@ export type HandPipeDispenserData = {
   selectedcost: number;
   resources: number;
   selecteddesc: string;
+  issilicon: BooleanLike;
 };
-
-// I feel like this should be common somewhere but :iiam:
-export enum ByondDir {
-  North = 1,
-  South = 2,
-  East = 4,
-  West = 8,
-}
 
 export enum Tab {
   AtmosPipes = 'atmospipes',

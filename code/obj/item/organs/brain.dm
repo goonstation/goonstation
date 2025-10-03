@@ -186,3 +186,8 @@
 	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
 		[SPAN_BOLD("ID:")] Computational core<br>\
 		[SPAN_BOLD("###=-")]")]"}
+
+/obj/item/organ/brain/amphibian
+	name = "amphibian brain"
+	desc = "A frog brain. Look at the size of those optic lobes!"
+	icon_state = "amphibian_brain"

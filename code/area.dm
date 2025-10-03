@@ -447,11 +447,7 @@ TYPEINFO(/area)
 			//if ("AI Satellite Core") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg') // same as above
 			if ("The Blind Pig") sound_fx_1 = pick('sound/ambience/spooky/TheBlindPig.ogg','sound/ambience/spooky/TheBlindPig2.ogg')
 			if ("M. Fortuna's House of Fortune") sound_fx_1 = 'sound/ambience/spooky/MFortuna.ogg'
-			#ifdef SUBMARINE_MAP
-			else sound_fx_1 = pick(ambience_submarine)
-			#else
 			else sound_fx_1 = pick(ambience_general)
-			#endif
 
 	proc/add_light(var/obj/machinery/light/L)
 		if (!light_manager)
@@ -750,7 +746,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle2"
 	occlude_foreground_parallax_layers = FALSE
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 /area/shuttle/escape/centcom
@@ -810,7 +806,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "John's Bus Diner Dock"
 	icon_state = "shuttle"
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 /area/shuttle/john/diner/nadir
@@ -902,7 +898,8 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 	sound_environment = 22
 	ambient_light = TRENCH_LIGHT
 #elif defined(UNDERWATER_MAP) // Oshan/Manta diner shuttle is at the surface sea diner
-	ambient_light = OCEAN_LIGHT
+	ambient_light = 0
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 #endif
 
 /area/shuttle/merchant_shuttle/left_station
@@ -1326,9 +1323,6 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Derelict Space Station"
 	icon_state = "derelict"
 	occlude_foreground_parallax_layers = TRUE
-#ifdef SUBMARINE_MAP
-	force_fullbright = 1
-#endif
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -1337,9 +1331,6 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Derelict Diner"
 	icon_state = "derelict"
 	occlude_foreground_parallax_layers = TRUE
-#ifdef SUBMARINE_MAP
-	force_fullbright = 1
-#endif
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -1871,11 +1862,7 @@ TYPEINFO(/area/station)
 	minimaps_to_render_on = MAP_ALL
 	occlude_foreground_parallax_layers = TRUE
 	var/tmp/initial_structure_value = 0
-#ifdef MOVING_SUB_MAP
-	filler_turf = "/turf/space/fluid/manta"
-#else
 	filler_turf = null
-#endif
 
 	New()
 		..()
@@ -2393,10 +2380,6 @@ ABSTRACT_TYPE(/area/station/mining)
 	icon_state = "bridge"
 	sound_environment = 4
 	station_map_colour = MAPC_COMMAND
-#ifdef SUBMARINE_MAP
-	sound_group = "bridge"
-	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
-#endif
 
 /area/station/bridge/united_command //currently only on atlas - ET
     name = "United Command"
@@ -2748,7 +2731,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/garden/sunlight
 	name = "Public Garden"
 	icon_state = "park"
-	ambient_light = CENTCOM_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_EARTH
 
 /area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
 	name = "Garbage Garbs clothing store"
@@ -2769,7 +2752,7 @@ ABSTRACT_TYPE(/area/station/com_dish)
 	icon_state = "yellow"
 	requires_power = FALSE
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 /area/station/com_dish/comdish
@@ -3813,7 +3796,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 	CanEnter(atom/movable/A)
 		var/mob/living/M = A
-		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
+		if(istype(M) && M.mind && !(M.mind.get_antagonist(ROLE_WIZARD) || M.mind.special_role == ROLE_WIZARD || M.mind.get_antagonist(ROLE_BASKETBALL_WIZARD) || M.mind.special_role == ROLE_BASKETBALL_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
 				return TRUE
 			boutput(M, SPAN_ALERT("A magical barrier prevents you from entering!")) //or something
@@ -4136,7 +4119,7 @@ ABSTRACT_TYPE(/area/mining)
 /area/space/plasma_reef
 	name = "Plasma Reef"
 	icon_state = "purple"
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	requires_power = FALSE // find out where the fuck the check is later and change this so plasma reef doesn't have free power
 
 // // // // // // // // // // // //
@@ -4323,7 +4306,7 @@ ABSTRACT_TYPE(/area/mining)
 	if(name == "Space" || src.name == "Ocean")			// override defaults for space
 		requires_power = 0
 		#ifdef UNDERWATER_MAP
-		src.ambient_light = OCEAN_LIGHT
+		src.ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 		#endif
 
 	if(!requires_power)
@@ -4507,19 +4490,11 @@ Don't try and do this in the editor nerd. ~Warc
 	do_not_irradiate = FALSE
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
 	var/initial_structure_value = 0
-#ifdef MOVING_SUB_MAP
-	filler_turf = "/turf/space/fluid/manta"
-
-	New()
-		..()
-		initial_structure_value = calculate_structure_value()
-#else
 	filler_turf = null
 
 	New()
 		..()
 		initial_structure_value = calculate_structure_value()
-#endif
 
 /area/station2/atmos
 	name = "Atmospherics"
@@ -4753,10 +4728,6 @@ area/station/hallway/starboardupperhallway
 	name = "Bridge"
 	icon_state = "bridge"
 	sound_environment = 4
-#ifdef SUBMARINE_MAP
-	sound_group = "bridge"
-	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
-#endif
 
 /area/station2/captain //Three below this one are because Manta uses specific ambience on the bridge
 	name = "Captain's Office"

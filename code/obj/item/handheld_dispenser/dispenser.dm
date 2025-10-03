@@ -15,6 +15,7 @@
 		/obj/machinery/atmospherics/binary/nuclear_reactor,
 		/obj/machinery/atmospherics/binary/reactor_turbine,
 		/obj/machinery/atmospherics/unary/cryo_cell))
+	var/const/silicon_cost_multiplier = 200
 	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple
 	var/selectedimage
 	var/direction = EAST
@@ -24,7 +25,6 @@
 
 /obj/item/places_pipes/New()
 	. = ..()
-	src.inventory_counter.update_number(src.resources)
 	if (!src.atmospipesforcreation)
 		src.atmospipesforcreation = list()
 		for (var/datum/pipe_recipe/pipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/pipe))
@@ -63,6 +63,8 @@
 	. = ..()
 
 /obj/item/places_pipes/proc/load_ammo(mob/user, obj/item/rcd_ammo/ammo)
+	if(issilicon(user))
+		return
 	if (!ammo.matter)
 		return
 	if (src.resources == src.max_resources)
@@ -72,13 +74,14 @@
 		ammo.matter -= (src.max_resources - src.resources)
 		boutput(user, "The cartridge now contains [ammo.matter] units of matter.")
 		src.resources = src.max_resources
-		ammo.tooltip_rebuild = 1
+		ammo.tooltip_rebuild = TRUE
 	else
 		src.resources += ammo.matter
 		ammo.matter = 0
 		qdel(ammo)
-	src.tooltip_rebuild = 1
-	src.inventory_counter.update_number(src.resources)
+	src.tooltip_rebuild = TRUE
+	if (!issilicon(user))
+		src.inventory_counter.update_number(src.resources)
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	boutput(user, "\The [src] now holds [src.resources] matter-units.")
@@ -105,7 +108,12 @@
 			if(selection.exclusionary && device.exclusionary)
 				boutput(user, SPAN_ALERT("Something is occupying that space!"))
 				return
-		if(src.resources < selection.cost)
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			if (!(S.cell && (S.cell.charge >= selection.cost * silicon_cost_multiplier)))
+				boutput(user, SPAN_ALERT("Not enough charge to make a [selection.name]!"))
+				return
+		else if(src.resources < selection.cost)
 			boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
 			return
 		var/icon/rotated_icon = icon(selection.icon, selection.icon_state, src.direction)
@@ -116,10 +124,16 @@
 		actions.start(actionbar, user)
 
 /obj/item/places_pipes/proc/create_item(turf/target, mob/user, datum/pipe_recipe/recipe, direction)
+	var/mob/living/silicon/S
 	if(!(user && can_reach(user, target)))
 		boutput(user, SPAN_ALERT("Can't reach there!"))
 		return
-	if(src.resources < selection.cost)
+	if (issilicon(user))
+		S = user
+		if (!(S.cell && (S.cell.charge >= recipe.cost * silicon_cost_multiplier)))
+			boutput(user, SPAN_ALERT("Not enough charge to make a [recipe.name]!"))
+			return
+	else if(src.resources < recipe.cost)
 		boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
 		return
 	var/directs = recipe.get_directions(direction)
@@ -127,12 +141,16 @@
 		if((device.initialize_directions & directs))
 			boutput(user, SPAN_ALERT("Something is occupying that direction!"))
 			return
-		if(selection.exclusionary && device.exclusionary)
+		if(recipe.exclusionary && device.exclusionary)
 			boutput(user, SPAN_ALERT("Something is occupying that space!"))
 			return
-	src.resources -= recipe.cost
-	src.tooltip_rebuild = 1
-	src.inventory_counter.update_number(src.resources)
+	if (S?.cell)
+		S.cell.use(recipe.cost * silicon_cost_multiplier)
+	else
+		src.resources -= recipe.cost
+	if (!issilicon(user))
+		src.inventory_counter.update_number(src.resources)
+	src.tooltip_rebuild = TRUE
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
 	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
@@ -142,7 +160,13 @@
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
-	if(!src.resources)
+	var/mob/living/silicon/S
+	if (issilicon(user))
+		S = user
+		if (!(S.cell && (S.cell.charge >= silicon_cost_multiplier)))
+			boutput(user, SPAN_ALERT("Not enough charge to destroy that!"))
+			return
+	else if(!src.resources)
 		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
 		return
 	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
@@ -151,9 +175,13 @@
 		var/obj/machinery/atmospherics/binary/valve/O = target
 		if(O.high_risk)
 			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
-	resources -= 1
-	src.tooltip_rebuild = 1
-	src.inventory_counter.update_number(src.resources)
+	if (S?.cell)
+		S.cell.use(silicon_cost_multiplier)
+	else
+		resources -= 1
+	if (!issilicon(user))
+		src.inventory_counter.update_number(src.resources)
+	src.tooltip_rebuild = TRUE
 	qdel(target)
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -165,10 +193,13 @@
 		ui.open()
 
 /obj/item/places_pipes/ui_data(mob/user)
+	var/mob/living/silicon/S
+	if (issilicon(user))
+		S = user
 	. = list(
 		"selectedimage" = (src.selectedimage || getBase64Img(selection, src.direction)),
-		"selectedcost" = src.selection.cost,
-		"resources" = src.resources,
+		"selectedcost" = S ? (src.selection.cost * silicon_cost_multiplier) : src.selection.cost,
+		"resources" = S ? (S.cell ? S.cell.charge : 0) : src.resources,
 		"destroying" = src.destroying,
 		"selecteddesc" = src.selection.desc,
 	)
@@ -181,15 +212,16 @@
 		.["atmospipes"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost,
+			"cost" = recipe.cost * (issilicon(user) ? silicon_cost_multiplier : 1),
 			))
 	for (var/name in src.atmosmachinesforcreation)
 		var/datum/pipe_recipe/machine/recipe = src.atmosmachinesforcreation[name]
 		.["atmosmachines"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost,
+			"cost" = recipe.cost * (issilicon(user) ? silicon_cost_multiplier : 1),
 			))
+	.["issilicon"] = issilicon(user)
 
 /obj/item/places_pipes/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -199,7 +231,7 @@
 		if("select")
 			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]]
 			src.selectedimage = getBase64Img(src.selection, direction)
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 			. = TRUE
 		if("changedir")
 			src.direction = text2num_safe(params["newdir"])
@@ -217,8 +249,6 @@
 		return
 	. = icon2base64(icon = icon(icon = recipe.icon, icon_state = recipe.icon_state, dir = direction))
 	src.cache["[recipe.name][direction]"] = .
-
-/obj/item/places_pipes/proc/do_pipe_action()
 
 /datum/pipe_recipe
 	var/icon = 'icons/obj/atmospherics/hhd_recipe_images.dmi'
@@ -441,6 +471,25 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		path = /obj/machinery/atmospherics/binary/heat_exchanger
 		icon_state = "heatexchanger"
 		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
+
+ABSTRACT_TYPE(/datum/pipe_recipe/machine/trinary)
+/datum/pipe_recipe/machine/trinary
+	get_directions(dir)
+		switch(dir)
+			if(NORTH)
+				return NORTH|EAST|SOUTH
+			if(EAST)
+				return EAST|SOUTH|WEST
+			if(SOUTH)
+				return SOUTH|WEST|NORTH
+			if(WEST)
+				return WEST|NORTH|EAST
+
+	filter
+		name = "Gas Filter"
+		icon_state = "gasfilter"
+		path = /obj/machinery/atmospherics/trinary/filter
+		desc = "A scrubber that filters out a chosen gas to the side."
 
 /obj/item/places_pipes/research
 	icon_state = "hpd-place-r"

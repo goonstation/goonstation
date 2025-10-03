@@ -1,7 +1,7 @@
 /datum/targetable/critter/drop_disguise
 	name = "Drop Disguise"
 	desc = "Shed your skin and return to your base form."
-	icon_state = "drop_disguise"
+	icon_state = "mimic_drop_disguise"
 	cooldown = 10 SECONDS
 	targeted = 0
 

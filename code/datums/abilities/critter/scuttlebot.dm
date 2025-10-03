@@ -154,6 +154,11 @@
 	incapacitationCheck()
 		return FALSE
 
+/datum/targetable/critter/control_owner/mail
+	name = "Return to body"
+	desc = "Leave the P1G3E0N and return to your body"
+	icon_state = "shutdown_mail"
+
 /datum/targetable/critter/scuttle_scan
 	name = "Robotic scan"
 	desc = "Use your robotic vision to gather forensics"
@@ -170,4 +175,5 @@
 			return
 
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner]</b> has scanned [target]."))
-		boutput(holder.owner, scan_forensic(target, visible = 1))
+		var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
+		boutput(holder.owner, scan.build_report())

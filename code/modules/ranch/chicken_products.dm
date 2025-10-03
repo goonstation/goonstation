@@ -22,6 +22,7 @@
 			chicken_egg_props = new egg_props_path(src)
 		src.setup_special_effects()
 		src.UpdateIcon()
+		src.food_color = global.get_average_color(global.getFlatIcon(src))
 	update_icon()
 		if (egg_props_path)
 			src.icon_state = "egg-[chicken_egg_props.chicken_id]"
@@ -92,6 +93,9 @@
 		egg_props_path = /datum/chicken_egg_props/honk
 	cluwne
 		egg_props_path = /datum/chicken_egg_props/cluwne
+		New()
+			. = ..()
+			src.reagents.add_reagent("painbow_eggs",10)
 	raptor
 		egg_props_path = /datum/chicken_egg_props/raptor
 	plant

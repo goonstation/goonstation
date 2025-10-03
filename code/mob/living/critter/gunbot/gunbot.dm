@@ -2,12 +2,11 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	mats = list("metal_dense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6)
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_ERROR)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_ERROR)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 
 /mob/living/critter/robotic/gunbot
 	name = "robot"
-	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
 	icon = 'icons/mob/critter/robotic/gunbot.dmi'
 	icon_state = "gunbot"
@@ -21,7 +20,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	health_brute_vuln = 1
 	health_burn = 20
 	health_burn_vuln = 0.5
-	speech_verb_say = "states"
+	voice_type = "cyborg_distorted"
+	speech_verb_say = "blares"
 	speech_verb_gasp = "states"
 	speech_verb_stammer = "states"
 	speech_verb_exclaim = "declares"
@@ -33,7 +33,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	faction = list(FACTION_DERELICT)
 	is_npc = TRUE
 
-	speech_verb_say = "blares"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/speak_lines = TRUE
@@ -191,9 +190,15 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	get_ranged_protection()
 		return 2
 
+/mob/living/critter/robotic/gunbot/syndicate_mining_encounter
+	name = "\improper Syndicate robot"
+	desc = "A retrofitted Syndicate gunbot, it seems angry."
+	icon_state = "nukebot"
+	base_icon_state = "nukebot"
+	faction = list(FACTION_SYNDICATE)
+
 /mob/living/critter/robotic/gunbot/syndicate
 	name = "\improper Syndicate robot"
-	real_name = "\improper Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."
 	icon_state = "nukebot"
 	base_icon_state = "nukebot"
@@ -244,7 +249,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 /mob/living/critter/robotic/gunbot/syndicate/polaris
 	name = "\improper unmarked robot"
-	real_name = "\improper unmarked robot"
 	desc = "Painted in red and black, all identifying marks have been scraped off. Darn."
 	health_brute = 20
 	health_burn = 20
@@ -404,7 +408,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 	bound_width = 64
 	bound_height = 32
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/minimum_gunbots = 1
 	var/building = FALSE
 	var/progress = 0

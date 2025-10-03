@@ -133,7 +133,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/handspider
 	name = "handspider"
-	real_name = "handspider"
 	desc = "It's a living disembodied hand with shifting flesh... Disgusting!"
 	icon_state = "handspider"
 	icon_state_dead = "handspider-dead"
@@ -346,7 +345,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/eyespider
 	name = "eyespider"
-	real_name = "eyespider"
 	desc = "It's a living disembodied eye with freaky spindly legs... That's messed up!"
 	density = 0
 	icon_state = "eyespider"
@@ -436,7 +434,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/legworm
 	name = "legworm"
-	real_name = "legworm"
 	desc = "A writhing, angry disembodied leg!"
 	icon_state = "legworm"
 	icon_state_dead = "legworm-dead"
@@ -569,7 +566,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/buttcrab
 	name = "buttcrab"
-	real_name = "buttcrab"
 	desc = "Well. OK then. Thats a thing."
 	icon_state = "buttcrab"
 	icon_state_dead = "buttcrab-dead"
@@ -641,7 +637,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/headspider
 	name = "headspider"
-	real_name = "headspider"
 	desc = "Oh my god!"
 	icon_state = "headspider"
 	icon_state_dead = "headspider-dead"
@@ -694,18 +689,19 @@ TYPEINFO(/mob/living/critter/changeling)
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
 	if(ishuman(M) && !isdead(M))
 		var/mob/living/carbon/human/H = M
-		random_brute_damage(H, 10)
-		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
-		playsound(src, 'sound/misc/headspiderability.ogg', 60)
-		src.set_loc(H)
-		H.setStatusMin("unconscious", 10 SECONDS)
 
 		var/datum/ailment_data/parasite/ailment_data = get_disease_from_path(/datum/ailment/parasite/headspider).setup_strain()
 		ailment_data.affected_mob = H
 		ailment_data.source = src
-		H.contract_disease(/datum/ailment/parasite/headspider, null, ailment_data, TRUE)
-
-		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		if(H.contract_disease(/datum/ailment/parasite/headspider, null, ailment_data, TRUE))
+			random_brute_damage(H, 10)
+			src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
+			playsound(src, 'sound/misc/headspiderability.ogg', 60)
+			src.set_loc(H)
+			H.setStatusMin("unconscious", 10 SECONDS)
+			logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		else //The only way we can fail is if they are immune to disease (ling/vamp/thrall/zombie/godmode) or they already have a headspider
+			boutput(src, SPAN_ALERT("[H]'s inhuman nature renders us unable to infect their form."))
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))

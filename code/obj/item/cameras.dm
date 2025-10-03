@@ -234,6 +234,9 @@ TYPEINFO(/obj/item/camera_film/large)
 	/// Resize and update photo overlay (layer)
 	proc/render_photo_image(var/layer)
 		var/image/IM = src.fullImage
+		if (!IM)
+			return
+		// Scale and position the image to fit on the photo
 		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 		IM.pixel_y = 1
 		IM.layer = layer
@@ -280,7 +283,7 @@ TYPEINFO(/obj/item/camera_film/large)
 				signature.layer = OBJ_LAYER + 0.01
 				src.overlays += signature
 				signed += "<span style='color: [P.font_color]'>[t]</span>"
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			else if (signwrite == "write")
 				var/image/writing = image(icon='icons/misc/photo_writing.dmi',icon_state="[signwrite]")
 				writing.color = P.font_color
@@ -291,7 +294,7 @@ TYPEINFO(/obj/item/camera_film/large)
 				else
 					src.overlays -= src.my_writing
 					written = "[src.written] <span style='color: [P.font_color]'>[t]</span>"
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				src.my_writing = writing
 				src.overlays += writing
 		return

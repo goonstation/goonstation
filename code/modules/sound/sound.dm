@@ -104,7 +104,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
-	src.player.cloudSaves.putData("audio_volume", json_encode(volumes))
+	src.player?.cloudSaves.putData("audio_volume", json_encode(volumes))
 
 	var/list/playing = src.SoundQuery()
 	if( channel == VOLUME_CHANNEL_MASTER )
@@ -532,6 +532,7 @@ var/global/number_of_sound_generated = 0
 			if ("step_heavyboots") soundin = pick(sounds_step_heavyboots)
 			if ("step_military") soundin = pick(sounds_step_military)
 			if ("step_snow") soundin = pick(sounds_step_snow)
+			if ("chute_insert") soundin = pick(sounds_chute_insert)
 
 	if(islist(soundin))
 		soundin = pick(soundin)
@@ -750,6 +751,7 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/sounds_warp = list(sound('sound/effects/warp1.ogg'),sound('sound/effects/warp2.ogg'))
 /var/global/list/sounds_engine = list(sound('sound/machines/tractor_running2.ogg'),sound('sound/machines/tractor_running3.ogg'))
 /var/global/list/sounds_keyboard = list(sound('sound/machines/keyboard1.ogg'),sound('sound/machines/keyboard2.ogg'),sound('sound/machines/keyboard3.ogg'))
+/var/global/list/sounds_chute_insert = list(sound('sound/effects/chute_place_1.ogg'),sound('sound/effects/chute_place_2.ogg'),sound('sound/effects/chute_place_3.ogg'),sound('sound/effects/chute_place_4.ogg'))
 
 /var/global/list/sounds_enginegrump = list(sound('sound/machines/engine_grump1.ogg'),sound('sound/machines/engine_grump2.ogg'),sound('sound/machines/engine_grump3.ogg'),sound('sound/machines/engine_grump4.ogg'))
 
@@ -816,6 +818,7 @@ proc/narrator_mode_sound_file(sound_file)
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
 		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
+		"cyborg_distorted" = sound('sound/misc/talk/cyborg_distorted.ogg'),	"cyborg_distorted!" = sound('sound/misc/talk/cyborg_exclaim_distorted.ogg'),"cyborg_distorted?" = sound('sound/misc/talk/cyborg_ask_distorted.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
 

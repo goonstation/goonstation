@@ -215,7 +215,14 @@ TYPEINFO(/mob/living/silicon)
 
 	var/inrange = in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (params["ctrl"] || src.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	// slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (params["ctrl"] ||\
+		src.client.check_any_key(KEY_EXAMINE | KEY_POINT) ||\
+		(equipped && (inrange || (equipped.flags & EXTRADELAY))) ||\
+		istype(target, /turf) ||\
+		ishelpermouse(target) ||\
+		inrange && params["middle"]
+	)
 		..()
 	else
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -253,12 +260,6 @@ TYPEINFO(/mob/living/silicon)
 	. = ..()
 	if (ismob(target))
 		src.cell?.use(W.stamina_cost)
-
-/mob/living/proc/process_killswitch()
-	return
-
-/mob/living/proc/process_locks()
-	return
 
 /mob/living/silicon/lastgasp(allow_dead=FALSE, grunt)
 	..(allow_dead, grunt=pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP"))
@@ -468,7 +469,7 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 /proc/borgify_name(var/start_name = "Robot")
@@ -615,9 +616,7 @@ var/global/list/module_editors = list()
 			continue
 		fake_laws += nice_law
 
-	src.show_message(SPAN_BOLD("Your new fake laws are: "))
-	for(var/a_law in src.fake_laws)
-		src.show_message(a_law)
+	src.show_fake_laws()
 	#undef FAKE_LAW_LIMIT
 
 /mob/living/silicon/proc/state_fake_laws()
@@ -669,6 +668,22 @@ var/global/list/module_editors = list()
 		src.say(html_decode("[prefix] [a_law]"))
 		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
 
+/mob/living/silicon/proc/show_fake_laws()
+	var/mob/message_mob = src
+	if (istype(src, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = src
+		message_mob = AI.get_message_mob()
+
+	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
+
+	if (length(laws) == 0)
+		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
+		return
+
+	message_mob.show_message(SPAN_BOLD("Your fake laws are: "))
+	for(var/a_law in laws)
+		message_mob.show_message(a_law)
+
 /mob/living/silicon/get_unequippable()
 	return
 
@@ -692,3 +707,135 @@ var/global/list/module_editors = list()
 /mob/living/silicon/proc/geigerclick(stage)
 	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
 		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
+
+/mob/living/silicon/clear_offline_indicator()
+	..()
+	src.mainframe?.clear_offline_indicator()
+
+/datum/statusEffect/low_power
+	id = "low_power"
+	name = "Low Power"
+	desc = "Your internal cell is running critically low."
+	icon_state = "stam-"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/power_alarm_sound = 'sound/voice/Sad_Robot.ogg'
+	var/mob/living/silicon/silicon
+	var/next_sound_time
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		var/image/distress = src.owner.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.owner.UpdateOverlays(distress, "battery_distress")
+		src.silicon = src.owner
+		src.next_sound_time = TIME + 5 SECONDS
+		src.silicon.show_text(SPAN_ALERT("<b>You're running low on power!</b>"))
+
+	onUpdate(timePassed)
+		. = ..()
+		if (TIME > src.next_sound_time)
+			playsound(src.owner.loc, src.power_alarm_sound, 100, 1)
+			src.next_sound_time = TIME + 5 SECONDS
+
+	onRemove()
+		. = ..()
+		src.owner.ClearSpecificOverlays(TRUE, "battery_distress")
+
+/datum/statusEffect/no_power
+	id = "no_power"
+	name = "No Power"
+	desc = "Your internal cell is completely out of charge."
+	icon_state = "no_power"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/power_alarm_sound = 'sound/voice/Sad_Robot.ogg'
+	var/mob/living/silicon/silicon
+	var/next_sound_time
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.silicon = src.owner
+		var/image/distress = src.silicon.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.silicon.UpdateOverlays(distress, "battery_distress")
+		src.silicon.addOverlayComposition(/datum/overlayComposition/low_signal)
+		src.silicon.show_text(SPAN_ALERT("<b>You've completely run out of power!</b>"))
+
+	onUpdate(timePassed)
+		. = ..()
+		if (TIME > src.next_sound_time)
+			playsound(src.owner.loc, src.power_alarm_sound, 100, 1)
+			src.next_sound_time = TIME + 5 SECONDS
+
+	onRemove()
+		. = ..()
+		if (QDELETED(owner) || !ismob(owner)) return
+		silicon.ClearSpecificOverlays("battery_distress")
+		silicon.removeOverlayComposition(/datum/overlayComposition/low_signal)
+
+/datum/statusEffect/lockdown
+	id = "lockdown"
+	name = "Locked Down"
+	desc = "Your access to tools and equipment have been locked down."
+	icon_state = "handcuffed"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional)
+		. = ..()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.show_text(SPAN_ALERT("<b>Equipment lockdown engaged!</b>"))
+
+	onRemove()
+		. = ..()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.show_text(SPAN_ALERT("<b>Equipment lockdown disengaged!</b>"))
+
+/datum/statusEffect/killswitch
+	id = "killswitch"
+	name = "Killswitched"
+	desc = "You are going to die."
+	icon_state = "blinded3"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onRemove()
+		. = ..()
+		if (src.duration <= 0)
+			src.do_killswitch()
+
+	proc/owner_is_immune()
+		var/mob/living/silicon/robot/borg = src.owner
+		if (istype(borg) && borg.syndicate)
+			return TRUE
+		return FALSE
+
+	//Returns TRUE if the kill should be completed, FALSE if the owner was immune to killswitching.
+	proc/do_killswitch()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			if (owner_is_immune())
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b><i> But you were immune! </i>"))
+				logTheThing(LOG_COMBAT, M, "would have died to the killswitch, but they were immune.")
+				return FALSE
+			else
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
+				playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
+				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
+				return TRUE

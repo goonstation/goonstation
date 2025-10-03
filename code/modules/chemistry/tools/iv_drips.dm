@@ -157,7 +157,8 @@
 /obj/item/reagent_containers/iv_drip/proc/stop_transfusion()
 	processing_items -= src
 	src.in_use = 0
-	REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
+	if (istype(src.patient))
+		REMOVE_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 	src.patient = null
 	if (src.stand)
 		src.stand.UpdateIcon()

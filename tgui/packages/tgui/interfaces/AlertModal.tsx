@@ -115,6 +115,7 @@ export const AlertModal = () => {
     >
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
+        scrollable={!!content_window}
         onKeyDown={(e) => {
           const keyCode = window.event ? e.which : e.keyCode;
           /**
@@ -150,7 +151,13 @@ export const AlertModal = () => {
                 overflowY="auto"
                 maxHeight="100%"
               >
-                {typedContentWindow ? typedContentWindow.content : message}
+                {(() => {
+                  if (!typedContentWindow) {
+                    return message;
+                  }
+                  const { component: Component } = typedContentWindow;
+                  return <Component />;
+                })()}
               </Box>
             </Stack.Item>
             <Stack.Item>

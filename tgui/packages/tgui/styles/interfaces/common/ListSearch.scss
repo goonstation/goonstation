@@ -1,6 +1,6 @@
 .list-search-interface {
   // using both classes for increased specificity
-  &__search-option.Button--color--transparent {
+  &__search-option {
     // reverting changes to transition to prevent laggy hover effect
     transition: initial;
   }

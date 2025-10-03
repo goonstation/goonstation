@@ -392,6 +392,17 @@
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/bullet_9mm_frangible
+	name = "9mm Frangible Rounds"
+	item_requirements = list("conductive" = 25,
+							 "rubber" = 15,
+							 "plastic" = 15,
+							 "metal" = 10)
+	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
+	create = 1
+	time = 15 SECONDS
+	category = "Resource"
+
 /datum/manufacture/bullet_12g_nail
 	name = "12 gauge nailshot"
 	item_requirements = list("metal_dense" = 40,
@@ -1156,6 +1167,15 @@
 	time = 20 SECONDS
 	category = "Clothing"
 
+/datum/manufacture/wheelchair
+	name = "Wheelchair Parts"
+	item_requirements = list("metal" = 8,
+							 "fabric" = 3)
+	item_outputs = list(/obj/item/furniture_parts/wheelchair)
+	create = 1
+	time = 30 SECONDS
+	category = "Resource"
+
 /datum/manufacture/hypospray
 	name = "Hypospray"
 	item_requirements = list("metal" = 2,
@@ -1695,6 +1715,13 @@
 	time = 50 SECONDS
 	category = "Component"
 
+/datum/manufacture/clone_rack
+	name = "Clone Rack"
+	item_outputs = list(/obj/machinery/disk_rack/clone)
+	item_requirements = list("metal" = 30, "conductive" = 10)
+	create = 1
+	time = 40 SECONDS
+
 /datum/manufacture/shell_frame
 	name = "AI Shell Frame"
 	item_requirements = list("metal_dense" = 12)
@@ -1974,7 +2001,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	name = "Teleport Upgrade"
 	item_requirements = list("conductive" = 10,
 							 "dense" = 1,
-							 "energy_high" = 10)//Okayenoughroundstartteleportborgs.Fuck.
+							 "telecrystal" = 10)//Okayenoughroundstartteleportborgs.Fuck.
 	item_outputs = list(/obj/item/roboupgrade/teleport)
 	create = 1
 	time = 120 SECONDS
@@ -2378,7 +2405,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	category = "Resource"
 
 /datum/manufacture/mender
-	name = "Auto Mender"
+	name = "Auto Mender (x2)"
 	item_requirements = list("metal_dense" = 5,
 							 "crystal" = 4,
 							 "gold" = 5)
@@ -3463,7 +3490,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_kit
 	name = "Interdictor Frame Kit"
-	item_requirements = list("metal_dense" = 10)
+	item_requirements = list("metal_dense" = 5)
 	item_outputs = list(/obj/item/interdictor_kit)
 	create = 1
 	time = 10 SECONDS
@@ -3471,7 +3498,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_board_standard
 	name = "Standard Interdictor Mainboard"
-	item_requirements = list("conductive" = 4)
+	item_requirements = list("conductive" = 2)
 	item_outputs = list(/obj/item/interdictor_board)
 	create = 1
 	time = 5 SECONDS
@@ -3479,7 +3506,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_board_nimbus
 	name = "Nimbus Interdictor Mainboard"
-	item_requirements = list("conductive" = 4,
+	item_requirements = list("conductive" = 2,
 							 "insulated" = 2,
 							 "crystal" = 2)
 	item_outputs = list(/obj/item/interdictor_board/nimbus)
@@ -3489,7 +3516,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_board_zephyr
 	name = "Zephyr Interdictor Mainboard"
-	item_requirements = list("conductive" = 4,
+	item_requirements = list("conductive" = 2,
 							 "viscerite" = 5)
 	item_outputs = list(/obj/item/interdictor_board/zephyr)
 	create = 1
@@ -3498,7 +3525,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_board_devera
 	name = "Devera Interdictor Mainboard"
-	item_requirements = list("conductive" = 4,
+	item_requirements = list("conductive" = 2,
 							 "crystal" = 2,
 							 "syreline" = 5)
 	item_outputs = list(/obj/item/interdictor_board/devera)
@@ -3509,8 +3536,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"
 	item_requirements = list("metal_dense" = 2,
-							 "conductive" = 10,
-							 "crystal" = 5,
+							 "conductive" = 5,
+							 "crystal" = 2,
 							 "insulated" = 2)
 	item_outputs = list(/obj/item/interdictor_rod)
 	create = 1
@@ -3520,8 +3547,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_sigma
 	name = "Sigma Phase-Control Rod"
 	item_requirements = list("metal_dense" = 2,
-							 "conductive_high" = 10,
-							 "insulated" = 5,
+							 "conductive_high" = 5,
+							 "insulated" = 2,
 							 "energy" = 2)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
 	create = 1
@@ -3531,8 +3558,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_epsilon
 	name = "Epsilon Phase-Control Rod"
 	item_requirements = list("metal_dense" = 2,
-							 "electrum" = 10,
-							 "dense" = 5,
+							 "electrum" = 5,
+							 "dense" = 2,
 							 "energy" = 2)
 	item_outputs = list(/obj/item/interdictor_rod/epsilon)
 	create = 1
@@ -3542,8 +3569,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_phi
 	name = "Phi Phase-Control Rod"
 	item_requirements = list("metal_dense" = 5,
-							 "crystal" = 10,
-							 "conductive" = 5)
+							 "conductive" = 5,
+							 "crystal" = 2)
 	item_outputs = list(/obj/item/interdictor_rod/phi)
 	create = 1
 	time = 15 SECONDS

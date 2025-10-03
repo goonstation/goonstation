@@ -56,7 +56,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/list/inhands = list()
 	var/list/healthlist = list()
 
-	var/list/implants = list()
 	var/can_implant = TRUE
 
 	var/death_text = null // can use %src%
@@ -133,6 +132,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	burning_image.icon_state = null
 
 	src.old_canmove = src.canmove
+	src.real_name = src.name
 
 	if(!isnull(src.custom_organHolder_type))
 		src.organHolder = new src.custom_organHolder_type(src, custom_brain_type)
@@ -191,10 +191,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	equipment.len = 0
 	equipment = null
 
-	for(var/obj/item/I in implants)
+	for(var/obj/item/I in implant)
 		I.dispose()
-	implants.len = 0
-	implants = null
+	implant.len = 0
+	implant = null
 
 	for(var/damage_type in healthlist)
 		var/datum/healthHolder/hh = healthlist[damage_type]
@@ -833,7 +833,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/handHolder/HH = hands[t_hand]
 		if (HH.item || !HH.can_hold_items)
 			return 0
-		if(istype(HH.limb, /datum/limb/small_critter))
+		if(istype(HH.limb, /datum/limb/small_critter) && HH.limb.exempt == FALSE)
 			var/datum/limb/small_critter/L = HH.limb
 			if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 				return 0
@@ -847,7 +847,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/handHolder/HH = hands[active_hand]
 		if (HH.item || !HH.can_hold_items)
 			return 0
-		if(istype(HH.limb, /datum/limb/small_critter))
+		if(istype(HH.limb, /datum/limb/small_critter) && HH.limb.exempt == FALSE)
 			var/datum/limb/small_critter/L = HH.limb
 			if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 				return 0

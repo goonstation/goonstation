@@ -31,7 +31,7 @@ var/list/asteroid_blocked_turfs = list()
 			ore_types_common += O
 			ore_types_all += O
 
-		for (var/X in childrentypesof(/datum/mining_encounter))
+		for (var/X in concrete_typesof(/datum/mining_encounter))
 			var/datum/mining_encounter/MC = new X
 			mining_encounters_common += MC
 			mining_encounters_all += MC
@@ -160,7 +160,6 @@ var/list/asteroid_blocked_turfs = list()
 /area/mining/magnet
 	name = "Magnet Area"
 	icon_state = "purple"
-	force_fullbright = 1
 	requires_power = 0
 	luminosity = 1
 	expandable = 0

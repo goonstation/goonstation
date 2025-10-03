@@ -437,7 +437,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	item_state = "headset"
 	block_eye = "R"
 	nudge_compatible = FALSE
-	var/pinhole = 0
+	var/pinhole = FALSE
 	var/mob/living/carbon/human/equipper
 	wear_layer = MOB_GLASSES_LAYER2
 
@@ -452,11 +452,11 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		return ..()
 
 	attackby(obj/item/W, mob/user)
-		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
+		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !src.pinhole)
 			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
-				pinhole = 1
-				block_eye = null
+				src.pinhole = TRUE
+				src.block_eye = FALSE
 				appearance_flags |= RESET_COLOR
 				if(!theEye)
 					user.show_message(SPAN_ALERT(">Um. Wow. Thats kinda grode."))
@@ -466,14 +466,18 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				logTheThing(LOG_COMBAT, user, "removes their [log_object(theEye)] using an eyepatch and [log_object(W)] at [log_loc(user)].")
 				return
 			else
-				pinhole = 1
-				block_eye = null
+				pinhole = TRUE
+				block_eye = FALSE
 				appearance_flags |= RESET_COLOR
 				user.show_message(SPAN_NOTICE("You poke a tiny pinhole into [src]!"))
-				if (!pinhole)
-					desc = "[desc] Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
 				return
 		return ..()
+
+	get_desc ()
+		if (src.pinhole)
+			. += " Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
+
+
 	attack_self(mob/user)
 
 		if (src.icon_state == "eyepatch-R")
@@ -539,27 +543,28 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	icon_state = "vr_scuttlebot"
 	item_state = "vr_scuttlebot"
 	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
+	var/pigeon_controller = FALSE
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
 		..()
 		var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
 			if(connected_scuttlebot.mind)
-				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
+				boutput(user, SPAN_ALERT("The [pigeon_controller ? "P1G30N" : "scuttlebot"] is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldn't be found."))
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The [pigeon_controller ? "P1G30N" : "scuttlebot"] couldn't be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else
-			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
+			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The [pigeon_controller ? "P1G30N" : "scuttlebot"] is likely destroyed."))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot))
 			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S)
-				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
+				boutput(user, "You try to put the goggles back into the [pigeon_controller ? "P1G30N" : "hat"] but it grumps at you, not recognizing the goggles.")
 				return 1
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
@@ -568,11 +573,13 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					var/obj/item/clothing/head/det_hat/gadget/newgadget = new /obj/item/clothing/head/det_hat/gadget(get_turf(S))
 					if (S.is_inspector)
 						newgadget.make_inspector()
+				else if (istype(S, /mob/living/critter/robotic/scuttlebot/mail))
+					new /obj/item/clothing/suit/pigeon(get_turf(S))
 				else
 					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 					if (S.is_inspector)
 						newscuttle.make_inspector()
-			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			boutput(user, "You stuff the goggles back into the [pigeon_controller ? "Carrier Pigeon" : "detgadget hat"]. It powers down with a low whirr.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
@@ -586,6 +593,13 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		..()
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()
+	mail
+		name = "P1G30N remote controller"
+		desc = "A pair of VR goggles connected to a remote pigeon. Use them on the scuttlebot to turn it back into a plushie."
+		icon_state = "vr_dungeon_exit"
+		item_state = "vr_dungeon_exit"
+
+		pigeon_controller = TRUE
 
 /obj/item/clothing/glasses/vr_fake //Only exist IN THE MATRIX.  Used to log out.
 	name = "\improper VR goggles"

@@ -1,6 +1,5 @@
 /mob/living/critter/mechmonstrosity
 	name = "mechanical monstrosity"
-	real_name = "mechanical monstrosity"
 	desc = "A severely disfigured human torso which is forcibly kept alive by the mechanical parts.."
 	density = TRUE
 	icon = 'icons/mob/critter/robotic/mechanical/monstrosity.dmi'
@@ -90,7 +89,6 @@
 
 /mob/living/critter/mechmonstrosity/medical
 	name = "V.I.V.I-SECT-10N"
-	real_name = "V.I.V.I-SECT-10N"
 	desc = "You better wish that apples will keep this thing away from you.."
 	icon = 'icons/mob/critter/robotic/mechanical/vivisection.dmi'
 	icon_state = "vivisection"
@@ -285,7 +283,7 @@
 			playsound(ownerMob, 'sound/items/hypo.ogg', 80, FALSE)
 
 			var/mob/living/critter/robotic/crawler/crawler = new /mob/living/critter/robotic/crawler(get_turf(target))
-			crawler.name = "[target]'s crawling head"
+			crawler.name = "[target]’s crawling head"
 			crawler.desc = "A horrible crawling monstrosity, ravaged from the corpse of [target]."
 			crawler.revivalChance = 100
 

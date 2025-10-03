@@ -112,6 +112,16 @@ proc/filter_trait_hats(var/type)
 	icon_state = "bio_jani"
 	item_state = "bio_jani"
 
+/obj/item/clothing/head/bio_hood/rd
+	name = "research director's bio hood"
+	desc = "This hood protects you from harmful biological contaminants."
+	icon_state = "bio_rd"
+	item_state = "bio_rd"
+
+	setupProperties()
+		..()
+		delProperty("movespeed")
+
 /obj/item/clothing/head/bio_hood/nt
 	name = "NT bio hood"
 	icon_state = "ntbiohood"
@@ -208,7 +218,7 @@ proc/filter_trait_hats(var/type)
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			light.enable()
 			c_flags |= SPACEWEAR
 			processing_items |= src
@@ -216,7 +226,7 @@ proc/filter_trait_hats(var/type)
 			src.firesource = FALSE
 			src.force = 3
 			c_flags &= ~SPACEWEAR
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
 			light.disable()

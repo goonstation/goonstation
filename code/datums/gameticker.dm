@@ -175,13 +175,29 @@ var/global/game_force_started = FALSE
 	else
 		src.mode.announce()
 
+	// setup initial special random jobs based on roundstart count of players
+	var/latejoin_job_count = clamp(ceil(src.roundstart_player_count(FALSE) / 7), 5, 15)
+	var/list/datum/job/latejoin_jobs = list()
+	for (var/datum/job/J in global.job_controls.special_jobs)
+		if (istype(J, /datum/job/special/random))
+			latejoin_jobs += J
+	var/count = 0
+	while(count < latejoin_job_count && length(latejoin_jobs))
+		var/datum/job/J = pick(latejoin_jobs)
+		latejoin_jobs -= J
+		if (J.limit >= 1)
+			continue
+		J.limit = 1
+		count++
+	logTheThing(LOG_DEBUG, null, "Dynamic latejoin scaling added [latejoin_job_count] random jobs")
+
 	logTheThing(LOG_DEBUG, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
 	message_admins("Chosen game mode: [mode] ([master_mode]).")
 
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()
 
-#ifdef RP_MODE
+#if defined(RP_MODE) || defined(NIGHTSHADE)
 	global.toggle_looc_allowed(TRUE)
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	global.toggle_ooc_allowed(FALSE)
@@ -274,14 +290,6 @@ var/global/game_force_started = FALSE
 			if(lobby_player.client)
 				lobby_player.update_joinmenu()
 
-		//Setup the hub site logging
-		var hublog_filename = "data/stats/data.txt"
-		if (fexists(hublog_filename))
-			fdel(hublog_filename)
-
-		hublog = file(hublog_filename)
-		hublog << ""
-
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 		roundManagement.recordUpdate(mode)
@@ -326,7 +334,7 @@ var/global/game_force_started = FALSE
 				unreadied_count++
 	var/total = readied_count + (unreadied_count/2)
 	if (loud)
-		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+		logTheThing(LOG_GAMEMODE, null, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
 	return total
 
 //Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
@@ -339,9 +347,9 @@ var/global/game_force_started = FALSE
 			try
 				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
 			catch (var/exception/e)
-				logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
-				logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
-				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_ADMIN, null, "The automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_DIARY, null, "The automated map switch vote couldn't run because: [e.name]", "admin")
+				message_admins("The automated map switch vote couldn't run because: [e.name]")
 
 /datum/controller/gameticker
 	proc/distribute_jobs()

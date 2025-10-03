@@ -46,6 +46,12 @@ TYPEINFO(/obj/item/card/emag)
 	attack()	//Fucking attack messages up in this joint.
 		return
 
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		..()
+		if(!hit_atom || !thr)
+			return
+		hit_atom.emag_act(thr.user, src)
+
 /obj/item/card/emag/attack_self(mob/user as mob)
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return
@@ -79,7 +85,7 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "id_basic"
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
-	flags = TABLEPASS | ATTACK_SELF_DELAY
+	flags = TABLEPASS | ATTACK_SELF_DELAY | SUPPRESSATTACK
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
 	var/datum/pronouns/pronouns = null
@@ -101,7 +107,7 @@ TYPEINFO(/obj/item/card/emag)
 	var/datum/computer/file/cardfile = null
 
 	proc/update_name()
-		name = "[src.registered]'s ID Card ([src.assignment])"
+		name = "[src.registered]’s ID Card ([src.assignment])"
 
 	get_desc()
 		. = ..()
@@ -349,7 +355,7 @@ TYPEINFO(/obj/item/card/emag)
 				return // Abort process.
 		src.registered = reg
 		src.assignment = ass
-		src.name = "[src.registered]'s ID Card ([src.assignment])"
+		src.name = "[src.registered]’s ID Card ([src.assignment])"
 		boutput(user, SPAN_NOTICE("You successfully forge the ID card."))
 	else
 		..()
@@ -434,7 +440,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
 				queryGauntletMatches(user.client.key)
-		name = "[registered]'s ID Card ([assignment])"
+		name = "[registered]’s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)
 		switch (matches)
@@ -461,7 +467,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "Legendary Gladiator ([matches] rounds played)"
 			else
 				assignment = "what the fuck ([matches] rounds played)"
-		name = "[registered]'s ID Card ([assignment])"
+		name = "[registered]’s ID Card ([assignment])"
 
 // Experimental item that may be made into a 100k spacebux reward in the future?
 /obj/item/card/license_to_kill

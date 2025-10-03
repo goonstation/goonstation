@@ -887,10 +887,10 @@
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
 						if (src.find_ailment_by_type(/datum/ailment/malady/flatline))
-							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,3)].ogg"
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender == MALE ? MALE : FEMALE]_gasp_[pick(1,3)].ogg"
 							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
 						else if (src.health <= 0)
-							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(4,5)].ogg"
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender == MALE ? MALE : FEMALE]_gasp_[pick(4,5)].ogg"
 							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
 						else
 							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
@@ -1106,6 +1106,9 @@
 					message = "<b>[used_name]</b> sniffs and scrunches [his_or_her(src)] face up irritably."
 					maptext_out = "<I>sniffs and scrunches [his_or_her(src)] face up irritably</I>"
 				m_type = 1
+				if (prob(5))
+					message = SPAN_ALERT("<b>[used_name]</b> pushes [his_or_her(src)] finger a bit too far up their nose and pokes their brain. Gross!")
+					src.take_brain_damage(5)
 				if (src.mind)
 					src.add_karma(-1)
 
@@ -2223,7 +2226,7 @@
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
 						dab_id.dab_count++
-						dab_id.tooltip_rebuild = 1
+						dab_id.tooltip_rebuild = TRUE
 					src.add_karma(-4)
 					if(!dab_id)
 						src.apply_automated_arrest("Public dabbing.")
@@ -2269,7 +2272,7 @@
 					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
 						dab_id?.brain_damage_count += 10
-						if(src.get_brain_damage() > 60)
+						if(src.get_brain_damage() > BRAIN_DAMAGE_MAJOR)
 							src.show_text(SPAN_ALERT("Your head hurts!"))
 					if(locate(/obj/item/bible) in src.loc)
 						if(H.limbs.l_arm)

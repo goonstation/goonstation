@@ -26,9 +26,6 @@ var/datum/respawn_controls/respawn_controller
 	- Most respawns done through this controller
 
 */
-#define RESPAWNEE_STATE_WAITING 0
-#define RESPAWNEE_STATE_ELIGIBLE 1
-#define RESPAWNEE_STATE_ALIVE 2
 
 /datum/respawn_controls
 	var/respawn_time = DEFAULT_RESPAWN_TIME
@@ -156,6 +153,9 @@ var/datum/respawn_controls/respawn_controller
 				if(isnull(the_client))
 					return RESPAWNEE_STATE_WAITING
 
+			if (!the_client.authenticated)
+				return RESPAWNEE_STATE_WAITING
+
 			src.update_time_display()
 
 			// Check that the client is currently dead or in the afterlife bar
@@ -239,10 +239,6 @@ var/datum/respawn_controls/respawn_controller
 		else
 			time_text = "<span style='color:#f88;'>[time2text(time, "hh:mm:ss", 0)]</span>"
 		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Respawn in [time_text]</span>"}
-
-#undef RESPAWNEE_STATE_WAITING
-#undef RESPAWNEE_STATE_ELIGIBLE
-#undef RESPAWNEE_STATE_ALIVE
 
 /atom/movable/screen/join_other
 	screen_loc = "CENTER, NORTH-1"

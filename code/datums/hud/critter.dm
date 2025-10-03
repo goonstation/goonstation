@@ -376,7 +376,7 @@
 	if (!src.bleeding) return //doesn't have a hud element to update
 	if (isdead(src.master))
 		src.bleeding.icon_state = "blood0"
-		src.bleeding.tooltipTheme = "healthDam healthDam0"
+		src.bleeding.tooltip_options = list("theme" = "healthDam0")
 		return
 
 	var/state = 0
@@ -396,7 +396,7 @@
 			theme = 6
 
 	src.bleeding.icon_state = "blood[state]"
-	src.bleeding.tooltipTheme = "healthDam healthDam[theme]"
+	src.bleeding.tooltip_options = list("theme" = "healthDam[theme]")
 
 /// updates temperature hud element
 /datum/hud/critter/proc/update_temp_indicator()
@@ -404,7 +404,7 @@
 		return
 	if(src.master.getStatusDuration("burning") && !src.master.is_heat_resistant())
 		src.bodytemp.icon_state = "tempF" // on fire
-		src.bodytemp.tooltipTheme = "tempInd tempIndF"
+		src.bodytemp.tooltip_options = list("theme" = "tempIndF")
 		src.bodytemp.desc = "OH FUCK FIRE FIRE FIRE OH GOD FIRE AAAAAAA"
 		return
 
@@ -440,7 +440,7 @@
 			src.bodytemp.desc = "The temperature feels fine."
 
 	src.bodytemp.icon_state = "temp[state]"
-	src.bodytemp.tooltipTheme = "tempInd tempInd[state]"
+	src.bodytemp.tooltip_options = list("theme" = "tempInd[state]")
 
 /// updates toxic gas hud element
 /datum/hud/critter/proc/update_tox_indicator(var/status)
@@ -497,7 +497,8 @@
 	if (src.master.use_stamina)
 		var/stamloc = "EAST[src.next_topright()], NORTH"
 		src.stamina = src.create_screen("stamina","Stamina", src.hud_icon, "stamina",\
-		stamloc, HUD_LAYER, tooltipTheme = "stamina")
+		stamloc, HUD_LAYER, tooltip_options = list("theme" = "stamina"))
+		src.stamina.mouse_opacity = 2
 		src.stamina_back = src.create_screen("stamina_back","Stamina", src.hud_icon, "stamina_back",\
 		stamloc, HUD_LAYER_UNDER_1)
 		if (src.master.stamina_bar)
@@ -505,7 +506,7 @@
 
 /datum/hud/critter/proc/create_temperature_element()
 	src.bodytemp = src.create_screen("bodytemp","Temperature", src.hud_icon, "temp0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "tempInd0"))
 	src.bodytemp.desc = "The temperature feels fine."
 
 /datum/hud/critter/proc/create_oxygen_element()
@@ -518,17 +519,17 @@
 
 /datum/hud/critter/proc/create_toxin_element()
 	src.toxin = src.create_screen("toxin","Toxic Warning",src.hud_icon, "toxin0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusToxin"))
 	src.toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
 /datum/hud/critter/proc/create_radiation_element()
 	src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusRad"))
 	src.rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 /datum/hud/critter/proc/create_bleeding_element()
 	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 	src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
 /datum/hud/critter/proc/create_throwing_element()
