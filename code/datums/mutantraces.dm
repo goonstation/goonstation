@@ -1948,7 +1948,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	icon_state = "body_m"
 	firevuln = 1.3
 	brutevuln = 0.7
-	toxvuln = 2 // fragile froggish beastes
+	toxvuln = 1.6 // fragile froggish beastes
 	human_compatible = 0
 	uses_human_clothes = 1
 	aquatic = 1
@@ -1996,10 +1996,10 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
 			M.bioHolder.AddEffect("accent_frog")
-			if (!M.sims)
-				H.sims = new /datum/simsHolder(M)
-			M.sims.addMotive(/datum/simsMotive/thirst) // allows dehydration for amphibians on classic
-			M.sims.add_hud()
+			if (!mob.sims)
+				mob.sims = new /datum/simsHolder(mob)
+			mob.sims.addMotive(/datum/simsMotive/hunger/thirst) // allows dehydration for amphibians on classic
+			mob.sims.add_hud()
 
 
 	disposing()
@@ -2008,9 +2008,9 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			src.mob.bioHolder.RemoveEffect("jumpy")
 			src.mob.bioHolder.RemoveEffect("vowelitis")
 			src.mob.bioHolder.RemoveEffect("accent_frog")
-			if (!M.sims)
-				M.sims = new /datum/simsHolder(H)
-			M.sims.removeMotive("Thirst")
+			if (!mob.sims)
+				mob.sims = new /datum/simsHolder(mob)
+			mob.sims.removeMotive("Thirst")
 		..()
 
 	emote(act, voluntary)
