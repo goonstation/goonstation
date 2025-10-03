@@ -900,7 +900,7 @@ TYPEINFO(/mob/living)
 			return
 
 	var/turf/T = get_turf(src)
-	if (T.active_liquid && src.lying)
+	if (T.active_liquid && src.lying && !HAS_ATOM_PROPERTY(src, PROP_ATOM_NOCROSSING))
 		T.active_liquid.Crossed(src)
 		src.visible_message(SPAN_ALERT("[src] splashes around in [T.active_liquid]!</b>"), SPAN_NOTICE("You splash around in [T.active_liquid]."))
 

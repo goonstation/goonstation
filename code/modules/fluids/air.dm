@@ -44,7 +44,8 @@
 		var/i = 0
 		for(var/atom/movable/A in range(0,src))
 			if (src.disposed) return
-			src.Crossed(A)
+			if(!HAS_ATOM_PROPERTY(A, PROP_ATOM_NOCROSSING))
+				src.Crossed(A)
 			i++
 			if (i > 40)
 				break

@@ -1739,7 +1739,7 @@
 				sfx_count = 0
 
 			var/turf/T = get_turf(M)
-			if (T.active_liquid)
+			if (T.active_liquid && !HAS_ATOM_PROPERTY(M, PROP_ATOM_NOCROSSING))
 				T.active_liquid.Crossed(M)
 
 		else

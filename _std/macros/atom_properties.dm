@@ -323,6 +323,8 @@ To remove:
 #define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOTSAM(x) x("flotsam", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+// This will prevent the atom from ever calling Crossed()
+#define PROP_ATOM_NOCROSSING(x) x("nocrossing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 /// Thing will redirect clicks to a fluid on its tile when clicked by a relevant item (beaker mop etc)
 #define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 ///for tracking if a borg/cyborg frame was a roundstart one, for stats purposes

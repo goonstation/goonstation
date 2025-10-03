@@ -141,6 +141,10 @@ TYPEINFO(/obj/item/disk)
 	burn_possible = FALSE
 	item_function_flags = IMMUNE_TO_ACID
 
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_NOCROSSING, "dummy")
+
 	disposing()
 		disposed = FALSE
 		..()

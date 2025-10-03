@@ -181,7 +181,8 @@ ABSTRACT_TYPE(/obj/machinery/crusher)
 		qdel(src)
 		return
 	for (var/atom/movable/AM in T) //heh
-		src.Crossed(AM)
+		if(!HAS_ATOM_PROPERTY(AM, PROP_ATOM_NOCROSSING))
+			src.Crossed(AM)
 
 TYPEINFO(/obj/machinery/crusher/instant)
 	mats = null

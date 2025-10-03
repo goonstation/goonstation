@@ -540,7 +540,7 @@ TYPEINFO(/atom/movable)
 		if(isturf(src.loc)) // call it on the area too
 			src.loc.loc.Entered(src, null)
 			for(var/atom/A in src.loc)
-				if(A != src)
+				if(A != src && !HAS_ATOM_PROPERTY(src, PROP_ATOM_NOCROSSING))
 					A.Crossed(src)
 
 
@@ -1104,7 +1104,7 @@ TYPEINFO(/atom/movable)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
 		for(var/atom/A in oldloc)
-			if(A != src)
+			if(A != src && !HAS_ATOM_PROPERTY(src, PROP_ATOM_NOCROSSING))
 				A.Uncrossed(src)
 
 	// area.Exited called if we are on turfs and changing areas or if exiting a turf into a non-turf (just like Move does it internally)
@@ -1119,7 +1119,7 @@ TYPEINFO(/atom/movable)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
 		for(var/atom/A in newloc)
-			if(A != src)
+			if(A != src && !HAS_ATOM_PROPERTY(src, PROP_ATOM_NOCROSSING))
 				A.Crossed(src)
 
 	// area.Entered called if we are on turfs and changing areas or if entering a turf from a non-turf (just like Move does it internally)
