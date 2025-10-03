@@ -217,6 +217,7 @@ TYPEINFO(/area)
 			//If any mobs are entering, within a thing or otherwise
 			if (length(enteringMobs) > 0)
 				for (var/mob/enteringM in enteringMobs) //each dumb mob
+					src.on_mob_entered(enteringM)
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
 					if(enteringM.skipped_mobs_list)
@@ -261,6 +262,7 @@ TYPEINFO(/area)
 
 			if (length(exitingMobs) > 0)
 				for (var/mob/exitingM in exitingMobs)
+					src.on_mob_exited(exitingM)
 					src.cancel_sound_loop(exitingM)
 					if (exitingM.ckey && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)
@@ -273,6 +275,7 @@ TYPEINFO(/area)
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
 								src.population -= exitingM.mind
+
 							if (src.active == 1 && length(src.population) == 0) //Only if this area is now empty
 								src.active = 0
 								SEND_SIGNAL(src, COMSIG_AREA_DEACTIVATED)
@@ -280,6 +283,14 @@ TYPEINFO(/area)
 						//Put whatever you want here. See Entering above.
 
 		..()
+
+	/// Called whenever a mob enters the area
+	proc/on_mob_entered(var/mob/enteringM)
+		return
+
+	/// Called whenever a mob exits the area
+	proc/on_mob_exited(var/mob/exitingM)
+		return
 
 	/// Cancel a mob's ambient sound loop when leaving an area
 	proc/cancel_sound_loop(mob/M)
@@ -3442,6 +3453,19 @@ ABSTRACT_TYPE(/area/station/chapel)
 	name = "Chapel"
 	icon_state = "chapel"
 	station_map_colour = MAPC_CHAPEL
+	var/datum/area_therapy/therapy
+
+	New()
+		..()
+		src.therapy = new(src, list("training_chaplain"))
+
+	on_mob_entered(var/mob/enteringM)
+		..()
+		src.therapy.attach_mob(enteringM)
+
+	on_mob_exited(var/mob/exitingM)
+		..()
+		src.therapy.detach_mob(exitingM)
 
 /area/station/chapel/sanctuary
 	name = "Chapel"
