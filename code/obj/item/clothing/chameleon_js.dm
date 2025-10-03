@@ -392,12 +392,12 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
-			src.tooltip_rebuild = TRUE
-			usr.set_clothing_icon_dirty()
 			if (T.seal_hair)
 				c_flags |= COVERSHAIR
 			else
 				c_flags &= ~COVERSHAIR
+			src.tooltip_rebuild = TRUE
+			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_hat_pattern
 	var/name = "hat"
@@ -578,7 +578,6 @@
 	item_state = "hoodie"
 	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
-	over_hair = FALSE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_suit_pattern/hoodie
 
@@ -610,7 +609,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
-			P.over_hair = U.over_hair
+			P.over_hair = U.c_flags & COVERSHAIR
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -653,11 +652,14 @@
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
 			src.icon = T.sprite_item
-			src.over_hair = T.over_hair
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			if (T.over_hair)
+				c_flags |= COVERSHAIR
+			else
+				c_flags &= ~COVERSHAIR
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
@@ -906,7 +908,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-		over_hair = FALSE
+		over_hair = TRUE
 		hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES|C_GLASSES|C_EARS
 
 	chef_coat

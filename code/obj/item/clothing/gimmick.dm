@@ -795,7 +795,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "adeptus"
 	item_state = "adeptus"
-	over_hair = TRUE
+	c_flags = COVERSHAIR
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
 	wear_layer = MOB_FULL_SUIT_LAYER
@@ -974,9 +974,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "monkey"
 	item_state = "monkey"
-	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	wear_layer = MOB_LAYER_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
@@ -1012,10 +1011,9 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	icon_state = "light_borg"
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	wear_layer = MOB_FULL_SUIT_LAYER
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
-	over_hair = TRUE
 	see_face = FALSE
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
@@ -1515,9 +1513,8 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_FULL_SUIT_LAYER
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
-	over_hair = TRUE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1676,7 +1673,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	wear_layer = MOB_FULL_SUIT_LAYER // ?????
 	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "hotdogsuit"
-	over_hair = TRUE
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/suit/gimmick/pickle
 	name = "pickle suit"
@@ -1685,7 +1682,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	wear_layer = MOB_FULL_SUIT_LAYER // ?????
 	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "picklesuit"
-	over_hair = TRUE
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"
