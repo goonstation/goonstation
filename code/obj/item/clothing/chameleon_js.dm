@@ -318,7 +318,6 @@
 	var/current_choice = new/datum/chameleon_hat_pattern
 	blocked_from_petasusaphilic = TRUE
 	item_function_flags = IMMUNE_TO_ACID
-	seal_hair = FALSE
 
 	New()
 		..()
@@ -348,7 +347,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
-			P.seal_hair = U.seal_hair
+			P.seal_hair = U.c_flags & COVERSHAIR
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -364,7 +363,7 @@
 			src.hides_from_examine = null
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.seal_hair = FALSE
+			src.c_flags &= ~COVERSHAIR
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -393,9 +392,12 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
-			src.seal_hair = T.seal_hair
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
+			if (T.seal_hair)
+				c_flags |= COVERSHAIR
+			else
+				c_flags &= ~COVERSHAIR
 
 /datum/chameleon_hat_pattern
 	var/name = "hat"
