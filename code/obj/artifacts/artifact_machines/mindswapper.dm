@@ -2,6 +2,19 @@
 	name = "mindscrambler"
 	associated_datum = /datum/artifact/mindscrambler
 
+	attackby(obj/item/W, mob/user)
+		/datum/artifact/mindscrambler/attacked_artifact = src.associated_datum
+		if (istype(W, /obj/item/bible))
+			attacked_artifact.exorcised = attacked_artifact.exorcised + 1
+			switch (attacked_artifact.exorcised)
+				if(1)
+					//Knock back
+				if(2)
+					//Hiss and knock back
+				if(3)
+					attacked_artifact.ArtifactDeactivated()
+
+
 /datum/artifact/mindscrambler
 	associated_object = /obj/machinery/artifact/mindscrambler
 	type_name = "mindscrambler"
@@ -18,6 +31,7 @@
 	var/mob/living/carbon/human/last_activating_body
 	var/mindscramble_cooldown = 30 SECONDS
 	var/list/cooldowns = new/list()
+	var/exorcised = 0
 
 	post_setup()
 		..()
