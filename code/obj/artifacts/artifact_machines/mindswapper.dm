@@ -2,17 +2,28 @@
 	name = "mindscrambler"
 	associated_datum = /datum/artifact/mindscrambler
 
-	attackby(obj/item/W, mob/user)
-		/datum/artifact/mindscrambler/attacked_artifact = src.associated_datum
+	Artifact_attackby(obj/item/W, mob/user)
+		. = ..()
+		var/datum/artifact/mindscrambler/artifact = src.artifact
+		if(artifact.activated == FALSE)
+			return
 		if (istype(W, /obj/item/bible))
-			attacked_artifact.exorcised = attacked_artifact.exorcised + 1
-			switch (attacked_artifact.exorcised)
+			artifact.exorcised = artifact.exorcised + 1
+			playsound(src.loc, 'sound/effects/faithbiblewhack.ogg', 50, 1, -1)
+			for (var/mob/living/carbon/human/remembered_body in artifact.remembered_bodies)
+				remembered_body.emote("scream")
+				remembered_body.changeStatus("unconscious", 1 SECONDS)
+				remembered_body.force_laydown_standup()
+			switch (artifact.exorcised)
 				if(1)
 					//Knock back
 				if(2)
 					//Hiss and knock back
 				if(3)
-					attacked_artifact.ArtifactDeactivated()
+					playsound(src.loc, 'sound/voice/wraith/revleave.ogg', 50, 1, -1)
+					src.ArtifactDeactivated()
+		else if (istype(W, /obj/item/implant/mindhack))
+			//TODO: Add mindhack attunement.
 
 
 /datum/artifact/mindscrambler
@@ -29,6 +40,8 @@
 	var/can_previous_targets_scramble_again = TRUE
 	var/list/remembered_bodies = new/list()
 	var/mob/living/carbon/human/last_activating_body
+	var/list/original_minds = new/list()
+	var/list/original_bodies = new/list()
 	var/mindscramble_cooldown = 30 SECONDS
 	var/list/cooldowns = new/list()
 	var/exorcised = 0
@@ -72,6 +85,8 @@
 		//Add the toucher
 		src.remembered_bodies.Add(H)
 		src.last_activating_body = H
+		src.original_minds.Add(H.mind)
+		src.original_bodies.Add(H)
 		T.visible_message("<b>[O]</b>'s antennas glow!")
 		boutput(H, SPAN_ALERT("[O] peers into your mind!"))
 
@@ -92,6 +107,30 @@
 			position_two = rand(0, position_one - 1)
 			new_bodies.Swap(position_one+1, position_two+1)
 
+		//Cool animation
+		for (var/mob/living/carbon/human/remembered_body in src.remembered_bodies)
+			playsound(remembered_body.loc, 'sound/effects/ghost.ogg', 50, 1, -1) //Could be overwhelming if a lot of them are close by each other.
+			animate_levitate(remembered_body, -1, 10)
+		for (var/i = 0, i < 30, i++)
+			var/delay = 5
+			switch(i)
+				if (21 to INFINITY)
+					delay = 0.25
+				if (15 to 21)
+					delay = 0.5
+				if (12 to 15)
+					delay = 1
+				if (4 to 12)
+					delay = 2
+				if (0 to 4)
+					delay = 3
+			for (var/mob/living/carbon/human/remembered_body in src.remembered_bodies)
+				remembered_body.set_dir(turn(remembered_body.dir, 90))
+			sleep(delay)
+		for (var/mob/living/carbon/human/remembered_body in src.remembered_bodies)
+			playsound(remembered_body.loc, 'sound/effects/lightning_strike.ogg', 50, 1, -1)
+			animate_stop(remembered_body)
+
 		//Perform the swaps, ensuring nobody gets swapped multiple times.
 		var/nr_of_bodies = length(new_bodies)
 		for (var/i = 1 to nr_of_bodies)
@@ -108,3 +147,19 @@
 		ON_COOLDOWN(src, "mind_scramble", src.mindscramble_cooldown)
 		SPAWN(src.mindscramble_cooldown)
 			T.visible_message("<b>[O]</b>'s antennas become active again!")
+
+	effect_deactivate(obj/O)
+		. = ..()
+		//TODO Figure out and add some checks to see if we want to transfer dead minds to their old bodies.
+		var/nr_of_minds = length(src.original_minds)
+		for (var/i = 1 to nr_of_minds)
+			var/datum/mind/original_mind = src.original_minds[i]
+			var/mob/living/carbon/human/original_body = src.original_bodies[i]
+			if(!(original_mind == original_body.mind))
+				original_mind.swap_with(original_body)
+
+		src.original_minds = list()
+		src.original_bodies = list()
+		src.remembered_bodies = list()
+		src.last_activating_body = ""
+		src.exorcised = 0
