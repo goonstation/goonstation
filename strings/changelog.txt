@@ -1,6 +1,10 @@
 
 (t)fri oct 03 25
 (u)Lord_Earthfire
+(p)24818
+(e)|
+(+)Eggs in egg cartons are also visible while in inventories.
+(u)Lord_Earthfire
 (p)24817
 (e)|
 (+)You can click-drag eggs onto egg cartons to quickly fill the carton with eggs in the area, akin to how satchels work.
