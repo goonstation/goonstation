@@ -321,14 +321,16 @@
 		/obj/item/circuitboard/announcement/engineering,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
+	#elif defined(MAP_OVERRIDE_NEON)
+		/obj/item/clothing/shoes/stomp_boots,
 	#endif
 	#ifdef UNDERWATER_MAP
 		/obj/item/clothing/suit/space/diving/engineering,
 		/obj/item/clothing/head/helmet/space/engineer/diving,
 		/obj/item/clothing/shoes/flippers
 	#else
-		/obj/item/clothing/suit/space/light/engineer,
-		/obj/item/clothing/head/helmet/space/light/engineer,
+		/obj/item/clothing/suit/space/light/chiefengineer,
+		/obj/item/clothing/head/helmet/space/light/chiefengineer,
 	#endif
 	)
 
@@ -884,9 +886,10 @@
 	/obj/item/satchel/hydro,\
 	/obj/item/reagent_containers/glass/wateringcan,\
 	/obj/item/sponge,\
-	/obj/item/kitchen/food_box/egg_box/rancher,
-	/obj/item/storage/box/knitting,
-	/obj/item/storage/box/nametags)
+	/obj/item/kitchen/egg_box/rancher,\
+	/obj/item/storage/box/knitting,\
+	/obj/item/storage/box/nametags,\
+	/obj/item/kitchen/egg_box/empty)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
@@ -968,8 +971,8 @@
 			bc2.pixel_x = 3
 			p.pixel_x = 3
 
-			var/obj/item/kitchen/food_box/egg_box/e1 = new(src)
-			var/obj/item/kitchen/food_box/egg_box/e2 = new(src)
+			var/obj/item/kitchen/egg_box/e1 = new(src)
+			var/obj/item/kitchen/egg_box/e2 = new(src)
 			e1.pixel_y = -4
 			e2.pixel_y = -4
 
