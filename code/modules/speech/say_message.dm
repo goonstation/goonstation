@@ -184,9 +184,10 @@
 	// Ensure that a channel is assigned to this message.
 	src.output_module_channel ||= src.speaker.default_speech_output_channel
 
-	src.content = src.make_safe_for_chat(src.content)
 	if (ismob(src.speaker))
 		src.run_mob_and_client_checks()
+
+	src.content = src.make_safe_for_chat(src.content)
 
 /datum/say_message/disposing()
 	src.speaker = null
