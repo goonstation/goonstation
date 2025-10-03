@@ -4,7 +4,10 @@
 	var/list/specialist_traits
 	/// Taits which prevent a mob being affected by therapy in this area, although they can still grant it to others
 	var/list/trait_exclusions
+	/// The value each mob's addictions are changed by
+	var/static/addiction_increment = -0.8
 	var/static/cooldown = 10 SECONDS
+
 
 	New(var/area/master, var/list/specialist_traits,var/list/trait_exclusions)
 		..()
@@ -23,7 +26,7 @@
 			var/mob/mob = mind.current
 			if (!mob?.hearing_check(TRUE) || mob.traitHolder.hasTraitInList(trait_exclusions))
 				continue
-			mob.try_affect_all_addictions(-0.8)
+			mob.try_affect_all_addictions(addiction_increment)
 
 	proc/try_do_therapy(var/target, var/datum/say_message/said)
 		var/mob/mob = said.original_speaker
