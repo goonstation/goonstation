@@ -224,7 +224,7 @@
 			name = "Security Department Announcement Computer"
 			sound_to_play = 'sound/misc/bingbong.ogg'
 			sound_volume = 70
-			circuit_type = /obj/item/circuitboard/announcement/cargo
+			circuit_type = /obj/item/circuitboard/announcement/security/department
 			alert_origin = ALERT_DEPARTMENT
 
 	research
