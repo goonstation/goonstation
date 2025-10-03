@@ -2963,6 +2963,19 @@ ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical/medbay/psychiatrist
 	name = "Psychiatrist's Office"
 	icon_state = "psychiatrist"
+	var/datum/area_therapy/therapy
+
+	New()
+		..()
+		src.therapy = new(src, list("training_therapy"))
+
+	on_mob_entered(var/mob/enteringM)
+		..()
+		src.therapy.attach_mob(enteringM)
+
+	on_mob_exited(var/mob/exitingM)
+		..()
+		src.therapy.detach_mob(exitingM)
 
 /area/station/medical/medbay/treatment1
 	name = "Treatment Room 1"
