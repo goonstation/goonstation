@@ -22,6 +22,8 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 		last_update = world.timeofday
 		light = new
 
+		update_color( calculate_color(src.time) )
+
 	proc/initialize()
 		return
 
