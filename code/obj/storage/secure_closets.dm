@@ -886,9 +886,10 @@
 	/obj/item/satchel/hydro,\
 	/obj/item/reagent_containers/glass/wateringcan,\
 	/obj/item/sponge,\
-	/obj/item/kitchen/food_box/egg_box/rancher,
-	/obj/item/storage/box/knitting,
-	/obj/item/storage/box/nametags)
+	/obj/item/kitchen/egg_box/rancher,\
+	/obj/item/storage/box/knitting,\
+	/obj/item/storage/box/nametags,\
+	/obj/item/kitchen/egg_box/empty)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
@@ -970,8 +971,8 @@
 			bc2.pixel_x = 3
 			p.pixel_x = 3
 
-			var/obj/item/kitchen/food_box/egg_box/e1 = new(src)
-			var/obj/item/kitchen/food_box/egg_box/e2 = new(src)
+			var/obj/item/kitchen/egg_box/e1 = new(src)
+			var/obj/item/kitchen/egg_box/e2 = new(src)
 			e1.pixel_y = -4
 			e2.pixel_y = -4
 
