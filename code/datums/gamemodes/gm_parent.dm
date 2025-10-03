@@ -71,8 +71,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 			shuttle_initial_auto_call_done = 1
 
 /datum/game_mode/proc/check_finished()
-	if(src.force_round_finished)
-		return 1
 	if(emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
 		return 1
 	return 0
