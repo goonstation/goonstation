@@ -36,8 +36,7 @@
 		else
 			cooldown_id = "therapy_pleb"
 
-		if (!ON_COOLDOWN(src.master, cooldown_id, cooldown) && (length(master.population) > 0))
-			boutput(mob, SPAN_ALERT("firing therapy with cooldown '[cooldown_id]'"))
+		if (!ON_COOLDOWN(src.master, cooldown_id, cooldown) && (length(master.population) > 1))
 			src.do_therapy()
 
 
