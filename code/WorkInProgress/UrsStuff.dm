@@ -332,6 +332,7 @@
 	name = null
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = null
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER
 	var/obj/item/kitchen/egg_box/my_egg_box = null
 	var/my_index = null
 
