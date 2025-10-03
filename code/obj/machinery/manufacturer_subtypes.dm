@@ -586,7 +586,8 @@
 		/datum/manufacture/wooden,
 		/datum/manufacture/medical,
 		/datum/manufacture/biohazard,
-		/datum/manufacture/freezer)
+		/datum/manufacture/freezer,
+		/datum/manufacture/personal_crate)
 
 	hidden = list(/datum/manufacture/classcrate)
 

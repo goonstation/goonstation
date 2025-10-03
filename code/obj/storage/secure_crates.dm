@@ -25,6 +25,15 @@
 				return TRUE
 		return ..()
 
+/obj/storage/secure/crate/personal
+	desc = "A personal crate. The first card swiped against it gains control over its lock."
+	name = "Personal crate"
+	icon_state = "securecrategreen"
+	density = 1
+	personal = 1
+	icon_opened = "securecrategreenopen"
+	icon_closed = "securecrategreen"
+
 /obj/storage/secure/crate/weapon
 	desc = "A secure weapons crate."
 	name = "Weapons crate"
