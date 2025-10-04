@@ -374,7 +374,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/double)
+		src.setItemSpecial(/datum/item_special/jab)
 
 	glass
 		desc = "A tiny bit of glass attached to a handle. You might cut yourself just holding it."
