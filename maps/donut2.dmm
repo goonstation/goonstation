@@ -10731,6 +10731,9 @@
 	},
 /area/station/security/main)
 "bkA" = (
+/obj/securearea{
+	pixel_x = -32
+	},
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -11094,8 +11097,8 @@
 	c_tag = "Security Lobby";
 	pixel_y = 10
 	},
-/obj/securearea{
-	pixel_x = -32
+/obj/submachine/ATM{
+	pixel_x = -31
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -35254,8 +35257,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "oit" = (
-/obj/submachine/ATM{
-	pixel_x = -31
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 10
