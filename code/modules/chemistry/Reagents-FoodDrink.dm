@@ -2995,6 +2995,8 @@ datum
 				if (istype(M, /mob/living/critter/small_animal/slug))
 					M.show_text(SPAN_ALERT("<b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b>"))
 					M.TakeDamage(null, src.depletion_rate * mult, src.depletion_rate * mult)
+				if (isfrog(M))
+					M.changeStatus("poisoned", 8 SECONDS * mult)
 				..()
 				return
 

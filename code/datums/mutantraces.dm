@@ -1948,6 +1948,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	icon_state = "body_m"
 	firevuln = 1.3
 	brutevuln = 0.7
+	toxvuln = 1.6 // fragile froggish beastes
 	human_compatible = 0
 	uses_human_clothes = 1
 	aquatic = 1
@@ -1995,6 +1996,11 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
 			M.bioHolder.AddEffect("accent_frog")
+			if (!mob.sims)
+				mob.sims = new /datum/simsHolder(mob)
+			mob.sims.addMotive(/datum/simsMotive/hunger/thirst) // allows dehydration for amphibians on classic
+			mob.sims.add_hud()
+
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2002,6 +2008,9 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			src.mob.bioHolder.RemoveEffect("jumpy")
 			src.mob.bioHolder.RemoveEffect("vowelitis")
 			src.mob.bioHolder.RemoveEffect("accent_frog")
+			if (!mob.sims)
+				mob.sims = new /datum/simsHolder(mob)
+			mob.sims.removeMotive("Thirst")
 		..()
 
 	emote(act, voluntary)
@@ -2020,6 +2029,20 @@ TYPEINFO(/datum/mutantrace/amphibian)
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return message
 			else ..()
+
+	onLife(var/mult = 1)
+		if (src.mob.hasStatus("poisoned")) // allows frogs to "tox out" (amphibian reaction to environmental toxins)
+			if(prob(20))
+				src.mob.setStatusMin("knockdown", 4 SECONDS)
+				src.mob.visible_message(SPAN_ALERT("<b>[mob]'s legs spasm horribly!</b>"))
+			if(prob(10))
+				src.mob.emote(pick("twitch", "twitch_v", "tremble"))
+		if(src.mob.sims.getValue("Thirst") < 10.0) // frog need water. nuff said
+			if (prob(25))
+				src.mob.emote(pick("choke","wheeze"))
+				src.mob.take_oxygen_deprivation(5)
+			if (prob(8))
+				src.mob.visible_message(SPAN_ALERT("[mob] conspicuously wrinkles up."))
 
 TYPEINFO(/datum/mutantrace/amphibian/shelter)
 	icon = 'icons/mob/shelterfrog.dmi'
