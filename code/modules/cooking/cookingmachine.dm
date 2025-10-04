@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			var/itemData = list()
 			itemData["name"] = I.name
 			itemData["index"] = index
-			itemData["iconData"] = icon2base64(icon(I.icon, I.icon_state))
+			itemData["iconData"] = icon2base64(getFlatIcon(I, no_anim = TRUE))
 			heldItems += list(itemData)
 			index += 1
 		. = list("working" = src.working, "heldItems" = heldItems)
