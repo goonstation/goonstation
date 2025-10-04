@@ -66,7 +66,8 @@
 
 	examine()
 		. = ..()
-		. += "It has [get_fuel()] units of fuel left!"
+		if (src.fuel_capacity)
+			. += "It has [src.get_fuel()] units of fuel left!"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (is_special)

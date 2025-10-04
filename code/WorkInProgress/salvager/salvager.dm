@@ -305,9 +305,6 @@
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		UpdateIcon()
 
-	examine()
-		return
-
 	afterattack(obj/O, mob/user)
 		if (src.welding)
 			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
