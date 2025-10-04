@@ -895,8 +895,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return FALSE
 		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
-			boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
-			return FALSE
+			if (AM.online)
+				boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
+				return FALSE
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
