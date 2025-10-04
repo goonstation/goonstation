@@ -22,7 +22,7 @@
 				if(3)
 					playsound(src.loc, 'sound/voice/wraith/revleave.ogg', 50, 1, -1)
 					src.ArtifactDeactivated()
-		else if (istype(W, /obj/item/implant/mindhack))
+		else if (istype(W, /obj/item/implanter/mindhack))
 			artifact.mindhack_attuned = TRUE
 			artifact.mindhack_owner = user
 			boutput(user, SPAN_ALERT("[src] absorbs and attunes to the mindhack implant."))
