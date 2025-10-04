@@ -28,7 +28,7 @@
 		var/mob/M = suit.loc
 		if (!ishuman(M))
 			suit.body_parts_covered ^= HEAD
-			suit.over_hair = !suit.over_hair
+			suit.c_flags ^= COVERSHAIR
 		M.set_clothing_icon_dirty()
 
 	suit.UpdateIcon()
