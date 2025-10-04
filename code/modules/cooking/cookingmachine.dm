@@ -104,23 +104,10 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			var/itemData = list()
 			itemData["name"] = I.name
 			itemData["index"] = index
-			itemData["iconData"] = get_item_icon(I)
+			itemData["iconData"] = icon2base64(icon(I.icon, I.icon_state))
 			heldItems += list(itemData)
 			index += 1
 		. = list("working" = src.working, "heldItems" = heldItems)
-
-	proc/get_item_icon(var/obj/item/target)
-		var/static/base64_preview_cache = list()
-		var/original_name = initial(target.name)
-		. = base64_preview_cache[original_name]
-
-		if(isnull(.))
-			var/icon/result = getFlatIcon(target, no_anim=TRUE)
-			if(result)
-				. = icon2base64(result)
-			else
-				. = ""
-			base64_preview_cache[original_name] = .
 
 	proc/get_valid_recipe()
 		for (var/datum/cookingrecipe/R in src.possible_recipes)
