@@ -151,7 +151,8 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			if(!locate(ingredient.type) in src.contents)
 				src.possible_recipes -= src.get_recipes_from_ingredient(ingredient)
 
-	proc/get_recipes_from_ingredient(obj/item/ingredient) //TODO: unify the recipes_by_ingredient lists so you don't have to redefine everything
+	//TODO: unify the recipes_by_ingredient lists so you don't have to redefine everything ASAP
+	proc/get_recipes_from_ingredient(obj/item/ingredient)
 		var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
 		var/considered_type = ingredient.type
 		while(considered_type != /obj/item && considered_type != /obj/item/reagent_containers/food/snacks/ingredient)
@@ -482,7 +483,7 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 				return output
 			else
 				considered_type = type2parent(considered_type)
-		return
+		return list()
 
 	start_cook()
 		..()
