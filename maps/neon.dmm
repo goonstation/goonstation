@@ -1763,41 +1763,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"bwd" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
-/obj/item/inner_tube/random,
-/obj/item/clothing/gloves/water_wings,
-/obj/item/rubberduck{
-	pixel_y = 6
-	},
-/obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/grime,
-/area/heated_pool)
 "bwk" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -3618,6 +3583,12 @@
 /obj/railing,
 /turf/simulated/floor/yellow/side,
 /area/shuttle/sea_elevator_room)
+"cOU" = (
+/obj/rack,
+/obj/item/clothing/head/helmet/space/donk,
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/simulated/floor/grime,
+/area/iss)
 "cPj" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/specialroom/freezer,
@@ -3708,19 +3679,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/radiostation/podbay)
-"cSL" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/landmark/bill_spawn,
-/obj/item/storage/wall{
-	pixel_y = -24
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "cSU" = (
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker,
@@ -7648,16 +7606,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
-"fwT" = (
-/obj/fakeobject/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
-/obj/item/clothing/under/swimsuit/donkini,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "fxt" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -8260,6 +8208,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
+"fUi" = (
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "fUt" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -11423,12 +11375,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"iku" = (
-/obj/rack,
-/obj/item/clothing/head/helmet/space/donk,
-/obj/item/clothing/under/swimsuit/donkini,
-/turf/simulated/floor/grime,
-/area/iss)
 "ikC" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/radio/intercom/medical,
@@ -15069,6 +15015,23 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
+"kNE" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/landmark/bill_spawn,
+/obj/item/storage/wall{
+	pixel_y = -24
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "kNF" = (
 /obj/table/wood/round/auto,
 /obj/machinery/recharger{
@@ -15365,6 +15328,16 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/hangar/main)
+"kXx" = (
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "kXA" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -19274,10 +19247,6 @@
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
-"nUR" = (
-/obj/submachine/chef_oven,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "nUZ" = (
 /obj/storage/secure/closet/medical{
 	name = "secure haloperidol storage"
@@ -19663,6 +19632,15 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"ofJ" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/machinery/phone/wall{
+	pixel_x = 24;
+	pixel_y = 6
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "ofQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21835,6 +21813,41 @@
 /obj/mapping_helper/access/teleporter,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/teleporter)
+"pOo" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/inner_tube/random,
+/obj/item/clothing/gloves/water_wings,
+/obj/item/rubberduck{
+	pixel_y = 6
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/grime,
+/area/heated_pool)
 "pOp" = (
 /turf/simulated/floor,
 /area/radiostation/bridge)
@@ -26677,14 +26690,6 @@
 /obj/mapping_helper/access/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
-"tnR" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/obj/machinery/light_switch/west,
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "toi" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/purple,
@@ -27564,15 +27569,6 @@
 	dir = 4
 	},
 /area/station/engine/elect)
-"tTp" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/obj/machinery/phone/wall{
-	pixel_x = 24;
-	pixel_y = 6
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "tTw" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -31304,6 +31300,11 @@
 /obj/item/storage/pill_bottle/antirad,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
+"wur" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "wuK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
@@ -32840,6 +32841,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"xBv" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/obj/machinery/light_switch/west,
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "xBF" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Shower";
@@ -33793,11 +33802,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"ykD" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "ykF" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
@@ -77603,9 +77607,9 @@ tjm
 ijA
 ijA
 oXW
-nUR
+fUi
 aKH
-ykD
+wur
 sXd
 oXW
 dTQ
@@ -79876,9 +79880,9 @@ eht
 uoU
 mGu
 jCV
-tnR
+xBv
 gpi
-cSL
+kNE
 tHr
 kqr
 kqr
@@ -80780,7 +80784,7 @@ gmJ
 fHv
 eht
 wam
-tTp
+ofJ
 lRv
 yjG
 bYv
@@ -91774,7 +91778,7 @@ cUW
 dPL
 qpn
 qis
-bwd
+pOo
 wUY
 wUY
 nZB
@@ -109389,7 +109393,7 @@ iJU
 dAl
 bdY
 nts
-fwT
+kXx
 reD
 bdY
 dAl
@@ -115741,7 +115745,7 @@ qpn
 qpn
 qpn
 iJU
-iku
+cOU
 por
 iJU
 qpn

@@ -9463,13 +9463,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"ers" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer{
-	pixel_y = 4
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "erz" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -11324,14 +11317,6 @@
 	dir = 6
 	},
 /area/station/hangar/sec)
-"fhQ" = (
-/obj/item/kitchen/egg_box,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen/freezer)
 "fid" = (
 /obj/table/reinforced/auto,
 /obj/machinery/defib_mount,
@@ -14404,6 +14389,17 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergency)
+"gxq" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "gxB" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -22558,49 +22554,6 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
-"jRm" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
-/turf/simulated/floor/bluewhite/corner{
-	dir = 1
-	},
-/area/station/crew_quarters/pool)
 "jRv" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/plating,
@@ -32180,6 +32133,49 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/interrogation)
+"nTi" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
+/area/station/crew_quarters/pool)
 "nTn" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/oxygen,
@@ -33090,6 +33086,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"oss" = (
+/obj/item/kitchen/egg_box,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "ost" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -37283,6 +37287,13 @@
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
+"qng" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "qnB" = (
 /obj/stool/bar,
 /obj/disposalpipe/segment/horizontal,
@@ -41048,13 +41059,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/cloner)
-"sec" = (
-/obj/submachine/chef_oven,
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "seK" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -45428,6 +45432,15 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"udK" = (
+/obj/machinery/door_control{
+	id = "kitchen";
+	name = "Kitchen Shutter Control";
+	pixel_y = 24
+	},
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "udR" = (
 /obj/machinery/vending/alcohol/with_ammo,
 /obj/decal/cleanable/dirt/jen,
@@ -45726,6 +45739,17 @@
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
+"ukw" = (
+/obj/machinery/light/small/floor/cool,
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "ukW" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -48109,17 +48133,6 @@
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
-"vum" = (
-/obj/machinery/light/small/floor/cool,
-/obj/fakeobject/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
-/obj/item/clothing/under/swimsuit/donkini,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "vuv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/diplomat)
@@ -48483,15 +48496,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
-"vAs" = (
-/obj/machinery/door_control{
-	id = "kitchen";
-	name = "Kitchen Shutter Control";
-	pixel_y = 24
-	},
-/obj/submachine/chef_oven,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "vAE" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/arcade,
@@ -79644,7 +79648,7 @@ bzS
 syI
 kQE
 cuH
-vum
+ukw
 tjr
 lmL
 sdl
@@ -86831,7 +86835,7 @@ ssd
 iPb
 jdm
 gcO
-fhQ
+oss
 tAC
 rDo
 itn
@@ -89845,7 +89849,7 @@ oNg
 hWN
 oLJ
 iHN
-vAs
+udK
 bhF
 maE
 jpW
@@ -90147,7 +90151,7 @@ oNg
 vyr
 oLJ
 iHN
-sec
+gxq
 rCD
 tTz
 ssc
@@ -91355,7 +91359,7 @@ oNg
 hEe
 gbZ
 iHN
-ers
+qng
 maE
 bsw
 mjF
@@ -91615,7 +91619,7 @@ bRa
 vTs
 xYW
 dtE
-jRm
+nTi
 jCJ
 jBH
 xYW

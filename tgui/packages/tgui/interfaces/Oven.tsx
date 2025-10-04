@@ -24,11 +24,9 @@ import { ProductList } from './common/ProductList';
 interface OvenData {
   time: number;
   heat: string;
-  cooking: BooleanLike;
-  content_icons: string[];
-  content_names: string[];
-  recipe_icons: string[];
-  recipe_names: string[];
+  working: BooleanLike;
+  heldItems;
+  recipe_ingredients;
   output_icon: string;
   output_name: string;
   cook_time: string;
@@ -37,13 +35,11 @@ interface OvenData {
 export const Oven = () => {
   const { act, data } = useBackend<OvenData>();
   const {
+    working,
+    heldItems,
     time,
     heat,
-    cooking,
-    content_icons,
-    content_names,
-    recipe_icons,
-    recipe_names,
+    recipe_ingredients,
     output_icon,
     output_name,
     cook_time,
@@ -106,33 +102,33 @@ export const Oven = () => {
             <Section
               title="Contents"
               fill
-              fitted={!!content_icons?.length}
-              scrollable={!!(content_icons && content_icons.length)}
+              fitted={!!heldItems?.length}
+              scrollable={!!(heldItems && heldItems.length)}
               buttons={
                 <Button onClick={() => act('eject_all')}>
                   <Icon name="eject" />
                 </Button>
               }
             >
-              {content_icons?.length ? (
+              {heldItems?.length ? (
                 <ProductList showImage>
-                  {content_icons.map((item, index) => (
+                  {heldItems.map((item) => (
                     <ProductList.Item
-                      image={item}
-                      key={index}
+                      image={item.iconData}
+                      key={item.index}
                       extraCellsSlot={
                         <ProductList.Cell collapsing px={1}>
                           <Button
                             icon="eject"
                             onClick={() =>
-                              act('eject', { ejected_item: index + 1 })
+                              act('eject', { ejected_item: item.index })
                             }
                             tooltip="Eject"
                           />
                         </ProductList.Cell>
                       }
                     >
-                      {content_names[index]}
+                      {item.name}
                     </ProductList.Item>
                   ))}
                 </ProductList>
@@ -150,9 +146,12 @@ export const Oven = () => {
                       <Stack vertical>
                         <Stack.Item>
                           <ProductList showImage>
-                            {recipe_icons.map((item, index) => (
-                              <ProductList.Item key={index} image={item}>
-                                {recipe_names[index]}
+                            {recipe_ingredients.map((ingredient, index) => (
+                              <ProductList.Item
+                                key={index}
+                                image={ingredient.icon}
+                              >
+                                {ingredient.name}
                               </ProductList.Item>
                             ))}
                           </ProductList>
@@ -189,7 +188,7 @@ export const Oven = () => {
             </Section>
           </Stack.Item>
         </Stack>
-        {!!cooking && (
+        {!!working && (
           <Modal fontSize={2} textAlign="center">
             <Section>Cooking! Please wait...</Section>
           </Modal>

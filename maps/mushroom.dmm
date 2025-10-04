@@ -9150,17 +9150,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/private)
-"bcN" = (
-/obj/storage/secure/closet/fridge,
-/obj/item/kitchen/egg_box,
-/obj/item/kitchen/egg_box,
-/obj/item/storage/box/bacon_kit,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/storage/box/donkpocket_kit,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "bcP" = (
 /obj/cable/reinforced{
 	icon_state = "0-8-thick"
@@ -13200,6 +13189,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/catering)
+"cMO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "cMS" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -18456,6 +18454,17 @@
 /obj/machinery/vending/security,
 /turf/simulated/floor/red,
 /area/station/security/processing)
+"hio" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/storage/box/bacon_kit,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/storage/box/donkpocket_kit,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "hjc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18765,6 +18774,26 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"hty" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/kitchen/utensil/fork{
+	dir = 2;
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "htK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -21704,12 +21733,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"kcn" = (
-/obj/submachine/chef_oven{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "kcs" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -23044,6 +23067,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"llg" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "lnp" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -31947,26 +31976,6 @@
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/artifact)
-"rLY" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/item/kitchen/utensil/fork{
-	dir = 2;
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/kitchen/utensil/knife{
-	pixel_y = 3
-	},
-/obj/item/kitchen/utensil/spoon{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/machinery/mixer,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "rMh" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
@@ -32533,15 +32542,6 @@
 /obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
-"skZ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "slg" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass{
@@ -73314,7 +73314,7 @@ xIA
 aDq
 bqL
 aHH
-bcN
+hio
 vYV
 frK
 hce
@@ -74218,7 +74218,7 @@ geC
 rCt
 qGL
 bUq
-kcn
+llg
 qIR
 pcb
 kFq
@@ -74520,7 +74520,7 @@ viz
 tVY
 noz
 iWS
-skZ
+cMO
 ngB
 pcb
 wmR
@@ -75425,7 +75425,7 @@ lqG
 aDb
 sxh
 txB
-rLY
+hty
 hhS
 gzD
 pcb

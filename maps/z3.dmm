@@ -910,10 +910,6 @@
 	dir = 8
 	},
 /area/space_hive)
-"acT" = (
-/obj/submachine/chef_oven,
-/turf/unsimulated/floor/honeyblocks/corner,
-/area/space_hive)
 "acU" = (
 /obj/critter/domestic_bee/chef,
 /turf/unsimulated/floor/honeyblocks/border,
@@ -4355,10 +4351,6 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/salyut)
-"atu" = (
-/obj/item/skull/hunter,
-/turf/simulated/floor/plating,
 /area/salyut)
 "atv" = (
 /obj/fakeobject/pipe{
@@ -8823,10 +8815,6 @@
 /obj/map/light/screen,
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
-"aQH" = (
-/obj/submachine/chef_oven,
-/turf/simulated/floor/sanitary,
-/area/h7/crew)
 "aQJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15925,17 +15913,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/space_hive)
-"cPf" = (
-/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
-/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
-/obj/item/reagent_containers/food/drinks/milk/rancid,
-/obj/item/kitchen/egg_box,
-/obj/storage/secure/closet/fridge/kitchen{
-	locked = 0
-	},
-/turf/simulated/floor/scorched2,
-/area/diner/kitchen)
 "cPz" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -16306,6 +16283,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"dJD" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grime,
+/area/diner/kitchen)
 "dLg" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
@@ -16791,16 +16775,21 @@
 	},
 /turf/simulated/floor,
 /area/h7/crew)
+"fgQ" = (
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
+/obj/item/kitchen/egg_box,
+/obj/storage/secure/closet/fridge/kitchen{
+	locked = 0
+	},
+/turf/simulated/floor/scorched2,
+/area/diner/kitchen)
 "fgU" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/diner/hangar)
-"fiK" = (
-/obj/item/clothing/under/swimsuit/donkini,
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/storage/crate/bloody,
-/turf/simulated/floor/airless/damaged2,
-/area/abandonedship)
 "fjh" = (
 /obj/cable,
 /obj/cable{
@@ -17423,6 +17412,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"gHW" = (
+/obj/machinery/cookingmachine/oven,
+/turf/unsimulated/floor/honeyblocks/corner,
+/area/space_hive)
 "gJv" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
@@ -18823,16 +18816,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/press)
-"kdj" = (
-/obj/fakeobject/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
-/obj/item/clothing/under/swimsuit/donkini,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "kdO" = (
 /obj/table/auto,
 /obj/fakeobject/lightbulb_broken{
@@ -19089,6 +19072,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/grime,
 /area/abandonedmedicalship)
+"kJU" = (
+/obj/item/skull/hunter,
+/turf/simulated/floor/plating,
+/area/salyut)
 "kKc" = (
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
@@ -19099,13 +19086,6 @@
 /obj/item/pen,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"kKo" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer,
-/obj/decal/cleanable/cobweb2,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/grime,
-/area/diner/kitchen)
 "kKQ" = (
 /obj/storage/secure/closet/fridge{
 	desc = "A staff fridge."
@@ -20589,6 +20569,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/diner/hangar)
+"ogr" = (
+/obj/machinery/cookingmachine/oven,
+/turf/simulated/floor/sanitary,
+/area/h7/crew)
 "ohs" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -21085,6 +21069,16 @@
 /obj/item/paint_can/rainbow/plaid,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
+"plQ" = (
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "pnX" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -22493,6 +22487,11 @@
 	dir = 8
 	},
 /area/diner/hallway)
+"sOo" = (
+/obj/machinery/cookingmachine/oven,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/scorched,
+/area/diner/kitchen)
 "sOs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22862,6 +22861,12 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"txL" = (
+/obj/item/clothing/under/swimsuit/donkini,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
 "tyi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/illuminated_sign/onair{
@@ -23375,11 +23380,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/space_hive)
-"uJM" = (
-/obj/submachine/chef_oven,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/scorched,
-/area/diner/kitchen)
 "uJP" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -32745,7 +32745,7 @@ aaa
 aaa
 aOU
 aOU
-aQH
+ogr
 aRi
 aOU
 utv
@@ -49279,7 +49279,7 @@ rpS
 aaO
 gaf
 acA
-acT
+gHW
 adl
 aaO
 qMu
@@ -61174,7 +61174,7 @@ aaa
 iYn
 blg
 blo
-fiK
+txL
 avn
 iPp
 aGD
@@ -74982,7 +74982,7 @@ pPj
 aaF
 aaa
 iDu
-uJM
+sOo
 azq
 fZa
 qSL
@@ -75655,7 +75655,7 @@ aaa
 aaa
 nYg
 atr
-atu
+kJU
 nYg
 aaa
 aaa
@@ -75888,8 +75888,8 @@ pPj
 afD
 aeZ
 iDu
-kKo
-cPf
+dJD
+fgQ
 boq
 alb
 piW
@@ -92374,7 +92374,7 @@ aTQ
 wAy
 aVD
 uNg
-kdj
+plQ
 aVD
 aVD
 wAy

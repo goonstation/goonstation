@@ -4959,14 +4959,6 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating/damaged3,
 /area/station/hallway/secondary/construction)
-"aqM" = (
-/obj/decal/cleanable/cobweb2,
-/obj/submachine/chef_oven{
-	desc = "Still works, sorta.";
-	name = "grungy oven"
-	},
-/turf/simulated/floor/grime,
-/area/station/hallway/secondary/construction)
 "aqN" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/black,
@@ -5025,17 +5017,6 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"aqW" = (
-/obj/storage/crate,
-/obj/item/kitchen/egg_box,
-/obj/item/kitchen/egg_box,
-/obj/item/kitchen/egg_box,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9;
-	level = 2
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/catering)
 "aqX" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
@@ -5880,18 +5861,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"ats" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/obj/item/device/radio/intercom/catering,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"att" = (
-/obj/submachine/chef_oven,
-/obj/machinery/light_switch/north,
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "atu" = (
 /obj/submachine/chef_sink,
 /obj/disposalpipe/segment/produce,
@@ -8959,24 +8928,6 @@
 	icon_state = "wooden"
 	},
 /area/station/chapel/sanctuary)
-"aBL" = (
-/obj/storage/crate,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/banana,
-/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
-/obj/item/reagent_containers/food/snacks/plant/peanuts,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/clothing/glasses/blindfold,
-/obj/item/kitchen/egg_box,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/chapel/sanctuary)
 "aBN" = (
 /obj/storage/closet/law,
 /turf/simulated/floor/specialroom/arcade,
@@ -9675,23 +9626,6 @@
 	icon_state = "fpurple2"
 	},
 /area/station/crew_quarters/bar)
-"aDx" = (
-/obj/table/auto,
-/obj/machinery/mixer,
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"aDy" = (
-/obj/submachine/chef_oven,
-/obj/disposalpipe/segment/food{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "aDz" = (
 /obj/machinery/disposal{
 	name = "Lay-Z Chef Prison Food Chute"
@@ -14961,24 +14895,6 @@
 /area/station/crew_quarters/pool)
 "aTN" = (
 /obj/critter/seagull,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
-"aTO" = (
-/obj/table/glass/reinforced/auto,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/shoes/flippers,
-/obj/item/reagent_containers/glass/bottle/eyedrops,
-/obj/item/reagent_containers/dropper,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/inner_tube/random,
-/obj/item/inner_tube/random,
-/obj/item/clothing/gloves/water_wings,
-/obj/item/clothing/gloves/water_wings,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aTP" = (
@@ -51740,6 +51656,14 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/research_outpost/chamber)
+"djM" = (
+/obj/decal/cleanable/cobweb2,
+/obj/machinery/cookingmachine/oven{
+	desc = "Still works, sorta.";
+	name = "grungy oven"
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/secondary/construction)
 "djN" = (
 /obj/machinery/r_door_control/podbay/medsci{
 	id = "hangar_research2"
@@ -52630,10 +52554,6 @@
 /area/station/crew_quarters/kitchen)
 "doK" = (
 /obj/item/space_thing,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"doL" = (
-/obj/item/skull/changeling,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "doM" = (
@@ -54298,6 +54218,17 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"eZu" = (
+/obj/storage/crate,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9;
+	level = 2
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/catering)
 "eZP" = (
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -55210,6 +55141,24 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/science/lab)
+"gaw" = (
+/obj/table/glass/reinforced/auto,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/shoes/flippers,
+/obj/item/reagent_containers/glass/bottle/eyedrops,
+/obj/item/reagent_containers/dropper,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/inner_tube/random,
+/obj/item/inner_tube/random,
+/obj/item/clothing/gloves/water_wings,
+/obj/item/clothing/gloves/water_wings,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
 "gbC" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -66125,6 +66074,10 @@
 /obj/noticeboard/persistent/kitchen/directional/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"pQU" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "pRl" = (
 /obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
@@ -66286,6 +66239,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"pYM" = (
+/obj/machinery/cookingmachine/oven,
+/obj/disposalpipe/segment/food{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "pYP" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	id = "cloning"
@@ -69994,6 +69956,12 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/southwest)
+"tuT" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/item/device/radio/intercom/catering,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "tvu" = (
 /obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
@@ -70741,6 +70709,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"uhC" = (
+/obj/table/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "uir" = (
 /obj/table/wood/round/auto,
 /obj/machinery/computer/television/small{
@@ -73433,6 +73409,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"xlA" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
+/obj/item/reagent_containers/food/snacks/plant/peanuts,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/kitchen/egg_box,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/chapel/sanctuary)
 "xlE" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Mechanic's Lab"
@@ -74532,6 +74526,12 @@
 	icon_state = "carpetSE"
 	},
 /area/station/security/hos)
+"ykp" = (
+/obj/machinery/cookingmachine/oven,
+/obj/machinery/light_switch/north,
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "ykv" = (
 /obj/cable/orange{
 	icon_state = "2-8"
@@ -100067,7 +100067,7 @@ amd
 anp
 aon
 osq
-aqM
+djM
 gTd
 ath
 auF
@@ -104295,7 +104295,7 @@ amn
 anB
 aoy
 ocj
-aqW
+eZu
 vTP
 tNo
 auO
@@ -104599,14 +104599,14 @@ aoz
 apF
 aqX
 vTP
-ats
+tuT
 auP
 awl
 kQh
 axJ
 aAR
 auT
-aDx
+uhC
 ase
 aFR
 aHD
@@ -104901,14 +104901,14 @@ aoA
 apF
 aqY
 vTP
-att
+ykp
 auP
 awm
 rsO
 azy
 auT
 aAU
-aDy
+pYM
 ase
 wIl
 aHE
@@ -113074,7 +113074,7 @@ aOI
 aKR
 aKR
 aKR
-aTO
+gaw
 aNy
 aWy
 aYc
@@ -124234,7 +124234,7 @@ jVv
 arx
 ayL
 aAi
-aBL
+xlA
 aBy
 aBy
 alM
@@ -150084,7 +150084,7 @@ aad
 aad
 aad
 aad
-doL
+pQU
 aab
 aab
 aaa

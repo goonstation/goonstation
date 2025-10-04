@@ -7287,18 +7287,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"DL" = (
-/obj/submachine/chef_oven{
-	pixel_y = 16
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/unsimulated/floor/wood/three,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "DO" = (
 /obj/mesh/grille/steel,
 /obj/railing/yellow/reinforced,
@@ -8029,6 +8017,30 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/yellowblack{
 	dir = 10
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"GZ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/item/storage/secure/ssafe/loot{
+	pixel_y = 26
+	},
+/obj/item/skull,
+/obj/item/skull,
+/obj/item/skull,
+/obj/item/skull,
+/obj/item/skull/hunter,
+/obj/storage/crate/classcrate/xg{
+	desc = "A hefty attache case.";
+	locked = 1;
+	name = "attache case"
+	},
+/turf/simulated/floor/greenblack{
+	dir = 1
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -8804,6 +8816,18 @@
 /turf/unsimulated/floor/carpet{
 	color = "green"
 	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"KC" = (
+/obj/machinery/cookingmachine/oven{
+	pixel_y = 16
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/wood/three,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -11737,30 +11761,6 @@
 	name = "CLOSED FOR PEST CONTROL"
 	},
 /turf/simulated/floor/stairs/dark/wide{
-	dir = 1
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Wj" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/item/storage/secure/ssafe/loot{
-	pixel_y = 26
-	},
-/obj/item/skull,
-/obj/item/skull,
-/obj/item/skull,
-/obj/item/skull,
-/obj/item/skull/hunter,
-/obj/storage/crate/classcrate/xg{
-	desc = "A hefty attache case.";
-	locked = 1;
-	name = "attache case"
-	},
-/turf/simulated/floor/greenblack{
 	dir = 1
 	},
 /area/solarium{
@@ -16231,7 +16231,7 @@ Rk
 JR
 lt
 Yf
-Wj
+GZ
 bP
 RN
 CS
@@ -16290,7 +16290,7 @@ oM
 sL
 sL
 WP
-DL
+KC
 tA
 Sz
 wi

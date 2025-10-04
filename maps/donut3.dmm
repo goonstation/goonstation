@@ -1823,6 +1823,35 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"ayV" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
+/turf/simulated/floor/white,
+/area/spacehabitat/pool)
 "azp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3591,19 +3620,6 @@
 	},
 /turf/simulated/floor/airless/plating/jen,
 /area/station/turret_protected/AIbaseoutside)
-"baK" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
-/obj/machinery/mixer,
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/asylum/kitchen)
 "baL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4007,6 +4023,10 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction2)
+"bhJ" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bhW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -12181,35 +12201,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/small_backup1)
-"dIG" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
-/turf/simulated/floor/white,
-/area/spacehabitat/pool)
 "dIR" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -17905,6 +17896,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"fAG" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/spacehabitat/owlery)
 "fAI" = (
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/white/checker2{
@@ -18254,6 +18249,14 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/northwest)
+"fFC" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
 "fFG" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/black,
@@ -33274,6 +33277,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
+"kpn" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "kpv" = (
 /obj/decorative_pot{
 	anchored = 1
@@ -34239,6 +34248,19 @@
 	dir = 9
 	},
 /area/station/medical/research)
+"kFq" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
 "kFs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
@@ -35118,10 +35140,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/spacehabitat/owlery)
-"kVk" = (
-/obj/item/skull/changeling,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "kVL" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/arrival{
@@ -39051,16 +39069,6 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"mcT" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/machinery/mixer,
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/crew_quarters/kitchen)
 "mcV" = (
 /turf/simulated/floor/wood/six,
 /area/station/library/reading2)
@@ -48247,6 +48255,30 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/testchamber/bombchamber)
+"oYE" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/turf/simulated/floor/white,
+/area/spacehabitat/pool)
 "oYJ" = (
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -51785,10 +51817,6 @@
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
-"qea" = (
-/obj/item/skull/changeling,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/spacehabitat/owlery)
 "qed" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62141,12 +62169,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"toq" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "toz" = (
 /obj/table/reinforced/auto,
 /obj/item/robot_module{
@@ -64318,6 +64340,13 @@
 /obj/machinery/light/small/sticky/greenish,
 /turf/simulated/floor/greenwhite/corner,
 /area/station/medical/cdc)
+"tVM" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 8
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "tVN" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -67659,6 +67688,16 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/hallway/primary/east)
+"uXC" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/cookingmachine/mixer,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
 "uYi" = (
 /obj/submachine/chem_extractor{
 	dir = 4
@@ -70731,14 +70770,6 @@
 	dir = 4
 	},
 /area/station/medical/breakroom)
-"vSP" = (
-/obj/submachine/chef_oven{
-	dir = 8
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/asylum/kitchen)
 "vSS" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
@@ -72943,13 +72974,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/outer/east)
-"wAj" = (
-/obj/submachine/chef_oven{
-	dir = 8
-	},
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "wAm" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -78632,30 +78656,6 @@
 	dir = 6
 	},
 /area/station/security/checkpoint/podbay)
-"yeo" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/turf/simulated/floor/white,
-/area/spacehabitat/pool)
 "yes" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/maintenance/inner/north)
@@ -90387,7 +90387,7 @@ bsa
 jqe
 bsa
 bsa
-qea
+fAG
 bsa
 bsa
 bsa
@@ -99455,7 +99455,7 @@ mLH
 sDx
 fZs
 mLH
-dIG
+ayV
 fTA
 iCP
 iCP
@@ -99755,7 +99755,7 @@ iKD
 oVo
 ant
 rlc
-yeo
+oYE
 fTA
 fTA
 fTA
@@ -122186,7 +122186,7 @@ ddn
 wNW
 aag
 pQh
-mcT
+uXC
 egr
 nmd
 dJO
@@ -122492,7 +122492,7 @@ rbK
 rTC
 bPz
 wZX
-toq
+kpn
 bPz
 pzp
 gtq
@@ -123398,7 +123398,7 @@ lTa
 jQw
 kkc
 mBc
-wAj
+tVM
 kkc
 mWU
 oFm
@@ -149309,7 +149309,7 @@ fDv
 hfR
 pul
 lon
-baK
+kFq
 sDu
 wwE
 wwE
@@ -150519,7 +150519,7 @@ tdb
 tdb
 tdb
 tdb
-vSP
+fFC
 wwE
 rdj
 rdj
@@ -158234,7 +158234,7 @@ rdj
 rdj
 csA
 csA
-kVk
+bhJ
 fJu
 csA
 csA

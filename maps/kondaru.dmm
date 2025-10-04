@@ -27590,6 +27590,42 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
+"cOi" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "cOu" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -31007,6 +31043,14 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
+"eZL" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer{
+	pixel_y = 6;
+	pixel_x = 5
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "eZN" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -32425,12 +32469,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
-"gbQ" = (
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "gcw" = (
 /obj/stool/chair{
 	dir = 4
@@ -38239,6 +38277,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/mining/magnet)
+"jVi" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "jVv" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -40759,13 +40807,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"lGb" = (
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 4
-	},
-/obj/item/kitchen/egg_box,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen/freezer)
 "lGw" = (
 /mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet/red/fancy/innercorner/north,
@@ -41723,6 +41764,12 @@
 /area/station/routing/medsci{
 	name = "Research Router"
 	})
+"moX" = (
+/obj/machinery/cookingmachine/oven{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "mph" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crematorium"
@@ -45758,42 +45805,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"pmV" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/fuzzy,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "pmZ" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/machinery/camera/directional/east{
@@ -54600,14 +54611,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"vnl" = (
-/obj/table/reinforced/auto,
-/obj/machinery/mixer{
-	pixel_y = 6;
-	pixel_x = 5
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "vnw" = (
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
@@ -57380,16 +57383,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"xfa" = (
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/submachine/chef_oven{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/kitchen)
 "xft" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
@@ -58592,6 +58585,13 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
+"xUk" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
+/obj/item/kitchen/egg_box,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "xUw" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -114905,7 +114905,7 @@ hvn
 dZK
 kLJ
 aZS
-lGb
+xUk
 cnR
 lIh
 cJp
@@ -116113,8 +116113,8 @@ iNb
 aUM
 jOn
 eQk
-gbQ
-xfa
+moX
+jVi
 tYy
 ppQ
 mPi
@@ -116420,7 +116420,7 @@ jdC
 qUu
 qUu
 ncP
-vnl
+eZL
 dUm
 uzb
 xpA
@@ -123349,7 +123349,7 @@ aCF
 gZu
 aCF
 coy
-pmV
+cOi
 pUx
 koG
 aCF
