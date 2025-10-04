@@ -1,4 +1,149 @@
 
+(t)fri oct 03 25
+(u)Emily
+(*)Classic Only: Shuttle auto-call reduced from 90 minutes to 60 minutes on classic servers for all game modes. Max round times are unaffected.
+(u)Lord_Earthfire
+(p)24818
+(e)|
+(+)Eggs in egg cartons are also visible while in inventories.
+(u)Lord_Earthfire
+(p)24817
+(e)|
+(+)You can click-drag eggs onto egg cartons to quickly fill the carton with eggs in the area, akin to how satchels work.
+(t)thu oct 02 25
+(u)Emily
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(*)Egg Cartons now have improved functionality. Produce Satchels no longer hold eggs. Buy more empty cartons at QM.
+(u)Lord_Earthfire
+(p)24809
+(e)🆕📦📡|C-Feature, A-Game-Objects, A-AI
+(+)Clowns found a method to turn the AI lawrack into a toaster!
+(u)Kanthes
+(p)24805
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds a Wellspring artifact type that floods the area with reagents.
+(u)WyrdDoe & Ribbie
+(p)24757
+(e)🎨🔊|C-Sprites, C-Sound
+(+)Added a new track to the easter egg drops.
+(u)Lord_Earthfire
+(p)24761
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(*)Non-rev Flashes can be build into assemblies as either triggers or appliers. Have a mousetrap/flash/cell assembly ready for when a search comes up!
+(+)Flashes don't need to have their cover removed to be combined with cells. Flash/Cell assemblies can also be dismantled to retreive the used cell
+(+)Flash assemblies will trigger their corresponding applier. If your flash/igniter/pipebomb assembly blows up your ass: i warned you...
+(+)If both parts can be triggers or appliers of an assembly, you can choose which one to use as a trigger.
+(+)Flash/cell assemblies with insufficient charge will behave like normal flashes.
+(t)wed oct 01 25
+(u)Egregorious
+(p)24767
+(e)🔄💊⚗|C-Rework, A-Medical, A-Chemistry
+(*)Addiction strength and withdrawal symptoms are now independent, you can cure your addiction while taking sufficiently small (under 5 unit) doses to calm symptoms when needed
+(*)Any addictive reagent of the same severity as you're addicted to can be used to prevent withdrawal symptoms from worsening, but this is bad for it in the long term
+(*)The worse your addiction gets, the more quickly your body will metabolise that reagent, reducing its effectiveness
+(u)JORJ949
+(p)24715
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Syndicate operatives can now identify syndicate robot frames and conversion chambers at a glance
+(u)Nexusuxen
+(p)24722
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Neutrons from fallout TTVs now properly spawn
+(u)TheGeneralJay
+(p)24560
+(e)💅💊|C-QoL, A-Medical
+(+)The cloning mindhack module now bypasses the puritan trait.
+(u)JORJ949
+(p)24726
+(e)🪲💊|C-Bug, A-Medical
+(+)Fixed the Gene Booth making all your clicks be empty hands, allowing you to deconstruct it and bash it (50 hp) to force the occupant out (doesn't break the booth).
+(t)tue sep 30 25
+(u)LeahTheTech
+(+)You can put bread in the AI law rack now. I mean you shouldn't, but you can.
+(u)JORJ949
+(p)24780
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The limit of 2 poltergeists per wraith is now present on all servers, rather than just RP.
+(u)Sord
+(+)The Chief Engineer now gets a special, slightly more environmentally protective, version of the light engineering space suit in their locker. The manufactured version remains the same.
+(+)The CE also now gets stomper boots in their locker on Neon like they should have.
+(u)Kanthes
+(p)24755
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds the artifact bomb (radioactive) variant.
+(t)mon sep 29 25
+(u)Calphrick
+(p)24691
+(e)🔄👽|C-Rework, A-Mutantraces
+(*)Reworked the shelterfrog accent.
+(t)sat sep 27 25
+(u)LeahTheTech
+(+)Saying something will now once again bump up the maptext of people around you. Yes this was a feature, you weren't going crazy.
+(u)JORJ949
+(p)24743
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Spy thieves now have a "Steal items via uplink" objective, the "Professional Thief" medal is now tied to this objective.
+(t)fri sep 26 25
+(u)Sord
+(+)The Research Director now gets a special bio suit in their main locker.
+(u)JORJ949
+(p)24748
+(e)💅📄|C-QoL, A-UI
+(*)Antagonist summary item names (Including wizard spells and blob upgrades) are now hidden behind a tooltip available by hovering over the item's icon.
+(t)wed sep 24 25
+(u)Kanthes
+(p)24683
+(e)🆕🔬|C-Feature, A-Science
+(*)Added the Flinger large artifact.
+(t)mon sep 22 25
+(u)Egregorious
+(p)24686
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added sfx for putting things into chutes. If the action does have an associated chat message, noone else will hear the sound except you.
+(u)JORJ949
+(p)24672
+(e)🆕📄🧛|C-Feature, A-UI, A-Gamemodes
+(*)Added a "Preferred Uplink" option under the general character setup tab. The uplink received when rolling Traitor or Head Revolutionary will try to reflect this option.
+(t)sun sep 21 25
+(u)JORJ949
+(p)24685
+(e)⚖🤖|C-Balance, A-Silicons
+(*)AI Cores can now survive on their internal cell for only 25 minutes, down from 100 minutes.
+(u)NibChocolateeny
+(p)24223
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)New Research indicates that splicing the Invasive Growth gene into-non creepers will cause them to spread via budding; they do not have a chance to mutate initially when spreading to new trays.
+(u)NibChocolateeny
+(p)24346
+(e)🆕🔎⚖📦|C-Feature, C-Code-Quality, C-Balance, A-Game-Objects
+(*)9mm Frangible Rounds can be fabricated from hacked general fabricators, but you'll need a lot of plastic to make them.
+(u)JORJ949
+(p)24488
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Syndicate Cyborgs will now appear on the robotics console, but are immune to the effects of lockdowns and killswitches.
+(u)Egregorious
+(p)24669
+(e)💅🔨📦|C-QoL, A-Player-Actions, A-Game-Objects
+(+)Dumping the contents of mining, produce and mail satchels into a chute is now performed by click-dragging.
+(u)JORJ949
+(p)24655
+(e)⚖📦🤖|C-Balance, A-Game-Objects, A-Silicons
+(+)Law Linkers now come connected to the default law rack.
+(u)Kubius
+(p)24682
+(e)⚖|C-Balance
+(+)Interdictor component material costs have received across-the-board reductions.
+(t)sat sep 20 25
+(u)TemThrush
+(p)24694
+(e)🎨|C-Sprites
+(*)Added 14 new long hairstyles into the game, see minor changes for the list!
+(+)New hairstyle options are; Long Poofy, Med Curls, Long Straight, Royal Curls, Poofy Wave, Wild Wave, Symmetrical Bob, Choppy Long, Himecut, Wild Bedhead, Sway, Longer Curls, Curly Twists, and Straightened Shoulder-Length.
+(t)wed sep 17 25
+(u)JORJ949
+(p)24549
+(e)🗺🔄|A-Mapping, C-Rework
+(*)Clarion's Bridge has been reworked.
 (t)tue sep 16 25
 (u)Lord_Earthfire
 (p)24661

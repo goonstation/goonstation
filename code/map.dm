@@ -998,7 +998,7 @@ var/global/list/mapNames = list(
 
 /area/shuttle/merchant_shuttle/left_station
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 	icon_state = "shuttle_merch_l"
 	donut2
@@ -1037,7 +1037,7 @@ var/global/list/mapNames = list(
 
 /area/shuttle/merchant_shuttle/right_station
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 	icon_state = "shuttle_merch_r"
 	donut2

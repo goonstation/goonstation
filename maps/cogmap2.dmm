@@ -5017,17 +5017,6 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"aqW" = (
-/obj/storage/crate,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9;
-	level = 2
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/catering)
 "aqX" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
@@ -8933,44 +8922,8 @@
 	icon_state = "fpurple3"
 	},
 /area/station/chapel/sanctuary)
-"aBI" = (
-/obj/stool/chair/pew/fancy/right{
-	dir = 1
-	},
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fpurple2"
-	},
-/area/station/chapel/sanctuary)
-"aBJ" = (
-/obj/table/wood/auto,
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/chapel/sanctuary)
 "aBK" = (
 /obj/mic_stand,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/chapel/sanctuary)
-"aBL" = (
-/obj/storage/crate,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/banana,
-/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
-/obj/item/reagent_containers/food/snacks/plant/peanuts,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/clothing/glasses/blindfold,
-/obj/item/kitchen/food_box/egg_box,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -14942,24 +14895,6 @@
 /area/station/crew_quarters/pool)
 "aTN" = (
 /obj/critter/seagull,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
-"aTO" = (
-/obj/table/glass/reinforced/auto,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/shoes/flippers,
-/obj/item/reagent_containers/glass/bottle/eyedrops,
-/obj/item/reagent_containers/dropper,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/inner_tube/random,
-/obj/item/inner_tube/random,
-/obj/item/clothing/gloves/water_wings,
-/obj/item/clothing/gloves/water_wings,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aTP" = (
@@ -52621,10 +52556,6 @@
 /obj/item/space_thing,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"doL" = (
-/obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "doM" = (
 /turf/space,
 /area/supply/sell_point)
@@ -54287,6 +54218,17 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"eZu" = (
+/obj/storage/crate,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9;
+	level = 2
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/catering)
 "eZP" = (
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -54576,6 +54518,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
+"foa" = (
+/obj/stool/chair/pew/fancy/right{
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fpurple2"
+	},
+/area/station/chapel/sanctuary)
 "fpN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -55190,6 +55141,24 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/science/lab)
+"gaw" = (
+/obj/table/glass/reinforced/auto,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/shoes/flippers,
+/obj/item/reagent_containers/glass/bottle/eyedrops,
+/obj/item/reagent_containers/dropper,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/inner_tube/random,
+/obj/item/inner_tube/random,
+/obj/item/clothing/gloves/water_wings,
+/obj/item/clothing/gloves/water_wings,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
 "gbC" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -66105,6 +66074,10 @@
 /obj/noticeboard/persistent/kitchen/directional/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"pQU" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "pRl" = (
 /obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
@@ -69786,6 +69759,15 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"toy" = (
+/obj/table/wood/auto,
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/chapel/sanctuary)
 "toG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -73427,6 +73409,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"xlA" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
+/obj/item/reagent_containers/food/snacks/plant/peanuts,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/kitchen/egg_box,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/chapel/sanctuary)
 "xlE" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Mechanic's Lab"
@@ -104295,7 +104295,7 @@ amn
 anB
 aoy
 ocj
-aqW
+eZu
 vTP
 tNo
 auO
@@ -113074,7 +113074,7 @@ aOI
 aKR
 aKR
 aKR
-aTO
+gaw
 aNy
 aWy
 aYc
@@ -123328,7 +123328,7 @@ avE
 ary
 ayJ
 aAh
-aBI
+foa
 ary
 irY
 alM
@@ -123630,7 +123630,7 @@ avF
 arx
 ayK
 aod
-aBJ
+toy
 aCV
 aod
 alM
@@ -124234,7 +124234,7 @@ jVv
 arx
 ayL
 aAi
-aBL
+xlA
 aBy
 aBy
 alM
@@ -150084,7 +150084,7 @@ aad
 aad
 aad
 aad
-doL
+pQU
 aab
 aab
 aaa

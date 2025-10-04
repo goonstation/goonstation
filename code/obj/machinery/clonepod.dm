@@ -305,30 +305,33 @@ TYPEINFO(/obj/machinery/clonepod)
 					is_puritan = TRUE
 
 			if (is_puritan)
-				src.mess = TRUE
-				// Puritans have a bad time.
-				// This is a little different from how it was before:
-				// - Immediately take 250 tox and 100 random brute
-				// - Always get a major cloning defect
-				// - 50% chance, per limb, to lose that limb
-				// - enforced premature_clone, which gibs you on death
-				// If you have a clone body that's been allowed to fully heal before
-				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
-				// out of deep critical health before they turn into chunky salsa
-				// This should be really rare to have happen, but I want to leave it in
-				// just in case someone manages to pull off a miracle save
-				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
-				src.occupant.bioHolder?.AddEffect("premature_clone")
-				src.occupant.take_toxin_damage(350)
-				APPLY_ATOM_PROPERTY(src.occupant, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
-				random_brute_damage(src.occupant, 200, 0)
-				if (ishuman(src.occupant))
-					var/mob/living/carbon/human/P = src.occupant
-					if (P.limbs)
-						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
-						for (var/limb in limbs)
-							if (prob(50))
-								P.limbs.sever(limb)
+				if (clonehack) // If mindhack cloner, bypass puritan stuff.
+					boutput(src.occupant, SPAN_NOTICE("<h3>The mindhack module has forced your body to adapt, bypassing your clone instability!</h3>"))
+				else
+					src.mess = TRUE
+					// Puritans have a bad time.
+					// This is a little different from how it was before:
+					// - Immediately take 250 tox and 100 random brute
+					// - Always get a major cloning defect
+					// - 50% chance, per limb, to lose that limb
+					// - enforced premature_clone, which gibs you on death
+					// If you have a clone body that's been allowed to fully heal before
+					// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
+					// out of deep critical health before they turn into chunky salsa
+					// This should be really rare to have happen, but I want to leave it in
+					// just in case someone manages to pull off a miracle save
+					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
+					src.occupant.bioHolder?.AddEffect("premature_clone")
+					src.occupant.take_toxin_damage(350)
+					APPLY_ATOM_PROPERTY(src.occupant, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+					random_brute_damage(src.occupant, 200, 0)
+					if (ishuman(src.occupant))
+						var/mob/living/carbon/human/P = src.occupant
+						if (P.limbs)
+							var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
+							for (var/limb in limbs)
+								if (prob(50))
+									P.limbs.sever(limb)
 			#endif
 
 		if (length(defects.active_cloner_defects) > 7)

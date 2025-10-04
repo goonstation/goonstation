@@ -4352,10 +4352,6 @@
 	name = "reinforced plating"
 	},
 /area/salyut)
-"atu" = (
-/obj/item/skull/strange,
-/turf/simulated/floor/plating,
-/area/salyut)
 "atv" = (
 /obj/fakeobject/pipe{
 	desc = "It won't budge.";
@@ -15484,12 +15480,6 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/timewarp/ship)
-"bPC" = (
-/obj/fakeobject/shuttlethruster{
-	dir = 4
-	},
-/turf/space,
-/area/diner/tug)
 "bPI" = (
 /obj/stool,
 /turf/simulated/floor/carpet/arcade,
@@ -15923,17 +15913,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/space_hive)
-"cPf" = (
-/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
-/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
-/obj/item/reagent_containers/food/drinks/milk/rancid,
-/obj/item/kitchen/food_box/egg_box,
-/obj/storage/secure/closet/fridge/kitchen{
-	locked = 0
-	},
-/turf/simulated/floor/scorched2,
-/area/diner/kitchen)
 "cPz" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -16796,16 +16775,21 @@
 	},
 /turf/simulated/floor,
 /area/h7/crew)
+"fgQ" = (
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
+/obj/item/kitchen/egg_box,
+/obj/storage/secure/closet/fridge/kitchen{
+	locked = 0
+	},
+/turf/simulated/floor/scorched2,
+/area/diner/kitchen)
 "fgU" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/diner/hangar)
-"fiK" = (
-/obj/item/clothing/under/gimmick/donkini,
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/storage/crate/bloody,
-/turf/simulated/floor/airless/damaged2,
-/area/abandonedship)
 "fjh" = (
 /obj/cable,
 /obj/cable{
@@ -17021,6 +17005,12 @@
 /obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"fTH" = (
+/obj/fakeobject/shuttlethruster{
+	dir = 4
+	},
+/turf/space,
+/area/diner/tug)
 "fUB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -18826,16 +18816,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/press)
-"kdj" = (
-/obj/fakeobject/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
-/obj/item/clothing/under/gimmick/donkini,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "kdO" = (
 /obj/table/auto,
 /obj/fakeobject/lightbulb_broken{
@@ -19092,6 +19072,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/grime,
 /area/abandonedmedicalship)
+"kJU" = (
+/obj/item/skull/hunter,
+/turf/simulated/floor/plating,
+/area/salyut)
 "kKc" = (
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
@@ -21085,6 +21069,16 @@
 /obj/item/paint_can/rainbow/plaid,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
+"plQ" = (
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "pnX" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -22867,6 +22861,12 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"txL" = (
+/obj/item/clothing/under/swimsuit/donkini,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
 "tyi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/illuminated_sign/onair{
@@ -61174,7 +61174,7 @@ aaa
 iYn
 blg
 blo
-fiK
+txL
 avn
 iPp
 aGD
@@ -66826,9 +66826,9 @@ aaa
 aaa
 aaa
 aaa
-bPC
-bPC
-bPC
+fTH
+fTH
+fTH
 aaa
 aaa
 aaa
@@ -75655,7 +75655,7 @@ aaa
 aaa
 nYg
 atr
-atu
+kJU
 nYg
 aaa
 aaa
@@ -75889,7 +75889,7 @@ afD
 aeZ
 iDu
 dJD
-cPf
+fgQ
 boq
 alb
 piW
@@ -92374,7 +92374,7 @@ aTQ
 wAy
 aVD
 uNg
-kdj
+plQ
 aVD
 aVD
 wAy

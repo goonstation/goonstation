@@ -22564,24 +22564,6 @@
 /obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
-"gJN" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/plating,
-/area/station/medical/dome)
 "gJU" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/floppy,
@@ -32961,6 +32943,24 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"mRI" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "mRT" = (
 /obj/strip_door,
 /obj/machinery/conveyor/SN{
@@ -38130,42 +38130,6 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"pHf" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/fuzzy,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "pHL" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/grime,
@@ -45332,6 +45296,42 @@
 /obj/item/rods/steel,
 /turf/space,
 /area/space)
+"tRL" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "tSw" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -67350,7 +67350,7 @@ aKS
 aKS
 aKS
 aXp
-gJN
+mRI
 aXp
 aXp
 bjx
@@ -86940,7 +86940,7 @@ jAa
 axc
 snn
 dqU
-pHf
+tRL
 aFT
 aGE
 xnD

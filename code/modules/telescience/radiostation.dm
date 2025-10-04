@@ -646,6 +646,11 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 	New()
 		..()
+#ifdef NIGHTSHADE
+		//apparently second reality has copyright issues, not allowed on streamer servers
+		qdel(src)
+		return
+#endif
 		var/image/overlay = new /image(src.icon, "record_3")
 		overlay.color = list(1.5, 0, 0, 0, 0, 0, 0, 0, 0) // very red
 		src.UpdateOverlays(overlay, "recordlabel")
@@ -772,6 +777,12 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	add_overlay = 0
 	icon_state = "record_fruit"
 	song = 'sound/radio_station/music/honkmas.ogg'
+
+/obj/item/record/lay_egg_is_true
+	desc = "This egg seems to be laid particularly TRUE!!!"
+	add_overlay = 0
+	icon_state = "record_duck"
+	song = 'sound/radio_station/music/lay_egg_is_true.ogg'
 
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0

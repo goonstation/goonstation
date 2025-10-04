@@ -1823,6 +1823,35 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"ayV" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
+/turf/simulated/floor/white,
+/area/spacehabitat/pool)
 "azp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3994,6 +4023,10 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction2)
+"bhJ" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bhW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -12168,35 +12201,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/small_backup1)
-"dIG" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
-/turf/simulated/floor/white,
-/area/spacehabitat/pool)
 "dIR" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -17892,6 +17896,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"fAG" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/spacehabitat/owlery)
 "fAI" = (
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/white/checker2{
@@ -35132,10 +35140,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/spacehabitat/owlery)
-"kVk" = (
-/obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "kVL" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/arrival{
@@ -39141,6 +39145,18 @@
 /obj/submachine/slot_machine,
 /turf/simulated/floor/carpet/green,
 /area/station/crew_quarters/cafeteria)
+"mej" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/obj/item/scpgnome,
+/obj/random_item_spawner/chompskey{
+	where_to_spawn = list(list(105,167),list(205,144),list(194,96),list(118,104),list(147,191),list(95,146),list(95,139),list(169,192))
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "meq" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
@@ -41897,18 +41913,6 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
-"naT" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/obj/item/scpgnome,
-/obj/random_item_spawner/chompskey{
-	where_to_spawn = list(list(105,167),list(205,144),list(194,96),list(118,104),list(147,191),list(95,146),list(95,139),list(169,192))
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/sw)
 "naU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44078,17 +44082,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
-"nKQ" = (
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/plating/jen,
-/area/station/medical/dome)
 "nKY" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -48262,6 +48255,30 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/testchamber/bombchamber)
+"oYE" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/turf/simulated/floor/white,
+/area/spacehabitat/pool)
 "oYJ" = (
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -51800,10 +51817,6 @@
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
-"qea" = (
-/obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/spacehabitat/owlery)
 "qed" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -73039,6 +73052,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"wAZ" = (
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access = null
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/plating/jen,
+/area/station/medical/dome)
 "wBl" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -78632,30 +78656,6 @@
 	dir = 6
 	},
 /area/station/security/checkpoint/podbay)
-"yeo" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/turf/simulated/floor/white,
-/area/spacehabitat/pool)
 "yes" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/maintenance/inner/north)
@@ -90387,7 +90387,7 @@ bsa
 jqe
 bsa
 bsa
-qea
+fAG
 bsa
 bsa
 bsa
@@ -99455,7 +99455,7 @@ mLH
 sDx
 fZs
 mLH
-dIG
+ayV
 fTA
 iCP
 iCP
@@ -99755,7 +99755,7 @@ iKD
 oVo
 ant
 rlc
-yeo
+oYE
 fTA
 fTA
 fTA
@@ -108682,7 +108682,7 @@ jlu
 hdw
 wNA
 gwi
-naT
+mej
 gjH
 pOK
 umn
@@ -129828,7 +129828,7 @@ hum
 uaz
 uaz
 gBK
-nKQ
+wAZ
 tOH
 bUC
 kaI
@@ -158234,7 +158234,7 @@ rdj
 rdj
 csA
 csA
-kVk
+bhJ
 fJu
 csA
 csA

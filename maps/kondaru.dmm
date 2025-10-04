@@ -27590,6 +27590,42 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
+"cOi" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -9
+	},
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "cOu" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -33444,6 +33480,20 @@
 	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
+"gHt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/dome)
 "gHX" = (
 /obj/mesh/catwalk,
 /obj/machinery/oreaccumulator,
@@ -40757,13 +40807,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"lGb" = (
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 4
-	},
-/obj/item/kitchen/food_box/egg_box,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen/freezer)
 "lGw" = (
 /mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet/red/fancy/innercorner/north,
@@ -45762,42 +45805,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"pmV" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -9
-	},
-/obj/item/clothing/shoes/fuzzy,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "pmZ" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/machinery/camera/directional/east{
@@ -48437,20 +48444,6 @@
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
-"raY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/dome)
 "rbi" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -58592,6 +58585,13 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
+"xUk" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
+/obj/item/kitchen/egg_box,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "xUw" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -94964,7 +94964,7 @@ iTv
 iTv
 iTv
 iTv
-raY
+gHt
 iTv
 iTv
 iTv
@@ -114905,7 +114905,7 @@ hvn
 dZK
 kLJ
 aZS
-lGb
+xUk
 cnR
 lIh
 cJp
@@ -123349,7 +123349,7 @@ aCF
 gZu
 aCF
 coy
-pmV
+cOi
 pUx
 koG
 aCF

@@ -2385,28 +2385,6 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
-"qb" = (
-/obj/storage/closet/wardrobe/mixed{
-	name = "guest lockers"
-	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/head/goggles/blue{
-	name = "swim goggles"
-	},
-/obj/item/clothing/head/goggles/blue{
-	name = "swim goggles"
-	},
-/turf/unsimulated/floor/pool/blue,
-/area/syndicate_station{
-	name = "Decirprevo Tanker";
-	color = "aqua"
-	})
 "qe" = (
 /obj/machinery/door/airlock/gannets/engineering{
 	name = "exports"
@@ -3213,13 +3191,6 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
-"wb" = (
-/obj/noticeboard/directional/north,
-/turf/simulated/floor/circuit/off,
-/area/syndicate_station{
-	name = "Decirprevo Tanker";
-	color = "aqua"
-	})
 "wc" = (
 /obj/machinery/door/airlock/gannets/maintenance,
 /obj/mapping_helper/access/syndie_shuttle,
@@ -3257,6 +3228,13 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
 /turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"wz" = (
+/obj/noticeboard/directional/north,
+/turf/simulated/floor/circuit/off,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
 	color = "aqua"
@@ -6051,6 +6029,28 @@
 	dir = 4
 	},
 /area/space)
+"PI" = (
+/obj/storage/closet/wardrobe/mixed{
+	name = "guest lockers"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/head/goggles/blue{
+	name = "swim goggles"
+	},
+/obj/item/clothing/head/goggles/blue{
+	name = "swim goggles"
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "PK" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/twotone/black,
@@ -7976,7 +7976,7 @@ SG
 Yd
 HQ
 bZ
-qb
+PI
 am
 am
 CW
@@ -8028,7 +8028,7 @@ SG
 Yd
 HQ
 bZ
-qb
+PI
 am
 am
 vz
@@ -8215,7 +8215,7 @@ aD
 Yd
 HQ
 Gk
-wb
+wz
 bH
 bH
 bH

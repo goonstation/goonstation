@@ -1372,17 +1372,6 @@
 /obj/machinery/turret,
 /turf/simulated/floor/blueblack/corner,
 /area/station/turret_protected/ai)
-"bbB" = (
-/obj/machinery/disposal/brig{
-	name = "ejector chute"
-	},
-/obj/disposalpipe/trunk/ejection{
-	dir = 8
-	},
-/obj/machinery/light/incandescent/warm,
-/obj/noticeboard/persistent/security_foyer/directional/north,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "bbD" = (
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
@@ -1774,41 +1763,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"bwd" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
-/obj/item/inner_tube/random,
-/obj/item/clothing/gloves/water_wings,
-/obj/item/rubberduck{
-	pixel_y = 6
-	},
-/obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/grime,
-/area/heated_pool)
 "bwk" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -2335,13 +2289,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/ce)
-"bQq" = (
-/obj/machinery/vending/medical,
-/obj/noticeboard/persistent/medbay/directional/north,
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/station/medical/medbay)
 "bQs" = (
 /obj/table/auto,
 /obj/machinery/networked/printer{
@@ -3500,13 +3447,6 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
-"cKG" = (
-/obj/table/wood/auto,
-/obj/noticeboard/persistent/chapel/directional/west,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
-/area/station/chapel/sanctuary)
 "cKH" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 8;
@@ -3643,6 +3583,12 @@
 /obj/railing,
 /turf/simulated/floor/yellow/side,
 /area/shuttle/sea_elevator_room)
+"cOU" = (
+/obj/rack,
+/obj/item/clothing/head/helmet/space/donk,
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/simulated/floor/grime,
+/area/iss)
 "cPj" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/specialroom/freezer,
@@ -5791,6 +5737,13 @@
 /obj/lattice,
 /turf/space/fluid,
 /area/space)
+"eoh" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/noticeboard/directional/north,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
 "eot" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical{
@@ -7653,16 +7606,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
-"fwT" = (
-/obj/fakeobject/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
-/obj/item/clothing/under/gimmick/donkini,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "fxt" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -11432,12 +11375,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"iku" = (
-/obj/rack,
-/obj/item/clothing/head/helmet/space/donk,
-/obj/item/clothing/under/gimmick/donkini,
-/turf/simulated/floor/grime,
-/area/iss)
 "ikC" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/radio/intercom/medical,
@@ -15391,6 +15328,16 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/hangar/main)
+"kXx" = (
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "kXA" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -15420,25 +15367,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/studio)
-"kYi" = (
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/storage/crate,
-/obj/machinery/light/incandescent,
-/obj/noticeboard/persistent/engineering/directional/east,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/engineering)
 "kYz" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/navbeacon/mule/research_north/west,
@@ -18573,6 +18501,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"nnG" = (
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/item/heat_dowsing,
+/obj/storage/crate,
+/obj/machinery/light/incandescent,
+/obj/noticeboard/persistent/engineering/directional/east,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/engineering)
 "noF" = (
 /obj/decal/cleanable/oil{
 	icon_state = "floor6"
@@ -21162,13 +21109,6 @@
 "pqm" = (
 /turf/unsimulated/floor/green/corner,
 /area/station/crewquarters/cryotron)
-"pqx" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
-/obj/noticeboard/directional/north,
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
 "pqY" = (
 /turf/unsimulated/floor/green/side{
 	dir = 8
@@ -21873,6 +21813,41 @@
 /obj/mapping_helper/access/teleporter,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/teleporter)
+"pOo" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/inner_tube/random,
+/obj/item/clothing/gloves/water_wings,
+/obj/item/rubberduck{
+	pixel_y = 6
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/grime,
+/area/heated_pool)
 "pOp" = (
 /turf/simulated/floor,
 /area/radiostation/bridge)
@@ -21956,6 +21931,13 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/bridge/execrestroom)
+"pQv" = (
+/obj/machinery/vending/medical,
+/obj/noticeboard/persistent/medbay/directional/north,
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/medical/medbay)
 "pQx" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/hair_dye_dispenser,
@@ -23133,6 +23115,13 @@
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"qKk" = (
+/obj/table/wood/auto,
+/obj/noticeboard/persistent/chapel/directional/west,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
 "qKs" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/plating,
@@ -24764,6 +24753,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
+"rVW" = (
+/obj/machinery/disposal/brig{
+	name = "ejector chute"
+	},
+/obj/disposalpipe/trunk/ejection{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/noticeboard/persistent/security_foyer/directional/north,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "rVX" = (
 /obj/machinery/navbeacon/mule/crewA_north,
 /turf/simulated/floor/carpet{
@@ -74155,7 +74155,7 @@ vVG
 eAP
 kTn
 hAH
-bQq
+pQv
 hZh
 iHL
 sjx
@@ -79859,7 +79859,7 @@ meM
 nYB
 bpk
 cDx
-cKG
+qKk
 lfU
 fqX
 qNe
@@ -83834,7 +83834,7 @@ wcx
 urY
 pLB
 vMj
-bbB
+rVW
 iue
 tJZ
 fwH
@@ -85588,7 +85588,7 @@ evo
 wmq
 wmq
 iSW
-kYi
+nnG
 yej
 ecg
 gkR
@@ -91778,7 +91778,7 @@ cUW
 dPL
 qpn
 qis
-bwd
+pOo
 wUY
 wUY
 nZB
@@ -97614,7 +97614,7 @@ qpn
 qpn
 qpn
 pJo
-pqx
+eoh
 dQP
 dQP
 sdZ
@@ -109393,7 +109393,7 @@ iJU
 dAl
 bdY
 nts
-fwT
+kXx
 reD
 bdY
 dAl
@@ -115745,7 +115745,7 @@ qpn
 qpn
 qpn
 iJU
-iku
+cOU
 por
 iJU
 qpn

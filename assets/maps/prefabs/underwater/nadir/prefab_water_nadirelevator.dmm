@@ -380,18 +380,6 @@
 "ob" = (
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"ou" = (
-/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
-/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
-/obj/item/reagent_containers/food/drinks/milk/rancid,
-/obj/item/kitchen/food_box/egg_box,
-/obj/storage/secure/closet/fridge/kitchen{
-	locked = 0
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/black/grime,
-/area/diner/kitchen)
 "ow" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
@@ -510,16 +498,6 @@
 	dir = 8
 	},
 /area/shuttle/sea_elevator)
-"sR" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cookingmachine/mixer,
-/obj/machinery/light/incandescent/warm{
-	dir = 4;
-	nostick = 1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/black/grime,
-/area/diner/kitchen)
 "sX" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -559,6 +537,18 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
+"tM" = (
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
+/obj/item/kitchen/egg_box,
+/obj/storage/secure/closet/fridge/kitchen{
+	locked = 0
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
 "tN" = (
 /obj/machinery/teleport/portal_generator,
 /turf/simulated/floor/engine,
@@ -1027,11 +1017,6 @@
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
-"Jv" = (
-/obj/machinery/cookingmachine/oven,
-/obj/landmark/bill_spawn,
-/turf/simulated/floor/black/grime,
-/area/diner/kitchen)
 "Jz" = (
 /obj/lattice{
 	dir = 4;
@@ -1278,6 +1263,16 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
+"Pw" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cookingmachine/mixer,
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
 "PL" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 4
@@ -1296,6 +1291,11 @@
 /mob/living/carbon/human/biker,
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/diner/dining)
+"QR" = (
+/obj/machinery/cookingmachine/oven,
+/obj/landmark/bill_spawn,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
 "Rd" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/shaker/ketchup{
@@ -3537,10 +3537,10 @@ nw
 nw
 nw
 Fw
-Jv
+QR
 KY
 VR
-sR
+Pw
 tP
 KU
 Fw
@@ -3636,7 +3636,7 @@ nw
 nw
 Fw
 Fw
-ou
+tM
 qe
 Fw
 VC

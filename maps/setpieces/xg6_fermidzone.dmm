@@ -264,6 +264,50 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"be" = (
+/obj/decal/stage_edge/alt{
+	color = "#222222"
+	},
+/obj/noticeboard/directional/north{
+	desc = "A board for shaming fellow workers.";
+	name = "SHAME BOARD"
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Technicians got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Left a malfunctioning SMES unit at his service desk without following proper energy isolation and lockout procedures. AGAIN! </b>";
+	name = "Joff Muncey, Repair Technician";
+	pixel_x = 2;
+	pixel_y = 29
+	},
+/obj/item/paper{
+	desc = "Looks like some of the Sales team got called out.";
+	icon_state = "postit-writing";
+	info = "<b>The sales techs didn't flush their garbage disposal ALL WEEK. It's attracting ants!! Does plant cleanliness mean NOTHING to you?</b>";
+	name = "Gordon Baade & Sue Zhang, Sales Technicians";
+	pixel_x = -7;
+	pixel_y = 28
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Janitors got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Hurry up and take care of these damned ants! </b>";
+	name = "Tedward Benson, Janitor";
+	pixel_x = -2;
+	pixel_y = 26
+	},
+/obj/item/paper{
+	desc = "Looks like one of the Engineers got called out.";
+	icon_state = "postit-writing";
+	info = "<b>Borrowed GLEN's wrench, didn't return it for weeks!</b>";
+	name = "Jimmy Li, Engineer";
+	pixel_x = 7;
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/yellowblack,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "bf" = (
 /obj/item/poster{
 	desc = "Janet Habicht, Operations Manager. Last seen at XG-5 'Su Song' Thermocouple Site. Missing in Action following radiological disaster. Reward offered for information.";
@@ -3068,34 +3112,6 @@
 	},
 /obj/item/casing/small,
 /turf/unsimulated/floor/industrial,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"mW" = (
-/obj/table/reinforced/bar/auto{
-	name = "dinette counter"
-	},
-/obj/decal/tile_edge/check/white{
-	dir = 4;
-	icon_state = "check1"
-	},
-/obj/decal/tile_edge/check/white{
-	dir = 8;
-	icon_state = "check1"
-	},
-/obj/noticeboard/directional/north{
-	desc = "A board for shaming fellow workers.";
-	name = "SHAME BOARD"
-	},
-/obj/item/paper{
-	desc = "It's a menu of the last meals served here.";
-	icon_state = "paper";
-	info = "<h3>Shen Kuo Cafe</h3><h4>Today's Menu</h4><hr><br><p>Today's Theme: Culinary Eggcellence! </p><ul><li>Hardboiled Egg</li><li>Deviled Egg</li><li>Egg Salad</li><li>Egg on Toast</li></ul>";
-	name = "Menu";
-	pixel_x = -4;
-	pixel_y = 26
-	},
-/turf/unsimulated/floor/wood/two,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -7580,6 +7596,34 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"Fj" = (
+/obj/table/reinforced/bar/auto{
+	name = "dinette counter"
+	},
+/obj/decal/tile_edge/check/white{
+	dir = 4;
+	icon_state = "check1"
+	},
+/obj/decal/tile_edge/check/white{
+	dir = 8;
+	icon_state = "check1"
+	},
+/obj/noticeboard/directional/north{
+	desc = "A board for shaming fellow workers.";
+	name = "SHAME BOARD"
+	},
+/obj/item/paper{
+	desc = "It's a menu of the last meals served here.";
+	icon_state = "paper";
+	info = "<h3>Shen Kuo Cafe</h3><h4>Today's Menu</h4><hr><br><p>Today's Theme: Culinary Eggcellence! </p><ul><li>Hardboiled Egg</li><li>Deviled Egg</li><li>Egg Salad</li><li>Egg on Toast</li></ul>";
+	name = "Menu";
+	pixel_x = -4;
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/wood/two,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "Fl" = (
 /obj/map/light/green,
 /turf/unsimulated/floor/engine/glow/blue,
@@ -7973,6 +8017,30 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/yellowblack{
 	dir = 10
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"GZ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/item/storage/secure/ssafe/loot{
+	pixel_y = 26
+	},
+/obj/item/skull,
+/obj/item/skull,
+/obj/item/skull,
+/obj/item/skull,
+/obj/item/skull/hunter,
+/obj/storage/crate/classcrate/xg{
+	desc = "A hefty attache case.";
+	locked = 1;
+	name = "attache case"
+	},
+/turf/simulated/floor/greenblack{
+	dir = 1
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -10344,50 +10412,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"QQ" = (
-/obj/decal/stage_edge/alt{
-	color = "#222222"
-	},
-/obj/noticeboard/directional/north{
-	desc = "A board for shaming fellow workers.";
-	name = "SHAME BOARD"
-	},
-/obj/item/paper{
-	desc = "Looks like one of the Technicians got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Left a malfunctioning SMES unit at his service desk without following proper energy isolation and lockout procedures. AGAIN! </b>";
-	name = "Joff Muncey, Repair Technician";
-	pixel_x = 2;
-	pixel_y = 29
-	},
-/obj/item/paper{
-	desc = "Looks like some of the Sales team got called out.";
-	icon_state = "postit-writing";
-	info = "<b>The sales techs didn't flush their garbage disposal ALL WEEK. It's attracting ants!! Does plant cleanliness mean NOTHING to you?</b>";
-	name = "Gordon Baade & Sue Zhang, Sales Technicians";
-	pixel_x = -7;
-	pixel_y = 28
-	},
-/obj/item/paper{
-	desc = "Looks like one of the Janitors got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Hurry up and take care of these damned ants! </b>";
-	name = "Tedward Benson, Janitor";
-	pixel_x = -2;
-	pixel_y = 26
-	},
-/obj/item/paper{
-	desc = "Looks like one of the Engineers got called out.";
-	icon_state = "postit-writing";
-	info = "<b>Borrowed GLEN's wrench, didn't return it for weeks!</b>";
-	name = "Jimmy Li, Engineer";
-	pixel_x = 7;
-	pixel_y = 28
-	},
-/turf/unsimulated/floor/yellowblack,
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "QT" = (
 /obj/lattice/directional_icons{
 	dir = 9
@@ -11737,30 +11761,6 @@
 	name = "CLOSED FOR PEST CONTROL"
 	},
 /turf/simulated/floor/stairs/dark/wide{
-	dir = 1
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Wj" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/item/storage/secure/ssafe/loot{
-	pixel_y = 26
-	},
-/obj/item/skull,
-/obj/item/skull,
-/obj/item/skull,
-/obj/item/skull,
-/obj/item/skull/strange,
-/obj/storage/crate/classcrate/xg{
-	desc = "A hefty attache case.";
-	locked = 1;
-	name = "attache case"
-	},
-/turf/simulated/floor/greenblack{
 	dir = 1
 	},
 /area/solarium{
@@ -16003,7 +16003,7 @@ cT
 EX
 WP
 yC
-mW
+Fj
 Gq
 yC
 Iv
@@ -16154,7 +16154,7 @@ Fm
 Lp
 fc
 yC
-QQ
+be
 Rk
 JR
 lt
@@ -16231,7 +16231,7 @@ Rk
 JR
 lt
 Yf
-Wj
+GZ
 bP
 RN
 CS

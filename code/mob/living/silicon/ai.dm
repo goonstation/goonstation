@@ -1414,8 +1414,10 @@ or don't if it uses a custom topopen overlay
 	if (src.sleeping) src.sleeping = 0
 	src.delStatus("knockdown")
 
+#define AI_CHARGE_RATE 10
 /mob/living/silicon/ai/use_power()
 	..()
+	var/mult = (max(tick_spacing, TIME - last_life_tick) / tick_spacing)
 	var/turf/T = get_turf(src)
 	if (T)
 		var/area/A = T.loc
@@ -1428,13 +1430,13 @@ or don't if it uses a custom topopen overlay
 	switch(src.power_mode)
 		if (0)
 			if (istype(src.cell,/obj/item/cell/) && src.cell.charge < src.cell.maxcharge)
-				src.cell.charge = min(src.cell.charge + 5,src.cell.maxcharge)
+				src.cell.charge = min(src.cell.charge + (AI_CHARGE_RATE * mult),src.cell.maxcharge)
 				if (src.cell.charge >= 100 && isdead(src) && try_rebooting_it())
 					src.show_text("<b>ALERT: Internal power cell has regained sufficient charge to operate. Rebooting...</b>", "blue")
 		if (1)
 			if (istype(src.cell,/obj/item/cell/))
 				if (src.cell.charge > 5)
-					src.cell.use(5)
+					src.cell.use(AI_CHARGE_RATE * mult)
 				else if (!isdead(src))
 					src.cell.charge = 0
 					src.show_text("<b>ALERT: Internal battery expired. Shutting down to prevent system damage.</b>", "red")
@@ -1482,6 +1484,7 @@ or don't if it uses a custom topopen overlay
 					src.aiRestorePowerRoutine = 1
 			else
 				src.aiRestorePowerRoutine = 0
+#undef AI_CHARGE_RATE
 
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
@@ -2581,7 +2584,7 @@ proc/get_mobs_trackable_by_AI()
 	. = ..()
 	src.camera.c_tag = src.real_name
 	src.eyecam.UpdateName()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 // For if an AI needs to disconnect, make their core a latejoin one
@@ -2884,6 +2887,7 @@ proc/get_mobs_trackable_by_AI()
 
 	do_killswitch()
 		. = ..()
-		src.ai.brain.take_damage(20, 20)
-		src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
-		src.ai.eject_brain()
+		if (.)
+			src.ai.brain.take_damage(20, 20)
+			src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
+			src.ai.eject_brain()

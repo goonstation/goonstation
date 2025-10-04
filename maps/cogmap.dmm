@@ -5861,6 +5861,11 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"axr" = (
+/obj/submachine/ice_cream_dispenser,
+/obj/noticeboard/persistent/bar/directional/north,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "axu" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -12009,38 +12014,6 @@
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
-	},
-/area/station/crew_quarters/pool)
-"aRt" = (
-/obj/machinery/light,
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/macho{
-	color = "#555555";
-	desc = "They're a little bit tight.";
-	name = "speedo"
-	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/shoes/flippers,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
-/turf/simulated/floor/bluewhite/corner{
-	dir = 8
 	},
 /area/station/crew_quarters/pool)
 "aRv" = (
@@ -34895,10 +34868,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"cBU" = (
-/obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "cBV" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -52151,18 +52120,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
-"pge" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/obj/noticeboard/persistent/brig/directional/north,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "pgo" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -54178,6 +54135,20 @@
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
+"qGo" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
 "qGN" = (
 /obj/mesh/catwalk{
 	dir = 5
@@ -56689,11 +56660,6 @@
 /obj/random_item_spawner/med_tool,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
-"sBh" = (
-/obj/submachine/ice_cream_dispenser,
-/obj/noticeboard/persistent/bar/directional/north,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/bar)
 "sBA" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -62437,6 +62403,10 @@
 	name = "test chamber plating"
 	},
 /area/station/science/testchamber)
+"wGX" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "wHn" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /turf/simulated/floor/plating,
@@ -63155,20 +63125,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
-"xjn" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_south,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
 "xjC" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -63186,6 +63142,38 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/station/hangar/engine)
+"xkt" = (
+/obj/machinery/light,
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/macho{
+	color = "#555555";
+	desc = "They're a little bit tight.";
+	name = "speedo"
+	},
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/shoes/flippers,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area/station/crew_quarters/pool)
 "xkU" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/med_data{
@@ -64479,6 +64467,18 @@
 /obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"yjq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/noticeboard/persistent/brig/directional/north,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "yku" = (
 /obj/machinery/power/terminal,
 /obj/cable/orange{
@@ -95743,7 +95743,7 @@ fZG
 aho
 dON
 asX
-pge
+yjq
 fDN
 vaa
 pgN
@@ -106633,7 +106633,7 @@ aLS
 aLS
 ave
 aLP
-aRt
+xkt
 aSl
 aSl
 hEd
@@ -114165,7 +114165,7 @@ tSy
 wVZ
 kCu
 wiO
-sBh
+axr
 fqw
 qQJ
 tvH
@@ -119001,7 +119001,7 @@ pYK
 pYK
 axC
 tVl
-xjn
+qGo
 aqZ
 bUx
 sQL
@@ -141224,7 +141224,7 @@ czU
 czU
 czU
 czU
-cBU
+wGX
 cBQ
 cBQ
 adC

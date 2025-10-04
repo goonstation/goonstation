@@ -9150,17 +9150,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/private)
-"bcN" = (
-/obj/storage/secure/closet/fridge,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/storage/box/bacon_kit,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/snacks/ingredient/cheese,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/storage/box/donkpocket_kit,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "bcP" = (
 /obj/cable/reinforced{
 	icon_state = "0-8-thick"
@@ -11788,10 +11777,6 @@
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"bOI" = (
-/obj/noticeboard/directional/north,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "bOO" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
@@ -13267,6 +13252,14 @@
 	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
+"cPd" = (
+/obj/noticeboard/directional/north{
+	name = "Wanted Board"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "cPs" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/produce{
@@ -14581,6 +14574,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hop)
+"dXn" = (
+/obj/noticeboard/directional/north{
+	name = "Complaint Board"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "dXv" = (
 /obj/machinery/manufacturer/qm,
 /turf/simulated/floor/orangeblack/side{
@@ -18452,6 +18454,17 @@
 /obj/machinery/vending/security,
 /turf/simulated/floor/red,
 /area/station/security/processing)
+"hio" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/storage/box/bacon_kit,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/storage/box/donkpocket_kit,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "hjc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20010,15 +20023,6 @@
 /obj/machinery/portableowl/judgementowl,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
-"iHS" = (
-/obj/noticeboard/directional/north{
-	name = "Complaint Board"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "iIq" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -21699,6 +21703,10 @@
 	},
 /turf/space,
 /area/station/engine/proto)
+"kaN" = (
+/obj/noticeboard/directional/north,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "kbe" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -26767,6 +26775,13 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"ojx" = (
+/obj/submachine/seed_manipulator,
+/obj/noticeboard/persistent/botany/directional/west,
+/turf/simulated/floor/greenblack{
+	dir = 9
+	},
+/area/station/hydroponics/bay)
 "ojH" = (
 /obj/shrub,
 /turf/simulated/floor/green/side{
@@ -30894,6 +30909,12 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/engine/engineering/ce)
+"raZ" = (
+/obj/noticeboard/persistent/cargo/directional/north,
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/station/quartermaster/office)
 "rbd" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/specialroom/chapel{
@@ -34221,12 +34242,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"trm" = (
-/obj/noticeboard/persistent/cargo/directional/north,
-/turf/simulated/floor/caution/east{
-	dir = 8
-	},
-/area/station/quartermaster/office)
 "trL" = (
 /obj/storage/crate,
 /obj/machinery/shieldgenerator/meteorshield,
@@ -35662,14 +35677,6 @@
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"uvI" = (
-/obj/noticeboard/directional/north{
-	name = "Wanted Board"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/south)
 "uwO" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -39347,13 +39354,6 @@
 	dir = 10
 	},
 /area/station/science/teleporter)
-"xuI" = (
-/obj/submachine/seed_manipulator,
-/obj/noticeboard/persistent/botany/directional/west,
-/turf/simulated/floor/greenblack{
-	dir = 9
-	},
-/area/station/hydroponics/bay)
 "xvi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -73314,7 +73314,7 @@ xIA
 aDq
 bqL
 aHH
-bcN
+hio
 vYV
 frK
 hce
@@ -78420,7 +78420,7 @@ wIC
 aaa
 aaa
 toE
-xuI
+ojx
 gjW
 hBw
 iGF
@@ -80786,7 +80786,7 @@ aJw
 aJw
 aJw
 aJw
-trm
+raZ
 azl
 aAV
 aJw
@@ -83789,7 +83789,7 @@ adP
 dMT
 afb
 adP
-iHS
+dXn
 uWQ
 ibj
 xDN
@@ -85699,7 +85699,7 @@ fPp
 mfY
 feR
 mfY
-uvI
+cPd
 uSK
 uSK
 uSK
@@ -87814,7 +87814,7 @@ tEO
 aIq
 aJo
 vfi
-bOI
+kaN
 rkK
 nvS
 oDO
