@@ -966,7 +966,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "RCD Replacement"
 
-/datum/supply_packs/placespipes
+/datum/supply_packs/places_pipes
 	name = "Handheld-pipe-dispenser replacement"
 	desc = "Contains one handheld-pipe-dispenser."
 	category = "Basic Materials"

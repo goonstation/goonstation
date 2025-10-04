@@ -986,7 +986,7 @@
 	time = 90 SECONDS
 	category = "Tool"
 
-/datum/manufacture/placespipes
+/datum/manufacture/places_pipes
 	name = "Handheld Pipe Dispencer"
 	item_requirements = list("metal_superdense" = 12,
 							 "crystal_dense" = 6,
