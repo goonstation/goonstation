@@ -14,25 +14,25 @@
 				remembered_body.emote("scream")
 				remembered_body.changeStatus("unconscious", 1 SECONDS)
 				remembered_body.force_laydown_standup()
-			switch (artifact.exorcised)
+			switch (artifact.exorcised) //Possibly some kind of retribution from the artifact?
 				if(1)
-					//Knock back
+					//First hit
 				if(2)
-					//Hiss and knock back
+					//Second hit
 				if(3)
 					playsound(src.loc, 'sound/voice/wraith/revleave.ogg', 50, 1, -1)
 					src.ArtifactDeactivated()
 		else if (istype(W, /obj/item/implant/mindhack))
 			artifact.mindhack_attuned = TRUE
 			artifact.mindhack_owner = user
-			boutput(user, SPAN_ALERT("[artifact] absorbs and attunes to the mindhack implant."))
+			boutput(user, SPAN_ALERT("[src] absorbs and attunes to the mindhack implant."))
 			qdel(W)
 
 	examine()
 		. = ..()
 		var/datum/artifact/mindscrambler/artifact = src.artifact
 		if(artifact.activated && istraitor(usr))
-			. += " You alone notice there's a small opening the exact size and shape of a Mindhack implant.."
+			. += SPAN_ARTHINT(" You notice there's a small opening the exact size and shape of a Mindhack implant.")
 
 
 /datum/artifact/mindscrambler
@@ -129,6 +129,10 @@
 			if(src.mindhack_attuned)
 				var/mob/target = src.remembered_bodies[i]
 				target.setStatus("mindhack", null, src.mindhack_owner, null)
+				if(src.remembered_bodies[i] == src.mindhack_owner)
+					boutput(src.remembered_bodies[i], SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
+					tgui_alert(src.remembered_bodies[i], "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
+				logTheThing(LOG_COMBAT, src.mindhack_owner, "has mindhacked people through the use of the Mindscramble artifact [O] at [log_loc(O)].")
 
 		ON_COOLDOWN(src, "mind_scramble", src.mindscramble_cooldown)
 		SPAWN(src.mindscramble_cooldown)
@@ -141,16 +145,19 @@
 		for (var/i = 1 to nr_of_minds)
 			var/datum/mind/original_mind = src.original_minds[i]
 			var/mob/living/carbon/human/original_body = src.original_bodies[i]
-			if(src.mindhack_attuned)
-				original_body.delStatus("mindhack")
 			if(!(original_mind == original_body.mind))
 				original_mind.swap_with(original_body)
+		if(src.mindhack_attuned)
+			for (var/mob/living/carbon/human/original_body in src.original_bodies)
+				original_body.delStatus("mindhack")
 
 		src.original_minds = list()
 		src.original_bodies = list()
 		src.remembered_bodies = list()
 		src.last_activating_body = ""
 		src.exorcised = 0
+		src.mindhack_attuned = FALSE
+		src.mindhack_owner = ""
 
 	proc/animate_mindscramble(var/list/remembered_bodies)
 		//Levitate everybody, spin them around, drop em down and play the lightning strike.
