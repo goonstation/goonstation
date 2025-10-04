@@ -441,11 +441,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	flags = FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	HELP_MESSAGE_OVERRIDE({"\
 		Click the barrel with an <b>empty hand</b> to flip the barrel's funnel into a spout or vice versa. \
-		Click and drag the barrel to a <b>CheMaster 3000</b> to allow the CheMaster to draw from the barrel's contents. \
 		Use a <b>reagent container</b> to add/remove reagents from the barrel, depending on the funnel/spout. \
 		Use a <b>pen</b> to add a label to the barrel. \
 		Use a <b>wrench</b> to open or close the barrel's lid. \
-		Use a <b>synthetic pustule</b> on the barrel to squeeze its contents into the barrel.\
+		Use a <b>synthetic pustule</b> on the barrel to squeeze its contents into the barrel. \
+		Click and drag the barrel to a <b>CheMaster 3000</b> to allow the CheMaster to draw from the barrel's contents.\
 	"})
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
