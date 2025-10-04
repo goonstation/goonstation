@@ -544,7 +544,7 @@
 			organ_list["brain"] = brain
 			SPAWN(2 SECONDS)
 				if (src.brain && src.donor)
-					src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					src.brain.name = "[src.donor.real_name]’s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 
@@ -624,9 +624,9 @@
 			var/obj/item/organ/O = organ_list[thing]
 			if(isnull(O))
 				continue
-			var/list/organ_name_parts = splittext(O.name, "'s")
+			var/list/organ_name_parts = splittext(O.name, "’s")
 			if(length(organ_name_parts) == 2)
-				O.name = "[user_name]'s [organ_name_parts[2]]"
+				O.name = "[user_name]’s [organ_name_parts[2]]"
 				O.donor_name = user_name
 
 	//input organ = string value of organ_list assoc list
@@ -1580,7 +1580,7 @@
 			organ_list["brain"] = brain
 			SPAWN(2 SECONDS)
 				if (src.brain && src.donor)
-					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					//src.brain.name = "[src.donor.real_name]’s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 

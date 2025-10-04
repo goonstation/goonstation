@@ -5027,9 +5027,9 @@
 /area/station/chapel/sanctuary)
 "aqW" = (
 /obj/storage/crate,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	level = 2
@@ -8972,7 +8972,7 @@
 /obj/item/reagent_containers/food/snacks/plant/peanuts,
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/clothing/glasses/blindfold,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -14973,8 +14973,8 @@
 /obj/item/clothing/shoes/flippers,
 /obj/item/reagent_containers/glass/bottle/eyedrops,
 /obj/item/reagent_containers/dropper,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/item/inner_tube/random,
 /obj/item/inner_tube/random,
 /obj/item/clothing/gloves/water_wings,
@@ -52633,7 +52633,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "doL" = (
-/obj/item/skull/odd,
+/obj/item/skull/changeling,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "doM" = (
