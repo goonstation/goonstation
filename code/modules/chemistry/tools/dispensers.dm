@@ -432,7 +432,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 /obj/reagent_dispensers/chemicalbarrel
 	name = "chemical barrel"
-	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
+	desc = "For storing medical chemicals and less savory things."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
