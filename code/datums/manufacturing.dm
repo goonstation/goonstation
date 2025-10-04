@@ -3473,6 +3473,14 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	time = 10 SECONDS
 	category = "Miscellaneous"
+
+/datum/manufacture/personal_crate
+	name = "Personal Crate"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/storage/secure/crate/personal)
+	create = 1
+	time = 10 SECONDS
+	category = "Miscellaneous"
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor
