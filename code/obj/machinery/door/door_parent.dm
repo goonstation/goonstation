@@ -618,7 +618,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			src.operating = 0
 
 /obj/machinery/door/proc/opened()
-	if(autoclose)
+	while(autoclose && !density && !QDELETED(src))
 		sleep(src.autoclose_delay)
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
