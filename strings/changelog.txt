@@ -1,4 +1,15 @@
 
+(t)fri oct 03 25
+(u)Emily
+(*)Classic Only: Shuttle auto-call reduced from 90 minutes to 60 minutes on classic servers for all game modes. Max round times are unaffected.
+(u)Lord_Earthfire
+(p)24818
+(e)|
+(+)Eggs in egg cartons are also visible while in inventories.
+(u)Lord_Earthfire
+(p)24817
+(e)|
+(+)You can click-drag eggs onto egg cartons to quickly fill the carton with eggs in the area, akin to how satchels work.
 (t)thu oct 02 25
 (u)Emily
 (e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects

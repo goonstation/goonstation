@@ -229,12 +229,32 @@
 				tooltip_rebuild = TRUE
 				boutput(user, "You place [W] into [src].")
 				src.update()
+				SEND_SIGNAL(W, COMSIG_ITEM_STORED, user)
 			else return ..()
 
 	mouse_drop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		if(user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 			if(!user.put_in_hand(src))
 				return ..()
+
+	MouseDrop_T(var/atom/movable/target, var/mob/user)
+		if (src.icon_state == "eggbox-closed" || !istype(target, /obj/item/reagent_containers/food/snacks/ingredient/egg) || !in_interact_range(src, user)  || BOUNDS_DIST(target, user) > 0 || !can_act(user))
+			return
+		if (src.count < src.max_count)
+			user.visible_message(SPAN_NOTICE("[user] begins quickly filling \the [src]."))
+			var/turf/staystill = get_turf(user)
+			for(var/obj/item/checked_item in view(1,user))
+				if (!istype(checked_item, target.type) || (checked_item in user) || QDELETED(checked_item)) continue
+				if (get_turf(user) != staystill) break
+				checked_item.add_fingerprint(user)
+				checked_item.set_loc(src)
+				src.insert_egg(checked_item)
+				SEND_SIGNAL(checked_item, COMSIG_ITEM_STORED, user)
+				sleep(0.2 SECONDS)
+				if (src.count >= src.max_count)
+					boutput(user, SPAN_NOTICE("\The [src] is now full!"))
+					break
+			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
 
 	proc/insert_egg(var/obj/item/egg = null)
 		if (src.count < src.max_count)
@@ -332,6 +352,7 @@
 	name = null
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = null
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER
 	var/obj/item/kitchen/egg_box/my_egg_box = null
 	var/my_index = null
 
