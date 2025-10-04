@@ -47,9 +47,15 @@ export const MixerItem = (props) => {
 };
 
 interface MixerMachineData {
-  maxItems;
-  heldItems;
-  working;
+  maxItems: number;
+  heldItems: CookingIngredient[];
+  working: boolean;
+}
+
+interface CookingIngredient {
+  name: string;
+  index: number;
+  iconData: string;
 }
 
 export const MixerMachine = () => {
