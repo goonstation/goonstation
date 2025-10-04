@@ -535,7 +535,7 @@
 				F.last_depth_level = my_depth_level
 				for(var/obj/O in F.loc)
 					LAGCHECK(LAG_MED)
-					if (O?.submerged_images)
+					if (O?.submerged_images && !HAS_ATOM_PROPERTY(O, PROP_ATOM_NOCROSSING))
 						F.Crossed(O)
 
 				depth_changed = 1

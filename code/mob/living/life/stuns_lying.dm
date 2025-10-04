@@ -80,7 +80,7 @@
 			if (owner.lying && !owner.buckled && !HAS_ATOM_PROPERTY(owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND))
 				var/turf/T = get_turf(owner)
 				var/sound_to_play = 'sound/misc/body_thud.ogg'
-				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3)
+				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3 && !HAS_ATOM_PROPERTY(owner, PROP_ATOM_NOCROSSING))
 					T.active_liquid.Crossed(owner)
 					sound_to_play = 'sound/misc/splash_2.ogg'
 				else if(T?.active_liquid)

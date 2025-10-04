@@ -333,7 +333,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		FLICK("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
-			src.Crossed(AM) // try to flush them
+			if(!HAS_ATOM_PROPERTY(AM, PROP_ATOM_NOCROSSING))
+				src.Crossed(AM) // try to flush them
 		SPAWN(0.7 SECONDS)
 			opening = FALSE
 
