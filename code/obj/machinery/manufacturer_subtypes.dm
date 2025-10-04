@@ -655,6 +655,7 @@
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
 		/datum/manufacture/RCD,
+		/datum/manufacture/places_pipes,
 		/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,

@@ -966,6 +966,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "RCD Replacement"
 
+/datum/supply_packs/places_pipes
+	name = "Handheld-pipe-dispenser replacement"
+	desc = "Contains one handheld-pipe-dispenser."
+	category = "Basic Materials"
+	contains = list(/obj/item/places_pipes)
+	cost = PAY_DONTBUYIT
+	containertype = /obj/storage/crate/wooden
+	containername = "HPD Replacement"
+
 /datum/supply_packs/buddy
 	name = "Thinktronic Build Your Own Buddy Kit"
 	desc = "Assemble your very own working Robuddy, one part per week."
