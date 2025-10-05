@@ -151,7 +151,6 @@
 
 	effect_deactivate(obj/O)
 		. = ..()
-		var/turf/T = get_turf(O)
 		//First try to distribute original minds to their original bodies.
 		var/list/leftover_bodies = new/list()
 		var/list/minds_without_bodies = new/list()
@@ -184,7 +183,7 @@
 			var/datum/mind/new_mind = new_minds_order[i]
 			var/mob/living/carbon/human/remembered_body = leftover_bodies[i]
 			new_mind.transfer_to(remembered_body)
-			boutput(original_body, SPAN_ALERT("[O] couldn't return you to your original body.. This is who you are now."))
+			boutput(remembered_body, SPAN_ALERT("[O] couldn't return you to your original body.. This is who you are now."))
 
 		//Delete the temporary bodies.
 		for (var/mob/temp_body in temporary_bodies)
