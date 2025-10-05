@@ -217,7 +217,7 @@ TYPEINFO(/area)
 			//If any mobs are entering, within a thing or otherwise
 			if (length(enteringMobs) > 0)
 				for (var/mob/enteringM in enteringMobs) //each dumb mob
-					src.on_mob_entered(enteringM)
+					SEND_SIGNAL(src, COMSIG_MOB_ENTERED_AREA, enteringM)
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
 					if(enteringM.skipped_mobs_list)
@@ -262,7 +262,7 @@ TYPEINFO(/area)
 
 			if (length(exitingMobs) > 0)
 				for (var/mob/exitingM in exitingMobs)
-					src.on_mob_exited(exitingM)
+					SEND_SIGNAL(src, COMSIG_MOB_EXITED_AREA, exitingM)
 					src.cancel_sound_loop(exitingM)
 					if (exitingM.ckey && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)
@@ -283,14 +283,6 @@ TYPEINFO(/area)
 						//Put whatever you want here. See Entering above.
 
 		..()
-
-	/// Called whenever a mob enters the area
-	proc/on_mob_entered(var/mob/enteringM)
-		return
-
-	/// Called whenever a mob exits the area
-	proc/on_mob_exited(var/mob/exitingM)
-		return
 
 	/// Cancel a mob's ambient sound loop when leaving an area
 	proc/cancel_sound_loop(mob/M)
@@ -2963,19 +2955,10 @@ ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical/medbay/psychiatrist
 	name = "Psychiatrist's Office"
 	icon_state = "psychiatrist"
-	var/datum/area_therapy/therapy
 
 	New()
 		..()
-		src.therapy = new(src, list("training_therapy"))
-
-	on_mob_entered(var/mob/enteringM)
-		..()
-		src.therapy.attach_mob(enteringM)
-
-	on_mob_exited(var/mob/exitingM)
-		..()
-		src.therapy.detach_mob(exitingM)
+		AddComponent(/datum/component/area_therapy, specialist_traits=list("training_therapy"))
 
 /area/station/medical/medbay/treatment1
 	name = "Treatment Room 1"
@@ -3466,19 +3449,10 @@ ABSTRACT_TYPE(/area/station/chapel)
 	name = "Chapel"
 	icon_state = "chapel"
 	station_map_colour = MAPC_CHAPEL
-	var/datum/area_therapy/therapy
 
 	New()
 		..()
-		src.therapy = new(src, list("training_chaplain"), list("atheist"))
-
-	on_mob_entered(var/mob/enteringM)
-		..()
-		src.therapy.attach_mob(enteringM)
-
-	on_mob_exited(var/mob/exitingM)
-		..()
-		src.therapy.detach_mob(exitingM)
+		AddComponent(/datum/component/area_therapy, specialist_traits=list("training_chaplain"), trait_exclusions=list("atheist"))
 
 /area/station/chapel/sanctuary
 	name = "Chapel"
