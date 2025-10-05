@@ -33,7 +33,8 @@
 		var/datum/artifact/mindscrambler/artifact = src.artifact
 		if(artifact.activated && istraitor(usr))
 			. += SPAN_ARTHINT(" You notice there's a small opening the exact size and shape of a Mindhack implant.")
-
+		if(artifact.activated && usr.traitHolder?.hasTrait("training_chaplain"))
+			. += SPAN_ARTHINT(" This artifact is clearly diabolical!")
 
 /datum/artifact/mindscrambler
 	associated_object = /obj/machinery/artifact/mindscrambler
@@ -154,15 +155,13 @@
 		//First try to distribute original minds to their original bodies.
 		var/list/leftover_bodies = new/list()
 		var/list/minds_without_bodies = new/list()
-		T.visible_message("<b>[O]</b> created lists.")
 
 		//Put all minds in some temporary holders to make room for the new ones.
 		var/list/temporary_bodies = new/list()
-		for (var/mob/living/carbon/human/remembered_body in src.original_bodies)
+		for (var/mob/living/carbon/human/remembered_body in src.remembered_bodies)
 			var/mob/temp_body = new/mob(remembered_body.loc)
 			remembered_body.mind.transfer_to(temp_body)
 			temporary_bodies.Add(temp_body)
-		T.visible_message("<b>[O]</b> created temporary bodies.")
 
 		//Try to distribute original minds to original bodies as far as possible.
 		for (var/i = 1 to length(src.original_minds))
@@ -177,7 +176,7 @@
 				leftover_bodies.Add(original_body)
 				continue
 			original_mind.transfer_to(original_body)
-		T.visible_message("<b>[O]</b> distributed original minds.")
+			boutput(original_body, SPAN_ALERT("[O] is forced to return you to your original body!"))
 
 		//Then distribute minds without bodies to leftover bodies.
 		var/list/new_minds_order = src.sattolos_algo(minds_without_bodies)
@@ -185,18 +184,16 @@
 			var/datum/mind/new_mind = new_minds_order[i]
 			var/mob/living/carbon/human/remembered_body = leftover_bodies[i]
 			new_mind.transfer_to(remembered_body)
-		T.visible_message("<b>[O]</b> distributed minds without bodies.")
+			boutput(original_body, SPAN_ALERT("[O] couldn't return you to your original body.. This is who you are now."))
 
 		//Delete the temporary bodies.
 		for (var/mob/temp_body in temporary_bodies)
 			qdel(temp_body)
-		T.visible_message("<b>[O]</b> deleted temporary bodies.")
 
 		//And finally, take off any applied mindhacks.
 		if(src.mindhack_attuned)
 			for (var/mob/living/carbon/human/original_body in src.original_bodies)
 				original_body.delStatus("mindhack")
-		T.visible_message("<b>[O]</b> removed mindhacks.")
 
 		src.original_minds = list()
 		src.original_bodies = list()
