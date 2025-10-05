@@ -26,8 +26,14 @@ TYPEINFO(/datum/component/area_therapy)
 		RegisterSignal(src.parent, COMSIG_MOB_EXITED_AREA, PROC_REF(detach_mob))
 
 	proc/attach_mob(var/area, var/mob/mob)
+		// TODO, we want to register cyborgs to be able to give therapy even though they can't benefit because why not, but probably
+		// don't want to let player critters etc do so.
 		RegisterSignal(mob, COMSIG_ATOM_SAY, PROC_REF(try_do_therapy))
-		if (!mob?.traitHolder?.hasTraitInList(trait_exclusions))
+		// register all player mobs for therapy, but don't set the status for anyone unless they specifically have an addiction
+		if (istype(mob, /mob/living) && !mob?.traitHolder?.hasTraitInList(trait_exclusions))
+			var/mob/living/living = mob
+			if (!living.find_ailment_by_type(/datum/ailment/addiction))
+				return
 			mob.setStatus("therapy_zone", INFINITE_STATUS)
 
 	proc/detach_mob(var/area, var/mob/mob)
