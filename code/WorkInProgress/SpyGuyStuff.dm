@@ -31,7 +31,7 @@ Fibre wire
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/leg))
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
-			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot-ominous")
+			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot_ominous")
 			B.name = "ominous skullbot"
 			boutput(user, SPAN_NOTICE("You add [W] to [src]. That's neat."))
 			B.set_loc(get_turf(user))

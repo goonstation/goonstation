@@ -1056,6 +1056,8 @@ TYPEINFO(/datum/trait/partyanimal)
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
+			if (owner.reagents) // Addicts start with somewhat high addiction severity, so that they have to deal with it more.
+				LAZYLISTADDASSOC(owner.reagents.addiction_tally, selected_reagent, 60)
 			SPAWN(rand(4 MINUTES, 8 MINUTES))
 				addAddiction(owner)
 				do_addiction = TRUE
