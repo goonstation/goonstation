@@ -239,11 +239,11 @@ datum
 					M.take_toxin_damage(1 * mult)
 				if (probmult(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
 				if (probmult(8)) boutput(M, SPAN_NOTICE("You feel [pick("really buff", "on top of the world","like you're made of steel", "energized", "invigorated", "full of energy")]!"))
-				if (prob(5))
+				if (probmult(5))
 					boutput(M, SPAN_ALERT("You cannot breathe!"))
-					M.setStatusMin("stunned", 2 SECONDS * mult)
-					M.take_oxygen_deprivation(15 * mult)
-					M.losebreath += (1 * mult)
+					M.setStatus("slowed", 3 SECONDS)
+					M.take_oxygen_deprivation(15)
+					M.losebreath += (1)
 				..()
 				return
 
