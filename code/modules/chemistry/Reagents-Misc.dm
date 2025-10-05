@@ -242,8 +242,8 @@ datum
 				if (probmult(5))
 					boutput(M, SPAN_ALERT("You cannot breathe!"))
 					M.setStatus("slowed", 3 SECONDS)
-					M.take_oxygen_deprivation(15 * mult)
-					M.losebreath += (1 * mult)
+					M.take_oxygen_deprivation(15)
+					M.losebreath += (1)
 				..()
 				return
 
