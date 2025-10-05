@@ -320,15 +320,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/gas)
 "abj" = (
-/obj/storage/crate{
-	name = "undersea cables crate"
-	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/storage/box/cablesbox/reinforced,
-/obj/item/storage/box/cablesbox/reinforced,
-/obj/item/storage/box/cablesbox/reinforced,
-/obj/item/storage/box/cablesbox/reinforced,
 /obj/decal/stripe_caution,
+/obj/storage/crate/eng_reinforcedcables,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/inner)
 "abk" = (
@@ -10360,18 +10354,8 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
 "aKI" = (
-/obj/storage/crate{
-	name = "dowsing rod crate"
-	},
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
 /obj/decal/stripe_caution,
+/obj/storage/crate/eng_dowsingrods,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/inner)
 "aKJ" = (
@@ -16312,24 +16296,6 @@
 /area/station/engine/monitoring)
 "bmO" = (
 /obj/machinery/power/stomper,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
-/area/station/engine/inner)
-"bmP" = (
-/obj/storage/crate{
-	name = "dowsing rod crate"
-	},
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/inner)
@@ -108911,7 +108877,7 @@ abb
 ceM
 cfx
 abj
-bmP
+aKI
 aKI
 qmd
 wfI
