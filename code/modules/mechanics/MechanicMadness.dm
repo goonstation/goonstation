@@ -559,15 +559,7 @@ TYPEINFO(/obj/item/mechanics)
 				work_time = clamp(work_time, 1 SECONDS, 10 SECONDS)
 				//now we set the action bar in motion
 				user.visible_message(SPAN_NOTICE("[user] begins tampering with [src]."))
-				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
-					user,
-					src,
-					work_time,
-					/obj/item/mechanics/proc/wrench_action,
-					\list(user, W),
-					W.icon,
-					W.icon_state,)
-				actions.start(action_bar, user)
+				SETUP_GENERIC_ACTIONBAR(user, src, work_time, PROC_REF(wrench_action), list(user, W), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
 				src.wrench_action(user)
 			return TRUE
