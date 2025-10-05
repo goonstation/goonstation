@@ -112,12 +112,22 @@
 		var/list/new_minds_order = src.sattolos_algo(src.remembered_minds)
 		src.animate_mindscramble(src.remembered_bodies)
 
+		//Put all minds in some temporary holders to make room for the new ones.
+		var/list/temporary_bodies = new/list()
+		for (var/mob/living/carbon/human/remembered_body in src.remembered_bodies)
+			var/mob/temp_body = new/mob(remembered_body.loc)
+			remembered_body.mind.transfer_to(temp_body)
+			temporary_bodies.Add(temp_body)
+
 		//Perform the transfers
-		src.wipe_minds(src.remembered_bodies)
 		for (var/i = 1 to length(new_minds_order))
 			var/datum/mind/new_mind = new_minds_order[i]
 			var/mob/living/carbon/human/remembered_body = src.remembered_bodies[i]
-			src.insert_mind(new_mind, remembered_body)
+			new_mind.transfer_to(remembered_body)
+
+		//Delete the temporary bodies.
+		for (var/mob/temp_body in temporary_bodies)
+			qdel(temp_body)
 
 		if(src.mindhack_attuned)
 			for (var/mob/living/carbon/human/remembered_body in src.remembered_bodies)
@@ -140,12 +150,23 @@
 
 	effect_deactivate(obj/O)
 		. = ..()
+		var/turf/T = get_turf(O)
 		//First try to distribute original minds to their original bodies.
 		var/list/leftover_bodies = new/list()
 		var/list/minds_without_bodies = new/list()
-		src.wipe_minds(src.original_bodies)
+		T.visible_message("<b>[O]</b> created lists.")
+
+		//Put all minds in some temporary holders to make room for the new ones.
+		var/list/temporary_bodies = new/list()
+		for (var/mob/living/carbon/human/remembered_body in src.original_bodies)
+			var/mob/temp_body = new/mob(remembered_body.loc)
+			remembered_body.mind.transfer_to(temp_body)
+			temporary_bodies.Add(temp_body)
+		T.visible_message("<b>[O]</b> created temporary bodies.")
+
+		//Try to distribute original minds to original bodies as far as possible.
 		for (var/i = 1 to length(src.original_minds))
-			var/original_mind = src.original_minds[i]
+			var/datum/mind/original_mind = src.original_minds[i]
 			var/mob/living/carbon/human/original_body = src.original_bodies[i]
 			//If the body is dead, there's nothing to return to.
 			if(!(original_body in src.remembered_bodies))
@@ -155,19 +176,27 @@
 			if(!(original_mind in src.remembered_minds))
 				leftover_bodies.Add(original_body)
 				continue
-			src.insert_mind(original_mind, original_body)
+			original_mind.transfer_to(original_body)
+		T.visible_message("<b>[O]</b> distributed original minds.")
 
 		//Then distribute minds without bodies to leftover bodies.
 		var/list/new_minds_order = src.sattolos_algo(minds_without_bodies)
 		for (var/i = 1 to length(new_minds_order))
-			var/new_mind = new_minds_order[i]
+			var/datum/mind/new_mind = new_minds_order[i]
 			var/mob/living/carbon/human/remembered_body = leftover_bodies[i]
-			src.insert_mind(new_mind, remembered_body)
+			new_mind.transfer_to(remembered_body)
+		T.visible_message("<b>[O]</b> distributed minds without bodies.")
+
+		//Delete the temporary bodies.
+		for (var/mob/temp_body in temporary_bodies)
+			qdel(temp_body)
+		T.visible_message("<b>[O]</b> deleted temporary bodies.")
 
 		//And finally, take off any applied mindhacks.
 		if(src.mindhack_attuned)
 			for (var/mob/living/carbon/human/original_body in src.original_bodies)
 				original_body.delStatus("mindhack")
+		T.visible_message("<b>[O]</b> removed mindhacks.")
 
 		src.original_minds = list()
 		src.original_bodies = list()
@@ -220,13 +249,6 @@
 		body.ai_calm_down = 1
 		body.ai_default_intent = INTENT_HELP
 		body.ai_init()
-
-	proc/wipe_minds(var/list/remembered_bodies)
-		for (var/mob/living/carbon/human/remembered_body in remembered_bodies)
-			remembered_body.mind = null
-
-	proc/insert_mind(var/datum/mind/remembered_mind, var/mob/living/carbon/human/target_body)
-		remembered_mind.transfer_to(target_body)
 
 	proc/clean_remembered_bodies_and_minds()
 		//Clear out dead bodies and the mind which occupied the body when it died. Iterate in reverse order to avoid shifting.
