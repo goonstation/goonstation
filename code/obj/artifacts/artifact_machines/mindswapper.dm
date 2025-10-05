@@ -77,9 +77,8 @@
 			return
 		var/mob/living/carbon/human/H = user
 		if(!H.mind)
-			if(!isnpcmonkey(H))
-				T.visible_message("<b>[O]</b>'s antennas remain inactive.")
-				return
+			T.visible_message("<b>[O]</b>'s antennas remain inactive.")
+			return
 		if(H == src.last_activating_body)
 			T.visible_message("<b>[O]</b>'s antennas blink.")
 			boutput(user, SPAN_ALERT("[O] rejects your soul. It already remembers you from last time."))
@@ -96,14 +95,10 @@
 		src.clean_remembered_bodies_and_minds()
 
 		//Add the toucher
-		if(H.mind)
-			src.remembered_minds.Add(H.mind)
-			src.original_minds.Add(H.mind)
-		else
-			src.remembered_minds.Add("monkey")
-			src.original_minds.Add("monkey")
-		src.remembered_bodies.Add(H)
+		src.original_minds.Add(H.mind)
 		src.original_bodies.Add(H)
+		src.remembered_minds.Add(H.mind)
+		src.remembered_bodies.Add(H)
 		src.last_activating_body = H
 		T.visible_message("<b>[O]</b>'s antennas glow!")
 		boutput(H, SPAN_ALERT("[O] peers into your mind!"))
@@ -153,7 +148,7 @@
 			var/original_mind = src.original_minds[i]
 			var/mob/living/carbon/human/original_body = src.original_bodies[i]
 			//If the body is dead, there's nothing to return to.
-			if(!isalive(original_body))
+			if(!(original_body in src.remembered_bodies))
 				minds_without_bodies.Add(original_mind)
 				continue
 			//If the mind died while in another body, they don't get ressureccted.
@@ -230,23 +225,16 @@
 		for (var/mob/living/carbon/human/remembered_body in remembered_bodies)
 			remembered_body.mind = null
 
-	proc/insert_mind(var/remembered_mind, var/mob/living/carbon/human/target_body)
-		if(remembered_mind == "monkey")
-			src.make_monkey_npc(target_body)
-		else
-			if(target_body.is_npc)
-				target_body.ai_stop()
-				target_body.is_npc = FALSE
-			var/datum/mind/actual_mind = remembered_mind
-			actual_mind.transfer_to(target_body)
+	proc/insert_mind(var/datum/mind/remembered_mind, var/mob/living/carbon/human/target_body)
+		remembered_mind.transfer_to(target_body)
 
 	proc/clean_remembered_bodies_and_minds()
 		//Clear out dead bodies and the mind which occupied the body when it died. Iterate in reverse order to avoid shifting.
 		var/nr_of_minds = length(src.remembered_minds)
 		for (var/i = 0 to nr_of_minds - 1)
 			var/i_adjusted = nr_of_minds - i
-			//var/datum/mind/remembered_mind = src.remembered_minds[i_adjusted]
+			var/datum/mind/remembered_mind = src.remembered_minds[i_adjusted]
 			var/mob/living/carbon/human/remembered_body = src.remembered_bodies[i_adjusted]
 			if(!isalive(remembered_body))
-				src.remembered_minds.Cut(i_adjusted, i_adjusted+1) //What happens if this is the last element in the list?
-				src.remembered_bodies.Cut(i_adjusted, i_adjusted+1)
+				src.remembered_minds.Remove(remembered_mind)
+				src.remembered_bodies.Remove(remembered_body)
