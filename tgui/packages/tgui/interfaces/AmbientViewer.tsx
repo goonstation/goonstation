@@ -9,6 +9,7 @@ import {
   Collapsible,
   LabeledList,
   NumberInput,
+  Section,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
@@ -88,7 +89,17 @@ const AmbientSources = (props: AmbientViewerData) => {
   const { act } = useBackend();
 
   return Object.entries(props.controllers).map(([source_key, sourceData]) => (
-    <LabeledList.Item key={source_key} label={source_key}>
+    <Section
+      key={source_key}
+      title={source_key}
+      buttons={
+        <Button
+          icon="wand-magic-sparkles"
+          tooltip="Effect"
+          onClick={() => act('effect', { byondRef: sourceData.byondRef })}
+        />
+      }
+    >
       <Collapsible
         style={{
           background: `linear-gradient(to right, ${[sourceData.samples].map((txt) => txt)})`,
@@ -190,7 +201,7 @@ const AmbientSources = (props: AmbientViewerData) => {
           ''
         )}
       </Collapsible>
-    </LabeledList.Item>
+    </Section>
   ));
 };
 
@@ -200,9 +211,7 @@ export const AmbientViewer = () => {
   return (
     <Window title="Ambient Viewer" width={500} height={800}>
       <Window.Content scrollable>
-        <LabeledList>
-          <AmbientSources controllers={data.controllers} />
-        </LabeledList>
+        <AmbientSources controllers={data.controllers} />
       </Window.Content>
     </Window>
   );
