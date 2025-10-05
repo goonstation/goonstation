@@ -3872,5 +3872,5 @@
 	id = "therapy_zone"
 	name = "Therapeutic Atmosphere"
 	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
-	icon_state = "person"
+	icon_state = "therapy_zone"
 	effect_quality = STATUS_QUALITY_POSITIVE
