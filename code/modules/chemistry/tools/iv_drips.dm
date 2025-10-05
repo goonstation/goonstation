@@ -93,14 +93,15 @@
 	else
 		boutput(user, "[src] has already been sliced open.")
 
-/obj/item/reagent_containers/iv_drip/process()
-	if (!src.check_conditions())
-		return
+/obj/item/reagent_containers/iv_drip/process(mult = 1)
+	if (!src.stand)
+		if (!src.check_conditions())
+			return
 	switch (src.mode)
 		if (IV_INJECT)
-			src.inject_into_patient()
+			src.inject_into_patient(mult)
 		if (IV_DRAW)
-			src.draw_from_patient()
+			src.draw_from_patient(mult)
 
 /obj/item/reagent_containers/iv_drip/proc/update_name()
 	if (src.reagents?.total_volume)
@@ -163,12 +164,12 @@
 	if (src.stand)
 		src.stand.UpdateIcon()
 
-/obj/item/reagent_containers/iv_drip/proc/draw_from_patient()
-	transfer_blood(src.patient, src, src.amount_per_transfer_from_this)
+/obj/item/reagent_containers/iv_drip/proc/draw_from_patient(mult)
+	transfer_blood(src.patient, src, (src.amount_per_transfer_from_this * mult))
 
-/obj/item/reagent_containers/iv_drip/proc/inject_into_patient()
-	src.reagents.trans_to(src.patient, src.amount_per_transfer_from_this)
-	src.patient.reagents.reaction(src.patient, INGEST, src.amount_per_transfer_from_this)
+/obj/item/reagent_containers/iv_drip/proc/inject_into_patient(mult)
+	src.reagents.trans_to(src.patient, (src.amount_per_transfer_from_this * mult))
+	src.patient.reagents.reaction(src.patient, INGEST, (src.amount_per_transfer_from_this * mult))
 
 /obj/item/reagent_containers/iv_drip/proc/check_conditions()
 	. = TRUE
