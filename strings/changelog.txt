@@ -1,5 +1,9 @@
 
 (t)sun oct 05 25
+(u)Lord_Earthfire
+(p)24819
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Aranesp will not cause stuns anymore. Instead, it will slow the user with an equal probability.
 (u)Egregorious
 (p)24823
 (e)🆕💅💊|C-Feature, C-QoL, A-Medical
