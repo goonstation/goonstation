@@ -1961,8 +1961,8 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	jerk = FALSE
 	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
 	head_offset = 0
-	hand_offset = -3
-	body_offset = -3
+	hand_offset = -1
+	body_offset = 0
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
@@ -2029,6 +2029,13 @@ TYPEINFO(/datum/mutantrace/amphibian)
 					message = "<B>[used_name]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return message
+
+			if ("clothes")
+				src.clothes_filters_active = !src.clothes_filters_active
+				boutput(src.mob, src.clothes_filters_active ? "Amphibian-specific clothes filters activated." : "Disabled amphibian-specific clothes filters.")
+				src.mob.update_clothing()
+				. = "<B>[used_name]</B> adjusts [his_or_her(src.mob)] clothing."
+				return message
 			else ..()
 
 	apply_clothing_filters(var/obj/item/worn)
@@ -2037,6 +2044,8 @@ TYPEINFO(/datum/mutantrace/amphibian)
 		var/list/output = list()
 
 		if (istype(worn, /obj/item/clothing/suit))
+			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/under))
 			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
 		return output
 
