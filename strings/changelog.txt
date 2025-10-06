@@ -1,6 +1,10 @@
 
 (t)mon oct 06 25
 (u)JORJ949
+(p)24854
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(*)PDAs containing uplinks are now immune to detomatix bombings.
+(u)JORJ949
 (p)24811
 (e)🆕🗺|C-Feature, A-Mapping
 (*)The Security Department now has their own announcement computer locked to security access, instead of just the HoS (though the HoS still has their own cooler version).
