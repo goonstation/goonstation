@@ -38381,7 +38381,7 @@
 /area/station/mining/staff_room)
 "mJt" = (
 /obj/machinery/shieldgenerator/energy_shield,
-/obj/machinery/light/incandescent/netural{
+/obj/machinery/light/incandescent/blueish{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -43982,7 +43982,7 @@
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
 "tRo" = (
-/obj/machinery/light/incandescent/netural{
+/obj/machinery/light/incandescent/blueish{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
