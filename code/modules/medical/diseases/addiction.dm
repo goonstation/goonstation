@@ -21,10 +21,12 @@
 			rgnt = reagents_cache[reagent]
 		if (!rgnt) // if something isn't right, we have to fall back on a default in order to return something
 			rgnt = reagents_cache["gcheese"]
+			addiction.name = "[rgnt.name] addiction (This addiction has bugged)"
+		else
+			addiction.name = "[rgnt.name] addiction"
 
 		addiction.associated_reagent = rgnt.name
 		addiction.last_reagent_dose = TIME
-		addiction.name = "[rgnt.name] addiction"
 		addiction.severity = severity_override == null ? rgnt.addiction_severity : severity_override
 		addiction.addiction_meter = max(target?.reagents?.addiction_tally[rgnt.id], 10)
 		addiction.depletion_rate = addiction.depletion_rate ? addiction.depletion_rate : generate_depletion_rate(rgnt)
