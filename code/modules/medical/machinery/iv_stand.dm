@@ -73,8 +73,11 @@
 		. = ..()
 		return
 	if (iscarbon(over_object))
-		var/mob/living/carbon/new_patient = over_object
-		src.iv_drip.attempt_add_patient(new_patient, user)
+		if (src.patient == over_object)
+			src.iv_drip.remove_patient(user)
+		else
+			var/mob/living/carbon/new_patient = over_object
+			src.iv_drip.attempt_add_patient(new_patient, user)
 		return
 	if (!isturf(over_object))
 		. = ..()
