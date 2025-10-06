@@ -1,3 +1,9 @@
+/**
+ * IV stands
+ *
+ * N.B. The lights on the IV pump will flash red when they have a bag attached and when it isn't actively transfusing a patient. This is intended
+ * behaviour. - DisturbHerb
+ */
 /obj/machinery/medical/iv_stand
 	name = "\improper IV stand"
 	desc = {"A metal pole that you can hang IV bags on, which is useful since we aren't animals that go leaving our sanitized medical equipment all
@@ -19,6 +25,7 @@
 /obj/machinery/medical/iv_stand/New()
 	. = ..()
 	src.UpdateIcon()
+	src.update_name()
 
 /obj/machinery/medical/iv_stand/disposing()
 	if (src.iv_drip)
@@ -37,29 +44,38 @@
 /obj/machinery/medical/iv_stand/update_icon()
 	if (!src.iv_drip)
 		src.icon_state = "IVstand"
-		src.name = "\improper IV stand"
-		src.UpdateOverlays(null, "fluid")
-		src.UpdateOverlays(null, "bag")
+		src.ClearSpecificOverlays(list("fluid", "bag", "lights"))
 		return
-	src.name = "\improper IV stand ([src.iv_drip])"
+	src.icon_state = "IVstand-closed"
+	src.handle_iv_bag_image()
+	if (src.is_disabled())
+		src.ClearSpecificOverlays("lights")
+		return
+	if (!src.iv_drip.patient)
+		src.UpdateOverlays(image(src.icon, icon_state = "IVstand-lights"), "lights")
+		return
+	src.ClearSpecificOverlays("lights")
+
+/obj/machinery/medical/iv_stand/proc/handle_iv_bag_image()
 	if (src.iv_drip.reagents.total_volume)
-		src.bag_image = image(src.icon, icon_state = "IVstand1-full")
-		if (!src.fluid_image)
-			src.fluid_image = image(src.icon, icon_state = "IVstand1-fluid")
-		src.fluid_image.icon_state = "IVstand1-fluid"
+		src.bag_image = image(src.icon, icon_state = "IV-full")
+		src.fluid_image = src.fluid_image || image(src.icon, icon_state = "IV-fluid")
+		src.fluid_image.icon_state = "IV-fluid"
 		var/datum/color/average = src.iv_drip.reagents.get_average_color()
 		src.fluid_image.color = average.to_rgba()
 		src.UpdateOverlays(src.fluid_image, "fluid")
 	else
-		src.bag_image = image(src.icon, icon_state = "IVstand1")
+		src.bag_image = image(src.icon, icon_state = "IV")
 		src.UpdateOverlays(null, "fluid")
 	if (!src.bag_image)
-		src.bag_image = image(src.icon, icon_state = "IVstand1")
+		src.bag_image = image(src.icon, icon_state = "IV")
 	src.UpdateOverlays(src.bag_image, "bag")
-	if (src.iv_drip.patient)
-		src.icon_state = "IVstand-active"
+
+/obj/machinery/medical/iv_stand/proc/update_name()
+	if (src.iv_drip)
+		src.name = "[src.name] ([src.iv_drip])"
 	else
-		src.icon_state = "IVstand-finished"
+		src.name = initial(src.name)
 
 /obj/machinery/medical/iv_stand/mouse_drop(atom/over_object)
 	if (!isatom(over_object))
@@ -152,12 +168,14 @@
 	src.iv_drip.handle_processing()
 	src.add_patient(src.iv_drip.patient)
 	src.UpdateIcon()
+	src.update_name()
 
 /obj/machinery/medical/iv_stand/proc/remove_iv_drip(mob/user, turf/new_loc)
 	var/obj/item/reagent_containers/iv_drip/old_IV = src.iv_drip
 	src.iv_drip = null
 	src.remove_patient()
 	src.UpdateIcon()
+	src.update_name()
 	user.visible_message(SPAN_NOTICE("[user] takes [old_IV] down from [src]."),\
 	SPAN_NOTICE("You take [old_IV] down from [src]."))
 	if (ismob(user) && !isturf(new_loc))
