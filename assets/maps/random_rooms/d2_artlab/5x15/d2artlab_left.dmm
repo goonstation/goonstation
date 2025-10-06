@@ -8,14 +8,14 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "f" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Outpost launcher hub'";
 	name = "Outpost launcher hub"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -29,16 +29,16 @@
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_south"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /obj/machinery/launcher_loader/west{
 	id = "outpostla2"
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
@@ -111,10 +111,10 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /obj/machinery/door/poddoor/pyro/podbay_autoclose{
 	id = "artlabgun"
@@ -142,14 +142,14 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -159,7 +159,7 @@
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_west"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 O

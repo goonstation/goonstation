@@ -25,7 +25,7 @@
 /area/dmm_suite/clear_area)
 "j" = (
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "l" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -47,7 +47,7 @@
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_south"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -65,7 +65,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "r" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -75,7 +75,7 @@
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_west"
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -93,17 +93,17 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/dmm_suite/clear_area)
 "B" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Outpost launcher hub'";
 	name = "Outpost launcher hub"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /obj/decal/poster/wallsign/space{
 	pixel_y = 40
@@ -131,20 +131,20 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "R" = (
 /obj/machinery/launcher_loader/west{
 	id = "outpostla2"
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/dmm_suite/clear_area)
 "T" = (
 /obj/machinery/door/poddoor/pyro/podbay_autoclose{
 	id = "artlabgun"
