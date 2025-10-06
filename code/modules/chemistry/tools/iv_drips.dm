@@ -151,7 +151,7 @@
 			src.iv_stand.transfer_rate : \
 			src.amount_per_transfer_from_this) \
 		: src.amount_per_transfer_from_this
-	transfer_blood(src.patient, src, (transfer_rate * mult))
+	transfer_blood(src.patient, src, (transfer_rate * max(mult / 10, 1)))
 
 /obj/item/reagent_containers/iv_drip/proc/handle_inject(mult)
 	var/transfer_rate = \
@@ -160,8 +160,8 @@
 			src.iv_stand.transfer_rate : \
 			src.amount_per_transfer_from_this) \
 		: src.amount_per_transfer_from_this
-	src.reagents.trans_to(src.patient, (transfer_rate * mult))
-	src.patient.reagents.reaction(src.patient, INGEST, (transfer_rate * mult))
+	src.reagents.trans_to(src.patient, (transfer_rate * max(mult / 10, 1)))
+	src.patient.reagents.reaction(src.patient, INGEST, (transfer_rate * max(mult / 10, 1)))
 
 /obj/item/reagent_containers/iv_drip/proc/update_name()
 	if (src.reagents?.total_volume)
