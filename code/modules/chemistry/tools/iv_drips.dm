@@ -1,7 +1,15 @@
-/* ================================================= */
-/* -------------------- IV Drip -------------------- */
-/* ================================================= */
+#define IV_FAIL_PT_FULL "patient_full"
+#define IV_FAIL_BAG_EMPTY "bag_empty"
+#define IV_FAIL_BAG_FULL "bag_full"
+#define IV_FAIL_PT_VAMP "patient_vampire"
+#define IV_FAIL_PT_EMPTY "patient_empty"
 
+/**
+ * # IV Drip
+ *
+ * Vampires can't [auto-infuse their own blood] to inflate their blood count, because they can't get more than ~30% of it back.
+ * Also ignore that second container of blood entirely if it's a vampire (Convair880).
+ */
 /obj/item/reagent_containers/iv_drip
 	name = "\improper IV drip"
 	desc = "A bag with a fine needle attached at the end, for injecting patients with fluids."
@@ -23,6 +31,8 @@
 	var/image/image_inj_dr = null
 
 	var/mode = IV_DRAW
+	/// Is this actively drawing/injecting?
+	var/active = FALSE
 	/// Other reagent containers can pour reagents into this if slashed oppen.
 	var/slashed = FALSE
 
@@ -50,8 +60,8 @@
 	. = ..()
 
 /obj/item/reagent_containers/iv_drip/moved(mob/user, old_loc)
-	src.on_movement()
 	. = ..()
+	src.on_movement()
 
 /obj/item/reagent_containers/iv_drip/on_reagent_change()
 	..()
@@ -94,6 +104,9 @@
 /obj/item/reagent_containers/iv_drip/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!ishuman(target))
 		return ..()
+	if (src.patient == target)
+		src.remove_patient(user)
+		return
 	src.attempt_add_patient(target, user)
 
 /obj/item/reagent_containers/iv_drip/attackby(obj/A, mob/user)
@@ -123,7 +136,7 @@
 
 /// `mult` only matters if `src` is connected to an IV stand.
 /obj/item/reagent_containers/iv_drip/process(mult = 1)
-	if (!src.check_conditions())
+	if (!src.can_transfuse())
 		return
 	switch (src.mode)
 		if (IV_DRAW)
@@ -132,18 +145,10 @@
 			src.handle_inject(mult)
 
 /obj/item/reagent_containers/iv_drip/proc/handle_draw(mult)
-	if (src.reagents.is_full())
-		src.visible_message("[src] is completely full!")
-		src.stop_transfusion()
-		return
 	var/transfer_rate = src.iv_stand ? src.iv_stand.transfer_rate : src.amount_per_transfer_from_this
 	transfer_blood(src.patient, src, (transfer_rate * mult))
 
 /obj/item/reagent_containers/iv_drip/proc/handle_inject(mult)
-	if (!src.reagents.total_volume)
-		src.visible_message("[src] is completely empty!")
-		src.stop_transfusion()
-		return
 	var/transfer_rate = src.iv_stand ? src.iv_stand.transfer_rate : src.amount_per_transfer_from_this
 	src.reagents.trans_to(src.patient, (transfer_rate * mult))
 	src.patient.reagents.reaction(src.patient, INGEST, (transfer_rate * mult))
@@ -157,47 +162,44 @@
 /obj/item/reagent_containers/iv_drip/proc/attempt_add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!iscarbon(new_patient))
 		return
-	if (src.patient)
-		if (src.patient != new_patient)
-			user.show_text("[src] is already being used by someone else!", "red")
-		else
-			src.remove_patient(user)
+	if (src.patient && (src.patient != new_patient))
+		user.show_text("[src] is already being used by someone else!", "red")
 		return
-	var/feedback = src.can_connect(new_patient)
-	if (feedback)
-		user.show_text(feedback, "red")
+	var/failure_feedback = src.can_connect(new_patient)
+	if (failure_feedback)
+		user.show_text(failure_feedback, "red")
 		return
 	new_patient.tri_message(user,\
 		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s needle into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
 		SPAN_NOTICE("[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm."),\
 		SPAN_NOTICE("You begin inserting [src]'s needle into [new_patient == user ? "your" : "[new_patient]'s"] arm."))
 	logTheThing(LOG_COMBAT, user, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
-	var/icon/actionbar_icon = src.iv_stand ? src.iv_stand.icon : src.icon
-	var/actionbar_icon_state = src.iv_stand ? src.iv_stand.icon_state : "IV"
-	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(add_patient), list(new_patient, user), actionbar_icon, actionbar_icon_state, null, null)
+	var/icon/actionbar_icon = getFlatIcon(src.iv_stand ? src.iv_stand : src, no_anim = TRUE)
+	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(add_patient), list(new_patient, user), actionbar_icon, null, null, null)
 
 /obj/item/reagent_containers/iv_drip/proc/can_connect(mob/living/carbon/new_patient)
-	if (src.mode == IV_INJECT)
-		if (!src.reagents.total_volume)
-			. = "There's nothing left in [src]!"
-			return
-		if (new_patient.reagents && new_patient.reagents.is_full())
-			. = "[new_patient]'s blood pressure seems dangerously high as it is, there's probably no room for anything else!"
-			return
-	if (src.mode == IV_DRAW)
-		if (src.reagents.is_full())
-			. = "[src] is full!"
-			return
-		// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back.
-		// Also ignore that second container of blood entirely if it's a vampire (Convair880).
-		if ((isvampire(new_patient) && (new_patient.get_vampire_blood() <= 0)) || (!isvampire(new_patient) && !new_patient.blood_volume))
-			. = "[new_patient] doesn't have anything left to give!"
-			return
+	. = null
+	var/failure_feedback = src.check_iv_fail(new_patient)
+	if (!failure_feedback)
+		return
+	switch (failure_feedback)
+		if (IV_FAIL_BAG_FULL)
+			return "[src] is full!"
+		if (IV_FAIL_PT_VAMP)
+			return "[new_patient] doesn't have anything left to give!"
+		if (IV_FAIL_PT_EMPTY)
+			return "[new_patient] doesn't have anything left to give!"
+		if (IV_FAIL_PT_FULL)
+			return "There's nothing left in [src]!"
+		if (IV_FAIL_BAG_EMPTY)
+			return "[new_patient]'s blood pressure seems dangerously high as it is, there's probably no room for anything else!"
 
 /obj/item/reagent_containers/iv_drip/proc/add_patient(mob/living/carbon/human/new_patient, mob/user)
 	if (src.patient)
 		return
 	src.patient = new_patient
+	if (src.iv_stand)
+		src.iv_stand.add_patient(src.patient, user)
 	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_movement), TRUE)
 	src.start_transfusion()
 	if (!ismob(user))
@@ -223,6 +225,8 @@
 	var/mob/living/carbon/human/old_patient = src.patient
 	src.stop_transfusion()
 	src.patient = null
+	if (src.iv_stand)
+		src.iv_stand.remove_patient(user)
 	if (!ismob(user))
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
@@ -232,6 +236,7 @@
 		SPAN_NOTICE("[old_patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm."))
 
 /obj/item/reagent_containers/iv_drip/proc/start_transfusion()
+	src.active = TRUE
 	src.handle_processing()
 	APPLY_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 2)
 	if (!src.iv_stand)
@@ -239,18 +244,19 @@
 	src.iv_stand.feedback(IV_STAND_START)
 
 /obj/item/reagent_containers/iv_drip/proc/stop_transfusion()
+	src.active = FALSE
+	src.handle_processing()
 	REMOVE_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
-	processing_items -= src
 	if (!src.iv_stand)
 		return
 	src.iv_stand.feedback(IV_STAND_STOP)
 
-/// When attached to an IV stand, we'll leech off of the machine process loop instead of `processing_items`.
+/// When attached to an IV stand, we'll leech off of the machine process loop instead of `global.processing_items`.
 /obj/item/reagent_containers/iv_drip/proc/handle_processing()
 	if (src.iv_stand || !src.patient)
-		processing_items -= src
+		global.processing_items -= src
 		return
-	processing_items |= src
+	global.processing_items |= src
 
 /obj/item/reagent_containers/iv_drip/proc/on_movement()
 	. = TRUE
@@ -266,48 +272,74 @@
 	if (in_interact_range(src, src.patient))
 		return
 	// JAAAANK
-	if (src.patient.pulling == (src || src.iv_stand))
+	if ((src.patient.pulling == src) || (src.patient.pulling == src.iv_stand))
 		return
 	src.remove_patient(force = TRUE)
 	. = FALSE
 
-/obj/item/reagent_containers/iv_drip/proc/check_conditions()
+/obj/item/reagent_containers/iv_drip/proc/can_transfuse()
 	. = TRUE
 	if (!src.patient || !ishuman(src.patient) || !src.patient.reagents)
 		return FALSE
-
 	if (!src.check_interact_range())
 		return FALSE
-
-	if (src.mode == IV_INJECT)
-		if (src.patient.reagents.is_full())
-			src.patient.visible_message(SPAN_NOTICE("<b>[src.patient]</b>'s transfusion finishes."),\
-			SPAN_NOTICE("Your transfusion finishes."))
-			src.stop_transfusion()
-			return FALSE
-		if (!src.reagents.total_volume)
+	var/failure_feedback = src.check_iv_fail()
+	if (!failure_feedback)
+		return
+	switch (failure_feedback)
+		// Draw failure
+		if (IV_FAIL_BAG_FULL)
+			src.patient.visible_message(\
+				SPAN_NOTICE("[src] fills up and stops drawing blood from [src.patient]."),\
+				SPAN_NOTICE("[src] fills up and stops drawing blood from you."))
+		if (IV_FAIL_PT_VAMP)
+			src.patient.visible_message(\
+				SPAN_ALERT("[src] can't seem to draw anything more out of [src.patient]!"),\
+				SPAN_ALERT("Your veins feel utterly empty!"))
+		if (IV_FAIL_PT_EMPTY)
+			src.patient.visible_message(\
+				SPAN_ALERT("[src] can't seem to draw anything more out of [src.patient]!"),\
+				SPAN_ALERT("Your veins feel utterly empty!"))
+		// Inject failure
+		if (IV_FAIL_PT_FULL)
+			src.patient.visible_message(\
+				SPAN_NOTICE("<b>[src.patient]</b>'s transfusion finishes."),\
+				SPAN_NOTICE("Your transfusion finishes."))
+		if (IV_FAIL_BAG_EMPTY)
 			src.patient.visible_message(SPAN_ALERT("[src] runs out of fluid!"))
-			src.stop_transfusion()
-			return FALSE
+	src.stop_transfusion()
+	return FALSE
+
+/obj/item/reagent_containers/iv_drip/proc/check_iv_fail(mob/living/carbon/patient_to_check)
+	. = null
+	if (!iscarbon(patient_to_check) && src.patient)
+		patient_to_check = src.patient
+	if (src.mode == IV_DRAW)
+		if (!patient_to_check.reagents.total_volume && !patient_to_check.blood_volume)
+			return IV_FAIL_PT_EMPTY
+		if (src.reagents.is_full())
+			return IV_FAIL_BAG_FULL
+	else
+		if (!src.reagents.total_volume)
+			return IV_FAIL_BAG_EMPTY
+		if (patient_to_check.reagents.is_full())
+			return IV_FAIL_PT_FULL
+		if (src.check_vampire())
+			return IV_FAIL_PT_VAMP
+
+/obj/item/reagent_containers/iv_drip/proc/check_vampire(mob/living/carbon/mob_to_test)
+	. = FALSE
+	if (!iscarbon(mob_to_test))
+		mob_to_test = src.patient
+	if (isvampire(mob_to_test) && (mob_to_test.get_vampire_blood() <= 0))
+		. = TRUE
 		return
 
-	if (src.mode == IV_DRAW)
-		if (src.reagents.is_full())
-			src.patient.visible_message(SPAN_NOTICE("[src] fills up and stops drawing blood from [src.patient]."),\
-			SPAN_NOTICE("[src] fills up and stops drawing blood from you."))
-			src.stop_transfusion()
-			return FALSE
-		// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back.
-		// Also ignore that second container of blood entirely if it's a vampire (Convair880).
-		if ((isvampire(src.patient) && (src.patient.get_vampire_blood() <= 0)) || (!isvampire(src.patient) && !src.patient.reagents.total_volume && !src.patient.blood_volume))
-			src.patient.visible_message(SPAN_ALERT("[src] can't seem to draw anything more out of [src.patient]!"),\
-			SPAN_ALERT("Your veins feel utterly empty!"))
-			src.stop_transfusion()
-			return FALSE
-
-/* =================================================== */
-/* -------------------- Sub-Types -------------------- */
-/* =================================================== */
+#undef IV_FAIL_PT_FULL
+#undef IV_FAIL_BAG_EMPTY
+#undef IV_FAIL_BAG_FULL
+#undef IV_FAIL_PT_VAMP
+#undef IV_FAIL_PT_EMPTY
 
 /obj/item/reagent_containers/iv_drip/blood
 	desc = "A bag filled with some odd, synthetic blood. There's a fine needle at the end that can be used to transfer it to someone."
