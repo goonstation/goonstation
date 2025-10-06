@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return MED_MACHINE_REMOVE_PATIENT
 	// Yank the connection by force if patient exits interaction range.
 	if (!in_interact_range(src, src.patient))
-		return MED_MACHINE_REMOVE_PATIENT_FORCE
+		return MED_MACHINE_REMOVE_PATIENT_FORCEFUL
 
 /// Override this proc on child types.
 /obj/machinery/medical/proc/affect_patient(mult)
@@ -171,7 +171,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	. = TRUE
 	if (src.override_connection_logic)
 		CRASH("Proc `attempt_add_patient()` was not overriden on [src]!")
-		return FALSE
 	if (!ismob(user))
 		return FALSE
 	if (!iscarbon(new_patient))
@@ -187,7 +186,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (src.override_connection_logic)
 		CRASH("Proc `add_patient()` was not overriden on [src]!")
-		return FALSE
 	if (!iscarbon(new_patient))
 		return
 	if (ismob(user))
@@ -200,17 +198,15 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/attempt_remove_patient(mob/user)
 	if (src.override_connection_logic)
 		CRASH("Proc `attempt_remove_patient()` was not overriden on [src]!")
-		return FALSE
 	src.remove_patient(user)
 
 /obj/machinery/medical/proc/remove_patient(mob/user, removal_status = MED_MACHINE_REMOVE_PATIENT)
 	if (src.override_connection_logic)
 		CRASH("Proc `remove_patient()` was not overriden on [src]!")
-		return FALSE
 	if (ismob(user))
 		src.remove_message(user)
 		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
-	if (removal_status = MED_MACHINE_REMOVE_PATIENT_FORCE && !user)
+	if (removal_status = MED_MACHINE_REMOVE_PATIENT_FORCEFUL && !user)
 		src.force_remove_message()
 	src.patient = null
 	src.power_usage = 0
