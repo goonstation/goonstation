@@ -37,7 +37,7 @@
 "m" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 100;
+	drive_range = 300;
 	id = "outpostla"
 	},
 /turf/simulated/floor/plating,
@@ -49,12 +49,12 @@
 	},
 /area/dmm_suite/clear_area)
 "o" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 9;
+/obj/machinery/door/poddoor/pyro{
 	id = "outpostla"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 300;
 	id = "outpostla"
 	},
 /turf/simulated/floor/plating/airless,
@@ -69,7 +69,7 @@
 "r" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 135;
+	drive_range = 300;
 	id = "outpostla2"
 	},
 /turf/simulated/floor/engine/vacuum{
@@ -149,13 +149,19 @@
 /obj/machinery/door/poddoor/pyro/podbay_autoclose{
 	id = "artlabgun"
 	},
+/obj/machinery/mass_driver{
+	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
+	dir = 1;
+	drive_range = 300;
+	id = "artlabgun"
+	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "W" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
 	dir = 1;
-	drive_range = 100;
+	drive_range = 300;
 	id = "artlabgun"
 	},
 /turf/simulated/floor/plating,
