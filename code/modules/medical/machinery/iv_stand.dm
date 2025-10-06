@@ -37,14 +37,14 @@
 /obj/machinery/medical/iv_stand/get_desc()
 	. = ..()
 	if (src.iv_drip)
-		var/iv_drip_examine = src.iv_drip.examine()
-		iv_drip_examine = lowertext(copytext(iv_drip_examine, 1, 2)) + copytext(iv_drip_examine, 2)
-		. += "[src.iv_drip] is attached to it; [iv_drip_examine]"
+		var/iv_drip_desc = src.iv_drip.desc
+		iv_drip_desc = lowertext(copytext(iv_drip_desc, 1, 2)) + copytext(iv_drip_desc, 2)
+		. += "[src.iv_drip] is attached to it; [iv_drip_desc]"
 
 /obj/machinery/medical/iv_stand/update_icon()
 	if (!src.iv_drip)
 		src.icon_state = "IVstand"
-		src.ClearSpecificOverlays(list("fluid", "bag", "lights"))
+		src.ClearSpecificOverlays("fluid", "bag", "lights")
 		return
 	src.icon_state = "IVstand-closed"
 	src.handle_iv_bag_image()
