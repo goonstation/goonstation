@@ -688,6 +688,7 @@
 /// @param reagent The reagent which the mob should become addicted to. Can be a reference or a string id.
 /// @param bypass_resistance If disease resistance should be bypassed while adding a disease.
 /// @param ailment_name Name of the ailment to add. This is not cosmetic; the ailment type is retrieved via this name.
-/mob/living/proc/contract_addiction(var/reagent, var/bypass_resistance = FALSE, var/ailment_name = null)
-	var/datum/ailment_data/addiction/AD = get_disease_from_path(/datum/ailment/addiction).setup_strain(reagent, src)
+/// @param severity_override Overrides the addiction_severity of the reagent.
+/mob/living/proc/contract_addiction(var/reagent, var/bypass_resistance = FALSE, var/ailment_name = null, var/severity_override = null)
+	var/datum/ailment_data/addiction/AD = get_disease_from_path(/datum/ailment/addiction).setup_strain(reagent, src, severity_override)
 	src.contract_disease(/datum/ailment/addiction, ailment_name, AD, bypass_resistance)

@@ -1071,7 +1071,7 @@ TYPEINFO(/datum/trait/partyanimal)
 			addAddiction(owner)
 
 	proc/addAddiction(var/mob/living/owner)
-		owner.contract_addiction(src.selected_reagent, TRUE)
+		owner.contract_addiction(src.selected_reagent, TRUE, severity_override = HIGH_ADDICTION_SEVERITY)
 
 	onRemove(mob/owner)
 		for(var/datum/ailment_data/addiction/AD in owner.ailments)
