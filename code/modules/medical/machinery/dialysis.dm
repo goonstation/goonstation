@@ -139,7 +139,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 
 /obj/machinery/medical/dialysis/force_remove_feedback()
 	. = ..()
-	blood_slash(src.patient, 5)
+	blood_slash(src.patient, 7)
 	src.patient.emote("scream")
 
 /datum/statusEffect/dialysis
