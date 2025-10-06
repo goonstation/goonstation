@@ -135,22 +135,6 @@
 	icon_state = "engine_caution_east"
 	},
 /area/space)
-"acp" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 135;
-	id = "outpostla2"
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_west"
-	},
-/area/space)
-"acq" = (
-/obj/machinery/launcher_loader/west{
-	id = "outpostla2"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/space)
 "acv" = (
 /obj/lattice{
 	dir = 9;
@@ -163,12 +147,6 @@
 	drive_range = 43;
 	id = "outpostla3"
 	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_south"
-	},
-/area/space)
-"acx" = (
-/obj/machinery/launcher_loader/north,
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_south"
 	},
@@ -15830,44 +15808,12 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"cEi" = (
-/obj/decal/poster/wallsign/stencil/right/q{
-	pixel_x = -3;
-	pixel_y = 48
-	},
-/obj/decal/poster/wallsign/stencil/right/m{
-	pixel_y = 48
-	},
-/obj/machinery/activation_button/driver_button{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
-	id = "outpostla";
-	name = "Emergency Ejection Button";
-	pixel_y = 24
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 9
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "cEj" = (
 /obj/machinery/light/emergency{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
-"cFC" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "cFD" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/blast/pyro{
@@ -16178,17 +16124,6 @@
 /obj/item/paper/Port_A_Brig,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
-"cOu" = (
-/obj/machinery/door/poddoor/pyro/podbay_autoclose{
-	id = "artlabgun"
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/science/artifact)
 "cOJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16662,22 +16597,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
-"dcj" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 9
-	},
-/obj/machinery/light/incandescent,
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 5
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "dcu" = (
 /obj/decal/poster/wallsign/medbay_left{
 	pixel_x = 31
@@ -18187,8 +18106,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "dXX" = (
-/obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
 /area/station/science/artifact)
 "dYb" = (
 /turf/simulated/floor/greenwhite/corner{
@@ -20123,14 +20046,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
-"fed" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 10;
-	id = "outpostla"
-	},
-/turf/simulated/floor/plating,
-/area/station/science/artifact)
 "fef" = (
 /obj/vehicle/segway,
 /turf/simulated/floor/red/side{
@@ -20669,6 +20584,24 @@
 	dir = 1
 	},
 /area/station/science/chemistry)
+"fxa" = (
+/obj/table/auto,
+/obj/item/storage/box/tapebox{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/disk/data/tape{
+	layer = 3.5
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/landmark/random_room/d2_artlab_5x15,
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "fxl" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -21154,31 +21087,6 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
-"fPo" = (
-/obj/table/auto,
-/obj/item/storage/box/tapebox{
-	pixel_x = -2;
-	pixel_y = 12
-	},
-/obj/item/disk/data/tape{
-	layer = 3.5
-	},
-/obj/decal/poster/wallsign/space{
-	pixel_y = 40
-	},
-/obj/machinery/activation_button/driver_button{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
-	id = "artlabgun";
-	name = "Emergency Ejection Button";
-	pixel_y = 24
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 5
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 4
-	},
-/area/station/science/artifact)
 "fPH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34689,6 +34597,14 @@
 	icon_state = "fgreen6"
 	},
 /area/station/crew_quarters/hop)
+"nSr" = (
+/obj/forcefield/energyshield/perma{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
 "nSH" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
@@ -36771,17 +36687,6 @@
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
-"oTZ" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "oUa" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -39597,6 +39502,17 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
+"qyR" = (
+/obj/table/auto,
+/obj/item/paper{
+	info = "Weren't these ejectors the other way around, previously?";
+	name = "confused note"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "qyZ" = (
 /obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
@@ -46009,14 +45925,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/checkpoint/arrivals)
-"uoo" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "uoQ" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass,
@@ -49060,12 +48968,6 @@
 	},
 /area/station/hallway/primary/south)
 "wef" = (
-/obj/machinery/mass_driver{
-	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
-	dir = 1;
-	drive_range = 100;
-	id = "artlabgun"
-	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "wei" = (
@@ -50885,6 +50787,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
@@ -52239,22 +52144,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/kitchen)
-"yhM" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 9;
-	id = "outpostla"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "outpostla"
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/science/artifact)
 "yhT" = (
 /obj/fakeobject/shuttleweapon/base{
 	desc = "A futuristic system that collects residual power from chicken alchemy.";
@@ -127646,7 +127535,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aiU
 aiU
 aiU
 euX
@@ -127946,12 +127835,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aiU
 aiU
 aiU
-fPo
+fxa
 nrl
+tma
 akc
 tma
 tXP
@@ -128248,12 +128137,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-cOu
+nSr
+wef
 wef
 dXX
-uoo
-tma
+fkY
+fkY
 xnK
 fkY
 viQ
@@ -128539,11 +128428,10 @@ aaa
 aaa
 aaa
 aaa
-aap
-acc
-acp
-acc
-acF
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -128554,7 +128442,8 @@ aaa
 aiU
 aiU
 aiU
-dcj
+qyR
+tma
 tma
 nAS
 tma
@@ -128841,10 +128730,6 @@ aaa
 aaa
 aaa
 aaa
-aaA
-acd
-acq
-acx
 aaa
 aaa
 aaa
@@ -128853,12 +128738,16 @@ aaa
 aaa
 aaa
 aaa
-yhM
-fed
-dXX
-oTZ
-fkY
-cFC
+aaa
+aaa
+aaa
+nSr
+wef
+wef
+tma
+tma
+tma
+nAS
 oUV
 nIf
 efW
@@ -129143,11 +129032,10 @@ aaa
 aaa
 aaa
 aaa
-abZ
-acc
-acd
-acc
-acF
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -129158,7 +129046,8 @@ aaa
 aiU
 aiU
 aiU
-cEi
+tma
+tma
 tma
 hOU
 lAo
@@ -129446,9 +129335,6 @@ aaa
 aaa
 aaa
 aaa
-abZ
-aai
-acy
 aaa
 aaa
 aaa
@@ -129459,6 +129345,9 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+sHv
 sHv
 bJf
 xKU
