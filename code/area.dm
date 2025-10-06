@@ -217,7 +217,7 @@ TYPEINFO(/area)
 			//If any mobs are entering, within a thing or otherwise
 			if (length(enteringMobs) > 0)
 				for (var/mob/enteringM in enteringMobs) //each dumb mob
-					SEND_SIGNAL(src, COMSIG_MOB_ENTERED_AREA, enteringM)
+					SEND_SIGNAL(src, COMSIG_AREA_ENTERED_BY_MOB, enteringM)
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
 					if(enteringM.skipped_mobs_list)
@@ -262,7 +262,7 @@ TYPEINFO(/area)
 
 			if (length(exitingMobs) > 0)
 				for (var/mob/exitingM in exitingMobs)
-					SEND_SIGNAL(src, COMSIG_MOB_EXITED_AREA, exitingM)
+					SEND_SIGNAL(src, COMSIG_AREA_EXITED_BY_MOB, exitingM)
 					src.cancel_sound_loop(exitingM)
 					if (exitingM.ckey && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)

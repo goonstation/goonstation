@@ -29,9 +29,9 @@
 	/// area's active var set to false (when all clients leave)
 	#define COMSIG_AREA_DEACTIVATED "area_deactivated"
 	/// whenever a mob enters an area
-	#define COMSIG_MOB_ENTERED_AREA "mob_entered_area"
+	#define COMSIG_AREA_ENTERED_BY_MOB "mob_entered_area"
 	/// whenever a mob exits an area
-	#define COMSIG_MOB_EXITED_AREA "mob_exited_area"
+	#define COMSIG_AREA_EXITED_BY_MOB "mob_exited_area"
 
 // ---- TGUI signals ----
 	/// A TGUI window was opened by a user (receives tgui datum)

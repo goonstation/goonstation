@@ -1,14 +1,14 @@
 TYPEINFO(/datum/component/area_therapy)
 		initialization_args = list(
-		ARG_INFO("specialist_traits", DATA_INPUT_NUM, "A list of trait ids which have their own cooldown for this area", null),
-		ARG_INFO("trait_exclusions", DATA_INPUT_NUM, "A list of taits ids which prevent a mob being affected by therapy in this area", null)
+		ARG_INFO("specialist_traits", DATA_INPUT_LIST_VAR, "A list of trait ids which have their own cooldown for this area", null),
+		ARG_INFO("trait_exclusions", DATA_INPUT_LIST_VAR, "A list of traits ids which prevent a mob being affected by therapy in this area", null)
 	)
 
 /datum/component/area_therapy
 	var/area/master
-	/// traits which have their own cooldown for this area, which makes makes them twice as useful for therapy
+	/// Traits which have their own cooldown for this area, which makes makes them twice as useful for therapy
 	var/list/specialist_traits
-	/// Taits which prevent a mob being affected by therapy in this area, although they can still grant it to others
+	/// Traits which prevent a mob being affected by therapy in this area, although they can still grant it to others
 	var/list/trait_exclusions
 	/// The value each mob's addictions are changed by
 	var/static/addiction_increment = -0.8
@@ -22,8 +22,8 @@ TYPEINFO(/datum/component/area_therapy)
 		src.master = src.parent
 		src.specialist_traits = specialist_traits
 		src.trait_exclusions = trait_exclusions
-		RegisterSignal(src.parent, COMSIG_MOB_ENTERED_AREA, PROC_REF(attach_mob))
-		RegisterSignal(src.parent, COMSIG_MOB_EXITED_AREA, PROC_REF(detach_mob))
+		RegisterSignal(src.parent, COMSIG_AREA_ENTERED_BY_MOB, PROC_REF(attach_mob))
+		RegisterSignal(src.parent, COMSIG_AREA_EXITED_BY_MOB, PROC_REF(detach_mob))
 
 	proc/attach_mob(var/area, var/mob/mob)
 		// TODO, we want to register cyborgs to be able to give therapy even though they can't benefit because why not, but probably
@@ -62,8 +62,8 @@ TYPEINFO(/datum/component/area_therapy)
 			src.do_therapy()
 
 	UnregisterFromParent()
-		UnregisterSignal(src.parent, COMSIG_MOB_ENTERED_AREA)
-		UnregisterSignal(src.parent, COMSIG_MOB_EXITED_AREA)
+		UnregisterSignal(src.parent, COMSIG_AREA_ENTERED_BY_MOB)
+		UnregisterSignal(src.parent, COMSIG_AREA_EXITED_BY_MOB)
 		// TODO unregister from mobs in the area. How do? I don't know that areas hold a list of all their own turfs, let alone the non-player
 		// mobs in that area. Yet we have to register all mobs for therapy in case of mindswaps
 
