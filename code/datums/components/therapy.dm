@@ -26,10 +26,11 @@ TYPEINFO(/datum/component/area_therapy)
 		RegisterSignal(src.parent, COMSIG_AREA_EXITED_BY_MOB, PROC_REF(detach_mob))
 
 	proc/attach_mob(var/area, var/mob/mob)
-		// TODO, we want to register cyborgs to be able to give therapy even though they can't benefit because why not, but probably
-		// don't want to let player critters etc do so.
+		// Not going to have any additional exceptions for player critters or wraiths etc, because it's a slow system and as long as another player
+		// is being encouraged to hang out with you, rubber ducking your problems with a sentient cockroach or the shade of Amhunatep XI seems fine.
+		// The area's Entered() filters out ghosts already.
 		RegisterSignal(mob, COMSIG_ATOM_SAY, PROC_REF(try_do_therapy))
-		// register all player mobs for therapy, but don't set the status for anyone unless they specifically have an addiction
+		// Don't set the status for anyone unless they specifically have an addiction
 		if (istype(mob, /mob/living) && !mob?.traitHolder?.hasTraitInList(trait_exclusions))
 			var/mob/living/living = mob
 			if (!living.find_ailment_by_type(/datum/ailment/addiction))
@@ -43,6 +44,7 @@ TYPEINFO(/datum/component/area_therapy)
 	proc/do_therapy()
 		for(var/datum/mind/mind in src.master.population)
 			var/mob/mob = mind.current
+			// In a perfect world there'd be checks for 'did mob hear/understand', maybe handled using callbacks attached to say messages.
 			if (!mob?.hearing_check(TRUE) || mob.traitHolder.hasTraitInList(trait_exclusions))
 				continue
 			mob.try_affect_all_addictions(addiction_increment)
@@ -64,8 +66,8 @@ TYPEINFO(/datum/component/area_therapy)
 	UnregisterFromParent()
 		UnregisterSignal(src.parent, COMSIG_AREA_ENTERED_BY_MOB)
 		UnregisterSignal(src.parent, COMSIG_AREA_EXITED_BY_MOB)
-		// TODO unregister from mobs in the area. How do? I don't know that areas hold a list of all their own turfs, let alone the non-player
-		// mobs in that area. Yet we have to register all mobs for therapy in case of mindswaps
+		for(var/mob/mob in src.master)
+			UnregisterSignal(mob, COMSIG_ATOM_SAY)
 
 
 
