@@ -1,5 +1,10 @@
 
 (t)mon oct 06 25
+(u)TheGeneralJay
+(p)24664
+(e)🗺💅|A-Mapping, C-QoL
+(*)Oshan medbay has had a remodel! Details to follow in minor changes.
+(+)Oshan genetics is now visible from the main hall. The pharmacy, treatment rooms, and therapy office has been moved to accommodate this.
 (u)Flappybat
 (e)⚖📦|C-Balance, A-Game-Objects
 (*)Owl bombs no longer affect nuclear operatives.
