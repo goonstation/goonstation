@@ -42,7 +42,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	var/patient_blood_id = null
 
 /obj/machinery/medical/dialysis/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
-	. = ..()
+	text = ..()
 	var/fluff = pick("pulled", "yanked", "ripped")
 	text = replacetext(text, "$FLF", "[fluff]")
 	. = text
@@ -69,7 +69,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 		src.remove_patient()
 		return
 
-	transfer_blood(src.patient, src, src.draw_amount)
+	transfer_blood(src.patient, src, (src.draw_amount * max(mult / 10, 1)))
 
 	// Re-implemented here due to all the got dang boutputs.
 	var/list/whitelist_buffer = chem_whitelist + src.patient_blood_id
@@ -88,7 +88,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	if (patient_blood > patient_blood_max)
 		src.reagents.remove_reagent("blood", (patient_blood - patient_blood_max))
 
-	var/amount_to_draw = min(src.draw_amount, (src.patient.reagents.maximum_volume - src.patient.reagents.total_volume))
+	var/amount_to_draw = min(src.draw_amount, (src.patient.reagents.maximum_volume - src.patient.reagents.total_volume)) * max(mult / 10, 1)
 	src.reagents.trans_to(src.patient, amount_to_draw)
 	src.patient.reagents.reaction(src.patient, INGEST, amount_to_draw)
 	src.reagents.clear_reagents()
