@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "b" = (
 /obj/decal/poster/wallsign/stencil/right/q{
 	pixel_x = -3;
@@ -22,7 +22,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "j" = (
 /turf/space,
 /area/space)
@@ -33,15 +33,15 @@
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 10;
+	drive_range = 100;
 	id = "outpostla"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "n" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/engine/vacuum{
@@ -58,7 +58,7 @@
 	id = "outpostla"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "p" = (
 /obj/lattice{
 	dir = 10;
@@ -86,7 +86,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "y" = (
 /obj/lattice{
 	dir = 6;
@@ -120,11 +120,11 @@
 /turf/simulated/floor/white/checker2{
 	dir = 4
 	},
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "K" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/lattice{
 	dir = 8;
@@ -150,7 +150,7 @@
 	id = "artlabgun"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
@@ -159,7 +159,7 @@
 	id = "artlabgun"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 j

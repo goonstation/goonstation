@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "e" = (
 /obj/lattice{
 	dir = 8;
@@ -23,7 +23,7 @@
 	id = "outpostla"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "n" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/engine/vacuum{
@@ -59,7 +59,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 4
 	},
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -70,7 +70,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "x" = (
 /obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
@@ -87,7 +87,7 @@
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "z" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -95,16 +95,16 @@
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "A" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
 	dir = 1;
-	drive_range = 10;
+	drive_range = 100;
 	id = "artlabgun"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/lattice{
 	dir = 1;
@@ -120,7 +120,7 @@
 	id = "artlabgun"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -131,11 +131,11 @@
 	id = "outpostla"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
-/area/station/science/artifact)
+/area/dmm_suite/clear_area)
 "O" = (
 /obj/lattice{
 	dir = 6;
