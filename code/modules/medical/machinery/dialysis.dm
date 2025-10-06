@@ -44,7 +44,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 /obj/machinery/medical/dialysis/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
 	. = ..()
 	var/fluff = pick("pulled", "yanked", "ripped")
-	text = replacetext(text, "$FLF", "[user]")
+	text = replacetext(text, "$FLF", "[fluff]")
 	. = text
 
 /obj/machinery/medical/dialysis/New()
