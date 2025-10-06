@@ -8,7 +8,6 @@
 /// Maximum air temperature before default lungs start taking damage
 #define DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX T0C + 66
 
-// Medical Machinery
-#define MED_MACHINE_KEEP_PATIENT 0
-#define MED_MACHINE_REMOVE_PATIENT 1
-#define MED_MACHINE_REMOVE_PATIENT_FORCEFUL 2
+// IV drips
+#define IV_INJECT 1
+#define IV_DRAW 0
