@@ -1960,9 +1960,6 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	voice_name = "amphibian"
 	jerk = FALSE
 	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
-	head_offset = 0
-	hand_offset = -1
-	body_offset = 0
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
@@ -2034,9 +2031,10 @@ TYPEINFO(/datum/mutantrace/amphibian)
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Amphibian-specific clothes filters activated." : "Disabled amphibian-specific clothes filters.")
 				src.mob.update_clothing()
-				. = "<B>[used_name]</B> adjusts [his_or_her(src.mob)] clothing."
+				message = "<B>[used_name]</B> adjusts [his_or_her(src.mob)] clothing."
 				return message
-			else ..()
+			else
+				..()
 
 	apply_clothing_filters(var/obj/item/worn)
 		. = ..()
