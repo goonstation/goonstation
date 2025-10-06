@@ -137,10 +137,12 @@
 		return
 	src.patient = src.iv_drip.patient
 	src.SubscribeToProcess()
+	src.UpdateIcon()
 
 /obj/machinery/medical/iv_stand/remove_patient(mob/user, forceful)
 	src.patient = null
 	src.UnsubscribeProcess()
+	src.UpdateIcon()
 
 /obj/machinery/medical/iv_stand/affect_patient(mult)
 	src.iv_drip.process(mult)
