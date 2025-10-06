@@ -19,7 +19,7 @@
 "g" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 10;
+	drive_range = 100;
 	id = "outpostla"
 	},
 /turf/simulated/floor/plating,
@@ -100,7 +100,7 @@
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
 	dir = 1;
-	drive_range = 100;
+	drive_range = 10;
 	id = "artlabgun"
 	},
 /turf/simulated/floor/plating,
