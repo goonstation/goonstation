@@ -129,7 +129,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		if (src.patient == over_object)
 			src.attempt_remove_patient(user)
 		else
-			src.attempt_add_patient(over_object, user)
+			src.attempt_add_patient(user, over_object)
 		return
 	if (!isobj(over_object))
 		. = ..()
