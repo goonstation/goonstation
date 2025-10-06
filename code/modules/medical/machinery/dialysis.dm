@@ -14,12 +14,38 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	icon_state = "dialysis-base"
 #endif
 	power_consumption = 1.5 KILO WATTS
+
+	/*
+		Bespoke overrides:
+		* $FLF -> pick("pulled", "yanked", "ripped")
+	*/
+	attempt_msg_viewer = "<b>$USR</b> begins inserting $SRC's cannulae into $TRG's arm."
+	attempt_msg_user = "You begin inserting $SRC's cannulae into $TRG's arm."
+	attempt_msg_patient = "<b>$USR</b> begins inserting $SRC's cannulae into your arm."
+
+	add_msg_viewer = "<b>$USR</b> inserts $SRC's cannulae into $TRG's arm."
+	add_msg_user = "You inserts $SRC's cannulae into $TRG's arm."
+	add_msg_patient = "<b>$USR</b> inserts $SRC's cannulae into your arm."
+
+	remove_msg_viewer = "<b>$USR</b> removes $SRC's cannulae from $TRG's."
+	remove_msg_user = "You removes $SRC's cannulae from $TRG's."
+	remove_msg_patient = "<b>$USR</b> removes $SRC's cannulae from your arm."
+
+	remove_forceful_msg_viewer = "<b>$SRC's cannulae get $FLF out of $TRG's arm!</b>"
+	remove_forceful_msg_patient = "<b>$SRC's cannulae get $FLF out of your arm!</b>"
+
 	/// In units per process tick.
 	var/draw_amount = 16
 	/// Colour is used for fluid image overlay.
 	var/output_blood_colour = null
 	/// Reagent ID of the current patient's blood.
 	var/patient_blood_id = null
+
+/obj/machinery/medical/dialysis/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
+	. = ..()
+	var/fluff = pick("pulled", "yanked", "ripped")
+	text = replacetext(text, "$FLF", "[user]")
+	. = text
 
 /obj/machinery/medical/dialysis/New()
 	..()
@@ -110,6 +136,11 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	src.output_blood_colour = null
 	..()
 	src.UpdateIcon()
+
+/obj/machinery/medical/dialysis/force_remove_feedback()
+	. = ..()
+	blood_slash(src.patient, 5)
+	src.patient.emote("scream")
 
 /datum/statusEffect/dialysis
 	id = "dialysis"

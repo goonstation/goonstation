@@ -71,9 +71,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/remove_msg_patient = "<b>$USR</b> disconnects $SRC from you."
 
 	/// Message to be displayed to all other viewers on forceful disconnection.
-	var/remove_forceful_msg_viewer = "<b>$USR</b> disconnects $SRC from $TRG."
+	var/remove_forceful_msg_viewer = "<b>$SRC is forcefully disconnected from $TRG!</b>"
 	/// Message to be displayed to patient on forceful disconnection.
-	var/remove_forceful_msg_patient = "<b>$USR</b> disconnects $SRC from you."
+	var/remove_forceful_msg_patient = "<b>$SRC is forcefully disconnected from you!</b>"
 
 /// Replaces tags in constant text variables with non-constants.
 /obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
