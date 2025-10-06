@@ -9,5 +9,5 @@
 #define DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX T0C + 66
 
 // IV drips
-#define IV_INJECT 1
 #define IV_DRAW 0
+#define IV_INJECT 1
