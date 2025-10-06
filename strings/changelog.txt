@@ -1,5 +1,8 @@
 
 (t)mon oct 06 25
+(u)Flappybat
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Owl bombs no longer affect nuclear operatives.
 (u)JORJ949
 (p)24854
 (e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects

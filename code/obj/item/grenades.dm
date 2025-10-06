@@ -1175,6 +1175,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
+			if (isnukeop(M)) continue
 			src.dress_up(M)
 		..()
 
