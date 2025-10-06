@@ -35,6 +35,15 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	/// For EMAG effects.
 	var/hacked = FALSE
 
+	/**
+	 * Some machines don't connect directly to patients; they would then contain an item in its contents that handles the connection behaviour
+	 * (e.g. IV stands).
+	 *
+	 * You may want to override the following procs: `attempt_add_patient()`, `add_patient()`, `attempt_remove_patient()`, `remove_patient()`
+	*/
+	var/connect_directly = TRUE
+	var/connection_time = 3 SECONDS
+
 	var/connect_offset_x = 0
 	var/connect_offset_y = 10
 
@@ -47,28 +56,39 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	/// Message to be displayed to all other viewers on attempted connection.
 	var/attempt_msg_viewer = "<b>$USR</b> begins connecting $SRC to $TRG."
 	/// Message to be displayed to user on attempted connection.
-	var/attempt_msg_first = "You begin connecting $SRC to $TRG."
+	var/attempt_msg_user = "You begin connecting $SRC to $TRG."
 	/// Message to be displayed to patient on attempted connection.
-	var/attempt_msg_second = "<b>$USR</b> begins connecting $SRC to you."
+	var/attempt_msg_patient = "<b>$USR</b> begins connecting $SRC to you."
 
 	/// Message to be displayed to all other viewers on successful connection.
 	var/add_msg_viewer = "<b>$USR</b> connects $SRC to $TRG."
 	/// Message to be displayed to user on successful connection.
-	var/add_msg_first = "You connect $SRC to $TRG."
+	var/add_msg_user = "You connect $SRC to $TRG."
 	/// Message to be displayed to patient on successful connection.
-	var/add_msg_second = "<b>$USR</b> connects $SRC to you."
+	var/add_msg_patient = "<b>$USR</b> connects $SRC to you."
 
 	/// Message to be displayed to all other viewers on disconnection.
 	var/remove_msg_viewer = "<b>$USR</b> disconnects $SRC from $TRG."
 	/// Message to be displayed to user on disconnection.
-	var/remove_msg_first = "You disconnect $SRC from $TRG."
+	var/remove_msg_user = "You disconnect $SRC from $TRG."
 	/// Message to be displayed to patient on disconnection.
-	var/remove_msg_second = "<b>$USR</b> disconnects $SRC from you."
+	var/remove_msg_patient = "<b>$USR</b> disconnects $SRC from you."
 
 	/// Message to be displayed to all other viewers on forceful disconnection.
 	var/remove_forceful_msg_viewer = "<b>$USR</b> disconnects $SRC from $TRG."
 	/// Message to be displayed to patient on forceful disconnection.
 	var/remove_forceful_msg_patient = "<b>$USR</b> disconnects $SRC from you."
+
+/// Replaces tags in constant text variables with non-constants.
+/obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
+	if (!length(text))
+		return ""
+	if (ismob(user))
+		text = replacetext(text, "$USR", "[user]")
+	if (iscarbon(target))
+		text = replacetext(text, "$TRG", "[user == target ? (self_referential ? "you" : himself_or_herself(user)) : target]")
+	text = replacetext(text, "$SRC", "[src]")
+	. = text
 
 /obj/machinery/medical/New()
 	. = ..()
@@ -100,11 +120,11 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/mouse_drop(atom/over_object)
 	if (!isatom(over_object))
-		..()
+		. = ..()
 		return
 	var/mob/living/user = usr
 	if (!isliving(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
-		..()
+		. = ..()
 		return
 	if (iscarbon(over_object))
 		if (src.patient == over_object)
@@ -113,11 +133,11 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 			src.attempt_add_patient(over_object, user)
 		return
 	if (!isobj(over_object))
-		..()
+		. = ..()
 		return
 	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
 	if (!(over_object.type in typinfo.paired_obj_whitelist))
-		..()
+		. = ..()
 		return
 	if (over_object == src.paired_obj)
 		src.detach_from_obj(user)
@@ -131,9 +151,12 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	..()
 	if (!src.patient)
 		return
-	src.check_remove_conditions()
+	if (!src.connect_directly)
+		src.affect_patient(mult)
+		return
 	if (src.is_broken() || src.has_no_power())
 		return
+	src.check_remove_conditions()
 	src.affect_patient(mult)
 
 /obj/machinery/medical/emag_act(mob/user, obj/item/card/emag/E)
@@ -170,7 +193,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return FALSE
 	src.attempt_message(user, new_patient)
 	logTheThing(LOG_COMBAT, user, "is trying to connect [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
-	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(add_patient), list(new_patient, user), src.actionbar_icon, src.actionbar_icon_state, null, null)
+	SETUP_GENERIC_ACTIONBAR(user, src, src.connection_time, PROC_REF(add_patient), list(new_patient, user), src.actionbar_icon, src.actionbar_icon_state, null, null)
 
 /obj/machinery/medical/proc/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!iscarbon(new_patient))
@@ -181,13 +204,15 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.patient = new_patient
 	src.power_usage = src.power_consumption
 	src.SubscribeToProcess()
-	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(check_remove_conditions))
+	RegisterSignal(src.patient, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_remove_conditions))
 
 /obj/machinery/medical/proc/attempt_remove_patient(mob/user)
 	src.remove_patient(user)
 
 /obj/machinery/medical/proc/remove_patient(mob/user, forceful = FALSE)
-	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
+	if (!src.patient || !iscarbon(src.patient))
+		return
+	UnregisterSignal(src.patient, COMSIG_MOVABLE_SET_LOC)
 	if (ismob(user))
 		src.remove_message(user)
 		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
@@ -197,39 +222,28 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.power_usage = 0
 	src.UnsubscribeProcess()
 
-/// Replaces tags in constant text variables with non-constants.
-/obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target)
-	if (!length(text))
-		return ""
-	if (ismob(user))
-		text = replacetext(text, "$USR", "[user]")
-	if (iscarbon(target))
-		text = replacetext(text, "$TRG", "[target]")
-	text = replacetext(text, "$SRC", "[src]")
-	. = text
-
 /obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
 		SPAN_NOTICE(src.parse_message(src.attempt_msg_viewer, user, new_patient)),\
-		SPAN_NOTICE(src.parse_message(src.attempt_msg_first, user, new_patient)),\
-		SPAN_NOTICE(src.parse_message(src.attempt_msg_second, user, new_patient)))
+		SPAN_NOTICE(src.parse_message(src.attempt_msg_user, user, new_patient, self_referential = TRUE)),\
+		SPAN_NOTICE(src.parse_message(src.attempt_msg_patient, user, new_patient)))
 
 /obj/machinery/medical/proc/add_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
 		SPAN_NOTICE(src.parse_message(src.add_msg_viewer, user, new_patient)),\
-		SPAN_NOTICE(src.parse_message(src.add_msg_first, user, new_patient)),\
-		SPAN_NOTICE(src.parse_message(src.add_msg_second, user, new_patient)))
+		SPAN_NOTICE(src.parse_message(src.add_msg_user, user, new_patient, self_referential = TRUE)),\
+		SPAN_NOTICE(src.parse_message(src.add_msg_patient, user, new_patient)))
 
 /obj/machinery/medical/proc/remove_message(mob/user)
 	user.tri_message(src.patient,\
 		SPAN_NOTICE(src.parse_message(src.remove_msg_viewer, user, src.patient)),\
-		SPAN_NOTICE(src.parse_message(src.remove_msg_first, user, src.patient)),\
-		SPAN_NOTICE(src.parse_message(src.remove_msg_second, user, src.patient)))
+		SPAN_NOTICE(src.parse_message(src.remove_msg_user, user, src.patient, self_referential = TRUE)),\
+		SPAN_NOTICE(src.parse_message(src.remove_msg_patient, user, src.patient)))
 
 /obj/machinery/medical/proc/force_remove_message()
 	src.patient.visible_message(\
 		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_viewer, target = src.patient)),\
-		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_patient, target = src.patient)))
+		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_patient, target = src.patient, self_referential = TRUE)))
 
 /obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
@@ -260,3 +274,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.pixel_y = initial(src.pixel_y)
 	src.paired_obj = null
 	src.density = initial(src.density)
+
+/// Override on children.
+/obj/machinery/medical/proc/deconstruct()
+	qdel(src)

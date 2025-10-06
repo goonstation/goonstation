@@ -11,3 +11,8 @@
 // IV drips
 #define IV_DRAW 0
 #define IV_INJECT 1
+
+// Medical machinery
+// IV stands
+#define IV_STAND_STOP "iv_stop"
+#define IV_STAND_START "iv_start"
