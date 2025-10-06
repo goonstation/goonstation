@@ -212,7 +212,15 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.patient = new_patient
 	src.power_usage = src.power_consumption
 	src.SubscribeToProcess()
-	RegisterSignal(src.patient, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_remove_conditions))
+	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_moved))
+
+/obj/machinery/medical/proc/on_patient_moved()
+	if (in_interact_range(src, src.patient))
+		return
+	// JAAAANK
+	if (src.patient.pulling == src)
+		return
+	src.remove_patient(forceful = TRUE)
 
 /obj/machinery/medical/proc/attempt_remove_patient(mob/user)
 	src.remove_patient(user)
@@ -220,7 +228,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/remove_patient(mob/user, forceful = FALSE)
 	if (!src.patient || !iscarbon(src.patient))
 		return
-	UnregisterSignal(src.patient, COMSIG_MOVABLE_SET_LOC)
+	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
 	if (ismob(user))
 		src.remove_message(user)
 		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
