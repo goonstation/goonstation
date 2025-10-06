@@ -10,16 +10,23 @@
 	affected_species = list("Human")
 	strain_type = /datum/ailment_data/addiction
 
-	setup_strain(var/datum/reagent/rgnt, var/initial_meter, var/mob/living/mob)
+	setup_strain(var/reagent, var/mob/living/target)
 		var/datum/ailment_data/addiction/addiction = ..()
 		if (!addiction)
 			return
+		var/datum/reagent/rgnt
+		if (istype(reagent, /datum/reagent))
+			rgnt = reagent
+		else if (istext(reagent))
+			rgnt = reagents_cache[reagent]
+		if (!rgnt) // if something isn't right, we have to fall back on a default in order to return something
+			rgnt = reagents_cache["gcheese"]
+
 		addiction.associated_reagent = rgnt.name
-		addiction.last_reagent_dose = world.timeofday
+		addiction.last_reagent_dose = TIME
 		addiction.name = "[rgnt.name] addiction"
-		addiction.affected_mob = mob
 		addiction.severity = rgnt.addiction_severity
-		addiction.addiction_meter = max(initial_meter, 10)
+		addiction.addiction_meter = max(target?.reagents?.addiction_tally[rgnt.id], 10)
 		addiction.depletion_rate = addiction.depletion_rate ? addiction.depletion_rate : generate_depletion_rate(rgnt)
 		return addiction
 
