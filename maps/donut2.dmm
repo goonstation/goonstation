@@ -10708,11 +10708,6 @@
 	dir = 5
 	},
 /area/station/security/main)
-"bkA" = (
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/station/security/main)
 "bkB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11066,18 +11061,6 @@
 /obj/storage/secure/closet/security/equipment,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/security/main)
-"bmy" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Security Lobby";
-	pixel_y = 10
-	},
-/obj/securearea{
-	pixel_x = -32
-	},
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
 /area/station/security/main)
 "bmz" = (
 /obj/cable{
@@ -16902,6 +16885,18 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
+"dkE" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Security Lobby";
+	pixel_y = 10
+	},
+/obj/submachine/ATM{
+	pixel_x = -31
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/main)
 "dkS" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
@@ -18105,14 +18100,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"dXX" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "dYb" = (
 /turf/simulated/floor/greenwhite/corner{
 	dir = 4
@@ -22045,6 +22032,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/research)
+"guk" = (
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/station/security/main)
 "gum" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -23287,6 +23282,9 @@
 /obj/decal/cleanable/rust,
 /turf/simulated/floor/sanitary/white,
 /area/station/maintenance/west)
+"hgR" = (
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
 "hhj" = (
 /obj/disposalpipe/segment/food,
 /obj/mic_stand{
@@ -27845,6 +27843,20 @@
 	icon_state = "fred2"
 	},
 /area/station/security/hos)
+"jZy" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "jZH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29724,6 +29736,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"ldF" = (
+/obj/securearea{
+	pixel_x = -32
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/main)
 "leb" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -35169,14 +35189,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
-"oit" = (
-/obj/submachine/ATM{
-	pixel_x = -31
-	},
-/turf/simulated/floor/redblack{
-	dir = 10
-	},
-/area/station/security/main)
 "oiv" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
@@ -43117,6 +43129,14 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"sGX" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "sGZ" = (
 /obj/landmark/pest,
 /obj/machinery/light/incandescent,
@@ -48967,9 +48987,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"wef" = (
-/turf/simulated/floor/plating,
-/area/station/science/artifact)
 "wei" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -50780,20 +50797,6 @@
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
-"xnK" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "xos" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -92007,13 +92010,13 @@ aIe
 bnf
 miJ
 bjF
-bkA
+ldF
 tyt
-bmy
+dkE
 bno
 boh
 cSO
-oit
+guk
 bjC
 vVq
 opL
@@ -128138,12 +128141,12 @@ aaa
 aaa
 aaa
 nSr
-wef
-wef
-dXX
+hgR
+hgR
+sGX
 fkY
 fkY
-xnK
+jZy
 fkY
 viQ
 vzb
@@ -128742,8 +128745,8 @@ aaa
 aaa
 aaa
 nSr
-wef
-wef
+hgR
+hgR
 tma
 tma
 tma
