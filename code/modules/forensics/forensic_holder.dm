@@ -45,6 +45,7 @@ datum/forensic_holder
 
 	/// Obtain a specific type of forensic group if it exists
 	proc/get_group(var/category = FORENSIC_GROUP_NOTES, var/check_admin = FALSE)
+		RETURN_TYPE(/datum/forensic_group)
 		var/list/datum/forensic_group/target_groups
 		if(check_admin)
 			target_groups = src.admin_list

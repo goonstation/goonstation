@@ -107,6 +107,18 @@ datum
 			// silver salts are toxic
 			overdose = 10
 
+			reaction_turf(var/turf/T, var/volume)
+				. = ..()
+				if(volume < 1)
+					return
+				T.setStatus("forensic_silver_nitrate", 60 SECONDS)
+
+			reaction_obj(var/obj/O, var/volume)
+				. = ..()
+				if(volume < 1)
+					return
+				O.setStatus("forensic_silver_nitrate", 60 SECONDS)
+
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				if (!volume_passed)

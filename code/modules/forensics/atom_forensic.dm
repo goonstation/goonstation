@@ -1,5 +1,4 @@
 /atom
-	var/tmp/fingerprintslast = null
 	var/tmp/blood_DNA = null
 	var/tmp/blood_type = null
 	// only exists because human overlays are a headache, preserves color from add_blood
@@ -15,6 +14,8 @@
 	src.forensic_holder.copy_to(scan.holder, scan.is_admin)
 	if(src.reagents)
 		src.reagents.on_forensic_scan_reagent(scan)
+	if(src.hasStatus("forensic_silver_nitrate"))
+		scan.scan_effects += register_id("effect_silver_nitrate")
 
 	// Transfer old forensics to new forensics for scan
 	if(src.blood_DNA)
@@ -41,9 +42,11 @@
 		return "<b>No admin forensics found on [src].</b>"
 	return "<b>Hidden Adminprints on [src]:</b>" + aprints_group.get_adminprints()
 
-/atom/proc/get_last_ckey(var/admin_client)
-	var/datum/forensic_group/adminprints/aprints_group = src.forensic_holder.get_group(FORENSIC_GROUP_ADMINPRINTS, TRUE)
+/atom/proc/get_last_ckey(var/include_time = FALSE)
+	var/datum/forensic_group/adminprints/aprints_group = src.forensic_holder?.get_group(FORENSIC_GROUP_ADMINPRINTS, TRUE)
 	if(istype(aprints_group) && aprints_group.last_print)
+		if(include_time)
+			return aprints_group.last_print.get_text()
 		return aprints_group.last_print.clientKey.id
 	return "None"
 
@@ -63,13 +66,13 @@
 	return src.forensic_trace[key]
 
 /// Add a mob's fingerprint to something. If `hidden_only` is TRUE, only add to admin-visible prints.
-/atom/proc/add_fingerprint(mob/living/M, hidden_only = FALSE)
+/atom/proc/add_fingerprint(mob/living/M, admin_only = FALSE)
 	if (!ismob(M) || isnull(M.key))
 		return
 	if(M.client?.ckey)
 		var/datum/forensic_data/adminprint/aprint_data = new(register_id(M.client.ckey))
 		src.forensic_holder.add_evidence(aprint_data, FORENSIC_GROUP_ADMINPRINTS, TRUE)
-	if (src.flags & NOFPRINT)
+	if ((src.flags & NOFPRINT) || admin_only)
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -78,7 +81,6 @@
 	if(M.mind?.color)
 		var/datum/forensic_data/basic/color_data = new(M.mind.color, flags = 0)
 		src.add_evidence(color_data, FORENSIC_GROUP_SLEUTH)
-	src.fingerprintslast = M.key
 
 // WHAT THE ACTUAL FUCK IS THIS SHIT
 // WHO THE FUCK WROTE THIS

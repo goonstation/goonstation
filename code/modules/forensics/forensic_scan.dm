@@ -5,6 +5,7 @@
 	var/scan_time = 0
 	var/accuracy = 0 //! The quality of the scan
 	var/is_admin = FALSE
+	var/list/datum/forensic_id/scan_effects = list()
 
 	var/report_title = "Unknown Forensic Analysis"
 
@@ -76,9 +77,16 @@
 		for(var/i=1; i<= headers.len; i++)
 			report += SPAN_NOTICE("[headers[i]]")
 			for(var/line in src.report_lines[headers[i]])
-				report += "<li style='padding-left:12px'>[line]</li>" // Indent line and add a bullent point
+				report += "<li style='padding-left:12px'>[line]</li>" // Indent line and add a bullet point
 		if(!report)
 			report = "<li style='padding-left:12px'>No evidence detected.</li>"
+			//report = "<table><tr><td>
+			//	<li style='padding-left:12px'>Test A</li>
+			//	<li style='padding-left:12px'>Test B</li>
+			//	</td><td>
+			//	<li style='padding-left:12px'>Test C</li>
+			//	<li style='padding-left:12px'>Test D</li>
+			//	</td></tr></table>"
 
 		var/report_title = SPAN_SUCCESS(src.title)
 		if(print_hyperlink)

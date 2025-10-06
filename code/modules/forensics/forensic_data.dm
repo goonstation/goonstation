@@ -102,17 +102,24 @@
 		src.print_mask = print_mask
 		src.flags = flags
 
-	get_text()
-		var/fprint_text = get_masked_print()
-		var/fibers_text = fibers?.id
-		if(fprint_text && fibers_text)
-			if(src.print_mask == "0123-4567-89AB-CDEF")
-				fibers_text = SPAN_SUBTLE(fibers_text)
-				return "[fprint_text] ([fibers_text])"
-			else if(src.print_mask)
-				fprint_text = SPAN_SUBTLE(fprint_text)
+	get_text(var/datum/forensic_scan/scan)
+		if(scan.scan_effects.Find(register_id("effect_silver_nitrate")))
+			// Silver nitrate was applied. Show partial fingerprints.
+			var/fprint_text = get_masked_print()
+			var/fibers_text = SPAN_SUBTLE(src.fibers?.id)
+			if(fprint_text && fibers_text && src.print_mask)
 				return "([fprint_text]) [fibers_text]"
-		return fprint_text + fibers_text
+			return fprint_text + fibers_text
+		else if(src.print_mask?.id == "0123-4567-89AB-CDEF")
+			var/fprint_text = get_masked_print()
+			var/fibers_text = SPAN_SUBTLE(src.fibers?.id)
+			if(fprint_text && fibers_text)
+				return "[fprint_text] ([fibers_text])"
+			return fprint_text + fibers_text
+		else if(src.fibers)
+			return SPAN_SUBTLE(src.fibers.id)
+		else
+			return src.print?.id
 
 	get_copy()
 		var/datum/forensic_data/fingerprint/data_copy = new(src.print, src.fibers, src.print_mask, src.flags)

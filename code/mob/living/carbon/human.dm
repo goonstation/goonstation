@@ -3405,15 +3405,20 @@ mob/living/carbon/human/has_genetics()
 	var/datum/forensic_id/mask = null
 	if(!src.limbs)
 		return null
+	var/which_hand = LEFT_HAND
 	if((src.hand == LEFT_HAND || force_hand == LEFT_HAND) && limbs.l_arm)
 		print = limbs.l_arm.limb_print
-	if((src.hand == RIGHT_HAND || force_hand == RIGHT_HAND) && limbs.r_arm)
+	else if((src.hand == RIGHT_HAND || force_hand == RIGHT_HAND) && limbs.r_arm)
 		print = limbs.r_arm.limb_print
+		which_hand = RIGHT_HAND
 	if(!print)
 		return null
 	if(src.gloves && !ignore_gloves)
-		fibers = src.gloves.fibers
-		mask = src.gloves.print_mask
+		var/is_hand_covered = HAS_FLAG(src.gloves.which_hands, GLOVE_HAS_LEFT) && which_hand == LEFT_HAND
+		is_hand_covered |= HAS_FLAG(src.gloves.which_hands, GLOVE_HAS_RIGHT) && which_hand == RIGHT_HAND
+		if(is_hand_covered)
+			fibers = src.gloves.fibers
+			mask = src.gloves.print_mask
 	var/fprint_flags = FORENSIC_REMOVE_CLEANING
 	var/datum/forensic_data/fingerprint/new_fprint = new(print, fibers, mask, fprint_flags)
 	return new_fprint
