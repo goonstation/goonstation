@@ -147,7 +147,7 @@
 /obj/item/reagent_containers/iv_drip/proc/handle_draw(mult)
 	var/transfer_rate = \
 		src.iv_stand ? \
-			(!src.iv_stand.is_disabled ? \
+			(!src.iv_stand.is_disabled() ? \
 			src.iv_stand.transfer_rate : \
 			src.amount_per_transfer_from_this) \
 		: src.amount_per_transfer_from_this
@@ -156,7 +156,7 @@
 /obj/item/reagent_containers/iv_drip/proc/handle_inject(mult)
 	var/transfer_rate = \
 		src.iv_stand ? \
-			(!src.iv_stand.is_disabled ? \
+			(!src.iv_stand.is_disabled() ? \
 			src.iv_stand.transfer_rate : \
 			src.amount_per_transfer_from_this) \
 		: src.amount_per_transfer_from_this
