@@ -597,7 +597,7 @@
 		src.add_filter("chalkbutton_outline", 0, outline_filter(size=2, color="#000000"))
 		return ..()
 
-	MouseEntered(object,location,control,params)
+	MouseEntered(location,control,params)
 		src.add_filter("chalkbutton_drop_shadow", 0, drop_shadow_filter(x=0, y=0, size=3, offset=0, color="#FFFFFF"))
 		src.add_filter("chalkbutton_outline", 0, outline_filter(size=2, color="#FFFFFF"))
 
@@ -798,7 +798,7 @@
 		return ..()
 
 #ifdef HALLOWEEN
-obj/eldritch_altar
+/obj/eldritch_altar
 	name = "eldritch altar"
 	desc = "A strange altar with strangely familiar symbols etched into it.. Seems to have <b>two<b> different symbols on either side of it. It looks, uhh spooky."
 	icon = 'icons/obj/spooky.dmi'
