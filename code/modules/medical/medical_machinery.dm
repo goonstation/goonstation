@@ -26,10 +26,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	/// Medical machines can be connected to objects such as beds or surgical tables.
 	var/obj/paired_obj = null
 
-	var/actionbar_icon = 'icons/obj/surgery.dmi'
-	/// Icon state that represents every actionbar interaction for this machine. See `src.actionbar_icon`.
-	var/actionbar_icon_state = "IV"
-
 	/// Power consumption is constant if a patient is connected to the machine. In Watts.
 	var/power_consumption = 250 MILLI WATTS
 	/// For EMAG effects.
@@ -113,7 +109,10 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/Move(atom/target)
 	. = ..()
+	if (src.patient)
+		src.check_remove_conditions()
 	if (!src.paired_obj)
+		src.detach_from_obj()
 		return
 	if (!(src.paired_obj in src.loc))
 		src.detach_from_obj()
@@ -135,17 +134,23 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!isobj(over_object))
 		. = ..()
 		return
-	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
-	if (!(over_object.type in typinfo.paired_obj_whitelist))
-		. = ..()
-		return
 	if (over_object == src.paired_obj)
 		src.detach_from_obj(user)
 		return
 	if (src.paired_obj)
 		boutput(user, SPAN_ALERT("[src] is already attached to [src.paired_obj]!"))
 		return
-	src.attach_to_obj(over_object, user)
+	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
+	var/obj/object_to_attach_to = null
+	for (var/whitelist_type in typinfo.paired_obj_whitelist)
+		if (!istype(over_object, whitelist_type))
+			continue
+		object_to_attach_to = over_object
+		break
+	if (!object_to_attach_to)
+		. = ..()
+		return
+	src.attach_to_obj(object_to_attach_to, user)
 
 /obj/machinery/medical/process(mult)
 	..()
@@ -169,6 +174,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /// See `_std/defines/medical.dm`
 /obj/machinery/medical/proc/check_remove_conditions()
+	if (!src.connect_directly)
+		return
 	if (!src.patient)
 		src.remove_patient()
 		return
@@ -193,7 +200,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return FALSE
 	src.attempt_message(user, new_patient)
 	logTheThing(LOG_COMBAT, user, "is trying to connect [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
-	SETUP_GENERIC_ACTIONBAR(user, src, src.connection_time, PROC_REF(add_patient), list(new_patient, user), src.actionbar_icon, src.actionbar_icon_state, null, null)
+	var/icon/actionbar_icon = getFlatIcon(src)
+	SETUP_GENERIC_ACTIONBAR(user, src, src.connection_time, PROC_REF(add_patient), list(new_patient, user), actionbar_icon, null, null, null)
 
 /obj/machinery/medical/proc/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!iscarbon(new_patient))
@@ -217,7 +225,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		src.remove_message(user)
 		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
 	if (forceful && !user)
-		src.force_remove_message()
+		src.force_remove_feedback()
 	src.patient = null
 	src.power_usage = 0
 	src.UnsubscribeProcess()
@@ -240,7 +248,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		SPAN_NOTICE(src.parse_message(src.remove_msg_user, user, src.patient, self_referential = TRUE)),\
 		SPAN_NOTICE(src.parse_message(src.remove_msg_patient, user, src.patient)))
 
-/obj/machinery/medical/proc/force_remove_message()
+/obj/machinery/medical/proc/force_remove_feedback()
 	src.patient.visible_message(\
 		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_viewer, target = src.patient)),\
 		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_patient, target = src.patient, self_referential = TRUE)))
@@ -257,23 +265,31 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.paired_obj = target_object
 	mutual_attach(src, src.paired_obj)
 	src.set_loc(src.paired_obj.loc)
-	src.layer = (src.paired_obj.layer - 0.1)
 	src.pixel_x = src.connect_offset_x
 	src.pixel_y = src.connect_offset_y
-	src.density = FALSE
+	src.density = src.paired_obj.density
+	src.set_layer()
+	RegisterSignal(src.paired_obj, COMSIG_ATOM_DIR_CHANGED, PROC_REF(set_layer))
 
 /obj/machinery/medical/proc/detach_from_obj(mob/user)
 	. = TRUE
-	if (!src.paired_obj)
-		return FALSE
-	if (ismob(user))
-		src.visible_message(SPAN_NOTICE("[user] detaches [src] from [src.paired_obj]."))
-	mutual_detach(src, src.paired_obj)
 	src.layer = initial(src.layer)
 	src.pixel_x = initial(src.pixel_x)
 	src.pixel_y = initial(src.pixel_y)
 	src.paired_obj = null
 	src.density = initial(src.density)
+	if (!src.paired_obj)
+		return FALSE
+	if (ismob(user))
+		src.visible_message(SPAN_NOTICE("[user] detaches [src] from [src.paired_obj]."))
+	mutual_detach(src, src.paired_obj)
+	UnregisterSignal(src.paired_obj, COMSIG_ATOM_DIR_CHANGED)
+
+/// Specifically because of chairs.
+/obj/machinery/medical/proc/set_layer()
+	if (!src.paired_obj)
+		return
+	src.layer = src.paired_obj.layer - 0.1
 
 /// Override on children.
 /obj/machinery/medical/proc/deconstruct()
