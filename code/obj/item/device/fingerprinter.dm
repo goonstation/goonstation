@@ -118,7 +118,7 @@
 			else
 				boutput(user, SPAN_ALERT("No prints on [target] to scan."))
 
-		target.forensic_holder.copy_to(src.scanned_evidence)
+		target.forensic_holder.copy_to(src.scanned_evidence, null)
 		boutput(user, SPAN_SUCCESS("You read the prints on [target] into [src]."))
 		// boutput(user, SPAN_ALERT("You've already scanned all the prints on [target]."))
 

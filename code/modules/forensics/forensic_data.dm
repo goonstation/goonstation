@@ -15,7 +15,8 @@
 	proc/get_text(var/datum/forensic_scan/scan)
 		return ""
 
-	proc/get_copy()
+	/// Return a copy of the data. Forensic scan is optional for copying incomplete data.
+	proc/get_copy(var/datum/forensic_scan/scan)
 		RETURN_TYPE(/datum/forensic_data)
 		return null
 
@@ -103,29 +104,35 @@
 		src.flags = flags
 
 	get_text(var/datum/forensic_scan/scan)
+		var/fibers_text = SPAN_SUBTLE(src.fibers?.id)
 		if(scan.scan_effects.Find(register_id("effect_silver_nitrate")))
 			// Silver nitrate was applied. Show partial fingerprints.
 			var/fprint_text = get_masked_print()
-			var/fibers_text = SPAN_SUBTLE(src.fibers?.id)
 			if(fprint_text && fibers_text && src.print_mask)
-				return "([fprint_text]) [fibers_text]"
+				return "([fprint_text]) ; [fibers_text]"
 			return fprint_text + fibers_text
 		else if(src.print_mask?.id == "0123-4567-89AB-CDEF")
 			var/fprint_text = get_masked_print()
-			var/fibers_text = SPAN_SUBTLE(src.fibers?.id)
 			if(fprint_text && fibers_text)
 				return "[fprint_text] ([fibers_text])"
 			return fprint_text + fibers_text
 		else if(src.fibers)
-			return SPAN_SUBTLE(src.fibers.id)
+			return fibers_text
 		else
 			return src.print?.id
 
-	get_copy()
+	get_copy(var/datum/forensic_scan/scan)
 		var/datum/forensic_data/fingerprint/data_copy = new(src.print, src.fibers, src.print_mask, src.flags)
 		data_copy.time_start = src.time_start
 		data_copy.time_end = src.time_end
 		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
+		if(!scan || scan.scan_effects.Find(register_id("effect_silver_nitrate")))
+			return data_copy
+		if(!src.print_mask || src.print_mask.id == "0123-4567-89AB-CDEF")
+			return data_copy
+		if(src.fibers)
+			// Fingerprints aren't visible. Don't copy the prints themselves (avoid listing duplicate gloves).
+			data_copy.print = null
 		return data_copy
 
 	proc/get_masked_print()

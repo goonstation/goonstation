@@ -111,13 +111,13 @@ datum
 				. = ..()
 				if(volume < 1)
 					return
-				T.setStatus("forensic_silver_nitrate", 60 SECONDS)
+				T.changeStatus("forensic_silver_nitrate", 30 SECONDS)
 
 			reaction_obj(var/obj/O, var/volume)
 				. = ..()
 				if(volume < 1)
 					return
-				O.setStatus("forensic_silver_nitrate", 60 SECONDS)
+				O.changeStatus("forensic_silver_nitrate", 30 SECONDS)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()

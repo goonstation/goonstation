@@ -11,7 +11,7 @@
 
 /// Called before a forensics scan. You can change how the scan works here.
 /atom/proc/on_forensic_scan(var/datum/forensic_scan/scan)
-	src.forensic_holder.copy_to(scan.holder, scan.is_admin)
+	src.forensic_holder.copy_to(scan.holder, null, scan.is_admin)
 	if(src.reagents)
 		src.reagents.on_forensic_scan_reagent(scan)
 	if(src.hasStatus("forensic_silver_nitrate"))

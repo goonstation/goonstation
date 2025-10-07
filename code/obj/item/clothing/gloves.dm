@@ -266,14 +266,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("chemprot", 15)
 
 	get_fiber_mask()
-		return create_glovemask_order(2) // 1/2 chance of match
+		return "...???..."
 
 /obj/item/clothing/gloves/fingerless
 	desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
 	name = "fingerless gloves"
 	icon_state = "fgloves"
 	item_state = "finger-"
-	material_prints = "short black fibers"
+	material_prints = "black leather fibers"
 
 	setupProperties()
 		..()
@@ -316,8 +316,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.visible_message(SPAN_NOTICE("[user] cuts off the fingertips from [src]."))
 		if(src.loc == user)
 			user.u_equip(src)
+		var/obj/item/clothing/gloves/fingerless/cut_gloves = new()
+		cut_gloves.fibers = src.fibers
 		qdel(src)
-		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
+		user.put_in_hand_or_drop(cut_gloves)
 	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"

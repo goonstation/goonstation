@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 	proc/report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
 		return
 
-	proc/copy_to(var/datum/forensic_holder/other)
+	proc/copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan)
 		return
 
 	proc/get_header()
@@ -103,9 +103,9 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		for(var/datum/forensic_data/f_data in src.evidence_list)
 			report.add_line(f_data.get_text(scan), src.get_header())
 
-	copy_to(var/datum/forensic_holder/other)
+	copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan)
 		for(var/datum/forensic_data/evidence_data in src.evidence_list)
-			var/datum/forensic_data/evidence_copy = evidence_data.get_copy()
+			var/datum/forensic_data/evidence_copy = evidence_data.get_copy(scan)
 			other.add_evidence(evidence_copy, src.category)
 
 	/// If duplicate evidence is added, you can have that affect the value of the existing evidence
@@ -300,9 +300,9 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		for(var/datum/forensic_data/f_data in src.evidence_list)
 			report.add_line(f_data.get_text(scan), src.get_header())
 
-	copy_to(var/datum/forensic_holder/other)
+	copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan)
 		for(var/datum/forensic_data/evidence_data in src.evidence_list)
-			var/datum/forensic_data/evidence_copy = evidence_data.get_copy()
+			var/datum/forensic_data/evidence_copy = evidence_data.get_copy(scan)
 			other.add_evidence(evidence_copy, src.category)
 
 	get_header()

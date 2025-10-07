@@ -66,7 +66,7 @@
 		header_lines.Add(evidence_text)
 
 	/// Collect all the lines into a single string
-	proc/compile_report(var/print_hyperlink = "")
+	proc/compile_report(var/print_hyperlink = "", var/allow_columns = FALSE)
 		var/list/headers = list()
 		for(var/header in src.report_lines)
 			headers.Add(header)
@@ -75,24 +75,30 @@
 		var/report = ""
 		// Go through headers in order
 		for(var/i=1; i<= headers.len; i++)
-			report += SPAN_NOTICE("[headers[i]]")
-			for(var/line in src.report_lines[headers[i]])
-				report += "<li style='padding-left:12px'>[line]</li>" // Indent line and add a bullet point
+			report += SPAN_NOTICE("[headers[i]]") + compile_report_columns(headers[i])
+			//for(var/line in src.report_lines[headers[i]])
+			//	report += "<li style='padding-left:12px'>[line]</li>" // Indent line and add a bullet point
 		if(!report)
 			report = "<li style='padding-left:12px'>No evidence detected.</li>"
-			//report = "<table><tr><td>
-			//	<li style='padding-left:12px'>Test A</li>
-			//	<li style='padding-left:12px'>Test B</li>
-			//	</td><td>
-			//	<li style='padding-left:12px'>Test C</li>
-			//	<li style='padding-left:12px'>Test D</li>
-			//	</td></tr></table>"
 
 		var/report_title = SPAN_SUCCESS(src.title)
 		if(print_hyperlink)
 			report_title += ": [print_hyperlink]"
 		report = "[report_title]<br>" + report
 		return report
+
+	proc/compile_report_columns(var/header)
+		var/column_count = 1
+		var/text_header = "<table>"
+		for(var/line in src.report_lines[header])
+			text_header += "<tr>"
+			var/list/row_text = splittext(line, ";")
+			if(length(row_text) > column_count)
+				column_count = length(row_text)
+			for(var/text in row_text)
+				text_header += "<td><li style='padding-left:12px'>[text]</li></td>"
+			text_header += "</tr>"
+		return "[text_header]</table>"
 
 /proc/cmp_forensic_headers(var/headerA, var/headerB)
 	var/priorityA = get_header_priority(headerA)
