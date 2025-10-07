@@ -42,11 +42,11 @@
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 100 //Powerful effect, thus rare.
 	validtypes = list("eldritch") //Straight up evil.
-	validtriggers = list(/datum/artifact_trigger/carbon_touch)
-	//validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	activ_text = "extends several antennas!"
 	deact_text = "retracts its antennas."
-	react_xray = list(15,75,90,3,"ANTENNAS")
+	react_xray = list(15,75,90,3,"ANTENNAE")
+	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
 	var/can_previous_targets_scramble_again = TRUE
 	var/list/remembered_minds = new/list()
 	var/list/remembered_bodies = new/list()
