@@ -83,7 +83,6 @@
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black,\
-	/obj/item/clothing/glasses/phyto,\
 #ifdef SEASON_WINTER
 	/obj/item/clothing/suit/puffer/botanist)
 #else
