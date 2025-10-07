@@ -233,7 +233,7 @@ proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_pla
 
 
 
-proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA)
+proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA,var/show_gene_strain=TRUE)
 	// This is the proc plant analyzers use to pop up their readout for the player.
 	// Should be mostly self-explanatory to read through.
 	//
@@ -318,7 +318,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		for (var/datum/plant_gene_strain/X in DNA.commuts)
 			gene_strains += "[X.name] [X.strain_type]"
 		if(gene_strains.len)
-			message += "[MUT ? "" : "<br>"]<font color='red'><b>Gene strains detected:</b> [gene_strains.Join(", ")]</font>"
+			message += "[MUT ? "" : "<br>"]<font color='red'><b>Gene strains detected[show_gene_strain ? ": " + gene_strains.Join(", ") : ", advanced analysis required."]</b></font>"
 
 	boutput(user, message)
 	return

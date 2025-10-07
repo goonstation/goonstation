@@ -86,8 +86,9 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /obj/machinery/plantpot/get_desc(dist, mob/user)
 	. = ..()
-	if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION))
-		boutput(user, scan_plant(src, user))
+	var/show_gene_strain = GET_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) >= PHYTOVISION_UPGRADED ? TRUE : FALSE
+	if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) || show_gene_strain)
+		boutput(user, scan_plant(src, user, FALSE, show_gene_strain))
 
 /obj/machinery/plantpot/proc/post_alert(var/list/alert_data)
 	if(src.status & (NOPOWER|BROKEN)) return

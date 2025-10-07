@@ -729,21 +729,45 @@ TYPEINFO(/obj/item/clothing/glasses/phyto)
 	flash_state = "goggle_flash"
 	flash_compatible = TRUE
 	desc = "Goggles with a modified variant of the Raman spectroscope for rapid qualitative and quantitative analysis of botanical samples."
-	color_r = 0.6
-	color_g = 0.85
-	color_b = 1
+	color_r = 0.7
+	color_g = 0.9
+	color_b = 0.7
+	var/vision_type = PHYTOVISION_NORMAL
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 5)
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/analyzer/phytoscopic_upgrade))
+			if (src.vision_type >= PHYTOVISION_UPGRADED)
+				boutput(user, SPAN_ALERT("[src] already has a gene scan upgrade!"))
+				return
+			else
+				src.vision_type = PHYTOVISION_UPGRADED
+				var/mob/living/carbon/human/human_user = user
+				if (istype(human_user) && human_user.glasses == src)
+					APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src, src.vision_type)
+				src.icon_state = "phyto-upgraded"
+				boutput(user, SPAN_NOTICE("Gene scan upgrade installed."))
+				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
+				user.u_equip(W)
+				qdel(W)
+				return
+		else
+			return ..()
+
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src, src.vision_type)
 
 	unequipped(mob/user)
 		. = ..()
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src)
+
+/obj/item/clothing/glasses/phyto/upgraded
+	icon_state = "phyto-upgraded"
+	vision_type = PHYTOVISION_UPGRADED
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles

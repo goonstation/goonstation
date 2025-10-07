@@ -409,6 +409,17 @@ TYPEINFO(/obj/item/plantanalyzer)
 		src.add_fingerprint(user)
 		return
 
+// This is the best place for this thing
+/obj/item/device/analyzer/phytoscopic_upgrade
+	name = "phytoscopic analyzer upgrade"
+	desc = "A small upgrade card that allows phytoscopic goggles to detect gene strains present in a plant."
+	icon_state = "phyto_upgr"
+	flags = TABLEPASS | CONDUCT
+	throwforce = 0
+	w_class = W_CLASS_TINY
+	throw_speed = 5
+	throw_range = 10
+
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 
 /obj/item/seedplanter

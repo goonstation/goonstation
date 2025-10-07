@@ -72,8 +72,11 @@ ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 		if (dist >= 2)
 			return
 
-		if (iskudzuman(user) || HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION))
-			. = scan_plant(src, user, visible = 0) // Replaced with global proc (Convair880).
+		var/show_gene_strain = GET_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) >= PHYTOVISION_UPGRADED ? TRUE : FALSE
+		if (iskudzuman(user))
+			. = scan_plant(src, user, FALSE) // Replaced with global proc (Convair880).
+		else if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) || show_gene_strain)
+			. = scan_plant(src, user, FALSE, show_gene_strain) // Replaced with global proc (Convair880).
 
 	proc/docolor() //bleh, used when unpooling
 		src.plant_seed_color(src.seedcolor)
