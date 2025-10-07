@@ -12,6 +12,7 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 	var/time = 0	// The current time in ticks.
 	var/last_update = 0	// The last time (in ticks) the time was updated
 	var/ambient_light_source = AMBIENT_LIGHT_SRC_INVLD
+	var/current_color
 	var/obj/ambient/light
 
 	New()
@@ -20,6 +21,8 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 		src.time = initial_time
 		last_update = world.timeofday
 		light = new
+
+		update_color( calculate_color(src.time) )
 
 	proc/initialize()
 		return
@@ -35,17 +38,37 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 
 		src.time = (src.time + ( delta_ticks * src.speed)) % src.cycle
 
+		update_color( calculate_color(src.time) )
+
 		src.last_update = current_tick
+
+	proc/calculate_color(tick)
+		return "#888"
+
+	proc/update_color(new_color)
+		if(current_color != new_color)
+			current_color = new_color
+			animate(light, color=new_color, time=10 SECONDS)
+
+	proc/generate_color_samples()
+		var/list/colors = list()
+		var/samples = 24
+		if(cycle)
+			for(var/i = 0; i < samples; i++)
+				colors += calculate_color(i * (src.cycle / samples))
+		else
+			colors += current_color
+		return colors
+
 
 /datum/daynight_controller/earth
 	ambient_light_source = AMBIENT_LIGHT_SRC_EARTH
 
-	process()
-		. = ..()
+	calculate_color(tick)
 		// Update lighting based on sun position
 		var/sun_color
 
-		var/hours = floor(src.time/(1 HOUR))
+		var/hours = floor(tick/(1 HOUR))
 		switch(hours)
 			if(7)
 				sun_color =  rgb(255 * 0.01, 255 * 0.01, 255 * 0.01)	// night time
@@ -98,17 +121,16 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 			else
 				sun_color =  rgb(255 * 1.00, 255 * 1.00, 255 * 1.00)	// uhhhhhh
 
-		if(light.color != sun_color)
-			animate(light, color=sun_color, time=10 SECONDS)
+		. = sun_color
+
 
 /datum/daynight_controller/ocean
 	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 
-	process()
-		. = ..()
+	calculate_color(tick)
 		var/sky_color
 
-		var/hours = floor(src.time/(1 HOUR))
+		var/hours = floor(tick/(1 HOUR))
 		switch(hours)
 #ifdef MAP_OVERRIDE_NADIR
 	// nadir has an 8 hour rotation, but is somewhat evenly lit by both shidd and fugg, as it's quite far from typhone (royal rings district)
@@ -156,9 +178,7 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 			if(11, 23)
 				sky_color = rgb(0.160 *  18, 0.60 * 236, 1.00 * 255, 0.65 * 255)
 #endif
-
-		if(light.color != sky_color)
-			animate(light, color=sky_color, time=10 SECONDS)
+		. = sky_color
 
 /datum/daynight_controller/terrainify
 	ambient_light_source = AMBIENT_LIGHT_SRC_TERRAINIFY
@@ -176,11 +196,10 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 		else
 			src.light.color	= color1
 
-	process()
-		. = ..()
+	calculate_color(tick)
 
-		var/color1_cycle = (-cos(360*(src.time / src.cycle)+0.9)+1) / 2 // 0 to 1 over the course of the cycle
-		var/color2_cycle = (-cos(360*(src.time / src.cycle)-1.3)+1) / 2
+		var/color1_cycle = (-cos(360*(tick / src.cycle)+30)+1) / 2 // 0 to 1 over the course of the cycle
+		var/color2_cycle = (-cos(360*(tick / src.cycle)-30)+1) / 2
 
 		var/list/color1_rgb = rgb2num(color1)
 		var/list/color2_rgb = rgb2num(color2)
@@ -189,5 +208,5 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 					color1_rgb[2]*color1_cycle+color2_rgb[2]*color2_cycle, \
 					color1_rgb[3]*color1_cycle+color2_rgb[3]*color2_cycle)
 
-		if(light.color != new_color)
-			animate(light, color=new_color, time=10 SECONDS)
+		// Update ambient light color if it has changed
+		. = new_color

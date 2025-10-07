@@ -791,6 +791,7 @@
 #include "code\modules\admin\viewvariables\particool.dm"
 #include "code\modules\admin\viewvariables\particool_serialization.dm"
 #include "code\modules\admin\viewvariables\pixel_offset.dm"
+#include "code\modules\ambient_lighting\ambient_lightning_viewer.dm"
 #include "code\modules\animation\AnimationLibrary.dm"
 #include "code\modules\antagonists\__antagonist.dm"
 #include "code\modules\antagonists\__generic_antagonist.dm"
