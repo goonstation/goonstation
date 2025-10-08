@@ -131,7 +131,7 @@
 		if(!src.print_mask || src.print_mask.id == "0123-4567-89AB-CDEF")
 			return data_copy
 		if(src.fibers)
-			// Fingerprints aren't visible. Don't copy the prints themselves (avoid listing duplicate gloves).
+			// Fingerprints are not visible. Don't copy the prints themselves (avoid listing duplicate gloves).
 			data_copy.print = null
 		return data_copy
 

@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
 	protective_temperature = 550
-	material_prints = "synthetic silicone rubber fibers"
+	material_prints = "synthetic silicone rubber"
 	fingertip_color = "#ffff33"
 	setupProperties()
 		..()
@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "fingerless gloves"
 	icon_state = "fgloves"
 	item_state = "finger-"
-	material_prints = "black leather fibers"
+	material_prints = "black leather"
 
 	setupProperties()
 		..()
@@ -285,7 +285,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "black"
 	item_state = "bgloves"
 	protective_temperature = 1500
-	material_prints = "black leather fibers"
+	material_prints = "black leather"
 	fingertip_color = "#535353"
 
 	setupProperties()
@@ -334,7 +334,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "lgloves"
 	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
 	protective_temperature = 310
-	material_prints = "latex rubber imprints"
+	material_prints = "latex rubber"
 	fingertip_color = "#f3f3f3"
 	setupProperties()
 		..()
@@ -503,7 +503,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "These gloves are electrically charged."
 	icon_state = "stun"
 	item_state = "stun"
-	material_prints = "insulative fibers, electrically charged"
+	material_prints = "insulative fibers, charged"
 	stunready = 1
 	can_be_charged = 1
 	uses = 10
@@ -558,7 +558,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Big soft gloves used in competitive boxing."
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
-	material_prints = "red leather fibers"
+	material_prints = "red leather"
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35
@@ -614,7 +614,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "transparent gloves"
 	icon_state = "transparent"
 	item_state = "transparent"
-	material_prints = "black leather fibers"
+	material_prints = "black leather"
 	no_prints = TRUE
 	var/deployed = FALSE
 	nodescripition = TRUE
@@ -718,7 +718,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "power gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
-	material_prints = "insulative fibers and nanomachines"
+	material_prints = "insulative fibers"
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
 	max_uses = 10
 	flags = HAS_EQUIP_CLICK
@@ -730,6 +730,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("conductivity", 0)
+
+	get_fiber_mask()
+		return create_glovemask_order(3) // 1/8 chance of match
 
 	proc/use_power(var/amount)
 		var/turf/T = get_turf(src)
@@ -969,7 +972,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Glimmer glimmer!"
 	icon_state = "princess"
 	item_state = "princess"
-	material_prints = "silk fibres and glitter"
+	material_prints = "silk fibres, glitter"
 	fingertip_color = "#f3f3f3"
 
 	setupProperties()

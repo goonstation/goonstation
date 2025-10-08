@@ -16,11 +16,11 @@
 			report_title = "Forensic Analysis of <b>[scan_target]</b>"
 			scan_target.on_forensic_scan(src)
 
-	proc/build_report(var/print_hyperlink = "")
+	proc/build_report(var/print_hyperlink = "", var/compress = FALSE)
 		var/datum/forensic_report/report = new(src.report_title, src.scan_time)
 		src.holder.report_text(src, report)
-		var/report_scan = report.compile_report()
-		var/report_chain = next_chain?.build_report()
+		var/report_scan = report.compile_report(compress = compress)
+		var/report_chain = next_chain?.build_report(null, compress)
 		if(report_chain)
 			report_chain = "<li></li>" + report_chain
 		return report_scan + report_chain
@@ -66,7 +66,7 @@
 		header_lines.Add(evidence_text)
 
 	/// Collect all the lines into a single string
-	proc/compile_report(var/print_hyperlink = "", var/allow_columns = FALSE)
+	proc/compile_report(var/print_hyperlink = "", var/compress = FALSE)
 		var/list/headers = list()
 		for(var/header in src.report_lines)
 			headers.Add(header)
@@ -75,11 +75,11 @@
 		var/report = ""
 		// Go through headers in order
 		for(var/i=1; i<= headers.len; i++)
-			report += SPAN_NOTICE("[headers[i]]") + compile_report_columns(headers[i])
+			report += SPAN_NOTICE("[headers[i]]") + compile_report_header(headers[i], compress)
 			//for(var/line in src.report_lines[headers[i]])
 			//	report += "<li style='padding-left:12px'>[line]</li>" // Indent line and add a bullet point
 		if(!report)
-			report = "<ul style='margin-top:0px;padding-left:20px'><li>No evidence detected.</li></ul>"
+			report = "<ul style='margin-top:0px;padding-left:25px'><li>No evidence detected.</li></ul>"
 
 		var/report_title = SPAN_SUCCESS(src.title)
 		if(print_hyperlink)
@@ -87,16 +87,27 @@
 		report = "[report_title]<br>" + report
 		return report
 
-	proc/compile_report_columns(var/header, var/compress = FALSE)
+	proc/compile_report_header(var/header, var/compress)
+		// Check if there should be columns and how many
 		var/column_count = 1
 		for(var/line in src.report_lines[header])
 			var/col_count = findtext(line, ";") + 1
 			if(col_count > column_count)
 				column_count = col_count
+		if(column_count > 1)
+			return compile_report_columns(src.report_lines[header], column_count)
+		else if(compress && header == FORENSIC_HEADER_FINGERPRINTS)
+			return compile_report_compress(header, 2)
+		else
+			var/header_text = "<ul style='margin-top:0px;padding-left:25px'>"
+			for(var/line in src.report_lines[header])
+				header_text += "<li style='padding-left:0px'>[line]</li>" // Indent line and add a bullet point
+			return "[header_text]</ul>"
 
+	proc/compile_report_columns(var/list/lines, var/column_count, var/bullet_pts = FALSE)
 		// There is probably a better way way to do this formatting
 		var/text_header = "<table style='border-spacing: -5px'><ul style='margin-top:-13px;padding-left:20px'>"
-		for(var/line in src.report_lines[header])
+		for(var/line in lines)
 			text_header += "<tr>"
 			var/list/row_text = splittext(line, ";")
 			var/current_column = 1
@@ -104,13 +115,34 @@
 				var/style = "padding-left:20px;padding-right:10px"
 				if(current_column != column_count)
 					style += ";border-right:1px solid white"
-				if(current_column == 1)
+				if(current_column == 1 || bullet_pts)
 					text_header += "<td style='[style]'><li>[text]</li></td>"
 				else
 					text_header += "<td style='[style]'>[text]</td>"
 				current_column++
 			text_header += "</tr>"
 		return "[text_header]</ul></table>"
+
+	proc/compile_report_compress(var/header, var/lines_per_row = 2)
+		var/list/row_text = list()
+
+		// Combine multiple lines into rows
+		var/counter = 1
+		var/current_row = ""
+		for(var/line in src.report_lines[header])
+			if(current_row)
+				current_row += " ; [line]"
+			else
+				current_row = line
+			if(counter == lines_per_row)
+				counter = 0
+				row_text += current_row
+				current_row = ""
+			counter++
+		if(current_row)
+			row_text += current_row
+		return compile_report_columns(row_text, lines_per_row, TRUE)
+
 
 /proc/cmp_forensic_headers(var/headerA, var/headerB)
 	var/priorityA = get_header_priority(headerA)

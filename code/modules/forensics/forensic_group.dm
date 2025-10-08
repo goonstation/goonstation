@@ -234,7 +234,6 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 			// Incoming adminprint is old (perhaps copied from someplace else)
 			src.print_list += data
 
-
 	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
 		for(var/datum/forensic_data/adminprint/f_data in src.print_list)
 			report.add_line(f_data.get_text(scan), src.get_header())
