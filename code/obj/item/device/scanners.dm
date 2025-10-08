@@ -272,7 +272,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant forensic scan of [target]."))
 				var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
 				last_scan = scan.build_report(compress = FALSE)
-				boutput(user, last_scan)
+				boutput(user, scan.build_report(compress = TRUE))
 				src.add_fingerprint(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -285,10 +285,10 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if (scans == null)
 			scans = new/list(maximum_scans)
 		var/datum/forensic_scan/scan = scan_forensic(A, visible = TRUE)
-		last_scan = scan.build_report(compress = TRUE)
+		last_scan = scan.build_report(compress = FALSE)
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [A];'>PRINT REPORT</a> ---<br>" + last_scan
+		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [A];'>PRINT REPORT</a> ---<br>" + scan.build_report(compress = TRUE)
 		number_of_scans += 1
 
 		boutput(user, scan_output)

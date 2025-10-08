@@ -17,7 +17,7 @@
 			scan_target.on_forensic_scan(src)
 
 	proc/build_report(var/print_hyperlink = "", var/compress = FALSE)
-		var/datum/forensic_report/report = new(src.report_title, src.scan_time)
+		var/datum/forensic_report/report = new(src, src.report_title)
 		src.holder.report_text(src, report)
 		var/report_scan = report.compile_report(compress = compress)
 		var/report_chain = next_chain?.build_report(null, compress)
@@ -48,14 +48,22 @@
 		else
 			src.next_chain.chain_scan(new_scan)
 
+	proc/add_effect(var/effect_id)
+		src.scan_effects += register_id(effect_id)
+
+	proc/has_effect(var/effect_id)
+		return src.scan_effects.Find(register_id(effect_id))
+
 // The results of a forensics scan in text format.
 /datum/forensic_report
 	/// Associative list. Keys are header names. Each element is a list of evidence under that header in text format.
+	var/datum/forensic_scan/scan
 	var/list/list/report_lines = list()
 	var/title = ""
 
-	New(var/title)
+	New(var/datum/forensic_scan/scan, var/title)
 		..()
+		src.scan = scan
 		src.title = title
 
 	proc/add_line(var/evidence_text, var/header = FORENSIC_HEADER_NOTES)
@@ -96,10 +104,10 @@
 				column_count = col_count
 		if(column_count > 1)
 			return compile_report_columns(src.report_lines[header], column_count)
-		else if(compress && header == FORENSIC_HEADER_FINGERPRINTS)
+		else if(compress && header == FORENSIC_HEADER_FINGERPRINTS && !src.scan.has_effect("effect_silver_nitrate"))
 			return compile_report_compress(header, 2)
 		else
-			var/header_text = "<ul style='margin-top:0px;padding-left:25px'>"
+			var/header_text = "<ul style='margin-top:0px;padding-left:20px'>"
 			for(var/line in src.report_lines[header])
 				header_text += "<li style='padding-left:0px'>[line]</li>" // Indent line and add a bullet point
 			return "[header_text]</ul>"
@@ -129,6 +137,8 @@
 		// Combine multiple lines into rows
 		var/counter = 1
 		var/current_row = ""
+		if(src.report_lines[header].len < lines_per_row)
+			lines_per_row = src.report_lines[header].len
 		for(var/line in src.report_lines[header])
 			if(current_row)
 				current_row += " ; [line]"

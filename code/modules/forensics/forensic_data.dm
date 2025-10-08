@@ -105,17 +105,20 @@
 
 	get_text(var/datum/forensic_scan/scan)
 		var/fibers_text = SPAN_SUBTLE(src.fibers?.id)
-		if(scan.scan_effects.Find(register_id("effect_silver_nitrate")))
+		if(scan.has_effect("effect_silver_nitrate"))
 			// Silver nitrate was applied. Show partial fingerprints.
 			var/fprint_text = get_masked_print()
 			if(fprint_text && fibers_text && src.print_mask)
 				return "([fprint_text]) [fibers_text]"
 			return fprint_text + fibers_text
 		else if(src.print_mask?.id == "0123-4567-89AB-CDEF")
-			var/fprint_text = get_masked_print()
-			if(fprint_text && fibers_text)
-				return "[fprint_text] ([fibers_text])"
-			return fprint_text + fibers_text
+			return src.print?.id
+
+			// Not including the fibers for now because they were taking up too much room in the forensic report.
+			//var/fprint_text = get_masked_print()
+			// if(fprint_text && fibers_text)
+				// return "[fprint_text] ([fibers_text])"
+			// return fprint_text + fibers_text
 		else if(src.fibers)
 			return fibers_text
 		else
@@ -126,9 +129,12 @@
 		data_copy.time_start = src.time_start
 		data_copy.time_end = src.time_end
 		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
-		if(!scan || scan.scan_effects.Find(register_id("effect_silver_nitrate")))
+		if(!scan || scan.has_effect("effect_silver_nitrate"))
 			return data_copy
 		if(!src.print_mask || src.print_mask.id == "0123-4567-89AB-CDEF")
+			// Ignore the fibers of fingerless gloves for now. Taking up too much room in the forensic report.
+			data_copy.fibers = null
+			data_copy.print_mask = null
 			return data_copy
 		if(src.fibers)
 			// Fingerprints are not visible. Don't copy the prints themselves (avoid listing duplicate gloves).
