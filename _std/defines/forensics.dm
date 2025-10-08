@@ -36,5 +36,6 @@
 #define FORENSIC_VALUE_MAX 4
 #define FORENSIC_VALUE_MIN 5
 
-#define FORENSIC_CHARS_FINGERPRINTS list("G","H","J","K","N","O","P","Q","R","S","U","V","W","X","Y","Z")
+// #define FORENSIC_CHARS_FINGERPRINTS list("G","H","J","K","N","O","P","Q","R","S","U","V","W","X","Y","Z")
+#define FORENSIC_CHARS_FINGERPRINTS list("a","b","c","d","e","g","n","o","p","q","s","u","v","x","y","z")
 #define FORENSIC_CHARS_HEX list("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")

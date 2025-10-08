@@ -109,7 +109,7 @@
 			// Silver nitrate was applied. Show partial fingerprints.
 			var/fprint_text = get_masked_print()
 			if(fprint_text && fibers_text && src.print_mask)
-				return "([fprint_text]) ; [fibers_text]"
+				return "([fprint_text]) [fibers_text]"
 			return fprint_text + fibers_text
 		else if(src.print_mask?.id == "0123-4567-89AB-CDEF")
 			var/fprint_text = get_masked_print()

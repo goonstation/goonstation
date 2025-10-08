@@ -166,7 +166,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				mask += "?"
 		return "...-[mask]-..."
 
-	proc/create_glovemask_bunch(var/reveal_count = 1) // (?-?-..g..-?)
+	proc/create_glovemask_bunch(var/reveal_count = 1) // (?-?-...g...-?)
 		// Probability (1): 1/4 chance of match (default glove mask)
 		// Probability (2): 1/16 chance of match (latex gloves)
 		if(reveal_count == 0)
@@ -179,10 +179,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			var/rand_bunch = rand(1, bunch_list.len)
 			var/rand_pos = rand(0,3)
 			var/hex = num2hex(((bunch_list[rand_bunch] * 4) - 4 + rand_pos), 1)
-			if(reveal_count == 1)
-				text_list[bunch_list[rand_bunch]] = "...[hex]..."
-			else
-				text_list[bunch_list[rand_bunch]] = "..[hex].."
+			text_list[bunch_list[rand_bunch]] = "...[hex]..."
 			bunch_list.Cut(rand_bunch, rand_bunch+1)
 
 		return "[text_list[1]]-[text_list[2]]-[text_list[3]]-[text_list[4]]"

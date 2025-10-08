@@ -79,7 +79,7 @@
 			//for(var/line in src.report_lines[headers[i]])
 			//	report += "<li style='padding-left:12px'>[line]</li>" // Indent line and add a bullet point
 		if(!report)
-			report = "<li style='padding-left:12px'>No evidence detected.</li>"
+			report = "<ul style='margin-top:0px;padding-left:20px'><li>No evidence detected.</li></ul>"
 
 		var/report_title = SPAN_SUCCESS(src.title)
 		if(print_hyperlink)
@@ -87,18 +87,30 @@
 		report = "[report_title]<br>" + report
 		return report
 
-	proc/compile_report_columns(var/header)
+	proc/compile_report_columns(var/header, var/compress = FALSE)
 		var/column_count = 1
-		var/text_header = "<table>"
+		for(var/line in src.report_lines[header])
+			var/col_count = findtext(line, ";") + 1
+			if(col_count > column_count)
+				column_count = col_count
+
+		// There is probably a better way way to do this formatting
+		var/text_header = "<table style='border-spacing: -5px'><ul style='margin-top:-13px;padding-left:20px'>"
 		for(var/line in src.report_lines[header])
 			text_header += "<tr>"
 			var/list/row_text = splittext(line, ";")
-			if(length(row_text) > column_count)
-				column_count = length(row_text)
+			var/current_column = 1
 			for(var/text in row_text)
-				text_header += "<td><li style='padding-left:12px'>[text]</li></td>"
+				var/style = "padding-left:20px;padding-right:10px"
+				if(current_column != column_count)
+					style += ";border-right:1px solid white"
+				if(current_column == 1)
+					text_header += "<td style='[style]'><li>[text]</li></td>"
+				else
+					text_header += "<td style='[style]'>[text]</td>"
+				current_column++
 			text_header += "</tr>"
-		return "[text_header]</table>"
+		return "[text_header]</ul></table>"
 
 /proc/cmp_forensic_headers(var/headerA, var/headerB)
 	var/priorityA = get_header_priority(headerA)
