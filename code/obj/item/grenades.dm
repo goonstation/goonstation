@@ -1175,6 +1175,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
+			if (isnukeop(M)) continue
 			src.dress_up(M)
 		..()
 
@@ -1929,6 +1930,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		user.u_equip(src)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
+		logTheThing(LOG_STATION, user, "crafts a zipgun at [log_loc(user)]")
 		user.put_in_hand_or_drop(new_gun)
 		qdel(to_combine_atom)
 		qdel(src)
@@ -1941,6 +1943,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			user.u_equip(to_combine_atom)
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+			logTheThing(LOG_STATION, user, "crafts a slamgun at [log_loc(user)]")
 			user.put_in_hand_or_drop(S)
 			qdel(to_combine_atom)
 			qdel(src)
@@ -2061,6 +2064,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			var/turf/target_turf = get_turf(src)
 			var/obj/item/pipebomb/bomb/complete_bomb = new /obj/item/pipebomb/bomb(target_turf)
 			complete_bomb.strength = src.strength
+			logTheThing(LOG_STATION, user, "crafts a pipe bomb at [log_loc(user)], power: [complete_bomb.strength], modifiers: [length(src.item_mods) ? english_list(src.item_mods) : "none"]")
 			if (src.material)
 				complete_bomb.setMaterial(src.material)
 			//add properties from item mods to the finished pipe bomb

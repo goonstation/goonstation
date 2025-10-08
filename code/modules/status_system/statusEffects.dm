@@ -2938,6 +2938,7 @@
 		if (!isdead(L))
 			for (var/datum/ailment_data/ailment as anything in L.ailments)
 				ailment.stage_act(mult)
+		L.reagents?.addiction_cache = 0
 
 		for (var/mob/living/other_mob in hearers(4, L))
 			if (prob(40) && other_mob != L)
@@ -3553,6 +3554,12 @@
 	icon_state = "empulsar"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
+
+	onAdd()
+		..()
+		if(istype(src.owner, /obj/vehicle))
+			var/obj/vehicle/V = src.owner
+			V.stop()
 
 /datum/statusEffect/pod_corrosion
 	id = "pod_corrosion"

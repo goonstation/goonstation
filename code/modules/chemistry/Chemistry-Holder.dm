@@ -41,6 +41,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	var/inert = 0
 
 	var/list/addiction_tally = null
+	/// Cache for misc addiction changes, this value will be added to every addiction's meter and then reset to 0 every life tick
+	var/addiction_cache = 0
 
 	var/tmp/list/datum/chemical_reaction/possible_reactions = list()
 	var/tmp/list/datum/chemical_reaction/active_reactions = list()

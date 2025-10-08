@@ -33,7 +33,7 @@
 				return 1
 			var/personname = H.real_name
 			var/mob/living/critter/skeleton/wraith/S = new /mob/living/critter/skeleton/wraith(get_turf(T))
-			S.name = "[personname]'s skeleton"
+			S.name = "[personname]’s skeleton"
 			S.health_burn = 15
 			S.health_brute = 15
 			H.gib()

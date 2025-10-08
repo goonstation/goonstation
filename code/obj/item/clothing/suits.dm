@@ -375,6 +375,21 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
 
+/obj/item/clothing/suit/hazard/bio_suit/rd
+	name = "research director's bio suit"
+	desc = "A special, form fitted, suit that protects against biological contamination."
+	item_state = "biosuit_rd"
+	icon_state = "biosuit_rd"
+	armor_icon = "armorbio_rd"
+
+	setupProperties()
+		..()
+		delProperty("movespeed")
+
+	armor()
+		. = ..()
+		src.delProperty("movespeed")
+
 TYPEINFO(/obj/item/clothing/suit/hazard/bio_suit/armored)
 	pre_armored = TRUE
 /obj/item/clothing/suit/hazard/bio_suit/armored
@@ -1539,7 +1554,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
-	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
+	icon_state = "spacelight-civ"
 	item_state = "es_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1572,6 +1587,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		desc = "A lightweight engineering spacesuit designed to.... well, it doesn't really protect you from as much. But it lets you run away from fires quicker."
 		icon_state = "spacelight-e"
 		item_state = "es_suit"
+
+	chiefengineer
+		name = "chief engineer's light space suit"
+		desc = "A lightweight engineering spacesuit custom modified by the Chief Engineer to protect from more environmental hazards."
+		icon_state = "spacelight-ce"
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 20)
+			setProperty("radprot", 20)
+			setProperty("meleeprot", 2)
+			setProperty("rangedprot", 0.2) // better than 0
 
 // Sealab suits
 
