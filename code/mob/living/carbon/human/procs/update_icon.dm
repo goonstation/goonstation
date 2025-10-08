@@ -881,7 +881,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 				human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
 				src.body_standing.overlays += human_decomp_image
-			boutput(world, "human_image color: [human_image.color]")
 			if (src.limbs)
 				src.limbs.reset_stone()
 
