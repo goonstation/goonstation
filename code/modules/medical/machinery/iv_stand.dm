@@ -36,10 +36,11 @@
 
 /obj/machinery/medical/iv_stand/get_desc()
 	. = ..()
-	if (src.iv_drip)
-		var/iv_drip_desc = src.iv_drip.desc
-		iv_drip_desc = lowertext(copytext(iv_drip_desc, 1, 2)) + copytext(iv_drip_desc, 2)
-		. += "[src.iv_drip] is attached to it; [iv_drip_desc]"
+	if (!src.iv_drip)
+		return
+	var/iv_drip_desc = src.iv_drip.desc
+	iv_drip_desc = lowertext(copytext(iv_drip_desc, 1, 2)) + copytext(iv_drip_desc, 2)
+	. += "[src.iv_drip] is attached to it; [iv_drip_desc]"
 
 /obj/machinery/medical/iv_stand/update_icon()
 	if (!src.iv_drip)
@@ -147,7 +148,7 @@
 
 /obj/machinery/medical/iv_stand/start_feedback()
 	. = ..()
-	src.say("Started [src.iv_drip.mode == IV_INJECT ? "infusion" : "drawing"] at [src.transfer_rate]u per tick.")
+	src.say("[src.iv_drip.mode == IV_INJECT ? "Infusing" : "Drawing from"] patient at [src.transfer_rate]u per tick.")
 
 /obj/machinery/medical/iv_stand/stop_affect(reason = MED_MACHINE_FAILURE)
 	. = ..()
@@ -155,10 +156,9 @@
 		return
 	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given)
 		src.say("IV pump without power. Check bag.")
+		src.low_power_alert_given = TRUE
 		return
-	if (reason == MED_MACHINE_FAILURE)
-		src.say("Stopped [src.iv_drip.mode == IV_INJECT ? "infusion" : "drawing"].")
-		return
+	src.say("Stopped [src.iv_drip.mode == IV_INJECT ? "infusing" : "drawing from"] patient.")
 
 /obj/machinery/medical/iv_stand/deconstruct()
 	if (src.iv_drip)

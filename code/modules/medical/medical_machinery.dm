@@ -205,6 +205,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.start_feedback()
 
 /obj/machinery/medical/proc/affect_patient(mult)
+	if (!src.patient)
+		return
 	if (!src.active)
 		return
 
