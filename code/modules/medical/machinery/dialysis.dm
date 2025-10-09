@@ -82,9 +82,12 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	// Re-implemented here due to all the got dang boutputs.
 	var/list/whitelist_buffer = chem_whitelist + src.patient_blood_id
 	for (var/reagent_id in src.reagents.reagent_list)
-		if (src.hacked && !(reagent_id in whitelist_buffer))
-			continue
-		if (!src.hacked && (reagent_id in whitelist_buffer))
+		var/purge_reagent = FALSE
+		if (src.hacked)
+			purge_reagent = !purge_reagent
+		if (!(reagent_id in whitelist_buffer))
+			purge_reagent = !purge_reagent
+		if (!purge_reagent)
 			continue
 		src.reagents.del_reagent(reagent_id)
 
