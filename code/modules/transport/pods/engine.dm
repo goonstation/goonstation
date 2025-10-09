@@ -97,6 +97,9 @@
 	ship_install()
 		if(istype(src.ship, /obj/machinery/vehicle/pod_smooth))
 			src.engine_icon = image('icons/effects/64x64.dmi', "[src.icon_state]-off")
+			src.engine_icon.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
+			src.engine_icon.color = src.color
+			src.engine_icon.alpha = src.alpha
 			ship.AddOverlays(engine_icon, "engine")
 		else if(istype(src.ship, /obj/machinery/vehicle/miniputt) || istype(src.ship, /obj/machinery/vehicle/escape_pod) || istype(src.ship, /obj/machinery/vehicle/pod_wars_dingy))
 			src.engine_icon = image('icons/obj/ship.dmi', "[src.icon_state]-off")
