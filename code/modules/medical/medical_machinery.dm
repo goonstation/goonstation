@@ -75,9 +75,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/remove_msg_patient = "<b>$USR</b> disconnects $SRC from you."
 
 	/// Message to be displayed to all other viewers on forceful disconnection.
-	var/remove_forceful_msg_viewer = "<b>$SRC is forcefully disconnected from $TRG!</b>"
+	var/remove_force_msg_viewer = "<b>$SRC is forcefully disconnected from $TRG!</b>"
 	/// Message to be displayed to patient on forceful disconnection.
-	var/remove_forceful_msg_patient = "<b>$SRC is forcefully disconnected from you!</b>"
+	var/remove_force_msg_patient = "<b>$SRC is forcefully disconnected from you!</b>"
 
 /// Replaces tags in constant text variables with non-constants.
 /obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	// Yank the connection by force if patient exits interaction range.
 	if (!in_interact_range(src, src.patient))
-		src.remove_patient(forceful = TRUE)
+		src.remove_patient(force = TRUE)
 		return
 
 /obj/machinery/medical/proc/start_affect()
@@ -250,19 +250,19 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	// JAAAANK
 	if (src.patient.pulling == src)
 		return
-	src.remove_patient(forceful = TRUE)
+	src.remove_patient(force = TRUE)
 
 /obj/machinery/medical/proc/attempt_remove_patient(mob/user)
 	src.remove_patient(user)
 
-/obj/machinery/medical/proc/remove_patient(mob/user, forceful = FALSE)
+/obj/machinery/medical/proc/remove_patient(mob/user, force = FALSE)
 	if (!src.patient || !iscarbon(src.patient))
 		return
 	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
 	if (ismob(user))
 		src.remove_message(user)
 		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
-	if (forceful && !user)
+	if (force && !user)
 		src.force_remove_feedback()
 	src.stop_affect()
 	src.patient = null
@@ -288,8 +288,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/proc/force_remove_feedback()
 	src.patient.visible_message(\
-		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_viewer, target = src.patient)),\
-		SPAN_ALERT(src.parse_message(src.remove_forceful_msg_patient, target = src.patient, self_referential = TRUE)))
+		SPAN_ALERT(src.parse_message(src.remove_force_msg_viewer, target = src.patient)),\
+		SPAN_ALERT(src.parse_message(src.remove_force_msg_patient, target = src.patient, self_referential = TRUE)))
 
 /obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
 	. = TRUE

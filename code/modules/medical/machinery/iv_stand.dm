@@ -137,7 +137,7 @@
 	. = ..()
 	src.UpdateIcon()
 
-/obj/machinery/medical/iv_stand/remove_patient(mob/user, forceful)
+/obj/machinery/medical/iv_stand/remove_patient(mob/user, force)
 	src.patient = null
 	src.UnsubscribeProcess()
 	src.UpdateIcon()

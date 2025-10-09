@@ -36,8 +36,8 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	remove_msg_user = "You removes $SRC's cannulae from $TRG's."
 	remove_msg_patient = "<b>$USR</b> removes $SRC's cannulae from your arm."
 
-	remove_forceful_msg_viewer = "<b>$SRC's cannulae get $FLF out of $TRG's arm!</b>"
-	remove_forceful_msg_patient = "<b>$SRC's cannulae get $FLF out of your arm!</b>"
+	remove_force_msg_viewer = "<b>$SRC's cannulae get $FLF out of $TRG's arm!</b>"
+	remove_force_msg_patient = "<b>$SRC's cannulae get $FLF out of your arm!</b>"
 
 	/// In units per process tick.
 	var/transfer_rate = 16
@@ -171,7 +171,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	src.patient_blood_id = src.patient.blood_id
 	src.UpdateIcon()
 
-/obj/machinery/medical/dialysis/remove_patient(mob/user, forceful)
+/obj/machinery/medical/dialysis/remove_patient(mob/user, force)
 	var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src)
 	if (length(statuses))
 		src.patient.delStatus(statuses[1])
