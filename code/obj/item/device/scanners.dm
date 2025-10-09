@@ -882,7 +882,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			src.active1["pronouns"] = target.get_pronouns().name
 			src.active1["age"] = target.bioHolder.age
 			/////Fingerprint record update
-			if (target.gloves?.print_mask && target.gloves?.print_mask.id != "0123-4567-89AB-CDEF")
+			if (target.gloves?.print_mask && target.gloves?.print_mask.id != FORENSIC_GLOVE_MASK_FINGERLESS)
 				src.active1["fingerprint_right"] = "Unknown"
 				src.active1["fingerprint_left"] = "Unknown"
 			else

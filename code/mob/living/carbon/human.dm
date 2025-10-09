@@ -3359,7 +3359,7 @@ mob/living/carbon/human/has_genetics()
 
 /mob/living/carbon/human/on_forensic_scan(datum/forensic_scan/scan)
 	..()
-	if(!src.gloves?.print_mask || src.gloves?.print_mask == "0123-4567-89AB-CDEF")
+	if(!src.gloves?.print_mask || src.gloves?.print_mask == FORENSIC_GLOVE_MASK_FINGERLESS)
 		var/datum/forensic_id/print_right = src.limbs?.r_arm?.limb_print
 		var/datum/forensic_id/print_left = src.limbs?.l_arm?.limb_print
 		if(print_right || print_left)

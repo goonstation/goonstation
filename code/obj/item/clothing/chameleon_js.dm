@@ -1335,7 +1335,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	var/fingertip_color = null
 
 	proc/get_fiber_mask(var/obj/item/clothing/gloves/gloves)
-		return "...???..."
+		return FORENSIC_GLOVE_MASK_NONE
 
 	insulated
 		desc = "Tough rubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
@@ -1356,7 +1356,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		fingertip_color = null
 
 		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
-			return "0123-4567-89AB-CDEF"
+			return FORENSIC_GLOVE_MASK_FINGERLESS
 
 	latex
 		name = "latex gloves"

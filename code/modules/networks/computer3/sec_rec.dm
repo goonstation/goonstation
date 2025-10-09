@@ -747,17 +747,17 @@
 
 			var/view_string = {"\
 				<br><center><b>Record Data</b></center>\
-				<br>\[01\]<b>Name</b>:        [src.active_general["name"]]\
+				<br>\[[num2text(FIELDNUM_NAME, 2, 10)]\]<b>Name</b>:        [src.active_general["name"]]\
 				<br>\[__\]<b>ID</b>:          [src.active_general["id"]]\
-				<br>\[02\]<b>Full Name</b>:   [src.active_general["full_name"]]\
-				<br>\[03\]<b>Sex:</b>         [src.active_general["sex"]]\
-				<br>\[04\]<b>Pronouns:</b>    [src.active_general["pronouns"]]\
-				<br>\[05\]<b>Age:</b>         [src.active_general["age"]]\
-				<br>\[06\]<b>Rank:</b>        [src.active_general["rank"]]\
-				<br>\[07\]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]\
-				<br>\[08\]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]\
+				<br>\[[num2text(FIELDNUM_FULLNAME, 2, 10)]\]<b>Full Name</b>:   [src.active_general["full_name"]]\
+				<br>\[[num2text(FIELDNUM_SEX, 2, 10)]\]<b>Sex:</b>         [src.active_general["sex"]]\
+				<br>\[[num2text(FIELDNUM_PRONOUNS, 2, 10)]\]<b>Pronouns:</b>    [src.active_general["pronouns"]]\
+				<br>\[[num2text(FIELDNUM_AGE, 2, 10)]\]<b>Age:</b>         [src.active_general["age"]]\
+				<br>\[[num2text(FIELDNUM_RANK, 2, 10)]\]<b>Rank:</b>        [src.active_general["rank"]]\
+				<br>\[[num2text(FIELDNUM_PRINT_R, 2, 10)]\]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]\
+				<br>\[[num2text(FIELDNUM_PRINT_L, 2, 10)]\]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]\
 				<br>\[__\]<b>DNA:</b>         [src.active_general["dna"]]\
-				<br>\[09\]<b>Photo</b>:       [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]\
+				<br>\[[num2text(FIELDNUM_PHOTO, 2, 10)]\]<b>Photo</b>:       [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]\
 				<br>\[__\]<b>Phys Status</b>: [src.active_general["p_stat"]]\
 				<br>\[__\]<b>Ment Status</b>: [src.active_general["m_stat"]]\
 			"}
@@ -765,13 +765,13 @@
 			if ((istype(src.active_secure, /datum/db_record) && data_core.security.has_record(src.active_secure)))
 				view_string += {"<br>\
 					<br><center><b>Security Data</b></center>\
-					<br>\[10\]<b>Criminal Status:</b> [src.active_secure["criminal"]]\
-					<br>\[11\]<b>SecHUD Flag:</b>     [src.active_secure["sec_flag"]]\
-					<br>\[12\]<b>Minor Crimes:</b>    [src.active_secure["mi_crim"]]\
-					<br>\[13\]<b>Details:</b>         [src.active_secure["mi_crim_d"]]\
-					<br>\[14\]<b>Major Crimes:</b>    [src.active_secure["ma_crim"]]\
-					<br>\[15\]<b>Details:</b>         [src.active_secure["ma_crim_d"]]\
-					<br>\[16\]<b>Important Notes:</b> [src.active_secure["notes"]]\
+					<br>\[[num2text(FIELDNUM_CRIMSTAT, 2, 10)]\]<b>Criminal Status:</b> [src.active_secure["criminal"]]\
+					<br>\[[num2text(FIELDNUM_SECFLAG, 2, 10)]\]<b>SecHUD Flag:</b>     [src.active_secure["sec_flag"]]\
+					<br>\[[num2text(FIELDNUM_MINCRIM, 2, 10)]\]<b>Minor Crimes:</b>    [src.active_secure["mi_crim"]]\
+					<br>\[[num2text(FIELDNUM_MINDET, 2, 10)]\]<b>Details:</b>         [src.active_secure["mi_crim_d"]]\
+					<br>\[[num2text(FIELDNUM_MAJCRIM, 2, 10)]\]<b>Major Crimes:</b>    [src.active_secure["ma_crim"]]\
+					<br>\[[num2text(FIELDNUM_MAJDET, 2, 10)]\]<b>Details:</b>         [src.active_secure["ma_crim_d"]]\
+					<br>\[[num2text(FIELDNUM_NOTES, 2, 10)]\]<b>Important Notes:</b> [src.active_secure["notes"]]\
 				"}
 			else
 				view_string += {"<br>\

@@ -1232,7 +1232,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		setProperty("conductivity", 1)
 
 	get_fiber_mask()
-		return "0123-4567-89AB-CDEF"
+		return FORENSIC_GLOVE_MASK_FINGERLESS
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)) || prob(1)) // honk

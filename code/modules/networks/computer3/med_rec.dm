@@ -755,42 +755,42 @@
 
 			var/view_string = {"\
 				<br><center><b>Record Data</b></center>\
-				<br>\[01\]<b>Name</b>:        [src.active_general["name"]]\
+				<br>\[[num2text(FIELDNUM_NAME, 2, 10)]\]<b>Name</b>:        [src.active_general["name"]]\
 				<br>\[__\]<b>ID</b>:          [src.active_general["id"]]\
-				<br>\[02\]<b>Full Name</b>:   [src.active_general["full_name"]]\
-				<br>\[03\]<b>Sex:</b>         [src.active_general["sex"]]\
-				<br>\[04\]<b>Pronouns:</b>    [src.active_general["pronouns"]]\
-				<br>\[05\]<b>Age:</b>         [src.active_general["age"]]\
+				<br>\[[num2text(FIELDNUM_FULLNAME, 2, 10)]\]<b>Full Name</b>:   [src.active_general["full_name"]]\
+				<br>\[[num2text(FIELDNUM_SEX, 2, 10)]\]<b>Sex:</b>         [src.active_general["sex"]]\
+				<br>\[[num2text(FIELDNUM_PRONOUNS, 2, 10)]\]<b>Pronouns:</b>    [src.active_general["pronouns"]]\
+				<br>\[[num2text(FIELDNUM_AGE, 2, 10)]\]<b>Age:</b>         [src.active_general["age"]]\
 				<br>\[__\]<b>Rank:</b>        [src.active_general["rank"]]\
-				<br>\[06\]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]\
-				<br>\[07\]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]\
-				<br>\[08\]<b>DNA:</b>         [src.active_general["dna"]]\
+				<br>\[[num2text(FIELDNUM_PRINT_R, 2, 10)]\]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]\
+				<br>\[[num2text(FIELDNUM_PRINT_L, 2, 10)]\]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]\
+				<br>\[[num2text(FIELDNUM_DNA, 2, 10)]\]<b>DNA:</b>         [src.active_general["dna"]]\
 				<br>\[__\]<b>Photo</b>:       [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]\
-				<br>\[09\]<b>Phys Status</b>: [src.active_general["p_stat"]]\
-				<br>\[10\]<b>Ment Status</b>: [src.active_general["m_stat"]]\
+				<br>\[[num2text(FIELDNUM_PSTAT, 2, 10)]\]<b>Phys Status</b>: [src.active_general["p_stat"]]\
+				<br>\[[num2text(FIELDNUM_MSTAT, 2, 10)]\]<b>Ment Status</b>: [src.active_general["m_stat"]]\
 			"}
 
 			if ((istype(src.active_medical, /datum/db_record) && data_core.medical.has_record(src.active_medical)))
 				view_string += {"<br>\
 					<br><center><b>Medical Data</b></center>\
 					<br>\[__\]<b>Current Health:</b>     [src.active_medical["h_imp"]]\
-					<br>\[11\]<b>Blood Type:</b>         [src.active_medical["bioHolder.bloodType"]]\
-					<br>\[12\]<b>Minor Disabilities:</b> [src.active_medical["mi_dis"]]\
-					<br>\[13\]<b>Details:</b>            [src.active_medical["mi_dis_d"]]\
-					<br>\[14\]<b>Major Disabilities:</b> [src.active_medical["ma_dis"]]\
-					<br>\[15\]<b>Details:</b>            [src.active_medical["ma_dis_d"]]\
-					<br>\[16\]<b>Allergies:</b>          [src.active_medical["alg"]]\
-					<br>\[17\]<b>Details:</b>            [src.active_medical["alg_d"]]\
-					<br>\[18\]<b>Current Diseases:</b>   [src.active_medical["cdi"]] (per disease info placed in log/comment section)\
-					<br>\[19\]<b>Details:</b>            [src.active_medical["cdi_d"]]\
-					<br>\[20\]<b>Cloner Defects:</b>     [src.active_medical["cl_def"]]\
-					<br>\[21\]<b>Details:</b>            [src.active_medical["cl_def_d"]]\
-					<br>\[22\]<b>Important Notes:</b>    [src.active_medical["notes"]]\
+					<br>\[[num2text(FIELDNUM_BLOODTYPE, 2, 10)]\]<b>Blood Type:</b>         [src.active_medical["bioHolder.bloodType"]]\
+					<br>\[[num2text(FIELDNUM_MINDIS, 2, 10)]\]<b>Minor Disabilities:</b> [src.active_medical["mi_dis"]]\
+					<br>\[[num2text(FIELDNUM_MINDET, 2, 10)]\]<b>Details:</b>            [src.active_medical["mi_dis_d"]]\
+					<br>\[[num2text(FIELDNUM_MAJDIS, 2, 10)]\]<b>Major Disabilities:</b> [src.active_medical["ma_dis"]]\
+					<br>\[[num2text(FIELDNUM_MAJDET, 2, 10)]\]<b>Details:</b>            [src.active_medical["ma_dis_d"]]\
+					<br>\[[num2text(FIELDNUM_ALLERGY, 2, 10)]\]<b>Allergies:</b>          [src.active_medical["alg"]]\
+					<br>\[[num2text(FIELDNUM_ALGDET, 2, 10)]\]<b>Details:</b>            [src.active_medical["alg_d"]]\
+					<br>\[[num2text(FIELDNUM_DISEASE, 2, 10)]\]<b>Current Diseases:</b>   [src.active_medical["cdi"]] (per disease info placed in log/comment section)\
+					<br>\[[num2text(FIELDNUM_DISDET, 2, 10)]\]<b>Details:</b>            [src.active_medical["cdi_d"]]\
+					<br>\[[num2text(FIELDNUM_CLDEF, 2, 10)]\]<b>Cloner Defects:</b>     [src.active_medical["cl_def"]]\
+					<br>\[[num2text(FIELDNUM_CLDET, 2, 10)]\]<b>Details:</b>            [src.active_medical["cl_def_d"]]\
+					<br>\[[num2text(FIELDNUM_NOTES, 2, 10)]\]<b>Important Notes:</b>    [src.active_medical["notes"]]\
 				"}
 			else
 				view_string += {"<br>\
 					<br><b>Medical Record Lost!</b>\
-					<br>\[99\] Create New Medical Record.\
+					<br>\[[num2text(FIELDNUM_NEWREC, 2, 10)]\] Create New Medical Record.\
 				"}
 
 			view_string += "<br><br>Enter field number to edit a field:<br>(R) Redraw (D) Delete (P) Print (0) Return to index."

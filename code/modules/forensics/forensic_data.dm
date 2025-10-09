@@ -111,7 +111,7 @@
 			if(fprint_text && fibers_text && src.print_mask)
 				return "([fprint_text]) [fibers_text]"
 			return fprint_text + fibers_text
-		else if(src.print_mask?.id == "0123-4567-89AB-CDEF")
+		else if(src.print_mask?.id == FORENSIC_GLOVE_MASK_FINGERLESS)
 			return src.print?.id
 
 			// Not including the fibers for now because they were taking up too much room in the forensic report.
@@ -129,9 +129,11 @@
 		data_copy.time_start = src.time_start
 		data_copy.time_end = src.time_end
 		REMOVE_FLAG(data_copy.flags, FORENSIC_USED)
-		if(!scan || scan.has_effect("effect_silver_nitrate"))
+		if(!scan)
 			return data_copy
-		if(!src.print_mask || src.print_mask.id == "0123-4567-89AB-CDEF")
+		if(scan.has_effect("effect_silver_nitrate"))
+			return data_copy
+		if(!src.print_mask || src.print_mask.id == FORENSIC_GLOVE_MASK_FINGERLESS)
 			// Ignore the fibers of fingerless gloves for now. Taking up too much room in the forensic report.
 			data_copy.fibers = null
 			data_copy.print_mask = null

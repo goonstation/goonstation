@@ -263,7 +263,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("chemprot", 15)
 
 	get_fiber_mask()
-		return "...???..."
+		return FORENSIC_GLOVE_MASK_NONE
 
 /obj/item/clothing/gloves/fingerless
 	desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
@@ -277,7 +277,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 1)
 
 	get_fiber_mask()
-		return "0123-4567-89AB-CDEF"
+		return FORENSIC_GLOVE_MASK_FINGERLESS
 
 /obj/item/clothing/gloves/black
 	desc = "These thick leather gloves are fire-resistant."
@@ -293,7 +293,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("heatprot", 7)
 
 	get_fiber_mask()
-		return "...???..."
+		return FORENSIC_GLOVE_MASK_NONE
 
 	slasher
 		name = "padded gloves"
@@ -375,7 +375,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			return null
 		var/chem_prot = src.material.getProperty("chemical")
 		if(chem_prot >= 8)
-			return "...???..."
+			return FORENSIC_GLOVE_MASK_NONE
 		if(chem_prot >= 6)
 			return create_glovemask_order(2) // 1/2 chance of match
 		if(chem_prot >= 3)
@@ -665,7 +665,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.lastattacked = get_weakref(target)
 
 	get_fiber_mask()
-		return "...???..."
+		return FORENSIC_GLOVE_MASK_NONE
 
 	proc/sheathe_blades_toggle(mob/living/user)
 		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 35, 1, -3)
@@ -910,7 +910,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 1) //it is made of pure metal afterall
 
 	get_fiber_mask()
-		return "...???..."
+		return FORENSIC_GLOVE_MASK_NONE
 
 	attackby(obj/item/power_stones/W, mob/user)
 		if (istype(W, /obj/item/power_stones))
