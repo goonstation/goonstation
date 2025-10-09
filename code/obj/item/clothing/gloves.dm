@@ -140,6 +140,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		. = ..()
 		if(src.fibers)
 			scan.add_text("Glove ID: ([src.fibers.id])")
+		if(src.print_mask)
+			var/mask_text = "Glove pattern: ([FORENSIC_GLOVE_MASK_FINGERLESS]) to ([src.print_mask.id])"
+			scan.add_text(mask_text)
 
 	proc/set_fibers()
 		var/glove_fp_mask = src.get_fiber_mask()
@@ -161,7 +164,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		for(var/i=1; i<=4; i++)
 			if(i == rand_pos)
 				var/index = (rand_bunch * 4) - 4 + rand_pos - 1
-				mask += num2hex(index, 1)
+				mask += uppertext(num2hex(index, 1))
 			else
 				mask += "?"
 		return "...-[mask]-..."
@@ -178,7 +181,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		for(var/i=1; i<= reveal_count; i++)
 			var/rand_bunch = rand(1, bunch_list.len)
 			var/rand_pos = rand(0,3)
-			var/hex = num2hex(((bunch_list[rand_bunch] * 4) - 4 + rand_pos), 1)
+			var/hex = uppertext(num2hex(((bunch_list[rand_bunch] * 4) - 4 + rand_pos), 1))
 			text_list[bunch_list[rand_bunch]] = "...[hex]..."
 			bunch_list.Cut(rand_bunch, rand_bunch+1)
 
