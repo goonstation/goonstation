@@ -189,8 +189,6 @@
 	switch (failure_feedback)
 		if (IV_FAIL_BAG_FULL)
 			return "[src] is full!"
-		if (IV_FAIL_PT_VAMP)
-			return "[new_patient] doesn't have anything left to give!"
 		if (IV_FAIL_PT_EMPTY)
 			return "[new_patient] doesn't have anything left to give!"
 		if (IV_FAIL_PT_FULL)
@@ -332,7 +330,7 @@
 	. = FALSE
 	if (!iscarbon(mob_to_test))
 		mob_to_test = src.patient
-	if (isvampire(mob_to_test) && (mob_to_test.get_vampire_blood() <= 0))
+	if (isvampire(mob_to_test) && !mob_to_test.get_vampire_blood())
 		. = TRUE
 
 #undef IV_FAIL_PT_FULL
