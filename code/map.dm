@@ -864,6 +864,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/density2 // I just copied cog2 for now, ok????
 	name = "density2"
+	goonhub_map = "/maps/density2"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -997,7 +998,7 @@ var/global/list/mapNames = list(
 
 /area/shuttle/merchant_shuttle/left_station
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 	icon_state = "shuttle_merch_l"
 	donut2
@@ -1036,7 +1037,7 @@ var/global/list/mapNames = list(
 
 /area/shuttle/merchant_shuttle/right_station
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 	icon_state = "shuttle_merch_r"
 	donut2

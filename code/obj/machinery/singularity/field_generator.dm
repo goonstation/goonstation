@@ -1,13 +1,13 @@
 
-#define UNWRENCHED 0	/// Defines a machine as being entirely loose. Not wrenched, not welded.
-#define WRENCHED 1		/// Defines a machine as being secured to the floor (wrenched), but not welded.
-#define WELDED 2		/// Defines a machine as being both secured to the floor (wrenched) and welded.
+#define UNWRENCHED 0	//! Defines a machine as being entirely loose. Not wrenched, not welded.
+#define WRENCHED 1		//! Defines a machine as being secured to the floor (wrenched), but not welded.
+#define WELDED 2		//! Defines a machine as being both secured to the floor (wrenched) and welded.
 
 TYPEINFO(/obj/machinery/field_generator)
 	mats = 14
 
 /obj/machinery/field_generator
-	name = "Field Generator"
+	name = "field generator"
 	desc = "Projects an energy field when active"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Field_Gen"
@@ -49,10 +49,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active >= 1)
-	//			src.active = 0
-	//			icon_state = "Field_Gen"
 				boutput(user, "You are unable to turn off the field generator, wait till it powers down.")
-	//			src.cleanup()
 			else
 				set_active(1)
 				icon_state = "Field_Gen +a"
@@ -260,7 +257,7 @@ TYPEINFO(/obj/machinery/field_generator)
 			return
 
 	if(ispulsingtool(W))
-		boutput(user, SPAN_ALERT("The [src.name] is at [src.power]/100 power."))
+		boutput(user, SPAN_NOTICE("The [src.name] is at [get_percentage_of_fraction_and_whole(src.power, src.max_power)]% power."))
 
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
@@ -383,12 +380,6 @@ TYPEINFO(/obj/machinery/field_generator)
 	if(sigcommand == "activate" && !src.active)
 		src.set_active(1)
 		icon_state = "Field_Gen +a"
-
-	if(sigcommand == "deactivate" && src.active)
-		src.set_active(0)
-		icon_state = "Field_Gen"
-
-	return
 
 /obj/machinery/field_generator/activated
 	Varedit_start = TRUE

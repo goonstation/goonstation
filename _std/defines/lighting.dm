@@ -94,3 +94,8 @@
 #undef DLL
 #define DLL 0.2
 #endif
+
+#define AMBIENT_LIGHT_SRC_INVLD null
+#define AMBIENT_LIGHT_SRC_EARTH "Earth"
+#define AMBIENT_LIGHT_SRC_OCEAN "Ocean"
+#define AMBIENT_LIGHT_SRC_TERRAINIFY "Terrainify"
