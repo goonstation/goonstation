@@ -2,7 +2,7 @@
 /// PollResource
 /datum/apiModel/Tracked/PollResource
 	var/game_admin_id									= null // integer
-	var/datum/apiModel/Tracked/GameAdmin/game_admin		= null // GameAdmin
+	var/datum/apiModel/Tracked/PlayerAdmin/game_admin	= null // Model
 	var/question										= null // string
 	var/list/datum/apiModel/PollOptionResource/options	= null // [PollOptionResource]
 	var/servers											= null // [string]
@@ -14,7 +14,7 @@
 /datum/apiModel/Tracked/PollResource/SetupFromResponse(response)
 	. = ..()
 	src.game_admin_id = response["game_admin_id"]
-	if ("game_admin" in response)
+	if (("game_admin" in response) && islist(response["game_admin"]))
 		src.game_admin = new
 		src.game_admin.SetupFromResponse(response["game_admin"])
 	src.question = response["question"]

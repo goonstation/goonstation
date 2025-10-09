@@ -22,7 +22,16 @@
 
 	onAttach(mob/to_whom)
 		. = ..()
-		RegisterSignal(to_whom, COMSIG_MOB_DEATH, PROC_REF(on_death))
+		RegisterSignal(to_whom, COMSIG_MOB_DEATH, PROC_REF(on_death), TRUE)
+		to_whom.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
+		to_whom.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
+
+	onRemove(mob/from_who)
+		. = ..()
+
+		if (from_who)
+			from_who.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
+			from_who.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
 
 	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
@@ -168,7 +177,7 @@
 			sleep(20 SECONDS)
 			if (HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
 				return
-			HS.UnregisterSignal(src, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
+			HS.UnregisterSignal(body, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
 			boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
 			HS.set_loc(get_turf(body)) //be free!!!
 			body.visible_message(SPAN_ALERT("<B>[body]</B>'s head detaches, sprouts legs and wanders off looking for food!"))

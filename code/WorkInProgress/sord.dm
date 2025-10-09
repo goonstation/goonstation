@@ -6,6 +6,8 @@
 	desc = "A big red button that alerts the station Security team that there's a crisis at your location. On the bottom someone has scribbled 'oh shit button', cute."
 	icon_state = "panic_button"
 	w_class = W_CLASS_TINY
+	object_flags = parent_type::object_flags | NO_GHOSTCRITTER
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	var/net_id = null
 	var/alert_group = list(MGD_SECURITY, MGA_CRISIS)
 
@@ -13,6 +15,24 @@
 		. = ..()
 		src.net_id = generate_net_id(src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+/// ----------- Trigger/Applier-Assembly-Related Procs -----------
+
+	proc/assembly_application(var/manipulated_panic_button, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		if(ON_COOLDOWN(src, "panic button", 15 SECONDS))
+			return
+		logTheThing(LOG_COMBAT, parent_assembly.last_armer, "'s [parent_assembly] triggers at [log_loc(parent_assembly)]")
+		playsound(parent_assembly, 'sound/items/security_alert.ogg', 30)
+		parent_assembly.visible_message(SPAN_ALERT("[parent_assembly] sets off an alarm!"), "You hear an alarm go off!")
+		src.triggerpanicbutton()
+
+/// ----------------------------------------------
+
 
 	attack_self(mob/user)
 		..()
@@ -196,7 +216,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "Greyhold Mercenary Operative"
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]’s ID Card ([C.assignment])"
 
 		update_clothing()
 

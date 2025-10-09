@@ -62,6 +62,9 @@ TYPEINFO(/mob/new_player)
 		..()
 
 	Login()
+		if (!src.client)
+			logTheThing(LOG_DEBUG, src, "new_player/Login called with null client. This is likely due to someone trying to log in with an in-use key.")
+			return
 		..()
 
 		if(!mind)
@@ -73,18 +76,23 @@ TYPEINFO(/mob/new_player)
 			if (!isnull(P.round_join_time) && isnull(P.round_leave_time)) //they likely died but didnt d/c b4 respawn
 				P.log_leave_time()
 
+		src.client?.load_pregame()
+		close_spawn_windows()
 		new_player_panel()
-		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
+		var/turf/default_loc = locate(1,1,1)
+		if (istype(default_loc.loc, /area/cordon))
+			default_loc = pick_landmark(LANDMARK_LATEJOIN, locate(world.maxx/2,world.maxy/2,1))
+		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, default_loc))
 		src.sight |= SEE_TURFS
 
-
+		#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
 		// byond members get a special join message :]
 		if (src.client?.IsByondMember())
 			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
 			var/num = rand(1,16)
 			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(num in msgs_which_are_gifs) ? "gif" : "jpg"]")
 			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
-
+		#endif
 
 		if (src.ckey && !adminspawned)
 			if ("[src.ckey]" in spawned_in_keys)
@@ -113,7 +121,7 @@ TYPEINFO(/mob/new_player)
 					qdel(src)
 
 			else
-				spawned_in_keys += "[src.ckey]"
+				if (src.client.authenticated) spawned_in_keys += "[src.ckey]"
 				for (var/sound in global.dj_panel.preloaded_sounds)
 					src.client << load_resource(sound, -1)
 
@@ -145,22 +153,13 @@ TYPEINFO(/mob/new_player)
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
 			SPAWN(0)
 				if(isclient(src.last_client))
-					winshow(src.last_client, "pregameBrowser", 0)
 					src.last_client << browse("", "window=pregameBrowser")
+					winshow(src.last_client, "pregameBrowser", FALSE)
 		return
 
 	verb/new_player_panel()
 		set src = usr
 		src.update_joinmenu()
-		#ifndef NO_PREGAME_HTML
-		if(pregameHTML && client)
-			winshow(client, "pregameBrowser", 1)
-			client << browse(pregameHTML, "window=pregameBrowser")
-			src.pregameBrowserLoaded = TRUE
-		else if(client)
-			winshow(src.last_client, "pregameBrowser", 0)
-			src.last_client << browse("", "window=pregameBrowser")
-		#endif
 
 	Stat()
 		..()
@@ -249,7 +248,17 @@ TYPEINFO(/mob/new_player)
 						else if (S.syndicate)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-						S.job = "Cyborg"
+						if (isAI(S))
+							S.job = "AI"
+							S.mind.assigned_role = "AI"
+						else
+							S.job = "Cyborg"
+							S.mind.assigned_role = "Cyborg"
+						S.traitHolder.removeTrait("cyber_incompatible")
+						S.mind.join_time = world.time
+						logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
+						ticker.minds += S.mind
+
 						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						S.apply_roundstart_events()
 						S.show_laws()
@@ -263,10 +272,7 @@ TYPEINFO(/mob/new_player)
 				else
 					AttemptLateSpawn(JOB)
 
-		if(href_list["preferences"])
-			if (!src.ready_play)
-				client.preferences.process_link(src, href_list)
-		else if(!href_list["late_join"])
+		if(!href_list["late_join"])
 			new_player_panel()
 
 	proc/IsSiliconAvailableForLateJoin(var/mob/living/silicon/S)
@@ -457,7 +463,6 @@ TYPEINFO(/mob/new_player)
 
 			if (ticker && character.mind)
 				character.mind.join_time = world.time
-				//ticker.implant_skull_key() // This also checks if a key has been implanted already or not. If not then it'll implant a random sucker with a key.
 				if (!(character.mind in ticker.minds))
 					logTheThing(LOG_DEBUG, character, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
 					ticker.minds += character.mind
@@ -762,6 +767,9 @@ a.latejoin-card:hover {
 	proc/create_character(var/datum/job/J, var/allow_late_antagonist = 0)
 		if (!src || !src.mind || !src.client)
 			return null
+#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+		src.client.preferences.savefile_load(src.client)
+#endif
 		if (!J)
 			J = find_job_in_controller_by_string(src.mind.assigned_role)
 
@@ -900,9 +908,9 @@ a.latejoin-card:hover {
 			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
@@ -923,9 +931,9 @@ a.latejoin-card:hover {
 			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if (ticker)
@@ -985,9 +993,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".observe_round"
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
@@ -1039,7 +1047,7 @@ a.latejoin-card:hover {
 #define JOINMENU_VERTICAL_OFFSET_PER_BUTTON 56
 
 /mob/new_player/proc/update_joinmenu()
-	if (!client)
+	if (!client || !client.authenticated)
 		return
 
 	// super conservative with client checks as we *really* don't want to crash here

@@ -9,6 +9,8 @@
 			else
 				var/changelogHtml
 				var/data
+				if (!cdn)
+					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
 				if (byond_version >= 516)
 					changelogHtml = grabResource("html/changelog.html")
 					data = changelog.html
@@ -19,9 +21,7 @@
 				<style type="text/css">
 				@font-face {
 					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/Twemoji.eot")]');
-					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
-						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
 					text-rendering: optimizeLegibility;
 				}
 				</style>

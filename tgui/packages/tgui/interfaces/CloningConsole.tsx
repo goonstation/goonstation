@@ -11,6 +11,7 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  Divider,
   Flex,
   Icon,
   LabeledList,
@@ -28,6 +29,7 @@ import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goonstation/HealthStat';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
+import { DiskDrive } from './common/DiskDrive';
 
 interface CloningConsoleData {
   allowDeadScan: BooleanLike;
@@ -37,10 +39,12 @@ interface CloningConsoleData {
   cloneHack;
   cloneRecords;
   clonesForCash;
-  cloningWithRecords;
   completion;
   disk;
   diskReadOnly;
+  diskHasRecord: BooleanLike;
+  diskName: string;
+  diskColor: string;
   geneticAnalysis;
   meatLevels;
   message;
@@ -80,7 +84,6 @@ const healthToColor = (oxy, tox, burn, brute) => {
 
 const Tab = {
   Functions: 'functions',
-  Records: 'records',
   Pods: 'pods',
 };
 
@@ -102,13 +105,7 @@ const TypedNoticeBox = (props) => {
 
 export const CloningConsole = () => {
   const { data, act } = useBackend<CloningConsoleData>();
-  const {
-    balance,
-    cloneHack,
-    clonesForCash,
-    cloningWithRecords,
-    allowedToDelete,
-  } = data;
+  const { balance, cloneHack, clonesForCash, allowedToDelete } = data;
 
   // N.B. uses `deletionTarget` that is shared with Records component
   const [deletionTarget, setDeletionTarget] = useState('');
@@ -116,11 +113,7 @@ export const CloningConsole = () => {
     id: string;
     note: string;
   } | null>(null);
-  const [tab, setTab] = useSharedState('tab', Tab.Records);
-
-  if (!cloningWithRecords && tab === Tab.Records) {
-    setTab(Tab.Pods);
-  }
+  const [tab, setTab] = useSharedState('tab', Tab.Pods);
 
   return (
     <Window
@@ -192,15 +185,6 @@ export const CloningConsole = () => {
           <Stack.Item>
             <Section fitted>
               <Tabs>
-                {!!cloningWithRecords && (
-                  <Tabs.Tab
-                    icon="list"
-                    selected={tab === Tab.Records}
-                    onClick={() => setTab(Tab.Records)}
-                  >
-                    Records
-                  </Tabs.Tab>
-                )}
                 <Tabs.Tab
                   icon="box"
                   selected={tab === Tab.Pods}
@@ -227,12 +211,6 @@ export const CloningConsole = () => {
             <StatusSection />
           </Stack.Item>
           <Stack.Item grow={1}>
-            {tab === Tab.Records && !!cloningWithRecords && (
-              <Records
-                setDeletionTarget={setDeletionTarget}
-                setViewingNote={setViewingNote}
-              />
-            )}
             {tab === Tab.Pods && <Pods />}
             {tab === Tab.Functions && <Functions />}
           </Stack.Item>
@@ -251,7 +229,6 @@ const Functions = () => {
     diskReadOnly,
     geneticAnalysis,
     mindWipe,
-    cloningWithRecords,
   } = data;
 
   return (
@@ -314,40 +291,6 @@ const Functions = () => {
           </Box>
         </Section>
       )}
-      {!!disk && (
-        <Section
-          title="Disk Controls"
-          buttons={
-            <>
-              {cloningWithRecords ? (
-                <Button
-                  icon="upload"
-                  color={'blue'}
-                  onClick={() => act('load')}
-                >
-                  Load from disk
-                </Button>
-              ) : (
-                <Button
-                  icon="upload"
-                  color={'blue'}
-                  onClick={() => act('loadAndClone')}
-                >
-                  Clone from disk
-                </Button>
-              )}
-              <Button icon="eject" color={'bad'} onClick={() => act('eject')}>
-                Eject Disk
-              </Button>
-            </>
-          }
-        >
-          <Box>
-            <Icon color={diskReadOnly ? 'bad' : 'good'} name={'check'} />
-            {` ${diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
-          </Box>
-        </Section>
-      )}
     </>
   );
 };
@@ -359,7 +302,11 @@ const StatusSection = () => {
     occupantScanned,
     scannerOccupied,
     scannerGone,
-    cloningWithRecords,
+    disk,
+    diskReadOnly,
+    diskHasRecord,
+    diskName,
+    diskColor,
   } = data;
 
   const message = data.message || { text: '', status: '' };
@@ -405,41 +352,55 @@ const StatusSection = () => {
           </Button>
         }
       >
-        {!!cloningWithRecords &&
-          (!!scannerGone || !!occupantScanned || !scannerOccupied) && (
+        {!!scannerGone && (
+          <Box>
+            <Icon
+              color={scannerGone || !scannerOccupied ? 'bad' : 'good'}
+              name={scannerGone || !scannerOccupied ? 'times' : 'check'}
+            />
+            {` ${scannerGone ? 'No scanner detected.' : ''}`}
+          </Box>
+        )}
+        <Button
+          width={scannerGone ? 8 : 7}
+          icon="dna"
+          align="center"
+          color={scannerGone ? 'bad' : 'good'}
+          disabled={occupantScanned || scannerGone}
+          onClick={() => act('scan')}
+        >
+          Scan
+        </Button>
+        <Button
+          icon="user-plus"
+          align="center"
+          color="good"
+          onClick={() => act('clone')}
+        >
+          Clone
+        </Button>
+        <Divider />
+        <Stack vertical>
+          <Stack.Item align="center">
+            <DiskDrive
+              onEject={() => act('diskAction')}
+              onInsert={() => act('diskAction')}
+            >
+              {disk && (
+                <DiskDrive.Disk color={diskColor}>{diskName}</DiskDrive.Disk>
+              )}
+            </DiskDrive>
+          </Stack.Item>
+          <Stack.Item align="center">
             <Box>
               <Icon
-                color={scannerGone || !scannerOccupied ? 'bad' : 'good'}
-                name={scannerGone || !scannerOccupied ? 'times' : 'check'}
+                color={!disk || diskReadOnly ? 'bad' : 'good'}
+                name={disk ? 'check' : 'xmark'}
               />
-              {` ${scannerGone ? 'No scanner detected.' : scannerOccupied ? 'Occupant scanned.' : 'Scanner has no occupant.'}`}
+              {` ${!disk ? 'No disk.' : diskHasRecord ? 'Disk has saved scan.' : diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
             </Box>
-          )}
-        {!scannerGone &&
-          !occupantScanned &&
-          !!scannerOccupied &&
-          !!cloningWithRecords && (
-            <Button
-              width={scannerGone ? 8 : 7}
-              icon="dna"
-              align="center"
-              color={scannerGone ? 'bad' : 'good'}
-              disabled={occupantScanned || scannerGone}
-              onClick={() => act('scan')}
-            >
-              Scan
-            </Button>
-          )}
-        {!scannerGone && !!scannerOccupied && !cloningWithRecords && (
-          <Button
-            icon="dna"
-            align="center"
-            color={'good'}
-            onClick={() => act('scanAndClone')}
-          >
-            Scan & Clone
-          </Button>
-        )}
+          </Stack.Item>
+        </Stack>
       </Section>
     </>
   );

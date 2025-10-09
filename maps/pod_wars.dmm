@@ -3839,7 +3839,7 @@
 /turf/unsimulated/floor/airless,
 /area/pod_wars/team1/powergen)
 "nY" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "oa" = (

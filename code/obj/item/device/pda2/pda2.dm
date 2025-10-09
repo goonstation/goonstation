@@ -10,7 +10,6 @@
 	rand_pos = 0
 	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
-	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/datum/db_record/accessed_record = null // the bank account on the id card
 	var/obj/item/pen = null // slap a pen into that thang
@@ -536,7 +535,6 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<style type='text/css'>
 		hr {
 			color:#000;
@@ -1219,7 +1217,7 @@
 		return 1
 
 	proc/explode()
-		if (src.bombproof)
+		if (src.bombproof || src.uplink)
 			if (ismob(src.loc))
 				boutput(src.loc, SPAN_ALERT("<b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked."))
 			return

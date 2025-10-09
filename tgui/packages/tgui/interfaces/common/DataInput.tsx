@@ -167,13 +167,13 @@ const DataInputColorEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onInput={(e, value) =>
+        onChange={(value) => {
           act('modify_value', {
             name: name,
             value: value,
             type: type,
-          })
-        }
+          });
+        }}
       />
     </Tooltip>
   );
@@ -189,9 +189,10 @@ const DataInputIntegerEntry = (props) => {
         minValue={a ?? 0}
         maxValue={b ?? 100}
         stepPixelSize={5}
-        width="39px"
+        width="30px"
         step={1}
-        onDrag={(value) =>
+        tickWhileDragging
+        onChange={(value) =>
           act('modify_value', {
             name: name,
             value: value,
@@ -210,7 +211,6 @@ const DataInputBoolEntry = (props) => {
     <Tooltip position="bottom" content={tooltip}>
       <Button.Checkbox
         checked={value}
-        // content={toggleOption}
         onClick={() =>
           act('modify_value', {
             name: name,
@@ -230,15 +230,15 @@ const DataInputTextEntry = (props) => {
   return (
     <Tooltip position="bottom" content={tooltip}>
       <Input
+        fluid
         value={value}
-        width="200px"
-        onInput={(e, value) =>
+        onChange={(value) => {
           act('modify_value', {
             name: name,
             value: value,
             type: type,
-          })
-        }
+          });
+        }}
       />
     </Tooltip>
   );

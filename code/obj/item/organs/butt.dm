@@ -53,8 +53,8 @@ TYPEINFO(/obj/item/clothing/head/butt)
 			src.donor = nholder.donor
 		if (src.donor)
 			src.donor_name = src.donor.real_name
-			src.name = "[src.donor_name]'s [initial(src.name)]"
-			src.real_name = "[src.donor_name]'s [initial(src.name)]" // Gotta do this somewhere!
+			src.name = "[src.donor_name]’s [initial(src.name)]"
+			src.real_name = "[src.donor_name]’s [initial(src.name)]" // Gotta do this somewhere!
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 			if (src.toned && src.donor.bioHolder) //NO RACIALLY INSENSITIVE ASSHATS ALLOWED
 				src.s_tone = src.donor.bioHolder.mobAppearance.s_tone
@@ -196,6 +196,11 @@ TYPEINFO(/obj/item/clothing/head/butt)
 
 		else
 			return ..()
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.donor_DNA)
+			scan.add_text("Butt's DNA: [src.donor_DNA]")
 
 	proc/explode_butt()
 		var/turf/T = get_turf(src)

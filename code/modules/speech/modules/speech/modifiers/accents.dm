@@ -1,162 +1,143 @@
+/// This value is substituted with `src` on `New()`.
+#define SRC_PROC "src_proc"
+
+
 ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 /datum/speech_module/modifier/accent
 	id = "accent_base"
 	priority = SPEECH_MODIFIER_PRIORITY_ACCENTS
+	var/datum/callback/accent_proc = null
+
+/datum/speech_module/modifier/accent/New(datum/speech_module_tree/parent)
+	if (src.accent_proc && (src.accent_proc.object == SRC_PROC))
+		src.accent_proc.object = src
+
+	. = ..()
+
+/datum/speech_module/modifier/accent/process(datum/say_message/message)
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, src.accent_proc)
+	. = message
+
+
+
 
 
 // Dialects:
 /datum/speech_module/modifier/accent/bingus
 	id = SPEECH_MODIFIER_ACCENT_BINGUS
-
-/datum/speech_module/modifier/accent/bingus/process(datum/say_message/message)
-	message.content = bingus_parse(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(bingus_parse))
 
 
 /datum/speech_module/modifier/accent/chav
 	id = SPEECH_MODIFIER_ACCENT_CHAV
-
-/datum/speech_module/modifier/accent/chav/process(datum/say_message/message)
-	message.content = chavify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(chavify))
 
 
 /datum/speech_module/modifier/accent/elvis
 	id = SPEECH_MODIFIER_ACCENT_ELVIS
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(elvisfy))
 
 /datum/speech_module/modifier/accent/elvis/process(datum/say_message/message)
-	message.content = elvisfy(message.content)
 	message.flags |= SAYFLAG_SINGING
-	. = message
+	. = ..()
 
 
 /datum/speech_module/modifier/accent/finnish
 	id = SPEECH_MODIFIER_ACCENT_FINNISH
-
-/datum/speech_module/modifier/accent/finnish/process(datum/say_message/message)
-	message.content = finnishify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(finnishify))
 
 
 /datum/speech_module/modifier/accent/french
 	id = SPEECH_MODIFIER_ACCENT_FRENCH
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(tabarnak))
 
-/datum/speech_module/modifier/accent/french/process(datum/say_message/message)
-	message.content = tabarnak(message.content)
-	. = message
-
+/datum/speech_module/modifier/accent/frog
+	id = SPEECH_MODIFIER_ACCENT_FROG
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(frogify))
 
 /datum/speech_module/modifier/accent/german
 	id = SPEECH_MODIFIER_ACCENT_GERMAN
-
-/datum/speech_module/modifier/accent/german/process(datum/say_message/message)
-	message.content = germify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(germify))
 
 
 /datum/speech_module/modifier/accent/hacker
 	id = SPEECH_MODIFIER_ACCENT_HACKER
-
-/datum/speech_module/modifier/accent/hacker/process(datum/say_message/message)
-	message.content = accent_hacker(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(accent_hacker))
 
 
 /datum/speech_module/modifier/accent/piglatin
 	id = SPEECH_MODIFIER_ACCENT_PIGLATIN
-
-/datum/speech_module/modifier/accent/piglatin/process(datum/say_message/message)
-	message.content = accent_piglatin(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(accent_piglatin))
 
 
 /datum/speech_module/modifier/accent/pirate
 	id = SPEECH_MODIFIER_ACCENT_PIRATE
-
-/datum/speech_module/modifier/accent/pirate/process(datum/say_message/message)
-	message.content = pirateify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirateify))
 
 
 /datum/speech_module/modifier/accent/russian
 	id = SPEECH_MODIFIER_ACCENT_RUSSIAN
-
-/datum/speech_module/modifier/accent/russian/process(datum/say_message/message)
-	message.content = russify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(russify))
 
 
 /datum/speech_module/modifier/accent/scots
 	id = SPEECH_MODIFIER_ACCENT_SCOTS
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scotify))
+	var/static/list/danny_lyrics = null
 	var/danny_index = 1
 
+/datum/speech_module/modifier/accent/scots/New(datum/speech_module_tree/parent)
+	. = ..()
+	src.danny_lyrics ||= global.dd_file2list("strings/danny.txt")
+
 /datum/speech_module/modifier/accent/scots/process(datum/say_message/message)
+	// Scots can only sing Danny Boy.
 	if (message.flags & SAYFLAG_SINGING)
-		// Scots can only sing Danny Boy
 		src.danny_index = (src.danny_index % 16) + 1
-		var/lyrics = dd_file2list("strings/danny.txt")
-		message.content = lyrics[src.danny_index]
-	else
-		message.content = scotify(message.content)
-	. = message
+		message.content = MAKE_CONTENT_MUTABLE(src.danny_lyrics[src.danny_index])
+
+		return message
+
+	. = ..()
 
 
 /datum/speech_module/modifier/accent/scoob
 	id = SPEECH_MODIFIER_ACCENT_SCOOB
-
-/datum/speech_module/modifier/accent/scoob/process(datum/say_message/message)
-	message.content = scoobify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scoobify))
 
 
 /datum/speech_module/modifier/accent/scoob_nerf
 	id = SPEECH_MODIFIER_ACCENT_SCOOB_NERF
-
-/datum/speech_module/modifier/accent/scoob_nerf/process(datum/say_message/message)
-	message.content = scoobify(message.content, TRUE)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(scoobify), TRUE)
 
 
 /datum/speech_module/modifier/accent/swedish
 	id = SPEECH_MODIFIER_ACCENT_SWEDISH
-
-/datum/speech_module/modifier/accent/swedish/process(datum/say_message/message)
-	message.content = borkborkbork(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(borkborkbork))
 
 
 /datum/speech_module/modifier/accent/thrall
 	id = SPEECH_MODIFIER_ACCENT_THRALL
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(thrall_parse))
 
 /datum/speech_module/modifier/accent/thrall/process(datum/say_message/message)
-	. = message
-
-	message.content = thrall_parse(message.content)
 	message.say_verb = "gurgles"
+	. = ..()
 
 
 /datum/speech_module/modifier/accent/tommy
 	id = SPEECH_MODIFIER_ACCENT_TOMMY
-
-/datum/speech_module/modifier/accent/tommy/process(datum/say_message/message)
-	message.content = tommify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(tommify))
 
 
 /datum/speech_module/modifier/accent/tyke
 	id = SPEECH_MODIFIER_ACCENT_TYKE
-
-/datum/speech_module/modifier/accent/tyke/process(datum/say_message/message)
-	message.content = yorkify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(yorkify))
 
 
 /datum/speech_module/modifier/accent/uwu
 	id = SPEECH_MODIFIER_ACCENT_UWU
-
-/datum/speech_module/modifier/accent/uwu/process(datum/say_message/message)
-	message.content = uwutalk(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(uwutalk))
 
 
 
@@ -165,59 +146,56 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 // Speech Effects:
 /datum/speech_module/modifier/accent/loud
 	id = SPEECH_MODIFIER_ACCENT_LOUD
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(make_loud))
 
 /datum/speech_module/modifier/accent/loud/process(datum/say_message/message)
-	. = message
+	. = ..()
 
-	message.content = replacetext(message.content, "!", "!!!")
-	message.content = replacetext(message.content, ".", "!!!")
-	message.content = replacetext(message.content, "?", "???")
-	message.content = uppertext(message.content)
-	message.content += "!!!"
-
+	message.content += MAKE_CONTENT_MUTABLE("!!!")
 	message.say_verb = "bellows"
 	message.loudness += 1
+
+/datum/speech_module/modifier/accent/loud/proc/make_loud(string)
+	string = replacetext(string, "!", "!!!")
+	string = replacetext(string, ".", "!!!")
+	string = replacetext(string, "?", "???")
+	return uppertext(string)
 
 
 /datum/speech_module/modifier/accent/quiet
 	id = SPEECH_MODIFIER_ACCENT_QUIET
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(make_quiet))
 
 /datum/speech_module/modifier/accent/quiet/process(datum/say_message/message)
-	. = message
+	. = ..()
 
-	message.content = replacetext(message.content, "!", "...")
-	message.content = replacetext(message.content, "?", "..?")
-	message.content = lowertext(message.content)
-	message.content += "..."
-
+	message.content += MAKE_CONTENT_MUTABLE("...")
 	message.say_verb = "murmurs"
 	message.loudness -= 1
+
+/datum/speech_module/modifier/accent/quiet/proc/make_quiet(string)
+	string = replacetext(string, "!", "...")
+	string = replacetext(string, "?", "..?")
+	return lowertext(string)
 
 
 /datum/speech_module/modifier/accent/slurring
 	id = SPEECH_MODIFIER_ACCENT_SLURRING
-
-/datum/speech_module/modifier/accent/slurring/process(datum/say_message/message)
-	message.content = say_drunk(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(say_drunk))
 
 
 /datum/speech_module/modifier/accent/stutter
 	id = SPEECH_MODIFIER_ACCENT_STUTTER
-
-/datum/speech_module/modifier/accent/stutter/process(datum/say_message/message)
-	message.content = stutter(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(stutter))
 
 
 /datum/speech_module/modifier/accent/unintelligible
 	id = SPEECH_MODIFIER_ACCENT_UNINTELLIGIBLE
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(say_superdrunk))
 
 /datum/speech_module/modifier/accent/unintelligible/process(datum/say_message/message)
-	. = message
-
-	message.content = say_superdrunk(message.content)
 	message.say_verb = "splutters"
+	. = ..()
 
 
 
@@ -285,11 +263,10 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 /datum/speech_module/modifier/accent/butt
 	id = SPEECH_MODIFIER_ACCENT_BUTT
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
 
-/datum/speech_module/modifier/accent/butt/process(datum/say_message/message)
-	. = message
-
-	var/list/speech_list = splittext(message.content, " ")
+/datum/speech_module/modifier/accent/butt/proc/replace_words(string)
+	var/list/speech_list = splittext(string, " ")
 	var/list_length = length(speech_list)
 
 	if (!list_length)
@@ -299,16 +276,15 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	for (var/i in 1 to number_of_butts)
 		speech_list[rand(1, list_length)] = "butt"
 
-	message.content = jointext(speech_list, " ")
+	return jointext(speech_list, " ")
 
 
 /datum/speech_module/modifier/accent/clack
 	id = SPEECH_MODIFIER_ACCENT_CLACK
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
 
-/datum/speech_module/modifier/accent/clack/process(datum/say_message/message)
-	. = message
-
-	var/list/speech_list = splittext(message.content, " ")
+/datum/speech_module/modifier/accent/clack/proc/replace_words(string)
+	var/list/speech_list = splittext(string, " ")
 	var/list_length = length(speech_list)
 
 	if (!list_length)
@@ -318,18 +294,18 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	for (var/i in 1 to number_of_clacks)
 		speech_list[rand(1, list_length)] = "clack"
 
-	message.content = jointext(speech_list, " ")
+	return jointext(speech_list, " ")
 
 
 /datum/speech_module/modifier/accent/cluwne
 	id = SPEECH_MODIFIER_ACCENT_CLUWNE
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(honk))
 
 /datum/speech_module/modifier/accent/cluwne/process(datum/say_message/message)
-	. = message
-
-	message.content = honk(message.content)
 	if (!ON_COOLDOWN(message.speaker, "cluwne laugh", CLUWNE_NOISE_COOLDOWN))
 		message.say_sound = pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg')
+
+	. = ..()
 
 
 /datum/speech_module/modifier/accent/comic
@@ -344,18 +320,17 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 /datum/speech_module/modifier/accent/emoji
 	id = SPEECH_MODIFIER_ACCENT_EMOJI
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
 	var/static/regex/word_regex = regex("(\[a-zA-Z0-9-\]*)")
-	var/static/list/word_to_emoji
+	var/static/list/word_to_emoji = null
 	var/static/list/suffixes = list("", "ing", "s", "ed", "er", "ings")
 
 /datum/speech_module/modifier/accent/emoji/New(datum/speech_module_tree/parent)
 	. = ..()
 	src.word_to_emoji ||= json_decode(file2text("strings/word_to_emoji.json"))
 
-/datum/speech_module/modifier/accent/emoji/process(datum/say_message/message)
-	. = message
-
-	var/list/words = splittext_char(message.content, src.word_regex)
+/datum/speech_module/modifier/accent/emoji/proc/replace_words(string)
+	var/list/words = splittext_char(string, src.word_regex)
 	var/list/out_words = list()
 
 	for (var/word in words)
@@ -376,16 +351,15 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 		if (!found)
 			out_words += word
 
-	message.content = jointext(out_words, "")
+	return jointext(out_words, "")
 
 
 /datum/speech_module/modifier/accent/emoji/only
 	id = SPEECH_MODIFIER_ACCENT_EMOJI_ONLY
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
 
-/datum/speech_module/modifier/accent/emoji/only/process(datum/say_message/message)
-	message = ..()
-
-	var/processed = message.content
+/datum/speech_module/modifier/accent/emoji/only/replace_words(string)
+	var/processed = ..()
 	var/list/output = list()
 
 	for (var/i in 1 to length(processed))
@@ -395,26 +369,27 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 		else if (char > 127)
 			output += ascii2text(char)
 
-	message.content = jointext(output, "")
+	return jointext(output, "") || "😶"
 
 
 /datum/speech_module/modifier/accent/error
 	id = SPEECH_MODIFIER_ACCENT_ERROR
-	var/max_font_size = 110
-	var/min_font_size = 80
-	var/rate_of_change = 5
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(corrupt_text))
+	var/static/max_font_size = 110
+	var/static/min_font_size = 80
+	var/static/rate_of_change = 5
 
-/datum/speech_module/modifier/accent/error/process(datum/say_message/message)
-	. = message
-
+/datum/speech_module/modifier/accent/error/proc/corrupt_text(string)
 	var/font_size = 100
 	var/fontIncreasing = TRUE
 
-	var/list/characters = explode_string(message.content)
-	var/processed_content = ""
+	var/list/characters = explode_string(string)
+	var/processed_content = MAKE_CONTENT_IMMUTABLE("<b>")
 
 	for (var/character as anything in characters)
-		processed_content += "<span style='font-size: [font_size]%;'>[character]</span>"
+		processed_content += MAKE_CONTENT_IMMUTABLE("<span style='font-size: [font_size]%;'>")
+		processed_content += character
+		processed_content += MAKE_CONTENT_IMMUTABLE("</span>")
 
 		if (fontIncreasing)
 			font_size = min(font_size + src.rate_of_change, src.max_font_size)
@@ -431,28 +406,26 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 		if (prob(10))
 			processed_content += pick("%", "##A", "-", "- - -", "ERROR")
 
-	message.content = "<b>[processed_content]</b>"
-	. = message
-
+	processed_content += MAKE_CONTENT_IMMUTABLE("</b>")
+	return processed_content
 
 /datum/speech_module/modifier/accent/horse
 	id = SPEECH_MODIFIER_ACCENT_HORSE
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(neigh))
 
 /datum/speech_module/modifier/accent/horse/process(datum/say_message/message)
-	. = message
-
-	message.content = neigh(message.content)
 	if (!ON_COOLDOWN(message.speaker, "cluwne laugh", CLUWNE_NOISE_COOLDOWN))
 		message.say_sound = pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg')
+
+	. = ..()
 
 
 /datum/speech_module/modifier/accent/literal_owo
 	id = SPEECH_MODIFIER_ACCENT_LITERAL_OWO
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_text))
 
-/datum/speech_module/modifier/accent/literal_owo/process(datum/say_message/message)
-	. = message
-
-	var/list/speech_list = splittext(message.content, " ")
+/datum/speech_module/modifier/accent/literal_owo/proc/replace_text(string)
+	var/list/speech_list = splittext(string, " ")
 	var/list_length = length(speech_list)
 
 	if (!list_length)
@@ -475,64 +448,52 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 		speech_list[i] = newtext
 
-	message.content = jointext(speech_list, " ")
+	return jointext(speech_list, " ")
 
 
 /datum/speech_module/modifier/accent/lol
 	id = SPEECH_MODIFIER_ACCENT_LOLCAT
-
-/datum/speech_module/modifier/accent/lol/process(datum/say_message/message)
-	message.content = lolcat(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(lolcat))
 
 
 /datum/speech_module/modifier/accent/mocking
 	id = SPEECH_MODIFIER_ACCENT_MOCKING
-
-/datum/speech_module/modifier/accent/mocking/process(datum/say_message/message)
-	message.content = accent_mocking(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(accent_mocking))
 
 
 /datum/speech_module/modifier/accent/reversed_speech
 	id = SPEECH_MODIFIER_ACCENT_REVERSED
-
-/datum/speech_module/modifier/accent/reversed_speech/process(datum/say_message/message)
-	message.content = html_encode(reverse_text(html_decode(message.content)))
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reverse_text))
 
 
 /datum/speech_module/modifier/accent/scrambled
 	id = SPEECH_MODIFIER_ACCENT_SCRAMBLED
-
-/datum/speech_module/modifier/accent/scrambled/process(datum/say_message/message)
-	message.content = accent_scramble(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(accent_scramble))
 
 
 /datum/speech_module/modifier/accent/smile
 	id = SPEECH_MODIFIER_ACCENT_SMILING
-
-/datum/speech_module/modifier/accent/smile/process(datum/say_message/message)
-	message.content = smilify(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(smilify))
 
 
 /datum/speech_module/modifier/accent/transposed
 	id = SPEECH_MODIFIER_ACCENT_TRANSPOSED
-	var/max_font_size = 130
-	var/min_font_size = 70
-	var/rate_of_change = 5
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(transpose_text))
+	var/static/max_font_size = 130
+	var/static/min_font_size = 70
+	var/static/rate_of_change = 5
 
-/datum/speech_module/modifier/accent/transposed/process(datum/say_message/message)
+/datum/speech_module/modifier/accent/transposed/proc/transpose_text(string)
 	var/font_size = 100
 	var/fontIncreasing = TRUE
 
-	var/list/characters = explode_string(message.content)
+	var/list/characters = explode_string(string)
 	var/processed_content = ""
 
 	for (var/character as anything in characters)
-		processed_content += "<span style='font-size: [font_size]%;'>[character]</span>"
+		processed_content += MAKE_CONTENT_IMMUTABLE("<span style='font-size: [font_size]%;'>")
+		processed_content += character
+		processed_content += MAKE_CONTENT_IMMUTABLE("</span>")
 
 		if (fontIncreasing)
 			font_size = min(font_size + src.rate_of_change, src.max_font_size)
@@ -546,22 +507,19 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 			if (font_size <= src.min_font_size)
 				fontIncreasing = TRUE
 
-	message.content = processed_content
-	. = message
+	return processed_content
 
 
 /datum/speech_module/modifier/accent/void
 	id = SPEECH_MODIFIER_ACCENT_VOID
-
-/datum/speech_module/modifier/accent/void/process(datum/say_message/message)
-	message.content = voidSpeak(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(voidSpeak), TRUE)
 
 
 /datum/speech_module/modifier/accent/vowelitis
 	id = SPEECH_MODIFIER_ACCENT_VOWELITIS
-	var/vowel_lower
-	var/vowel_upper
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(vowelitis))
+	var/vowel_lower = null
+	var/vowel_upper = null
 
 /datum/speech_module/modifier/accent/vowelitis/New(datum/speech_module_tree/parent)
 	. = ..()
@@ -569,40 +527,38 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	src.vowel_lower = pick("a", "e", "i", "o", "u")
 	src.vowel_upper = uppertext(src.vowel_lower)
 
-/datum/speech_module/modifier/accent/vowelitis/process(datum/say_message/message)
-	. = message
+/datum/speech_module/modifier/accent/vowelitis/proc/vowelitis(string)
+	string = replacetextEx(string, "a", src.vowel_lower)
+	string = replacetextEx(string, "e", src.vowel_lower)
+	string = replacetextEx(string, "i", src.vowel_lower)
+	string = replacetextEx(string, "o", src.vowel_lower)
+	string = replacetextEx(string, "u", src.vowel_lower)
 
-	message.content = replacetextEx(message.content, "a", src.vowel_lower)
-	message.content = replacetextEx(message.content, "e", src.vowel_lower)
-	message.content = replacetextEx(message.content, "i", src.vowel_lower)
-	message.content = replacetextEx(message.content, "o", src.vowel_lower)
-	message.content = replacetextEx(message.content, "u", src.vowel_lower)
-	message.content = replacetextEx(message.content, "A", src.vowel_upper)
-	message.content = replacetextEx(message.content, "E", src.vowel_upper)
-	message.content = replacetextEx(message.content, "I", src.vowel_upper)
-	message.content = replacetextEx(message.content, "O", src.vowel_upper)
-	message.content = replacetextEx(message.content, "U", src.vowel_upper)
+	string = replacetextEx(string, "A", src.vowel_upper)
+	string = replacetextEx(string, "E", src.vowel_upper)
+	string = replacetextEx(string, "I", src.vowel_upper)
+	string = replacetextEx(string, "O", src.vowel_upper)
+	string = replacetextEx(string, "U", src.vowel_upper)
+
+	return string
 
 
 /datum/speech_module/modifier/accent/word_scrambled
 	id = SPEECH_MODIFIER_ACCENT_WORD_SCRAMBLED
-
-/datum/speech_module/modifier/accent/word_scrambled/process(datum/say_message/message)
-	message.content = accent_shuffle_words(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(accent_shuffle_words))
 
 
 /datum/speech_module/modifier/accent/yee
 	id = SPEECH_MODIFIER_ACCENT_YEE
-
-/datum/speech_module/modifier/accent/yee/process(datum/say_message/message)
-	message.content = yee_text(message.content)
-	. = message
+	accent_proc = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(yee_text))
 
 
 /datum/speech_module/modifier/accent/zalgo
 	id = SPEECH_MODIFIER_ACCENT_ZALGO
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(random_zalgo))
 
-/datum/speech_module/modifier/accent/zalgo/process(datum/say_message/message)
-	message.content = zalgoify(message.content, rand(0,2), rand(0, 1), rand(0, 2))
-	. = message
+/datum/speech_module/modifier/accent/zalgo/proc/random_zalgo(string)
+	return global.zalgoify(string, rand(0, 2), rand(0, 1), rand(0, 2))
+
+
+#undef SRC_PROC

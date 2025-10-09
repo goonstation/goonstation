@@ -197,7 +197,7 @@ var/global/game_force_started = FALSE
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()
 
-#ifdef RP_MODE
+#if defined(RP_MODE) || defined(NIGHTSHADE)
 	global.toggle_looc_allowed(TRUE)
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	global.toggle_ooc_allowed(FALSE)
@@ -290,14 +290,6 @@ var/global/game_force_started = FALSE
 			if(lobby_player.client)
 				lobby_player.update_joinmenu()
 
-		//Setup the hub site logging
-		var hublog_filename = "data/stats/data.txt"
-		if (fexists(hublog_filename))
-			fdel(hublog_filename)
-
-		hublog = file(hublog_filename)
-		hublog << ""
-
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 		roundManagement.recordUpdate(mode)
@@ -355,9 +347,9 @@ var/global/game_force_started = FALSE
 			try
 				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
 			catch (var/exception/e)
-				logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
-				logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
-				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_ADMIN, null, "The automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_DIARY, null, "The automated map switch vote couldn't run because: [e.name]", "admin")
+				message_admins("The automated map switch vote couldn't run because: [e.name]")
 
 /datum/controller/gameticker
 	proc/distribute_jobs()
@@ -535,7 +527,7 @@ var/global/game_force_started = FALSE
 			src.add_minds(1)
 			src.last_readd_lost_minds_to_ticker = world.time
 
-		if(mode.check_finished())
+		if(mode.check_finished() || mode.force_round_finished)
 			current_state = GAME_STATE_FINISHED
 
 			// This does a little more than just declare - it handles all end of round processing

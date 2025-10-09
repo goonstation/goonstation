@@ -69,7 +69,7 @@
 	var/power = src.get_power()
 
 	if (isobj(AM) && !istypes(AM, list(/obj/effects, /obj/overlay, /obj/laser_sink, /obj/linked_laser)))
-		telehop(AM, power, power > 2)
+		telehop(AM, power)
 		return
 
 	if (!isliving(AM))
@@ -80,7 +80,7 @@
 		if (1 to 3)
 			hitMob.take_radiation_dose(3 SIEVERTS)
 			hitMob.changeStatus("knockdown", 2 SECONDS)
-			telehop(hitMob, src.power, src.power > 2)
+			telehop(hitMob, src.power)
 			return
 
 		if (4)
@@ -89,7 +89,7 @@
 
 			random_brute_damage(hitMob, 25)
 			hitMob.changeStatus("knockdown", 2 SECONDS)
-			if (ishuman(hitMob) && prob(25))
+			if (ishuman(hitMob) && prob(15))
 				var/mob/living/carbon/human/hitHuman = hitMob
 				if (hitHuman.organHolder && hitHuman.organHolder.brain)
 					var/obj/item/organ/brain/B = hitHuman.organHolder.drop_organ("Brain", hitHuman.loc)

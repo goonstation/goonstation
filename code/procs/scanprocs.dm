@@ -160,7 +160,7 @@
 				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
 					brain_data = SPAN_ALERT("Minor brain damage detected.")
 				else if (H.get_brain_damage() > 0)
-					brain_data = SPAN_ALERT("Synapse function may be disrupted.")
+					brain_data = SPAN_ALERT("Brain synapse function may be disrupted.")
 			else
 				brain_data = SPAN_ALERT("Subject has no brain.")
 
@@ -256,7 +256,7 @@
 //takes string input, for name in organholder.organ_list and checks if the organholder has anything
 //obfuscate, if true then don't show the exact organ health amount. Minor damage, moderate damage, severe damage, critical damage
 /proc/organ_health_scan(var/input, var/mob/living/carbon/human/H, var/obfuscate = 0)
-	var/obj/item/organ/O = H.organHolder.organ_list[input]
+	var/obj/item/organ/O = H.organHolder?.organ_list[input]
 	if (istype(O))
 		var/damage = O.get_damage()
 		if (obfuscate)
@@ -532,192 +532,18 @@
 		eth_eq = 0
 	return eth_eq
 
-// Should make it easier to maintain the detective's scanner and PDA program (Convair880).
-/proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0)
+/proc/scan_forensic(var/atom/A as turf|obj|mob, visible = FALSE)
+	RETURN_TYPE(/datum/forensic_scan)
 	if (istype(A, /obj/ability_button)) // STOP THAT
 		return
-	var/fingerprint_data = null
-	var/blood_data = null
-	var/forensic_data = null
-	var/glove_data = null
-	var/contraband_data = null
-	var/interesting_data = null
-
 	if (!A)
 		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if(visible)
 		animate_scanning(A, "#b9d689")
+	var/datum/forensic_scan/scan = new(A)
+	return scan
 
-	if (ishuman(A))
-		var/mob/living/carbon/human/H = A
-
-		if (!isnull(H.gloves))
-			var/obj/item/clothing/gloves/WG = H.gloves
-			if (WG.glove_ID && !(WG.no_prints))
-				glove_data += "[WG.glove_ID] ([SPAN_NOTICE("[H]'s worn [WG.name]")])"
-			if (!WG.hide_prints)
-				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
-			else
-				fingerprint_data += "<br>[SPAN_NOTICE("Unable to scan [H]'s fingerprints.")]"
-		else
-			fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
-
-		if (H.gunshot_residue) // Left by firing a kinetic gun.
-			forensic_data += "<br>[SPAN_NOTICE("Gunshot residue found.")]"
-
-		if (H.implant && length(H.implant) > 0)
-			var/wounds = null
-			for (var/obj/item/implant/I in H.implant)
-				if (istype(I, /obj/item/implant/projectile))
-					wounds ++
-			if (wounds)
-				forensic_data += "<br>[SPAN_NOTICE("[wounds] gunshot [wounds == 1 ? "wound" : "wounds"] detected.")]"
-
-		if (H.fingerprints) // Left by grabbing or pulling people.
-			var/list/FFP = H:fingerprints
-			for(var/i in FFP)
-				fingerprint_data += "<br>[SPAN_NOTICE("Foreign fingerprint on [H]:")] [i]"
-
-		if (H.bioHolder.Uid) // For quick reference. Also, attacking somebody only makes their clothes bloody, not the mob (think naked dudes).
-			blood_data += "<br>[SPAN_NOTICE("[H]'s blood DNA:")] [H.bioHolder.Uid]"
-
-		if (H.blood_DNA && isnull(H.gloves)) // Don't magically detect blood through worn gloves.
-			var/list/BH = params2list(H:blood_DNA)
-			for(var/i in BH)
-				blood_data += "<br>[SPAN_NOTICE("Blood on [H]'s hands:")] [i]"
-
-		var/list/gear_to_check = list(H.head, H.wear_mask, H.w_uniform, H.wear_suit, H.belt, H.gloves, H.back)
-		for (var/obj/item/check in gear_to_check)
-			if (check)
-				var/list/BC
-				if (check.blood_DNA)
-					BC = params2list(check.blood_DNA)
-					for(var/i in BC)
-						blood_data += "<br>[SPAN_NOTICE("Blood on worn [check.name]:")] [i]"
-				/*var/trace_blood = check.get_forensic_trace("bDNA")
-				if (trace_blood)
-					BC = params2list(trace_blood)
-					for (var/i in BC)
-						blood_data += "<br>[SPAN_NOTICE("Blood trace on worn [check.name]:")] [i]"
-				*/
-
-		if (H.r_hand && H.r_hand.blood_DNA)
-			var/list/BIR = params2list(H.r_hand.blood_DNA)
-			for(var/i in BIR)
-				blood_data += "<br>[SPAN_NOTICE("Blood on held [H.r_hand.name]:")] [i]"
-
-		if (H.l_hand && H.l_hand.blood_DNA)
-			var/list/BIL = params2list(H.l_hand.blood_DNA)
-			for(var/i in BIL)
-				blood_data += "<br>[SPAN_NOTICE("Blood on held [H.l_hand.name]:")] [i]"
-
-	else
-
-		if (istype(A, /obj/item/parts/human_parts))
-			var/obj/item/parts/human_parts/H = A
-			if (H.original_DNA)
-				blood_data += "<br>[SPAN_NOTICE("[H]'s blood DNA:")] [H.original_DNA]"
-			if (istype(H, /obj/item/parts/human_parts/arm)) // has fringerpints
-				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.original_fprints]"
-
-		else if (istype(A, /obj/item/organ))
-			var/obj/item/organ/O = A
-			if (O.donor_DNA)
-				blood_data += "<br>[SPAN_NOTICE("[O]'s blood DNA:")] [O.donor_DNA]"
-
-		else if (istype(A, /obj/item/clothing/head/butt))
-			var/obj/item/clothing/head/butt/B = A
-			if (B.donor_DNA)
-				blood_data += "<br>[SPAN_NOTICE("[B]'s blood DNA:")] [B.donor_DNA]"
-
-		else if (isobj(A) && A.reagents && A.is_open_container() && A.reagents.has_reagent("blood"))
-			var/datum/reagent/blood/B = A.reagents.reagent_list["blood"]
-			if (B && istype(B.data, /datum/bioHolder))
-				var/datum/bioHolder/BH = B.data
-				if (BH.Uid)
-					blood_data += "<br>[SPAN_NOTICE("Blood DNA inside [A]:")] [BH.Uid]"
-
-		if (A.interesting)
-			if (istype(A, /obj))
-				interesting_data += "<br>[SPAN_NOTICE("[A.interesting]")]"
-			if (istype(A, /turf))
-				interesting_data += "<br>[SPAN_NOTICE("There seems to be more to [A] than meets the eye.")]"
-
-//		if (!A.fingerprints)
-			/*var/list/FP = params2list(A.get_forensic_trace("fprints"))
-			if (FP)
-				for (var/i in FP)
-					fingerprint_data += "<br>[SPAN_NOTICE("[i]")]"
-			else
-				*///fingerprint_data += "<br>[SPAN_NOTICE("Unable to locate any fingerprints.")]"
-//		else
-		if (A.fingerprints)
-			var/list/FP = A:fingerprints
-			for(var/i in FP)
-				fingerprint_data += "<br>[SPAN_NOTICE("[i]")]"
-
-//		if (!A.blood_DNA)
-			/*var/list/DNA = params2list(A.get_forensic_trace("bDNA"))
-			if (DNA)
-				for (var/i in DNA)
-					blood_data += "<br>[SPAN_NOTICE("[i]")]"
-			else
-				*///blood_data += "<br>[SPAN_NOTICE("Unable to locate any blood traces.")]"
-//		else
-		if (A.blood_DNA)
-			var/list/DNA = params2list(A:blood_DNA)
-			for(var/i in DNA)
-				blood_data += "<br>[SPAN_NOTICE("[i]")]"
-
-		if (isitem(A))
-			var/obj/item/I = A
-			var/contra = GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_GUNS)
-			if (contra)
-				contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
-
-		if (istype(A, /obj/item/clothing/gloves))
-			var/obj/item/clothing/gloves/G = A
-			if (G.glove_ID)
-				glove_data += "[G.glove_ID] [G.material_prints ? "([G.material_prints])" : null]"
-
-		if (istype(A, /obj))
-			var/obj/O = A
-			if(O.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [O]:")] [O.forensic_ID]"
-
-		if (istype(A, /turf/simulated/wall))
-			var/turf/simulated/wall/W = A
-			if (W.forensic_impacts && islist(W.forensic_impacts) && length(W.forensic_impacts))
-				for(var/i in W.forensic_impacts)
-					forensic_data += "<br>[SPAN_NOTICE("Forensic signature found:")] [i]"
-
-	if (!fingerprint_data) // Just in case, we'd always want to have a readout for these.
-		fingerprint_data = "<br>[SPAN_NOTICE("Unable to locate any fingerprints.")]"
-
-	if (!blood_data)
-		blood_data = "<br>[SPAN_NOTICE("Unable to locate any blood traces.")]"
-
-	// This was the least enjoyable part of the entire exercise. Formatting is nothing but a chore.
-	var/data = "--------------------------------<br>\
-	[SPAN_NOTICE("Forensic analysis of <b>[A]</b>")] [contraband_data ? "[contraband_data]" : null]<br>\
-	<br>\
-	<i>Isolated fingerprints:</i>[fingerprint_data]<br>\
-	<br>\
-	<i>Isolated blood samples:</i>[blood_data]<br>\
-	[forensic_data ? "<br><i>Additional forensic data:</i>[forensic_data]<br>" : null]\
-	[glove_data ? "<br><i>Material analysis:</i>[SPAN_NOTICE(" [glove_data]")]" : null]\
-	[interesting_data ? "<br><i>Energy signature analysis:</i>[SPAN_NOTICE(" [interesting_data]")]" : null]\
-	"
-
-	if (CHECK_LIQUID_CLICK(A))
-		var/turf/T = get_turf(A)
-		if (T.active_liquid)
-			data += scan_forensic(T.active_liquid, visible)
-		if (T.active_airborne_liquid)
-			data += scan_forensic(T.active_airborne_liquid, visible)
-
-	return data
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
 /proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0)

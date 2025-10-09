@@ -3,10 +3,6 @@
 	config_tag = "gang"
 	regular = FALSE
 
-	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
-	var/random_gangs = TRUE
-
-	antag_token_support = TRUE
 	var/list/datum/gang/gangs = list()
 
 	var/const/setup_min_teams = 2
@@ -54,16 +50,6 @@
 	if (!length(leaders_possible))
 		return 0
 
-
-	token_players = antag_token_list()
-	for(var/datum/mind/tplayer in token_players)
-		if (!length(token_players))
-			break
-		src.traitors += tplayer
-		token_players.Remove(tplayer)
-		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
-		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
-
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	src.traitors |= chosen_leader
 
@@ -86,8 +72,7 @@
 		if(antag_mind.special_role == ROLE_GANG_LEADER)
 			antag_mind.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
 
-	if(src.random_gangs)
-		fill_gangs()
+	fill_gangs()
 
 	// we delay announcement to make sure everyone gets information about the other members
 	for(var/datum/mind/antag_mind in src.traitors)
@@ -579,8 +564,10 @@
 	proc/select_gang_uniform()
 		// Jumpsuit Selection.
 		var/temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
-
+		var/frustration = 0
 		while (!src.uniform_list[temporary_jumpsuit])
+			if (frustration++ > 10)
+				return FALSE
 			boutput(src.leader.current , SPAN_ALERT("That uniform has been claimed by another gang."))
 			temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
 
@@ -594,11 +581,14 @@
 			var/temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
 
 			while(!src.headwear_list[temporary_headwear])
+				if (frustration++ > 10)
+					return FALSE
 				boutput(src.leader.current , SPAN_ALERT("That mask or hat has been claimed by another gang."))
 				temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
 
 			src.headwear = src.headwear_list[temporary_headwear]
 			src.headwear_list -= temporary_headwear
+		return TRUE
 
 	proc/num_tiles_controlled()
 		return src.tiles_controlled
@@ -1896,12 +1886,8 @@
 			src.gang.free_gun_owners += antag_datum
 
 		if(user.mind.special_role == ROLE_GANG_LEADER && !src.gang.claimed_briefcase)
-			var/datum/game_mode/gang/gamemode = ticker.mode
 			src.gang.claimed_briefcase = TRUE
-			if(gamemode.random_gangs)
-				user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers/random_gangs(user.loc, src.gang))
-			else
-				user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers(user.loc, src.gang))
+			user.put_in_hand_or_drop(new /obj/item/storage/box/gang_equipment(user.loc, src.gang))
 
 		src.gang.gear_cooldown += user
 		SPAWN(300 SECONDS)
@@ -2267,98 +2253,6 @@
 
 		boutput(user, SPAN_NOTICE("You finish filling the [src]!"))
 
-/obj/item/gang_flyer
-	desc = "A gang recruitment flyer."
-	name = "gang recruitment flyer"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "paper_caution"
-	w_class = W_CLASS_TINY
-	var/datum/gang/gang = null
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
-			if(user != target)
-				user.visible_message(SPAN_ALERT("<b>[user] shows [src] to [target]!</b>"))
-			// induct_to_gang(target)		//this was sometimes kinda causing people to accidentally accept joining a gang.
-			return
-		else
-			return ..()
-
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob)
-		if (istype(A, /turf/simulated/wall) || istype(A, /turf/simulated/shuttle/wall) || istype(A, /turf/unsimulated/wall) || istype(A, /obj/window))
-			user.visible_message("<b>[user]</b> attaches [src] to [A].","You attach [src] to [A].")
-			user.u_equip(src)
-			src.set_loc(A)
-			src.anchored = ANCHORED
-		else
-			return ..()
-
-	attack_hand(mob/user)
-		if (src.anchored == UNANCHORED)
-			return ..()
-
-		var/turf/T = src.loc
-		user.visible_message(SPAN_ALERT("<b>[user]</b> rips down [src] from [T]!"), SPAN_ALERT("You rip down [src] from [T]!"))
-		src.anchored = UNANCHORED
-		user.put_in_hand_or_drop(src)
-
-	attack_self(mob/living/carbon/human/user as mob)
-		induct_to_gang(user)
-
-	proc/induct_to_gang(var/mob/living/carbon/human/target)
-		var/datum/game_mode/gang/gamemode = ticker.mode
-		if(gamemode.random_gangs)
-			boutput(target, SPAN_ALERT("You can't join a gang, they're already preformed!"))
-			return
-
-		if(gang == null)
-			boutput(target, SPAN_ALERT("The flyer doesn't specify which gang it's advertising!"))
-			return
-
-		if(!ishuman(target))
-			boutput(target, SPAN_ALERT("Only humans can join a gang!"))
-			return
-
-		if(!isalive(target))
-			boutput(target, SPAN_ALERT("Not when you're incapacitated."))
-			return
-
-		if (issmallanimal(target))
-			var/mob/living/critter/small_animal/C = target
-			if (C.ghost_spawned)
-				boutput(target, SPAN_ALERT("Your spectral brain can't comprehend the concept of a gang!"))
-				return
-
-		var/datum/gang/target_gang = target.get_gang()
-		if(target_gang == gang)
-			boutput(target, SPAN_ALERT("You're already in that gang!"))
-			return
-
-		if(target_gang && (target == target_gang.leader))
-			boutput(target, SPAN_ALERT("You can't join a gang, you run your own!"))
-			return
-
-		if(target_gang)
-			boutput(target, SPAN_ALERT("You're already in a gang, you can't switch sides!"))
-			return
-
-		var/datum/job/job = find_job_in_controller_by_string(target.mind.assigned_role)
-		if(job && (!job.can_be_antag(ROLE_GANG_MEMBER) || !job.can_be_antag(ROLE_GANG_LEADER)))
-			boutput(target, SPAN_ALERT("You are too responsible to join a gang!"))
-			return
-
-		if(length(src.gang.members) >= src.gang.current_max_gang_members)
-			boutput(target, SPAN_ALERT("That gang is full!"))
-			return
-
-		var/joingang = tgui_alert(target, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
-		if (joingang != "Yes")
-			return
-
-		target.mind?.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = src.gang.leader)
-
-		return
-
 
 /obj/item/tool/janktanktwo
 	name = "JankTank II"
@@ -2503,39 +2397,22 @@
 			boutput(user, SPAN_ALERT("The [src.name] fizzles and hisses angrily! The AI control wire is probably cut."))
 		UpdateIcon()
 
-/obj/item/storage/box/gang_flyers
-	name = "gang recruitment flyer case"
+/obj/item/storage/box/gang_equipment
+	name = "gang equipment case"
+	spawn_contents = list(/obj/item/spray_paint_gang = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
 	desc = "A briefcase full of neat stuff."
 	icon_state = "briefcase_black"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 
-	spawn_contents = list(/obj/item/gang_flyer = 4, /obj/item/spray_paint_gang = 2, /obj/item/tool/quickhack = 1)
 	var/datum/gang/gang = null
 
 	New(turf/newloc, datum/gang/gang)
-		src.name = "[gang.gang_name] recruitment material"
-		src.desc = "A briefcase full of flyers advertising the [gang.gang_name] gang."
 		src.gang = gang
+		src.desc = "A briefcase full of equipment for the [gang.gang_name] gang."
 		..()
 
-	random_gangs
-		name = "gang equipment case"
-		spawn_contents = list(/obj/item/spray_paint_gang = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
-		New(turf/newloc, datum/gang/gang)
-			..()
-			src.desc = "A briefcase full of equipment for the [gang.gang_name] gang."
-
-	make_my_stuff()
-		..()
-
-		for(var/obj/item/gang_flyer/flyer in src.storage.get_contents())
-			var/gang_name = gang?.gang_name || "C0D3R"
-			flyer.name = "[gang_name] recruitment flyer"
-			flyer.desc = "A flyer offering membership in the [gang_name] gang."
-			flyer.gang = gang
-
-	//items purchasable from gangs
+//items purchasable from gangs
 /datum/gang_item
 	var/name = "commodity"	// Name of the item
 	var/desc = "item"		//Description for item
@@ -2867,11 +2744,11 @@
 		src.heatTracker = null
 		qdel(heatTracker)
 
-	/// Look for & remember players in this gang's sight range
+	/// Look for & remember players in this tag's sight range
 	proc/find_players()
 		for(var/mob/M in range(GANG_TAG_SIGHT_RANGE, src.loc))
 			if (IN_EUCLIDEAN_RANGE(src,M,GANG_TAG_SIGHT_RANGE))
-				if(M.client && isalive(M))
+				if(M.client && isalive(M) && !isganger(M))
 					mobs[M] = TRUE //remember mob
 
 	/// Adds heat to this tag based upon how many mobs it's remembered. Then forgets all mobs it's seen and cools down.
