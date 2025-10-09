@@ -9,15 +9,10 @@
 	desc = {"A metal pole that you can hang IV bags on, which is useful since we aren't animals that go leaving our sanitized medical equipment all
 			over the ground or anything!"}
 	icon = 'icons/obj/machines/medical/iv_stand.dmi'
-	icon_state = "IVstand"
+	icon_state = "IV_stand"
 	connect_directly = FALSE
-
 	var/obj/item/reagent_containers/iv_drip/iv_drip = null
 	var/transfer_rate = 5
-
-	// Overlay images
-	var/image/fluid_image = null
-	var/image/bag_image = null
 
 /obj/machinery/medical/iv_stand/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
 	return
@@ -44,33 +39,25 @@
 
 /obj/machinery/medical/iv_stand/update_icon()
 	if (!src.iv_drip)
-		src.icon_state = "IVstand"
 		src.ClearSpecificOverlays("fluid", "bag", "lights")
+		src.UpdateOverlaysimage(src.icon, icon_state = "IV_pump-lid"), "lid"
 		return
-	src.icon_state = "IVstand-closed"
 	src.handle_iv_bag_image()
-	if (src.is_disabled())
+	src.ClearSpecificOverlays("lid")
+	if (src.iv_drip.patient || src.is_disabled())
 		src.ClearSpecificOverlays("lights")
-		return
 	if (!src.iv_drip.patient)
-		src.UpdateOverlays(image(src.icon, icon_state = "IVstand-lights"), "lights")
-		return
-	src.ClearSpecificOverlays("lights")
+		src.UpdateOverlays(image(src.icon, icon_state = "IV_pump-lights"), "lights")
 
 /obj/machinery/medical/iv_stand/proc/handle_iv_bag_image()
-	if (src.iv_drip.reagents.total_volume)
-		src.bag_image = image(src.icon, icon_state = "IV-full")
-		src.fluid_image = src.fluid_image || image(src.icon, icon_state = "IV-fluid")
-		src.fluid_image.icon_state = "IV-fluid"
-		var/datum/color/average = src.iv_drip.reagents.get_average_color()
-		src.fluid_image.color = average.to_rgba()
-		src.UpdateOverlays(src.fluid_image, "fluid")
-	else
-		src.bag_image = image(src.icon, icon_state = "IV")
-		src.UpdateOverlays(null, "fluid")
-	if (!src.bag_image)
-		src.bag_image = image(src.icon, icon_state = "IV")
-	src.UpdateOverlays(src.bag_image, "bag")
+	src.UpdateOverlays(image(src.icon, icon_state = "IV"), "bag")
+	if (!src.iv_drip.reagents.total_volume)
+		src.ClearSpecificOverlays("fluid")
+		return
+	var/image/fluid_image = image(src.icon, icon_state = "IV-fluid")
+	fluid_image.icon_state = "IV-fluid"
+	fluid_image.color = src.iv_drip.reagents.get_average_color().to_rgba()
+	src.UpdateOverlays(fluid_image, "fluid")
 
 /obj/machinery/medical/iv_stand/proc/update_name()
 	if (src.iv_drip)
@@ -204,7 +191,7 @@
 	name = "\improper IV stand parts"
 	desc = "A collection of parts that can be used to make an IV stand."
 	icon = 'icons/obj/machines/medical/iv_stand.dmi'
-	icon_state = "IVstand_parts"
+	icon_state = "IV_stand_parts"
 	force = 2
 	stamina_damage = 10
 	stamina_cost = 8
