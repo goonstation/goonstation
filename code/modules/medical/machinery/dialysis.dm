@@ -109,6 +109,8 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 		src.say("Unable to draw power, stopping dialysis.")
 		src.low_power_alert_given = TRUE
 		return
+	if (src.has_no_power())
+		return
 	src.say("Stopped dialysing patient.")
 
 /// Returns total patient blood volume in units.

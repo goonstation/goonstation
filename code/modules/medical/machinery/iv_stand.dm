@@ -158,6 +158,8 @@
 		src.say("IV pump without power. Check bag.")
 		src.low_power_alert_given = TRUE
 		return
+	if (src.has_no_power())
+		return
 	src.say("Stopped [src.iv_drip.mode == IV_INJECT ? "infusing" : "drawing from"] patient.")
 
 /obj/machinery/medical/iv_stand/deconstruct()
