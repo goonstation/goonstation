@@ -230,8 +230,6 @@
 		var/fluff = pick("pulled", "yanked", "ripped")
 		src.patient.visible_message(SPAN_ALERT("<b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b>"),\
 		SPAN_ALERT("<b>[src]'s needle gets [fluff] out of your arm!</b>"))
-		blood_slash(src.patient, 5)
-		src.patient.emote("scream")
 	var/mob/living/carbon/human/old_patient = src.patient
 	src.stop_transfusion()
 	src.patient = null

@@ -137,11 +137,6 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	..()
 	src.UpdateIcon()
 
-/obj/machinery/medical/dialysis/force_remove_feedback()
-	. = ..()
-	blood_slash(src.patient, 7)
-	src.patient.emote("scream")
-
 /datum/statusEffect/dialysis
 	id = "dialysis"
 	name = "Dialysis"
