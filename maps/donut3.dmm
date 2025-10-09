@@ -52794,7 +52794,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "qtb" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,

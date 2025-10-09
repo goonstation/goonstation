@@ -82,7 +82,7 @@
 				return
 			else if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
 				var/turf/floor = get_turf(src)
-				for (var/mob/mob in floor.loc)
+				for (var/mob/mob in floor.loc) // checks if anyone in the room's area has the status
 					var/datum/statusEffect/wrestler/status = mob.hasStatus("wrestler")
 					if (status)
 						status.toggle_active()

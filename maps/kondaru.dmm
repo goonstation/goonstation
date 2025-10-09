@@ -29530,7 +29530,7 @@
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "ecN" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
@@ -53354,7 +53354,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "uBr" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},

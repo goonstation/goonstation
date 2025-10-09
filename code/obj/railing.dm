@@ -128,7 +128,7 @@
 		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W as obj, mob/user)
-		if (istype(src, /obj/railing/wrestling))
+		if (istype(src, /obj/railing/boxing))
 			return
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))

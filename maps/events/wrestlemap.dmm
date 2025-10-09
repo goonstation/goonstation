@@ -149,7 +149,7 @@
 	},
 /area/station/hallway/primary/south)
 "aaS" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 6;
 	layer = 3.1
 	},
@@ -640,7 +640,7 @@
 /area/station/chapel/sanctuary)
 "ajS" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -1331,7 +1331,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
 "aBu" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 10
 	},
 /turf/simulated/floor/engine{
@@ -2056,7 +2056,7 @@
 /area/station/medical/medbay)
 "aPW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/cable{
@@ -3611,7 +3611,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
 "bCB" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/disposalpipe/segment/brig{
@@ -4126,7 +4126,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bPM" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -5128,7 +5128,7 @@
 /area/station/medical/medbay)
 "cmg" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -5491,7 +5491,7 @@
 	},
 /area/station/engine/inner)
 "cud" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -5636,7 +5636,7 @@
 /turf/simulated/floor/caution,
 /area/station/hangar/escape)
 "cwR" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -8741,7 +8741,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering/ce)
 "dQZ" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -9808,7 +9808,7 @@
 /area/station/catwalk/south)
 "eoc" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 6;
 	layer = 3.1
 	},
@@ -10174,7 +10174,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
 "exs" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -10665,7 +10665,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/east,
 /area/station/crew_quarters/data)
 "eIv" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 9;
 	layer = 3.1
 	},
@@ -10969,7 +10969,7 @@
 /area/station/engine/inner)
 "eSN" = (
 /obj/machinery/light/small/harsh/very,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -11673,7 +11673,7 @@
 	name = "Corpse Tunnel"
 	})
 "fid" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 10
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -12432,7 +12432,7 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/storage/tech)
 "fBu" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/cable{
@@ -14803,7 +14803,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bathroom)
 "gHu" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /turf/simulated/floor/engine{
@@ -14821,7 +14821,7 @@
 /area/station/medical/robotics)
 "gHG" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -17114,7 +17114,7 @@
 	},
 /area/station/medical/medbay)
 "hIS" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -17819,7 +17819,7 @@
 "ibx" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/reagent_containers/food/drinks/water,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 5
 	},
 /turf/simulated/floor/engine,
@@ -18587,7 +18587,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "ivj" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -18790,7 +18790,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/medbay)
 "izE" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -18824,7 +18824,7 @@
 /area/station/science/storage)
 "iAd" = (
 /obj/item/chair/folded,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -21868,7 +21868,7 @@
 /area/station/ranch)
 "jLX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 5
 	},
 /obj/cable{
@@ -23080,7 +23080,7 @@
 /area/station/janitor/office)
 "kpH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -25019,7 +25019,7 @@
 	name = "Cargo Hallway"
 	})
 "lko" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 6
 	},
 /turf/simulated/floor/engine{
@@ -25045,7 +25045,7 @@
 /area/station/medical/robotics)
 "lkY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 9
 	},
 /obj/cable{
@@ -25395,7 +25395,7 @@
 /area/station/ai_monitored/storage/eva)
 "ltP" = (
 /obj/machinery/vending/monkey/research,
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/unsimulated/floor/stairs/dark{
 	dir = 1
 	},
@@ -26089,7 +26089,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 9
 	},
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 5;
 	layer = 3.1
 	},
@@ -26890,7 +26890,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
 "mbl" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/cable{
@@ -27905,7 +27905,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/engine/engineering/ce)
 "mAq" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 9
 	},
 /turf/simulated/floor,
@@ -28523,7 +28523,7 @@
 /turf/space,
 /area/station/hallway/secondary/construction)
 "mOo" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	layer = 3.1
 	},
 /obj/machinery/light/small/floor,
@@ -29440,7 +29440,7 @@
 /area/station/ai_monitored/armory)
 "nmq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/cable{
@@ -29862,7 +29862,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "nvo" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/disposalpipe/segment/mail/horizontal,
@@ -30942,7 +30942,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "nSu" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/courtroom)
@@ -31250,7 +31250,7 @@
 /area/station/storage/warehouse)
 "nYy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/cable{
@@ -31429,7 +31429,7 @@
 	},
 /area/station/bridge)
 "obJ" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple{
@@ -32984,7 +32984,7 @@
 /area/station/engine/power)
 "oOi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/cable{
@@ -33369,7 +33369,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "oVk" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
@@ -33680,7 +33680,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -35877,7 +35877,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "qiA" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 5
 	},
 /turf/simulated/floor/circuit,
@@ -35987,7 +35987,7 @@
 	},
 /area/station/medical/medbay)
 "qkm" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -36665,7 +36665,7 @@
 /turf/simulated/floor/stairs,
 /area/station/turret_protected/ai)
 "qyV" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
@@ -37371,7 +37371,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "qRE" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 5;
 	layer = 3.1
 	},
@@ -37423,7 +37423,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 9
 	},
 /turf/simulated/floor/shuttlebay{
@@ -38082,7 +38082,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "rlB" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
 "rlY" = (
@@ -39193,7 +39193,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	layer = 3.1
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -41627,7 +41627,7 @@
 /area/ghostdrone_factory)
 "sVf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 9;
 	layer = 3.1
 	},
@@ -42042,7 +42042,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Monkeydome"
 	},
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/mapping_helper/access/medlab,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -42890,7 +42890,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/engine/storage)
 "txe" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -42924,7 +42924,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "tyg" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 9;
 	layer = 3.1
 	},
@@ -43441,7 +43441,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "tJA" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	layer = 3.1
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -43838,7 +43838,7 @@
 	},
 /area/shuttle/arrival/station)
 "tUq" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -44315,7 +44315,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/checkpoint/sec_foyer)
 "uie" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "5-10"
@@ -45414,7 +45414,7 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "uHq" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/cable{
@@ -45968,7 +45968,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "uUA" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/stairs/wide{
 	dir = 1
@@ -47142,7 +47142,7 @@
 /turf/simulated/floor/carpet/green/standard/edge/south,
 /area/station/crew_quarters/bar)
 "vvA" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -47278,7 +47278,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/data)
 "vyB" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/cable{
@@ -47529,7 +47529,7 @@
 	},
 /area/station/medical/medbay)
 "vDZ" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 9
 	},
 /turf/simulated/floor/circuit,
@@ -48502,7 +48502,7 @@
 /turf/simulated/floor/stairs/wood,
 /area/station/maintenance/east)
 "wbX" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -48514,7 +48514,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/decal/boxingropeenter{
@@ -48625,7 +48624,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
 "wdM" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 1
 	},
@@ -48929,7 +48928,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "wkk" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/machinery/light/small/harsh/very{
@@ -48996,7 +48995,7 @@
 	})
 "wlC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 5;
 	layer = 3.1
 	},
@@ -49324,7 +49323,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "wtk" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/captain)
 "wtp" = (
@@ -51708,7 +51707,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "xwx" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 5;
 	layer = 3.1
 	},
@@ -51790,7 +51789,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "xxZ" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 1
@@ -52201,7 +52200,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "xFA" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /turf/simulated/floor/engine{
@@ -52232,7 +52231,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "xGd" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -52392,7 +52391,7 @@
 /area/station/catwalk/south)
 "xLn" = (
 /obj/machinery/light/small/harsh/very,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -52593,7 +52592,7 @@
 /turf/simulated/floor/grey,
 /area/station/science/research_director)
 "xRU" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -52908,7 +52907,7 @@
 /area/station/crew_quarters/quarters_south)
 "xYd" = (
 /obj/machinery/light/incandescent,
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},

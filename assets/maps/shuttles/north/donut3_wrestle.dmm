@@ -159,7 +159,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "ds" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -321,7 +321,7 @@
 /turf/unsimulated/floor/grey,
 /area/shuttle/escape/centcom)
 "hz" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/window/reinforced/west,
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
@@ -632,7 +632,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "qp" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/window/reinforced/east,
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
@@ -1002,7 +1002,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Jt" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,

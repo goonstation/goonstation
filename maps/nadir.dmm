@@ -10063,7 +10063,7 @@
 	name = "Science Lounge"
 	})
 "eEE" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -27938,7 +27938,7 @@
 /area/station/chapel/sanctuary)
 "mfQ" = (
 /obj/stool,
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -32121,7 +32121,7 @@
 	name = "Extraction Nexus"
 	})
 "nUF" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
@@ -38841,7 +38841,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "reB" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -43519,7 +43519,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "tnh" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},

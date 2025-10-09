@@ -14879,7 +14879,7 @@
 	},
 /area/station/ai_monitored/armory)
 "fEU" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{

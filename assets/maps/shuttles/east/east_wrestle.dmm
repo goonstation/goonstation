@@ -1224,7 +1224,7 @@
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
 "Pl" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/unsimulated/floor/stairs{
 	dir = 1
 	},
@@ -1330,7 +1330,7 @@
 	},
 /area/centcom/outside)
 "Uq" = (
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
 "Uw" = (

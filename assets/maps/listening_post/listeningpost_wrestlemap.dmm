@@ -236,7 +236,7 @@
 /turf/simulated/floor/caution/north,
 /area/listeningpost/general)
 "ls" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 9
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -335,7 +335,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 10
 	},
 /turf/simulated/floor/engine{
@@ -664,7 +664,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/railing/wrestling,
+/obj/railing/boxing,
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
@@ -777,7 +777,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Xo" = (
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 5
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -804,7 +804,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/obj/railing/wrestling{
+/obj/railing/boxing{
 	dir = 6
 	},
 /turf/simulated/floor/engine{

@@ -193,7 +193,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	blood_type = null
 	anchored = ANCHORED
 
-/obj/decal/boxingrope
+/obj/decal/boxingrope // for functional ropes see below and /obj/railing/boxingrope
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
 	density = 1
@@ -276,7 +276,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 			. = 1
 		UNCROSS_BUMP_CHECK(O)
 
-/obj/railing/wrestling
+/obj/railing/boxing
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
 	icon = 'icons/obj/decoration.dmi'
