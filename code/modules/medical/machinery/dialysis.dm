@@ -1,18 +1,23 @@
+#define DIALYSIS_PT_EMPTY "patient_empty"
+
+// MUST BE IDENTICAL TO ICONSTATE NAMES IN 'icons/obj/machines/medical/dialysis.dmi'.
+#define DIALYSIS_TUBING_BAD "tubing-bad"
+#define DIALYSIS_TUBING_GOOD "tubing-good"
+
 TYPEINFO(/obj/machinery/medical/dialysis)
 	mats = list("metal" = 20,
 				"crystal" = 5,
 				"conductive_high" = 5)
 
+/**
+ * # Dialysis Machine
+ */
 /obj/machinery/medical/dialysis
 	name = "dialysis machine"
 	desc = "A machine which continuously draws blood from a patient, removes excess chemicals from it, and re-infuses it into the patient."
 	icon = 'icons/obj/machines/medical/dialysis.dmi'
 	density = 1
-#ifdef IN_MAP_EDITOR
-	icon_state = "dialysis-map"
-#else
-	icon_state = "dialysis-base"
-#endif
+	icon_state = "dialysis"
 	power_consumption = 1.5 KILO WATTS
 
 	/*
@@ -35,9 +40,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	remove_forceful_msg_patient = "<b>$SRC's cannulae get $FLF out of your arm!</b>"
 
 	/// In units per process tick.
-	var/draw_amount = 16
-	/// Colour is used for fluid image overlay.
-	var/output_blood_colour = null
+	var/transfer_rate = 16
 	/// Reagent ID of the current patient's blood.
 	var/patient_blood_id = null
 
@@ -49,97 +52,138 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 
 /obj/machinery/medical/dialysis/New()
 	..()
-	src.create_reagents(src.draw_amount)
+	src.create_reagents(src.transfer_rate)
 	src.UpdateIcon()
-
-/obj/machinery/medical/dialysis/disposing()
-	if (src.patient)
-		src.remove_patient()
-	..()
 
 /obj/machinery/medical/dialysis/emag_act(mob/user, obj/item/card/emag/E)
 	..()
 	src.say("Dialysis protocols inversed.")
 
+/obj/machinery/medical/dialysis/start_affect()
+	. = ..()
+	APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 3)
+
+/obj/machinery/medical/dialysis/start_feedback()
+	. = ..()
+	src.say("Dialysing patient.")
+
 /obj/machinery/medical/dialysis/affect_patient(mult)
 	..()
-
-	if (!src.patient.blood_volume)
-		src.say("No blood pressure detected.")
-		src.remove_patient()
+	if (!src.get_patient_fluid_volume())
+		src.stop_affect()
 		return
 
-	transfer_blood(src.patient, src, (src.draw_amount * max(mult / 10, 1)))
+	// Don't inject anything back in if there's nothing in our internal reagent container.
+	if (!src.reagents.total_volume)
+		src.UpdateIcon()
+		src.handle_draw(mult)
+		return
 
 	// Re-implemented here due to all the got dang boutputs.
 	var/list/whitelist_buffer = chem_whitelist + src.patient_blood_id
 	for (var/reagent_id in src.reagents.reagent_list)
-		if ((!src.hacked && !(reagent_id in whitelist_buffer)) || (src.hacked && (reagent_id in whitelist_buffer)))
-			src.reagents.del_reagent(reagent_id)
-
-	src.output_blood_colour = src.reagents.total_volume ? src.reagents.get_average_color().to_rgba() : null
+		if (src.hacked && !(reagent_id in whitelist_buffer))
+			continue
+		if (!src.hacked && (reagent_id in whitelist_buffer))
+			continue
+		src.reagents.del_reagent(reagent_id)
 
 	// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
 	// The blood that's not actually in the bloodstream yet, know what I mean?
-	var/datum/reagent/patient_blood_reagent = src.patient.reagents.reagent_list["blood"]
-	var/patient_blood_reagent_volume = patient_blood_reagent?.volume || 0
-	var/patient_blood = src.patient.blood_volume + patient_blood_reagent_volume
+	var/patient_blood = src.get_patient_blood_volume()
 	var/patient_blood_max = initial(src.patient.blood_volume)
 	if (patient_blood > patient_blood_max)
 		src.reagents.remove_reagent("blood", (patient_blood - patient_blood_max))
-
-	var/amount_to_draw = min(src.draw_amount, (src.patient.reagents.maximum_volume - src.patient.reagents.total_volume)) * max(mult / 10, 1)
-	src.reagents.trans_to(src.patient, amount_to_draw)
-	src.patient.reagents.reaction(src.patient, INGEST, amount_to_draw)
-	src.reagents.clear_reagents()
 	src.UpdateIcon()
+	src.handle_infusion(src.reagents.total_volume, mult)
+	src.reagents.clear_reagents()
+	src.handle_draw(mult)
+
+/obj/machinery/medical/dialysis/stop_affect(reason = MED_MACHINE_FAILURE)
+	. = ..()
+	REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
+	src.UpdateIcon()
+	if (src.is_broken())
+		return
+	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given)
+		src.say("Unable to draw power, stopping dialysis.")
+		src.low_power_alert_given = TRUE
+		return
+	src.say("Stopped dialysing patient.")
+
+/// Returns total patient blood volume in units.
+/obj/machinery/medical/dialysis/proc/get_patient_blood_volume()
+	. = 0
+	if (iscarbon(src.patient))
+		return
+	var/datum/reagent/patient_blood_reagent = src.patient.reagents.reagent_list["blood"]
+	var/patient_blood_reagent_volume = patient_blood_reagent?.volume || 0
+	. = src.patient.blood_volume + patient_blood_reagent_volume
+
+/// Returns total patient fluid volume (blood + all reagents) in units.
+/obj/machinery/medical/dialysis/proc/get_patient_fluid_volume()
+	. = 0
+	if (iscarbon(src.patient))
+		return
+	. = src.patient.blood_volume + src.patient.reagents.total_volume
+
+/obj/machinery/medical/dialysis/proc/handle_infusion(volume, mult)
+	if (!src.patient)
+		return
+	src.update_tubing(DIALYSIS_TUBING_GOOD)
+	src.reagents.trans_to(src.patient, src.calculate_transfer_volume(volume, mult))
+	src.patient.reagents.reaction(src.patient, INGEST, src.calculate_transfer_volume(volume, mult))
+
+/obj/machinery/medical/dialysis/proc/handle_draw(mult)
+	if (!src.patient)
+		return
+	transfer_blood(src.patient, src, src.calculate_transfer_volume(src.transfer_rate, mult))
+	src.update_tubing(DIALYSIS_TUBING_BAD)
+
+/obj/machinery/medical/dialysis/proc/calculate_transfer_volume(volume, mult)
+	. = volume * max(mult / 10, 1)
 
 /obj/machinery/medical/dialysis/update_icon(...)
 	..()
-	if (src.patient)
-		src.UpdateOverlays(image(src.icon, "pump-on"), "pump")
-		src.UpdateOverlays(image(src.icon, "screen-on"), "screen")
-		src.UpdateOverlays(image(src.icon, "cannulae"), "tubing")
+	var/inoperative = FALSE
+	if (!src.patient)
+		inoperative = TRUE
+		src.ClearSpecificOverlays(DIALYSIS_TUBING_GOOD, DIALYSIS_TUBING_BAD)
+	if (!src.active)
+		inoperative = TRUE
+	if (inoperative)
+		src.ClearSpecificOverlays("pump", "screen")
+		return
+	src.UpdateOverlays(image(src.icon, "pump"), "pump")
+	src.UpdateOverlays(image(src.icon, "screen"), "screen")
 
-		var/image/blood_out = image(src.icon, "tubing-good[src.output_blood_colour ? "" : "-empty"]")
-		if (src.output_blood_colour)
-			blood_out.color = src.output_blood_colour
-		src.UpdateOverlays(blood_out, "blood_out")
-
-		var/image/blood_in = image(src.icon, "tubing-bad[(src.patient.blood_volume || src.patient.reagents.total_volume) ? "" : "-empty"]")
-		if (src.patient.reagents.total_volume)
-			blood_in.color = src.patient.reagents.get_average_color().to_rgba()
-		else
-			blood_in.color = src.patient.blood_color
-		src.UpdateOverlays(blood_in, "blood_in")
-	else
-		src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
-		src.UpdateOverlays(image(src.icon, "screen-off"), "screen")
-		src.UpdateOverlays(image(src.icon, "tubing"), "tubing")
-		src.ClearSpecificOverlays("blood_out")
-		src.ClearSpecificOverlays("blood_in")
+/obj/machinery/medical/dialysis/proc/update_tubing(tube = DIALYSIS_TUBING_BAD)
+	var/image/tubing_image = image(src.icon, tube)
+	if (src.reagents.total_volume)
+		tubing_image.color = src.reagents.get_average_color().to_rgba()
+	src.UpdateOverlays(tubing_image, tube)
 
 /obj/machinery/medical/dialysis/add_patient(mob/living/carbon/new_patient, mob/user)
 	..()
 	src.patient.setStatus("dialysis", INFINITE_STATUS, src)
 	src.patient_blood_id = src.patient.blood_id
-	APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 3)
 	src.UpdateIcon()
 
 /obj/machinery/medical/dialysis/remove_patient(mob/user, forceful)
-	var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src) //get our particular status effect
+	var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src)
 	if (length(statuses))
 		src.patient.delStatus(statuses[1])
-	REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 	src.patient_blood_id = null
-	src.output_blood_colour = null
 	..()
 	src.UpdateIcon()
+
+#undef DIALYSIS_TUBING_BAD
+#undef DIALYSIS_TUBING_GOOD
 
 /datum/statusEffect/dialysis
 	id = "dialysis"
 	name = "Dialysis"
-	desc = "Your blood is being filtered by a dyalysis machine."
+	desc = "Your blood is being filtered by a dialysis machine."
 	icon_state = "dialysis"
 	unique = FALSE
 	effect_quality = STATUS_QUALITY_POSITIVE
