@@ -13,6 +13,5 @@
 #define IV_INJECT 1
 
 // Medical machinery
-// IV stands
-#define IV_STAND_STOP "iv_stop"
-#define IV_STAND_START "iv_start"
+#define MED_MACHINE_NO_POWER "med_machine_no_power"
+#define MED_MACHINE_FAILURE "med_machine_failure"

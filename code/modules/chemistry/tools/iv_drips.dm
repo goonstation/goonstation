@@ -140,7 +140,7 @@
 	if (src.mode == IV_INJECT)
 		src.handle_inject(mult)
 		return
-			src.handle_draw(mult)
+	src.handle_draw(mult)
 
 /obj/item/reagent_containers/iv_drip/proc/handle_draw(mult)
 	var/transfer_rate = src.calculate_transfer_rate()
@@ -239,21 +239,21 @@
 	src.active = TRUE
 	src.handle_processing()
 	APPLY_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 2)
-	if (!src.iv_stand)
+	if (src.iv_stand?.active)
 		return
-	src.iv_stand.feedback(IV_STAND_START)
+	src.iv_stand.start_feedback()
 
 /obj/item/reagent_containers/iv_drip/proc/stop_transfusion()
 	src.active = FALSE
 	src.handle_processing()
 	REMOVE_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
-	if (!src.iv_stand)
+	if (!src.iv_stand?.active)
 		return
-	src.iv_stand.feedback(IV_STAND_STOP)
+	src.iv_stand.stop_affect()
 
 /// When attached to an IV stand, we'll leech off of the machine process loop instead of `global.processing_items`.
 /obj/item/reagent_containers/iv_drip/proc/handle_processing()
-	if (src.iv_stand || !src.patient)
+	if (!src.patient || src.iv_stand?.active)
 		global.processing_items -= src
 		return
 	global.processing_items |= src
@@ -278,24 +278,21 @@
 	. = FALSE
 
 /obj/item/reagent_containers/iv_drip/proc/can_transfuse()
-	. = TRUE
+	. = FALSE
 	if (!iscarbon(src.patient))
-		return FALSE
+		return
 	if (!src.check_interact_range())
-		return FALSE
+		return
 	var/failure_feedback = src.check_iv_fail()
 	if (!failure_feedback)
-		return
+		return TRUE
+	src.stop_transfusion()
 	switch (failure_feedback)
 		// Draw failure
 		if (IV_FAIL_BAG_FULL)
 			src.patient.visible_message(\
 				SPAN_NOTICE("[src] fills up and stops drawing blood from [src.patient]."),\
 				SPAN_NOTICE("[src] fills up and stops drawing blood from you."))
-		if (IV_FAIL_PT_VAMP)
-			src.patient.visible_message(\
-				SPAN_ALERT("[src] can't seem to draw anything more out of [src.patient]!"),\
-				SPAN_ALERT("Your veins feel utterly empty!"))
 		if (IV_FAIL_PT_EMPTY)
 			src.patient.visible_message(\
 				SPAN_ALERT("[src] can't seem to draw anything more out of [src.patient]!"),\
@@ -307,8 +304,6 @@
 				SPAN_NOTICE("Your transfusion finishes."))
 		if (IV_FAIL_BAG_EMPTY)
 			src.patient.visible_message(SPAN_ALERT("[src] runs out of fluid!"))
-	src.stop_transfusion()
-	return FALSE
 
 /obj/item/reagent_containers/iv_drip/proc/check_iv_fail(mob/living/carbon/patient_to_check)
 	. = null

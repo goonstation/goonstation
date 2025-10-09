@@ -131,12 +131,9 @@
 	src.iv_drip.attempt_add_patient(user, new_patient)
 
 /obj/machinery/medical/iv_stand/add_patient(mob/living/carbon/new_patient, mob/user)
-	if (src.patient)
-		return
 	if (!src.iv_drip.patient)
 		return
-	src.patient = src.iv_drip.patient
-	src.SubscribeToProcess()
+	. = ..()
 	src.UpdateIcon()
 
 /obj/machinery/medical/iv_stand/remove_patient(mob/user, forceful)
@@ -145,7 +142,23 @@
 	src.UpdateIcon()
 
 /obj/machinery/medical/iv_stand/affect_patient(mult)
+	. = ..()
 	src.iv_drip.process(mult)
+
+/obj/machinery/medical/iv_stand/start_feedback()
+	. = ..()
+	src.say("Started [src.iv_drip.mode == IV_INJECT ? "infusion" : "drawing"] at [src.transfer_rate]u per tick.")
+
+/obj/machinery/medical/iv_stand/stop_affect(reason = MED_MACHINE_FAILURE)
+	. = ..()
+	if (src.is_broken())
+		return
+	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given)
+		src.say("IV pump without power. Check bag.")
+		return
+	if (reason == MED_MACHINE_FAILURE)
+		src.say("Stopped [src.iv_drip.mode == IV_INJECT ? "infusion" : "drawing"].")
+		return
 
 /obj/machinery/medical/iv_stand/deconstruct()
 	if (src.iv_drip)
@@ -186,15 +199,6 @@
 		old_IV.set_loc(new_loc)
 	old_IV.iv_stand = null
 	old_IV.handle_processing()
-
-/obj/machinery/medical/iv_stand/proc/feedback(feedback)
-	var/output = ""
-	switch (feedback)
-		if (IV_STAND_STOP)
-			output = "Stopped [src.iv_drip.mode == IV_INJECT ? "infusion" : "drawing"]."
-		if (IV_STAND_START)
-			output = "Started [src.iv_drip.mode == IV_INJECT ? "infusion" : "drawing"] at [src.transfer_rate]u per tick."
-	src.say(output)
 
 /obj/item/furniture_parts/IVstand
 	name = "\improper IV stand parts"

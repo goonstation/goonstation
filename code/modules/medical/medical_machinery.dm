@@ -28,6 +28,10 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 	/// Power consumption is constant if a patient is connected to the machine. In Watts.
 	var/power_consumption = 250 MILLI WATTS
+	/// Fire off single feedback message after losing power.
+	var/low_power_alert_given = FALSE
+	/// Is this device currently affecting a patient?
+	var/active = FALSE
 	/// For EMAG effects.
 	var/hacked = FALSE
 
@@ -85,10 +89,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		text = replacetext(text, "$TRG", "[user == target ? (self_referential ? "you" : himself_or_herself(user)) : target]")
 	text = replacetext(text, "$SRC", "[src]")
 	. = text
-
-/obj/machinery/medical/New()
-	. = ..()
-	src.UnsubscribeProcess()
 
 /obj/machinery/medical/disposing()
 	src.remove_patient()
@@ -159,9 +159,11 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!src.connect_directly)
 		src.affect_patient(mult)
 		return
-	if (src.is_broken() || src.has_no_power())
-		return
 	src.check_remove_conditions()
+	if (src.is_disabled())
+		return
+	if (!src.active)
+		return
 	src.affect_patient(mult)
 
 /obj/machinery/medical/emag_act(mob/user, obj/item/card/emag/E)
@@ -171,6 +173,18 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	logTheThing(LOG_ADMIN, user, "emagged [src] at [log_loc(user)].")
 	logTheThing(LOG_DIARY, user, "emagged [src] at [log_loc(user)].", "admin")
 	message_admins("[key_name(usr)] emagged [src] at [log_loc(user)].")
+
+/obj/machinery/medical/power_change()
+	. = ..()
+	if (!src.powered())
+		src.stop_affect(MED_MACHINE_NO_POWER)
+		return
+	if (!src.active && src.patient)
+		src.affect_patient()
+
+/obj/machinery/medical/set_broken()
+	src.stop_affect()
+	. = ..()
 
 /// See `_std/defines/medical.dm`
 /obj/machinery/medical/proc/check_remove_conditions()
@@ -184,8 +198,21 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		src.remove_patient(forceful = TRUE)
 		return
 
-/// Override this proc on child types.
+/obj/machinery/medical/proc/start_affect()
+	if (src.is_disabled())
+		return
+	src.active = TRUE
+	src.start_feedback()
+
 /obj/machinery/medical/proc/affect_patient(mult)
+	if (!src.active)
+		return
+
+/obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
+	src.active = FALSE
+
+/// Override on children. Usecase includes any feedback the machine should provide about the affect it currently has on the patient.
+/obj/machinery/medical/proc/start_feedback()
 	return
 
 /obj/machinery/medical/proc/attempt_add_patient(mob/user, mob/living/carbon/new_patient)
@@ -206,13 +233,14 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!iscarbon(new_patient))
 		return
+	src.patient = new_patient
+	src.power_usage = src.power_consumption
+	src.start_feedback()
 	if (ismob(user))
 		src.add_message(user, new_patient)
 		logTheThing(LOG_COMBAT, user, "connected [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
-	src.patient = new_patient
-	src.power_usage = src.power_consumption
-	src.SubscribeToProcess()
-	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_moved))
+	if (!src.connect_directly)
+		RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_moved))
 
 /obj/machinery/medical/proc/on_patient_moved()
 	if (in_interact_range(src, src.patient))
@@ -234,9 +262,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
 	if (forceful && !user)
 		src.force_remove_feedback()
+	src.stop_affect()
 	src.patient = null
 	src.power_usage = 0
-	src.UnsubscribeProcess()
 
 /obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
