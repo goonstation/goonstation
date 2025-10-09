@@ -180,7 +180,6 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	if (length(statuses))
 		src.patient.delStatus(statuses[1])
 	src.patient_blood_id = null
-
 	..()
 	src.UpdateIcon()
 
