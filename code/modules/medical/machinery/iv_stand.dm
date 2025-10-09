@@ -40,7 +40,7 @@
 /obj/machinery/medical/iv_stand/update_icon()
 	if (!src.iv_drip)
 		src.ClearSpecificOverlays("fluid", "bag", "lights")
-		src.UpdateOverlaysimage(src.icon, icon_state = "IV_pump-lid"), "lid"
+		src.UpdateOverlays(image(src.icon, icon_state = "IV_pump-lid"), "lid")
 		return
 	src.handle_iv_bag_image()
 	src.ClearSpecificOverlays("lid")
