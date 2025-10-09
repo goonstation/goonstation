@@ -89,18 +89,10 @@
 	if (!src.iv_drip)
 		. = ..()
 		return
-	if (iscarbon(over_object))
-		if (src.patient == over_object)
-			src.iv_drip.remove_patient(user)
-		else
-			var/mob/living/carbon/new_patient = over_object
-			src.iv_drip.attempt_add_patient(new_patient, user)
+	if (isturf(over_object))
+		var/turf/over_turf = over_object
+		src.remove_iv_drip(user, over_turf)
 		return
-	if (!isturf(over_object))
-		. = ..()
-		return
-	var/turf/over_turf = over_object
-	src.remove_iv_drip(user, over_turf)
 	. = ..()
 
 /obj/machinery/medical/iv_stand/attackby(obj/item/W, mob/user)
@@ -138,6 +130,7 @@
 	src.UpdateIcon()
 
 /obj/machinery/medical/iv_stand/remove_patient(mob/user, force)
+	src.iv_drip?.remove_patient(user)
 	src.patient = null
 	src.UnsubscribeProcess()
 	src.UpdateIcon()
