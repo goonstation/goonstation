@@ -94,7 +94,6 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	src.reagents.clear_reagents()
 	src.UpdateIcon()
 
-
 /obj/machinery/medical/dialysis/update_icon(...)
 	..()
 	if (src.patient)
