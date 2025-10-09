@@ -137,30 +137,25 @@
 /obj/item/reagent_containers/iv_drip/process(mult = 1)
 	if (!src.can_transfuse())
 		return
-	switch (src.mode)
-		if (IV_DRAW)
+	if (src.mode == IV_INJECT)
+		src.handle_inject(mult)
+		return
 			src.handle_draw(mult)
-		if (IV_INJECT)
-			src.handle_inject(mult)
 
 /obj/item/reagent_containers/iv_drip/proc/handle_draw(mult)
-	var/transfer_rate = \
-		src.iv_stand ? \
-			(!src.iv_stand.is_disabled() ? \
-			src.iv_stand.transfer_rate : \
-			src.amount_per_transfer_from_this) \
-		: src.amount_per_transfer_from_this
-	transfer_blood(src.patient, src, (transfer_rate * max(mult / 10, 1)))
+	var/transfer_rate = src.calculate_transfer_rate()
+	transfer_blood(src.patient, src, transfer_rate)
 
 /obj/item/reagent_containers/iv_drip/proc/handle_inject(mult)
-	var/transfer_rate = \
-		src.iv_stand ? \
-			(!src.iv_stand.is_disabled() ? \
-			src.iv_stand.transfer_rate : \
-			src.amount_per_transfer_from_this) \
-		: src.amount_per_transfer_from_this
-	src.reagents.trans_to(src.patient, (transfer_rate * max(mult / 10, 1)))
-	src.patient.reagents.reaction(src.patient, INGEST, (transfer_rate * max(mult / 10, 1)))
+	var/transfer_rate = src.calculate_transfer_rate()
+	src.reagents.trans_to(src.patient, transfer_rate)
+	src.patient.reagents.reaction(src.patient, INGEST, transfer_rate)
+
+/obj/item/reagent_containers/iv_drip/proc/calculate_transfer_rate(mult)
+	. = src.amount_per_transfer_from_this
+	if (src.iv_stand && !src.iv_stand.is_disabled())
+		. = src.iv_stand.transfer_rate
+	. *= max(mult / 10, 1)
 
 /obj/item/reagent_containers/iv_drip/proc/update_name()
 	if (src.reagents?.total_volume)
