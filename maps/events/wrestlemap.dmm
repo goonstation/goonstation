@@ -132,7 +132,7 @@
 "aaB" = (
 /obj/machinery/light/small/floor,
 /obj/item/reagent_containers/food/drinks/water,
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -1351,7 +1351,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -2058,13 +2058,13 @@
 /area/station/medical/medbay)
 "aPW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/boxing{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/decal/boxingrope{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/turret_protected/ai)
 "aQi" = (
@@ -4854,6 +4854,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/maintenance/solar/west)
+"cek" = (
+/obj/decal/boxingrope,
+/turf/unsimulated/floor/specialroom/gym,
+/area/station/crew_quarters/quarters{
+	name = "The Ring"
+	})
 "cel" = (
 /obj/stool/chair/moveable{
 	dir = 1
@@ -5075,7 +5081,7 @@
 	dir = 4;
 	pixel_x = -21
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -8806,7 +8812,7 @@
 /area/station/crew_quarters/quarters_south)
 "dSE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "dSY" = (
@@ -8981,7 +8987,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -10181,7 +10187,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
 "exs" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -11890,7 +11896,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -12443,7 +12449,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/light/incandescent,
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -14614,7 +14620,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "gCc" = (
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/medbay/treatment1)
 "gCe" = (
@@ -14745,6 +14751,12 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hallway/primary/south)
+"gFz" = (
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/captain)
 "gFA" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -14836,7 +14848,7 @@
 /area/station/medical/robotics)
 "gHG" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -17129,7 +17141,7 @@
 	},
 /area/station/medical/medbay)
 "hIS" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -18791,7 +18803,7 @@
 /obj/stool/chair/blue{
 	dir = 4
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -20009,7 +20021,7 @@
 	dir = 4;
 	level = 2
 	},
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -20346,7 +20358,7 @@
 /area/station/crew_quarters/quarters_south)
 "jdY" = (
 /obj/machinery/light/small/floor,
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -22587,7 +22599,7 @@
 "ken" = (
 /obj/machinery/light/small/floor,
 /obj/item/clothing/gloves/boxing,
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -22620,7 +22632,7 @@
 /area/station/hallway/secondary/exit)
 "kfR" = (
 /obj/machinery/vending/monkey/genetics,
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -22965,7 +22977,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
 "kmh" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -25176,7 +25188,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -26224,7 +26236,7 @@
 /area/station/storage/warehouse)
 "lLS" = (
 /obj/machinery/light/small/floor,
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -28018,9 +28030,6 @@
 	dir = 4
 	},
 /obj/railing/reinforced{
-	invisibility = 1
-	},
-/obj/railing/reinforced{
 	bound_height = 0;
 	bound_width = 0;
 	density = 0;
@@ -29429,14 +29438,14 @@
 /area/station/ai_monitored/armory)
 "nmq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/boxing{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/decal/boxingrope{
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/turret_protected/ai)
@@ -30772,6 +30781,10 @@
 "nPU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
+"nQj" = (
+/obj/decal/boxingrope,
+/turf/simulated/floor/specialroom/gym,
+/area/station/medical/medbay)
 "nQr" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -31198,7 +31211,7 @@
 	icon_state = "5-8"
 	},
 /obj/stool/chair/moveable,
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -31240,14 +31253,14 @@
 /area/station/storage/warehouse)
 "nYy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/boxing{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/decal/boxingrope{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/turret_protected/ai)
@@ -32285,7 +32298,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -34214,7 +34227,7 @@
 /obj/cable{
 	icon_state = "8-9"
 	},
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -34346,7 +34359,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -35642,7 +35655,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -36906,7 +36919,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -37055,7 +37068,7 @@
 	name = "Boardroom"
 	})
 "qIB" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -37605,7 +37618,7 @@
 /area/station/maintenance/disposal)
 "qXF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -37751,7 +37764,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "rbN" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -38096,7 +38109,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "rlB" = (
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
 "rlY" = (
@@ -39199,23 +39212,6 @@
 	},
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
-"rMg" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/railing/boxing{
-	layer = 3.1
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "rMA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -41781,7 +41777,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crewquarters/cryotron)
 "sXU" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -42268,7 +42264,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "tfU" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -43850,7 +43846,7 @@
 	},
 /area/shuttle/arrival/station)
 "tUq" = (
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -45167,7 +45163,7 @@
 /area/station/engine/monitoring)
 "uCu" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -45519,7 +45515,7 @@
 	dir = 6;
 	level = 2
 	},
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -46485,7 +46481,7 @@
 	layer = 9.1;
 	pixel_y = 22
 	},
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -46651,9 +46647,6 @@
 /turf/simulated/floor/caution/west,
 /area/station/ai_monitored/storage/eva)
 "vmq" = (
-/obj/railing/reinforced{
-	invisibility = 1
-	},
 /obj/railing/reinforced{
 	bound_height = 0;
 	bound_width = 0;
@@ -47285,13 +47278,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/data)
 "vyB" = (
-/obj/railing/boxing{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/machinery/light/incandescent,
+/obj/decal/boxingrope{
+	dir = 4
+	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -48516,7 +48509,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -48588,7 +48581,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "wdb" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -48722,7 +48715,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -48931,7 +48924,7 @@
 /obj/item/device/radio/intercom/brig{
 	pixel_x = 26
 	},
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -49323,7 +49316,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "wtk" = (
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/captain)
 "wtp" = (
@@ -49654,7 +49647,7 @@
 /area/station/science/lab)
 "wDc" = (
 /obj/machinery/firealarm/directional/west,
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -52028,7 +52021,7 @@
 	dir = 4;
 	level = 2
 	},
-/obj/railing/boxing,
+/obj/decal/boxingrope,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -52647,7 +52640,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "xTk" = (
-/obj/railing/boxing{
+/obj/decal/boxingrope{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -85661,7 +85654,7 @@ aHY
 aHY
 aHY
 aHY
-rOo
+nQj
 jUF
 esZ
 tIX
@@ -86869,7 +86862,7 @@ aHY
 aHY
 aHY
 aHY
-rOo
+nQj
 uuy
 irp
 gSu
@@ -89953,7 +89946,7 @@ qHS
 aQS
 eRV
 oRl
-rMg
+qFK
 psv
 psv
 psv
@@ -90255,7 +90248,7 @@ qHS
 aQS
 eSI
 jzZ
-rMg
+qFK
 psv
 psv
 psv
@@ -90557,7 +90550,7 @@ pPQ
 aQS
 ppm
 jmw
-rMg
+qFK
 psv
 psv
 psv
@@ -90859,7 +90852,7 @@ pPQ
 aQS
 ppm
 jEM
-rMg
+qFK
 qwn
 qGS
 qGS
@@ -102890,7 +102883,7 @@ yjD
 dxR
 aml
 dxR
-fvF
+cek
 fRg
 lLn
 eLk
@@ -103192,7 +103185,7 @@ fZB
 xnh
 gwc
 dxR
-fvF
+cek
 oRp
 tPU
 ybY
@@ -103494,7 +103487,7 @@ aaA
 fzh
 odY
 dxR
-fvF
+cek
 fRg
 qps
 mOQ
@@ -103796,7 +103789,7 @@ jae
 dxR
 orF
 dxR
-fvF
+cek
 fRg
 dPO
 xrq
@@ -108053,7 +108046,7 @@ gDZ
 jyC
 hMS
 mAq
-xGd
+gFz
 xGd
 ecC
 wtM

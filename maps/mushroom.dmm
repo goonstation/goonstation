@@ -5689,9 +5689,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "boD" = (
-/obj/decal/boxingrope{
-	dir = 4;
-	tag = "icon-ringrope (EAST)"
+/obj/railing/boxing{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -6850,6 +6849,12 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"bHL" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "bIc" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -8141,8 +8146,8 @@
 	},
 /area/station/engine/engineering)
 "cuy" = (
-/obj/decal/boxingrope,
 /obj/machinery/light/incandescent,
+/obj/railing/boxing,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "cuF" = (
@@ -8613,9 +8618,8 @@
 /area/station/engine/proto)
 "cKS" = (
 /obj/stool,
-/obj/decal/boxingropeenter{
-	dir = 8;
-	tag = "icon-ringrope (WEST)"
+/obj/railing/boxing{
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -9112,9 +9116,8 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "dgP" = (
-/obj/decal/boxingrope{
-	dir = 9;
-	tag = "icon-ringrope (NORTHWEST)"
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -22692,9 +22695,8 @@
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "ndU" = (
-/obj/decal/boxingrope{
-	dir = 5;
-	tag = "icon-ringrope (NORTHEAST)"
+/obj/stool/chair/boxingrope_corner{
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -29141,7 +29143,7 @@
 /area/station/engine/proto)
 "rac" = (
 /obj/table/reinforced,
-/obj/item/item_box/medical_patches/styptic,
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor{
 	icon_state = "0,6";
 	tag = "icon-0,6"
@@ -29161,10 +29163,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "rak" = (
-/obj/decal/boxingrope{
-	density = 0;
-	dir = 8;
-	tag = "icon-ringrope (WEST)"
+/obj/railing/boxing{
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -29181,11 +29181,10 @@
 	},
 /area/station/chapel/sanctuary)
 "rbC" = (
-/obj/decal/boxingropeenter{
-	dir = 4;
-	tag = "icon-ringrope (EAST)"
-	},
 /obj/stool,
+/obj/railing/boxing{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "rbK" = (
@@ -33593,7 +33592,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "tIy" = (
-/obj/decal/boxingrope,
+/obj/railing/boxing,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "tID" = (
@@ -34476,6 +34475,10 @@
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/gloves/boxing,
+/obj/item/item_box/medical_patches/styptic{
+	pixel_x = 10;
+	pixel_y = 15
+	},
 /turf/simulated/floor{
 	icon_state = "0,6";
 	tag = "icon-0,6"
@@ -37980,12 +37983,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "wHt" = (
-/obj/decal/boxingrope{
-	dir = 5;
-	tag = "icon-ringrope (NORTHEAST)"
-	},
 /obj/machinery/light/incandescent{
 	dir = 4
+	},
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -79636,7 +79638,7 @@ kIA
 erm
 toE
 qNz
-dgP
+bHL
 rak
 rak
 cKS
