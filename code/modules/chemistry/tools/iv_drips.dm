@@ -23,7 +23,7 @@
 	amount_per_transfer_from_this = 5
 	initial_volume = 250
 
-	var/mob/living/carbon/human/patient = null
+	var/mob/living/carbon/patient = null
 	var/obj/machinery/medical/iv_stand/iv_stand = null
 
 	var/image/fluid_image = null
@@ -102,7 +102,7 @@
 	src.UpdateIcon()
 
 /obj/item/reagent_containers/iv_drip/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	if (!ishuman(target))
+	if (!iscarbon(target))
 		return ..()
 	if (src.patient == target)
 		src.remove_patient(user)
@@ -287,7 +287,7 @@
 
 /obj/item/reagent_containers/iv_drip/proc/can_transfuse()
 	. = TRUE
-	if (!src.patient || !ishuman(src.patient) || !src.patient.reagents)
+	if (!iscarbon(src.patient))
 		return FALSE
 	if (!src.check_interact_range())
 		return FALSE
