@@ -134,7 +134,7 @@
 	. = ..()
 
 /// `mult` only matters if `src` is connected to an IV stand.
-/obj/item/reagent_containers/iv_drip/process(mult = 1)
+/obj/item/reagent_containers/iv_drip/process(mult = 10)
 	if (!src.can_transfuse())
 		return
 	if (src.mode == IV_INJECT)
@@ -239,15 +239,15 @@
 	src.active = TRUE
 	src.handle_processing()
 	APPLY_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 2)
-	if (src.iv_stand?.active)
+	if (!src.iv_stand)
 		return
-	src.iv_stand.start_feedback()
+	src.iv_stand.start_affect()
 
 /obj/item/reagent_containers/iv_drip/proc/stop_transfusion()
 	src.active = FALSE
 	src.handle_processing()
 	REMOVE_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
-	if (!src.iv_stand?.active)
+	if (!src.iv_stand)
 		return
 	src.iv_stand.stop_affect()
 
@@ -309,17 +309,16 @@
 	. = null
 	if (!iscarbon(patient_to_check) && src.patient)
 		patient_to_check = src.patient
-	if (IV_INJECT)
+	if (src.mode == IV_INJECT)
 		if (!src.reagents.total_volume)
 			return IV_FAIL_BAG_EMPTY
 		if (patient_to_check.reagents.is_full())
 			return IV_FAIL_PT_FULL
 		return
-	if (IV_DRAW)
-		if (src.check_vampire() || (!patient_to_check.reagents.total_volume && !patient_to_check.blood_volume))
-			return IV_FAIL_PT_EMPTY
-		if (src.reagents.is_full())
-			return IV_FAIL_BAG_FULL
+	if (src.check_vampire() || (!patient_to_check.reagents.total_volume && !patient_to_check.blood_volume))
+		return IV_FAIL_PT_EMPTY
+	if (src.reagents.is_full())
+		return IV_FAIL_BAG_FULL
 
 /obj/item/reagent_containers/iv_drip/proc/check_vampire(mob/living/carbon/mob_to_test)
 	. = FALSE

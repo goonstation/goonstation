@@ -23,7 +23,7 @@
 	return
 
 /obj/machinery/medical/iv_stand/New()
-	. = ..()
+	..()
 	src.UpdateIcon()
 	src.update_name()
 
@@ -80,14 +80,14 @@
 
 /obj/machinery/medical/iv_stand/mouse_drop(atom/over_object)
 	if (!isatom(over_object))
-		. = ..()
+		..()
 		return
 	var/mob/living/user = usr
 	if (!isliving(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
-		. = ..()
+		..()
 		return
 	if (!src.iv_drip)
-		. = ..()
+		..()
 		return
 	if (isturf(over_object))
 		var/turf/over_turf = over_object
@@ -100,7 +100,7 @@
 		actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 2 SECONDS), user)
 		return
 	if (!istype(W, /obj/item/reagent_containers/iv_drip))
-		. = ..()
+		..()
 		return
 	if (isrobot(user)) // are they a borg? it's probably a mediborg's IV then, don't take that!
 		return
@@ -108,7 +108,7 @@
 
 /obj/machinery/medical/iv_stand/attack_hand(mob/user)
 	if (!src.iv_drip)
-		. = ..()
+		..()
 		return
 	if (isrobot(user))
 		return
@@ -126,7 +126,7 @@
 /obj/machinery/medical/iv_stand/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!src.iv_drip.patient)
 		return
-	. = ..()
+	..()
 	src.UpdateIcon()
 
 /obj/machinery/medical/iv_stand/remove_patient(mob/user, force)
@@ -136,15 +136,17 @@
 	src.UpdateIcon()
 
 /obj/machinery/medical/iv_stand/affect_patient(mult)
-	. = ..()
+	..()
+	if (!src.iv_drip)
+		return
 	src.iv_drip.process(mult)
 
 /obj/machinery/medical/iv_stand/start_feedback()
-	. = ..()
+	..()
 	src.say("[src.iv_drip.mode == IV_INJECT ? "Infusing" : "Drawing from"] patient at [src.transfer_rate]u per tick.")
 
 /obj/machinery/medical/iv_stand/stop_affect(reason = MED_MACHINE_FAILURE)
-	. = ..()
+	..()
 	if (src.is_broken())
 		return
 	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given)
@@ -152,6 +154,8 @@
 		src.low_power_alert_given = TRUE
 		return
 	if (src.has_no_power())
+		return
+	if (!src.iv_drip)
 		return
 	src.say("Stopped [src.iv_drip.mode == IV_INJECT ? "infusing" : "drawing from"] patient.")
 

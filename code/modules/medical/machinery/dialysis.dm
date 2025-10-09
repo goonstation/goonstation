@@ -59,8 +59,13 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	..()
 	src.say("Dialysis protocols inversed.")
 
-/obj/machinery/medical/dialysis/start_affect()
+/obj/machinery/medical/dialysis/can_affect()
 	. = ..()
+	if (!src.get_patient_fluid_volume())
+		return FALSE
+
+/obj/machinery/medical/dialysis/start_affect()
+	..()
 	APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 3)
 
 /obj/machinery/medical/dialysis/start_feedback()
@@ -69,42 +74,15 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 
 /obj/machinery/medical/dialysis/affect_patient(mult)
 	..()
-	if (!src.get_patient_fluid_volume())
-		src.stop_affect()
-		return
-
-	// Don't inject anything back in if there's nothing in our internal reagent container.
-	if (!src.reagents.total_volume)
-		src.UpdateIcon()
-		src.handle_draw(mult)
-		return
-
-	// Re-implemented here due to all the got dang boutputs.
-	var/list/whitelist_buffer = chem_whitelist + src.patient_blood_id
-	for (var/reagent_id in src.reagents.reagent_list)
-		var/purge_reagent = FALSE
-		if (src.hacked)
-			purge_reagent = !purge_reagent
-		if (!(reagent_id in whitelist_buffer))
-			purge_reagent = !purge_reagent
-		if (!purge_reagent)
-			continue
-		src.reagents.del_reagent(reagent_id)
-
-	// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
-	// The blood that's not actually in the bloodstream yet, know what I mean?
-	var/patient_blood = src.get_patient_blood_volume()
-	var/patient_blood_max = initial(src.patient.blood_volume)
-	if (patient_blood > patient_blood_max)
-		src.reagents.remove_reagent("blood", (patient_blood - patient_blood_max))
 	src.UpdateIcon()
-	src.handle_infusion(src.reagents.total_volume, mult)
-	src.reagents.clear_reagents()
 	src.handle_draw(mult)
+	src.screen_blood()
+	src.handle_infusion(mult)
 
 /obj/machinery/medical/dialysis/stop_affect(reason = MED_MACHINE_FAILURE)
-	. = ..()
-	REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
+	src.handle_infusion()
+	..()
+	REMOVE_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 	src.UpdateIcon()
 	if (src.is_broken())
 		return
@@ -119,7 +97,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 /// Returns total patient blood volume in units.
 /obj/machinery/medical/dialysis/proc/get_patient_blood_volume()
 	. = 0
-	if (iscarbon(src.patient))
+	if (!iscarbon(src.patient))
 		return
 	var/datum/reagent/patient_blood_reagent = src.patient.reagents.reagent_list["blood"]
 	var/patient_blood_reagent_volume = patient_blood_reagent?.volume || 0
@@ -128,22 +106,45 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 /// Returns total patient fluid volume (blood + all reagents) in units.
 /obj/machinery/medical/dialysis/proc/get_patient_fluid_volume()
 	. = 0
-	if (iscarbon(src.patient))
+	if (!iscarbon(src.patient))
 		return
 	. = src.patient.blood_volume + src.patient.reagents.total_volume
-
-/obj/machinery/medical/dialysis/proc/handle_infusion(volume, mult)
-	if (!src.patient)
-		return
-	src.update_tubing(DIALYSIS_TUBING_GOOD)
-	src.reagents.trans_to(src.patient, src.calculate_transfer_volume(volume, mult))
-	src.patient.reagents.reaction(src.patient, INGEST, src.calculate_transfer_volume(volume, mult))
 
 /obj/machinery/medical/dialysis/proc/handle_draw(mult)
 	if (!src.patient)
 		return
+	if (!src.get_patient_fluid_volume())
+		src.stop_affect()
+		return
 	transfer_blood(src.patient, src, src.calculate_transfer_volume(src.transfer_rate, mult))
 	src.update_tubing(DIALYSIS_TUBING_BAD)
+
+/// Re-implemented here due to all the got dang boutputs.
+/obj/machinery/medical/dialysis/proc/screen_blood()
+	var/list/whitelist_buffer = chem_whitelist + src.patient_blood_id
+	for (var/reagent_id in src.reagents.reagent_list)
+		var/purge_reagent = FALSE
+		if (src.hacked)
+			purge_reagent = !purge_reagent
+		if (!(reagent_id in whitelist_buffer))
+			purge_reagent = !purge_reagent
+		if (!purge_reagent)
+			continue
+		src.reagents.del_reagent(reagent_id)
+
+/obj/machinery/medical/dialysis/proc/handle_infusion(mult)
+	if (!src.patient)
+		return
+	// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
+	var/patient_blood = src.get_patient_blood_volume()
+	var/patient_blood_max = initial(src.patient.blood_volume)
+	if (patient_blood > patient_blood_max)
+		src.reagents.remove_reagent("blood", (patient_blood - patient_blood_max))
+	src.update_tubing(DIALYSIS_TUBING_GOOD)
+	var/infusion_volume = src.calculate_transfer_volume(src.reagents.total_volume, mult)
+	src.reagents.trans_to(src.patient, infusion_volume)
+	src.patient.reagents.reaction(src.patient, INGEST, infusion_volume)
+	src.reagents.clear_reagents()
 
 /obj/machinery/medical/dialysis/proc/calculate_transfer_volume(volume, mult)
 	. = volume * max(mult / 10, 1)
@@ -179,6 +180,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	if (length(statuses))
 		src.patient.delStatus(statuses[1])
 	src.patient_blood_id = null
+
 	..()
 	src.UpdateIcon()
 

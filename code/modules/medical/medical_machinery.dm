@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/Move(atom/target)
 	. = ..()
 	if (src.patient)
-		src.check_remove_conditions()
+		src.check_connection()
 	if (!src.paired_obj)
 		src.detach_from_obj()
 		return
@@ -156,13 +156,17 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	..()
 	if (!src.patient)
 		return
-	if (!src.connect_directly)
-		src.affect_patient(mult)
+	if (!src.check_connection())
+		src.remove_patient(force = TRUE)
 		return
-	src.check_remove_conditions()
-	if (src.is_disabled())
+	if (!src.powered())
+		src.stop_affect(MED_MACHINE_NO_POWER)
+		return
+	if (!src.can_affect())
+		src.stop_affect()
 		return
 	if (!src.active)
+		src.start_affect()
 		return
 	src.affect_patient(mult)
 
@@ -179,39 +183,42 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!src.powered())
 		src.stop_affect(MED_MACHINE_NO_POWER)
 		return
-	if (!src.active && src.patient)
-		src.affect_patient()
+	if (src.active)
+		return
+	if (!src.can_affect())
+		return
+	src.start_affect()
 
 /obj/machinery/medical/set_broken()
-	src.stop_affect()
 	. = ..()
+	src.stop_affect()
+	src.UnsubscribeProcess()
 
-/// See `_std/defines/medical.dm`
-/obj/machinery/medical/proc/check_remove_conditions()
-	if (!src.connect_directly)
-		return
+/obj/machinery/medical/proc/can_affect()
+	. = TRUE
 	if (!src.patient)
-		src.remove_patient()
-		return
-	// Yank the connection by force if patient exits interaction range.
-	if (!in_interact_range(src, src.patient))
-		src.remove_patient(force = TRUE)
-		return
+		return FALSE
+	if (src.is_disabled())
+		return FALSE
 
 /obj/machinery/medical/proc/start_affect()
-	if (src.is_disabled())
+	if (!src.can_affect())
 		return
 	src.active = TRUE
+	src.low_power_alert_given = FALSE
+	src.power_usage = src.power_consumption
 	src.start_feedback()
+	src.affect_patient()
 
 /obj/machinery/medical/proc/affect_patient(mult)
-	if (!src.patient)
-		return
 	if (!src.active)
 		return
 
 /obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
+	if (!src.active)
+		return
 	src.active = FALSE
+	src.power_usage = 0
 
 /// Override on children. Usecase includes any feedback the machine should provide about the affect it currently has on the patient.
 /obj/machinery/medical/proc/start_feedback()
@@ -236,21 +243,28 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!iscarbon(new_patient))
 		return
 	src.patient = new_patient
-	src.power_usage = src.power_consumption
-	src.start_feedback()
+	src.start_affect()
 	if (ismob(user))
 		src.add_message(user, new_patient)
 		logTheThing(LOG_COMBAT, user, "connected [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
-	if (!src.connect_directly)
-		RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_moved))
+	if (src.connect_directly)
+		RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_move))
 
-/obj/machinery/medical/proc/on_patient_moved()
-	if (in_interact_range(src, src.patient))
+/obj/machinery/medical/proc/on_patient_move()
+	if (src.check_connection())
 		return
-	// JAAAANK
-	if (src.patient.pulling == src)
+	if (!src.patient)
 		return
 	src.remove_patient(force = TRUE)
+
+/// For machines that connect directly to patients: is our connection still good?
+/obj/machinery/medical/proc/check_connection()
+	. = FALSE
+	if (in_interact_range(src, src.patient))
+		return TRUE
+	// JAAAANK
+	if (src.patient.pulling == src)
+		return TRUE
 
 /obj/machinery/medical/proc/attempt_remove_patient(mob/user)
 	src.remove_patient(user)
@@ -266,7 +280,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		src.force_remove_feedback()
 	src.stop_affect()
 	src.patient = null
-	src.power_usage = 0
 
 /obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
