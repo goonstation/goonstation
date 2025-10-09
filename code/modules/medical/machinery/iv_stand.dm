@@ -130,7 +130,8 @@
 	src.UpdateIcon()
 
 /obj/machinery/medical/iv_stand/remove_patient(mob/user, force)
-	src.iv_drip?.remove_patient(user)
+	if (src.iv_drip?.patient)
+		src.iv_drip.remove_patient(user)
 	src.patient = null
 	src.UnsubscribeProcess()
 	src.UpdateIcon()

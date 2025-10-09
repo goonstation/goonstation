@@ -82,7 +82,7 @@
 	. = TRUE
 
 /obj/item/reagent_containers/iv_drip/pickup(mob/user)
-	if (src.patient && (src.patient != user))
+	if (src.patient)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_movement), TRUE)
 	..()
 	SPAWN(0)
@@ -113,7 +113,7 @@
 		return ..()
 	if (src.slashed)
 		src.slashed = TRUE
-		src.desc = "[src.desc] It has been sliced open with a scalpel."
+		src.desc = "[src.desc] It has been sliced open."
 		boutput(user, "You carefully slice [src] open.")
 	else
 		boutput(user, "[src] has already been sliced open.")
