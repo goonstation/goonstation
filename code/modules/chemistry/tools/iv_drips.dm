@@ -1,13 +1,12 @@
 #define IV_FAIL_PT_FULL "patient_full"
 #define IV_FAIL_BAG_EMPTY "bag_empty"
 #define IV_FAIL_BAG_FULL "bag_full"
-#define IV_FAIL_PT_VAMP "patient_vampire"
 #define IV_FAIL_PT_EMPTY "patient_empty"
 
 /**
  * # IV Drip
  *
- * Vampires can't [auto-infuse their own blood] to inflate their blood count, because they can't get more than ~30% of it back.
+ * Vampires can't [draw their own blood] to inflate their blood count, because they can't get more than ~30% of it back.
  * Also ignore that second container of blood entirely if it's a vampire (Convair880).
  */
 /obj/item/reagent_containers/iv_drip
@@ -322,18 +321,17 @@
 	. = null
 	if (!iscarbon(patient_to_check) && src.patient)
 		patient_to_check = src.patient
-	if (src.mode == IV_DRAW)
-		if (!patient_to_check.reagents.total_volume && !patient_to_check.blood_volume)
-			return IV_FAIL_PT_EMPTY
-		if (src.reagents.is_full())
-			return IV_FAIL_BAG_FULL
-	else
+	if (IV_INJECT)
 		if (!src.reagents.total_volume)
 			return IV_FAIL_BAG_EMPTY
 		if (patient_to_check.reagents.is_full())
 			return IV_FAIL_PT_FULL
-		if (src.check_vampire())
-			return IV_FAIL_PT_VAMP
+		return
+	if (IV_DRAW)
+		if (src.check_vampire() || (!patient_to_check.reagents.total_volume && !patient_to_check.blood_volume))
+			return IV_FAIL_PT_EMPTY
+		if (src.reagents.is_full())
+			return IV_FAIL_BAG_FULL
 
 /obj/item/reagent_containers/iv_drip/proc/check_vampire(mob/living/carbon/mob_to_test)
 	. = FALSE
@@ -341,12 +339,10 @@
 		mob_to_test = src.patient
 	if (isvampire(mob_to_test) && (mob_to_test.get_vampire_blood() <= 0))
 		. = TRUE
-		return
 
 #undef IV_FAIL_PT_FULL
 #undef IV_FAIL_BAG_EMPTY
 #undef IV_FAIL_BAG_FULL
-#undef IV_FAIL_PT_VAMP
 #undef IV_FAIL_PT_EMPTY
 
 /obj/item/reagent_containers/iv_drip/blood
