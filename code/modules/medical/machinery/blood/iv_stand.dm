@@ -50,7 +50,7 @@
 		return
 	var/iv_drip_desc = src.iv_drip.desc
 	iv_drip_desc = lowertext(copytext(iv_drip_desc, 1, 2)) + copytext(iv_drip_desc, 2)
-	. += "[src.iv_drip] is attached to it; [iv_drip_desc]"
+	. += " [src.iv_drip] is attached to it; [iv_drip_desc]"
 
 /obj/machinery/medical/blood/iv_stand/update_icon()
 	if (!src.iv_drip)
