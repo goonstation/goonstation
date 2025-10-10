@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	 * Some machines don't connect directly to patients; they would then contain an item in its contents that handles the connection behaviour
 	 * (e.g. IV stands).
 	 *
-	 * You may want to override the following procs: `attempt_add_patient()`, `add_patient()`, `attempt_remove_patient()`, `remove_patient()`
+	 * Override the following procs: `attempt_add_patient()`, `add_patient()`, `remove_patient()`
 	*/
 	var/connect_directly = TRUE
 	var/connection_time = 3 SECONDS
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	if (iscarbon(over_object))
 		if (src.patient == over_object)
-			src.attempt_remove_patient(user)
+			src.remove_patient(user)
 		else
 			src.attempt_add_patient(user, over_object)
 		return
@@ -257,6 +257,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/proc/attempt_add_patient(mob/user, mob/living/carbon/new_patient)
 	. = TRUE
+	if (!src.connect_directly)
+		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/attempt_add_patient()`!")
+		return
 	if (!ismob(user))
 		return FALSE
 	if (!iscarbon(new_patient))
@@ -274,6 +277,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!iscarbon(new_patient))
 		return
 	if (!src.connect_directly)
+		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/add()`!")
 		return
 	src.patient = new_patient
 	src.start_affect()
@@ -283,13 +287,11 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.patient.setStatus(src.connection_status_effect, INFINITE_STATUS, src)
 	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_move))
 
-/obj/machinery/medical/proc/attempt_remove_patient(mob/user)
-	src.remove_patient(user)
-
 /obj/machinery/medical/proc/remove_patient(mob/user, force = FALSE)
 	if (!src.patient)
 		return
 	if (!src.connect_directly)
+		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/remove_patient()`!")
 		return
 	src.stop_affect()
 	var/mob/living/carbon/old_patient = src.patient
