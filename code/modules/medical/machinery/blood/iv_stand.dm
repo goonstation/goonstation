@@ -81,25 +81,11 @@
 		return
 	src.name = initial(src.name)
 
-/*
-	The only notable change is that you can click-drag bags off of the IV stand. Do I really need to rewrite the boilerplate for all these?
-	- DisturbHerb
-*/
-/obj/machinery/medical/blood/iv_stand/mouse_drop(atom/over_object)
-	if (!isatom(over_object))
-		..()
-		return
-	var/mob/living/user = usr
-	if (!isliving(user) || isintangible(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
-		..()
-		return
-	if (!src.iv_drip)
-		..()
-		return
-	if (isturf(over_object))
+/obj/machinery/medical/blood/iv_stand/mouse_drop_behaviour(atom/over_object, mob/living/user)
+	if (isturf(over_object) && src.iv_drip)
 		var/turf/over_turf = over_object
 		src.remove_iv_drip(user, over_turf)
-		return
+		return TRUE
 	. = ..()
 
 /obj/machinery/medical/blood/iv_stand/attackby(obj/item/W, mob/user)
@@ -107,18 +93,16 @@
 		actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 2 SECONDS), user)
 		return
 	if (!istype(W, /obj/item/reagent_containers/iv_drip))
-		..()
-		return
+		return ..()
 	if (isrobot(user)) // are they a borg? it's probably a mediborg's IV then, don't take that!
 		return
 	src.add_iv_drip(W, user)
 
 /obj/machinery/medical/blood/iv_stand/attack_hand(mob/user)
 	if (!src.iv_drip)
-		..()
-		return
+		return ..()
 	if (isrobot(user))
-		return
+		return ..()
 	src.remove_iv_drip(user)
 
 /obj/machinery/medical/blood/iv_stand/attempt_add_patient(mob/user, mob/living/carbon/new_patient)

@@ -135,40 +135,40 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!(src.paired_obj in src.loc))
 		src.detach_from_obj()
 
+/**
+ * Only checks to see if the user using the `mouse_drop` interaction is tangible, living, able to act, and is within interaction range. Specific
+ * behaviours should be implemented in `/obj/machinery/medical/proc/mouse_drop_behaviour()`.
+ */
 /obj/machinery/medical/mouse_drop(atom/over_object)
 	if (!isatom(over_object))
-		. = ..()
-		return
-	var/mob/living/user = usr
-	if (!isliving(user) || isintangible(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
-		. = ..()
-		return
+		return ..()
+	var/mob/user = usr
+	if (!isliving(user))
+		return ..()
+	if (isintangible(user))
+		return ..()
+	if (!can_act(user))
+		return ..()
+	if (!in_interact_range(src, user))
+		return ..()
+	if (!in_interact_range(over_object, user))
+		return ..()
+	if (!src.mouse_drop_behaviour(over_object, user))
+		return ..()
+
+/obj/machinery/medical/proc/mouse_drop_behaviour(atom/over_object, mob/living/user)
+	. = FALSE
 	if (iscarbon(over_object))
 		if (src.patient == over_object)
 			src.remove_patient(user)
 		else
 			src.attempt_add_patient(user, over_object)
-		return
-	if (!isobj(over_object))
-		. = ..()
-		return
+		return TRUE
 	if (over_object == src.paired_obj)
 		src.detach_from_obj(user)
-		return
-	if (src.paired_obj)
-		boutput(user, SPAN_ALERT("[src] is already attached to [src.paired_obj]!"))
-		return
-	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
-	var/obj/object_to_attach_to = null
-	for (var/whitelist_type in typinfo.paired_obj_whitelist)
-		if (!istype(over_object, whitelist_type))
-			continue
-		object_to_attach_to = over_object
-		break
-	if (!object_to_attach_to)
-		. = ..()
-		return
-	src.attach_to_obj(object_to_attach_to, user)
+		return TRUE
+	if (src.attempt_attach_to_obj(over_object, user))
+		return TRUE
 
 /obj/machinery/medical/process(mult)
 	..()
@@ -259,7 +259,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	. = TRUE
 	if (!src.connect_directly)
 		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/attempt_add_patient()`!")
-		return
 	if (!ismob(user))
 		return FALSE
 	if (!iscarbon(new_patient))
@@ -278,7 +277,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	if (!src.connect_directly)
 		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/add()`!")
-		return
 	src.patient = new_patient
 	src.start_affect()
 	if (ismob(user))
@@ -292,7 +290,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	if (!src.connect_directly)
 		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/remove_patient()`!")
-		return
 	src.stop_affect()
 	var/mob/living/carbon/old_patient = src.patient
 	src.patient = null
@@ -346,12 +343,28 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (src.patient.pulling == src)
 		return TRUE
 
-/obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
+/obj/machinery/medical/proc/attempt_attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
-	if (!isobj(target_object) || src.paired_obj)
+	if (target_object == src.paired_obj)
+		boutput(user, SPAN_ALERT("[src] is already attached to [src.paired_obj]!"))
 		return FALSE
 	if (src.anchored)
 		boutput(user, SPAN_ALERT("Disengage the brakes first to attach [src] to [target_object]!"))
+		return FALSE
+	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
+	var/obj/object_to_attach_to = null
+	for (var/whitelist_type in typinfo.paired_obj_whitelist)
+		if (!istype(over_object, whitelist_type))
+			continue
+		object_to_attach_to = over_object
+		break
+	if (!object_to_attach_to)
+		return FALSE
+	src.attach_to_obj(object_to_attach_to, user)
+
+/obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
+	. = TRUE
+	if (!isobj(target_object) || src.paired_obj)
 		return FALSE
 	if (ismob(user))
 		src.visible_message(SPAN_NOTICE("[user] attaches [src] to [target_object]."))
