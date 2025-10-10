@@ -10367,7 +10367,7 @@
 	teleport_blocked = 1
 	})
 "Xb" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/unsimulated/floor/sanitary/white,

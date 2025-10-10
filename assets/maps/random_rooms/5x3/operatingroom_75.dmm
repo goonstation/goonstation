@@ -58,7 +58,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "E" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)

@@ -40,7 +40,7 @@
 /turf/simulated/floor/white,
 /area/noGenerate)
 "hu" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/noGenerate)
@@ -80,7 +80,7 @@
 /turf/simulated/floor/white,
 /area/noGenerate)
 "mu" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/white,
 /area/noGenerate)
 "mw" = (

@@ -52553,7 +52553,7 @@
 	dir = 4;
 	pixel_x = -2
 	},
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -56482,7 +56482,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/station/routing/depot)
 "hns" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
@@ -64305,7 +64305,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "ogs" = (
-/obj/machinery/medical/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -68896,7 +68896,7 @@
 /turf/simulated/floor/black,
 /area/station/ranch)
 "swZ" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -69427,7 +69427,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
 "sVO" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
@@ -69898,7 +69898,7 @@
 /area/station/hallway/primary/west)
 "ttv" = (
 /obj/machinery/light_switch/east,
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 4
@@ -70374,7 +70374,7 @@
 "tQT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2,
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "tRs" = (
@@ -70738,7 +70738,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "ugt" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
@@ -73427,7 +73427,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "xkv" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/engine{
 	dir = 8;
 	icon_state = "engine_caution_corners"

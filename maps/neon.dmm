@@ -2387,7 +2387,7 @@
 	},
 /area/station/hallway/primary/south)
 "bTy" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -9933,7 +9933,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "haT" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
@@ -15195,7 +15195,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
 "kTn" = (
-/obj/machinery/medical/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "kTr" = (
@@ -29995,7 +29995,7 @@
 "vFP" = (
 /obj/machinery/firealarm/directional/east,
 /obj/stool/bed/moveable,
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "vFQ" = (
@@ -31605,7 +31605,7 @@
 	},
 /area/station/science/chemistry)
 "wDE" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/cable{
 	icon_state = "0-8"
 	},

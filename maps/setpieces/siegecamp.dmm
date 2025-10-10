@@ -1145,7 +1145,7 @@
 /turf/unsimulated/floor/engine/glow/blue,
 /area/space)
 "WN" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /obj/item/reagent_containers/iv_drip/blood,
 /obj/item/reagent_containers/iv_drip/blood,

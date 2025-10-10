@@ -6270,7 +6270,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -11015,7 +11015,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/medical/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -11786,7 +11786,7 @@
 /turf/simulated/floor/black,
 /area/pasiphae)
 "fsR" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -24864,7 +24864,7 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -31024,7 +31024,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{

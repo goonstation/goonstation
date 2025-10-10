@@ -5217,7 +5217,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "JX" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "JY" = (

@@ -61,7 +61,7 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/prefab/sequestered_cloner)
 "eL" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/red/redblackchecker,
 /area/prefab/sequestered_cloner)
 "ff" = (

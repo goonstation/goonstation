@@ -28415,7 +28415,7 @@
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/primary/west)
 "drc" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light{
 	dir = 8;
@@ -34421,7 +34421,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "hnM" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "hoh" = (
@@ -37040,7 +37040,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "jik" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -43168,7 +43168,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "nof" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light/small,
 /obj/item/device/radio/intercom/medical{
@@ -44947,7 +44947,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "oEg" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light/small,
 /obj/item/device/radio/intercom/medical{
@@ -45498,7 +45498,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/emergency)
 "pcq" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "pcs" = (
@@ -45912,7 +45912,7 @@
 /area/station/maintenance/inner/east)
 "pqC" = (
 /obj/decal/cleanable/robot_debris,
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "pqI" = (
@@ -46382,7 +46382,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/medical/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},

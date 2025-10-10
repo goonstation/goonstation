@@ -2752,7 +2752,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/medical/medbay/surgery)
@@ -32970,7 +32970,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/mining/cargo_staff_room)
 "oQI" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},

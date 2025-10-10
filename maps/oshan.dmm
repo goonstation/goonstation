@@ -35786,7 +35786,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -39969,7 +39969,7 @@
 /area/station/security/beepsky)
 "pFj" = (
 /obj/machinery/light_switch/auto,
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "pFr" = (
@@ -41126,7 +41126,7 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -43928,7 +43928,7 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
-/obj/machinery/medical/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "ujb" = (
@@ -46435,7 +46435,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
 "xiQ" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/space/fluid,
 /area/space)
 "xkB" = (

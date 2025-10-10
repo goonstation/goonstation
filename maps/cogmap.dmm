@@ -10222,7 +10222,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/cafeteria)
 "aMc" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -33412,7 +33412,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cuo" = (
@@ -33777,7 +33777,7 @@
 /turf/space,
 /area/station/maintenance/northeast)
 "cvD" = (
-/obj/machinery/medical/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -33917,7 +33917,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cwe" = (
@@ -34365,7 +34365,7 @@
 	},
 /area/station/medical/medbay)
 "cxR" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light,
 /turf/simulated/floor/white,
@@ -63539,7 +63539,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "xzu" = (
-/obj/machinery/medical/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
