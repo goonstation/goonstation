@@ -637,7 +637,10 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		src.setProperty("vault_speed",3)
 		src.setProperty("disorient_resist",45)
 
-
+/* --------------- Bike horn: now in blue ------------ */
+/obj/item/instrument/bikehorn/blue
+	name = "blue bike horn"
+	icon_state = "bike_horn_blue"
 
 /* -------------------- Harmonica -------------------- */
 
