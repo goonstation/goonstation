@@ -17,19 +17,20 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY
-	flags = TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | ACCEPTS_MOUSEDROP_REAGENTS | SUPPRESSATTACK
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
 	initial_volume = 250
+	incompatible_with_chem_dispensers = TRUE
 	can_recycle = FALSE
 	shatter_immune = TRUE
+	container_icon = 'icons/obj/surgery.dmi'
+	container_style = "IV"
+	fluid_overlay_states = 9
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR
 
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/medical/blood/iv_stand/iv_stand = null
-
-	var/image/fluid_image = null
-	var/image/label_image = null
-	var/image/image_inj_dr = null
 
 	var/mode = IV_DRAW
 	/// Is this actively drawing/injecting?
@@ -37,18 +38,7 @@
 
 /obj/item/reagent_containers/glass/iv_drip/New()
 	..()
-	if (src.reagents.get_master_reagent_name() == "blood")
-		src.label_image = image(src.icon, "IVlabel-blood")
-	if (!src.label_image)
-		src.label_image = image(src.icon, "IVlabel")
-	src.UpdateOverlays(src.label_image, "label")
-	src.AddComponent( \
-		/datum/component/reagent_overlay, \
-		reagent_overlay_icon = src.icon, \
-		reagent_overlay_icon_state = "IV", \
-		reagent_overlay_states = 9, \
-		reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
-	)
+	src.UpdateOverlays(image(src.icon, "IVlabel[src.reagents.get_master_reagent_name() ? "-blood" : ""]"), "label")
 	src.update_name()
 	src.UpdateIcon()
 
@@ -71,12 +61,9 @@
 
 /obj/item/reagent_containers/glass/iv_drip/update_icon()
 	if (ismob(src.loc))
-		if (!src.image_inj_dr)
-			src.image_inj_dr = image(src.icon)
-		src.image_inj_dr.icon_state = src.mode ? "inject" : "draw"
-		src.UpdateOverlays(src.image_inj_dr, "inj_dr")
-	else
-		src.UpdateOverlays(null, "inj_dr")
+		src.UpdateOverlays(image(src.icon, (src.mode ? "inject" : "draw")), "inj_dr")
+		return
+	src.UpdateOverlays(null, "inj_dr")
 
 /obj/item/reagent_containers/glass/iv_drip/pickup(mob/user)
 	if (src.patient)
@@ -97,7 +84,7 @@
 	user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
 	src.UpdateIcon()
 
-/obj/item/reagent_containers/glass/iv_drip/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+/obj/item/reagent_containers/glass/iv_drip/afterattack(obj/target, mob/user, flag)
 	if (!iscarbon(target))
 		return ..()
 	if (src.patient == target)
@@ -110,7 +97,7 @@
 		return ..()
 	if (src.is_open_container())
 		boutput(user, "[src] has already been sliced open.")
-		return
+		return ..()
 	src.set_open_container(TRUE)
 	src.desc = "[src.desc] It has been sliced open."
 	boutput(user, "You carefully slice [src] open.")
