@@ -55150,6 +55150,33 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"exk" = (
+/obj/table/monodesk/auto,
+/obj/decal/poster/flag/bisexual{
+	pixel_y = 32;
+	pixel_x = 4
+	},
+/obj/item/stamp/centcom{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/instrument/bikehorn/blue{
+	pixel_y = 8;
+	pixel_x = -10;
+	name = "long-coveted, latest-model NT-branded Special Operations Bike Horn"
+	},
+/obj/item/clothing/head/NTberet/commander,
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea{
+	pixel_x = -10
+	},
+/obj/decoration/clock{
+	pixel_x = -13;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 5
+	},
+/area/centcom/offices/jorj)
 "exo" = (
 /obj/tree{
 	dir = 1
@@ -61565,32 +61592,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor,
 /area/centcom/lounge)
-"jvV" = (
-/obj/table/monodesk/auto,
-/obj/decal/poster/flag/bisexual{
-	pixel_y = 32;
-	pixel_x = 4
-	},
-/obj/item/stamp/centcom{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/instrument/bikehorn/blue{
-	pixel_y = 8;
-	pixel_x = -10
-	},
-/obj/item/clothing/head/NTberet/commander,
-/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea{
-	pixel_x = -10
-	},
-/obj/decoration/clock{
-	pixel_x = -13;
-	pixel_y = 32
-	},
-/turf/unsimulated/floor/darkblueblack{
-	dir = 5
-	},
-/area/centcom/offices/jorj)
 "jvX" = (
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/grime,
@@ -158247,7 +158248,7 @@ wel
 sJH
 elx
 rER
-rER
+lmi
 rER
 dxn
 rER
@@ -158267,7 +158268,7 @@ dyR
 rER
 dxn
 rER
-lmi
+rER
 rER
 rER
 rER
@@ -158550,7 +158551,7 @@ iVt
 vij
 wel
 wel
-oaN
+xsg
 wel
 wel
 wel
@@ -158570,7 +158571,7 @@ hnj
 wel
 wel
 wel
-xsg
+oaN
 wel
 wel
 wel
@@ -158851,9 +158852,9 @@ wel
 efe
 vij
 wel
-dvW
-dvW
-dvW
+vgQ
+fcy
+iNq
 wel
 dvW
 dvW
@@ -158871,9 +158872,9 @@ dyS
 dzj
 dzj
 wel
-vgQ
-fcy
-iNq
+dvW
+dvW
+dvW
 wel
 gwN
 uxt
@@ -159153,9 +159154,9 @@ jfx
 sJH
 vij
 wel
-dvW
-dvW
-dvW
+xtj
+vjZ
+jLf
 wel
 dvW
 dvW
@@ -159173,9 +159174,9 @@ dyT
 dzc
 dzc
 wel
-xtj
-vjZ
-jLf
+dvW
+dvW
+dvW
 wel
 rZl
 rZl
@@ -159455,9 +159456,9 @@ wel
 sJH
 vij
 wel
-lRO
-dvW
-dvW
+fBu
+sge
+eFT
 wel
 lRO
 dvW
@@ -159475,9 +159476,9 @@ dzc
 dzk
 dzc
 wel
-fBu
-sge
-eFT
+lRO
+dvW
+dvW
 wel
 hYK
 oKw
@@ -159757,9 +159758,9 @@ wel
 iVt
 vij
 wel
-dvW
-dvW
-dvW
+exk
+wOQ
+ssz
 wel
 dvW
 dvW
@@ -159777,9 +159778,9 @@ dzc
 dzl
 dzm
 wel
-jvV
-wOQ
-ssz
+dvW
+dvW
+dvW
 wel
 mVU
 wzH
