@@ -131,7 +131,6 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	id = "dialysis-machine"
 	name = "Dialysis Machine"
 	desc = "You are connected to a dialysis machine."
-	icon_state = "dialysis"
 
 /datum/statusEffect/medical_machine/getTooltip()
 	. = "A dialysis machine is connected to your body. Moving too far from it may forcefully disconnect you."

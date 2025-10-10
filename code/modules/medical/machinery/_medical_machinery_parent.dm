@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	id = "medical_machine"
 	name = "Medical Machine"
 	desc = "Your're currently connected to a medical machine."
-	icon_state = "dialysis"
+	icon_state = "+"
 	unique = FALSE
 	effect_quality = STATUS_QUALITY_NEUTRAL
 	var/obj/machinery/medical/medical_machine = null
