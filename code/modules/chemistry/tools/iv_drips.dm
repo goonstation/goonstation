@@ -317,7 +317,7 @@
 	id = "iv_drip"
 	name = "IV line"
 	desc = "Your're currently connected to an IV drip."
-	icon_state = "dialysis"
+	icon_state = "+"
 	unique = FALSE
 	effect_quality = STATUS_QUALITY_NEUTRAL
 	var/obj/item/reagent_containers/glass/iv_drip/iv_drip = null
