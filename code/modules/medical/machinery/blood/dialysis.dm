@@ -17,7 +17,10 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	density = 1
 	icon_state = "dialysis"
 	power_consumption = 1.5 KILO WATTS
+
 	transfer_volume = 16
+
+	connection_status_effect = "dialysis"
 
 	attempt_msg_viewer = "<b>$USR</b> begins inserting $SRC's cannulae into $TRG's arm."
 	attempt_msg_user = "You begin inserting $SRC's cannulae into $TRG's arm."
@@ -57,7 +60,6 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 
 /obj/machinery/medical/blood/dialysis/affect_patient(mult)
 	..()
-	src.UpdateIcon()
 	src.handle_draw(src.transfer_volume, mult)
 	src.screen_blood()
 	src.handle_infusion(src.transfer_volume, mult)
@@ -99,14 +101,8 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 
 /obj/machinery/medical/blood/dialysis/update_icon(...)
 	..()
-	var/inoperative = FALSE
-	if (!src.patient)
-		inoperative = TRUE
-		src.ClearSpecificOverlays(DIALYSIS_TUBING_GOOD, DIALYSIS_TUBING_BAD)
-	if (!src.active)
-		inoperative = TRUE
-	if (inoperative)
-		src.ClearSpecificOverlays("pump", "screen")
+	if (!src.active || !src.patient)
+		src.ClearSpecificOverlays("pump", "screen", DIALYSIS_TUBING_GOOD, DIALYSIS_TUBING_BAD)
 		return
 	src.UpdateOverlays(image(src.icon, "pump"), "pump")
 	src.UpdateOverlays(image(src.icon, "screen"), "screen")
@@ -119,36 +115,23 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 
 /obj/machinery/medical/blood/dialysis/add_patient(mob/living/carbon/new_patient, mob/user)
 	..()
-	src.patient.setStatus("dialysis", INFINITE_STATUS, src)
 	src.patient_blood_id = src.patient.blood_id
 	src.UpdateIcon()
 
-/obj/machinery/medical/blood/dialysis/remove_patient(mob/user, force)
-	var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src)
-	if (length(statuses))
-		src.patient.delStatus(statuses[1])
-	src.patient_blood_id = null
+/obj/machinery/medical/blood/dialysis/remove_patient(mob/user, force = FALSE)
 	..()
+	src.patient_blood_id = null
 	src.UpdateIcon()
 
 #undef DIALYSIS_TUBING_BAD
 #undef DIALYSIS_TUBING_GOOD
 
-/datum/statusEffect/dialysis
+/datum/statusEffect/medical_machine/dialysis
 	id = "dialysis"
 	name = "Dialysis"
 	desc = "Your blood is being filtered by a dialysis machine."
 	icon_state = "dialysis"
-	unique = FALSE
 	effect_quality = STATUS_QUALITY_POSITIVE
-	var/obj/machinery/medical/blood/dialysis/dialysis_machine = null
 
-/datum/statusEffect/dialysis/getTooltip()
+/datum/statusEffect/medical_machine/getTooltip()
 	. = "A dialysis machine is filtering your blood, removing toxins and treating the symptoms of liver and kidney failure."
-
-/datum/statusEffect/dialysis/onAdd(obj/machinery/medical/blood/dialysis/optional)
-	..()
-	src.dialysis_machine = optional
-
-/datum/statusEffect/dialysis/onCheck(optional)
-	return src.dialysis_machine == optional

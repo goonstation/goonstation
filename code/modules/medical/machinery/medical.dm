@@ -45,6 +45,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	*/
 	var/connect_directly = TRUE
 	var/connection_time = 3 SECONDS
+	var/connection_status_effect = "medical_machine"
 
 	// Pixel offsets for this machine when paired with an object.
 	var/connect_offset_x = 0
@@ -139,7 +140,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		. = ..()
 		return
 	var/mob/living/user = usr
-	if (!isliving(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
+	if (!isliving(user) || isintangible(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
 		. = ..()
 		return
 	if (iscarbon(over_object))
@@ -178,9 +179,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	if (!src.active)
 		return
-	if (!src.powered())
-		src.stop_affect(MED_MACHINE_NO_POWER)
-		return
 	if (!src.can_affect())
 		src.stop_affect()
 		return
@@ -198,11 +196,14 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/power_change()
 	. = ..()
-	if (!src.active)
-		return
 	if (!src.powered())
 		src.stop_affect(MED_MACHINE_NO_POWER)
 		return
+	if (src.active)
+		return
+	if (!src.can_affect())
+		return
+	src.start_affect()
 
 /obj/machinery/medical/set_broken()
 	. = ..()
@@ -272,43 +273,37 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!iscarbon(new_patient))
 		return
+	if (!src.connect_directly)
+		return
 	src.patient = new_patient
 	src.start_affect()
 	if (ismob(user))
 		src.add_message(user, new_patient)
 		logTheThing(LOG_COMBAT, user, "connected [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
-	if (src.connect_directly)
-		RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_move))
-
-/obj/machinery/medical/proc/on_patient_move()
-	if (src.check_connection())
-		return
-	if (!src.patient)
-		return
-	src.remove_patient(force = TRUE)
-
-/// For machines that connect directly to patients: is our connection still good?
-/obj/machinery/medical/proc/check_connection()
-	. = FALSE
-	if (in_interact_range(src, src.patient))
-		return TRUE
-	// JAAAANK
-	if (src.patient.pulling == src)
-		return TRUE
+	src.patient.setStatus(src.connection_status_effect, INFINITE_STATUS, src)
+	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_move))
 
 /obj/machinery/medical/proc/attempt_remove_patient(mob/user)
 	src.remove_patient(user)
 
 /obj/machinery/medical/proc/remove_patient(mob/user, force = FALSE)
-	if (ismob(user))
-		src.remove_message(user)
-		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
-	if (force && !user)
-		src.force_remove_feedback()
-	if (src.connect_directly)
-		UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
+	if (!src.patient)
+		return
+	if (!src.connect_directly)
+		return
 	src.stop_affect()
+	var/mob/living/carbon/old_patient = src.patient
 	src.patient = null
+	if (force)
+		src.force_remove_feedback()
+	var/list/datum/statusEffect/statuses = old_patient.getStatusList(src.connection_status_effect, src)
+	if (length(statuses))
+		old_patient.delStatus(statuses[1])
+	UnregisterSignal(old_patient, COMSIG_MOVABLE_MOVED)
+	if (!ismob(user))
+		return
+	src.remove_message(user)
+	logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(old_patient, "combat")] at [log_loc(user)].")
 
 /obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
@@ -332,6 +327,22 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.patient.visible_message(\
 		SPAN_ALERT(src.parse_message(src.remove_force_msg_viewer, target = src.patient)),\
 		SPAN_ALERT(src.parse_message(src.remove_force_msg_patient, target = src.patient, self_referential = TRUE)))
+
+/obj/machinery/medical/proc/on_patient_move()
+	if (src.check_connection())
+		return
+	src.remove_patient(force = TRUE)
+
+/// For machines that connect directly to patients: is our connection still good?
+/obj/machinery/medical/proc/check_connection()
+	. = FALSE
+	if (!src.patient)
+		return
+	if (in_interact_range(src, src.patient))
+		return TRUE
+	// JAAAANK
+	if (src.patient.pulling == src)
+		return TRUE
 
 /obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
@@ -374,3 +385,22 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /// Override on children.
 /obj/machinery/medical/proc/deconstruct()
 	qdel(src)
+
+/datum/statusEffect/medical_machine
+	id = "medical_machine"
+	name = "Connected To Machine"
+	desc = "Your're currently connected to a medical machine."
+	icon_state = "dialysis"
+	unique = FALSE
+	effect_quality = STATUS_QUALITY_NEUTRAL
+	var/obj/machinery/medical/medical_machine = null
+
+/datum/statusEffect/medical_machine/getTooltip()
+	. = "You are physically connected to a medical machine. Moving too far from it may forcefully disconnect you."
+
+/datum/statusEffect/medical_machine/onAdd(obj/machinery/medical/optional)
+	..()
+	src.medical_machine = optional
+
+/datum/statusEffect/medical_machine/onCheck(optional)
+	return src.medical_machine == optional
