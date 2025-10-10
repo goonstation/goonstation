@@ -17,7 +17,6 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	density = 1
 	icon_state = "dialysis"
 	power_consumption = 1.5 KILO WATTS
-
 	transfer_volume = 16
 
 	connection_status_effect = "dialysis"
@@ -25,15 +24,12 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	attempt_msg_viewer = "<b>$USR</b> begins inserting $SRC's cannulae into $TRG's arm."
 	attempt_msg_user = "You begin inserting $SRC's cannulae into $TRG's arm."
 	attempt_msg_patient = "<b>$USR</b> begins inserting $SRC's cannulae into your arm."
-
 	add_msg_viewer = "<b>$USR</b> inserts $SRC's cannulae into $TRG's arm."
 	add_msg_user = "You inserts $SRC's cannulae into $TRG's arm."
 	add_msg_patient = "<b>$USR</b> inserts $SRC's cannulae into your arm."
-
 	remove_msg_viewer = "<b>$USR</b> removes $SRC's cannulae from $TRG's."
 	remove_msg_user = "You removes $SRC's cannulae from $TRG's."
 	remove_msg_patient = "<b>$USR</b> removes $SRC's cannulae from your arm."
-
 	remove_force_msg_viewer = "<b>$SRC's cannulae get $FLUFF out of $TRG's arm!</b>"
 	remove_force_msg_patient = "<b>$SRC's cannulae get $FLUFF out of your arm!</b>"
 

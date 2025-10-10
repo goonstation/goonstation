@@ -51,37 +51,26 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/connect_offset_x = 0
 	var/connect_offset_y = 10
 
-	/*
-		Chat log feedback
-		Overrides:
-			* $USR -> [user]
-			* $SRC -> [src]
-			* $TRG -> [new_patient] or [src.patient] dependent on target.
-	*/
-	/*
-		`tri_message` inputs.
-	*/
+	// See src.parse_message() for tag substitutions.
+	// tri_message() inputs.
 	/// Message to be displayed to all other viewers on attempted connection.
 	var/attempt_msg_viewer = "<b>$USR</b> begins connecting $SRC to $TRG."
 	/// Message to be displayed to user on attempted connection.
 	var/attempt_msg_user = "You begin connecting $SRC to $TRG."
 	/// Message to be displayed to patient on attempted connection.
 	var/attempt_msg_patient = "<b>$USR</b> begins connecting $SRC to you."
-
 	/// Message to be displayed to all other viewers on successful connection.
 	var/add_msg_viewer = "<b>$USR</b> connects $SRC to $TRG."
 	/// Message to be displayed to user on successful connection.
 	var/add_msg_user = "You connect $SRC to $TRG."
 	/// Message to be displayed to patient on successful connection.
 	var/add_msg_patient = "<b>$USR</b> connects $SRC to you."
-
 	/// Message to be displayed to all other viewers on disconnection.
 	var/remove_msg_viewer = "<b>$USR</b> disconnects $SRC from $TRG."
 	/// Message to be displayed to user on disconnection.
 	var/remove_msg_user = "You disconnect $SRC from $TRG."
 	/// Message to be displayed to patient on disconnection.
 	var/remove_msg_patient = "<b>$USR</b> disconnects $SRC from you."
-
 	/// Message to be displayed to all other viewers on forceful disconnection.
 	var/remove_force_msg_viewer = "<b>$SRC is forcefully disconnected from $TRG!</b>"
 	/// Message to be displayed to patient on forceful disconnection.
@@ -97,17 +86,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	/// On stopping affecting the patient.
 	var/stop_msg = ""
 
-/// Replaces tags in constant text variables with non-constants.
-/obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
-	if (!length(text))
-		return ""
-	if (ismob(user))
-		text = replacetext(text, "$USR", "[user]")
-	if (iscarbon(target))
-		text = replacetext(text, "$TRG", "[user == target ? (self_referential ? "you" : himself_or_herself(user)) : target]")
-	text = replacetext(text, "$SRC", "[src]")
-	. = text
-
 /obj/machinery/medical/disposing()
 	src.remove_patient()
 	src.detach_from_obj()
@@ -117,6 +95,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	..()
 	if (src.hacked)
 		. += " [src.hacked_desc]"
+	if (src.patient)
+		. += " Someone is currently attached to it."
 
 /obj/machinery/medical/attack_hand(mob/user)
 	if (src.paired_obj)
@@ -127,13 +107,13 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/Move(atom/target)
 	. = ..()
-	if (src.patient)
-		src.check_connection()
-	if (!src.paired_obj)
-		src.detach_from_obj()
+	if (src.paired_obj)
+		src.check_paired_obj()
+	if (!src.patient)
 		return
-	if (!(src.paired_obj in src.loc))
-		src.detach_from_obj()
+	if (src.check_connection())
+		return
+	src.remove_patient(force = TRUE)
 
 /**
  * Only checks to see if the user using the `mouse_drop` interaction is tangible, living, able to act, and is within interaction range. Specific
@@ -155,20 +135,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return ..()
 	if (!src.mouse_drop_behaviour(over_object, user))
 		return ..()
-
-/obj/machinery/medical/proc/mouse_drop_behaviour(atom/over_object, mob/living/user)
-	. = FALSE
-	if (iscarbon(over_object))
-		if (src.patient == over_object)
-			src.remove_patient(user)
-		else
-			src.attempt_add_patient(user, over_object)
-		return TRUE
-	if (over_object == src.paired_obj)
-		src.detach_from_obj(user)
-		return TRUE
-	if (src.attempt_attach_to_obj(over_object, user))
-		return TRUE
 
 /obj/machinery/medical/process(mult)
 	..()
@@ -196,10 +162,10 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/power_change()
 	. = ..()
+	if (src.active)
+		return
 	if (!src.powered())
 		src.stop_affect(MED_MACHINE_NO_POWER)
-		return
-	if (src.active)
 		return
 	if (!src.can_affect())
 		return
@@ -207,8 +173,23 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/set_broken()
 	. = ..()
-	src.stop_affect()
+	if (src.active)
+		src.stop_affect()
 	src.UnsubscribeProcess()
+
+/obj/machinery/medical/proc/mouse_drop_behaviour(atom/over_object, mob/living/user)
+	. = FALSE
+	if (iscarbon(over_object))
+		if (src.patient == over_object)
+			src.remove_patient(user)
+		else
+			src.attempt_add_patient(user, over_object)
+		return TRUE
+	if (over_object == src.paired_obj)
+		src.detach_from_obj(user)
+		return TRUE
+	if (src.attempt_attach_to_obj(over_object, user))
+		return TRUE
 
 /obj/machinery/medical/proc/can_affect()
 	. = TRUE
@@ -216,6 +197,17 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return FALSE
 	if (src.is_disabled())
 		return FALSE
+
+/// For machines that connect directly to patients: is our connection still good?
+/obj/machinery/medical/proc/check_connection()
+	. = FALSE
+	if (!src.patient)
+		return
+	if (in_interact_range(src, src.patient))
+		return TRUE
+	// JAAAANK
+	if (src.patient.pulling == src)
+		return TRUE
 
 /obj/machinery/medical/proc/start_affect()
 	if (!src.can_affect())
@@ -231,8 +223,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 
 /obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
-	if (!src.active)
-		return
 	src.active = FALSE
 	src.power_usage = 0
 	src.stop_feedback(reason)
@@ -285,9 +275,12 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.patient.setStatus(src.connection_status_effect, INFINITE_STATUS, src)
 	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_move))
 
-/obj/machinery/medical/proc/remove_patient(mob/user, force = FALSE)
-	if (!src.patient)
+/obj/machinery/medical/proc/on_patient_move()
+	if (src.check_connection())
 		return
+	src.remove_patient(force = TRUE)
+
+/obj/machinery/medical/proc/remove_patient(mob/user, force = FALSE)
 	if (!src.connect_directly)
 		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/remove_patient()`!")
 	src.stop_affect()
@@ -303,6 +296,22 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	src.remove_message(user)
 	logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(old_patient, "combat")] at [log_loc(user)].")
+
+/*
+	Replaces tags in constant text variables with non-constants.
+		* $USR -> [user]
+		* $SRC -> [src]
+		* $TRG -> [new_patient] or [src.patient] dependent on target.
+*/
+/obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
+	if (!length(text))
+		return ""
+	if (ismob(user))
+		text = replacetext(text, "$USR", "[user]")
+	if (iscarbon(target))
+		text = replacetext(text, "$TRG", "[user == target ? (self_referential ? "you" : himself_or_herself(user)) : target]")
+	text = replacetext(text, "$SRC", "[src]")
+	. = text
 
 /obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
@@ -326,22 +335,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.patient.visible_message(\
 		SPAN_ALERT(src.parse_message(src.remove_force_msg_viewer, target = src.patient)),\
 		SPAN_ALERT(src.parse_message(src.remove_force_msg_patient, target = src.patient, self_referential = TRUE)))
-
-/obj/machinery/medical/proc/on_patient_move()
-	if (src.check_connection())
-		return
-	src.remove_patient(force = TRUE)
-
-/// For machines that connect directly to patients: is our connection still good?
-/obj/machinery/medical/proc/check_connection()
-	. = FALSE
-	if (!src.patient)
-		return
-	if (in_interact_range(src, src.patient))
-		return TRUE
-	// JAAAANK
-	if (src.patient.pulling == src)
-		return TRUE
 
 /obj/machinery/medical/proc/attempt_attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
@@ -376,6 +369,12 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.density = src.paired_obj.density
 	src.set_layer()
 	RegisterSignal(src.paired_obj, COMSIG_ATOM_DIR_CHANGED, PROC_REF(set_layer))
+	RegisterSignal(src.paired_obj, COMSIG_MOVABLE_MOVED, PROC_REF(check_paired_obj))
+
+/obj/machinery/medical/proc/check_paired_obj()
+ 	if (src.paired_obj in src.loc)
+		return
+	src.detach_from_obj()
 
 /obj/machinery/medical/proc/detach_from_obj(mob/user)
 	. = TRUE
@@ -390,8 +389,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		src.visible_message(SPAN_NOTICE("[user] detaches [src] from [src.paired_obj]."))
 	mutual_detach(src, src.paired_obj)
 	UnregisterSignal(src.paired_obj, COMSIG_ATOM_DIR_CHANGED)
+	UnregisterSignal(src.paired_obj, COMSIG_MOVABLE_MOVED)
 
-/// Specifically because of chairs.
+/// Specifically because of chairs, they change layers on dir change.
 /obj/machinery/medical/proc/set_layer()
 	if (!src.paired_obj)
 		return
@@ -401,6 +401,12 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/deconstruct()
 	qdel(src)
 
+ABSTRACT_TYPE(/datum/statusEffect/medical_machine)
+/**
+ * # /datum/statusEffect/medical_machine
+ *
+ * Added to patient on connection to a medical machine. Mostly serves as a visual indicator that you're connected.
+ */
 /datum/statusEffect/medical_machine
 	id = "medical_machine"
 	name = "Connected To Machine"

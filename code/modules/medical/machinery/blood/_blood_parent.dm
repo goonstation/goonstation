@@ -2,26 +2,13 @@ ABSTRACT_TYPE(/obj/machinery/medical/blood)
 /**
  * # `machinery/medical/blood`
  *
- * Any piece of medical machinery which primarily deals in transfusing blood/reagents in a patient.
+ * Any piece of medical machinery which primarily deals in transfusing blood/reagents in a patient. Contains some relevant helper procs.
  */
 /obj/machinery/medical/blood
 	/// Units of fluid transferred each tick. Currently for both in and out.
 	var/transfer_volume = 16
 	/// Assuming there's a single internal reagent container.
 	var/maximum_container_volume = 16
-
-/*
-	Bespoke overrides:
-	* $FLUFF -> pick("pulled", "yanked", "ripped")
-	* $VOL -> [src.transfer_volume]
-*/
-/obj/machinery/medical/blood/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
-	text = ..()
-	if (findtext(text, "$FLUFF"))
-		var/fluff = pick("pulled", "yanked", "ripped")
-		text = replacetext(text, "$FLUFF", "[fluff]")
-	text = replacetext(text, "$VOL", "[src.transfer_volume]")
-	. = text
 
 /obj/machinery/medical/blood/New()
 	. = ..()
@@ -30,6 +17,19 @@ ABSTRACT_TYPE(/obj/machinery/medical/blood)
 	if (!src.maximum_container_volume)
 		return
 	src.create_reagents(src.maximum_container_volume)
+
+/**
+ * Unique overrides:
+ * 	$FLUFF -> pick("pulled", "yanked", "ripped")
+ * 	$VOL -> [src.transfer_volume]
+*/
+/obj/machinery/medical/blood/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
+	text = ..()
+	if (findtext(text, "$FLUFF"))
+		var/fluff = pick("pulled", "yanked", "ripped")
+		text = replacetext(text, "$FLUFF", "[fluff]")
+	text = replacetext(text, "$VOL", "[src.transfer_volume]")
+	. = text
 
 /obj/machinery/medical/blood/can_affect()
 	. = ..()

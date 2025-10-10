@@ -18,21 +18,21 @@
 	// This transfer rate may differ from the attached `iv_drip`.
 	transfer_volume = 5
 
-/*
-	Bespoke overrides:
-	* $MODE -> [src.iv_drip.mode]
-*/
 	low_power_msg = "IV pump unable to draw power. Check bag."
 	start_msg = "$MODE patient at $VOLu per tick."
 	stop_msg = "Stopped $MODE patient."
 
-	/// IV stands cannot operate without an `iv_drip` attached. Hence, this machine does not directly connect to the patient.
+	/// IV stands cannot operate without an `iv_drip` attached. This machine does not directly connect to the patient.
 	var/obj/item/reagent_containers/iv_drip/iv_drip = null
 
+/**
+ * Unique overrides:
+ * 	$MODE -> [src.iv_drip.mode]
+*/
 /obj/machinery/medical/blood/iv_stand/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
 	text = ..()
 	if (src.iv_drip)
-		text = replacetext(text, "$MODE", "[src.iv_drip.mode ? "infusing" : "drawing from"]")
+		text = replacetext(text, "$MODE", "[src.iv_drip?.mode ? "infusing" : "drawing from"]")
 	. = text
 
 /obj/machinery/medical/blood/iv_stand/New()
