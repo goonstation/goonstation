@@ -993,6 +993,9 @@
 	icon_state = "scope_off"
 
 	execute_ability()
+		if (!(the_item in the_mob.equipped_list()))
+			boutput(the_mob, SPAN_NOTICE("You can't toggle the scope if you aren't holding [the_item]!"))
+			return
 		var/datum/component/holdertargeting/sniper_scope/scope = the_item.GetComponent(/datum/component/holdertargeting/sniper_scope)
 		SEND_SIGNAL(the_item, COMSIG_SCOPE_ENABLED, the_mob, !scope.enabled)
 		if (scope.enabled)
