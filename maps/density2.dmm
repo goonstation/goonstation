@@ -6521,7 +6521,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/mask/surgical_shield,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/clothing/glasses/blindfold,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)

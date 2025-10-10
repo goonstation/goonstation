@@ -10897,7 +10897,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/blackwhite/side{
 	dir = 1
 	},
@@ -12021,7 +12021,7 @@
 /area/station/crewquarters/fuq3)
 "dFM" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -25783,7 +25783,7 @@
 /area/station/science/storage)
 "iap" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip,
+/obj/item/reagent_containers/glass/iv_drip,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -46565,7 +46565,7 @@
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = 6;
 	pixel_y = 4
 	},
@@ -58064,7 +58064,7 @@
 /area/station/crew_quarters/captain)
 "saU" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/device/analyzer/healthanalyzer,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
@@ -71198,7 +71198,7 @@
 /area/station/janitor/office)
 "waB" = (
 /obj/machinery/optable,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /obj/machinery/light_switch/south{
 	pixel_x = -4
 	},

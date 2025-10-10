@@ -196,7 +196,7 @@
 /area/listeningpost/general)
 "ij" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -1046,8 +1046,8 @@
 /obj/storage/crate/medical,
 /obj/random_item_spawner/med_tool/few,
 /obj/random_item_spawner/medicine/some,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},

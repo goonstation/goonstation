@@ -14945,7 +14945,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/redwhite{
 	dir = 5
@@ -20244,7 +20244,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/disposalpipe/segment,
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},

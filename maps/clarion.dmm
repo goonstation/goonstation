@@ -4248,8 +4248,8 @@
 "aIW" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/syringes,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
 	},
@@ -5998,11 +5998,11 @@
 	icon_state = "1-2"
 	},
 /obj/table/auto,
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/reagent_containers/hypospray{
 	pixel_x = -12;
 	pixel_y = 4
@@ -22454,7 +22454,7 @@
 	id = "OR1"
 	},
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "kXe" = (
@@ -29985,7 +29985,7 @@
 /obj/item/bandage,
 /obj/item/bandage,
 /obj/item/bandage,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/clothing/gloves/latex{
 	pixel_x = -4;
@@ -32154,7 +32154,7 @@
 	},
 /obj/item/device/radio/intercom/medical,
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},

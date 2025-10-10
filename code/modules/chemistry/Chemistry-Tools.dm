@@ -478,8 +478,8 @@ proc/ui_describe_reagents(atom/A)
 				else
 					boutput(user, SPAN_NOTICE("[src] doesn't have enough silver in it to coat [I]."))
 
-		else if (istype(I, /obj/item/reagent_containers/iv_drip))
-			var/obj/item/reagent_containers/iv_drip/W = I
+		else if (istype(I, /obj/item/reagent_containers/glass/iv_drip))
+			var/obj/item/reagent_containers/glass/iv_drip/W = I
 			if (W.is_open_container())
 				..()
 			else

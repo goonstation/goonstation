@@ -4108,7 +4108,7 @@
 /area/station/hydroponics/bay)
 "ayD" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
 "ayE" = (

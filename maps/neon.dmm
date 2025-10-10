@@ -1816,7 +1816,7 @@
 /area/radiostation/bridge)
 "bwu" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = 6
 	},
 /obj/item/handcuffs,

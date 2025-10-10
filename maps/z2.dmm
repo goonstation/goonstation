@@ -38549,7 +38549,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cOI" = (
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /obj/item/handcuffs,
 /obj/machinery/optable,
 /obj/decal/cleanable/blood{
@@ -45031,7 +45031,7 @@
 /obj/table/auto,
 /obj/item/bandage,
 /obj/item/bandage,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /obj/item/clothing/gloves/latex/random,
 /obj/item/implanter,
 /turf/unsimulated/floor/redwhite{
@@ -53326,7 +53326,7 @@
 /area/centcom/lobby)
 "dPR" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
 "dPT" = (

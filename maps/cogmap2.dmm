@@ -14094,7 +14094,7 @@
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/optable,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /obj/machinery/light/small,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
@@ -42098,8 +42098,8 @@
 /area/station/science/lobby)
 "cAs" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/kitchen/utensil/knife{
 	desc = "A precision instrument for biological research.";
 	name = "dissection knife"
@@ -51751,7 +51751,7 @@
 /area/research_outpost/chamber)
 "djZ" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/engine{
 	dir = 8;
 	icon_state = "engine_caution_misc"
@@ -65944,8 +65944,8 @@
 /obj/table/auto,
 /obj/item/storage/box/stma_kit,
 /obj/item/staple_gun,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -68897,7 +68897,7 @@
 /area/station/ranch)
 "swZ" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -69899,7 +69899,7 @@
 "ttv" = (
 /obj/machinery/light_switch/east,
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -70739,7 +70739,7 @@
 /area/station/engine/inner)
 "ugt" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "uir" = (

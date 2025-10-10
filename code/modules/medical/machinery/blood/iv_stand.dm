@@ -23,7 +23,7 @@
 	stop_msg = "Stopped $MODE patient."
 
 	/// IV stands cannot operate without an `iv_drip` attached. This machine does not directly connect to the patient.
-	var/obj/item/reagent_containers/iv_drip/iv_drip = null
+	var/obj/item/reagent_containers/glass/iv_drip/iv_drip = null
 
 /**
  * Unique overrides:
@@ -91,7 +91,7 @@
 	if (iswrenchingtool(W))
 		actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 2 SECONDS), user)
 		return
-	if (!istype(W, /obj/item/reagent_containers/iv_drip))
+	if (!istype(W, /obj/item/reagent_containers/glass/iv_drip))
 		return ..()
 	if (isrobot(user)) // are they a borg? it's probably a mediborg's IV then, don't take that!
 		return
@@ -151,7 +151,7 @@
 /obj/machinery/medical/blood/iv_stand/proc/add_iv_drip(obj/item/reagent_containers/iv_drip/new_iv, mob/user)
 	if (src.iv_drip)
 		return
-	if (!istype(new_iv, /obj/item/reagent_containers/iv_drip))
+	if (!istype(new_iv, /obj/item/reagent_containers/glass/iv_drip))
 		return
 	user.visible_message(SPAN_NOTICE("[user] hangs [new_iv] on [src]."), SPAN_NOTICE("You hang [new_iv] on [src]."))
 	if (new_iv.loc == user)
@@ -166,7 +166,7 @@
 
 /obj/machinery/medical/blood/iv_stand/proc/remove_iv_drip(mob/user, turf/new_loc)
 	src.stop_affect()
-	var/obj/item/reagent_containers/iv_drip/old_iv = src.iv_drip
+	var/obj/item/reagent_containers/glass/iv_drip/old_iv = src.iv_drip
 	src.iv_drip.iv_stand = null
 	src.iv_drip = null
 	src.remove_patient()

@@ -14650,7 +14650,7 @@
 /obj/item/bandage,
 /obj/item/bandage,
 /obj/item/staple_gun,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -24950,8 +24950,8 @@
 /area/station/science/testchamber)
 "chA" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/kitchen/utensil/knife{
 	desc = "A precision instrument for biological research.";
 	name = "dissection knife"
@@ -28416,7 +28416,7 @@
 /area/station/hallway/primary/west)
 "drc" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -31220,7 +31220,7 @@
 /area/station/crew_quarters/fitness)
 "fjF" = (
 /obj/table/auto,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/staple_gun,
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -43169,14 +43169,14 @@
 /area/station/crew_quarters/pool)
 "nof" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light/small,
 /obj/item/device/radio/intercom/medical{
 	dir = 8;
 	pixel_x = 21;
 	pixel_y = -4
 	},
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light/small,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
@@ -44948,14 +44948,14 @@
 /area/station/maintenance/inner/west)
 "oEg" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light/small,
 /obj/item/device/radio/intercom/medical{
 	dir = 8;
 	pixel_x = 21;
 	pixel_y = -4
 	},
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light/small,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
@@ -53687,13 +53687,13 @@
 /obj/item/body_bag{
 	pixel_x = -5
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -4
 	},
-/obj/item/reagent_containers/iv_drip/blood{
+/obj/item/reagent_containers/glass/iv_drip/blood{
 	pixel_x = 4
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -4
 	},
 /obj/item/bandage{

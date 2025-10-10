@@ -9888,7 +9888,7 @@
 	pixel_x = -3;
 	pixel_y = 11
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = 1;
 	pixel_y = 3
 	},
@@ -34366,7 +34366,7 @@
 /area/station/medical/medbay)
 "cxR" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -38755,7 +38755,7 @@
 	pixel_x = 4;
 	pixel_y = -11
 	},
-/obj/item/reagent_containers/iv_drip/blood{
+/obj/item/reagent_containers/glass/iv_drip/blood{
 	pixel_x = 2;
 	pixel_y = 1
 	},
@@ -51148,7 +51148,7 @@
 /area/station/crew_quarters/hop)
 "owm" = (
 /obj/table/auto,
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -7;
 	pixel_y = 2
 	},
@@ -51546,7 +51546,7 @@
 	pixel_x = 2;
 	pixel_y = -10
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -5;
 	pixel_y = 4
 	},
@@ -63540,7 +63540,7 @@
 /area/station/hallway/secondary/entry)
 "xzu" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "xAi" = (

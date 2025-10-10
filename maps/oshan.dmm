@@ -10610,8 +10610,8 @@
 /area/space)
 "aTI" = (
 /obj/table/round/auto,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/space/fluid,
 /area/space)
 "aTL" = (
@@ -35787,7 +35787,7 @@
 	},
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "kWm" = (
@@ -37624,7 +37624,7 @@
 /area/station/medical/medbay)
 "mVd" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = 6
 	},
 /obj/item/handcuffs,
@@ -41127,7 +41127,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "qWU" = (

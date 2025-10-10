@@ -150,7 +150,7 @@
 	item_state = "docbag1"
 	desc = "A old-fashioned doctor's bag designed to carry medical and surgical supplies."
 	kit_styles = list("docbag1", "docbag2", "docbag3")
-	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medicaldiagnosis/stethoscope)
+	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/iv_drip/blood, /obj/item/medicaldiagnosis/stethoscope)
 
 /* -------------------- First Aid Kits - VR -------------------- */
 
@@ -278,7 +278,7 @@
 	name = "\improper IV drip box"
 	icon_state = "patches"
 	desc = "A box of empty, sterile IV drips, ready to be filled with donated blood, or healing chemicals. Or whatever."
-	spawn_contents = list(/obj/item/reagent_containers/iv_drip = 7)
+	spawn_contents = list(/obj/item/reagent_containers/glass/iv_drip = 7)
 
 /obj/item/storage/box/body_bag
 	name = "body bag box"

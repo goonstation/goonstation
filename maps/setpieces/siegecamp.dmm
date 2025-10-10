@@ -1146,10 +1146,10 @@
 /area/space)
 "WN" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /obj/machinery/light/small/floor/blueish,
 /turf/unsimulated/floor/engine/glow/blue,
 /area/space)

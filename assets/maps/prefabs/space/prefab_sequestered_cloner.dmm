@@ -66,12 +66,12 @@
 /area/prefab/sequestered_cloner)
 "ff" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/iv_drip{
+/obj/item/reagent_containers/glass/iv_drip{
 	pixel_x = 7;
 	pixel_y = -4
 	},
-/obj/item/reagent_containers/iv_drip,
-/obj/item/reagent_containers/iv_drip{
+/obj/item/reagent_containers/glass/iv_drip,
+/obj/item/reagent_containers/glass/iv_drip{
 	pixel_x = -5;
 	pixel_y = 4
 	},

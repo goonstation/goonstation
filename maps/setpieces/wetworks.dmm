@@ -1179,7 +1179,7 @@
 /obj/table/auto,
 /obj/item/bandage,
 /obj/item/bandage,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /obj/item/clothing/gloves/latex/random,
 /obj/item/implanter,
 /obj/item_dispenser/bandage,

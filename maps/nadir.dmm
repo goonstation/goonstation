@@ -3961,11 +3961,11 @@
 "bLh" = (
 /obj/table/reinforced/auto,
 /obj/item/robodefibrillator,
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -15;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -15
 	},
 /obj/blind_switch/area/east,
@@ -6271,7 +6271,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -11787,7 +11787,7 @@
 /area/pasiphae)
 "fsR" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -24865,7 +24865,7 @@
 	dir = 8
 	},
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -31025,7 +31025,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"

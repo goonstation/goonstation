@@ -10368,8 +10368,8 @@
 	})
 "Xb" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/unsimulated/floor/sanitary/white,
 /area/adventure{
 	name = "Caer Vedwyd";

@@ -609,7 +609,7 @@
 /area/station/devzone)
 "ld" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip,
+/obj/item/reagent_containers/glass/iv_drip,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "lj" = (

@@ -245,7 +245,7 @@
 /area/mining/miningoutpost)
 "aT" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip,
+/obj/item/reagent_containers/glass/iv_drip,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/redwhite{
 	icon_state = "redwhite";
@@ -357,7 +357,7 @@
 /area/mining/miningoutpost)
 "bm" = (
 /obj/machinery/medical/blood/iv_stand,
-/obj/item/reagent_containers/iv_drip,
+/obj/item/reagent_containers/glass/iv_drip,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/redwhite{
 	icon_state = "redwhite";

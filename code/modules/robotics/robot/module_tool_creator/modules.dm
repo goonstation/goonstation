@@ -156,7 +156,7 @@
 		/obj/item/reagent_containers/mender/burn/medbot,
 		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/suture,
-		/obj/item/reagent_containers/iv_drip/blood,
+		/obj/item/reagent_containers/glass/iv_drip/blood,
 		/obj/item/circular_saw,
 		/obj/item/scalpel,
 		/obj/item/scissors/surgical_scissors,
