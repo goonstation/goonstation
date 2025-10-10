@@ -1,5 +1,3 @@
-#define DIALYSIS_PT_EMPTY "patient_empty"
-
 // MUST BE IDENTICAL TO ICONSTATE NAMES IN 'icons/obj/machines/medical/dialysis.dmi'.
 #define DIALYSIS_TUBING_BAD "tubing-bad"
 #define DIALYSIS_TUBING_GOOD "tubing-good"
@@ -33,12 +31,13 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	remove_msg_user = "You removes $SRC's cannulae from $TRG's."
 	remove_msg_patient = "<b>$USR</b> removes $SRC's cannulae from your arm."
 
-	remove_force_msg_viewer = "<b>$SRC's cannulae get $FLF out of $TRG's arm!</b>"
-	remove_force_msg_patient = "<b>$SRC's cannulae get $FLF out of your arm!</b>"
+	remove_force_msg_viewer = "<b>$SRC's cannulae get $FLUFF out of $TRG's arm!</b>"
+	remove_force_msg_patient = "<b>$SRC's cannulae get $FLUFF out of your arm!</b>"
 
 	hack_msg = "Dialysis protocols inversed."
 	low_power_msg = "Unable to draw power, stopping dialysis."
 	start_msg = "Dialysing patient."
+	stop_msg = "Stopping dialysis."
 
 	/// Reagent ID of the current patient's blood.
 	var/patient_blood_id = null
@@ -64,7 +63,8 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	src.handle_infusion(src.transfer_volume, mult)
 
 /obj/machinery/medical/blood/dialysis/stop_affect(reason = MED_MACHINE_FAILURE)
-	src.handle_infusion()
+	if (!src.patient.reagents.is_full())
+		src.handle_infusion()
 	REMOVE_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 	..()
 	src.UpdateIcon()

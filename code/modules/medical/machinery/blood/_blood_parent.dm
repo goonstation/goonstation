@@ -12,12 +12,15 @@ ABSTRACT_TYPE(/obj/machinery/medical/blood)
 
 /*
 	Bespoke overrides:
-	* $FLF -> pick("pulled", "yanked", "ripped")
+	* $FLUFF -> pick("pulled", "yanked", "ripped")
+	* $VOL -> [src.transfer_volume]
 */
 /obj/machinery/medical/blood/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
 	text = ..()
-	var/fluff = pick("pulled", "yanked", "ripped")
-	text = replacetext(text, "$FLF", "[fluff]")
+	if (findtext(text, "$FLUFF"))
+		var/fluff = pick("pulled", "yanked", "ripped")
+		text = replacetext(text, "$FLUFF", "[fluff]")
+	text = replacetext(text, "$VOL", "[src.transfer_volume]")
 	. = text
 
 /obj/machinery/medical/blood/New()
@@ -53,6 +56,7 @@ ABSTRACT_TYPE(/obj/machinery/medical/blood)
 	if (!isnum(volume))
 		return
 	if (src.patient.reagents.is_full())
+		src.stop_affect()
 		return
 	var/infusion_volume = src.calculate_transfer_volume(volume, mult)
 	src.reagents.trans_to(src.patient, infusion_volume)

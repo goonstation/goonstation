@@ -18,13 +18,22 @@
 	// This transfer rate may differ from the attached `iv_drip`.
 	transfer_volume = 5
 
+/*
+	Bespoke overrides:
+	* $MODE -> [src.iv_drip.mode]
+*/
 	low_power_msg = "IV pump unable to draw power. Check bag."
+	start_msg = "$MODE patient at $VOLu per tick."
+	stop_msg = "Stopped $MODE patient."
 
 	/// IV stands cannot operate without an `iv_drip` attached. Hence, this machine does not directly connect to the patient.
 	var/obj/item/reagent_containers/iv_drip/iv_drip = null
 
 /obj/machinery/medical/blood/iv_stand/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
-	return
+	text = ..()
+	if (src.iv_drip)
+		text = replacetext(text, "$MODE", "[src.iv_drip.mode ? "infusing" : "drawing from"]")
+	. = text
 
 /obj/machinery/medical/blood/iv_stand/New()
 	..()
@@ -33,9 +42,7 @@
 
 /obj/machinery/medical/blood/iv_stand/disposing()
 	if (src.iv_drip)
-		MOVE_OUT_TO_TURF_SAFE(src.iv_drip, src)
-		src.iv_drip.iv_stand = null
-		src.iv_drip = null
+		src.remove_iv_drip()
 	..()
 
 /obj/machinery/medical/blood/iv_stand/get_desc()
@@ -137,21 +144,14 @@
 		src.iv_drip.remove_patient(user)
 	src.UpdateIcon()
 
+/obj/machinery/medical/blood/iv_stand/can_affect()
+	. = ..()
+	if (!src.iv_drip)
+		return FALSE
+
 /obj/machinery/medical/blood/iv_stand/affect_patient(mult)
 	..()
-	if (!src.iv_drip)
-		return
 	src.iv_drip.process(mult)
-
-/obj/machinery/medical/blood/iv_stand/start_feedback()
-	..()
-	src.say("[src.iv_drip.mode == IV_INJECT ? "Infusing" : "Drawing from"] patient at [src.transfer_volume]u per tick.")
-
-/obj/machinery/medical/blood/iv_stand/stop_affect(reason = MED_MACHINE_FAILURE)
-	..()
-	if (!src.iv_drip)
-		return
-	src.say("Stopped [src.iv_drip.mode == IV_INJECT ? "infusing" : "drawing from"] patient.")
 
 /obj/machinery/medical/blood/iv_stand/deconstruct()
 	if (src.iv_drip)
@@ -178,8 +178,8 @@
 	src.update_name()
 
 /obj/machinery/medical/blood/iv_stand/proc/remove_iv_drip(mob/user, turf/new_loc)
-	src.iv_drip.iv_stand = null
 	var/obj/item/reagent_containers/iv_drip/old_iv = src.iv_drip
+	src.iv_drip.iv_stand = null
 	src.iv_drip = null
 	src.remove_patient()
 	src.UpdateIcon()

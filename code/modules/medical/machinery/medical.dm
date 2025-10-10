@@ -34,6 +34,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/active = FALSE
 	/// For EMAG effects.
 	var/hacked = FALSE
+	/// Appended on examine.
 	var/hacked_desc = "Something about it seems a little off."
 
 	/**
@@ -45,14 +46,19 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/connect_directly = TRUE
 	var/connection_time = 3 SECONDS
 
+	// Pixel offsets for this machine when paired with an object.
 	var/connect_offset_x = 0
 	var/connect_offset_y = 10
 
-	/* `tri_message` inputs for chat log feedback.
+	/*
+		Chat log feedback
 		Overrides:
 			* $USR -> [user]
 			* $SRC -> [src]
 			* $TRG -> [new_patient] or [src.patient] dependent on target.
+	*/
+	/*
+		`tri_message` inputs.
 	*/
 	/// Message to be displayed to all other viewers on attempted connection.
 	var/attempt_msg_viewer = "<b>$USR</b> begins connecting $SRC to $TRG."
@@ -84,9 +90,11 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	/// On being EMAG'd.
 	var/hack_msg = ""
 	/// If the machine cannot draw power from the area.
-	var/low_power_msg = "Unable to draw power."
+	var/low_power_msg = ""
 	/// On starting to affect the patient.
 	var/start_msg = ""
+	/// On stopping affecting the patient.
+	var/stop_msg = ""
 
 /// Replaces tags in constant text variables with non-constants.
 /obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
@@ -182,6 +190,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (src.hacked)
 		return FALSE
 	src.hacked = TRUE
+	if (length(src.hack_msg))
+		src.say(src.parse_message(src.hack_msg))
 	logTheThing(LOG_ADMIN, user, "emagged [src] at [log_loc(user)].")
 	logTheThing(LOG_DIARY, user, "emagged [src] at [log_loc(user)].", "admin")
 	message_admins("[key_name(usr)] emagged [src] at [log_loc(user)].")
@@ -219,20 +229,29 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!src.active)
 		return
 
-/// Any spoken feedback aside from low power messages should not be sent if the machine is disabled.
 /obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
 	if (!src.active)
 		return
 	src.active = FALSE
 	src.power_usage = 0
-	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given && !src.is_broken())
-		src.low_power_alert_given = TRUE
-		if (length(src.low_power_msg))
-			src.say(src.low_power_msg)
+	src.stop_feedback(reason)
 
-/// Override on children. Usecase includes any feedback the machine should provide about the affect it currently has on the patient.
+/// Feedback the machine should provide about the affect it currently has on the patient.
 /obj/machinery/medical/proc/start_feedback()
-	return
+	if (length(src.start_msg))
+		src.say(src.parse_message(src.start_msg))
+
+/// Any spoken feedback aside from low power messages should not be sent if the machine is disabled.
+/obj/machinery/medical/proc/stop_feedback(reason = MED_MACHINE_FAILURE)
+	if (!length(reason))
+		return
+	if (src.is_broken())
+		return
+	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given && length(src.low_power_msg))
+		src.say(src.parse_message(src.low_power_msg))
+		src.low_power_alert_given = TRUE
+	if (length(src.stop_msg))
+		src.say(src.parse_message(src.stop_msg))
 
 /obj/machinery/medical/proc/attempt_add_patient(mob/user, mob/living/carbon/new_patient)
 	. = TRUE
