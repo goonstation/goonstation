@@ -483,7 +483,7 @@
 	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
 	big_station_bounties[/obj/machinery/computer/cloning] = 2
 	big_station_bounties[/obj/machinery/clonepod] = 2
-	big_station_bounties[/obj/machinery/medical/dialysis] = 2
+	big_station_bounties[/obj/machinery/medical/blood/dialysis] = 2
 
 	big_station_bounties[/obj/machinery/flasher/portable] = 2
 	big_station_bounties[/obj/machinery/recharge_station] = 2

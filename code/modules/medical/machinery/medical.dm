@@ -34,6 +34,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/active = FALSE
 	/// For EMAG effects.
 	var/hacked = FALSE
+	var/hacked_desc = "Something about it seems a little off."
 
 	/**
 	 * Some machines don't connect directly to patients; they would then contain an item in its contents that handles the connection behaviour
@@ -79,6 +80,14 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	/// Message to be displayed to patient on forceful disconnection.
 	var/remove_force_msg_patient = "<b>$SRC is forcefully disconnected from you!</b>"
 
+	// Spoken feedback messages.
+	/// On being EMAG'd.
+	var/hack_msg = ""
+	/// If the machine cannot draw power from the area.
+	var/low_power_msg = "Unable to draw power."
+	/// On starting to affect the patient.
+	var/start_msg = ""
+
 /// Replaces tags in constant text variables with non-constants.
 /obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
 	if (!length(text))
@@ -98,7 +107,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/get_desc(dist, mob/user)
 	..()
 	if (src.hacked)
-		. += " Something about it seems a little off."
+		. += " [src.hacked_desc]"
 
 /obj/machinery/medical/attack_hand(mob/user)
 	if (src.paired_obj)
@@ -159,14 +168,13 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!src.check_connection())
 		src.remove_patient(force = TRUE)
 		return
+	if (!src.active)
+		return
 	if (!src.powered())
 		src.stop_affect(MED_MACHINE_NO_POWER)
 		return
 	if (!src.can_affect())
 		src.stop_affect()
-		return
-	if (!src.active)
-		src.start_affect()
 		return
 	src.affect_patient(mult)
 
@@ -180,14 +188,11 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/power_change()
 	. = ..()
+	if (!src.active)
+		return
 	if (!src.powered())
 		src.stop_affect(MED_MACHINE_NO_POWER)
 		return
-	if (src.active)
-		return
-	if (!src.can_affect())
-		return
-	src.start_affect()
 
 /obj/machinery/medical/set_broken()
 	. = ..()
@@ -214,11 +219,16 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!src.active)
 		return
 
+/// Any spoken feedback aside from low power messages should not be sent if the machine is disabled.
 /obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
 	if (!src.active)
 		return
 	src.active = FALSE
 	src.power_usage = 0
+	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given && !src.is_broken())
+		src.low_power_alert_given = TRUE
+		if (length(src.low_power_msg))
+			src.say(src.low_power_msg)
 
 /// Override on children. Usecase includes any feedback the machine should provide about the affect it currently has on the patient.
 /obj/machinery/medical/proc/start_feedback()
@@ -270,14 +280,13 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.remove_patient(user)
 
 /obj/machinery/medical/proc/remove_patient(mob/user, force = FALSE)
-	if (!src.patient || !iscarbon(src.patient))
-		return
-	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
 	if (ismob(user))
 		src.remove_message(user)
 		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
 	if (force && !user)
 		src.force_remove_feedback()
+	if (src.connect_directly)
+		UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
 	src.stop_affect()
 	src.patient = null
 

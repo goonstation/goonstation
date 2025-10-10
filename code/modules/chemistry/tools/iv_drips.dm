@@ -23,7 +23,7 @@
 	initial_volume = 250
 
 	var/mob/living/carbon/patient = null
-	var/obj/machinery/medical/iv_stand/iv_stand = null
+	var/obj/machinery/medical/blood/iv_stand/iv_stand = null
 
 	var/image/fluid_image = null
 	var/image/label_image = null
@@ -126,10 +126,10 @@
 	if (!isliving(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
 		. = ..()
 		return
-	if (!istype(over_object, /obj/machinery/medical/iv_stand))
+	if (!istype(over_object, /obj/machinery/medical/blood/iv_stand))
 		. = ..()
 		return
-	var/obj/machinery/medical/iv_stand/iv_stand = over_object
+	var/obj/machinery/medical/blood/iv_stand/iv_stand = over_object
 	iv_stand.add_iv_drip(over_object, user)
 	. = ..()
 
@@ -143,18 +143,18 @@
 	src.handle_draw(mult)
 
 /obj/item/reagent_containers/iv_drip/proc/handle_draw(mult)
-	var/transfer_rate = src.calculate_transfer_rate()
-	transfer_blood(src.patient, src, transfer_rate)
+	var/transfer_volume = src.calculate_transfer_volume()
+	transfer_blood(src.patient, src, transfer_volume)
 
 /obj/item/reagent_containers/iv_drip/proc/handle_inject(mult)
-	var/transfer_rate = src.calculate_transfer_rate()
-	src.reagents.trans_to(src.patient, transfer_rate)
-	src.patient.reagents.reaction(src.patient, INGEST, transfer_rate)
+	var/transfer_volume = src.calculate_transfer_volume()
+	src.reagents.trans_to(src.patient, transfer_volume)
+	src.patient.reagents.reaction(src.patient, INGEST, transfer_volume)
 
-/obj/item/reagent_containers/iv_drip/proc/calculate_transfer_rate(mult)
+/obj/item/reagent_containers/iv_drip/proc/calculate_transfer_volume(mult)
 	. = src.amount_per_transfer_from_this
 	if (src.iv_stand && !src.iv_stand.is_disabled())
-		. = src.iv_stand.transfer_rate
+		. = src.iv_stand.transfer_volume
 	. *= max(mult / 10, 1)
 
 /obj/item/reagent_containers/iv_drip/proc/update_name()
@@ -222,18 +222,16 @@
 		var/fluff = pick("pulled", "yanked", "ripped")
 		src.patient.visible_message(SPAN_ALERT("<b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b>"),\
 		SPAN_ALERT("<b>[src]'s needle gets [fluff] out of your arm!</b>"))
-	var/mob/living/carbon/human/old_patient = src.patient
+	if (ismob(user))
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		src.patient.tri_message(user,\
+			SPAN_NOTICE("<b>[user]</b> removes [src]'s needle from [src.patient == user ? "[his_or_her(src.patient)]" : "[src.patient]'s"] arm."),\
+			SPAN_NOTICE("You remove [src]'s needle from [src.patient == user ? "your" : "[src.patient]'s"] arm."),\
+			SPAN_NOTICE("[src.patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm."))
 	src.stop_transfusion()
 	src.patient = null
 	if (src.iv_stand)
 		src.iv_stand.remove_patient(user)
-	if (!ismob(user))
-		return
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	old_patient.tri_message(user,\
-		SPAN_NOTICE("<b>[user]</b> removes [src]'s needle from [old_patient == user ? "[his_or_her(old_patient)]" : "[old_patient]'s"] arm."),\
-		SPAN_NOTICE("You remove [src]'s needle from [old_patient == user ? "your" : "[old_patient]'s"] arm."),\
-		SPAN_NOTICE("[old_patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm."))
 
 /obj/item/reagent_containers/iv_drip/proc/start_transfusion()
 	src.active = TRUE
