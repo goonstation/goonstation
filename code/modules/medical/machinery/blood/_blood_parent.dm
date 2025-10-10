@@ -31,11 +31,6 @@ ABSTRACT_TYPE(/obj/machinery/medical/blood)
 	text = replacetext(text, "$VOL", "[src.transfer_volume]")
 	. = text
 
-/obj/machinery/medical/blood/can_affect()
-	. = ..()
-	if (!src.get_patient_fluid_volume())
-		return FALSE
-
 /// Draws patient blood into internal reagent container.
 /obj/machinery/medical/blood/proc/handle_draw(volume, mult)
 	if (!src.patient)
