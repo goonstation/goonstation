@@ -110,10 +110,10 @@
 		bioHolder.build_fingerprints()
 		. = ..()
 
-obj/item/reagent_containers/iv_drip/dead_exec
+/obj/item/reagent_containers/glass/iv_drip/dead_exec
 	desc = "A bag filled with someone's blood. It's labelled 'Jean Rockefeller'."
 	icon_state = "IV-blood"
-	mode = 1
+	mode = INJECT
 	initial_reagents = "blood"
 
 	New()

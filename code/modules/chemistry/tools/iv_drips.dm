@@ -335,7 +335,7 @@
 /datum/statusEffect/iv_drip/getTooltip()
 	. = "You are physically connected to an IV drip. Moving too far from it may forcefully disconnect you."
 
-/datum/statusEffect/iv_drip/onAdd(obj/item/reagent_containers/iv_drip/optional)
+/datum/statusEffect/iv_drip/onAdd(obj/item/reagent_containers/glass/iv_drip/optional)
 	..()
 	src.iv_drip = optional
 

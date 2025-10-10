@@ -148,7 +148,7 @@
 		P.setMaterial(src.material)
 	qdel(src)
 
-/obj/machinery/medical/blood/iv_stand/proc/add_iv_drip(obj/item/reagent_containers/iv_drip/new_iv, mob/user)
+/obj/machinery/medical/blood/iv_stand/proc/add_iv_drip(obj/item/reagent_containers/glass/iv_drip/new_iv, mob/user)
 	if (src.iv_drip)
 		return
 	if (!istype(new_iv, /obj/item/reagent_containers/glass/iv_drip))
