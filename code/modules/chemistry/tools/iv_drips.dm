@@ -169,9 +169,9 @@
 		user.show_text(failure_feedback, "red")
 		return FALSE
 	new_patient.tri_message(user,\
-		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s needle into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
-		SPAN_NOTICE("[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm."),\
-		SPAN_NOTICE("You begin inserting [src]'s needle into [new_patient == user ? "your" : "[new_patient]'s"] arm."))
+		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s needle into [new_patient == user ? "[him_or_her(new_patient)]" : "[new_patient]"]."),\
+		SPAN_NOTICE("[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into you."),\
+		SPAN_NOTICE("You begin inserting [src]'s needle into [new_patient]."))
 	logTheThing(LOG_COMBAT, user, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
 	var/icon/actionbar_icon = getFlatIcon(src.iv_stand ? src.iv_stand : src, no_anim = TRUE)
 	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(add_patient), list(new_patient, user), actionbar_icon, null, null, null)
@@ -204,9 +204,9 @@
 	if ((src.loc == user) && (src.patient != user))
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_movement), TRUE)
 	new_patient.tri_message(user,\
-		SPAN_NOTICE("<b>[user]</b> inserts [src]'s needle into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
-		SPAN_NOTICE("[new_patient == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm."),\
-		SPAN_NOTICE("You insert [src]'s needle into [new_patient == user ? "your" : "[new_patient]'s"] arm."))
+		SPAN_NOTICE("<b>[user]</b> inserts [src]'s needle into [new_patient == user ? "[himself_or_herself(new_patient)]" : "[new_patient]"]."),\
+		SPAN_NOTICE("[new_patient == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into you[new_patient == user ? "rself" : ""]."),\
+		SPAN_NOTICE("You insert [src]'s needle into [new_patient]."))
 	logTheThing(LOG_COMBAT, user, "connects an IV drip [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
 
 /obj/item/reagent_containers/iv_drip/proc/remove_patient(mob/user, force = FALSE)
@@ -215,14 +215,14 @@
 	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
 	if (force)
 		var/fluff = pick("pulled", "yanked", "ripped")
-		src.patient.visible_message(SPAN_ALERT("<b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b>"),\
-		SPAN_ALERT("<b>[src]'s needle gets [fluff] out of your arm!</b>"))
+		src.patient.visible_message(SPAN_ALERT("<b>[src]'s needle gets [fluff] out of [src.patient]!</b>"),\
+		SPAN_ALERT("<b>[src]'s needle gets [fluff] out of you!</b>"))
 	if (ismob(user))
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		src.patient.tri_message(user,\
-			SPAN_NOTICE("<b>[user]</b> removes [src]'s needle from [src.patient == user ? "[his_or_her(src.patient)]" : "[src.patient]'s"] arm."),\
-			SPAN_NOTICE("You remove [src]'s needle from [src.patient == user ? "your" : "[src.patient]'s"] arm."),\
-			SPAN_NOTICE("[src.patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm."))
+			SPAN_NOTICE("<b>[user]</b> removes [src]'s needle from [src.patient == user ? "[him_or_her(src.patient)]" : "[src.patient]"]."),\
+			SPAN_NOTICE("[src.patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from you[src.patient == user ? "rself" : ""]."),\
+			SPAN_NOTICE("You remove [src]'s needle from [src.patient]."))
 	src.stop_transfusion()
 	src.patient = null
 
