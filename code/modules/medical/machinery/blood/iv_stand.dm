@@ -27,7 +27,7 @@
 
 /**
  * Unique overrides:
- * 	$MODE -> [src.iv_drip.mode]
+ * 	$MODE -> [src.iv_drip?.mode]
 */
 /obj/machinery/medical/blood/iv_stand/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
 	text = ..()
@@ -38,7 +38,6 @@
 /obj/machinery/medical/blood/iv_stand/New()
 	..()
 	src.UpdateIcon()
-	src.update_name()
 
 /obj/machinery/medical/blood/iv_stand/disposing()
 	if (src.iv_drip)
@@ -106,36 +105,39 @@
 	src.remove_iv_drip(user)
 
 /obj/machinery/medical/blood/iv_stand/attempt_add_patient(mob/user, mob/living/carbon/new_patient)
-	. = TRUE
-	if (!ismob(user))
-		return FALSE
 	if (!src.iv_drip)
 		boutput(user, SPAN_ALERT("[src] does not have an IV drip attached!"))
-		return FALSE
-	if (!src.iv_drip.attempt_add_patient(user, new_patient))
-		return FALSE
-	src.add_patient(new_patient)
+		return
+	src.iv_drip.attempt_add_patient(user, new_patient)
 
 /obj/machinery/medical/blood/iv_stand/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!src.iv_drip)
 		return
-	src.patient = new_patient
-	src.start_affect()
+	src.patient = src.iv_drip.patient
+
+/obj/machinery/medical/blood/iv_stand/start_affect()
+	. = ..()
 	src.UpdateIcon()
 
 /obj/machinery/medical/blood/iv_stand/remove_patient(mob/user, force = FALSE)
-	src.stop_affect()
 	src.patient = null
+	if (!src.iv_drip)
+		return
+	if (src.iv_drip.patient)
+		src.iv_drip.remove_patient(user)
+
+/obj/machinery/medical/blood/iv_stand/stop_affect()
+	. = ..()
 	src.UpdateIcon()
-	src.iv_drip?.remove_patient(user, force)
 
 /obj/machinery/medical/blood/iv_stand/can_affect()
 	. = ..()
 	if (!src.iv_drip)
 		return FALSE
+	if (!src.iv_drip.active)
+		return FALSE
 
 /obj/machinery/medical/blood/iv_stand/affect_patient(mult)
-	..()
 	src.iv_drip.process(mult)
 
 /obj/machinery/medical/blood/iv_stand/deconstruct()
@@ -158,7 +160,7 @@
 	src.iv_drip = new_iv
 	src.iv_drip.iv_stand = src
 	src.iv_drip.handle_processing()
-	src.add_patient(src.iv_drip.patient)
+	src.add_patient()
 	src.UpdateIcon()
 	src.update_name()
 

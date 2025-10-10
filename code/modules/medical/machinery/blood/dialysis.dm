@@ -127,7 +127,6 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	name = "Dialysis"
 	desc = "Your blood is being filtered by a dialysis machine."
 	icon_state = "dialysis"
-	effect_quality = STATUS_QUALITY_POSITIVE
 
 /datum/statusEffect/medical_machine/getTooltip()
 	. = "A dialysis machine is filtering your blood, removing toxins and treating the symptoms of liver and kidney failure."

@@ -216,7 +216,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.low_power_alert_given = FALSE
 	src.power_usage = src.power_consumption
 	src.start_feedback()
-	src.affect_patient()
 
 /obj/machinery/medical/proc/affect_patient(mult)
 	if (!src.active)
@@ -225,7 +224,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
 	src.active = FALSE
 	src.power_usage = 0
-	src.stop_feedback(reason)
+	if (src.patient)
+		src.stop_feedback(reason)
 
 /// Feedback the machine should provide about the affect it currently has on the patient.
 /obj/machinery/medical/proc/start_feedback()
@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (force)
 		src.force_remove_feedback()
 	src.stop_affect()
-	for(var/datum/statusEffect/machine_status_effect as anything in src.patient.getStatusList(src.connection_status_effect, src))
+	for (var/datum/statusEffect/machine_status_effect as anything in src.patient.getStatusList(src.connection_status_effect, src))
 		src.patient.delStatus(machine_status_effect)
 	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
 	src.patient = null
