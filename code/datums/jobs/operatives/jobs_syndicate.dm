@@ -24,11 +24,13 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, src.name, source = ANTAGONIST_SOURCE_ADMIN)
 		SPAWN(0) //Let the ID actually spawn
 			var/obj/item/card/id/ID = M.get_id()
 			if(istype(ID))
 				ID.icon_state = "id_syndie" //Syndie ID normally starts with basic sprite
+		SPAWN(2) //Ghost respawn panel has a SPAWN(1) that clears all antag roles. Apply specialist role if no other role was picked
+			if(!M.mind?.is_antagonist())
+				M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, src.name, source = ANTAGONIST_SOURCE_ADMIN)
 
 /datum/job/special/syndicate/weak
 	name = "Junior Syndicate Operative"
