@@ -90,7 +90,7 @@
 		..()
 		return
 	var/mob/living/user = usr
-	if (!isliving(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
+	if (!isliving(user) || isintangible(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
 		..()
 		return
 	if (!src.iv_drip)
@@ -128,21 +128,22 @@
 	if (!src.iv_drip)
 		boutput(user, SPAN_ALERT("[src] does not have an IV drip attached!"))
 		return FALSE
-	src.iv_drip.attempt_add_patient(user, new_patient)
+	if (!src.iv_drip.attempt_add_patient(user, new_patient))
+		return FALSE
+	src.add_patient(new_patient)
 
 /obj/machinery/medical/blood/iv_stand/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!src.iv_drip)
 		return
-	if (!src.iv_drip.patient)
-		return
-	..()
+	src.patient = new_patient
+	src.start_affect()
 	src.UpdateIcon()
 
-/obj/machinery/medical/blood/iv_stand/remove_patient(mob/user, force)
-	..()
-	if (src.iv_drip?.patient)
-		src.iv_drip.remove_patient(user)
+/obj/machinery/medical/blood/iv_stand/remove_patient(mob/user, force = FALSE)
+	src.stop_affect()
+	src.patient = null
 	src.UpdateIcon()
+	src.iv_drip?.remove_patient(user, force)
 
 /obj/machinery/medical/blood/iv_stand/can_affect()
 	. = ..()

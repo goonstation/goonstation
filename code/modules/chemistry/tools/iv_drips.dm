@@ -32,8 +32,6 @@
 	var/mode = IV_DRAW
 	/// Is this actively drawing/injecting?
 	var/active = FALSE
-	/// Other reagent containers can pour reagents into this if slashed oppen.
-	var/slashed = FALSE
 
 /obj/item/reagent_containers/iv_drip/New()
 	..()
@@ -78,9 +76,6 @@
 	else
 		src.UpdateOverlays(null, "inj_dr")
 
-/obj/item/reagent_containers/iv_drip/is_open_container()
-	. = TRUE
-
 /obj/item/reagent_containers/iv_drip/pickup(mob/user)
 	if (src.patient)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_movement), TRUE)
@@ -111,19 +106,19 @@
 /obj/item/reagent_containers/iv_drip/attackby(obj/A, mob/user)
 	if (!iscuttingtool(A))
 		return ..()
-	if (src.slashed)
-		src.slashed = TRUE
-		src.desc = "[src.desc] It has been sliced open."
-		boutput(user, "You carefully slice [src] open.")
-	else
+	if (src.is_open_container())
 		boutput(user, "[src] has already been sliced open.")
+		return
+	src.set_open_container(TRUE)
+	src.desc = "[src.desc] It has been sliced open."
+	boutput(user, "You carefully slice [src] open.")
 
 /obj/item/reagent_containers/iv_drip/mouse_drop(atom/over_object)
 	if (!isatom(over_object))
 		. = ..()
 		return
 	var/mob/living/user = usr
-	if (!isliving(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
+	if (!isliving(user) || isintangible(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(over_object, user))
 		. = ..()
 		return
 	if (!istype(over_object, /obj/machinery/medical/blood/iv_stand))
@@ -164,15 +159,16 @@
 		src.name = "\improper IV drip"
 
 /obj/item/reagent_containers/iv_drip/proc/attempt_add_patient(mob/living/carbon/new_patient, mob/user)
+	. = TRUE
 	if (!iscarbon(new_patient))
-		return
+		return FALSE
 	if (src.patient && (src.patient != new_patient))
 		user.show_text("[src] is already being used by someone else!", "red")
-		return
+		return FALSE
 	var/failure_feedback = src.can_connect(new_patient)
 	if (failure_feedback)
 		user.show_text(failure_feedback, "red")
-		return
+		return FALSE
 	new_patient.tri_message(user,\
 		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s needle into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
 		SPAN_NOTICE("[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm."),\
@@ -230,8 +226,6 @@
 			SPAN_NOTICE("[src.patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm."))
 	src.stop_transfusion()
 	src.patient = null
-	if (src.iv_stand)
-		src.iv_stand.remove_patient(user)
 
 /obj/item/reagent_containers/iv_drip/proc/start_transfusion()
 	src.active = TRUE
@@ -245,9 +239,7 @@
 	src.active = FALSE
 	src.handle_processing()
 	REMOVE_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
-	if (!src.iv_stand)
-		return
-	src.iv_stand.stop_affect()
+	src.iv_stand?.stop_affect()
 
 /// When attached to an IV stand, we'll leech off of the machine process loop instead of `global.processing_items`.
 /obj/item/reagent_containers/iv_drip/proc/handle_processing()
