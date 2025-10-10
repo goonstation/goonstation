@@ -30,10 +30,13 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/power_consumption = 250 MILLI WATTS
 	/// Fire off single feedback message after losing power.
 	var/low_power_alert_given = FALSE
+	/// Fire off single feedback message if failing to start. Resets on successful start.
+	var/start_fail_alert_given = FALSE
 	/// Is this device currently affecting a patient?
 	var/active = FALSE
 	/// For EMAG effects.
 	var/hacked = FALSE
+	var/hackable = FALSE
 	/// Appended on examine.
 	var/hacked_desc = "Something about it seems a little off."
 
@@ -81,6 +84,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/hack_msg = ""
 	/// If the machine cannot draw power from the area.
 	var/low_power_msg = ""
+	/// On failure to start.
+	var/start_fail_msg = ""
 	/// On starting to affect the patient.
 	var/start_msg = ""
 	/// On stopping affecting the patient.
@@ -141,15 +146,25 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!src.check_connection())
 		src.remove_patient(force = TRUE)
 		return
-	if (!src.active)
+	if (src.active)
+		if (!src.powered())
+			src.stop_affect(MED_MACHINE_NO_POWER)
+			return
+		if (!src.can_affect())
+			src.stop_affect()
+			return
+		src.affect_patient(mult)
 		return
 	if (!src.can_affect())
-		src.stop_affect()
 		return
-	src.affect_patient(mult)
+	if (!src.powered())
+		return
+	src.start_affect()
 
 /obj/machinery/medical/emag_act(mob/user, obj/item/card/emag/E)
 	if (src.hacked)
+		return FALSE
+	if (!src.hackable)
 		return FALSE
 	src.hacked = TRUE
 	if (length(src.hack_msg))
@@ -193,7 +208,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	. = TRUE
 	if (!src.patient)
 		return FALSE
-	if (src.is_disabled())
+	if (src.is_broken())
 		return FALSE
 
 /// For machines that connect directly to patients: is our connection still good?
@@ -209,9 +224,11 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/proc/start_affect()
 	if (!src.can_affect())
+		src.start_failure_feedback()
 		return
 	src.active = TRUE
 	src.low_power_alert_given = FALSE
+	src.start_fail_alert_given = FALSE
 	src.power_usage = src.power_consumption
 	src.start_feedback()
 
@@ -220,10 +237,18 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 
 /obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
-	src.active = FALSE
-	src.power_usage = 0
 	if (src.patient)
 		src.stop_feedback(reason)
+	src.active = FALSE
+	src.power_usage = 0
+
+/// Feedback the machine should provide about the affect it currently has on the patient.
+/obj/machinery/medical/proc/start_failure_feedback()
+	if (src.start_fail_alert_given)
+		return
+	src.start_fail_alert_given = TRUE
+	if (length(src.start_fail_msg))
+		src.say(src.parse_message(src.start_fail_msg))
 
 /// Feedback the machine should provide about the affect it currently has on the patient.
 /obj/machinery/medical/proc/start_feedback()
@@ -233,6 +258,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /// Any spoken feedback aside from low power messages should not be sent if the machine is disabled.
 /obj/machinery/medical/proc/stop_feedback(reason = MED_MACHINE_FAILURE)
 	if (!length(reason))
+		return
+	if (!src.active)
 		return
 	if (src.is_broken())
 		return
@@ -305,6 +332,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		text = replacetext(text, "$USR", "[user]")
 	if (iscarbon(target))
 		text = replacetext(text, "$TRG", "[user == target ? (self_referential ? "yourself" : himself_or_herself(user)) : target]")
+	// Fuck this line in particular. Surely there's a better way.
 	text = replacetext(text, "$SRC", "[src]")
 	. = text
 

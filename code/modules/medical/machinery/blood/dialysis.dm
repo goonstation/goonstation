@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	icon_state = "dialysis"
 	power_consumption = 1.5 KILO WATTS
 	transfer_volume = 16
+	hackable = TRUE
 
 	connection_status_effect = "dialysis"
 
@@ -35,6 +36,7 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 
 	hack_msg = "Dialysis protocols inversed."
 	low_power_msg = "Unable to draw power, stopping dialysis."
+	start_fail_msg = "Failure to start dialysis. Check patient."
 	start_msg = "Dialysing patient."
 	stop_msg = "Stopping dialysis."
 

@@ -108,7 +108,7 @@
 	if (!src.iv_drip)
 		boutput(user, SPAN_ALERT("[src] does not have an IV drip attached!"))
 		return
-	src.iv_drip.attempt_add_patient(user, new_patient)
+	src.iv_drip.attempt_add_patient(new_patient, user)
 
 /obj/machinery/medical/blood/iv_stand/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!src.iv_drip)
@@ -157,8 +157,9 @@
 	new_iv.set_loc(src)
 	src.iv_drip = new_iv
 	src.iv_drip.iv_stand = src
-	src.add_patient()
-	src.iv_drip.start_transfusion()
+	if (src.iv_drip.patient)
+		src.add_patient()
+		src.iv_drip.start_transfusion()
 	src.UpdateIcon()
 	src.update_name()
 
@@ -171,13 +172,14 @@
 	src.UpdateIcon()
 	src.update_name()
 	old_iv.handle_processing()
+	if (isturf(new_loc))
+		old_iv.set_loc(new_loc)
+		return
 	if (ismob(user))
 		user.visible_message(SPAN_NOTICE("[user] takes [old_iv] down from [src]."), SPAN_NOTICE("You take [old_iv] down from [src]."))
 		user.put_in_hand_or_drop(old_iv)
 		return
-	if (!isturf(new_loc))
-		new_loc = get_turf(src)
-	src.iv_drip.set_loc(new_loc)
+	old_iv.set_loc(get_turf(new_loc))
 
 /obj/item/furniture_parts/IVstand
 	name = "\improper IV stand parts"

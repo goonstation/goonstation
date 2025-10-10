@@ -114,7 +114,7 @@
 		. = ..()
 		return
 	var/obj/machinery/medical/blood/iv_stand/iv_stand = over_object
-	iv_stand.add_iv_drip(over_object, user)
+	iv_stand.add_iv_drip(src, user)
 
 /// `mult` only matters if `src` is connected to an IV stand.
 /obj/item/reagent_containers/glass/iv_drip/process(mult = 10)
@@ -168,7 +168,7 @@
 		if (patient_to_check.reagents.is_full())
 			return IV_FAIL_PT_FULL
 		return
-	if (src.check_vampire() || (!patient_to_check.reagents.total_volume && !patient_to_check.blood_volume))
+	if (src.check_vampire(patient_to_check) || (!patient_to_check.reagents.total_volume && !patient_to_check.blood_volume))
 		return IV_FAIL_PT_EMPTY
 	if (src.reagents.is_full())
 		return IV_FAIL_BAG_FULL
@@ -183,8 +183,8 @@
 		user.show_text(src.connect_fail_feedback(failure_feedback, new_patient), "red")
 		return FALSE
 	new_patient.tri_message(user,\
-		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s needle into [new_patient == user ? "[him_or_her(new_patient)]" : "[new_patient]"]."),\
-		SPAN_NOTICE("[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into you."),\
+		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s needle into [new_patient == user ? "[himself_or_herself(new_patient)]" : "[new_patient]"]."),\
+		SPAN_NOTICE("[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into you[new_patient == user ? "rself" : ""]."),\
 		SPAN_NOTICE("You begin inserting [src]'s needle into [new_patient]."))
 	logTheThing(LOG_COMBAT, user, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
 	var/icon/actionbar_icon = getFlatIcon(src.iv_stand ? src.iv_stand : src, no_anim = TRUE)
@@ -200,9 +200,9 @@
 		if (IV_FAIL_PT_EMPTY)
 			return "[new_patient] doesn't have anything left to give!"
 		if (IV_FAIL_PT_FULL)
-			return "There's nothing left in [src]!"
-		if (IV_FAIL_BAG_EMPTY)
 			return "[new_patient]'s blood pressure seems dangerously high as it is, there's probably no room for anything else!"
+		if (IV_FAIL_BAG_EMPTY)
+			return "There's nothing left in [src]!"
 
 /obj/item/reagent_containers/glass/iv_drip/proc/add_patient(mob/living/carbon/human/new_patient, mob/user)
 	if (src.patient)
@@ -235,17 +235,20 @@
 	if (ismob(user))
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		src.patient.tri_message(user,\
-			SPAN_NOTICE("<b>[user]</b> removes [src]'s needle from [src.patient == user ? "[him_or_her(src.patient)]" : "[src.patient]"]."),\
+			SPAN_NOTICE("<b>[user]</b> removes [src]'s needle from [src.patient == user ? "[himself_or_herself(src.patient)]" : "[src.patient]"]."),\
 			SPAN_NOTICE("[src.patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from you[src.patient == user ? "rself" : ""]."),\
 			SPAN_NOTICE("You remove [src]'s needle from [src.patient]."))
 	src.stop_transfusion()
 	for (var/datum/statusEffect/status_effect as anything in src.patient.getStatusList("iv_drip", src))
 		src.patient.delStatus(status_effect)
 	src.patient = null
+	src.UpdateIcon()
 	if (src.iv_stand?.patient)
 		src.iv_stand.remove_patient(user)
 
 /obj/item/reagent_containers/glass/iv_drip/proc/start_transfusion()
+	if (src.check_iv_fail())
+		return
 	src.active = TRUE
 	src.handle_processing()
 	APPLY_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 2)
