@@ -250,6 +250,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given && length(src.low_power_msg))
 		src.say(src.parse_message(src.low_power_msg))
 		src.low_power_alert_given = TRUE
+		return
 	if (length(src.stop_msg))
 		src.say(src.parse_message(src.stop_msg))
 

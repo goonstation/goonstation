@@ -178,6 +178,7 @@
 	src.update_name()
 
 /obj/machinery/medical/blood/iv_stand/proc/remove_iv_drip(mob/user, turf/new_loc)
+	src.stop_affect()
 	var/obj/item/reagent_containers/iv_drip/old_iv = src.iv_drip
 	src.iv_drip.iv_stand = null
 	src.iv_drip = null
