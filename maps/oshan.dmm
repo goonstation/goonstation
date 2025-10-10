@@ -35786,17 +35786,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/medical/dialysis,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/decal/tile_edge/line/red{
-	icon_state = "line1"
-	},
-/obj/machinery/light/incandescent/cool,
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -41136,7 +41126,7 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -43938,7 +43928,7 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
-/obj/machinery/dialysis,
+/obj/machinery/medical/dialysis,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "ujb" = (
@@ -45578,14 +45568,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
 "wsD" = (
-/obj/machinery/medical/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/disposalpipe/segment,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/disposalpipe/segment,
 /obj/machinery/optable{
 	id = "OR1"
