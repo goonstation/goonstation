@@ -149,7 +149,6 @@ interface ModifyAppearance {
   style1: string;
   style2: string;
   style3: string;
-  fixColors: BooleanLike;
   hasEyes: BooleanLike;
   hasSkin: BooleanLike;
   hasHair: BooleanLike;

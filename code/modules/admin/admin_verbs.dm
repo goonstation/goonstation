@@ -387,6 +387,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,
 		/client/proc/cmd_paraviewer,
+		/client/proc/cmd_ambient_viewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
@@ -2154,6 +2155,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.addreagents(A)
 		if("Check Reagents")
 			C.cmd_admin_check_reagents(A)
+		if ("Adjust Addictions")
+			C.cmd_change_addiction(A)
 		if("View Variables")
 			C.debug_variables(A)
 		if("View Fingerprints")

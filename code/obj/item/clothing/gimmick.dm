@@ -335,15 +335,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 		setProperty("coldprot", 20)
 		setProperty("radprot", 5)
 
-// Donkini
-
-/obj/item/clothing/under/gimmick/donkini
-	name = "\improper Donkini"
-	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
-	icon_state = "donkini"
-	item_state = "donkini"
-	hide_underwear = TRUE
-
 // Duke Nukem
 
 /obj/item/clothing/under/gimmick/duke

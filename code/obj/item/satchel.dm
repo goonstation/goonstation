@@ -79,6 +79,8 @@
 				if (length(src.contents) > 1)
 					if (user.a_intent == INTENT_GRAB)
 						getItem = src.search_through(user)
+						if (!getItem) // prevents the satchel teleporting back to the hand if the search is cancelled
+							return
 
 					else
 						user.visible_message(SPAN_NOTICE("<b>[user]</b> rummages through \the [src]."),\
@@ -125,6 +127,9 @@
 		sortList(satchel_contents, /proc/cmp_text_asc)
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
 		if (!chosenItem || !(satchel_contents[chosenItem] in src.contents))
+			return
+		if (!user.is_in_hands(src))
+			boutput(user, SPAN_ALERT("You could have sworn [src] was just in your hand a moment ago."))
 			return
 		return satchel_contents[chosenItem]
 
@@ -210,8 +215,9 @@
 		if (!length(src.contents))
 			boutput(user, SPAN_ALERT("There's nothing in [src] to dump out!"))
 			return
-		if (!user.is_in_hands(src))
-			boutput(user, SPAN_ALERT("You need to be holding [src] to do that."))
+		if (!(src in user.equipped_list()))
+			if (!isrobot(user))
+				boutput(user, SPAN_ALERT("You need to be holding [src] to do that."))
 			return
 		for(var/obj/item/item in src.contents)
 			if (chute.fits_in(item))
@@ -219,6 +225,7 @@
 		user.set_dir(get_dir(user, chute))
 		src.UpdateIcon()
 		src.tooltip_rebuild = TRUE
+		chute.play_item_insert_sound(src)
 		user.visible_message("<b>[user.name]</b> dumps out [src] into [chute].")
 		chute.update()
 
@@ -307,6 +314,7 @@
 		icon_state = "hydrosatchel"
 		item_state = "hydrosatchel"
 		itemstring = "items of produce"
+		maxitems = 50
 
 		New()
 			..()
@@ -321,7 +329,9 @@
 			/obj/item/raw_material/cotton,
 			/obj/item/feather,
 			/obj/item/bananapeel)
-			exceptions = list(/obj/item/plant/tumbling_creeper) // tumbling creeper have size restrictions and should not be carried in large amount
+			exceptions = list(/obj/item/plant/tumbling_creeper, /obj/item/reagent_containers/food/snacks/ingredient/egg)
+			// tumbling creeper have size restrictions and should not be carried in large amount
+			// eggs are just a bit too powerful to fit in your pocket
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()
