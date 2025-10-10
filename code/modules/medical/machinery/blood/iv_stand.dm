@@ -157,8 +157,8 @@
 	new_iv.set_loc(src)
 	src.iv_drip = new_iv
 	src.iv_drip.iv_stand = src
-	src.iv_drip.handle_processing()
 	src.add_patient()
+	src.iv_drip.start_transfusion()
 	src.UpdateIcon()
 	src.update_name()
 

@@ -107,8 +107,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/Move(atom/target)
 	. = ..()
-	if (src.paired_obj)
-		src.check_paired_obj()
 	if (!src.patient)
 		return
 	if (src.check_connection())
@@ -354,39 +352,36 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
-	if (!isobj(target_object) || src.paired_obj)
+	if (!isobj(target_object))
 		return FALSE
+	if (src.paired_obj)
+		src.detach_from_obj(user)
 	if (ismob(user))
 		src.visible_message(SPAN_NOTICE("[user] attaches [src] to [target_object]."))
 	src.paired_obj = target_object
-	mutual_attach(src, src.paired_obj)
 	src.set_loc(src.paired_obj.loc)
 	src.pixel_x = src.connect_offset_x
 	src.pixel_y = src.connect_offset_y
 	src.density = src.paired_obj.density
 	src.set_layer()
+	mutual_attach(src, src.paired_obj)
 	RegisterSignal(src.paired_obj, COMSIG_ATOM_DIR_CHANGED, PROC_REF(set_layer))
-	RegisterSignal(src.paired_obj, COMSIG_MOVABLE_MOVED, PROC_REF(check_paired_obj))
+	RegisterSignal(src.paired_obj, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(paired_obj_disposed))
 
-/obj/machinery/medical/proc/check_paired_obj()
-	if (src.paired_obj in src.loc)
-		return
+/obj/machinery/medical/proc/paired_obj_disposed()
 	src.detach_from_obj()
 
 /obj/machinery/medical/proc/detach_from_obj(mob/user)
-	. = TRUE
+	mutual_detach(src, src.paired_obj)
+	UnregisterSignal(src.paired_obj, COMSIG_ATOM_DIR_CHANGED)
+	UnregisterSignal(src.paired_obj, COMSIG_PARENT_PRE_DISPOSING)
+	if (ismob(user))
+		src.visible_message(SPAN_NOTICE("[user] detaches [src] from [src.paired_obj]."))
 	src.layer = initial(src.layer)
 	src.pixel_x = initial(src.pixel_x)
 	src.pixel_y = initial(src.pixel_y)
 	src.paired_obj = null
 	src.density = initial(src.density)
-	if (!src.paired_obj)
-		return FALSE
-	if (ismob(user))
-		src.visible_message(SPAN_NOTICE("[user] detaches [src] from [src.paired_obj]."))
-	mutual_detach(src, src.paired_obj)
-	UnregisterSignal(src.paired_obj, COMSIG_ATOM_DIR_CHANGED)
-	UnregisterSignal(src.paired_obj, COMSIG_MOVABLE_MOVED)
 
 /// Specifically because of chairs, they change layers on dir change.
 /obj/machinery/medical/proc/set_layer()

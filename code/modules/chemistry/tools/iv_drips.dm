@@ -275,7 +275,7 @@
 	if (in_interact_range(src, src.patient))
 		return
 	// JAAAANK
-	if ((src.patient.pulling == src) || (src.patient.pulling == src.iv_stand))
+	if ((src.patient.pulling == src) || (src.iv_stand && (src.patient.pulling == src.iv_stand)))
 		return
 	. = FALSE
 
