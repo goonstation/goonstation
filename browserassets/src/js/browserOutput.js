@@ -537,21 +537,6 @@ function ehjaxCallback(data) {
       opts.perfMonLoaded = true;
     } else if (data.modeChange) {
       changeMode(data.modeChange);
-    } else if (data.firebug) {
-      if (data.trigger) {
-        output(
-          '<span class="internal boldnshit">Loading firebug console, triggered by ' +
-            data.trigger +
-            '...</span>'
-        );
-      } else {
-        output(
-          '<span class="internal boldnshit">Loading firebug console...</span>'
-        );
-      }
-      var firebugEl = document.createElement('script');
-      firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-      document.body.appendChild(firebugEl);
     } else if (data.dectalk) {
       var message =
         '<audio class="dectalk" src="' +
