@@ -126,7 +126,6 @@
 		return
 	var/obj/machinery/medical/blood/iv_stand/iv_stand = over_object
 	iv_stand.add_iv_drip(over_object, user)
-	. = ..()
 
 /// `mult` only matters if `src` is connected to an IV stand.
 /obj/item/reagent_containers/iv_drip/process(mult = 10)
