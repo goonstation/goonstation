@@ -120,11 +120,9 @@
 	src.UpdateIcon()
 
 /obj/machinery/medical/blood/iv_stand/remove_patient(mob/user, force = FALSE)
-	src.patient = null
-	if (!src.iv_drip)
-		return
-	if (src.iv_drip.patient)
+	if (src.iv_drip?.patient)
 		src.iv_drip.remove_patient(user)
+	src.patient = null
 
 /obj/machinery/medical/blood/iv_stand/stop_affect()
 	. = ..()
