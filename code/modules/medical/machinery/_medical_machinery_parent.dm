@@ -246,17 +246,16 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		src.say(src.parse_message(src.stop_msg))
 
 /obj/machinery/medical/proc/attempt_add_patient(mob/user, mob/living/carbon/new_patient)
-	. = TRUE
 	if (!src.connect_directly)
 		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/attempt_add_patient()`!")
 	if (!ismob(user))
-		return FALSE
+		return
 	if (!iscarbon(new_patient))
 		boutput(user, SPAN_ALERT("Unable to connect [new_patient] to [src]!"))
-		return FALSE
+		return
 	if (src.patient)
 		boutput(user, SPAN_ALERT("Unable to connect [new_patient] as [src.patient] is already using [src]!"))
-		return FALSE
+		return
 	src.attempt_message(user, new_patient)
 	logTheThing(LOG_COMBAT, user, "is trying to connect [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
 	var/icon/actionbar_icon = getFlatIcon(src)
@@ -272,7 +271,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (ismob(user))
 		src.add_message(user, new_patient)
 		logTheThing(LOG_COMBAT, user, "connected [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
-	src.patient.setStatus(src.connection_status_effect, INFINITE_STATUS, src)
+	if (!length(src.patient.getStatusList(src.connection_status_effect, src)))
+		src.patient.setStatus(src.connection_status_effect, INFINITE_STATUS, src)
 	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_move))
 
 /obj/machinery/medical/proc/on_patient_move()
@@ -283,19 +283,16 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/remove_patient(mob/user, force = FALSE)
 	if (!src.connect_directly)
 		CRASH("[src] has not overridden patient connectivity behaviour on `/proc/remove_patient()`!")
-	src.stop_affect()
-	var/mob/living/carbon/old_patient = src.patient
-	src.patient = null
+	if (ismob(user))
+		src.remove_message(user)
+		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
 	if (force)
 		src.force_remove_feedback()
-	var/list/datum/statusEffect/statuses = old_patient.getStatusList(src.connection_status_effect, src)
-	if (length(statuses))
-		old_patient.delStatus(statuses[1])
-	UnregisterSignal(old_patient, COMSIG_MOVABLE_MOVED)
-	if (!ismob(user))
-		return
-	src.remove_message(user)
-	logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(old_patient, "combat")] at [log_loc(user)].")
+	src.stop_affect()
+	for(var/datum/statusEffect/machine_status_effect as anything in src.patient.getStatusList(src.connection_status_effect, src))
+		src.patient.delStatus(machine_status_effect)
+	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
+	src.patient = null
 
 /*
 	Replaces tags in constant text variables with non-constants.
@@ -309,7 +306,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (ismob(user))
 		text = replacetext(text, "$USR", "[user]")
 	if (iscarbon(target))
-		text = replacetext(text, "$TRG", "[user == target ? (self_referential ? "you" : himself_or_herself(user)) : target]")
+		text = replacetext(text, "$TRG", "[user == target ? (self_referential ? "yourself" : himself_or_herself(user)) : target]")
 	text = replacetext(text, "$SRC", "[src]")
 	. = text
 
@@ -347,9 +344,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
 	var/obj/object_to_attach_to = null
 	for (var/whitelist_type in typinfo.paired_obj_whitelist)
-		if (!istype(over_object, whitelist_type))
+		if (!istype(target_object, whitelist_type))
 			continue
-		object_to_attach_to = over_object
+		object_to_attach_to = target_object
 		break
 	if (!object_to_attach_to)
 		return FALSE
@@ -401,7 +398,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/deconstruct()
 	qdel(src)
 
-ABSTRACT_TYPE(/datum/statusEffect/medical_machine)
 /**
  * # /datum/statusEffect/medical_machine
  *

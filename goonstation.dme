@@ -1656,7 +1656,7 @@
 #include "code\modules\medical\genetics\bioEffects\powers.dm"
 #include "code\modules\medical\genetics\bioEffects\speech.dm"
 #include "code\modules\medical\genetics\bioEffects\useless.dm"
-#include "code\modules\medical\machinery\medical.dm"
+#include "code\modules\medical\machinery\_medical_machinery_parent.dm"
 #include "code\modules\medical\machinery\blood\_blood_parent.dm"
 #include "code\modules\medical\machinery\blood\dialysis.dm"
 #include "code\modules\medical\machinery\blood\iv_stand.dm"
