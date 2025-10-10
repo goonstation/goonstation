@@ -20,7 +20,7 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	transfer_volume = 16
 	hackable = TRUE
 
-	connection_status_effect = "dialysis"
+	connection_status_effect = "dialysis-machine"
 
 	attempt_msg_viewer = "<b>$USR</b> begins inserting $SRC's cannulae into $TRG."
 	attempt_msg_user = "You begin inserting $SRC's cannulae into $TRG."
@@ -61,11 +61,14 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	src.handle_draw(src.transfer_volume, mult)
 	src.screen_blood()
 	src.handle_infusion(src.transfer_volume, mult)
+	if (src.active && !src.patient.hasStatus("dialysis"))
+		src.patient.setStatus("dialysis", INFINITE_STATUS)
 
 /obj/machinery/medical/blood/dialysis/stop_affect(reason = MED_MACHINE_FAILURE)
 	if (!src.patient.reagents.is_full())
 		src.handle_infusion()
 	REMOVE_ATOM_PROPERTY(src.patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
+	src.patient.delStatus("dialysis")
 	..()
 	src.UpdateIcon()
 
@@ -125,10 +128,21 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 #undef DIALYSIS_TUBING_GOOD
 
 /datum/statusEffect/medical_machine/dialysis
+	id = "dialysis-machine"
+	name = "Dialysis Machine"
+	desc = "You are connected to a dialysis machine."
+	icon_state = "dialysis"
+
+/datum/statusEffect/medical_machine/getTooltip()
+	. = "A dialysis machine is connected to your body. Moving too far from it may forcefully disconnect you."
+
+/datum/statusEffect/dialysis
 	id = "dialysis"
 	name = "Dialysis"
 	desc = "Your blood is being filtered by a dialysis machine."
 	icon_state = "dialysis"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	unique = TRUE
 
-/datum/statusEffect/medical_machine/getTooltip()
+/datum/statusEffect/dialysed/getTooltip()
 	. = "A dialysis machine is filtering your blood, removing toxins and treating the symptoms of liver and kidney failure."
