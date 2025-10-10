@@ -372,7 +372,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	RegisterSignal(src.paired_obj, COMSIG_MOVABLE_MOVED, PROC_REF(check_paired_obj))
 
 /obj/machinery/medical/proc/check_paired_obj()
- 	if (src.paired_obj in src.loc)
+	if (src.paired_obj in src.loc)
 		return
 	src.detach_from_obj()
 
