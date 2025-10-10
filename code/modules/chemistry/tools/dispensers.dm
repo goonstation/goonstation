@@ -227,6 +227,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "coolerbase"
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
+	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	capacity = 500
 	_health = 250
 	_max_health = 250
@@ -433,7 +434,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 /obj/reagent_dispensers/chemicalbarrel
 	name = "chemical barrel"
 	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/chemical_barrel.dmi'
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
@@ -441,27 +442,23 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	flags = FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
-	var/image/fluid_image = null
 	var/image/lid_image = null
 	var/image/spout_image = null
 	var/obj/machinery/chem_master/linked_machine = null
 
 	New()
-		..()
+		. = ..()
+
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = 'icons/obj/chemical_barrel.dmi', \
+			reagent_overlay_icon_state = "barrel", \
+			reagent_overlay_states = 9, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)
 		src.UpdateIcon()
 
 	update_icon()
-		var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 9 + 1), 1, 9))
-		if (!src.fluid_image)
-			src.fluid_image = image(src.icon)
-		if (src.reagents && src.reagents.total_volume)
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.fluid_image.icon_state = "fluid-barrel-[fluid_state]"
-		else
-			fluid_image.icon_state = "fluid-barrel-0"
-		src.UpdateOverlays(src.fluid_image, "fluid")
-
 		if (!src.lid_image)
 			src.lid_image = image(src.icon)
 			src.lid_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
@@ -469,7 +466,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.lid_image.icon_state = "[base_icon_state]-lid"
 			src.UpdateOverlays(src.lid_image, "lid")
 		else
-			src.lid_image.layer = src.fluid_image.layer + 0.1
+			src.lid_image.layer = FLOAT_LAYER
 			src.lid_image.icon_state = null
 			src.UpdateOverlays(null, "lid")
 

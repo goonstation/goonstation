@@ -252,6 +252,8 @@
 				return
 		user.visible_message(SPAN_ALERT("[user] dumps the contents of [src.linked_item.name] onto [over_object]!"))
 		for (var/obj/item/I as anything in src.get_contents())
+			if(I.anchored)
+				continue
 			src.transfer_stored_item(I, T, user = user)
 			I.layer = initial(I.layer)
 			if(SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, user))
@@ -263,6 +265,9 @@
 
 /// after attacking an object with the storage item
 /datum/storage/proc/storage_item_after_attack(atom/target, mob/user, reach)
+	var/obj/O = target
+	if (istype(O) && O.anchored)
+		return
 	// if item is stored, drop storage and take it out
 	if (target in src.get_contents())
 		user.drop_item()
@@ -271,9 +276,6 @@
 			target.Attackhand(user)
 	// attempt to load item into storage if you have a free hand
 	else if (isitem(target) && !istype(target, /obj/item/storage))
-		var/obj/O = target
-		if (O.anchored)
-			return
 		if (!can_reach(user, target))
 			return
 		if (issilicon(user))
@@ -357,6 +359,7 @@
 	I.stored = src
 
 	src.add_contents_extra(I, user, visible)
+	SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
 
 /// For adding an item by trying to stack it with other items.
 /// Returns the item the input was stacked into if that happened, returns W

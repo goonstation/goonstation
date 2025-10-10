@@ -107,7 +107,7 @@ TYPEINFO(/obj/item/card/emag)
 	var/datum/computer/file/cardfile = null
 
 	proc/update_name()
-		name = "[src.registered]'s ID Card ([src.assignment])"
+		name = "[src.registered]’s ID Card ([src.assignment])"
 
 	get_desc()
 		. = ..()
@@ -355,7 +355,7 @@ TYPEINFO(/obj/item/card/emag)
 				return // Abort process.
 		src.registered = reg
 		src.assignment = ass
-		src.name = "[src.registered]'s ID Card ([src.assignment])"
+		src.name = "[src.registered]’s ID Card ([src.assignment])"
 		boutput(user, SPAN_NOTICE("You successfully forge the ID card."))
 	else
 		..()
@@ -440,7 +440,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
 				queryGauntletMatches(user.client.key)
-		name = "[registered]'s ID Card ([assignment])"
+		name = "[registered]’s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)
 		switch (matches)
@@ -467,7 +467,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "Legendary Gladiator ([matches] rounds played)"
 			else
 				assignment = "what the fuck ([matches] rounds played)"
-		name = "[registered]'s ID Card ([assignment])"
+		name = "[registered]’s ID Card ([assignment])"
 
 // Experimental item that may be made into a 100k spacebux reward in the future?
 /obj/item/card/license_to_kill

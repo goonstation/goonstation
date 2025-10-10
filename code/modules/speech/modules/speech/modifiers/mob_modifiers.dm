@@ -16,6 +16,9 @@
 	if (speaker.stat != STAT_ALIVE)
 		return NO_MESSAGE
 
+	if (!speaker.mind)
+		message.flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY
+
 	// Handle breath modifiers.
 	if (iscarbon(speaker))
 		var/mob/living/carbon/C = speaker

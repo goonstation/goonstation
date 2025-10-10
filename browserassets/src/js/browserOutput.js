@@ -537,21 +537,6 @@ function ehjaxCallback(data) {
       opts.perfMonLoaded = true;
     } else if (data.modeChange) {
       changeMode(data.modeChange);
-    } else if (data.firebug) {
-      if (data.trigger) {
-        output(
-          '<span class="internal boldnshit">Loading firebug console, triggered by ' +
-            data.trigger +
-            '...</span>'
-        );
-      } else {
-        output(
-          '<span class="internal boldnshit">Loading firebug console...</span>'
-        );
-      }
-      var firebugEl = document.createElement('script');
-      firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-      document.body.appendChild(firebugEl);
     } else if (data.dectalk) {
       var message =
         '<audio class="dectalk" src="' +
@@ -824,6 +809,15 @@ $(function () {
           actualTerms +
           '</span>'
       );
+      // Check for invalid regexes in saved config
+      for (var t = 0; t < savedTerms.length; t++) {
+        var testTerm = savedTerms[t];
+        try {
+          new RegExp(testTerm);
+        } catch (err) {
+          savedTerms[t] = 'INVALID REGEX';
+        }
+      }
       opts.highlightTerms = savedTerms;
     }
   }
@@ -1315,11 +1309,18 @@ $(function () {
   $('body').on('submit', '#highlightTermForm', function (e) {
     e.preventDefault();
 
+    // Validate and replace invalid regexes
+    // Don't allow people to crash their own chat
     opts.highlightTerms = [];
     for (var count = 0; count < opts.highlightLimit; count++) {
       var term = $('#highlightTermInput' + count).val();
       if (term !== null && /\S/.test(term)) {
-        opts.highlightTerms.push(term);
+        try {
+          new RegExp(term);
+          opts.highlightTerms.push(term);
+        } catch (err) {
+          opts.highlightTerms.push('INVALID REGEX');
+        }
       }
     }
 
