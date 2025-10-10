@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
  */
 /datum/statusEffect/medical_machine
 	id = "medical_machine"
-	name = "Connected To Machine"
+	name = "Medical Machine"
 	desc = "Your're currently connected to a medical machine."
 	icon_state = "dialysis"
 	unique = FALSE

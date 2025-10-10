@@ -315,7 +315,7 @@
 
 /datum/statusEffect/iv_drip
 	id = "iv_drip"
-	name = "Connected to IV"
+	name = "IV line"
 	desc = "Your're currently connected to an IV drip."
 	icon_state = "dialysis"
 	unique = FALSE
