@@ -935,7 +935,7 @@
 /area/prefab/replicant_lab)
 "cF" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip,
+/obj/item/reagent_containers/glass/iv_drip,
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},

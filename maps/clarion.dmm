@@ -4248,8 +4248,8 @@
 "aIW" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/syringes,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
 	},
@@ -5998,11 +5998,11 @@
 	icon_state = "1-2"
 	},
 /obj/table/auto,
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/reagent_containers/hypospray{
 	pixel_x = -12;
 	pixel_y = 4
@@ -22303,7 +22303,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "kSj" = (
-/obj/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "kSp" = (
@@ -22453,8 +22453,8 @@
 /obj/machinery/computer/operating/small{
 	id = "OR1"
 	},
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "kXe" = (
@@ -24703,7 +24703,7 @@
 	dir = 4;
 	pixel_x = -8
 	},
-/obj/machinery/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -29985,7 +29985,7 @@
 /obj/item/bandage,
 /obj/item/bandage,
 /obj/item/bandage,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/clothing/gloves/latex{
 	pixel_x = -4;
@@ -30673,7 +30673,7 @@
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/hallway/primary/south)
 "raY" = (
-/obj/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "rbp" = (
@@ -32153,8 +32153,8 @@
 	id = "OR1"
 	},
 /obj/item/device/radio/intercom/medical,
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},

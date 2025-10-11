@@ -2752,8 +2752,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/medical/medbay/surgery)
 "blM" = (
@@ -29446,7 +29446,7 @@
 /area/station/security/processing)
 "npO" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -32970,7 +32970,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/mining/cargo_staff_room)
 "oQI" = (
-/obj/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -50933,7 +50933,7 @@
 	pixel_x = 10;
 	pixel_y = 13
 	},
-/obj/item/reagent_containers/iv_drip/blood{
+/obj/item/reagent_containers/glass/iv_drip/blood{
 	pixel_x = -8;
 	pixel_y = 1
 	},

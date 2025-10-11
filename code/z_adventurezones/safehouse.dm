@@ -110,10 +110,10 @@
 		bioHolder.build_fingerprints()
 		. = ..()
 
-obj/item/reagent_containers/iv_drip/dead_exec
+/obj/item/reagent_containers/glass/iv_drip/dead_exec
 	desc = "A bag filled with someone's blood. It's labelled 'Jean Rockefeller'."
 	icon_state = "IV-blood"
-	mode = 1
+	mode = INJECT
 	initial_reagents = "blood"
 
 	New()
@@ -204,7 +204,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 			for_by_tcl(O, /obj/machinery/bio_handscanner)
 				O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
 
-			for_by_tcl(O, /obj/item/reagent_containers/iv_drip/dead_exec)
+			for_by_tcl(O, /obj/item/reagent_containers/glass/iv_drip/dead_exec)
 				if(!O.reagents.has_reagent("blood"))
 					return
 				var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]

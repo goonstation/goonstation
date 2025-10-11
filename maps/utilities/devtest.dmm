@@ -267,7 +267,7 @@
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line2"
 	},
-/obj/machinery/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "fs" = (
@@ -608,8 +608,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "ld" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip,
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "lj" = (

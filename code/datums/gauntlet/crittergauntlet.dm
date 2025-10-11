@@ -754,7 +754,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Surgical Tools"
 		minimum_level = 15
 		point_cost = -1
-		supplies = list(/obj/item/reagent_containers/iv_drip/blood/vr, /obj/item/suture/vr, /obj/item/scalpel/vr, /obj/item/reagent_containers/food/drinks/bottle/vodka/vr)
+		supplies = list(/obj/item/reagent_containers/glass/iv_drip/blood/vr, /obj/item/suture/vr, /obj/item/scalpel/vr, /obj/item/reagent_containers/food/drinks/bottle/vodka/vr)
 
 	medkits
 		name = "Medkits"

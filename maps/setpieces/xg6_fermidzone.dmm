@@ -9252,8 +9252,8 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Mz" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/unsimulated/floor/sanitary/white,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"

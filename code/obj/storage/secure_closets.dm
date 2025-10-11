@@ -1001,8 +1001,8 @@
 	name = "blood supply refrigerator"
 	req_access = list(access_medical_lockers)
 	spawn_contents = list(/obj/item/storage/box/iv_box,
-	/obj/item/reagent_containers/iv_drip/saline,
-	/obj/item/reagent_containers/iv_drip/blood = 5,
+	/obj/item/reagent_containers/glass/iv_drip/saline,
+	/obj/item/reagent_containers/glass/iv_drip/blood = 5,
 	/obj/item/paper/blood_fridge_note)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has

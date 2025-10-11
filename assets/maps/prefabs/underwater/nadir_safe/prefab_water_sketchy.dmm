@@ -409,7 +409,7 @@
 /area/prefab/sea_sketch)
 "bR" = (
 /obj/item/reagent_containers/syringe/krokodil,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/glass/iv_drip/blood,
 /turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bS" = (

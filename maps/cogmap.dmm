@@ -9888,7 +9888,7 @@
 	pixel_x = -3;
 	pixel_y = 11
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = 1;
 	pixel_y = 3
 	},
@@ -10222,7 +10222,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/cafeteria)
 "aMc" = (
-/obj/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -33412,7 +33412,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cuo" = (
@@ -33777,7 +33777,7 @@
 /turf/space,
 /area/station/maintenance/northeast)
 "cvD" = (
-/obj/machinery/dialysis,
+/obj/machinery/medical/blood/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -33917,7 +33917,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment,
-/obj/iv_stand,
+/obj/machinery/medical/blood/iv_stand,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cwe" = (
@@ -34365,8 +34365,8 @@
 	},
 /area/station/medical/medbay)
 "cxR" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -38755,7 +38755,7 @@
 	pixel_x = 4;
 	pixel_y = -11
 	},
-/obj/item/reagent_containers/iv_drip/blood{
+/obj/item/reagent_containers/glass/iv_drip/blood{
 	pixel_x = 2;
 	pixel_y = 1
 	},
@@ -51148,7 +51148,7 @@
 /area/station/crew_quarters/hop)
 "owm" = (
 /obj/table/auto,
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -7;
 	pixel_y = 2
 	},
@@ -51546,7 +51546,7 @@
 	pixel_x = 2;
 	pixel_y = -10
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -5;
 	pixel_y = 4
 	},
@@ -63539,8 +63539,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "xzu" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "xAi" = (

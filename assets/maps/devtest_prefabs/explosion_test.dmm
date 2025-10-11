@@ -620,7 +620,7 @@
 /area/space)
 "ul" = (
 /obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /turf/simulated/floor/sanitary/white,
 /area/space)
 "uI" = (

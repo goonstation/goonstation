@@ -195,11 +195,11 @@
 /area/prefab/safehouse)
 "fx" = (
 /obj/storage/secure/closet/fridge,
-/obj/item/reagent_containers/iv_drip/dead_exec{
+/obj/item/reagent_containers/glass/iv_drip/dead_exec{
 	layer = 3.1;
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/iv_drip/dead_exec{
+/obj/item/reagent_containers/glass/iv_drip/dead_exec{
 	layer = 3.1
 	},
 /turf/simulated/floor/bluewhite{

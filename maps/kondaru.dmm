@@ -14299,17 +14299,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"bmj" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/machinery/dialysis,
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
-/area/station/medical/medbay/surgery)
 "bmk" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
@@ -14661,7 +14650,7 @@
 /obj/item/bandage,
 /obj/item/bandage,
 /obj/item/staple_gun,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -17036,10 +17025,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"bzz" = (
-/obj/iv_stand,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbooth)
 "bzA" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -24648,20 +24633,6 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/hangar/medical)
-"cgm" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/red,
-/area/station/medical/medbay/surgery)
 "cgn" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
@@ -24979,8 +24950,8 @@
 /area/station/science/testchamber)
 "chA" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/kitchen/utensil/knife{
 	desc = "A precision instrument for biological research.";
 	name = "dissection knife"
@@ -25025,12 +24996,6 @@
 	name = "Test Chamber Shutters"
 	},
 /turf/simulated/floor/engine,
-/area/station/science/testchamber)
-"chI" = (
-/obj/iv_stand,
-/turf/simulated/floor/shuttlebay{
-	name = "test chamber plating"
-	},
 /area/station/science/testchamber)
 "chJ" = (
 /obj/lattice,
@@ -25286,11 +25251,6 @@
 /area/research_outpost/indigo_rye)
 "ciZ" = (
 /obj/decal/cleanable/ash,
-/turf/simulated/floor/engine/vacuum,
-/area/research_outpost/indigo_rye)
-"cja" = (
-/obj/decal/cleanable/robot_debris,
-/obj/iv_stand,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "cjb" = (
@@ -28454,6 +28414,20 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/primary/west)
+"drc" = (
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/red,
+/area/station/medical/medbay/surgery)
 "drB" = (
 /obj/lattice{
 	dir = 1;
@@ -31246,7 +31220,7 @@
 /area/station/crew_quarters/fitness)
 "fjF" = (
 /obj/table/auto,
-/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/glass/iv_drip/saline,
 /obj/item/staple_gun,
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -32815,10 +32789,6 @@
 /obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor/grey,
 /area/station/storage/hydroponics)
-"gpl" = (
-/obj/iv_stand,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "gpE" = (
 /obj/machinery/disposal/mail/autoname/public/escape,
 /obj/disposalpipe/trunk/mail/west,
@@ -34450,6 +34420,10 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"hnM" = (
+/obj/machinery/medical/blood/iv_stand,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
 "hoh" = (
 /obj/machinery/navbeacon/mule/bridge_north,
 /obj/decal/stripe_caution,
@@ -37065,6 +37039,12 @@
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"jik" = (
+/obj/machinery/medical/blood/iv_stand,
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
+/area/station/science/testchamber)
 "jin" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -40759,6 +40739,13 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"lGb" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
+/obj/item/kitchen/egg_box,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "lGw" = (
 /mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet/red/fancy/innercorner/north,
@@ -42297,20 +42284,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"mIG" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/machinery/light/small,
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/obj/item/device/radio/intercom/medical{
-	dir = 8;
-	pixel_x = 21;
-	pixel_y = -4
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/treatment2)
 "mIZ" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -43194,6 +43167,27 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
+"nof" = (
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/machinery/light/small,
+/obj/item/device/radio/intercom/medical{
+	dir = 8;
+	pixel_x = 21;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/machinery/light/small,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/item/device/radio/intercom/medical{
+	dir = 8;
+	pixel_x = 21;
+	pixel_y = -4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/treatment2)
 "noI" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
@@ -44952,6 +44946,27 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"oEg" = (
+/obj/machinery/medical/blood/iv_stand,
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/machinery/light/small,
+/obj/item/device/radio/intercom/medical{
+	dir = 8;
+	pixel_x = 21;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/glass/iv_drip/saline,
+/obj/machinery/light/small,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/item/device/radio/intercom/medical{
+	dir = 8;
+	pixel_x = 21;
+	pixel_y = -4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/treatment1)
 "oEq" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -45482,6 +45497,10 @@
 "paR" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/emergency)
+"pcq" = (
+/obj/machinery/medical/blood/iv_stand,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbooth)
 "pcs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -45529,13 +45548,6 @@
 /obj/item/clothing/mask/balaclava,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_north)
-"pfV" = (
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 4
-	},
-/obj/item/kitchen/egg_box,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen/freezer)
 "pgz" = (
 /obj/lattice{
 	dir = 9;
@@ -45898,6 +45910,11 @@
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"pqC" = (
+/obj/decal/cleanable/robot_debris,
+/obj/machinery/medical/blood/iv_stand,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
 "pqI" = (
 /obj/disposalpipe/segment/transport,
 /obj/railing/orange/reinforced{
@@ -46359,6 +46376,17 @@
 /obj/machinery/r_door_control/podbay/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"pHP" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/medical/blood/dialysis,
+/turf/simulated/floor/redwhite{
+	dir = 10
+	},
+/area/station/medical/medbay/surgery)
 "pIc" = (
 /obj/lattice,
 /obj/machinery/light/runway_light/delay4,
@@ -53659,13 +53687,13 @@
 /obj/item/body_bag{
 	pixel_x = -5
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -4
 	},
-/obj/item/reagent_containers/iv_drip/blood{
+/obj/item/reagent_containers/glass/iv_drip/blood{
 	pixel_x = 4
 	},
-/obj/item/reagent_containers/iv_drip/saline{
+/obj/item/reagent_containers/glass/iv_drip/saline{
 	pixel_x = -4
 	},
 /obj/item/bandage{
@@ -58969,20 +58997,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"ygd" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/machinery/light/small,
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/obj/item/device/radio/intercom/medical{
-	dir = 8;
-	pixel_x = 21;
-	pixel_y = -4
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/treatment1)
 "ygm" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/plating,
@@ -66673,7 +66687,7 @@ ciF
 ciG
 ciH
 ciV
-cja
+pqC
 ciL
 ciL
 cjy
@@ -84736,7 +84750,7 @@ aaa
 abW
 chm
 chz
-chI
+jik
 uuG
 cpm
 dmF
@@ -93166,11 +93180,11 @@ vmF
 cbT
 ceA
 bfZ
-cgm
+drc
 bir
 xES
 sAB
-bmj
+pHP
 vXo
 bfZ
 boV
@@ -93781,7 +93795,7 @@ bqb
 chM
 jrT
 con
-gpl
+hnM
 boV
 bxJ
 byP
@@ -97404,7 +97418,7 @@ bpc
 bqj
 brz
 bsW
-ygd
+oEg
 bvz
 xvH
 bxN
@@ -98612,7 +98626,7 @@ tlD
 hRE
 brC
 bsZ
-mIG
+nof
 bvz
 bwF
 bxQ
@@ -114904,7 +114918,7 @@ hvn
 dZK
 kLJ
 aZS
-pfV
+lGb
 cnR
 lIh
 cJp
@@ -117944,7 +117958,7 @@ buY
 sWf
 fOc
 ijC
-bzz
+pcq
 cpE
 ctq
 xft
