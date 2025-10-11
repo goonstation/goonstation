@@ -864,7 +864,7 @@
 	icon_closed = "secure_green"
 	icon_opened = "secure_green-open"
 	spawn_contents = list(/obj/item/storage/box/clothing/botanist,
-	/obj/item/plantanalyzer,
+	/obj/item/clothing/glasses/phyto,
 	/obj/item/device/reagentscanner,
 	/obj/item/reagent_containers/glass/wateringcan,
 	/obj/item/paper/book/from_file/hydroponicsguide,
