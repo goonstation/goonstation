@@ -20,6 +20,8 @@
 		else if (istext(reagent))
 			rgnt = reagents_cache[reagent]
 		if (!rgnt) // if something isn't right, we have to fall back on a default in order to return something
+			stack_trace("Addiction failed to find reagent \"[reagent]\" (type: [string_type_of_anything(reagent)]) when setting up for \
+							[target] ([target?.ckey || "no ckey"]). Falling back to a default.")
 			rgnt = reagents_cache["gcheese"]
 			addiction.name = "[rgnt.name] addiction (This addiction has bugged)"
 		else
