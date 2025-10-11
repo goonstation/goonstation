@@ -88,6 +88,7 @@
 		if ((isscrewingtool(I) || istype(I, /obj/item/pen)) && !src.pinhole)
 			src.pinhole = TRUE
 			src.block_vision = FALSE
+			setProperty("disorient_resist_eye", 2) // matches eyepatch with pinhole
 			boutput(user, SPAN_NOTICE("You poked two holes into the blindfold, now you can pretend that you can see without seeing"))
 		else
 			. = ..()
@@ -466,6 +467,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 
 	attackby(obj/item/W, mob/user)
 		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !src.pinhole)
+			setProperty("disorient_resist_eye", 2) // You still have something on your eye and taking up a slot
 			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
 				src.pinhole = TRUE
