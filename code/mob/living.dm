@@ -1749,6 +1749,8 @@ TYPEINFO(/mob/living)
 
 /// makes mob auto pick up the highest weight item on a turf. if multiple have that weight, last one in the order of contents var is picked
 /mob/living/proc/auto_pickup_item(atom/target_loc)
+	if (src.lying)
+		return
 	var/turf/T = get_turf(target_loc)
 	if (!T)
 		return
