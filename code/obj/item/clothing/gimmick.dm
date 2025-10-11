@@ -943,6 +943,22 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "death"
 	see_face = FALSE
 
+/obj/item/clothing/mask/skull/vampire
+	name = "menacing skull mask"
+	desc = "An eerie skull mask, still glowing with otherworldly power."
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_vampire"
+	item_state = "death"
+	see_face = FALSE
+
+/obj/item/clothing/mask/skull/changeling
+	name = "odd skull mask"
+	desc = "Don't ask why you can see through the skull without any eyeholes."
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_changeling"
+	item_state = "death"
+	see_face = FALSE
+
 /obj/item/clothing/suit/robuddy
 	name = "guardbuddy costume"
 	desc = "A costume that loosely resembles the PR-6 Guardbuddy. How adorable!"
