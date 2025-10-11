@@ -38,7 +38,7 @@
 
 /obj/item/reagent_containers/glass/iv_drip/New()
 	..()
-	src.UpdateOverlays(image(src.icon, "IVlabel[src.reagents.get_master_reagent_name() ? "-blood" : ""]"), "label")
+	src.UpdateOverlays(image(src.icon, "IVlabel[src.reagents.get_master_reagent_name() == "blood" ? "-blood" : ""]"), "label")
 	src.update_name()
 	src.UpdateIcon()
 
