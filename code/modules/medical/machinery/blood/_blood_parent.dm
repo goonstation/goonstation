@@ -18,19 +18,6 @@ ABSTRACT_TYPE(/obj/machinery/medical/blood)
 		return
 	src.create_reagents(src.maximum_container_volume)
 
-/**
- * Unique overrides:
- * 	$FLUFF -> pick("pulled", "yanked", "ripped")
- * 	$VOL -> [src.transfer_volume]
-*/
-/obj/machinery/medical/blood/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
-	text = ..()
-	if (findtext(text, "$FLUFF"))
-		var/fluff = pick("pulled", "yanked", "ripped")
-		text = replacetext(text, "$FLUFF", "[fluff]")
-	text = replacetext(text, "$VOL", "[src.transfer_volume]")
-	. = text
-
 /// Draws patient blood into internal reagent container.
 /obj/machinery/medical/blood/proc/handle_draw(volume, mult)
 	if (!src.patient)

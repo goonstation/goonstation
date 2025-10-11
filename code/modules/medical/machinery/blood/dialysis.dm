@@ -22,26 +22,56 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 
 	connection_status_effect = "dialysis-machine"
 
-	attempt_msg_viewer = "<b>$USR</b> begins inserting $SRC's cannulae into $TRG."
-	attempt_msg_user = "You begin inserting $SRC's cannulae into $TRG."
-	attempt_msg_patient = "<b>$USR</b> begins inserting $SRC's cannulae into you."
-	add_msg_viewer = "<b>$USR</b> inserts $SRC's cannulae into $TRG."
-	add_msg_user = "You insert $SRC's cannulae into $TRG."
-	add_msg_patient = "<b>$USR</b> inserts $SRC's cannulae into you."
-	remove_msg_viewer = "<b>$USR</b> removes $SRC's cannulae from $TRG."
-	remove_msg_user = "You remove $SRC's cannulae from $TRG."
-	remove_msg_patient = "<b>$USR</b> removes $SRC's cannulae from your."
-	remove_force_msg_viewer = "<b>$SRC's cannulae get $FLUFF out of $TRG!</b>"
-	remove_force_msg_patient = "<b>$SRC's cannulae get $FLUFF out of you!</b>"
-
-	hack_msg = "Dialysis protocols inversed."
-	low_power_msg = "Unable to draw power, stopping dialysis."
-	start_fail_msg = "Failure to start dialysis. Check patient."
-	start_msg = "Dialysing patient."
-	stop_msg = "Stopping dialysis."
-
 	/// Reagent ID of the current patient's blood.
 	var/patient_blood_id = null
+
+/obj/machinery/medical/blood/dialysis/handle_emag(mob/user, obj/item/card/emag/E)
+	. = ..()
+	src.say("Dialysis protocols inversed.")
+
+/obj/machinery/medical/blood/dialysis/start_failure_feedback()
+	. = ..()
+	src.say("Failure to start dialysis. Check patient.")
+
+/obj/machinery/medical/blood/dialysis/start_feedback()
+	. = ..()
+	src.say("Dialysing patient.")
+
+/obj/machinery/medical/blood/dialysis/stop_feedback(reason)
+	. = ..()
+	src.say("Stopping dialysis.")
+
+/obj/machinery/medical/blood/dialysis/low_power_alert()
+	. = ..()
+	src.say("Unable to draw power, stopping dialysis.")
+
+/obj/machinery/medical/blood/dialysis/attempt_message(mob/user, mob/living/carbon/new_patient)
+	user.tri_message(new_patient,\
+		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into [new_patient]."),\
+		SPAN_NOTICE("You begin inserting [src]'s cannulae into [new_patient]."),\
+		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into you.")\
+	)
+
+/obj/machinery/medical/blood/dialysis/add_message(mob/user, mob/living/carbon/new_patient)
+	user.tri_message(new_patient,\
+		SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into [new_patient]."),\
+		SPAN_NOTICE("You insert [src]'s cannulae into [new_patient]."),\
+		SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into you.")\
+	)
+
+/obj/machinery/medical/blood/dialysis/remove_message(mob/user)
+	user.tri_message(src.patient,\
+		SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from [src.patient]."),\
+		SPAN_NOTICE("You remove [src]'s cannulae from [src.patient]."),\
+		SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from your.")\
+	)
+
+/obj/machinery/medical/blood/dialysis/force_remove_feedback()
+	var/fluff = pick("pulled", "yanked", "ripped")
+	src.patient.visible_message(\
+		SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of [src.patient]!</b>"),\
+		SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of you!</b>")\
+	)
 
 /obj/machinery/medical/blood/dialysis/New()
 	..()
@@ -131,9 +161,6 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 	id = "dialysis-machine"
 	name = "Dialysis Machine"
 	desc = "You are connected to a dialysis machine."
-
-/datum/statusEffect/medical_machine/getTooltip()
-	. = "A dialysis machine is connected to your body. Moving too far from it may forcefully disconnect you."
 
 /datum/statusEffect/dialysis
 	id = "dialysis"

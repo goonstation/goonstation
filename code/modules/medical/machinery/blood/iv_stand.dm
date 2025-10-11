@@ -17,23 +17,30 @@
 	connect_directly = FALSE
 	// This transfer rate may differ from the attached `iv_drip`.
 	transfer_volume = 5
-
-	low_power_msg = "IV pump unable to draw power. Check bag."
-	start_msg = "$MODE patient at $VOLu per tick."
-	stop_msg = "Stopped $MODE patient."
-
 	/// IV stands cannot operate without an `iv_drip` attached. This machine does not directly connect to the patient.
 	var/obj/item/reagent_containers/glass/iv_drip/iv_drip = null
 
-/**
- * Unique overrides:
- * 	$MODE -> [src.iv_drip?.mode]
-*/
-/obj/machinery/medical/blood/iv_stand/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
-	text = ..()
-	if (src.iv_drip)
-		text = replacetext(text, "$MODE", "[src.iv_drip?.mode ? "infusing" : "drawing from"]")
-	. = text
+/obj/machinery/medical/blood/iv_stand/start_feedback()
+	. = ..()
+	src.say("[src.iv_drip?.mode ? "Infusing" : "Drawing from"] patient at [src.transfer_volume]u per tick.")
+
+/obj/machinery/medical/blood/iv_stand/stop_feedback(reason)
+	. = ..()
+	src.say("Stopped [src.iv_drip?.mode ? "infusing" : "drawing from"] patient.")
+
+/obj/machinery/medical/blood/iv_stand/low_power_alert()
+	. = ..()
+	src.say("IV pump unable to draw power. Check bag.")
+
+// These should never be called if `correct_directly` is `FALSE`, this is merely a precaution.
+/obj/machinery/medical/blood/iv_stand/attempt_message(mob/user, mob/living/carbon/new_patient)
+	return
+/obj/machinery/medical/blood/iv_stand/add_message(mob/user, mob/living/carbon/new_patient)
+	return
+/obj/machinery/medical/blood/iv_stand/remove_message(mob/user)
+	return
+/obj/machinery/medical/blood/iv_stand/force_remove_feedback()
+	return
 
 /obj/machinery/medical/blood/iv_stand/New()
 	..()

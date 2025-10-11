@@ -54,43 +54,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/connect_offset_x = 0
 	var/connect_offset_y = 10
 
-	// See src.parse_message() for tag substitutions.
-	// tri_message() inputs.
-	/// Message to be displayed to all other viewers on attempted connection.
-	var/attempt_msg_viewer = "<b>$USR</b> begins connecting $SRC to $TRG."
-	/// Message to be displayed to user on attempted connection.
-	var/attempt_msg_user = "You begin connecting $SRC to $TRG."
-	/// Message to be displayed to patient on attempted connection.
-	var/attempt_msg_patient = "<b>$USR</b> begins connecting $SRC to you."
-	/// Message to be displayed to all other viewers on successful connection.
-	var/add_msg_viewer = "<b>$USR</b> connects $SRC to $TRG."
-	/// Message to be displayed to user on successful connection.
-	var/add_msg_user = "You connect $SRC to $TRG."
-	/// Message to be displayed to patient on successful connection.
-	var/add_msg_patient = "<b>$USR</b> connects $SRC to you."
-	/// Message to be displayed to all other viewers on disconnection.
-	var/remove_msg_viewer = "<b>$USR</b> disconnects $SRC from $TRG."
-	/// Message to be displayed to user on disconnection.
-	var/remove_msg_user = "You disconnect $SRC from $TRG."
-	/// Message to be displayed to patient on disconnection.
-	var/remove_msg_patient = "<b>$USR</b> disconnects $SRC from you."
-	/// Message to be displayed to all other viewers on forceful disconnection.
-	var/remove_force_msg_viewer = "<b>$SRC is forcefully disconnected from $TRG!</b>"
-	/// Message to be displayed to patient on forceful disconnection.
-	var/remove_force_msg_patient = "<b>$SRC is forcefully disconnected from you!</b>"
-
-	// Spoken feedback messages.
-	/// On being EMAG'd.
-	var/hack_msg = ""
-	/// If the machine cannot draw power from the area.
-	var/low_power_msg = ""
-	/// On failure to start.
-	var/start_fail_msg = ""
-	/// On starting to affect the patient.
-	var/start_msg = ""
-	/// On stopping affecting the patient.
-	var/stop_msg = ""
-
 /obj/machinery/medical/disposing()
 	src.remove_patient()
 	src.detach_from_obj()
@@ -162,13 +125,17 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.start_affect()
 
 /obj/machinery/medical/emag_act(mob/user, obj/item/card/emag/E)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	src.handle_emag(user, E)
+
+/// SpacemanDMM kept yellying at me for putting the `SHOULD_CALL_PARENT` macro on `emag_act()` so you get this instead.
+/obj/machinery/medical/proc/handle_emag(mob/user, obj/item/card/emag/emag)
+	SHOULD_CALL_PARENT(TRUE)
 	if (src.hacked)
 		return FALSE
 	if (!src.hackable)
 		return FALSE
 	src.hacked = TRUE
-	if (length(src.hack_msg))
-		src.say(src.parse_message(src.hack_msg))
 	logTheThing(LOG_ADMIN, user, "emagged [src] at [log_loc(user)].")
 	logTheThing(LOG_DIARY, user, "emagged [src] at [log_loc(user)].", "admin")
 	message_admins("[key_name(usr)] emagged [src] at [log_loc(user)].")
@@ -190,6 +157,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		src.stop_affect()
 	src.UnsubscribeProcess()
 
+/// Return `TRUE` if our mouse drop actually does something.
 /obj/machinery/medical/proc/mouse_drop_behaviour(atom/over_object, mob/living/user)
 	. = FALSE
 	if (iscarbon(over_object))
@@ -204,6 +172,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (src.attempt_attach_to_obj(over_object, user))
 		return TRUE
 
+/// Can we actually impart an effect onto a patient?
 /obj/machinery/medical/proc/can_affect()
 	. = TRUE
 	if (!src.patient)
@@ -211,15 +180,15 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (src.is_broken())
 		return FALSE
 
-/// For machines that connect directly to patients: is our connection still good?
-/obj/machinery/medical/proc/check_connection()
+/// For machines that connect directly to patients: is a connection possible?
+/obj/machinery/medical/proc/can_connect(mob/living/carbon/patient_to_test, mob/connector)
 	. = FALSE
-	if (!src.patient)
+	if (ismob(connector) && !in_interact_range(src, connector))
 		return
-	if (in_interact_range(src, src.patient))
+	if (in_interact_range(src, patient_to_test))
 		return TRUE
 	// JAAAANK
-	if (src.patient.pulling == src)
+	if (patient_to_test.pulling == src)
 		return TRUE
 
 /obj/machinery/medical/proc/start_affect()
@@ -281,6 +250,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (src.patient)
 		boutput(user, SPAN_ALERT("Unable to connect [new_patient] as [src.patient] is already using [src]!"))
 		return
+	if (!src.can_connect(new_patient, user))
+		boutput(user, SPAN_ALERT("[src] is too far away to connect anybody!"))
+		return
 	src.attempt_message(user, new_patient)
 	logTheThing(LOG_COMBAT, user, "is trying to connect [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
 	var/icon/actionbar_icon = getFlatIcon(src)
@@ -319,45 +291,32 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
 	src.patient = null
 
-/*
-	Replaces tags in constant text variables with non-constants.
-		* $USR -> [user]
-		* $SRC -> [src]
-		* $TRG -> [new_patient] or [src.patient] dependent on target.
-*/
-/obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target, self_referential = FALSE)
-	if (!length(text))
-		return ""
-	if (ismob(user))
-		text = replacetext(text, "$USR", "[user]")
-	if (iscarbon(target))
-		text = replacetext(text, "$TRG", "[user == target ? (self_referential ? "yourself" : himself_or_herself(user)) : target]")
-	// Fuck this line in particular. Surely there's a better way.
-	text = replacetext(text, "$SRC", "[src]")
-	. = text
-
+/// Feedback on (a user) attempting to connect a patient.
 /obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
-		SPAN_NOTICE(src.parse_message(src.attempt_msg_viewer, user, new_patient)),\
-		SPAN_NOTICE(src.parse_message(src.attempt_msg_user, user, new_patient, self_referential = TRUE)),\
-		SPAN_NOTICE(src.parse_message(src.attempt_msg_patient, user, new_patient)))
+		SPAN_NOTICE("<b>[user]</b> begins connecting [src] to [new_patient]."),\
+		SPAN_NOTICE("You begin connecting [src] to [new_patient]."),\
+		SPAN_NOTICE("<b>[user]</b> begins connecting [src] to you."))
 
+/// Feedback on (a user) successfully connecting a patient.
 /obj/machinery/medical/proc/add_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
-		SPAN_NOTICE(src.parse_message(src.add_msg_viewer, user, new_patient)),\
-		SPAN_NOTICE(src.parse_message(src.add_msg_user, user, new_patient, self_referential = TRUE)),\
-		SPAN_NOTICE(src.parse_message(src.add_msg_patient, user, new_patient)))
+		SPAN_NOTICE("<b>[user]</b> connects [src] to [new_patient]."),\
+		SPAN_NOTICE("You connect [src] to [new_patient]."),\
+		SPAN_NOTICE("<b>[user]</b> connects [src] to you."))
 
+/// Feedback on (a user) disconencting a patient.
 /obj/machinery/medical/proc/remove_message(mob/user)
 	user.tri_message(src.patient,\
-		SPAN_NOTICE(src.parse_message(src.remove_msg_viewer, user, src.patient)),\
-		SPAN_NOTICE(src.parse_message(src.remove_msg_user, user, src.patient, self_referential = TRUE)),\
-		SPAN_NOTICE(src.parse_message(src.remove_msg_patient, user, src.patient)))
+		SPAN_NOTICE("<b>[user]</b> disconnects [src] from [src.patient]."),\
+		SPAN_NOTICE("You disconnect [src] from [src.patient]."),\
+		SPAN_NOTICE("<b>[user]</b> disconnects [src] from you."))
 
+/// Feedback on the forceful disconnection of a patient.
 /obj/machinery/medical/proc/force_remove_feedback()
 	src.patient.visible_message(\
-		SPAN_ALERT(src.parse_message(src.remove_force_msg_viewer, target = src.patient)),\
-		SPAN_ALERT(src.parse_message(src.remove_force_msg_patient, target = src.patient, self_referential = TRUE)))
+		SPAN_ALERT("<b>[src] is forcefully disconnected from [src.patient]!</b>"),\
+		SPAN_ALERT("<b>[src] is forcefully disconnected from you!</b>"))
 
 /obj/machinery/medical/proc/attempt_attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
