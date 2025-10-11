@@ -1,4 +1,116 @@
 
+(t)thu oct 09 25
+(u)Drakios
+(p)24638
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Blindfolds can have holes piked in them now - win every time while hitting a pinata
+(t)mon oct 06 25
+(u)TheGeneralJay
+(p)24664
+(e)🗺💅|A-Mapping, C-QoL
+(*)Oshan medbay has had a remodel! Details to follow in minor changes.
+(+)Oshan genetics is now visible from the main hall. The pharmacy, treatment rooms, and therapy office has been moved to accommodate this.
+(u)Flappybat
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Owl bombs no longer affect nuclear operatives.
+(u)JORJ949
+(p)24854
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(*)PDAs containing uplinks are now immune to detomatix bombings.
+(u)JORJ949
+(p)24811
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The Security Department now has their own announcement computer locked to security access, instead of just the HoS (though the HoS still has their own cooler version).
+(t)sun oct 05 25
+(u)Lord_Earthfire
+(p)24825
+(e)⚖🧱📦|C-Balance, A-Materials, A-Game-Objects
+(*)Plating mechcomp in materials makes them take much more time to loosen/fasten. Carefull of crystal material, since components plated in these shatter upon being loosened, but are much more durable to tampering.
+(u)Lord_Earthfire
+(p)24819
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Aranesp will not cause stuns anymore. Instead, it will slow the user with an equal probability.
+(u)Egregorious
+(p)24823
+(e)🆕💅💊|C-Feature, C-QoL, A-Medical
+(+)You may get updates on your addiction's status when it's affected by outside factors.
+(t)fri oct 03 25
+(u)Emily
+(*)Classic Only: Shuttle auto-call reduced from 90 minutes to 60 minutes on classic servers for all game modes. Max round times are unaffected.
+(u)Lord_Earthfire
+(p)24818
+(e)|
+(+)Eggs in egg cartons are also visible while in inventories.
+(u)Lord_Earthfire
+(p)24817
+(e)|
+(+)You can click-drag eggs onto egg cartons to quickly fill the carton with eggs in the area, akin to how satchels work.
+(t)thu oct 02 25
+(u)Emily
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(*)Egg Cartons now have improved functionality. Produce Satchels no longer hold eggs. Buy more empty cartons at QM.
+(u)Lord_Earthfire
+(p)24809
+(e)🆕📦📡|C-Feature, A-Game-Objects, A-AI
+(+)Clowns found a method to turn the AI lawrack into a toaster!
+(u)Kanthes
+(p)24805
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds a Wellspring artifact type that floods the area with reagents.
+(u)WyrdDoe & Ribbie
+(p)24757
+(e)🎨🔊|C-Sprites, C-Sound
+(+)Added a new track to the easter egg drops.
+(u)Lord_Earthfire
+(p)24761
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(*)Non-rev Flashes can be build into assemblies as either triggers or appliers. Have a mousetrap/flash/cell assembly ready for when a search comes up!
+(+)Flashes don't need to have their cover removed to be combined with cells. Flash/Cell assemblies can also be dismantled to retreive the used cell
+(+)Flash assemblies will trigger their corresponding applier. If your flash/igniter/pipebomb assembly blows up your ass: i warned you...
+(+)If both parts can be triggers or appliers of an assembly, you can choose which one to use as a trigger.
+(+)Flash/cell assemblies with insufficient charge will behave like normal flashes.
+(t)wed oct 01 25
+(u)Egregorious
+(p)24767
+(e)🔄💊⚗|C-Rework, A-Medical, A-Chemistry
+(*)Addiction strength and withdrawal symptoms are now independent, you can cure your addiction while taking sufficiently small (under 5 unit) doses to calm symptoms when needed
+(*)Any addictive reagent of the same severity as you're addicted to can be used to prevent withdrawal symptoms from worsening, but this is bad for it in the long term
+(*)The worse your addiction gets, the more quickly your body will metabolise that reagent, reducing its effectiveness
+(u)JORJ949
+(p)24715
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Syndicate operatives can now identify syndicate robot frames and conversion chambers at a glance
+(u)Nexusuxen
+(p)24722
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Neutrons from fallout TTVs now properly spawn
+(u)TheGeneralJay
+(p)24560
+(e)💅💊|C-QoL, A-Medical
+(+)The cloning mindhack module now bypasses the puritan trait.
+(u)JORJ949
+(p)24726
+(e)🪲💊|C-Bug, A-Medical
+(+)Fixed the Gene Booth making all your clicks be empty hands, allowing you to deconstruct it and bash it (50 hp) to force the occupant out (doesn't break the booth).
+(t)tue sep 30 25
+(u)LeahTheTech
+(+)You can put bread in the AI law rack now. I mean you shouldn't, but you can.
+(u)JORJ949
+(p)24780
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The limit of 2 poltergeists per wraith is now present on all servers, rather than just RP.
+(u)Sord
+(+)The Chief Engineer now gets a special, slightly more environmentally protective, version of the light engineering space suit in their locker. The manufactured version remains the same.
+(+)The CE also now gets stomper boots in their locker on Neon like they should have.
+(u)Kanthes
+(p)24755
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds the artifact bomb (radioactive) variant.
+(t)mon sep 29 25
+(u)Calphrick
+(p)24691
+(e)🔄👽|C-Rework, A-Mutantraces
+(*)Reworked the shelterfrog accent.
 (t)sat sep 27 25
 (u)LeahTheTech
 (+)Saying something will now once again bump up the maptext of people around you. Yes this was a feature, you weren't going crazy.

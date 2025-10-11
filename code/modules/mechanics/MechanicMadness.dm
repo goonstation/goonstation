@@ -469,6 +469,71 @@ TYPEINFO(/obj/item/mechanics)
 	proc/rotate()
 		src.set_dir(turn(src.dir, -90))
 
+	proc/check_wrenching_conditions(var/mob/user)
+		//We need only to check conditions when the object is non-wrenched. Because else it can always be loosened
+		if(src.level == OVERFLOOR)
+			if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
+				boutput(user, SPAN_ALERT("[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work."))
+				return FALSE
+			if (IN_CABINET && istype(src, /obj/item/mechanics/movement))
+				var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+				if (cabinet.amount_of_prevent_move_comps > 0)
+					boutput(user, SPAN_ALERT("[src] is not allowed since an anchored component is preventing cabinet movement."))
+					return FALSE
+			if(IN_CABINET && src.cabinet_banned)
+				boutput(user,SPAN_ALERT("[src] is not allowed in component housings."))
+				return FALSE
+			if(!IN_CABINET && src.cabinet_only)
+				boutput(user,SPAN_ALERT("[src] is not allowed outside of component housings."))
+				return FALSE
+		return TRUE
+
+
+	proc/wrench_action(var/mob/user, var/obj/item/used_wrench)
+		// we need to check if the component didn't moved during our action bar and all other conditions are still true
+		if (!in_interact_range(src, user) || !can_act(user) || !src.check_wrenching_conditions(user))
+			return
+		switch(level)
+			if(UNDERFLOOR) //Level 1 = wrenched into place
+				boutput(user, "You detach the [src] from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
+				logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+				level = OVERFLOOR
+				anchored = UNANCHORED
+				if (src.cabinet_prevent_move && IN_CABINET)
+					var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+					cabinet.amount_of_prevent_move_comps--
+				clear_owner()
+				loosen()
+				if(src.material && src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					user.visible_message(SPAN_NOTICE("[src] breaks under the strain of the operation."))
+					var/turf/target_turf = get_turf(src)
+					var/obj/item/raw_material/shard/new_shard = new /obj/item/raw_material/shard(target_turf)
+					new_shard.setMaterial(src.material)
+					playsound(target_turf, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
+					qdel(src)
+			if(OVERFLOOR) //Level 2 = loose
+				if (IN_CABINET && src.cabinet_prevent_move)
+					var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+					cabinet.amount_of_prevent_move_comps++
+					if (cabinet.amount_of_prevent_move_comps == 1 && cabinet.unanchor_movement_comps() > 0)
+						boutput(user, SPAN_ALERT("The cabinet unanchored all movement components!"))
+				boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
+				logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+				level = UNDERFLOOR
+				anchored = ANCHORED
+				set_owner(user)
+				secure()
+		var/turf/T = src.loc
+		if(isturf(T))
+			hide(T.intact)
+		else
+			hide()
+		if (!src.dont_disconnect_on_change)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+		if(src && !QDELETED(src))
+			src.material_trigger_when_attacked(used_wrench, user, 1)
+		return TRUE
+
 	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			if (can_rotate)
@@ -478,60 +543,25 @@ TYPEINFO(/obj/item/mechanics)
 					boutput(user, "You must unsecure the [src] in order to rotate it.")
 			return TRUE
 		else if(iswrenchingtool(W))
-			switch(level)
-				if(UNDERFLOOR) //Level 1 = wrenched into place
-					boutput(user, "You detach the [src] from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
-					level = OVERFLOOR
-					anchored = UNANCHORED
-					if (src.cabinet_prevent_move && IN_CABINET)
-						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
-						cabinet.amount_of_prevent_move_comps--
-					clear_owner()
-					loosen()
-				if(OVERFLOOR) //Level 2 = loose
-					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
-						boutput(user, SPAN_ALERT("[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work."))
-						return FALSE
-					if (IN_CABINET && istype(src, /obj/item/mechanics/movement))
-						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
-						if (cabinet.amount_of_prevent_move_comps > 0)
-							boutput(user, SPAN_ALERT("[src] is not allowed since an anchored component is preventing cabinet movement."))
-							return
-					if(IN_CABINET && src.cabinet_banned)
-						boutput(user,SPAN_ALERT("[src] is not allowed in component housings."))
-						return
-					if(!IN_CABINET && src.cabinet_only)
-						boutput(user,SPAN_ALERT("[src] is not allowed outside of component housings."))
-						return
-					if(src.one_per_tile)
-						for(var/obj/item/mechanics/Z in src.loc)
-							if (Z.type == src.type && Z.level == UNDERFLOOR)
-								boutput(user,SPAN_ALERT("No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile."))
-								return
-					if(anchored)
-						boutput(user,SPAN_ALERT("[src] is already attached to something somehow."))
-						return
-					if (IN_CABINET && src.cabinet_prevent_move)
-						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
-						cabinet.amount_of_prevent_move_comps++
-						if (cabinet.amount_of_prevent_move_comps == 1 && cabinet.unanchor_movement_comps() > 0)
-							boutput(user, SPAN_ALERT("The cabinet unanchored all movement components!"))
-					boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
-					level = UNDERFLOOR
-					anchored = ANCHORED
-					set_owner(user)
-					secure()
-
-			var/turf/T = src.loc
-			if(isturf(T))
-				hide(T.intact)
+			if(src.material && src.material.getProperty("density") > 0)
+				if(!src.check_wrenching_conditions(user))
+					//we need to check the wrenching conditions manually here, else you get an action bar even though the action actually doesn't work
+					return TRUE
+				//work time calculation, 0.8 seconds per density, half when you have training, half for wrenching in, double for crystal material since loosening it breaks it.
+				var/work_time = src.material.getProperty("density") * 0.8 SECONDS
+				if(src.level == OVERFLOOR)
+					work_time *= 0.5
+				if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					work_time *= 2
+				if(user.traitHolder && (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer")))
+					work_time *= 0.5
+				// now, let's keep the result in reasonable values, even if you are untrained and should have no business working with this
+				work_time = clamp(work_time, 1 SECONDS, 10 SECONDS)
+				//now we set the action bar in motion
+				user.visible_message(SPAN_NOTICE("[user] begins tampering with [src]."))
+				SETUP_GENERIC_ACTIONBAR(user, src, work_time, PROC_REF(wrench_action), list(user, W), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				hide()
-
-			if (!src.dont_disconnect_on_change)
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+				src.wrench_action(user)
 			return TRUE
 		return ..()
 
