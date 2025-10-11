@@ -1,5 +1,81 @@
 
+(t)thu oct 09 25
+(u)Drakios
+(p)24638
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Blindfolds can have holes piked in them now - win every time while hitting a pinata
+(t)mon oct 06 25
+(u)TheGeneralJay
+(p)24664
+(e)🗺💅|A-Mapping, C-QoL
+(*)Oshan medbay has had a remodel! Details to follow in minor changes.
+(+)Oshan genetics is now visible from the main hall. The pharmacy, treatment rooms, and therapy office has been moved to accommodate this.
+(u)Flappybat
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Owl bombs no longer affect nuclear operatives.
+(u)JORJ949
+(p)24854
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(*)PDAs containing uplinks are now immune to detomatix bombings.
+(u)JORJ949
+(p)24811
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The Security Department now has their own announcement computer locked to security access, instead of just the HoS (though the HoS still has their own cooler version).
+(t)sun oct 05 25
+(u)Lord_Earthfire
+(p)24825
+(e)⚖🧱📦|C-Balance, A-Materials, A-Game-Objects
+(*)Plating mechcomp in materials makes them take much more time to loosen/fasten. Carefull of crystal material, since components plated in these shatter upon being loosened, but are much more durable to tampering.
+(u)Lord_Earthfire
+(p)24819
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Aranesp will not cause stuns anymore. Instead, it will slow the user with an equal probability.
+(u)Egregorious
+(p)24823
+(e)🆕💅💊|C-Feature, C-QoL, A-Medical
+(+)You may get updates on your addiction's status when it's affected by outside factors.
+(t)fri oct 03 25
+(u)Emily
+(*)Classic Only: Shuttle auto-call reduced from 90 minutes to 60 minutes on classic servers for all game modes. Max round times are unaffected.
+(u)Lord_Earthfire
+(p)24818
+(e)|
+(+)Eggs in egg cartons are also visible while in inventories.
+(u)Lord_Earthfire
+(p)24817
+(e)|
+(+)You can click-drag eggs onto egg cartons to quickly fill the carton with eggs in the area, akin to how satchels work.
+(t)thu oct 02 25
+(u)Emily
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(*)Egg Cartons now have improved functionality. Produce Satchels no longer hold eggs. Buy more empty cartons at QM.
+(u)Lord_Earthfire
+(p)24809
+(e)🆕📦📡|C-Feature, A-Game-Objects, A-AI
+(+)Clowns found a method to turn the AI lawrack into a toaster!
+(u)Kanthes
+(p)24805
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds a Wellspring artifact type that floods the area with reagents.
+(u)WyrdDoe & Ribbie
+(p)24757
+(e)🎨🔊|C-Sprites, C-Sound
+(+)Added a new track to the easter egg drops.
+(u)Lord_Earthfire
+(p)24761
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(*)Non-rev Flashes can be build into assemblies as either triggers or appliers. Have a mousetrap/flash/cell assembly ready for when a search comes up!
+(+)Flashes don't need to have their cover removed to be combined with cells. Flash/Cell assemblies can also be dismantled to retreive the used cell
+(+)Flash assemblies will trigger their corresponding applier. If your flash/igniter/pipebomb assembly blows up your ass: i warned you...
+(+)If both parts can be triggers or appliers of an assembly, you can choose which one to use as a trigger.
+(+)Flash/cell assemblies with insufficient charge will behave like normal flashes.
 (t)wed oct 01 25
+(u)Egregorious
+(p)24767
+(e)🔄💊⚗|C-Rework, A-Medical, A-Chemistry
+(*)Addiction strength and withdrawal symptoms are now independent, you can cure your addiction while taking sufficiently small (under 5 unit) doses to calm symptoms when needed
+(*)Any addictive reagent of the same severity as you're addicted to can be used to prevent withdrawal symptoms from worsening, but this is bad for it in the long term
+(*)The worse your addiction gets, the more quickly your body will metabolise that reagent, reducing its effectiveness
 (u)JORJ949
 (p)24715
 (e)💅📦|C-QoL, A-Game-Objects

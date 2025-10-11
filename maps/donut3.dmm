@@ -4635,6 +4635,17 @@
 	dir = 4
 	},
 /area/station/chapel/funeral_parlor)
+"bti" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decoration/clock{
+	pixel_y = 32
+	},
+/obj/machinery/computer/announcement/station/security/department,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "btk" = (
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/stool/bed,
@@ -20823,16 +20834,6 @@
 	dir = 1
 	},
 /area/station/science/lobby)
-"gvN" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/decoration/clock{
-	pixel_y = 32
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
 "gwb" = (
 /obj/disposalpipe/segment/food{
 	dir = 8;
@@ -35118,10 +35119,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/spacehabitat/owlery)
-"kVk" = (
-/obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "kVL" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/arrival{
@@ -51785,10 +51782,6 @@
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
-"qea" = (
-/obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/spacehabitat/owlery)
 "qed" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -55658,6 +55651,10 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"rpk" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "rpl" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -77845,6 +77842,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"xTL" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/spacehabitat/owlery)
 "xTN" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -90387,7 +90388,7 @@ bsa
 jqe
 bsa
 bsa
-qea
+xTL
 bsa
 bsa
 bsa
@@ -101099,7 +101100,7 @@ lHs
 lHs
 fvd
 plN
-gvN
+bti
 rLz
 sBF
 kut
@@ -158234,7 +158235,7 @@ rdj
 rdj
 csA
 csA
-kVk
+rpk
 fJu
 csA
 csA
