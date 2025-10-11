@@ -227,6 +227,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "coolerbase"
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
+	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	capacity = 500
 	_health = 250
 	_max_health = 250
