@@ -211,8 +211,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	var/obj/dummy/light_overlay // Light overlay object to place in `src.vis_contents`
 
-	pass_unstable = TRUE
-
 	New()
 		..()
 		inserted_lamp = new light_type()
@@ -280,12 +278,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						break
 				T = null
 
-	Cross(atom/movable/mover)
+	// Let people shoot out lights if they're aiming at them
+	Crossed(atom/movable/mover)
 		. = ..()
-		if(istype(mover, /obj/projectile))
-			var/obj/projectile/P = mover
-			if(P.called_target == src && P.proj_data?.damage > 5)
-				. = FALSE
+		var/obj/projectile/P = astype(mover)
+		if(P?.called_target == src && P?.proj_data?.damage > 5)
+			P.collide(src)
 
 	bullet_act(obj/projectile/P)
 		. = ..()
@@ -723,6 +721,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 	name = "tripod light"
 	desc = "A large portable light tripod."
 	density = 1
+	pass_unstable = TRUE
 	anchored = ANCHORED
 	icon_state = "tripod1"
 	base_state = "tripod"
