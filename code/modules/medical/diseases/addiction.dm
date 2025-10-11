@@ -27,7 +27,7 @@
 
 		addiction.associated_reagent = rgnt.name
 		addiction.last_reagent_dose = TIME
-		addiction.severity = severity_override == null ? rgnt.addiction_severity : severity_override
+		addiction.severity = isnull(severity_override) ? rgnt.addiction_severity : severity_override
 		addiction.addiction_meter = max(target?.reagents?.addiction_tally[rgnt.id], 10)
 		addiction.depletion_rate = addiction.depletion_rate ? addiction.depletion_rate : generate_depletion_rate(rgnt)
 		return addiction
