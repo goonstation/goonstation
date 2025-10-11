@@ -55,7 +55,8 @@ proc/get_all_gangs()
 
 /// Checks whether a mob can be converted to the revolution by use of a flash, revolutionary flash, revolutionary flashbang, or violence.
 /mob/living/proc/can_be_converted_to_the_revolution()
-	if (!src.mind || isghostcritter(src) || locate(/obj/item/implant/counterrev) in src.implant)
+	var/obj/item/implant/counterrev/implant = locate() in src.implant
+	if (!src.mind || isghostcritter(src) || implant?.online)
 		return FALSE
 
 	var/list/unconvertable_roles = list(
