@@ -242,9 +242,9 @@
 	for (var/datum/statusEffect/status_effect as anything in src.patient.getStatusList("iv_drip", src))
 		src.patient.delStatus(status_effect)
 	src.patient = null
-	src.UpdateIcon()
 	if (src.iv_stand?.patient)
 		src.iv_stand.remove_patient(user)
+	src.UpdateIcon()
 
 /obj/item/reagent_containers/glass/iv_drip/proc/start_transfusion()
 	if (src.check_iv_fail())

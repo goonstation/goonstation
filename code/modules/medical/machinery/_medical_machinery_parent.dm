@@ -11,6 +11,12 @@ TYPEINFO(/obj/machinery/medical)
 	)
 
 ABSTRACT_TYPE(/obj/machinery/medical)
+/**
+ * # Medical Machines
+ *
+ * Any medical object that can be (in)directly connected to a patient to impart an effect onto them. Can be attached to any object within
+ * `TYPEINFO(/obj/machinery/medical).paired_obj_whitelist`.
+ */
 /obj/machinery/medical
 	name = "medical machine"
 	desc = "A medical doohickey. Call 1800-CODER if you see this."
@@ -28,10 +34,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 	/// Power consumption is constant if a patient is connected to the machine. In Watts.
 	var/power_consumption = 250 MILLI WATTS
-	/// Fire off single feedback message after losing power.
-	var/low_power_alert_given = FALSE
-	/// Fire off single feedback message if failing to start. Resets on successful start.
-	var/start_fail_alert_given = FALSE
 	/// Is this device currently affecting a patient?
 	var/active = FALSE
 	/// For EMAG effects.
@@ -39,6 +41,15 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/hackable = FALSE
 	/// Appended on examine.
 	var/hacked_desc = "Something about it seems a little off."
+
+	/// Fire off single feedback message after losing power. Resets on successful start.
+	var/low_power_alert_given = FALSE
+	/// Fire off single feedback message if failing to start. Resets on successful start.
+	var/start_fail_alert_given = FALSE
+	/// Fire off single feedback message on startup. Resets on stop.
+	var/start_alert_given = FALSE
+	/// Fire off single feedback message if stopping. Resets on successful start.
+	var/stop_alert_given = FALSE
 
 	/**
 	 * Some machines don't connect directly to patients; they would then contain an item in its contents that handles the connection behaviour
@@ -64,7 +75,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (src.hacked)
 		. += " [src.hacked_desc]"
 	if (src.patient)
-		. += " Someone is currently attached to it."
+		. += " [src.patient] is currently attached to it."
 
 /obj/machinery/medical/attack_hand(mob/user)
 	if (src.paired_obj)
@@ -72,6 +83,20 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	src.anchored = !src.anchored
 	boutput(user, SPAN_NOTICE("You [src.anchored ? "apply" : "release"] \the [src.name]'s brake."))
+
+/obj/machinery/medical/process(mult)
+	..()
+	if (!src.check_connection() && src.patient)
+		src.remove_patient(force = TRUE)
+	if (!src.powered())
+		src.stop_affect(MED_MACHINE_NO_POWER)
+	if (!src.can_affect())
+		src.stop_affect()
+	if (src.active)
+		src.affect_patient(mult)
+		return
+	if (src.powered() && src.can_affect())
+		src.start_affect()
 
 /obj/machinery/medical/Move(atom/target)
 	. = ..()
@@ -102,28 +127,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!src.mouse_drop_behaviour(over_object, user))
 		return ..()
 
-/obj/machinery/medical/process(mult)
-	..()
-	if (!src.patient)
-		return
-	if (!src.check_connection())
-		src.remove_patient(force = TRUE)
-		return
-	if (src.active)
-		if (!src.powered())
-			src.stop_affect(MED_MACHINE_NO_POWER)
-			return
-		if (!src.can_affect())
-			src.stop_affect()
-			return
-		src.affect_patient(mult)
-		return
-	if (!src.can_affect())
-		return
-	if (!src.powered())
-		return
-	src.start_affect()
-
+/// For children of `/obj/machinery/medical`, please call `handle_emag` instead with the same params so that all EMAGs are logged and handled correctly.
 /obj/machinery/medical/emag_act(mob/user, obj/item/card/emag/E)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	src.handle_emag(user, E)
@@ -190,54 +194,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	// JAAAANK
 	if (patient_to_test.pulling == src)
 		return TRUE
-
-/obj/machinery/medical/proc/start_affect()
-	if (!src.can_affect())
-		src.start_failure_feedback()
-		return
-	src.active = TRUE
-	src.low_power_alert_given = FALSE
-	src.start_fail_alert_given = FALSE
-	src.power_usage = src.power_consumption
-	src.start_feedback()
-
-/obj/machinery/medical/proc/affect_patient(mult)
-	if (!src.active)
-		return
-
-/obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
-	if (src.patient)
-		src.stop_feedback(reason)
-	src.active = FALSE
-	src.power_usage = 0
-
-/// Feedback the machine should provide about the affect it currently has on the patient.
-/obj/machinery/medical/proc/start_failure_feedback()
-	if (src.start_fail_alert_given)
-		return
-	src.start_fail_alert_given = TRUE
-	if (length(src.start_fail_msg))
-		src.say(src.parse_message(src.start_fail_msg))
-
-/// Feedback the machine should provide about the affect it currently has on the patient.
-/obj/machinery/medical/proc/start_feedback()
-	if (length(src.start_msg))
-		src.say(src.parse_message(src.start_msg))
-
-/// Any spoken feedback aside from low power messages should not be sent if the machine is disabled.
-/obj/machinery/medical/proc/stop_feedback(reason = MED_MACHINE_FAILURE)
-	if (!length(reason))
-		return
-	if (!src.active)
-		return
-	if (src.is_broken())
-		return
-	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given && length(src.low_power_msg))
-		src.say(src.parse_message(src.low_power_msg))
-		src.low_power_alert_given = TRUE
-		return
-	if (length(src.stop_msg))
-		src.say(src.parse_message(src.stop_msg))
 
 /obj/machinery/medical/proc/attempt_add_patient(mob/user, mob/living/carbon/new_patient)
 	if (!src.connect_directly)
@@ -318,6 +274,98 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		SPAN_ALERT("<b>[src] is forcefully disconnected from [src.patient]!</b>"),\
 		SPAN_ALERT("<b>[src] is forcefully disconnected from you!</b>"))
 
+/// If failure to start, fire off once.
+/obj/machinery/medical/proc/start_failure_feedback()
+	SHOULD_CALL_PARENT(TRUE)
+	if (src.start_fail_alert_given)
+		return
+	src.start_fail_alert_given = TRUE
+
+/// Feedback on successful startup.
+/obj/machinery/medical/proc/start_feedback()
+	SHOULD_CALL_PARENT(TRUE)
+	if (src.start_alert_given)
+		return
+	if (!src.active)
+		return
+	src.start_alert_given = TRUE
+
+/// Feedback on stopping for any reason.
+/obj/machinery/medical/proc/stop_feedback(reason = MED_MACHINE_FAILURE)
+	SHOULD_CALL_PARENT(TRUE)
+	if (src.low_power_alert_given || src.stop_alert_given)
+		return
+	if (!length(reason))
+		reason = MED_MACHINE_FAILURE
+	if (!src.active)
+		return
+	if ((reason == MED_MACHINE_NO_POWER) && !src.low_power_alert_given)
+		src.low_power_alert()
+		return
+	if (src.is_disabled())
+		return
+	src.stop_alert_given = TRUE
+
+/// If stopping due to power loss, fire off once.
+/obj/machinery/medical/proc/low_power_alert()
+	SHOULD_CALL_PARENT(TRUE)
+	if (src.low_power_alert_given || src.stop_alert_given)
+		return
+	if (!src.active)
+		return
+	if (src.is_broken())
+		return
+	src.low_power_alert_given = TRUE
+	src.stop_alert_given = TRUE
+
+/// For machines that connect directly to patients: is our connection still good?
+/obj/machinery/medical/proc/check_connection()
+	. = TRUE
+	if (!src.patient)
+		return FALSE
+	if (!src.can_connect(src.patient))
+		return FALSE
+
+/obj/machinery/medical/proc/set_active()
+	SHOULD_CALL_PARENT(TRUE)
+	// Don't need to do these again if it's the same value.
+	if (src.active)
+		return
+	src.active = TRUE
+	src.power_usage = src.power_consumption
+	src.low_power_alert_given = FALSE
+	src.start_fail_alert_given = FALSE
+	src.stop_alert_given = FALSE
+
+/obj/machinery/medical/proc/set_inactive()
+	SHOULD_CALL_PARENT(TRUE)
+	// Don't need to do these again if it's the same value.
+	if (!src.active)
+		return
+	src.active = FALSE
+	src.power_usage = 0
+	src.start_alert_given = FALSE
+
+/obj/machinery/medical/proc/start_affect()
+	if (src.active)
+		return
+	if (!src.can_affect())
+		src.start_failure_feedback()
+		return
+	src.set_active()
+	src.start_feedback()
+
+/obj/machinery/medical/proc/affect_patient(mult)
+	if (!src.active)
+		return
+
+/obj/machinery/medical/proc/stop_affect(reason = MED_MACHINE_FAILURE)
+	if (!src.active)
+		return
+	if (src.patient)
+		src.stop_feedback(reason)
+	src.set_inactive()
+
 /obj/machinery/medical/proc/attempt_attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
 	if (target_object == src.paired_obj)
@@ -388,14 +436,14 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /datum/statusEffect/medical_machine
 	id = "medical_machine"
 	name = "Medical Machine"
-	desc = "Your're currently connected to a medical machine."
+	desc = "You are connected to a medical machine."
 	icon_state = "+"
 	unique = FALSE
 	effect_quality = STATUS_QUALITY_NEUTRAL
 	var/obj/machinery/medical/medical_machine = null
 
 /datum/statusEffect/medical_machine/getTooltip()
-	. = "You are physically connected to a medical machine. Moving too far from it may forcefully disconnect you."
+	. = "You are physically connected to \a [src.medical_machine.name]. Moving too far from it may forcefully disconnect you."
 
 /datum/statusEffect/medical_machine/onAdd(obj/machinery/medical/optional)
 	..()

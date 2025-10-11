@@ -477,6 +477,10 @@
 		var/obj/machinery/clonepod/P = A
 		if(P.occupant)
 			reagents = P.occupant.reagents
+	else if (istype(A, /obj/machinery/medical/blood/iv_stand))
+		var/obj/machinery/medical/blood/iv_stand/iv_stand = A
+		if (iv_stand.iv_drip)
+			reagents = iv_stand.iv_drip.reagents
 
 	if (reagents)
 		if (length(reagents.reagent_list))

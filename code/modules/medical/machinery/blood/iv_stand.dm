@@ -1,5 +1,5 @@
 /**
- * IV stands
+ * # IV stand
  *
  * N.B. The lights on the IV pump will flash red when these conditions are true:
  * 	- An IV bag is attached
@@ -21,15 +21,15 @@
 	var/obj/item/reagent_containers/glass/iv_drip/iv_drip = null
 
 /obj/machinery/medical/blood/iv_stand/start_feedback()
-	. = ..()
+	..()
 	src.say("[src.iv_drip?.mode ? "Infusing" : "Drawing from"] patient at [src.transfer_volume]u per tick.")
 
 /obj/machinery/medical/blood/iv_stand/stop_feedback(reason)
-	. = ..()
+	..()
 	src.say("Stopped [src.iv_drip?.mode ? "infusing" : "drawing from"] patient.")
 
 /obj/machinery/medical/blood/iv_stand/low_power_alert()
-	. = ..()
+	..()
 	src.say("IV pump unable to draw power. Check bag.")
 
 // These should never be called if `correct_directly` is `FALSE`, this is merely a precaution.
@@ -51,13 +51,14 @@
 		src.remove_iv_drip()
 	..()
 
-/obj/machinery/medical/blood/iv_stand/get_desc()
+/obj/machinery/medical/blood/iv_stand/get_desc(dist, mob/user)
 	. = ..()
 	if (!src.iv_drip)
 		return
-	var/iv_drip_desc = src.iv_drip.desc
-	iv_drip_desc = lowertext(copytext(iv_drip_desc, 1, 2)) + copytext(iv_drip_desc, 2)
-	. += " [src.iv_drip] is attached to it; [iv_drip_desc]"
+	. += " [src.iv_drip] is attached to it."
+	if (!src.iv_drip.reagents.total_volume)
+		return
+	. += "<br>[SPAN_NOTICE("[src.iv_drip.reagents.get_description(user, src.iv_drip.rc_flags)]")]"
 
 /obj/machinery/medical/blood/iv_stand/update_icon()
 	if (!src.iv_drip)
@@ -68,8 +69,8 @@
 	src.ClearSpecificOverlays("lid")
 	if (src.iv_drip.patient || src.is_disabled())
 		src.ClearSpecificOverlays("lights")
-	if (!src.iv_drip.patient)
-		src.UpdateOverlays(image(src.icon, icon_state = "IV_pump-lights"), "lights")
+		return
+	src.UpdateOverlays(image(src.icon, icon_state = "IV_pump-lights"), "lights")
 
 /obj/machinery/medical/blood/iv_stand/proc/handle_iv_bag_image()
 	src.UpdateOverlays(image(src.icon, icon_state = "IV"), "bag")
@@ -123,7 +124,7 @@
 	src.patient = src.iv_drip.patient
 
 /obj/machinery/medical/blood/iv_stand/start_affect()
-	. = ..()
+	..()
 	src.UpdateIcon()
 
 /obj/machinery/medical/blood/iv_stand/remove_patient(mob/user, force = FALSE)
@@ -132,7 +133,7 @@
 	src.patient = null
 
 /obj/machinery/medical/blood/iv_stand/stop_affect()
-	. = ..()
+	..()
 	src.UpdateIcon()
 
 /obj/machinery/medical/blood/iv_stand/can_affect()
