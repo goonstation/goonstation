@@ -250,12 +250,13 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		search = lowertext(search)
 
 		for (var/datum/db_record/R as anything in data_core.general.records)
-			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
+			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint_right"]) || search == lowertext(R["fingerprint_left"]) || search == lowertext(R["name"]))
 
 				var/data = "--------------------------------<br>\
 				<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
 				<br>\
-				<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
+				<i>Fingerprint (R):</i><font color='blue'> [R["fingerprint_right"]]</font><br>\
+				<i>Fingerprint (L):</i><font color='blue'> [R["fingerprint_left"]]</font><br>\
 				<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
 
 				boutput(user, data)
@@ -282,10 +283,10 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if (scans == null)
 			scans = new/list(maximum_scans)
 		var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
-		last_scan = scan.build_report()
+		last_scan = scan.build_report(compress = FALSE)
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [target];'>PRINT REPORT</a> ---<br>" + last_scan
+		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [target];'>PRINT REPORT</a> ---<br>" + scan.build_report(compress = TRUE)
 		number_of_scans += 1
 		boutput(user, scan_output)
 
@@ -863,8 +864,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				R["sex"] = target.gender
 				R["pronouns"] = target.get_pronouns().name
 				R["age"] = target.bioHolder.age
-				if (!target.gloves)
-					R["fingerprint"] = target.bioHolder.fingerprints
+				if (!target.gloves?.print_mask)
+					R["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print]"
+					R["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print]"
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"
 				src.active1 = R
@@ -880,10 +882,18 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			src.active1["pronouns"] = target.get_pronouns().name
 			src.active1["age"] = target.bioHolder.age
 			/////Fingerprint record update
-			if (target.gloves)
-				src.active1["fingerprint"] = "Unknown"
+			if (target.gloves?.print_mask && target.gloves?.print_mask.id != FORENSIC_GLOVE_MASK_FINGERLESS)
+				src.active1["fingerprint_right"] = "Unknown"
+				src.active1["fingerprint_left"] = "Unknown"
 			else
-				src.active1["fingerprint"] = target.bioHolder.fingerprints
+				if(target.limbs?.r_arm?.limb_print)
+					src.active1["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print]"
+				else
+					src.active1["fingerprint_right"] = "None"
+				if(target.limbs?.l_arm?.limb_print)
+					src.active1["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print]"
+				else
+					src.active1["fingerprint_right"] = "None"
 			src.active1["p_stat"] = "Active"
 			src.active1["m_stat"] = "Stable"
 			data_core.general.add_record(src.active1)
