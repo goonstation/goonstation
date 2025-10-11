@@ -10,6 +10,7 @@
 	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
 	wear_layer = MOB_GLASSES_LAYER
+	equipment_slot = SLOT_FLAG_GLASSES
 	block_vision = 0
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
