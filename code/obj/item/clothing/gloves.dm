@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	proc/create_glovemask_bunch(var/reveal_count = 1) // (?-?-...g...-?)
 		// Probability (1): 1/4 chance of match (default glove mask)
-		// Probability (2): 1/16 chance of match (latex gloves)
+		// Probability (2): 1/15 chance of match (latex gloves)
 		if(reveal_count == 0)
 			return ""
 		else if(reveal_count > 4)
@@ -345,7 +345,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("chemprot", 15)
 
 	get_fiber_mask()
-		return create_glovemask_bunch(2) // 1/16 chance of match
+		return create_glovemask_bunch(2) // 1/15 chance of match
 
 /obj/item/clothing/gloves/latex/blue
 	color = "#91d5e9"
@@ -385,7 +385,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			return create_glovemask_position() // 1/4 chance of match
 		if(chem_prot >= 2)
 			return create_glovemask_order(3) // 1/8 chance of match
-		return create_glovemask_bunch(2) // 1/16 chance of match
+		return create_glovemask_bunch(2) // 1/15 chance of match
 
 	insulating
 		onMaterialChanged()
@@ -567,6 +567,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	stamina_dmg_mult = 0.35
 	fingertip_color = "#f80000"
 	var/weighted
+
+	get_fiber_mask()
+		return create_glovemask_position() // 1/4 chance of match
 
 	setupProperties()
 		..()

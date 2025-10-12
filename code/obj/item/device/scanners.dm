@@ -247,22 +247,12 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
-		search = lowertext(search)
 
-		for (var/datum/db_record/R as anything in data_core.general.records)
-			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint_right"]) || search == lowertext(R["fingerprint_left"]) || search == lowertext(R["name"]))
-
-				var/data = "--------------------------------<br>\
-				<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
-				<br>\
-				<i>Fingerprint (R):</i><font color='blue'> [R["fingerprint_right"]]</font><br>\
-				<i>Fingerprint (L):</i><font color='blue'> [R["fingerprint_left"]]</font><br>\
-				<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
-
-				boutput(user, data)
-				return
-
-		user.show_text("No match found in security records.", "red")
+		var/result = data_core.general.forensic_search(search)
+		if(result)
+			boutput(user, data_core.general.forensic_search(search))
+		else
+			boutput(user, SPAN_ALERT("No match found in security records."))
 		return
 
 
