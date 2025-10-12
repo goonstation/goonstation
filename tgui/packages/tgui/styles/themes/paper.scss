@@ -5,6 +5,10 @@
 
 .theme-paper:root {
   // Base
+  @font-face {
+    font-family: 'XFont';
+    src: local('/../../../../../interface/fonts/xfont.ttf');
+  }
   --color-base: hsl(0, 0%, 90%);
   --secondary-lightness-adjustment: -3;
   --color-section: hsla(0, 0%, 0%, 0.1);
