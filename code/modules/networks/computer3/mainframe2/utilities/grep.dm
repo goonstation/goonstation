@@ -78,13 +78,13 @@
 				var/field_data = record.fields[field_name]
 				var/field = (!isnull(field_data)) ? "[field_name]=[field_data]" : field_name
 
-				if (regex.Find(line))
+				if (regex.Find("[field]"))
 					if (print_only_match)
 						grep_results += "[regex.match]"
 					else if (plain)
-						grep_results += line
+						grep_results += "[field]"
 					else
-						grep_results += "[record.name]:[j]:[line]"
+						grep_results += "[record.name]:[j]:[field]"
 
 		else if (!no_messages)
 			grep_results += "[target] could not be read."
