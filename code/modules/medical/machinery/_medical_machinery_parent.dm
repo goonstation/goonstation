@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /// Is a connection (to an object or patient) possible?
 /obj/machinery/medical/proc/can_connect(atom/atom_to_test, mob/connector)
 	. = FALSE
-	if (isatom(atom_to_test))
+	if (!isatom(atom_to_test))
 		return
 	if (ismob(connector) && !in_interact_range(src, connector))
 		return
