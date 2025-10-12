@@ -1056,7 +1056,7 @@ DEFINE_FLOORS(minitiles/black,
 	Exited(atom/movable/M, atom/newloc)
 		..()
 		if (!istype(newloc, /turf/simulated/floor/specialroom/gym))
-			M.delStatus("wrestler")
+			M.setStatus("wrestler", 3 SECONDS)
 
 /turf/simulated/floor/specialroom/gym/alt
 	name = "gym mat"

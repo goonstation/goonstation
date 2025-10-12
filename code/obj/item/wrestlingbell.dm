@@ -122,7 +122,7 @@
 			M = owner
 		else
 			return ..(timePassed)
-		if (M.health <= 0 | !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
+		if (M.health <= 0)
 			M.delStatus("wrestler")
 
 	onRemove()
@@ -158,6 +158,8 @@
 		if (!src.active)
 			src.active = 1
 			src.name = "Wrestling!"
+			var/obj/itemspecialeffect/boxing/effect = new /obj/itemspecialeffect/boxing
+			effect.setup(usr.loc)
 		else
 			src.active = 0
 			src.name = "Waiting to wrestle!"
