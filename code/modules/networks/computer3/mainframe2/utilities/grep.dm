@@ -72,7 +72,6 @@
 
 		else if (istype(target, /datum/computer/file/record))
 			var/datum/computer/file/record/record = target
-			
 			for (var/j in 1 to length(record.fields))
 				var/field_name = record.fields[j]
 				var/field_data = record.fields[field_name]
