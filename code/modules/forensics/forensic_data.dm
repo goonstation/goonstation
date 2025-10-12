@@ -113,6 +113,8 @@
 			return fprint_text + fibers_text
 		else if(src.print_mask?.id == FORENSIC_GLOVE_MASK_FINGERLESS)
 			return src.print?.id
+		else if(src.fibers && startswith(src.fibers.id, "latex rubber"))
+			return "([get_masked_print()])"
 
 			// Not including the fibers for now because they were taking up too much room in the forensic report.
 			//var/fprint_text = get_masked_print()
@@ -132,6 +134,8 @@
 		if(!scan)
 			return data_copy
 		if(scan.has_effect("effect_silver_nitrate"))
+			return data_copy
+		if(src.fibers && startswith(src.fibers.id, "latex rubber"))
 			return data_copy
 		if(!src.print_mask || src.print_mask.id == FORENSIC_GLOVE_MASK_FINGERLESS)
 			// Ignore the fibers of fingerless gloves for now. Taking up too much room in the forensic report.

@@ -243,7 +243,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		src.add_fingerprint(user)
 
 		var/holder = src.loc
-		var/search = tgui_input_text(user, "Enter name, fingerprint or blood DNA.", "Find record")
+		var/search = tgui_input_text(user, "Enter name, full/partial fingerprint, or blood DNA.", "Find record")
 		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
