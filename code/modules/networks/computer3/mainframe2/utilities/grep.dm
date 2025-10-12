@@ -73,15 +73,19 @@
 		else if (istype(target, /datum/computer/file/record))
 			var/datum/computer/file/record/record = target
 
-			for (var/j in 1 to length(record.fields))
-				var/field = record.fields[j]
-				if (regex.Find("[field][record.fields[field]]"))
+			var/j = 1
+			for (var/x in record.fields)
+				var/line = "[x]"
+				if (!isnull(record.fields[x]))
+					line += "=[record.fields[x]]"
+				
+				if (regex.Find(line))
 					if (print_only_match)
 						grep_results += "[regex.match]"
 					else if (plain)
-						grep_results += "[field][record.fields[field]]"
+						grep_results += line
 					else
-						grep_results += "[record.name]:[j]:[field][record.fields[field]]"
+						grep_results += "[record.name]:[j]:[line]"
 
 		else if (!no_messages)
 			grep_results += "[target] could not be read."
