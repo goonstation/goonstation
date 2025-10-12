@@ -159,7 +159,7 @@
 			src.active = 1
 			src.name = "Wrestling!"
 			var/obj/itemspecialeffect/boxing/effect = new /obj/itemspecialeffect/boxing
-			effect.setup(usr.loc)
+			effect.setup(src.owner.loc)
 		else
 			src.active = 0
 			src.name = "Waiting to wrestle!"
