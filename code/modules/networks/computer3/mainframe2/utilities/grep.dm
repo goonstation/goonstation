@@ -72,13 +72,12 @@
 
 		else if (istype(target, /datum/computer/file/record))
 			var/datum/computer/file/record/record = target
+			
+			for (var/j in 1 to length(record.fields))
+				var/field_name = record.fields[j]
+				var/field_data = record.fields[field_name]
+				var/field = (!isnull(field_data)) ? "[field_name]=[field_data]" : field_name
 
-			var/j = 1
-			for (var/x in record.fields)
-				var/line = "[x]"
-				if (!isnull(record.fields[x]))
-					line += "=[record.fields[x]]"
-				
 				if (regex.Find(line))
 					if (print_only_match)
 						grep_results += "[regex.match]"
