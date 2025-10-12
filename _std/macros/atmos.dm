@@ -347,13 +347,13 @@ proc/gas_text_color(gas_id)
 	if (UNLINT(HIDDEN)) { \
 		src.ClearSpecificOverlays("[DIR]"); \
 		break; \
-		}  \
+	}  \
 	var/pipe_state = NODE ? "intact" : "exposed"; \
 	var/pipe_cached = pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"]; \
 	if (!pipe_cached) { \
 		pipe_cached = icon('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "[pipe_state]_[NODE ? null : SIZE]", DIR); \
 		pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"] = pipe_cached; \
-		} \
+	} \
 	var/image/pipe_image = mutable_appearance(pipe_cached); \
 	pipe_image.color = COLOUR ? COLOUR : "#B4B4B4"; \
 	pipe_image.layer = src.layer - 0.001; \
@@ -368,7 +368,7 @@ proc/gas_text_color(gas_id)
 	if (!pipe_cached) { \
 		pipe_cached = icon('icons/obj/atmospherics/pipes/pipe.dmi', "ends_[pipe_state]", DIR); \
 		pipe_underlay_cache["simple_[pipe_state]_[DIR]"] = pipe_cached; \
-		} \
+	} \
 	var/image/pipe_image = mutable_appearance(pipe_cached); \
 	pipe_image.color = src.color; \
 	pipe_image.layer = src.layer - 0.001; \
@@ -377,6 +377,7 @@ proc/gas_text_color(gas_id)
 	} while(0)
 
 #define issimplepipe(X) istype(X, /obj/machinery/atmospherics/pipe/simple)
+#define ismanifoldorquad(X) (istype(X, /obj/machinery/atmospherics/pipe/manifold) || istype(X, /obj/machinery/atmospherics/pipe/quadway))
 
 //check if we should hide our pipe ends
 #define CHECKHIDEPIPE(X) (intact && issimulatedturf(X.loc) && X.level == UNDERFLOOR)

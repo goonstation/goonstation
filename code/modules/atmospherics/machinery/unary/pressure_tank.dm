@@ -13,7 +13,7 @@
 	src.air_contents.temperature = T20C
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, FALSE)
+	update_pipe_underlay(src.node, src.dir, "long", FALSE)
 
 
 /obj/machinery/atmospherics/unary/tank/attackby(obj/item/I, mob/user) //let's just make these breakable for now
