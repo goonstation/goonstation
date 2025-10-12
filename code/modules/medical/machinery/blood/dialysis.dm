@@ -3,9 +3,11 @@
 #define DIALYSIS_TUBING_GOOD "tubing-good"
 
 TYPEINFO(/obj/machinery/medical/blood/dialysis)
-	mats = list("metal" = 20,
-				"crystal" = 5,
-				"conductive_high" = 5)
+	mats = list(
+		"metal" = 20,
+		"crystal" = 5,
+		"conductive_high" = 5
+	)
 
 /**
  * # Dialysis Machine
