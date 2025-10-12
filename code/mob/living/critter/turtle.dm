@@ -376,3 +376,17 @@
 		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
 		..()
 
+/mob/living/critter/small_animal/turtle/leonardo //Kyle's new, beloved pet turtle
+
+	name = "Leonardo"
+	desc = "You are filled with the knowlede that if this turtle could carry a sword, it would."
+	icon_state = "turtle-beret-nt"
+	player_can_spawn_with_pet = FALSE
+	is_pet = FALSE
+	ai_type = /datum/aiHolder/empty
+
+	New()
+		..()
+		var/obj/item/clothing/head/NTberet/beret = new/obj/item/clothing/head/NTberet(src)
+		wearing_beret = beret
+		src.UpdateIcon()
