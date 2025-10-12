@@ -184,14 +184,19 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (src.is_broken())
 		return FALSE
 
-/// For machines that connect directly to patients: is a connection possible?
-/obj/machinery/medical/proc/can_connect(mob/living/carbon/patient_to_test, mob/connector)
+/// Is a connection (to an object or patient) possible?
+/obj/machinery/medical/proc/can_connect(atom/atom_to_test, mob/connector)
 	. = FALSE
+	if (isatom(atom_to_test))
+		return
 	if (ismob(connector) && !in_interact_range(src, connector))
 		return
-	if (in_interact_range(src, patient_to_test))
+	if (in_interact_range(src, atom_to_test))
 		return TRUE
 	// JAAAANK
+	if (!iscarbon(atom_to_test))
+		return
+	var/mob/living/carbon/patient_to_test = atom_to_test
 	if (patient_to_test.pulling == src)
 		return TRUE
 
@@ -374,6 +379,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (src.anchored)
 		boutput(user, SPAN_ALERT("Disengage the brakes first to attach [src] to [target_object]!"))
 		return FALSE
+	if (!src.can_connect(target_object, user))
+		boutput(user, SPAN_ALERT("[src] is too far away to be attached to anything!"))
+		return
 	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
 	var/obj/object_to_attach_to = null
 	for (var/whitelist_type in typinfo.paired_obj_whitelist)
