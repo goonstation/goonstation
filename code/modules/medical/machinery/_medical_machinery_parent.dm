@@ -380,7 +380,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		boutput(user, SPAN_ALERT("Disengage the brakes first to attach [src] to [target_object]!"))
 		return FALSE
 	if (!src.can_connect(target_object, user))
-		boutput(user, SPAN_ALERT("[src] is too far away to be attached to anything!"))
+		boutput(user, SPAN_ALERT("[src] is too far away to be attached to [target_object]!"))
 		return
 	var/typeinfo/obj/machinery/medical/typinfo = src.get_typeinfo()
 	var/obj/object_to_attach_to = null
