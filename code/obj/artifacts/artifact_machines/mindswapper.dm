@@ -47,6 +47,7 @@
 	deact_text = "retracts its antennas."
 	react_xray = list(15,75,90,3,"ANTENNAE")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
+	examine_hint = "It looks vaguely foreboding."
 	var/can_previous_targets_scramble_again = TRUE
 	var/list/remembered_minds = new/list()
 	var/list/remembered_bodies = new/list()
@@ -58,6 +59,7 @@
 	var/exorcised = 0
 	var/mindhack_attuned = FALSE
 	var/mob/mindhack_owner
+	var/brain_damage_amount = 5
 
 	post_setup()
 		..()
@@ -72,7 +74,7 @@
 		if(!isalive(user) || !ishuman(user))
 			T.visible_message("<b>[O]</b>'s antennas remain inactive.")
 			return
-		if(ischangeling(user) || isvampire(user) || isarcfiend(user))
+		if(ischangeling(user) || isvampire(user) || isarcfiend(user) || iswizard(user))
 			T.visible_message("<b>[O]</b>'s antennas remain inactive.")
 			boutput(user, SPAN_ALERT("[O] rejects your inhuman soul."))
 			return
@@ -125,6 +127,7 @@
 			var/datum/mind/new_mind = new_minds_order[i]
 			var/mob/living/carbon/human/remembered_body = src.remembered_bodies[i]
 			new_mind.transfer_to(remembered_body)
+			remembered_body.take_brain_damage(src.brain_damage_amount)
 
 		//Delete the temporary bodies.
 		for (var/mob/temp_body in temporary_bodies)
@@ -175,6 +178,7 @@
 				leftover_bodies.Add(original_body)
 				continue
 			original_mind.transfer_to(original_body)
+			original_body.take_brain_damage(src.brain_damage_amount)
 			boutput(original_body, SPAN_ALERT("[O] is forced to return you to your original body!"))
 
 		//Then distribute minds without bodies to leftover bodies.
@@ -183,6 +187,7 @@
 			var/datum/mind/new_mind = new_minds_order[i]
 			var/mob/living/carbon/human/remembered_body = leftover_bodies[i]
 			new_mind.transfer_to(remembered_body)
+			remembered_body.take_brain_damage(src.brain_damage_amount)
 			boutput(remembered_body, SPAN_ALERT("[O] couldn't return you to your original body.. This is who you are now."))
 
 		//Delete the temporary bodies.
