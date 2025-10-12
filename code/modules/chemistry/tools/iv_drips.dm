@@ -52,6 +52,10 @@
 	. = ..()
 	src.on_movement()
 
+/obj/item/reagent_containers/glass/iv_drip/set_loc(newloc, storage_check)
+	. = ..()
+	src.on_movement()
+
 /obj/item/reagent_containers/glass/iv_drip/on_reagent_change()
 	..()
 	src.update_name()
