@@ -1,4 +1,9 @@
 
+(t)mon oct 13 25
+(u)Driftered
+(p)24822
+(e)🎨|C-Sprites
+(*)Adds two new skull mask sprites: Vampire and Changeling
 (t)sun oct 12 25
 (u)Egregorious
 (p)24128
