@@ -6,38 +6,43 @@
 	name = "artifact food processor"
 	associated_datum = /datum/artifact/food_processor
 
+	ArtifactHitWith(obj/item/I, mob/user)
+		var/datum/artifact/food_processor/artifact = src.artifact
+		if(artifact.food_processor_state != STATUS_READY)
+			boutput(user, SPAN_ALERT("The artifact is already processing!"))
+			return
+		if (istype(I, /obj/item/reagent_containers/food) || (istype(I, /obj/item/parts/human_parts)) || istype(I, /obj/item/clothing/head/butt) || istype(I, /obj/item/organ) || istype(I,/obj/item/raw_material/martian))
+			user.u_equip(I)
+			qdel(I)
+			user.visible_message("<b>[user]</b> loads [I] into [src].","You load [I] into [src]")
+			artifact.biomatter += 2
+			artifact.spawn_food(src)
+		return
+
 /datum/artifact/food_processor
 	associated_object = /obj/machinery/artifact/food_processor
 	type_name = "Food Processor"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","precursor", "wizard", "ancient", "eldritch")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
+	validtriggers = list(/datum/artifact_trigger/carbon_touch)
+	//validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	activated = 0
-	activ_text = "begins to radiate a strange energy field!"
-	deact_text = "shuts down, causing the energy field to vanish!"
+	activ_text = "begins to make a grinding noise!"
+	deact_text = "shuts down, going quiet."
 	react_xray = list(50,20,90,8,"MECHANICAL")
-	var/biofuel = 0
-	var/biofuel_per_food = 0
+	var/biomatter = 0
+	var/biomatter_per_food = 0
 	var/processing_speed = 0
-	var/food_processor_state = READY
+	var/food_processor_state = STATUS_READY
+	var/escapable = TRUE
+	var/loops_per_consumption_step
+	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 
 	New()
 		..()
-		var/biofuel_per_food = rand(0, 10)
-
-	attackby(obj/item/grab/G, mob/user)
-		if(src.food_processor_state != STATUS_READY)
-			boutput(user, SPAN_ALERT("The artifact is already processing!"))
-			return
-		if (istype(G, /obj/item/reagent_containers/food) || (istype(G, /obj/item/parts/human_parts)) || istype(G, /obj/item/clothing/head/butt) || istype(G, /obj/item/organ) || istype(G,/obj/item/raw_material/martian))
-			user.u_equip(G)
-			qdel(G)
-			user.visible_message("<b>[user]</b> loads [G] into [src].","You load [G] into [src]")
-			src.biofuel += 2
-		src.add_fingerprint(user)
-		actions.start(new /datum/action/bar/icon/put_in_reclaimer(G.affecting, src, G, 50), user)
-		return
+		src.biomatter_per_food = rand(0, 10)
+		src.loops_per_consumption_step = src.escapable ? rand(4, 7) : rand(2, 4)
 
 	//Effect_touch copied from borgifier.
 	effect_touch(var/obj/O, var/mob/living/user)
@@ -45,7 +50,7 @@
 			return
 		if (!user)
 			return
-		if (src.food_processor_state != STATE_READY)
+		if (src.food_processor_state != STATUS_READY)
 			return
 		if (ishuman(user))
 			var/mob/living/carbon/human/humanuser = user
@@ -60,7 +65,7 @@
 				user.set_loc(O)
 			else
 				user.set_loc(get_turf(O.loc))
-			src.food_processor_state = STATE_PROCESSING_BODY
+			src.food_processor_state = STATUS_PROCESSING_BODY
 			// keep it truthy to avoid null values due to missing limbs
 			var/list/obj/item/parts/convertable_limbs = keep_truthy(list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg))
 			//figure out which limbs are already robotic and remove them from the list
@@ -68,8 +73,8 @@
 				if (!limb || (limb.kind_of_limb & LIMB_ROBOT))
 					convertable_limbs -= limb
 			//people with existing robolimbs get converted faster.
-			//(loops_per_conversion_step - 1) bit adds some 'buffer time' before any limbs are converted.
-			var/loops = (loops_per_conversion_step * (convertable_limbs.len + 1)) + (loops_per_conversion_step - 1)
+			//(loops_per_consumption_step - 1) bit adds some 'buffer time' before any limbs are converted.
+			var/loops = (loops_per_consumption_step * (convertable_limbs.len + 1)) + (loops_per_consumption_step - 1)
 			while (loops > 0)
 				if ((user.loc != O.loc && user.loc != O) || !activated)
 					src.food_processor_state = STATUS_READY
@@ -80,7 +85,7 @@
 				take_bleeding_damage(humanuser, null, (escapable ? 3 : 4))
 				user.changeStatus("stunned", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
-				if (loops % loops_per_conversion_step == 0)
+				if (loops % loops_per_consumption_step == 0)
 					if (!convertable_limbs.len) //avoid runtiming once all limbs are converted
 						continue
 					var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
@@ -95,7 +100,8 @@
 							qdel(humanuser.limbs.get_limb("r_leg"))
 					convertable_limbs -= limb_to_replace
 					humanuser.update_body()
-					src.biofuel += 2
+					src.biomatter += 2
+					spawn_food(O)
 				sleep(0.4 SECONDS)
 
 			var/bdna = null // For forensics (Convair880).
@@ -116,7 +122,19 @@
 			//Biofuel per body copied from the enzymatic reclaimer
 			var/humanOccupant = (ishuman(user) && !ismonkey(user))
 			var/decomp = ishuman(user) ? user:decomp_stage : 0
-			src.biofuel += rand(5, 8) * (humanOccupant ? 2 : 1) * ((4.5 - decomp) / 4.5)
-			src.food_processor_state = STATE_READY
+			src.biomatter += rand(5, 8) * (humanOccupant ? 2 : 1) * ((4.5 - decomp) / 4.5)
+			src.food_processor_state = STATUS_READY
+
+			spawn_food(O)
 		else
 			return
+
+	proc/spawn_food(var/obj/O)
+		while(src.biomatter > src.biomatter_per_food)
+			var/food = pick(concrete_typesof(/obj/item/reagent_containers/food/snacks))
+			new food(O.loc)
+			src.biomatter -= src.biomatter_per_food
+
+#undef STATUS_PROCESSING
+#undef STATUS_PROCESSING_BODY
+#undef STATUS_READY
