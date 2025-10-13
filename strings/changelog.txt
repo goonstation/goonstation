@@ -1,6 +1,12 @@
 
 (t)sun oct 12 25
 (u)Egregorious
+(p)24128
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Plant yield has been reworked, it now contributes less to produce count per-point but is easier to increase.
+(+)Saltpetre infusions have a negative effect on yield.
+(+)Crop output has some natural variance, which is affected by the quality of the harvest.
+(u)Egregorious
 (p)24824
 (e)🆕🎨💊💪|C-Feature, C-Sprites, A-Medical, A-Traits
 (*)Cure your addiction with the power of therapy, visit the chapel or the psychiatrists office and talk to someone about your problems today.
