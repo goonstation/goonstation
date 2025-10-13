@@ -3867,3 +3867,10 @@
 		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/therapy_zone
+	id = "therapy_zone"
+	name = "Therapeutic Atmosphere"
+	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
+	icon_state = "therapy_zone"
+	effect_quality = STATUS_QUALITY_POSITIVE
