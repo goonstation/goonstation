@@ -41,8 +41,10 @@
 
 	New()
 		..()
-		src.biomatter_per_food = rand(0, 10)
+		src.biomatter_per_food = rand(1, 4)
 		src.loops_per_consumption_step = src.escapable ? rand(4, 7) : rand(2, 4)
+		if (prob(15))
+			escapable = FALSE
 
 	//Effect_touch copied from borgifier.
 	effect_touch(var/obj/O, var/mob/living/user)
@@ -101,7 +103,6 @@
 					convertable_limbs -= limb_to_replace
 					humanuser.update_body()
 					src.biomatter += 2
-					spawn_food(O)
 				sleep(0.4 SECONDS)
 
 			var/bdna = null // For forensics (Convair880).
@@ -114,16 +115,16 @@
 
 			ArtifactLogs(user, null, O, "touched", "food processing user", 0) // Added (Convair880).
 
-			user.set_loc(get_turf(O.loc))
-			user.death()
-			user.ghostize()
-			qdel(user)
-
 			//Biofuel per body copied from the enzymatic reclaimer
 			var/humanOccupant = (ishuman(user) && !ismonkey(user))
 			var/decomp = ishuman(user) ? user:decomp_stage : 0
 			src.biomatter += rand(5, 8) * (humanOccupant ? 2 : 1) * ((4.5 - decomp) / 4.5)
 			src.food_processor_state = STATUS_READY
+
+			user.set_loc(get_turf(O.loc))
+			user.death()
+			user.ghostize()
+			qdel(user)
 
 			spawn_food(O)
 		else
@@ -131,8 +132,27 @@
 
 	proc/spawn_food(var/obj/O)
 		while(src.biomatter > src.biomatter_per_food)
+			playsound(O.loc, 'sound/machines/vending_dispense.ogg', 50, 1, -1)
+			sleep(0.5 SECONDS)
+
+			//Pick a random food item.
 			var/food = pick(concrete_typesof(/obj/item/reagent_containers/food/snacks))
-			new food(O.loc)
+			var/obj/item/spawned_food = new food(O.loc)
+
+			//Change its name, appearance, and description to that of a small artifact.
+			var/datum/artifact_origin/AO = src.artitype
+			var/datum/artifact_origin/appearance = artifact_controls.get_origin_from_string(AO.name)
+
+			var/name1 = pick(appearance.adjectives)
+			var/name2 = pick(appearance.nouns_small)
+
+			spawned_food.name = "[name1] [name2]"
+			spawned_food.desc = "You have no idea what this thing is!" + SPAN_ARTHINT("It almost looks edible.")
+
+			spawned_food.icon_state = appearance.name + "-[rand(1,appearance.max_sprites)]"
+			spawned_food.item_state = appearance.name
+
+			//Spawn the food.
 			src.biomatter -= src.biomatter_per_food
 
 #undef STATUS_PROCESSING
