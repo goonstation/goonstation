@@ -305,17 +305,16 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		switch (action)
 			if("editappearance")
 				. = TRUE
-				var/fixColors = !!(src.target_mob.mutantrace?.mutant_appearance_flags & FIX_COLORS)
 				if (params["skin"])
 					src.s_tone = sanitize_color(params["skin"], FALSE)
 				if (params["eyes"])
 					src.e_color = sanitize_color(params["eyes"], FALSE)
 				if (params["color1"])
-					src.customization_first_color = sanitize_color(params["color1"], fixColors)
+					src.customization_first_color = sanitize_color(params["color1"], FALSE)
 				if (params["color2"])
-					src.customization_second_color = sanitize_color(params["color2"], fixColors)
+					src.customization_second_color = sanitize_color(params["color2"], FALSE)
 				if (params["color3"])
-					src.customization_third_color = sanitize_color(params["color3"], fixColors)
+					src.customization_third_color = sanitize_color(params["color3"], FALSE)
 				if (params["style1"])
 					src.customization_first_style = find_style_by_name(params["style1"], usr.client)
 				if (params["style2"])
@@ -337,7 +336,6 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 				var/datum/customization_style/CS = new styletype
 				genetek_hair_styles += CS.name
 
-		var/fixColors = !!(src.target_mob.mutantrace?.mutant_appearance_flags & FIX_COLORS)
 		var/hasHumanEyes = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_EYES)
 		var/hasHumanSkintone = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_SKINTONE)
 		var/hasHumanHair = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_HAIR)
@@ -357,7 +355,6 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			"style1" = src.customization_first_style.name,
 			"style2" = src.customization_second_style.name,
 			"style3" = src.customization_third_style.name,
-			"fixColors" = fixColors,
 			"hasEyes" = hasHumanEyes,
 			"hasSkin" = hasHumanSkintone,
 			"hasHair" = hasHumanHair,

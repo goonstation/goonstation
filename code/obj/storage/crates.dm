@@ -860,3 +860,15 @@ TYPEINFO(/obj/storage/crate/chest)
 		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
 		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
 		..()
+
+/obj/storage/crate/eng_reinforcedcables
+	name = "reinforced cable crate"
+	spawn_contents = list(
+		/obj/item/storage/box/cablesbox/reinforced = 4
+	)
+
+/obj/storage/crate/eng_dowsingrods
+	name = "dowsing rod crate"
+	spawn_contents = list(
+		/obj/item/heat_dowsing = 10
+	)

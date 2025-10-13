@@ -986,6 +986,17 @@
 	time = 90 SECONDS
 	category = "Tool"
 
+/datum/manufacture/places_pipes
+	name = "Handheld Pipe Dispencer"
+	item_requirements = list("metal_superdense" = 12,
+							 "crystal_dense" = 6,
+							 "conductive_high" = 6,
+							 "energy_high" = 6)
+	item_outputs = list(/obj/item/places_pipes)
+	create = 1
+	time = 90 SECONDS
+	category = "Tool"
+
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
 	item_requirements = list("dense" = 30)
