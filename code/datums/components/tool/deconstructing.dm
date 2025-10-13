@@ -23,10 +23,6 @@ TYPEINFO(/datum/component/deconstructing)
 		var/obj/O = target
 		if (!O.can_deconstruct(user))
 			return
-		if (istype(O, /obj/item/storage/mechanics))
-			for (var/obj/item/mechanics/comp in O) // can't have deconned cabinets running still
-				if (comp.anchored == ANCHORED)
-					comp.wrench_action(user)
 		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user?.visible_message("<B>[user.name]</B> deconstructs [target].")

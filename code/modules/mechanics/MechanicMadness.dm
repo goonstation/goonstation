@@ -17,12 +17,12 @@
 //
 
 TYPEINFO(/obj/item/storage/mechanics/housing_large)
-	mats = list("bohrum" = 20,
-				"conductive" = 20)
+	mats = list("bohrum" = 100,
+				"conductive" = 50)
 
 TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
-	mats = list("bohrum" = 10,
-				"conductive_high" = 10)
+	mats = list("bohrum" = 80,
+				"conductive_high" = 40)
 
 /obj/item/storage/mechanics // generic
 	name="Generic MechComp Housing"
@@ -30,7 +30,7 @@ TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
 	icon='icons/misc/mechanicsExpansion.dmi'
 	can_hold=list(/obj/item/mechanics, /obj/item/device/gps)
 	var/list/users = list() // le chumps who have opened the housing
-	deconstruct_flags = DECON_WELDER | DECON_WIRECUTTERS | DECON_SCREWDRIVER | DECON_MULTITOOL //be free.
+	deconstruct_flags = DECON_NONE
 	slots=1
 	var/num_f_icons = 0 // how many fill icons i have
 	var/light_time=0
