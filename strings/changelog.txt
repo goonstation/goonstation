@@ -1,6 +1,12 @@
 
 (t)sun oct 12 25
 (u)Egregorious
+(p)24824
+(e)🆕🎨💊💪|C-Feature, C-Sprites, A-Medical, A-Traits
+(*)Cure your addiction with the power of therapy, visit the chapel or the psychiatrists office and talk to someone about your problems today.
+(+)The chaplain in their chapel and the psychiatrist in their office are more potent in providing therapy.
+(+)Atheists cannot benefit from therapy in the chapel, but they can provide it to others.
+(u)Egregorious
 (p)24490
 (e)🆕🌱|C-Feature, A-Hydroponics
 (+)Mutadone can infuse plants with a gene strain that prevents alleles from mutating when harvested.
