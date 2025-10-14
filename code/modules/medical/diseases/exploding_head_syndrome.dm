@@ -46,7 +46,7 @@
 				boutput(affected_mob, SPAN_ALERT("You see a flash of light in the corner of your vision"))
 				affected_mob.take_brain_damage(3)
 			if(probmult(5))
-				boutput(affected_mob, SPAN_ALERT("<B>You feek a strange tingle moving towards your head</B>"))
+				boutput(affected_mob, SPAN_ALERT("<B>You feel a strange tingle moving towards your head</B>"))
 				SPAWN(rand(20, 100))
 					if (affected_mob)
 						var/mob/living/carbon/human/H = affected_mob
