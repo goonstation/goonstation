@@ -140,7 +140,8 @@
 				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
 				M.setStatus("resting", INFINITE_STATUS)
 				SPAWN(10 SECONDS)
-					M.UpdateOverlays(null, "dizzy")
+					if (M)
+						M.UpdateOverlays(null, "dizzy")
 
 	proc/handsignal(mob/attacker, mob/user) // wrapper procs, looks stinky?
 		var/datum/statusEffect/wrestler/statusAttacked = attacker.hasStatus("wrestler")
