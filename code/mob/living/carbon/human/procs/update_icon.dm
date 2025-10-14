@@ -506,7 +506,7 @@
 		if(src.handcuffs)
 			handcuff_img.color = src.handcuffs.color
 			handcuff_img.alpha = src.handcuffs.alpha
-			handcuff_img.filters = src.handcuffs.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.belt)
+			handcuff_img.filters = src.handcuffs.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.handcuffs)
 		src.AddOverlays(handcuff_img, "handcuffs")
 	else
 		src.ClearSpecificOverlays("handcuffs")
@@ -539,7 +539,7 @@
 			if(tail_clothing)
 				human_tail_image.color = tail_clothing.color
 				human_tail_image.alpha = tail_clothing.alpha
-				human_tail_image.filters = tail_clothing.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.belt)
+				human_tail_image.filters = tail_clothing.filters.Copy() + src.mutantrace?.apply_clothing_filters(tail_clothing)
 			src.tail_standing.overlays += human_tail_image
 			src.tail_standing_oversuit.overlays += human_tail_image
 			src.update_tail_overlays()
