@@ -1,4 +1,9 @@
 
+(t)tue oct 14 25
+(u)FlameArrow57
+(p)23995
+(e)🆕🔬|C-Feature, A-Science
+(*)Added a new Lattice origin Agitator artifact. Using it on any activated artifact gives that artifact a guaranteed fault with higher activation chance.
 (t)mon oct 13 25
 (u)Driftered
 (p)24822
