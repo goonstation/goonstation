@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 export interface CharacterPreferencesData {
   isMentor: BooleanLike;
@@ -39,6 +39,7 @@ export interface CharacterPreferencesData {
   pdaColor: string;
   pdaRingtone: string;
   useSatchel: BooleanLike;
+  preferredUplink: string;
   skinTone: string;
   specialStyle: string;
   eyeColor: string;
@@ -51,6 +52,15 @@ export interface CharacterPreferencesData {
   underwearColor: string;
   underwearStyle: string;
   randomAppearance: BooleanLike;
+
+  jobStaticData: Record<string, JobStaticData>;
+  jobFavourite: string;
+  jobsMedPriority: string[];
+  jobsLowPriority: string[];
+  jobsUnwanted: string[];
+
+  antagonistStaticData: Record<string, AntagonistStaticData>;
+  antagonistPreferences: Record<string, boolean>;
 
   fontSize: string;
   seeMentorPms: BooleanLike;
@@ -65,6 +75,7 @@ export interface CharacterPreferencesData {
   hudThemePreview: string;
   tooltipOption: CharacterPreferencesTooltip;
   scrollWheelTargeting: CharacterPreferencesScrollTarget;
+  middleMouseSwap: BooleanLike;
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;
   viewChangelog: BooleanLike;
@@ -86,6 +97,21 @@ export interface CharacterPreferencesPartData {
   name: string;
   points: number;
   img: string;
+}
+
+export interface JobStaticData {
+  colour: string;
+  disabled: BooleanLike;
+  disabled_tooltip?: string;
+  required: BooleanLike;
+  wiki_link?: string;
+}
+
+export interface AntagonistStaticData {
+  name: string;
+  variable: string;
+  disabled: number;
+  disabled_tooltip?: string;
 }
 
 export interface CharacterPreferencesTraitStaticData {
@@ -115,6 +141,7 @@ export enum CharacterPreferencesTabKeys {
   Saves,
   General,
   Character,
+  Occupation,
   Traits,
   GameSettings,
 }
@@ -129,4 +156,30 @@ export enum CharacterPreferencesScrollTarget {
   Never = 1, // SCROLL_TARGET_NEVER
   Hover = 2, // SCROLL_TARGET_HOVER
   Always = 3, // SCROLL_TARGET_ALWAYS
+}
+
+export enum PriorityLevel {
+  Favorite = 1,
+  Medium = 2,
+  Low = 3,
+  Unwanted = 4,
+}
+
+export interface OccupationPriorityModalOptions {
+  occupation: string;
+  hasWikiLink: boolean;
+  priorityLevel: number;
+  required: boolean;
+}
+
+export interface ModalContextValue {
+  setOccupationPriorityModalOptions: (
+    options: OccupationPriorityModalOptions | undefined,
+  ) => void;
+  showResetOccupationPreferencesModal: (show: boolean | undefined) => void;
+}
+
+export interface ModalContextState {
+  occupationModal: OccupationPriorityModalOptions | undefined;
+  resetOccupationPreferencesModal: boolean | undefined;
 }

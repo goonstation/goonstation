@@ -537,21 +537,6 @@ function ehjaxCallback(data) {
       opts.perfMonLoaded = true;
     } else if (data.modeChange) {
       changeMode(data.modeChange);
-    } else if (data.firebug) {
-      if (data.trigger) {
-        output(
-          '<span class="internal boldnshit">Loading firebug console, triggered by ' +
-            data.trigger +
-            '...</span>'
-        );
-      } else {
-        output(
-          '<span class="internal boldnshit">Loading firebug console...</span>'
-        );
-      }
-      var firebugEl = document.createElement('script');
-      firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-      document.body.appendChild(firebugEl);
     } else if (data.dectalk) {
       var message =
         '<audio class="dectalk" src="' +
@@ -824,6 +809,15 @@ $(function () {
           actualTerms +
           '</span>'
       );
+      // Check for invalid regexes in saved config
+      for (var t = 0; t < savedTerms.length; t++) {
+        var testTerm = savedTerms[t];
+        try {
+          new RegExp(testTerm);
+        } catch (err) {
+          savedTerms[t] = 'INVALID REGEX';
+        }
+      }
       opts.highlightTerms = savedTerms;
     }
   }
@@ -1165,8 +1159,8 @@ $(function () {
     );
   });
 
-  $('#saveLog').click(function (e) {
-    var saved = '';
+  $('#saveLog').click(async function (e) {
+    var saved = '<!doctype html>';
 
     if (window.XMLHttpRequest) {
       xmlHttp = new XMLHttpRequest();
@@ -1183,11 +1177,44 @@ $(function () {
       'application/x-www-form-urlencoded'
     );
     xmlHttp.send();
-    saved += '<html class="' + opts.currentTheme + '">';
-    saved += '<style>' + xmlHttp.responseText + '</style>';
-    saved += '<body>';
 
-    saved += $messages.html();
+    // translate all images to base64 so they work in the saved log
+    // With love by ZeWaka
+    var $cloned = $messages.clone();
+    var imgPromises = [];
+    $cloned.find('img').each(function () {
+      var img = this;
+      var src = img.src;
+      // Only process http(s) images
+      if (/^https?:\/\//i.test(src)) {
+        var p = fetch(src)
+          .then(function (resp) {
+            return resp.blob();
+          })
+          .then(function (blob) {
+            return new Promise(function (resolve) {
+              var reader = new FileReader();
+              reader.onloadend = function () {
+                img.src = reader.result;
+                resolve();
+              };
+              reader.readAsDataURL(blob);
+            });
+          })
+          .catch(function () {
+            // lol fuck em
+          });
+        imgPromises.push(p);
+      }
+    });
+
+    await Promise.all(imgPromises);
+
+    saved += `<html class="${opts.currentTheme ?? 'theme-default'}">`;
+    saved += `<head><meta charset="utf-8" /><style>${xmlHttp.responseText}</style></head>`;
+    saved += `<body class="${opts.currentTheme ?? 'theme-default'}">`;
+
+    saved += $cloned.html();
     saved += '</body></html>';
 
     var now = new Date();
@@ -1204,7 +1231,35 @@ $(function () {
       now.getMinutes() +
       '.html';
 
-    navigator.msSaveBlob(new Blob([saved], { type: 'text/html' }), filename);
+    var blob = new Blob([saved], { type: 'text/html' });
+
+    if (window.showSaveFilePicker) {
+      var accept = {};
+      accept[blob.type] = ['.html'];
+
+      var fileOpts = {
+        suggestedName: filename,
+        types: [
+          {
+            description: 'SS13 file',
+            accept: accept,
+          },
+        ],
+      };
+
+      window
+        .showSaveFilePicker(fileOpts)
+        .then(function (file) {
+          return file.createWritable();
+        })
+        .then(function (writable) {
+          return writable.write(blob).then(function () {
+            return writable.close();
+          });
+        })
+        .catch(function () {});
+    }
+    // ...existing code for msSaveBlob or <a download> if needed...
   });
 
   $('#highlightTerm').click(function (e) {
@@ -1254,11 +1309,18 @@ $(function () {
   $('body').on('submit', '#highlightTermForm', function (e) {
     e.preventDefault();
 
+    // Validate and replace invalid regexes
+    // Don't allow people to crash their own chat
     opts.highlightTerms = [];
     for (var count = 0; count < opts.highlightLimit; count++) {
       var term = $('#highlightTermInput' + count).val();
       if (term !== null && /\S/.test(term)) {
-        opts.highlightTerms.push(term);
+        try {
+          new RegExp(term);
+          opts.highlightTerms.push(term);
+        } catch (err) {
+          opts.highlightTerms.push('INVALID REGEX');
+        }
       }
     }
 
@@ -1291,20 +1353,6 @@ $(function () {
    * KICK EVERYTHING OFF
    *
    ******************************************/
-
-  //Do IE check because apparently some luddites still rock XP and IE 8 in the year of our lord 2017
-  var trident = navigator.userAgent.match(/Trident\/(\d)\.\d(?:;|$)/gi);
-  var msie = document.documentMode;
-  if ((msie && msie < 10) || (trident && parseInt(trident) < 6)) {
-    //Trident/6.0 == IE 10
-    $('body').append(
-      '<div class="browser-warning">' +
-        "BYOND uses IE for interfaces and we've detected yours is very old.<br>" +
-        '<strong>Please consider upgrading or some stuff might be broken for you!</strong>' +
-        '<a href="#" class="close"><i class="icon-remove"></i></a>' +
-        '</div>'
-    );
-  }
 
   runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading');
   if ($('#loading').is(':visible')) {

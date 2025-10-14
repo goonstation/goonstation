@@ -572,6 +572,10 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	col_b = 1.00
 	brightness = 4.5
 	light_type = /datum/light/cone
+	var/icon_state_collapsed = "floodlight_item"
+	var/icon_state_deployed = "floodlight"
+	var/icon_state_light_overlay = "floodlight_light"
+	var/icon_state_lever = "floodlight-lever"
 	var/outer_angular_size = 120
 	var/inner_angular_size = 60
 	var/inner_radius = 3
@@ -691,7 +695,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		if (!isturf(src.loc))
 			return
 		src.anchored = ANCHORED
-		src.set_icon_state("floodlight")
+		src.set_icon_state(src.icon_state_deployed)
 		light_check()
 		if (src.switch_on)
 			processing_items |= src
@@ -700,7 +704,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		if (!isturf(src.loc))
 			return
 		src.anchored = UNANCHORED
-		src.set_icon_state("floodlight_item")
+		src.set_icon_state(src.icon_state_collapsed)
 		if (src.switch_on)
 			processing_items -= src
 		light_check()
@@ -744,7 +748,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		has_power |= src.cell?.charge >= src.power_usage
 		has_power |= src.infinite_power
 		if (src.anchored)
-			src.UpdateOverlays(SafeGetOverlayImage("lever", src.icon, src.switch_on ? "floodlight-lever-on" : "floodlight-lever-off"), "lever")
+			var/lever_state = src.switch_on ? "[src.icon_state_lever]-on" : "[src.icon_state_lever]-off"
+			src.UpdateOverlays(SafeGetOverlayImage("lever", src.icon, lever_state), "lever")
 		else
 			src.UpdateOverlays(null, "lever")
 
@@ -758,8 +763,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				src.light.attach_x = pixel_x / world.icon_size
 				src.light.attach_y = pixel_y / world.icon_size
 				src.light.enable()
-				src.UpdateOverlays(image(src.icon, "floodlight-light"), "light")
-				var/image/light_lightplane = image(src.icon, "floodlight-light")
+				src.UpdateOverlays(image(src.icon, src.icon_state_light_overlay), "light")
+				var/image/light_lightplane = image(src.icon, src.icon_state_light_overlay)
 				light_lightplane.plane = PLANE_SELFILLUM
 				light_lightplane.alpha = 127
 				src.UpdateOverlays(light_lightplane, "light-lightplane")

@@ -1,0 +1,5 @@
+/*!
+ * Anton by The Anton Project Authors (https://github.com/googlefonts/AntonFont.git)
+ * License - SIL OFL 1.1
+ */
+@font-face{font-family:Anton;font-style:normal;font-weight:400;font-display:block;src:url('{{resource("css/fonts/anton-regular.woff2")}}') format('woff2')}

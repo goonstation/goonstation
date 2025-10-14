@@ -22,6 +22,7 @@
 			chicken_egg_props = new egg_props_path(src)
 		src.setup_special_effects()
 		src.UpdateIcon()
+		src.food_color = global.get_average_color(global.getFlatIcon(src))
 	update_icon()
 		if (egg_props_path)
 			src.icon_state = "egg-[chicken_egg_props.chicken_id]"

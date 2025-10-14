@@ -62,6 +62,9 @@ TYPEINFO(/mob/new_player)
 		..()
 
 	Login()
+		if (!src.client)
+			logTheThing(LOG_DEBUG, src, "new_player/Login called with null client. This is likely due to someone trying to log in with an in-use key.")
+			return
 		..()
 
 		if(!mind)
@@ -74,8 +77,12 @@ TYPEINFO(/mob/new_player)
 				P.log_leave_time()
 
 		src.client?.load_pregame()
+		close_spawn_windows()
 		new_player_panel()
-		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
+		var/turf/default_loc = locate(1,1,1)
+		if (istype(default_loc.loc, /area/cordon))
+			default_loc = pick_landmark(LANDMARK_LATEJOIN, locate(world.maxx/2,world.maxy/2,1))
+		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, default_loc))
 		src.sight |= SEE_TURFS
 
 		#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
@@ -265,10 +272,7 @@ TYPEINFO(/mob/new_player)
 				else
 					AttemptLateSpawn(JOB)
 
-		if(href_list["preferences"])
-			if (!src.ready_play)
-				client.preferences.process_link(src, href_list)
-		else if(!href_list["late_join"])
+		if(!href_list["late_join"])
 			new_player_panel()
 
 	proc/IsSiliconAvailableForLateJoin(var/mob/living/silicon/S)

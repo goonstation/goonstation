@@ -83,7 +83,9 @@ TYPEINFO(/obj/item/device/multitool)
 
 /obj/item/device/multitool/proc/assembly_application(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 	if(!assembly_target)
-		//if there is no target, we don't do anything
+		//if there is no target, we make a shock akin to using the multitools special on a 1-second cooldown
+		if(!ON_COOLDOWN(src, "multitool shock", 1 SECONDS))
+			elecflash(get_turf(src),0, power=2, exclude_center = 0)
 		return
 	else
 		if(istype(assembly_target, /obj/item/tank/plasma))
@@ -170,7 +172,7 @@ TYPEINFO(/obj/item/device/multitool)
 			frequency = omniperipheral.frequency
 	else if (targetimplant)
 		net_id = targetimplant.net_id
-		frequency = targetimplant.pda_alert_frequency
+		frequency = targetimplant.alert_frequency
 
 	if(net_id)
 		boutput(user, SPAN_ALERT("NETID#[net_id]"))

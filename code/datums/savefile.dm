@@ -53,6 +53,7 @@
 		F["[profileNum]_PDAcolor"] << src.PDAcolor
 		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
 		F["[profileNum]_use_satchel"] << src.use_satchel
+		F["[profileNum]_preferred_uplink"] << src.preferred_uplink
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -116,6 +117,7 @@
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
 		F["scrollwheel_limb_targeting"] << src.scrollwheel_limb_targeting
+		F["middle_mouse_swap"] << src.middle_mouse_swap
 		F["changelog"] << src.view_changelog
 		F["score"] << src.view_score
 		F["tickets"] << src.view_tickets
@@ -222,6 +224,7 @@
 		F["[profileNum]_PDAcolor"] >> src.PDAcolor
 		F["[profileNum]_pda_ringtone_index"] >> src.pda_ringtone_index
 		F["[profileNum]_use_satchel"] >> src.use_satchel
+		F["[profileNum]_preferred_uplink"] >> src.preferred_uplink
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -312,6 +315,7 @@
 		// Game setting options, not per-profile
 		F["tooltip"] >> src.tooltip_option
 		F["scrollwheel_limb_targeting"] >> src.scrollwheel_limb_targeting
+		F["middle_mouse_swap"] >> src.middle_mouse_swap
 		if (isnull(src.scrollwheel_limb_targeting))
 			src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 		F["changelog"] >> src.view_changelog
@@ -446,6 +450,9 @@
 		src.tooltip_option = (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS) //For fucks sake.
 		src.keybind_prefs_updated(user)
 
+		winset(user, "tooltip_option_always", "is-checked=[src.tooltip_option == TOOLTIP_ALWAYS]")
+		winset(user, "tooltip_option_alt", "is-checked=[src.tooltip_option == TOOLTIP_ALT]")
+		winset(user, "tooltip_option_never", "is-checked=[src.tooltip_option == TOOLTIP_NEVER]")
 
 		return 1
 
