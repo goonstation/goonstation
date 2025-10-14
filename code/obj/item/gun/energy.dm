@@ -1570,6 +1570,10 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			//you must be holding/wearing the weapon
 			//this check makes it so that someone can't stun you, stand on top of you and say "I am the law" to kill you
 			if (src in M.contents)
+				// This is to check if someone is the gun, prevents them from speaking "I am the Law" into the gun while the gun. This was triggered by a Wraith event that happened.
+				if (islivingobject(M))
+					boutput(usr, SPAN_ALERT("<b>You cannot speak into the gun.</b>"))
+					return 1;
 				if (M.job != "Head of Security" || src.emagged)
 					src.cant_self_remove = 1
 					playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
