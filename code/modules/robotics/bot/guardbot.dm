@@ -2972,7 +2972,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if (target_name && target_name != "")
 					src.target_names = list(target_name)
 
-			if (confList["command"])
+			if (confList["command_2"])
 				switch(lowertext(confList["command"]))
 					if ("add_target")
 						if(confList["acc_code"] != netpass_heads)
