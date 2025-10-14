@@ -2961,6 +2961,7 @@
 #include "interface\skin.dmf"
 #include "maps\config\map.dm"
 // END_INCLUDE
+#include "code\modules\medical\diseases\exploding_head_syndrome.dm"
 
 #ifdef SECRETS_ENABLED
 #include "+secret\_secretAfter.dme"
