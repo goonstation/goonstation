@@ -7,9 +7,13 @@
 	var/list/whoMentors = list()
 	var/list/whoNormies = list()
 	var/list/whoPreAuth = list()
+	var/num_new_players = 0
 
 	for (var/client/C as anything in clients)
 		if (!C || !C.mob) continue
+
+		if (istype(C.mob, /mob/new_player))
+			num_new_players++
 
 		//Admins
 		if (C.holder)
@@ -90,7 +94,8 @@
 		for (var/aPreAuth in whoPreAuth)
 			rendered += aPreAuth
 
-	rendered += "<b>Total Players: [length(whoAdmins) + length(whoMentors) + length(whoNormies)]</b>"
+	var/total_players = length(whoAdmins) + length(whoMentors) + length(whoNormies)
+	rendered += "<b>Total Players: [num_in_game] ([total_players - num_new_players] in game)</b>"
 	rendered += "</div>"
 	boutput(usr, rendered.Join())
 
