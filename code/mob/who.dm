@@ -95,7 +95,7 @@
 			rendered += aPreAuth
 
 	var/total_players = length(whoAdmins) + length(whoMentors) + length(whoNormies)
-	rendered += "<b>Total Players: [num_in_game] ([total_players - num_new_players] in game)</b>"
+	rendered += "<b>Total Players: [total_players] ([total_players - num_new_players] in game)</b>"
 	rendered += "</div>"
 	boutput(usr, rendered.Join())
 
