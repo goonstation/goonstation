@@ -638,10 +638,7 @@
 
 	if (!length(src.combined_artifacts))
 		src.combined_artifacts = list()
-	if (O.artifact.combine_effect_priority == ARTIFACT_COMBINATION_TOUCHED)
-		src.combined_artifacts.Insert(1, O)
-	else
-		src.combined_artifacts += O
+	src.combined_artifacts += O
 	O.name = src.name
 	O.real_name = src.real_name
 	O.set_loc(src)
