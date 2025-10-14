@@ -1,5 +1,9 @@
 
 (t)tue oct 14 25
+(u)Gomp
+(p)24933
+(e)🎨|C-Sprites
+(+)The Floor and Wall designer is now standardized to use "gray" not "grey" when searching for floors or walls.
 (u)FlameArrow57
 (p)23995
 (e)🆕🔬|C-Feature, A-Science
