@@ -19652,12 +19652,6 @@
 	icon_state = "corner_east"
 	},
 /area/iomoon/base/underground)
-"bBD" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/afterlife/bar)
 "bBE" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -60580,7 +60574,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "iOP" = (
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -101341,7 +101335,7 @@ dSn
 dTd
 cwl
 cwl
-bBD
+cwl
 dTg
 dqe
 daN
