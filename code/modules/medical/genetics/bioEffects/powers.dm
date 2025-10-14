@@ -2363,14 +2363,15 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 /datum/bioEffect/power/project_voice
 	name = "Project Voice"
-	desc = "Allows the subject to create voice resembling sound waves at a target location."
+	desc = "Allows the subject to create sound waves resembling voice at a target location."
 	id = "project_voice"
 	msgGain = "You feel in tune with sound."
 	msgLose = "You feel out of tune with sound."
 	cooldown = 10 SECONDS
-	ability_path = /datum/targetable/geneticsAbility/ventriloquism
+	ability_path = /datum/targetable/geneticsAbility/project_voice
+	occur_in_genepools = FALSE
 
-/datum/targetable/geneticsAbility/ventriloquism
+/datum/targetable/geneticsAbility/project_voice
 	name = "Project Voice"
 	desc = "Project a voice at a target location."
 	icon_state = "speech"
@@ -2388,7 +2389,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/to_say = tgui_input_text(src.owner, "What would you like this thing to say?", "Project Voice")
 		if (!to_say)
 			return TRUE
+
+		if (!src.linked_power.safety)
+			src.owner.emote(pick("cough", "laugh", "yawn"))
 		target.say(to_say)
+
+		logTheThing(LOG_SAY, src.owner, "uses Project Voice gene to make [constructTarget(target)] say: [to_say]")
 
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter

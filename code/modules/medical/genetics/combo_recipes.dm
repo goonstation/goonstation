@@ -283,6 +283,10 @@ ABSTRACT_TYPE(/datum/geneticsrecipe)
 	required_effects = list("farty","bigpuke")
 	result = /datum/bioEffect/power/shoot_limb
 
+/datum/geneticsrecipe/project_voice
+	required_effects = list("telepathy", "loud_voice")
+	result = /datum/bioEffect/power/project_voice
+
 // Mutantraces
 
 /datum/geneticsrecipe/seenoevil
