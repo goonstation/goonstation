@@ -45,7 +45,7 @@
 		icon_state = "space-fish"
 		desc = "You're about 90% sure this isn't just a regular fishbowl."
 		item_state = "s_helmet"
-		c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+		c_flags = /obj/item/clothing/head/helmet/space::c_flags & ~COVERSHAIR
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
@@ -348,7 +348,7 @@
 			name = "commander's cap"
 			icon_state = "syndie_commander"
 			desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
-			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+			c_flags = /obj/item/clothing/head/helmet/space/syndicate/specialist::c_flags & ~COVERSHAIR
 
 		infiltrator
 			icon_state = "syndie_specialist-infiltrator"
@@ -1110,7 +1110,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	item_state = "buckethat"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	block_vision = 1
-	c_flags = COVERSEYES | BLOCKCHOKE | COVERSHAIR
+	c_flags = /obj/item/clothing/head/helmet/bucket::c_flags | COVERSHAIR
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 

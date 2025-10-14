@@ -1328,7 +1328,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	desc = "For the inner space commander in you."
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = /obj/item/clothing/head/helmet/space/pod_wars/NT::c_flags & ~COVERSHAIR
 	see_face = TRUE
 
 	setupProperties()
@@ -1360,7 +1360,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	name = "syndicate commander's cap"
 	icon_state = "syndie_commander"
 	desc = "For the inner space commander in you."
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = /obj/item/clothing/head/helmet/space/pod_wars/SY::c_flags & ~COVERSHAIR
 	see_face = TRUE
 
 	setupProperties()
