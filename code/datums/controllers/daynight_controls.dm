@@ -14,13 +14,16 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 	var/ambient_light_source = AMBIENT_LIGHT_SRC_INVLD
 	var/current_color
 	var/obj/ambient/light
+	var/atom/movable/screen/ambient_lighting/ambient_screen
 
 	New()
 		. = ..()
 		src.initial_time =   BUILD_TIME_HOUR HOURS + BUILD_TIME_MINUTE MINUTES + BUILD_TIME_SECOND SECONDS
 		src.time = initial_time
-		last_update = world.timeofday
 		light = new
+		ambient_screen = new
+
+		process()
 
 		update_color( calculate_color(src.time) )
 
@@ -48,7 +51,10 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 	proc/update_color(new_color)
 		if(current_color != new_color)
 			current_color = new_color
-			animate(light, color=new_color, time=10 SECONDS)
+			if(istype(light))
+				animate(light, color=new_color, time=10 SECONDS)
+			if(istype(ambient_screen))
+				animate(ambient_screen, color=new_color, time=10 SECONDS)
 
 	proc/generate_color_samples()
 		var/list/colors = list()
@@ -179,6 +185,7 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 				sky_color = rgb(0.160 *  18, 0.60 * 236, 1.00 * 255, 0.65 * 255)
 #endif
 		. = sky_color
+
 
 /datum/daynight_controller/terrainify
 	ambient_light_source = AMBIENT_LIGHT_SRC_TERRAINIFY
