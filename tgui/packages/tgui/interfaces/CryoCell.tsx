@@ -15,6 +15,7 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { damageNum, HealthStat } from '../components/goonstation/HealthStat';
@@ -28,14 +29,49 @@ import {
 } from './common/temperatureUtils';
 
 interface CryoCellData {
-  cellTemp;
-  containerData;
-  hasDefib;
-  occupant;
-  status;
-  reagentScanActive;
-  reagentScanEnabled;
-  showBeakerContents;
+  cellTemp: number;
+  containerData; // Reagents
+  hasDefib: BooleanLike;
+  occupant: CryoOccupantData;
+  ejectFullHealthOccupant: BooleanLike;
+  status: BooleanLike;
+  reagentScanActive: BooleanLike;
+  reagentScanEnabled: BooleanLike;
+  showBeakerContents: BooleanLike;
+}
+
+interface CryoOccupantData {
+  occupied: BooleanLike;
+  occupantStat: number;
+  health: number;
+  oxyDamage: number;
+  toxDamage: number;
+  burnDamage: number;
+  bruteDamage: number;
+  patient_status: number;
+  blood_pressure_rendered: string;
+  blood_pressure_status: string;
+  body_temp: number;
+  optimal_temp: number;
+  embedded_objects: EmbeddedObjects;
+  rad_stage: number;
+  rad_dose: number;
+  brain_damage: BrainDamage;
+  blood_volume: number;
+  reagents; // Reagents
+  hasRoboticOrgans: boolean;
+}
+
+interface EmbeddedObjects {
+  foreign_object_count: number;
+  implant_count: number;
+  has_chest_count: BooleanLike;
+}
+
+interface BrainDamage {
+  value: number;
+  desc: string;
+  color: string;
 }
 
 export const CryoCell = () => {
@@ -81,7 +117,13 @@ const CryoCellControl = () => {
 
 const Occupant = () => {
   const { act, data } = useBackend<CryoCellData>();
-  const { occupant, reagentScanEnabled, reagentScanActive, hasDefib } = data;
+  const {
+    occupant,
+    reagentScanEnabled,
+    reagentScanActive,
+    hasDefib,
+    ejectFullHealthOccupant,
+  } = data;
   const occupantStatus = occupant ? MobStatuses[occupant.occupantStat] : null;
 
   return (
@@ -109,6 +151,14 @@ const Occupant = () => {
             color="green"
           >
             Eject
+          </Button>
+          <Button
+            onClick={() => act('full_health_eject')}
+            icon="refresh"
+            color={ejectFullHealthOccupant ? 'green' : 'red'}
+            tooltip="Automatically eject full-health occupants"
+          >
+            Auto-Eject
           </Button>
         </>
       }

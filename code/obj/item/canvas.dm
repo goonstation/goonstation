@@ -191,7 +191,6 @@
 <html>
 <head>
 <title>[src]</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="pragma" content="no-cache">
 <style>
@@ -421,7 +420,7 @@
 		save_to_id(src.id)
 
 	get_dot_color(mob/user)
-		if(text2num(user?.client.player.cloudSaves.getData("persistent_canvas_banned")))
+		if(text2num(user?.client.player?.cloudSaves.getData("persistent_canvas_banned")))
 			return null
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
 			boutput(user, SPAN_ALERT("The first brush stroke exhausted you too much. You will need to wait until the next shift for another."))

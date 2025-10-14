@@ -335,15 +335,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 		setProperty("coldprot", 20)
 		setProperty("radprot", 5)
 
-// Donkini
-
-/obj/item/clothing/under/gimmick/donkini
-	name = "\improper Donkini"
-	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
-	icon_state = "donkini"
-	item_state = "donkini"
-	hide_underwear = TRUE
-
 // Duke Nukem
 
 /obj/item/clothing/under/gimmick/duke
@@ -505,9 +496,9 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/blue
 	name = "blue clown suit"
 	desc = "Proof that if you truly believe in yourself, you can accomplish anything. Honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 	icon_state = "blessedclown"
 	item_state = "blessedclown"
 
@@ -531,7 +522,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/purple
 	name = "purple clown suit"
 	desc = "What kind of clown are you for wearing this color? It's a good question, honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
@@ -553,7 +544,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/pink
 	name = "pink clown suit"
 	desc = "The color pink is the embodiment of love and hugs and nice people. Honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "pinkclown"
 	//item_state = "pinkclown"
@@ -588,7 +579,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/yellow
 	name = "yellow clown suit"
 	desc = "Have a happy honk!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "yellowclown"
 	//item_state = "yellowclown"
@@ -849,6 +840,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty ultramarine backpack"
 	desc = "How is this janky piece of shit supposed to work anyway?"
 	icon_state = "um_back"
+	satchel_variant = null
 
 /obj/item/clothing/suit/power/noisemarine
 	name = "cardboard noise marine armor"
@@ -865,6 +857,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty noise marine backpack"
 	desc = "Shame this doesn't have real loudspeakers built into it."
 	icon_state = "nm_back"
+	satchel_variant = null
 
 TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	mat_appearances_to_ignore = list("jean")
@@ -1157,7 +1150,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
 	desc = "The signature striped uniform of the mime. Not necessarily French."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "mime1"
 	item_state = "mime1"
@@ -1206,7 +1199,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A fiery flame shirt even Guy Fieri would be envious of."
 	icon_state = "flame"
 	item_state = "flame"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 
 /obj/item/clothing/under/misc/america
@@ -1214,7 +1207,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "I am a REAL AMERICAN, I fight for the rights of every man!"
 	icon_state = "america"
 	item_state = "america"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 
 /obj/item/clothing/under/gimmick/wedding_dress
@@ -1539,7 +1532,7 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 /obj/item/clothing/under/rotten
 	name = "suit and vest"
 	desc = "You feel like you could sing a real catchy tune in this getup!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "rotten"
 	item_state = "rotten"

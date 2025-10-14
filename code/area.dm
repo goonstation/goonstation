@@ -746,7 +746,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle2"
 	occlude_foreground_parallax_layers = FALSE
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 /area/shuttle/escape/centcom
@@ -806,7 +806,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "John's Bus Diner Dock"
 	icon_state = "shuttle"
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 /area/shuttle/john/diner/nadir
@@ -898,7 +898,8 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 	sound_environment = 22
 	ambient_light = TRENCH_LIGHT
 #elif defined(UNDERWATER_MAP) // Oshan/Manta diner shuttle is at the surface sea diner
-	ambient_light = OCEAN_LIGHT
+	ambient_light = 0
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 #endif
 
 /area/shuttle/merchant_shuttle/left_station
@@ -2748,7 +2749,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/garden/sunlight
 	name = "Public Garden"
 	icon_state = "park"
-	ambient_light = CENTCOM_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_EARTH
 
 /area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
 	name = "Garbage Garbs clothing store"
@@ -2769,7 +2770,7 @@ ABSTRACT_TYPE(/area/station/com_dish)
 	icon_state = "yellow"
 	requires_power = FALSE
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 /area/station/com_dish/comdish
@@ -3813,7 +3814,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 	CanEnter(atom/movable/A)
 		var/mob/living/M = A
-		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
+		if(istype(M) && M.mind && !(M.mind.get_antagonist(ROLE_WIZARD) || M.mind.special_role == ROLE_WIZARD || M.mind.get_antagonist(ROLE_BASKETBALL_WIZARD) || M.mind.special_role == ROLE_BASKETBALL_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
 				return TRUE
 			boutput(M, SPAN_ALERT("A magical barrier prevents you from entering!")) //or something
@@ -4136,7 +4137,7 @@ ABSTRACT_TYPE(/area/mining)
 /area/space/plasma_reef
 	name = "Plasma Reef"
 	icon_state = "purple"
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	requires_power = FALSE // find out where the fuck the check is later and change this so plasma reef doesn't have free power
 
 // // // // // // // // // // // //
@@ -4323,7 +4324,7 @@ ABSTRACT_TYPE(/area/mining)
 	if(name == "Space" || src.name == "Ocean")			// override defaults for space
 		requires_power = 0
 		#ifdef UNDERWATER_MAP
-		src.ambient_light = OCEAN_LIGHT
+		src.ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 		#endif
 
 	if(!requires_power)

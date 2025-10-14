@@ -377,6 +377,21 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
 
+/obj/item/clothing/suit/hazard/bio_suit/rd
+	name = "research director's bio suit"
+	desc = "A special, form fitted, suit that protects against biological contamination."
+	item_state = "biosuit_rd"
+	icon_state = "biosuit_rd"
+	armor_icon = "armorbio_rd"
+
+	setupProperties()
+		..()
+		delProperty("movespeed")
+
+	armor()
+		. = ..()
+		src.delProperty("movespeed")
+
 TYPEINFO(/obj/item/clothing/suit/hazard/bio_suit/armored)
 	pre_armored = TRUE
 /obj/item/clothing/suit/hazard/bio_suit/armored
@@ -1541,7 +1556,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
-	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
+	icon_state = "spacelight-civ"
 	item_state = "es_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1574,6 +1589,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		desc = "A lightweight engineering spacesuit designed to.... well, it doesn't really protect you from as much. But it lets you run away from fires quicker."
 		icon_state = "spacelight-e"
 		item_state = "es_suit"
+
+	chiefengineer
+		name = "chief engineer's light space suit"
+		desc = "A lightweight engineering spacesuit custom modified by the Chief Engineer to protect from more environmental hazards."
+		icon_state = "spacelight-ce"
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 20)
+			setProperty("radprot", 20)
+			setProperty("meleeprot", 2)
+			setProperty("rangedprot", 0.2) // better than 0
 
 // Sealab suits
 
@@ -2614,3 +2641,62 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/dress/denim)
 	name = "khaki denim dress"
 	icon_state = "denim_dress-khaki"
 	item_state = "denim_dress-khaki"
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/swimskirt)
+/obj/item/clothing/suit/swimskirt
+	name = "swim skirt"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	desc = "A loose skirt, meant to be tied around the waist and worn over a swimsuit"
+	w_class = W_CLASS_SMALL
+
+	white
+		name = "white swim skirt"
+		icon_state = "swimskirt_w"
+		item_state = "swimskirt_w"
+
+	red
+		name = "red swim skirt"
+		icon_state = "swimskirt_r"
+		item_state = "swimskirt_r"
+
+	orange
+		name = "orange swim skirt"
+		icon_state = "swimskirt_o"
+		item_state = "swimskirt_o"
+
+	green
+		name = "green swim skirt"
+		icon_state = "swimskirt_g"
+		item_state = "swimskirt_g"
+
+	blue
+		name = "blue swim skirt"
+		icon_state = "swimskirt_u"
+		item_state = "swimskirt_u"
+
+	purple
+		name = "purple swim skirt"
+		icon_state = "swimskirt_p"
+		item_state = "swimskirt_p"
+
+	black
+		name = "black swim skirt"
+		icon_state = "swimskirt_b"
+		item_state = "swimskirt_b"
+
+	red_pdot
+		name = "red polka-dot swim skirt"
+		icon_state = "swimskirt_rpdot"
+		item_state = "swimskirt_rpdot"
+
+	yellow_pdot
+		name = "yellow polka-dot swim skirt"
+		icon_state = "swimskirt_ypdot"
+		item_state = "swimskirt_ypdot"
+
+	strawberry
+		name = "strawberry swim skirt"
+		icon_state = "swimskirt_strawb"
+		item_state = "swimskirt_strawb"
+

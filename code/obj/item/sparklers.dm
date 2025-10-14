@@ -95,7 +95,7 @@
 			src.force = 3
 			src.icon_state = src.icon_on
 			src.item_state = src.item_on
-			light.enable()
+			src.AddComponent(/datum/component/loctargeting/simple_light, col_r * 255, col_g * 255, col_b * 255, 0.7 * 255, TRUE)
 			processing_items |= src
 			if(user)
 				user.update_inhands()
@@ -109,7 +109,7 @@
 			src.force = 0
 			src.icon_state = src.icon_off
 			src.item_state = src.item_off
-			light.disable()
+			src.RemoveComponentsOfType(/datum/component/loctargeting/simple_light)
 			processing_items -= src
 			if(user)
 				user.update_inhands()

@@ -15,6 +15,7 @@ TYPEINFO_NEW(/obj/table)
 	density = 1
 	anchored = ANCHORED
 	flags = NOSPLASH
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
@@ -252,9 +253,6 @@ TYPEINFO_NEW(/obj/table)
 				return
 			actions.start(new /datum/action/bar/icon/furnish_table(src,W), user)
 
-		else if (istype(W, /obj/item/paint_can))
-			return
-
 		else if (isscrewingtool(W) && user.a_intent == INTENT_HARM)
 			if (src.has_drawer && src.drawer_locked)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_LOCKPICK), user)
@@ -285,13 +283,7 @@ TYPEINFO_NEW(/obj/table)
 				boutput(user, SPAN_ALERT("[K] doesn't seem to fit in [src]'s desk drawer lock."))
 			return
 
-		else if (istype(W, /obj/item/cloth/towel))
-			user.visible_message(SPAN_NOTICE("[user] wipes down [src] with [W]."))
-
 		else if (istype(W) && src.place_on(W, user, params))
-			return
-		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
-		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= BRAIN_DAMAGE_MODERATE && rand(1, 10) < 10))
 			return
 
 		else
@@ -353,20 +345,6 @@ TYPEINFO_NEW(/obj/table)
 			return
 
 		var/obj/item/I = O
-		if(I.equipped_in_slot && I.cant_self_remove)
-			return
-		if (istype(I,/obj/item/satchel))
-			var/obj/item/satchel/S = I
-			if (length(S.contents) < 1)
-				boutput(user, SPAN_ALERT("There's nothing in [S]!"))
-			else
-				user.visible_message(SPAN_NOTICE("[user] dumps out [S]'s contents onto [src]!"))
-				for (var/obj/item/thing in S.contents)
-					thing.set_loc(src.loc)
-				S.tooltip_rebuild = TRUE
-				S.UpdateIcon()
-				return
-		// Placed as such because we do want to let borgs drag their satchels to dump on tables, but don't want to let them place items on tables from their module
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
 
@@ -853,8 +831,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
 				/obj/item/storage/box/beakerbox,
 				/obj/item/reagent_containers/glass/beaker/large = 2,
-				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner = 2,
+				/obj/item/clothing/glasses/spectro = 2,
+				/obj/item/device/reagentscanner = 3,
 				/obj/item/reagent_containers/dropper/mechanical = 2,
 				/obj/item/reagent_containers/dropper = 2)
 
@@ -863,8 +841,6 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	desc = "Extra supplies for the discerning chemist."
 	drawer_contents = list(/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
-				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner,
 				/obj/item/bunsen_burner,
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,

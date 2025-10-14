@@ -54,8 +54,8 @@
 	. = ..()
 
 // common helper procs for all power machines
-/obj/machinery/power/proc/add_avail(var/amount)
-	powernet?.newavail += amount
+/obj/machinery/power/proc/add_avail(var/amount, var/process_loop = PROCESSING_EIGHTH)
+	powernet?.newavail += amount / 2**(PROCESSING_EIGHTH - process_loop)
 
 #ifdef MACHINE_PROCESSING_DEBUG
 	if(!detailed_power_data) detailed_power_data = new
@@ -66,9 +66,9 @@
 		station_power_generation["[round(world.time / ( 1 MINUTE ))]"] += amount
 
 
-/obj/machinery/power/proc/add_load(var/amount)
+/obj/machinery/power/proc/add_load(var/amount, process_loop = PROCESSING_EIGHTH)
 	if(powernet && powernet.newload + amount <= powernet.avail)
-		powernet.newload += amount
+		powernet.newload += amount / 2**(PROCESSING_EIGHTH - process_loop)
 		. = TRUE
 
 /obj/machinery/power/proc/surplus()
@@ -215,20 +215,38 @@ var/makingpowernetssince = 0
 			*/
 			. += C
 
+//checks for cables pointing directly into this machine but NOT passing under it
+//this fixes the issue of crossed pnets getting linked by dragging a stomper over them
+//macro'd because there's two dir vars and I hate copy paste
+#define CHECK_DIRECT_CONNECTIONS(dirvar)\
+	if(C.dirvar == cdir) {\
+		var/through_line = FALSE;\
+		for (var/obj/cable/center_cable in center) {\
+			if (turn(center_cable.d1, 180) == C.dirvar || turn(center_cable.d2, 180) == C.dirvar) {\
+				through_line = TRUE;\
+				break;\
+			}\
+		}\
+		if (!through_line) {\
+			. += C;\
+		}\
+	}
 /obj/machinery/power/proc/get_connections(unmarked = 0)
 	if(!directwired)
 		return get_indirect_connections(unmarked)
 
 	. = list()
 	var/cdir
-
+	var/turf/center = get_turf(src)
 	for(var/turf/T in orange(1, src))
 		cdir = get_dir(T, src)
 		for(var/obj/cable/C in T)
 			if(C.netnum && unmarked)
 				continue
-			if(C.d1 == cdir || C.d2 == cdir)
-				. += C
+			CHECK_DIRECT_CONNECTIONS(d1)
+			CHECK_DIRECT_CONNECTIONS(d2)
+
+#undef CHECK_DIRECT_CONNECTIONS
 
 /obj/machinery/power/proc/get_indirect_connections(unmarked = 0)
 	. = list()

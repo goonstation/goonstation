@@ -50,6 +50,7 @@
 		tutorial.current_step -= 1
 		var/datum/tutorialStep/newbee/previous_step = tutorial.steps[tutorial.current_step]
 		previous_step.SetUp(TRUE)
+		src.holder.owner.reagents.clear_reagents()
 		src.holder.owner.stabilize()
 		tutorial.ShowStep()
 
@@ -60,5 +61,6 @@
 
 	cast(atom/target)
 		. = ..()
-		src.holder.owner.mind?.get_player()?.tutorial?.Advance(TRUE)
-		src.holder.owner.stabilize()
+		src.holder.owner?.mind?.get_player()?.tutorial?.Advance(TRUE)
+		src.holder.owner?.reagents.clear_reagents()
+		src.holder.owner?.stabilize()

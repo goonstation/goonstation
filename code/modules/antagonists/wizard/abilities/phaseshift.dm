@@ -61,6 +61,10 @@
 			boutput(H, SPAN_NOTICE("The flames sputter out as you phase shift."))
 			H.delStatus("burning")
 
+	for(var/obj/item/grab/grab_grabbed_by in H.grabbed_by)
+		if (!istype(grab_grabbed_by, /obj/item/grab/block))
+			qdel(grab_grabbed_by)
+
 	SPAWN(0)
 		var/start_loc
 		var/mobloc = get_turf(H.loc)
@@ -224,7 +228,7 @@
 				src.set_cloaked(0)
 
 			else
-				if (T.RL_GetBrightness() < 0.2 && can_act(owner))
+				if (!T.is_lit() && can_act(owner))
 					src.set_cloaked(1)
 				else
 					src.set_cloaked(0)

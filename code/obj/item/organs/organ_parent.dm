@@ -140,10 +140,10 @@
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
+				src.name = "[src.donor_name]’s [initial(src.name)]"
 			else if (src.donor.name)
 				src.donor_name = src.donor.name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
+				src.name = "[src.donor_name]’s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 			src.blood_DNA = src.donor_DNA
 			src.blood_type = src.donor.bioHolder?.bloodType
@@ -312,6 +312,11 @@
 	emp_act()
 		if (robotic)
 			src.take_damage(20, 20, 20)
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.donor_DNA)
+			scan.add_text("[src.organ_name]'s DNA: [src.donor_DNA]")
 
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)

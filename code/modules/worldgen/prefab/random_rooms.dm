@@ -83,3 +83,7 @@ proc/buildRandomRooms()
 		size = "7x5"
 		icon = 'icons/effects/mapeditor/7x5tiles.dmi'
 		additional_tags = list("nadir_rocks")
+
+	d2_artlab_5x15
+		size = "5x15"
+		additional_tags = list("d2_artlab")

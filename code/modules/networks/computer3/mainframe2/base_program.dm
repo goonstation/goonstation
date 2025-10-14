@@ -77,7 +77,7 @@
 /// Initialise this program. Called when this program starts running.
 /datum/computer/file/mainframe_program/proc/initialize(initparams)
 	if (src.initialized || !src.master)
-		return FALSE
+		return TRUE
 
 	src.initialized = TRUE
 	return FALSE
@@ -193,7 +193,12 @@
 	src.useracc.user_file.fields[field] = data
 	return TRUE
 
-/// Send a signal from this program to its mainframe computer.
+/**
+ *	Send a signal from this program to a target program through the mainframe computer.
+ *	- `progid`: The program ID of the recipient program.
+ *	- `data`: A key-value list of data to pass to the recipient program.
+ *	- `file`: An optional computer file to pass to the recipient program.
+ */
 /datum/computer/file/mainframe_program/proc/signal_program(progid, list/data, datum/computer/file/file)
 	if (!src.master || !data)
 		return TRUE

@@ -1192,147 +1192,147 @@ proc/random_accent()
 	var/new_string = ""
 	var/used = 0
 
-	switch(lowertext(R.curr_char))
+	switch(R.curr_char)
 		if("w")
-			if(lowertext(R.next_char) == "h" && lowertext(R.next_next_char) == "a")
+			if(R.next_char == "h" && R.next_next_char == "a")
 				new_string = "wo"
 				used = 3
-		/*if("W")
-			if(lowertext(R.next_char) == "H" && lowertext(R.next_next_char) == "A")
+		if("W")
+			if(R.next_char == "H" && R.next_next_char == "A")
 				new_string = "WO"
-				used = 3*/
+				used = 3
 
 		if("o")
-			if(lowertext(R.next_char) == "u" && lowertext(R.next_next_char) == "g" && lowertext(R.next_next_next_char) == "h")
+			if(R.next_char == "u" && R.next_next_char == "g" && R.next_next_next_char == "h")
 				new_string = "uf"
 				used = 4
-			if(lowertext(R.next_char) == "r" && lowertext(R.next_next_char) == "r" && lowertext(R.next_next_next_char) == "y")
+			if(R.next_char == "r" && R.next_next_char == "r" && R.next_next_next_char == "y")
 				new_string = "oz"
 				used = 4
-		/*if("O")
-			if(lowertext(R.next_char) == "U" && lowertext(R.next_next_char) == "G" && lowertext(R.next_next_next_char) == "H")
+		if("O")
+			if(R.next_char == "U" && R.next_next_char == "G" && R.next_next_next_char == "H")
 				new_string = "UF"
 				used = 4
-			if(lowertext(R.next_char) == "R" && lowertext(R.next_next_char) == "R" && lowertext(R.next_next_next_char) == "Y")
+			if(R.next_char == "R" && R.next_next_char == "R" && R.next_next_next_char == "Y")
 				new_string = "OZ"
-				used = 4*/
+				used = 4
 
 		if("t")
-			if(lowertext(R.next_char) == "i" && lowertext(R.next_next_char) == "o" && lowertext(R.next_next_next_char) == "n")
+			if(R.next_char == "i" && R.next_next_char == "o" && R.next_next_next_char == "n")
 				new_string = "shun"
 				used = 4
-			else if(lowertext(R.next_char) == "h" && lowertext(R.next_next_char) == "e")
+			else if(R.next_char == "h" && R.next_next_char == "e")
 				new_string = "zee"
 				used = 3
-			else if(lowertext(R.next_char) == "h" && (lowertext(R.next_next_char) == " " || lowertext(R.next_next_char) == "," || lowertext(R.next_next_char) == "." || lowertext(R.next_next_char) == "-"))
+			else if(R.next_char == "h" && (R.next_next_char == " " || R.next_next_char == "," || R.next_next_char == "." || R.next_next_char == "-"))
 				new_string = "t" + R.next_next_char
 				used = 3
-		/*if("T")
-			if(lowertext(R.next_char) == "I" && lowertext(R.next_next_char) == "O" && lowertext(R.next_next_next_char) == "N")
+		if("T")
+			if(R.next_char == "I" && R.next_next_char == "O" && R.next_next_next_char == "N")
 				new_string = "SHUN"
 				used = 4
-			else if(lowertext(R.next_char) == "H" && lowertext(R.next_next_char) == "E")
+			else if(R.next_char == "H" && R.next_next_char == "E")
 				new_string = "ZEE"
 				used = 3
-			else if(lowertext(R.next_char) == "H" && (lowertext(R.next_next_char) == " " || lowertext(R.next_next_char) == "," || lowertext(R.next_next_char) == "." || lowertext(R.next_next_char) == "-"))
+			else if(R.next_char == "H" && (R.next_next_char == " " || R.next_next_char == "," || R.next_next_char == "." || R.next_next_char == "-"))
 				new_string = "T" + R.next_next_char
-				used = 3*/
+				used = 3
 
 		if("u")
-			if (lowertext(R.prev_char) != " " || lowertext(R.next_char) != " ")
+			if (R.prev_char != " " || R.next_char != " ")
 				new_string = "oo"
 				used = 1
-		/*if("U")
-			if (lowertext(R.prev_char) != " " || lowertext(R.next_char) != " ")
+		if("U")
+			if (R.prev_char != " " || R.next_char != " ")
 				new_string = "OO"
-				used = 1*/
+				used = 1
 
 		if("o")
-			if (lowertext(R.next_char) == "w"  && (lowertext(R.prev_char) != " " || lowertext(R.next_next_char )!= " "))
+			if (R.next_char == "w"  && (R.prev_char != " " || R.next_next_char != " "))
 				new_string = "oo"
 				used = 2
-			else if (lowertext(R.prev_char) != " " || lowertext(R.next_char) != " ")
+			else if (R.prev_char != " " || R.next_char != " ")
 				new_string = "u"
 				used = 1
-			else if(lowertext(R.next_char) == " " && lowertext(R.prev_char) == " ") ///!!!
+			else if(R.next_char == " " && R.prev_char == " ") ///!!!
 				new_string = "oo"
 				used = 1
-		/*if("O")
-			if (lowertext(R.next_char) == "W"  && (lowertext(R.prev_char) != " " || lowertext(R.next_next_char )!= " "))
+		if("O")
+			if (R.next_char == "W"  && (R.prev_char != " " || R.next_next_char != " "))
 				new_string = "OO"
 				used = 2
-			else if (lowertext(R.prev_char) != " " || lowertext(R.next_char) != " ")
+			else if(R.prev_char != " " || R.next_char != " ")
 				new_string = "U"
 				used = 1
-			else if(lowertext(R.next_char) == " " && lowertext(R.prev_char) == " ") ///!!!
+			else if(R.next_char == " " && R.prev_char == " ") ///!!!
 				new_string = "OO"
-				used = 1*/
+				used = 1
 
 		if("i")
-			if (lowertext(R.next_char) == "r"  && (lowertext(R.prev_char) != " " || lowertext(R.next_next_char) != " "))
+			if (R.next_char == "r"  && (R.prev_char != " " || R.next_next_char != " "))
 				new_string = "ur"
 				used = 2
-			else if((lowertext(R.prev_char) != " " || lowertext(R.next_char) != " "))
+			else if((R.prev_char != " " || R.next_char != " "))
 				new_string = "ee"
 				used = 1
-		/*if("I")
-			if (lowertext(R.next_char) == "R"  && (lowertext(R.prev_char) != " " || lowertext(R.next_next_char) != " "))
+		if("I")
+			if (R.next_char == "R"  && (R.prev_char != " " || R.next_next_char != " "))
 				new_string = "UR"
 				used = 2
-			else if((lowertext(R.prev_char) != " " || lowertext(R.next_char) != " "))
+			else if((R.prev_char != " " || R.next_char != " "))
 				new_string = "EE"
-				used = 1*/
+				used = 1
 
 		if("e")
-			if (lowertext(R.next_char) == "n"  && lowertext(R.next_next_char) == " ")
-				new_string = "ee "
+			if (R.next_char == "n"  && R.next_next_char == " ")
+				new_string = "ee"
 				used = 3
-			else if (lowertext(R.next_char) == "w"  && (lowertext(R.prev_char) != " " || lowertext(R.next_next_char) != " "))
+			else if (R.next_char == "w"  && (R.prev_char != " " || R.next_next_char != " "))
 				new_string = "oo"
 				used = 2
-			else if ((lowertext(R.next_char) == " " || lowertext(R.next_char) == "," || lowertext(R.next_char) == "." || lowertext(R.next_char) == "-")  && lowertext(R.prev_char) != " ")
+			else if ((R.next_char == " " || R.next_char == "," || R.next_char == "." || R.next_char == "-")  && R.prev_char != " ")
 				new_string = "e-a" + R.next_char
 				used = 2
-			else if(lowertext(R.next_char) == " " && lowertext(R.prev_char) == " ") ///!!!
+			else if(R.next_char == " " && R.prev_char == " ") ///!!!
 				new_string = "i"
 				used = 1
-		/*if("E")
-			if (lowertext(R.next_char) == "N"  && lowertext(R.next_next_char) == " ")
+		if("E")
+			if (R.next_char == "N"  && R.next_next_char == " ")
 				new_string = "EE "
 				used = 3
-			else if (lowertext(R.next_char) == "W"  && (lowertext(R.prev_char) != " " || lowertext(R.next_next_char) != " "))
+			else if (R.next_char == "W"  && (R.prev_char != " " || R.next_next_char != " "))
 				new_string = "OO"
 				used = 2
-			else if ((lowertext(R.next_char) == " " || lowertext(R.next_char) == "," || lowertext(R.next_char) == "." || lowertext(R.next_char) == "-")  && lowertext(R.prev_char) != " ")
+			else if ((R.next_char == " " || R.next_char == "," || R.next_char == "." || R.next_char == "-")  && R.prev_char != " ")
 				new_string = "E-A" + R.next_char
 				used = 2
-			else if(lowertext(R.next_char) == " " && lowertext(R.prev_char) == " ") ///!!!
+			else if(R.next_char == " " && R.prev_char == " ") ///!!!
 				new_string = "I"
-				used = 1*/
+				used = 1
 
 		if("a")
-			if (lowertext(R.next_char) == "u")
+			if (R.next_char == "u")
 				new_string = "oo"
 				used = 2
-			else if ((lowertext(R.next_char) == "n" && lowertext(R.prev_char) == "c") || (lowertext(R.next_char) == "n" && (lowertext(R.next_next_char) == "t" || (lowertext(R.next_next_char) == "'" && lowertext(R.next_next_next_char) == "t"))))
+			else if ((R.next_char == "n" && R.prev_char == "c") || (R.next_char == "n" && (R.next_next_char == "t" || (R.next_next_char == "'" && R.next_next_next_char == "t"))))
 				new_string = "een"
 				used = 2
-			else if (lowertext(R.next_char) == "n")
+			else if (R.next_char == "n")
 				new_string = "un"
 				used = 2
 			else
 				new_string = "e" //{WC} ?
 				used = 1
-		/*if("A")
-			if (lowertext(R.next_char) == "U")
+		if("A")
+			if (R.next_char == "U")
 				new_string = "OO"
 				used = 2
-			else if (lowertext(R.next_char) == "N")
+			else if (R.next_char == "N")
 				new_string = "UN"
 				used = 2
 			else
 				new_string = "E" //{WC} ?
-				used = 1 */
+				used = 1
 
 	if(new_string == "")
 		new_string = R.curr_char
@@ -1375,7 +1375,7 @@ proc/random_accent()
 	P.chars_used = used
 	return P
 
-/proc/voidSpeak(var/message) // sharing the creepiness with everyone!!
+/proc/voidSpeak(message, mutable_tags = FALSE)
 	if (!message)
 		return
 
@@ -1402,10 +1402,20 @@ proc/random_accent()
 			randomPos = " position: relative; top: [rand(-3,3)]px; left: [rand(-3,3)]px;"
 		else
 			randomPos = ""
-		processedMessage += "<span style='font-size: [fontSize]%;[randomPos]'>[c]</span>"
+
+		if (mutable_tags)
+			processedMessage += MAKE_CONTENT_IMMUTABLE("<span style='font-size: [fontSize]%;[randomPos]'>")
+			processedMessage += c
+			processedMessage += MAKE_CONTENT_IMMUTABLE("</span>")
+
+		else
+			processedMessage += "<span style='font-size: [fontSize]%;[randomPos]'>[c]</span>"
 
 
-	return "<em>[processedMessage]</em>"
+	if (mutable_tags)
+		return "[MAKE_CONTENT_IMMUTABLE("<em>")][processedMessage][MAKE_CONTENT_IMMUTABLE("</em>")]"
+	else
+		return "<em>[processedMessage]</em>"
 
 // zalgo text proc, borrowed from eeemo.net
 
@@ -2624,4 +2634,11 @@ proc/leetspeakify(string, chance=100)
 	)
 	for (var/pattern in bingus_list)
 		string = replacetext(string, regex(pattern, "i"), bingus_list[pattern])
+	return string
+
+proc/frogify(var/string)
+
+	if(prob(15))
+		string += pick(" ribbit", " croak", " brp", " weh", " burup")
+
 	return string

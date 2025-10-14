@@ -305,9 +305,6 @@
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		UpdateIcon()
 
-	examine()
-		return
-
 	afterattack(obj/O, mob/user)
 		if (src.welding)
 			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
@@ -439,7 +436,7 @@
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
 	check_wclass = 1
 	color = "#ff9933"
-	satchel_compatible = FALSE
+	satchel_variant = null
 
 /obj/item/device/radio/headset/salvager
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew. The headset is covered in scratch marks and the screws look nearly stripped."

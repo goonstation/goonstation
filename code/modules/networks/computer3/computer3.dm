@@ -1056,9 +1056,11 @@
 				dv.authid = W
 				update_static_data(usr)
 			return
-		else
-			src.Attackhand(user)
-		return
+		..()
+
+	grab_smash(obj/item/grab/G, mob/user)
+		if(..())
+			src.set_broken()
 
 	powered()
 		if(!src.cell || src.cell.charge <= 0)
