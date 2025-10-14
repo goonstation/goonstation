@@ -19653,7 +19653,7 @@
 	},
 /area/iomoon/base/underground)
 "bBD" = (
-/obj/railing/boxing{
+/obj/decal/boxingropeenter{
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -60580,7 +60580,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "iOP" = (
-/obj/railing/boxing{
+/obj/decal/boxingropeenter{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -80609,7 +80609,7 @@
 /area/crater/cave/lower)
 "xUC" = (
 /obj/decal/stage_edge,
-/obj/machinery/wrestlingbell{
+/obj/item/wrestlingbell{
 	density = 0;
 	pixel_y = 7
 	},
