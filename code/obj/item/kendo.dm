@@ -7,7 +7,7 @@
 	desc = "\improper 面 : A light padded helmet with a grilled faceplate to protect the user in a kendo match."
 	icon_state = "men"
 	item_state = "men"
-	c_flags = /obj/item/clothing/head/helmet::c_flags | COVERSHAIR
+	c_flags = parent_type::c_flags | COVERSHAIR
 
 	setupProperties()
 		..()
