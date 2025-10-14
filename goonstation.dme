@@ -2319,6 +2319,7 @@
 #include "code\obj\artifacts\faults.dm"
 #include "code\obj\artifacts\triggers.dm"
 #include "code\obj\artifacts\artifact_items\activator_key.dm"
+#include "code\obj\artifacts\artifact_items\agitator.dm"
 #include "code\obj\artifacts\artifact_items\attack_wand.dm"
 #include "code\obj\artifacts\artifact_items\dimensional_key.dm"
 #include "code\obj\artifacts\artifact_items\energy_gun.dm"
