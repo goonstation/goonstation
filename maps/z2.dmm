@@ -1060,6 +1060,16 @@
 	},
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
+"afV" = (
+/obj/fakeobject/firealarm_broken{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "afW" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/mainhall)
@@ -2078,6 +2088,13 @@
 	},
 /turf/unsimulated/floor/black,
 /area/hospital)
+"akT" = (
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
+/turf/unsimulated/floor,
+/area/hospital/samostrel)
 "akU" = (
 /turf/unsimulated/floor/caution/corner/misc{
 	dir = 1
@@ -3963,6 +3980,13 @@
 	},
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
+"atf" = (
+/obj/fakeobject/firealarm_broken{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/unsimulated/floor,
+/area/hospital/samostrel)
 "atk" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -5652,6 +5676,15 @@
 	dir = 6
 	},
 /area/owlery/office)
+"aBV" = (
+/obj/machinery/camera/vspace{
+	name = "V-space - B-Ball Court";
+	pixel_y = -10
+	},
+/turf/unsimulated/floor{
+	icon_state = "0,6"
+	},
+/area/sim/bball)
 "aBY" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
@@ -6876,6 +6909,15 @@
 	},
 /turf/unsimulated/floor/yellowblack/corner,
 /area/owlery/gangzone)
+"aJa" = (
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
+/turf/unsimulated/floor/black{
+	dir = 1
+	},
+/area/marsoutpost)
 "aJb" = (
 /obj/machinery/optable,
 /turf/unsimulated/floor/black{
@@ -7114,6 +7156,13 @@
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
 "aJX" = (
+/turf/unsimulated/floor/black,
+/area/marsoutpost)
+"aJY" = (
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
 "aJZ" = (
@@ -9207,6 +9256,15 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
+"aQL" = (
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
+/turf/unsimulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/marsoutpost)
 "aQM" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 8
@@ -9757,6 +9815,10 @@
 	icon_state = "leadwindow_2"
 	},
 /area/upper_arctic/hall)
+"aSN" = (
+/obj/lattice,
+/turf/unsimulated/floor/arctic/cliff,
+/area/upper_arctic/exterior/surface)
 "aSO" = (
 /obj/mesh/catwalk,
 /turf/unsimulated/floor/arctic/plating,
@@ -9765,6 +9827,16 @@
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/cliff,
+/area/upper_arctic/exterior/surface)
+"aSQ" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
@@ -10669,6 +10741,14 @@
 /obj/item/clothing/head/helmet/mars,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
+"aVL" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 9
+	},
+/area/upper_arctic/exterior/surface)
 "aVO" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -11097,6 +11177,13 @@
 	dir = 1
 	},
 /area/upper_arctic/exterior/surface)
+"aXp" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/unsimulated/floor/arctic/cliff_outsidecorner,
+/area/upper_arctic/exterior/abyss)
 "aXq" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -11432,6 +11519,12 @@
 	},
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/surface)
+"aYn" = (
+/obj/lattice,
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 4
+	},
+/area/upper_arctic/exterior/abyss)
 "aYo" = (
 /obj/lattice{
 	dir = 8;
@@ -12383,6 +12476,21 @@
 	},
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
+"bbG" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 4
+	},
+/area/upper_arctic/exterior/surface)
 "bbH" = (
 /obj/lattice{
 	dir = 4;
@@ -13142,6 +13250,13 @@
 	},
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
+"bec" = (
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
 "bed" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -13442,6 +13557,16 @@
 	name = "broken rover"
 	},
 /turf/unsimulated/floor/grime,
+/area/marsoutpost)
+"bfa" = (
+/obj/table/auto,
+/obj/fakeobject/firealarm_broken{
+	pixel_y = 24;
+	dir = 1
+	},
+/turf/unsimulated/floor/yellow{
+	dir = 4
+	},
 /area/marsoutpost)
 "bfb" = (
 /obj/table/auto,
@@ -16151,6 +16276,18 @@
 	icon_state = "plating_dusty1"
 	},
 /area/marsoutpost)
+"bnk" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera/watchful_eye/directional/north{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_x = -10
+	},
+/obj/machinery/camera/watchful_eye/directional/west{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_y = 10
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "bno" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -16365,6 +16502,17 @@
 	},
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
+"bnJ" = (
+/obj/map/light/cyan,
+/obj/rack/precursor,
+/obj/item/skull/wizard{
+	pixel_x = -2;
+	pixel_y = 11
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor)
 "bnO" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm8"
@@ -21380,6 +21528,15 @@
 	},
 /turf/space/no_replace,
 /area/space)
+"bID" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/under/swimsuit/donkini,
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fred2"
+	},
+/area/solarium)
 "bIE" = (
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred2"
@@ -24011,6 +24168,13 @@
 /obj/item/tile/steel,
 /turf/unsimulated/floor/plating,
 /area/crunch)
+"bRv" = (
+/obj/fakeobject/firealarm_broken{
+	dir = 2;
+	pixel_y = -24
+	},
+/turf/unsimulated/floor,
+/area/crunch)
 "bRw" = (
 /obj/decal/cleanable/greenpuke,
 /turf/unsimulated/floor,
@@ -24038,6 +24202,21 @@
 "bRD" = (
 /obj/table/auto,
 /obj/machinery/light/worn,
+/turf/unsimulated/floor/blue/checker,
+/area/crunch)
+"bRE" = (
+/obj/table/auto,
+/obj/fakeobject/firealarm_broken{
+	dir = 2;
+	pixel_y = -24
+	},
+/obj/item/c_tube{
+	desc = "A very large knife, possibly from a mail order catalog or a MLM scheme.";
+	icon = 'icons/obj/kitchen.dmi';
+	icon_state = "knife_b";
+	item_state = "knife_b";
+	name = "Discount Dan-Branded Steak Knife"
+	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bRF" = (
@@ -27101,6 +27280,14 @@
 	dir = 8
 	},
 /area/crunch)
+"cdP" = (
+/obj/item/bballbasket/mounted{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "0,3"
+	},
+/area/sim/bball)
 "cdQ" = (
 /turf/unsimulated/floor{
 	icon_state = "1,3"
@@ -27129,6 +27316,14 @@
 "cdV" = (
 /turf/unsimulated/floor{
 	icon_state = "c12"
+	},
+/area/sim/bball)
+"cdW" = (
+/obj/item/bballbasket/mounted{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "c13"
 	},
 /area/sim/bball)
 "cea" = (
@@ -27259,6 +27454,13 @@
 	icon_state = "c8"
 	},
 /area/sim/bball)
+"ceI" = (
+/obj/fakeobject/firealarm_broken{
+	dir = 2;
+	pixel_y = -24
+	},
+/turf/unsimulated/floor,
+/area/meat_derelict/entry)
 "ceM" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/meat_derelict/guts)
@@ -34755,6 +34957,11 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
+"cDN" = (
+/obj/table/reinforced/auto,
+/obj/item/assembly/flash_cell,
+/turf/unsimulated/floor/white,
+/area/owlery/lab)
 "cDO" = (
 /obj/decal/cleanable/paper,
 /turf/unsimulated/floor/black,
@@ -36245,6 +36452,14 @@
 /obj/item/instrument/large/piano,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/owleryhall)
+"cIo" = (
+/obj/machinery/light,
+/obj/decal/stage_edge{
+	dir = 2
+	},
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "cIp" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -37078,6 +37293,14 @@
 	name = "table"
 	},
 /turf/unsimulated/floor/wood/two,
+/area/owlery/owleryhall)
+"cKY" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cKZ" = (
 /turf/unsimulated/floor/greenwhite/corner,
@@ -44425,6 +44648,11 @@
 	icon_state = "cairngorm17"
 	},
 /area/syndicate_station/battlecruiser)
+"dfW" = (
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "dfX" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -46631,13 +46859,6 @@
 	dir = 5
 	},
 /area/centcom/gallery)
-"dsy" = (
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24;
-	dir = 1
-	},
-/turf/unsimulated/floor/grime,
-/area/marsoutpost)
 "dsz" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
@@ -51557,6 +51778,26 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
+"dLy" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "0,6";
+	name = "wood floor";
+	tag = "null"
+	},
+/area/centcom/garden)
 "dLz" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -53737,6 +53978,11 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
+"dSU" = (
+/obj/machinery/bot/skullbot/macho,
+/obj/map/light/brightwhite,
+/turf/unsimulated/floor/specialroom/gym,
+/area/afterlife/bar)
 "dSW" = (
 /obj/table/wood/round/auto,
 /obj/map/light/white,
@@ -54483,19 +54729,6 @@
 /obj/item/paper/book/from_file/hydroponicsguide,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
-"eht" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera/watchful_eye/directional/south{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_x = -10
-	},
-/obj/machinery/camera/watchful_eye/directional/south{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_x = 10
-	},
-/obj/lattice,
-/turf/space,
-/area/watchful_eye_sensor)
 "ehF" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
@@ -54902,6 +55135,33 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"exk" = (
+/obj/table/monodesk/auto,
+/obj/decal/poster/flag/bisexual{
+	pixel_y = 32;
+	pixel_x = 4
+	},
+/obj/item/stamp/centcom{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/instrument/bikehorn/blue{
+	pixel_y = 8;
+	pixel_x = -10;
+	name = "long-coveted, latest-model NT-branded Special Operations Bike Horn"
+	},
+/obj/item/clothing/head/NTberet/commander,
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea{
+	pixel_x = -10
+	},
+/obj/decoration/clock{
+	pixel_x = -13;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 5
+	},
+/area/centcom/offices/jorj)
 "exo" = (
 /obj/tree{
 	dir = 1
@@ -55074,6 +55334,17 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"eFT" = (
+/obj/stool/pet_bed{
+	pixel_x = -4
+	},
+/mob/living/critter/small_animal/turtle/commander{
+	pixel_x = -5;
+	dir = 4;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/darkblueblack,
+/area/centcom/offices/jorj)
 "eGn" = (
 /obj/adventurepuzzle/triggerable/light/gauntlet,
 /turf/unsimulated/floor/plating,
@@ -55593,6 +55864,16 @@
 	temperature = 313.15
 	},
 /area/iomoon/base)
+"fcy" = (
+/obj/item/bananapeel{
+	pixel_x = -8;
+	name = "conspicuously placed banana peel";
+	pixel_y = -1
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 8
+	},
+/area/centcom/offices/jorj)
 "fcM" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -56153,16 +56434,26 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
-"fBo" = (
-/obj/lattice,
-/turf/unsimulated/floor/arctic/cliff,
-/area/upper_arctic/exterior/surface)
 "fBq" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
+"fBu" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/table/monodesk/auto,
+/obj/machinery/computer3/generic/personal{
+	pixel_y = 12;
+	pixel_x = 1
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/centcom/offices/jorj)
 "fBC" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
@@ -56714,13 +57005,18 @@
 /obj/noticeboard/directional/north,
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
-"fYV" = (
-/obj/fakeobject/firealarm_broken{
-	dir = 2;
-	pixel_y = -24
+"fZb" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera/watchful_eye/directional/west{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_y = -10
 	},
-/turf/unsimulated/floor,
-/area/meat_derelict/entry)
+/obj/machinery/camera/watchful_eye/directional/south{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_x = -10
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "fZr" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor,
@@ -56740,17 +57036,6 @@
 	dir = 5
 	},
 /area/centcom)
-"gah" = (
-/obj/map/light/cyan,
-/obj/rack/precursor,
-/obj/item/skull/wizard{
-	pixel_x = -2;
-	pixel_y = 11
-	},
-/turf/unsimulated/floor/setpieces/bluefloor{
-	dir = 4
-	},
-/area/precursor)
 "gas" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -57018,6 +57303,19 @@
 	},
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/observatory)
+"gjT" = (
+/obj/table/auto,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/assembly/flash_cell{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "gkG" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -57831,6 +58129,18 @@
 "gNI" = (
 /turf/unsimulated/floor/airless/plating/damaged2,
 /area/crunch)
+"gNL" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera/watchful_eye/directional/north{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_x = 10
+	},
+/obj/machinery/camera/watchful_eye/directional/east{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_y = 10
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "gOl" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -57905,11 +58215,6 @@
 	},
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
-"gSQ" = (
-/obj/decal/stage_edge,
-/obj/machinery/loudspeaker,
-/turf/unsimulated/floor/wood/two,
-/area/afterlife/bar)
 "gTb" = (
 /obj/item/cigbutt{
 	pixel_x = 9;
@@ -58118,18 +58423,6 @@
 	dir = 4
 	},
 /area/upper_arctic/exterior/surface)
-"hci" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera/watchful_eye/directional/east{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_y = -10
-	},
-/obj/machinery/camera/watchful_eye/directional/south{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_x = 10
-	},
-/turf/space,
-/area/watchful_eye_sensor)
 "hcG" = (
 /obj/table/wood/auto/desk,
 /obj/item/luggable_computer/personal/adhara_laptop,
@@ -58707,27 +59000,6 @@
 /obj/tree,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/south)
-"hAf" = (
-/obj/map/light/void,
-/obj/creepy_sound_trigger,
-/obj/trigger/spooky_emote,
-/obj/effects/lightshaft,
-/obj/stool/chair/comfy/throne_gold{
-	anchored = 1
-	},
-/obj/item/skull/macho,
-/obj/item/clothing/head/crown{
-	rarity = 5;
-	name = "crown of the underworld";
-	pixel_y = 11
-	},
-/turf/unsimulated/floor/setpieces{
-	desc = "A strange jet black metal floor. There are odd lines carved into it.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "ancient";
-	name = "strange surface"
-	},
-/area/crater/cave/lower)
 "hAp" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -59023,15 +59295,6 @@
 /obj/fakeobject/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
-"hOA" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/under/swimsuit/donkini,
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "fred2"
-	},
-/area/solarium)
 "hPi" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -59235,15 +59498,6 @@
 	dir = 10
 	},
 /area/owlery/staffhall)
-"hXr" = (
-/obj/machinery/camera/vspace{
-	name = "V-space - B-Ball Court";
-	pixel_y = -10
-	},
-/turf/unsimulated/floor{
-	icon_state = "0,6"
-	},
-/area/sim/bball)
 "hXz" = (
 /obj/mesh/catwalk,
 /obj/cable/green{
@@ -59401,16 +59655,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
-"ieT" = (
-/obj/table/auto,
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24;
-	dir = 1
-	},
-/turf/unsimulated/floor/yellow{
-	dir = 4
-	},
-/area/marsoutpost)
 "ieZ" = (
 /obj/fakeobject/robot,
 /obj/decal/cleanable/blood/splatter{
@@ -59468,13 +59712,6 @@
 /obj/decal/nav_danger,
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
-"ihJ" = (
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24;
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/hospital/samostrel)
 "iia" = (
 /obj/machinery/door/unpowered/wood/stall{
 	dir = 8;
@@ -60271,16 +60508,6 @@
 "iKM" = (
 /turf/unsimulated/floor/stairs/wood/wide,
 /area/afterlife/bar/sanctuary)
-"iLE" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/arctic/cliff,
-/area/upper_arctic/exterior/surface)
 "iLO" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -60308,6 +60535,12 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"iNq" = (
+/obj/decoration/ntcrate,
+/turf/unsimulated/floor/darkblueblack{
+	dir = 10
+	},
+/area/centcom/offices/jorj)
 "iNJ" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -60871,6 +61104,27 @@
 	},
 /turf/unsimulated/floor/tatami/north,
 /area/centcom/offices/angel)
+"jfB" = (
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6
+	},
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 1;
+	name = "grimy pipe"
+	},
+/obj/fakeobject/firealarm_broken{
+	pixel_y = -24;
+	dir = 2
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "jfG" = (
 /obj/table/auto,
 /obj/item/instrument/harmonica,
@@ -61248,6 +61502,25 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"jtV" = (
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6
+	},
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 10;
+	name = "grimy pipe";
+	tag = "icon-intact (NORTHWEST)"
+	},
+/obj/fakeobject/firealarm_broken{
+	pixel_y = -24;
+	dir = 2
+	},
+/turf/unsimulated/floor/caution/south,
+/area/hospital/samostrel)
 "jup" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
@@ -61643,6 +61916,11 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"jLf" = (
+/obj/machinery/light/small,
+/obj/decoration/ntcratesmall,
+/turf/unsimulated/floor/darkblueblack,
+/area/centcom/offices/jorj)
 "jLX" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -62235,19 +62513,6 @@
 	dir = 6
 	},
 /area/upper_arctic/exterior/surface)
-"kkJ" = (
-/obj/table/auto,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/item/assembly/flash_cell{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "kkO" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	desc = "Oh sure it looks the same, but all the connections and mounting points are different.  Also all the screw heads are those awful triangular ones.";
@@ -62518,19 +62783,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
-"ktv" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera/watchful_eye/directional/south{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_x = 10
-	},
-/obj/machinery/camera/watchful_eye/directional/south{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_x = -10
-	},
-/obj/lattice,
-/turf/space,
-/area/watchful_eye_sensor)
 "ktH" = (
 /obj/machinery/door/unpowered/wood,
 /obj/decal/stripe_delivery,
@@ -62750,21 +63002,6 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
-"kBK" = (
-/obj/fakeobject/pipe{
-	color = "b4b4b4";
-	dir = 6;
-	name = "grimy pipe"
-	},
-/obj/fakeobject/firealarm_broken{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/hospital/samostrel)
 "kBZ" = (
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
@@ -63295,6 +63532,19 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/janantilles)
+"kXv" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera/watchful_eye/directional/south{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_x = 10
+	},
+/obj/machinery/camera/watchful_eye/directional/south{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_x = -10
+	},
+/obj/lattice,
+/turf/space,
+/area/watchful_eye_sensor)
 "kYq" = (
 /obj/channel{
 	required_to_pass = 1e+009
@@ -63594,6 +63844,17 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"lmi" = (
+/obj/admin_plaque{
+	name = "Jorj's Office";
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "lmj" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/se,
 /area/centcom/offices{
@@ -63984,6 +64245,16 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"lAJ" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/skull/macho,
+/obj/item/sticker/gold_star,
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/crunch/wtc)
 "lAN" = (
 /obj/cable,
 /obj/cable{
@@ -64841,21 +65112,6 @@
 	dir = 10
 	},
 /area/hospital/samostrel)
-"mpf" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/unsimulated/floor/arctic/cliff{
-	dir = 4
-	},
-/area/upper_arctic/exterior/surface)
 "mpq" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid1"
@@ -64874,26 +65130,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
-"mpz" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/swimsuit/swimsuits/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "0,6";
-	name = "wood floor";
-	tag = "null"
-	},
-/area/centcom/garden)
 "mpU" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -65705,14 +65941,6 @@
 /obj/spawner/ancient_robot_artifact,
 /turf/unsimulated/floor/ancient,
 /area/crunch)
-"mXD" = (
-/obj/item/bballbasket/mounted{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "0,3"
-	},
-/area/sim/bball)
 "mXS" = (
 /mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
@@ -65949,12 +66177,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
-"nja" = (
-/obj/lattice,
-/turf/unsimulated/floor/arctic/cliff{
-	dir = 4
-	},
-/area/upper_arctic/exterior/abyss)
 "njd" = (
 /obj/machinery/door/airlock/pyro/command/centcom{
 	dir = 4
@@ -66125,13 +66347,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"nrn" = (
-/obj/fakeobject/firealarm_broken{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/unsimulated/floor,
-/area/hospital/samostrel)
 "nrv" = (
 /obj/machinery/gibber/output_west,
 /turf/unsimulated/floor/plating,
@@ -66507,6 +66722,17 @@
 	dir = 9
 	},
 /area/hospital/samostrel)
+"nCH" = (
+/obj/rack/precursor,
+/obj/item/skull/cluwne{
+	pixel_x = -2;
+	pixel_y = 11
+	},
+/obj/map/light/cyan,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor)
 "nDg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-13"
@@ -66528,6 +66754,19 @@
 /obj/item/clothing/head/helmet/space/soviet,
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
+"nFq" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera/watchful_eye/directional/south{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_x = -10
+	},
+/obj/machinery/camera/watchful_eye/directional/south{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_x = 10
+	},
+/obj/lattice,
+/turf/space,
+/area/watchful_eye_sensor)
 "nFE" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/mining)
@@ -66703,15 +66942,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
-"nLe" = (
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24;
-	dir = 1
-	},
-/turf/unsimulated/floor/black{
-	dir = 1
-	},
-/area/marsoutpost)
 "nLL" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = 7;
@@ -67079,17 +67309,6 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
-"nUA" = (
-/obj/rack/precursor,
-/obj/item/skull/cluwne{
-	pixel_x = -2;
-	pixel_y = 11
-	},
-/obj/map/light/cyan,
-/turf/unsimulated/floor/setpieces/bluefloor{
-	dir = 8
-	},
-/area/precursor)
 "nUC" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
@@ -67368,11 +67587,6 @@
 	name = "security door"
 	},
 /area/hospital)
-"oed" = (
-/obj/machinery/bot/skullbot/macho,
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/specialroom/gym,
-/area/afterlife/bar)
 "oeC" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -67403,16 +67617,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/observatory)
-"ofu" = (
-/obj/table/reinforced/auto,
-/obj/item/currency/spacecash/million,
-/obj/item/clothing/gloves/ring/gold,
-/obj/item/skull/macho,
-/obj/item/sticker/gold_star,
-/turf/unsimulated/floor/black/side{
-	dir = 8
-	},
-/area/crunch/wtc)
 "ofy" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
@@ -68471,13 +68675,6 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"oZX" = (
-/obj/fakeobject/firealarm_broken{
-	dir = 2;
-	pixel_y = -24
-	},
-/turf/unsimulated/floor,
-/area/crunch)
 "pah" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm21"
@@ -69028,14 +69225,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"ptN" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/floor/arctic/cliff{
-	dir = 9
-	},
-/area/upper_arctic/exterior/surface)
 "pue" = (
 /obj/decal/poster/wallsign/stencil/right/i,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -69241,13 +69430,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
-"pBP" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
-	},
-/turf/unsimulated/floor/arctic/cliff_outsidecorner,
-/area/upper_arctic/exterior/abyss)
 "pCf" = (
 /obj/lattice,
 /obj/machinery/vending/coffee,
@@ -70511,6 +70693,27 @@
 	},
 /turf/unsimulated/floor/caution/east,
 /area/drone/assembly)
+"qzU" = (
+/obj/map/light/void,
+/obj/creepy_sound_trigger,
+/obj/trigger/spooky_emote,
+/obj/effects/lightshaft,
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/obj/item/skull/macho,
+/obj/item/clothing/head/crown{
+	rarity = 5;
+	name = "crown of the underworld";
+	pixel_y = 11
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "qAb" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow{
@@ -70799,20 +71002,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
-"qIv" = (
-/obj/machinery/camera/vspace{
-	name = "V-Space - Gun Sim Arena";
-	pixel_y = -10
-	},
-/obj/invisible_teleporter/receive_only{
-	id = "murderbox"
-	},
-/turf/unsimulated/floor/setpieces/gauntlet{
-	desc = "Today is a good day to die.";
-	icon_state = "gauntfloorSkulls";
-	name = "\proper THE MURDERBOX"
-	},
-/area/sim/gunsim/arena)
 "qII" = (
 /obj/machinery/light{
 	dir = 1;
@@ -71940,6 +72129,21 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"rBY" = (
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 6;
+	name = "grimy pipe"
+	},
+/obj/fakeobject/firealarm_broken{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "rCm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -72265,18 +72469,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
-"rNi" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera/watchful_eye/directional/west{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_y = -10
-	},
-/obj/machinery/camera/watchful_eye/directional/south{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_x = -10
-	},
-/turf/space,
-/area/watchful_eye_sensor)
 "rNt" = (
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue3";
@@ -72299,6 +72491,26 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
+"rPE" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/computer/television{
+	camera_networks = list("Minerva5");
+	pixel_x = -3
+	},
+/obj/machinery/camera{
+	c_tag = "NT/SCI #41903";
+	desc = "";
+	invisibility = 100;
+	network = "Minerva5"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/black,
+/area/owlery/lab)
 "rPG" = (
 /obj/mesh/catwalk{
 	dir = 9;
@@ -72359,26 +72571,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
-"rSU" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/computer/television{
-	camera_networks = list("Minerva5");
-	pixel_x = -3
-	},
-/obj/machinery/camera{
-	c_tag = "NT/SCI #41903";
-	desc = "";
-	invisibility = 100;
-	network = "Minerva5"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/black,
-/area/owlery/lab)
 "rTv" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -72734,6 +72926,12 @@
 	icon_state = "shore-12"
 	},
 /area/titlescreen)
+"sge" = (
+/obj/stool/chair/office/blue{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/offices/jorj)
 "sgg" = (
 /obj/fakeobject/pipe{
 	density = 1;
@@ -73110,6 +73308,31 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"ssz" = (
+/obj/storage/secure/closet/command/nanotrasen{
+	admin_access_override = 1;
+	pixel_x = 7
+	},
+/obj/item/clothing/shoes/swat{
+	pixel_x = 6;
+	pixel_y = -11
+	},
+/obj/item/clothing/under/misc/collar_shirt/dark_blue{
+	pixel_y = -3;
+	pixel_x = 7
+	},
+/obj/item/clothing/suit/scarf{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/clothing/mask/clown_hat/blue{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 6
+	},
+/area/centcom/offices/jorj)
 "stu" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -73181,14 +73404,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
-"svG" = (
-/obj/item/bballbasket/mounted{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "c13"
-	},
-/area/sim/bball)
 "swp" = (
 /turf/unsimulated/floor/black/side{
 	dir = 4
@@ -73578,16 +73793,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
-"sOS" = (
-/obj/fakeobject/firealarm_broken{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/hospital/samostrel)
 "sPo" = (
 /obj/machinery/door_control/bolter/new_walls/west{
 	id = "cairngorm_barracks";
@@ -73894,21 +74099,6 @@
 	icon_state = "iocrust_edge"
 	},
 /area/iomoon/caves)
-"tgt" = (
-/obj/table/auto,
-/obj/fakeobject/firealarm_broken{
-	dir = 2;
-	pixel_y = -24
-	},
-/obj/item/c_tube{
-	desc = "A very large knife, possibly from a mail order catalog or a MLM scheme.";
-	icon = 'icons/obj/kitchen.dmi';
-	icon_state = "knife_b";
-	item_state = "knife_b";
-	name = "Discount Dan-Branded Steak Knife"
-	},
-/turf/unsimulated/floor/blue/checker,
-/area/crunch)
 "tgO" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -74383,18 +74573,6 @@
 "tDJ" = (
 /turf/unsimulated/floor/blackwhite/whitegrime/other,
 /area/observatory)
-"tEx" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera/watchful_eye/directional/north{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_x = -10
-	},
-/obj/machinery/camera/watchful_eye/directional/west{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_y = 10
-	},
-/turf/space,
-/area/watchful_eye_sensor)
 "tED" = (
 /obj/stool/bee_bed,
 /obj/dialogueobj/dreambee,
@@ -75916,15 +76094,6 @@
 /obj/tree,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
-"uQf" = (
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24;
-	dir = 1
-	},
-/turf/unsimulated/floor/stairs/wide{
-	dir = 4
-	},
-/area/marsoutpost)
 "uQv" = (
 /obj/tree/sakura_tree/tree_2,
 /obj/fakeobject/birdhouse/light,
@@ -75946,18 +76115,6 @@
 	},
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
-"uQQ" = (
-/obj/mesh/catwalk,
-/obj/machinery/camera/watchful_eye/directional/north{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_x = 10
-	},
-/obj/machinery/camera/watchful_eye/directional/east{
-	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_y = 10
-	},
-/turf/space,
-/area/watchful_eye_sensor)
 "uQX" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/bball)
@@ -76016,25 +76173,6 @@
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
-"uSQ" = (
-/obj/fakeobject/pipe{
-	color = "b4b4b4";
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6
-	},
-/obj/fakeobject/pipe{
-	color = "b4b4b4";
-	dir = 10;
-	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
-	},
-/obj/fakeobject/firealarm_broken{
-	pixel_y = -24;
-	dir = 2
-	},
-/turf/unsimulated/floor/caution/south,
-/area/hospital/samostrel)
 "uTj" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/computer3/generic/personal/meatland{
@@ -76300,14 +76438,6 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
-"vfO" = (
-/obj/machinery/light,
-/obj/decal/stage_edge{
-	dir = 2
-	},
-/obj/machinery/loudspeaker,
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "vfY" = (
 /obj/fitness/speedbag/captain,
 /turf/unsimulated/floor/wood/eight{
@@ -76334,6 +76464,11 @@
 	dir = 4
 	},
 /area/centcom/offices/adhara)
+"vgQ" = (
+/turf/unsimulated/floor/darkblueblack{
+	dir = 9
+	},
+/area/centcom/offices/jorj)
 "vha" = (
 /obj/fakeobject/pipe{
 	desc = "It seems to have been damaged somehow.";
@@ -76475,6 +76610,9 @@
 "vjH" = (
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"vjZ" = (
+/turf/unsimulated/floor/black,
+/area/centcom/offices/jorj)
 "vkk" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black{
@@ -77446,34 +77584,6 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
-"vSe" = (
-/obj/table/wood/round/auto{
-	desc = "This table is also pretty dang old.";
-	name = "old wooden table"
-	},
-/obj/machinery/computer/television{
-	camera_networks = list("Minerva5");
-	pixel_y = 6
-	},
-/obj/machinery/camera{
-	c_tag = "NT/ADMIN/SCI #51352";
-	desc = "";
-	invisibility = 100;
-	network = "Minerva5"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/carpet{
-	dir = 4;
-	tag = "icon-blue1"
-	},
-/area/syndicate/minerva5/command)
-"vSf" = (
-/obj/fakeobject/firealarm_broken{
-	pixel_y = 24;
-	dir = 1
-	},
-/turf/unsimulated/floor/black,
-/area/marsoutpost)
 "vSm" = (
 /mob/living/critter/small_animal/cat{
 	desc = "This is Eloisa. She looks old, but sweet.";
@@ -78473,27 +78583,6 @@
 	},
 /turf/space,
 /area/space)
-"wBw" = (
-/obj/fakeobject/pipe{
-	color = "b4b4b4";
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6
-	},
-/obj/fakeobject/pipe{
-	color = "b4b4b4";
-	dir = 1;
-	name = "grimy pipe"
-	},
-/obj/fakeobject/firealarm_broken{
-	pixel_y = -24;
-	dir = 2
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/hospital/samostrel)
 "wCG" = (
 /obj/decal/nav_danger,
 /obj/mesh/catwalk,
@@ -78873,6 +78962,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"wOQ" = (
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 8;
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 4
+	},
+/area/centcom/offices/jorj)
 "wOR" = (
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
@@ -78998,14 +79096,18 @@
 /obj/map/light/dimred,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
-"wUH" = (
-/obj/machinery/light{
-	dir = 1
+"wVh" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera/watchful_eye/directional/east{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_y = -10
 	},
-/obj/decal/stage_edge,
-/obj/machinery/loudspeaker,
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
+/obj/machinery/camera/watchful_eye/directional/south{
+	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
+	pixel_x = 10
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "wVp" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -79595,6 +79697,16 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"xsg" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 4
+	},
+/area/centcom/offices/jorj)
 "xsp" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -79619,6 +79731,33 @@
 	},
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
+"xtj" = (
+/obj/decoration/bookcase{
+	pixel_y = 21;
+	pixel_x = -32
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 31;
+	unlisted = 1;
+	stripe_color = "#395cc6"
+	},
+/obj/table/monodesk/auto,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/disk/data/floppy/sec_command{
+	pixel_x = 12;
+	pixel_y = 9;
+	name = "important looking disk"
+	},
+/obj/item/clothing/glasses/nt_operative{
+	pixel_x = 11
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/centcom/offices/jorj)
 "xun" = (
 /obj/item/clothing/under/gimmick/donk,
 /turf/unsimulated/floor/plating,
@@ -80132,6 +80271,27 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"xIo" = (
+/obj/table/wood/round/auto{
+	desc = "This table is also pretty dang old.";
+	name = "old wooden table"
+	},
+/obj/machinery/computer/television{
+	camera_networks = list("Minerva5");
+	pixel_y = 6
+	},
+/obj/machinery/camera{
+	c_tag = "NT/ADMIN/SCI #51352";
+	desc = "";
+	invisibility = 100;
+	network = "Minerva5"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/carpet{
+	dir = 4;
+	tag = "icon-blue1"
+	},
+/area/syndicate/minerva5/command)
 "xIB" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -80370,11 +80530,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
-"xSg" = (
-/obj/table/reinforced/auto,
-/obj/item/assembly/flash_cell,
-/turf/unsimulated/floor/white,
-/area/owlery/lab)
 "xSl" = (
 /obj/item/material_piece/uqill,
 /obj/item/material_piece/uqill,
@@ -80766,6 +80921,20 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"ycI" = (
+/obj/machinery/camera/vspace{
+	name = "V-Space - Gun Sim Arena";
+	pixel_y = -10
+	},
+/obj/invisible_teleporter/receive_only{
+	id = "murderbox"
+	},
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "Today is a good day to die.";
+	icon_state = "gauntfloorSkulls";
+	name = "\proper THE MURDERBOX"
+	},
+/area/sim/gunsim/arena)
 "ycV" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -82834,7 +83003,7 @@ cYb
 cYD
 cWJ
 cWV
-vSe
+xIo
 cXg
 cWJ
 cXl
@@ -84410,7 +84579,7 @@ aSG
 aSG
 aSG
 xuw
-ptN
+aVL
 aRJ
 ndE
 faP
@@ -88449,7 +88618,7 @@ bQy
 bQJ
 bQy
 bQy
-tgt
+bRE
 aDC
 bIY
 bIY
@@ -88948,7 +89117,7 @@ aZj
 aZT
 aZT
 bbe
-mpf
+bbG
 aNN
 aKX
 aKX
@@ -89244,8 +89413,8 @@ aKX
 aKX
 aKX
 aKX
-pBP
-nja
+aXp
+aYn
 aZk
 aZU
 aZU
@@ -89450,11 +89619,11 @@ cFq
 cFq
 cFq
 cFq
-vfO
+cIo
 cJL
 cJN
 cLs
-wUH
+cKY
 cFq
 cMa
 qrz
@@ -93466,7 +93635,7 @@ qJS
 qJS
 qJS
 qJS
-fBo
+aSN
 aTG
 aTG
 aVh
@@ -94674,7 +94843,7 @@ qJS
 qJS
 qJS
 qJS
-iLE
+aSQ
 aTJ
 aTJ
 aVk
@@ -95696,7 +95865,7 @@ vVV
 uJs
 uJs
 bRg
-oZX
+bRv
 aDC
 bIY
 bIY
@@ -96994,7 +97163,7 @@ cDJ
 cAB
 cAB
 cFf
-rSU
+rPE
 cHo
 cAB
 cLQ
@@ -97292,7 +97461,7 @@ aBY
 cAE
 cBk
 cBk
-xSg
+cDN
 cEr
 cAB
 cAB
@@ -98145,7 +98314,7 @@ crw
 crA
 qcH
 sCF
-ofu
+lAJ
 sLt
 csp
 crr
@@ -100136,7 +100305,7 @@ bZH
 bZH
 bZH
 bZH
-nUA
+nCH
 bfQ
 bfQ
 bfQ
@@ -101775,7 +101944,7 @@ dSb
 dTz
 cwf
 dSK
-oed
+dSU
 cwf
 dan
 xUC
@@ -102571,7 +102740,7 @@ bxS
 bxS
 blL
 bhC
-gah
+bnJ
 bZH
 aaa
 aaa
@@ -103584,7 +103753,7 @@ daN
 dSd
 daA
 ddQ
-gSQ
+dfW
 dSb
 cwC
 dSm
@@ -110164,7 +110333,7 @@ aab
 aab
 jnw
 cnv
-hOA
+bID
 jnw
 bJo
 jnw
@@ -113004,7 +113173,7 @@ dfa
 btf
 vtv
 btf
-kkJ
+gjT
 btf
 cwh
 fgY
@@ -117778,7 +117947,7 @@ cbT
 cbV
 cbV
 cdp
-mXD
+cdP
 cex
 cbV
 cfj
@@ -119589,7 +119758,7 @@ cbn
 cbV
 cbV
 cbV
-hXr
+aBV
 cbV
 cbV
 cbV
@@ -121704,7 +121873,7 @@ cbX
 cbV
 cbV
 cdy
-svG
+cdW
 ceD
 cbV
 cfo
@@ -126418,7 +126587,7 @@ aIr
 aaa
 biL
 gLr
-hAf
+qzU
 bjm
 gEi
 bkd
@@ -134576,7 +134745,7 @@ aTs
 aTs
 aTs
 aTs
-dsy
+bec
 aKS
 aKS
 aTs
@@ -135766,7 +135935,7 @@ bep
 aXZ
 aIe
 aTs
-ieT
+bfa
 bfs
 bfs
 bfZ
@@ -136042,7 +136211,7 @@ aIe
 aIe
 aTs
 aTs
-uQf
+aQL
 aRy
 aSA
 aTs
@@ -136201,7 +136370,7 @@ ueV
 aqL
 cdA
 cea
-fYV
+ceI
 aqL
 ccY
 ccY
@@ -137239,7 +137408,7 @@ aTs
 aTs
 aTs
 aTs
-vSf
+aJY
 aJX
 aKa
 aKa
@@ -137278,7 +137447,7 @@ aYR
 aXZ
 aTs
 aTs
-dsy
+bec
 aKS
 aKS
 aLF
@@ -139653,7 +139822,7 @@ dFc
 aaa
 aIe
 aTs
-nLe
+aJa
 aJA
 aKb
 aKy
@@ -139687,7 +139856,7 @@ bcW
 aIA
 aIA
 aTs
-dsy
+bec
 aKS
 aKS
 aKS
@@ -146507,13 +146676,13 @@ uYE
 klZ
 nJg
 nJg
-tEx
+bnk
 iUI
 rnz
 xGi
 rnz
 ryq
-rNi
+fZb
 nJg
 nJg
 oDr
@@ -146808,7 +146977,7 @@ sJh
 pXh
 tuc
 tuc
-tEx
+bnk
 fzQ
 rUB
 nzY
@@ -146816,7 +146985,7 @@ iVa
 nzY
 rUB
 oEr
-rNi
+fZb
 tuc
 tuc
 vVf
@@ -147119,7 +147288,7 @@ lgd
 uLf
 wFK
 oNz
-ktv
+kXv
 nJg
 mef
 udu
@@ -147421,7 +147590,7 @@ wfJ
 sgR
 nzY
 eAB
-eht
+nFq
 nJg
 iUy
 laI
@@ -147723,7 +147892,7 @@ mZO
 iha
 xuD
 jwj
-eht
+nFq
 nJg
 xPj
 lrS
@@ -148025,7 +148194,7 @@ wfJ
 sgR
 nzY
 eAB
-eht
+nFq
 nJg
 lev
 fWR
@@ -148327,7 +148496,7 @@ jAK
 uLf
 eYq
 jCA
-eht
+nFq
 nJg
 xmf
 jRl
@@ -148620,7 +148789,7 @@ vYu
 fxG
 tuc
 tuc
-uQQ
+gNL
 oEr
 rUB
 nzY
@@ -148628,7 +148797,7 @@ ioH
 nzY
 rUB
 fzQ
-hci
+wVh
 tuc
 tuc
 jnk
@@ -148923,13 +149092,13 @@ tyD
 vHb
 nJg
 nJg
-uQQ
+gNL
 oMX
 oox
 kzP
 oox
 irO
-hci
+wVh
 nJg
 nJg
 glo
@@ -153130,7 +153299,7 @@ clv
 clv
 clv
 clv
-qIv
+ycI
 clv
 clv
 clv
@@ -158079,7 +158248,7 @@ wel
 sJH
 elx
 rER
-rER
+lmi
 rER
 dxn
 rER
@@ -158382,7 +158551,7 @@ iVt
 vij
 wel
 wel
-oaN
+xsg
 wel
 wel
 wel
@@ -158683,9 +158852,9 @@ wel
 efe
 vij
 wel
-dvW
-dvW
-dvW
+vgQ
+fcy
+iNq
 wel
 dvW
 dvW
@@ -158985,9 +159154,9 @@ jfx
 sJH
 vij
 wel
-dvW
-dvW
-dvW
+xtj
+vjZ
+jLf
 wel
 dvW
 dvW
@@ -159287,9 +159456,9 @@ wel
 sJH
 vij
 wel
-lRO
-dvW
-dvW
+fBu
+sge
+eFT
 wel
 lRO
 dvW
@@ -159589,9 +159758,9 @@ wel
 iVt
 vij
 wel
-dvW
-dvW
-dvW
+exk
+wOQ
+ssz
 wel
 dvW
 dvW
@@ -163062,7 +163231,7 @@ abr
 abr
 abr
 abr
-ihJ
+akT
 ahg
 amh
 amT
@@ -163181,7 +163350,7 @@ aES
 aES
 dpP
 lWe
-mpz
+dLy
 dLB
 lWe
 dLx
@@ -163189,7 +163358,7 @@ dLt
 dLt
 lWe
 dLB
-mpz
+dLy
 lWe
 drL
 aES
@@ -164884,7 +165053,7 @@ abr
 abr
 eii
 ahg
-nrn
+atf
 lcu
 abr
 ava
@@ -165166,14 +165335,14 @@ qoT
 kVW
 kVW
 xwE
-wBw
+jfB
 abr
 kVW
 rwg
 uca
 eED
 ucd
-uSQ
+jtV
 abr
 abr
 afK
@@ -166677,7 +166846,7 @@ kfa
 abr
 abB
 abB
-kBK
+rBY
 afj
 sbH
 abr
@@ -167594,7 +167763,7 @@ fzW
 sbH
 iaF
 abB
-sOS
+afV
 abB
 abB
 abB
