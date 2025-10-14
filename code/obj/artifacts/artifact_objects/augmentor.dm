@@ -16,7 +16,6 @@
 	deact_text = "closes itself up."
 	react_xray = list(6,75,60,11,"SEGMENTED")
 	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
-	combine_effect_priority = ARTIFACT_COMBINATION_TOUCHED
 	var/datum/artifact_augmentation/augment = null
 	var/augment_location = list()
 	var/recharge_time = 600

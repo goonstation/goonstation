@@ -12,7 +12,6 @@
 	/datum/artifact_trigger/cold, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
-	combine_effect_priority = ARTIFACT_COMBINATION_TOUCHED
 	activ_text = "opens up, revealing a complex array of thin tubes!"
 	deact_text = "closes itself up."
 	react_xray = list(9, 70, 75, 11, "SEGMENTED")
