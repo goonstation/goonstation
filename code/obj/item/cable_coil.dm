@@ -69,7 +69,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	proc/assembly_overlay_addition(var/manipulated_coil, var/obj/item/assembly/parent_assembly, overlay_offset)
 		if(parent_assembly.special_construction_identifier == "canbomb")
-			parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "cable_coil_canbomb")
+			var/image/temp_image = image('icons/obj/items/assemblies.dmi', parent_assembly, "cable_coil_canbomb")
+			parent_assembly.overlays += temp_image
 
 
 	proc/assembly_check(var/manipulated_coil, var/obj/item/second_part, var/mob/user)

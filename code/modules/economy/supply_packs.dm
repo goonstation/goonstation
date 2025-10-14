@@ -221,7 +221,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white,
-					/obj/item/kitchen/food_box/egg_box = 3,
+					/obj/item/kitchen/egg_box = 3,
 					/obj/item/storage/box/bacon_kit = 2)
 	cost = PAY_TRADESMAN*5
 	containertype = /obj/storage/crate/freezer
@@ -502,6 +502,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Wool Production Kit"
+
+
+/datum/supply_packs/ranch_egg_cartons
+	name = "Empty Egg Cartons"
+	desc = "For use with existing Ranch."
+	category = "Civilian Department"
+	contains = list(/obj/item/kitchen/egg_box/empty = 5)
+	cost = PAY_TRADESMAN*1
+	containertype = /obj/storage/crate
+	containername = "Empty Egg Cartons"
 
 /datum/supply_packs/fishing
 	name = "Angling Starter Kit"
@@ -955,6 +965,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_DONTBUYIT
 	containertype = /obj/storage/crate/wooden
 	containername = "RCD Replacement"
+
+/datum/supply_packs/places_pipes
+	name = "Handheld-pipe-dispenser replacement"
+	desc = "Contains one handheld-pipe-dispenser."
+	category = "Basic Materials"
+	contains = list(/obj/item/places_pipes)
+	cost = PAY_DONTBUYIT
+	containertype = /obj/storage/crate/wooden
+	containername = "HPD Replacement"
 
 /datum/supply_packs/buddy
 	name = "Thinktronic Build Your Own Buddy Kit"

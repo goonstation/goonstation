@@ -73,6 +73,25 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
+/datum/bioEffect/speech/frog
+	name = "Frontal Gyrus Alteration Type-Fr"
+	desc = "Forces the language center of the subject's brain to construct sentences in a truly ribbeting manner."
+	id = "accent_frog"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "You feel froggy."
+	msgLose = "You no longer feel froggy."
+	reclaim_fail = 10
+	probability = 0
+	occur_in_genepools = FALSE
+	can_make_injector = FALSE
+	can_copy = FALSE
+	curable_by_mutadone = FALSE
+	scanner_visibility = FALSE
+	can_research = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+
 
 /datum/bioEffect/speech/scots
 	name = "Frontal Gyrus Alteration Type-F"
