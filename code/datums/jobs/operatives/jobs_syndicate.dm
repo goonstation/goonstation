@@ -1,6 +1,7 @@
 ABSTRACT_TYPE(/datum/job/special/syndicate)
 /datum/job/special/syndicate
 	linkcolor = SYNDICATE_LINK_COLOR
+	job_category = JOB_SYNDICATE
 	limit = 0
 	wages = 0
 	name = "YOU SHOULDN'T SEE ME OPERATIVE"

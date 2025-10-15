@@ -16,16 +16,22 @@
 /datum/job_manager/ui_data(mob/user)
 	var/list/staple_job_data = list()
 	var/list/special_job_data = list()
+	var/list/categorised_special_job_data = list()
 	var/list/hidden_job_data = list()
 	for (var/datum/job/job in job_controls.staple_jobs)
 		staple_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
+	var/list/special_job_categories = list(JOB_NANOTRASEN, JOB_SYNDICATE, JOB_HALLOWEEN)// If adding more, make sure to add the category in JobManager.tsx
 	for (var/datum/job/job in job_controls.special_jobs)
+		if(job.job_category in special_job_categories)
+			categorised_special_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
+			continue
 		special_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
 	for (var/datum/job/job in job_controls.hidden_jobs)
 		hidden_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
 	. = list(
 		"stapleJobs" = staple_job_data,
 		"specialJobs" = special_job_data,
+		"categorisedSpecialJobs" = categorised_special_job_data,
 		"hiddenJobs" = hidden_job_data,
 		"allowSpecialJobs" = job_controls.allow_special_jobs
 	)

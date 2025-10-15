@@ -4,6 +4,7 @@
 ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
+	job_category = JOB_HALLOWEEN
 	wiki_link = "https://wiki.ss13.co/Jobs#Spooktober_Jobs"
 #ifdef HALLOWEEN
 	limit = 1
