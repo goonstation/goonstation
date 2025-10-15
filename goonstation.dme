@@ -2341,6 +2341,7 @@
 #include "code\obj\artifacts\artifact_machines\madness.dm"
 #include "code\obj\artifacts\artifact_machines\plant_helper.dm"
 #include "code\obj\artifacts\artifact_machines\robot.dm"
+#include "code\obj\artifacts\artifact_machines\singularity_bait.dm"
 #include "code\obj\artifacts\artifact_machines\turret.dm"
 #include "code\obj\artifacts\artifact_machines\warper.dm"
 #include "code\obj\artifacts\artifact_machines\wellspring.dm"
