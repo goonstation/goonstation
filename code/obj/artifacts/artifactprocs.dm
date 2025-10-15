@@ -656,6 +656,7 @@
 	O.artifact.hide_fx(O)
 	src.artifact.faults |= O.artifact.faults
 	src.artifact.validtriggers |= O.artifact.validtriggers
+	src.artifact.triggers |= O.artifact.triggers
 	for (var/obj/art as anything in O.artifact.combined_artifact_objs)
 		src.combine_artifact(art)
 	O.artifact.combined_artifact_objs = null
@@ -675,17 +676,19 @@
 	. += str
 
 /obj/proc/anchor_artifact()
-	var/anchor_sources = GET_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES)
-	APPLY_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources", anchor_sources + 1)
 	var/obj/p_art = src.get_uppermost_artifact()
+	var/anchor_sources = HAS_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES) ? GET_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES) : 0
+	APPLY_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources", anchor_sources + 1)
 	p_art.anchored = ANCHORED
 
 /obj/proc/try_unanchor_artifact()
-	var/anchor_sources = GET_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES) - 1
+	var/obj/p_art = src.get_uppermost_artifact()
+	var/anchor_sources = GET_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES) - 1
 	if (anchor_sources <= 0)
-		REMOVE_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources")
-		var/obj/p_art = src.get_uppermost_artifact()
+		REMOVE_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources")
 		p_art.anchored = UNANCHORED
+	else
+		APPLY_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources", anchor_sources)
 
 // Added. Very little related to artifacts was logged (Convair880).
 /proc/ArtifactLogs(var/mob/user, var/mob/target, var/obj/O, var/type_of_action, var/special_addendum, var/trigger_alert = 0)

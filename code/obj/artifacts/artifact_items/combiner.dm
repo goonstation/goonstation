@@ -16,7 +16,10 @@
 		if (!src.first_art)
 			if (O.anchored != UNANCHORED)
 				var/turf/T = get_turf(src)
-				T.visible_message(SPAN_ALERT("[src] glows yellow momentarily."))
+				T.visible_message(SPAN_NOTICE("[src] glows yellow momentarily."))
+				src.add_filter("yellow_error", 1, outline_filter(size = 1, color = "#fbff00"))
+				SPAWN(0.5 SECONDS)
+					src.remove_filter("yellow_error")
 				playsound(T, 'sound/items/lattice_combiner_error.ogg', 50, TRUE)
 				return
 			src.first_art = target
@@ -29,7 +32,6 @@
 			src.clear_first_art()
 			return
 		if (!src.try_combine_arts(target, src.first_art))
-			src.clear_first_art(FALSE)
 			return
 		src.combine_arts(target, src.first_art)
 
@@ -52,11 +54,19 @@
 			var/turf/T = get_turf(src)
 			T.visible_message(SPAN_NOTICE("[src] glows yellow momentarily."))
 			playsound(T, 'sound/items/lattice_combiner_error.ogg', 50, TRUE)
+			src.clear_first_art(FALSE)
+			src.add_filter("yellow_error", 1, outline_filter(size = 1, color = "#fbff00"))
+			SPAWN(0.5 SECONDS)
+				src.remove_filter("yellow_error")
 			return FALSE
 		if (!receiver.can_combine_artifact(to_merge))
 			var/turf/T = get_turf(src)
 			T.visible_message(SPAN_NOTICE("[src] glows red momentarily."))
 			playsound(T, 'sound/items/lattice_combiner_error.ogg', 50, TRUE)
+			src.clear_first_art(FALSE)
+			src.add_filter("red_error", 1, outline_filter(size = 1, color = "#ff0000"))
+			SPAWN(0.5 SECONDS)
+				src.remove_filter("red_error")
 			return FALSE
 		return TRUE
 
@@ -66,10 +76,9 @@
 		var/turf/T = get_turf(src)
 		playsound(T, pick(src.artifact.artitype.activation_sounds), 20, TRUE)
 		T.visible_message(SPAN_NOTICE("[to_merge] fuses into [receiver]!"))
-		if (findtext(receiver.name, "fused"))
+		if (receiver.get_filter("combined_arts"))
 			return
-		receiver.name_prefix("fused")
-		receiver.UpdateName()
+		receiver.add_filter("combined_arts", 1, outline_filter(size = 1.5, color = random_color()))
 
 /datum/artifact/combiner
 	associated_object = /obj/item/artifact/combiner

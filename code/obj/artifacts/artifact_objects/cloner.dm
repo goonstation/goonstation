@@ -133,6 +133,6 @@
 			O.visible_message(SPAN_ALERT("<b>[O]</b> releases [clone.name] and shuts down!"))
 		else
 			O.visible_message(SPAN_ALERT("<b>[O]</b> shuts down strangely!"))
-		for(var/atom/movable/I in (O.contents-O.vis_contents))
+		for(var/atom/movable/I in (O.contents - (O.artifact.combined_artifact_objs || list()) - O.vis_contents))
 			I.set_loc(get_turf(O))
 		clone = null
