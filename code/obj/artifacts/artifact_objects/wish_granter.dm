@@ -14,7 +14,7 @@
 	activ_text = "begins glowing with an enticing light!"
 	deact_text = "falls dark and quiet."
 	react_xray = list(666,666,666,11,"NONE")
-	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_ANY
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/list/wish_granted = list()
 	var/evil = 0
 
@@ -29,27 +29,27 @@
 		if (!isliving(user))
 			return
 		if (user.key in wish_granted)
-			boutput(user, "<b>[O.get_uppermost_artifact()]</b> is silent.")
+			boutput(user, "<b>[O]</b> is silent.")
 			return
-		boutput(user, "<b>[O.get_uppermost_artifact()]</b> resonates, \"<big>I SHALL GRANT YOU ONE WISH...</big>\"")
+		boutput(user, "<b>[O]</b> resonates, \"<big>I SHALL GRANT YOU ONE WISH...</big>\"")
 
 		var/list/wishes = list("I wish to become rich!","I wish for great power!")
 
-		var/wish = input(user, "Make a wish?","[O.get_uppermost_artifact()]") as null|anything in wishes
+		var/wish = input(user, "Make a wish?","[O]") as null|anything in wishes
 		if (user.key in wish_granted)
-			boutput(user, "<b>[O.get_uppermost_artifact()]</b> resonates, \"<big>FOOLISH MORTAL, YOU TRY TO FOOL ME???</big>\"")
+			boutput(user, "<b>[O]</b> resonates, \"<big>FOOLISH MORTAL, YOU TRY TO FOOL ME???</big>\"")
 			return
 		if (!wish)
 			boutput(user, "You say nothing.")
-			boutput(user, "<b>[O.get_uppermost_artifact()]</b> resonates, \"<big>YOU MAY RETURN LATER...</big>\"")
+			boutput(user, "<b>[O]</b> resonates, \"<big>YOU MAY RETURN LATER...</big>\"")
 			return
 
 		wish_granted += user.key
 		user.say(wish)
 		sleep(0.5 SECONDS)
-		boutput(user, "<b>[O.get_uppermost_artifact()]</b> resonates, \"<big>SO BE IT...</big>\"")
+		boutput(user, "<b>[O]</b> resonates, \"<big>SO BE IT...</big>\"")
 		playsound(O, 'sound/musical_instruments/Gong_Rumbling.ogg', 40, TRUE)
-		O.visible_message(SPAN_ALERT("<b>[O.get_uppermost_artifact()]</b> begins to charge up..."))
+		O.visible_message(SPAN_ALERT("<b>[O]</b> begins to charge up..."))
 		O.ArtifactFaultUsed(user)
 		sleep(3 SECONDS)
 		if (prob(2))
@@ -58,7 +58,7 @@
 		if (evil)
 			switch(wish)
 				if("I wish to become rich!")
-					O.visible_message(SPAN_ALERT("<b>[O.get_uppermost_artifact()]</b> envelops [user] in a golden light!"))
+					O.visible_message(SPAN_ALERT("<b>[O]</b> envelops [user] in a golden light!"))
 					playsound(user, 'sound/weapons/flashbang.ogg', 50, TRUE)
 					for(var/mob/N in viewers(user, null))
 						N.flash(3 SECONDS)
@@ -68,7 +68,7 @@
 					user.become_statue(getMaterial("gold"), "A statue of someone very wealthy", TRUE)
 
 				if("I wish for great power!")
-					O.visible_message(SPAN_ALERT("<b>[O.get_uppermost_artifact()] discharges a massive bolt of electricity!</b>"))
+					O.visible_message(SPAN_ALERT("<b>[O] discharges a massive bolt of electricity!</b>"))
 					playsound(user, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 					var/list/affected = drawLineObj(O.get_uppermost_artifact(),user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
@@ -87,7 +87,7 @@
 						S.setup(T)
 
 				if("I wish for great power!")
-					O.visible_message(SPAN_ALERT("<b>[O.get_uppermost_artifact()]</b> envelops [user] in a brilliant light!"))
+					O.visible_message(SPAN_ALERT("<b>[O]</b> envelops [user] in a brilliant light!"))
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.bioHolder)

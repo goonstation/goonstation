@@ -41,7 +41,7 @@
 	var/gravity_type = 0 // push or pull?
 	examine_hint = "It is covered in very conspicuous markings."
 	var/obj/effect/grav_pulse/lense
-	combine_flags = ARTIFACT_COMBINES_INTO_ANY | ARTIFACT_ACCEPTS_ANY_COMBINE
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 
 	New()
 		..()

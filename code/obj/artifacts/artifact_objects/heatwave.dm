@@ -16,7 +16,7 @@
 	deact_text = "stops emitting flames."
 	react_xray = list(12,35,85,5,"POROUS") //has pores for flames idk
 	examine_hint = "It is covered in very conspicuous markings."
-	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/recharge_time = 20 SECONDS
 	var/fire_range = 4
 	var/temperature = 7000 KELVIN

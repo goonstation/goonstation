@@ -21,7 +21,7 @@
 	activ_text = "uncovers an array of guns!"
 	deact_text = "retracts the guns back into itself and falls quiet!"
 	react_xray = list(9,40,80,8,"SEGMENTED")
-	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/cycles_without_target = 0
 	var/cycles_until_shutdown = 10
 	var/capricious = 0
@@ -72,7 +72,7 @@
 					O.ArtifactDeactivated()
 		else
 			if (target_is_valid(current_target,O) && bullet)
-				shoot_projectile_ST_pixel_spread(O, bullet, current_target)
+				shoot_projectile_ST_pixel_spread(O.get_uppermost_artifact(), bullet, current_target)
 			else
 				current_target = null
 

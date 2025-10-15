@@ -19,6 +19,7 @@
 	activated = 0
 	activ_text = "begins to flood the area with liquid!"
 	deact_text = "stops flooding."
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/payload_reagent = "water"
 	var/payload_amount = 1
 	var/payload_cooldown = 1 SECONDS

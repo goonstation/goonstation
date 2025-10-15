@@ -37,6 +37,7 @@
 	activ_text = "begins to build tension."
 	deact_text = "relaxes."
 	react_xray = list(11,70,90,9,"FIBROUS")
+	combine_flags = ACCEPTS_ANY_COMBINE
 	var/range = 1
 	var/throwforce = 1
 	var/recharge_time = 600

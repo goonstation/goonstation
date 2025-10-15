@@ -14,7 +14,7 @@
 	activ_text = "suddenly starts warping space around it!"
 	deact_text = "deactivates, and lays silent."
 	react_xray = list(15,75,90,3,"ANOMALOUS")
-	combine_flags = ARTIFACT_DOES_NOT_COMBINE
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/max_teleports
 	var/teleports = 0 //how many times has the artifact moved
 	var/grab_range //at what range can we "grab" living people
@@ -42,11 +42,12 @@
 			return
 		else
 			var/loc = ((wormholer && O.z == Z_LEVEL_STATION) ? pick(random_floor_turfs) : get_offset_target_turf(T, rand(-teleport_range, teleport_range), rand(-teleport_range, teleport_range)) )
-			playsound(O.loc, "warp", 50)
+			playsound(get_turf(O), "warp", 50)
 			for (var/mob/living/M in orange(grab_range,O))
 				if (isintangible(M)) continue
 				var/warp_target = get_offset_target_turf(loc, rand(-grab_range, grab_range), rand(-grab_range, grab_range))
 				logTheThing(LOG_COMBAT, M, "was teleported by Warper artifact [O] from [log_loc(M)] to [log_loc(warp_target)].")
 				M.set_loc(warp_target)
-			O.set_loc(loc)
+			var/obj/art = src.get_uppermost_artifact()
+			art.set_loc(loc)
 			teleports++

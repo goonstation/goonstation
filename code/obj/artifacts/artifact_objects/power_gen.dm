@@ -25,7 +25,7 @@
 	deact_sound = 'sound/effects/singsuck.ogg'
 	react_xray = list(10,90,80,10,"NONE")
 	touch_descriptors = list("You can feel the electricity flowing through this thing.")
-	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_ANY
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/gen_rate = 0
 	var/gen_level = 0
 	var/mode = 0

@@ -15,7 +15,7 @@
 	activ_text = "opens up, revealing an array of strange needles!"
 	deact_text = "closes itself up."
 	react_xray = list(8,60,75,11,"SEGMENTED")
-	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_ANY
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/list/injection_reagents = list()
 	var/injection_amount = 10
 
