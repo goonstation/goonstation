@@ -1,5 +1,9 @@
 
 (t)wed oct 15 25
+(u)Kelguroth
+(p)24848
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Added ability to deconstruct secure containers so long as they are unlocked.
 (u)LeahTheTech
 (p)24159
 (e)🧫|C-Experimental
