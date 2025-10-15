@@ -2,7 +2,7 @@
 
 ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
-	linkcolor = SECURITY_LINK_COLOR
+	ui_colour = TGUI_COLOUR_RED
 	slot_card = /obj/item/card/id/security
 	receives_miranda = TRUE
 	job_category = JOB_SECURITY

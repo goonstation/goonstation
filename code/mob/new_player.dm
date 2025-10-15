@@ -184,114 +184,6 @@ TYPEINFO(/mob/new_player)
 					else // are they a normal player or not in stealth mode/using a fake key?
 						stat("[player.key]", playing) // show them normally
 
-	Topic(href, href_list[])
-		if(href_list["SelectedJob"])
-			if (src.spawning)
-				return
-
-			if (!enter_allowed)
-				boutput(usr, SPAN_NOTICE("There is an administrative lock on entering the game!"))
-				return
-
-			var/datum/job/JOB = null
-			var/mob/living/silicon/S = null
-
-			if (ticker?.mode)
-				S = locate(href_list["SelectedJob"]) in mobs
-				if(S)
-					if(istype(S, /mob/living/silicon/robot))
-						JOB = get_singleton(/datum/job/civilian/cyborg)
-					else if(istype(S, /mob/living/silicon/ai))
-						JOB = get_singleton(/datum/job/civilian/AI)
-				else if (istype(ticker.mode, /datum/game_mode/construction))
-					var/datum/game_mode/construction/C = ticker.mode
-					JOB = locate(href_list["SelectedJob"]) in C.enabled_jobs
-				else
-					var/list/alljobs = job_controls.staple_jobs | job_controls.special_jobs
-					JOB = locate(href_list["SelectedJob"]) in alljobs
-
-				if(!istype(JOB))
-					stack_trace("Unknown job: [JOB] [href_list["SelectedJob"]]")
-
-				if(href_list["latejoin"] == "prompt")
-					var/wiki_link = JOB.wiki_link
-					var/who_we_joining_as = JOB.name
-					if(S)
-						who_we_joining_as += " " + S.name
-					var/list/alert_buttons = wiki_link ? list("Join", "Cancel", "Wiki") : list("Join", "Cancel")
-					var/alert_response = tgui_alert(usr, "Join as [who_we_joining_as]?", "Join as [who_we_joining_as]?", alert_buttons)
-					if(alert_response == "Cancel" || isnull(alert_response))
-						return
-					else if(alert_response == "Wiki")
-						usr << link(wiki_link)
-						return
-				else if(href_list["latejoin"] != "join")
-					stack_trace("Unknown latejoin link: [href_list["latejoin"]]")
-
-				if (S)
-					if(jobban_isbanned(src, "Cyborg"))
-						boutput(usr, SPAN_NOTICE("Sorry, you are banned from playing silicons."))
-						close_spawn_windows()
-						return
-					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
-					if(latejoin)
-						close_spawn_windows()
-						latejoin.activated = TRUE
-						latejoin.name_prefix("activated")
-						latejoin.UpdateName()
-						latejoin.color = json_decode("\[-0.152143,1.02282,-0.546681,1.28769,-0.143153,0.610996,-0.135547,0.120332,0.935685\]") //spriters beware
-						latejoin.owner = src.mind
-						src.mind.transfer_to(S)
-						if (S.emagged)
-							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
-							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-						else if (S.syndicate)
-							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
-							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-						if (isAI(S))
-							S.job = "AI"
-							S.mind.assigned_role = "AI"
-						else
-							S.job = "Cyborg"
-							S.mind.assigned_role = "Cyborg"
-						S.traitHolder.removeTrait("cyber_incompatible")
-						S.mind.join_time = world.time
-						logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
-						ticker.minds += S.mind
-
-						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
-						S.apply_roundstart_events()
-						S.show_laws()
-						SPAWN(1 DECI SECOND)
-							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
-							S.choose_name()
-							qdel(src)
-					else
-						close_spawn_windows()
-						boutput(usr, SPAN_NOTICE("Sorry, that Silicon has already been taken control of."))
-				else
-					AttemptLateSpawn(JOB)
-
-		if(!href_list["late_join"])
-			new_player_panel()
-
-	proc/IsSiliconAvailableForLateJoin(var/mob/living/silicon/S)
-		if (isdead(S))
-			return 0
-
-		if (istype(S,/mob/living/silicon/ai))
-			var/mob/living/silicon/ai/AI = S
-			var/obj/item/organ/brain/latejoin/latejoin = AI.brain
-			if (istype(latejoin) && !latejoin.activated)
-				return latejoin
-		if (istype(S,/mob/living/silicon/robot))
-			var/mob/living/silicon/robot/R = S
-			var/obj/item/organ/brain/latejoin/latejoin = R.part_head?.brain
-			if (istype(latejoin) && !latejoin.activated)
-				return latejoin
-		return 0
-
-
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
@@ -494,275 +386,82 @@ TYPEINFO(/mob/new_player)
 
 		return
 
-	/// create a set of latejoin cards for a job
-	proc/LateJoinLink(var/datum/job/J)
-		if (J.no_late_join)
+	proc/AttemptSiliconLateSpawn(obj/item/organ/brain/latejoin/latejoin)
+		if (jobban_isbanned(src, "Cyborg"))
+			boutput(src, SPAN_NOTICE("Sorry, you are banned from playing silicons."))
 			return
 
-		var/limit = J.limit
-		var/c = J.assigned
-		var/allowed = TRUE
-		if (limit == 0 && c == 0)
-			// 0 slots, nobody in it, don't show it
+		if (latejoin.activated)
+			boutput(src, SPAN_NOTICE("Sorry, that Silicon has already been taken control of."))
 			return
 
-		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS | SPECIAL_JOBS))
-			// Show unavailable jobs, but no joining them
-			allowed = FALSE
+		var/mob/living/silicon/S = latejoin.loc
+		if (!istype(S))
+			return
 
-		//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
-		if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
-			c = max(c, limit)
+		latejoin.activated = TRUE
+		latejoin.name_prefix("activated")
+		latejoin.UpdateName()
+		latejoin.color = json_decode("\[-0.152143,1.02282,-0.546681,1.28769,-0.143153,0.610996,-0.135547,0.120332,0.935685\]")
+		latejoin.owner = src.mind
+		src.mind.transfer_to(S)
 
-		var/hover_text = J.short_description || "Join the round as [J.name]."
+		if (S.emagged)
+			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
+			S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+		else if (S.syndicate)
+			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
+			S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 
-		// probalby could be a define but dont give a shite
-		var/maxslots = 5
-		var/list/slots = list()
-		var/shown = clamp(c, (limit == -1 ? maxslots : limit), maxslots)
-		// if there's still an open space, show a final join link
-		if (limit == -1 || (limit > maxslots && c < limit))
-			slots += {"<a href='byond://?src=\ref[src];
-			SelectedJob=\ref[J];latejoin=join' class='latejoin-card' style='border-color: [J.linkcolor];
-			' title='[hover_text]'>&#x2713;
-			&#xFE0E;
-			</a>"}
-		// show slots up to the limit
-		// extra people beyond the limit will be shown as a [+X] card, supposedly
-		for (var/i = shown, i > 0, i--)
-			// can you believe all these slot appendages were in one line before using nested ternaries? awful.
-			if (i <= c)
-				if (i == 1 && c > shown)
-					// display +X card
-					slots += {"
-					<div
-					class='latejoin-card latejoin-full'
-					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
-					title='Slot filled.'
-					>+[c - maxslots]
-					</div>
-					"}
-				else
-					// display crossed out card
-					slots += {"
-					<div
-					class='latejoin-card latejoin-full'
-					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
-					title='Slot filled.'
-					>&times;
-					</div>
-					"}
-			else
-				if(allowed)
-					// display joinable slot
-					slots += {"
-					<a
-					href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
-					class='latejoin-card' style='border-color: [J.linkcolor];'
-					title='[hover_text]'
-					>&#x2713;&#xFE0E;
-					</a>
-					"}
-				else
-					// display faded empty slot
-					slots += {"
-					<div
-					class ='latejoin-card latejoin-full'
-					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
-					title='Job unavailable.'
-					>&#xA0;
-					</div>
-					"}
-		return {"
-			<tr>
-				<td class='latejoin-link[J.is_highlighted() ? " highlighted" : ""]'>
-					[((limit == -1 || c < limit) && allowed) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];[istype(J, /datum/job/civilian/clown) ? "font-family: Comic Sans MS;" : ""]' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is unavailable.'>[J.name]</span>"]
-				</td>
-				<td class='latejoin-cards'>[jointext(slots, " ")]</td>
-			</tr>
-			"}
+		if (isAI(S))
+			S.job = "AI"
+			S.mind.assigned_role = "AI"
+		else
+			S.job = "Cyborg"
+			S.mind.assigned_role = "Cyborg"
+
+		S.traitHolder.removeTrait("cyber_incompatible")
+		S.mind.join_time = world.time
+		logTheThing(LOG_DEBUG, S, "<b>Late join:</b> added player to ticker.minds. [S.mind.on_ticker_add_log()]")
+		ticker.minds += S.mind
+
+		S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
+		S.apply_roundstart_events()
+		S.show_laws()
+
+		SPAWN(1 DECI SECOND)
+			S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
+			S.choose_name()
+			qdel(src)
 
 	proc/LateChoices()
-		// shut up
-		var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? {"
-		<title>Select a Job</title>
-		<style type='text/css'>
-			body { background: #222; color: white; font-family: Tahoma, sans-serif; }
-		</style>"} : ""
-
-		var/dat = {"
-[header_thing_chui_toggle]
-<style type='text/css'>
-.latejoin-cards {
-	white-space: nowrap;
-	min-width: 12em;
-	text-align: left;
-	}
-.latejoin td {
-	padding: 0.1em;
-	}
-.latejoin-link {
-	max-width: 12em;
-	padding: 0.2em 0;
-	}
-.latejoin-link > * {
-	display: block;
-	text-align: right;
-	padding-right: 1em;
-	}
-.latejoin-link > a {
-	font-weight: bold;
-	}
-.latejoin-link a:hover {
-	background-color: #555;
-	}
-
-.latejoin-link span {
-	opacity: 0.6;
-	}
-
-.latejoin-card {
-	display: inline-block;
-	padding: 0.0em 0.1em;
-	border: 2px solid black;
-	background: #fff;
-	border-radius: 3px;
-	min-width: 1em;
-	text-align: center;
-	font-size: 90%;
-	text-decoration: none;
-	font-weight: bold;
-	}
-
-.latejoin-full {
-	opacity: 0.4;
-	color: black;
-	}
-
-a.latejoin-card {
-	box-shadow: -0.5px -0.5px 3px 1px rgba(255, 255, 255, 0.7);
-	color: white;
-	}
-
-a.latejoin-card:hover {
-	color: black;
-	box-shadow: 0 0 6px 2px white;
-	}
-
-.latejoin th {
-	background: #555;
-	padding: 0.3em;
-	margin-top: 0.5em;
-}
-.fuck {
-	max-width: 48%;
-	display: inline-block;
-	vertical-align: top;
-	margin: 0 1em;
-}
-.highlighted {
-	border: 4px solid #FFE251;
-	border-radius: 3px;
-}
-</style>
-<h2 style='text-align: center; margin: 0 0 0.3em 0; font-size: 150%;'>You are joining a round in progress.</h2>
-<h3 style='text-align: center; margin: 0 0 0.5em 0; font-size: 120%;'>Please choose from one of the remaining open positions.</h3>
-<div style='text-align: center;'>
-"}
-
-		// deal with it
-		dat += ""
-		if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(ticker.mode,/datum/game_mode/battle_royale) && !istype(ticker.mode,/datum/game_mode/football) && !istype(ticker.mode,/datum/game_mode/pod_wars))
-			dat += {"<div class='fuck'><table class='latejoin'><tr><th colspan='2'>Command / Security</th></tr>"}
-			for(var/datum/job/command/J in job_controls.staple_jobs)
-				dat += LateJoinLink(J)
-			for(var/datum/job/security/J in job_controls.staple_jobs)
-				dat += LateJoinLink(J)
-			//dat += "</table></td>"
-
-			dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Research / Medical</th></tr>"}
-			for(var/datum/job/research/J in job_controls.staple_jobs)
-				dat += LateJoinLink(J)
-			for(var/datum/job/medical/J in job_controls.staple_jobs)
-				dat += LateJoinLink(J)
-			//dat += "</table></td>"
-
-			//dat += {"<td valign="top"><table>"}
-			dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Engineering / Supply</th></tr>"}
-			for(var/datum/job/engineering/J in job_controls.staple_jobs)
-				dat += LateJoinLink(J)
-			dat += {"</table></div><div class='fuck'><table class='latejoin'><tr><th colspan='2'>Crew Service / Silicon</th></tr>"}
-
-			for(var/datum/job/civilian/J in job_controls.staple_jobs)
-				dat += LateJoinLink(J)
-
-			for(var/datum/job/daily/J in job_controls.staple_jobs)
-				dat += LateJoinLink(J)
-
-			// not showing if it's an ai or cyborg is the worst fuckin shit so: FIXED
-			for(var/mob/living/silicon/S in mobs)
-				if (IsSiliconAvailableForLateJoin(S))
-					var/sili_type = istype(S, /mob/living/silicon/ai) ? "AI" : "Cyborg"
-					var/hover_text = "Join as [sili_type]."
-					if(istype(S, /mob/living/silicon/robot))
-						hover_text = get_singleton(/datum/job/civilian/cyborg).short_description
-					else if(istype(S, /mob/living/silicon/ai))
-						hover_text = get_singleton(/datum/job/civilian/AI).short_description
-					dat += {"<tr><td colspan='2' class='latejoin-link'><a href='byond://?src=\ref[src];SelectedJob=\ref[S];latejoin=prompt' style='color: #c4c4c4; text-align: center;' title='[hover_text]'>[S.name] ([sili_type])</a></td></tr>"}
-
-			// is this ever actually off? ?????
-			if (job_controls.allow_special_jobs)
-				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
-
-				for(var/datum/job/daily/J in job_controls.special_jobs)
-					dat += LateJoinLink(J)
-
-				for(var/datum/job/special/J in job_controls.special_jobs)
-					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
-					dat += LateJoinLink(J)
-
-				for(var/datum/job/created/J in job_controls.special_jobs)
-					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
-					dat += LateJoinLink(J)
-
-			dat += "</table></div>"
-
-		else if(istype(ticker.mode,/datum/game_mode/battle_royale))
-			//ahahaha you get no choices im going to just shove you in the game now good luck
-			AttemptLateSpawn(new /datum/job/battler)
+		if (!global.ticker.mode)
 			return
-		else if(istype(ticker.mode,/datum/game_mode/football))
-			//ahahaha you get no choices im going to just shove you in the game now good luck
-			AttemptLateSpawn(new /datum/job/football)
-			return
-		else if(istype(ticker.mode,/datum/game_mode/pod_wars))
-			//Go to the team with less members
-			var/datum/game_mode/pod_wars/mode = ticker.mode
 
-			if (mode?.team_NT?.members?.len > mode?.team_SY?.members?.len)
-				AttemptLateSpawn(new /datum/job/special/pod_wars/syndicate, 1)
+		if (istype(global.ticker.mode, /datum/game_mode/construction))
+			src.AttemptLateSpawn(new /datum/job/special/station_builder)
+			return
+
+		if (istype(global.ticker.mode, /datum/game_mode/battle_royale))
+			src.AttemptLateSpawn(new /datum/job/battler)
+			return
+
+		if (istype(global.ticker.mode, /datum/game_mode/football))
+			src.AttemptLateSpawn(new /datum/job/football)
+			return
+
+		if (istype(global.ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = global.ticker.mode
+			if (length(mode.team_NT?.members) > length(mode.team_SY?.members))
+				src.AttemptLateSpawn(new /datum/job/special/pod_wars/syndicate, TRUE)
 			else
-				AttemptLateSpawn(new /datum/job/special/pod_wars/nanotrasen, 1)
+				src.AttemptLateSpawn(new /datum/job/special/pod_wars/nanotrasen, TRUE)
 
 			return
-		else
-			var/datum/game_mode/construction/C = ticker.mode
-			if (!C.enabled_jobs.len)
-				var/datum/job/special/station_builder/D = new /datum/job/special/station_builder()
-				D.limit = -1
-				C.enabled_jobs += D
-			for (var/datum/job/J in C.enabled_jobs)
-				if (job_controls.check_job_eligibility(src, J, STAPLE_JOBS|SPECIAL_JOBS) && !J.no_late_join)
-					var/hover_text = J.short_description || "Join the round as [J.name]."
-					dat += "<tr><td style='width:100%'>"
-					dat += {"<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' title='[hover_text]'><font color=[J.linkcolor]>[J.name]</font></a> ([J.assigned][J.limit == -1 ? "" : "/[J.limit]"])<br>"}
-					dat += "</td></tr>"
-		dat += "</table></div>"
 
-		src.Browse(dat, "window=latechoices;size=800x666")
-		if(!bank_menu)
-			bank_menu = new
-		bank_menu.ui_interact(usr ,null)
+		global.latejoin_menu.ui_interact(src)
+		src.bank_menu ||= new()
+		src.bank_menu.ui_interact(src)
 
 	proc/create_character(var/datum/job/J, var/allow_late_antagonist = 0)
 		if (!src || !src.mind || !src.client)
@@ -895,10 +594,10 @@ a.latejoin-card:hover {
 				traitor.special_role = ROLE_TRAITOR
 
 	proc/close_spawn_windows()
-		if(client)
-			src.Browse(null, "window=latechoices") //closes late choices window
-			src.Browse(null, "window=playersetup") //closes the player setup window
-			winshow(src, "joinmenu", 0)
+		if (!src.client)
+			return
+
+		winshow(src, "joinmenu", FALSE)
 
 	verb/declare_ready_use_token()
 		set hidden = 1
@@ -952,7 +651,6 @@ a.latejoin-card:hover {
 			if(!src.ready_play)
 				src.ready_play = TRUE
 				src.update_joinmenu()
-				usr.Browse(null, "window=mob_occupation")
 				if(!bank_menu)
 					bank_menu = new
 				bank_menu.ui_interact( usr, null )
