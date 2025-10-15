@@ -1,5 +1,9 @@
 
 (t)wed oct 15 25
+(u)JORJ949
+(p)24803
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Emagging a genetics booth will now make it throw people with extra power.
 (u)Kelguroth
 (p)24848
 (e)🆕📦|C-Feature, A-Game-Objects
