@@ -1,5 +1,9 @@
 
 (t)wed oct 15 25
+(u)LeahTheTech
+(p)24159
+(e)🧫|C-Experimental
+(*)Playing on one of the less populated servers will now give you a small chance to earn an antag token at the end of each round.
 (u)JORJ949
 (p)24935
 (e)📦📨|A-Game-Objects, A-Logistics
