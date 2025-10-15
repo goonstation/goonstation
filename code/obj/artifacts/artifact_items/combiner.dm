@@ -13,16 +13,16 @@
 		var/obj/O = target
 		if (!istype(O) || !O.artifact)
 			return
-		if (O.anchored != UNANCHORED)
-			var/turf/T = get_turf(src)
-			T.visible_message(SPAN_ALERT("[src] glows yellow momentarily."))
-			playsound(T, 'sound/items/lattice_combiner_error.ogg', 50, TRUE)
-			return
 		if (!src.first_art)
+			if (O.anchored != UNANCHORED)
+				var/turf/T = get_turf(src)
+				T.visible_message(SPAN_ALERT("[src] glows yellow momentarily."))
+				playsound(T, 'sound/items/lattice_combiner_error.ogg', 50, TRUE)
+				return
 			src.first_art = target
 			var/turf/T = get_turf(src)
-			T.visible_message(SPAN_NOTICE("[src] starts glowing green."))
-			playsound(get_turf(src), 'sound/items/lattice_combiner_transform_art.ogg', 50, TRUE)
+			T.visible_message(SPAN_NOTICE("[src] glows green."))
+			playsound(T, 'sound/items/lattice_combiner_transform_art.ogg', 50, TRUE)
 			src.add_filter("first_art_picked", 1, outline_filter(size = 1, color = "#06b800"))
 			return
 		if (target == src.first_art)
