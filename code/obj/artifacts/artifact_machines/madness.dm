@@ -359,7 +359,7 @@
 
 		if(prob(2))
 			var/turf/T = get_turf(O)
-			T.visible_message("<b>[O.get_uppermost_artifact()]</b> shimmers briefly!")
+			T.visible_message("<b>[O]</b> shimmers briefly!")
 
 		for (var/mob/living/L in range(range,O))
 			if (!L.client) //no point hallucinating if there's nobody to see it

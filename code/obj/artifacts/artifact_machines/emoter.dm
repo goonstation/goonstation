@@ -48,7 +48,7 @@
 			return
 
 		var/turf/T = get_turf(O)
-		T.visible_message("<b>[O.get_uppermost_artifact()]</b> emits a weird noise!")
+		T.visible_message("<b>[O]</b> emits a weird noise!")
 
 		var/count = 0
 		for (var/mob/living/L in range(range,O))

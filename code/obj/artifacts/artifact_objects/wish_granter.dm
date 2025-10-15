@@ -70,7 +70,7 @@
 				if("I wish for great power!")
 					O.visible_message(SPAN_ALERT("<b>[O] discharges a massive bolt of electricity!</b>"))
 					playsound(user, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
-					var/list/affected = drawLineObj(O.get_uppermost_artifact(),user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+					var/list/affected = drawLineObj(get_turf(O),user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
 						SPAWN(0.6 SECONDS)
 							qdel(OB)
