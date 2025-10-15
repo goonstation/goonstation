@@ -33,15 +33,7 @@
 		src.setItemSpecial(null)
 
 	examine()
-		. = list("You have no idea what this thing is!")
-		if (!src.ArtifactSanityCheck())
-			return
-		var/str
-		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-			for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
-				if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
-					str += SPAN_ARTHINT(O.artifact.examine_hint)
-		. += str
+		. = src.get_arthints()
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -109,7 +101,6 @@
 	react_xray = list(10,75,100,11,"CAVITY")
 	var/list/datum/projectile/artifact/bullets = list()
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
 		..()

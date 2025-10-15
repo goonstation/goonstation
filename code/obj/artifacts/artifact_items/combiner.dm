@@ -1,7 +1,7 @@
 /obj/item/artifact/combiner
 	name = "artifact combiner"
 	associated_datum = /datum/artifact/combiner
-	var/obj/loaded_art
+	var/obj/first_art
 
 	afterattack(atom/target, mob/user)
 		. = ..()
@@ -11,43 +11,47 @@
 		if (!art.activated)
 			return
 		var/obj/O = target
-		if (!istype(O))
-			return
-		if (!O.artifact || !O.artifact.activated)
+		if (!istype(O) || !O.artifact || !O.artifact.activated)
 			return
 		if (O.anchored != UNANCHORED)
 			var/turf/T = get_turf(src)
-			T.visible_message(SPAN_NOTICE("[src] glows yellow momentarily."))
+			T.visible_message(SPAN_ALERT("[src] glows yellow momentarily."))
 			playsound(T, 'sound/items/lattice_combiner_error.ogg', 50, TRUE)
 			return
-		if (!src.loaded_art)
-			src.load_art(target)
+		if (!src.first_art)
+			src.first_art = target
+			T.visible_message(SPAN_NOTICE("[src] starts glowing green."))
+			playsound(get_turf(src), 'sound/items/lattice_combiner_transform_art.ogg', 50, TRUE)
+			src.add_filter("first_art_picked", 1, outline_filter(size = 1, color = "#06b800"))
 			return
-		if (!src.try_combine_arts(target, src.loaded_art))
+		if (target == src.first_art)
+			src.clear_first_art()
 			return
-		src.combine_arts(target, src.loaded_art)
+		if (!src.try_combine_arts(target, src.first_art))
+			src.clear_first_art(FALSE)
+			return
+		src.combine_arts(target, src.first_art)
 
 	attack_self(mob/user)
 		. = ..()
-		src.eject_art()
+		src.clear_first_art()
 
-	proc/load_art(obj/O)
-		O.set_loc(src)
-		src.loaded_art = O
-		var/turf/T = get_turf(src)
-		T.visible_message(SPAN_NOTICE("[O] folds in on itself like paper and slips into [src]! Woah."))
-		playsound(T, 'sound/items/lattice_combiner_transform_art.ogg', 50, TRUE)
-
-	proc/eject_art()
-		if (!src.loaded_art)
+	proc/clear_first_art(play_fx = TRUE)
+		if (!src.first_art)
 			return
-		var/turf/T = get_turf(src)
-		T.visible_message(SPAN_NOTICE("[src.loaded_art] slips out of [src] and unfolds itself back into space!"))
-		playsound(T, 'sound/items/lattice_combiner_transform_art.ogg', 50, TRUE)
-		src.loaded_art.set_loc(get_turf(src))
-		src.loaded_art = null
+		src.first_art = null
+		if (play_fx)
+			var/turf/T = get_turf(src)
+			playsound(T, 'sound/items/lattice_combiner_transform_art.ogg', 50, TRUE)
+			T.visible_message(SPAN_NOTICE("[src] stops glowing green."))
+		src.remove_filter("first_art_picked")
 
 	proc/try_combine_arts(obj/receiver, obj/to_merge)
+		if (BOUNDS_DIST(receiver, to_merge) > 0)
+			var/turf/T = get_turf(src)
+			T.visible_message(SPAN_NOTICE("[src] glows yellow momentarily."))
+			playsound(T, 'sound/items/lattice_combiner_error.ogg', 50, TRUE)
+			return FALSE
 		if (!receiver.can_combine_artifact(to_merge))
 			var/turf/T = get_turf(src)
 			T.visible_message(SPAN_NOTICE("[src] glows red momentarily."))
@@ -57,7 +61,7 @@
 
 	proc/combine_arts(obj/receiver, obj/to_merge)
 		receiver.combine_artifact(to_merge)
-		src.loaded_art = null
+		src.clear_first_art(FALSE)
 		var/turf/T = get_turf(src)
 		playsound(T, pick(src.artifact.artitype.activation_sounds), 20, TRUE)
 		T.visible_message(SPAN_NOTICE("[to_merge] fuses into [receiver]!"))
@@ -74,4 +78,3 @@
 	validtypes = list("lattice")
 	react_xray = list(7, 30, 95, 8, "ANOMALOUS")
 	examine_hint = "Space is warping strangely around it."
-	combine_flags = ARTIFACT_DOES_NOT_COMBINE

@@ -23,7 +23,6 @@
 	var/recharge_phrase = ""
 	var/error_phrase = ""
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
 		..()

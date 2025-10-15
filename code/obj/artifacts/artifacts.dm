@@ -46,15 +46,7 @@
 		..()
 
 	examine()
-		. = list("You have no idea what this thing is!")
-		if (!src.ArtifactSanityCheck())
-			return
-		var/str
-		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-			for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
-				if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
-					str += SPAN_ARTHINT(O.artifact.examine_hint)
-		. += str
+		. = src.get_arthints()
 
 	ex_act(severity)
 		switch(severity)
@@ -136,15 +128,7 @@
 		..()
 
 	examine()
-		. = list("You have no idea what this thing is!")
-		if (!src.ArtifactSanityCheck())
-			return
-		var/str
-		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-			for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
-				if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
-					str += SPAN_ARTHINT(O.artifact.examine_hint)
-		. += str
+		. = src.get_arthints()
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -156,7 +140,7 @@
 		var/datum/artifact/A = src.artifact
 
 		if (A.activated)
-			A.effect_process(src.get_uppermost_artifact())
+			A.effect_process(src)
 
 	attack_hand(mob/user)
 		src.ArtifactTouched(user)
@@ -244,15 +228,7 @@
 		..()
 
 	examine()
-		. = list("You have no idea what this thing is!")
-		if (!src.ArtifactSanityCheck())
-			return
-		var/str
-		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-			for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
-				if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
-					str += SPAN_ARTHINT(O.artifact.examine_hint)
-		. += str
+		. = src.get_arthints()
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"

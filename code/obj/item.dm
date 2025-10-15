@@ -1052,6 +1052,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	if (src.artifact?.activated)
 		src.artifact.effect_attack_self(user)
+		for (var/obj/O as anything in src.combined_artifacts)
+			O.artifact.effect_attack_self(user)
 
 	chokehold?.attack_self(user)
 
@@ -1101,7 +1103,11 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (src.artifact?.activated)
 		if (reach)
 			src.artifact.effect_attack_atom(src, user, target)
+			for (var/obj/O as anything in src.combined_artifacts)
+				O.artifact.effect_attack_atom(src, user, target)
 		src.artifact.effect_click_tile(src, user, get_turf(target))
+		for (var/obj/O as anything in src.combined_artifacts)
+			O.artifact.effect_click_tile(src, user, get_turf(target))
 	return
 
 /obj/item/dummy/ex_act()
@@ -1352,6 +1358,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	if (src.artifact?.activated)
 		src.artifact.effect_melee_attack(src, user, target)
+		for (var/obj/O as anything in src.combined_artifacts)
+			O.artifact.effect_melee_attack(src, user, target)
 		return
 
 	def_zone = target.get_def_zone(user, def_zone)

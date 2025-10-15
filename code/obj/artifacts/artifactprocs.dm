@@ -463,25 +463,37 @@
 	if (!src || !A)
 		return
 
-	if (!A.activated)
-		for (var/datum/artifact_trigger/AT in A.triggers)
-			if (A.activated)
+	if (A.activated)
+		if (!length(src.combined_artifacts))
+			return
+		var/subarts_activated = TRUE
+		for (var/obj/O in src.combined_artifacts)
+			if (!O.artifact.activated)
+				subarts_activated = FALSE
 				break
-			if (AT.stimulus_required == stimtype)
-				if (AT.do_amount_check)
-					if (AT.stimulus_type == ">=" && strength >= AT.stimulus_amount)
-						src.ArtifactActivated()
-					else if (AT.stimulus_type == "<=" && strength <= AT.stimulus_amount)
-						src.ArtifactActivated()
-					else if (AT.stimulus_type == "==" && strength == AT.stimulus_amount)
-						src.ArtifactActivated()
-					else
-						if (istext(A.hint_text))
-							if (strength >= AT.stimulus_amount - AT.hint_range && strength <= AT.stimulus_amount + AT.hint_range)
-								if (prob(AT.hint_prob))
-									T.visible_message("<b>[src]</b> [A.hint_text]")
-				else
+		if (subarts_activated)
+			return
+
+	for (var/datum/artifact_trigger/AT in A.triggers)
+		if (AT.stimulus_required == stimtype)
+			if (AT.do_amount_check)
+				if (AT.stimulus_type == ">=" && strength >= AT.stimulus_amount)
 					src.ArtifactActivated()
+					break
+				else if (AT.stimulus_type == "<=" && strength <= AT.stimulus_amount)
+					src.ArtifactActivated()
+					break
+				else if (AT.stimulus_type == "==" && strength == AT.stimulus_amount)
+					src.ArtifactActivated()
+					break
+				else
+					if (istext(A.hint_text))
+						if (strength >= AT.stimulus_amount - AT.hint_range && strength <= AT.stimulus_amount + AT.hint_range)
+							if (prob(AT.hint_prob))
+								T.visible_message("<b>[src]</b> [A.hint_text]")
+			else
+				src.ArtifactActivated()
+				break
 
 /obj/proc/ArtifactTouched(mob/user as mob)
 	if (!in_interact_range(get_turf(src), user))
@@ -652,6 +664,17 @@
 
 /obj/proc/get_uppermost_artifact()
 	return src.parent_artifact || src
+
+/obj/proc/get_arthints()
+	. = list("You have no idea what this thing is!")
+	if (!src.ArtifactSanityCheck())
+		return
+	var/str
+	if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+		for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
+			if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
+				str += SPAN_ARTHINT(O.artifact.examine_hint)
+	. += str
 
 // Added. Very little related to artifacts was logged (Convair880).
 /proc/ArtifactLogs(var/mob/user, var/mob/target, var/obj/O, var/type_of_action, var/special_addendum, var/trigger_alert = 0)

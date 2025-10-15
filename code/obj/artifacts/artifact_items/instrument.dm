@@ -30,7 +30,6 @@
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor","martian","ancient")
 	react_xray = list(10,65,95,9,"TUBULAR")
-	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	effect_attack_self(mob/user)
 		if (..())
