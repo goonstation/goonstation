@@ -1,5 +1,9 @@
 
 (t)wed oct 15 25
+(u)JORJ949
+(p)24935
+(e)📦📨|A-Game-Objects, A-Logistics
+(*)Cargo's crate manufacturer is now capable of printing locked secure crates. Be careful not to fabricate one around yourself.
 (u)Glamurio (Ryou)
 (p)24719
 (e)💅📦|C-QoL, A-Game-Objects
