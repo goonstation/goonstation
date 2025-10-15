@@ -150,7 +150,7 @@
 			//TODO: Filter out raw ingredients as well as items requiring forks or other utensils.
 			src.biomatter -= src.biomatter_per_food
 			var/food = pick(src.possible_foods)
-			var/obj/item/spawned_food = new food(O.loc)
+			var/obj/item/reagent_containers/food/snacks/spawned_food = new food(O.loc)
 
 			//Change its name, appearance, and description to that of a small artifact.
 			var/datum/artifact_origin/artifact_origin = src.artitype
@@ -162,6 +162,7 @@
 			spawned_food.icon = 'icons/obj/artifacts/artifactsitemS.dmi'
 			spawned_food.icon_state = appearance.name + "-[rand(1,appearance.max_sprites)]"
 			spawned_food.item_state = appearance.name
+			spawned_food.crunchy = TRUE
 
 #undef STATUS_PROCESSING
 #undef STATUS_PROCESSING_BODY
