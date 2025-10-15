@@ -1,5 +1,9 @@
 
 (t)wed oct 15 25
+(u)Ghostplasmas & Ribbie
+(p)24881
+(e)🎨|C-Sprites
+(*)Added 26 more hairstyles.
 (u)JORJ949
 (p)24803
 (e)🆕📦|C-Feature, A-Game-Objects
