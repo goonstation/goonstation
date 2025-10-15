@@ -20,6 +20,7 @@
 			return
 		if (!src.first_art)
 			src.first_art = target
+			var/turf/T = get_turf(src)
 			T.visible_message(SPAN_NOTICE("[src] starts glowing green."))
 			playsound(get_turf(src), 'sound/items/lattice_combiner_transform_art.ogg', 50, TRUE)
 			src.add_filter("first_art_picked", 1, outline_filter(size = 1, color = "#06b800"))

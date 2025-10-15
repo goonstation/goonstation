@@ -683,7 +683,7 @@
 /obj/proc/try_unanchor_artifact()
 	var/anchor_sources = GET_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES) - 1
 	if (anchor_sources <= 0)
-		REMOVE_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources", anchor_sources + 1)
+		REMOVE_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources")
 		var/obj/p_art = src.get_uppermost_artifact()
 		p_art.anchored = UNANCHORED
 

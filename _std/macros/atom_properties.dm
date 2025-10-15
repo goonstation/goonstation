@@ -305,7 +305,7 @@ To remove:
 
 //-------------------- OBJ PROPS ------------------------
 #define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
-#define PROP_OBJ_ART_ANCHOR_SOURCES(X) x("artifact_anchor_sources", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_OBJ_ART_ANCHOR_SOURCES(x) x("artifact_anchor_sources", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
 //-------------------- ITEM PROPS -----------------------
 #define PROP_ITEM_IN_CHEM_DISPENSER(x) x("in_chem_dispenser", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)

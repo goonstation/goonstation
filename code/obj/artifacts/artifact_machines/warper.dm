@@ -48,6 +48,6 @@
 				var/warp_target = get_offset_target_turf(loc, rand(-grab_range, grab_range), rand(-grab_range, grab_range))
 				logTheThing(LOG_COMBAT, M, "was teleported by Warper artifact [O] from [log_loc(M)] to [log_loc(warp_target)].")
 				M.set_loc(warp_target)
-			var/obj/art = src.get_uppermost_artifact()
+			var/obj/art = O.get_uppermost_artifact()
 			art.set_loc(loc)
 			teleports++
