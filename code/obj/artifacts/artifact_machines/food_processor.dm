@@ -8,15 +8,22 @@
 
 	ArtifactHitWith(obj/item/I, mob/user)
 		var/datum/artifact/food_processor/artifact = src.artifact
+		if(!artifact.activated)
+			return
 		if(artifact.food_processor_state != STATUS_READY)
 			boutput(user, SPAN_ALERT("The artifact is already processing!"))
 			return
 		if (istype(I, /obj/item/reagent_containers/food) || (istype(I, /obj/item/parts/human_parts)) || istype(I, /obj/item/clothing/head/butt) || istype(I, /obj/item/organ) || istype(I,/obj/item/raw_material/martian))
+			artifact.food_processor_state = STATUS_PROCESSING
 			user.u_equip(I)
 			qdel(I)
-			user.visible_message("<b>[user]</b> loads [I] into [src].","You load [I] into [src]")
+			user.visible_message("<b>[user]</b> loads [I] into [src].", "You load [I] into [src]")
 			artifact.biomatter += 2
+
+			playsound(src.loc, 'sound/machines/pc_process.ogg', 50, 1, -1)
+			sleep(5 SECONDS)
 			artifact.spawn_food(src)
+			artifact.food_processor_state = STATUS_READY
 		return
 
 /datum/artifact/food_processor
@@ -24,17 +31,19 @@
 	type_name = "Food Processor"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
-	validtypes = list("martian","precursor", "wizard", "ancient", "eldritch")
-	validtriggers = list(/datum/artifact_trigger/carbon_touch)
-	//validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
+	validtypes = list("martian","precursor", "wizard", "eldritch")
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	activated = 0
-	activ_text = "begins to make a grinding noise!"
-	deact_text = "shuts down, going quiet."
+	activ_text = "opens up, revealing an array of strange utensils!"
+	deact_text = "closes itself up."
 	react_xray = list(50,20,90,8,"MECHANICAL")
+	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
+	examine_hint = "It looks vaguely foreboding."
 	var/biomatter = 0
 	var/biomatter_per_food = 0
 	var/processing_speed = 0
 	var/food_processor_state = STATUS_READY
+	var/list/possible_foods = list(/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip, /obj/item/reagent_containers/food/snacks/cookie/dog, /obj/item/reagent_containers/food/snacks/donkpocket, /obj/item/reagent_containers/food/snacks/donkpocket_w, /obj/item/reagent_containers/food/snacks/donkpocket/honk, /obj/item/reagent_containers/food/snacks/donut/custom/robust, /obj/item/reagent_containers/food/snacks/donut/custom/robusted, /obj/item/reagent_containers/food/snacks/steak/human, /obj/item/reagent_containers/food/snacks/steak/monkey, /obj/item/reagent_containers/food/snacks/steak/ling, /obj/item/reagent_containers/food/snacks/hardtack, /obj/item/reagent_containers/food/snacks/pickle/trash, /obj/item/reagent_containers/food/snacks/greengoo, /obj/item/reagent_containers/food/snacks/sandwich/meat_h, /obj/item/reagent_containers/food/snacks/sandwich/meat_m, /obj/item/reagent_containers/food/snacks/sandwich/c_butty, /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_h, /obj/item/reagent_containers/food/snacks/burger, /obj/item/reagent_containers/food/snacks/burger/buttburger, /obj/item/reagent_containers/food/snacks/burger/heartburger, /obj/item/reagent_containers/food/snacks/burger/roburger, /obj/item/reagent_containers/food/snacks/burger/sloppyjoe, /obj/item/reagent_containers/food/snacks/burger/mysteryburger, /obj/item/reagent_containers/food/snacks/burger/wcheeseburger, /obj/item/reagent_containers/food/snacks/burger/monsterburger, /obj/item/reagent_containers/food/snacks/burger/aburgination, /obj/item/reagent_containers/food/snacks/burger/burgle, /obj/item/reagent_containers/food/snacks/swedish_fish)
 	var/escapable = TRUE
 	var/loops_per_consumption_step
 	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
@@ -119,14 +128,16 @@
 			var/humanOccupant = (ishuman(user) && !ismonkey(user))
 			var/decomp = ishuman(user) ? user:decomp_stage : 0
 			src.biomatter += rand(5, 8) * (humanOccupant ? 2 : 1) * ((4.5 - decomp) / 4.5)
-			src.food_processor_state = STATUS_READY
 
 			user.set_loc(get_turf(O.loc))
 			user.death()
 			user.ghostize()
 			qdel(user)
 
-			spawn_food(O)
+			playsound(O.loc, 'sound/machines/pc_process.ogg', 50, 1, -1)
+			sleep(5 SECONDS)
+			src.spawn_food(O)
+			src.food_processor_state = STATUS_READY
 		else
 			return
 
@@ -136,24 +147,21 @@
 			sleep(0.5 SECONDS)
 
 			//Pick a random food item.
-			var/food = pick(concrete_typesof(/obj/item/reagent_containers/food/snacks))
+			//TODO: Filter out raw ingredients as well as items requiring forks or other utensils.
+			src.biomatter -= src.biomatter_per_food
+			var/food = pick(src.possible_foods)
 			var/obj/item/spawned_food = new food(O.loc)
 
 			//Change its name, appearance, and description to that of a small artifact.
-			var/datum/artifact_origin/AO = src.artitype
-			var/datum/artifact_origin/appearance = artifact_controls.get_origin_from_string(AO.name)
-
+			var/datum/artifact_origin/artifact_origin = src.artitype
+			var/datum/artifact_origin/appearance = artifact_controls.get_origin_from_string(artifact_origin.name)
 			var/name1 = pick(appearance.adjectives)
 			var/name2 = pick(appearance.nouns_small)
-
 			spawned_food.name = "[name1] [name2]"
-			spawned_food.desc = "You have no idea what this thing is!" + SPAN_ARTHINT("It almost looks edible.")
-
+			spawned_food.desc = "You have no idea what this thing is! " + SPAN_ARTHINT("It almost looks edible.")
+			spawned_food.icon = 'icons/obj/artifacts/artifactsitemS.dmi'
 			spawned_food.icon_state = appearance.name + "-[rand(1,appearance.max_sprites)]"
 			spawned_food.item_state = appearance.name
-
-			//Spawn the food.
-			src.biomatter -= src.biomatter_per_food
 
 #undef STATUS_PROCESSING
 #undef STATUS_PROCESSING_BODY
