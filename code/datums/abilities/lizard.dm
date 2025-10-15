@@ -107,7 +107,7 @@
 			AHs.customizations["hair_bottom"].color = col3
 			AHs.customizations["hair_middle"].color = col1
 			AHs.customizations["hair_top"].color = col2
-			AHs.s_tone = AHs.customizations["hair_bottom"].color
+			AHs.s_tone = fix_colors(AHs.customizations["hair_bottom"].color)
 
 			L.visible_message(SPAN_NOTICE("<b>[L.name]</b> changes colors!"))
 			L.update_lizard_parts()
@@ -173,7 +173,7 @@
 		switch(region)
 			if (1)
 				AHliz.customizations["hair_bottom"].color = color
-				AHliz.s_tone = color
+				AHliz.s_tone = fix_colors(color)
 				spot = "skin"
 			if (2)
 				AHliz.customizations["hair_middle"].color = color

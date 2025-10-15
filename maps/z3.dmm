@@ -4357,7 +4357,7 @@
 	},
 /area/salyut)
 "atu" = (
-/obj/item/skull/strange,
+/obj/item/skull/hunter,
 /turf/simulated/floor/plating,
 /area/salyut)
 "atv" = (
@@ -15930,7 +15930,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese,
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/item/reagent_containers/food/drinks/milk/rancid,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/storage/secure/closet/fridge/kitchen{
 	locked = 0
 	},
@@ -16796,7 +16796,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hangar)
 "fiK" = (
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged2,
@@ -18830,7 +18830,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "kdO" = (

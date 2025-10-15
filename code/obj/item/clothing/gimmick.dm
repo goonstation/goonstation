@@ -335,15 +335,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 		setProperty("coldprot", 20)
 		setProperty("radprot", 5)
 
-// Donkini
-
-/obj/item/clothing/under/gimmick/donkini
-	name = "\improper Donkini"
-	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
-	icon_state = "donkini"
-	item_state = "donkini"
-	hide_underwear = TRUE
-
 // Duke Nukem
 
 /obj/item/clothing/under/gimmick/duke
@@ -949,6 +940,22 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A spooky skull mask. You're getting the heebie-jeebies just looking at it!"
 	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull"
+	item_state = "death"
+	see_face = FALSE
+
+/obj/item/clothing/mask/skull/vampire
+	name = "menacing skull mask"
+	desc = "An eerie skull mask, still glowing with otherworldly power."
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_vampire"
+	item_state = "death"
+	see_face = FALSE
+
+/obj/item/clothing/mask/skull/changeling
+	name = "odd skull mask"
+	desc = "Don't ask why you can see through the skull without any eyeholes."
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_changeling"
 	item_state = "death"
 	see_face = FALSE
 

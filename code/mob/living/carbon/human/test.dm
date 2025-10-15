@@ -10,6 +10,12 @@
 		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_TEST_DUMMY)
 
 	disposing()
-		qdel(src.stam_monitor)
-		src.stam_monitor = null
+		QDEL_NULL(src.stam_monitor)
 		. = ..()
+
+/mob/living/carbon/human/bald
+	real_name = "Test Subject"
+	New()
+		. = ..()
+		JobEquipSpawned("Staff Assistant")
+		src.bioHolder.mobAppearance.customizations["hair_bottom"] =  new /datum/customization_style/none
