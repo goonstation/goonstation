@@ -22,7 +22,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 			rebuildEventList(using)
 
 	proc/boot_if_away()
-		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using) || (!isAI(using) && !(GET_DIST(src, using) <= ((WIDE_TILE_WIDTH - 1)/ 2))))) // copied last bit from default.dm tgui code
+		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using) || (status & (BROKEN|NOPOWER)) || !can_act(using) || (!isAI(using) && !(GET_DIST(src, using) <= ((WIDE_TILE_WIDTH - 1)/ 2))))) // copied last bit from default.dm tgui code
 			src.remove_dialog(using)
 			using.Browse(null, "window=qtelescope;override_setting=1")
 			using = null

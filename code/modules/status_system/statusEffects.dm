@@ -2938,6 +2938,7 @@
 		if (!isdead(L))
 			for (var/datum/ailment_data/ailment as anything in L.ailments)
 				ailment.stage_act(mult)
+		L.reagents?.addiction_cache = 0
 
 		for (var/mob/living/other_mob in hearers(4, L))
 			if (prob(40) && other_mob != L)
@@ -3554,6 +3555,12 @@
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
 
+	onAdd()
+		..()
+		if(istype(src.owner, /obj/vehicle))
+			var/obj/vehicle/V = src.owner
+			V.stop()
+
 /datum/statusEffect/pod_corrosion
 	id = "pod_corrosion"
 	effect_quality = STATUS_QUALITY_NEGATIVE
@@ -3860,3 +3867,10 @@
 		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/therapy_zone
+	id = "therapy_zone"
+	name = "Therapeutic Atmosphere"
+	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
+	icon_state = "therapy_zone"
+	effect_quality = STATUS_QUALITY_POSITIVE

@@ -398,6 +398,23 @@
 /datum/computer/file/mainframe_program/shell/proc/script_evaluate(list/token_stream, return_bool = FALSE)
 	src.stack = list()
 
+	// The following allows apostrophes to sit next to text and still be treated as a separate token.
+	// This will eventually be replaced by a proper tokeniser.
+	for (var/i = 1; i <= length(token_stream); i++)
+		var/token = token_stream[i]
+
+		if (findtext(token, "'", 1, 2))
+			token = copytext(token, 2, 0)
+			token_stream[i] = token
+			token_stream.Insert(i, "'")
+			i++
+
+		if (findtext(token, "'", -1, 0))
+			token = copytext(token, 1, -1)
+			token_stream[i] = token
+			token_stream.Insert(i + 1, "'")
+			i++
+
 	while (length(token_stream))
 		var/current_token = text2num_if_num(token_stream[1])
 		token_stream.Cut(1, 2)

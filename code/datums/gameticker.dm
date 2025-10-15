@@ -197,7 +197,7 @@ var/global/game_force_started = FALSE
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()
 
-#ifdef RP_MODE
+#if defined(RP_MODE) || defined(NIGHTSHADE)
 	global.toggle_looc_allowed(TRUE)
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	global.toggle_ooc_allowed(FALSE)
@@ -527,7 +527,7 @@ var/global/game_force_started = FALSE
 			src.add_minds(1)
 			src.last_readd_lost_minds_to_ticker = world.time
 
-		if(mode.check_finished())
+		if(mode.check_finished() || mode.force_round_finished)
 			current_state = GAME_STATE_FINISHED
 
 			// This does a little more than just declare - it handles all end of round processing

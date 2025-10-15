@@ -19,6 +19,7 @@
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
+	open_to_sound = FALSE
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
@@ -177,7 +178,7 @@
 				src.skintone = AHead.s_tone
 			src.head_image.color = src.skintone
 			if(src.donor_name)
-				src.name = "[src.donor_name]'s [src.organ_name]"
+				src.name = "[src.donor_name]’s [src.organ_name]"
 			else
 				src.name = src.organ_name
 

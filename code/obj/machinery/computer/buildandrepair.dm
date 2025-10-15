@@ -33,11 +33,10 @@ TYPEINFO(/obj/item/circuitboard)
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
-	var/id = null
-	var/frequency = null
 	var/computertype = null
 	var/powernet = null
-	var/list/records = null
+	/// Custom data saved to the on-board memory chip from its computer type
+	var/saved_data = null
 
 	New()
 		. = ..()
@@ -46,6 +45,10 @@ TYPEINFO(/obj/item/circuitboard)
 	disposing()
 		STOP_TRACKING
 		. = ..()
+
+	get_desc(dist, mob/user)
+		if (!isnull(saved_data))
+			. += "This one has an onboard memory chip."
 
 /obj/item/circuitboard/security
 	name = "circuit board (security camera viewer)"
@@ -132,6 +135,7 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (genetics)"
 	computertype = /obj/machinery/computer/genetics
 	icon_state = "circuit_medical"
+
 /obj/item/circuitboard/tetris
 	name = "circuit board (Robustris Pro)"
 	computertype = /obj/machinery/computer/tetris
@@ -219,6 +223,11 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 /obj/item/circuitboard/announcement/security
 	name = "circuit board (security announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/security
+	icon_state = "circuit_security"
+
+/obj/item/circuitboard/announcement/security/department
+	name = "circuit board (security department announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/security/department
 	icon_state = "circuit_security"
 
 /obj/item/circuitboard/announcement/research
@@ -402,12 +411,8 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 				boutput(user, SPAN_NOTICE("You connect the monitor."))
 				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
 				B.set_dir(src.dir)
-				if (circuit.id)
-					B.id = circuit.id
-				if (circuit.records)
-					B.records = circuit.records
-				if (circuit.frequency)
-					B.frequency = circuit.frequency
+				B.load_board_data(src.circuit)
+
 				logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 				qdel(src)
 
