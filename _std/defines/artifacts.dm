@@ -8,7 +8,3 @@
 #define ARTIFACT_DOES_NOT_COMBINE (1<<2)
 #define ARTIFACT_COMBINES_INTO_HANDHELD (1<<3)
 #define ARTIFACT_COMBINES_INTO_LARGE (1<<4)
-
-/// effect priorities when combined
-#define ARTIFACT_COMBINATION_PASSIVE "art_combination_passive"
-#define ARTIFACT_COMBINATION_TOUCHED "art_combination_touched"
