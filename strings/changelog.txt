@@ -1,4 +1,9 @@
 
+(t)wed oct 15 25
+(u)Glamurio (Ryou)
+(p)24719
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Canisters can now be disassembled with a welding tool.
 (t)tue oct 14 25
 (u)Gomp
 (p)24933
