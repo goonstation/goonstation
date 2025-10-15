@@ -136,14 +136,12 @@
 		if(src.mindhack_attuned)
 			for (var/mob/living/carbon/human/remembered_body in src.remembered_bodies)
 				if(remembered_body.mind)
-					//Only mindhack them if they aren't already mindhacked.
-					if(!remembered_body.mind.get_antagonist(ROLE_MINDHACK))
-						var/mob/target = remembered_body
-						target.setStatus("mindhack", null, src.mindhack_owner, null)
-						//Did you just touch the artifact you just told to mindhack anyone who touches? Lol, lmao even. Now SOMEBODY is the leader.
-						if(remembered_body == src.mindhack_owner)
-							boutput(remembered_body, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
-							tgui_alert(remembered_body, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
+					var/mob/target = remembered_body
+					target.setStatus("mindhack", null, src.mindhack_owner, null)
+					//Did you just touch the artifact you just told to mindhack anyone who touches? Lol, lmao even. Now SOMEBODY is the leader.
+					if(remembered_body == src.mindhack_owner)
+						boutput(remembered_body, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
+						tgui_alert(remembered_body, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			logTheThing(LOG_COMBAT, src.mindhack_owner, "has mindhacked people through the use of the Mindscramble artifact [O] at [log_loc(O)].")
 
 		src.remembered_minds = new_minds_order
