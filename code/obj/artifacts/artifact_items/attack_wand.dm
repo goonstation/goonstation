@@ -17,7 +17,6 @@
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/force)
 	react_xray = list(8,80,60,11,"COMPLEX")
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-
 	var/ready = 1
 	var/cooldown = 180
 	var/attack_type = null

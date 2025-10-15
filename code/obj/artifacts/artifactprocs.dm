@@ -618,9 +618,7 @@
 
 /obj/proc/can_combine_artifact(obj/O)
 	. = FALSE
-	if (!src.artifact.activated)
-		return
-	if (!O || !O.artifact || !O.artifact.activated)
+	if (!O || !O.artifact || O.anchored)
 		return
 
 	if (src.artifact.combine_flags & ARTIFACT_DOES_NOT_COMBINE)
@@ -643,13 +641,13 @@
 
 /// combines passed object into src
 /obj/proc/combine_artifact(obj/O)
-	if (!src.artifact.activated)
-		return
-	if (!O || !O.artifact || !O.artifact.activated)
+	if (!O || !O.artifact || O.anchored)
 		return
 
 	if (!length(src.combined_artifacts))
 		src.combined_artifacts = list()
+	if (!src.artifact.activated)
+		O.ArtifactDeactivated()
 	src.combined_artifacts += O
 	O.name = src.name
 	O.real_name = src.real_name
@@ -675,6 +673,19 @@
 			if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
 				str += SPAN_ARTHINT(O.artifact.examine_hint)
 	. += str
+
+/obj/proc/anchor_artifact()
+	var/anchor_sources = GET_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES)
+	APPLY_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources", anchor_sources + 1)
+	var/obj/p_art = src.get_uppermost_artifact()
+	p_art.anchored = ANCHORED
+
+/obj/proc/try_unanchor_artifact()
+	var/anchor_sources = GET_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES) - 1
+	if (anchor_sources <= 0)
+		REMOVE_ATOM_PROPERTY(src, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources", anchor_sources + 1)
+		var/obj/p_art = src.get_uppermost_artifact()
+		p_art.anchored = UNANCHORED
 
 // Added. Very little related to artifacts was logged (Convair880).
 /proc/ArtifactLogs(var/mob/user, var/mob/target, var/obj/O, var/type_of_action, var/special_addendum, var/trigger_alert = 0)

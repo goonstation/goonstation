@@ -11,7 +11,7 @@
 		if (!art.activated)
 			return
 		var/obj/O = target
-		if (!istype(O) || !O.artifact || !O.artifact.activated)
+		if (!istype(O) || !O.artifact)
 			return
 		if (O.anchored != UNANCHORED)
 			var/turf/T = get_turf(src)

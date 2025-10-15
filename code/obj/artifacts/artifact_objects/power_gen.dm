@@ -52,8 +52,7 @@
 				if(!attached)
 					boutput(user, "No exposed cable here to attach to.")
 				else
-					var/obj/p_art = O.get_uppermost_artifact()
-					p_art.anchored = ANCHORED
+					O.anchor_artifact()
 					mode = 2
 					boutput(user, "[O] connects itself to the cable. Weird.")
 					playsound(O, 'sound/effects/ship_charge.ogg', 75, TRUE)
@@ -64,8 +63,7 @@
 			else
 				boutput(user, "[O] must be placed over a cable to attach to it.")
 		else
-			var/obj/p_art = O.get_uppermost_artifact()
-			p_art.anchored = UNANCHORED
+			O.try_unanchor_artifact()
 			mode = 0
 			attached = 0
 			boutput(user, "[O] disconnects itself from the cable.")
