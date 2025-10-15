@@ -163,7 +163,7 @@
 	else
 		A.show_fx(src)
 	A.effect_activate(!combined_art_activation ? src : src.get_uppermost_artifact())
-	for (var/obj/O in src.combined_artifacts)
+	for (var/obj/O as anything in src.artifact.combined_artifact_objs)
 		O.ArtifactActivated(TRUE)
 	if (combined_art_activation)
 		return
@@ -195,7 +195,7 @@
 	else
 		A.hide_fx(src)
 	A.effect_deactivate(!combined_art_activation ? src : src.get_uppermost_artifact())
-	for (var/obj/O in src.combined_artifacts)
+	for (var/obj/O as anything in src.artifact.combined_artifact_objs)
 		O.ArtifactDeactivated(TRUE)
 
 /obj/proc/Artifact_emp_act()
@@ -464,10 +464,10 @@
 		return
 
 	if (A.activated)
-		if (!length(src.combined_artifacts))
+		if (!length(src.artifact.combined_artifact_objs))
 			return
 		var/subarts_activated = TRUE
-		for (var/obj/O in src.combined_artifacts)
+		for (var/obj/O as anything in src.artifact.combined_artifact_objs)
 			if (!O.artifact.activated)
 				subarts_activated = FALSE
 				break
@@ -524,7 +524,7 @@
 				boutput(user, "You can't really tell how it feels.")
 		if (A.activated)
 			A.effect_touch(src,user)
-			for (var/obj/O in src.combined_artifacts)
+			for (var/obj/O as anything in src.artifact.combined_artifact_objs)
 				O.artifact.effect_touch(O, user)
 	return
 
@@ -586,7 +586,7 @@
 
 	artifact_controls.artifacts -= src
 
-	for (var/obj/O in src.combined_artifacts)
+	for (var/obj/O as anything in src.artifact.combined_artifact_objs)
 		O.ArtifactDestroyed(TRUE)
 
 	qdel(src)
@@ -635,7 +635,7 @@
 			if (O.artifact.combine_flags & ARTIFACT_COMBINES_INTO_HANDHELD)
 				. = TRUE
 
-	for (var/obj/art in O.combined_artifacts)
+	for (var/obj/art as anything in O.artifact.combined_artifact_objs)
 		if (!src.can_combine_artifact(art))
 			return FALSE
 
@@ -644,24 +644,24 @@
 	if (!O || !O.artifact || O.anchored)
 		return
 
-	if (!length(src.combined_artifacts))
-		src.combined_artifacts = list()
+	if (!length(src.artifact.combined_artifact_objs))
+		src.artifact.combined_artifact_objs = list()
 	if (!src.artifact.activated)
 		O.ArtifactDeactivated()
-	src.combined_artifacts += O
+	src.artifact.combined_artifact_objs += O
 	O.name = src.name
 	O.real_name = src.real_name
 	O.set_loc(src)
-	O.parent_artifact = src
+	O.artifact.parent_artifact_obj = src
 	O.artifact.hide_fx(O)
 	src.artifact.faults |= O.artifact.faults
 	src.artifact.validtriggers |= O.artifact.validtriggers
-	for (var/obj/art in O.combined_artifacts)
+	for (var/obj/art as anything in O.artifact.combined_artifact_objs)
 		src.combine_artifact(art)
-	O.combined_artifacts = null
+	O.artifact.combined_artifact_objs = null
 
 /obj/proc/get_uppermost_artifact()
-	return src.parent_artifact || src
+	return src.artifact?.parent_artifact_obj || src
 
 /obj/proc/get_arthints()
 	. = list("You have no idea what this thing is!")
@@ -669,7 +669,7 @@
 		return
 	var/str
 	if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-		for (var/obj/O as anything in (list(src) + (src.combined_artifacts || list())))
+		for (var/obj/O as anything in (list(src) + (src.artifact.combined_artifact_objs || list())))
 			if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
 				str += SPAN_ARTHINT(O.artifact.examine_hint)
 	. += str

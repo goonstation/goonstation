@@ -113,8 +113,10 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
 
-	/// if the artifact can be loaded into the combiner when active
-	var/can_combine_when_active = TRUE
+	/// if this artifact's object is combined in another, this var is the parent object holding that one
+	var/parent_artifact_obj = null
+	/// artifact objects combined into this artifact's object
+	var/list/combined_artifact_objs = null
 	/// what this artifact combines with
 	var/combine_flags = ARTIFACT_DOES_NOT_COMBINE
 

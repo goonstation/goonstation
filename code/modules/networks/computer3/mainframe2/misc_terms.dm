@@ -4253,7 +4253,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 							if (A.artitype.name == "eldritch" && prob(6))
 								src.sensed[5] = "ERROR"
 
-							if (length(A.associated_object.combined_artifacts))
+							if (length(A.associated_object.artifact.combined_artifact_objs))
 								src.sensed[1] = "???"
 								src.sensed[2] = "???"
 								src.sensed[3] = "???"
