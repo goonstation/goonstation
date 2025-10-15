@@ -42,7 +42,7 @@ TYPEINFO(/obj/item/device/radio)
 	var/list/secure_frequencies = null
 	/// The colour that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single colour may be defined for all channels to use that colour. Overrides `secure_classes`.
 	var/list/secure_colors = list()
-	/// The overriding CSS classes that should be used for messages sent over each channel, indexed by channel prefix. Alternatively an class under the index "all" may be defined for all channels to use that style (e.g. secure_classes = list("all" = RADIOCL_SYNDICATE)). Overridden by `secure_colors`.
+	/// The overriding CSS classes that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a class under the index "all" may be defined for all undefined channels to use that style (e.g. secure_classes = list("all" = RADIOCL_SYNDICATE)). Overridden by `secure_colors`.
 	var/list/secure_classes = list()
 
 	// Additional Message Styling Variables:
