@@ -154,7 +154,7 @@
 	. = src.amount_per_transfer_from_this
 	if (src.iv_stand?.active)
 		. = src.iv_stand.transfer_volume
-	. *= max(mult / 10, 1)
+	. *= (mult / 10)
 
 /obj/item/reagent_containers/glass/iv_drip/proc/update_name()
 	if (src.reagents?.total_volume)

@@ -62,4 +62,4 @@ ABSTRACT_TYPE(/obj/machinery/medical/blood)
 
 /// As `mult` is given in deciseconds, it needs to be converted to seconds for transfer volume calculations.
 /obj/machinery/medical/blood/proc/calculate_transfer_volume(volume, mult)
-	. = volume * max(mult / 10, 1)
+	. = volume * (mult / 10)
