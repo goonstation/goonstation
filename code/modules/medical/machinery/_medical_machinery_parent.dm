@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	if (!ismovable(leader, follower))
 		return
 	// Don't bother if neither the lead or follow are within pushing/pulling distance.
-	if (GET_DIST(leader, follower) > 3)
+	if (GET_MANHATTAN_DIST(leader, follower) > 2)
 		return
 	var/atom/new_leader_loc = leader.loc
 	var/atom/old_leader_loc = get_step(new_leader_loc, turn(leader.last_move, 180))
