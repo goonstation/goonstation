@@ -3,8 +3,8 @@
 	max_stages = 5
 	spread = "Non-Contagious"
 	cure_flags = CURE_CUSTOM
-	cure_desc = "Stabilizing Agent"
-	reagentcure = list("stabiliser")
+	cure_desc = "Synaptizine"
+	reagentcure = list("synaptizine")
 	recureprob = 10
 	associated_reagent = "ehsjuice"
 	affected_species = list("Human","Monkey")
