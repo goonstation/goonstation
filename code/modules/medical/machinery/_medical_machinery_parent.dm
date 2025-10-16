@@ -65,6 +65,10 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	var/connect_offset_x = 0
 	var/connect_offset_y = 10
 
+/obj/machinery/medical/New()
+	. = ..()
+	RegisterSignals(src, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(on_move))
+
 /obj/machinery/medical/disposing()
 	src.remove_patient()
 	src.detach_from_obj()
@@ -86,8 +90,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 
 /obj/machinery/medical/process(mult)
 	..()
-	if (!src.check_connection() && src.patient)
-		src.remove_patient(force = TRUE)
 	if (!src.powered())
 		src.stop_affect(MED_MACHINE_NO_POWER)
 	if (!src.can_affect())
@@ -97,14 +99,6 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return
 	if (src.powered() && src.can_affect())
 		src.start_affect()
-
-/obj/machinery/medical/Move(atom/target)
-	. = ..()
-	if (!src.patient)
-		return
-	if (src.check_connection())
-		return
-	src.remove_patient(force = TRUE)
 
 /**
  * Only checks to see if the user using the `mouse_drop` interaction is tangible, living, able to act, and is within interaction range. Specific
@@ -185,20 +179,45 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		return FALSE
 
 /// Is a connection (to an object or patient) possible?
-/obj/machinery/medical/proc/can_connect(atom/atom_to_test, mob/connector)
+/obj/machinery/medical/proc/can_connect(atom/atom_to_test, mob/connector, atom/old_patient_loc)
 	. = FALSE
 	if (!isatom(atom_to_test))
-		return
+		if (!src.patient)
+			return
+		atom_to_test = src.patient
 	if (ismob(connector) && !in_interact_range(src, connector))
 		return
 	if (in_interact_range(src, atom_to_test))
-		return TRUE
-	// JAAAANK
-	if (!iscarbon(atom_to_test))
+		. = TRUE
+	// If being pushed/pulled by `src.patient`, check if either the previous or current position of whatever moved is in range of whatever follows.
+	if (atom_to_test != src.patient)
 		return
-	var/mob/living/carbon/patient_to_test = atom_to_test
-	if (patient_to_test.pulling == src)
-		return TRUE
+	if ((src.patient.pushing != src) && (src.patient.pulling != src))
+		return
+	if (src.can_push_or_pull())
+		. = TRUE
+
+/obj/machinery/medical/proc/can_push_or_pull()
+	. = FALSE
+	if (!src.patient)
+		return
+	var/atom/movable/leader
+	var/atom/movable/follower
+	if (src.patient.pulling == src)
+		leader = src.patient
+		follower = src
+	if (src.patient.pushing == src)
+		leader = src
+		follower = src.patient
+	if (!ismovable(leader, follower))
+		return
+	// Don't bother if neither the lead or follow are within pushing/pulling distance.
+	if (GET_DIST(leader, follower) > 3)
+		return
+	var/atom/new_leader_loc = leader.loc
+	var/atom/old_leader_loc = get_step(new_leader_loc, turn(leader.last_move, 180))
+	if (!BOUNDS_DIST(old_leader_loc, follower) || !BOUNDS_DIST(new_leader_loc, follower))
+		. = TRUE
 
 /obj/machinery/medical/proc/attempt_add_patient(mob/user, mob/living/carbon/new_patient)
 	if (!src.connect_directly)
@@ -231,12 +250,11 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		logTheThing(LOG_COMBAT, user, "connected [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
 	if (!length(src.patient.getStatusList(src.connection_status_effect, src)))
 		src.patient.setStatus(src.connection_status_effect, INFINITE_STATUS, src)
-	RegisterSignal(src.patient, COMSIG_MOVABLE_MOVED, PROC_REF(on_patient_move))
+	RegisterSignals(src.patient, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(on_move))
 
-/obj/machinery/medical/proc/on_patient_move()
-	if (src.check_connection())
-		return
-	src.remove_patient(force = TRUE)
+/obj/machinery/medical/proc/on_move()
+	if (!src.check_connection() && src.patient)
+		src.remove_patient(force = TRUE)
 
 /obj/machinery/medical/proc/remove_patient(mob/user, force = FALSE)
 	if (!src.connect_directly)
@@ -249,7 +267,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.stop_affect()
 	for (var/datum/statusEffect/machine_status_effect as anything in src.patient.getStatusList(src.connection_status_effect, src))
 		src.patient.delStatus(machine_status_effect)
-	UnregisterSignal(src.patient, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(src.patient, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
 	src.patient = null
 
 /// Feedback on (a user) attempting to connect a patient.
@@ -323,12 +341,15 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	src.low_power_alert_given = TRUE
 	src.stop_alert_given = TRUE
 
-/// For machines that connect directly to patients: is our connection still good?
-/obj/machinery/medical/proc/check_connection()
+/**
+ * For machines that connect directly to patients: is our connection still good?
+ * Arg `atom/old_patient_loc` is `src.patient`'s previous position, used for checking connectivity when pulled.
+*/
+/obj/machinery/medical/proc/check_connection(atom/old_patient_loc)
 	. = TRUE
 	if (!src.patient)
 		return FALSE
-	if (!src.can_connect(src.patient))
+	if (!src.can_connect(old_patient_loc = old_patient_loc))
 		return FALSE
 
 /obj/machinery/medical/proc/set_active()
