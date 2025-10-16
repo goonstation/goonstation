@@ -70,14 +70,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/listeningpost/landing_bay)
-"bP" = (
-/obj/decal/boxingropeenter{
-	dir = 5
-	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
-/area/listeningpost/syndicate_teleporter)
 "bS" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
@@ -186,15 +178,6 @@
 	},
 /turf/space,
 /area/listeningpost/landing_bay)
-"iQ" = (
-/obj/machinery/firealarm/directional/north{
-	text = "NF"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost/general)
 "jn" = (
 /obj/storage/crate/furnacefuel,
 /obj/item/device/radio/intercom{
@@ -252,6 +235,14 @@
 /obj/machinery/light,
 /turf/simulated/floor/caution/north,
 /area/listeningpost/general)
+"ls" = (
+/obj/railing/boxing{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "lM" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -309,16 +300,6 @@
 /obj/item/pen,
 /turf/simulated/floor/caution/north,
 /area/listeningpost/general)
-"pP" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/boxingropeenter,
-/turf/simulated/floor/engine{
-	icon_state = "gym_mat"
-	},
-/area/listeningpost/syndicate_teleporter)
 "pZ" = (
 /obj/lattice{
 	dir = 5;
@@ -347,17 +328,20 @@
 	icon_state = "gym_mat"
 	},
 /area/listeningpost/syndicate_teleporter)
-"se" = (
-/obj/decal/boxingropeenter{
-	dir = 9
-	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
-/area/listeningpost/syndicate_teleporter)
 "sj" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/vestibule)
+"st" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/railing/boxing{
+	dir = 10
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
 "tF" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/listeningpost/barracks)
@@ -412,17 +396,6 @@
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
-	},
-/area/listeningpost/syndicate_teleporter)
-"yQ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
-	},
-/obj/decal/boxingropeenter{
-	dir = 10
-	},
-/turf/simulated/floor/engine{
-	icon_state = "gym_mat"
 	},
 /area/listeningpost/syndicate_teleporter)
 "yS" = (
@@ -501,17 +474,6 @@
 "FR" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/listeningpost/barracks)
-"GT" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/obj/decal/boxingropeenter{
-	dir = 6
-	},
-/turf/simulated/floor/engine{
-	icon_state = "gym_mat"
-	},
-/area/listeningpost/syndicate_teleporter)
 "Hv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -642,6 +604,15 @@
 	},
 /turf/space,
 /area/listeningpost/landing_bay)
+"Ov" = (
+/obj/machinery/firealarm/directional/north{
+	text = "NF"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
 "OH" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "bot2";
@@ -688,6 +659,16 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost/landing_bay)
+"QD" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/railing/boxing,
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
 "QQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -795,6 +776,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
+"Xo" = (
+/obj/railing/boxing{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "XV" = (
 /obj/storage/closet/syndicate/personal,
 /obj/item/clothing/under/misc/clown,
@@ -811,6 +800,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
+"YK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/railing/boxing{
+	dir = 6
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
 "YY" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -1256,7 +1256,7 @@ ZT
 lM
 bS
 Cj
-iQ
+Ov
 Nd
 sj
 OH
@@ -1315,10 +1315,10 @@ OR
 Cn
 Cn
 xj
-se
+ls
 nV
 dE
-yQ
+st
 Cj
 Zq
 kK
@@ -1352,7 +1352,7 @@ xj
 Pi
 aC
 vO
-pP
+QD
 ww
 Iy
 hp
@@ -1383,10 +1383,10 @@ OR
 Cn
 Cn
 xj
-bP
+Xo
 Kc
 rR
-GT
+YK
 Cj
 SH
 Iv

@@ -2486,7 +2486,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 /mob/living/carbon/human/hand_attack(atom/target, params, location, control)
 	if (src.lying && src.buckled != target) //lol we need to allow unbuckling here i guess...
 		return
-
 	if (mutantrace?.override_attack)
 		if(mutantrace.custom_attack(target))
 			return
