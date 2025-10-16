@@ -76,17 +76,15 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = get_weakref(src)
 		if (istype(W, /obj/item/tinyhammer/wrestling))
-			if (user.a_intent != "harm")
-				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50)
+			SPAWN(2 SECONDS)
 				src.put_back_hammer()
-				return
-			else if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
-				var/turf/floor = get_turf(src)
-				for (var/mob/mob in floor.loc) // checks if anyone in the room's area has the status
-					var/datum/statusEffect/wrestler/status = mob.hasStatus("wrestler")
-					if (status)
-						status.toggle_active()
-				playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+		if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
+			var/turf/floor = get_turf(src)
+			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+			for (var/mob/mob in floor.loc) // checks if anyone in the room's area has the status
+				var/datum/statusEffect/wrestler/status = mob.hasStatus("wrestler")
+				if (status)
+					status.toggle_active()
 
 	/// snap back if too far away
 	proc/hammer_move()
@@ -96,6 +94,7 @@
 
 	proc/put_back_hammer()
 		if (src.hammer)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50)
 			src.hammer.force_drop(sever=TRUE)
 			src.hammer.set_loc(src)
 			src.hammer.parent = null
@@ -138,7 +137,7 @@
 				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 				M.make_dizzy(140)
 				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
-				M.setStatus("resting", INFINITE_STATUS)
+				M.setStatus("knockdown", 3 SECONDS)
 				SPAWN(10 SECONDS)
 					if (M)
 						M.UpdateOverlays(null, "dizzy")
