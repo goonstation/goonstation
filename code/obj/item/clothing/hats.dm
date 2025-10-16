@@ -9,7 +9,6 @@
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf", "flubber", "martian", "blob")
 	wear_layer = MOB_HEAD_LAYER2
-	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
@@ -90,11 +89,10 @@ proc/filter_trait_hats(var/type)
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	hides_from_examine = C_EARS
 
 	desc = "This hood protects you from harmful biological contaminants."
-	seal_hair = 1
 
 	setupProperties()
 		..()
@@ -133,10 +131,9 @@ proc/filter_trait_hats(var/type)
 	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	desc = "Helps protect from vacuum for a short period of time."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
-	seal_hair = 1
 	acid_survival_time = 3 MINUTES
 
 	setupProperties()
@@ -154,10 +151,9 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	hides_from_examine = C_EARS
 	desc = "Asbestos, right near your face. Perfect!"
-	seal_hair = 1
 
 	setupProperties()
 		..()
@@ -737,7 +733,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "A green hood, full of magic, wonder, cromulence, and maybe a spider or two."
 	icon_state = "wizardgreen"
 	item_state = "wizardgreen"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/wizard/witch
 	name = "witch hat"
@@ -751,7 +747,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
 	see_face = FALSE
-	seal_hair = 1
+	c_flags = COVERSHAIR
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 /obj/item/clothing/head/wizard/traveller
@@ -1445,16 +1441,15 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "A nurse hat from the past."
 	icon_state = "traditionalnursehat"
 	item_state = "traditionalnursehat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/chemhood
 	name = "chemical protection hood"
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
 	icon_state = "chemhood"
 	item_state = "chemhood"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	hides_from_examine = C_EARS
-	seal_hair = 1
 	acid_survival_time = 8 MINUTES
 
 	setupProperties()
@@ -1468,7 +1463,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "The hat of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/party
 	name = "party hat"
@@ -2316,7 +2311,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/elephanthat)
 	desc = "For a more bull-headed approach."
 	icon_state = "minotaur"
 	item_state = "minotaur"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 TYPEINFO(/obj/item/clothing/head/mushroomcap)
 	random_subtypes = list(
@@ -2515,21 +2510,21 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	desc = "A visor with teal spikes dragging behind the mask, vaguely reminiscent of an extinct alien race."
 	icon_state = "weirdohat"
 	item_state = "weirdohat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/lighthat
 	name = "light mitre"
 	desc = "A golden mitre pointing tall, proudly touting the strength of its faith and its light"
 	icon_state = "lighthat"
 	item_state = "lighthat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/bushhat
 	name = "druid mask"
 	desc = "Flowers, grass, and other flora completely cover the face of this mask. You can almost hear the roar of earthen creatures calling from inside the shrubbery"
 	icon_state = "bushhat"
 	item_state = "bushhat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/rabbithat
 	name = "Rabbit Costume Hat"
@@ -2539,7 +2534,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "rabbithat"
 	item_state = "rabbithat"
-	seal_hair = TRUE
+	c_flags = COVERSHAIR
 
 // Mx Blorbo's lovable visage.
 
@@ -2551,7 +2546,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "blorbohat"
 	item_state = "blorbohat"
-	seal_hair = TRUE
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/chompskyhat
 	name = "Gnome hat"
