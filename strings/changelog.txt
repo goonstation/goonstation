@@ -1,4 +1,9 @@
 
+(t)thu oct 16 25
+(u)FlameArrow57
+(p)24940
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Pressing ctrl + click on a tile will pull something from that tile, prioritizing first found object, then heaviest weight item, then first found mob.
 (t)wed oct 15 25
 (u)Ghostplasmas & Ribbie
 (p)24881
