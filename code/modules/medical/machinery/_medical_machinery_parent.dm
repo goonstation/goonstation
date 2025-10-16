@@ -274,21 +274,21 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
 		SPAN_NOTICE("<b>[user]</b> begins connecting [src] to [new_patient]."),\
-		SPAN_NOTICE("You begin connecting [src] to [new_patient]."),\
+		SPAN_NOTICE("You begin connecting [src] to [new_patient == user ? "yourself" : new_patient]."),\
 		SPAN_NOTICE("<b>[user]</b> begins connecting [src] to you."))
 
 /// Feedback on (a user) successfully connecting a patient.
 /obj/machinery/medical/proc/add_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
 		SPAN_NOTICE("<b>[user]</b> connects [src] to [new_patient]."),\
-		SPAN_NOTICE("You connect [src] to [new_patient]."),\
+		SPAN_NOTICE("You connect [src] to [new_patient == user ? "yourself" : new_patient]."),\
 		SPAN_NOTICE("<b>[user]</b> connects [src] to you."))
 
 /// Feedback on (a user) disconencting a patient.
 /obj/machinery/medical/proc/remove_message(mob/user)
 	user.tri_message(src.patient,\
 		SPAN_NOTICE("<b>[user]</b> disconnects [src] from [src.patient]."),\
-		SPAN_NOTICE("You disconnect [src] from [src.patient]."),\
+		SPAN_NOTICE("You disconnect [src] from [src.patient == user ? "yourself" : src.patient]."),\
 		SPAN_NOTICE("<b>[user]</b> disconnects [src] from you."))
 
 /// Feedback on the forceful disconnection of a patient.

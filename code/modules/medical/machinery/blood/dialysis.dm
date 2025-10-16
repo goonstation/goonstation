@@ -50,21 +50,21 @@ TYPEINFO(/obj/machinery/medical/blood/dialysis)
 /obj/machinery/medical/blood/dialysis/attempt_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
 		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into [new_patient]."),\
-		SPAN_NOTICE("You begin inserting [src]'s cannulae into [new_patient]."),\
+		SPAN_NOTICE("You begin inserting [src]'s cannulae into [new_patient == user ? "yourself" : new_patient]."),\
 		SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into you.")\
 	)
 
 /obj/machinery/medical/blood/dialysis/add_message(mob/user, mob/living/carbon/new_patient)
 	user.tri_message(new_patient,\
 		SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into [new_patient]."),\
-		SPAN_NOTICE("You insert [src]'s cannulae into [new_patient]."),\
+		SPAN_NOTICE("You insert [src]'s cannulae into [new_patient == user ? "yourself" : new_patient]."),\
 		SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into you.")\
 	)
 
 /obj/machinery/medical/blood/dialysis/remove_message(mob/user)
 	user.tri_message(src.patient,\
 		SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from [src.patient]."),\
-		SPAN_NOTICE("You remove [src]'s cannulae from [src.patient]."),\
+		SPAN_NOTICE("You remove [src]'s cannulae from [src.patient == user ? "yourself" : src.patient]."),\
 		SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from your.")\
 	)
 
