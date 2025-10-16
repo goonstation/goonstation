@@ -75,11 +75,12 @@
 		// Go through headers in order
 		for(var/i=1; i<= headers.len; i++)
 			report += SPAN_NOTICE("[headers[i]]")
+			report += "<ul style='list-style-type: disc; margin-top: 0; margin-left:-5px'>"
 			for(var/line in src.report_lines[headers[i]])
-				report += "<li style='padding-left:12px'>[line]</li>" // Indent line and add a bullent point
+				report += "<li>[line]</li>" // Indent line and add a bullent point
+			report += "</ul>"
 		if(!report)
-			report = "<li style='padding-left:12px'>No evidence detected.</li>"
-
+			report = "<li>No evidence detected.</li>"
 		var/report_title = SPAN_SUCCESS(src.title)
 		if(print_hyperlink)
 			report_title += ": [print_hyperlink]"

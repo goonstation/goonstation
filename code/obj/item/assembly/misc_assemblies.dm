@@ -58,6 +58,7 @@ Contains:
 	var/qdel_on_tear_apart = FALSE //! set this to TRUE for applier who needs multiple spawns to do their effect before eliminating itself (because for some reason smokebombs need it, ugh)
 	var/mob/last_armer = null //! for tracking/logging of who armed the assembly
 	var/obj/item/chargeable_component = null //! if one of the components of the assembly can be charged, it will be referenced here. Use this if you want the assembly to be reachargeable.
+	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 
@@ -231,6 +232,52 @@ Contains:
 
 ///------ ------------------------------------------ ---------
 
+///------ Procs to handle attacking_component  ---------
+
+/obj/item/assembly/attack(var/mob/target, var/mob/user, var/def_zone, var/is_special = FALSE, var/params = null)
+	if(src.attacking_component && src.secured)
+		//if we have an attack-overriding component and this assembly is secured, we just relay the proc to the component
+		//if the attack-override-component doesn't return true
+		if(!SEND_SIGNAL(src.attacking_component, COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE, src, target, user, def_zone, is_special, params))
+			//we now do the attack override. Else, we return false
+			if(SEND_SIGNAL(src.attacking_component, COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE, src, target, user, def_zone, is_special, params))
+				// We need to handle some after_attack-stuff here.
+				user.lastattacked = get_weakref(target)
+				target.lastattacker = get_weakref(user)
+				target.lastattackertime = world.time
+				return
+		else
+			return
+	. = ..()
+
+///This Proc makes the targe the attacking_component, overriding most of the attack-related behaviour of the assembly
+///This won't attack attack specials so people can add their own to handle assembly-weapons
+/obj/item/assembly/proc/set_attacking_component(var/obj/item/target)
+	if(src.attacking_component)
+		//if there is already one, we remove it
+		src.remove_attacking_component()
+	//we check here for target, so it is able to use make_attacking_component(null) to just call remove_attacking_component() when needed
+	if(target)
+		src.attacking_component = target
+		src.force = target.force
+		src.throwforce = target.throwforce
+		src.stamina_damage = target.stamina_damage
+		src.stamina_cost = target.stamina_cost
+		src.click_delay = target.click_delay
+		if(target.flags & ATTACK_SELF_DELAY)
+			src.flags |= ATTACK_SELF_DELAY
+
+///This proc returns most attack-related behaviour back to what it was
+/obj/item/assembly/proc/remove_attacking_component()
+	src.attacking_component = null
+	src.force = initial(src.force)
+	src.throwforce = initial(src.throwforce)
+	src.stamina_damage = initial(src.stamina_damage)
+	src.stamina_cost = initial(src.stamina_cost)
+	src.flags &= ~ATTACK_SELF_DELAY
+	src.click_delay = initial(src.click_delay)
+
+///------ ------------------------------------------ ---------
 
 ///------ Proc to transfer impulses/events onto the main components ---------
 /obj/item/assembly/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled)
@@ -319,6 +366,7 @@ Contains:
 	src.additional_components = null
 	src.last_armer = null
 	src.chargeable_component = null
+	src.attacking_component = null
 	..()
 
 /obj/item/assembly/attack_self(mob/user)
@@ -391,7 +439,7 @@ Contains:
 		component_names = "[component_names]/[initial(src.target.name)]"
 	src.name = "[name_prefix(null, 1)][component_names]-[initial(src.name)][name_suffix(null, 1)]"
 
-/obj/item/assembly/examine()
+/obj/item/assembly/examine(var/mob/user)
 	. = ..()
 	if(src.chargeable_component)
 		var/charge_list = list()
@@ -399,6 +447,8 @@ Contains:
 			. += SPAN_ALERT("No power cell installed in [src.chargeable_component].")
 		else
 			. += "The power cell in [src.chargeable_component] has [charge_list["charge"]]/[charge_list["max_charge"]] PUs left!"
+	for (var/obj/item/checked_item in list(src.target, src.applier, src.trigger))
+		. += checked_item.assembly_get_part_examine_message(user, src)
 
 
 /obj/item/assembly/attackby(obj/item/used_object, mob/user)
@@ -501,11 +551,23 @@ Contains:
 	src.trigger = null
 	src.applier = null
 	src.target = null
+	src.remove_attacking_component()
 	src.chargeable_component = null
 	qdel(src)
 
 
 /// misc. Assembly-procs --------------------------------
+
+/// This proc returns a string that corresponds to the place the target item is in the assembly. This is used for finding the proper sprites.
+/obj/item/assembly/proc/get_category_string(var/obj/item/target)
+	if(src.trigger == target)
+		return "trigger"
+	if(src.applier == target)
+		return "applier"
+	if(src.target == target)
+		return "target"
+	if(target in src.additional_components)
+		return "comp"
 
 /obj/item/assembly/proc/add_target_item(var/atom/to_combine_atom, var/mob/user)
 	if(src.target)
@@ -857,6 +919,21 @@ Contains:
 /obj/item/assembly/timer_ignite_pipebomb/mini_syndicate
 	icon_state = "Pipe_Wired_Syndicate"
 	pipebomb_path = /obj/item/pipebomb/bomb/miniature_syndicate
+
+
+
+/////////////////////////////////////////////////// flash/cell assemblies ////////////////////////////////////
+
+/obj/item/assembly/flash_cell
+	secured = TRUE
+	var/new_cell_charge = 7500
+
+/obj/item/assembly/flash_cell/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/device/flash(src)
+	var/obj/item/cell/new_applier = new /obj/item/cell(src)
+	new_applier.charge = src.new_cell_charge
+	src.set_up_new(null, new_trigger, new_applier)
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
 

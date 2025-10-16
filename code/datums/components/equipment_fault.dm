@@ -516,9 +516,16 @@ TYPEINFO(/datum/component/equipment_fault/leaky)
 
 /datum/component/equipment_fault/leaky/Initialize(tool_flags, reagent_list)
 	. = ..()
-	if (!islist(reagent_list))
+
+	src.reagent_list = list()
+	if(!islist(reagent_list))
+		if(reagent_list in reagents_cache)
+			src.reagent_list |= reagent_list
+	for(var/reagent_id in reagent_list)
+		if(reagent_id in reagents_cache)
+			src.reagent_list |= reagent_id
+	if(!length(src.reagent_list))
 		return COMPONENT_INCOMPATIBLE
-	src.reagent_list = reagent_list
 	src.current_prob = src.base_probability
 
 /datum/component/equipment_fault/leaky/ef_process(obj/machinery/M, mult)

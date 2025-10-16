@@ -752,6 +752,21 @@
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
 
+/// takes one of CUST_1, CUST_2, CUST_3 and returns the corrected colour for that part
+/mob/living/carbon/human/proc/get_body_custom_color(slot)
+	switch(slot)
+		if(CUST_1)
+			. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
+		if(CUST_2)
+			. = src.bioHolder.mobAppearance.customizations["hair_middle"].color
+		if(CUST_3)
+			. = src.bioHolder.mobAppearance.customizations["hair_top"].color
+		else
+			return "#FFFFFF"
+	if (src.mutantrace?.mutant_appearance_flags & FIX_COLORS)
+		return fix_colors(.)
+	return .
+
 /mob/living/carbon/human/update_body(force = FALSE)
 	..()
 
@@ -830,28 +845,12 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				// all this shit goes on the torso anyway
 				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
 					human_image = image(AHOLD.mob_detail_1_icon, AHOLD.mob_detail_1_state, MOB_BODYDETAIL_LAYER1)
-					switch(AHOLD.mob_detail_1_color_ref)
-						if(CUST_1)
-							human_image.color = AHOLD.customizations["hair_bottom"].color
-						if(CUST_2)
-							human_image.color = AHOLD.customizations["hair_middle"].color
-						if(CUST_3)
-							human_image.color = AHOLD.customizations["hair_top"].color
-						else
-							human_image.color = "#FFFFFF"
+					human_image.color = src.get_body_custom_color(AHOLD.mob_detail_1_color_ref)
 					src.body_standing.overlays += human_image
 
 				if(AHOLD.mob_appearance_flags & HAS_OVERSUIT_DETAILS)	// need more oversuits? Make more of these!
 					human_detail_image = image(AHOLD.mob_oversuit_1_icon, AHOLD.mob_oversuit_1_state, layer = MOB_OVERSUIT_LAYER1)
-					switch(AHOLD.mob_oversuit_1_color_ref)
-						if(CUST_1)
-							human_detail_image.color = AHOLD.customizations["hair_bottom"].color
-						if(CUST_2)
-							human_detail_image.color = AHOLD.customizations["hair_middle"].color
-						if(CUST_3)
-							human_detail_image.color = AHOLD.customizations["hair_top"].color
-						else
-							human_detail_image.color = "#FFFFFF"
+					human_image.color = src.get_body_custom_color(AHOLD.mob_detail_1_color_ref)
 					src.detail_standing_oversuit.overlays += human_detail_image
 					AddOverlays(src.detail_standing_oversuit, "detail_oversuit")
 				else // ^^ up here because peoples' bodies turn invisible if it down there with the rest of em
@@ -882,7 +881,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 				human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
 				src.body_standing.overlays += human_decomp_image
-
 			if (src.limbs)
 				src.limbs.reset_stone()
 
