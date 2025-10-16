@@ -5497,7 +5497,7 @@
 		name = "Juice That Makes Your Head Explode"
 		id = "ehsjuice"
 		result = "ehsjuice"
-		required_reagents = list("blackpowder" = 1, "hard_punch" = 1, "juice_raspberry" = 1, "prions" = 1, "sonicpowder" = 1, "water_holy" = 1)
-		mix_phrase = "The mixture coalesces into a dark red liquid. A strange jingle rings out of it."
-		result_amount = 6
+		required_reagents = list("blackpowder" = 1, "hard_punch" = 1, "juice_raspberry" = 1, "prions" = 1, "sonicpowder" = 1)
+		mix_phrase = "The mixture coalesces into a dark red liquid."
+		result_amount = 5
 
