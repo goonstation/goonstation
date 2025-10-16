@@ -1,4 +1,34 @@
 
+(t)thu oct 16 25
+(u)FlameArrow57
+(p)24940
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Pressing ctrl + click on a tile will pull something from that tile, prioritizing first found object, then heaviest weight item, then first found mob.
+(t)wed oct 15 25
+(u)Ghostplasmas & Ribbie
+(p)24881
+(e)🎨|C-Sprites
+(*)Added 26 more hairstyles.
+(u)JORJ949
+(p)24803
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Emagging a genetics booth will now make it throw people with extra power.
+(u)Kelguroth
+(p)24848
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Added ability to deconstruct secure containers so long as they are unlocked.
+(u)LeahTheTech
+(p)24159
+(e)🧫|C-Experimental
+(*)Playing on one of the less populated servers will now give you a small chance to earn an antag token at the end of each round.
+(u)JORJ949
+(p)24935
+(e)📦📨|A-Game-Objects, A-Logistics
+(*)Cargo's crate manufacturer is now capable of printing locked secure crates. Be careful not to fabricate one around yourself.
+(u)Glamurio (Ryou)
+(p)24719
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Canisters can now be disassembled with a welding tool.
 (t)tue oct 14 25
 (u)Gomp
 (p)24933
