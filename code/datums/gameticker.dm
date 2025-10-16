@@ -918,6 +918,10 @@ var/global/game_force_started = FALSE
 		cloud_saves_put_data_bulk(bulk_commit)
 		logTheThing(LOG_DEBUG, null, "Done with spacebux")
 
+	logTheThing(LOG_DEBUG, null, "Starting round end drops...")
+	src.do_roundend_drops()
+	logTheThing(LOG_DEBUG, null, "Done with round end drops")
+
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
 
@@ -974,5 +978,67 @@ var/global/game_force_started = FALSE
 	if (!src.creds)
 		src.creds = new /datum/crewCredits
 	return src.creds
+
+//% - this is the maximum possible chance with very few people on one server and a lot on another
+#define BASE_TOKEN_CHANCE 20
+// the ratio of players between this server and the highest one before drops start to occur
+//eg. 36 players on Morty, 60 on Sylvester = we start to drop tokens, at a very low chance
+#define RATIO_THRESHOLD 0.6
+
+/datum/controller/gameticker/proc/do_roundend_drops()
+	var/datum/game_server/self = global.game_servers.find_server(global.config.server_id)
+	var/self_player_count = world.total_player_count() //the game server datum for the current server doesn't report player count, wack
+	var/is_nightshade = findtext(self.name, "nightshade")
+	var/datum/game_server/highest_pop = null
+	for (var/server_id in global.game_servers.servers)
+		var/datum/game_server/server = global.game_servers.servers[server_id]
+		var/other_is_nightshade = findtext(server.name, "nightshade")
+		if ((!!is_nightshade) ^ (!!other_is_nightshade)) //rare non-bitwise xor use case!!
+			continue
+		if (text2num_safe(server.player_count) > text2num_safe(highest_pop?.player_count))
+			highest_pop = server
+
+	var/highest_player_count = text2num_safe(highest_pop.player_count)
+
+	logTheThing(LOG_DEBUG, null, "Round end drops: we are [is_nightshade ? "" : "not"] nightshade, highest population server is [highest_pop?.name] with [highest_player_count] players")
+
+	//for when nightshade is winding down and we don't want to be giving people free tokens every round
+	if (highest_player_count <= 20)
+		logTheThing(LOG_DEBUG, null, "All linked servers below population threshold, no round end drops.")
+		return
+
+	var/pop_ratio = self_player_count / highest_player_count
+	if (pop_ratio > RATIO_THRESHOLD)
+		logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [pop_ratio], greater than threshold [RATIO_THRESHOLD], aborting end round drops.")
+		return // servers are reasonably balanced, no drops for u
+
+	//scale by round length, normalised at 50 minutes
+	var/length_ratio = min(src.round_elapsed_ticks/(50 MINUTES), 1)
+
+	var/actual_token_chance = BASE_TOKEN_CHANCE * ((RATIO_THRESHOLD - pop_ratio) / RATIO_THRESHOLD) * length_ratio
+	logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [self_player_count]/[highest_player_count]: [pop_ratio]. Round length [ticker.round_elapsed_ticks / 600] minutes, length scaling set at [length_ratio]. Starting end round drops with token chance [actual_token_chance]")
+
+	var/list/players = list()
+	for (var/mob/M as anything in mobs)
+		var/datum/player/player = M.mind?.get_player()
+		if (!player || (player in players))
+			continue
+		if (jobban_isbanned(M, "Syndicate"))
+			continue
+		players += player
+		//also scale by how long they've been in the round, no joining at the end just for the chance
+		var/time_ratio = player.current_playtime / ticker.round_elapsed_ticks
+		var/player_unique_chance = actual_token_chance * time_ratio
+		if (player.get_antag_tokens() >= 1)
+			boutput(M, SPAN_BOLD("You would have been eligable for an antag token drop this round, but you already have one!"))
+			continue
+		if (!prob(player_unique_chance))
+			continue //unlucky
+		player.set_antag_tokens(1)
+		boutput(M, SPAN_BOLD("You have recieved an antag token drop for playing on a less populated server!"))
+		logTheThing(LOG_DEBUG, M, "[player.key] received an antag token drop with chance [player_unique_chance]%")
+
+#undef BASE_TOKEN_CHANCE
+#undef RATIO_THRESHOLD
 
 #undef LATEJOIN_FULL_WAGE_GRACE_PERIOD
