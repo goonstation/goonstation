@@ -146,12 +146,16 @@
 	proc/handsignal(mob/attacker, mob/user) // wrapper procs, looks stinky?
 		var/datum/statusEffect/wrestler/statusAttacked = attacker.hasStatus("wrestler")
 		var/datum/statusEffect/wrestler/statusUser = user.hasStatus("wrestler")
+		if (!statusAttacked || !statusUser)
+			return
 		if (!statusAttacked.active && statusUser.active)
 			src.toggle_active(owner)
 
 	proc/itemsignal(obj/item, mob/attacker, mob/user)
 		var/datum/statusEffect/wrestler/statusAttacked = attacker.hasStatus("wrestler")
 		var/datum/statusEffect/wrestler/statusUser = user.hasStatus("wrestler")
+		if (!statusAttacked || !statusUser)
+			return
 		if (!statusAttacked.active && statusUser.active)
 			src.toggle_active(owner)
 
