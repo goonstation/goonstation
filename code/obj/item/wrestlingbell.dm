@@ -79,12 +79,15 @@
 			SPAWN(2 SECONDS)
 				src.put_back_hammer()
 		if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
-			var/turf/floor = get_turf(src)
 			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-			for (var/mob/mob in floor.loc) // checks if anyone in the room's area has the status
-				var/datum/statusEffect/wrestler/status = mob.hasStatus("wrestler")
-				if (status)
-					status.toggle_active()
+			src.give_status()
+
+	proc/give_status()
+		var/turf/floor = get_turf(src)
+		for (var/mob/living/mob in floor.loc) // checks if anyone in the room's area has the status
+			var/turf/position = get_turf(mob)
+			if (istype(position, /turf/simulated/floor/specialroom/gym))
+				mob.setStatus("wrestler", INFINITE_STATUS, optional=mob)
 
 	/// snap back if too far away
 	proc/hammer_move()
@@ -98,22 +101,25 @@
 			src.hammer.force_drop(sever=TRUE)
 			src.hammer.set_loc(src)
 			src.hammer.parent = null
-
 			UpdateIcon()
 
 /datum/statusEffect/wrestler // makes more sense for this to be in here than floors.dm. perhaps a better place exists still
 	id = "wrestler"
 	name = "Wrestling!"
 	desc = "You're in the ring, break a leg!"
-	icon_state = "wrestling0"
+	icon_state = "wrestling"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
-	var/active = 0
 
 	onAdd(optional)
 		. = ..()
-		RegisterSignal(owner, COMSIG_ATTACKHAND, PROC_REF(handsignal))
-		RegisterSignal(owner, COMSIG_ATTACKBY, PROC_REF(itemsignal))
+		var/mob/M = null
+		if(ismob(owner))
+			M = owner
+		RegisterSignal(M, COMSIG_ATTACKHAND, PROC_REF(handsignal))
+		RegisterSignal(M, COMSIG_ATTACKBY, PROC_REF(itemsignal))
+		var/obj/itemspecialeffect/boxing/effect = new /obj/itemspecialeffect/boxing
+		effect.setup(M.loc)
 
 	onUpdate(timePassed)
 		var/mob/M = null
@@ -131,7 +137,7 @@
 			M = owner
 			UnregisterSignal(M, COMSIG_ATTACKHAND)
 			UnregisterSignal(M, COMSIG_ATTACKBY)
-			if (M.health <= 0 && src.active)
+			if (M.health <= 0)
 				SPAWN(0)
 					playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)
 				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
@@ -143,31 +149,14 @@
 						M.UpdateOverlays(null, "dizzy")
 
 	proc/handsignal(mob/attacker, mob/user) // wrapper procs, looks stinky?
-		var/datum/statusEffect/wrestler/statusAttacked = attacker.hasStatus("wrestler")
-		var/datum/statusEffect/wrestler/statusUser = user.hasStatus("wrestler")
-		if (!statusAttacked || !statusUser)
-			return
-		if (!statusAttacked.active && statusUser.active)
-			src.toggle_active(owner)
+		if (attacker.hasStatus("wrestler") && !user.hasStatus("wrestler")) // why is attacked named attacker </3 god
+			user.setStatus("wrestler", INFINITE_STATUS)
 
 	proc/itemsignal(obj/item, mob/attacker, mob/user)
-		var/datum/statusEffect/wrestler/statusAttacked = attacker.hasStatus("wrestler")
-		var/datum/statusEffect/wrestler/statusUser = user.hasStatus("wrestler")
-		if (!statusAttacked || !statusUser)
-			return
-		if (!statusAttacked.active && statusUser.active)
-			src.toggle_active(owner)
+		if (attacker.hasStatus("wrestler") && !user.hasStatus("wrestler"))
+			user.setStatus("wrestler", INFINITE_STATUS)
 
-	proc/toggle_active(mob/user)
-		if (!src.active)
-			src.active = 1
-			src.name = "Wrestling!"
-			var/obj/itemspecialeffect/boxing/effect = new /obj/itemspecialeffect/boxing
-			effect.setup(src.owner.loc)
-		else
-			src.active = 0
-			src.name = "Waiting to wrestle!"
-		src.icon_state = "wrestling[src.active]"
+
 
 
 
