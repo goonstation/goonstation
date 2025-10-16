@@ -621,9 +621,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hide(var/intact)
 	var/hide_pipe = CHECKHIDEPIPE(src)
 	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
-	update_pipe_underlay(src.node1, turn(src.dir, 90),  "small", hide_pipe)
-	update_pipe_underlay(src.node2, turn(src.dir, 180), "small", hide_pipe)
-	update_pipe_underlay(src.node3, turn(src.dir, -90), "small", hide_pipe)
+	update_pipe_underlay(src.node1, turn(src.dir, 90),  "short", hide_pipe)
+	update_pipe_underlay(src.node2, turn(src.dir, 180), "short", hide_pipe)
+	update_pipe_underlay(src.node3, turn(src.dir, -90), "short", hide_pipe)
 
 /obj/machinery/atmospherics/pipe/manifold/weld_sheet(obj/item/sheet/sheet, mob/user)
 	. = ..()
@@ -739,10 +739,10 @@
 /obj/machinery/atmospherics/pipe/quadway/hide(var/intact)
 	var/hide_pipe = CHECKHIDEPIPE(src)
 	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
-	update_pipe_underlay(src.node1, SOUTH,  "small", hide_pipe)
-	update_pipe_underlay(src.node2, WEST,   "small", hide_pipe)
-	update_pipe_underlay(src.node3, NORTH,  "small", hide_pipe)
-	update_pipe_underlay(src.node4, EAST,   "small", hide_pipe)
+	update_pipe_underlay(src.node1, SOUTH,  "short", hide_pipe)
+	update_pipe_underlay(src.node2, WEST,   "short", hide_pipe)
+	update_pipe_underlay(src.node3, NORTH,  "short", hide_pipe)
+	update_pipe_underlay(src.node4, EAST,   "short", hide_pipe)
 
 /obj/machinery/atmospherics/pipe/quadway/pipeline_expansion()
 	return list(src.node1, src.node2, src.node3, src.node4)
