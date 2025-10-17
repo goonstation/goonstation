@@ -16,7 +16,8 @@ type DataGroupViewerData = {
 
 type DataInputGroup = {
   name: string;
-  objects: Array<DataInputObjectProps>;
+  objects?: Array<DataInputObjectProps>;
+  groups?: Array<DataInputGroup>;
 };
 
 interface DataInputGroupsProps {
@@ -49,7 +50,12 @@ export const DataInputGroups = (props: DataInputGroupsProps) => {
   return props && props.groups.length
     ? Object.entries(props.groups).map(([groupKey, groupData]) => (
         <Collapsible key={groupKey} title={groupData.name} open>
-          <DataInputObjects objects={groupData.objects} />
+          {groupData.objects?.length ? (
+            <DataInputObjects objects={groupData.objects} />
+          ) : null}
+          {groupData.groups?.length ? (
+            <DataInputGroups groups={groupData.groups} />
+          ) : null}
         </Collapsible>
       ))
     : '--Empty Group--';
