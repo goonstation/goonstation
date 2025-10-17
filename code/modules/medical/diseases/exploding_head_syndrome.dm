@@ -50,5 +50,6 @@
 				SPAWN(rand(20, 100))
 					if (affected_mob)
 						var/mob/living/carbon/human/H = affected_mob
+						explosion(affected_mob, get_turf(affected_mob), -1,-1,0,1)
 						H.head_explosion()
 						logTheThing(LOG_COMBAT, affected_mob, "had their head exploded by the disease [name] at [log_loc(affected_mob)].")
