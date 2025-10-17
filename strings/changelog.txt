@@ -1,4 +1,13 @@
 
+(t)fri oct 17 25
+(u)Egregorious
+(p)24557
+(e)🆕🧱🔬|C-Feature, A-Materials, A-Science
+(*)Some activated artifacts can interfere with teleportation, and will be sent to the wrong location if moved with the cargo transporter. Diligent scientists are recommended to test for this property via telecrystal reaction.
+(u)Naksu
+(p)24915
+(e)🚄⚗|C-Performance, A-Chemistry
+(+)Slight performance tweak for chemistry reactions. Report issues if you encounter any!
 (t)thu oct 16 25
 (u)FlameArrow57
 (p)24940
