@@ -1217,7 +1217,7 @@
 		return 1
 
 	proc/explode()
-		if (src.bombproof)
+		if (src.bombproof || src.uplink)
 			if (ismob(src.loc))
 				boutput(src.loc, SPAN_ALERT("<b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked."))
 			return

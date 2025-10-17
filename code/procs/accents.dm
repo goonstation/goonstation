@@ -2635,3 +2635,10 @@ proc/leetspeakify(string, chance=100)
 	for (var/pattern in bingus_list)
 		string = replacetext(string, regex(pattern, "i"), bingus_list[pattern])
 	return string
+
+proc/frogify(var/string)
+
+	if(prob(15))
+		string += pick(" ribbit", " croak", " brp", " weh", " burup")
+
+	return string

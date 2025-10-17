@@ -173,6 +173,8 @@
 			src.prefix = lowertext(trimtext(copytext(src.content, 1, cut_position)))
 			src.content = copytext(src.content, cut_position, MAX_MESSAGE_LEN)
 
+	src.content = trimtext(src.content)
+
 	// Determine whether this message has a singing prefix, and adjust the content accordingly.
 	if (copytext(src.content, 1, 2) == "%")
 		src.flags |= SAYFLAG_SINGING
@@ -182,9 +184,10 @@
 	// Ensure that a channel is assigned to this message.
 	src.output_module_channel ||= src.speaker.default_speech_output_channel
 
-	src.content = src.make_safe_for_chat(src.content)
 	if (ismob(src.speaker))
 		src.run_mob_and_client_checks()
+
+	src.content = src.make_safe_for_chat(src.content)
 
 /datum/say_message/disposing()
 	src.speaker = null
@@ -245,13 +248,13 @@
 
 /// Determines the say sound that this message should use, and plays it.
 /datum/say_message/proc/process_say_sound()
+	if (src.flags & SAYFLAG_ADMIN_MESSAGE)
+		return
+
 	if (world.time < src.message_origin.last_voice_sound + VOICE_SOUND_COOLDOWN)
 		return
 
-	if (src.say_sound == NO_SAY_SOUND)
-		return
-
-	if (!src.say_sound && !src.speaker.voice_type && !src.speaker.voice_sound_override)
+	if ((src.say_sound == NO_SAY_SOUND) || (!src.say_sound && !src.speaker.voice_type && !src.speaker.voice_sound_override))
 		return
 
 	src.say_sound ||= src.speaker.voice_sound_override
@@ -280,7 +283,7 @@
 
 /// Determines the speech bubble that this message should use, and displays it on the speaker.
 /datum/say_message/proc/process_speech_bubble()
-	if (!src.speaker.use_speech_bubble)
+	if ((src.flags & SAYFLAG_ADMIN_MESSAGE) || !src.speaker.use_speech_bubble)
 		return
 
 	var/speech_bubble_icon

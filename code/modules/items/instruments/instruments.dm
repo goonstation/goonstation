@@ -637,7 +637,10 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		src.setProperty("vault_speed",3)
 		src.setProperty("disorient_resist",45)
 
-
+/* --------------- Bike horn: now in blue ------------ */
+/obj/item/instrument/bikehorn/blue
+	name = "blue bike horn"
+	icon_state = "bike_horn_blue"
 
 /* -------------------- Harmonica -------------------- */
 
@@ -856,7 +859,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			gibs(S.loc, null, bdna, btype)
 
 			S.set_mutantrace(/datum/mutantrace/skeleton)
-			S.real_name = "[S.name]'s skeleton"
+			S.real_name = "[S.name]’s skeleton"
 			S.name = S.real_name
 			S.update_body()
 			S.UpdateName()

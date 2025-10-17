@@ -1943,55 +1943,55 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/strange
+/obj/item/reagent_containers/food/drinks/skull_chalice/hunter
 	name = "strange skull chalice"
 	desc = "This is one ugly drinking vessel."
-	icon_state = "skullchaliceP"
+	icon_state = "skullchalice_hunter"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/odd
+/obj/item/reagent_containers/food/drinks/skull_chalice/changeling
 	name = "odd skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. This one's got fewer holes and more room. Convenient!"
-	icon_state = "skullchaliceA"
+	icon_state = "skullchalice_changeling"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_volume = 60
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/peculiar
+/obj/item/reagent_containers/food/drinks/skull_chalice/wizard
 	name = "peculiar skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. The magic keeps the contents from spilling out."
-	icon_state = "skullchalice_strange"
+	icon_state = "skullchalice_wizard"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/menacing
+/obj/item/reagent_containers/food/drinks/skull_chalice/vampire
 	name = "menacing skull chalice"
 	desc = "In Space Soviet Russia, chalice drink out of YOU!"
-	icon_state = "skullchalice_menacing"
+	icon_state = "skullchalice_vampire"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_reagents = list("blood" = 50)
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/crystal
+/obj/item/reagent_containers/food/drinks/skull_chalice/omnitraitor
 	name = "skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. You have an odd urge to serve champagne in this."
-	icon_state = "skullchalice_crystal"
-	item_state = "skullchalice_crystal"
+	icon_state = "skullchalice_omnitraitor"
+	item_state = "skullchalice_omnitraitor"
 	can_recycle = FALSE
 	initial_volume = 60
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/gold
+/obj/item/reagent_containers/food/drinks/skull_chalice/macho
 	name = "golden skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. Smells a bit like processed meat snacks."
-	icon_state = "skullchalice_gold"
-	item_state = "skullchalice_gold"
+	icon_state = "skullchalice_macho"
+	item_state = "skullchalice_macho"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/noface
+/obj/item/reagent_containers/food/drinks/skull_chalice/cluwne
 	name = "faceless skull chalice"
 	desc = "A thing which you can drink fluids out of. Maybe. Possibly. Hypothetically."
-	icon_state = "skullchalice_noface"
+	icon_state = "skullchalice_cluwne"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_volume = 5
@@ -2040,6 +2040,13 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 /obj/item/reagent_containers/food/drinks/mug/HoS/blue
 	icon_state = "HoSMugBlue"
 	item_state = "mug"
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged
+	icon_state = "HoSMugBlueTwo"
+	emagged = TRUE
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea
+	initial_reagents = list("mint_tea" = 50)
 
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()

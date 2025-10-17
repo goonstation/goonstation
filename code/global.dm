@@ -278,7 +278,7 @@ var/global
 	player_cap = 55
 	player_cap_grace = list()
 	/// specifies if pcap kick messages show display to admins in chat
-	pcap_kick_messages = TRUE
+	pcap_kick_messages = FALSE
 	traitor_scaling = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0

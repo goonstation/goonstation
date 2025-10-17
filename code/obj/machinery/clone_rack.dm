@@ -39,7 +39,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 /obj/machinery/disk_rack/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "DiskRack")
+		ui = new(user, src, "DiskRack", src.name)
 		ui.open()
 
 /obj/machinery/disk_rack/ui_data(mob/user)
@@ -59,7 +59,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	if (.)
 		return .
 	if (action == "diskAction")
-		var/index = text2num_safe(params["id"])
+		var/index = text2num_safe(params["dmIndex"])
 		if (index < 1 || index > MAX_DISKS) //nu
 			return FALSE
 		if (BOUNDS_DIST(ui.user, src) || isintangible(ui.user))
@@ -192,7 +192,7 @@ TYPEINFO(/obj/machinery/disk_rack)
 	New()
 		. = ..()
 		var/i = 1
-		for (var/type in concrete_typesof(/obj/item/disk/data/floppy/office))
+		for (var/type in childrentypesof(/obj/item/disk/data/floppy/office))
 			src.insert_disk(i++, new type)
 
 /obj/spawner/clone_rack
