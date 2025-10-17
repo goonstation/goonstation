@@ -2041,6 +2041,13 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	icon_state = "HoSMugBlue"
 	item_state = "mug"
 
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged
+	icon_state = "HoSMugBlueTwo"
+	emagged = TRUE
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea
+	initial_reagents = list("mint_tea" = 50)
+
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()
 		..()

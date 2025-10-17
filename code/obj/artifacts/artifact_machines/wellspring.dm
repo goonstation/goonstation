@@ -12,7 +12,7 @@
 	type_size = ARTIFACT_SIZE_LARGE
 
 	type_name = "Wellspring"
-	rarity_weight = 350
+	rarity_weight = 400
 	react_xray = list(5,65,20,11,"LIQUID RESERVOIR")
 	validtypes = list("ancient", "martian", "eldritch", "precursor", "wizard")
 	validtriggers = list(/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/force, /datum/artifact_trigger/heat, /datum/artifact_trigger/cold, /datum/artifact_trigger/radiation, /datum/artifact_trigger/electric, /datum/artifact_trigger/language)

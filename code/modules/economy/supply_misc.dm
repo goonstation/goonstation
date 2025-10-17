@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 /obj/landmark/supply_delivery // target location where supplies are sent to
@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 	Entered(var/atom/movable/AM)

@@ -392,12 +392,12 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	var/list/utility_supplies = list()
 	// Ranch Eggs
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice)
-	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/plant)
-	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/void) // table ambushes ig
-	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/snow)
-	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/wizard)
-	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/knight)
-	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/mime)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/plant)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/void) // table ambushes ig
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/snow)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/wizard)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/knight)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/mime)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy) // Keeping this a one off cause I know someone will kill themselves and be salty
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
