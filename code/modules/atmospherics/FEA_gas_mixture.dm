@@ -69,8 +69,15 @@ What are the archived variables for?
 
 /// Process all reactions, return bitfield if notable reaction occurs.
 /datum/gas_mixture/proc/react(atom/dump_location, mult=1)
+	if (prob(50))
+		return react_new(dump_location, mult)
+	return react_old(dump_location, mult)
+
+/// Process all reactions, return bitfield if notable reaction occurs.
+/datum/gas_mixture/proc/react_old(atom/dump_location, mult=1)
 	. = 0 //(used by pipe_network and hotspots)
 	var/reaction_rate
+
 	if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
 		if(src.oxygen_agent_b > MINIMUM_REACT_QUANTITY)
 			reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.oxygen_agent_b*0.05)
@@ -98,7 +105,44 @@ What are the archived variables for?
 			. |= REACTION_ACTIVE
 
 	src.fuel_burnt = 0
+
 	if(src.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(src.fire(mult))
+			. |= COMBUSTION_ACTIVE
+
+/// Process all reactions, return bitfield if notable reaction occurs.
+/datum/gas_mixture/proc/react_new(atom/dump_location, mult=1)
+	. = 0 //(used by pipe_network and hotspots)
+	var/reaction_rate
+	if(src.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST && src.toxins > MINIMUM_REACT_QUANTITY)
+		if(src.temperature > 900 && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
+			if(src.oxygen_agent_b > MINIMUM_REACT_QUANTITY)
+				reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.oxygen_agent_b*0.05)
+				reaction_rate = QUANTIZE(reaction_rate) * mult
+
+				src.carbon_dioxide -= reaction_rate
+				src.oxygen += reaction_rate
+				src.oxygen_agent_b -= reaction_rate*0.05
+
+				src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
+
+				if(reaction_rate > MINIMUM_REACT_QUANTITY)
+					. |= CATALYST_ACTIVE
+				. |= REACTION_ACTIVE
+
+			if(src.farts > MINIMUM_REACT_QUANTITY)
+				reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
+				reaction_rate = QUANTIZE(reaction_rate) * mult
+
+				src.carbon_dioxide -= reaction_rate
+				src.toxins += reaction_rate
+				src.farts -= reaction_rate*0.05
+
+				src.temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
+				. |= REACTION_ACTIVE
+
+		src.fuel_burnt = 0
+
 		if(src.fire(mult))
 			. |= COMBUSTION_ACTIVE
 
@@ -352,9 +396,18 @@ What are the archived variables for?
 
 	return TRUE
 
+/datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
+	if (prob(50))
+		if (prob(50))
+			return share_new(sharer)
+		return share_old(sharer)
+	if (prob(50))
+		return share_new_branchopt(sharer)
+	return share_old_branchopt(sharer)
+
 /// * Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length.
 /// * Return: Moles of gas exchanged (+ if sharer received)
-/datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
+/datum/gas_mixture/proc/share_old(datum/gas_mixture/sharer)
 	if(!sharer)
 		return
 	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
@@ -394,6 +447,164 @@ What are the archived variables for?
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY && abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 				src.temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
+
+	// Check that either threshold was met for pressure_difference calculations
+	if((abs(delta_temperature) > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
+		var/delta_pressure = ARCHIVED(temperature)*(TOTAL_MOLES(src) + moved_moles) - sharer.ARCHIVED(temperature)*(TOTAL_MOLES(sharer) - moved_moles)
+		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
+	else
+		return 0 MOLES
+
+/datum/gas_mixture/proc/share_old_branchopt(datum/gas_mixture/sharer)
+	if(!sharer)
+		return
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
+	APPLY_TO_GASES(_DELTA_GAS)
+	#undef _DELTA_GAS
+
+	var/delta_temperature = (src.ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
+
+	var/moved_moles = 0 MOLES
+	#define _SHARE_GAS(GAS, ...) \
+		if(delta_##GAS) { \
+			src.GAS -= delta_##GAS / src.group_multiplier; \
+			sharer.GAS += delta_##GAS / sharer.group_multiplier; \
+			moved_moles += delta_##GAS; }
+	APPLY_TO_GASES(_SHARE_GAS)
+	#undef _SHARE_GAS
+
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/heat_capacity_self_to_sharer = 0
+		var/heat_capacity_sharer_to_self = 0
+		#define _SHARE_GAS_HEAT(GAS, SPECIFIC_HEAT, ...) \
+			if(delta_##GAS > 0) { heat_capacity_self_to_sharer += SPECIFIC_HEAT * delta_##GAS } \
+			else if(delta_##GAS < 0) { heat_capacity_sharer_to_self -= SPECIFIC_HEAT * delta_##GAS }
+		APPLY_TO_GASES(_SHARE_GAS_HEAT)
+		#undef _SHARE_GAS_HEAT
+		var/old_self_heat_capacity = HEAT_CAPACITY(src)*src.group_multiplier
+		var/old_sharer_heat_capacity = HEAT_CAPACITY(sharer)*sharer.group_multiplier
+
+		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
+		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
+
+		src.temperature = (old_self_heat_capacity*src.temperature - heat_capacity_self_to_sharer*ARCHIVED(temperature) + heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature))/new_self_heat_capacity
+
+		sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature) + heat_capacity_self_to_sharer*ARCHIVED(temperature))/new_sharer_heat_capacity
+
+		if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
+			src.temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
+
+	// Check that either threshold was met for pressure_difference calculations
+	if((abs(delta_temperature) > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
+		var/delta_pressure = ARCHIVED(temperature)*(TOTAL_MOLES(src) + moved_moles) - sharer.ARCHIVED(temperature)*(TOTAL_MOLES(sharer) - moved_moles)
+		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
+	else
+		return 0 MOLES
+
+/datum/gas_mixture/proc/share_new_branchopt(datum/gas_mixture/sharer)
+	if(!sharer)
+		return
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
+	APPLY_TO_GASES(_DELTA_GAS)
+	#undef _DELTA_GAS
+
+	var/delta_temperature = (src.ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
+
+	var/moved_moles = 0 MOLES
+
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/heat_capacity_self_to_sharer = 0
+		var/heat_capacity_sharer_to_self = 0
+
+		#define _SHARE_GAS_COMBINED(GAS, SPECIFIC_HEAT, ...) \
+			if(delta_##GAS) { \
+				src.GAS -= delta_##GAS / src.group_multiplier; \
+				sharer.GAS += delta_##GAS / sharer.group_multiplier; \
+				moved_moles += delta_##GAS;\
+				if(delta_##GAS > 0) { heat_capacity_self_to_sharer += SPECIFIC_HEAT * delta_##GAS } \
+				else { heat_capacity_sharer_to_self -= SPECIFIC_HEAT * delta_##GAS } }
+		APPLY_TO_GASES(_SHARE_GAS_COMBINED)
+		#undef _SHARE_GAS_COMBINED
+
+
+
+		var/old_self_heat_capacity = HEAT_CAPACITY(src)*src.group_multiplier
+		var/old_sharer_heat_capacity = HEAT_CAPACITY(sharer)*sharer.group_multiplier
+
+		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
+		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
+
+		src.temperature = (old_self_heat_capacity*src.temperature - heat_capacity_self_to_sharer*ARCHIVED(temperature) + heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature))/new_self_heat_capacity
+
+		sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature) + heat_capacity_self_to_sharer*ARCHIVED(temperature))/new_sharer_heat_capacity
+
+		if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
+			src.temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
+	else
+		#define _SHARE_GAS(GAS, ...) \
+			if(delta_##GAS) { \
+				src.GAS -= delta_##GAS / src.group_multiplier; \
+				sharer.GAS += delta_##GAS / sharer.group_multiplier; \
+				moved_moles += delta_##GAS; }
+		APPLY_TO_GASES(_SHARE_GAS)
+		#undef _SHARE_GAS
+
+	// Check that either threshold was met for pressure_difference calculations
+	if((abs(delta_temperature) > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
+		var/delta_pressure = ARCHIVED(temperature)*(TOTAL_MOLES(src) + moved_moles) - sharer.ARCHIVED(temperature)*(TOTAL_MOLES(sharer) - moved_moles)
+		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
+	else
+		return 0 MOLES
+
+/datum/gas_mixture/proc/share_new(datum/gas_mixture/sharer)
+	if(!sharer)
+		return
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
+	APPLY_TO_GASES(_DELTA_GAS)
+	#undef _DELTA_GAS
+
+	var/delta_temperature = (src.ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
+
+	var/moved_moles = 0 MOLES
+
+	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/heat_capacity_self_to_sharer = 0
+		var/heat_capacity_sharer_to_self = 0
+
+		#define _SHARE_GAS_COMBINED(GAS, SPECIFIC_HEAT, ...) \
+			if(delta_##GAS) { \
+				src.GAS -= delta_##GAS / src.group_multiplier; \
+				sharer.GAS += delta_##GAS / sharer.group_multiplier; \
+				moved_moles += delta_##GAS;\
+				if(delta_##GAS > 0) { heat_capacity_self_to_sharer += SPECIFIC_HEAT * delta_##GAS } \
+				else { heat_capacity_sharer_to_self -= SPECIFIC_HEAT * delta_##GAS } }
+		APPLY_TO_GASES(_SHARE_GAS_COMBINED)
+		#undef _SHARE_GAS_COMBINED
+
+
+
+		var/old_self_heat_capacity = HEAT_CAPACITY(src)*src.group_multiplier
+		var/old_sharer_heat_capacity = HEAT_CAPACITY(sharer)*sharer.group_multiplier
+
+		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
+		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
+
+		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			src.temperature = (old_self_heat_capacity*src.temperature - heat_capacity_self_to_sharer*ARCHIVED(temperature) + heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature))/new_self_heat_capacity
+
+		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature) + heat_capacity_self_to_sharer*ARCHIVED(temperature))/new_sharer_heat_capacity
+
+			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY && abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
+				src.temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
+	else
+		#define _SHARE_GAS(GAS, ...) \
+			if(delta_##GAS) { \
+				src.GAS -= delta_##GAS / src.group_multiplier; \
+				sharer.GAS += delta_##GAS / sharer.group_multiplier; \
+				moved_moles += delta_##GAS; }
+		APPLY_TO_GASES(_SHARE_GAS)
+		#undef _SHARE_GAS
 
 	// Check that either threshold was met for pressure_difference calculations
 	if((abs(delta_temperature) > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
