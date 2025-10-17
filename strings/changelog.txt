@@ -1,4 +1,9 @@
 
+(t)fri oct 17 25
+(u)Naksu
+(p)24915
+(e)🚄⚗|C-Performance, A-Chemistry
+(+)Slight performance tweak for chemistry reactions. Report issues if you encounter any!
 (t)thu oct 16 25
 (u)FlameArrow57
 (p)24940
