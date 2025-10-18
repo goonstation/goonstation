@@ -65,7 +65,7 @@
 				SPAWN(src.duration)
 					if (M && istype(M) && radio_controller && istype(radio_controller) && (M in by_cat[TR_CAT_RADIO_JAMMERS]))
 						OTHER_STOP_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
-			if (isvampire(HH) && HH.check_vampire_power(3) == 1)
+			if (isvampire(HH) && ((HH.check_vampire_power(3) == 1) || HH.mind?.get_antagonist(ROLE_COVEN_VAMPIRE)))
 				boutput(HH, SPAN_NOTICE("You are immune to [M]'s screech!"))
 				continue
 			if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))

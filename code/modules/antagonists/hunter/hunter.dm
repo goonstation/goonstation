@@ -97,7 +97,7 @@
 							if (ROLE_WIZARD)
 								skull_type = /obj/item/skull/wizard
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
-							if (ROLE_VAMPIRE)
+							if (ROLE_VAMPIRE, ROLE_COVEN_VAMPIRE)
 								skull_type = /obj/item/skull/vampire
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."

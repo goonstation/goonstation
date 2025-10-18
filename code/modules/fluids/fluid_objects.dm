@@ -50,6 +50,10 @@ TYPEINFO(/obj/machinery/drainage/big)
 		var/turf/T = get_turf(src)
 		if (!T)
 			return
+
+		if (src.event_process())
+			return
+
 		if (T.active_liquid)
 			if (clogged)
 				clogged--

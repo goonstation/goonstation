@@ -13,3 +13,4 @@
 #define PREFIX_TEXT_RIGHT_HAND ":rh"
 #define PREFIX_TEXT_SILICON ":s"
 #define PREFIX_TEXT_THRALLCHAT ":thrall"
+#define PREFIX_TEXT_VAMPCHAT ":v"

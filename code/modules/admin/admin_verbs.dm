@@ -32,6 +32,7 @@ var/list/admin_verbs = list(
 		/client/proc/marsay,
 		/client/proc/silisay,
 		/client/proc/thrallsay,
+		/client/proc/vampsay,
 		/client/proc/wraithsay,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
@@ -204,6 +205,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_removeComponentType,
 		/client/proc/cmd_replace_type,
 		/client/proc/cmd_lightsout,
+		/client/proc/cmd_set_event_state,
 
 		/client/proc/vpn_whitelist_add,
 		/client/proc/vpn_whitelist_remove,

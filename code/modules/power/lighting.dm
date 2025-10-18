@@ -175,7 +175,7 @@ TYPEINFO(/obj/item/light_parts)
 
 ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/admin_fix)
 
-/var/global/stationLights = new/list()
+/var/global/list/stationLights = new/list()
 /obj/machinery/light
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'

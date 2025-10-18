@@ -134,4 +134,5 @@
 #define SAY_CHANNEL_OUTLOUD "outloud"
 #define SAY_CHANNEL_SILICON "silicon"
 #define SAY_CHANNEL_THRALL "thrall"
+#define SAY_CHANNEL_VAMPIRE "vampire"
 #define SAY_CHANNEL_WRAITH "wraith"
