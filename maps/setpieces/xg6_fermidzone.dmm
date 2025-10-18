@@ -268,7 +268,7 @@
 /obj/decal/stage_edge/alt{
 	color = "#222222"
 	},
-/obj/noticeboard{
+/obj/noticeboard/directional/north{
 	desc = "A board for shaming fellow workers.";
 	name = "SHAME BOARD"
 	},
@@ -7620,7 +7620,7 @@
 	dir = 8;
 	icon_state = "check1"
 	},
-/obj/noticeboard{
+/obj/noticeboard/directional/north{
 	desc = "A board for shaming fellow workers.";
 	name = "SHAME BOARD"
 	},
@@ -11754,7 +11754,7 @@
 /obj/item/skull,
 /obj/item/skull,
 /obj/item/skull,
-/obj/item/skull/strange,
+/obj/item/skull/hunter,
 /obj/storage/crate/classcrate/xg{
 	desc = "A hefty attache case.";
 	locked = 1;

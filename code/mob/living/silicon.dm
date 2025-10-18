@@ -215,7 +215,14 @@ TYPEINFO(/mob/living/silicon)
 
 	var/inrange = in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (params["ctrl"] || src.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	// slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (params["ctrl"] ||\
+		src.client.check_any_key(KEY_EXAMINE | KEY_POINT) ||\
+		(equipped && (inrange || (equipped.flags & EXTRADELAY))) ||\
+		istype(target, /turf) ||\
+		ishelpermouse(target) ||\
+		inrange && params["middle"]
+	)
 		..()
 	else
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -462,7 +469,7 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 /proc/borgify_name(var/start_name = "Robot")
@@ -701,6 +708,10 @@ var/global/list/module_editors = list()
 	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
 		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
 
+/mob/living/silicon/clear_offline_indicator()
+	..()
+	src.mainframe?.clear_offline_indicator()
+
 /datum/statusEffect/low_power
 	id = "low_power"
 	name = "Low Power"
@@ -809,10 +820,22 @@ var/global/list/module_editors = list()
 		if (src.duration <= 0)
 			src.do_killswitch()
 
+	proc/owner_is_immune()
+		var/mob/living/silicon/robot/borg = src.owner
+		if (istype(borg) && borg.syndicate)
+			return TRUE
+		return FALSE
+
+	//Returns TRUE if the kill should be completed, FALSE if the owner was immune to killswitching.
 	proc/do_killswitch()
 		if (ismob(src.owner))
 			var/mob/M = src.owner
-			if (M.client)
+			if (owner_is_immune())
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b><i> But you were immune! </i>"))
+				logTheThing(LOG_COMBAT, M, "would have died to the killswitch, but they were immune.")
+				return FALSE
+			else
 				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
 				playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
 				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
+				return TRUE

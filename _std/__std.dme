@@ -21,6 +21,7 @@
 #include "datum.dm"					// hasvar()
 #include "macros\spawn.dm"			// SPAWN
 #include "plane.dm"					// debug icons
+#include "text.dm"					// text macros/helpers
 #include "defines\abilities.dm"
 #include "defines\access.dm"
 #include "defines\actions.dm"
@@ -163,6 +164,7 @@
 #include "macros\client.dm"
 #include "macros\cooldown.dm"
 #include "macros\debug.dm"
+#include "macros\descriptions.dm"
 #include "macros\dir.dm"
 #include "macros\directional_offsets.dm"
 #include "macros\dist.dm"
@@ -215,7 +217,6 @@
 #include "record_db.dm"
 #include "sorting.dm"
 #include "spatial_hashing.dm"
-#include "text.dm"
 #include "tgs.config.dm"
 #include "tgs.dm"
 #include "tgui.dm"

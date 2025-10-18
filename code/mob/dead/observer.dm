@@ -477,7 +477,7 @@ TYPEINFO(/mob/dead/observer)
 			wigmat = wigmat.getMutable()
 			wigmat.setColor(src.bioHolder.mobAppearance.customizations["hair_bottom"].color)
 			O.wig.setMaterial(wigmat)
-			O.wig.name = "[O.name]'s hair"
+			O.wig.name = "[O.name]’s hair"
 			O.wig.icon = 'icons/mob/human_hair.dmi'
 			O.wig.icon_state = cust_one
 			O.wig.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color

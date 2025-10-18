@@ -797,6 +797,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		src.eye_glider.anchored = ANCHORED_ALWAYS
+		APPLY_ATOM_PROPERTY(P, PROP_ATOM_FLOATING, src)
 		for (var/mob/M in P.contents)
 			if(M.client)
 				M.client.eye = src.eye_glider

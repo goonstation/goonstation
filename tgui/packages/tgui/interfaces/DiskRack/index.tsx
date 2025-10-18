@@ -1,48 +1,63 @@
-import { Divider, Flex, Stack } from 'tgui-core/components';
+/**
+ * @file
+ * @copyright 2025
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license MIT
+ */
+
+import { Fragment } from 'react';
+import { Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { DiskButton } from './DiskButton';
+import { DiskDrive } from '../common/DiskDrive';
 import { Led } from './LED';
-import { Disk, DiskRackData } from './types';
+import type { DiskRackData } from './types';
+
+const getWindowHeight = (numDisks: number) =>
+  numDisks * 38 +
+  2 + // extra divider
+  6 * 2 + // top and bottom window padding
+  31; // title bar
 
 export const DiskRack = (_props: unknown) => {
-  const { data, act } = useBackend<DiskRackData>();
-  const { disks } = data;
+  const { act, data } = useBackend<DiskRackData>();
+  const { disks, has_lights } = data;
   return (
     <Window
-      title="Disk Rack"
-      height={disks.length * 46 + 5}
-      width={315 + (data.has_lights ? 25 : 0)}
+      height={getWindowHeight(disks.length)}
+      width={304 + (has_lights ? 26 : 0)}
     >
       <Window.Content>
-        <Divider />
-        <Stack vertical>
-          {disks.reverse().map((disk: Disk, index) => (
-            <>
-              <Stack.Item key={index}>
-                <Flex>
-                  <Flex.Item>
-                    {disk ? (
-                      <DiskButton
-                        index={disks.length - index - 1}
-                        diskName={disk.name}
-                        diskColor={disk.color}
-                      />
-                    ) : (
-                      <DiskButton index={disks.length - index - 1} />
+        <Stack vertical reverse>
+          <Stack.Divider />
+          {disks.map((disk, index) => {
+            const handleClick = () => act('diskAction', { dmIndex: index + 1 });
+            return (
+              <Fragment key={index}>
+                <Stack.Item>
+                  <Stack align="center">
+                    <Stack.Item>
+                      <DiskDrive onEject={handleClick} onInsert={handleClick}>
+                        {disk && (
+                          <DiskDrive.Disk color={disk.color}>
+                            {disk.name}
+                          </DiskDrive.Disk>
+                        )}
+                      </DiskDrive>
+                    </Stack.Item>
+                    {!!has_lights && (
+                      <Stack.Item>
+                        <Led flashing={disk?.light} />
+                      </Stack.Item>
                     )}
-                  </Flex.Item>
-                  {!!data.has_lights && (
-                    <Flex.Item>
-                      <Led flashing={disk?.light} />
-                    </Flex.Item>
-                  )}
-                </Flex>
-              </Stack.Item>
-              <Stack.Divider />
-            </>
-          ))}
+                  </Stack>
+                </Stack.Item>
+                <Stack.Divider />
+              </Fragment>
+            );
+          })}
         </Stack>
       </Window.Content>
     </Window>

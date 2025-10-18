@@ -41,7 +41,7 @@ proc/text2num_safe(x)
 /// Similar to `text2num_safe`, but returns the original string on failure.
 /proc/text2num_if_num(x)
 	. = text2num(x)
-	if (isnum_safe(.))
+	if (isnum_safe(.) && ("[.]" == x))
 		return
 	return x
 
