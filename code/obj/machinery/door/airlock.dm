@@ -884,10 +884,11 @@ var/global/list/cycling_airlocks = list()
 	return 0
 
 /obj/machinery/door/airlock/autoclose()
-	if(!src.welded)
-		close(0, 1)
-	else
-		..()
+	if (src.aiControlDisabled != 1)
+		if(!src.welded)
+			close(0, 1)
+		else
+			..()
 	return
 
 // ========== mechcomp duplicate code ============
