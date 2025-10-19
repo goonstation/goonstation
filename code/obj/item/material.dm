@@ -45,7 +45,7 @@
 			UpdateIcon()
 
 	update_icon()
-		src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+		src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
 	proc/update_stack_name() //! How the material should be named at different stack sizes
 		UpdateName(src) // get the name in order so it has whatever it needs
@@ -628,15 +628,9 @@
 /obj/item/raw_material/veranium
 	name = "veranium crystal"
 	desc = "A sparking crystal of veranium."
-	icon = 'icons/obj/items/materials/materials.dmi'
+	icon = 'icons/obj/items/materials/veranium.dmi'
 	material_name = "Veranium"
 	default_material = "veranium"
-
-	update_icon()
-		src.icon_state = "ore$$veranium"
-
-	get_stack_value()
-		return 1
 
 /obj/item/raw_material/yuranite
 	name = "yuranite"

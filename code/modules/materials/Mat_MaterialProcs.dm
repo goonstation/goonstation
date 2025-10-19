@@ -909,7 +909,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
 			return
 		if (istype(L))
-			L.shock(I, src.wattage, "All", 1, FALSE)
+			var/total_wattage = (I.amount * I.material_amt * src.wattage * 0.1) + src.wattage - 0.1
+			if(istype(I, /obj/item/raw_material/veranium))
+				var/obj/item/raw_material/veranium/ore = I
+				FLICK("ore[ore.icon_stack_value]_shock$$veranium", ore)
+			L.shock(I, total_wattage, "All", 1, FALSE)
 
 /datum/materialProc/arcflash_life
 	var/cd_min
