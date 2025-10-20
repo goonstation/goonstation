@@ -26,9 +26,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	get_desc(dist, mob/user)
 		. = ..()
-		var/show_gene_strain = GET_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) >= PHYTOVISION_UPGRADED ? TRUE : FALSE
-		if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) || show_gene_strain)
-			boutput(user, scan_plant(src, user, FALSE, show_gene_strain))
+		if (dist >= 5)
+			return
+		HYPphytoscopic_scan(user, src)
 
 	clamp_act(mob/clamper, obj/item/clamp)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)

@@ -462,3 +462,11 @@ proc/HYPstat_rounding(var/input_number)
 	// This proc will take a value and round up with a chance equal to the first two fractional numbers
 	// this means e.g. 4,24 in this proc will output a 5 with a 24% chance and a 4 with a 76% chance
 	return trunc(input_number) + (prob(fract(input_number) * 100) * sign(input_number))
+
+// Quick proc for phytoscopic glasses
+proc/HYPphytoscopic_scan(var/mob/user, var/atom/target, var/do_return = FALSE)
+	var/show_gene_strain = GET_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) >= PHYTOVISION_UPGRADED ? TRUE : FALSE
+	if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) || show_gene_strain)
+		if(do_return)
+			return scan_plant(target, user, FALSE, show_gene_strain)
+		boutput(user, scan_plant(target, user, FALSE, show_gene_strain))

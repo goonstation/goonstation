@@ -762,19 +762,17 @@ TYPEINFO(/obj/item/clothing/glasses/phyto)
 			if (src.vision_type >= PHYTOVISION_UPGRADED)
 				boutput(user, SPAN_ALERT("[src] already has a gene scan upgrade!"))
 				return
-			else
-				src.vision_type = PHYTOVISION_UPGRADED
-				var/mob/living/carbon/human/human_user = user
-				if (istype(human_user) && human_user.glasses == src)
-					APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src, src.vision_type)
-				src.icon_state = "phyto-upgraded"
-				boutput(user, SPAN_NOTICE("Gene scan upgrade installed."))
-				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
-				user.u_equip(W)
-				qdel(W)
-				return
-		else
-			return ..()
+			src.vision_type = PHYTOVISION_UPGRADED
+			var/mob/living/carbon/human/human_user = user
+			if (istype(human_user) && human_user.glasses == src)
+				APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src, src.vision_type)
+			src.icon_state = "phyto-upgraded"
+			boutput(user, SPAN_NOTICE("Gene scan upgrade installed."))
+			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
+			user.u_equip(W)
+			qdel(W)
+			return
+		return ..()
 
 	equipped(mob/user, slot)
 		. = ..()
