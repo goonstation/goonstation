@@ -1115,6 +1115,21 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "cobweb1"
 	anchored = ANCHORED_ALWAYS
 
+/obj/decal/cleanable/cobweb/cobwebs_1
+	icon_state = "cobwebs_1"
+
+SET_UP_DIRECTIONALS(/obj/decal/cleanable/cobweb/cobwebs_1, OFFSETS_COBWEB)
+
+/obj/decal/cleanable/cobweb/cobwebs_2
+	icon_state = "cobwebs_2"
+
+SET_UP_DIRECTIONALS(/obj/decal/cleanable/cobweb/cobwebs_2, OFFSETS_COBWEB)
+
+/obj/decal/cleanable/cobweb/cobwebs_3
+	icon_state = "cobwebs_3"
+
+SET_UP_DIRECTIONALS(/obj/decal/cleanable/cobweb/cobwebs_3, OFFSETS_COBWEB)
+
 /obj/decal/cleanable/molten_item
 	name = "gooey grey mass"
 	desc = "huh."
