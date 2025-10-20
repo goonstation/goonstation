@@ -894,22 +894,15 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	item_state = "clown_nose"
 	see_face = TRUE
 
-	var/spam_flag = 0
-	var/spam_timer = 100
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	var/volume = 50
 	var/randomized_pitch = 1
 
 	proc/honk_nose(mob/user as mob)
 		if (ON_COOLDOWN(src, "clown_nose", 10 SECONDS))
-			return
-		if (!spam_flag)
-			spam_flag = 1
-			src.add_fingerprint(user)
-			user?.visible_message("<B>[user]</B> honks the [src.name]!")
-			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN(src.spam_timer)
-				spam_flag = 0
 			return 1
+		src.add_fingerprint(user)
+		user?.visible_message("<B>[user]</B> honks the [src.name]!")
+		playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 		return 0
 
