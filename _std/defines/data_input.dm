@@ -34,5 +34,9 @@
 #define DATA_INPUT_LIST_PROVIDED "List"
 #define DATA_INPUT_LIST_VAR "List Var"
 
+// boop
+#define DATA_INPUT_BUTTON "Button"
+#define DATA_INPUT_BUTTON_LIST "Buttons"
+
 //TODO figure out associated list shit
 //TODO way to call things with New args. might be a seperate problem actually? Add to build mode spawning idk
