@@ -1653,6 +1653,13 @@ datum/commodity/drugs/sell/poppies
 	onmarket = 0
 	price = PAY_UNTRAINED
 
+/datum/commodity/clown_nose
+	comname = "Clown Nose"
+	comtype = /obj/item/clothing/mask/clown_nose
+	desc = "A clown nose, simple!"
+	onmarket = 0
+	price = PAY_UNTRAINED/5
+
 /*
 /datum/commodity/screamshoes
 	comname = "scream shoes"
