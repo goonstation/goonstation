@@ -1,4 +1,9 @@
 
+(t)mon oct 20 25
+(u)Lord_Earthfire
+(p)24832
+(e)🆕🛠️|C-Feature, A-Engineering
+(+)Pressure sensors by default give out the name of the object that triggered them as signal. You can override that signal, if you like.
 (t)fri oct 17 25
 (u)Egregorious
 (p)24557
