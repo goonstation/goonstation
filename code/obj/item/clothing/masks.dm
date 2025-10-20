@@ -889,7 +889,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 
 /obj/item/clothing/mask/clown_nose
 	name = "clown nose"
-	desc = "A classic red clown nose. My god, it even honks."
+	desc = "A classic red clown nose. It even honks!"
 	icon_state = "clown_nose"
 	item_state = "clown_nose"
 	see_face = TRUE
@@ -905,7 +905,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
-			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] face!")
+			user?.visible_message("<B>[user]</B> honks the [src.name]!")
 			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN(src.spam_timer)
 				spam_flag = 0
