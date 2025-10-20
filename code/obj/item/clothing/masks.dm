@@ -893,7 +893,6 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	icon_state = "clown_nose"
 	item_state = "clown_nose"
 	see_face = TRUE
-	var/base_icon_state = "clown_nose"
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -902,6 +901,8 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	var/randomized_pitch = 1
 
 	proc/honk_nose(mob/user as mob)
+		if (ON_COOLDOWN(src, "clown_nose", 10 SECONDS))
+			return
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
