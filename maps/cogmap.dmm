@@ -34899,10 +34899,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"cBU" = (
-/obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "cBV" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -41361,6 +41357,13 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
+"haC" = (
+/obj/machinery/light/emergency,
+/obj/stool/chair/red{
+	dir = 4
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/main)
 "haH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43020,6 +43023,17 @@
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"ikR" = (
+/obj/machinery/light,
+/obj/disposalpipe/segment/brig{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 8
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/main)
 "ilc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -46389,6 +46403,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
+"kPH" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "kRb" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -46874,10 +46892,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
-"lmP" = (
-/obj/machinery/light/emergency,
-/turf/simulated/floor/red/side,
-/area/station/security/main)
 "lnh" = (
 /obj/machinery/camera/directional/east{
 	pixel_y = -10
@@ -47926,14 +47940,6 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
-"mje" = (
-/obj/machinery/light,
-/obj/disposalpipe/segment/brig{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/red/side,
-/area/station/security/main)
 "mjS" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -96360,7 +96366,7 @@ aho
 kwp
 aJf
 aHB
-lmP
+haC
 awM
 rwX
 awM
@@ -96662,7 +96668,7 @@ ubA
 omr
 aJh
 aKo
-mje
+ikR
 awM
 aOa
 aOh
@@ -141224,7 +141230,7 @@ czU
 czU
 czU
 czU
-cBU
+kPH
 cBQ
 cBQ
 adC

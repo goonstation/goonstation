@@ -735,6 +735,8 @@
 			if (I)
 				fireflash(I,0, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 				I.combust()
+			sleep(1 SECONDS)
+			src.toast_laws(TRUE)
 
 	/**
 	 * Sets an arbitrary slot to the passed aiModule - will override any module in the slot.
@@ -792,6 +794,26 @@
 	proc/DeleteAllLaws()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
+
+	///toasts each bread-law in the law rack and eject them out
+	proc/toast_laws(var/update_laws = TRUE)
+		var/amount_of_toast = 0
+		for (var/i in 1 to MAX_CIRCUITS)
+			if(istype(src.law_circuits[i], /obj/item/aiModule/bread))
+				src.DeleteLaw(i)
+				amount_of_toast++
+		if (amount_of_toast < 1)
+			return
+		logTheThing(LOG_ADMIN, null, "[log_object(src)] toasted a total of [amount_of_toast] bread. Scrumptious!")
+		src.visible_message(SPAN_ALERT("[src] expels some fresh toast!"))
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		for(var/i in 1 to amount_of_toast)
+			var/obj/item/reagent_containers/food/snacks/breadslice/toastslice/new_slice = new /obj/item/reagent_containers/food/snacks/breadslice/toastslice(get_turf(src))
+			var/turf/target_turf = get_ranged_target_turf(get_turf(src), pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST), 7 * 32)
+			new_slice.throw_at(target_turf, 7, rand(2,4))
+		if(update_laws)
+			src.UpdateLaws()
+
 
 	/**
 	 * This will cause a module to glitch, either totally replace it law or adding picked_law to its text (depening on replace).

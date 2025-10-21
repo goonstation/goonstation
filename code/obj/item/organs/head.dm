@@ -312,7 +312,7 @@
 		else if (src.head && src.head.wear_image_icon)
 			actual_head.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
-		if(!(src.head && src.head.seal_hair))
+		if(!(src.head && src.head.c_flags & COVERSHAIR))
 			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor?.hair_override)
 				src.head_image_cust_one.pixel_x = 0
 				src.head_image_cust_one.pixel_y = 0

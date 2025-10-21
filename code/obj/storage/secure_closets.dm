@@ -886,9 +886,10 @@
 	/obj/item/satchel/hydro,\
 	/obj/item/reagent_containers/glass/wateringcan,\
 	/obj/item/sponge,\
-	/obj/item/kitchen/food_box/egg_box/rancher,
-	/obj/item/storage/box/knitting,
-	/obj/item/storage/box/nametags)
+	/obj/item/kitchen/egg_box/rancher,\
+	/obj/item/storage/box/knitting,\
+	/obj/item/storage/box/nametags,\
+	/obj/item/kitchen/egg_box/empty)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
@@ -970,8 +971,8 @@
 			bc2.pixel_x = 3
 			p.pixel_x = 3
 
-			var/obj/item/kitchen/food_box/egg_box/e1 = new(src)
-			var/obj/item/kitchen/food_box/egg_box/e2 = new(src)
+			var/obj/item/kitchen/egg_box/e1 = new(src)
+			var/obj/item/kitchen/egg_box/e2 = new(src)
 			e1.pixel_y = -4
 			e2.pixel_y = -4
 
@@ -1092,3 +1093,11 @@
 	/obj/item/clothing/head/wig = 2,
 	/obj/item/scissors,
 	/obj/item/razor_blade)
+
+// NT official branded lockers
+/obj/storage/secure/closet/command/nanotrasen
+	name = "NanoTrasen Locker"
+	req_access = list(access_centcom)
+	reinforced = TRUE
+	icon_state = "nanotrasen"
+	icon_closed = "nanotrasen"

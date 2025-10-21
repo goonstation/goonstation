@@ -11,7 +11,7 @@ TYPEINFO(/area/station/shield_zone)
 	minimaps_to_render_on = null
 	occlude_foreground_parallax_layers = FALSE
 	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
 
 /* ==================== Generator ==================== */

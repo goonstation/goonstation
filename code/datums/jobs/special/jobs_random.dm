@@ -365,6 +365,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	linkcolor = MEDICAL_LINK_COLOR
 	wages = PAY_DOCTORATE
 	request_limit = 1 // limited workspace
+	trait_list = list("training_therapy")
 	access_string = "Psychiatrist"
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
 	slot_card = /obj/item/card/id/medical

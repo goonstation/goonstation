@@ -213,6 +213,10 @@
 	#define COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME "assembly_set_trigger_time"
 	/// Will be send to the assembly if one of its components gets disposed
 	#define COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL "assembly_on_part_disposal"
+	/// Will be send to the attacking_component of the assembly when it is about to be used. If it returns TRUE, the attack proc will prevent the attack entirely
+	#define COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE "assembly_on_attack_override"
+	/// Will be send to the attacking_component of the assembly when it is being used. If it returns TRUE, the attack proc will not call the attack parent of the assembly
+	#define COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE "assembly_do_attack_override"
 
 	// ---- implant signals ----
 
