@@ -132,7 +132,18 @@
 
 		if (istool(W, TOOL_SAWING))
 			user.visible_message(SPAN_NOTICE("[user] hollows out [src]."))
-			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
+			var/obj/item/clothing/mask/skull/smask
+
+			if (src.icon_state == "skull_changeling" || istype(src, /obj/item/skull/changeling))
+				smask = new /obj/item/clothing/mask/skull/changeling(src.loc)
+
+			else if (src.icon_state == "skull_vampire" || istype(src, /obj/item/skull/vampire))
+				smask = new /obj/item/clothing/mask/skull/vampire(src.loc)
+
+			else if (src.icon_state == "skull" || istype(src, /obj/item/skull)) //Human & all other skulls without a mask sprite
+				smask = new /obj/item/clothing/mask/skull(src.loc)
+
+			user.put_in_hand_or_drop(smask)
 			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 			if (src.key)
@@ -141,7 +152,6 @@
 				SK.visible_message(SPAN_ALERT("<B>A key clatters out of \the [src]!</B>"))
 				src.key = null
 
-			smask.set_loc(get_turf(user))
 			if (src.donor || src.donor_name)
 				smask.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] skull mask"
 				smask.desc = "The hollowed out skull of [src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"]"
