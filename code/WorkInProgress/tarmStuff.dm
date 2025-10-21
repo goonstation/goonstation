@@ -743,16 +743,47 @@ TYPEINFO(/obj/item/device/geiger)
 	New()
 		. = ..()
 		AddComponent(/datum/component/holdertargeting/geiger)
-		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(change_icon_state))
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(on_geiger_tick))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
+		// geiger counter + assembly-applier -> geiger counter/Applier-Assembly
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
-	proc/change_icon_state(source, stage)
-		switch(stage)
-			if(1 to 2)
-				FLICK("geiger-1", src)
-			if(3 to 4)
-				FLICK("geiger-2", src)
-			if(5)
-				FLICK("geiger-3", src)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_get_state(var/manipulated_geiger, var/obj/item/assembly/parent_assembly)
+		return TRUE
+
+	proc/assembly_setup(var/manipulated_geiger, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to apply the component onto the assembly as well
+		parent_assembly.AddComponent(/datum/component/holdertargeting/geiger)
+
+	proc/assembly_removal(var/manipulated_geiger, var/obj/item/assembly/parent_assembly, var/mob/user)
+		//we need to remove the component from the assembly once we remove this
+		parent_assembly.RemoveComponentsOfType(/datum/component/holdertargeting/geiger)
+
+
+/// ----------------------------------------------
+
+
+
+	proc/on_geiger_tick(source, stage)
+		if(src.master && !ON_COOLDOWN(src, "geiger_assembly", 0.5 SECONDS))
+			SPAWN( 0 )
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["message"] = "ACTIVATE"
+				src.master.receive_signal(signal)
+		else
+			switch(stage)
+				if(1 to 2)
+					FLICK("geiger-1", src)
+				if(3 to 4)
+					FLICK("geiger-2", src)
+				if(5)
+					FLICK("geiger-3", src)
 
 
 /obj/decal/fireplace  //for Jan's chrismas event

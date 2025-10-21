@@ -74,6 +74,7 @@ var/list/removed_jobs = list(
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
 	var/use_satchel //Automatically convert backpack to satchel?
+	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -252,6 +253,7 @@ var/list/removed_jobs = list(
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
 			"useSatchel" = src.use_satchel,
+			"preferredUplink" = src.preferred_uplink,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -540,6 +542,16 @@ var/list/removed_jobs = list(
 
 			if ("toggle-satchel")
 				src.use_satchel = !src.use_satchel
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-uplink")
+				if (isnull(src.preferred_uplink) || src.preferred_uplink == PREFERRED_UPLINK_STANDALONE)
+					src.preferred_uplink = PREFERRED_UPLINK_PDA
+				else if (src.preferred_uplink == PREFERRED_UPLINK_PDA)
+					src.preferred_uplink = PREFERRED_UPLINK_RADIO
+				else
+					src.preferred_uplink = PREFERRED_UPLINK_STANDALONE
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1415,7 +1427,7 @@ var/list/removed_jobs = list(
 			"#0FF" = "teal",
 			"#0C0" = "green",
 			"#F00" = "red",
-			"#90F" = "purple",
+			"#90F" = "violet",
 			"#F9F" = "pink",
 			"#F90" = "orange",
 			"#09F" = "blue",
@@ -1729,6 +1741,8 @@ var/list/removed_jobs = list(
 			src.AH.u_color = "#FEFEFE"
 		if (src.AH.s_tone == null || src.AH.s_tone == "#FFFFFF" || src.AH.s_tone == "#ffffff")
 			src.AH.s_tone = "#FEFEFE"
+		if (!src.preferred_uplink)
+			src.preferred_uplink = PREFERRED_UPLINK_PDA
 
 	proc/keybind_prefs_updated(var/client/C)
 		if (!isclient(C))

@@ -78,10 +78,24 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 	nudge_compatible = FALSE
+	var/pinhole = FALSE
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 100)
+
+	attackby(obj/item/I, mob/user)
+		if ((isscrewingtool(I) || istype(I, /obj/item/pen)) && !src.pinhole)
+			src.pinhole = TRUE
+			src.block_vision = FALSE
+			setProperty("disorient_resist_eye", 2) // matches eyepatch with pinhole
+			boutput(user, SPAN_NOTICE("You poked two holes into the blindfold, now you can pretend that you can see without seeing"))
+		else
+			. = ..()
+
+	get_desc()
+		if (src.pinhole)
+			. += " Wait? There are tiny holes in it!"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target) && user.a_intent != INTENT_HARM) //ishuman() works on monkeys too apparently.
@@ -437,7 +451,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	item_state = "headset"
 	block_eye = "R"
 	nudge_compatible = FALSE
-	var/pinhole = 0
+	var/pinhole = FALSE
 	var/mob/living/carbon/human/equipper
 	wear_layer = MOB_GLASSES_LAYER2
 
@@ -452,11 +466,12 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		return ..()
 
 	attackby(obj/item/W, mob/user)
-		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
+		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !src.pinhole)
+			setProperty("disorient_resist_eye", 2) // You still have something on your eye and taking up a slot
 			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
-				pinhole = 1
-				block_eye = null
+				src.pinhole = TRUE
+				src.block_eye = FALSE
 				appearance_flags |= RESET_COLOR
 				if(!theEye)
 					user.show_message(SPAN_ALERT(">Um. Wow. Thats kinda grode."))
@@ -466,14 +481,18 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				logTheThing(LOG_COMBAT, user, "removes their [log_object(theEye)] using an eyepatch and [log_object(W)] at [log_loc(user)].")
 				return
 			else
-				pinhole = 1
-				block_eye = null
+				pinhole = TRUE
+				block_eye = FALSE
 				appearance_flags |= RESET_COLOR
 				user.show_message(SPAN_NOTICE("You poke a tiny pinhole into [src]!"))
-				if (!pinhole)
-					desc = "[desc] Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
 				return
 		return ..()
+
+	get_desc ()
+		if (src.pinhole)
+			. += " Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
+
+
 	attack_self(mob/user)
 
 		if (src.icon_state == "eyepatch-R")
