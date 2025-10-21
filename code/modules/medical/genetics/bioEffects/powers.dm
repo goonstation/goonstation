@@ -1372,7 +1372,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(target)] into [material_id] at [log_loc(owner)].")
 		src.owner.visible_message(SPAN_ALERT("[src.owner] touches [target], turning it to [material_id]!"))
 		target.setMaterial(getMaterial(material_id))
-		return 1
 
 /datum/bioEffect/power/midas/pickle
 	name = "Pickle Touch"
