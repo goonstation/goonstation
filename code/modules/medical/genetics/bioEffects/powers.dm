@@ -1118,7 +1118,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (!src.owner.reagents)
 			boutput(owner, SPAN_NOTICE("...you don't feel any different."))
 			return CAST_ATTEMPT_SUCCESS
-		var/multiplier = misfire ? 4 : src.linked_power.power
+		var/multiplier = misfire ? 4 + src.linked_power.power : src.linked_power.power
 		boutput(owner, SPAN_NOTICE("You get pumped up!"))
 		src.owner.emote("scream")
 		src.owner.reagents.add_reagent("epinephrine",20 * multiplier)
