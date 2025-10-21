@@ -53,16 +53,16 @@
 			"fa-all.min.css"		= "[resource("vendor/css/tgui/fa-all.min.css")]",
 		)
 
-/// Anton text font for paper time/name stamps
+/// Fonts used for paper text & time/name stamps
 /datum/asset/basic/anton_font
 	local_assets = list(
-		"anton.min.css",
+		"paper.min.css",
 		"anton-regular.woff2"
 	)
 
 	init()
 		. = ..()
 		url_map = list(
+			"paper.min.css"		= "[resource("vendor/css/tgui/paper.min.css")]",
 			"anton-regular.woff2"	= "[resource("css/fonts/anton-regular.woff2")]",
-			"anton.min.css"		= "[resource("vendor/css/tgui/anton.min.css")]",
 		)
