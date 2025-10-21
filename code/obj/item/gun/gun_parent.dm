@@ -290,9 +290,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				user.show_text(src.click_msg, "red")
 		return FALSE
 
-	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
-		var/mob/living/carbon/human/H = user
-		H.gunshot_residue = 1
+	if (src.add_residue && ismob(user)) // Kinetic firearms leave behind forensic evidence
+		var/mob/M = user
+		var/datum/forensic_data/basic/residue_data = new(register_id("Gunshot residue found"), flags = FORENSIC_REMOVE_CLEANING)
+		M.add_evidence(residue_data, FORENSIC_GROUP_NOTES)
+		src.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/simulated/floor))
+			T.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
 
 	if (!src.silenced)
 		for (var/mob/O in AIviewers(target, null))
@@ -444,11 +449,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	handle_recoil(user, start, target, POX, POY)
 
-	if (ismob(user))
+	if (src.add_residue && ismob(user)) // Kinetic firearms leave behind forensic evidence
 		var/mob/M = user
-		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
-			var/mob/living/carbon/human/H = user
-			H.gunshot_residue = 1
+		var/datum/forensic_data/basic/residue_data = new(register_id("Gunshot residue found"), flags = FORENSIC_REMOVE_CLEANING)
+		M.add_evidence(residue_data, FORENSIC_GROUP_NOTES)
+		src.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/simulated/floor))
+			T.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
 
 	src.UpdateIcon()
 	return TRUE

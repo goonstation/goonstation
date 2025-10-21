@@ -45,7 +45,6 @@
 <html>
 <head>
 	<title>[title]</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 [Make_view_variabls_style()]
 </head>
@@ -188,7 +187,6 @@
 <html>
 <head>
 	<title>[title]</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 [Make_view_variabls_style()]</head>
 <body>
@@ -221,6 +219,8 @@
 
 	if (A)
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
+		html += " &middot; <a href='byond://?src=\ref[src.holder];action=accessspeechtree;target=\ref[D]'>Speech Tree</a>"
+		html += " &middot; <a href='byond://?src=\ref[src.holder];action=accesslistentree;target=\ref[D]'>Listen Tree</a>"
 		if (ismob(D) || isobj(D))
 			html += " &middot; <a href='byond://?src=\ref[src];GetThing=\ref[D]'>Get (turf)</a> &middot; <a href='byond://?src=\ref[src];GetThing_Insert=\ref[D]'>Get (loc)</a>"
 			if (ismob(D))

@@ -91,7 +91,9 @@
 			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
-		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
+		//mostly people turn their instrument volume down to avoid the mime with 12 pianos and an autotyper, not the secoff with a whistle
+		var/channel = src.pick_random_note ? VOLUME_CHANNEL_GAME : VOLUME_CHANNEL_INSTRUMENTS
+		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = channel)
 
 		if (prob(5))
 			if (src.dog_bark)
@@ -635,7 +637,10 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		src.setProperty("vault_speed",3)
 		src.setProperty("disorient_resist",45)
 
-
+/* --------------- Bike horn: now in blue ------------ */
+/obj/item/instrument/bikehorn/blue
+	name = "blue bike horn"
+	icon_state = "bike_horn_blue"
 
 /* -------------------- Harmonica -------------------- */
 
@@ -854,7 +859,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			gibs(S.loc, null, bdna, btype)
 
 			S.set_mutantrace(/datum/mutantrace/skeleton)
-			S.real_name = "[S.name]'s skeleton"
+			S.real_name = "[S.name]’s skeleton"
 			S.name = S.real_name
 			S.update_body()
 			S.UpdateName()

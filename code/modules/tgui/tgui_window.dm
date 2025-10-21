@@ -11,6 +11,8 @@
 	var/is_browser = FALSE
 	var/status = TGUI_WINDOW_CLOSED
 	var/locked = FALSE
+	var/visible = FALSE
+	var/interface = null // |GOONSTATION-ADD| Interface string used to find a similar window in the pool
 	var/datum/tgui/locked_by
 	var/datum/subscriber_object
 	var/subscriber_delegate
@@ -47,8 +49,10 @@
  *
  * required client /client
  * required id string A unique window identifier.
+ * optional pooled bool
+ * optional interface string - used to find a similar window in the pool
  */
-/datum/tgui_window/New(client/client, id, pooled = FALSE)
+/datum/tgui_window/New(client/client, id, interface, pooled = FALSE) // |GOONSTATION-CHANGE|
 	. = ..() // |GOONSTATION-ADD| Probably good I guess
 	src.id = id
 	src.client = client
@@ -57,6 +61,14 @@
 	src.pooled = pooled
 	if(pooled)
 		src.pool_index = TGUI_WINDOW_INDEX(id)
+	src.interface = interface // |GOONSTATION-ADD| Initialize interface string
+
+/datum/tgui_window/disposing() // |GOONSTATION-ADD|
+	src.client = null
+	src.locked_by = null
+	src.subscriber_object = null
+	src.subscriber_delegate = null
+	. = ..()
 
 /**
  * public
@@ -280,6 +292,7 @@
 		log_tgui(client,
 			context = "[id]/close (suspending)",
 			window = src)
+		visible = FALSE
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
@@ -287,6 +300,7 @@
 		context = "[id]/close",
 		window = src)
 	release_lock()
+	visible = FALSE
 	status = TGUI_WINDOW_CLOSED
 	message_queue = null
 	// Do not close the window to give user some time
@@ -306,6 +320,10 @@
 /datum/tgui_window/proc/send_message(type, payload, force)
 	if(!client)
 		return
+
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	var/message = TGUI_CREATE_MESSAGE(type, payload)
 	// Place into queue if window is still loading
 	if(!force && status != TGUI_WINDOW_READY)
@@ -328,6 +346,10 @@
 /datum/tgui_window/proc/send_raw_message(message, force)
 	if(!client)
 		return
+
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	// Place into queue if window is still loading
 	if(!force && status != TGUI_WINDOW_READY)
 		if(!message_queue)
@@ -380,6 +402,9 @@
  * Callback for handling incoming tgui messages.
  */
 /datum/tgui_window/proc/on_message(type, list/payload, list/href_list) // |GOONSTATION-CHANGE| Explicit list for payload/href_list
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	// Status can be READY if user has refreshed the window.
 	if(type == "ready" && status == TGUI_WINDOW_READY)
 		// Resend the assets
@@ -409,6 +434,9 @@
 	switch(type)
 		if("ping")
 			send_message("ping/reply", payload)
+		if("visible")
+			visible = TRUE
+			SEND_SIGNAL(src, COMSIG_TGUI_WINDOW_VISIBLE, client)
 		if("suspend")
 			close(can_be_suspended = TRUE)
 		if("close")
@@ -473,6 +501,7 @@
 		"type" = message_type,
 		"count" = chunk_count,
 		"chunks" = list(),
+		"timeout" = 1.25 SECONDS + TIME // |GOONSTATION-CHANGE|
 	)
 
 /datum/tgui_window/proc/append_payload_chunk(payload_id, chunk)
@@ -481,14 +510,30 @@
 		return
 	var/list/chunks = payload["chunks"]
 	chunks += chunk
-	if(length(chunks) >= payload["count"])
+	if(length(chunks) < payload["count"]) // |GOONSTATION-CHANGE| Extend timeout on incomplete payloads, flip logic
+		payload["timeout"] = 1.25 SECONDS + TIME // |GOONSTATION-CHANGE|
+	else
+		payload["timeout"] = 0 // |GOONSTATION-CHANGE|
 		var/message_type = payload["type"]
 		var/final_payload = chunks.Join()
 		remove_oversized_payload(payload_id)
 		on_message(message_type, json_decode(final_payload), list("type" = message_type, "payload" = final_payload, "tgui" = TRUE, "window_id" = id))
-	else
-		SPAWN (1 SECOND)
-			remove_oversized_payload(payload_id)
 
 /datum/tgui_window/proc/remove_oversized_payload(payload_id)
 	oversized_payloads -= payload_id
+
+// |GOONSTATION-ADD| Lazy sweep expired oversized payloads (no timers 😿😿😿)
+/datum/tgui_window/proc/prune_oversized_payloads()
+	if(!length(oversized_payloads))
+		return
+	var/list/to_remove = list()
+	for(var/pid in oversized_payloads)
+		var/list/payload = oversized_payloads[pid]
+		if(!islist(payload))
+			to_remove += pid
+			continue
+		var/timeout = payload["timeout"]
+		if(isnum(timeout) && (timeout <= TIME))
+			to_remove += pid
+	for(var/pid in to_remove)
+		remove_oversized_payload(pid)

@@ -7,19 +7,9 @@
 	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
-		var/x = 1
-		for (var/client/C)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
-				continue
-			x++
-		return x
+		return src.total_player_count()
 	else if(T == "players")
-		var/n = 0
-		for(var/client/C)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
-				continue
-			n++
-		return n
+		return src.total_player_count()
 
 	else if (T == "status")
 		var/list/s = list()
@@ -993,21 +983,6 @@
 							return TRUE
 
 				var/msg = "Failed to find pre-auth client for [preauth_ckey] during auth callback"
-				logTheThing(LOG_ADMIN, null, msg)
-				logTheThing(LOG_DIARY, null, msg, "admin")
-				return FALSE
-
-			if ("legacy_discord_auth_callback")
-				var/preauth_ckey = plist["preauth_ckey"]
-
-				for (var/client/C in pre_auth_clients)
-					if (C.ckey == preauth_ckey)
-						if (istype(C.client_auth_provider, /datum/client_auth_provider/goonhub))
-							var/datum/client_auth_provider/goonhub/provider = C.client_auth_provider
-							provider.show_external("authed")
-							return TRUE
-
-				var/msg = "Failed to find pre-auth client for [preauth_ckey] during legacy Discord auth callback"
 				logTheThing(LOG_ADMIN, null, msg)
 				logTheThing(LOG_DIARY, null, msg, "admin")
 				return FALSE

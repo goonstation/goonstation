@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   Flex,
+  Icon,
   Image,
   Section,
   Stack,
@@ -17,10 +18,10 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
-import { Icon } from '../../components';
+import { ByondDir } from '../../common/directions';
 import { Window } from '../../layouts';
 import { ProductList } from '../common/ProductList';
-import { ByondDir, HandPipeDispenserData, PipeData, Tab } from './type';
+import { HandPipeDispenserData, PipeData, Tab } from './type';
 
 export const HandPipeDispenser = () => {
   const { act, data } = useBackend<HandPipeDispenserData>();

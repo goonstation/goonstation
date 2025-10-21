@@ -8,9 +8,9 @@
 
 	New(M)
 		..(M)
-		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "SOUTH,EAST", HUD_LAYER_1, tooltipTheme = "flock")
+		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "SOUTH,EAST", HUD_LAYER_1, tooltip_options = list("theme" = "flock"))
 		releaseButton.desc = "Remove yourself from this drone and become intangible."
-		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER_1, tooltipTheme = "flock")
+		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER_1, tooltip_options = list("theme" = "flock"))
 		eggButton.desc = "Lay egg is true! Starts at [FLOCK_LAY_EGG_COST] and scales with number of drones."
 		if (istype(M, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/F = M

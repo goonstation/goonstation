@@ -95,8 +95,6 @@
 	var/makeup = null // for when you wanna look pretty
 	var/makeup_color = null
 
-	var/gunshot_residue = 0 // Fire a kinetic firearm and get forensic evidence all over you (Convair880).
-
 	var/datum/hud/human/hud
 	var/mini_health_hud = 0
 
@@ -497,7 +495,7 @@
 		for(var/atom/limb in list(l_arm, r_arm, l_leg, r_leg))
 			var/list/limb_name_parts = splittext(limb.name, "'s")
 			if(length(limb_name_parts) == 2)
-				limb.name = "[user_name]'s [limb_name_parts[2]]"
+				limb.name = "[user_name]’s [limb_name_parts[2]]"
 
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
@@ -1456,7 +1454,7 @@
 		hud.set_visible(hud.twohandl, 0)
 		hud.set_visible(hud.twohandr, 0)
 		hud.remove_item(I)
-		hud.add_object(I, HUD_LAYER+2, (src.hand ? hud.layouts[hud.layout_style]["lhand"] : hud.layouts[hud.layout_style]["rhand"]))
+		hud.add_object(I, HUD_LAYER+2, (src.hand ? hud.layouts[hud.layout_style]["lhand"] : hud.layouts[hud.layout_style]["rhand"]),FALSE)
 		switch(src.hand)
 			if(1)//Left
 				src.l_hand = I
@@ -1542,7 +1540,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"], FALSE)
 					return TRUE
 			else
 				if (!src.r_hand)
@@ -1555,7 +1553,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"], FALSE)
 					return TRUE
 		return FALSE
 
@@ -1751,9 +1749,9 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 	if (src.wear_mask)
 		hud.add_other_object(src.wear_mask,hud.layouts[hud.layout_style]["mask"])
 	if (src.l_hand)
-		hud.add_other_object(src.l_hand,hud.layouts[hud.layout_style]["lhand"])
+		hud.add_other_object(src.l_hand,hud.layouts[hud.layout_style]["lhand"],FALSE)
 	if (src.r_hand)
-		hud.add_other_object(src.r_hand,hud.layouts[hud.layout_style]["rhand"])
+		hud.add_other_object(src.r_hand,hud.layouts[hud.layout_style]["rhand"],FALSE)
 	if (src.belt)
 		hud.add_other_object(src.belt,hud.layouts[hud.layout_style]["belt"])
 	if (src.wear_id)
@@ -2422,8 +2420,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
-	W.name = "[real_name]'s hair"
-	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
+	W.name = "[real_name]’s hair"
+	W.real_name = "[real_name]’s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 
@@ -3358,3 +3356,33 @@ mob/living/carbon/human/has_genetics()
 	sleep(1.2 SECONDS * spaces)
 	src.remove_typing_indicator()
 	src.say(text)
+
+/mob/living/carbon/human/on_forensic_scan(datum/forensic_scan/scan)
+	..()
+	if(!src.gloves?.hide_prints)
+		scan.add_text("Subject's Fingerprints: [src.bioHolder?.fingerprints]")
+	if(src.gloves)
+		scan.add_text("Subject's Glove ID: [src.gloves.glove_ID] [src.gloves.material_prints ? "([src.gloves.material_prints])" : null]")
+	if(src.bioHolder.Uid)
+		scan.add_text("Subject's DNA: [src.bioHolder.Uid]")
+
+	if (src.blood_DNA && !src.gloves) // Don't magically detect blood through worn gloves.
+		var/list/BH = params2list(src.blood_DNA)
+		for(var/i in BH)
+			scan.add_text("[i] (Hands)", FORENSIC_HEADER_DNA)
+
+	var/list/gear_to_check = list(src.head, src.wear_mask, src.w_uniform, src.wear_suit, src.belt, src.gloves, src.shoes, src.back, src.r_hand, src.l_hand)
+	for (var/obj/item/check in gear_to_check)
+		if (!check?.blood_DNA)
+			continue
+		var/list/BC = params2list(check.blood_DNA)
+		for(var/i in BC)
+			scan.add_text("[i] ([check.name])", FORENSIC_HEADER_DNA)
+
+	if(src.implant && length(src.implant) > 0)
+		var/wound_count = 0
+		for (var/obj/item/implant/I in src.implant)
+			if (istype(I, /obj/item/implant/projectile))
+				wound_count++
+		if(wound_count)
+			scan.add_text("Gunshot wounds: [wound_count] fragments detected")

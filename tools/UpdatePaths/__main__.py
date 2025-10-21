@@ -15,6 +15,12 @@ Replacement syntax example:
     /obj/effect/landmark/start/virologist : @DELETE
 Syntax for subtypes also exist, to update a path's type but maintain subtypes:
     /obj/structure/closet/crate/@SUBTYPES : /obj/structure/new_box/@SUBTYPES {@OLD}
+More advanced @SUBTYPES syntax:
+	In the old path, the @SUBTYPES keyword may be used multiple times. This is useful for finding paths that end in a specific path or contain a specific path.
+    In the new path, the @SUBTYPES keyword will refer to the ENTIRE subtype, starting from the first use of @SUBTYPES.
+	If multple @SUBTYPES keywords are used in the old path, in the new path the @SUBTYPES_N keyword will refer to the Nth subtype path.
+    /obj/machinery/camera/@SUBTYPES : /obj/machinery/camera/@SUBTYPES/directional - add the "directional" subtype to every instace (including subtypes that are already directional).
+    /obj/machinery/camera/@SUBTYPES/directional/@SUBTYPES : /obj/machinery/camera/@SUBTYPES_1 - remove all directional subtypes from every instance.
 New paths properties:
     @DELETE - if used as new path name the old path will be deleted
     @OLD - if used as property name copies all modified properties from original path to this one
@@ -29,6 +35,7 @@ Old paths properties:
     property = @ANY - will apply the rule when the property is mapedited, regardless of its value.
 """
 
+# won't get secret for some reason, add /+secret to the end and run again
 default_map_directory = "../.."
 
 default_map_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), default_map_directory)
@@ -76,11 +83,19 @@ def update_path(dmm_data, replacement_string, verbose=False):
         new_paths.append((new_path, new_path_props))
 
     subtypes = ""
-    if old_path.endswith("/@SUBTYPES"):
-        old_path = old_path[:-len("/@SUBTYPES")]
+    split_position = old_path.find("/@SUBTYPES")
+    if split_position != -1:
+        remaining_path = re.escape(old_path[split_position:])
+        old_path = old_path[:split_position]
         if verbose:
             print("Looking for subtypes of", old_path)
-        subtypes = r"(?:/\w+)*"
+
+        i = 1
+        while remaining_path.find("/@SUBTYPES") != -1:
+            remaining_path = remaining_path.replace("/@SUBTYPES", fr"(?P<subtype_{i}>(?:/\w+)*)", 1)
+            i += 1
+
+        subtypes = remaining_path
 
     replacement_pattern = re.compile(rf"(?P<path>{re.escape(old_path)}(?P<subtype>{subtypes}))\s*(:?{{(?P<props>.*)}})?$")
 
@@ -110,8 +125,16 @@ def update_path(dmm_data, replacement_string, verbose=False):
                 if verbose:
                     print("Deleting match : {0}".format(match.group(0)))
                 return [None]
-            elif new_path.find("/@SUBTYPES"):
-                out = new_path.replace("/@SUBTYPES", match.group('subtype'), 1)
+            elif new_path.find("/@SUBTYPES") != -1:
+                find_position = new_path.find("/@SUBTYPES_")
+                if find_position != -1:
+                    out = new_path
+                    while find_position != -1:
+                        i = int(out[find_position + len("/@SUBTYPES_")])
+                        out = out.replace(f"/@SUBTYPES_{i}", match.group(f"subtype_{i}"))
+                        find_position = out.find("/@SUBTYPES_")
+                else:
+                    out = new_path.replace("/@SUBTYPES", match.group('subtype'))
             else:
                 out = new_path
 

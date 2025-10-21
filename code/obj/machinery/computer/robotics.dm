@@ -7,7 +7,6 @@
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
 	circuit_type = /obj/item/circuitboard/robotics
-	id = 0
 	var/perma = 0
 
 	light_r =0.85
@@ -71,9 +70,10 @@
 						var/mob/living/silicon/robot/robot = locate(params["mob_ref"])
 						if (QDELETED(robot))
 							return
-						message_admins(SPAN_ALERT("[key_name(usr)] has activated the robot self destruct on [key_name(robot)]."))
-						logTheThing(LOG_COMBAT, usr, "has activated the robot killswitch process on [constructTarget(robot,"combat")]")
-						robot.setStatus("killswitch_robot", ROBOT_KILLSWITCH_DURATION)
+						var/datum/statusEffect/killswitch/killswitch_status = robot.setStatus("killswitch_robot", ROBOT_KILLSWITCH_DURATION)
+						var/immune = killswitch_status.owner_is_immune()
+						message_admins(SPAN_ALERT("[key_name(usr)] has activated the [immune ? "fake " : ""]robot self destruct on [key_name(robot)]."))
+						logTheThing(LOG_COMBAT, usr, "has activated the [immune ? "fake " : ""]robot killswitch process on [constructTarget(robot,"combat")]")
 					else
 						boutput(usr, SPAN_ALERT("Access Denied."))
 				return TRUE
@@ -90,7 +90,7 @@
 				var/mob/living/silicon/robot/robot = locate(params["mob_ref"])
 				if (QDELETED(robot))
 					return
-				if (robot.emagged)
+				if (robot.emagged || robot.syndicate)
 					if (robot.client)
 						boutput(robot, SPAN_NOTICE("<b>Equipment lockdown signal blocked!</b>"))
 						return
@@ -130,7 +130,15 @@
 
 /obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj, mob/user)
 	logTheThing(LOG_STATION, src, "is deconstructed by [key_name(user)] at [log_loc(src)]")
-	frame.circuit.id = src.id
+
+/obj/machinery/computer/robotics/save_board_data(obj/item/circuitboard/circuitboard)
+	. = ..()
+	circuitboard.saved_data = src.id
+
+/obj/machinery/computer/robotics/load_board_data(obj/item/circuitboard/circuitboard)
+	if(..())
+		return
+	src.id = circuitboard.saved_data
 
 /obj/machinery/computer/robotics/proc/update_silicon_statuses()
 	var/list/ais = list()
@@ -145,22 +153,22 @@
 			"killswitch_time" = killswitch_ai_status ? round((killswitch_ai_status.duration) / 10, 1) : null
 		))
 
-		for(var/mob/living/silicon/robot/R in A.connected_robots)
-			if(QDELETED(R))
-				continue
-			var/datum/statusEffect/killswitch/killswitch_robot_status = R.hasStatus("killswitch_robot")
-			var/datum/statusEffect/lockdown/lockdown_robot_status = R.hasStatus("lockdown_robot")
-			cyborgs += list(list(
-				"name" = R.name,
-				"mob_ref" = "\ref[R]",
-				"missing_brain" = isnull(R.part_head?.brain),
-				"status" = R.stat,
-				"cell_charge" = R.cell?.charge,
-				"cell_maxcharge" = R.cell?.maxcharge,
-				"module" = R.module ? capitalize(R.module.name) : null,
-				"lock_time" = lockdown_robot_status ? round(lockdown_robot_status.duration/10, 1) : null,
-				"killswitch_time" = killswitch_robot_status ? round((killswitch_robot_status.duration) / 10, 1) : null
-			))
+	for_by_tcl(R, /mob/living/silicon/robot)
+		if(QDELETED(R) || R.shell || R.dependent)
+			continue
+		var/datum/statusEffect/killswitch/killswitch_robot_status = R.hasStatus("killswitch_robot")
+		var/datum/statusEffect/lockdown/lockdown_robot_status = R.hasStatus("lockdown_robot")
+		cyborgs += list(list(
+			"name" = R.name,
+			"mob_ref" = "\ref[R]",
+			"missing_brain" = isnull(R.part_head?.brain),
+			"status" = R.stat,
+			"cell_charge" = R.cell?.charge,
+			"cell_maxcharge" = R.cell?.maxcharge,
+			"module" = R.module ? capitalize(R.module.name) : null,
+			"lock_time" = lockdown_robot_status ? round(lockdown_robot_status.duration/10, 1) : null,
+			"killswitch_time" = killswitch_robot_status ? round((killswitch_robot_status.duration) / 10, 1) : null
+		))
 
 	return list(ais, cyborgs)
 

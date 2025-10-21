@@ -9,9 +9,9 @@ import {
   Box,
   Button,
   ByondUi,
-  Flex,
   LabeledList,
   Section,
+  Stack,
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../../backend';
@@ -88,7 +88,7 @@ export const ScannerTab = () => {
                   size={1.5}
                   style={{
                     margin: '-4px',
-                    'margin-right': '4px',
+                    marginRight: '4px',
                   }}
                 />
                 {mr.name}
@@ -111,8 +111,8 @@ export const ScannerTab = () => {
       ) : (
         <>
           <Section title="Occupant">
-            <Flex>
-              <Flex.Item mr={1}>
+            <Stack fill>
+              <Stack.Item grow={1}>
                 <LabeledList>
                   <LabeledList.Item
                     label="Name"
@@ -181,9 +181,9 @@ export const ScannerTab = () => {
                     {bloodType}
                   </LabeledList.Item>
                 </LabeledList>
-              </Flex.Item>
+              </Stack.Item>
               {human && showPreview && (
-                <Flex.Item shrink={0}>
+                <Stack.Item shrink={0}>
                   <ByondUi
                     params={{
                       id: preview,
@@ -191,13 +191,12 @@ export const ScannerTab = () => {
                     }}
                     style={{
                       width: '64px',
-                      height: '128px',
+                      height: '96px',
                     }}
-                    hideOnScroll
                   />
-                </Flex.Item>
+                </Stack.Item>
               )}
-            </Flex>
+            </Stack>
           </Section>
           <Section title="Potential Genes">
             <GeneList
