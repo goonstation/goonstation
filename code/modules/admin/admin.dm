@@ -3309,7 +3309,7 @@ var/global/noir = 0
 				return
 
 		if ("secretsdebug")
-			if (src.level >= LEVEL_CODER)
+			if (src.level >= LEVEL_ADMIN)
 				switch(href_list["type"])
 					if("budget")
 						src.owner:debug_variables(wagesystem)
