@@ -53,7 +53,8 @@
 			src.thing.event_handler_flags |= MOVE_NOCLIP
 		if (throw_type & (THROW_ARC))
 			var/arc_height = (params && params["arc_height"]) ? params["arc_height"] : 24
-			animate(src.thing, pixel_y = arc_height, time = 0.4 SECONDS, easing=CUBIC_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
+			var/arc_duration = (params && params["arc_time"]) ? params["arc_time"] / 2 : 1 SECONDS
+			animate(src.thing, pixel_y = arc_height, time = arc_duration, easing=CUBIC_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
 		..()
 
 	proc/get_throw_travelled()
@@ -138,9 +139,10 @@ var/global/datum/controller/throwing/throwing_controller = new
 				end_throwing = TRUE
 				break
 
-			if ((thr.throw_type & (THROW_ARC)) && ( thr.dist_travelled >= (thr.range * 0.6) ) )
+			if ((thr.throw_type & (THROW_ARC)) && ( thr.dist_travelled >= (thr.range * 0.5) ) )
 				thr.throw_type &= ~THROW_ARC
-				animate(thing, pixel_y = 0, time = 1 SECONDS, easing=CUBIC_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
+				var/arc_duration = (thr.params && thr.params["arc_time"]) ? thr.params["arc_time"] / 2 : 1 SECONDS
+				animate(thing, pixel_y = 0, time = arc_duration, easing=CUBIC_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
 
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
 			var/hit_thing = ( thr.throw_type & THROW_NO_CLIP ) ? null : thing.hit_check(thr)
