@@ -333,8 +333,7 @@ datum
 			var/current_tally = holder.addiction_tally[src.id]
 			if (addiction_min < current_tally && isliving(M) && prob(addProb))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
-				addiction = get_disease_from_path(/datum/ailment/addiction).setup_strain(src, current_tally, M)
-				M.contract_disease(/datum/ailment/addiction, null, addiction, TRUE)
+				M.contract_addiction(src, TRUE)
 				return
 			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
 				boutput(M, SPAN_ALERT("You think it might be time to hold back on [src.name] for a bit..."))
