@@ -1,5 +1,9 @@
 
 (t)wed oct 22 25
+(u)JORJ949
+(p)24985
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)Spy thieves will now be informed if a target bounty is in cryogenic storage
 (u)Kanthes
 (p)24947
 (e)🆕🔬|C-Feature, A-Science
