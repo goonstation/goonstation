@@ -49,8 +49,11 @@
 		src.end_throw_callback = end_throw_callback
 		src.user = usr // ew
 		src.throw_type = throw_type
-		if (throw_type == THROW_PHASE)
+		if (throw_type & (THROW_PHASE | THROW_NO_CLIP))
 			src.thing.event_handler_flags |= MOVE_NOCLIP
+		if (throw_type & (THROW_ARC))
+			var/arc_height = (params && params["arc_height"]) ? params["arc_height"] : 24
+			animate(src.thing, pixel_y = arc_height, time = 0.4 SECONDS, easing=CUBIC_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
 		..()
 
 	proc/get_throw_travelled()
@@ -108,7 +111,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 				end_throwing = TRUE
 				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
-			if (thr.throw_type == THROW_THROUGH_WALL)
+			if (thr.throw_type & THROW_THROUGH_WALL)
 				var/busted = FALSE
 				if (istype(next, /turf/simulated/wall))
 					var/turf/simulated/wall/wall = next
@@ -124,8 +127,8 @@ var/global/datum/controller/throwing/throwing_controller = new
 					end_throwing = FALSE
 					thr.throw_type = THROW_NORMAL
 
-			if (thr.throw_type == THROW_PHASE)
-				if (thr.get_throw_travelled() > 1)
+			if (thr.throw_type & (THROW_PHASE | THROW_NO_CLIP) )
+				if ( (thr.throw_type & THROW_PHASE) && thr.get_throw_travelled() > 1)
 					thr.throw_type = THROW_NORMAL
 					thing.event_handler_flags = initial(thing.event_handler_flags)
 				else
@@ -134,8 +137,13 @@ var/global/datum/controller/throwing/throwing_controller = new
 				thr.hitAThing = TRUE // of !throwing on their own, so manually checking if Move failed as end condition
 				end_throwing = TRUE
 				break
+
+			if ((thr.throw_type & (THROW_ARC)) && ( thr.dist_travelled >= (thr.range * 0.6) ) )
+				thr.throw_type &= ~THROW_ARC
+				animate(thing, pixel_y = 0, time = 1 SECONDS, easing=CUBIC_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
+
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
-			var/hit_thing = thing.hit_check(thr)
+			var/hit_thing = ( thr.throw_type & THROW_NO_CLIP ) ? null : thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
 			if(!thing.throwing || hit_thing)
@@ -143,7 +151,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 				break
 
 		if(end_throwing)
-			if (thr.throw_type == THROW_PHASE)
+			if (thr.throw_type & (THROW_PHASE | THROW_NO_CLIP))
 				thing.event_handler_flags = initial(thing.event_handler_flags)
 			thrown -= thr
 			if(thr.end_throw_callback)
