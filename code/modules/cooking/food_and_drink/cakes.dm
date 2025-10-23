@@ -189,8 +189,10 @@
 		else
 			src.clayer--
 			src.update_cake_context()
+		var/list/slices = list()
 		for(var/i in 1 to CAKE_SLICES) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/schild = new /obj/item/reagent_containers/food/snacks/cake
+			slices.Add(schild)
 			schild.icon_state = "slice-base_custom"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
@@ -222,7 +224,14 @@
 			schild.set_loc(get_turf(src.loc))
 		qdel(s) //cleaning up the template slice
 		if(deletionqueue)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, slices, user)
 			qdel(src)
+		else //The hackness of sadness is back. Cakes account for trays because they're not always deleted on slicing, blergh.
+			var/obj/surgery_tray/tray = locate() in src.loc
+			if(!tray)
+				return
+			for(var/obj/item/I in slices)
+				tray.place_on(I)
 
 
 
