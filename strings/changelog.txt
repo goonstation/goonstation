@@ -1,4 +1,28 @@
 
+(t)thu oct 23 25
+(u)LorrMaster
+(p)24745
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(*)Updated the coloring effects for more materials.
+(*)New material colors now combine properly in the nano-crucible.
+(u)LeahTheTech
+(p)24934
+(e)🔨|A-Player-Actions
+(+)Getting interrupted no longer closes your chatbox.
+(t)wed oct 22 25
+(u)JORJ949
+(p)24985
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)Spy thieves will now be informed if a target bounty is in cryogenic storage
+(u)Kanthes
+(p)24947
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds the Food Processor artifact, which will take biological materials to produce mysterious foods.
+(t)mon oct 20 25
+(u)Lord_Earthfire
+(p)24832
+(e)🆕🛠️|C-Feature, A-Engineering
+(+)Pressure sensors by default give out the name of the object that triggered them as signal. You can override that signal, if you like.
 (t)fri oct 17 25
 (u)Egregorious
 (p)24557
