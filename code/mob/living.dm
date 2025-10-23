@@ -1642,10 +1642,6 @@ TYPEINFO(/mob/living)
 					enteredtext = ";" + enteredtext
 				winset(client, "[window_type]window.say-input", "text=\"\"")
 				if (isnull(client)) return
-				winset(client, "[window_type]window", "is-visible=false")
-				if (isnull(client)) return
-				src.cancel_typing(window_type)
-				src.cancel_emote_typing(window_type)
 				found_text = TRUE
 				break
 	if (found_text)
