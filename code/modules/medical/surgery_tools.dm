@@ -1131,12 +1131,12 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 
 	// Sometimes items are altered by being deleted and replaced with a new item. This is for handling such conversions while attached to the tray
 	proc/on_item_converted(obj/item/I, var/new_item, var/user)
-		var/turf = get_turf(src) // some conversions place the new item elsewhere, we don't want to attach them to the tray if they aren't on it
+		var/src_turf = get_turf(src) // some conversions place the new item elsewhere, we don't want to attach them to the tray if they aren't on it
 		if (islist(new_item))
 			for (var/obj/item/item in new_item)
-				if (get_turf(item) == turf)
+				if (get_turf(item) == src_turf)
 					src.attach(item)
-		else if (get_turf(new_item) == turf)
+		else if (isitem(new_item) && get_turf(new_item) == src_turf)
 			src.attach(new_item)
 		src.detach(I) // technically shouldn't need to do this since the old item will usually be qdel'd, but it doesn't hurt to be safe
 
