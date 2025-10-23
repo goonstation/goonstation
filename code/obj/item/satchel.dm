@@ -328,7 +328,7 @@
 			/obj/item/parts/human_parts/leg,
 			/obj/item/raw_material/cotton,
 			/obj/item/feather,
-      /obj/item/ammo/bullets/thingammo),
+      		/obj/item/ammo/bullets/thingammo,
 			/obj/item/bananapeel)
 			exceptions = list(/obj/item/plant/tumbling_creeper, /obj/item/reagent_containers/food/snacks/ingredient/egg)
 			// tumbling creeper have size restrictions and should not be carried in large amount
