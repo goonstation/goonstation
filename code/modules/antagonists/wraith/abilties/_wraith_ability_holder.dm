@@ -76,6 +76,22 @@
 			if (W.forced_manifest == TRUE)
 				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (!target)
+			return CAST_ATTEMPT_SUCCESS
+		var/list/turfs = raytrace(src.holder.owner, target)
+		for (var/turf/T as anything in turfs)
+			var/obj/decal/cleanable/saltpile/salt = locate() in T
+			if (salt)
+				if (!ON_COOLDOWN(T, "wraith_ability_block", 2 SECONDS))
+					salt.add_filter("wraith_ability_block", 1, outline_filter(2, "#000"))
+					animate(salt.filters[length(salt.filters)], alpha = 0, time = 0)
+					animate(alpha = 255, time = 0.5 SECONDS)
+					animate(alpha = 0, time = 0.5 SECONDS)
+					SPAWN(1 SECOND)
+						salt.remove_filter("wraith_ability_block")
+					playsound(T, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+					boutput(src.holder.owner, SPAN_ALERT("That [SPAN_BOLD(pick("DISGUSTING", "FEARFUL", "PURE", "HOLY"))] salt blocks your power."), "wraith_ability_fail")
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return CAST_ATTEMPT_SUCCESS
 
 	doCooldown()

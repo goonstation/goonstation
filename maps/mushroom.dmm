@@ -9152,8 +9152,8 @@
 /area/station/engine/engineering/private)
 "bcN" = (
 /obj/storage/secure/closet/fridge,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/item/storage/box/bacon_kit,
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
@@ -13255,9 +13255,8 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "cPd" = (
-/obj/noticeboard{
-	name = "Wanted Board";
-	pixel_y = 28
+/obj/noticeboard/directional/north{
+	name = "Wanted Board"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -14578,9 +14577,8 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hop)
 "dXn" = (
-/obj/noticeboard{
-	name = "Complaint Board";
-	pixel_y = 28
+/obj/noticeboard/directional/north{
+	name = "Complaint Board"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -21677,7 +21675,7 @@
 /turf/space,
 /area/station/engine/proto)
 "kaN" = (
-/obj/noticeboard/north,
+/obj/noticeboard/directional/north,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "kbe" = (
@@ -26750,13 +26748,7 @@
 /area/station/maintenance/southeast)
 "ojx" = (
 /obj/submachine/seed_manipulator,
-/obj/noticeboard/persistent{
-	name = "Botany persistent notice board";
-	persistent_id = "botany";
-	pixel_y = 0;
-	dir = 8;
-	pixel_x = -32
-	},
+/obj/noticeboard/persistent/botany/directional/west,
 /turf/simulated/floor/greenblack{
 	dir = 9
 	},
@@ -30889,10 +30881,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/engine/engineering/ce)
 "raZ" = (
-/obj/noticeboard/persistent{
-	name = "Cargo persistent notice board";
-	persistent_id = "cargo"
-	},
+/obj/noticeboard/persistent/cargo/directional/north,
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},

@@ -42,15 +42,18 @@
 #define MGA_TRACKING "Tracking Alert"
 #define MGA_SYNDICATE "Syndicate Alert"
 
-// Job categories
-#define JOB_SPECIAL "special"
+// Job "department" categories
 #define JOB_COMMAND "command"
 #define JOB_SECURITY "security"
 #define JOB_RESEARCH "research"
 #define JOB_MEDICAL "medical"
 #define JOB_ENGINEERING "engineering"
 #define JOB_CIVILIAN "civilian"
+#define JOB_SPECIAL "special"
 #define JOB_CREATED "created"
+#define JOB_NANOTRASEN "nanotrasen"
+#define JOB_SYNDICATE "syndicate"
+#define JOB_HALLOWEEN "halloween"
 
 // Job categories
 #define STAPLE_JOBS (1<<0)

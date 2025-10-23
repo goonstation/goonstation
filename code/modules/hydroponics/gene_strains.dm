@@ -207,6 +207,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 				else if (!growing && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/seedless) && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/reagent_blacklist))
 					//we create a new seed now
 					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(current_plantgenes, current_planttype, carrying_plantpot.generation)
+					temporary_seed.dont_mutate = TRUE //QoL for using this commut for non-creepers, so you don't have to deal with any mutants.
 					// now we are able to plant the seed
 					checked_plantpot.HYPnewplant(temporary_seed)
 					spawn(0.5 SECONDS)
@@ -391,3 +392,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 		// I don't want to preemptively counteract stuff like immortal unless necessary, that'd be no fun.
 		h_data.pot.harvests = 1
 		h_data.extra_harvest_chance = -999
+    
+/datum/plant_gene_strain/stable_alleles
+	name = "Immutable Alleles"
+	desc = "This plant's alleles are more stable, they will be passed down when harvested."

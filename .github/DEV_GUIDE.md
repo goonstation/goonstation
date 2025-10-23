@@ -64,7 +64,7 @@ If that's not there, you can press <kbd>Ctrl + Shift + P</kbd> to open the comma
 
 Now, paste the URL of the repository you created in the last step. It should look like this: `https://github.com/YOURNAME/goonstation`. Then, select a folder to keep your local repository. *The process of downloading might take a while.*
 
-Once it's downloaded, open the folder in VS Code. You now have your own local copy of the code!
+Once it's downloaded, open the new clone of the repository (likely a folder named `goonstation`) in VS Code. You now have your own local copy of the code!
 
 Next, we're going to need to get some necessary extensions!
 
@@ -103,7 +103,7 @@ We need to add the main Goonstation repository as a remote now. :satellite:
 
 It is likely that when you cloned your github repository, this upstream remote was already set up for you. If that's the case, you can skip **adding the remote**, and move straight to setting your local master to track the master branch.
 
-**Adding the remote:** If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
+**Adding the remote:** If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. Put https://github.com/goonstation/goonstation as the URL. Then, it'll prompt you for a name, which should be `upstream`. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
 It's also useful to have your local master track the main Goonstation master branch, so you can keep in sync with all the new changes automatically. To do this, press (<kbd>Ctrl + \`</kbd>) to open the terminal and then run
 ```
