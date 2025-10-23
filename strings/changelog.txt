@@ -1,5 +1,10 @@
 
 (t)thu oct 23 25
+(u)LorrMaster
+(p)24745
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(*)Updated the coloring effects for more materials.
+(*)New material colors now combine properly in the nano-crucible.
 (u)LeahTheTech
 (p)24934
 (e)🔨|A-Player-Actions
