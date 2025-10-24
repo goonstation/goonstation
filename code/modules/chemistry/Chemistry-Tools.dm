@@ -685,7 +685,7 @@ proc/ui_describe_reagents(atom/A)
 					bucket_hat.set_loc(get_turf(H))
 					H.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], [splash? "splashing" : "bouncing off"] [H] and falling to the floor."), \
 										SPAN_ALERT("[src] falls from \the [targetDoor], [splash? "splashing you and " : ""]bouncing off your hat."))
-				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, bucket_hat, user)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, bucket_hat)
 				qdel(src) //it's a hat now
 			else
 				//aw, fine, it just falls on the floor
