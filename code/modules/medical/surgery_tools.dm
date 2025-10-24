@@ -1138,7 +1138,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 					src.attach(item)
 		else if (isitem(new_item) && get_turf(new_item) == src_turf)
 			src.attach(new_item)
-		src.detach(I) // technically shouldn't need to do this since the old item will usually be qdel'd, but it doesn't hurt to be safe
+		src.detach(I) // This is necessary because sometimes the original is stored in limbo instead of deleted, but should be treated as if it were gone
 
 	proc/toggle_brake(mob/user)
 		src.anchored = !src.anchored
