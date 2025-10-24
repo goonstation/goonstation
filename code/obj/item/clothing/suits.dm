@@ -866,11 +866,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 						boutput(user, SPAN_ALERT("You were interrupted!"))
 						return
 					else
+						var/list/bandages = list()
 						for (var/i=3, i>0, i--)
-							new /obj/item/bandage(get_turf(src))
+							bandages.Add(new /obj/item/bandage(get_turf(src)))
 						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 						boutput(user, "You cut [src] into bandages.")
 						user.u_equip(src)
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, bandages, user)
 						qdel(src)
 						return
 				if ("Cut cable")
@@ -1306,6 +1308,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 		var/obj/item/newsuit = new /obj/item/clothing/suit/space/emerg
 		user.put_in_hand_or_drop(newsuit)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newsuit, user)
 		qdel(src)
 
 /obj/item/clothing/suit/space/emerg/science
