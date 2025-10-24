@@ -454,8 +454,7 @@
 						else if (H.abilityHolder)
 							H.abilityHolder.dispose()
 							H.abilityHolder = null
-						H.set_mutantrace(/datum/mutantrace/kudzu)
-						H.show_antag_popup("kudzu")
+						H.mind?.add_antagonist(ROLE_KUDZUPERSON, source = ANTAGONIST_SOURCE_CONVERTED, respect_mutual_exclusives = FALSE)
 					natural_opening = 1
 					qdel(src)
 		else
