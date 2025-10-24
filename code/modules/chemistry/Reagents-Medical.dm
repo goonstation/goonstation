@@ -780,7 +780,7 @@ datum
 			transparency = 255
 			value = 8 // 2c + 3c + 1c + 1c + 1c
 			threshold = THRESHOLD_INIT
-			var/list/flushed_reagents = list("LSD","lsd_bee","psilocybin","crank","bathsalts","THC","space_drugs","catdrugs","methamphetamine","epinephrine","synaptizine")
+			var/list/flushed_reagents = list("LSD","lsd_bee","psilocybin","crank","bathsalts","THC","space_drugs","catdrugs","methamphetamine","epinephrine","synaptizine","madness_toxin")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
