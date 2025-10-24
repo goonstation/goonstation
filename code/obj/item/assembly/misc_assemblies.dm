@@ -541,11 +541,13 @@ Contains:
 	if(ismob(src.loc))
 		var/mob/handling_user = src.loc
 		handling_user.u_equip(src)
+	var/list/items_removed = list()
 	for(var/obj/item/removed_item in items_to_remove)
 		SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, null)
 		removed_item.master = null
 		if(!removed_item.qdeled && !removed_item.disposed)
 			removed_item.set_loc(target_turf)
+			items_removed.Add(removed_item)
 		if(removed_item in src.additional_components)
 			src.additional_components -= removed_item
 	src.trigger = null
@@ -553,6 +555,7 @@ Contains:
 	src.target = null
 	src.remove_attacking_component()
 	src.chargeable_component = null
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, items_removed)
 	qdel(src)
 
 
