@@ -529,6 +529,8 @@ TYPEINFO(/mob/living)
 			src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 	else if (params["ctrl"])
 		var/atom/movable/movable = target
+		if (istype(movable, /turf))
+			movable = src.get_pullable_atom(movable)
 		if (istype(movable))
 			movable.pull(src)
 
@@ -1640,10 +1642,6 @@ TYPEINFO(/mob/living)
 					enteredtext = ";" + enteredtext
 				winset(client, "[window_type]window.say-input", "text=\"\"")
 				if (isnull(client)) return
-				winset(client, "[window_type]window", "is-visible=false")
-				if (isnull(client)) return
-				src.cancel_typing(window_type)
-				src.cancel_emote_typing(window_type)
 				found_text = TRUE
 				break
 	if (found_text)
@@ -1749,6 +1747,8 @@ TYPEINFO(/mob/living)
 
 /// makes mob auto pick up the highest weight item on a turf. if multiple have that weight, last one in the order of contents var is picked
 /mob/living/proc/auto_pickup_item(atom/target_loc)
+	if (src.lying)
+		return
 	var/turf/T = get_turf(target_loc)
 	if (!T)
 		return
@@ -1761,6 +1761,27 @@ TYPEINFO(/mob/living)
 	if (picked_item)
 		picked_item.pick_up_by(src)
 		return TRUE
+
+/// gets a pullable atom on a turf, prioritizing first found of objects, then highest weight item, then first found of mobs
+/mob/living/proc/get_pullable_atom(atom/target_loc)
+	var/turf/T = get_turf(target_loc)
+	if (!T)
+		return
+	var/obj/item/picked_item
+	for (var/atom/movable/AM in T.contents)
+		if (AM.anchored)
+			continue
+		if (istype(AM, /obj) && !istype(AM, /obj/item))
+			return AM
+		else if (istype(AM, /obj/item))
+			var/obj/item/I = AM
+			if (!picked_item)
+				picked_item = I
+			else if (I.w_class >= picked_item.w_class)
+				picked_item = I
+		else if (ismob(AM) && !isintangible(AM))
+			return AM
+	return picked_item
 
 /mob/living/clamp_act()
 	if (isintangible(src))

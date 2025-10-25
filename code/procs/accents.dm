@@ -1375,7 +1375,7 @@ proc/random_accent()
 	P.chars_used = used
 	return P
 
-/proc/voidSpeak(var/message) // sharing the creepiness with everyone!!
+/proc/voidSpeak(message, mutable_tags = FALSE)
 	if (!message)
 		return
 
@@ -1402,10 +1402,20 @@ proc/random_accent()
 			randomPos = " position: relative; top: [rand(-3,3)]px; left: [rand(-3,3)]px;"
 		else
 			randomPos = ""
-		processedMessage += "<span style='font-size: [fontSize]%;[randomPos]'>[c]</span>"
+
+		if (mutable_tags)
+			processedMessage += MAKE_CONTENT_IMMUTABLE("<span style='font-size: [fontSize]%;[randomPos]'>")
+			processedMessage += c
+			processedMessage += MAKE_CONTENT_IMMUTABLE("</span>")
+
+		else
+			processedMessage += "<span style='font-size: [fontSize]%;[randomPos]'>[c]</span>"
 
 
-	return "<em>[processedMessage]</em>"
+	if (mutable_tags)
+		return "[MAKE_CONTENT_IMMUTABLE("<em>")][processedMessage][MAKE_CONTENT_IMMUTABLE("</em>")]"
+	else
+		return "<em>[processedMessage]</em>"
 
 // zalgo text proc, borrowed from eeemo.net
 
@@ -2624,4 +2634,11 @@ proc/leetspeakify(string, chance=100)
 	)
 	for (var/pattern in bingus_list)
 		string = replacetext(string, regex(pattern, "i"), bingus_list[pattern])
+	return string
+
+proc/frogify(var/string)
+
+	if(prob(15))
+		string += pick(" ribbit", " croak", " brp", " weh", " burup")
+
 	return string

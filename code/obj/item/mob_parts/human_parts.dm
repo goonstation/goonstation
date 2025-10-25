@@ -87,7 +87,7 @@
 			// zam note - removing this again.
 			SPAWN(2 SECONDS)
 				if (new_holder && istype(new_holder))
-					name = "[new_holder.real_name]'s [initial(name)]"
+					name = "[new_holder.real_name]’s [initial(name)]"
 		if (src.skintoned)
 			if (holder_ahol)
 				colorize_limb_icon()
@@ -207,6 +207,11 @@
 				hit_atom.changeStatus("stunned", 2 SECONDS)
 			return
 		..()
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.original_DNA)
+			scan.add_text("[src]'s DNA: [src.original_DNA]")
 
 	/// Determines what the limb's skin tone should be
 	proc/colorize_limb_icon()
@@ -362,6 +367,12 @@
 			holder.u_equip(I)
 			I.set_loc(holder.loc)
 		. = ..()
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.original_fprints)
+			scan.add_text("Arm's fingerprints: [src.original_fprints]")
+
 
 
 /obj/item/parts/human_parts/arm/left

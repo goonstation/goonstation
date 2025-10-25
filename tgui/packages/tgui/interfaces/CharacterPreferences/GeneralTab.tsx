@@ -211,6 +211,11 @@ export const GeneralTab = () => {
               Y/N
             </Button.Checkbox>
           </LabeledList.Item>
+          <LabeledList.Item label="Preferred Uplink">
+            <Button onClick={() => act('update-uplink')}>
+              {data.preferredUplink}
+            </Button>
+          </LabeledList.Item>
         </LabeledList>
       </Section>
     </>

@@ -1096,7 +1096,7 @@
 /area/station/maintenance/north)
 "avE" = (
 /obj/table/auto,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/item/storage/box/plates{
 	pixel_x = -10
 	},
@@ -4519,7 +4519,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/hop)
 "bYB" = (
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/hos)
 "bYH" = (
@@ -8795,9 +8795,7 @@
 /area/station/security/hos)
 "dTJ" = (
 /obj/machinery/disposal,
-/obj/noticeboard{
-	pixel_y = 28
-	},
+/obj/noticeboard/directional/north,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -49378,7 +49376,7 @@
 	},
 /area/research_outpost/protest)
 "wxr" = (
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/restroom{
 	name = "Safety Shower"
@@ -51068,7 +51066,7 @@
 	},
 /area/station/security/checkpoint/sec_foyer)
 "xjy" = (
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/ce)
 "xjV" = (

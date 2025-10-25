@@ -2258,6 +2258,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 1
 	initial_reagents = list("juice_pickle"=5)
+	mat_changename = "pickle"
+	default_material = "pickle"
 
 	trash
 		name = "trash pickle"

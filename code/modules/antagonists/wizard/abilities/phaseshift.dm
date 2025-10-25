@@ -228,7 +228,7 @@
 				src.set_cloaked(0)
 
 			else
-				if (T.RL_GetBrightness() < 0.2 && can_act(owner))
+				if (!T.is_lit() && can_act(owner))
 					src.set_cloaked(1)
 				else
 					src.set_cloaked(0)

@@ -322,6 +322,12 @@ ABSTRACT_TYPE(/obj/item)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		var/contra = GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS)
+		if(contra)
+			scan.add_text("CONTRABAND: Level [contra]")
+
 	proc/update_wear_image(mob/living/carbon/human/H, override)
 		return
 
@@ -1854,7 +1860,16 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
 	return
 
+///This will be called when the item is build into a /obj/item/assembly on examine()
+/obj/item/proc/assembly_get_part_examine_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	return
+
 ///This will be called when the item is build into a /obj/item/assembly on get_admin_log_message(). Use this for additional information for logging.
 /obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
 	return
+
+///Called during attackby() to determine whether the default attack message should be suppressed.
+///Override this to add logic for suppressing the default attack message, or override it with a custom one.
+/obj/item/proc/should_suppress_attack(var/object, mob/user, params)
+	return flags & SUPPRESSATTACK
 

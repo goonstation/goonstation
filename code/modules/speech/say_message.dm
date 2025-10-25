@@ -1,5 +1,3 @@
-var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
-
 /**
  *	The base message type; it contains the content of a message and all of the relevant metadata. Any text that has been passed
  *	to `say()` is in turn passed into a new say message datum.
@@ -175,7 +173,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 			src.prefix = lowertext(trimtext(copytext(src.content, 1, cut_position)))
 			src.content = copytext(src.content, cut_position, MAX_MESSAGE_LEN)
 
-	src.content = src.make_safe_for_chat(src.content)
+	src.content = trimtext(src.content)
 
 	// Determine whether this message has a singing prefix, and adjust the content accordingly.
 	if (copytext(src.content, 1, 2) == "%")
@@ -188,6 +186,8 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 	if (ismob(src.speaker))
 		src.run_mob_and_client_checks()
+
+	src.content = src.make_safe_for_chat(src.content)
 
 /datum/say_message/disposing()
 	src.speaker = null
@@ -211,15 +211,21 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 	// Remove forbidden ASCII characters and whitespace from the beginning and end.
 	message = trimtext(message)
-	// Remove HTML tags.
-	if (!(src.flags & SAYFLAG_IGNORE_HTML))
-		message = strip_html(message)
 
-		// Check for URLs.
-		if (global.url_regex.Find(message))
-			if (ismob(src.speaker))
-				boutput(src.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-			return
+	// Handle message mutability.
+	// Strip any existing mutable tags.
+	message = STRIP_MUTABLE_CONTENT_TAGS(message)
+
+	// At this point return if the message is empty, so to avoid inserting empty mutable tags.
+	if (!message)
+		return
+
+	// If the message should not strip HTML, make the HTML tags immutable.
+	if (src.flags & SAYFLAG_IGNORE_HTML)
+		message = MAKE_HTML_TAGS_IMMUTABLE(message)
+
+	// Declare the message mutable.
+	message = MAKE_CONTENT_MUTABLE(message)
 
 	return message
 
@@ -242,13 +248,13 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 /// Determines the say sound that this message should use, and plays it.
 /datum/say_message/proc/process_say_sound()
+	if (src.flags & SAYFLAG_ADMIN_MESSAGE)
+		return
+
 	if (world.time < src.message_origin.last_voice_sound + VOICE_SOUND_COOLDOWN)
 		return
 
-	if (src.say_sound == NO_SAY_SOUND)
-		return
-
-	if (!src.say_sound && !src.speaker.voice_type && !src.speaker.voice_sound_override)
+	if ((src.say_sound == NO_SAY_SOUND) || (!src.say_sound && !src.speaker.voice_type && !src.speaker.voice_sound_override))
 		return
 
 	src.say_sound ||= src.speaker.voice_sound_override
@@ -277,7 +283,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 /// Determines the speech bubble that this message should use, and displays it on the speaker.
 /datum/say_message/proc/process_speech_bubble()
-	if (!src.speaker.use_speech_bubble)
+	if ((src.flags & SAYFLAG_ADMIN_MESSAGE) || !src.speaker.use_speech_bubble)
 		return
 
 	var/speech_bubble_icon
@@ -305,6 +311,9 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 /datum/say_message/proc/format_for_output(atom/listener)
 	// Apply any message modifier flags to the message.
 	global.SpeechManager.ApplyMessageModifierPostprocessing(src)
+
+	// Apply HTML escaping to mutable characters.
+	APPLY_CALLBACK_TO_MESSAGE_CONTENT(src, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(strip_html)))
 
 	// Apply loudness effects.
 	if (!isnull(src.message_size_override))

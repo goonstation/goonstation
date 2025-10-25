@@ -27,7 +27,7 @@ datum
 		var/fluid_g = 255
 		var/addiction_prob = 0 // per-tick chance that addiction will surface
 		var/addiction_min = 10 // how high the tally for this addiction needs to be before addiction_prob starts rolling
-		var/max_addiction_severity = "HIGH" // HIGH = barfing, stuns, etc, LOW = twitching, getting tired
+		var/addiction_severity = HIGH_ADDICTION_SEVERITY // HIGH = barfing, stuns, etc, LOW = twitching, getting tired
 		var/dispersal = 4 // The range at which this disperses from a grenade. Should be lower for heavier particles (and powerful stuff).
 		var/volatility = 0 // Volatility determines effectiveness in pipebomb. This is 0 for a bad additive, otherwise a positive number which linerally affects explosive power.
 		var/reacting = 0 // fuck off chemist spam
@@ -186,13 +186,9 @@ datum
 							H.sims.affectMotive("Hygiene", hygiene_change)
 
 				if(INGEST)
-					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
-					if (AD)
-						M.make_jittery(-5)
-						AD.last_reagent_dose = world.timeofday
-						if (AD.stage != 1)
-							boutput(M, SPAN_NOTICE("<b>You feel slightly better, but for how long?</b>"))
-							AD.stage = 1
+					if (src.addiction_prob && M.ailments)
+						for(var/datum/ailment_data/addiction/Addictn in M.ailments)
+							Addictn.ingested_addictive_reagent(src, volume)
 
 			M.material_trigger_on_chems(src, volume)
 			for(var/atom/A in M)
@@ -252,7 +248,7 @@ datum
 						H.sims.affectMotive("Energy", energy_value)
 
 			if (addiction_prob)
-				src.handle_addiction(M, deplRate, addiction_prob)
+				deplRate += src.handle_addiction(M, deplRate, addiction_prob, mult)
 
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
@@ -269,7 +265,6 @@ datum
 		///This calculates the depletion rate of a chem. In case you want to modify the result of the chems normal depletion rate
 		proc/calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
 			SHOULD_CALL_PARENT(TRUE)
-
 			var/resulting_depletion = src.depletion_rate * mult
 			if (isliving(affected_mob))
 				var/mob/living/living_mob = affected_mob
@@ -313,42 +308,33 @@ datum
 				M.take_toxin_damage(severity * mult)
 			return effect
 
-
-
-		proc/handle_addiction(var/mob/living/M, var/rate, var/addProb)
-			//DEBUG_MESSAGE("[src.id].handle_addiction([M],[rate])")
-			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
-			if (AD)
-				//DEBUG_MESSAGE("already have [AD.name]")
-				return AD
-			//DEBUG_MESSAGE("addProb [addProb]")
+		/// returns
+		proc/handle_addiction(var/mob/living/M, var/rate, var/addProb, var/mult)
+			var/datum/ailment_data/addiction/addiction = M.addicted_to_reagent(src)
+			if (addiction)
+				// Get extra metabolisation from addiction level
+				// I don't like this being inline, but it's a few less proc calls for the life loop I guess
+				. = round(addiction.addiction_meter * addiction.extra_metabolisation * mult, 0.01)
+			// Metabolisation effects for addictive reagents for all addictions
+			for(var/datum/ailment_data/addiction/ad in M.ailments)
+				ad.metabolised_addictive_reagent(src, rate + ., mult)
+			if (addiction)
+				return
+			. = 0
 			if (isliving(M))
 				var/mob/living/H = M
 				if (H.traitHolder.hasTrait("strongwilled"))
 					addProb /= 2
 					rate /= 2
-					//DEBUG_MESSAGE("strongwilled: addProb [addProb], rate [rate]")
 				if (H.traitHolder.hasTrait("addictive_personality"))
 					addProb *= 2
 					rate *= 2
-					//DEBUG_MESSAGE("addictive_personality: addProb [addProb], rate [rate]")
-			if (!holder.addiction_tally)
-				holder.addiction_tally = list()
-			//DEBUG_MESSAGE("holder.addiction_tally\[src.id\] = [holder.addiction_tally[src.id]]")
-			holder.addiction_tally[src.id] += rate
+			LAZYLISTADDASSOC(holder.addiction_tally, src.id, rate)
 			var/current_tally = holder.addiction_tally[src.id]
-			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
 			if (addiction_min < current_tally && isliving(M) && prob(addProb))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
-				AD = get_disease_from_path(/datum/ailment/addiction).setup_strain()
-				AD.associated_reagent = src.name
-				AD.last_reagent_dose = world.timeofday
-				AD.name = "[src.name] addiction"
-				AD.affected_mob = M
-				AD.max_severity = src.max_addiction_severity
-				M.contract_disease(/datum/ailment/addiction, null, AD, TRUE)
-				//DEBUG_MESSAGE("became addicted: [AD.name]")
-				return AD
+				M.contract_addiction(src, TRUE)
+				return
 			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
 				boutput(M, SPAN_ALERT("You think it might be time to hold back on [src.name] for a bit..."))
 			return

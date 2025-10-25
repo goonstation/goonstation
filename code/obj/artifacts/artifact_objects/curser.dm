@@ -148,23 +148,14 @@
 		for (var/mob/L as anything in src.active_cursees)
 			L.delStatus(src.chosen_curse)
 			if (do_playsound)
-				playsound(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
-		src.active_cursees = list()
+				playsound(L, 'sound/effects/lit.ogg', 100, TRUE)
+
+	proc/curse_cleanup()
 		src.blood_curse_active = FALSE
 		src.aging_curse_active = FALSE
 		src.disp_curse_active = FALSE
 		if (src.maze)
 			QDEL_NULL(src.maze)
-
-	proc/lift_curse_specific(do_playsound, mob/living/L)
-		if ((L in src.active_cursees) && length(src.active_cursees) == 1)
-			src.lift_curse(do_playsound)
-			return
-		if (do_playsound)
-			L.playsound_local(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
-		if (L in src.active_cursees)
-			L.delStatus(src.active_cursees[L])
-		src.active_cursees -= L
 
 	// maze width is only defined in this proc, if changed, care needs to be taken for other values used
 	// also note, loaded rooms (x1, y1) location is at the bottom left of the room, not the middle
@@ -324,8 +315,7 @@
 
 	Crossed(atom/movable/AM)
 		if (!src.density && AM.hasStatus("art_maze_curse"))
-			var/datum/statusEffect/art_curse/maze/curse = AM.getStatusList()["art_maze_curse"]
-			curse.linked_curser.lift_curse_specific(TRUE, AM)
+			AM.delStatus("art_maze_curse")
 		else
 			return ..()
 

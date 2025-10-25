@@ -97,7 +97,7 @@ var/global
 				"browserassets/src/css/fonts/fontawesome-webfont.eot",
 				"browserassets/src/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/src/css/fonts/fontawesome-webfont.woff",
-				"browserassets/src/css/fonts/Twemoji.ttf",
+				"browserassets/src/css/fonts/twemoji.woff2",
 				"browserassets/src/vendor/css/font-awesome.css",
 				"browserassets/src/css/browserOutput.css"
 			)
@@ -215,7 +215,7 @@ var/global
 					ircbot.export_async("admin", ircmsg)
 
 				//Add evasion ban details
-				var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
+				var/datum/apiModel/Tracked/Ban/ban = checkBan["ban"]
 				bansHandler.addDetails(
 					ban.id,
 					TRUE,
@@ -224,6 +224,7 @@ var/global
 					isnull(found["compid"]) ? null : src.owner.computer_id,
 					isnull(found["ip"]) ? null : src.owner.address
 				)
+				del(src.owner)
 	src.cookieSent = 1
 
 /datum/chatOutput/proc/getContextFlags()
