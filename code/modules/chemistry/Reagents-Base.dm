@@ -809,6 +809,12 @@
 	hygiene_value = 2
 	value = 3 // 1 1 1
 
+	on_add()
+		global.holy_water_reagent_holders += src.holder
+
+	on_remove()
+		global.holy_water_reagent_holders -= src.holder
+
 	reaction_mob(var/mob/target, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 		..()
 		var/reacted = 0

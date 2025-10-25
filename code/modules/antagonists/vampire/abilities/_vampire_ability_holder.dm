@@ -121,11 +121,14 @@
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
 		. = list()
-		.["Blood:"] = round(src.points)
-		.["Total:"] = round(src.vamp_blood)
 
 		if (src.is_coven_vampire)
-			.["Coven Total:"] = round(src.coven.total_blood)
+			var/digits = length("[round(max(src.vamp_blood, src.coven.total_blood))]")
+			.["Blood:"] = "[pad_leading(round(src.points), digits)]/[pad_leading(round(src.vamp_blood), digits)]"
+			.["Coven:"] = "[pad_leading(round(src.coven.blood), digits)]/[pad_leading(round(src.coven.total_blood), digits)]"
+		else
+			.["Blood:"] = round(src.points)
+			.["Total:"] = round(src.vamp_blood)
 
 	onAttach(mob/to_whom)
 		..()
@@ -190,7 +193,6 @@
 				src.vamp_blood = 0
 			else
 				src.vamp_blood = max(src.vamp_blood + change, 0)
-
 				if (src.is_coven_vampire)
 					src.coven.total_blood = max(src.coven.total_blood + change, 0)
 
@@ -203,6 +205,8 @@
 				src.points = 0
 			else
 				src.points = clamp(src.points + change, 0, src.vamp_blood)
+				if (src.is_coven_vampire)
+					src.coven.blood = clamp(src.coven.blood + change, 0, src.coven.total_blood)
 
 			if (change > 0 && ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
@@ -432,7 +436,7 @@
 			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
-		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1 && !(M.job == "Chaplain"))
+		if (istype(get_area(M), /area/station/chapel) && (M.check_vampire_power(3) != 1) && !(M.job == "Chaplain") && !global.chapel_desecrated)
 			boutput(M, SPAN_ALERT("Your powers do not work in this holy place!"))
 			return 0
 

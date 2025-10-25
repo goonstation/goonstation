@@ -295,8 +295,9 @@
 
 ///////////////////////////////////////////////////// Disarm intent ////////////////////////////////////////////////
 
+/mob/var/canbedisarmed = TRUE
 /mob/proc/disarm(var/mob/living/target, var/extra_damage = 0, var/suppress_flags = 0, var/damtype = DAMAGE_BLUNT, var/is_special = 0)
-	if (!src || !ismob(src) || !target || !ismob(target))
+	if (!src || !ismob(src) || !target || !ismob(target) || !target.canbedisarmed)
 		return
 
 	hit_twitch(target)

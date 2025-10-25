@@ -60,6 +60,7 @@
 #define SPEECH_OUTPUT_THRALLCHAT_THRALL "thrall_thrallchat"
 #define SPEECH_OUTPUT_THRALLCHAT_VAMPIRE "vampire_thrallchat"
 #define SPEECH_OUTPUT_VAMPCHAT "vampchat"
+#define SPEECH_OUTPUT_VAMPCHAT_ANNOUNCER "vampchat_announcer"
 #define SPEECH_OUTPUT_WRAITHCHAT "wraithchat"
 #define SPEECH_OUTPUT_WRAITHCHAT_ADMIN "admin_wraithchat"
 #define SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT "plague_rat_wraithchat"
@@ -254,6 +255,7 @@
 #define LISTEN_EFFECT_RITUAL "ritual"
 #define LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE "sims_social_motive"
 #define LISTEN_EFFECT_SKULLBOT "skullbot"
+#define LISTEN_EFFECT_VAMPIRE_RITUAL_CIRCLE "vampire_ritual_circle"
 
 
 //------------ Listen Controls ------------//
