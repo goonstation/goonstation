@@ -6,9 +6,6 @@
 	faction = list(FACTION_BOTANY)
 	wiki_link = "https://wiki.ss13.co/Kudzu"
 
-	is_compatible_with(datum/mind/mind)
-		return ishuman(mind.current)
-
 	give_equipment()
 		if (!ishuman(src.owner.current))
 			return FALSE
