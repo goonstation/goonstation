@@ -242,7 +242,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		var/aprint_text = ""
 		for(var/datum/forensic_data/adminprint/print in src.print_list)
 			aprint_text += "<li>[print.get_text()]</li>"
-		aprint_text += "<li><b>Last touched by:</b> [src.get_last_ckey()].</li>"
+		aprint_text += "<li><b>Last touched by:</b> [replace_if_null(src.get_last_ckey(), "None")].</li>"
 		return aprint_text
 
 	copy_to(var/datum/forensic_holder/other)
@@ -255,8 +255,6 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 
 	/// Returns the ckey of the last about-to-be-sorry hooligan who touched this thing
 	proc/get_last_ckey()
-		if(!src.last_print)
-			return "None"
 		return src.last_print.clientKey.id
 
 /datum/forensic_group/fingerprints

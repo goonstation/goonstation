@@ -205,7 +205,7 @@ var/datum/explosion_controller/explosions
 					M = user
 				if(power > 10 && (last_ckey_source || M?.last_ckey) && !istype(A, /area/mining/magnet) && !istype(source, /obj/machinery/vehicle/escape_pod))
 					message_admins(logmsg)
-				if (last_ckey_source != "None")
+				if (last_ckey_source)
 					logTheThing(LOG_BOMBING, last_ckey_source, logmsg)
 					logTheThing(LOG_DIARY, last_ckey_source, logmsg, "combat")
 				else

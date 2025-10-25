@@ -191,6 +191,9 @@ proc/end_sentence(sentence, punctuation = ".")
 		return sentence
 	return sentence + punctuation
 
+/// Replace x if it is null. Can be used for things other than text, but I wasn't sure where else to put it.
+#define replace_if_null(x, replacement) (x ? x : replacement)
+
 /// Replace all instances of a char, with consecutive chars all replaced only once (Ex: "?xxx?xx?x?" => "?y?y?y?"). Useful for parsing.
 proc/text_replace_repeat(var/text, var/target_char, var/replacement)
 	var/new_text = ""

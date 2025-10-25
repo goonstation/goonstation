@@ -676,7 +676,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	var/the_key = ""
 	var/last_ckey = null
 
-	if (isnull(whom) || whom == "None")
+	if (isnull(whom))
 		return "*null*"
 	else if (isclient(whom))
 		the_client = whom

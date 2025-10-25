@@ -48,7 +48,7 @@
 		if(include_time)
 			return aprints_group.last_print.get_text()
 		return aprints_group.last_print.clientKey.id
-	return "None"
+	return null
 
 /atom/movable
 	var/tracked_blood = null // list(bDNA, btype, color, count)
