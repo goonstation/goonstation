@@ -926,10 +926,10 @@
 
 		/// Handle actual ability effects. This is the one you want to override.
 		/// Returns for this proc can be found in defines/abilities.dm.
-		cast(atom/target)
+		cast(atom/target, params)
 			SHOULD_CALL_PARENT(TRUE)
 			if (do_logs)
-				logCast(target)
+				logCast(target, params)
 			if(interrupt_action_bars)
 				actions.interrupt(holder.owner, INTERRUPT_ACT)
 
@@ -995,7 +995,7 @@
 				if (!.)
 					localholder.deductPoints(pointCost)
 
-		logCast(atom/target)
+		logCast(atom/target, params)
 			if (src.targeted)
 				if (!isnull(target))
 					logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src.name] on [constructTarget(target, "combat")] at [log_loc(target)]")
