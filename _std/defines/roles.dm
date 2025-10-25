@@ -44,6 +44,7 @@
 #define ROLE_NUKEOP_GUNBOT "nukeop_gunbot"
 #define ROLE_ZOMBIE "zombie"
 #define ROLE_BROKEN "broken"
+#define ROLE_KUDZUPERSON "kudzu"
 
 // gimmicks
 #define ROLE_BATTLER "battler"

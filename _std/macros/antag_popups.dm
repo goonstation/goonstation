@@ -69,7 +69,7 @@
 	<a href='byond://?src=\ref[src];action=[ROLE_WRESTLER]'>Wrestler</a> |
 	<a href='byond://?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='byond://?src=\ref[src];action=martian'>Martian</a> |
-	<a href='byond://?src=\ref[src];action=kudzu'>Kudzu Person</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_KUDZUPERSON]'>Kudzu Person</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_SLASHER]'>The Slasher</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_SALVAGER]'>Salvagers</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_ARCFIEND]'>Arcfiend Person</a> |
