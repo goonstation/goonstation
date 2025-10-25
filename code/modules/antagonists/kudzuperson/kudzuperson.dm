@@ -2,9 +2,7 @@
 	id = ROLE_KUDZUPERSON
 	display_name = "Kudzuperson"
 	antagonist_icon = "kudzu"
-	remove_on_death = TRUE
 	remove_on_clone = TRUE
-	keep_equipment_on_death = TRUE
 	faction = list(FACTION_BOTANY)
 	wiki_link = "https://wiki.ss13.co/Kudzu"
 
@@ -44,6 +42,3 @@
 	announce()
 		boutput(src.owner.current, SPAN_ALERT("<b>You have been taken over by the kudzu hivemind!</b>"))
 		..()
-
-	announce_removal()
-		src.owner.current.show_antag_popup("rogueborgremoved")
