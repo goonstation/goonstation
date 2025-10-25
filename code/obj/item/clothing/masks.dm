@@ -613,6 +613,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
 			if (src.color)
 				M.color = src.color
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, M, user)
 			qdel(src)
 
 /obj/item/clothing/mask/paper
@@ -786,6 +787,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	the_handkerchief.setMaterial(src.material)
 	the_handkerchief.color = src.color
 	src.copy_filters_to(the_handkerchief)
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, the_handkerchief, user)
 	qdel(src)
 	user.put_in_hand_or_drop(the_handkerchief)
 	boutput(user, SPAN_NOTICE("You unfold \the [src] into \a [the_handkerchief]."))
@@ -858,7 +860,8 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana/random/New()
 	..()
 	var/obj/item/clothing/mask/bandana/bandana_to_spawn = pick(possible_bandana)
-	new bandana_to_spawn(src.loc)
+	var/new_bandana = new bandana_to_spawn(src.loc)
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_bandana)
 	qdel(src)
 
 /obj/item/clothing/mask/tengu

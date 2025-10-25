@@ -58,6 +58,7 @@
 			var/obj/item/clothing/shoes/rocket/R = new/obj/item/clothing/shoes/rocket(T)
 			R.uses = uses
 			boutput(user, SPAN_NOTICE("You haphazardly kludge together some rocket shoes."))
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, R, user)
 			qdel(W)
 			qdel(src)
 
@@ -350,6 +351,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 					I.set_loc(get_turf(src))
 				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
 				boutput(user, SPAN_NOTICE("You spraypaint the clown shoes in a sleek black!"))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, I, user)
 				qdel(src)
 			else
 				boutput(user, SPAN_ALERT("You don't feel like insulting the clown like this."))
@@ -562,6 +564,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 				else
 					I.set_loc(get_turf(src))
 				boutput(user, SPAN_NOTICE("You cover the heavy boots in crayon!"))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, I, user)
 				qdel(src)
 			else
 				boutput(user, SPAN_ALERT("You don't feel brave enough to do this."))

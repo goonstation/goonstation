@@ -1115,18 +1115,30 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 		return
 
 	proc/attach(obj/item/I as obj)
-		if(I.anchored) return
-		else if (istype(I, /obj/item/mechanics) || istype(I, /obj/item/storage/mechanics))
+		if (I.anchored || istype(I, /obj/item/mechanics) || istype(I, /obj/item/storage/mechanics) || (I in src.attached_objs))
 			return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
 		SPAWN(0)
 			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_STORED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP), PROC_REF(detach))
+			RegisterSignal(I, COMSIG_ITEM_CONVERTED, PROC_REF(on_item_converted))
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
-		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_STORED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP))
+		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_STORED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP,
+									COMSIG_ITEM_CONVERTED))
+
+	// Sometimes items are altered by being deleted and replaced with a new item. This is for handling such conversions while attached to the tray
+	proc/on_item_converted(obj/item/I, var/new_item, var/user)
+		var/src_turf = get_turf(src) // some conversions place the new item elsewhere, we don't want to attach them to the tray if they aren't on it
+		if (islist(new_item))
+			for (var/obj/item/item in new_item)
+				if (get_turf(item) == src_turf)
+					src.attach(item)
+		else if (isitem(new_item) && get_turf(new_item) == src_turf)
+			src.attach(new_item)
+		src.detach(I) // This is necessary because sometimes the original is stored in limbo instead of deleted, but should be treated as if it were gone
 
 	proc/toggle_brake(mob/user)
 		src.anchored = !src.anchored

@@ -177,6 +177,9 @@
 	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
 	/// Send out to every item directly in and on the person on no-suicide-death
 	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
+	/// After an item is altered by being removed and replaced with another item, sent shortly before being removed. The original is not always
+	/// deleted but instead treated as if it were a part of the new item, see assemblies. (item or list of items produced by conversion, user)
+	#define COMSIG_ITEM_CONVERTED "itm_converted"
 
 	// ---- bomb assembly signals ----
 

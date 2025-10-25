@@ -584,6 +584,7 @@ proc/ui_describe_reagents(atom/A)
 			user.u_equip(D)
 			user.put_in_hand_or_drop(B)
 			user.show_text("You add the sensor to the bucket")
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(D)
 			qdel(src)
 
@@ -607,6 +608,7 @@ proc/ui_describe_reagents(atom/A)
 			user.show_text("You cut eyeholes into [src].")
 			var/obj/item/clothing/head/helmet/bucket/B = new helmet_bucket_type(src.loc)
 			user.put_in_hand_or_drop(B)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(src)
 		else
 			return ..()
@@ -626,6 +628,7 @@ proc/ui_describe_reagents(atom/A)
 		var/obj/item/clothing/head/helmet/bucket/hat/B = new hat_bucket_type(src.loc)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
 
 	afterattack(obj/target, mob/user, flag)
@@ -682,6 +685,7 @@ proc/ui_describe_reagents(atom/A)
 					bucket_hat.set_loc(get_turf(H))
 					H.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], [splash? "splashing" : "bouncing off"] [H] and falling to the floor."), \
 										SPAN_ALERT("[src] falls from \the [targetDoor], [splash? "splashing you and " : ""]bouncing off your hat."))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, bucket_hat)
 				qdel(src) //it's a hat now
 			else
 				//aw, fine, it just falls on the floor

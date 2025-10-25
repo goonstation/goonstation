@@ -534,9 +534,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 		unwrapped = 1
 		user.visible_message(SPAN_EMOTE("[user] unwraps the Hetz's Cups."), "You unwrap the Hetz's Cups.")
 		var/turf/T = get_turf(user)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
+		var/list/cuts = list()
+		cuts.Add(new /obj/item/reagent_containers/food/snacks/candy/pbcup(T))
+		cuts.Add(new /obj/item/reagent_containers/food/snacks/candy/pbcup(T))
+		cuts.Add(new /obj/item/reagent_containers/food/snacks/candy/pbcup(T))
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, cuts, user)
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/caramel
@@ -588,6 +590,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 			src.reagents.trans_to(A, 5)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(A)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, A, user)
 			qdel(src)
 			qdel(W)
 		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
@@ -609,7 +612,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
 			if(istype(W,/obj/item/stick)) W.amount--
 			if(!W.amount) qdel(W)
-
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newcandy, user)
 			qdel(src)
 		else
 			..()
@@ -771,14 +774,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 				user.visible_message("[src] disintegrates, falling apart into individual strands and sugar dust!", "[src] disintegrates through your fingers, what remains of its strands falling onto the floor.")
 				var/turf/T = get_turf(user)
 				var/diminished_reagents = max(1, round(src.reagents.total_volume / 6)) // less reagent content for failing
+				var/list/cuts = list()
 				for (var/i=0, i<pick(1,2,3), i++)
 					var/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut/A = new /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut(T)
+					cuts.Add(A)
 					A.reagents.clear_reagents()
 					src.reagents.trans_to(A, diminished_reagents)
 					A.folds = src.folds
 					A.desc = src.desc
 					A.eat_message = src.eat_message
 					A.food_effects = src.food_effects
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, cuts, user)
 				qdel(src)
 				return
 		else
