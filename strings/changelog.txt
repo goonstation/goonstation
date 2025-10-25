@@ -1,5 +1,9 @@
 
 (t)sat oct 25 25
+(u)Mr. Moriarty
+(p)24633
+(e)🆕📄🐣|C-Feature, A-UI, A-Respawning
+(*)The latejoin window has been converted into TGUI.
 (u)RubberRats
 (p)24723
 (e)🎨🔨|C-Sprites, A-Player-Actions
