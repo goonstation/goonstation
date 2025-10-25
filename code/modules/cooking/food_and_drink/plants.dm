@@ -24,6 +24,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		src.plantgenes = new /datum/plantgenes(src)
 		src.make_reagents()
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (dist >= 5)
+			return
+		HYPphytoscopic_scan(user, src)
+
 	clamp_act(mob/clamper, obj/item/clamp)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		if(src.reagents)
