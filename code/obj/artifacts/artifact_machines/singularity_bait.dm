@@ -154,11 +154,11 @@
 				boutput(src.target, SPAN_ALERT("It comes closer."))
 			//And finally, pull the singularity towards the target.
 			for(var/i = 1 to src.steps_per_pull)
-				step_towards(src.linked_singularity, src.target)
-				playsound(O.loc, 'sound/effects/lit.ogg', 50, 1, -1)
-				src.lense.pulse()
-				T.visible_message("<b>[O]</b> pulses.")
-				sleep(0.3 SECONDS)
+				SPAWN(0.3 * i SECONDS)
+					step_towards(src.linked_singularity, src.target)
+					playsound(O.loc, 'sound/effects/lit.ogg', 50, 1, -1)
+					src.lense.pulse()
+					T.visible_message("<b>[O]</b> pulses.")
 
 	proc/kill_singularity()
 		if(!src.linked_singularity.disposed)
