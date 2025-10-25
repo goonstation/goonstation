@@ -9,7 +9,7 @@
 	var/tmp/list/detailed_count
 	var/count = 0
 	var/conversion_progress = 0
-`
+
 	setup()
 		name = "Kudzu"
 		schedule_interval = 3 SECONDS
