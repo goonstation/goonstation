@@ -41,7 +41,12 @@
 	ship_install()
 		..()
 		if(src.ship.uses_weapon_overlays && src.appearanceString)
-			src.ship.UpdateOverlays(image('icons/effects/64x64.dmi', "[src.appearanceString]"), "mainweapon")
+			var/image/weap_image = image('icons/effects/64x64.dmi', "[src.appearanceString]")
+			weap_image.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
+			weap_image.color = src.color
+			weap_image.alpha = src.alpha
+			weap_image.filters = src.filters.Copy()
+			src.ship.UpdateOverlays(weap_image, "mainweapon")
 
 	ship_uninstall()
 		..()

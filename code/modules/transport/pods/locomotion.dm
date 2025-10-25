@@ -28,7 +28,12 @@
 		..()
 		if(istype(src.ship, /obj/machinery/vehicle/tank))
 			var/obj/machinery/vehicle/tank/tank = src.ship
-			tank.UpdateOverlays(image('icons/obj/machines/8dirvehicles.dmi', "[tank.body_type]_[src.appearanceString]"), "locomotion")
+			var/image/loco_image = image('icons/obj/machines/8dirvehicles.dmi', "[tank.body_type]_[src.appearanceString]")
+			loco_image.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
+			loco_image.color = src.color
+			loco_image.alpha = src.alpha
+			loco_image.filters = src.filters.Copy()
+			tank.UpdateOverlays(loco_image, "locomotion")
 		src.activate() // Locomotion should always be active
 
 	ship_uninstall()
