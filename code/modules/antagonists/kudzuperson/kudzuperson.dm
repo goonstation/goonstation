@@ -2,6 +2,7 @@
 	id = ROLE_KUDZUPERSON
 	display_name = "Kudzuperson"
 	antagonist_icon = "kudzu"
+	remove_on_death = TRUE
 	remove_on_clone = TRUE
 	faction = list(FACTION_BOTANY)
 	wiki_link = "https://wiki.ss13.co/Kudzu"
