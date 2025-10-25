@@ -194,6 +194,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	edible = 1
 	rand_pos = 1
 	var/has_cigs = 0
+	var/crunchy = FALSE
 
 	var/use_bite_mask = TRUE
 	var/current_mask = 5
@@ -424,7 +425,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				else
 					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
 		src.heal(consumer)
-		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+		if(src.crunchy)
+			playsound(consumer.loc,'sound/items/eatfoodshort.ogg', rand(10,50), 1)
+		else
+			playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
 		if (src.festivity && !ethereal_eater && !inafterlife(consumer))
 			modify_christmas_cheer(src.festivity)
