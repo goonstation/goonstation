@@ -3068,6 +3068,11 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "interrogation"
 	sound_environment = 2
 
+/area/station/security/evidence
+	name = "Evidence Room"
+	icon_state = "evidence"
+	sound_environment = 2
+
 /area/station/security/processing
 	name = "Processing Room"
 	icon_state = "red"
