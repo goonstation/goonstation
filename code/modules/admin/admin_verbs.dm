@@ -438,6 +438,7 @@ var/list/admin_verbs = list(
 		/client/proc/test_spacebee_command,
 		/client/proc/delete_landmarks,
 		/client/proc/admin_minimap,
+		/client/proc/transfer_abcu_blueprints,
 		),
 
 	7 = list(
@@ -2591,3 +2592,22 @@ proc/alert_all_ghosts(atom/target, message)
 	for (var/turf/landmark in global.landmarks[choice])
 		boutput(src, "Deleting landmark at [log_loc(landmark)]")
 	global.landmarks[choice] = list()
+
+/client/proc/transfer_abcu_blueprints()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Transfer ABCU blueprints"
+	set desc = "Transfer "
+	ADMIN_ONLY
+	var/ckey_from = input(src, "Ckey to transfer from") as text
+	var/ckey_to = input(src, "Ckey to transfer to") as text
+	ckey_from = ckey(ckey_from)
+	ckey_to = ckey(ckey_to)
+	if (!length(ckey_from) || !length(ckey_to))
+		return
+	var/list/bplist = flist("data/blueprints/[ckey_from]/")
+	if (!length(bplist))
+		boutput(src, SPAN_ALERT("No blueprints found for ckey [ckey_from]"))
+		return
+	for (var/filename in bplist)
+		boutput(src, "Copying blueprint [filename] from [ckey_from] to [ckey_to]...")
+		fcopy("data/blueprints/[ckey_from]/[filename]", "data/blueprints/[ckey_to]/[filename]")

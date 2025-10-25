@@ -11,6 +11,8 @@
 	layer = 2.6
 	var/drive_range = 200 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 	plane = PLANE_NOSHADOW_BELOW
+	var/throw_type = THROW_NORMAL
+	var/throw_params = null
 
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(status & (BROKEN|NOPOWER))
@@ -26,6 +28,6 @@
 				boutput(M, SPAN_NOTICE("The mass driver lets out a screech, it mustn't be able to handle any more items."))
 			break
 		use_power(500)
-		O.throw_at(target, drive_range * src.power, src.power)
+		O.throw_at(target, drive_range * src.power, src.power, throw_type=src.throw_type, params=src.throw_params)
 	FLICK("mass_driver1", src)
 	return
