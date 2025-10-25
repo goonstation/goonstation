@@ -42,6 +42,7 @@
 			return
 		if(isnpc(H) || isnpcmonkey(H)) //NPCs provide no points
 			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
+			H.set_body_icon_dirty()
 			return
 		src.conversion_progress += rand(CONVERT_PER_CORPSE_MINIMUM, CONVERT_PER_CORPSE_MAXIMUM)
 		if(src.conversion_progress < CONVERT_REQUIRED)
