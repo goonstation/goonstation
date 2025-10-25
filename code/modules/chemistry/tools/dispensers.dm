@@ -629,6 +629,16 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		reagents.remove_reagent("beer",1000)
 		reagents.add_reagent("rum",1000)
 
+/obj/reagent_dispensers/beerkeg/wine
+	name = "barrel of wine"
+	desc = "Immortals always resort to wine."
+	icon_state = "rum_barrel"
+
+	New()
+		..()
+		reagents.remove_reagent("beer",1000)
+		reagents.add_reagent("wine",1000)
+
 /obj/reagent_dispensers/compostbin
 	name = "compost tank"
 	desc = "A device that mulches up unwanted produce into usable fertiliser."

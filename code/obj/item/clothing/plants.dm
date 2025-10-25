@@ -299,16 +299,25 @@
 	c_flags = COVERSEYES | COVERSMOUTH
 	see_face = FALSE
 	item_state = "carved"
+	var/lit = FALSE
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/light/flashlight))
-			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
-			W.name = copytext(src.name, 8) + " lantern"	// "carved "
-			W.desc = "Spookiest!"
-			W.icon = 'icons/misc/halloween.dmi'
-			W.icon_state = "flight[W:on]"
-			W.item_state = "lantern"
-			W.transform = src.transform
-			qdel(src)
+		if (istype(W, /obj/item/device/light))
+			src.light_up(W, user)
 		else
 			..()
+
+	proc/light_up(var/obj/item/item, var/mob/user)
+		if (lit)
+			return
+		user.visible_message("[user] adds [item] to [src].", "You add [item] to [src].")
+		var/obj/item/jack = new /obj/item/jackolantern
+		jack.set_loc(src)
+		qdel(src)
+
+/obj/item/jackolantern
+	name = "Jack-O-Lantern"
+	desc = "Spookiest!"
+	icon = 'icons/misc/halloween.dmi'
+	icon_state = "flight1"
+	item_state = "lantern"

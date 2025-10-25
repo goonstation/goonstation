@@ -27,11 +27,18 @@
 	icon_state = "corpse-critter"
 	spawn_type = /mob/living/critter/small_animal/bee // Type path to spawn
 	container_type = null
+	var/change_name = null
+	var/change_desc = null
 
 	setup()
 		if(isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 		var/mob/living/M = new spawn_type(src.loc)
+		if (src.change_name)
+			M.name = src.change_name
+			M.real_name = src.change_name
+		if (src.change_desc)
+			M.desc = src.change_desc
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)

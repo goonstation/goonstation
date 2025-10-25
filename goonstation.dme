@@ -2961,6 +2961,7 @@
 #include "code\z_adventurezones\space_casino.dm"
 #include "code\z_adventurezones\sunken.dm"
 #include "code\z_adventurezones\timeship.dm"
+#include "code\z_adventurezones\vampire_chapel.dm"
 #include "code\z_adventurezones\vault.dm"
 #include "code\z_adventurezones\void.dm"
 #include "code\z_adventurezones\sealab_trench\deserted_outpost.dm"
