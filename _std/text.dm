@@ -229,7 +229,7 @@ proc/limit_chars(var/text, var/list/other_chars, var/include_nums = FALSE, var/i
 	var/new_text = ""
 	for(var/i in 1 to length(text))
 		var/input_char = copytext(text, i, i+1)
-		if(include_nums && isnum_safe(text2num(input_char)))
+		if(include_nums && text2num_safe(input_char))
 			new_text += input_char
 		else if(include_letters && (is_uppercase_letter(input_char) || is_lowercase_letter(input_char)))
 			new_text += input_char
