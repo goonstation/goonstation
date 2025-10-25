@@ -4135,26 +4135,11 @@ ABSTRACT_TYPE(/area/mining)
 
 // // // // // // // // // // // //
 
-/// Used for the admin holding cells.
+/// Used for the admin holding cells. Any mob in this area is unobservable (though current observers may not get kicked out)
 /area/prison/cell_block/wards
 	name = "Asylum Wards"
 	icon_state = "brig"
 	requires_power = 0
-	var/list/unobservable_old = list()
-
-	Entered(atom/movable/A, atom/oldloc)
-		. = ..()
-		if(ismob(A))
-			var/mob/M = A
-			unobservable_old[M] = M.unobservable
-			M.unobservable = TRUE
-
-	Exited(atom/movable/A)
-		. = ..()
-		if(ismob(A))
-			var/mob/M = A
-			M.unobservable = unobservable_old[M]
-			unobservable_old -= M
 
 /// Shamecube area, applied on the admin command. Blocks entry.
 /area/shamecube

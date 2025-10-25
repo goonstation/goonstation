@@ -109,7 +109,7 @@
 	Click(location,control,params)
 		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
-			if(src.pilot)
+			if(src.pilot && src.pilot.is_observable_by(O))
 				O.insert_observer(src.pilot)
 		else
 			. = ..()

@@ -508,6 +508,7 @@
 #include "code\mob\who.dm"
 #include "code\mob\dead\hivemind_observer.dm"
 #include "code\mob\dead\mentor_mouse_observer.dm"
+#include "code\mob\dead\observable_checks.dm"
 #include "code\mob\dead\observer.dm"
 #include "code\mob\dead\target_observer.dm"
 #include "code\mob\living\carbon.dm"

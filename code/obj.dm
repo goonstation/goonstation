@@ -410,7 +410,7 @@
 	qdel(src)
 
 /obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
-	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
+	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant && occupant.is_observable_by(viewer))
 		var/mob/dead/observer/O = viewer
 		O.insert_observer(occupant)
 		return TRUE
