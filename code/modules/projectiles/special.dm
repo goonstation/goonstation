@@ -137,6 +137,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 100
 	shot_sound = 'sound/machines/sweep.ogg'
 
+	on_hit(atom/hit, direction, var/obj/projectile/projectile)
+		..()
+		hit.damage_blunt(3) // Small additional brute so it works with critters (most don't have toxic damage handlers)
+
 // Mildly crazy shit
 
 /datum/projectile/special/spreader
