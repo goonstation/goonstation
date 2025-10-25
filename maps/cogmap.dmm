@@ -54949,6 +54949,10 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
+"rmR" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space,
+/area/space)
 "rnn" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -65750,6 +65754,7 @@ adC
 adC
 adC
 adC
+rmR
 adC
 adC
 adC
@@ -66040,8 +66045,7 @@ adC
 adC
 adC
 adC
-adC
-adC
+rmR
 adC
 adC
 adC
@@ -141238,7 +141242,7 @@ adC
 adC
 adC
 adC
-adC
+rmR
 adC
 adC
 adC
@@ -153632,7 +153636,7 @@ adC
 adC
 adC
 adC
-adC
+rmR
 adC
 adC
 adC

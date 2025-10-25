@@ -23055,6 +23055,10 @@
 	name = "solar paneling"
 	},
 /area/station/solar/east)
+"hfM" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space,
+/area/space)
 "hfR" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/knife{
@@ -80394,6 +80398,7 @@ rdj
 rdj
 rdj
 rdj
+hfM
 rdj
 rdj
 rdj
@@ -80684,8 +80689,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
+hfM
 rdj
 rdj
 rdj
@@ -154071,7 +154075,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+hfM
 rdj
 rdj
 rdj
@@ -168276,7 +168280,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+hfM
 rdj
 rdj
 rdj

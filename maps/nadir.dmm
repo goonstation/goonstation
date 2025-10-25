@@ -2167,6 +2167,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"aZB" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space/fluid/acid,
+/area/space)
 "aZC" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -76497,7 +76501,7 @@ oeA
 oeA
 oeA
 lZF
-bzS
+aZB
 bzS
 bzS
 bzS
@@ -77830,7 +77834,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+aZB
 oeA
 oeA
 oeA
@@ -128399,7 +128403,7 @@ oeA
 oeA
 oeA
 lZF
-bzS
+aZB
 bzS
 bzS
 bzS
@@ -129771,7 +129775,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+aZB
 bzS
 bzS
 oeA

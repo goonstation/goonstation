@@ -39846,6 +39846,10 @@
 	dir = 5
 	},
 /area/station/security/main)
+"xIr" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space,
+/area/space)
 "xIs" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
@@ -41725,6 +41729,7 @@ aaa
 aaa
 aaa
 aaa
+xIr
 aaa
 aaa
 aaa
@@ -41974,8 +41979,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+xIr
 aaa
 aaa
 aaa
@@ -129607,6 +129611,7 @@ aaa
 aaa
 aaa
 aaa
+xIr
 aaa
 aaa
 aaa
@@ -129829,8 +129834,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+xIr
 aaa
 aaa
 aaa

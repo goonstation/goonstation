@@ -58385,6 +58385,10 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
+"iTX" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space,
+/area/space)
 "iUL" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -75813,6 +75817,7 @@ aaa
 aaa
 aaa
 aaa
+iTX
 aaa
 aaa
 aaa
@@ -76103,8 +76108,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+iTX
 aaa
 aaa
 aaa
@@ -150094,7 +150098,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+iTX
 aaa
 aaa
 aaa
@@ -163695,7 +163699,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+iTX
 aaa
 aaa
 aaa

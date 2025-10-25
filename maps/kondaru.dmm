@@ -52134,6 +52134,10 @@
 	dir = 8
 	},
 /area/station/engine/storage)
+"tIV" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space,
+/area/space)
 "tJr" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -60377,7 +60381,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+tIV
 aaa
 aaa
 aaa
@@ -60668,7 +60672,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+tIV
 aaa
 aaa
 aaa
@@ -134960,7 +134964,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+tIV
 aaa
 aaa
 aaa
@@ -148259,7 +148263,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+tIV
 aaa
 aaa
 aaa

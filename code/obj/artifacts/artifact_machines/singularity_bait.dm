@@ -33,10 +33,11 @@
 	var/cooldowns = new/list()
 	var/obj/machinery/the_singularity/linked_singularity
 	var/target
-	var/spawn_direction
+	var/spawn_direction = NORTH
 	var/turf/spawn_location
 	var/alert_delay = 60 SECONDS
 	var/pull_cooldown = 5 SECONDS
+	var/steps_per_pull = 2
 	var/clown_seeking_missile = FALSE
 	var/obj/effect/grav_pulse/lense
 
@@ -46,17 +47,22 @@
 			if(prob(25))
 				src.clown_seeking_missile = TRUE
 		src.alert_delay = rand(30, 90) SECONDS
-		src.pull_cooldown = rand(3, 30) DECI SECONDS // 0.3 to 3 seconds
-		src.spawn_direction = pick(ordinal)
-		switch(src.spawn_direction) //Determine spawn location in advance rather than on activation just in case.
-			if(NORTHEAST)
-				src.spawn_location = get_turf(locate(world.maxx-5, world.maxy-5, 1))
-			if(NORTHWEST)
-				src.spawn_location = get_turf(locate(5, world.maxy-5, 1))
-			if(SOUTHEAST)
-				src.spawn_location = get_turf(locate(world.maxx-5, 5, 1))
-			if(SOUTHWEST)
-				src.spawn_location = get_turf(locate(5, 5, 1))
+		src.pull_cooldown = rand(1, 15) SECONDS
+		src.steps_per_pull = rand(1, 3)
+		if(length(landmarks[LANDMARK_ARTIFACT_SINGULARITY_SPAWN]) >= 1)
+			src.spawn_location = pick(landmarks[LANDMARK_ARTIFACT_SINGULARITY_SPAWN])
+			src.spawn_direction = get_dir(locate(round(world.maxx/2, 1), round(world.maxy/2, 1), 1), src.spawn_location)
+		else
+			src.spawn_direction = pick(ordinal)
+			switch(src.spawn_direction) //Determine spawn location in advance rather than on activation just in case.
+				if(NORTHEAST)
+					src.spawn_location = get_turf(locate(world.maxx-5, world.maxy-5, 1))
+				if(NORTHWEST)
+					src.spawn_location = get_turf(locate(5, world.maxy-5, 1))
+				if(SOUTHEAST)
+					src.spawn_location = get_turf(locate(world.maxx-5, 5, 1))
+				if(SOUTHWEST)
+					src.spawn_location = get_turf(locate(5, 5, 1))
 		src.lense = new()
 
 	disposing()
@@ -147,10 +153,12 @@
 				//Send them a creepy message.
 				boutput(src.target, SPAN_ALERT("It comes closer."))
 			//And finally, pull the singularity towards the target.
-			step_towards(src.linked_singularity, src.target)
-			playsound(O.loc, 'sound/effects/lit.ogg', 50, 1, -1)
-			src.lense.pulse()
-			T.visible_message("<b>[O]</b> pulses.")
+			for(var/i = 1 to src.steps_per_pull)
+				step_towards(src.linked_singularity, src.target)
+				playsound(O.loc, 'sound/effects/lit.ogg', 50, 1, -1)
+				src.lense.pulse()
+				T.visible_message("<b>[O]</b> pulses.")
+				sleep(0.3 SECONDS)
 
 	proc/kill_singularity()
 		if(!src.linked_singularity.disposed)

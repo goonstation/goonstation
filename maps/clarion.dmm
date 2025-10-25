@@ -31193,6 +31193,10 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
+"ruW" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space,
+/area/space)
 "rvc" = (
 /obj/stool/chair{
 	dir = 4
@@ -42037,6 +42041,7 @@ aaa
 aaa
 aaa
 aaa
+ruW
 aaa
 aaa
 aaa
@@ -42327,8 +42332,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+ruW
 aaa
 aaa
 aaa
@@ -116922,7 +116926,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ruW
 aaa
 aaa
 aaa
@@ -129919,7 +129923,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ruW
 aaa
 aaa
 aaa

@@ -13266,6 +13266,10 @@
 	dir = 5
 	},
 /area/station/engine/engineering)
+"jBm" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space/fluid,
+/area/space/plasma_reef)
 "jBr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28404,6 +28408,10 @@
 	},
 /turf/simulated/shuttle/wall/flock,
 /area/space)
+"uuV" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space/fluid,
+/area/space)
 "uvx" = (
 /obj/mopbucket,
 /obj/item/mop,
@@ -35287,7 +35295,7 @@ qpn
 qpn
 qpn
 qpn
-qpn
+uuV
 qpn
 qpn
 cUW
@@ -49241,7 +49249,7 @@ jPy
 wAm
 lbM
 lbM
-lbM
+jBm
 lbM
 lbM
 meb
@@ -122626,7 +122634,7 @@ asi
 cUW
 dPL
 qpn
-qpn
+uuV
 qpn
 qpn
 qpn
@@ -123173,7 +123181,7 @@ wAm
 lbM
 lbM
 lbM
-lbM
+jBm
 lbM
 jPy
 jPy
