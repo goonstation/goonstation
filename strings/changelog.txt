@@ -1,5 +1,9 @@
 
 (t)sat oct 25 25
+(u)JORJ949
+(p)24994
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Clowns have been granted access to the Civilian radio channel for scheming with each other and begging the botanists for banana peels.
 (u)Calphrick
 (p)24996
 (e)💅👮|C-QoL, A-Security
