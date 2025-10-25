@@ -19480,9 +19480,7 @@
 	},
 /area/iomoon/caves)
 "bBa" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
@@ -55789,9 +55787,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
@@ -56497,9 +56493,7 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
@@ -56511,7 +56505,7 @@
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
 "fyU" = (
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -58606,9 +58600,7 @@
 	},
 /area/centcom)
 "hab" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/stone{
 	explosion_immune = 1
 	},
@@ -59965,7 +59957,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon)
 "igq" = (
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -63241,7 +63233,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "kwk" = (
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	dir = 4;
 	pixel_x = 5;
 	pixel_y = 3
@@ -63768,9 +63760,7 @@
 /area/void_diner)
 "kPY" = (
 /obj/decoration/wineholder,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
@@ -63977,9 +63967,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "kZk" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /obj/item/clothing/mask/skull/vampire{
 	pixel_x = 2;
 	pixel_y = -2
@@ -65412,7 +65400,7 @@
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "mhX" = (
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	dir = 4;
 	pixel_x = 5;
 	pixel_y = 3
@@ -70010,7 +69998,7 @@
 /area/iomoon/base)
 "pyG" = (
 /obj/storage/closet/coffin/vampire,
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -70266,9 +70254,7 @@
 /area/drone)
 "pIf" = (
 /obj/kitchenspike,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
@@ -72155,7 +72141,7 @@
 	},
 /area/iomoon/base)
 "rai" = (
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -72958,14 +72944,6 @@
 	dir = 10
 	},
 /area/crunch/wtc)
-"rFr" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "rFt" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/television/small{
@@ -75276,6 +75254,13 @@
 "tuc" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/watchful_eye_sensor)
+"tum" = (
+/obj/decoration/bookcase,
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
+/turf/simulated/wall/auto/reinforced/supernorn/blackred{
+	explosion_protection = 1
+	},
+/area/vampchapel)
 "tuw" = (
 /turf/unsimulated/wall/auto/lead/white{
 	desc = "The outer shell of some large microwave array thing.";
@@ -75288,7 +75273,7 @@
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "tuK" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
@@ -76286,7 +76271,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "uoF" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/carpet/purple/fancy/edge/sw{
 	explosion_immune = 1
 	},
@@ -77357,7 +77342,7 @@
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
 "veL" = (
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	dir = 4;
 	pixel_x = 5;
 	pixel_y = 3
@@ -78486,9 +78471,7 @@
 	},
 /area/iomoon/base)
 "vPn" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /obj/decal/poster/wallsign/dead_exec_portrait{
 	name = "spooky painting";
 	desc = "His eyes follow you. Aah!"
@@ -78572,7 +78555,7 @@
 /area/moon/museum)
 "vSG" = (
 /obj/decal/stage_edge/dojo,
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	dir = 4;
 	pixel_x = 5;
 	pixel_y = 3
@@ -79391,7 +79374,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	dir = 4;
 	pixel_x = 8;
 	pixel_y = 3
@@ -80986,7 +80969,7 @@
 /obj/item/clothing/under/gimmick/vampire,
 /obj/item/clothing/under/gimmick/vampire,
 /obj/item/clothing/under/gimmick/vampire,
-/obj/decal/cleanable/cobweb/cobwebs_3/directional{
+/obj/decal/cleanable/cobweb/cobwebs_3{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -169455,8 +169438,8 @@ vYB
 isd
 dYZ
 okr
-rxF
-rFr
+tum
+pOm
 pOm
 gjJ
 pOm

@@ -98,9 +98,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "aat" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aav" = (
@@ -336,7 +334,7 @@
 "ace" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "ack" = (
@@ -363,9 +361,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/green/standard/edge{
 	dir = 9
 	},
@@ -841,9 +837,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "ajP" = (
@@ -1105,9 +1099,7 @@
 	},
 /area/spacehabitat/pool)
 "anB" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/funeral_parlor)
 "anF" = (
@@ -1271,9 +1263,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/storage/closet,
 /obj/mesh/catwalk/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "apC" = (
@@ -1490,9 +1480,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/medical/asylum/computer)
 "asW" = (
@@ -2286,9 +2274,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "aDG" = (
@@ -2310,9 +2296,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "aEa" = (
@@ -2365,9 +2349,7 @@
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "aES" = (
@@ -2392,9 +2374,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/fluid_canister,
 /obj/decal/stripe_caution,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "aFv" = (
@@ -2732,7 +2712,7 @@
 "aLf" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "aLl" = (
@@ -3121,9 +3101,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "aRI" = (
@@ -3240,9 +3218,7 @@
 	dir = 1
 	},
 /obj/chicken_nesting_box,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aSY" = (
@@ -3360,9 +3336,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "aUw" = (
@@ -3426,9 +3400,7 @@
 "aVj" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "aVB" = (
@@ -3603,9 +3575,7 @@
 	desc = "The remains of an idea.";
 	name = "\proper Jenny's hopes and dreams"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "aXY" = (
@@ -3688,9 +3658,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black,
 /area/station/science/storage)
 "aYV" = (
@@ -3843,9 +3811,7 @@
 /obj/decal/stripe_caution,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
 "bbc" = (
@@ -4200,9 +4166,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
 "bhB" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
 "bhG" = (
@@ -5811,7 +5775,7 @@
 "bGc" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "bGh" = (
@@ -5841,9 +5805,7 @@
 "bHa" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm/directional/east,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/grey,
 /area/station/science/lab)
 "bHc" = (
@@ -6246,9 +6208,7 @@
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "testchamber"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bMd" = (
@@ -6275,9 +6235,7 @@
 /area/station/medical/dome)
 "bMf" = (
 /obj/shrub,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/grass/random,
 /area/station/chapel/funeral_parlor)
 "bMm" = (
@@ -6879,9 +6837,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "bYr" = (
@@ -7346,7 +7302,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "cev" = (
@@ -7808,9 +7764,7 @@
 	},
 /obj/machinery/light_switch/east,
 /obj/disposalpipe/segment/morgue,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade/dungeon)
 "cjZ" = (
@@ -7829,7 +7783,7 @@
 	},
 /area/station/hallway/primary/south)
 "ckk" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/yellowblack{
 	dir = 10
 	},
@@ -7859,9 +7813,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "cky" = (
@@ -8333,9 +8285,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "cpP" = (
@@ -8614,9 +8564,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple2"
@@ -8673,9 +8621,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent/netural,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "cug" = (
@@ -8935,9 +8881,7 @@
 	dir = 8;
 	icon_state = "check1"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "cxE" = (
@@ -10066,9 +10010,7 @@
 	pixel_y = 26
 	},
 /obj/machinery/light_switch/west,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/eight{
 	dir = 1
 	},
@@ -10142,7 +10084,7 @@
 "cRf" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "cRi" = (
@@ -10384,9 +10326,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "cVM" = (
@@ -10525,9 +10465,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cYn" = (
@@ -10590,7 +10528,7 @@
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /obj/blind_switch/area/west,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -10685,7 +10623,7 @@
 	},
 /obj/machinery/shower,
 /obj/machinery/drainage,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /obj/decal/cleanable/cobweb/cobwebs_3{
 	dir = 4;
 	pixel_x = 6;
@@ -11044,9 +10982,7 @@
 	pixel_y = 10
 	},
 /obj/reagent_dispensers/watertank/fountain,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "dhO" = (
@@ -11109,9 +11045,7 @@
 /turf/simulated/floor/white,
 /area/station/security/main)
 "diK" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "diQ" = (
@@ -11661,9 +11595,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/wood/six,
 /area/station/library/reading1)
 "dqi" = (
@@ -12062,9 +11994,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "dyK" = (
@@ -12576,7 +12506,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "dHe" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "dHg" = (
@@ -12629,9 +12559,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light_switch/west,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -13840,9 +13768,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -13985,9 +13911,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "eby" = (
@@ -14150,9 +14074,7 @@
 /obj/decal/poster/wallsign/cdnp{
 	pixel_x = 32
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "edM" = (
@@ -14661,9 +14583,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/escape)
 "emJ" = (
@@ -15190,9 +15110,7 @@
 	},
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "evS" = (
@@ -15514,9 +15432,7 @@
 "eCo" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/light_switch/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -15883,9 +15799,7 @@
 	icon_state = "0-4"
 	},
 /obj/decal/stripe_caution,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/white,
 /area/station/hangar/sec)
 "eJq" = (
@@ -16366,7 +16280,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "eRZ" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "eSa" = (
@@ -16789,9 +16703,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "eXS" = (
@@ -16836,7 +16748,7 @@
 /area/station/crew_quarters/hor)
 "eYE" = (
 /obj/storage/closet/wardrobe/black/formalwear,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "eYF" = (
@@ -17053,9 +16965,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "fba" = (
@@ -17626,9 +17536,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/item/device/flyswatter,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "fkF" = (
@@ -17890,9 +17798,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/circuit/purple,
 /area/station/science/bot_storage)
 "fpl" = (
@@ -17985,9 +17891,7 @@
 /area/station/crew_quarters/hor)
 "fqq" = (
 /obj/monkeyplant,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -18174,9 +18078,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/medbay)
 "fuv" = (
@@ -18619,9 +18521,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "fBA" = (
@@ -18646,9 +18546,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "fCh" = (
@@ -19077,9 +18975,7 @@
 /turf/simulated/floor/red/checker,
 /area/station/hangar/sec)
 "fHF" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/purpleblack{
 	dir = 6
 	},
@@ -19258,9 +19154,7 @@
 /obj/machinery/light/small/sticky/harsh{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "fJQ" = (
@@ -19420,9 +19314,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue2"
@@ -19523,9 +19415,7 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -19814,9 +19704,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/morgue)
 "fSq" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/station/maintenance/outer/north)
 "fSJ" = (
@@ -19848,9 +19736,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "fTq" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/sanctuary)
 "fTA" = (
@@ -20028,7 +19914,7 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /obj/cauldron/candy,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
@@ -20043,7 +19929,7 @@
 "fWa" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "fWg" = (
@@ -20104,9 +19990,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/stripe_caution,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "fWO" = (
@@ -20295,9 +20179,7 @@
 "gaL" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "gaM" = (
@@ -21002,7 +20884,7 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "gmf" = (
@@ -21127,7 +21009,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/light_switch/west,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -21252,9 +21134,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bathroom{
 	name = "South Bathroom"
@@ -21297,7 +21177,7 @@
 /obj/machinery/light_switch/west{
 	pixel_y = -7
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "gqX" = (
@@ -21345,9 +21225,7 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /obj/decal/cleanable/cobweb/cobwebs_3{
 	pixel_x = -7;
 	pixel_y = 4
@@ -21601,6 +21479,7 @@
 	dir = 8;
 	pixel_x = 5
 	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "gvh" = (
@@ -21635,9 +21514,7 @@
 	dir = 4;
 	pixel_y = 32
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -21961,7 +21838,7 @@
 "gBB" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "gBK" = (
@@ -22056,9 +21933,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
 "gDx" = (
@@ -23100,9 +22975,7 @@
 	pixel_y = 8
 	},
 /obj/submachine/cargopad/artlab,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/science/artifact)
 "gTe" = (
@@ -23146,9 +23019,7 @@
 /area/station/crew_quarters/sauna)
 "gTQ" = (
 /obj/machinery/firealarm/directional/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "gTW" = (
@@ -24187,9 +24058,7 @@
 /obj/decal/poster/wallsign/hazard_rad{
 	pixel_x = 32
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
@@ -24310,9 +24179,7 @@
 "hlp" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "hlu" = (
@@ -24414,9 +24281,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "hoj" = (
@@ -24468,7 +24333,7 @@
 "hoY" = (
 /obj/machinery/light/incandescent/warm,
 /obj/storage/secure/closet/engineering/mechanic,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "hoZ" = (
@@ -24630,7 +24495,7 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "hsh" = (
@@ -25857,9 +25722,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "hKs" = (
@@ -26384,9 +26247,7 @@
 /obj/machinery/portable_atmospherics/pump,
 /obj/decal/stripe_caution,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "hUX" = (
@@ -26508,9 +26369,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "hWE" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "hWG" = (
@@ -26836,7 +26695,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "icb" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/carpet/purple/fancy/edge{
 	dir = 10
 	},
@@ -26980,9 +26839,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "iep" = (
@@ -27010,9 +26867,7 @@
 /area/station/crew_quarters/fitness)
 "ieE" = (
 /obj/kitchenspike,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/asylum/kitchen)
 "ieH" = (
@@ -27855,9 +27710,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "itH" = (
@@ -28702,9 +28555,7 @@
 	},
 /obj/vehicle/segway,
 /obj/decal/stripe_caution,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "iGx" = (
@@ -29001,9 +28852,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black,
 /area/station/hangar/main)
 "iKl" = (
@@ -29099,9 +28948,7 @@
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "iMn" = (
@@ -30171,7 +30018,7 @@
 /area/station/crew_quarters/arcade)
 "jbA" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "jbD" = (
@@ -30827,9 +30674,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "jms" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -31033,9 +30878,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light_switch/east,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "jqy" = (
@@ -31139,9 +30982,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/specialroom/bar,
 /area/station/wreckage{
 	name = "Restricted Area"
@@ -31231,7 +31072,7 @@
 "jtC" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "jtI" = (
@@ -31380,9 +31221,7 @@
 /area/station/quartermaster/office)
 "jwf" = (
 /obj/storage/secure/closet/engineering/engineer,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
 "jwk" = (
@@ -31400,9 +31239,7 @@
 /area/station/ai_monitored/storage/eva)
 "jwm" = (
 /obj/machinery/bathtub,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "jwF" = (
@@ -31803,9 +31640,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "red2"
@@ -32460,9 +32295,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "jKv" = (
@@ -33261,9 +33094,7 @@
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
 "jWz" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
 "jWB" = (
@@ -34300,9 +34131,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "knP" = (
@@ -34462,9 +34291,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
 "kpv" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -34740,9 +34567,7 @@
 /area/station/security/hos)
 "kuA" = (
 /obj/machinery/firealarm/directional/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "kuB" = (
@@ -34833,9 +34658,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /obj/meatlight,
 /turf/simulated/floor/setpieces/bloodfloor,
 /area/station/crew_quarters/captain)
@@ -36257,9 +36080,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "kUm" = (
@@ -36978,9 +36799,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "lfU" = (
@@ -37064,16 +36883,12 @@
 	icon_state = "pipe-c";
 	name = "kitchen freezer pipe"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "lhG" = (
 /obj/machinery/firealarm/directional/south,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/escape{
 	dir = 6
 	},
@@ -37280,9 +37095,7 @@
 	dir = 4
 	},
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
 "llJ" = (
@@ -37485,9 +37298,7 @@
 "lpF" = (
 /obj/decal/stripe_caution,
 /obj/storage/cart/mechcart/tools,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "lpJ" = (
@@ -38402,9 +38213,7 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
 "lCu" = (
@@ -38551,7 +38360,7 @@
 	icon_state = "tile1"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "lDZ" = (
@@ -38591,7 +38400,7 @@
 /area/station/hallway/secondary/entry)
 "lEi" = (
 /obj/storage/closet/fire,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "lEm" = (
@@ -38684,9 +38493,7 @@
 "lFn" = (
 /obj/stool/bench/yellow/auto,
 /obj/machinery/firealarm/directional/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -38705,9 +38512,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/sanctuary)
 "lFE" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/grass,
 /area/station/hallway/secondary/exit)
 "lFJ" = (
@@ -39137,9 +38942,7 @@
 	icon_state = "line2"
 	},
 /obj/storage/secure/closet/civilian/hydro,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "lMe" = (
@@ -39273,9 +39076,7 @@
 /area/station/science/lobby)
 "lNN" = (
 /obj/landmark/antagonist/blob,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "lNO" = (
@@ -39855,9 +39656,7 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "lUS" = (
@@ -40004,9 +39803,7 @@
 "lWw" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "lWy" = (
@@ -40310,9 +40107,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "mbH" = (
@@ -40590,9 +40385,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
 "mgK" = (
@@ -40700,9 +40493,7 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -41194,9 +40985,7 @@
 /area/station/hallway/secondary/exit)
 "mrK" = (
 /obj/decoration/decorativeplant/plant3,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "mrO" = (
@@ -41505,9 +41294,7 @@
 "mwz" = (
 /obj/storage/crate,
 /obj/item/room_planner,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "mwC" = (
@@ -42093,9 +41880,7 @@
 /obj/stool/chair/green{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "mFk" = (
@@ -42124,9 +41909,7 @@
 	layer = 3;
 	pixel_y = 8
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "mFS" = (
@@ -42198,9 +41981,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "mHn" = (
@@ -42238,7 +42019,7 @@
 	name = "best seat in the house"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
 "mIb" = (
@@ -42588,9 +42369,7 @@
 	desc = "Why does it have teeth..?";
 	dir = 8
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom/extra2{
 	name = "North Restroom #2"
@@ -42981,9 +42760,7 @@
 /area/station/engine/engineering/breakroom)
 "mVs" = (
 /obj/machinery/firealarm/directional/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -44070,9 +43847,7 @@
 	dir = 6;
 	icon_state = "tile1"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "nlp" = (
@@ -44766,9 +44541,7 @@
 	pixel_x = -10;
 	pixel_y = 24
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/six,
 /area/station/chapel/funeral_parlor)
 "nxd" = (
@@ -44978,9 +44751,7 @@
 	},
 /obj/item/device/radio/intercom/engineering,
 /obj/machinery/portable_atmospherics/pump,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -45687,9 +45458,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -45769,7 +45538,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "nND" = (
@@ -45997,7 +45766,7 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/arcade/dungeon)
 "nPu" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
 "nPv" = (
@@ -46192,9 +45961,7 @@
 /area/station/security/beepsky)
 "nSJ" = (
 /obj/machinery/light/incandescent,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "nSP" = (
@@ -46773,9 +46540,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "oci" = (
@@ -47211,9 +46976,7 @@
 	pixel_y = 24;
 	pixel_x = -8
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "ojO" = (
@@ -47330,9 +47093,7 @@
 /obj/decal/stripe_caution,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "olB" = (
@@ -48725,9 +48486,7 @@
 	icon_state = "check1"
 	},
 /obj/stool/bench,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/north)
 "oGV" = (
@@ -48820,9 +48579,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "oIq" = (
@@ -49123,9 +48880,7 @@
 /obj/machinery/light/small/sticky/harsh{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "oLR" = (
@@ -49146,7 +48901,7 @@
 /area/station/crew_quarters/cafeteria)
 "oMm" = (
 /obj/storage/closet/wardrobe/black,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/wood/six,
 /area/station/chapel/funeral_parlor)
 "oMn" = (
@@ -50530,9 +50285,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "piZ" = (
@@ -50555,9 +50308,7 @@
 "pjd" = (
 /obj/machinery/navbeacon/mule/research_north/west,
 /obj/decal/mule/beacon,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/purpleblack{
 	dir = 5
 	},
@@ -50956,9 +50707,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
@@ -51465,9 +51214,7 @@
 /obj/machinery/turretid/armory{
 	pixel_x = -24
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "pzp" = (
@@ -51833,7 +51580,7 @@
 	pixel_x = 8;
 	pixel_y = 10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "pEo" = (
@@ -53219,9 +52966,7 @@
 "qaN" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "qaQ" = (
@@ -53321,9 +53066,7 @@
 "qbC" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "qbV" = (
@@ -53337,9 +53080,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "qco" = (
@@ -53517,9 +53258,7 @@
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -53629,9 +53368,7 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "qfR" = (
@@ -53816,7 +53553,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "qiF" = (
@@ -54189,9 +53926,7 @@
 /area/station/engine/engineering)
 "qpK" = (
 /obj/item/chair/folded,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "qpP" = (
@@ -54208,9 +53943,7 @@
 "qpU" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "qqd" = (
@@ -54225,7 +53958,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/light/incandescent/blueish,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fgreen2"
@@ -54619,9 +54352,7 @@
 	},
 /obj/reagent_dispensers/fueltank,
 /obj/decal/stripe_caution,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
 "qwb" = (
@@ -55661,9 +55392,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 9
 	},
@@ -55823,9 +55552,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -55887,9 +55614,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light/emergency,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "qRa" = (
@@ -55987,9 +55712,7 @@
 "qSJ" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "qSR" = (
@@ -56087,7 +55810,7 @@
 	tag = "icon-plant (NORTH)"
 	},
 /obj/disposalpipe/segment,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "qUa" = (
@@ -56147,9 +55870,7 @@
 /obj/machinery/light/incandescent/warm/very{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
 "qUL" = (
@@ -58267,9 +57988,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "rBL" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "rBY" = (
@@ -58458,7 +58177,7 @@
 "rFB" = (
 /obj/machinery/light/incandescent/warm,
 /obj/reagent_dispensers/heliumtank,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "rFN" = (
@@ -58486,9 +58205,7 @@
 "rFZ" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/landmark/bill_spawn,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "rGa" = (
@@ -58533,9 +58250,7 @@
 "rGw" = (
 /obj/storage/secure/crate/bee/loaded,
 /obj/submachine/cargopad/hydroponic,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "rGI" = (
@@ -58601,9 +58316,7 @@
 	name = "Command/Sec Transport"
 	},
 /obj/disposalpipe/trunk/transport,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/red/checker,
 /area/station/crew_quarters/quarters)
 "rHj" = (
@@ -59612,7 +59325,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/arcade/dungeon)
 "rWx" = (
@@ -59908,9 +59621,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/trunk,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "saq" = (
@@ -60236,9 +59947,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/reagent_dispensers/fueltank,
 /obj/decal/stripe_caution,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "sfc" = (
@@ -60595,9 +60304,7 @@
 /obj/stool/chair/couch/purple{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "smd" = (
@@ -60760,9 +60467,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "sor" = (
@@ -61177,9 +60882,7 @@
 	icon_state = "line1"
 	},
 /obj/reagent_dispensers/watertank/fountain,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/purpleblack{
 	dir = 6
 	},
@@ -62266,9 +61969,7 @@
 	},
 /obj/machinery/light_switch/east,
 /mob/living/critter/small_animal/dog/george/orwell,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/crew_quarters/hop)
 "sMp" = (
@@ -62974,9 +62675,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "sXz" = (
@@ -63419,9 +63118,7 @@
 "tdX" = (
 /obj/decoration/decorativeplant/plant4,
 /obj/machinery/light/emergency,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "tdY" = (
@@ -63743,9 +63440,7 @@
 	icon_state = "line2"
 	},
 /obj/disposalpipe/segment/brig,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "tia" = (
@@ -63789,9 +63484,7 @@
 "tij" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "tiv" = (
@@ -64207,9 +63900,7 @@
 	},
 /obj/landmark/start/job/engineer,
 /obj/machinery/light/incandescent/warm,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "toL" = (
@@ -64318,9 +64009,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "trd" = (
@@ -64358,9 +64047,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "tsc" = (
@@ -64539,7 +64226,7 @@
 /obj/stool/chair/yellow{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/yellowblack{
 	dir = 10
 	},
@@ -65044,7 +64731,7 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /obj/decal/stripe_delivery,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/escape{
 	dir = 10
 	},
@@ -65211,9 +64898,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light/incandescent,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
 "tEW" = (
@@ -65381,9 +65066,7 @@
 	pixel_y = 10
 	},
 /obj/machinery/light_switch/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /obj/decal/cleanable/cobweb/cobwebs_3{
 	pixel_x = -7;
 	pixel_y = 4
@@ -65674,9 +65357,7 @@
 /obj/disposalpipe/segment/food{
 	icon_state = "pipe-c"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "tKM" = (
@@ -65695,7 +65376,7 @@
 /area/space)
 "tLa" = (
 /obj/reagent_dispensers/watertank/fountain,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "tLp" = (
@@ -65990,9 +65671,7 @@
 "tPa" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "tPp" = (
@@ -66103,9 +65782,7 @@
 /area/ghostdrone_factory)
 "tRx" = (
 /obj/machinery/hair_dye_dispenser,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/barber_shop)
 "tRA" = (
@@ -67038,9 +66715,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "ugd" = (
@@ -67075,9 +66750,7 @@
 	pixel_x = -9
 	},
 /obj/machinery/light_switch/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom/extra1{
 	name = "North Restroom #1"
@@ -67112,7 +66785,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "uip" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "uiB" = (
@@ -67262,7 +66935,7 @@
 	layer = 4
 	},
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "uma" = (
@@ -67783,7 +67456,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light/small/sticky,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "uty" = (
@@ -68625,9 +68298,7 @@
 	pixel_y = -9;
 	dir = 8
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /obj/decoration/paperstack/massive{
 	desc = "Looks like scrawled research notes. None of it's particularly legible."
 	},
@@ -68727,9 +68398,7 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/reagent_dispensers/watertank/fountain,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue6"
@@ -69553,9 +69222,7 @@
 "uSB" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "uSY" = (
@@ -69567,9 +69234,7 @@
 "uTf" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/light_switch/north,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
 "uTs" = (
@@ -70161,9 +69826,6 @@
 /obj/machinery/light/incandescent/cool/very{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
 /turf/simulated/floor/circuit,
 /area/station/medical/robotics)
 "vcG" = (
@@ -70419,7 +70081,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
 	},
@@ -70699,9 +70361,7 @@
 /obj/disposalpipe/trunk/brig{
 	dir = 8
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -70861,9 +70521,7 @@
 /area/station/medical/medbay/treatment)
 "vmV" = (
 /obj/machinery/light/small/floor/warm,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "vna" = (
@@ -71781,9 +71439,7 @@
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
 /obj/machinery/light_switch/east,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -72219,7 +71875,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "vGJ" = (
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "vGN" = (
@@ -72259,9 +71915,7 @@
 /obj/decorative_pot{
 	anchored = 1
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
 "vHo" = (
@@ -73205,9 +72859,7 @@
 	dir = 4
 	},
 /obj/decoration/decorativeplant/plant4,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/medical/breakroom)
 "vVu" = (
@@ -73600,9 +73252,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig/north_side)
 "wbD" = (
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
 "wbI" = (
@@ -74420,7 +74070,7 @@
 /obj/disposalpipe/junction/left/west,
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "wos" = (
@@ -74720,9 +74370,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/funeral_parlor)
 "wst" = (
@@ -75082,9 +74730,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/carpet/green/fancy/narrow/north,
 /area/station/crew_quarters/hop)
 "wxS" = (
@@ -75158,9 +74804,7 @@
 /obj/stool/chair/syndicate,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "wyR" = (
@@ -75983,9 +75627,7 @@
 /obj/machinery/light/small/sticky,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "wJP" = (
@@ -77064,9 +76706,7 @@
 	icon_state = "line2"
 	},
 /obj/item/device/radio/intercom/mining,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/black/grime,
 /area/station/quartermaster/refinery)
 "wZp" = (
@@ -77315,9 +76955,7 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "xbJ" = (
@@ -78108,9 +77746,7 @@
 /obj/machinery/fluid_canister,
 /obj/decal/stripe_caution,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "xnl" = (
@@ -78926,9 +78562,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional{
-	dir = 4
-	},
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -80247,7 +79881,7 @@
 	pixel_y = 10
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "xTv" = (
@@ -80736,9 +80370,7 @@
 	name = "NO SMOKING";
 	pixel_y = 32
 	},
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 1
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/medbay)
 "xYM" = (
@@ -80902,9 +80534,7 @@
 	dir = 1
 	},
 /obj/random_item_spawner/junk/maybe_few,
-/obj/decal/cleanable/cobweb/cobwebs_1/directional{
-	dir = 8
-	},
+/obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "ybr" = (
@@ -80920,7 +80550,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "ybG" = (
@@ -81208,7 +80838,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "ygc" = (
@@ -81333,7 +80963,7 @@
 	dir = 1
 	},
 /obj/reagent_dispensers/watertank/fountain,
-/obj/decal/cleanable/cobweb/cobwebs_2/directional,
+/obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "yid" = (

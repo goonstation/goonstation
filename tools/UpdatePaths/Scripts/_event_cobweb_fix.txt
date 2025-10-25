@@ -1,0 +1,14 @@
+# Repath and flip directions, and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths twice.
+# NORTH
+/obj/decal/cleanable/cobweb/@SUBTYPES/directional{dir = 1}			: /temporary_cobweb_repath/@SUBTYPES/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# SOUTH
+/obj/decal/cleanable/cobweb/@SUBTYPES/directional{dir = @UNSET}		: /temporary_cobweb_repath/@SUBTYPES/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/decal/cleanable/cobweb/@SUBTYPES/directional{dir = 0}			: /temporary_cobweb_repath/@SUBTYPES/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/decal/cleanable/cobweb/@SUBTYPES/directional{dir = 2}			: /temporary_cobweb_repath/@SUBTYPES/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# EAST
+/obj/decal/cleanable/cobweb/@SUBTYPES/directional{dir = 4}			: /temporary_cobweb_repath/@SUBTYPES/east{@OLD; dir = @SKIP; pixel_x = @SKIP}
+# WEST
+/obj/decal/cleanable/cobweb/@SUBTYPES/directional{dir = 8}			: /temporary_cobweb_repath/@SUBTYPES/west{@OLD; dir = @SKIP; pixel_x = @SKIP}
+
+# Revert the temporary repaths.
+/temporary_cobweb_repath/@SUBTYPES : /obj/decal/cleanable/cobweb/@SUBTYPES{@OLD}
