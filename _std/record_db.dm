@@ -141,12 +141,14 @@
 				subject_records += R
 		return subject_records
 
-	/// Use a partial fingerprint to search for potential suspects. Here there be monsters.
 	proc/forensic_search_fingerprint_partial(var/search_input)
 		RETURN_TYPE(/list/datum/db_record)
+		if(!search_input)
+			return null
 		var/list/record_prints = list()
 		var/list/datum/db_record/record_refs = list()
-		// List the fingerprint data that we need to go through
+
+		// Collect the fingerprint data and their associated records that we need to go through
 		for(var/list/datum/db_record/record in data_core.general.records)
 			var/fprint_right = record["fingerprint_right"]
 			var/fprint_left = record["fingerprint_left"]
@@ -162,141 +164,70 @@
 				if(fprint_left)
 					record_prints.Add(fprint_left)
 					record_refs.Add(record)
-		if(!record_prints || !record_refs || length(record_prints) != length(record_refs))
+		if(!record_prints || !record_refs)
 			return null
 
 		// Get the input into a more usable format
-		// Print: (0123-4567-89AB-CDEF) => Bunches: list("0123","4567","89AB","CDEF")
-		var/list/bunches = list() // Split search into bunches separated by "-"
-		var/list/bunch_is_empty = list() // Does this bunch include a number or letter?
-		var/includes_num_or_letter = FALSE
-		var/search_allowed = FALSE
-		var/was_last_period = FALSE // Used to get rid of period series
-		var/search = ""
-		for(var/i in 1 to length(search_input))
-			var/input_char = copytext(search_input, i, i+1)
-			var/is_allowed = isnum_safe(text2num(input_char))
-			// is_uppercase_letter and is_lowercase_letter are both undefined for this file, so I'm just doing this
-			is_allowed = is_allowed || (text2ascii(input_char, 1) >= 65 && text2ascii(input_char, 1) <= 90)
-			is_allowed = is_allowed || (text2ascii(input_char, 1) >= 97 && text2ascii(input_char, 1) <= 122)
-			if(is_allowed)
-				includes_num_or_letter = TRUE
-				search_allowed = TRUE
-			is_allowed = is_allowed || (input_char == "?")
-			if(is_allowed)
-				was_last_period = FALSE
-				search += input_char
-			else if(input_char == ".")
-				if(was_last_period == TRUE)
-					continue
-				search += "_" // Replace series of dots with a single underscore for easier analysis
-				was_last_period = TRUE
-			else if(input_char == "-")
-				if(search)
-					bunches.Add(search)
-					bunch_is_empty.Add(!includes_num_or_letter)
-				search = ""
-				includes_num_or_letter = FALSE
-		bunches.Add(search)
-		bunch_is_empty.Add(!includes_num_or_letter)
-		if(!search_allowed)
+		// Print: (..3..-4567-...?...-CDEF) => Bunches: list("_3_","4567","_?_","CDEF")
+		var/list/input_bunches = splittext(search_input, "-")
+		for(var/i in length(input_bunches) to 1 step -1)
+			limit_chars(input_bunches[i], list("?","."), TRUE, TRUE)
+			if(input_bunches[i] == "")
+				input_bunches.Cut(i, i+1)
+		if(length(input_bunches) == 0)
+			return null
+		var/list/input_empty = list()
+		for(var/i in 1 to length(input_bunches))
+			input_bunches[i] = text_replace_repeat(input_bunches[i], ".", "_")
+			var/is_empty = !contains_chars(input_bunches[i], null, TRUE, TRUE)
+			input_empty += is_empty
+
+		var/trim_start = 0
+		var/trim_end = 0
+		for(var/i in 1 to length(input_empty))
+			if(!input_empty[i])
+				break
+			trim_start++
+		for(var/i in length(input_empty) to 1 step -1)
+			if(!input_empty[i])
+				break
+			trim_end++
+		trim_list(input_bunches, trim_start, trim_end)
+		if(length(input_bunches) == 0)
 			return null
 
+		// Find and collect all records containing a matching print
 		var/list/datum/db_record/match_records = list() // All records with a matching print
-
-		if(length(bunches) > 1)
-			// trim empty edge bunches
-			var/list/bunch_is_empty_trim = bunch_is_empty.Copy()
-			for(var/i in length(bunch_is_empty) to 1 step -1)
-				if(!bunch_is_empty[i])
+		for(var/i in 1 to length(record_prints))
+			var/list/rec_bunches = splittext(record_prints[i], "-")
+			trim_list(rec_bunches, trim_start, trim_end)
+			if(length(rec_bunches) == 0)
+				continue
+			var/input_index = 1
+			for(var/k in 1 to length(rec_bunches))
+				var/bunch_match = FALSE
+				if(findtext(input_bunches[input_index], "_")) // (-...A...-) or (...A...B...)
+					// Not efficient to split the input bunch every time, but should be fine
+					var/list/input_bunch_split = splittext(input_bunches[input_index], "_")
+					remove_all_list(input_bunch_split, "")
+					if(length(input_empty) == 1)
+						// Check the whole fingerprint rather than individual bunches
+						if(findtextEx_ordered(record_prints[i], input_bunch_split))
+							bunch_match = TRUE
+					else if(findtextEx_ordered(rec_bunches[k], input_bunch_split))
+						bunch_match = TRUE
+				else if(findtextEx(input_bunches[input_index], "?"))
+					if(text_replace_repeat(input_bunches[input_index], "?", "?") == "?") // Bunch only contains question marks
+						input_index++
+					else if(text_equals_partial(rec_bunches[k], input_bunches[input_index], "?")) // (-??A?-)
+						bunch_match = TRUE
+				if(bunch_match)
+					input_index++
+				else
+					input_index = 1
+				if(input_index == length(input_bunches) + 1) // Found a match!
+					match_records += record_refs[i]
 					break
-				bunches.Cut(length(bunch_is_empty))
-				bunch_is_empty_trim.Cut(length(bunch_is_empty))
-			for(var/i in 1 to length(bunch_is_empty))
-				if(!bunch_is_empty[i])
-					break
-				bunches.Cut(1, 2)
-				bunch_is_empty_trim.Cut(1, 2)
-			// Get rid of empty edge bunches in record prints
-			for(var/i in 1 to length(record_prints))
-				if(length(match_records) > 0)
-					if(record_refs[i] == match_records[length(match_records)])
-						continue // Already found a matching fingerprint for this record
-				var/list/rec_bunches = splittext(record_prints[i], "-")
-				if(length(rec_bunches) < length(bunch_is_empty))
-					record_prints[i] = null // Can't be it. Not enough bunches in the recorded fingerprint.
-					continue
-				// Remove empty edge bunches at end of print
-				for(var/k in length(bunch_is_empty) to 1 step -1)
-					var/bunch_length = length(rec_bunches)
-					if(!bunch_is_empty[k] || bunch_length == 0)
-						break
-					rec_bunches.Cut(bunch_length)
-				// Remove empty edge bunches at start of print
-				for(var/k in 1 to length(bunch_is_empty))
-					if(!bunch_is_empty[k] || length(rec_bunches) == 0)
-						break
-					rec_bunches.Cut(1, 2)
-				// Cleaning done. Now we finally compare the search to the records to see if there's a match
-				var/is_match = FALSE
-				var/search_bunch_index = 1
-				for(var/k in 1 to length(rec_bunches))
-					if(search_bunch_index == 1 && length(rec_bunches) < length(bunches))
-						break // Not enough bunches left for a match
-					var/rec_bunch = rec_bunches[k]
-					var/search_bunch = bunches[search_bunch_index]
-					var/is_bunch_match = bunch_is_empty_trim[search_bunch_index]
-					if(!is_bunch_match)
-						if(!findtextEx(search_bunch, "_")) // -??x?-
-							if(length(search_bunch) == length(rec_bunch))
-								for(var/j in 1 to length(search_bunch))
-									var/search_char = copytext(search_bunch, j, j+1)
-									var/rec_char = copytext(rec_bunch, j, j+1)
-									if(search_char != "?" && search_char != rec_char)
-										break
-									else if(j == length(search_bunch))
-										is_match = TRUE
-						else if(!findtextEx(search_bunch, "?")) // -_x_-
-							var/search_chars = replacetextEx(search_bunch, "_", "")
-							is_bunch_match = findtextEx(rec_bunch, search_chars)
-						else
-							// Underscores, question marks, and print characters all exist in one bunch. Abandon all hope.
-							is_bunch_match = FALSE
-					if(is_match)
-						break
-					if(is_bunch_match)
-						if(search_bunch_index == length(bunches))
-							is_match = TRUE
-							break
-						search_bunch_index++
-					else
-						search_bunch_index = 1
-				if(is_match)
-					match_records.Add(record_refs[i])
-		else
-			// Format was "...a...b...", which is now reformatted to "_a_b_"
-			var/list/search_chars = splittext(bunches[1], "_")
-			search_chars.RemoveAll("")
-			if(length(search_chars) > 1)
-				for(var/i in 1 to length(record_prints))
-					if(length(match_records) > 0)
-						if(record_refs[i] == match_records[length(match_records)])
-							continue // Already found a matching fingerprint for this record
-					var/is_match = TRUE
-					var/rec_prints = record_prints[i]
-					var/list/chars_index = list()
-					for(var/k in 1 to length(search_chars))
-						chars_index += findtextEx(rec_prints, search_chars[k])
-					for(var/k in 1 to length(chars_index) - 1)
-						if(chars_index[k] == 0)
-							is_match = FALSE
-							break
-						if(chars_index[k] > chars_index[k+1])
-							is_match = FALSE
-							break
-					if(is_match)
-						match_records.Add(record_refs[i])
-
 		return match_records
 
 /datum/db_record

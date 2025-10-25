@@ -60,7 +60,7 @@ datum/forensic_holder
 		src.group_list -= group
 
 	/// Copy evidence to another forensic holder. Can include a scan datum if evidence is being scanned.
-	proc/copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan = null, var/is_admin = FALSE)
+	proc/copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan, var/is_admin = FALSE)
 		var/list/datum/forensic_group/scan_groups = src.group_list
 		if(is_admin)
 			scan_groups = src.admin_list
