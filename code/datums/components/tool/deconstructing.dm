@@ -59,6 +59,11 @@ TYPEINFO(/datum/component/deconstructing)
 			var/decon_time = (decon_complexity * 2.5 SECONDS * src.complexity_mult) + src.base_duration
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,decon_tool,decon_time), user)
 		else
+			if (istype(O, /obj/item/storage/secure/ssafe)) //checks if secure safes are unlocked before attempting to deconstruct them.
+				var/obj/item/storage/secure/safe = target
+				if (safe.locked)
+					boutput(user, SPAN_ALERT("You cannot deconstruct [target] while it is locked."))
+					return ATTACK_PRE_DONT_ATTACK
 			user.showContextActions(O.decon_contexts, O, src.contextLayout)
 			boutput(user, SPAN_ALERT("You need to use some tools on [target] before it can be deconstructed."))
 		return ATTACK_PRE_DONT_ATTACK

@@ -63,7 +63,7 @@ TYPEINFO(/datum/component/radioactive)
 		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(round(128 * radStrength/100) + 16, 2) //base color + alpha
 		if(PA.color && isnull(src._backup_color))
 			src._backup_color = PA.color
-			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
+			PA.add_filter("radiation_color_\ref[src]", 99, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 			PA.color = null
 		if (isturf(PA))
 			PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
@@ -79,7 +79,7 @@ TYPEINFO(/datum/component/radioactive)
 		else
 			var/outline_color = (neutron ? "#2e3ae4" : "#18e022")
 			var/outline_size = (0.85 * radStrength/100) + 0.2
-			PA.add_filter("radiation_outline_\ref[src]", 50, outline_filter(size=outline_size, color=outline_color, flags=OUTLINE_SQUARE))
+			PA.add_filter("radiation_outline_\ref[src]", 100, outline_filter(size=outline_size, color=outline_color, flags=OUTLINE_SQUARE))
 
 	proc/process()
 		if(QDELETED(parent) || !parent.datum_components)
