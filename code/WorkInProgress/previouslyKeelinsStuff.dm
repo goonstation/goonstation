@@ -399,13 +399,13 @@ var/reverse_mode = 0
 							boutput(user, SPAN_ALERT("The relic crumbles into nothingness..."))
 							src.invisibility = INVIS_ALWAYS
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
-							E.fingerprintslast = src.fingerprintslast
+							src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 							sleep(0.5 SECONDS)
 							E = new/obj/effects/explosion( get_turf(src) )
-							E.fingerprintslast = src.fingerprintslast
+							src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 							sleep(0.5 SECONDS)
 							E = new/obj/effects/explosion( get_turf(src) )
-							E.fingerprintslast = src.fingerprintslast
+							src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 							qdel(src)
 						else
 							switch(pick(175;1,30;2,25;3,85;4))
@@ -421,7 +421,7 @@ var/reverse_mode = 0
 								if (3)
 									boutput(user, SPAN_ALERT("The relic explodes violently!"))
 									var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
-									E.fingerprintslast = src.fingerprintslast
+									src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 									logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 									user:gib()
 									qdel(src)

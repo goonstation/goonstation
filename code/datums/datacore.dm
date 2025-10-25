@@ -48,7 +48,8 @@
 	G["pronouns"] = H.get_pronouns().name
 
 	G["age"] ="[H.bioHolder.age]"
-	G["fingerprint"] = "[H.bioHolder.fingerprints]"
+	G["fingerprint_right"] = "[H.limbs?.r_arm?.limb_print.id]"
+	G["fingerprint_left"] = "[H.limbs?.l_arm?.limb_print.id]"
 	G["dna"] = H.bioHolder.Uid
 	G["p_stat"] = "Active"
 	G["m_stat"] = "Stable"

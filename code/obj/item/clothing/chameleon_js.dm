@@ -1245,8 +1245,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_gloves_pattern
 	material_prints = "black leather fibers"
-	hide_prints = TRUE
-	scramble_prints = FALSE
 	fingertip_color = "#535353"
 
 	New()
@@ -1321,7 +1319,11 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.material_prints = T.print_type
-			src.fingertip_color = T.fingertip_color
+			var/glove_fp_mask = T.get_fiber_mask()
+			if(glove_fp_mask)
+				src.print_mask = register_id(glove_fp_mask)
+				var/list/fiber_chars = list("c","f","g","h","i","j","k","r","s","t","v","w","x","y","z")
+				fibers = register_id("[src.material_prints]: [build_id(fiber_chars, 7)]")
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
@@ -1334,9 +1336,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	var/sprite_worn = 'icons/mob/clothing/hands.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
 	var/print_type = "black leather fibers"
-	var/hide_prints = TRUE
-	var/scramble_prints = FALSE
 	var/fingertip_color = null
+
+	proc/get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+		return FORENSIC_GLOVE_MASK_NONE
 
 	insulated
 		desc = "Tough rubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
@@ -1344,26 +1347,30 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "yellow"
 		item_state = "ygloves"
 		print_type = "insulative fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#ffff33"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_order(3) // 1/8 chance of match
 
 	fingerless
 		desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
 		name = "fingerless gloves"
 		icon_state = "fgloves"
 		item_state = "finger-"
-		hide_prints = FALSE
-		scramble_prints = FALSE
 		fingertip_color = null
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return FORENSIC_GLOVE_MASK_FINGERLESS
 
 	latex
 		name = "latex gloves"
 		icon_state = "latex"
 		item_state = "lgloves"
 		desc = "Thin, disposal medical gloves used to help prevent the spread of germs."
-		scramble_prints = TRUE
 		fingertip_color = "#f3f3f3"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_bunch(2) // 1/16 chance of match
 
 	boxing
 		name = "boxing gloves"
@@ -1371,9 +1378,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "boxinggloves"
 		item_state = "bogloves"
 		print_type = "red leather fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#f80000"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_bunch(1) // 1/4 chance of match
 
 	long
 		desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
@@ -1381,9 +1389,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "long_gloves"
 		item_state = "long_gloves"
 		print_type = "synthetic silicone rubber fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#ffff33"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_order(2) // 1/2 chance of match
 
 	gauntlets
 		name = "concussion gauntlets"
@@ -1391,9 +1400,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "cgaunts"
 		item_state = "bgloves"
 		print_type = "industrial-grade mineral fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#535353"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_order(2) // 1/2 chance of match
 
 	caps_gloves
 		name = "captain's gloves"
@@ -1401,9 +1411,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "capgloves"
 		item_state = "capgloves"
 		print_type = "high-quality synthetic fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#3fb54f"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_order(2) // 1/2 chance of match
 
 /obj/item/storage/belt/chameleon
 	name = "utility belt"
