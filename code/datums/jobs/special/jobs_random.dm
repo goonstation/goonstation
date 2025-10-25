@@ -17,11 +17,11 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_OSHAN
 	special_spawn_location = null
-	linkcolor = CIVILIAN_LINK_COLOR
+	ui_colour = TGUI_COLOUR_BLUE
 	limit = 1
 #elif defined(MAP_OVERRIDE_NADIR)
 	special_spawn_location = null
-	linkcolor = CIVILIAN_LINK_COLOR
+	ui_colour = TGUI_COLOUR_BLUE
 	limit = 1
 #else
 	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/medical_specialist
 	name = "Medical Specialist"
-	linkcolor = MEDICAL_LINK_COLOR
+	ui_colour = TGUI_COLOUR_PINK
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "VIP"
 	wages = PAY_EXECUTIVE
 	access_string = "VIP"
-	linkcolor = SECURITY_LINK_COLOR
+	ui_colour = TGUI_COLOUR_RED
 	request_cost = PAY_EMBEZZLED * 4 // they're on the take
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/inspector
 	name = "Inspector"
 	wages = PAY_IMPORTANT
-	linkcolor = NANOTRASEN_LINK_COLOR
+	ui_colour = TGUI_COLOUR_NAVY
 	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
@@ -348,7 +348,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
 	wages = PAY_DOCTORATE
-	linkcolor = MEDICAL_LINK_COLOR
+	ui_colour = TGUI_COLOUR_PINK
 	request_limit = 1 // limited workspace
 	trait_list = list("training_medical")
 	access_string = "Pharmacist"
@@ -362,7 +362,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/psychiatrist
 	name = "Psychiatrist"
-	linkcolor = MEDICAL_LINK_COLOR
+	ui_colour = TGUI_COLOUR_PINK
 	wages = PAY_DOCTORATE
 	request_limit = 1 // limited workspace
 	trait_list = list("training_therapy")

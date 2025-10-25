@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/datum/job/special/syndicate)
 /datum/job/special/syndicate
-	linkcolor = SYNDICATE_LINK_COLOR
+	ui_colour = TGUI_COLOUR_CRIMSON
 	job_category = JOB_SYNDICATE
 	limit = 0
 	wages = 0

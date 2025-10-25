@@ -2,7 +2,7 @@
 
 ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
-	linkcolor = ENGINEERING_LINK_COLOR
+	ui_colour = TGUI_COLOUR_ORANGE
 	slot_card = /obj/item/card/id/engineering
 	job_category = JOB_ENGINEERING
 
