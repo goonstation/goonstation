@@ -444,17 +444,8 @@
 					FLICK("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
 					if(H in src)
-						H.full_heal()
-						if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
-							if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
-								H.ckey = H.last_client.ckey
-						if (istype(H.abilityHolder, /datum/abilityHolder/composite))
-							var/datum/abilityHolder/composite/Comp = H.abilityHolder
-							Comp.removeHolder(/datum/abilityHolder/kudzu)
-						else if (H.abilityHolder)
-							H.abilityHolder.dispose()
-							H.abilityHolder = null
-						H.mind?.add_antagonist(ROLE_KUDZUPERSON, source = ANTAGONIST_SOURCE_CONVERTED, respect_mutual_exclusives = FALSE)
+						var/datum/controller/process/kudzu/kudzu_controller = get_master_kudzu_controller()
+						kudzu_controller.process_corpse(H)
 					natural_opening = 1
 					qdel(src)
 		else
