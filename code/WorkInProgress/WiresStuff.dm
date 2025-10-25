@@ -91,7 +91,7 @@
 			// loop through all things on that loc
 			for (var/atom/thing in contentsCopy)
 				// ignore things we don't want in the final image. lighting etc
-				if (thing.invisibility || istype(thing, /obj/overlay/tile_effect))
+				if (thing.invisibility || istype(thing, /atom/movable/light/robust_light))
 					continue
 
 				// TODO: handle large items (multi-tile things)
