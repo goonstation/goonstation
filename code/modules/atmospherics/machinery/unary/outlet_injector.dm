@@ -141,7 +141,7 @@
 	if (!node)
 		src.on = FALSE
 	src.icon_state = src.on ? "on" : "off"
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
 
 /obj/machinery/atmospherics/unary/outlet_injector/active
 	icon_state = "on-map"
