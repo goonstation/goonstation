@@ -214,7 +214,7 @@ proc/text_replace_repeat(var/text, var/target_char, var/replacement)
 proc/contains_chars(var/text, var/list/other_chars, var/include_nums = FALSE, var/include_letters = FALSE)
 	for(var/i in 1 to length(text))
 		var/input_char = copytext(text, i, i+1)
-		if(include_nums && isnum_safe(text2num(input_char)))
+		if(include_nums && text2num_safe(input_char))
 			return TRUE
 		if(include_letters && (is_uppercase_letter(input_char) || is_lowercase_letter(input_char)))
 			return TRUE
