@@ -25,6 +25,7 @@
 	deact_sound = 'sound/effects/singsuck.ogg'
 	react_xray = list(10,90,80,10,"NONE")
 	touch_descriptors = list("You can feel the electricity flowing through this thing.")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/gen_rate = 0
 	var/gen_level = 0
 	var/mode = 0
@@ -51,7 +52,7 @@
 				if(!attached)
 					boutput(user, "No exposed cable here to attach to.")
 				else
-					O.anchored = ANCHORED
+					O.anchor_artifact()
 					mode = 2
 					boutput(user, "[O] connects itself to the cable. Weird.")
 					playsound(O, 'sound/effects/ship_charge.ogg', 75, TRUE)
@@ -62,7 +63,7 @@
 			else
 				boutput(user, "[O] must be placed over a cable to attach to it.")
 		else
-			O.anchored = UNANCHORED
+			O.try_unanchor_artifact()
 			mode = 0
 			attached = 0
 			boutput(user, "[O] disconnects itself from the cable.")
