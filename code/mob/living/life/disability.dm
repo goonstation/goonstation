@@ -21,7 +21,7 @@
 			owner.jitteriness = max(0, owner.jitteriness - 5*mult)
 
 		if (owner.mind && isvampire(owner) || isvampiricthrall(owner))
-			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1 && !(owner.job == "Chaplain"))
+			if (istype(get_area(owner), /area/station/chapel) && (owner.check_vampire_power(3) != 1) && !(owner.job == "Chaplain") && !global.chapel_desecrated)
 				if (prob(33))
 					boutput(owner, SPAN_ALERT("The holy ground burns you!"))
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)

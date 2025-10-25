@@ -394,6 +394,18 @@
 
 	return M.real_name
 
+/datum/say_message/proc/register_signals()
+	src.RegisterSignal(src.signal_recipient, COMSIG_UNREGISTER_MESSAGE_SIGNALS, PROC_REF(unregister_signals))
+	src.RegisterSignal(src.signal_recipient, COMSIG_APPLY_CALLBACK_TO_MESSAGE_COPIES, PROC_REF(apply_callback))
+
+/datum/say_message/proc/unregister_signals()
+	src.UnregisterSignal(src.signal_recipient, COMSIG_UNREGISTER_MESSAGE_SIGNALS)
+	src.UnregisterSignal(src.signal_recipient, COMSIG_APPLY_CALLBACK_TO_MESSAGE_COPIES)
+	src.signal_recipient = null
+
+/datum/say_message/proc/apply_callback(datum/say_message/message, datum/callback/callback)
+	callback.Invoke(src)
+
 /// Create a copy of this say message datum.
 /datum/say_message/proc/Copy()
 	RETURN_TYPE(/datum/say_message)
@@ -451,5 +463,7 @@
 	copy.maptext_animation_colours = src.maptext_animation_colours?.Copy()
 	copy.maptext_prefix = src.maptext_prefix
 	copy.maptext_suffix = src.maptext_suffix
+
+	copy.register_signals()
 
 	return copy

@@ -166,6 +166,7 @@
 		return
 
 	message.signal_recipient = message
+	message.register_signals()
 
 	// Apply the effects of any applicable postmodifier speech prefix.
 	if (message.prefix && !(message.flags & SAYFLAG_PREFIX_PROCESSED))
@@ -191,6 +192,7 @@
 		break
 
 	SEND_SIGNAL(message, COMSIG_FLUSH_MESSAGE_BUFFER)
+	SEND_SIGNAL(message, COMSIG_UNREGISTER_MESSAGE_SIGNALS)
 
 /// Attempt to locate an applicable prefix module from the provided prefix module cache, and apply its affects to a say message.
 /datum/speech_module_tree/proc/process_prefix(datum/say_message/message, list/datum/speech_module/prefix/module_cache)

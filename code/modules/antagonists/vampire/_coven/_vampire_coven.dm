@@ -3,6 +3,7 @@
  */
 /datum/vampire_coven
 	var/list/datum/mind/members = null
+	var/blood = 0
 	var/total_blood = 0
 
 /datum/vampire_coven/New()
@@ -57,7 +58,7 @@ var/event_state = EVENT_STATE_PREFLOOD
 		return
 
 	global.event_state = event_states[new_event_state]
-	message_admins("[src] has set the event state to [new_event_state].")
+	global.message_admins("[src] has set the event state to [new_event_state].")
 
 	if (global.event_state == EVENT_STATE_FLOOD)
 		global.flood_drains()
