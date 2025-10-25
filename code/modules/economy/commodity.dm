@@ -1482,6 +1482,20 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/storage/box/costume/crap/goku
 	price = PAY_TRADESMAN
 
+/datum/commodity/costume/vocaloid
+	comname = "Android Diva Costume Set"
+	comtype = /obj/item/storage/box/costume/mikuluka
+	desc = "An official set of costumes for androids, idols, or divas from the future."
+	price = PAY_TRADESMAN*2
+
+/datum/commodity/costume/notvocaloid
+	comname = "Knockoff Android Diva Costume Set"
+	comtype = /obj/item/storage/box/costume/tetoneru
+	desc = "A derivative set of costumes for androids, idols, or divas from the future."
+	price = PAY_TRADESMAN
+
+
+
 /datum/commodity/costume/light_borg //YJHGHTFH's light borg costume
 	comname = "Light Cyborg Costume"
 	comtype = /obj/item/storage/box/costume/light_borg

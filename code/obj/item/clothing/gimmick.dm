@@ -2146,3 +2146,82 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "chompskysuit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+
+
+//vocaloid costumes
+
+/obj/item/clothing/under/gimmick/miku
+	name = "blue android diva costume"
+	desc = "A blue uniform fit for a digital idol. Smells faintly of spring onion."
+	icon_state = "miku"
+	item_state = "miku"
+	hide_underwear = TRUE
+
+/obj/item/clothing/gloves/miku
+	name = "blue android diva arm warmers"
+	desc = "Futuristic arm warmers decorated with buttons and lights."
+	icon_state = "miku"
+	item_state = "miku"
+
+/obj/item/clothing/shoes/miku
+	name = "blue android diva boots"
+	desc = "A tall pair of blue boots meant for the space-stage."
+	icon_state = "miku"
+	item_state = "miku"
+
+/obj/item/clothing/under/gimmick/luka
+	name = "gold android diva costume"
+	desc = "A brown and gold outfit fit for a digital idol. Smells faintly of tuna."
+	icon_state = "luka"
+	item_state = "luka"
+	hide_underwear = TRUE
+
+/obj/item/clothing/gloves/luka
+	name = "gold android diva armbands"
+	desc = "Golden arm bands with blue accents. If you spun around with these on, you'd reach a radius of 85 cm." //Double Lariat reference
+	icon_state = "luka"
+	item_state = "luka"
+
+/obj/item/clothing/shoes/luka
+	name = "gold android diva boots"
+	desc = "Golden lace-up boots meant for the space-stage."
+	icon_state = "luka"
+	item_state = "luka"
+
+/obj/item/clothing/under/gimmick/teto
+	name = "red android diva costume"
+	desc = "A red uniform fit for a digital idol. Smells faintly of french bread."
+	icon_state = "teto"
+	item_state = "teto"
+	hide_underwear = TRUE
+
+/obj/item/clothing/gloves/teto
+	name = "red android diva arm warmers"
+	desc = "Black and red arm warmers decorated with buttons."
+	icon_state = "teto"
+	item_state = "teto"
+
+/obj/item/clothing/shoes/teto
+	name = "red android diva boots"
+	desc = "A tall pair of red boots meant for the space-stage."
+	icon_state = "teto"
+	item_state = "teto"
+
+/obj/item/clothing/under/gimmick/neru
+	name = "yellow android diva costume"
+	desc = "A yellow uniform fit for a digital idol. Smells faintly of hate-mail...?"
+	icon_state = "neru"
+	item_state = "neru"
+	hide_underwear = TRUE
+
+/obj/item/clothing/gloves/neru
+	name = "yellow android diva arm warmers"
+	desc = "Futuristic arm warmers decorated with a keyboard."
+	icon_state = "neru"
+	item_state = "neru"
+
+/obj/item/clothing/shoes/neru
+	name = "yellow android diva boots"
+	desc = "A tall pair of yellow boots meant for the space-stage."
+	icon_state = "neru"
+	item_state = "neru"

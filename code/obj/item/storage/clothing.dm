@@ -398,6 +398,59 @@
 		/obj/item/clothing/under/gimmick/goku
 	)
 
+/obj/item/storage/box/costume/miku
+	name = "blue android diva costume set"
+	spawn_contents = list(
+		/obj/item/clothing/under/gimmick/miku,
+		/obj/item/clothing/shoes/miku,
+		/obj/item/clothing/gloves/miku,
+	)
+
+/obj/item/storage/box/costume/luka
+	name = "gold android diva costume set"
+	spawn_contents = list(
+		/obj/item/clothing/under/gimmick/luka,
+		/obj/item/clothing/shoes/luka,
+		/obj/item/clothing/gloves/luka,
+	)
+
+/obj/item/storage/box/costume/mikuluka
+	name = "official android diva costume set"
+	spawn_contents = list(
+		/obj/item/clothing/under/gimmick/miku,
+		/obj/item/clothing/shoes/miku,
+		/obj/item/clothing/gloves/miku,
+		/obj/item/clothing/under/gimmick/luka,
+		/obj/item/clothing/shoes/luka,
+		/obj/item/clothing/gloves/luka,
+	)
+/obj/item/storage/box/costume/teto
+	name = "red android diva costume set"
+	spawn_contents = list(
+		/obj/item/clothing/under/gimmick/teto,
+		/obj/item/clothing/shoes/teto,
+		/obj/item/clothing/gloves/teto,
+	)
+
+/obj/item/storage/box/costume/neru
+	name = "yellow android diva costume set"
+	spawn_contents = list(
+		/obj/item/clothing/under/gimmick/neru,
+		/obj/item/clothing/shoes/neru,
+		/obj/item/clothing/gloves/neru
+	)
+
+/obj/item/storage/box/costume/tetoneru
+	name = "derivative android diva costume set"
+	spawn_contents = list(
+		/obj/item/clothing/under/gimmick/teto,
+		/obj/item/clothing/shoes/teto,
+		/obj/item/clothing/gloves/teto,
+		/obj/item/clothing/under/gimmick/neru,
+		/obj/item/clothing/shoes/neru,
+		/obj/item/clothing/gloves/neru
+	)
+
 /obj/item/storage/box/costume/light_borg
 	name = "light cyborg costume"
 	spawn_contents = list(/obj/item/clothing/suit/gimmick/light_borg)
