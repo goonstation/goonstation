@@ -1047,6 +1047,16 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Wavy Ponytail: Split"
 				id = "wavy_tail_half"
 				random_allowed = FALSE
+			puffball
+				name = "Puffball"
+				id = "puffball"
+			puffball_fade
+				name = "Puffball: Faded"
+				id = "puffball_fade"
+			puffball_split
+				name = "Puffball: Split"
+				id = "puffball_split"
+				random_allowed = FALSE
 
 			crown_braid
 				name = "Crown Braid"
