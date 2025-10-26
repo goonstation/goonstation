@@ -15767,10 +15767,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/sw)
 "eQK" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -27732,9 +27728,6 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/breakroom)
 "iGZ" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -29776,9 +29769,6 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
 "jmG" = (
@@ -38124,9 +38114,6 @@
 	},
 /area/station/hallway/primary/west)
 "lOG" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/airless/redwhite/corner,
 /area/station/security/quarters)
 "lOJ" = (
@@ -40160,9 +40147,6 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /turf/simulated/floor/redwhite/corner{
 	dir = 8
@@ -77187,14 +77171,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
-"xHF" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/stairs{
-	dir = 4
-	},
-/area/station/security/quarters)
 "xIo" = (
 /turf/simulated/floor/stairs/wood2/middle,
 /area/station/crew_quarters/cafeteria)
@@ -104063,7 +104039,7 @@ cKu
 kbD
 pyY
 fDs
-xHF
+kbD
 aYF
 lJM
 lJM
