@@ -5,7 +5,7 @@
 		"a luce fuge",
 		"nobiscum in tenebris gaude",
 	)
-	blood_cost = 50
+	// blood_cost = 50
 	ritual_duration = 1 MINUTE
 
 /datum/vampire_ritual/transportation/invoke(mob/caster)
@@ -32,5 +32,12 @@
 		global.animate_shrinking_outline(M)
 
 		SPAWN(1.5 SECONDS)
-			M.set_loc(locate(text2num(coords[1]), text2num(coords[2]), text2num(coords[3])))
+			var/turf/T = locate(text2num(coords[1]), text2num(coords[2]), text2num(coords[3]))
+			M.set_loc(T)
 			global.animate_expanding_outline(M)
+
+			for (var/obj/item/grab/G in M.equipped_list(FALSE))
+				if (G.state < GRAB_AGGRESSIVE)
+					continue
+
+				G.affecting?.set_loc(T)
