@@ -887,8 +887,8 @@
 "akF" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 2;
-	xOffset = 138;
-	yOffset = -131
+	xOffset = 105;
+	yOffset = -106
 	},
 /turf/simulated/floor/stairs/wood{
 	dir = 8;
@@ -35598,8 +35598,8 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/viscontents_spawn{
 	targetZ = 2;
-	xOffset = 138;
-	yOffset = -131
+	xOffset = 105;
+	yOffset = -106
 	},
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
@@ -48349,8 +48349,8 @@
 "oEr" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 2;
-	xOffset = 138;
-	yOffset = -131
+	xOffset = 105;
+	yOffset = -106
 	},
 /turf/simulated/floor/stairs/wood{
 	dir = 1;
@@ -74560,8 +74560,8 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/viscontents_spawn{
 	targetZ = 2;
-	xOffset = 138;
-	yOffset = -131
+	xOffset = 105;
+	yOffset = -106
 	},
 /turf/simulated/floor/stairs/wood{
 	dir = 1;
