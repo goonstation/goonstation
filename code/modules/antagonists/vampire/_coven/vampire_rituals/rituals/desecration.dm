@@ -8,7 +8,7 @@ var/global/chapel_desecrated = FALSE
 		"fractus et segregatus",
 		"sicut sursum, sic et inferius",
 	)
-	blood_cost = 1000
+	blood_cost = 500
 
 /datum/vampire_ritual/desecration/sacrifice_conditions_met()
 	var/turf/T = get_turf(src.parent)

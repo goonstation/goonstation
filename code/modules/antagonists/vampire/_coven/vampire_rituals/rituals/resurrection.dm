@@ -5,7 +5,7 @@
 		"domus resurrectorum",
 		"reddite nobis amicum nostrum",
 	)
-	blood_cost = 200
+	blood_cost = 100
 
 /datum/vampire_ritual/resurrection/can_invoke_ritual()
 	var/dead_member = FALSE

@@ -9,7 +9,7 @@ var/global/list/datum/reagents/holy_water_reagent_holders = list()
 		"noctis voluntati cede",
 		"ad sanctum corrumpendum",
 	)
-	blood_cost = 1000
+	blood_cost = 500
 
 /datum/vampire_ritual/transmutation/sacrifice_conditions_met()
 	for (var/obj/item/I as anything in src.parent.sacrificial_circles_by_item)
@@ -41,3 +41,22 @@ var/global/list/datum/reagents/holy_water_reagent_holders = list()
 
 	playsound_global(world, 'sound/musical_instruments/Bell_Huge_1.ogg', 50, pitch = 0.75)
 	boutput(world, SPAN_ALERT("<h1>Something holy has been lost!</h1>"))
+
+
+
+
+
+// Admin spawnable heart crate, if things are going south for the vampires and they need the transmutation ritual.
+/obj/storage/crate/medical/hearts
+	name = "emergency offal crate"
+	desc = "A medical crate containing several dubiously sourced hearts."
+	spawn_contents = list(/obj/item/organ/heart = 5)
+
+/obj/storage/crate/medical/hearts/make_my_stuff()
+	. = ..()
+
+	var/mob/living/carbon/human/tdummy/dummy = new()
+	dummy.set_loc(null)
+
+	for (var/obj/item/organ/heart/heart in src.contents)
+		heart.donor_original = dummy

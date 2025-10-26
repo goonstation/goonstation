@@ -5,7 +5,7 @@
 		"a luce fuge",
 		"nobiscum in tenebris gaude",
 	)
-	blood_cost = 100
+	blood_cost = 50
 	ritual_duration = 1 MINUTE
 
 /datum/vampire_ritual/transportation/invoke(mob/caster)
