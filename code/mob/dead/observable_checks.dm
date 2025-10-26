@@ -1,6 +1,8 @@
 /atom/proc/is_observable_by(var/mob/observer)
 	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
-	if(!src in all_observables)
+	if(!(src in all_observables))
+		return FALSE
+	if(isnull(src.loc) && !isadmin(observer)) //nullspace will trap observers there, so you're gonna need an admin to get out
 		return FALSE
 	return TRUE
 
@@ -11,8 +13,6 @@
 	if(isadmin(observer))
 		return TRUE
 	if(src.unobservable)
-		return FALSE
-	if(isnull(src.loc))
 		return FALSE
 	if(istype(get_area(src), /area/prison/cell_block/wards))
 		return FALSE
