@@ -10,9 +10,37 @@
 	var/datum/vampire_coven/coven = null
 
 /datum/antagonist/coven_vampire/is_compatible_with(datum/mind/mind)
-	return ishuman(mind.current) || ismobcritter(mind.current)
+	return ishuman(mind.current) || isobserver(mind.current)
 
 /datum/antagonist/coven_vampire/give_equipment()
+	if (isobserver(src.owner.current))
+		src.owner.current.humanize(FALSE, FALSE, FALSE)
+		var/mob/living/carbon/human/H = src.owner.current
+
+		var/turf/T = null
+		if (length(by_type[/obj/decal/cleanable/vampire_ritual_circle]))
+			T = get_turf(pick(by_type[/obj/decal/cleanable/vampire_ritual_circle]))
+		else
+			// Backup spawn location.
+			T = pick_landmark(LANDMARK_LATEJOIN)
+
+		H.set_loc(T)
+		global.animate_expanding_outline(H)
+
+		H.equip_if_possible(new /obj/item/clothing/under/gimmick/vampire(H), SLOT_W_UNIFORM)
+		H.equip_if_possible(new /obj/item/clothing/shoes/dress_shoes(H), SLOT_SHOES)
+		H.equip_if_possible(new /obj/item/clothing/gloves/latex(H), SLOT_GLOVES)
+		H.equip_if_possible(new /obj/item/device/radio/headset/civilian(H), SLOT_EARS)
+		H.equip_if_possible(new /obj/item/storage/backpack(H), SLOT_BACK)
+		H.equip_if_possible(new /obj/item/device/pda2(H), SLOT_BELT)
+
+		H.equip_if_possible(new /obj/item/pen/blood_chalk, SLOT_IN_BACKPACK)
+
+		H.equip_sensory_items()
+		H.equip_body_traits(extended_tank = TRUE)
+
+		H.spawnId(global.find_job_in_controller_by_string("Staff Assistant"))
+
 	src.coven = global.get_singleton(/datum/vampire_coven)
 	src.coven.add_member(src.owner)
 
@@ -90,6 +118,9 @@
 			"value" = "[src.coven.total_blood] units",
 		),
 	)
+
+/datum/antagonist/coven_vampire/on_death()
+	global.vampchat_announcer.say("<b>[src.owner.current.real_name]</b> has died!", flags = SAYFLAG_IGNORE_HTML)
 
 
 /datum/objective/specialist/coven_vampire

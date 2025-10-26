@@ -1,6 +1,6 @@
 /obj/item/pen/blood_chalk
 	name = "blood chalk"
-	desc = "A stick of chalk that appears to be made from a waxy blood like compound."
+	desc = "A stick of chalk that appears to be made from a waxy blood-like compound."
 	icon_state = "chalk-9"
 	color = "#FF0000"
 	font_color = "#FF0000"

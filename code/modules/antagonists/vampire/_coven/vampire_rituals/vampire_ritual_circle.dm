@@ -34,7 +34,11 @@ TYPEINFO(/obj/decal/cleanable/vampire_ritual_circle)
 	)
 	src.sacrificial_circles_by_item = list()
 
+	START_TRACKING
+
 /obj/decal/cleanable/vampire_ritual_circle/disposing()
+	STOP_TRACKING
+
 	if (src.current_ritual)
 		global.VampireRitualManager.StopRitual(src.current_ritual)
 
