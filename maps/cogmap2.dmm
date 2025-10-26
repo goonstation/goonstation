@@ -58055,6 +58055,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "iDr" = (

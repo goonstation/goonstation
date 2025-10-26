@@ -46876,6 +46876,7 @@
 	id = "quarters_rd"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/plating/jen,
 /area/station/turret_protected/Zeta)
 "oCe" = (
