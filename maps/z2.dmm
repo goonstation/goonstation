@@ -67230,9 +67230,6 @@
 	})
 "nnl" = (
 /obj/table/endtable_gothic,
-/obj/item/scripture/reddarkhb{
-	name = "accursed tome"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -67240,6 +67237,10 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/item/paper/book/from_file/vampire_rituals{
+	pixel_x = -1;
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
