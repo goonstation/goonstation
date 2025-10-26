@@ -169,35 +169,38 @@
 	proc/choose_rocko_material()
 		src.icon_state = pick("rock1","rock1b","rock1c","rock1d")
 		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3
-		src.color = "#CCC" // Darken slightly to allow lighter colors to be more visibile
 		if(prob(90))
+			src.color = "#CCC" // Darken slightly to allow lighter colors to be more visibile
 			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
 			return
 
 		// Give rocko a random material
 		var/new_material = pick(childrentypesof(/datum/material/metal))
-		var/datum/material/dummy = new new_material
-		src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
+		var/datum/material/new_mat = new new_material
 
 		// Use ore sprites if available
-		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium")
-		if(!rock_list.Find(src.material.getID()))
+		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium","veranium")
+		if(!rock_list.Find(new_mat.getID()))
+			src.setMaterial(getMaterial(new_mat.getID()), setname = FALSE)
 			return
-		src.icon = file("icons/obj/items/materials/[src.material.getID()].dmi")
+		var/set_appearance = FALSE
+		src.icon = file("icons/obj/items/materials/[new_mat.getID()].dmi")
 		var/sprite_prefix = "ore"
 		var/sprite_value = pick(1,2,3,4,5,6)
 		var/list/sprite_variants = list("")
-		switch(src.material.getID())
+		switch(new_mat.getID())
 			if("bohrum")
 				sprite_value = pick(1,2,3,4) // Larger bohrum stack sizes are more piles of rocks than rocks
 			if("plutonium")
 				sprite_prefix = "scrap"
+				set_appearance = TRUE
 		// Include variants of ores if they exist
 		for(var/letter in list("b","c","d"))
-			if(is_valid_icon_state("[sprite_prefix][sprite_value][letter]_$$[src.material.getID()]"))
+			if(is_valid_icon_state("[sprite_prefix][sprite_value][letter]_$$[new_mat.getID()]"))
 				sprite_variants += letter
 			else
 				break
+		src.setMaterial(getMaterial(new_mat.getID()), appearance = set_appearance, setname = FALSE)
 		src.icon_state = "[sprite_prefix][sprite_value][pick(sprite_variants)]_$$[src.material.getID()]"
 		var/scale = 1 // Scale depending on chosen ore size
 		switch(sprite_value)

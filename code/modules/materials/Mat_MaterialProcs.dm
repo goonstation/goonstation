@@ -875,6 +875,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if(istype(I, /obj/item/raw_material/veranium))
 				var/obj/item/raw_material/veranium/ore = I
 				FLICK("ore[ore.icon_stack_value]_shock$$veranium", ore)
+			else if(istype(I, /obj/item/rocko))
+				var/obj/item/rocko/rocko = I
+				var/flick_state = replacetextEx(rocko.icon_state, "$$veranium", "shock$$veranium")
+				FLICK(flick_state, rocko)
 			L.shock(I, total_wattage, "All", 1, FALSE)
 
 /datum/materialProc/arcflash_life
