@@ -940,7 +940,6 @@
 #include "code\modules\antagonists\vampire\_coven\vampire_rituals\rituals\_vampire_ritual_parent.dm"
 #include "code\modules\antagonists\vampire\_coven\vampire_rituals\rituals\desecration.dm"
 #include "code\modules\antagonists\vampire\_coven\vampire_rituals\rituals\resurrection.dm"
-#include "code\modules\antagonists\vampire\_coven\vampire_rituals\rituals\test_ritual.dm"
 #include "code\modules\antagonists\vampire\_coven\vampire_rituals\rituals\transmutation.dm"
 #include "code\modules\antagonists\vampire\_coven\vampire_rituals\rituals\transportation.dm"
 #include "code\modules\antagonists\vampire\abilities\_vampire_ability_holder.dm"
