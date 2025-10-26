@@ -38,6 +38,11 @@
 	. = ..()
 
 
+/datum/speech_module/output/vampchat/admin
+	id = SPEECH_OUTPUT_VAMPCHAT_ADMIN
+	speech_prefix = null
+
+
 /datum/speech_module/output/vampchat_announcer
 	id = SPEECH_OUTPUT_VAMPCHAT_ANNOUNCER
 	channel = SAY_CHANNEL_VAMPIRE

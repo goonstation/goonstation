@@ -60,6 +60,7 @@
 #define SPEECH_OUTPUT_THRALLCHAT_THRALL "thrall_thrallchat"
 #define SPEECH_OUTPUT_THRALLCHAT_VAMPIRE "vampire_thrallchat"
 #define SPEECH_OUTPUT_VAMPCHAT "vampchat"
+#define SPEECH_OUTPUT_VAMPCHAT_ADMIN "admin_vampchat"
 #define SPEECH_OUTPUT_VAMPCHAT_ANNOUNCER "vampchat_announcer"
 #define SPEECH_OUTPUT_WRAITHCHAT "wraithchat"
 #define SPEECH_OUTPUT_WRAITHCHAT_ADMIN "admin_wraithchat"
