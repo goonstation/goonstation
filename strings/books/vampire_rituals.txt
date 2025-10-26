@@ -1,0 +1,65 @@
+<p><i>Just as central to our art is the ritual circle, as the chisel is to sculpture, as the sickle is to agriculture. It may be constructed using a chalk of blood.</i></p>
+
+<hr>
+<h2>Ritual Of Transportation</h2>
+
+<div style="margin-left:5%"><i>
+<quoteblock>
+amice meus in periculo<br>
+a luce fuge<br>
+nobiscum in tenebris gaude<br>
+<quoteblock>
+</i></div>
+
+<p><b>Requires:</b> 50 units of blood</p>
+
+<p>Hearken, and heed the call of the night, beckoning all who praise the shadows to return to the mirth and guardianship of the incanter and their ritual circle. In exchange for safe return, the circle exacts a toll of fifty droplets of blood.</p>
+
+
+<hr>
+<h2>Ritual Of Resurrection</h2>
+
+<div style="margin-left:5%"><i>
+<quoteblock>
+insula mortuorum<br>
+domus resurrectorum<br>
+reddite nobis amicum nostrum<br>
+<quoteblock>
+</i></div>
+
+<p><b>Requires:</b> one corpse, 100 units of blood</p>
+
+<p>One hundred fathoms behind the soft shadows cast by candlelight lies the Isle Of The Dead. Aided by the night, one may walk this path and return with an ally, but not without exchanging a soul for a soul, and blood for blood, per the law of equivalent exchange. A body and one hundred droplets of blood will be exacted by the circle.</p>
+
+
+<hr>
+<h2>Ritual Of Transmutation</h2>
+
+<div style="margin-left:5%"><i>
+<quoteblock>
+pura solutio<br>
+noctis voluntati cede<br>
+ad sanctum corrumpendum<br>
+<quoteblock>
+</i></div>
+
+<p><b>Requires:</b> five hearts, 500 units of blood</p>
+
+The blessed liquid, that which is to flesh what water is to clay and sediment, eroding and dissolving, is not itself without weakness: all things bleed. The circle exacts a heavy toll of five hearts and a river of 500 droplets of blood.</p>
+
+
+<hr>
+<h2>Ritual Of Desecration</h2>
+
+<div style="margin-left:5%"><i>
+<quoteblock>
+qui sanctus est, mortuus est<br>
+fractus et segregatus<br>
+sicut sursum, sic et inferius<br>
+<quoteblock>
+</i></div>
+
+<p><b>Requires:</b> corpse of chaplain, five of their organs, 500 units of blood</p>
+
+<p>All which is created can be undone, all that is built, burnt, all that is holy, desecrated. The circle requires that the holy one must be broken, their body placed in the circle, with organs rendered external surrounding them. The circle will exact this and 500 droplets of blood to break the holy curse of the Chapel.</p>
+

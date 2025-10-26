@@ -34,6 +34,7 @@
 		H.equip_if_possible(new /obj/item/storage/backpack(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/device/pda2(H), SLOT_BELT)
 
+		H.equip_if_possible(new /obj/item/paper/book/from_file/vampire_rituals, SLOT_IN_BACKPACK)
 		H.equip_if_possible(new /obj/item/pen/blood_chalk, SLOT_IN_BACKPACK)
 
 		H.equip_sensory_items()

@@ -183,3 +183,14 @@ ABSTRACT_TYPE(/datum/vampire_ritual)
 	src.ritual_stage = 1
 	src.unset_major_sacrifice()
 	src.minor_sacrifices = list()
+
+
+
+
+
+/obj/item/paper/book/from_file/vampire_rituals
+	name = "accursed tome"
+	desc = "A grand red and black book with gold lettering."
+	file_path = "strings/books/vampire_rituals.txt"
+	icon_state = "reddarkhb"
+	item_state = "reddarkhb"
