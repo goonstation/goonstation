@@ -46,6 +46,8 @@
 @include meta.load-css('./theme-modes/ntos-light.scss');
 
 // |GOOONSTATION-ADD| Components
+@include meta.load-css('./components/ColorCheckbox.scss');
+@include meta.load-css('./components/ColorSection.scss');
 @include meta.load-css('./components/GeneIcon.scss');
 @include meta.load-css('./components/LED.scss');
 
