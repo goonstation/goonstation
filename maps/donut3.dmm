@@ -18558,6 +18558,10 @@
 /obj/storage/secure/closet/brig_automatic{
 	id = "solitarycell"
 	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "fJf" = (
@@ -41551,6 +41555,9 @@
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "mUu" = (
@@ -55040,6 +55047,9 @@
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary2)
 "rcW" = (
@@ -79275,6 +79285,10 @@
 "ykh" = (
 /obj/storage/secure/closet/brig_automatic{
 	id = "solitarycell"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary2)
