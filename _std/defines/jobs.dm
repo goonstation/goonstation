@@ -71,18 +71,6 @@
 #define ROUNDS_MAX_MEDASS 75
 #define ROUNDS_MAX_TECHASS 75
 
-// Job Colors
-#define COMMAND_LINK_COLOR "#0C0"
-#define SECURITY_LINK_COLOR "#F00"
-#define RESEARCH_LINK_COLOR "#90F"
-#define MEDICAL_LINK_COLOR "#F9F"
-#define ENGINEERING_LINK_COLOR "#F90"
-#define CIVILIAN_LINK_COLOR "#09F"
-#define SILICON_LINK_COLOR "#999"
-
-#define NANOTRASEN_LINK_COLOR "#3348ff"
-#define SYNDICATE_LINK_COLOR "#800"
-
 // World announcement orders
 // Order in which the "John is the Captain!" world messages show up when multiple heads join at the same time (mainly roundstart)
 #define ANNOUNCE_ORDER_CAPTAIN 5
