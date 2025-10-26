@@ -25,7 +25,7 @@
 			return
 		if (!M.canmove)
 			return
-		if(isrestrictedz(M.loc.z))
+		if(isrestrictedz(M.loc.z) && !istype(get_area(M), /area/vampchapel))
 			return
 		return TRUE
 
