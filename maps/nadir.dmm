@@ -8133,22 +8133,13 @@
 	})
 "dHP" = (
 /obj/table/auto,
-/obj/item/disk/data/tape{
-	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/disk/data/tape/master/readonly{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/paper/book/from_file/dwainedummies{
-	pixel_x = 3;
-	pixel_y = 6
-	},
 /obj/item/device/multitool{
 	pixel_x = -14;
 	pixel_y = 7
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
@@ -15679,9 +15670,13 @@
 	},
 /area/station/medical/medbay/treatment1)
 "gXd" = (
-/obj/machinery/turret,
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
+	},
+/obj/table/auto,
+/obj/item/disk/data/tape/master/readonly{
+	pixel_x = -3;
+	pixel_y = 5
 	},
 /turf/simulated/floor/greenblack{
 	dir = 1
@@ -23720,6 +23715,7 @@
 /area/station/hallway/primary/northeast)
 "kqd" = (
 /obj/machinery/turret,
+/obj/decal/stripe_caution,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "kqe" = (
@@ -31063,7 +31059,16 @@
 /turf/simulated/floor/industrial,
 /area/station/mining/staff_room)
 "nvL" = (
-/obj/machinery/turret,
+/obj/table/auto,
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/disk/data/tape{
+	layer = 3.5;
+	pixel_x = -5;
+	pixel_y = -5
+	},
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
 "nvM" = (

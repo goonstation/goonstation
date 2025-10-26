@@ -16946,6 +16946,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "dmI" = (
@@ -31905,6 +31908,16 @@
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"mmR" = (
+/obj/machinery/door_control{
+	id = "dwaine_core";
+	name = "DWAINE Core Shield";
+	pixel_x = 25;
+	pixel_y = 0;
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "mmX" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/item/device/radio/intercom/security{
@@ -34141,6 +34154,13 @@
 	layer = 2
 	},
 /area/station/solar/zeta)
+"nBZ" = (
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "nCJ" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -51021,17 +51041,17 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "xvU" = (
-/obj/machinery/door_control{
-	id = "dwaine_core";
-	name = "DWAINE Core Shield";
-	pixel_x = 25;
-	pixel_y = 0;
-	dir = 4
-	},
 /obj/machinery/camera/science/directional/east{
 	c_tag = "Computer Core";
 	pixel_y = 10
 	},
+/obj/machinery/computer/robotics{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "xwa" = (
@@ -126357,7 +126377,7 @@ amc
 amH
 uOE
 dmc
-jBf
+nBZ
 alE
 dzq
 dzq
@@ -126657,7 +126677,7 @@ ama
 rrH
 jBf
 qdx
-amc
+mmR
 fGV
 xvU
 alE
