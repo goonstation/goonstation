@@ -27339,6 +27339,9 @@
 	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "bHE" = (
@@ -27351,7 +27354,13 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
@@ -27621,11 +27630,12 @@
 	},
 /area/station/crew_quarters/ce)
 "bIx" = (
-/obj/machinery/networked/radio,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
+	},
 /turf/simulated/floor/circuit,
 /area/station/crew_quarters/ce)
 "bIy" = (
@@ -28068,24 +28078,9 @@
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "bJA" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/mainframe/zeta{
-	tag = "ZETA_MAINFRAME"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/turf/simulated/floor/circuit,
+/obj/shrub/captainshrub,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
+/turf/simulated/floor/dojo/sand/circle,
 /area/station/bridge)
 "bJB" = (
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -28098,7 +28093,13 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
@@ -29058,9 +29059,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/computer/announcement/station/engineering{
-	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -33068,8 +33066,13 @@
 	},
 /area/station/crew_quarters/captain)
 "bXK" = (
-/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
-/obj/shrub/captainshrub,
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	tag = "icon-plant (NORTH)"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bXL" = (
@@ -36968,7 +36971,16 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/turret,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/mainframe/zeta{
+	tag = "ZETA_MAINFRAME"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "ckW" = (
@@ -38148,7 +38160,6 @@
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "cor" = (
-/obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -51538,6 +51549,26 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"djp" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/bridge)
 "djs" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
@@ -52741,6 +52772,9 @@
 	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "dwa" = (
@@ -54562,8 +54596,11 @@
 /turf/simulated/floor/caution/corner/ne,
 /area/station/engine/hotloop)
 "fqv" = (
-/obj/table/reinforced,
-/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/robotics,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "fqO" = (
@@ -56794,6 +56831,9 @@
 	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "hGw" = (
@@ -58435,6 +58475,11 @@
 /area/station/quartermaster/office)
 "iWF" = (
 /obj/machinery/light,
+/obj/machinery/networked/radio,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "iXJ" = (
@@ -59274,6 +59319,9 @@
 	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "jGx" = (
@@ -64435,10 +64483,11 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "ojx" = (
-/obj/machinery/computer3/terminal/zeta/os_loaded,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta/os_loaded,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "ojR" = (
@@ -67754,14 +67803,19 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Mainframe"
-	},
 /obj/mapping_helper/access/heads,
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "rml" = (
@@ -70004,7 +70058,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "tup" = (
-/obj/table/reinforced,
+/obj/machinery/turret,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "tuq" = (
@@ -72352,13 +72406,9 @@
 	},
 /area/station/quartermaster/office)
 "vSC" = (
-/obj/machinery/computer/robotics{
-	dir = 8
-	},
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "1-8"
 	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "vTP" = (
@@ -74187,9 +74237,8 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/networked/mainframe/zeta{
-	tag = "ZETA_MAINFRAME"
-	},
+/obj/table/reinforced,
+/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "xRN" = (
@@ -141569,7 +141618,7 @@ bAd
 bAd
 bDI
 bFE
-bHE
+djp
 bJA
 bHE
 bFE

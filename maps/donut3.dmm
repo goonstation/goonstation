@@ -8484,9 +8484,6 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "cwG" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/table/reinforced,
 /obj/item/disk/data/tape{
 	layer = 3.5;
@@ -26194,10 +26191,6 @@
 /turf/simulated/floor/white,
 /area/spacehabitat/pool)
 "ifF" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
 /obj/table/reinforced,
 /obj/item/device/radio{
 	pixel_x = -5;
@@ -77122,10 +77115,6 @@
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor,
 /area/station/hangar/science)
-"xGu" = (
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/plating/jen,
-/area/station/storage/tech)
 "xGz" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/yellow/corner,
@@ -132751,7 +132740,7 @@ mzg
 mIg
 wFv
 qUa
-xGu
+cHZ
 oBO
 bsr
 pqS
