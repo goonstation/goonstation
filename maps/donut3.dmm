@@ -885,11 +885,16 @@
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/gas)
 "akF" = (
+/obj/landmark/viscontents_spawn{
+	targetZ = 2;
+	xOffset = 138;
+	yOffset = -131
+	},
 /turf/simulated/floor/stairs/wood{
 	dir = 8;
 	explosion_immune = 1
 	},
-/area/space)
+/area/station/maintenance/outer/ne)
 "akT" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/alt{
@@ -9548,6 +9553,11 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
+"cHO" = (
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/station/maintenance/outer/ne)
 "cHQ" = (
 /obj/stool/chair{
 	dir = 4
@@ -11873,8 +11883,9 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = 7
+/obj/candle_light{
+	pixel_x = 6;
+	pixel_y = 11
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -14745,12 +14756,6 @@
 	icon_state = "fblue6"
 	},
 /area/station/crew_quarters/courtroom)
-"epL" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/floorpillstatue,
-/obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
 "epN" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/chapel{
@@ -34146,7 +34151,7 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/space)
+/area/station/maintenance/outer/ne)
 "knY" = (
 /obj/railing/orange{
 	dir = 4
@@ -35589,6 +35594,17 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"kLT" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/landmark/viscontents_spawn{
+	targetZ = 2;
+	xOffset = 138;
+	yOffset = -131
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/station/maintenance/outer/ne)
 "kLU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36956,6 +36972,12 @@
 	},
 /turf/simulated/floor/setpieces/bloodfloor,
 /area/station/engine/engineering/ce)
+"liR" = (
+/turf/simulated/floor/stairs/wood{
+	dir = 8;
+	explosion_immune = 1
+	},
+/area/station/maintenance/outer/ne)
 "liW" = (
 /obj/railing/orange{
 	dir = 1
@@ -47728,7 +47750,7 @@
 /turf/simulated/floor/stairs/wood{
 	explosion_immune = 1
 	},
-/area/space)
+/area/station/maintenance/outer/ne)
 "ouW" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/turret_protected/ai_upload_foyer)
@@ -48324,6 +48346,17 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/grey,
 /area/station/science/lab)
+"oEr" = (
+/obj/landmark/viscontents_spawn{
+	targetZ = 2;
+	xOffset = 138;
+	yOffset = -131
+	},
+/turf/simulated/floor/stairs/wood{
+	dir = 1;
+	explosion_immune = 1
+	},
+/area/station/maintenance/outer/ne)
 "oEx" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -60987,8 +61020,9 @@
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "suS" = (
+/obj/fakeobject/Azarakcandleswall,
 /turf/simulated/wall/auto/reinforced/jen,
-/area/space)
+/area/station/maintenance/outer/ne)
 "svo" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -66574,7 +66608,7 @@
 	dir = 1;
 	explosion_immune = 1
 	},
-/area/space)
+/area/station/maintenance/outer/ne)
 "ucr" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -70807,10 +70841,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
-"vpO" = (
-/obj/fakeobject/Azarakcandleswall,
-/turf/simulated/wall/auto/reinforced/jen,
-/area/space)
 "vpS" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -74526,6 +74556,18 @@
 	},
 /turf/simulated/wall/auto/jen,
 /area/station/hallway/primary/northwest)
+"wuc" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/landmark/viscontents_spawn{
+	targetZ = 2;
+	xOffset = 138;
+	yOffset = -131
+	},
+/turf/simulated/floor/stairs/wood{
+	dir = 1;
+	explosion_immune = 1
+	},
+/area/station/maintenance/outer/ne)
 "wue" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -127004,17 +127046,17 @@ rdj
 rdj
 rdj
 rdj
-rdj
-suS
-suS
-suS
-suS
-suS
-suS
+aUm
+aUm
+aUm
+aUm
+aUm
+aUm
+aUm
 aUm
 aUm
 dwQ
-epL
+bzZ
 kkV
 eMk
 nFq
@@ -127306,11 +127348,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
-suS
-knR
-uck
-knR
+aUm
+aUm
+kLT
+oEr
+wuc
 uck
 knR
 eVW
@@ -127608,11 +127650,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
+aUm
 suS
 akF
-suS
-suS
+aUm
+aUm
 aUm
 aUm
 aUm
@@ -127910,11 +127952,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
-vpO
-knR
-suS
-suS
+aUm
+aUm
+liR
+aUm
+aUm
 aUm
 ofw
 ofw
@@ -128212,11 +128254,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
+aUm
 suS
-akF
-suS
-suS
+liR
+aUm
+aUm
 aUm
 ofw
 ofw
@@ -128514,10 +128556,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
-suS
-knR
-knR
+aUm
+aUm
+cHO
+ouV
 ouV
 aUm
 ofw
@@ -128816,11 +128858,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
-suS
-suS
-suS
-suS
+aUm
+aUm
+aUm
+aUm
+aUm
 aUm
 aUm
 aUm

@@ -55534,15 +55534,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod2)
-"eJi" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodygloves_c"
-	},
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/marble/black,
-/area/vampchapel{
-	force_fullbright = 0
-	})
 "eJj" = (
 /obj/machinery/computer/television/small{
 	pixel_y = 8
@@ -59419,6 +59410,18 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"hxd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "hxi" = (
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
@@ -62161,6 +62164,21 @@
 /obj/machinery/light,
 /turf/unsimulated/floor,
 /area/centcom/lounge)
+"jvJ" = (
+/obj/candle_light{
+	pixel_y = 2;
+	pixel_x = -3
+	},
+/obj/candle_light{
+	pixel_y = 8;
+	pixel_x = 14
+	},
+/turf/simulated/floor/terrazzo/black{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jvX" = (
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/grime,
@@ -65020,6 +65038,17 @@
 	icon_state = "shore-31"
 	},
 /area/titlescreen)
+"lyj" = (
+/obj/landmark/viscontents_spawn{
+	xOffset = -138;
+	yOffset = 131
+	},
+/turf/simulated/floor/stairs/wood{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "lzl" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_station/battlecruiser)
@@ -66294,15 +66323,6 @@
 	},
 /turf/space,
 /area/wizard_station_space)
-"mCx" = (
-/obj/decal/cleanable/blood{
-	icon_state = "helmetblood_c"
-	},
-/obj/stool,
-/turf/simulated/floor/marble/black,
-/area/vampchapel{
-	force_fullbright = 0
-	})
 "mCX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -66562,6 +66582,17 @@
 /area/centcom/offices/leah)
 "mNv" = (
 /turf/simulated/floor/carpet/purple/fancy/innercorner/se{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
+"mNJ" = (
+/obj/candle_light{
+	pixel_y = -3;
+	pixel_x = -10
+	},
+/turf/simulated/floor/terrazzo/black{
 	explosion_immune = 1
 	},
 /area/vampchapel{
@@ -67829,6 +67860,18 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
+"nJc" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/landmark/viscontents_spawn{
+	xOffset = -138;
+	yOffset = 131
+	},
+/turf/simulated/floor/stairs/wood{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "nJg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
@@ -69208,6 +69251,14 @@
 	dir = 5
 	},
 /area/centcom/offices/varshie)
+"oIu" = (
+/obj/decal/cleanable/vampire_ritual_circle,
+/turf/simulated/floor/terrazzo/black{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "oIH" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/cigbutt{
@@ -69408,6 +69459,18 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
+"oOI" = (
+/obj/landmark/viscontents_spawn{
+	xOffset = -138;
+	yOffset = 131
+	},
+/turf/simulated/floor/stairs/wood{
+	dir = 8;
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "oPY" = (
 /obj/item/mechanics/trigger/button{
 	anchored = 1;
@@ -69529,6 +69592,17 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/syndicate_station_space)
+"oUa" = (
+/obj/item/device/light/candle/small{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/turf/simulated/floor/terrazzo/black{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "oUi" = (
 /turf/space,
 /area/wizard_station_space)
@@ -71497,14 +71571,6 @@
 /obj/map/light/purple,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/afterlife/bar/sanctuary)
-"qkl" = (
-/obj/decal/cleanable/blood{
-	icon_state = "left_bloodyhands_c"
-	},
-/turf/simulated/floor/marble/black,
-/area/vampchapel{
-	force_fullbright = 0
-	})
 "qkO" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-6"
@@ -72055,6 +72121,19 @@
 	icon_state = "track_2"
 	},
 /area/drone/office)
+"qDA" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/landmark/viscontents_spawn{
+	xOffset = -138;
+	yOffset = 131
+	},
+/turf/simulated/floor/stairs/wood{
+	dir = 8;
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "qDO" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 8
@@ -74829,6 +74908,15 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/void,
 /area/void_diner)
+"sCz" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/stairs/wood{
+	dir = 4;
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "sCC" = (
 /obj/decal/cleanable/blood{
 	icon_state = "helmetblood_c";
@@ -75497,6 +75585,18 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"thV" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/landmark/viscontents_spawn{
+	xOffset = -138;
+	yOffset = 131
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "tib" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -79355,18 +79455,6 @@
 	dir = 4
 	},
 /area/owlery/gangzone)
-"vWT" = (
-/obj/decal/cleanable/blood{
-	icon_state = "helmetblood_c";
-	pixel_x = 11;
-	pixel_y = -10
-	},
-/turf/simulated/floor/terrazzo/black{
-	explosion_immune = 1
-	},
-/area/vampchapel{
-	force_fullbright = 0
-	})
 "vWW" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-35"
@@ -81151,6 +81239,14 @@
 	tag = "icon-fblue2 (SOUTHEAST)"
 	},
 /area/afterlife/bar)
+"xhu" = (
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c"
+	},
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "xhY" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -168371,7 +168467,7 @@ tCL
 lgJ
 mJK
 jto
-mCx
+jto
 mxU
 iTt
 wSJ
@@ -168673,9 +168769,9 @@ skM
 lgJ
 lgJ
 eiN
-iTt
+xhu
 mxU
-eJi
+jFq
 ngj
 okr
 okr
@@ -168973,9 +169069,9 @@ pNm
 pNm
 vqH
 lgJ
+oUa
 lgJ
-lgJ
-iTt
+mNJ
 mxU
 iTt
 fko
@@ -169275,8 +169371,8 @@ vCl
 fLz
 vqH
 lgJ
-vWT
 lgJ
+oIu
 lgJ
 jmc
 jYC
@@ -169576,10 +169672,10 @@ pVF
 pNm
 pNm
 vqH
+jvJ
 lgJ
 lgJ
 lgJ
-qkl
 mxU
 iTt
 lgJ
@@ -169882,7 +169978,7 @@ lgJ
 lgJ
 vtQ
 iTt
-mxU
+hxd
 iTt
 spU
 okr
@@ -169891,7 +169987,7 @@ pOm
 pOm
 jAt
 jAt
-jAt
+fem
 jAt
 jAt
 jAt
@@ -170795,8 +170891,8 @@ urg
 okr
 mWz
 jAt
-gVl
-gVl
+pOm
+gjJ
 gjJ
 jAt
 gVl
@@ -171096,11 +171192,11 @@ grx
 mWn
 okr
 pgP
-jAt
+fem
 wtR
 jAt
 jAt
-jAt
+fem
 puz
 jAt
 pgP
@@ -171398,12 +171494,12 @@ mWn
 mWn
 okr
 pgP
-fem
-gVl
+jAt
+qDA
 jAt
 jAt
-fem
-gVl
+jAt
+sCz
 jAt
 pgP
 aaa
@@ -171700,11 +171796,11 @@ kYf
 ueu
 okr
 mWz
+fem
+oOI
 jAt
-wtR
 jAt
-jAt
-jAt
+fem
 puz
 jAt
 pgP
@@ -172003,9 +172099,9 @@ rkS
 okr
 pgP
 jAt
-gVl
-vlw
-gVl
+thV
+lyj
+nJc
 vlw
 gVl
 jAt
