@@ -1421,20 +1421,6 @@ var/list/removed_jobs = list(
 			"low" = src.jobs_low_priority,
 			"unwanted" = src.jobs_unwanted,
 		)
-		// TGUI buttons don't like non-standard colours.
-		// I hate this implementation, but I'm not adding a second colour variable to jobs.
-		var/alist/colour_map = list(
-			"#0FF" = "teal",
-			"#0C0" = "green",
-			"#F00" = "red",
-			"#90F" = "violet",
-			"#F9F" = "pink",
-			"#F90" = "orange",
-			"#09F" = "blue",
-			"#999" = "grey",
-			"#3348ff" = "blue",
-			"#800" = "red",
-		)
 		for (var/category as anything in jobs_by_category)
 			for (var/job as anything in jobs_by_category[category])
 				var/datum/job/job_datum = global.find_job_in_controller_by_string(job)
@@ -1443,7 +1429,7 @@ var/list/removed_jobs = list(
 
 				job_static_data[job_datum.name] ||= list()
 				job_static_data[job_datum.name]["disabled"] = FALSE
-				job_static_data[job_datum.name]["colour"] = colour_map[job_datum.linkcolor] || "blue"
+				job_static_data[job_datum.name]["colour"] = job_datum.ui_colour
 				job_static_data[job_datum.name]["wiki_link"] = job_datum.wiki_link
 				job_static_data[job_datum.name]["required"] = job_datum.cant_allocate_unwanted
 

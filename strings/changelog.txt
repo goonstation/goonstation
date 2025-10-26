@@ -1,5 +1,14 @@
 
 (t)sat oct 25 25
+(u)Mr. Moriarty
+(p)24633
+(e)🆕📄🐣|C-Feature, A-UI, A-Respawning
+(*)The latejoin window has been converted into TGUI.
+(u)RubberRats
+(p)24723
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(*)11 new hairstyles are now available: Blunt Pompadour, Big Pompadour, Ducktail, Pageboy, Ringlets, Short Ringlets, Crown Braid, High Bun, Massive Braids, and Chignon
+(+)An additional, twelfth hairstyle can be given to you by barbers.
 (u)JORJ949
 (p)24994
 (e)🆕🔨|C-Feature, A-Player-Actions
