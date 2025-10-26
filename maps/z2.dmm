@@ -1901,7 +1901,9 @@
 /turf/simulated/floor/stone{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "ajI" = (
 /turf/unsimulated/wall/auto/adventure/moon,
 /area/moon/museum)
@@ -3860,10 +3862,12 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/wood/seven{
+/turf/simulated/floor/carpet/purple/fancy/edge/east{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "asD" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'SURFACE AIRLOCK'";
@@ -4736,11 +4740,6 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
-"awW" = (
-/turf/simulated/floor/stairs/wood{
-	dir = 4
-	},
-/area/vampchapel)
 "awX" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
@@ -6750,7 +6749,9 @@
 /area/marsoutpost)
 "aIl" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "aIo" = (
 /turf/unsimulated/wall/arctic/abyss,
 /area/upper_arctic/exterior/abyss)
@@ -19481,10 +19482,13 @@
 /area/iomoon/caves)
 "bBa" = (
 /obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "bBb" = (
 /obj/item/raw_material/cerenkite,
 /turf/unsimulated/iomoon/floor{
@@ -24598,6 +24602,14 @@
 /obj/machinery/light/small/floor/purpleish,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven/hydroponics)
+"bTf" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "bTg" = (
 /obj/machinery/door/poddoor/buff/gauntlet,
 /turf/unsimulated/floor/setpieces/gauntlet,
@@ -44874,8 +44886,12 @@
 /obj/submachine/chef_oven{
 	dir = 8
 	},
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "dgG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45609,14 +45625,6 @@
 /obj/decal/poster/wallsign/wizard,
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
-"djM" = (
-/obj/stool/chair/pew/fancy/left{
-	dir = 1
-	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "djN" = (
 /obj/fakeobject/shuttlethruster{
 	dir = 8
@@ -47102,6 +47110,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"duo" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "duq" = (
 /turf/unsimulated/wall/auto/adventure/hospital,
 /area/hospital/underground)
@@ -54521,10 +54535,11 @@
 /obj/machinery/glass_recycler{
 	glass_amt = 50
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "dZt" = (
 /obj/machinery/light,
 /turf/unsimulated/floor,
@@ -54764,6 +54779,26 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"efl" = (
+/obj/stool/chair/comfy/throne_gold{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/south{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
+"egs" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "egw" = (
 /obj/tree,
 /obj/map/light/graveyard,
@@ -54781,7 +54816,9 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "ehb" = (
 /obj/item/material_piece/uqill,
 /obj/item/material_piece/uqill,
@@ -54853,13 +54890,26 @@
 /turf/unsimulated/floor/redblack,
 /area/owlery/Owlopen)
 "eiN" = (
-/obj/stool/chair/pew/fancy/right{
-	dir = 1
+/obj/item/device/light/candle/small{
+	pixel_x = -6;
+	pixel_y = -6
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
+/obj/item/device/light/candle/small{
+	pixel_x = 6;
+	pixel_y = -1
 	},
-/area/vampchapel)
+/obj/item/device/light/candle/small{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/candle_light{
+	pixel_x = 6;
+	pixel_y = 20
+	},
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "eiT" = (
 /obj/item/reagent_containers/vending/bag/larger{
 	desc = "You're considering stuffing your face in this, but you do have that lawsuit to file...";
@@ -55065,7 +55115,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "erd" = (
 /obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 8
@@ -55179,7 +55231,9 @@
 /turf/simulated/floor/carpet/purple/fancy{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "ewi" = (
 /turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 10
@@ -55359,6 +55413,17 @@
 /obj/fakeobject/microscope,
 /turf/unsimulated/floor/white,
 /area/hospital)
+"eDt" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "eEh" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window{
@@ -55469,6 +55534,15 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod2)
+"eJi" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "eJj" = (
 /obj/machinery/computer/television/small{
 	pixel_y = 8
@@ -55634,6 +55708,13 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"eQh" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/sw{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "eQr" = (
 /obj/item/sticker/gold_star{
 	anchored = 1;
@@ -55741,6 +55822,16 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"eTH" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/nw{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "eTR" = (
 /obj/stool/chair/comfy,
 /obj/landmark/spawner/random_trader,
@@ -55788,10 +55879,15 @@
 	},
 /obj/machinery/power/apc/autoname_east,
 /obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
+/obj/storage/closet/coffin/wood,
+/obj/decal/cleanable/dirt/jen,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "eUA" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -55823,7 +55919,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "eVB" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -56010,6 +56108,12 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"fem" = (
+/obj/fakeobject/Azarakcandleswall,
+/turf/simulated/wall/auto/reinforced/jen,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
@@ -56207,6 +56311,14 @@
 /obj/item/bananapeel,
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"fko" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/terrazzo/black{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "fks" = (
 /obj/table/auto,
 /obj/item/paper/businesscard/mabinogi,
@@ -56393,7 +56505,9 @@
 /turf/simulated/floor/wood/five{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "fuP" = (
 /obj/lattice{
 	dir = 10;
@@ -56497,7 +56611,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "fyt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56509,10 +56625,13 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/five{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "fzq" = (
 /obj/tree/sakura_tree,
 /turf/unsimulated/floor/grass/leafy,
@@ -56825,6 +56944,16 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/hall)
+"fLc" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/simulated/floor/carpet/purple/fancy{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "fLm" = (
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
@@ -56852,10 +56981,13 @@
 	pixel_x = 0;
 	pixel_y = 20
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/stone{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "fLD" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -56935,11 +57067,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/research)
-"fOB" = (
-/turf/simulated/floor/carpet/purple/fancy/innercorner/sw{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "fPB" = (
 /obj/storage/closet/thunderdome/green,
 /turf/unsimulated/floor/plating,
@@ -56959,7 +57086,9 @@
 /turf/simulated/wall/auto/supernorn/material/mauxite{
 	explosion_protection = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "fRh" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -57456,7 +57585,9 @@
 /turf/simulated/floor/stairs/wood{
 	dir = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "gjN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -57560,7 +57691,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "gnY" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -57629,6 +57762,16 @@
 /obj/item/paper/book/from_file/pharmacopia,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
+"gpl" = (
+/obj/reagent_dispensers/beerkeg/wine,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/wood/five{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "gpA" = (
 /obj/machinery/optable{
 	name = "Autopsy Table"
@@ -57684,8 +57827,16 @@
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/turf/simulated/floor/marble/black,
-/area/vampchapel)
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "gsH" = (
 /mob/living/critter/small_animal/crab/lava/deep,
 /turf/unsimulated/iomoon/floor{
@@ -57697,6 +57848,19 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
+"gtb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c"
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "gtA" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -58402,7 +58566,9 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/east{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "gRO" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
@@ -58463,6 +58629,14 @@
 /obj/mapping_helper/access/admin_override,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
+"gVl" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "gVq" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg13"
@@ -58601,10 +58775,15 @@
 /area/centcom)
 "hab" = (
 /obj/decal/cleanable/cobweb/cobwebs_1/directional/north,
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
 /turf/simulated/floor/stone{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "hao" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -58684,14 +58863,6 @@
 	dir = 10
 	},
 /area/upper_arctic/exterior/surface)
-"hej" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/purple/fancy/innercorner/ne{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "hep" = (
 /obj/machinery/door/unpowered/wood/lily{
 	dir = 8;
@@ -58709,10 +58880,13 @@
 	pixel_x = -7;
 	pixel_y = 7
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/purple/fancy{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "heN" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/grey/side,
@@ -58779,6 +58953,15 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/syndicate_station_space)
+"hiu" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/obj/stool,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "hjf" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -58802,6 +58985,16 @@
 	},
 /turf/unsimulated/grass,
 /area/dojo/sakura)
+"hjQ" = (
+/obj/submachine/chef_oven{
+	dir = 8
+	},
+/turf/simulated/floor/marble{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "hjS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Biodome"
@@ -58847,6 +59040,19 @@
 /obj/securearea,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"hkN" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c";
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "hkZ" = (
 /obj/item/implant/artifact/ancient/ancient_good,
 /obj/item/material_piece/cloth/spidersilk,
@@ -59040,16 +59246,25 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "htA" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
 /obj/machinery/mixer,
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "htI" = (
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -59399,6 +59614,19 @@
 	dir = 6
 	},
 /area/owlery/Owlopen)
+"hGb" = (
+/obj/storage/closet/coffin,
+/obj/fakeobject/skeleton{
+	desc = "There's scratch marks all over the bones.";
+	icon_state = "skeleton_s";
+	name = "crumbly skeleton"
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "hGh" = (
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/plating,
@@ -59524,7 +59752,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "hME" = (
 /obj/decal/poster/wallsign/stencil/left/a,
 /turf/unsimulated/floor/setpieces/gauntlet,
@@ -59752,12 +59982,6 @@
 	dir = 10
 	},
 /area/owlery/staffhall)
-"hWB" = (
-/obj/table/regal,
-/turf/simulated/floor/carpet/purple/fancy{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "hXz" = (
 /obj/mesh/catwalk,
 /obj/cable/green{
@@ -59829,10 +60053,17 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c";
+	pixel_x = 11;
+	pixel_y = -10
+	},
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "iaA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -59961,10 +60192,17 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c";
+	pixel_x = 11;
+	pixel_y = -10
+	},
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "iha" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
@@ -60294,7 +60532,9 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/se{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "isk" = (
 /obj/table/wood/auto/desk,
 /obj/item/storage/photo_album{
@@ -60570,10 +60810,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "iCR" = (
 /obj/shrub{
 	dir = 5
@@ -60662,20 +60902,23 @@
 	},
 /turf/unsimulated/floor/caution/corner/nw,
 /area/iomoon/base/underground)
-"iED" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/purple/fancy/innercorner/nw{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "iEH" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area/syndicate_station_space)
+"iEL" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "iEP" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -60988,7 +61231,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "iSc" = (
 /obj/cable/green{
 	icon_state = "0-8"
@@ -61041,7 +61286,9 @@
 /area/upper_arctic/pod1)
 "iTt" = (
 /turf/simulated/floor/marble/black,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "iTv" = (
 /obj/mesh/catwalk,
 /obj/cable/green{
@@ -61650,10 +61897,12 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/carpet/purple/fancy{
+/turf/simulated/floor/terrazzo/black{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jmi" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -61812,6 +62061,12 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
+"jto" = (
+/obj/stool,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jtH" = (
 /obj/stool/chair/office/syndie{
 	dir = 1
@@ -62057,6 +62312,11 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"jAt" = (
+/turf/simulated/wall/auto/reinforced/jen,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jAK" = (
 /obj/fakeobject{
 	icon = 'icons/obj/window.dmi';
@@ -62075,10 +62335,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jAQ" = (
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
@@ -62142,6 +62403,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"jFq" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jFH" = (
 /obj/machinery/conveyor/SN,
 /turf/unsimulated/floor/white,
@@ -62227,6 +62494,46 @@
 	},
 /turf/space,
 /area/watchful_eye_sensor)
+"jJc" = (
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c";
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/simulated/floor/stone{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
+"jJu" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/storage/belt/utility{
+	pixel_x = 1;
+	pixel_y = 0
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -7;
+	pixel_y = -7
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = 9;
+	pixel_y = -8
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jJx" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -62380,7 +62687,9 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/nw{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jQa" = (
 /obj/lattice{
 	dir = 6;
@@ -62508,10 +62817,13 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jWG" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -62592,10 +62904,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/carpet/purple/fancy/edge/south{
+/turf/simulated/floor/terrazzo/black{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "jYO" = (
 /obj/item/light_parts/bulb,
 /obj/machinery/light/emergency,
@@ -62770,7 +63084,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "khd" = (
 /obj/item/storage/secure/ssafe/icemoon,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -63037,6 +63353,14 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"knC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "knY" = (
 /obj/lattice,
 /obj/machinery/vending/cola/red,
@@ -63074,10 +63398,13 @@
 /area/void_diner)
 "kpC" = (
 /obj/decoration/wineholder,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "kqs" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
@@ -63241,7 +63568,9 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "kwx" = (
 /obj/lattice{
 	dir = 10;
@@ -63728,7 +64057,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred{
 	explosion_protection = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "kPz" = (
 /obj/decal/cleanable/sakura,
 /obj/item/reagent_containers/food/snacks/ramen_bowl{
@@ -63761,10 +64092,13 @@
 "kPY" = (
 /obj/decoration/wineholder,
 /obj/decal/cleanable/cobweb/cobwebs_1/directional/west,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "kQR" = (
 /obj/fakeobject/skeleton{
 	desc = "The burnt remains of some poor sod.";
@@ -63939,6 +64273,16 @@
 /obj/lattice,
 /turf/space,
 /area/watchful_eye_sensor)
+"kYf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "kYq" = (
 /obj/channel{
 	required_to_pass = 1e+009
@@ -63989,10 +64333,13 @@
 	name = "ominous skull hopper"
 	},
 /obj/decal/cleanable/ash,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/five{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "kZz" = (
 /obj/item/crowbar,
 /obj/fakeobject/skeleton{
@@ -64057,10 +64404,17 @@
 	dir = 4;
 	pixel_x = -2
 	},
+/obj/decal/cleanable/dirt/jen,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 0;
+	pixel_y = 0
+	},
 /turf/simulated/floor/wood/five{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "lbm" = (
 /obj/lattice{
 	dir = 9;
@@ -64204,6 +64558,13 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
+"lgJ" = (
+/turf/simulated/floor/terrazzo/black{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "lhd" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 4
@@ -64245,6 +64606,14 @@
 "liR" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
+"ljN" = (
+/turf/simulated/floor/stairs/wood{
+	dir = 1;
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "ljO" = (
 /obj/lattice{
 	dir = 10;
@@ -64894,11 +65263,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"lLE" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/north{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "lLS" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -65301,7 +65665,9 @@
 /turf/simulated/floor/carpet/purple/fancy{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "mcq" = (
 /obj/securearea{
 	desc = "";
@@ -65412,7 +65778,9 @@
 /turf/simulated/floor/wood/five{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "mie" = (
 /obj/stool/chair/dining/regal{
 	anchored = 1;
@@ -65863,6 +66231,14 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"mxU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "myh" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
@@ -65919,13 +66295,14 @@
 /turf/space,
 /area/wizard_station_space)
 "mCx" = (
-/obj/stool/chair/pew/fancy/center{
-	dir = 1
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c"
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/obj/stool,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "mCX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -66111,6 +66488,16 @@
 "mJF" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod2)
+"mJK" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/stool,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "mJY" = (
 /obj/machinery/light{
 	dir = 8;
@@ -66177,7 +66564,9 @@
 /turf/simulated/floor/carpet/purple/fancy/innercorner/se{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "mNW" = (
 /turf/unsimulated/wall/setpieces/stranger{
 	icon = 'icons/turf/walls/ancient.dmi';
@@ -66373,8 +66762,12 @@
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
 "mWn" = (
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "mWs" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -66395,12 +66788,27 @@
 /area/moon/museum/west)
 "mWz" = (
 /turf/unsimulated/wall/auto/adventure/meat/eyes,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
+"mWB" = (
+/obj/table/regal,
+/obj/item/plate,
+/obj/random_item_spawner/tableware/maybe_few,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/carpet/purple/fancy{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "mWO" = (
 /turf/simulated/floor/wood/five{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "mWP" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -66604,10 +67012,11 @@
 	pixel_y = 8;
 	initial_reagents = "wine"
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "ngk" = (
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
@@ -66661,7 +67070,9 @@
 /area/wizard_station_space)
 "nhJ" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "nhM" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -66759,7 +67170,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "nmJ" = (
 /turf/unsimulated/wall/generic{
 	dir = 4;
@@ -66779,10 +67192,16 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "nnS" = (
 /turf/unsimulated/floor/arrival{
 	dir = 8
@@ -66939,10 +67358,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "nuO" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -67161,20 +67583,29 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "nyn" = (
-/obj/table/regal,
-/obj/item/plate,
-/obj/random_item_spawner/tableware/maybe_few,
-/turf/simulated/floor/wood/seven{
+/obj/stool/chair/comfy/throne_gold{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/sw{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "nys" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/turf/simulated/floor/marble/black,
-/area/vampchapel)
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "nyz" = (
 /obj/fakeobject/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
@@ -67282,7 +67713,9 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "nDg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-13"
@@ -68204,14 +68637,6 @@
 	icon_state = "shore-36"
 	},
 /area/titlescreen)
-"ohL" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/nw{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "ohW" = (
 /turf/unsimulated/floor/carpet{
 	dir = 1;
@@ -68294,7 +68719,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred{
 	explosion_protection = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "okJ" = (
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
@@ -68374,10 +68801,10 @@
 	icon_state = "4-8"
 	},
 /obj/cable,
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "onI" = (
 /obj/ladder{
 	id = "iomoon"
@@ -68909,6 +69336,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"oMp" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c"
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "oMX" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -68957,10 +69394,13 @@
 	pixel_x = 10;
 	pixel_y = 0
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "oOA" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/television/small{
@@ -68980,7 +69420,9 @@
 /turf/simulated/floor/stone{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "oQB" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -69398,7 +69840,9 @@
 /area/centcom/offices/azrun)
 "pgP" = (
 /turf/unsimulated/wall/auto/adventure/meat/meatier,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "phe" = (
 /obj/decal/icefloor,
 /obj/item/currency/spacecash/thousand,
@@ -69509,7 +69953,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "piL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -69622,7 +70068,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pmE" = (
 /obj/fakeobject/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
@@ -69674,16 +70122,14 @@
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "pnd" = (
-/obj/stool/chair/pew/fancy/right{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "png" = (
 /obj/table/auto,
 /obj/item/storage/belt/medical,
@@ -69793,10 +70239,12 @@
 /obj/stool/chair/comfy/throne_gold{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/purple/fancy/edge/east{
+/turf/simulated/floor/carpet/purple/fancy{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pry" = (
 /obj/mesh/catwalk,
 /obj/cable/green{
@@ -69878,6 +70326,14 @@
 	dir = 6
 	},
 /area/afterlife/bar)
+"puz" = (
+/turf/simulated/floor/stairs/wood{
+	dir = 4;
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pwe" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/decal/residual_energy,
@@ -70003,10 +70459,15 @@
 	pixel_y = 2
 	},
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pyI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -70259,7 +70720,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pID" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -70267,8 +70730,12 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/marble/black,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pJd" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -70395,6 +70862,13 @@
 	dir = 1
 	},
 /area/owlery/office)
+"pNm" = (
+/turf/simulated/floor/stone{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pNn" = (
 /obj/storage/crate/medical{
 	name = "Atropine"
@@ -70441,7 +70915,9 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pOy" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -70454,11 +70930,6 @@
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
-"pOP" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/sw{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "pPI" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
@@ -70617,6 +71088,14 @@
 /obj/machinery/broadside_gun/artillery_cannon/syndicate,
 /turf/space,
 /area/syndicate_station_space)
+"pVF" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/stone{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "pVJ" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -70822,7 +71301,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "qan" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
@@ -71016,6 +71497,14 @@
 /obj/map/light/purple,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/afterlife/bar/sanctuary)
+"qkl" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodyhands_c"
+	},
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "qkO" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-6"
@@ -71036,14 +71525,21 @@
 /obj/submachine/foodprocessor{
 	dir = 8
 	},
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "qlH" = (
 /obj/reagent_dispensers/beerkeg/wine,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/five{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "qlT" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -71096,7 +71592,9 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "qnW" = (
 /obj/mesh/catwalk{
 	dir = 6;
@@ -71176,10 +71674,13 @@
 "qqi" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "qrj" = (
 /obj/table/auto,
 /obj/item/stimpack,
@@ -72051,11 +72552,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone)
-"qUM" = (
-/turf/space,
-/area/vampchapel{
-	requires_power = 0
-	})
 "qUR" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -72148,7 +72644,9 @@
 /turf/simulated/floor/stone{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "raS" = (
 /obj/stool/chair/comfy,
 /obj/landmark/spawner/random_trader,
@@ -72178,6 +72676,16 @@
 /turf/unsimulated/floor/carpet/purple/fancy/edge/se,
 /area/centcom/offices{
 	icon_state = "blue"
+	})
+"rev" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodyhands_c"
+	},
+/turf/simulated/floor/stone{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
 	})
 "reH" = (
 /obj/mesh/grille/steel,
@@ -72359,6 +72867,14 @@
 	dir = 4
 	},
 /area/owlery/gangzone)
+"rkS" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "rkU" = (
 /obj/decal/cleanable/glitter/harmless,
 /obj/critter/domestic_bee/walp_bee,
@@ -72713,7 +73229,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred{
 	explosion_protection = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "rxZ" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4;
@@ -72875,6 +73393,19 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"rCl" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "rCm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -72890,6 +73421,15 @@
 /obj/structure/girder,
 /turf/unsimulated/floor/plating/damaged2,
 /area/crunch)
+"rCC" = (
+/obj/fakeobject/cultiststatue,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/stone{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "rCV" = (
 /obj/cable,
 /obj/fakeobject/pipe{
@@ -72899,6 +73439,19 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"rDN" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c";
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/simulated/floor/wood/five{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "rEI" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
@@ -73839,7 +74392,9 @@
 /area/owlery/gangzone)
 "skM" = (
 /turf/unsimulated/floor/dojo/stonestair/left,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "skS" = (
 /obj/fakeobject/pipe{
 	density = 1;
@@ -74008,10 +74563,10 @@
 	pixel_y = 7;
 	initial_reagents = "wine"
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "sqg" = (
 /obj/machinery/bot/medbot/hippocrates,
 /turf/unsimulated/floor/shuttle{
@@ -74161,8 +74716,16 @@
 /area/owlery/Owlmait2)
 "swm" = (
 /obj/machinery/chem_dispenser/alcohol,
-/turf/simulated/floor/marble/black,
-/area/vampchapel)
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "swp" = (
 /turf/unsimulated/floor/black/side{
 	dir = 4
@@ -74266,6 +74829,18 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/void,
 /area/void_diner)
+"sCC" = (
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c";
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "sCF" = (
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
@@ -74309,11 +74884,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
-"sEU" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/ne{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "sEV" = (
 /obj/shrub{
 	dir = 4;
@@ -74504,12 +75074,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
-"sLK" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/marble,
-/area/vampchapel)
 "sMO" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
@@ -74702,18 +75266,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"sYs" = (
-/obj/table/regal,
-/obj/item/plate,
-/obj/random_item_spawner/tableware/maybe_few,
-/obj/item/reagent_containers/food/drinks/bottle/wine{
-	pixel_x = -7;
-	pixel_y = 7
-	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "sYC" = (
 /obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
@@ -75052,7 +75604,9 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "tll" = (
 /mob/living/carbon/human/npc/monkey/oppenheimer,
 /turf/unsimulated/floor/black,
@@ -75260,7 +75814,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred{
 	explosion_protection = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "tuw" = (
 /turf/unsimulated/wall/auto/lead/white{
 	desc = "The outer shell of some large microwave array thing.";
@@ -75274,10 +75830,13 @@
 /area/centcom/lounge)
 "tuK" = (
 /obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
+/obj/machinery/light/incandescent/netural{
+	dir = 8
 	},
-/area/vampchapel)
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "tvy" = (
 /obj/decal/cleanable/blood{
 	icon_state = "handblood_c"
@@ -75400,15 +75959,18 @@
 /area/centcom/lobby)
 "tCL" = (
 /obj/decal/stage_edge/dojo,
-/obj/candle_light_2spoopy{
-	pixel_x = 1;
-	pixel_y = 14
-	},
 /obj/table/endtable_gothic,
-/turf/simulated/floor/wood/seven{
+/obj/decal/cleanable/dirt/jen,
+/obj/candle_light{
+	pixel_x = 1;
+	pixel_y = 15
+	},
+/turf/simulated/floor/terrazzo/black{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "tDJ" = (
 /turf/unsimulated/floor/blackwhite/whitegrime/other,
 /area/observatory)
@@ -75483,8 +76045,12 @@
 /area/sim/gunsim/lobby)
 "tId" = (
 /obj/machinery/vending/kitchen,
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "tIu" = (
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_x = -3;
@@ -75861,14 +76427,6 @@
 	dir = 8
 	},
 /area/upper_arctic/exterior/surface)
-"tYT" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/north{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "tZb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -76021,10 +76579,13 @@
 /obj/stool/chair/comfy/throne_gold{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/carpet/purple/fancy/edge/west{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "udS" = (
 /obj/mesh/catwalk{
 	dir = 6;
@@ -76035,12 +76596,19 @@
 /area/shuttle/biodome_elevator/upper)
 "ueq" = (
 /turf/unsimulated/floor/dojo/stonestair/right,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "ueu" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "uex" = (
 /obj/machinery/light{
 	dir = 8
@@ -76192,10 +76760,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "ulB" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/ingredient/sugar{
@@ -76256,14 +76824,6 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
-"uoa" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/carpet/purple/fancy{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "uoE" = (
 /obj/shrub{
 	dir = 1
@@ -76272,10 +76832,12 @@
 /area/centcom/outside)
 "uoF" = (
 /obj/decal/cleanable/cobweb/cobwebs_2/directional/south,
-/turf/simulated/floor/carpet/purple/fancy/edge/sw{
+/turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "uoX" = (
 /obj/item/gun/kinetic/breakaction/singleshotrifle{
 	pixel_y = 32;
@@ -76334,8 +76896,12 @@
 /obj/machinery/deep_fryer{
 	dir = 4
 	},
-/turf/simulated/floor/marble/black,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "urH" = (
 /obj/lattice{
 	dir = 10;
@@ -76607,8 +77173,13 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/marble/black,
-/area/vampchapel)
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "uBB" = (
 /obj/decal/nav_danger,
 /obj/mesh/catwalk,
@@ -76733,7 +77304,9 @@
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "uFm" = (
 /obj/decal/stage_edge{
 	dir = 9
@@ -76810,7 +77383,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "uId" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -76898,6 +77473,17 @@
 /obj/mesh/grille/steel,
 /turf/space,
 /area/watchful_eye_sensor)
+"uLP" = (
+/obj/decoration/ritual{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "uLU" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -77354,8 +77940,12 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "veM" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
@@ -77368,6 +77958,17 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
+"vfA" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vfY" = (
 /obj/fitness/speedbag/captain,
 /turf/unsimulated/floor/wood/eight{
@@ -77582,6 +78183,13 @@
 /obj/machinery/light/lamp/green,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"vlw" = (
+/turf/simulated/floor/stairs/wood{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vlH" = (
 /obj/storage/crate/packing,
 /obj/random_item_spawner/hat/lots,
@@ -77808,7 +78416,9 @@
 /area/sim/gunsim/lobby)
 "vqH" = (
 /turf/unsimulated/floor/dojo/stonestair/middle,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vqK" = (
 /obj/mesh/catwalk,
 /obj/mesh/catwalk,
@@ -77926,6 +78536,27 @@
 /mob/living/critter/small_animal/firefly/ai_controlled,
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
+"vtQ" = (
+/obj/item/device/light/candle/small{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = 8;
+	pixel_y = -10
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/candle_light{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vuf" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -77984,6 +78615,18 @@
 	},
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
+"vwN" = (
+/obj/decal/cleanable/blood{
+	icon_state = "left_bloodygloves_c";
+	pixel_x = -13;
+	pixel_y = 11
+	},
+/turf/simulated/floor/wood/seven{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vwP" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -78046,7 +78689,9 @@
 /turf/simulated/floor/stone{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vCF" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-0"
@@ -78479,7 +79124,9 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vPQ" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -78560,10 +79207,11 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vSJ" = (
 /obj/table/wood/auto/desk,
 /obj/item/cigarbox/gold,
@@ -78707,6 +79355,18 @@
 	dir = 4
 	},
 /area/owlery/gangzone)
+"vWT" = (
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c";
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/simulated/floor/terrazzo/black{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "vWW" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-35"
@@ -78749,14 +79409,6 @@
 	},
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
-"vYB" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/ne{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "vYK" = (
 /obj/machinery/vending/medical_public,
 /turf/unsimulated/floor,
@@ -78901,8 +79553,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/marble,
-/area/vampchapel)
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wfm" = (
 /obj/shrub/dead,
 /turf/unsimulated/floor/black/side,
@@ -79005,7 +79661,20 @@
 /area/syndicate_station/firing_range)
 "wiO" = (
 /turf/space,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
+"wju" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/ketchup,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wjW" = (
 /obj/indestructible/shuttle_corner{
 	icon = 'icons/turf/walls/silicate.dmi';
@@ -79295,6 +79964,14 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"wtR" = (
+/turf/simulated/floor/stairs/wood{
+	dir = 8;
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wtT" = (
 /obj/lattice{
 	dir = 1;
@@ -79379,10 +80056,17 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
+/obj/decal/cleanable/blood{
+	icon_state = "helmetblood_c";
+	pixel_x = 11;
+	pixel_y = -10
+	},
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wwq" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window{
@@ -79594,7 +80278,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/marble/black,
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wDg" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -79718,6 +80404,22 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"wGc" = (
+/obj/item/screwdriver{
+	pixel_x = -12;
+	pixel_y = 6
+	},
+/obj/item/scissors{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wGf" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -79771,10 +80473,15 @@
 	desc = "What kind of vampire wears this?"
 	},
 /obj/item/clothing/head/headband/basic/red,
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wHm" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -80090,10 +80797,11 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
-/turf/simulated/floor/wood/seven{
-	explosion_immune = 1
-	},
-/area/vampchapel)
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/marble/black,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wTN" = (
 /obj/channel{
 	required_to_pass = 1e+009
@@ -80150,7 +80858,9 @@
 /turf/simulated/floor/carpet/purple/fancy{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wVh" = (
 /obj/mesh/catwalk,
 /obj/machinery/camera/watchful_eye/directional/east{
@@ -80171,6 +80881,20 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"wVu" = (
+/obj/decal/stage_edge/dojo,
+/obj/table/endtable_gothic,
+/obj/decal/cleanable/dirt/jen,
+/obj/candle_light{
+	pixel_x = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/terrazzo/black{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wVC" = (
 /obj/machinery/navbeacon/lunar/tour8,
 /turf/unsimulated/floor/plating,
@@ -80198,6 +80922,14 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
+"wXg" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "wXl" = (
 /obj/map/light/dimreddish,
 /obj/item/implant/artifact/ancient/ancient_gimmick,
@@ -80265,9 +80997,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
-"xaP" = (
-/turf/simulated/floor/stairs/wood,
-/area/vampchapel)
 "xbl" = (
 /obj/item/implant/artifact/ancient/ancient_gimmick,
 /turf/unsimulated/floor/setpieces{
@@ -80773,6 +81502,16 @@
 	},
 /turf/unsimulated/floor/engine/caution/east,
 /area/hospital/samostrel)
+"xsD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/se{
+	explosion_immune = 1
+	},
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "xsG" = (
 /obj/lattice{
 	dir = 6;
@@ -80976,7 +81715,9 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "xyj" = (
 /obj/decal/icefloor,
 /obj/item/currency/spacecash/thousand,
@@ -81083,10 +81824,16 @@
 /turf/unsimulated/floor/feather,
 /area/centcom/offices/leah)
 "xzf" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/stone{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "xzj" = (
 /mob/living/critter/shade,
 /turf/unsimulated/floor/void{
@@ -81258,7 +82005,9 @@
 /turf/simulated/floor/industrial{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "xGi" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -81360,7 +82109,9 @@
 /turf/simulated/floor/carpet/purple/fancy{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "xIn" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -81505,7 +82256,9 @@
 /turf/simulated/floor/wood/seven{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "xMJ" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -81637,11 +82390,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
-"xSi" = (
-/turf/simulated/floor/carpet/purple/fancy/innercorner/nw{
-	explosion_immune = 1
-	},
-/area/vampchapel)
 "xSl" = (
 /obj/item/material_piece/uqill,
 /obj/item/material_piece/uqill,
@@ -81944,7 +82692,9 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/south{
 	explosion_immune = 1
 	},
-/area/vampchapel)
+/area/vampchapel{
+	force_fullbright = 0
+	})
 "yaC" = (
 /turf/unsimulated/floor/arrival/corner{
 	dir = 1
@@ -163996,10 +164746,10 @@ pgP
 okr
 okr
 okr
+pOm
 jPW
-egU
 udA
-egU
+eQh
 uoF
 okr
 okr
@@ -164297,14 +165047,14 @@ wiO
 pgP
 okr
 bBa
-jPW
-xSi
-ewd
-mcj
-ewd
-fOB
-pOP
+eDt
 pOm
+duo
+mcj
+yag
+pOm
+eDt
+gVl
 okr
 mWz
 wiO
@@ -164598,14 +165348,14 @@ wiO
 wiO
 mWz
 okr
+gVl
 pOm
-aIl
-xIl
+pOm
+wXg
 mcj
-hWB
-mcj
-wUN
-yag
+efl
+pOm
+oMp
 pOm
 okr
 pgP
@@ -164901,13 +165651,13 @@ wiO
 mWz
 okr
 pOm
-aIl
-xIl
+sCC
+gVl
+wXg
 mcj
-ewd
-sYs
-wUN
-yag
+efl
+pOm
+pOm
 pOm
 okr
 pgP
@@ -165203,14 +165953,14 @@ wiO
 pgP
 okr
 pOm
-aIl
-xIl
-mcj
-hWB
-nyn
-wUN
-yag
 pOm
+pOm
+wXg
+mWB
+efl
+pOm
+gVl
+gVl
 okr
 pgP
 wiO
@@ -165504,15 +166254,15 @@ wiO
 wiO
 pgP
 kPu
-pOm
-aIl
-xIl
+gVl
+jPW
+egU
+eTH
 mcj
-ewd
 nyn
-wUN
-yag
-pOm
+egU
+eQh
+hkN
 okr
 mWz
 wiO
@@ -165801,18 +166551,18 @@ cnw
 aaa
 wiO
 wiO
-qUM
+wiO
 wiO
 wiO
 mWz
 okr
 pOm
 aIl
+fLc
 xIl
 mcj
-hWB
-mcj
 wUN
+ewd
 yag
 pOm
 okr
@@ -166110,11 +166860,11 @@ pgP
 okr
 wwp
 nhJ
+gRx
 uFa
-ewd
 hev
-ewd
 mNv
+gRx
 isd
 pOm
 okr
@@ -166411,12 +167161,12 @@ wiO
 pgP
 okr
 nuF
+uLP
 pOm
-nhJ
-gRx
+aIl
 prl
-gRx
-isd
+yag
+vwN
 pOm
 pOm
 okr
@@ -166714,12 +167464,12 @@ pgP
 okr
 jWu
 nnl
-xME
-xME
+vfA
+knC
 asC
+xsD
 xME
-xME
-xME
+rCl
 nDf
 okr
 kpC
@@ -167316,21 +168066,21 @@ okr
 okr
 xzf
 vSG
-pOm
-djM
-djM
-djM
-qnG
+jFq
+jFq
+jFq
+iTt
+mxU
 tuK
 okr
 okr
 qnG
-pOm
+oMp
 pOm
 pOm
 vqH
 mWO
-qlH
+gpl
 okr
 pgP
 wiO
@@ -167615,23 +168365,23 @@ wiO
 pgP
 okr
 kPu
-xzf
-xzf
+pVF
+pNm
 tCL
-pOm
+lgJ
+mJK
+jto
 mCx
-mCx
-mCx
-ohL
-pOP
+mxU
+iTt
 wSJ
 okr
 eUz
 wHi
 oOp
-pOm
+jJu
 ueq
-mWO
+rDN
 mhX
 okr
 mWz
@@ -167917,15 +168667,15 @@ wiO
 mWz
 okr
 ajH
-xzf
-xzf
+rev
+pNm
 skM
-pOm
+lgJ
+lgJ
 eiN
-eiN
-eiN
-tYT
-yag
+iTt
+mxU
+eJi
 ngj
 okr
 okr
@@ -168219,20 +168969,20 @@ wiO
 pgP
 okr
 rai
-xzf
-xzf
+pNm
+pNm
 vqH
-jPW
-egU
-egU
-egU
-iED
-fOB
-pOP
+lgJ
+lgJ
+lgJ
+iTt
+mxU
+iTt
+fko
 okr
 vPn
-pOm
-pOm
+eDt
+hGb
 okr
 okr
 okr
@@ -168524,15 +169274,15 @@ oQm
 vCl
 fLz
 vqH
-lLE
-ewd
-ewd
-ewd
+lgJ
+vWT
+lgJ
+lgJ
 jmc
-uoa
+jYC
 jYC
 iCw
-xME
+gtb
 xME
 qqi
 okr
@@ -168822,28 +169572,28 @@ aaa
 wiO
 pgP
 okr
-xzf
-xzf
-xzf
+pVF
+pNm
+pNm
 vqH
-sEU
-gRx
-gRx
-gRx
-hej
-mNv
-isd
+lgJ
+lgJ
+lgJ
+qkl
+mxU
+iTt
+lgJ
 kPu
 kwk
 pOm
-pOm
+gVl
 okr
 mWz
 pgP
 mWz
 pgP
-wiO
-wiO
+pgP
+pgP
 aaa
 kmt
 gGM
@@ -169124,28 +169874,28 @@ aaa
 wiO
 mWz
 okr
-ajH
-xzf
-xzf
+rCC
+pNm
+jJc
 ueq
-pOm
-djM
-djM
-djM
-tYT
-yag
+lgJ
+lgJ
+vtQ
+iTt
+mxU
+iTt
 spU
 okr
 rxF
 pOm
 pOm
-okr
-okr
-okr
-okr
+jAt
+jAt
+jAt
+jAt
+jAt
+jAt
 pgP
-wiO
-wiO
 aaa
 kmt
 gGM
@@ -169427,27 +170177,27 @@ wiO
 pgP
 okr
 kPu
-xzf
-xzf
-tCL
-pOm
-mCx
-mCx
-mCx
-vYB
-isd
+pNm
+pNm
+wVu
+fko
+jto
+hiu
+jto
+mxU
+jFq
 dYZ
 okr
 tum
+egs
 pOm
+ljN
+gVl
+gVl
+ljN
 pOm
-gjJ
-pOm
-pOm
-okr
+jAt
 pgP
-wiO
-wiO
 aaa
 kmt
 gGM
@@ -169732,24 +170482,24 @@ okr
 okr
 hab
 jAN
-xME
 pnd
 pnd
-pnd
+wCZ
+wCZ
 onr
-pOm
+bTf
 okr
 okr
 okr
 okr
-okr
-okr
-okr
-awW
-okr
+jAt
+jAt
+jAt
+jAt
+jAt
+gVl
+jAt
 pgP
-wiO
-wiO
 aaa
 kmt
 gGM
@@ -170038,20 +170788,20 @@ okr
 okr
 okr
 okr
-fuB
+uls
 okr
 okr
 urg
 okr
 mWz
-okr
-pOm
-xaP
-pOm
-okr
-mWz
-wiO
-wiO
+jAt
+gVl
+gVl
+gjJ
+jAt
+gVl
+jAt
+pgP
 aaa
 kmt
 gGM
@@ -170338,7 +171088,7 @@ fxU
 uHU
 qae
 pmy
-wCZ
+wju
 hsw
 pID
 htA
@@ -170346,14 +171096,14 @@ grx
 mWn
 okr
 pgP
-okr
-okr
-okr
-okr
-okr
-mWz
-wiO
-wiO
+jAt
+wtR
+jAt
+jAt
+jAt
+puz
+jAt
+pgP
 aaa
 kmt
 gGM
@@ -170641,21 +171391,21 @@ iao
 iRU
 okr
 veL
-iTt
-wfi
-iTt
 mWn
-iTt
+wfi
+rkS
+mWn
+mWn
 okr
 pgP
+fem
+gVl
+jAt
+jAt
+fem
+gVl
+jAt
 pgP
-pgP
-mWz
-pgP
-pgP
-pgP
-wiO
-wiO
 aaa
 kmt
 gGM
@@ -170945,19 +171695,19 @@ okr
 swm
 mWn
 uBz
-sLK
-wCZ
+kYf
+kYf
 ueu
 okr
 mWz
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
+jAt
+wtR
+jAt
+jAt
+jAt
+puz
+jAt
+pgP
 aaa
 kmt
 gGM
@@ -171245,21 +171995,21 @@ hMy
 gnO
 okr
 tId
-iTt
+wGc
 mWn
-iTt
 mWn
-iTt
+rkS
+rkS
 okr
 pgP
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
+jAt
+gVl
+vlw
+gVl
+vlw
+gVl
+jAt
+pgP
 aaa
 kmt
 gGM
@@ -171547,21 +172297,21 @@ fQO
 fQO
 okr
 okr
-dgF
-nys
+hjQ
+iEL
 dgF
 nys
 qlB
 okr
 pgP
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
+jAt
+jAt
+jAt
+jAt
+jAt
+jAt
+jAt
+pgP
 aaa
 kmt
 gGM
@@ -171856,14 +172606,14 @@ okr
 okr
 okr
 pgP
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
-wiO
+pgP
+pgP
+pgP
+pgP
+pgP
+pgP
+pgP
+pgP
 aaa
 kmt
 gGM

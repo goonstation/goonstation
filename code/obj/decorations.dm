@@ -225,6 +225,7 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	flags = FLUID_SUBMERGE
 	text = "<font color=#5c5>s"
+	var/meat = FALSE
 	var/health = 50
 	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track a objective.
 	var/max_uses = 0 // The maximum amount of time one can try to shake this shrub for something.
@@ -269,7 +270,10 @@
 	attack_hand(mob/user)
 		if (!user) return
 		if (destroyed && iscow(user) && user.a_intent == INTENT_HELP)
-			boutput(user, SPAN_NOTICE("You pick at the ruined bush, looking for any leafs to graze on, but cannot find any."))
+			if (src.meat)
+				boutput(user, SPAN_NOTICE("You pick at the ruined meat shrub, looking for any meats to graze on, but cannot find any. Sicko."))
+			else
+				boutput(user, SPAN_NOTICE("You pick at the ruined bush, looking for any leafs to graze on, but cannot find any."))
 			return ..()
 		else if (destroyed)
 			return ..()
@@ -359,12 +363,27 @@
 
 		if (is_plastic)
 			user.setStatus("knockdown", 3 SECONDS)
-			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src] and chokes on the plastic leaves."), SPAN_ALERT("You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!"))
+			if (src.meat)
+				user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src] and chokes on the EVIL meat."), SPAN_ALERT("You munch on some of [src]'s leaves, but realise too late it was EVIL meat. You start choking!"))
+			else
+				user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src] and chokes on the plastic leaves."), SPAN_ALERT("You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!"))
 			user.take_oxygen_deprivation(20)
 			user.losebreath += 2
 		else
 			user.changeStatus("food_hp_up", 20 SECONDS)
-			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src]."), SPAN_NOTICE("You munch on some of [src]'s leaves, like any normal human would."))
+			if (src.meat)
+				var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src))
+				gib.streak_cleanable(user.dir)
+				playsound(user.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src]... Ew."), SPAN_NOTICE("You munch on some of [src]'s meat, like any normal human would..."))
+				if (rand(1,6) == 1)
+					SPAWN(1 SECOND)
+						user.setStatus("knockdown", 2 SECONDS)
+						playsound(user.loc, 'sound/voice/farts/superfart.ogg', 50, 1)
+						ass_explosion(user, 0, 0)
+
+			else
+				user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src]."), SPAN_NOTICE("You munch on some of [src]'s leaves, like any normal human would."))
 			user.sims?.affectMotive("Hunger", 10)
 
 		src.take_bite()
@@ -419,6 +438,13 @@
 	dead
 		name = "Dead shrub"
 		icon_state = "shrub-dead"
+
+/obj/shrub/meat
+	name = "shrub?"
+	desc = "This one is definitely not a real bush."
+	icon = 'icons/misc/meatland.dmi'
+	icon_state = "light"
+	meat = TRUE
 
 //It'll show up on multitools
 TYPEINFO(/obj/shrub/syndicateplant)
