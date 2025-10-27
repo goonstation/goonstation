@@ -4,9 +4,16 @@
 	var/startTime = world.timeofday
 
 	total_chem_reactions.Cut()
+	limited_chem_reactions.Cut()
+
 	chem_reactions_by_result.Cut()
+
+	var/alist/tmpreactions = alist()
+
 	for(var/R in childrentypesof(/datum/chemical_reaction))
 		var/datum/chemical_reaction/CR = new R
+
+		tmpreactions[R] = CR // We'll use this in the next loop to skip datum instance creation there
 
 		if(CR.id)
 			chem_reactions_by_id[CR.id] = CR
@@ -18,6 +25,23 @@
 		for(var/reagent in CR.required_reagents)
 			if(!total_chem_reactions[reagent]) total_chem_reactions[reagent] = list()
 			total_chem_reactions[reagent] += CR
+
+	// Now that we have a list of all reactions each reagent participates in, we can use it to create a much more limited list where each reaction only appears once
+	for(var/R in childrentypesof(/datum/chemical_reaction))
+
+		var/datum/chemical_reaction/CR = tmpreactions[R]
+
+		var/minamt = INFINITY
+		var/minreagent = null
+		for(var/reagent in CR.required_reagents) // find the reagent that participates in the fewest amount of reactions, this is probably the least likely reagent to slosh around in a random container
+			if (total_chem_reactions[reagent] && length(total_chem_reactions[reagent]) < minamt)
+				minamt = length(total_chem_reactions[reagent])
+				minreagent = reagent
+
+		if (minreagent)
+			if (!limited_chem_reactions[minreagent])
+				limited_chem_reactions[minreagent] = list()
+			limited_chem_reactions[minreagent] += CR
 
 	sortList(total_chem_reactions, /proc/cmp_text_asc)
 
@@ -48,8 +72,8 @@
 
 	proc/append_possible_reactions(var/reagent_id)
 		chem_building_precaution
-		if(total_chem_reactions[reagent_id])
-			possible_reactions |= total_chem_reactions[reagent_id]
+		if(limited_chem_reactions[reagent_id])
+			possible_reactions += limited_chem_reactions[reagent_id]
 			. = 1
 #ifdef CHEM_REACTION_PRIORITIES
 		// sorting it each time anew is bad and slow, especially since your sorting algorithm doesn't even work nicely with almost sorted lists!!
@@ -59,8 +83,8 @@
 
 	proc/remove_possible_reactions(var/reagent_id)
 		chem_building_precaution
-		if(total_chem_reactions[reagent_id])
-			possible_reactions -= total_chem_reactions[reagent_id]
+		if(limited_chem_reactions[reagent_id])
+			possible_reactions -= limited_chem_reactions[reagent_id]
 			. = 1
 
 #undef chem_building_precaution

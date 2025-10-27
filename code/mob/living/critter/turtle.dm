@@ -376,3 +376,23 @@
 		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
 		..()
 
+
+/mob/living/critter/small_animal/turtle/commander
+	icon_state = "turtle-beret-nt-com"
+	player_can_spawn_with_pet = FALSE
+	is_pet = 1
+	ai_type = /datum/aiHolder/empty
+
+	New()
+		..()
+		var/obj/item/clothing/head/NTberet/commander/beret = new/obj/item/clothing/head/NTberet/commander(src)
+		src.wearing_beret = beret
+		src.UpdateIcon()
+
+	take_beret(var/mob/M)
+		if(!(isadmin(M)))
+			boutput(M, SPAN_ALERT("You try to grab the beret, but [src] pulls into his shell before you can!"))
+			playsound(src.loc, "rustle", 10, 1)
+			src.enter_shell()
+			return 0
+		return ..()

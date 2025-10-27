@@ -2988,21 +2988,33 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 	desc = ""
 	icon_state = "comp_pressure"
 	var/tmp/limiter = 0
+	var/changesig = FALSE
 	cabinet_banned = TRUE // non-functional
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
+
+	get_desc()
+		. += "<br>[SPAN_NOTICE("Replace Signal is [changesig ? "on.":"off."]")]"
+
+	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
+		changesig = !changesig
+		boutput(user, "Signal changing now [changesig ? "on":"off"]")
+		return TRUE
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || istype(AM, /obj/item/dummy))
 			return
 		return_if_overlay_or_effect(AM)
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return
 		LIGHT_UP_HOUSING
 		limiter = ticker.round_elapsed_ticks + 10
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+		var/transmission_style = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_SIGNAL
+		var/output = changesig ? null : "[AM.name]"
+		SEND_SIGNAL(src, transmission_style, output)
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_pressure"

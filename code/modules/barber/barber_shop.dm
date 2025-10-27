@@ -120,7 +120,7 @@
 	desc = "You can't tell the difference, Honest!"
 	icon_state = "baldcap"
 	item_state = "baldcap"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/scissors
 	name = "scissors"

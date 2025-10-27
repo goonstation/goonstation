@@ -1,4 +1,121 @@
 
+(t)sat oct 25 25
+(u)Mr. Moriarty
+(p)24633
+(e)🆕📄🐣|C-Feature, A-UI, A-Respawning
+(*)The latejoin window has been converted into TGUI.
+(u)RubberRats
+(p)24723
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(*)11 new hairstyles are now available: Blunt Pompadour, Big Pompadour, Ducktail, Pageboy, Ringlets, Short Ringlets, Crown Braid, High Bun, Massive Braids, and Chignon
+(+)An additional, twelfth hairstyle can be given to you by barbers.
+(u)JORJ949
+(p)24994
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Clowns have been granted access to the Civilian radio channel for scheming with each other and begging the botanists for banana peels.
+(u)Calphrick
+(p)24996
+(e)💅👮|C-QoL, A-Security
+(+)Gave Security flashlight modules in their PDAs.
+(t)fri oct 24 25
+(u)bork
+(p)25008
+(e)🆕🧱|C-Feature, A-Materials
+(+)pickles from the food processor can be refined into pickle clumps
+(t)thu oct 23 25
+(u)LorrMaster
+(p)24745
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(*)Updated the coloring effects for more materials.
+(*)New material colors now combine properly in the nano-crucible.
+(u)LeahTheTech
+(p)24934
+(e)🔨|A-Player-Actions
+(+)Getting interrupted no longer closes your chatbox.
+(t)wed oct 22 25
+(u)JORJ949
+(p)24985
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)Spy thieves will now be informed if a target bounty is in cryogenic storage
+(u)Kanthes
+(p)24947
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds the Food Processor artifact, which will take biological materials to produce mysterious foods.
+(t)mon oct 20 25
+(u)Lord_Earthfire
+(p)24832
+(e)🆕🛠️|C-Feature, A-Engineering
+(+)Pressure sensors by default give out the name of the object that triggered them as signal. You can override that signal, if you like.
+(t)fri oct 17 25
+(u)Egregorious
+(p)24557
+(e)🆕🧱🔬|C-Feature, A-Materials, A-Science
+(*)Some activated artifacts can interfere with teleportation, and will be sent to the wrong location if moved with the cargo transporter. Diligent scientists are recommended to test for this property via telecrystal reaction.
+(u)Naksu
+(p)24915
+(e)🚄⚗|C-Performance, A-Chemistry
+(+)Slight performance tweak for chemistry reactions. Report issues if you encounter any!
+(t)thu oct 16 25
+(u)FlameArrow57
+(p)24940
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Pressing ctrl + click on a tile will pull something from that tile, prioritizing first found object, then heaviest weight item, then first found mob.
+(t)wed oct 15 25
+(u)Ghostplasmas & Ribbie
+(p)24881
+(e)🎨|C-Sprites
+(*)Added 26 more hairstyles.
+(u)JORJ949
+(p)24803
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Emagging a genetics booth will now make it throw people with extra power.
+(u)Kelguroth
+(p)24848
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Added ability to deconstruct secure containers so long as they are unlocked.
+(u)LeahTheTech
+(p)24159
+(e)🧫|C-Experimental
+(*)Playing on one of the less populated servers will now give you a small chance to earn an antag token at the end of each round.
+(u)JORJ949
+(p)24935
+(e)📦📨|A-Game-Objects, A-Logistics
+(*)Cargo's crate manufacturer is now capable of printing locked secure crates. Be careful not to fabricate one around yourself.
+(u)Glamurio (Ryou)
+(p)24719
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Canisters can now be disassembled with a welding tool.
+(t)tue oct 14 25
+(u)Gomp
+(p)24933
+(e)🎨|C-Sprites
+(+)The Floor and Wall designer is now standardized to use "gray" not "grey" when searching for floors or walls.
+(u)FlameArrow57
+(p)23995
+(e)🆕🔬|C-Feature, A-Science
+(*)Added a new Lattice origin Agitator artifact. Using it on any activated artifact gives that artifact a guaranteed fault with higher activation chance.
+(t)mon oct 13 25
+(u)Driftered
+(p)24822
+(e)🎨|C-Sprites
+(*)Adds two new skull mask sprites: Vampire and Changeling
+(t)sun oct 12 25
+(u)Egregorious
+(p)24128
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Plant yield has been reworked, it now contributes less to produce count per-point but is easier to increase.
+(+)Saltpetre infusions have a negative effect on yield.
+(+)Crop output has some natural variance, which is affected by the quality of the harvest.
+(u)Egregorious
+(p)24824
+(e)🆕🎨💊💪|C-Feature, C-Sprites, A-Medical, A-Traits
+(*)Cure your addiction with the power of therapy, visit the chapel or the psychiatrists office and talk to someone about your problems today.
+(+)The chaplain in their chapel and the psychiatrist in their office are more potent in providing therapy.
+(+)Atheists cannot benefit from therapy in the chapel, but they can provide it to others.
+(u)Egregorious
+(p)24490
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Mutadone can infuse plants with a gene strain that prevents alleles from mutating when harvested.
 (t)thu oct 09 25
 (u)Drakios
 (p)24638

@@ -55150,6 +55150,33 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"exk" = (
+/obj/table/monodesk/auto,
+/obj/decal/poster/flag/bisexual{
+	pixel_y = 32;
+	pixel_x = 4
+	},
+/obj/item/stamp/centcom{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/instrument/bikehorn/blue{
+	pixel_y = 8;
+	pixel_x = -10;
+	name = "long-coveted, latest-model NT-branded Special Operations Bike Horn"
+	},
+/obj/item/clothing/head/NTberet/commander,
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea{
+	pixel_x = -10
+	},
+/obj/decoration/clock{
+	pixel_x = -13;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 5
+	},
+/area/centcom/offices/jorj)
 "exo" = (
 /obj/tree{
 	dir = 1
@@ -55322,6 +55349,17 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"eFT" = (
+/obj/stool/pet_bed{
+	pixel_x = -4
+	},
+/mob/living/critter/small_animal/turtle/commander{
+	pixel_x = -5;
+	dir = 4;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/darkblueblack,
+/area/centcom/offices/jorj)
 "eGn" = (
 /obj/adventurepuzzle/triggerable/light/gauntlet,
 /turf/unsimulated/floor/plating,
@@ -55841,6 +55879,16 @@
 	temperature = 313.15
 	},
 /area/iomoon/base)
+"fcy" = (
+/obj/item/bananapeel{
+	pixel_x = -8;
+	name = "conspicuously placed banana peel";
+	pixel_y = -1
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 8
+	},
+/area/centcom/offices/jorj)
 "fcM" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -56407,6 +56455,20 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
+"fBu" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/table/monodesk/auto,
+/obj/machinery/computer3/generic/personal{
+	pixel_y = 12;
+	pixel_x = 1
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/centcom/offices/jorj)
 "fBC" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
@@ -60488,6 +60550,12 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"iNq" = (
+/obj/decoration/ntcrate,
+/turf/unsimulated/floor/darkblueblack{
+	dir = 10
+	},
+/area/centcom/offices/jorj)
 "iNJ" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -61857,6 +61925,11 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"jLf" = (
+/obj/machinery/light/small,
+/obj/decoration/ntcratesmall,
+/turf/unsimulated/floor/darkblueblack,
+/area/centcom/offices/jorj)
 "jLX" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -63780,6 +63853,17 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"lmi" = (
+/obj/admin_plaque{
+	name = "Jorj's Office";
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "lmj" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/se,
 /area/centcom/offices{
@@ -72851,6 +72935,12 @@
 	icon_state = "shore-12"
 	},
 /area/titlescreen)
+"sge" = (
+/obj/stool/chair/office/blue{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/offices/jorj)
 "sgg" = (
 /obj/fakeobject/pipe{
 	density = 1;
@@ -73227,6 +73317,31 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"ssz" = (
+/obj/storage/secure/closet/command/nanotrasen{
+	admin_access_override = 1;
+	pixel_x = 7
+	},
+/obj/item/clothing/shoes/swat{
+	pixel_x = 6;
+	pixel_y = -11
+	},
+/obj/item/clothing/under/misc/collar_shirt/dark_blue{
+	pixel_y = -3;
+	pixel_x = 7
+	},
+/obj/item/clothing/suit/scarf{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/clothing/mask/clown_hat/blue{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 6
+	},
+/area/centcom/offices/jorj)
 "stu" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -76358,6 +76473,11 @@
 	dir = 4
 	},
 /area/centcom/offices/adhara)
+"vgQ" = (
+/turf/unsimulated/floor/darkblueblack{
+	dir = 9
+	},
+/area/centcom/offices/jorj)
 "vha" = (
 /obj/fakeobject/pipe{
 	desc = "It seems to have been damaged somehow.";
@@ -76499,6 +76619,9 @@
 "vjH" = (
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"vjZ" = (
+/turf/unsimulated/floor/black,
+/area/centcom/offices/jorj)
 "vkk" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black{
@@ -78848,6 +78971,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"wOQ" = (
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 8;
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 4
+	},
+/area/centcom/offices/jorj)
 "wOR" = (
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
@@ -79574,6 +79706,16 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"xsg" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 4
+	},
+/area/centcom/offices/jorj)
 "xsp" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -79598,6 +79740,33 @@
 	},
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
+"xtj" = (
+/obj/decoration/bookcase{
+	pixel_y = 21;
+	pixel_x = -32
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 31;
+	unlisted = 1;
+	stripe_color = "#395cc6"
+	},
+/obj/table/monodesk/auto,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/disk/data/floppy/sec_command{
+	pixel_x = 12;
+	pixel_y = 9;
+	name = "important looking disk"
+	},
+/obj/item/clothing/glasses/nt_operative{
+	pixel_x = 11
+	},
+/turf/unsimulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/centcom/offices/jorj)
 "xun" = (
 /obj/item/clothing/under/gimmick/donk,
 /turf/unsimulated/floor/plating,
@@ -158079,7 +158248,7 @@ wel
 sJH
 elx
 rER
-rER
+lmi
 rER
 dxn
 rER
@@ -158382,7 +158551,7 @@ iVt
 vij
 wel
 wel
-oaN
+xsg
 wel
 wel
 wel
@@ -158683,9 +158852,9 @@ wel
 efe
 vij
 wel
-dvW
-dvW
-dvW
+vgQ
+fcy
+iNq
 wel
 dvW
 dvW
@@ -158985,9 +159154,9 @@ jfx
 sJH
 vij
 wel
-dvW
-dvW
-dvW
+xtj
+vjZ
+jLf
 wel
 dvW
 dvW
@@ -159287,9 +159456,9 @@ wel
 sJH
 vij
 wel
-lRO
-dvW
-dvW
+fBu
+sge
+eFT
 wel
 lRO
 dvW
@@ -159589,9 +159758,9 @@ wel
 iVt
 vij
 wel
-dvW
-dvW
-dvW
+exk
+wOQ
+ssz
 wel
 dvW
 dvW

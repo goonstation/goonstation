@@ -3220,7 +3220,7 @@ datum
 				*/
 				var/datum/plant/growing = P.current
 				var/datum/plantgenes/DNA = P.plantgenes
-				growth_tick.cropsize_bonus += 0.24
+				growth_tick.cropsize_bonus += 0.74
 				if (DNA.harvests > 1)
 					growth_tick.harvests_bonus -= 0.24
 				if (growing.isgrass && P.growth > 2)
@@ -3243,7 +3243,7 @@ datum
 				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
 				if (DNA.cropsize > 1)
-					growth_tick.cropsize_bonus -= 0.24
+					growth_tick.cropsize_bonus -= 0.5
 
 		///////////////////////////
 		/// BODILY FLUIDS /////////
