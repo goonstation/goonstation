@@ -16999,6 +16999,10 @@
 /obj/machinery/light/lamp/black{
 	pixel_y = 19
 	},
+/obj/item/item_box/postit{
+	pixel_y = 4;
+	pixel_x = 9
+	},
 /obj/item/clothing/gloves/latex{
 	pixel_y = -3
 	},
