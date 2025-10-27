@@ -13155,6 +13155,14 @@
 	dir = 1
 	},
 /area/station/science/hall)
+"fTH" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "fTR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21430,6 +21438,12 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/southwest)
 "jqS" = (
@@ -24221,6 +24235,9 @@
 "kwe" = (
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -28747,6 +28764,9 @@
 	})
 "mqq" = (
 /obj/machinery/drainage,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "mqx" = (
@@ -37421,6 +37441,9 @@
 "qoy" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "qoL" = (
@@ -37850,6 +37873,9 @@
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -41326,6 +41352,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "skp" = (
@@ -42894,6 +42923,15 @@
 	dir = 8
 	},
 /area/station/hallway/primary/southeast)
+"sVs" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "sVB" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -85443,8 +85481,8 @@ hiU
 ref
 nYo
 vaV
-uqC
-uqC
+sVs
+fTH
 uqC
 uqC
 jjE
@@ -85746,7 +85784,7 @@ vaV
 vaV
 vaV
 uqC
-uqC
+tWS
 uqC
 uqC
 jjE
@@ -86345,11 +86383,11 @@ pqP
 mBY
 pqP
 skb
-vKn
+pqP
 kwe
 qxR
 qoy
-vKn
+pqP
 mqq
 wGw
 pon
