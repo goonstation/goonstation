@@ -9,30 +9,39 @@
 
 @use 'sass:map';
 
+// Custom colours
+$_custom_colors: (
+  'navy': var(--color-navy),
+  'crimson': var(--color-crimson),
+);
+
 // Mappings of color names
 $color-map: ();
-$_gen_map: (
-  'black': var(--color-black),
-  'white': var(--color-white),
-  'red': var(--color-red),
-  'orange': var(--color-orange),
-  'yellow': var(--color-yellow),
-  'olive': var(--color-olive),
-  'green': var(--color-green),
-  'teal': var(--color-teal),
-  'blue': var(--color-blue),
-  'violet': var(--color-violet),
-  'purple': var(--color-purple),
-  'pink': var(--color-pink),
-  'brown': var(--color-brown),
-  'grey': var(--color-grey),
-  'gray': var(--color-grey),
-  'light-grey': var(--color-light-grey),
-  'light-gray': var(--color-light-grey),
-  'good': var(--color-good),
-  'average': var(--color-average),
-  'bad': var(--color-bad),
-  'label': var(--color-label),
+$_gen_map: map.merge(
+  (
+    'black': var(--color-black),
+    'white': var(--color-white),
+    'red': var(--color-red),
+    'orange': var(--color-orange),
+    'yellow': var(--color-yellow),
+    'olive': var(--color-olive),
+    'green': var(--color-green),
+    'teal': var(--color-teal),
+    'blue': var(--color-blue),
+    'violet': var(--color-violet),
+    'purple': var(--color-purple),
+    'pink': var(--color-pink),
+    'brown': var(--color-brown),
+    'grey': var(--color-grey),
+    'gray': var(--color-grey),
+    'light-grey': var(--color-light-grey),
+    'light-gray': var(--color-light-grey),
+    'good': var(--color-good),
+    'average': var(--color-average),
+    'bad': var(--color-bad),
+    'label': var(--color-label),
+  ),
+  $_custom_colors
 );
 $low-contrast-color-map: ('yellow', 'white');
 
@@ -55,4 +64,20 @@ $color-map-keys: map.keys($_gen_map) !default;
 
 @function fg($color) {
   @return hsl(from $color h s calc(l + var(--adjust-color)));
+}
+
+/*
+  In order for custom colours to render for certain components, new
+  colour-specific classes require to be generated.
+*/
+@each $color-name, $color-value in $_custom_colors {
+  .Button--color--#{$color-name} {
+    --color: #{$color-value};
+
+    @each $color in $low-contrast-color-map {
+      @if $color-name == $color {
+        --button-color: var(--color-black);
+      }
+    }
+  }
 }

@@ -581,14 +581,24 @@
 	free_resources = list(/obj/item/material_piece/steel = 1,
 		/obj/item/material_piece/organic/wood = 1)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/crate,
-		/datum/manufacture/packingcrate,
-		/datum/manufacture/wooden,
-		/datum/manufacture/medical,
-		/datum/manufacture/biohazard,
-		/datum/manufacture/freezer)
+	available = list(
+		/datum/manufacture/crate,
+		/datum/manufacture/crate/wooden,
+		/datum/manufacture/crate/wooden/packing,
+		/datum/manufacture/crate/medical,
+		/datum/manufacture/crate/biohazard,
+		/datum/manufacture/crate/freezer,
+		/datum/manufacture/crate/secure,
+		/datum/manufacture/crate/secure/secure_transfer,
+		/datum/manufacture/crate/secure/confiscated_items,
+		/datum/manufacture/crate/secure/armory,
+		/datum/manufacture/crate/secure/hazard,
+		/datum/manufacture/crate/secure/engineering,
+		/datum/manufacture/crate/secure/medical,
+		/datum/manufacture/crate/secure/hydroponics,
+		)
 
-	hidden = list(/datum/manufacture/classcrate)
+	hidden = list(/datum/manufacture/crate/class, /datum/manufacture/crate/secure/syndicate)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"

@@ -1,6 +1,7 @@
 ABSTRACT_TYPE(/datum/job/special/nt)
 /datum/job/special/nt
-	linkcolor = NANOTRASEN_LINK_COLOR
+	ui_colour = TGUI_COLOUR_NAVY
+	job_category = JOB_NANOTRASEN
 	limit = 0
 	wages = PAY_IMPORTANT
 	//Emergency responders shouldn't be antags

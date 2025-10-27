@@ -3437,53 +3437,68 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 10 SECONDS
 	category = "Miscellaneous"
 
-/datum/manufacture/packingcrate
-	name = "Random Packing Crate"
-	item_requirements = list("wood" = 1)
-	item_outputs = list(/obj/storage/crate/packing)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
-
-/datum/manufacture/wooden
+/datum/manufacture/crate/wooden
 	name = "Wooden Crate"
 	item_requirements = list("wood" = 1)
 	item_outputs = list(/obj/storage/crate/wooden)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
 
-/datum/manufacture/medical
+/datum/manufacture/crate/wooden/packing
+	name = "Random Packing Crate"
+	item_outputs = list(/obj/storage/crate/packing)
+
+/datum/manufacture/crate/medical
 	name = "Medical Crate"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/storage/crate/medical)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
 
-/datum/manufacture/biohazard
+/datum/manufacture/crate/biohazard
 	name = "Biohazard Crate"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/storage/crate/biohazard)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
 
-/datum/manufacture/classcrate
+/datum/manufacture/crate/class
 	name = "Class Crate"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/storage/crate/classcrate)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
 
-/datum/manufacture/freezer
+/datum/manufacture/crate/freezer
 	name = "Freezer Crate"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/storage/crate/freezer)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
+
+/datum/manufacture/crate/secure
+	name = "Secure Crate (Access: None)"
+	item_requirements = list("metal" = 1, "conductive" = 2)
+	item_outputs = list(/obj/storage/secure/crate)
+
+/datum/manufacture/crate/secure/secure_transfer
+	name = "Security Transfer Crate"
+	item_outputs = list(/obj/storage/secure/crate/gear/transfer)
+
+/datum/manufacture/crate/secure/confiscated_items
+	name = "Confiscated Items Crate"
+	item_outputs = list(/obj/storage/secure/crate/weapon/confiscated_items)
+
+/datum/manufacture/crate/secure/armory
+	name = "Armory Weapons Crate (Empty)"
+	item_outputs = list(/obj/storage/secure/crate/weapon/armory)
+
+/datum/manufacture/crate/secure/hazard
+	name = "Research Hazard Transport Crate"
+	item_outputs = list(/obj/storage/secure/crate/plasma/hazard)
+
+/datum/manufacture/crate/secure/engineering
+	name = "Secure Engineering Crate"
+	item_outputs = list(/obj/storage/secure/crate/eng/locked)
+
+/datum/manufacture/crate/secure/medical
+	name = "Medical Transport Crate"
+	item_outputs = list(/obj/storage/secure/crate/medical)
+
+/datum/manufacture/crate/secure/hydroponics
+	name = "Hydroponics Transport Crate"
+	item_outputs = list(/obj/storage/secure/crate/bee/locked)
+
+/datum/manufacture/crate/secure/syndicate
+	name = "Unmarked Syndicate Crate"
+	item_outputs = list(/obj/storage/secure/crate/gear/syndicate)
+
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor
