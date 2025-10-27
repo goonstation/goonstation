@@ -396,8 +396,8 @@ TYPEINFO(/mob/new_player)
 			return
 
 		// the brain is in the head, which is in the silicon mob
-		var/mob/living/silicon/S = latejoin.loc?.loc
-		if (!istype(S))
+		var/mob/living/silicon/S = latejoin.find_parent_of_type(/mob/living/silicon)
+		if (!S)
 			return
 
 		latejoin.activated = TRUE
