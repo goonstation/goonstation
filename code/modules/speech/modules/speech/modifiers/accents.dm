@@ -271,7 +271,9 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent/word_replacement)
 		if (list_length <= 0)
 			return
 
-		var/regex/punct_regex = regex("^(\\W*)(\\w+)(\\W*)$")
+		// this will capture leading punctuation, the word itself(or at least the first part of it), and then any trailing punctuation or
+		// multi-barrelled parts
+		var/regex/punct_regex = regex("^(\\W*)(\[^\\s\\W\]+)(.*)$")
 		var/max_replacements = min(6, ceil(list_length / 2))
 
 		var/list/indices = list()
@@ -285,11 +287,8 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent/word_replacement)
 			indices -= word_index
 			var/old_word = speech_list[word_index]
 			if(!punct_regex.Find(old_word))
-				//words that are all-punctuation or have punctuation in the middle can't be parsed. I would prefer to ignore the all-punctuation words
-				//and replace the ones with punctuation in the middle, but I don't know how to do that without adding fairly significant complexity.
-				//So just replace them all.
-				if (prob(50))
-					speech_list[word_index] = src.get_preserved_word(old_word, src.get_replacement_word())
+				// If the word doesn't match the regex it's probably all punctuation, so skip it
+				continue
 			else if(prob(50))
 				var/replacement_word = src.get_preserved_word(punct_regex.group[2], src.get_replacement_word())
 				speech_list[word_index] = "[punct_regex.group[1]][replacement_word][punct_regex.group[3]]" //preserve leading and trailing punctuation
