@@ -493,7 +493,7 @@ const AnimationStep = (props: AnimationStepProps) => {
                 </Tooltip>
               </LabeledList.Item>
               <LabeledList.Item label="Easing">
-                {props.step.easing ? (
+                {props.step.easing !== null ? (
                   <EasingInput
                     value={props.step.easing}
                     index={props.index}
@@ -506,7 +506,7 @@ const AnimationStep = (props: AnimationStepProps) => {
               </LabeledList.Item>
 
               <LabeledList.Item label="Flags">
-                {props.step.flags ? (
+                {props.step.flags !== null ? (
                   <AnimationFlags
                     value={props.step.flags}
                     index={props.index}

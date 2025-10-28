@@ -12,6 +12,7 @@
 		var/datum/animation_editor/E = new /datum/animation_editor(src.mob)
 		E.ui_interact(mob)
 
+
 /datum/animation_editor
 	var/list/steps = list() // list of /datum/animation_step
 	var/atom/target = null
@@ -39,11 +40,14 @@
 		"suffix",
 	)
 
+
 /datum/animation_editor/New()
 		. = ..()
 
+
 /datum/animation_editor/ui_state(mob/user)
 	return tgui_admin_state
+
 
 /datum/animation_editor/ui_static_data(mob/user)
 	. = list()
@@ -73,10 +77,12 @@
 		"ANIMATION_END_LOOP" = ANIMATION_END_LOOP
 	)
 
+
 /datum/animation_editor/ui_data()
 	. = list()
 	.["steps"] = src.steps
 	.["target"] = isatom(src.target) ? src.target.name : null
+
 
 /datum/animation_editor/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
@@ -123,6 +129,7 @@
 				for(var/key in step["var_list"])
 					if(!(key in src.valid_keys))
 						return
+
 			// if we made it here, it's probably fine
 			src.steps = data
 
@@ -135,6 +142,7 @@
 			var/key = params["key"]
 			if(!(key in src.valid_keys))
 				return
+
 			// Update var value
 			step["var_list"][key] = params["value"]
 
@@ -147,6 +155,7 @@
 			var/key = params["key"]
 			if(!(key in step["var_list"]))
 				return
+
 			// Delete var
 			step["var_list"] -= key
 
@@ -167,6 +176,7 @@
 			var/key = params["key"]
 			if(!(key in src.valid_keys))
 				return
+
 			// Add var with default value
 			step["var_list"][key] = 0
 
@@ -206,56 +216,7 @@
 		ui = new(user, src, "AnimationEditor")
 		ui.open()
 
-	// Simple JSON-ish serialization for storage (returns a string)
-/datum/animation_editor/proc/serialize()
-		. = null
-		// var/out = "[\n"
-		// var/i = 1
-		// while(steps && i <= steps.len)
-		// 	var/datum/animation_step/s = steps[i]
-		// 	if(!s) { i++; continue }
-		// 	out += "\t{"
-		// 	out += "\"name\":\"" + escape_json(s.name) + "\","
-		// 	out += "\"sprite\":\"" + escape_json(s.sprite) + "\","
-		// 	out += "\"duration\":" + s.duration
-		// 	out += ",\"offset\":" + s.offset
-		// 	out += ",\"rotation\":" + s.rotation
-		// 	out += ",\"scale\":" + s.scale
-		// 	out += ",\"blend\":\"" + escape_json(s.blend) + "\""
-		// 	out += "}"
-		// 	if(i < steps.len) out += ","
-		// 	out += "\n"
-		// 	i++
-		// out += "]"
-		// return out
 
-	// Very small parser for the above format (expects exact keys) - returns TRUE on success
-/datum/animation_editor/proc/deserialize(text)
-	if(!text) return FALSE
-	// crude: look for objects between { }
-	// var/list/newsteps = list()
-	// var/pos = 1
-	// while(TRUE)
-	// 	var/a = text[pos..].find("{")
-	// 	if(a == 0) break
-	// 	pos += a
-	// 	var/b = text[pos..].find("}")
-	// 	if(b == 0) break
-	// 	var/block = text[pos+1 .. pos + b - 1]
-	// 	pos += b
-	// 	// parse basic keys
-	// 	var/name = parse_kv_string(block, "name")
-	// 	var/sprite = parse_kv_string(block, "sprite")
-	// 	var/duration = tofloat(parse_kv_number(block, "duration")) ? 1.0
-	// 	var/offset = toint(parse_kv_number(block, "offset")) ? 0
-	// 	var/rotation = toint(parse_kv_number(block, "rotation")) ? 0
-	// 	var/scale = tofloat(parse_kv_number(block, "scale")) ? 1.0
-	// 	var/blend = parse_kv_string(block, "blend") ? "normal"
-	// 	newsteps[newsteps.len + 1] = new /datum/animation_step(name, sprite, duration, offset, rotation, scale, blend)
-	// steps = newsteps
-	// return TRUE
-
-	// Playback: calls on_play_frame(step_index, step) for each step
 /datum/animation_editor/proc/play()
 	if(istype(target))
 		var/mob/M = target
@@ -268,20 +229,3 @@
 				animate(src.target, time=step["time"], step["var_list"], loop=step["loop"], easing=step["easing"], flags=step["flags"])
 			else
 				animate(time=step["time"], step["var_list"], loop=step["loop"], easing=step["easing"], flags=step["flags"])
-
-
-
-	// Helpers
-/datum/animation_editor/proc/escape_json(str)
-	if(!str) return ""
-	// var/new = str
-	// new = new.replace("\"", "\\\"")
-	// new = new.replace("\n", "\\n")
-	// return new
-
-
-/datum/animation_editor/proc/unescape_json(str)
-	if(!str) return ""
-	// var/out = str.replace("\\\"", "\"")
-	// out = out.replace("\\n", "\n")
-	// return out
