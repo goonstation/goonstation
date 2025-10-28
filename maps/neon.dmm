@@ -14422,10 +14422,6 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "kpQ" = (
-/obj/item/storage/toilet/random{
-	dir = 8;
-	pixel_x = 8
-	},
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "kqc" = (
@@ -22376,6 +22372,10 @@
 /area/station/science/lab)
 "qfP" = (
 /obj/machinery/light/incandescent/warm,
+/obj/item/storage/toilet/random{
+	dir = 8;
+	pixel_x = 8
+	},
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "qgc" = (
