@@ -289,7 +289,7 @@
 		var/obj/item/pen/PEN = O
 		. += list(
 			"penFont" = PEN.font,
-			"penColor" = PEN.color,
+			"penColor" = PEN.font_color, // PEN.color uses the color of the object, this uses the font color set by object
 			"editMode" = PAPER_MODE_WRITING,
 			"isCrayon" = FALSE,
 			"stampClass" = "FAKE",

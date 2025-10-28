@@ -128,12 +128,12 @@ export const JobManager = () => {
   const specialJobCategories = [
     {
       name: 'Nanotrasen Jobs',
-      color: 'blue', // TODO: Make navy when latejoin TGUI adds those
+      color: 'navy',
       jobs: categorisedSpecialJobs.filter((job) => job.type === 'nanotrasen'),
     },
     {
       name: 'Syndicate Jobs',
-      color: 'red', // TODO: Make crimson when latejoin TGUI adds those
+      color: 'crimson',
       jobs: categorisedSpecialJobs.filter((job) => job.type === 'syndicate'),
     },
     {
