@@ -1644,6 +1644,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/phone,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen1"
