@@ -711,12 +711,6 @@
 	dir = 8
 	},
 /area/station/turret_protected/ai)
-"aBi" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "aBt" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -4904,9 +4898,7 @@
 /area/station/science/lab)
 "dHb" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-2"
-	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "dHw" = (
@@ -8582,6 +8574,12 @@
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"gdk" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "gdv" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating,
@@ -22629,9 +22627,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "qoz" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "qoW" = (
@@ -25444,13 +25440,6 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon8,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"sqV" = (
-/obj/machinery/light/incandescent/warm,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "srf" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -78736,10 +78725,10 @@ oxp
 vDt
 vMH
 mNL
-fdk
+gdk
 dHb
-aBi
-sqV
+fdk
+fdk
 qoz
 hPT
 qKs
