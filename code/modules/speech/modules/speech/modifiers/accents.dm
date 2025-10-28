@@ -290,8 +290,6 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent/word_replacement)
 				//So just replace them all.
 				if (prob(50))
 					speech_list[word_index] = src.get_preserved_word(old_word, src.get_replacement_word())
-				number_of_attempts++
-				continue
 			else if(prob(50))
 				var/replacement_word = src.get_preserved_word(punct_regex.group[2], src.get_replacement_word())
 				speech_list[word_index] = "[punct_regex.group[1]][replacement_word][punct_regex.group[3]]" //preserve leading and trailing punctuation
