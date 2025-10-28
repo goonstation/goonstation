@@ -13,22 +13,37 @@
 		ui = new(user, src, "JobManager")
 		ui.open()
 
+#define JOB_DATA list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
 /datum/job_manager/ui_data(mob/user)
 	var/list/staple_job_data = list()
 	var/list/special_job_data = list()
+	var/list/categorised_special_job_data = list()
 	var/list/hidden_job_data = list()
+	var/list/staple_job_categories = list(JOB_COMMAND, JOB_SECURITY, JOB_RESEARCH, JOB_MEDICAL, JOB_ENGINEERING, JOB_CIVILIAN)
+	var/list/special_job_categories = list(JOB_NANOTRASEN, JOB_SYNDICATE, JOB_HALLOWEEN)// If adding more, make sure to add the category in JobManager.tsx
 	for (var/datum/job/job in job_controls.staple_jobs)
-		staple_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
+		if(!(job.job_category in staple_job_categories))// If its not in this list its not a staple job so should be sorted under special jobs
+			if(job.job_category in special_job_categories)
+				categorised_special_job_data += JOB_DATA
+			else
+				special_job_data += JOB_DATA
+			continue
+		staple_job_data += JOB_DATA
 	for (var/datum/job/job in job_controls.special_jobs)
-		special_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
+		if(job.job_category in special_job_categories)
+			categorised_special_job_data += JOB_DATA
+			continue
+		special_job_data += JOB_DATA
 	for (var/datum/job/job in job_controls.hidden_jobs)
-		hidden_job_data += list(list(name = job.name, type = job.job_category, count = countJob(job.name), limit = job.limit))
+		hidden_job_data += JOB_DATA
 	. = list(
 		"stapleJobs" = staple_job_data,
 		"specialJobs" = special_job_data,
+		"categorisedSpecialJobs" = categorised_special_job_data,
 		"hiddenJobs" = hidden_job_data,
 		"allowSpecialJobs" = job_controls.allow_special_jobs
 	)
+#undef JOB_DATA
 
 /datum/job_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

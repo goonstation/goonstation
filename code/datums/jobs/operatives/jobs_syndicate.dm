@@ -1,6 +1,7 @@
 ABSTRACT_TYPE(/datum/job/special/syndicate)
 /datum/job/special/syndicate
-	linkcolor = SYNDICATE_LINK_COLOR
+	ui_colour = TGUI_COLOUR_CRIMSON
+	job_category = JOB_SYNDICATE
 	limit = 0
 	wages = 0
 	name = "YOU SHOULDN'T SEE ME OPERATIVE"
@@ -24,11 +25,13 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, src.name, source = ANTAGONIST_SOURCE_ADMIN)
 		SPAWN(0) //Let the ID actually spawn
 			var/obj/item/card/id/ID = M.get_id()
 			if(istype(ID))
 				ID.icon_state = "id_syndie" //Syndie ID normally starts with basic sprite
+		SPAWN(2) //Ghost respawn panel has a SPAWN(1) that clears all antag roles. Apply specialist role if no other role was picked
+			if(!M.mind?.is_antagonist())
+				M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, src.name, source = ANTAGONIST_SOURCE_ADMIN)
 
 /datum/job/special/syndicate/weak
 	name = "Junior Syndicate Operative"

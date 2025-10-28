@@ -3,6 +3,7 @@ Hold SPACE and click on a tile to throw your current item there.
 Hold SPACE and click on a tile to pick up the highest weight item on that tile, if your hand is free.
 Hold ALT and click on something to examine it.
 Hold CTRL and click on a nearby object to start pulling it.
+Hold CTRL and click on a tile to pull an object, the heaviest weight item, or a mob found on that tile.
 Hit F to fart. All the cool kids are doing it.
 If you suspect someone's being shit, adminhelp it with F1. You might not always get a reply, but that doesn't mean it hasn't been looked into.
 Admins can always see adminhelps no matter whether they are currently on the server or not.
