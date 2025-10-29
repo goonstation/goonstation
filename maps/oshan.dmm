@@ -1314,7 +1314,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/main)
+/area/station/security/evidence)
 "aet" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/storage/box/PDAbox,
@@ -3619,14 +3619,15 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "anh" = (
-/obj/vehicle/segway,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/security/main)
+/obj/rack,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/evidence)
 "ani" = (
 /obj/submachine/chem_extractor{
 	dir = 8
@@ -4254,6 +4255,7 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
+/obj/machinery/vending/coffee,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "apD" = (
@@ -4472,10 +4474,18 @@
 /obj/item/stamp,
 /obj/disposalpipe/segment,
 /obj/machinery/recharger{
-	pixel_y = 10
+	pixel_y = 7
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/obj/item/hand_labeler{
+	pixel_y = 7;
+	pixel_x = 14
+	},
+/obj/item/clothing/gloves/latex/random{
+	pixel_y = -2;
+	pixel_x = 9
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/evidence)
 "aqk" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -4490,10 +4500,13 @@
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
-/obj/machinery/light/incandescent/cool,
 /obj/item/storage/firstaid/regular,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 7
+	},
+/obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/red,
-/area/station/security/main)
+/area/station/security/evidence)
 "aqn" = (
 /turf/space/fluid,
 /area/space)
@@ -21516,8 +21529,8 @@
 /obj/disposalpipe/segment/mail,
 /obj/storage/secure/closet/brig,
 /obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/security/main)
+/turf/simulated/floor/redblack,
+/area/station/security/evidence)
 "bFY" = (
 /obj/item/mine/stun/armed,
 /turf/space/fluid,
@@ -23873,8 +23886,10 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/evidence)
 "bPg" = (
 /obj/machinery/conveyor/EW{
 	id = "outbound"
@@ -24366,6 +24381,9 @@
 	name = "interrogation pipe"
 	},
 /obj/table/reinforced/auto,
+/obj/item/hand_labeler{
+	pixel_y = 7
+	},
 /obj/item/device/prisoner_scanner{
 	pixel_x = -11
 	},
@@ -24381,9 +24399,7 @@
 	name = "interrogation pipe"
 	},
 /obj/table/reinforced/auto,
-/obj/item/hand_labeler{
-	pixel_y = 7
-	},
+/obj/machinery/coffeemaker/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQN" = (
@@ -24746,6 +24762,12 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bRS" = (
@@ -25009,21 +25031,29 @@
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
-/area/station/security/main)
+/area/station/security/evidence)
 "bST" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor/red,
-/area/station/security/main)
+/obj/storage/cart/forensic/security,
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/evidence)
 "bSU" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/floor/red,
-/area/station/security/main)
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/evidence)
 "bSV" = (
 /obj/item/device/radio/intercom/security,
 /obj/machinery/vending/security,
-/obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/security/evidence)
 "bSX" = (
 /obj/machinery/light/incandescent/cool/very,
 /obj/machinery/power/apc/autoname_north,
@@ -25311,8 +25341,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/redblack/corner,
+/area/station/security/evidence)
 "bTX" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/brig{
@@ -25380,8 +25410,10 @@
 /area/station/maintenance/south)
 "bUk" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/security/evidence)
 "bUl" = (
 /obj/storage/closet/fire,
 /obj/machinery/camera/directional/east{
@@ -25855,8 +25887,12 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/obj/decal/stripe_delivery,
+/obj/storage/secure/closet/brig,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/evidence)
 "bWa" = (
 /obj/storage/secure/closet/command/hos,
 /obj/machinery/camera/directional/north{
@@ -25901,13 +25937,15 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/evidence)
 "bWg" = (
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/main)
+/area/station/security/evidence)
 "bWi" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -26069,8 +26107,8 @@
 	name = "interrogation pipe"
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/black,
+/area/station/security/evidence)
 "bWJ" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological{
 	req_access = null
@@ -26142,8 +26180,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/black,
+/area/station/security/evidence)
 "bWT" = (
 /obj/disposalpipe/segment/brig{
 	desc = "An underfloor interrogation pipe.";
@@ -26158,14 +26196,10 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/drink_rack/mug{
-	pixel_x = 26;
-	pixel_y = 4
-	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
-/area/station/security/main)
+/area/station/security/evidence)
 "bWU" = (
 /obj/disposaloutlet{
 	dir = 4;
@@ -26389,17 +26423,29 @@
 /area/station/storage/warehouse)
 "bXG" = (
 /obj/table/reinforced/auto,
-/obj/item/kitchen/food_box/donut_box{
-	pixel_y = 7
-	},
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
-/obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 6
+/obj/item/folder{
+	pixel_x = 19;
+	pixel_y = 3
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/obj/item/folder{
+	pixel_y = 4;
+	pixel_x = 23
+	},
+/obj/item/item_box/postit{
+	pixel_y = 1;
+	pixel_x = 16
+	},
+/obj/machinery/light/lamp/black{
+	pixel_y = 0;
+	pixel_x = -10
+	},
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/security/evidence)
 "bXH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbooth)
@@ -26582,7 +26628,7 @@
 "bYx" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/main)
+/area/station/security/evidence)
 "bYz" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/plating/random,
@@ -28291,21 +28337,40 @@
 /turf/simulated/floor,
 /area/station/engine/storage)
 "ceS" = (
-/obj/vehicle/segway,
-/obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/brig{
 	desc = "An underfloor interrogation pipe.";
 	dir = 4;
 	name = "interrogation pipe"
 	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/security/main)
+/obj/rack,
+/obj/machinery/light/incandescent/blueish{
+	dir = 8
+	},
+/obj/item/storage/box/evidence{
+	pixel_y = 0;
+	pixel_x = 9
+	},
+/obj/item/storage/box/evidence{
+	pixel_y = 0;
+	pixel_x = -6
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/evidence)
 "ceT" = (
-/obj/decal/stripe_delivery,
-/obj/storage/secure/closet/brig,
-/turf/simulated/floor,
-/area/station/security/main)
+/obj/rack,
+/obj/item/storage/box/evidence{
+	pixel_x = -5
+	},
+/obj/item/storage/box/evidence{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/station/security/evidence)
 "ceU" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1;
@@ -30080,8 +30145,10 @@
 /obj/stool/chair/red{
 	dir = 4
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/evidence)
 "cNn" = (
 /obj/decal/tile_edge/line/green{
 	dir = 5;
@@ -31741,8 +31808,10 @@
 	},
 /obj/stool/chair/office/red,
 /obj/landmark/start/job/security_assistant,
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/evidence)
 "eHa" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -32291,15 +32360,15 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "fgF" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
-/area/station/security/main)
+/area/station/security/evidence)
 "fgQ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	name = "Sauna"
@@ -33561,6 +33630,12 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
+"gAV" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/evidence)
 "gCA" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -35499,6 +35574,11 @@
 /obj/map/light/dimred,
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/security)
+"joF" = (
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/evidence)
 "joZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35895,8 +35975,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/floor/redblack,
+/area/station/security/evidence)
 "jNJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -36341,9 +36421,6 @@
 /turf/simulated/floor/green,
 /area/station/storage/tools)
 "kun" = (
-/obj/machinery/door/airlock/pyro/glass/security/alt{
-	dir = 4
-	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -36355,8 +36432,12 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4;
+	req_access_txt = "1"
+	},
 /turf/simulated/floor/red,
-/area/station/security/main)
+/area/station/security/evidence)
 "kup" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/light/incandescent/netural{
@@ -38107,10 +38188,13 @@
 /obj/machinery/computer/announcement/station/security/department{
 	dir = 8
 	},
+/obj/blind_switch/east{
+	pixel_y = 4
+	},
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
-/area/station/security/main)
+/area/station/security/evidence)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -39211,6 +39295,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/vending/jobclothing/security,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "nIs" = (
@@ -39677,6 +39765,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/vehicle/segway,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "ooU" = (
@@ -40360,6 +40450,9 @@
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor,
 /area/station/maintenance/northwest)
+"phK" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/evidence)
 "phM" = (
 /obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/shuttlebay,
@@ -41710,6 +41803,14 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
+"qRn" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/security/evidence)
 "qSK" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -44991,6 +45092,10 @@
 /obj/fishing_pool/portable,
 /turf/simulated/floor/green,
 /area/station/maintenance/northwest)
+"vAE" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/evidence)
 "vCf" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -45337,7 +45442,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/main)
+/area/station/security/evidence)
 "wab" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -45553,6 +45658,7 @@
 "wmR" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/cashreg,
 /obj/noticeboard/persistent/customs/directional/north,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0;
@@ -45561,7 +45667,6 @@
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
-/obj/machinery/phone,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -45690,6 +45795,8 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/vehicle/segway,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "wAH" = (
@@ -45815,7 +45922,6 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
-/obj/machinery/cashreg,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -45885,7 +45991,6 @@
 	name = "Catering Hangar"
 	})
 "wIh" = (
-/obj/table/reinforced/auto,
 /obj/disposalpipe/segment/brig{
 	desc = "An underfloor interrogation pipe.";
 	dir = 4;
@@ -45895,12 +46000,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/coffeemaker/security,
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/obj/machinery/photocopier,
+/turf/simulated/floor/black,
+/area/station/security/evidence)
 "wIH" = (
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
@@ -47108,7 +47210,7 @@
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
-/area/station/security/main)
+/area/station/security/evidence)
 "ydW" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/chapel)
@@ -94624,11 +94726,11 @@ aSX
 nHV
 bSO
 adn
-bJR
+phK
 anh
 ceS
 ceT
-bJR
+phK
 lbK
 bLr
 bNP
@@ -94926,11 +95028,11 @@ imd
 aCG
 fgF
 kun
-bJR
+phK
 bVY
 bWI
 bFX
-bJS
+vAE
 iPV
 iPV
 yhP
@@ -95530,7 +95632,7 @@ bQQ
 aCG
 bST
 bPd
-bUk
+gAV
 bUk
 wIh
 aqi
@@ -95833,10 +95935,10 @@ aCG
 bSU
 bTW
 cNe
-bMo
+joF
 eGW
 bXG
-bJR
+phK
 bLr
 bLr
 bNP
@@ -96133,12 +96235,12 @@ bLj
 bQR
 aCG
 bSV
-bTW
+qRn
 mAC
 bWg
 bWT
 aql
-bJR
+phK
 bLr
 bLr
 bNP
@@ -96440,7 +96542,7 @@ bRS
 evT
 bWU
 bRS
-bJR
+phK
 bLr
 bLr
 loJ
