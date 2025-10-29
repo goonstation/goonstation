@@ -26641,6 +26641,14 @@
 	pixel_x = 20;
 	pixel_y = 1
 	},
+/obj/item/folder{
+	pixel_y = -1;
+	pixel_x = -4
+	},
+/obj/item/folder{
+	pixel_y = -1;
+	pixel_x = -8
+	},
 /turf/simulated/floor/red,
 /area/station/security/evidence)
 "lzP" = (
