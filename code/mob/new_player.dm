@@ -395,8 +395,9 @@ TYPEINFO(/mob/new_player)
 			boutput(src, SPAN_NOTICE("Sorry, that Silicon has already been taken control of."))
 			return
 
-		var/mob/living/silicon/S = latejoin.loc
-		if (!istype(S))
+		// the brain is in the head, which is in the silicon mob
+		var/mob/living/silicon/S = latejoin.find_parent_of_type(/mob/living/silicon)
+		if (!S)
 			return
 
 		latejoin.activated = TRUE

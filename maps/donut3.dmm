@@ -20909,12 +20909,19 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
 "gwC" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/north{
+	pixel_x = 10
+	},
 /obj/machinery/light/emergency{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 24;
+	pixel_x = 2
 	},
 /obj/filing_cabinet,
+/obj/machinery/phone/wall{
+	pixel_y = 32;
+	pixel_x = -8
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},

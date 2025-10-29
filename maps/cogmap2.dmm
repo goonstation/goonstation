@@ -56111,6 +56111,10 @@
 "gXc" = (
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/disposal/mail/small/autoname/checkpoint/customs/east,
+/obj/machinery/phone/wall{
+	pixel_x = -28;
+	pixel_y = 6
+	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
 "gXp" = (
