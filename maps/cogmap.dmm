@@ -20319,14 +20319,8 @@
 /area/station/engine/combustion_chamber)
 "bxa" = (
 /obj/table/reinforced/auto,
-/obj/item/pen/marker/blue{
-	pixel_x = -6;
-	pixel_y = -1
-	},
 /obj/machinery/door/firedoor/pyro,
-/obj/item/bell/hop{
-	pixel_y = 5
-	},
+/obj/machinery/phone,
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "bxe" = (
@@ -47626,6 +47620,23 @@
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
+"lWg" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/door/firedoor/pyro,
+/obj/item/pen/marker/blue{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/bell/hop{
+	pixel_y = 8;
+	pixel_x = -3
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
 "lWj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -96078,7 +96089,7 @@ aWM
 bes
 aUk
 aZY
-oCZ
+lWg
 nlB
 nIQ
 nlB
