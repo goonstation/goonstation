@@ -39937,7 +39937,7 @@
 	},
 /obj/machinery/turret{
 	name = "gap defence turret";
-	desc = "Theres a label on it that says "Donotobstruct"."
+	desc = "Theres a label on it that says do not obstruct."
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
