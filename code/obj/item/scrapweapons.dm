@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		desc = "A sharp pointy bit of metal strapped to a metal rod. Devastatingly simple."
 		icon_state = "spear-scrapmetal"
 		item_state = "spear-scrapmetal"
-		force = 8
+		force = 9
 		hit_type = DAMAGE_STAB
 		hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 		HELP_MESSAGE_OVERRIDE(null)
@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		desc = "A sharp pointy bit of glass strapped to a metal rod. Devastatingly simple."
 		icon_state = "spear-glass"
 		item_state = "spear-glass"
-		force = 8
+		force = 9
 		hit_type = DAMAGE_STAB
 		hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 		HELP_MESSAGE_OVERRIDE(null)
@@ -215,7 +215,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		desc = "A sharp pointy bit of plasmaglass strapped to a metal rod. Devastatingly simple."
 		icon_state = "spear-pglass"
 		item_state = "spear-pglass"
-		force = 9 // plasmaglass is just a bit more damage dealing for scrap weapons
+		force = 11 // plasmaglass is just a bit more damage dealing for scrap weapons
 		hit_type = DAMAGE_STAB
 		hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 		HELP_MESSAGE_OVERRIDE(null)
@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
-	force = 9
+	force = 10
 	attack_verbs = "hacks"
 	hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 	custom_suicide = 1
@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	item_state = "club"
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_BLUNT
-	force = 9
+	force = 10
 	throwforce = 6
 	custom_suicide = 1
 	attack_verbs = "smashes"
@@ -286,7 +286,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		item_state = "club-scrapmetal"
 		HELP_MESSAGE_OVERRIDE(null)
 		w_class = W_CLASS_NORMAL
-		force = 11
+		force = 12
 		stamina_cost = 30
 		stamina_damage = 35
 
@@ -297,7 +297,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		HELP_MESSAGE_OVERRIDE(null)
 		w_class = W_CLASS_NORMAL
 		hit_type = DAMAGE_CUT
-		force = 11
+		force = 12
 		stamina_cost = 20
 		stamina_damage = 25
 		hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -309,7 +309,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		HELP_MESSAGE_OVERRIDE(null)
 		w_class = W_CLASS_NORMAL
 		hit_type = DAMAGE_CUT
-		force = 12
+		force = 14
 		stamina_cost = 20
 		stamina_damage = 25
 		hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -366,7 +366,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	w_class = W_CLASS_SMALL
 	tool_flags = TOOL_CUTTING
 	event_handler_flags = USE_GRAB_CHOKE
-	force = 7
+	force = 8
 	throwforce = 7
 	attack_verbs = "stabs"
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
@@ -385,7 +385,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		desc = "A tiny bit of plasmaglass attached to a handle. You might cut yourself just holding it."
 		icon_state = "dagger-pglass"
 		item_state = "dagger-pglass"
-		force = 8
+		force = 10
 
 /obj/item/scrapweapons/weapons/dagger/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
