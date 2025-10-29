@@ -89,11 +89,14 @@
 			return
 
 		var/list/hotspots = list()
+
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if (S.can_drift == 1) // draws the hotspots on the trench map and changes color if it is pinned
-				hotspots += {"<div class='hotspot' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
+				S.hotspot_color = "hotspot"
 			else
-				hotspots += {"<div class='pinned_hotspot' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
+				S.hotspot_color = "pinned_hotspot"
+
+			hotspots += {"<div class='[S.hotspot_color]' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
 
 		src.map_html = {"
 <!doctype html>
@@ -134,7 +137,7 @@
 		}
 		.pinned_hotspot {
 			position: absolute;
-			background: rgba(10, 210, 255, 0.6);
+			background: rgba(0, 160, 255, 0.6);
 		}
 		.key {
 			text-align: center;
@@ -156,7 +159,7 @@
 		.station { background-color: [map_colors["station"]]; }
 		.other { background-color: [map_colors["other"]]; }
 		.vent { background-color: rgb(255, 120, 120); }
-		.pinnedvent { background-color: rgb(10, 210, 255); }
+		.pinnedvent { background-color: rgb(0, 160, 255); }
 	</style>
 </head>
 <body>
@@ -299,6 +302,8 @@
 	var/d = 0
 
 	var/last_colorping = 0
+
+	var/hotspot_color
 
 
 	New()
