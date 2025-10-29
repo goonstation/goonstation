@@ -270,7 +270,6 @@ var/list/admin_verbs = list(
 		/client/proc/edit_module,
 		// /client/proc/modify_organs,
 		/client/proc/toggle_atom_verbs,
-		/client/proc/toggle_camera_network_reciprocity,
 		///client/proc/generate_poster,
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
@@ -387,6 +386,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,
 		/client/proc/cmd_paraviewer,
+		/client/proc/cmd_ambient_viewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
@@ -437,6 +437,7 @@ var/list/admin_verbs = list(
 		/client/proc/test_spacebee_command,
 		/client/proc/delete_landmarks,
 		/client/proc/admin_minimap,
+		/client/proc/transfer_abcu_blueprints,
 		),
 
 	7 = list(
@@ -462,7 +463,6 @@ var/list/admin_verbs = list(
 		/client/proc/debug_reagents_cache,
 		///client/proc/debug_check_possible_reactions,
 		/client/proc/set_admin_level,
-		/client/proc/show_camera_paths,
 		///client/proc/dbg_itemspecial,
 		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
@@ -2154,6 +2154,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.addreagents(A)
 		if("Check Reagents")
 			C.cmd_admin_check_reagents(A)
+		if ("Adjust Addictions")
+			C.cmd_change_addiction(A)
 		if("View Variables")
 			C.debug_variables(A)
 		if("View Fingerprints")
@@ -2588,3 +2590,22 @@ proc/alert_all_ghosts(atom/target, message)
 	for (var/turf/landmark in global.landmarks[choice])
 		boutput(src, "Deleting landmark at [log_loc(landmark)]")
 	global.landmarks[choice] = list()
+
+/client/proc/transfer_abcu_blueprints()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Transfer ABCU blueprints"
+	set desc = "Transfer "
+	ADMIN_ONLY
+	var/ckey_from = input(src, "Ckey to transfer from") as text
+	var/ckey_to = input(src, "Ckey to transfer to") as text
+	ckey_from = ckey(ckey_from)
+	ckey_to = ckey(ckey_to)
+	if (!length(ckey_from) || !length(ckey_to))
+		return
+	var/list/bplist = flist("data/blueprints/[ckey_from]/")
+	if (!length(bplist))
+		boutput(src, SPAN_ALERT("No blueprints found for ckey [ckey_from]"))
+		return
+	for (var/filename in bplist)
+		boutput(src, "Copying blueprint [filename] from [ckey_from] to [ckey_to]...")
+		fcopy("data/blueprints/[ckey_from]/[filename]", "data/blueprints/[ckey_to]/[filename]")

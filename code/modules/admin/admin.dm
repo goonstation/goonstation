@@ -1613,9 +1613,9 @@ var/global/noir = 0
 			boutput(usr, SPAN_SUCCESS("Removed [amt] units of [pick_id] from [A]."))
 
 			// Brought in line with adding reagents via the player panel (Convair880).
-			logTheThing(LOG_ADMIN, src, "removed [amt] units of [pick_id] from [A] at [log_loc(A)].")
+			logTheThing(LOG_ADMIN, usr, "removed [amt] units of [pick_id] from [A] at [log_loc(A)].")
 			if (ismob(A))
-				message_admins("[key_name(src)] removed [amt] units of [pick_id] from [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
+				message_admins("[key_name(usr)] removed [amt] units of [pick_id] from [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
 
 		if ("possessmob")
 			if( src.level >= LEVEL_PA )
@@ -3044,8 +3044,8 @@ var/global/noir = 0
 								M.client?.dir = setdir
 								LAGCHECK(LAG_LOW)
 							message_admins("[key_name(usr)] set station direction to [direction].")
-							logTheThing(LOG_ADMIN, src, "set station direction to [direction].")
-							logTheThing(LOG_DIARY, src, "set station direction to [direction]", "admin")
+							logTheThing(LOG_ADMIN, usr, "set station direction to [direction].")
+							logTheThing(LOG_DIARY, usr, "set station direction to [direction]", "admin")
 						else
 							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
@@ -3165,8 +3165,8 @@ var/global/noir = 0
 							if (!intensity)
 								return
 							var/time = input("Enter length of the shaking effect in seconds.", "length of shaking effect", 1) as num
-							logTheThing(LOG_ADMIN, src, "created a shake effect (intensity [intensity], length [time])")
-							logTheThing(LOG_DIARY, src, "created a shake effect (intensity [intensity], length [time])", "admin")
+							logTheThing(LOG_ADMIN, usr, "created a shake effect (intensity [intensity], length [time])")
+							logTheThing(LOG_DIARY, usr, "created a shake effect (intensity [intensity], length [time])", "admin")
 							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
 								SPAWN(0)
@@ -3309,7 +3309,7 @@ var/global/noir = 0
 				return
 
 		if ("secretsdebug")
-			if (src.level >= LEVEL_CODER)
+			if (src.level >= LEVEL_ADMIN)
 				switch(href_list["type"])
 					if("budget")
 						src.owner:debug_variables(wagesystem)
@@ -4307,24 +4307,24 @@ var/global/noir = 0
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
 	if(C.player?.cloudSaves.getData( "adminhelp_banner" ))
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player?.cloudSaves.getData( "adminhelp_banner" )])<br/>"
-		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from adminhelping.")
+		logTheThing(LOG_ADMIN, usr, "unmuted [constructTarget(C,"admin")] from adminhelping.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
-		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from adminhelping.")
+		logTheThing(LOG_ADMIN, usr, "muted [constructTarget(C,"admin")] from adminhelping.")
 
 	if(C.player?.cloudSaves.getData( "mentorhelp_banner" ))
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player?.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
-		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
+		logTheThing(LOG_ADMIN, usr, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
-		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from mentorhelping.")
+		logTheThing(LOG_ADMIN, usr, "muted [constructTarget(C,"admin")] from mentorhelping.")
 
 	if(C.player?.cloudSaves.getData( "prayer_banner" ))
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player?.cloudSaves.getData( "prayer_banner" )])<br/>"
-		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from praying.")
+		logTheThing(LOG_ADMIN, usr, "unmuted [constructTarget(C,"admin")] from praying.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"
-		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from praying.")
+		logTheThing(LOG_ADMIN, usr, "muted [constructTarget(C,"admin")] from praying.")
 
 	usr.Browse(built, "window=chatban;size=500x100")
 
@@ -4527,8 +4527,8 @@ var/global/noir = 0
 	if (!forced && tgui_alert(src, "Respawn [M]?", "Confirmation", list("Yes", "No")) != "Yes")
 		return
 
-	logTheThing(LOG_ADMIN, src, "respawned [constructTarget(M,"admin")]")
-	logTheThing(LOG_DIARY, src, "respawned [constructTarget(M,"diary")].", "admin")
+	logTheThing(LOG_ADMIN, usr, "respawned [constructTarget(M,"admin")]")
+	logTheThing(LOG_DIARY, usr, "respawned [constructTarget(M,"diary")].", "admin")
 	message_admins("[key_name(src)] respawned [key_name(M)].")
 
 	var/mob/new_player/newM = new()
@@ -4552,8 +4552,8 @@ var/global/noir = 0
 	set desc = "Respawn yourself"
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	logTheThing(LOG_ADMIN, src, "respawned themselves.")
-	logTheThing(LOG_DIARY, src, "respawned themselves.", "admin")
+	logTheThing(LOG_ADMIN, usr, "respawned themselves.")
+	logTheThing(LOG_DIARY, usr, "respawned themselves.", "admin")
 	message_admins("[key_name(src)] respawned themselves.")
 
 	var/mob/new_player/M = new()

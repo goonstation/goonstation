@@ -46,12 +46,12 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "Earth"
 	icon_state = "nothing_earth"
 	//force_fullbright = 1
-	ambient_light = CENTCOM_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_EARTH
 
 /area/meadow
 	name = "Meadow"
 	icon_state = "nothing_earth"
-	ambient_light = CENTCOM_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_EARTH
 	sanctuary = TRUE
 
 /area/centcom/gallery
@@ -170,6 +170,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	janantilles
 		ckey = "janantilles"
 		name = "Office of Fleur DeLaCreme"
+	jorj
+		ckey = "jorj949"
+		name = "Office of George"
 	katzen
 		ckey = "flappybat"
 		name = "Office of Katzen"

@@ -1096,7 +1096,7 @@
 /area/station/maintenance/north)
 "avE" = (
 /obj/table/auto,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/item/storage/box/plates{
 	pixel_x = -10
 	},

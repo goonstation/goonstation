@@ -256,13 +256,13 @@
 	/obj/item/clothing/shoes/clown_shoes/autumn,
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,
-	/obj/item/clothing/under/gimmick/clown_autumn,
+	/obj/item/clothing/under/misc/clown/autumn,
 	#endif
 	#ifdef SEASON_WINTER
 	/obj/item/clothing/shoes/clown_shoes/winter,
 	/obj/item/clothing/head/clown_winter_hat,
 	/obj/item/clothing/mask/clown_hat/winter,
-	/obj/item/clothing/under/gimmick/clown_winter,
+	/obj/item/clothing/under/misc/clown/winter,
 	#endif
 	/obj/item/storage/box/balloonbox)
 
@@ -860,3 +860,15 @@ TYPEINFO(/obj/storage/crate/chest)
 		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
 		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
 		..()
+
+/obj/storage/crate/eng_reinforcedcables
+	name = "reinforced cable crate"
+	spawn_contents = list(
+		/obj/item/storage/box/cablesbox/reinforced = 4
+	)
+
+/obj/storage/crate/eng_dowsingrods
+	name = "dowsing rod crate"
+	spawn_contents = list(
+		/obj/item/heat_dowsing = 10
+	)

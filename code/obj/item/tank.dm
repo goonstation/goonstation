@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 				// Thank goodness there's a lot of them! (With maxcap values you can get around 5.6 mols fallout in here tops, which is ~80 neutrons)
 				var/neutrons_to_emit = 10 * ceil( sqrt( src.air_contents.radgas * range ) )
 				for(var/i = 1 to neutrons_to_emit)
-					shoot_projectile_XY(src, new /datum/projectile/neutron(), rand(-10,10), rand(-10,10))
+					shoot_projectile_XY(get_turf(src), new /datum/projectile/neutron(), rand(-10,10), rand(-10,10))
 				// Do some flash radiation so that the mobs just out of the gib range still get messed up bad
 				// Based off neutrons_to_emit in a way, but to be a multiplier value between 0 and 2
 				rad_damage_multiplier = 2 * clamp(neutrons_to_emit / 100, 0, 1)

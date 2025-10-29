@@ -9152,8 +9152,8 @@
 /area/station/engine/engineering/private)
 "bcN" = (
 /obj/storage/secure/closet/fridge,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/item/storage/box/bacon_kit,
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,

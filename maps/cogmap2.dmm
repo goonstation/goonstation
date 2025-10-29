@@ -5025,17 +5025,6 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"aqW" = (
-/obj/storage/crate,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
-/obj/item/kitchen/food_box/egg_box,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9;
-	level = 2
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/catering)
 "aqX" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
@@ -8955,24 +8944,6 @@
 /area/station/chapel/sanctuary)
 "aBK" = (
 /obj/mic_stand,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/chapel/sanctuary)
-"aBL" = (
-/obj/storage/crate,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/tomato,
-/obj/item/reagent_containers/food/snacks/plant/banana,
-/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
-/obj/item/reagent_containers/food/snacks/plant/peanuts,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/clothing/glasses/blindfold,
-/obj/item/kitchen/food_box/egg_box,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -14973,8 +14944,8 @@
 /obj/item/clothing/shoes/flippers,
 /obj/item/reagent_containers/glass/bottle/eyedrops,
 /obj/item/reagent_containers/dropper,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/item/inner_tube/random,
 /obj/item/inner_tube/random,
 /obj/item/clothing/gloves/water_wings,
@@ -22940,17 +22911,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"but" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/storage/toolbox/emergency,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "buu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2{
@@ -23495,19 +23455,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/security/main)
-"bwd" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/syringe/haloperidol,
-/obj/random_item_spawner/desk_stuff,
-/obj/machinery/light_switch/north{
-	dir = 4;
-	pixel_x = 22;
-	pixel_y = 0
-	},
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
 /area/station/security/main)
 "bwe" = (
 /obj/machinery/light{
@@ -52632,10 +52579,6 @@
 /obj/item/space_thing,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"doL" = (
-/obj/item/skull/odd,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "doM" = (
 /turf/space,
 /area/supply/sell_point)
@@ -53118,6 +53061,19 @@
 /obj/machinery/light,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"dPe" = (
+/obj/machinery/light_switch/north{
+	dir = 4;
+	pixel_x = 22;
+	pixel_y = 0
+	},
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 8
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "dPz" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
@@ -56155,6 +56111,10 @@
 "gXc" = (
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/disposal/mail/small/autoname/checkpoint/customs/east,
+/obj/machinery/phone/wall{
+	pixel_x = -28;
+	pixel_y = 6
+	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
 "gXp" = (
@@ -60249,6 +60209,24 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/locker)
+"kvF" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
+/obj/item/reagent_containers/food/snacks/plant/peanuts,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/kitchen/egg_box,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/chapel/sanctuary)
 "kwv" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -62186,6 +62164,10 @@
 	dir = 8
 	},
 /area/station/crew_quarters/garden)
+"mli" = (
+/obj/item/skull/changeling,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "mlC" = (
 /turf/simulated/floor/greenwhite{
 	dir = 8
@@ -68424,6 +68406,19 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"rZx" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/reagent_containers/syringe/haloperidol,
+/obj/random_item_spawner/desk_stuff,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "rZy" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -74532,6 +74527,17 @@
 	icon_state = "carpetSE"
 	},
 /area/station/security/hos)
+"yjK" = (
+/obj/storage/crate,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/item/kitchen/egg_box,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9;
+	level = 2
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/catering)
 "ykv" = (
 /obj/cable/orange{
 	icon_state = "2-8"
@@ -104295,7 +104301,7 @@ amn
 anB
 aoy
 ocj
-aqW
+yjK
 vTP
 tNo
 auO
@@ -124234,7 +124240,7 @@ jVv
 arx
 ayL
 aAi
-aBL
+kvF
 aBy
 aBy
 alM
@@ -132727,8 +132733,8 @@ bkw
 bpe
 vie
 pZn
-but
-bwd
+rZx
+dPe
 byi
 bzS
 bBu
@@ -150084,7 +150090,7 @@ aad
 aad
 aad
 aad
-doL
+mli
 aab
 aab
 aaa

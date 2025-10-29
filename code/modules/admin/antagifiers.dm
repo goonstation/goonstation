@@ -75,7 +75,7 @@
 	desc = "Fancy a game?"
 	attachedObjective = "Blood, blood, blood!"
 	icon = 'icons/obj/items/organs/skull.dmi'
-	icon_state = "skullP"
+	icon_state = "skull_hunter"
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)

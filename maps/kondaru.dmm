@@ -40759,13 +40759,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"lGb" = (
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 4
-	},
-/obj/item/kitchen/food_box/egg_box,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen/freezer)
 "lGw" = (
 /mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet/red/fancy/innercorner/north,
@@ -41263,8 +41256,15 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/item_dispenser/idcarddispenser,
+/obj/item_dispenser/idcarddispenser{
+	pixel_x = 4;
+	pixel_y = 28
+	},
 /obj/machinery/computer3/generic/secure_data,
+/obj/machinery/phone/wall{
+	pixel_x = -12;
+	pixel_y = 32
+	},
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -41302,6 +41302,18 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
+"lXA" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 8
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "lXB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
@@ -45524,6 +45536,13 @@
 /obj/item/clothing/mask/balaclava,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_north)
+"pfV" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
+/obj/item/kitchen/egg_box,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "pgz" = (
 /obj/lattice{
 	dir = 9;
@@ -45765,9 +45784,9 @@
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
 /obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
@@ -56840,19 +56859,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/east)
-"wOR" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "wPv" = (
 /obj/machinery/light_switch/east,
 /obj/machinery/camera/directional/east{
@@ -111916,7 +111922,7 @@ bGK
 pRU
 vkt
 bLb
-wOR
+lXA
 bGx
 jNl
 lyi
@@ -114905,7 +114911,7 @@ hvn
 dZK
 kLJ
 aZS
-lGb
+pfV
 cnR
 lIh
 cJp

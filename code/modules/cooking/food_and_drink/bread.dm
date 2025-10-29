@@ -7,7 +7,7 @@
 	bites_left = 1
 	heal_amt = 1
 	fill_amt = 6
-	food_color = "#FFFFCC"
+	food_color = "#D79E6B"
 	real_name = "bread"
 	c_flags = ONBELT
 	sliceable = TRUE
@@ -153,7 +153,7 @@
 	icon_state = "breadslice"
 	bites_left = 1
 	heal_amt = 1
-	food_color = "#FFFFCC"
+	food_color = "#D79E6B"
 	real_name = "bread"
 	initial_volume = 5
 	initial_reagents = "bread"

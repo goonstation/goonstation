@@ -778,6 +778,12 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "record_fruit"
 	song = 'sound/radio_station/music/honkmas.ogg'
 
+/obj/item/record/lay_egg_is_true
+	desc = "This egg seems to be laid particularly TRUE!!!"
+	add_overlay = 0
+	icon_state = "record_duck"
+	song = 'sound/radio_station/music/lay_egg_is_true.ogg'
+
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0
 	icon_state = "record_yellow"

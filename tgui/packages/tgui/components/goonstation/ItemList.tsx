@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { Flex, Image } from 'tgui-core/components';
+import { Flex, Image, Tooltip } from 'tgui-core/components';
 
 interface ItemListProps {
   items: ItemListItemProps[];
@@ -30,17 +30,15 @@ export const ItemList = (props: ItemListProps) => {
     <Flex inline align="center" key={index}>
       {!!item.iconBase64 && (
         <Flex.Item>
-          <Image
-            height="32px"
-            width="32px"
-            src={`data:image/png;base64,${item.iconBase64}`}
-          />
+          <Tooltip content={item.name}>
+            <Image
+              height="32px"
+              width="32px"
+              src={`data:image/png;base64,${item.iconBase64}`}
+            />
+          </Tooltip>
         </Flex.Item>
       )}
-      <Flex.Item pr={1} pl={0.5}>
-        {item.name}
-        {`${index === arr.length - 1 ? '' : `, ${index === arr.length - 2 ? 'and ' : ''}`}`}
-      </Flex.Item>
     </Flex>
   ));
 };

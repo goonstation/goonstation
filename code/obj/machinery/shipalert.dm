@@ -134,7 +134,7 @@ TYPEINFO(/obj/machinery/shipalert)
 		return FALSE
 	//alert and siren
 	if (announce)
-		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station: [reason]. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
+		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station: <b>[end_sentence(reason)]</b><br>Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
 		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
 	//toggle on
 	shipAlertState = SHIP_ALERT_BAD

@@ -15915,14 +15915,14 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "git" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 8
-	},
 /obj/machinery/phone/wall{
 	pixel_x = 24
 	},
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
+	},
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 8
 	},
 /turf/simulated/floor/red/side{
 	dir = 5
@@ -18648,11 +18648,11 @@
 	desc = "They're a little bit tight.";
 	name = "speedo"
 	},
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/black,
-/obj/item/clothing/under/swimsuit/red,
-/obj/item/clothing/under/swimsuit/blue,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/random,
+/obj/item/clothing/under/swimsuit/swimsuits/black,
+/obj/item/clothing/under/swimsuit/swimsuits/red,
+/obj/item/clothing/under/swimsuit/swimsuits/blue,
 /obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
@@ -39644,8 +39644,15 @@
 /obj/machinery/computer/card{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/drainage,
+/obj/machinery/phone/wall{
+	pixel_y = 32;
+	pixel_x = 8
+	},
+/obj/machinery/firealarm/directional/north{
+	pixel_x = -8;
+	pixel_y = 30
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/bridge/customs)
 "xsx" = (

@@ -1359,6 +1359,20 @@
 
 	src.check_reagents_internal(target)
 
+/client/proc/cmd_change_addiction(var/atom/target as null|mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 0
+	set name = "Adjust Addictions"
+	set desc = "Increase the addiction meter of all of someone's addictions by an amount."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (!ismob(target))
+		return
+	var/value = input("Value:", "Increase all active addiction meters by value", "0") as num
+	var/mob/mobtarget = target
+	mobtarget.try_affect_all_addictions(value)
+
 /client/proc/check_reagents_internal(var/atom/target as null|mob|obj|turf in world, refresh = 0)
 	if (!target)
 		return

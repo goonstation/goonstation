@@ -224,6 +224,7 @@ var/global
 					isnull(found["compid"]) ? null : src.owner.computer_id,
 					isnull(found["ip"]) ? null : src.owner.address
 				)
+				del(src.owner)
 	src.cookieSent = 1
 
 /datum/chatOutput/proc/getContextFlags()
@@ -278,6 +279,8 @@ var/global
 			if(src.owner.holder)
 				src.owner.holder.playeropt(targetMob)
 		if ("observe")
+			if(!isadmin(src.owner) && isadmin(targetMob) && !targetMob.client?.player_mode)
+				return // no
 			if (istype(src.owner.mob, /mob/dead/target_observer))
 				var/mob/dead/target_observer/obs = src.owner.mob
 				if (!obs.locked)

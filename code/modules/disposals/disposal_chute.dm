@@ -213,6 +213,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					I.storage.transfer_stored_item(O, src, user = user)
 			user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
+			src.play_item_insert_sound(I)
 			src.update()
 			return
 
@@ -240,6 +241,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
+			src.play_item_insert_sound(I, user)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
@@ -259,6 +261,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (istype(target, /obj/machinery/bot))
 			var/obj/machinery/bot/bot = target
 			bot.set_loc(src)
+			src.play_item_insert_sound(bot, user)
 			return
 		if (iscritter(target))
 			var/obj/critter/corpse = target
@@ -266,6 +269,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				corpse.set_loc(src)
 				user.visible_message("[user.name] places \the [corpse] into \the [src].")
 				actions.interrupt(user, INTERRUPT_ACT)
+				src.play_item_insert_sound(corpse)
 			return
 
 		if (isliving(target))
@@ -303,11 +307,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			var/obj/item/I = MO
 			I.set_loc(src)
 			update()
+			src.play_item_insert_sound(I)
 			src.visible_message(SPAN_ALERT("\The [I] lands cleanly in \the [src]!"))
 
 		else if (istype(MO, /mob/living))
 			var/mob/living/H = MO
 			H.visible_message(SPAN_ALERT("<B>[H] falls into the disposal outlet!</B>"))
+			src.play_item_insert_sound(H)
 			logTheThing(LOG_COMBAT, H, "is thrown into a [src.name] at [log_loc(src)].")
 			H.set_loc(src)
 			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
@@ -615,6 +621,43 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	return_air(direct = FALSE)
 		if (!direct)
 			return src.loc?.return_air()
+
+	/// Plays the item insert sound with variations depending on item. If user is given, plays localised and with a lower volume, to imply sneakyness
+	proc/play_item_insert_sound(var/thing, var/mob/user = null)
+		var/pitch = 1
+		var/volume = 50
+		if (isitem(thing))
+			var/obj/item/itm = thing
+			switch(itm.w_class)
+				if (W_CLASS_TINY)
+					pitch = 1.4
+					volume = 25
+				if (W_CLASS_SMALL)
+					pitch = 1.1
+					volume = 40
+				if (W_CLASS_BULKY)
+					pitch = 0.8
+					volume = 100
+				if (W_CLASS_HUGE)
+					pitch = 0.5
+					volume = 300
+				if (W_CLASS_GIGANTIC)
+					pitch = 0.3
+					volume = 300
+				if (W_CLASS_BUBSIAN)
+					pitch = 0.1
+					volume = 400
+		else if (iscritter(thing) || ismobcritter(thing))
+			pitch = 0.7
+			volume = 100
+		else if (ismob(thing))
+			pitch = 0.4
+			volume = 300
+		if (user)
+			volume = min(volume * 0.5, 20)
+			user.playsound_local(src.loc, "chute_insert", volume, 1, 0, pitch)
+		else
+			playsound(src, "chute_insert", volume, 1, 0, pitch)
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
@@ -962,6 +1005,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				boutput(user, "You climb into the [chute].")
 
 			else if(target != user && !user.restrained())
+				chute.play_item_insert_sound(target)
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
 				if(istype(chute, /obj/machinery/disposal/brig))
