@@ -32778,13 +32778,14 @@
 /area/pasiphae/sys)
 "ofG" = (
 /obj/table/reinforced/auto,
+/obj/item/stamp{
+	pixel_x = 6
+	},
 /obj/item/item_box/postit{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/stamp{
-	pixel_x = 6
-	},
+/obj/machinery/phone,
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
