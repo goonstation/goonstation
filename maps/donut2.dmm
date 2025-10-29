@@ -23122,6 +23122,12 @@
 	pixel_y = 5;
 	pixel_x = -10
 	},
+/obj/item/folder{
+	pixel_x = 8
+	},
+/obj/item/folder{
+	pixel_x = 6
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "hbZ" = (
@@ -40153,6 +40159,7 @@
 	pixel_y = 4
 	},
 /obj/random_item_spawner/desk_stuff/one,
+/obj/item/item_box/postit,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
