@@ -29,7 +29,9 @@ export const DataInputOptions = (props: DataInputOptionsProps) => {
           key={optionName}
           byondRef={byondRef}
           type={options[optionName].type}
-          name={optionName}
+          name={
+            options[optionName].name ? options[optionName].name : optionName
+          }
           description={options[optionName].description}
           value={options[optionName].value}
           tooltip={options[optionName].description}
