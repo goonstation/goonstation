@@ -52760,6 +52760,7 @@
 	pixel_x = -4;
 	pixel_y = -2
 	},
+/obj/machinery/camera/directional/south,
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "dtC" = (
