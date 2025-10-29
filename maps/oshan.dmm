@@ -45553,7 +45553,6 @@
 "wmR" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/cashreg,
 /obj/noticeboard/persistent/customs/directional/north,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0;
@@ -45562,6 +45561,7 @@
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
+/obj/machinery/phone,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -45815,6 +45815,7 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
+/obj/machinery/cashreg,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"

@@ -1,4 +1,9 @@
 
+(t)tue oct 28 25
+(u)Azrun
+(p)24574
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Doors will now continue to attempt to autoclose.  Autoclose tied to AI Control wire where applicable.
 (t)sat oct 25 25
 (u)Mr. Moriarty
 (p)24633
