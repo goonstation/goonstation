@@ -129,6 +129,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 /obj/item/scrapweapons/weapons
 	name = "youshouldntseemee scrapweapon"
 	force = 5
+	contraband = 4
 
 	New()
 		..()
