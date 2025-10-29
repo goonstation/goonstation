@@ -45,7 +45,6 @@ var/list/server_toggles_tab_verbs = list(
 /datum/admins/proc/toggle_pull_slowing,
 /datum/admins/proc/togglepowerdebug,
 /client/proc/admin_toggle_nightmode,
-/client/proc/toggle_camera_network_reciprocity,
 /datum/admins/proc/toggle_radio_audio,
 /datum/admins/proc/toggle_remote_music_announcements,
 )
