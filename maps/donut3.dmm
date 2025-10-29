@@ -16999,6 +16999,14 @@
 /obj/machinery/light/lamp/black{
 	pixel_y = 19
 	},
+/obj/item/folder{
+	pixel_y = -1;
+	pixel_x = 3
+	},
+/obj/item/folder{
+	pixel_y = -1;
+	pixel_x = 7
+	},
 /obj/item/item_box/postit{
 	pixel_y = 4;
 	pixel_x = 9
