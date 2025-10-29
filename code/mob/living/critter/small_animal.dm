@@ -3043,6 +3043,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_pet = 2
 	player_can_spawn_with_pet = FALSE
 
+/* -------------------- Splinter --------------------- */
+
+/mob/living/critter/small_animal/bat/splinter //for Kyle's office
+	name = "Splinter"
+	desc = "Some say that bats are just rats with wings. If only they knew how right they were..."
+	icon_state = "batdoctor"
+	icon_state_dead = "batdoctor-dead"
+	health_brute = 30
+	health_burn = 30
+	is_pet = FALSE
+	player_can_spawn_with_pet = FALSE
+	ai_type = /datum/aiHolder/empty
+
 /* ------------------ Tiny Bat Rina ------------------ */
 
 /mob/living/critter/small_animal/bat/rina //for Jan's office
