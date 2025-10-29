@@ -4311,9 +4311,8 @@
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "arO" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 6
@@ -39264,9 +39263,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "fsG" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -47460,8 +47458,9 @@
 /area/station/crew_quarters/locker)
 "lIX" = (
 /obj/rack,
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/redblack{
 	dir = 10
@@ -56760,7 +56759,7 @@
 /area/station/crew_quarters/market)
 "stp" = (
 /obj/rack,
-/obj/machinery/light{
+/obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -10
 	},
