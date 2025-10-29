@@ -1,4 +1,6 @@
-
+(t)wed oct 29 25
+(u)LeahTheTech
+(+)Turning around while holding a ladder will now knock over any clowns standing in the line of fire.
 (t)tue oct 28 25
 (u)Azrun
 (p)24574
