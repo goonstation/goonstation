@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	item_state = "spear"
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_BLUNT
-	force = 6
+	force = 7
 	throwforce = 10
 	custom_suicide = 1
 	attack_verbs = "impales"
