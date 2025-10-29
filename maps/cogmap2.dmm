@@ -33425,6 +33425,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/vending/snack,
+/obj/window/bulletproof/west,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bYM" = (
@@ -33433,6 +33434,7 @@
 	dir = 4
 	},
 /obj/machinery/vending/cola/blue,
+/obj/window/bulletproof/east,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bYN" = (
