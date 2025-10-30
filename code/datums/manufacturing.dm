@@ -997,6 +997,9 @@
 	time = 90 SECONDS
 	category = "Tool"
 
+/datum/manufacture/places_pipes/science
+	item_outputs = list(/obj/item/places_pipes/research)
+
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
 	item_requirements = list("dense" = 30)

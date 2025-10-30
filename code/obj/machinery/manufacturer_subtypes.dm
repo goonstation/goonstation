@@ -280,6 +280,8 @@
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
+		/datum/manufacture/places_pipes/science,
+		/datum/manufacture/RCDammo,
 		/datum/manufacture/condenser,
 		/datum/manufacture/fractionalcondenser,
 		/datum/manufacture/dropper_funnel,
