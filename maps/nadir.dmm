@@ -5300,9 +5300,6 @@
 "csT" = (
 /obj/lattice,
 /obj/machinery/launcher_loader/south,
-/obj/machinery/camera/directional/north{
-	pixel_x = 6
-	},
 /turf/space/fluid/acid/clear,
 /area/space)
 "ctc" = (
@@ -26731,12 +26728,8 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "lEf" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/camera/directional/south{
-	pixel_x = 10
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
@@ -38697,11 +38690,7 @@
 	name = "The Warrens"
 	})
 "qWO" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/camera/directional/north{
+/obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
 /turf/space/fluid/acid/clear,
@@ -41563,8 +41552,8 @@
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "ssk" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = -10
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
@@ -51889,6 +51878,10 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/ce)
+"xdd" = (
+/obj/machinery/camera/directional/east,
+/turf/space/fluid/acid/clear,
+/area/space)
 "xdi" = (
 /obj/machinery/networked/artifact_console,
 /obj/cable{
@@ -78369,7 +78362,7 @@ rXj
 rXj
 rXj
 rJg
-rJg
+xdd
 rJg
 rXj
 rXj
@@ -79561,7 +79554,7 @@ rJg
 rJg
 rJg
 rJg
-ssk
+rJg
 rJg
 rJg
 rJg
@@ -79593,7 +79586,7 @@ rJg
 rJg
 rJg
 rJg
-ssk
+rJg
 rJg
 rJg
 rJg
@@ -79859,7 +79852,7 @@ bzS
 bzS
 rJg
 rJg
-rJg
+qWO
 dqY
 dqY
 dqY
@@ -79867,7 +79860,7 @@ dqY
 dqY
 dqY
 dqY
-rJg
+lEf
 rJg
 rJg
 rJg
@@ -79891,7 +79884,7 @@ rJg
 rJg
 rJg
 rJg
-rJg
+qWO
 dqY
 dqY
 dqY
@@ -79899,7 +79892,7 @@ dqY
 dqY
 dqY
 dqY
-rJg
+lEf
 rJg
 rJg
 bzS
@@ -85963,7 +85956,7 @@ jjE
 jjE
 jjE
 jjE
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -86783,7 +86776,7 @@ bzS
 bzS
 bzS
 bzS
-lEf
+lAH
 xQv
 bRa
 bRa
@@ -89195,7 +89188,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 bRa
@@ -91607,7 +91600,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 bRa
@@ -94019,7 +94012,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 bRa
@@ -94127,7 +94120,7 @@ tZe
 uqC
 uqC
 jjE
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -96431,7 +96424,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 bAt
@@ -96547,7 +96540,7 @@ tZe
 uqC
 uqC
 jjE
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -97637,7 +97630,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 dsa
@@ -97757,7 +97750,7 @@ uqC
 nPT
 uqC
 jjE
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -97939,7 +97932,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+aWz
 xQv
 mKY
 sRh
@@ -98059,7 +98052,7 @@ uqC
 tWS
 mkU
 jjE
-bzS
+fWG
 bzS
 bzS
 bzS
@@ -100052,7 +100045,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 oPd
 dJj
 epj
@@ -100174,7 +100167,7 @@ caB
 vtr
 uJG
 dQM
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -102167,7 +102160,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+ftF
 rne
 uVs
 nFp
@@ -102287,7 +102280,7 @@ neB
 vTb
 xTE
 dAB
-bzS
+omv
 bzS
 bzS
 bzS
@@ -102469,7 +102462,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 sJU
@@ -102589,7 +102582,7 @@ neB
 vTb
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -103679,7 +103672,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 wUo
@@ -103795,7 +103788,7 @@ nGi
 neB
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -106099,7 +106092,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 uNU
@@ -106207,7 +106200,7 @@ lCi
 neB
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -108519,7 +108512,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 uNU
@@ -108619,7 +108612,7 @@ lCi
 neB
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -110939,7 +110932,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 uNU
@@ -111031,7 +111024,7 @@ lCi
 neB
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -113443,7 +113436,7 @@ lCi
 neB
 neB
 dAB
-qWO
+vnv
 bzS
 bzS
 bzS
@@ -120967,7 +120960,7 @@ rJg
 rJg
 rJg
 rJg
-rJg
+ssk
 rJg
 rJg
 rJg
