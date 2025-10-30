@@ -79,7 +79,10 @@ TYPEINFO(/mob/new_player)
 		src.client?.load_pregame()
 		close_spawn_windows()
 		new_player_panel()
-		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
+		var/turf/default_loc = locate(1,1,1)
+		if (istype(default_loc.loc, /area/cordon))
+			default_loc = pick_landmark(LANDMARK_LATEJOIN, locate(world.maxx/2,world.maxy/2,1))
+		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, default_loc))
 		src.sight |= SEE_TURFS
 
 		#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND

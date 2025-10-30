@@ -4,6 +4,7 @@
 ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
+	job_category = JOB_HALLOWEEN
 	wiki_link = "https://wiki.ss13.co/Jobs#Spooktober_Jobs"
 #ifdef HALLOWEEN
 	limit = 1
@@ -347,6 +348,11 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_jump = list(/obj/item/clothing/under/color/green)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_foot = list(/obj/item/clothing/shoes/black)
+
+	New()
+		. = ..()
+		if (prob(0.1))
+			src.limit = 1 //rare pickle
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

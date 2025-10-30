@@ -431,6 +431,9 @@ var/global
 	list/datum/chemical_reaction/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
 	list/list/datum/chemical_reaction/chem_reactions_by_result = list() // Chemical reactions indexed by result ID
 
+	/// A single reaction is only in this list once, hopefully keyed by its least likely reagent, keeping the list of possible reactions small
+	list/limited_chem_reactions = list()
+
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
 

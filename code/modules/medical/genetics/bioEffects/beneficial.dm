@@ -664,10 +664,6 @@
 				HAH.customizations["hair_middle"].color = HAH.customizations["hair_middle"].color_original
 				HAH.customizations["hair_top"].color = HAH.customizations["hair_top"].color_original
 				HAH.s_tone = HAH.s_tone_original
-				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
-					HAH.customizations["hair_bottom"].color = fix_colors(HAH.customizations["hair_bottom"].color)
-					HAH.customizations["hair_middle"].color = fix_colors(HAH.customizations["hair_middle"].color)
-					HAH.customizations["hair_top"].color = fix_colors(HAH.customizations["hair_top"].color)
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 
@@ -1119,9 +1115,9 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/M = owner
 			if (M.AH_we_spawned_with)
-				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_bottom"].color)
-				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_middle"].color)
-				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_top"].color)
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= M.AH_we_spawned_with.customizations["hair_bottom"].color
+				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= M.AH_we_spawned_with.customizations["hair_middle"].color
+				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= M.AH_we_spawned_with.customizations["hair_top"].color
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style 			= M.AH_we_spawned_with.customizations["hair_bottom"].style
 				M.bioHolder.mobAppearance.customizations["hair_middle"].style 			= M.AH_we_spawned_with.customizations["hair_middle"].style
 				M.bioHolder.mobAppearance.customizations["hair_top"].style 			= M.AH_we_spawned_with.customizations["hair_top"].style

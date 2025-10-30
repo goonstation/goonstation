@@ -1,3 +1,5 @@
+// AREA_LAYER - 1
+// TURF_LAYER - 2
 #define PLATING_LAYER     (TURF_LAYER-0.2)
 #define BETWEEN_FLOORS_LAYER     (TURF_LAYER-0.1)
 #define LATTICE_LAYER 		(TURF_LAYER+0.1)
@@ -18,6 +20,7 @@
 #define COG2_WINDOW_LAYER 	(TURF_LAYER+0.95)
 
 // More specific obj layers
+// OBJ_LAYER - 3
 #define SUB_TAG_LAYER		(OBJ_LAYER - 0.03) //! Graffiti that's been sprayed over sits here
 #define TAG_LAYER			(OBJ_LAYER - 0.02) //! Graffiti layer for gangs, this is the topmost (ie. most recent) tag on a turf
 #define STORAGE_LAYER		(OBJ_LAYER - 0.01) // Keep lockers etc below items
@@ -60,6 +63,8 @@
 #define MOB_LIMB_LAYER 		(MOB_OVERLAY_BASE-21)
 #define MOB_TAIL_LAYER2 		(MOB_OVERLAY_BASE-23) // Tail detail
 #define MOB_TAIL_LAYER1 		(MOB_OVERLAY_BASE-24) // Tail base
+
+// FLY_LAYER = 5
 
 // Some effects were defined on layer 10, some on layer 20... Lets unify this...
 // These are for effects that should display below lighting
@@ -108,3 +113,7 @@
 #define ASTEROID_TOP_OVERLAY_LAYER (TURF_LAYER+0.01)
 #define ASTEROID_ORE_OVERLAY_LAYER (TURF_LAYER+0.02)
 #define ASTEROID_MINING_SCAN_DECAL_LAYER (TURF_LAYER+0.03)
+
+// also these magic values
+// EFFECTS_LAYER - 5000
+// BACKGROUND_LAYER - 20000

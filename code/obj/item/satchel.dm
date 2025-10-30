@@ -314,6 +314,7 @@
 		icon_state = "hydrosatchel"
 		item_state = "hydrosatchel"
 		itemstring = "items of produce"
+		maxitems = 50
 
 		New()
 			..()
@@ -328,7 +329,9 @@
 			/obj/item/raw_material/cotton,
 			/obj/item/feather,
 			/obj/item/bananapeel)
-			exceptions = list(/obj/item/plant/tumbling_creeper) // tumbling creeper have size restrictions and should not be carried in large amount
+			exceptions = list(/obj/item/plant/tumbling_creeper, /obj/item/reagent_containers/food/snacks/ingredient/egg)
+			// tumbling creeper have size restrictions and should not be carried in large amount
+			// eggs are just a bit too powerful to fit in your pocket
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()

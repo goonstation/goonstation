@@ -76,6 +76,8 @@
 			if (W.forced_manifest == TRUE)
 				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (!target)
+			return CAST_ATTEMPT_SUCCESS
 		var/list/turfs = raytrace(src.holder.owner, target)
 		for (var/turf/T as anything in turfs)
 			var/obj/decal/cleanable/saltpile/salt = locate() in T

@@ -754,3 +754,11 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 		icon_state = "syndie_radio_channel_upgrade"
 		secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 		secure_classes = list("z" = RADIOCL_SYNDICATE)
+
+	// For the super crimers (admin shenanigans)
+	nanotrasen
+		name = "nanotrasen radio channel upgrade"
+		desc = "A device capable of upgrading a headset to allow access over the Nanotrasen radio channel"
+		icon_state = "nt_radio_channel_upgrade"
+		secure_frequencies = list("n" = R_FREQ_NANOTRASEN)
+		secure_classes = list("n" = RADIOCL_NANOTRASEN)

@@ -430,6 +430,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (src.occupant)
 		boutput(usr, SPAN_ALERT("\The [src] is already occupied!"))
 		return
+	if(ishuman(usr))
+		src.move_human_inside(usr, usr)
+		return
 	usr.remove_pulling()
 	usr.set_loc(src)
 	src.occupant = usr

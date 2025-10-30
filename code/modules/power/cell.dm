@@ -113,6 +113,8 @@
 	charge = 25000
 
 /obj/item/cell/New()
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
 	..()
 
 // I think this relic of a by-gone age is only used by APCs (in New()). Did result in absurd numbers for these
@@ -127,6 +129,29 @@
 
 	if (genrate)
 		processing_items |= src
+
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+/obj/item/cell/assembly_get_part_examine_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	if (src.artifact || src.unusualCell)
+		return
+	if(user && !user.stat)
+		return "\nThe manufacturer's label of the [src] states it has a power rating of [maxcharge].<br>The charge meter reads [round(src.percent() )]%."
+
+/obj/item/cell/proc/assembly_setup(var/manipulated_cell, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	//since we have different cells
+	if(parent_assembly.applier == src)
+		parent_assembly.applier_icon_prefix = "cell"
+	if(parent_assembly.target == src)
+		//we need to displace the icon a bit more
+		parent_assembly.icon_base_offset = 3
+
+/obj/item/cell/proc/assembly_removal(var/manipulated_cell, var/obj/item/assembly/parent_assembly, var/mob/user)
+	//we need to reset the base icon offset
+	parent_assembly.icon_base_offset = 0
+
+/// ----------------------------------------------
 
 /obj/item/cell/disposing()
 	processing_items -= src

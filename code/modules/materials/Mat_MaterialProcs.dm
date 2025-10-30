@@ -320,6 +320,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		var/turf/T = get_turf(attacked)
 		var/mob/attacked_mob = attacked
+		if (isobj(attacked)) // teleportationally unstable artifacts react to telecrystals so that scientists can determine that they are
+			var/obj/target = attacked
+			if (target.artifact?.activated && target.artifact?.teleportationally_unstable)
+				attacker.visible_message(SPAN_ALERT("[attacked] reacts to [owner]!"))
+				if (target.anchored) // anchored artis shouldn't move, but there should still be feedback for the purpose of reactivity testing
+					if (!ON_COOLDOWN(attacked, "telecrystal_warp", 3 SECONDS)) // reduce potential for sound spam
+						playsound(target.loc, "warp", 50)
+					return
+				. = get_offset_target_turf(get_turf(attacked), rand(-2, 2), rand(-2, 2))
+				playsound(target.loc, "warp", 50) // No cooldown on this one because the teleportyness makes it difficult to spam already
+				if(attacker.is_that_in_this(target))
+					attacker.drop_item(target)
+				target.set_loc(.)
+				return
 		if(!istype(attacked_mob) || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
 			return
 		if(prob(33) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()

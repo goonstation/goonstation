@@ -941,6 +941,7 @@
 	name = "Brig APC";
 	pixel_y = -24
 	},
+/obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/redblack,
 /area/station/security/processing)
 "aIm" = (
@@ -4182,6 +4183,7 @@
 	pixel_x = -10
 	},
 /obj/item/storage/pill_bottle/antirad,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "dgM" = (
@@ -4413,9 +4415,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/tools)
 "dqf" = (
-/obj/storage/closet/wardrobe/orange,
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/brig,
+/obj/machinery/computer/announcement/station/security/department,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -4939,6 +4941,7 @@
 /obj/item/crowbar,
 /obj/machinery/light/incandescent/warm,
 /obj/item/storage/pill_bottle/antirad,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "dJJ" = (
@@ -5468,15 +5471,11 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "ecg" = (
-/obj/item/storage/box/cablesbox/reinforced,
-/obj/item/storage/box/cablesbox/reinforced,
-/obj/item/storage/box/cablesbox/reinforced,
-/obj/item/storage/box/cablesbox/reinforced,
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
-/obj/storage/crate,
 /obj/machinery/firealarm/directional/east,
+/obj/storage/crate/eng_reinforcedcables,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -11488,6 +11487,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/yellow,
 /area/station/hangar/eng_mining_shared)
 "imr" = (
@@ -18529,20 +18529,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "nnG" = (
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/storage/crate,
 /obj/machinery/light/incandescent,
 /obj/noticeboard/persistent/engineering/directional/east,
+/obj/storage/crate/eng_dowsingrods,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -18899,6 +18888,7 @@
 /obj/random_item_spawner/med_tool/one_or_zero,
 /obj/random_item_spawner/tools/one_or_zero,
 /obj/random_item_spawner/mask/one_or_zero,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -31302,6 +31292,7 @@
 /obj/item/crowbar,
 /obj/machinery/light_switch/north,
 /obj/item/storage/pill_bottle/antirad,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "wuK" = (
@@ -31332,6 +31323,7 @@
 /obj/random_item_spawner/tools/one_or_zero,
 /obj/random_item_spawner/snacks/one_or_zero,
 /obj/machinery/light/incandescent/blueish,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -32803,6 +32795,7 @@
 	},
 /obj/machinery/light/incandescent/blueish,
 /obj/random_item_spawner/gross_with_junk/one,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -33612,21 +33605,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "yej" = (
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/item/heat_dowsing,
-/obj/storage/crate,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/storage/crate/eng_dowsingrods,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},

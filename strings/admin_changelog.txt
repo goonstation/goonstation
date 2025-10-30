@@ -1,3 +1,6 @@
+(t)thu oct 02 25
+(u)Azrun
+(*)Added 'Ambient Viewer' panel, allows for viewing and adjusting lighting for Centcom, Ocean Maps, and Terrainify.
 (t)sat sept 13 25
 (u)ZeWaka
 (*)Reworked the 'Spawn Atom' panels found at the top of the game panel to be in TGUI, now with more features and QoL.

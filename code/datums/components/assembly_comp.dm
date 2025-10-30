@@ -90,14 +90,27 @@ TYPEINFO(/datum/component/assembly)
 			return src.override_combination(checked_atom, user)
 
 /// This component handles the creation of modular trigger-applier-assemblies
+TYPEINFO(/datum/component/assembly)
+	initialization_args = list(
+		ARG_INFO("override_component", DATA_INPUT_TYPE, "path or list of items that will trigger this proc when used on. This is an override special assemblies for e.g. flash/cell assemblies"),
+	)
+
 /datum/component/assembly/trigger_applier_assembly
 	to_combine_item = TOOL_ASSEMBLY_APPLIER
 	valid_assembly_proc = null
 
-/datum/component/assembly/trigger_applier_assembly/Initialize()
+/datum/component/assembly/trigger_applier_assembly/Initialize(var/override_component = null)
 	if(!src.parent)
 		return COMPONENT_INCOMPATIBLE
-	. = ..(TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
+	. = ..(override_component ? override_component : TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
+
+/datum/component/assembly/trigger_applier_assembly/attackby(var/atom/affected_parent, var/atom/to_combine_atom, var/mob/user, var/params, var/is_special)
+	if((length(to_combine_atom.GetComponents(/datum/component/assembly/trigger_applier_assembly)) > 0) && isassemblyapplier(src.parent))
+		//If the item used to attack you can also be trigger and a applier for an assembly, we don't continue here.
+		//At this point, the component of to_combine_atom should already turned this item into an assembly
+		//this guarantees that the item you use in your hand for an assembly will always turn out to be the trigger
+		return FALSE
+	return try_combination(to_combine_atom, user)
 
 /datum/component/assembly/trigger_applier_assembly/try_combination(var/atom/checked_atom, var/mob/user)
 	if(istype(checked_atom, src.parent.type))
@@ -109,12 +122,23 @@ TYPEINFO(/datum/component/assembly)
 	. = ..()
 
 /datum/component/assembly/trigger_applier_assembly/override_combination(var/atom/checked_atom, var/mob/user)
+	var/obj/item/item_to_be_trigger = src.parent
+	var/obj/item/item_to_be_applier = checked_atom
+	// Here, we take care of the special case that both items can be triggers and appliers. In that case, we open a context menu and ask how we want to build the assembly
+	if((length(checked_atom.GetComponents(/datum/component/assembly/trigger_applier_assembly)) > 0) && isassemblyapplier(src.parent))
+		var/input_action = input(user, "Which item should be activated if the assembly triggers?") in list("[src.parent]","[checked_atom]","Never Mind")
+		if(!input_action || input_action == "Never Mind" || !src.delayed_combination_valid_check(checked_atom, user))
+			return TRUE
+		// if our parent was selected, we have to swap the components places in the assembly. Else, just continue with what we were trying to do.
+		if(input_action == "[src.parent]")
+			item_to_be_trigger = checked_atom
+			item_to_be_applier = src.parent
 	// here, we want to create our new assembly
 	user.u_equip(checked_atom)
 	user.u_equip(src.parent)
 	var/obj/item/assembly/product = new /obj/item/assembly(get_turf(src.parent))
 	//we set up the new assembly with its corresponding proc
-	product.set_up_new(user, src.parent, checked_atom)
+	product.set_up_new(user, item_to_be_trigger, item_to_be_applier)
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [product.name] was created at [log_loc(product)]. Created by: [key_name(user)];[product.get_additional_logging_information(user)]")
 	if(product.requires_admin_messaging())
@@ -124,3 +148,9 @@ TYPEINFO(/datum/component/assembly)
 	user.put_in_hand_or_drop(product)
 	boutput(user, SPAN_NOTICE("You finish the construction of [product.name]."))
 	return TRUE
+
+
+/datum/component/assembly/trigger_applier_assembly/proc/delayed_combination_valid_check(var/obj/item/checked_item, var/mob/user)
+	// we check here if we can still reach both items and they weren't build into assemblies at a different point
+	var/obj/item/checked_parent = src.parent
+	return (can_reach(user, checked_item) && can_reach(user, checked_parent) && !istype(checked_item.loc, /obj/item/assembly) && !istype(checked_parent.loc, /obj/item/assembly))
