@@ -1027,12 +1027,26 @@
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
 "afR" = (
-/obj/storage/crate/medical,
-/obj/item/organ/liver/cyber,
-/obj/item/organ/lung/cyber/right,
-/obj/item/organ/pancreas/cyber,
-/obj/item/baton/ntso,
-/turf/unsimulated/floor/wood/two,
+/obj/item_dispenser/latex_gloves{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/obj/surgery_tray,
+/obj/item/hemostat{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 2;
+	pixel_y = 0
+	},
+/obj/item/suture{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 6
+	},
 /area/centcom/offices/kyle)
 "afS" = (
 /obj/fakeobject{
@@ -46374,10 +46388,14 @@
 	},
 /area/syndicate_station/battlecruiser)
 "dnK" = (
-/obj/stool/chair/comfy/red{
-	dir = 4
+/obj/iv_stand,
+/obj/item/storage/wall/surgery{
+	pixel_x = -32;
+	pixel_y = 0
 	},
-/turf/unsimulated/floor/wood/two,
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 8
+	},
 /area/centcom/offices/kyle)
 "dnP" = (
 /turf/unsimulated/floor/caution/corner/misc{
@@ -56519,20 +56537,20 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
 "fDe" = (
-/obj/table/wood/round/auto,
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 5;
-	pixel_y = 10
+/obj/table/monodesk/auto{
+	icon_state = "12"
 	},
-/obj/item/device/light/lava_lamp{
-	pixel_x = -4;
+/obj/computer3frame/desktop{
+	pixel_x = 0;
 	pixel_y = 8
 	},
-/obj/item/sticker/ribbon/participant{
-	desc = "Dr. Acula won this last year at the annual station beauty pageant.";
-	pixel_x = 4
+/obj/fakeobject/bookcase{
+	pixel_y = 29;
+	pixel_x = 0
 	},
-/turf/unsimulated/floor/wood/two,
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 1
+	},
 /area/centcom/offices/kyle)
 "fDn" = (
 /obj/machinery/vending/cola/red,
@@ -63486,6 +63504,9 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"kVH" = (
+/turf/unsimulated/floor/white,
+/area/centcom/offices/kyle)
 "kVN" = (
 /obj/fakeobject/teleport_pad,
 /turf/unsimulated/floor/shuttle{
@@ -63821,7 +63842,9 @@
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome2)
 "liR" = (
-/turf/unsimulated/floor/wood/two,
+/obj/machinery/computer/operating/small,
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/darkbluewhite,
 /area/centcom/offices/kyle)
 "ljO" = (
 /obj/lattice{
@@ -65322,7 +65345,7 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/darkblue,
 /area/centcom/offices/kyle)
 "mwF" = (
 /obj/fakeobject/airlock_broken/firelock{
@@ -66183,8 +66206,15 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "niJ" = (
-/obj/machinery/light,
-/turf/unsimulated/floor/wood/two,
+/obj/machinery/optable,
+/obj/machinery/drainage,
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
+	},
+/obj/item/organ/heart/cyber,
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 10
+	},
 /area/centcom/offices/kyle)
 "njd" = (
 /obj/machinery/door/airlock/pyro/command/centcom{
@@ -66579,12 +66609,31 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "nwN" = (
-/obj/stool/pet_bed{
-	desc = "A soft little bed the general size and shape of a space bat.";
-	name = "batbed"
+/obj/table/monodesk/auto{
+	icon_state = "4";
+	drawer_contents = list(/obj/item/reagent_containers/food/snacks/danish_weed = 2, /obj/item/reagent_containers/food/snacks/pie/weed = 2, /obj/item/plant/herb/cannabis = 1, /obj/item/plant/herb/cannabis/mega = 1, /obj/item/plant/herb/cannabis/black = 1, /obj/item/plant/herb/cannabis/white = 1, /obj/item/plant/herb/cannabis/omega = 1, /obj/item/reagent_containers/glass/water_pipe = 1, /obj/item/device/light/zippo = 1, /obj/item/baton/ntso = 1, /obj/item/reagent_containers/food/snacks/ingredient/dough = 1);
+	desc = "All items within are medicinal. I promise, there's only medicine and medical devices inside.";
+	name = "Kyle's 'medicine' drawer"
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat,
-/turf/unsimulated/floor/wood/two,
+/obj/decoration/pottedfern{
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 29;
+	pixel_x = 1
+	},
+/obj/item/staple_gun{
+	pixel_x = 13;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/desk_clutter{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 9
+	},
 /area/centcom/offices/kyle)
 "nxr" = (
 /obj/fakeobject/pipe{
@@ -74437,13 +74486,37 @@
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "ttl" = (
-/obj/surgery_tray,
-/obj/item/scalpel,
-/obj/item/circular_saw{
-	pixel_y = 7
+/obj/stool/pet_bed{
+	pixel_x = -3;
+	pixel_y = 14;
+	desc = "A soft bed designed for Splinter to snuggle up in. Smells a bit like a sewer?";
+	name = "Splinter's bed"
 	},
-/obj/item/suture,
-/turf/unsimulated/floor/wood/two,
+/obj/stool/pet_bed{
+	pixel_x = 5;
+	pixel_y = 1;
+	name = "Leonardo's bed";
+	desc = "A soft bed designed for Leonardo to snuggle up in. Smells a bit like pizza?"
+	},
+/obj/dialogueobj/plantoflosthope{
+	pixel_x = 12;
+	pixel_y = 16
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/mob/living/critter/small_animal/bat/splinter{
+	pixel_x = -3;
+	pixel_y = 16
+	},
+/mob/living/critter/small_animal/turtle/leonardo{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 5
+	},
 /area/centcom/offices/kyle)
 "tuc" = (
 /turf/unsimulated/wall/auto/lead/white,
@@ -74927,8 +75000,9 @@
 	},
 /area/centcom/lobby)
 "tVG" = (
-/obj/decal/cleanable/saltpile,
-/turf/unsimulated/floor/wood/two,
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 4
+	},
 /area/centcom/offices/kyle)
 "tWe" = (
 /obj/fakeobject{
@@ -75077,18 +75151,11 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/varshie)
 "uaJ" = (
-/obj/table/wood/round/auto,
-/obj/item/paper{
-	icon_state = "paper";
-	info = "Actually a pretty okay guy, despite everything. Huh.";
-	name = "paper-'Trent'"
+/obj/stool/chair/office/syndie{
+	dir = 1
 	},
-/obj/item/plant/herb/mint{
-	name = "pretend that this is a tin of altoids lol";
-	pixel_x = 4;
-	pixel_y = 12
-	},
-/turf/unsimulated/floor/wood/two,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/white,
 /area/centcom/offices/kyle)
 "uaQ" = (
 /obj/fakeobject/lightbulb_broken{
@@ -77877,6 +77944,22 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"wbD" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_x = 0;
+	pixel_y = 7
+	},
+/obj/item/scalpel{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/surgical_spoon{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/darkbluewhite,
+/area/centcom/offices/kyle)
 "wbM" = (
 /obj/machinery/computer/security/pod_timer,
 /obj/landmark{
@@ -78131,16 +78214,27 @@
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
 "wmi" = (
-/obj/machinery/light{
+/obj/table/monodesk/auto{
+	icon_state = "8";
+	drawer_contents = list(/obj/item/organ/eye/cyber/ecto = 1, /obj/item/organ/eye/cyber/nightvision = 1, /obj/item/organ/kidney/cyber/left = 1, /obj/item/organ/kidney/cyber/right = 1, /obj/item/organ/lung/cyber/left = 1, /obj/item/organ/lung/cyber/right = 1, /obj/item/organ/stomach/cyber = 1, /obj/item/organ/intestines/cyber = 1, /obj/item/organ/liver/cyber = 1, /obj/item/organ/pancreas/cyber = 1, /obj/item/organ/spleen/cyber = 1, /obj/item/organ/appendix/cyber = 1);
+	name = "Kyle's cyberorgan drawer";
+	desc = "What the... how does this all even fit inside?"
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 29;
+	pixel_x = -1
+	},
+/obj/item/medicaldiagnosis/stethoscope{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/gloves/latex/teal{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/darkbluewhite{
 	dir = 1
 	},
-/obj/item/toy/plush{
-	desc = "Awh, what a cutie.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "lion";
-	name = "Leo the looks-like-a-lion-but-is-actually-a-dog"
-	},
-/turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
 "wmm" = (
 /obj/machinery/door/airlock/pyro/classic{
@@ -157045,8 +157139,8 @@ uvs
 vnh
 wel
 wmi
-liR
-liR
+kVH
+wbD
 wel
 hqN
 obN
@@ -157952,7 +158046,7 @@ wmb
 wmb
 mbb
 wmb
-wmb
+dxa
 wmb
 dBe
 wmb

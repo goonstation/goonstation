@@ -2813,3 +2813,11 @@ proc/area_table_spawn(area_type, spawn_type)
 	if (!length(tables)) //no tables FUCK
 		return
 	new spawn_type(get_turf(pick(tables)))
+
+/atom/proc/find_parent_of_type(type)
+	var/atom/parent = src.loc
+	while (!istype(parent, type) && parent.loc)
+		parent = parent.loc
+	if (istype(parent, type))
+		return parent
+	return null
