@@ -91,12 +91,15 @@
 		var/list/hotspots = list()
 
 		for (var/datum/sea_hotspot/S in hotspot_groups)
-			if (S.can_drift == 1) // draws the hotspots on the trench map and changes color if it is pinned
-				S.hotspot_color = "hotspot"
-			else
-				S.hotspot_color = "pinned_hotspot"
 
-			hotspots += {"<div class='[S.hotspot_color]' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
+			var/hotspot_color
+
+			if (S.can_drift == 1) // draws the hotspots on the trench map and changes color if it is pinned
+				hotspot_color = "hotspot"
+			else
+				hotspot_color = "pinned_hotspot"
+
+			hotspots += {"<div class='[hotspot_color]' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
 
 		src.map_html = {"
 <!doctype html>
@@ -264,6 +267,8 @@
 
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
 
+				generate_map_html() //updates the map when hotspot gets stomped
+
 	proc/colorping_at_turf(var/turf/T)
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
@@ -302,8 +307,6 @@
 	var/d = 0
 
 	var/last_colorping = 0
-
-	var/hotspot_color
 
 
 	New()
