@@ -1460,6 +1460,7 @@
 "bgd" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/item/device/radio/intercom/security,
+/obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor,
 /area/station/security/evidence)
 "bgm" = (
@@ -1960,13 +1961,19 @@
 /area/station/science/lobby)
 "bAO" = (
 /obj/table/reinforced/auto,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/item/item_box/postit{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/paper_bin,
 /obj/item/paper{
 	icon_state = "paper";
 	info = "Okay, who the FUCK took all the donuts from security? I swear, if it was Scarlet again I'll wring her neck.";
-	name = "furious scribbles"
-	},
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
+	name = "furious scribbles";
+	pixel_x = 4
 	},
 /turf/simulated/floor,
 /area/station/security/evidence)
@@ -8715,6 +8722,7 @@
 	name = "Security Lockdown Doors";
 	opacity = 0
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "gie" = (
@@ -12144,7 +12152,6 @@
 /area/station/hangar/sec)
 "iMy" = (
 /obj/disposalpipe/segment/bent/east,
-/obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor,
 /area/station/security/evidence)
 "iMC" = (
@@ -12174,6 +12181,7 @@
 "iNn" = (
 /obj/machinery/light/incandescent/warm/very,
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/photocopier,
 /turf/simulated/floor,
 /area/station/security/evidence)
 "iNp" = (
@@ -12403,6 +12411,12 @@
 /obj/table/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"iVz" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/grime{
+	dir = 8
+	},
+/area/station/storage/warehouse)
 "iVZ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -20127,6 +20141,7 @@
 "oBl" = (
 /obj/rack,
 /obj/random_item_spawner/medicine/one_or_zero,
+/obj/item/hand_labeler,
 /turf/simulated/floor,
 /area/station/security/evidence)
 "oBU" = (
@@ -20992,6 +21007,14 @@
 /obj/item/ammo/bullets/smoke{
 	pixel_x = -2;
 	pixel_y = -3
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
 	},
 /turf/simulated/floor,
 /area/station/security/evidence)
@@ -24697,6 +24720,7 @@
 /area/station/hydroponics/bay)
 "rSQ" = (
 /obj/machinery/firealarm/directional/east,
+/obj/storage/cart/forensic/security,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -27306,6 +27330,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet/green/standard/edge/east,
 /area/station/bridge/customs)
 "tJV" = (
@@ -28028,6 +28053,16 @@
 /area/station/maintenance/northeast)
 "ujV" = (
 /obj/table/reinforced/auto,
+/obj/item/storage/box/evidence{
+	pixel_y = 5;
+	pixel_x = 5
+	},
+/obj/item/storage/box/evidence{
+	pixel_x = 5
+	},
+/obj/item/folder{
+	pixel_x = -4
+	},
 /turf/simulated/floor,
 /area/station/security/evidence)
 "ukA" = (
@@ -32304,6 +32339,10 @@
 /area/radiostation/bedroom)
 "xfd" = (
 /obj/disposalpipe/segment/bent/north,
+/obj/item/item_box/postit{
+	pixel_x = -8;
+	pixel_y = 6
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "xfh" = (
@@ -89243,7 +89282,7 @@ lcQ
 uHi
 jqs
 uFx
-rkY
+iVz
 sqk
 axn
 wIf
