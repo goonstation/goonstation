@@ -1946,6 +1946,8 @@ TYPEINFO(/datum/mutantrace/cat/bingus)
 	icon = 'icons/mob/shelterfrog.dmi'
 /obj/effect/rt/frog_distorts/uniform // frogs are wide
 	icon_state = "suit_distort"
+/obj/effect/rt/frog_distorts/shoes // frogs have long feet
+	icon_state = "shoes_distort"
 
 TYPEINFO(/datum/mutantrace/amphibian)
 	icon = 'icons/mob/amphibian.dmi'
@@ -1990,6 +1992,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 
 	var/clothes_filters_active = TRUE // see cow for explanation
 	var/obj/effect/rt/frog_distorts/uniform/distort_uniform = new
+	var/obj/effect/rt/frog_distorts/shoes/distort_shoes = new
 
 	say_verb()
 		return "croaks"
@@ -2001,7 +2004,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
 			M.bioHolder.AddEffect("accent_frog")
-			src.mob.vis_contents += list(src.distort_uniform)
+			src.mob.vis_contents += list(src.distort_uniform,src.distort_shoes)
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2009,6 +2012,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			src.mob.bioHolder.RemoveEffect("jumpy")
 			src.mob.bioHolder.RemoveEffect("vowelitis")
 			src.mob.bioHolder.RemoveEffect("accent_frog")
+			src.mob.vis_contents -= list(src.distort_uniform,src.distort_shoes)
 		..()
 
 	emote(act, voluntary)
@@ -2045,6 +2049,8 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
 		else if (istype(worn, /obj/item/clothing/under))
 			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/shoes))
+			output += filter(type="displace", render_source = src.distort_shoes.render_target, size = 127)
 		return output
 
 TYPEINFO(/datum/mutantrace/amphibian/shelter)
