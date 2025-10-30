@@ -449,7 +449,7 @@
 		if (istype(I, /obj/item/tile)) //let people repair floors underneath pipes
 			T.Attackby(I, user)
 			return
-		if (T.intact)
+		if (T.intact && !istype(T, /turf/space))
 			return		// prevent interaction with T-scanner revealed pipes
 
 		if (isweldingtool(I))

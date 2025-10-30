@@ -134,7 +134,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
-		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
 		/client/proc/toggle_tracy_profiling,
 
@@ -271,7 +270,6 @@ var/list/admin_verbs = list(
 		/client/proc/edit_module,
 		// /client/proc/modify_organs,
 		/client/proc/toggle_atom_verbs,
-		/client/proc/toggle_camera_network_reciprocity,
 		///client/proc/generate_poster,
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
@@ -388,6 +386,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,
 		/client/proc/cmd_paraviewer,
+		/client/proc/cmd_ambient_viewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
@@ -438,6 +437,7 @@ var/list/admin_verbs = list(
 		/client/proc/test_spacebee_command,
 		/client/proc/delete_landmarks,
 		/client/proc/admin_minimap,
+		/client/proc/transfer_abcu_blueprints,
 		),
 
 	7 = list(
@@ -463,7 +463,6 @@ var/list/admin_verbs = list(
 		/client/proc/debug_reagents_cache,
 		///client/proc/debug_check_possible_reactions,
 		/client/proc/set_admin_level,
-		/client/proc/show_camera_paths,
 		///client/proc/dbg_itemspecial,
 		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
@@ -475,7 +474,6 @@ var/list/admin_verbs = list(
 		/client/proc/toggleResourceCache,
 		/client/proc/debugResourceCache,
 		/client/proc/debug_profiler,
-		/client/proc/cmd_tooltip_debug,
 		/client/proc/deleteJsLogFile,
 		/client/proc/deleteAllJsLogFiles,
 		/client/proc/random_color_matrix,
@@ -485,6 +483,7 @@ var/list/admin_verbs = list(
 		/client/proc/rebuild_flow_networks,
 		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
+		/client/proc/toggle_server_rebuild,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
@@ -1495,7 +1494,7 @@ var/list/fun_images = list()
 		if(!istype(L) || isdead(L))
 			continue
 		var/obj/Pet = new pet_path(get_turf(L))
-		Pet.name = "[L]'s pet [Pet.name]"
+		Pet.name = "[L]’s pet [Pet.name]"
 
 		//Pets should probably not attack their owner
 		if (istype(Pet, /obj/critter))
@@ -1505,8 +1504,8 @@ var/list/fun_images = list()
 
 		LAGCHECK(LAG_LOW)
 
-	logTheThing(LOG_ADMIN, usr ? usr : src, null, "gave every player a pet [pet_path]!")
-	logTheThing(LOG_DIARY, usr ? usr : src, null, "gave every player a pet [pet_path]!", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, "gave every player a pet [pet_path]!")
+	logTheThing(LOG_DIARY, usr ? usr : src, "gave every player a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave every player a pet [pet_path]!")
 
 /client/proc/cmd_customgrenade()
@@ -1562,9 +1561,7 @@ var/list/fun_images = list()
 				<style type="text/css">
 				@font-face {
 					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/Twemoji.eot")]');
-					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
-						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
 					text-rendering: optimizeLegibility;
 				}
 				</style>
@@ -2157,6 +2154,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.addreagents(A)
 		if("Check Reagents")
 			C.cmd_admin_check_reagents(A)
+		if ("Adjust Addictions")
+			C.cmd_change_addiction(A)
 		if("View Variables")
 			C.debug_variables(A)
 		if("View Fingerprints")
@@ -2562,8 +2561,8 @@ proc/alert_all_ghosts(atom/target, message)
 	if (!player)
 		boutput(src, SPAN_ALERT("Unable to load data for ckey \"[ckey]\""))
 		return
-	var/value = alert(src, "Set flag on or off? Currently [player.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
-	if (player.cloudSaves.putData("bypass_round_reqs", (value == "On")))
+	var/value = alert(src, "Set flag on or off? Currently [player?.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
+	if (player?.cloudSaves.putData("bypass_round_reqs", (value == "On")))
 		boutput(src, "Successfully set round requirement bypass flag")
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else
@@ -2591,3 +2590,22 @@ proc/alert_all_ghosts(atom/target, message)
 	for (var/turf/landmark in global.landmarks[choice])
 		boutput(src, "Deleting landmark at [log_loc(landmark)]")
 	global.landmarks[choice] = list()
+
+/client/proc/transfer_abcu_blueprints()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Transfer ABCU blueprints"
+	set desc = "Transfer "
+	ADMIN_ONLY
+	var/ckey_from = input(src, "Ckey to transfer from") as text
+	var/ckey_to = input(src, "Ckey to transfer to") as text
+	ckey_from = ckey(ckey_from)
+	ckey_to = ckey(ckey_to)
+	if (!length(ckey_from) || !length(ckey_to))
+		return
+	var/list/bplist = flist("data/blueprints/[ckey_from]/")
+	if (!length(bplist))
+		boutput(src, SPAN_ALERT("No blueprints found for ckey [ckey_from]"))
+		return
+	for (var/filename in bplist)
+		boutput(src, "Copying blueprint [filename] from [ckey_from] to [ckey_to]...")
+		fcopy("data/blueprints/[ckey_from]/[filename]", "data/blueprints/[ckey_to]/[filename]")

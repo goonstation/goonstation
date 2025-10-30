@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Go for the endzone!',
-  content: (
+const FootballContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a SAFL player!</h1>
 
@@ -59,5 +58,10 @@ export const acw: AlertContentWindow = {
         * No <em>football</em> rules. You still have to follow the server rules.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Go for the endzone!',
+  component: FootballContentWindow,
 };

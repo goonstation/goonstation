@@ -10,6 +10,7 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = UNANCHORED
+	var/rc_flags = RC_SCALE | RC_SPECTRO
 	flags = FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
@@ -27,7 +28,7 @@
 
 	get_desc(dist, mob/user)
 		if (dist <= 2 && reagents)
-			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_SCALE)]")]"
+			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,src.rc_flags)]")]"
 
 	proc/smash()
 		var/turf/T = get_turf(src)
@@ -226,6 +227,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "coolerbase"
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
+	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	capacity = 500
 	_health = 250
 	_max_health = 250
@@ -272,7 +274,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	get_desc(dist, mob/user)
 		. += "There's [cup_amount] paper cup[s_es(src.cup_amount)] in [src]'s cup dispenser."
 		if (dist <= 2 && reagents)
-			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_SCALE)]")]"
+			. += "<br>[SPAN_NOTICE("[reagents.get_description(user, src.rc_flags)]")]"
 
 	attackby(obj/W, mob/user)
 		if (has_tank)
@@ -431,35 +433,39 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 /obj/reagent_dispensers/chemicalbarrel
 	name = "chemical barrel"
-	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
-	icon = 'icons/obj/objects.dmi'
+	desc = "For storing medical chemicals and less savory things."
+	icon = 'icons/obj/chemical_barrel.dmi'
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
+	rc_flags = RC_SCALE | RC_SPECTRO | RC_VISIBLE
 	flags = FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	HELP_MESSAGE_OVERRIDE({"\
+		Click the barrel with an <b>empty hand</b> to flip the barrel's funnel into a spout or vice versa. \
+		Use a <b>reagent container</b> to add/remove reagents from the barrel, depending on the funnel/spout. \
+		Use a <b>pen</b> to add a label to the barrel. \
+		Use a <b>wrench</b> to open or close the barrel's lid. \
+		Click and drag the barrel to a <b>CheMaster 3000</b> to allow the CheMaster to draw from the barrel's contents.\
+	"})
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
-	var/image/fluid_image = null
 	var/image/lid_image = null
 	var/image/spout_image = null
 	var/obj/machinery/chem_master/linked_machine = null
 
 	New()
-		..()
+		. = ..()
+
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = 'icons/obj/chemical_barrel.dmi', \
+			reagent_overlay_icon_state = "barrel", \
+			reagent_overlay_states = 9, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)
 		src.UpdateIcon()
 
 	update_icon()
-		var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 9 + 1), 1, 9))
-		if (!src.fluid_image)
-			src.fluid_image = image(src.icon)
-		if (src.reagents && src.reagents.total_volume)
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.fluid_image.icon_state = "fluid-barrel-[fluid_state]"
-		else
-			fluid_image.icon_state = "fluid-barrel-0"
-		src.UpdateOverlays(src.fluid_image, "fluid")
-
 		if (!src.lid_image)
 			src.lid_image = image(src.icon)
 			src.lid_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
@@ -467,7 +473,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.lid_image.icon_state = "[base_icon_state]-lid"
 			src.UpdateOverlays(src.lid_image, "lid")
 		else
-			src.lid_image.layer = src.fluid_image.layer + 0.1
+			src.lid_image.layer = FLOAT_LAYER
 			src.lid_image.icon_state = null
 			src.UpdateOverlays(null, "lid")
 

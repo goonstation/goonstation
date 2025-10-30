@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Mentor Mouse Tips!',
-  content: (
+const MentorMouseContentWindow = () => {
+  return (
     <div className="ghostcritter">
       <h1 className="center">You have been revived as a mentor mouse!</h1>
       <img src={resource('images/mentor_mouse.png')} className="center" />
@@ -68,5 +67,10 @@ export const acw: AlertContentWindow = {
         mentorhelp.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Mentor Mouse Tips!',
+  component: MentorMouseContentWindow,
 };

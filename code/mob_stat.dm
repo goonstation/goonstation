@@ -170,7 +170,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 					#if TIME_DILATION_ENABLED == 1
 					stat("Variable Ticklag:", "[world.tick_lag]")
 					#endif
-					stat("Maptick/Client:", "[world.map_cpu/length(clients)]")
+					stat("Maptick/Client:", "[world.map_cpu/(length(clients) || 1)]")
 					if(config.whitelistEnabled != config.baseWhitelistEnabled)
 						var/current_status = config.whitelistEnabled ? "temporarily ON" : "temporarily OFF"
 						if(!config.whitelistEnabled && config.baseWhitelistEnabled)

@@ -642,8 +642,8 @@
 	name = "yuranite"
 	desc = "Yuranite, an ore of uranium. Best to stay away from it without proper radiactive protection."
 	icon = 'icons/obj/items/materials/materials.dmi'
-	material_name = "Uranium"
-	default_material = "uranium"
+	material_name = "Yuranite"
+	default_material = "yuranite"
 
 	update_icon()
 		src.icon_state = "ore$$yuranite"
@@ -652,18 +652,6 @@
 		return 1
 
 // Misc building material
-
-/// This has no material, why does it exist???? Someone replace it
-/obj/item/raw_material/fabric
-	name = "fabric sheet"
-	desc = "Some spun cloth. Useful if you want to make clothing."
-	icon = 'icons/obj/items/materials/materials.dmi'
-	icon_state = "fabric"
-	material_name = "Fabric"
-	scoopable = 0
-
-	get_stack_value()
-		return 0
 
 /obj/item/raw_material/cotton
 	name = "cotton wad"

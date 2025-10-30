@@ -1,0 +1,15 @@
+<% const boxClass = it.state_has_error ? 'box--error' : '' %>
+<div class='box <%= boxClass %>' style='text-align: center;'>
+	<%= it.state_str %>
+</div>
+<div class='btn-group'>
+	<% if (it.established) { %>
+	<a href="remove=1" data-call-src="href" class='btn'>Retract</a>
+	<a href="air=1" data-call-src="href" class='btn'>Pressurize</a>
+	<% } else { %>
+	<a href="create=1" data-call-src="href" class='btn'>Establish</a>
+	<% } %>
+</div>
+<% if (it.working) { %>
+<div class='loading-overlay'></div>
+<% } %>

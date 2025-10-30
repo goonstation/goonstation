@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Ghost Critter Antagonist Tips!',
-  content: (
+const GhostcritterContentWindow = () => {
+  return (
     <div className="ghostcritter">
       <h1 className="center">You have been revived as a ghost critter!</h1>
       <img src={resource('images/ghostcritter.png')} className="center" />
@@ -24,5 +23,10 @@ export const acw: AlertContentWindow = {
         grudges from your previous one.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Ghost Critter Antagonist Tips!',
+  component: GhostcritterContentWindow,
 };

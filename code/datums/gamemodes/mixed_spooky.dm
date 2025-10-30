@@ -18,7 +18,7 @@
 	var/minimum_players = 15
 
 /datum/game_mode/mixed/spooky/announce()
-	boutput(world, "<B>The current game mode is - Mixed Spooky!</B>")
+	boutput(world, "<B>The current game mode is - Spooky!</B>")
 	boutput(world, "<B>Watch out for ghosts!</B>")
 
 /datum/game_mode/mixed/spooky/pre_setup()

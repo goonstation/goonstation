@@ -7,19 +7,9 @@
 	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
-		var/x = 1
-		for (var/client/C)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
-				continue
-			x++
-		return x
+		return src.total_player_count()
 	else if(T == "players")
-		var/n = 0
-		for(var/client/C)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
-				continue
-			n++
-		return n
+		return src.total_player_count()
 
 	else if (T == "status")
 		var/list/s = list()
@@ -342,7 +332,7 @@
 
 		if (findtext(addr, ":")) // remove port if present
 			addr = splittext(addr, ":")[1]
-		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub_ci_ip)
+		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip)
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)
@@ -871,12 +861,12 @@
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
-				player.cloudSaves.fetch()
-				for(var/kkey in player.cloudSaves.data)
+				player?.cloudSaves.fetch()
+				for(var/kkey in player?.cloudSaves.data)
 					if((kkey in list("admin_preferences", "buildmode")) || findtext(kkey, regex(@"^custom_job_\d+$")))
 						continue
-					response[kkey] = player.cloudSaves.data[kkey]
-				response["cloudsaves"] = player.cloudSaves.saves
+					response[kkey] = player?.cloudSaves.data[kkey]
+				response["cloudsaves"] = player?.cloudSaves.saves
 
 				return json_encode(response)
 
@@ -913,7 +903,7 @@
 							var/datum/http_request/request = new()
 							request.prepare(RUSTG_HTTP_METHOD_POST, "[config.irclog_url]/profiler_result", output, "")
 							request.begin_async()
-							UNTIL(request.is_complete())
+							UNTIL(request.is_complete(), 10 SECONDS)
 							response = request.into_response()
 				return 1
 
@@ -960,13 +950,6 @@
 				)
 				return 1
 
-			if("goonhub_auth")
-				var/ckey = plist["ckey"]
-				var/client/C = find_client(ckey)
-				if (C && C.goonhub_auth)
-					C.goonhub_auth.on_auth()
-				return 1
-
 			if ("mapSwitchDone")
 				if (!plist["map"] || !mapSwitcher.locked) return 0
 
@@ -980,10 +963,26 @@
 				else
 					msg = "Compilation of [attemptedMap] succeeded!"
 
-				logTheThing("admin", null, null, msg)
-				logTheThing("diary", null, null, msg, "admin")
+				logTheThing(LOG_ADMIN, null, msg)
+				logTheThing(LOG_DIARY, null, msg, "admin")
 				message_admins(msg)
 				ircmsg["msg"] = msg
 
 				mapSwitcher.unlock(map)
 				return ircbot.response(ircmsg)
+
+			if ("auth_callback")
+				var/preauth_ckey = plist["preauth_ckey"]
+				var/data = plist["data"]
+
+				for (var/client/C in pre_auth_clients)
+					if (C.ckey == preauth_ckey)
+						if (istype(C.client_auth_provider, /datum/client_auth_provider/goonhub))
+							var/datum/client_auth_provider/goonhub/provider = C.client_auth_provider
+							provider.on_auth(data)
+							return TRUE
+
+				var/msg = "Failed to find pre-auth client for [preauth_ckey] during auth callback"
+				logTheThing(LOG_ADMIN, null, msg)
+				logTheThing(LOG_DIARY, null, msg, "admin")
+				return FALSE

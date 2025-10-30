@@ -347,7 +347,7 @@
 		if (src.stat || src.hasStatus("paralysis"))
 			. += "<br>[SPAN_ALERT("[src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"
 		else
-			if (src.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
+			if (src.get_brain_damage() >= BRAIN_DAMAGE_LETHAL || src.reagents?.has_reagent("expresso"))
 				. += "<br>[SPAN_ALERT("[src.name] has a blank expression on [his_or_her(src)] face.")]"
 
 			if (!src.client && !src.ai_active)

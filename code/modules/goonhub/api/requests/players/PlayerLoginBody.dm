@@ -8,6 +8,7 @@
 		"byond_major", // integer
 		"byond_minor", // integer
 		"round_id", // integer
+		"server_id", // string
 	)
 
 /datum/apiBody/players/login/VerifyIntegrity()
@@ -16,5 +17,6 @@
 		isnull(src.values["ckey"]) \
 		|| isnull(src.values["key"]) \
 		|| isnull(src.values["round_id"]) \
+		|| isnull(src.values["server_id"])
 	)
 		return FALSE

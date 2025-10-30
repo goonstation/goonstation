@@ -2258,6 +2258,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 1
 	initial_reagents = list("juice_pickle"=5)
+	mat_changename = "pickle"
+	default_material = "pickle"
 
 	trash
 		name = "trash pickle"
@@ -2997,10 +2999,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	desc = "A perfectly baked square of chocolatey goodness. Yum!"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "brownie"
+	flags = TABLEPASS | NOSPLASH
 	bites_left = 3
 	heal_amt = 2
 	food_color = "#38130C"
-	initial_volume = 10
+	initial_volume = 20
 	initial_reagents = list("chocolate" = 5)
 	food_effects = list("food_warm","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK

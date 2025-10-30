@@ -135,8 +135,13 @@ TYPEINFO(/obj/machinery/power/smes)
 /obj/machinery/power/smes/update_icon()
 	if (status & (BROKEN|POWEROFF))
 		ClearAllOverlays()
+		if (status & BROKEN)
+			src.icon_state = "smes-broken"
 		return
+	src.icon_state = "smes"
+	src.update_overlays()
 
+/obj/machinery/power/smes/proc/update_overlays()
 	var/image/I = SafeGetOverlayImage("operating", 'icons/obj/power.dmi', "smes-op[online]")
 	UpdateOverlays(I, "operating")
 
@@ -387,6 +392,11 @@ TYPEINFO(/obj/machinery/power/smes)
 	capacity = 1e7
 	charge = 15e5
 
+/obj/machinery/power/smes/smart/update_icon()
+	if (status & (BROKEN|POWEROFF))
+		ClearAllOverlays()
+		return
+	src.update_overlays()
 
 /obj/machinery/power/smes/smart/charge(mult)
 	var/excess = terminal.surplus()

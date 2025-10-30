@@ -161,25 +161,25 @@ proc/create_fluff(datum/mind/target)
 	var/obj/item/steal_target
 	var/target_name
 	set_up()
-		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
-		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
+		var/list/items = list("Head of Security\'s beret", "Monsieur Stirstir\'s beret", "Detective\'s DetGadget hat", "horse mask", "Captain\'s authentication disk",
+		"\'freeform\' AI module", "gene power module", "mainframe memory board", "RD\'s yellow cake", "CE\'s aurora MKII utility belt", "much coveted Gooncode", "HoP\'s golden crayon")
 
 		if(!countJob("Head of Security"))
 			items.Remove("Head of Security\'s beret")
 		if(!countJob("Captain"))
-			items.Remove("authentication disk")
+			items.Remove("Captain\'s authentication disk")
 		if(!countJob("Chief Engineer"))
-			items.Remove("aurora MKII utility belt")
+			items.Remove("CE\'s aurora MKII utility belt")
 
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
 				steal_target = /obj/item/clothing/head/hos_hat
-			if("prisoner\'s beret")
+			if("Monsieur Stirstir\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
-			if("DetGadget hat")
+			if("Detective\'s DetGadget hat")
 				steal_target = /obj/item/clothing/head/det_hat/gadget
-			if("authentication disk")
+			if("Captain\'s authentication disk")
 				steal_target = /obj/item/disk/data/floppy/read_only/authentication
 			if("\'freeform\' AI module")
 				steal_target = /obj/item/aiModule/freeform
@@ -187,15 +187,15 @@ proc/create_fluff(datum/mind/target)
 				steal_target = /obj/item/cloneModule/genepowermodule
 			if("mainframe memory board")
 				steal_target = /obj/item/disk/data/memcard/main2
-			if("yellow cake")
+			if("RD\'s yellow cake")
 				steal_target = /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
-			if("aurora MKII utility belt")
+			if("CE\'s aurora MKII utility belt")
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
 			if("horse mask")
 				steal_target = /obj/item/clothing/mask/horse_mask
-			if("golden crayon")
+			if("HoP\'s golden crayon")
 				steal_target = /obj/item/pen/crayon/golden
 
 		explanation_text = "Steal the [target_name] and have it anywhere on you at the end of the shift."
@@ -1400,7 +1400,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 // Spy (theft) objectives                              //
 /////////////////////////////////////////////////////////
 
-/datum/objective/spy_theft/assasinate
+/datum/objective/spy_theft/assasinate //Unused
 	explanation_text = "Eliminate all other antagonists."
 
 	check_completion()
@@ -1410,6 +1410,20 @@ ABSTRACT_TYPE(/datum/objective/madness)
 			if (!src.is_target_eliminated(M))
 				return FALSE
 		return TRUE
+
+/datum/objective/spy_theft/steal
+	medal_name = "Professional Thief"
+	var/steal_goal
+
+	set_up()
+		src.steal_goal = rand(5,8)
+		explanation_text = "Steal at least [src.steal_goal] items in total via your uplink."
+
+	check_completion()
+		var/datum/antagonist/spy_thief/antag_datum = owner.get_antagonist(ROLE_SPY_THIEF)
+		if(!antag_datum?.stolen_items)
+			return FALSE
+		return (length(antag_datum.stolen_items) >= src.steal_goal)
 
 /////////////////////////////////////////////////////////
 // Battle Royale objective                             //
@@ -1431,15 +1445,37 @@ ABSTRACT_TYPE(/datum/objective/madness)
 /////////////////////////////////////////////////////////
 
 /datum/objective/specialist/powerdrain // this is basically just a repurposed vamp objective, but it should work.
-	var/powergoal
+	var/power_goal
 
 	set_up()
-		powergoal = rand(350,400) * 10
-		explanation_text = "Accumulate at least [powergoal] units of charge in total."
+		power_goal = rand(350,400) * 10
+		explanation_text = "Accumulate at least [power_goal] units of charge in total."
 
 	check_completion()
 		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
-		return (antag_datum?.ability_holder?.lifetime_energy >= powergoal)
+		return (antag_datum?.ability_holder?.lifetime_energy >= power_goal)
+
+/datum/objective/specialist/machineoverload
+	var/overload_goal
+
+	set_up()
+		overload_goal = rand(13, 17)
+		explanation_text = "Overload at least [overload_goal] machines with your Discharge ability."
+
+	check_completion()
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.machines_overloaded >= overload_goal)
+
+/datum/objective/specialist/heartstopper
+	var/heart_goal
+
+	set_up()
+		heart_goal = rand (2,4)
+		explanation_text = "Stop at least [heart_goal] hearts with your Jolt ability."
+
+	check_completion()
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.hearts_stopped >= heart_goal)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
@@ -1522,8 +1558,17 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	escape_choices = list(/datum/objective/escape/survive)
 
 /datum/objective_set/arcfiend
-	objective_list = list(/datum/objective/specialist/powerdrain)
+	objective_list = list(/datum/objective/specialist/powerdrain, /datum/objective/specialist/machineoverload, /datum/objective/specialist/heartstopper)
 	escape_choices = list(/datum/objective/escape)
+
+/datum/objective_set/arcfiend/drain_overload
+	objective_list = list(/datum/objective/specialist/powerdrain, /datum/objective/specialist/machineoverload)
+
+/datum/objective_set/arcfiend/overload_kill
+	objective_list = list(/datum/objective/specialist/machineoverload, /datum/objective/specialist/heartstopper)
+
+/datum/objective_set/arcfiend/kill_drain
+	objective_list = list(/datum/objective/specialist/powerdrain, /datum/objective/specialist/heartstopper)
 
 /datum/objective_set/salvager
 	objective_list = list(/datum/objective/specialist/salvager/machinery, /datum/objective/specialist/salvager/steal)
@@ -1593,22 +1638,17 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive)
 
-/datum/objective_set/spy_theft/bodyguard_gimmick
-	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/gimmick)
-	escape_choices = list(/datum/objective/escape/survive)
+// Spy Thieves
 
-/datum/objective_set/spy_theft/bodyguard_steal
-	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/steal)
-	escape_choices = list(/datum/objective/escape)
+/datum/objective_set/spy_theft
+	objective_list = list(/datum/objective/spy_theft/steal,/datum/objective/regular/steal)
+	escape_choices = list(/datum/objective/escape, /datum/objective/escape/survive)
 
-/datum/objective_set/spy_theft/bodyguard_and_kill
-	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape)
+/datum/objective_set/spy_theft/bodyguard
+	objective_list = list(/datum/objective/spy_theft/steal,/datum/objective/regular/assassinate/bodyguard)
 
 /datum/objective_set/spy_theft/assassin
-	objective_list = list(/datum/objective/regular/assassinate,/datum/objective/regular/assassinate,/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape)
+	objective_list = list(/datum/objective/spy_theft/steal,/datum/objective/regular/assassinate)
 
-/datum/objective_set/spy_theft/stealy
-	objective_list = list(/datum/objective/regular/gimmick,/datum/objective/regular/steal)
-	escape_choices = list(/datum/objective/escape)
+/datum/objective_set/spy_theft/gimmick
+	objective_list = list(/datum/objective/spy_theft/steal,/datum/objective/regular/gimmick)

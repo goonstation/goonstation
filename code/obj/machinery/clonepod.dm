@@ -281,11 +281,14 @@ TYPEINFO(/obj/machinery/clonepod)
 			 */
 			var/generation = src.occupant.bioHolder.clone_generation
 			for (var/i in 1 to rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1))))
-				if (generation)
+				if ((generation > 1) || traits.hasTrait("defect_prone"))
 					defects.add_random_cloner_defect()
 				else
 					// First cloning can't get major defects
 					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
+
+			if (traits.hasTrait("defect_prone"))
+				defects.add_random_cloner_defect()
 
 		src.mess = FALSE
 		var/is_puritan = FALSE
@@ -302,30 +305,33 @@ TYPEINFO(/obj/machinery/clonepod)
 					is_puritan = TRUE
 
 			if (is_puritan)
-				src.mess = TRUE
-				// Puritans have a bad time.
-				// This is a little different from how it was before:
-				// - Immediately take 250 tox and 100 random brute
-				// - Always get a major cloning defect
-				// - 50% chance, per limb, to lose that limb
-				// - enforced premature_clone, which gibs you on death
-				// If you have a clone body that's been allowed to fully heal before
-				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
-				// out of deep critical health before they turn into chunky salsa
-				// This should be really rare to have happen, but I want to leave it in
-				// just in case someone manages to pull off a miracle save
-				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
-				src.occupant.bioHolder?.AddEffect("premature_clone")
-				src.occupant.take_toxin_damage(350)
-				APPLY_ATOM_PROPERTY(src.occupant, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
-				random_brute_damage(src.occupant, 200, 0)
-				if (ishuman(src.occupant))
-					var/mob/living/carbon/human/P = src.occupant
-					if (P.limbs)
-						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
-						for (var/limb in limbs)
-							if (prob(50))
-								P.limbs.sever(limb)
+				if (clonehack) // If mindhack cloner, bypass puritan stuff.
+					boutput(src.occupant, SPAN_NOTICE("<h3>The mindhack module has forced your body to adapt, bypassing your clone instability!</h3>"))
+				else
+					src.mess = TRUE
+					// Puritans have a bad time.
+					// This is a little different from how it was before:
+					// - Immediately take 250 tox and 100 random brute
+					// - Always get a major cloning defect
+					// - 50% chance, per limb, to lose that limb
+					// - enforced premature_clone, which gibs you on death
+					// If you have a clone body that's been allowed to fully heal before
+					// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
+					// out of deep critical health before they turn into chunky salsa
+					// This should be really rare to have happen, but I want to leave it in
+					// just in case someone manages to pull off a miracle save
+					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
+					src.occupant.bioHolder?.AddEffect("premature_clone")
+					src.occupant.take_toxin_damage(350)
+					APPLY_ATOM_PROPERTY(src.occupant, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+					random_brute_damage(src.occupant, 200, 0)
+					if (ishuman(src.occupant))
+						var/mob/living/carbon/human/P = src.occupant
+						if (P.limbs)
+							var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
+							for (var/limb in limbs)
+								if (prob(50))
+									P.limbs.sever(limb)
 			#endif
 
 		if (length(defects.active_cloner_defects) > 7)
@@ -589,6 +595,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			return 0
 		if (user)
 			boutput(user, "You force an emergency ejection.")
+		logTheThing(LOG_STATION, src, "[key_name(src.occupant)] was ejected from [src] being emagged by [key_name(user)]!")
 		src.go_out(1)
 		return 1
 
@@ -745,7 +752,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (!isalive(usr) || iswraith(usr))
 			return
-		src.go_out()
+		var/mob/occupant = src.occupant
+		if (src.go_out())
+			logTheThing(LOG_STATION, src, "[key_name(occupant)] was ejected from [src] by [key_name(usr)]")
 		add_fingerprint(usr)
 		return
 
@@ -795,6 +804,7 @@ TYPEINFO(/obj/machinery/clonepod)
 					step_rand(O) // cogwerks - let's spread that mess instead of having a pile! bahaha
 			if (src.occupant)
 				src.occupant.set_loc(get_turf(src))
+				. = TRUE
 				src.occupant = null
 			src.UpdateIcon()
 			return
@@ -817,6 +827,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		src.occupant.changeStatus("unconscious", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
+		. = TRUE
 		if (src.emagged) //huck em
 			src.occupant.throw_at(get_edge_target_turf(src, pick(alldirs)), 10, 3)
 		src.occupant = null

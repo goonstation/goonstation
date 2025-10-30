@@ -40,25 +40,24 @@ export const FilterEntry = (props) => {
             maxValue={Infinity}
             minValue={-Infinity}
             step={1}
-            onChange={(value) =>
+            onChange={(value) => {
               act('change_priority', {
                 name: name,
                 new_priority: value,
-              })
-            }
+              });
+            }}
           />
           <Button.Input
-            placeholder={name}
-            onCommit={(e, new_name) =>
+            value={name}
+            onCommit={(new_name) =>
               act('rename_filter', {
                 name: name,
                 new_name: new_name,
               })
             }
             width="90px"
-          >
-            Rename
-          </Button.Input>
+            buttonText="Rename"
+          />
           <Button.Confirm
             icon="minus"
             onClick={() => act('remove_filter', { name: name })}

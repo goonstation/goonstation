@@ -848,6 +848,8 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		score = 65
 		projectile_type = /datum/projectile/special/acid
 		current_projectile = new/datum/projectile/special/acid
+		drop_loot_chance = 100
+		droploot = /obj/item/reagent_containers/glass/beaker/large/round/random_acid
 
 		New()
 			..()

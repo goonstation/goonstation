@@ -990,7 +990,8 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 
 	was_harmed(mob/M, obj/item/weapon, special, intent)
 		. = ..()
-		M.add_karma(-1)
+		if(M)
+			M.add_karma(-1)
 
 	proc/play_dead(var/addtime = 0)
 		if (addtime > 0) // we're adding more time
@@ -3041,6 +3042,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 30
 	is_pet = 2
 	player_can_spawn_with_pet = FALSE
+
+/* -------------------- Splinter --------------------- */
+
+/mob/living/critter/small_animal/bat/splinter //for Kyle's office
+	name = "Splinter"
+	desc = "Some say that bats are just rats with wings. If only they knew how right they were..."
+	icon_state = "batdoctor"
+	icon_state_dead = "batdoctor-dead"
+	health_brute = 30
+	health_burn = 30
+	is_pet = FALSE
+	player_can_spawn_with_pet = FALSE
+	ai_type = /datum/aiHolder/empty
 
 /* ------------------ Tiny Bat Rina ------------------ */
 

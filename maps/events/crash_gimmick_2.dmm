@@ -210,12 +210,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
@@ -331,12 +327,8 @@
 /area/space)
 "mb" = (
 /obj/storage/closet/emergency,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
@@ -784,12 +776,8 @@
 	},
 /area/shuttle/arrival/station)
 "CP" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /obj/machinery/manufacturer/mechanic{
 	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
@@ -911,12 +899,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "Er" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
@@ -951,22 +935,14 @@
 	},
 /area/built_zone)
 "Fz" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "FZ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /obj/machinery/computer/supplycomp{
 	dir = 8
@@ -1215,22 +1191,14 @@
 	tag = "icon-space"
 	},
 /obj/storage/closet/emergency,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "OK" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
 	},
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
@@ -1274,12 +1242,8 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Qd" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/shuttle,
@@ -1339,12 +1303,8 @@
 /area/shuttle/arrival/station)
 "SE" = (
 /obj/machinery/vending/cigarette,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)

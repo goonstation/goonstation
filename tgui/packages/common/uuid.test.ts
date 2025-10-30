@@ -1,7 +1,9 @@
+import { describe, it } from 'vitest';
+
 import { createUuid } from './uuid';
 
 describe('createUuid', () => {
-  it('generates a UUID v4 string', () => {
+  it('generates a UUID v4 string', ({ expect }) => {
     const uuid = createUuid();
     expect(uuid).toHaveLength(36);
     expect(uuid).toMatch(

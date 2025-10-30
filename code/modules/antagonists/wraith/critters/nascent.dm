@@ -25,6 +25,7 @@ TYPEINFO(/mob/living/critter/wraith)
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "poltergeist-corp"
 	hand_count = 0
+	nodamage = 1
 	health_brute = 50
 	health_brute_vuln = 1
 	health_burn = 50
@@ -54,6 +55,11 @@ TYPEINFO(/mob/living/critter/wraith)
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	attackby(var/obj/item/I, mob/user)
+		boutput(user, "[I] seems to just pass through...")
+
+	attack_hand(mob/user)
+		boutput(user, "Your hand just seems to phase through...")
 
 	death(var/gibbed)
 		if (src.master)

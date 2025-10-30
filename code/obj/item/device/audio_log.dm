@@ -242,7 +242,7 @@ TYPEINFO(/obj/item/device/audio_log)
 				var/speaker = copytext(speak_message, 1, separator) || "Unknown"
 				speak_message = copytext(speak_message, separator+1)
 
-				src.say("[speak_message]", flags = 0, message_params = list("speaker_to_display" = "[speaker]"))
+				src.say("[speak_message]", message_params = list("speaker_to_display" = "[speaker]"))
 				sleep(5 SECONDS)
 				if (!tape || !tape.next(continuous))
 					stop()
@@ -260,10 +260,10 @@ TYPEINFO(/obj/item/device/audio_log)
 			"maptext_css_values" = list("color" = "#E00000")
 		)
 
-		src.say("This message will self-destruct in 5 seconds...", flags = 0, message_params = message_params)
+		src.say("This message will self-destruct in 5 seconds...", message_params = message_params)
 		sleep(1 SECOND)
 		for (var/i in 1 to 4)
-			src.say("[5 - i]", flags = 0, message_params = message_params)
+			src.say("[5 - i]", message_params = message_params)
 			sleep(1 SECOND)
 
 		src.blowthefuckup(2)

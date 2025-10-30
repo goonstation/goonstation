@@ -396,7 +396,7 @@ var/list/access_all_actually = null
 		if(access_maint_tunnels)
 			return "Maintenance"
 		if(access_change_ids)
-			return "ID Computer"
+			return "Personnel Management"
 		if(access_ai_upload)
 			return "AI Upload"
 		if(access_supply_console)

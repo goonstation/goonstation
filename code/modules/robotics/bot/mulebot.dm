@@ -249,12 +249,13 @@
 			else
 				dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = "Mulebot [suffix ? "([suffix])" : ""] controls",
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = "Mulebot [suffix ? "([suffix])" : ""] controls",
+				content = dat,
+			)
 
 		return
 

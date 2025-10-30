@@ -588,7 +588,8 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	// PantsNote: Flamethrower disassmbly.
 	else if (isscrewingtool(W))
 		var/obj/item/gun/flamethrower/assembled/S = src
-		if (( S.gastank ))
+		if (( S.gastank || S.fueltank ))
+			boutput(user, SPAN_ALERT("You can't disassemble [src] while it has an attached tank!"))
 			return
 		var/obj/item/flamethrower_construction/new_construction = new /obj/item/flamethrower_construction (null, S.welder, S.rod, S.igniter)
 		user.u_equip(S)

@@ -493,7 +493,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 	shield_belt
 		comname = "Shield Belt"
 		comtype = /obj/item/storage/belt/powered/salvager
-		desc = "Belt generates an energy field around the user.  Provides some enviromental protection as well."
+		desc = "Belt generates an energy field around the user.  Provides some environmental protection as well."
 		price = 1200
 		amount = 4
 #endif

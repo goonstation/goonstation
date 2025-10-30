@@ -12,7 +12,7 @@
 
 #define SHOW_VERB_DESC do {\
 	var/procpath/this_proc = __PROC__;\
-	if(usr?.client.check_key(KEY_EXAMINE)) {\
+	if(usr?.client?.check_key(KEY_EXAMINE)) {\
 		boutput(usr, "<span class='helpmsg'>[this_proc.desc || "No verb desc found"]</span>");\
 		return\
 	}\

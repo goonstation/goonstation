@@ -6,10 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Broken',
-  theme: 'syndicate', // TODO: eldritch theme?
-  content: (
+const BrokenContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">
         You have been driven to madness by the immense psychic pressure of the
@@ -42,5 +40,11 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/Broken">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Broken',
+  theme: 'syndicate', // TODO: eldritch theme?
+  component: BrokenContentWindow,
 };

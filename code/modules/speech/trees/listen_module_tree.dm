@@ -334,6 +334,11 @@
 	RETURN_TYPE(/datum/listen_module/input)
 	return src.listen_inputs_by_id["[input_id][subchannel]"]
 
+/// Returns the number of subscriptions to this listen input module.
+/datum/listen_module_tree/proc/GetInputSubcount(input_id, subchannel, combined_id)
+	var/module_id = combined_id || "[input_id][subchannel]"
+	return src.listen_input_ids_with_subcount[module_id]
+
 /// Returns a list of listen input modules that receive from the specified channel.
 /datum/listen_module_tree/proc/GetInputsByChannel(channel_id)
 	RETURN_TYPE(/list/datum/listen_module/input)
@@ -380,6 +385,10 @@
 	RETURN_TYPE(/list/datum/listen_module/modifier)
 	return src.listen_modifiers_by_id[modifier_id]
 
+/// Returns the number of subscriptions to this listen modifier module.
+/datum/listen_module_tree/proc/GetModifierSubcount(modifier_id)
+	return src.listen_modifier_ids_with_subcount[modifier_id]
+
 /// Adds a new listen effect module to the tree. Returns a reference to the new effect module on success.
 /datum/listen_module_tree/proc/_AddListenEffect(effect_id, list/arguments = list(), count = 1)
 	RETURN_TYPE(/datum/listen_module/effect)
@@ -413,6 +422,10 @@
 /datum/listen_module_tree/proc/GetEffectByID(effect_id)
 	RETURN_TYPE(/list/datum/listen_module/effect)
 	return src.listen_effects_by_id[effect_id]
+
+/// Returns the number of subscriptions to this listen effect module.
+/datum/listen_module_tree/proc/GetEffectSubcount(effect_id)
+	return src.listen_effect_ids_with_subcount[effect_id]
 
 /// Adds a new listen control module to the tree. Returns a reference to the new control module on success.
 /datum/listen_module_tree/proc/_AddListenControl(control_id, list/arguments = list(), count = 1)
@@ -448,6 +461,10 @@
 	RETURN_TYPE(/list/datum/listen_module/control)
 	return src.listen_controls_by_id[control_id]
 
+/// Returns the number of subscriptions to this listen control module.
+/datum/listen_module_tree/proc/GetControlSubcount(control_id)
+	return src.listen_control_ids_with_subcount[control_id]
+
 /// Adds a known language to this listen tree. Known languages allow messages to be understood. Returns TRUE on success, FALSE on failure.
 /datum/listen_module_tree/proc/AddKnownLanguage(language_id, count = 1)
 	if (language_id == LANGUAGE_ALL)
@@ -478,6 +495,10 @@
 		src.known_language_ids_with_subcount -= language_id
 
 	return TRUE
+
+/// Returns the number of subscriptions to this language.
+/datum/listen_module_tree/proc/GetKnownLanguageSubcount(language_id)
+	return src.known_language_ids_with_subcount[language_id]
 
 /// Adds a count from the `LANGUAGE_ALL` subcount, and enables `understands_all_languages`.
 /datum/listen_module_tree/proc/AddLanguageAllSubcount(count = 1)

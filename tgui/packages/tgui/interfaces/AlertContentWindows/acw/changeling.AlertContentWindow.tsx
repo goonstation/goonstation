@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Changeling Tips',
-  content: (
+const ChangelingContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a changeling!</h1>
       <img
@@ -78,7 +77,7 @@ export const acw: AlertContentWindow = {
           <br />
           <em>Horror Form</em>, you turn into a shambling abomination with a
           special set of abilities. See the{' '}
-          <a href="http://wiki.ss13.co/Changeling#Shambling_Abomination">
+          <a href="https://wiki.ss13.co/Changeling#Shambling_Abomination">
             the wiki
           </a>
           .<br />
@@ -116,5 +115,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Changeling">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Changeling Tips',
+  component: ChangelingContentWindow,
 };

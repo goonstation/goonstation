@@ -42,8 +42,8 @@ TYPEINFO(/obj/item/device/radio)
 	var/list/secure_frequencies = null
 	/// The colour that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single colour may be defined for all channels to use that colour. Overrides `secure_classes`.
 	var/list/secure_colors = list()
-	/// The CSS class that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single class may be defined for all channels to use that style. Overridden by `secure_colors`.
-	var/list/secure_classes = list(RADIOCL_STANDARD)
+	/// The overriding CSS classes that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a class under the index "all" may be defined for all undefined channels to use that style (e.g. secure_classes = list("all" = RADIOCL_SYNDICATE)). Overridden by `secure_colors`.
+	var/list/secure_classes = list()
 
 	// Additional Message Styling Variables:
 	/// If set, this is radio icon that this radio should display on sent messages. See the `browserassets/images/radio_icons` folder.
@@ -344,15 +344,28 @@ TYPEINFO(/obj/item/radiojammer)
 	w_class = W_CLASS_TINY
 	is_syndicate = TRUE
 	var/active = FALSE
+	var/range = DEFAULT_RADIO_JAMMER_RANGE
 
 /obj/item/radiojammer/New()
 	. = ..()
 	src.RegisterSignal(src, COMSIG_SIGNAL_JAMMED, PROC_REF(signal_jammed))
 
-/obj/item/radiojammer/proc/signal_jammed()
+/obj/item/radiojammer/disposing()
+	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+	. = ..()
+
+/obj/item/radiojammer/get_desc(dist, mob/user)
+	. = ..()
+	. += " The range is currently set to [src.range]."
+	if(!src.active)
+		.+= " It is off."
+
+/obj/item/radiojammer/proc/signal_jammed(_source, datum/signal/signal)
 	//hoping this isn't too performance heavy if a lot of signals get blocked at once
 	if (!src.GetOverlayImage("jammed_light"))
-		src.UpdateOverlays(image(src.icon, "signal_jammed"), "jammed_light")
+		//automatic heartbeat signals: we still want to know when we're jamming them but we probably don't care most of the time
+		var/icon_state = signal.data["command"] == "heartbeat" ? "signal_jammed_heartbeat" : "signal_jammed"
+		src.UpdateOverlays(image(src.icon, icon_state), "jammed_light")
 	SPAWN(2 DECI SECONDS)
 		src.ClearSpecificOverlays("jammed_light")
 
@@ -371,10 +384,28 @@ TYPEINFO(/obj/item/radiojammer)
 		icon_state = "shieldoff"
 		STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 
-/obj/item/radiojammer/disposing()
-	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+/obj/item/radiojammer/attackby(obj/item/W, mob/user, params)
+	if(isscrewingtool(W) || ispulsingtool(W))
+		src.edit_range(user)
+		return
 	. = ..()
 
+/obj/item/radiojammer/proc/edit_range(mob/user)
+	var/inputted_number = tgui_input_number(user, "Input radio jammer range", "Radio Jammer", DEFAULT_RADIO_JAMMER_RANGE, DEFAULT_RADIO_JAMMER_RANGE, 1)
+	if(!inputted_number)
+		return
+	if(!can_act(user))
+		boutput(user, SPAN_ALERT("Not while incapacitated!"))
+		return
+	if(BOUNDS_DIST(src,user) > 1)
+		boutput(user, SPAN_ALERT("You are too far away from [src]!"))
+		return
+	inputted_number = trunc(inputted_number)
+	if(!isnum_safe(inputted_number) || inputted_number > DEFAULT_RADIO_JAMMER_RANGE || inputted_number < 1)
+		boutput(user, SPAN_ALERT("That number is out of [src]'s range!"))
+		return
+	src.range = inputted_number
+	boutput(user, SPAN_NOTICE("You set [src]'s range to [inputted_number]."))
 
 #undef WIRE_SIGNAL
 #undef WIRE_RECEIVE

@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: "You've been absorbed into the Kudzu!",
-  content: (
+const KudzuAlertWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">
         You are a member of the Kudzu hivemind! Not an antagonist!
@@ -62,5 +61,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Kudzu">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: "You've been absorbed into the Kudzu!",
+  component: KudzuAlertWindow,
 };

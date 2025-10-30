@@ -44,7 +44,7 @@
 
 		// give back stored pills first
 		if (src.contents.len)
-			for (var/i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill), i--)
+			for (var/i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill); i--)
 				P = src.contents[i]
 
 		// otherwise create a new one from the reagent holder
@@ -80,6 +80,7 @@
 		else
 			src.desc = "A [src.pname] pill bottle. There [totalpills==1? "is [totalpills] pill." : "are [totalpills] pills." ]"
 			src.inventory_counter.update_number(totalpills)
+		src.tooltip_rebuild = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/pill))

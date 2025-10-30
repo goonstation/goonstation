@@ -112,7 +112,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			"maptext_css_values" = list("color" = "#CC3FCC"),
 			"relay_flags" = SAY_RELAY_RADIO,
 		)
-		src.say("AI override engaged!", flags = 0, message_params = message_params)
+		src.say("AI override engaged!", message_params = message_params)
 		src.show_speech_bubble(image('icons/mob/mob.dmi', "ai"))
 
 		SPAWN(1 MINUTE)
@@ -258,7 +258,6 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	name = "DetNet Intercom (Security)"
 	frequency = R_FREQ_SECURITY
 	secure_frequencies = list("g" = R_FREQ_SECURITY)
-	secure_classes = list("g" = R_FREQ_SECURITY)
 	device_color = RADIOC_SECURITY
 	initial_speaker_enabled = TRUE
 	layer = 3.1
@@ -271,7 +270,6 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	name = "DetNet Intercom (???)"
 	frequency = R_FREQ_DETECTIVE
 	secure_frequencies = list("t" = R_FREQ_DETECTIVE)
-	secure_classes = list("t" = R_FREQ_DETECTIVE)
 	initial_speaker_enabled = TRUE
 	device_color = RADIOC_DETECTIVE
 	layer = 3

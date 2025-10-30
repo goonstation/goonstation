@@ -7,6 +7,8 @@ mob/verb/checkrewards()
 	set name = "Check Job Rewards"
 	set category = "Commands"
 
+	if (!src.mind) return
+
 	if(isdead(usr))
 		boutput(usr, SPAN_NOTICE("You can't claim rewards while dead!"))
 		return

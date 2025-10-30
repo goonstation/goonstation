@@ -97,7 +97,6 @@
 <html>
 <head>
 	[map_currently_underwater?"<title>Trench Map</title>":"<title>Mining Map</title>"]
-	<meta http-equiv="X-UA-Compatible" content="IE=edge;">
 	<style type="text/css">
 		body {
 			background: black;

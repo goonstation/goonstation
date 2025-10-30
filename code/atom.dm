@@ -123,7 +123,7 @@ TYPEINFO(/atom)
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_suffixes))
 			if (length(src.name_suffixes) >= src.num_allowed_suffixes)
 				src.remove_suffixes(1)
-			src.name_suffixes += strip_html(text_to_add)
+			src.name_suffixes += strip_html_tags(text_to_add)
 		if (return_suffixes)
 			var/amt_suffixes = 0
 			for (var/i in src.name_suffixes)
@@ -475,6 +475,11 @@ TYPEINFO(/atom/movable)
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
 
+	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
+	/// if an object type can be built somewhere, before instantiating the object itself.
+	proc/can_build(turf/T)
+		return TRUE
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/tmp/turf/last_turf = 0
@@ -490,7 +495,6 @@ TYPEINFO(/atom/movable)
 	/// Temporary value to smuggle newloc to Uncross during Move-related procs
 	var/tmp/atom/movement_newloc = null
 
-	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
 
@@ -852,15 +856,17 @@ TYPEINFO(/atom/movable)
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	PROTECTED_PROC(TRUE)
-	if (src.storage?.storage_item_attack_by(W, user))
+	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
+	W.material_on_attack_use(user, src)
 	src.material_trigger_when_attacked(W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
-		var/hits = src
-		if (!src.name && isobj(src)) //shut up
-			var/obj/self = src
-			hits = "\the [self.real_name]"
-		user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
+	if (silent)
+		return
+	var/hits = src
+	if (!src.name && isobj(src)) // shut up
+		var/obj/self = src
+		hits = "\the [self.real_name]"
+	user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
@@ -1386,6 +1392,10 @@ TYPEINFO(/atom/movable)
 		if("icon_state")
 			src.icon_state = oldval
 			src.set_icon_state(newval)
+		if("open_to_sound") //otherwise it doesn't update properly
+			for (var/atom/movable/AM in src)
+				AM.outermost_listener_tracker?.update_outermost_listener()
+
 
 /atom/movable/proc/is_that_in_this(atom/movable/target)
 	if (target.loc == src)

@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: "You've been absorbed into the Hivemind!",
-  content: (
+const HivemindContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You have been absorbed by a changeling!</h1>
       <img
@@ -56,5 +55,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Changeling">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: "You've been absorbed into the Hivemind!",
+  component: HivemindContentWindow,
 };

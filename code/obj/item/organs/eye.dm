@@ -391,7 +391,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 
 	on_transplant(var/mob/M)
 		..()
-		src.camera.c_tag = "[M]'s Eye"
+		src.camera.c_tag = "[M]’s Eye"
 		return ..()
 
 TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
@@ -560,6 +560,18 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/pug
 	name = "pug eye"
 	desc = "Poor guy."
+
+/obj/item/organ/eye/shelterfrog
+	name = "shelterfrog eye"
+	desc = "Oh, wow, this thing is huge. Like, larger than its owner's brain huge."
+	icon_state = "eye-shelterfrog"
+	change_iris = 0
+
+/obj/item/organ/eye/beady
+	name = "beady eye"
+	desc = "Looks like you're keeping a beady eye on this thing."
+	icon_state = "eye-beady"
+	change_iris = 0
 
 /obj/item/organ/eye/glass
 	name = "glass eye"

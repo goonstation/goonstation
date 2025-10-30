@@ -95,6 +95,8 @@
 		var/obj/item/I = src
 		I.item_state = appearance.name
 
+	A.teleportationally_unstable = prob(A.teleportationally_unstable_chance)
+
 	A.fx_image = new
 	A.fx_image.icon = src.icon
 	A.fx_image.icon_state = src.icon_state + "fx"
@@ -267,7 +269,7 @@
 		var/datum/artifact/activator_key/K = ACT.artifact
 
 		if (K.activated)
-			if (K.universal || A.artitype == K.artitype)
+			if (K.universal || A.artitype == K.activating_origin)
 				if (K.activator && !A.activated)
 					src.ArtifactActivated()
 					if(K.corrupting && length(A.faults) < 10) // there's only so much corrupting you can do ok

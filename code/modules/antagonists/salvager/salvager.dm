@@ -5,7 +5,6 @@
 	uses_pref_name = FALSE
 	wiki_link = "https://wiki.ss13.co/Salvager"
 
-	var/static/starting_freq = null
 	var/salvager_points
 
 	is_compatible_with(datum/mind/mind)
@@ -25,21 +24,7 @@
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/engineer/salvager(H), SLOT_HEAD)
 		H.equip_if_possible(new /obj/item/clothing/suit/space/salvager(H), SLOT_WEAR_SUIT)
 		H.equip_if_possible(new /obj/item/clothing/glasses/salvager(H), SLOT_GLASSES)
-
-		var/obj/item/device/radio/headset/headset = H.ears
-		if(!headset)
-			headset = new /obj/item/device/radio/headset/salvager
-			H.equip_if_possible(headset, SLOT_EARS)
-		else
-			headset.protected_radio = TRUE
-
-		// Allow for Salvagers to have a secure channel
-		headset.secure_frequencies = list("z" = src.pick_radio_freq())
-		headset.secure_classes = list(RADIOCL_OTHER)
-		headset.secure_colors = list("#a18146")
-		headset.set_secure_frequency("z", src.pick_radio_freq())
-		headset.desc += " The headset is covered in scratch marks and the screws look nearly stripped."
-
+		H.equip_if_possible(new /obj/item/device/radio/headset/salvager, SLOT_EARS)
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
@@ -86,20 +71,6 @@
 		else
 			src.owner.current.set_loc(pick(landmarks[LANDMARK_SALVAGER]))
 
-	proc/pick_radio_freq()
-		if(starting_freq)
-			return starting_freq
-
-		var/list/blacklisted = list(0, 1451, 1457)
-		blacklisted.Add(R_FREQ_BLACKLIST)
-
-		do
-			. = rand(R_FREQ_MINIMUM, R_FREQ_MAXIMUM)
-			. = sanitize_frequency(.)
-		while (. in blacklisted)
-
-		starting_freq = .
-
 	handle_round_end()
 		. = ..()
 
@@ -117,7 +88,7 @@
 	name = "Salvager"
 	wages = 0
 	limit = 0
-	linkcolor = "#acbb27"
+	ui_colour = TGUI_COLOUR_YELLOW
 	slot_ears = list() // So they don't get a default headset and stuff first.
 	slot_card = null
 	slot_glov = list()

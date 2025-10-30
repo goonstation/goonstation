@@ -5,10 +5,8 @@
  * @license ISC
  */
 import { AlertContentWindow } from '../types';
-
-export const acw: AlertContentWindow = {
-  title: 'Arcfiend Tips!',
-  content: (
+const ArcfiendContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are an Arcfiend!</h1>
       <p>1. Absorb energy from machinery, humans, and robots</p>
@@ -60,5 +58,9 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Arcfiend">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+export const acw: AlertContentWindow = {
+  title: 'Arcfiend Tips!',
+  component: ArcfiendContentWindow,
 };

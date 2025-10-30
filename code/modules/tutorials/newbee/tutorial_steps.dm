@@ -1163,13 +1163,10 @@
 // room 9 - Space Prep
 //
 
-// TODO: detection ?
-/datum/tutorialStep/newbee/timer/stats_before
-	name = "Character Stats"
-	instructions = "<b>Click</b> the STAT button in the HUD to show your current stats.<br>Note your cold resistance - space will freeze you to death in your current state!"
+/datum/tutorialStep/newbee/timer/spaceworthy
+	name = "Becoming Spaceworthy"
+	instructions = "To survive in space you need a space suit and air tank.<br>Make sure you're fully prepared before risking space travel!"
 	step_area = /area/tutorial/newbee/room_9
-	highlight_hud_element = "stats"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
 
 /datum/tutorialStep/newbee/opening_closets
 	name = "Emergency Closets"
@@ -1202,7 +1199,7 @@
 		src.target_closet.UpdateOverlays(null, "marker")
 
 /datum/tutorialStep/newbee/equipping_space_gear
-	name = "Becoming Spaceworthy"
+	name = "Space Gear"
 	instructions = "A space suit, helmet, and breath mask are needed to survive in the vacuum of space.<br><b>Click</b> each piece of space gear to pick it up, then press <b>V</b> or <b>click</b> the item slot to equip it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_9
@@ -1253,14 +1250,6 @@
 		src.worn_mask?.UpdateOverlays(null, "marker")
 		src.worn_mask = null
 
-// TODO: detection ?
-/datum/tutorialStep/newbee/timer/stats_after
-	name = "Suited Up"
-	instructions = "With full space gear, you now have 100% cold resistance.<br><b>Click</b> the STAT button again to check your current stats."
-	step_area = /area/tutorial/newbee/room_9
-	highlight_hud_element = "stats"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
-
 /datum/tutorialStep/newbee/item_pickup/oxygen
 	name = "Oxygen Required"
 	instructions = "You need oxygen to breathe in areas without air, like space.<br><b>Click</b> the oxygen tank to pick it up."
@@ -1294,6 +1283,14 @@
 		if (src._needed_item)
 			for(var/obj/ability_button/tank_valve_toggle/tank_ability in src._needed_item.ability_buttons)
 				tank_ability.UpdateOverlays(null, "marker")
+
+// TODO: detection ?
+/datum/tutorialStep/newbee/timer/stats_after
+	name = "Suited Up"
+	instructions = "<b>Click</b> the STAT button in the HUD to show your current stats.<br>Full space gear provides 100% cold resistance."
+	step_area = /area/tutorial/newbee/room_9
+	highlight_hud_element = "stats"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
 
 /datum/tutorialStep/newbee/move_to/enter_space
 	name = "Entering Space"

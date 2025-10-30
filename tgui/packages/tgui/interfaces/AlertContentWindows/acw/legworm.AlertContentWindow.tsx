@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'LegWorm Expectations',
-  content: (
+const LegwormContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">
         You have reawakened to serve your host changeling!
@@ -38,5 +37,10 @@ export const acw: AlertContentWindow = {
         </span>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'LegWorm Expectations',
+  component: LegwormContentWindow,
 };

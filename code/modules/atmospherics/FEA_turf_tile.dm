@@ -444,7 +444,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 	if(src.air.radgas >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
 		for(var/atom/movable/AM as anything in src)
-			if(isintangible(AM) || isobserver(AM) || istype(AM, /obj/overlay) || istype(AM, /obj/effects) || istype(AM, /obj/particle))
+			if(isintangible(AM) || isobserver(AM) || IS_OVERLAY_OR_EFFECT(AM) || istype(AM, /atom/movable/hotspot) || istype(AM, /obj/particle))
 				continue
 			if(AM.invisibility > INVIS_CLOAK) //invisible things don't get to be radioactive. Because space science reasons.
 				continue

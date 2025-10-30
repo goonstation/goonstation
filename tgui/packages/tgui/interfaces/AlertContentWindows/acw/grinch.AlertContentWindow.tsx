@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'How to steal Spacemas',
-  content: (
+const GrinchContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a grinch!</h1>
       <p>
@@ -52,5 +51,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Grinch">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'How to steal Spacemas',
+  component: GrinchContentWindow,
 };

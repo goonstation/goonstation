@@ -6,7 +6,7 @@
 	New(M)
 		..()
 		master = M
-		health = create_screen("health","Health", 'icons/mob/wraith_ui.dmi', "health-7", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		health = create_screen("health","Health", 'icons/mob/wraith_ui.dmi', "health-7", "EAST, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 		health.desc = "You feel powerful."
 		// var/atom/movable/screen/S = create_screen("release", "release", 'icons/mob/screen1.dmi', "x", "NORTH,EAST", HUD_LAYER)
 		// S.underlays += "block"

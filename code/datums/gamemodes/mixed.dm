@@ -1,5 +1,5 @@
 /datum/game_mode/mixed
-	name = "Mixed (Action)"
+	name = "Action"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
@@ -25,7 +25,7 @@
 
 
 /datum/game_mode/mixed/announce()
-	boutput(world, "<B>The current game mode is - Mixed Action!</B>")
+	boutput(world, "<B>The current game mode is - Action!</B>")
 	boutput(world, "<B>Anything could happen! Be on your guard!</B>")
 
 /datum/game_mode/mixed/pre_setup()

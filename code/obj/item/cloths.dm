@@ -89,6 +89,18 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 		user.visible_message(SPAN_NOTICE("[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src]."))
 		playsound(src, 'sound/items/glass_wipe.ogg', 35, TRUE)
 
+/obj/item/cloth/towel/should_suppress_attack(var/object, mob/user)
+	if (istype(object, /obj/table))
+		user.visible_message(SPAN_NOTICE("[user] wipes down [object] with [src]."))
+		return TRUE
+	. = ..()
+
+/obj/item/cloth/towel/should_place_on(obj/target, params)
+	// Don't place on tables unless click-dragged
+	if (istype(target, /obj/table) && islist(params) && !params["dragged"])
+		return FALSE
+	. = ..()
+
 /obj/item/cloth/towel/white
 	name = "white towel"
 	icon_state = "towel_white"

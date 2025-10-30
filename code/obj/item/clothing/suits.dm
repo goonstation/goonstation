@@ -11,7 +11,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
 	/// If TRUE the suit will hide whoever is wearing it's hair
-	var/over_hair = FALSE
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
@@ -376,6 +375,21 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 	desc = "A suit that protects against biological contamination. This one has purple boots."
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
+
+/obj/item/clothing/suit/hazard/bio_suit/rd
+	name = "research director's bio suit"
+	desc = "A special, form fitted, suit that protects against biological contamination."
+	item_state = "biosuit_rd"
+	icon_state = "biosuit_rd"
+	armor_icon = "armorbio_rd"
+
+	setupProperties()
+		..()
+		delProperty("movespeed")
+
+	armor()
+		. = ..()
+		src.delProperty("movespeed")
 
 TYPEINFO(/obj/item/clothing/suit/hazard/bio_suit/armored)
 	pre_armored = TRUE
@@ -769,11 +783,10 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
-	c_flags = COVERSEYES | COVERSMOUTH | ONBACK
+	c_flags = COVERSEYES | COVERSMOUTH | COVERSHAIR | ONBACK
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS|C_MASK
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
-	over_hair = TRUE
 	wear_layer = MOB_FULL_SUIT_LAYER
 	var/eyeholes = FALSE //Did we remember to cut eyes in the thing?
 	var/cape = FALSE
@@ -878,15 +891,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			src.icon_state = "bedcape[src.bcolor ? "-[bcolor]" : null]"
 			src.item_state = src.icon_state
 			see_face = TRUE
-			over_hair = FALSE
-			src.c_flags = ONBACK
+			src.c_flags &= ~COVERSHAIR
 			wear_layer = MOB_BACK_LAYER + 0.2
 		else
 			src.icon_state = "bedsheet[src.bcolor ? "-[bcolor]" : null][src.eyeholes ? "1" : null]"
 			src.item_state = src.icon_state
 			see_face = FALSE
 			src.c_flags = initial(src.c_flags)
-			over_hair = TRUE
 			wear_layer = MOB_OVER_TOP_LAYER
 
 	proc/cut_eyeholes()
@@ -1541,7 +1552,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
-	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
+	icon_state = "spacelight-civ"
 	item_state = "es_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1574,6 +1585,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		desc = "A lightweight engineering spacesuit designed to.... well, it doesn't really protect you from as much. But it lets you run away from fires quicker."
 		icon_state = "spacelight-e"
 		item_state = "es_suit"
+
+	chiefengineer
+		name = "chief engineer's light space suit"
+		desc = "A lightweight engineering spacesuit custom modified by the Chief Engineer to protect from more environmental hazards."
+		icon_state = "spacelight-ce"
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 20)
+			setProperty("radprot", 20)
+			setProperty("meleeprot", 2)
+			setProperty("rangedprot", 0.2) // better than 0
 
 // Sealab suits
 
@@ -1741,9 +1764,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "cultist"
 	see_face = FALSE
 	magical = 1
-	over_hair = TRUE
 	wear_layer = MOB_FULL_SUIT_LAYER
-	c_flags = COVERSEYES | COVERSMOUTH
+	c_flags = COVERSEYES | COVERSMOUTH | COVERSHAIR
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
 
@@ -1782,10 +1804,9 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "flockcultistt"
 	see_face = FALSE
 	wear_layer = MOB_FULL_SUIT_LAYER
-	c_flags = COVERSEYES | COVERSMOUTH
+	c_flags = COVERSEYES | COVERSMOUTH | COVERSHAIR
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
-	over_hair = TRUE
 
 	setupProperties()
 		..()
@@ -2546,7 +2567,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "burnedrobe"
 	item_state = "burnedrobe"
-	over_hair = TRUE
+	c_flags = COVERSHAIR
 	wear_layer = MOB_FULL_SUIT_LAYER
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
@@ -2558,7 +2579,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "greenrobe"
 	item_state = "greenrobe"
-	over_hair = TRUE
+	c_flags = COVERSHAIR
 	wear_layer = MOB_FULL_SUIT_LAYER
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
@@ -2614,3 +2635,62 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/dress/denim)
 	name = "khaki denim dress"
 	icon_state = "denim_dress-khaki"
 	item_state = "denim_dress-khaki"
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/swimskirt)
+/obj/item/clothing/suit/swimskirt
+	name = "swim skirt"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	desc = "A loose skirt, meant to be tied around the waist and worn over a swimsuit"
+	w_class = W_CLASS_SMALL
+
+	white
+		name = "white swim skirt"
+		icon_state = "swimskirt_w"
+		item_state = "swimskirt_w"
+
+	red
+		name = "red swim skirt"
+		icon_state = "swimskirt_r"
+		item_state = "swimskirt_r"
+
+	orange
+		name = "orange swim skirt"
+		icon_state = "swimskirt_o"
+		item_state = "swimskirt_o"
+
+	green
+		name = "green swim skirt"
+		icon_state = "swimskirt_g"
+		item_state = "swimskirt_g"
+
+	blue
+		name = "blue swim skirt"
+		icon_state = "swimskirt_u"
+		item_state = "swimskirt_u"
+
+	purple
+		name = "purple swim skirt"
+		icon_state = "swimskirt_p"
+		item_state = "swimskirt_p"
+
+	black
+		name = "black swim skirt"
+		icon_state = "swimskirt_b"
+		item_state = "swimskirt_b"
+
+	red_pdot
+		name = "red polka-dot swim skirt"
+		icon_state = "swimskirt_rpdot"
+		item_state = "swimskirt_rpdot"
+
+	yellow_pdot
+		name = "yellow polka-dot swim skirt"
+		icon_state = "swimskirt_ypdot"
+		item_state = "swimskirt_ypdot"
+
+	strawberry
+		name = "strawberry swim skirt"
+		icon_state = "swimskirt_strawb"
+		item_state = "swimskirt_strawb"
+

@@ -36,7 +36,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 #ifdef SECRETS_ENABLED
 		src.egg_overlay_secret = image('+secret/icons/obj/chickens_secret.dmi', src, "incubator-egg")
 #endif
-		src.egg_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-egg")
+		src.egg_overlay = image('icons/mob/ranch/chickens.dmi', src, "incubator-egg")
 		src.lights_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-lights")
 		processing_items |= src
 
@@ -106,6 +106,9 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 				boutput(user, SPAN_ALERT("<b>There's already an egg in there!</b>"))
 			else
 				var/obj/item/reagent_containers/food/snacks/ingredient/egg/E = W
+				if (E.infertile)
+					boutput(user, SPAN_ALERT("<b>This egg is infertile and cannot be used!</b>"))
+					return
 				user.u_equip(E)
 				E.set_loc(src)
 				my_egg = E
@@ -177,19 +180,24 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 /obj/submachine/ranch_feed_grinder
 	name = "feed grinder"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
-	icon_state = "feed_grinder"
+	icon_state = "feed_grinder-off"
 	density = 1
 	anchored = ANCHORED
-	var/work_cycle = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
+
+	var/work_cycle = 0
 	var/obj/item/reagent_containers/food/current_food = null
+	var/image/feed_grinder_overlay = null
 
 	New()
 		..()
 		processing_items |= src
+		src.feed_grinder_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "feed_grinder_overlay")
+		src.feed_grinder_overlay.color = "#FFFF00"
 
 	disposing()
 		processing_items.Remove(src)
+		feed_grinder_overlay = null
 		..()
 
 	attackby(obj/item/W, mob/user)
@@ -221,7 +229,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		src.add_item(W)
 
 	proc/add_item(var/obj/item/item)
-		if(istype(item,/obj/item/reagent_containers/food))
+		if(istype(item, /obj/item/reagent_containers/food))
 			item.set_loc(src)
 		else
 			var/obj/item/reagent_containers/food/F = src.preprocess(item)
@@ -274,6 +282,9 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				if(0)
 					if(QDELETED(current_food))
 						current_food = locate(/obj/item/reagent_containers/food) in src.contents
+						src.icon_state = "feed_grinder-on"
+						feed_grinder_overlay.color = current_food.food_color
+						UpdateOverlays(feed_grinder_overlay, "feed_grinder_overlay")
 						work_cycle++
 				if(1 to 2)
 					playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
@@ -287,6 +298,8 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 					make_feed(current_food)
 					current_food = null
 					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
+					src.icon_state = "feed_grinder-off"
+					ClearSpecificOverlays("feed_grinder_overlay")
 					work_cycle = 0
 					return
 
@@ -555,6 +568,19 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 			spread_feed(user.loc, user)
 		else
 			. = ..()
+
+	loot_age
+		name = "Dehab Mortality Feed"
+		desc = "A hand-knitted bag of feed which somehow creaks, it has a small label mentioning rapid ageing."
+		feed_flags = list("clockwork")
+		food_color = "#a0c0c0"
+		initial_reagents = list("ageinium", 40)
+
+	loot_antiage // for mining crates
+		name = "Ambrosia Immortality Feed"
+		desc = "A commercial feed bag plastered with adverts on anti-ageing effects."
+		feed_flags = list("ageless", "chicken_egg")
+		food_color = "#DDBB00"
 
 /obj/decal/cleanable/ranch_feed
 	name = "feed"

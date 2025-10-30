@@ -1,9 +1,8 @@
-<META http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <body>
-  </body>
+<body></body>
 
-  <script>
+<script>
   var hookEvent = (function() {
       var div;
 
@@ -555,10 +554,10 @@
       Page.Game.IsDirty = Page.ScoreBarCur.IsDirty = true;
 
       // if (this.ScoreCur > this.ScoreHigh){
-			this.ScoreHigh = this.ScoreCur;
-			Page.ScoreBarHigh.IsDirty = true;
+  	this.ScoreHigh = this.ScoreCur;
+  	Page.ScoreBarHigh.IsDirty = true;
 
-			window.location = {{TOPICURL}}
+  	window.location = {{TOPICURL}}
       // }
 
       this.IsAlive = false;
@@ -1053,8 +1052,8 @@
           }
           break;
 
-				case 32: // space
-				case 38: // up arrow
+  		case 32: // space
+  		case 38: // up arrow
           if (!GM.HardDrop) {
             Page.Game.IsDirty = GM.Pc.TryDrop();
             GM.HardDrop = true;
@@ -1087,29 +1086,29 @@
           GM.CCRotation = false;
           break;
 
-				case 37: // left arrow
+  		case 37: // left arrow
         case 65: // a
           GM.Left = false;
           GM.LeftDasTimer = 0;
           GM.LeftHasPriority = false;
           break;
 
-				case 39: // right arrow
+  		case 39: // right arrow
         case 68: // d
           GM.Right = false;
           GM.RightDasTimer = 0;
           GM.LeftHasPriority = true;
           break;
 
-				case 40: // down arrow
+  		case 40: // down arrow
         case 83: // s
           GM.SoftDrop = false;
           GM.SoftDropTimer = 0;
           break;
 
 
-				case 32: // space
-				case 38: // up arrow
+  		case 32: // space
+  		case 38: // up arrow
           GM.HardDrop = false;
           break;
 
@@ -1158,5 +1157,4 @@
     retColor += ',' + alpha + ')';
     return retColor;
   }
-
-  </script>
+</script>

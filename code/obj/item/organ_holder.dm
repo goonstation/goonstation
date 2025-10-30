@@ -544,7 +544,7 @@
 			organ_list["brain"] = brain
 			SPAWN(2 SECONDS)
 				if (src.brain && src.donor)
-					src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					src.brain.name = "[src.donor.real_name]’s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 
@@ -624,9 +624,9 @@
 			var/obj/item/organ/O = organ_list[thing]
 			if(isnull(O))
 				continue
-			var/list/organ_name_parts = splittext(O.name, "'s")
+			var/list/organ_name_parts = splittext(O.name, "’s")
 			if(length(organ_name_parts) == 2)
-				O.name = "[user_name]'s [organ_name_parts[2]]"
+				O.name = "[user_name]’s [organ_name_parts[2]]"
 				O.donor_name = user_name
 
 	//input organ = string value of organ_list assoc list
@@ -1035,7 +1035,8 @@
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
-	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
+	/// is_transformation prevents people from being ghostized by brain swapping, their brain is TRANSFORMING, not being swapped for someone else's
+	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0, is_transformation = FALSE)
 		if (!src.donor || !I || !organ)
 			return 0
 
@@ -1144,18 +1145,19 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
-				src.donor.ghostize()
-				if (newBrain.owner)
-					var/mob/G
-					G = find_ghost_by_key(newBrain?.owner?.key)
-					if (G)
-						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
-							G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
-							G.ghostize()?.mind?.transfer_to(src.donor)
-						else
-							G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
-							G.mind?.transfer_to(src.donor)
+				if (!is_transformation)
+					boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
+					src.donor.ghostize()
+					if (newBrain.owner)
+						var/mob/G
+						G = find_ghost_by_key(newBrain?.owner?.key)
+						if (G)
+							if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+								G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
+								G.ghostize()?.mind?.transfer_to(src.donor)
+							else
+								G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
+								G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
@@ -1578,7 +1580,7 @@
 			organ_list["brain"] = brain
 			SPAWN(2 SECONDS)
 				if (src.brain && src.donor)
-					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					//src.brain.name = "[src.donor.real_name]’s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 

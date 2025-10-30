@@ -134,6 +134,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	icon_state = "darkgreen"
 	casecolor = "darkgreen"
 
+/obj/machinery/portable_atmospherics/canister/get_help_message(dist, mob/user)
+	. = ..()
+	if (src.det)
+		. = "You can use <b>wirecutters</b> or <b>multitool</b> to attempt to defuse the bomb."
+	if (src.destroyed)
+		. = "You can use a <b>welding tool</b> to disassemble the broken canister."
+	else
+		. = "Use a <b>wrench</b> to attach or detach from an atmospherics port."
+
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
@@ -159,7 +168,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			UpdateOverlays(atmos_dmi, "holding")
 		else
 			UpdateOverlays(null, "holding")
-		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
+
+		var/tank_pressure = air_contents ? MIXTURE_PRESSURE(air_contents) : 0
 
 		if (tank_pressure < 10)
 			atmos_dmi.icon_state = "can-o0"
@@ -421,7 +431,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
 		user.visible_message(SPAN_NOTICE("[user] fills [balloon] from [src]."), SPAN_NOTICE("You fill [balloon] from [src]."))
 		return
-	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2) && !(W.flags & SUPPRESSATTACK))
+	else if(!src.destroyed && !iswrenchingtool(W) && !isweldingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2) && !(W.flags & SUPPRESSATTACK))
 		src.visible_message(SPAN_ALERT("[user] hits the [src] with a [W]!"))
 		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)

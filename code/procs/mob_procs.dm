@@ -131,8 +131,8 @@
 	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 /mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
-	. = null
 	SHOULD_CALL_PARENT(1)
+	. = null
 
 	if (!src.can_slip())
 		return

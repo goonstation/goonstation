@@ -835,7 +835,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					src.last_reply = world.time
 
 			use_power(10)
-			if (src.icon_vend) //Show the vending animation if needed
+			if (src.icon_vend && !src.fallen) //Show the vending animation if needed
 				FLICK(src.icon_vend,src)
 
 			src.vend_ready = 0
@@ -1098,7 +1098,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!R.infinite)
 			R.product_amount--
 		use_power(10)
-		if (src.icon_vend) //Show the vending animation if needed
+		if (src.icon_vend && !src.fallen) //Show the vending animation if needed
 			FLICK(src.icon_vend,src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)
@@ -1522,7 +1522,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 3)
 		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 3)
-		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/assembly/flash_cell, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
 

@@ -1117,7 +1117,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/noGenerate)
 "YS" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/wood/two,
 /area/prefab/secbot_academy)
 "Za" = (

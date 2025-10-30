@@ -335,15 +335,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 		setProperty("coldprot", 20)
 		setProperty("radprot", 5)
 
-// Donkini
-
-/obj/item/clothing/under/gimmick/donkini
-	name = "\improper Donkini"
-	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
-	icon_state = "donkini"
-	item_state = "donkini"
-	hide_underwear = TRUE
-
 // Duke Nukem
 
 /obj/item/clothing/under/gimmick/duke
@@ -505,9 +496,9 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/blue
 	name = "blue clown suit"
 	desc = "Proof that if you truly believe in yourself, you can accomplish anything. Honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 	icon_state = "blessedclown"
 	item_state = "blessedclown"
 
@@ -531,7 +522,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/purple
 	name = "purple clown suit"
 	desc = "What kind of clown are you for wearing this color? It's a good question, honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
@@ -553,7 +544,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/pink
 	name = "pink clown suit"
 	desc = "The color pink is the embodiment of love and hugs and nice people. Honk."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "pinkclown"
 	//item_state = "pinkclown"
@@ -588,7 +579,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/under/misc/clown/yellow
 	name = "yellow clown suit"
 	desc = "Have a happy honk!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "yellowclown"
 	//item_state = "yellowclown"
@@ -804,7 +795,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "adeptus"
 	item_state = "adeptus"
-	over_hair = TRUE
+	c_flags = COVERSHAIR
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
 	wear_layer = MOB_FULL_SUIT_LAYER
@@ -820,8 +811,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Wow this really looks like a noise marine helmet. But it's not!"
 	icon_state = "nm_helm"
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
-	c_flags = COVERSEYES | COVERSMOUTH
-	seal_hair = 1
+	c_flags = COVERSEYES | COVERSMOUTH | COVERSHAIR
 	see_face = FALSE
 
 /obj/item/clothing/suit/power
@@ -849,6 +839,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty ultramarine backpack"
 	desc = "How is this janky piece of shit supposed to work anyway?"
 	icon_state = "um_back"
+	satchel_variant = null
 
 /obj/item/clothing/suit/power/noisemarine
 	name = "cardboard noise marine armor"
@@ -865,6 +856,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "novelty noise marine backpack"
 	desc = "Shame this doesn't have real loudspeakers built into it."
 	icon_state = "nm_back"
+	satchel_variant = null
 
 TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	mat_appearances_to_ignore = list("jean")
@@ -950,6 +942,22 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "death"
 	see_face = FALSE
 
+/obj/item/clothing/mask/skull/vampire
+	name = "menacing skull mask"
+	desc = "An eerie skull mask, still glowing with otherworldly power."
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_vampire"
+	item_state = "death"
+	see_face = FALSE
+
+/obj/item/clothing/mask/skull/changeling
+	name = "odd skull mask"
+	desc = "Don't ask why you can see through the skull without any eyeholes."
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_changeling"
+	item_state = "death"
+	see_face = FALSE
+
 /obj/item/clothing/suit/robuddy
 	name = "guardbuddy costume"
 	desc = "A costume that loosely resembles the PR-6 Guardbuddy. How adorable!"
@@ -982,9 +990,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "monkey"
 	item_state = "monkey"
-	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	wear_layer = MOB_LAYER_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
@@ -1020,10 +1027,9 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	icon_state = "light_borg"
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	wear_layer = MOB_FULL_SUIT_LAYER
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
-	over_hair = TRUE
 	see_face = FALSE
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
@@ -1058,9 +1064,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A familiar, yet legally distinct helmet."
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	hides_from_examine = C_GLASSES|C_EARS|C_MASK
-	seal_hair = 1
 	see_face = FALSE
 
 /obj/item/clothing/suit/armor/sneaking_suit
@@ -1157,7 +1162,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
 	desc = "The signature striped uniform of the mime. Not necessarily French."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "mime1"
 	item_state = "mime1"
@@ -1206,7 +1211,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A fiery flame shirt even Guy Fieri would be envious of."
 	icon_state = "flame"
 	item_state = "flame"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 
 /obj/item/clothing/under/misc/america
@@ -1214,7 +1219,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "I am a REAL AMERICAN, I fight for the rights of every man!"
 	icon_state = "america"
 	item_state = "america"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 
 /obj/item/clothing/under/gimmick/wedding_dress
@@ -1430,6 +1435,12 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "guardscoat"
+	item_state = "guardscoat"
+	coat_style = "guardscoat"
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 	setupProperties()
 		..()
@@ -1518,22 +1529,20 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_FULL_SUIT_LAYER
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
-	over_hair = TRUE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
 	desc = "Looking at this fills you with joy! You're not sure why. That's kind of a weird thing to feel about something that looks like this."
 	icon_state = "joyful"
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	hides_from_examine = C_MASK|C_GLASSES|C_EARS
-	seal_hair = 1
 
 /obj/item/clothing/under/rotten
 	name = "suit and vest"
 	desc = "You feel like you could sing a real catchy tune in this getup!"
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "rotten"
 	item_state = "rotten"
@@ -1633,9 +1642,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/head/werewolf
 	name = "werewolf mask"
 	desc = "The mask of a wolfman getup."
-	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS | COVERSHAIR
 	hides_from_examine = C_GLASSES|C_MASK|C_EARS
-	seal_hair = 1
 	icon_state = "wwmask"
 
 /obj/item/clothing/suit/gimmick/werewolf/odd
@@ -1663,17 +1671,15 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/head/abomination
 	name = "abomination mask"
 	desc =  "The abomination mask straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
-	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS | COVERSHAIR
 	hides_from_examine = C_EARS
-	seal_hair = 1
 	icon_state = "abommask"
 
 /obj/item/clothing/head/zombie
 	name = "zombie mask"
 	desc = "The mask of a zombie. Man, they really captured the discolouration of rotten flesh."
-	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS | COVERSHAIR
 	hides_from_examine = C_EARS
-	seal_hair = 1
 	icon_state = "zombmask"
 
 /obj/item/clothing/suit/gimmick/hotdog
@@ -1683,7 +1689,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	wear_layer = MOB_FULL_SUIT_LAYER // ?????
 	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "hotdogsuit"
-	over_hair = TRUE
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/suit/gimmick/pickle
 	name = "pickle suit"
@@ -1692,7 +1698,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	wear_layer = MOB_FULL_SUIT_LAYER // ?????
 	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "picklesuit"
-	over_hair = TRUE
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"
@@ -1783,14 +1789,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "This hat looks patently ridiculous. Is this what passes for fashionable in the Commonwealth of Free Worlds?"
 	icon_state = "cwhat"
 	item_state = "cwhat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/fthat
 	name = "trader's headwear"
 	desc = "Why in the name of space would anyone trade with someone who wears a hat that looks this dumb? Yuck."
 	icon_state = "fthat"
 	item_state = "fthat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/gloves/handcomp
 	name = "Compudyne 0451 Handcomp"
@@ -1905,9 +1911,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "Wow! It's just like the real thing!"
 	icon_state = "big_lizard"
 	item_state = "big_lizard"
-	c_flags = COVERSMOUTH | COVERSEYES
+	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
 	hides_from_examine = C_EARS|C_GLASSES|C_MASK
-	seal_hair = 1
 	see_face = FALSE
 
 
@@ -2081,16 +2086,23 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 /obj/item/clothing/suit/pigeon
 	name = "Carrier Pigeon"
-	desc = "A motionless pigeon plushie that attaches to shoulders. It looks like something is sticking out of it."
+	desc = "A motionless pigeon plushie that attaches to shoulders. It looks like it has a postmaster's seal on it."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_HAIR_LAYER2
 	icon_state = "pigeon"
 	item_state = "pigeon"
+
+	equipped(mob/user)
+		if (ishuman(user))
+			var/mob/living/carbon/human/human = user
+			src.wear_image.pixel_y = human.mutantrace.head_offset
+		..()
 
 	attack_self (mob/user as mob)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
-		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] on the pigeon using a hidden switch!</b>"))
+		user.visible_message(SPAN_COMBAT("<b>[user] activates [his_or_her(user)] P1G30N using a hidden switch!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/mail/S = new /mob/living/critter/robotic/scuttlebot/mail(get_turf(src))
 		S.linked_pigeon = src
 		user.drop_item()
@@ -2098,9 +2110,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 		user.update_inhands()
 		return
 
-
 // Goku
-
 /obj/item/clothing/under/gimmick/goku
 	name = "anime martial artist costume"
 	desc = "Sturdy karate gi intended for only the toughest martial artists out there. If only you actually practiced!"

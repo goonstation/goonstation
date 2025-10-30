@@ -261,6 +261,20 @@ export const GameSettingsTab = () => {
               Use AZERTY Keyboard Layout
             </Button.Checkbox>
           </Box>
+          <Box mb="5px" color="label">
+            Usually middle mouse is a handy shortcut to open and close lockers.
+            Tick this to enable the legacy behaviour of it swapping hands
+            instead.
+          </Box>
+          <Box mb="5px">
+            <Button.Checkbox
+              checked={data.middleMouseSwap}
+              onClick={() => act('update-middleMouseSwap')}
+              tooltip="Middle mouse swaps hands"
+            >
+              Middle mouse swaps hands.
+            </Button.Checkbox>
+          </Box>
           <Box color="label">
             Familiar with /tg/station controls? You can enable/disable them
             under the Game/Interface menu in the top left.

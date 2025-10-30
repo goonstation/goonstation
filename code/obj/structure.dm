@@ -243,6 +243,9 @@ obj/structure/ex_act(severity)
 				else
 					var/datum/material/defaultMaterial = getMaterial("steel")
 					A.setMaterial(defaultMaterial)
+
+				var/obj/item/sheet/S = the_tool
+				S?.change_stack_amount(-2)
 				qdel(the_girder)
 			if (GIRDER_SECURE)
 				if (!istype(the_girder.loc, /turf/simulated/floor/))

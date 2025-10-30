@@ -18,29 +18,45 @@
  * Returns null if pool was exhausted.
  *
  * required user mob
+ * optional interface string - used to find a similar window in the pool
  * return datum/tgui
  */
-/datum/controller/process/tgui/proc/request_pooled_window(mob/user)
+/datum/controller/process/tgui/proc/request_pooled_window(mob/user, interface)
 	if(!user.client)
 		return null
 	var/list/windows = user.client.tgui_windows
 	var/window_id
 	var/datum/tgui_window/window
 	var/window_found = FALSE
-	// Find a usable window
+
+	// First, check if we have a similar window in the pool |GOONSTATION-ADD|
+	for (var/id in windows)
+		var/datum/tgui_window/suspended_window = windows[id]
+		if(suspended_window?.interface == interface)
+			if(suspended_window.locked)
+				continue
+			if (suspended_window.status == TGUI_WINDOW_READY)
+				return suspended_window
+			if(suspended_window.status == TGUI_WINDOW_CLOSED)
+				suspended_window.status = TGUI_WINDOW_LOADING
+				return suspended_window
+
+	// Find another usable window
 	for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
 		window_id = TGUI_WINDOW_ID(i)
 		window = windows[window_id]
 		// As we are looping, create missing window datums
 		if(!window)
-			window = new(user.client, window_id, pooled = TRUE)
+			window = new(user.client, window_id, interface, pooled = TRUE) // |GOONSTATION-CHANGE| interface
 		// Skip windows with acquired locks
 		if(window.locked)
 			continue
 		if(window.status == TGUI_WINDOW_READY)
+			window.interface = interface // |GOONSTATION-ADD| Set the interface string on resume
 			return window
 		if(window.status == TGUI_WINDOW_CLOSED)
 			window.status = TGUI_WINDOW_LOADING
+			window.interface = interface // |GOONSTATION-ADD| Set the interface string on resume
 			window_found = TRUE
 			break
 	if(!window_found)

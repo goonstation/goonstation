@@ -594,6 +594,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/vendor)
 	contraband = 1
 	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "juice_pineapple" = 3, "badgrease" = 4)
 
+/obj/item/reagent_containers/food/snacks/pizzaslice/vendor/xmas // hee hee hoo hoo
+	name = "slice of xmas pizza"
+	desc = "A slice of traditional Spacemas pizza. Yum!"
+	initial_reagents = list("yuck" = 1, "eggnog" = 1, "cheese" = 1, "porktonium" = 2, "mashedpotatoes" = 2, "sugar" = 3)
+
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/cargo)
 /obj/item/reagent_containers/food/snacks/pizza/cargo
 	name = "soft serve base pizza"
@@ -604,15 +609,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/cargo)
 /obj/item/reagent_containers/food/snacks/pizza/cargo/cheese
 	name = "soft serve cheese pizza"
 	icon_state = "cheesepizza"
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/cheese
 
 /obj/item/reagent_containers/food/snacks/pizza/cargo/pepperoni
 	name = "soft serve pepperoni pizza"
 	icon_state = "pepperonipizza"
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pepperoni
 
 /obj/item/reagent_containers/food/snacks/pizza/cargo/mushroom
 	name = "soft serve mushroom pizza"
 	icon_state = "mushroompizza"
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/mushroom
 
 /obj/item/reagent_containers/food/snacks/pizza/xmas
 	name = "\improper Spacemas pizza"
 	desc = "A traditional Spacemas pizza! It has ham, mashed potatoes, gingerbread and candy canes on it, with eggnog sauce and a fruitcake crust! Yum!"
+	// icon_state = "xmaspizza" TODO: Add sprite
+	slice_product =  /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/xmas

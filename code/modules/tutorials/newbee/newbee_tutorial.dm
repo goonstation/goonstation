@@ -214,12 +214,12 @@ var/global/newbee_tutorial_enabled = TRUE
 	src.AddStep(/datum/tutorialStep/newbee/move_to/traversing_maints)
 
 	// room 9 - Space Prep
-	src.AddStep(/datum/tutorialStep/newbee/timer/stats_before)
+	src.AddStep(/datum/tutorialStep/newbee/timer/spaceworthy)
 	src.AddStep(/datum/tutorialStep/newbee/opening_closets)
 	src.AddStep(/datum/tutorialStep/newbee/equipping_space_gear)
-	src.AddStep(/datum/tutorialStep/newbee/timer/stats_after)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/oxygen)
 	src.AddStep(/datum/tutorialStep/newbee/internals_on)
+	src.AddStep(/datum/tutorialStep/newbee/timer/stats_after)
 
 	// room 10 - Space Traversal
 	src.AddStep(/datum/tutorialStep/newbee/move_to/enter_space)

@@ -136,6 +136,8 @@ TYPEINFO(/obj/item/pinpointer)
 				continue
 			if(!isnull(z_locked) && z_locked != T.z)
 				continue
+			if(isnull(z_locked) && T.z != Z_LEVEL_STATION)
+				continue
 			var/dist = GET_DIST(A, src)
 			if(!isnull(max_range) && dist > max_range)
 				continue

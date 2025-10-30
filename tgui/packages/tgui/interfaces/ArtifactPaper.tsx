@@ -11,19 +11,19 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 // TODO: change usages to be theme-based rather than override color here
-const paperColor = 'white';
+const paperColor = 'AliceBlue';
 
 interface ArtifactPaperData {
-  artifactName;
-  artifactOrigin;
-  artifactType;
-  artifactTriggers;
-  artifactFaults;
-  artifactDetails;
-  allArtifactOrigins;
-  allArtifactTypes;
-  allArtifactTriggers;
-  crossed;
+  artifactName: string;
+  artifactOrigin: string;
+  artifactType: string;
+  artifactTriggers: string;
+  artifactFaults: string;
+  artifactDetails: string;
+  allArtifactOrigins: string[];
+  allArtifactTypes: [string, number][];
+  allArtifactTriggers: string[];
+  crossed: string[];
 }
 
 export const ArtifactPaper = () => {
@@ -56,11 +56,11 @@ export const ArtifactPaper = () => {
           <Flex direction={'column'} wrap={'wrap'} height={3}>
             {allArtifactOrigins.map((x) => (
               <Flex.Item
-                key={x.id}
+                key={x}
                 onClick={(e, value) => act('origin', { newOrigin: x })}
               >
                 <Button.Checkbox checked={artifactOrigin === x} />
-                <a>{crossed.includes(x) ? <s>{x}</s> : x}</a>
+                <span>{crossed.includes(x) ? <s>{x}</s> : x}</span>
               </Flex.Item>
             ))}
           </Flex>
@@ -68,17 +68,18 @@ export const ArtifactPaper = () => {
           <Flex
             direction={'column'}
             wrap={'wrap'}
-            height={25}
-            justify={'space-evenly'}
+            height={23}
+            // justify={'space-evenly'}
           >
-            {allArtifactTypes.map((x) => (
+            {allArtifactTypes.map(([name, size]) => (
               <Flex.Item
-                className={'artifactType' + x[1]}
-                key={x[0].id}
-                onClick={(e, value) => act('type', { newType: x[0] })}
+                className={'artifactType' + size}
+                backgroundColor={getArtifactSizeColor(size)}
+                key={name}
+                onClick={(e, value) => act('type', { newType: name })}
               >
-                <Button.Checkbox checked={artifactType === x[0]} />
-                <a>{crossed.includes(x[0]) ? <s>{x[0]}</s> : x[0]}</a>
+                <Button.Checkbox checked={artifactType === name} />
+                <span>{crossed.includes(name) ? <s>{name}</s> : name}</span>
               </Flex.Item>
             ))}
           </Flex>
@@ -86,11 +87,11 @@ export const ArtifactPaper = () => {
           <Flex direction={'column'} wrap={'wrap'} height={5}>
             {allArtifactTriggers.map((x) => (
               <Flex.Item
-                key={x.id}
+                key={x}
                 onClick={(e, value) => act('trigger', { newTriggers: x })}
               >
                 <Button.Checkbox checked={artifactTriggers === x} />
-                <a>{crossed.includes(x) ? <s>{x}</s> : x}</a>
+                <span>{crossed.includes(x) ? <s>{x}</s> : x}</span>
               </Flex.Item>
             ))}
           </Flex>
@@ -99,7 +100,7 @@ export const ArtifactPaper = () => {
             value={artifactFaults}
             fluid
             height={5}
-            onChange={(_, x) => act('fault', { newFaults: x })}
+            onBlur={(x) => act('fault', { newFaults: x })}
             backgroundColor={paperColor}
           />
           <h3>Additional Information</h3>
@@ -107,11 +108,24 @@ export const ArtifactPaper = () => {
             value={artifactDetails}
             fluid
             height={10}
-            onChange={(_, x) => act('detail', { newDetail: x })}
+            onBlur={(x) => act('detail', { newDetail: x })}
             backgroundColor={paperColor}
           />
         </Section>
       </Window.Content>
     </Window>
   );
+};
+
+const getArtifactSizeColor = (size: number): string => {
+  switch (size) {
+    case 3: // ARTIFACT_SIZE_LARGE
+      return '#c9acac';
+    case 2: // ARTIFACT_SIZE_MEDIUM
+      return '#ccc6b0';
+    case 1: // ARTIFACT_SIZE_TINY
+      return '#adc2d3';
+    default:
+      return 'lightgray';
+  }
 };

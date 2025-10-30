@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Fight for your team!',
-  content: (
+const PodwarsContentWindow = () => {
+  return (
     <div className="traitor-tips pod-wars-tips">
       <h1 className="center">You are a pod pilot!</h1>
       <div className="image-bar">
@@ -152,5 +151,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Pod wars">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Fight for your team!',
+  component: PodwarsContentWindow,
 };

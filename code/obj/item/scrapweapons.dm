@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					src.icon_state = "spear-wire"
 					src.item_state = "spear-wire"
 			else
-				boutput(user, "<span class='alert>You need to attach some wires before you stick anything on the spear!</span>")
+				boutput(user, "<span class='alert'>You need to attach some wires before you stick anything on the spear!</span>")
 				. = ..()
 		else if (istype(W, /obj/item/raw_material/scrap_metal))
 			W.change_stack_amount(-1)
@@ -374,7 +374,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/double)
+		src.setItemSpecial(/datum/item_special/jab)
 
 	glass
 		desc = "A tiny bit of glass attached to a handle. You might cut yourself just holding it."

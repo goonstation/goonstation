@@ -160,6 +160,7 @@ TYPEINFO(/datum/component/pet)
 			var/obj/item/trinket = new T(get_turf(src))
 			var/datum/db_record/R = pick(data_core.general.records)
 			trinket.name = "[R["name"]][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
+			trinket.real_name = trinket.name
 			trinket.quality = rand(5,80)
 			sleep(1 SECOND)
 			qdel(src)

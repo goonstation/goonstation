@@ -1,5 +1,5 @@
 /datum/game_mode/mixed/mixed_rp
-	name = "Mixed (Mild)"
+	name = "Intrigue"
 	config_tag = "mixed_rp"
 	latejoin_antag_compatible = 1
 	 //went with a trivial solution of adding more identical items to the list
@@ -16,5 +16,5 @@
 
 
 /datum/game_mode/mixed/mixed_rp/announce()
-	boutput(world, "<B>The current game mode is - Mixed Mild!</B>")
+	boutput(world, "<B>The current game mode is - Intrigue!</B>")
 	boutput(world, "<B>Something could happen! Be on your guard!</B>")

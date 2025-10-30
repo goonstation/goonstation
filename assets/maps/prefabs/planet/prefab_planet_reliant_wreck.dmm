@@ -421,7 +421,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "Gq" = (
-/obj/loudspeaker,
+/obj/machinery/loudspeaker,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "GG" = (

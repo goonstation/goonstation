@@ -314,12 +314,12 @@
 
 /obj/mapping_helper/access/owlcommand
 	name = "owlery command access spawn"
-	req_access = list(access_owlerysec)
+	req_access = list(access_owlerycommand)
 	color = COMMAND
 
 /obj/mapping_helper/access/owlsecurity
 	name = "owlery sec access spawn"
-	req_access = list(access_owlerycommand)
+	req_access = list(access_owlerysec)
 	color = SECURITY
 
 /obj/mapping_helper/access/polariscargo

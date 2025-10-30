@@ -402,7 +402,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		C.Browse(src.poster_HTML, "window=[src.line_title]_poster;size=[src.imgw]x[src.imgh];title=[src.line_title]")
 
 	proc/generate_poster()
-		src.poster_HTML = {"<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"/></head><body><title>Poster</title>\
+		src.poster_HTML = {"<html><body><title>Poster</title>\
 		[src.line_title ? "<h2><center><b>[src.line_title]</b></center></h2>" : null]<hr>\
 		[src.poster_image ? "<center><img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=posterimage.png height=96 width=96></center><br>" : null]\
 		[src.line_photo_subtitle ? "<center><small><sup>[src.line_photo_subtitle]</sup></small></center>" : null]<hr>\
@@ -509,7 +509,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 	proc/generate_html()
 		src.ensure_plist()
 
-		src.pdata = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"/></head><body><title>Wanted Poster</title>"
+		src.pdata = "<html><body><title>Wanted Poster</title>"
 		src.pdata += "<right><A href='byond://?src=\ref[src];print=1'>PRINT</A></right><br>"
 		src.pdata += "<h2><center><b><A href='byond://?src=\ref[src];entername=1'>NAME: [src.plist["name"]]</A></b></center></h2><hr>"
 		src.pdata += "<center><img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=pm_posterimage.png height=96 width=96></center><br>"

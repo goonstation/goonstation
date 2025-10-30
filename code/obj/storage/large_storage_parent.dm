@@ -9,7 +9,7 @@
 #define RELAYMOVE_DELAY 1 SECOND
 
 ABSTRACT_TYPE(/obj/storage)
-ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
+ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
@@ -214,6 +214,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
 			return
+		if (src.hasStatus("teleporting"))
+			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
 		src.last_relaymove_time = world.time
@@ -370,7 +372,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = ID.registered
-						src.name = "[ID.registered]'s [src.name]"
+						src.name = "[ID.registered]’s [src.name]"
 						src.desc = "Owned by [ID.registered]."
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
@@ -568,6 +570,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						continue
 					thing.set_loc(T)
 					SEND_SIGNAL(thing,COMSIG_ATTACKHAND,user) //triggers radiation/explsion/glue stuff
+					SEND_SIGNAL(thing, COMSIG_ATOM_MOUSEDROP, user, src, thing.loc)
 					sleep(0.5)
 					if (!src.open)
 						break
@@ -921,6 +924,57 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 			src.bust_out()
 
+/obj/storage/proc/take_damage(amount, mob/M = null, obj/item/I = null, obj/projectile/P = null)
+	if (!isnum(amount) || amount <= 0)
+		return
+	src._health -= amount
+	if(_health <= 0)
+		_health = 0
+		if (P)
+			var/shooter_data = null
+			var/vehicle
+			if (P.mob_shooter)
+				shooter_data = P.mob_shooter
+			else if (ismob(P.shooter))
+				var/mob/PS = P.shooter
+				shooter_data = PS
+			var/obj/machinery/vehicle/V
+			if (istype(P.shooter,/obj/machinery/vehicle/))
+				V = P.shooter
+				if (!shooter_data)
+					shooter_data = V.pilot
+				vehicle = 1
+			if(shooter_data)
+				logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+			else
+				logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		else if (M)
+			logTheThing(LOG_COMBAT, M, "broke open [log_object(src)] with [log_object(I)] at [log_loc(src)]")
+		else
+			logTheThing(LOG_COMBAT, src, "was broken open by an unknown cause at [log_loc(src)]")
+		break_open()
+
+/obj/storage/proc/break_open()
+	src.welded = 0
+	src.unlock()
+	src.open()
+	playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+
+/obj/storage/proc/bash(obj/item/I, mob/user)
+	user.lastattacked = get_weakref(src)
+	var/damage
+	var/damage_text
+	if (I.force < 10)
+		damage = round(I.force * 0.6)
+		damage_text = " It's not very effective."
+	else
+		damage = I.force
+	user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src] with [I]! [damage_text]"))
+	attack_particle(user,src)
+	hit_twitch(src)
+	take_damage(clamp(damage, 1, 20), user, I, null)
+	playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+
 /datum/action/bar/icon/storage_disassemble
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 20
@@ -1105,4 +1159,3 @@ TYPEINFO_NEW(/obj/storage/secure)
 			return 1
 
 #undef RELAYMOVE_DELAY
-

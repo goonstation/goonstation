@@ -226,7 +226,7 @@
 
 	proc/check_valid(mob/M, area/targetArea)
 		var/turf/T = get_turf(M)
-		if(!istype(targetArea, /area/station) || get_z(T) != Z_LEVEL_STATION)
+		if(!istype(targetArea, /area/station) || istype(targetArea, /area/station/medical/asylum) || get_z(T) != Z_LEVEL_STATION)
 			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
 			return FALSE
 
@@ -249,8 +249,7 @@
 		return TRUE
 	proc/confirm(mob/M)
 		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
-		antag_role.gang.select_gang_uniform()
-		return TRUE
+		return antag_role.gang.select_gang_uniform()
 
 	proc/after_cast(mob/M, area/area, datum/antagonist/gang_leader/antag_role)
 		for(var/datum/mind/member in antag_role.gang.members)

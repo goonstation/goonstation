@@ -7,9 +7,8 @@
 
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'BASKETBALL',
-  content: (
+const BasketballContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a Basketball Wizard!</h1>
 
@@ -22,5 +21,10 @@ export const acw: AlertContentWindow = {
 
       <p>3. BASKETBALL.</p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'BASKETBALL',
+  component: BasketballContentWindow,
 };

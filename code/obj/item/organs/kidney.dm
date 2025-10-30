@@ -194,3 +194,87 @@ TYPEINFO(/obj/item/organ/kidney/cyber)
 	icon_state = "cyber-kidney-R"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/kidney_failure/right
+
+/obj/item/organ/kidney/amphibian
+	name = "amphibian kidney"
+	desc = "Oh, look, it's got... nodules..."
+	icon_state = "amphibian_kidney_L"
+	organ_name = "amphibian_kidney"
+
+/obj/item/organ/kidney/amphibian/left
+	name = "left kidney"
+	desc = "Oh, look, it's got... nodules... It's the left kidney."
+	organ_name = "amphibian_kidney_L"
+	organ_holder_name = "left_kidney"
+	icon_state = "amphibian_kidney_L"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/left
+
+/obj/item/organ/kidney/amphibian/right
+	name = "right kidney"
+	desc = "Oh, look, it's got... nodules... It's the right kidney."
+	organ_name = "amphibian_kidney_R"
+	organ_holder_name = "right_kidney"
+	icon_state = "amphibian_kidney_R"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/right
+
+/obj/item/organ/kidney/skeleton
+	name = "right kidney"
+	desc = "Christ, this thing has teeth attached."
+	organ_name = "skele_kidney"
+	icon_state = "skele_kidney_L"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/kidney/skeleton/right
+	name = "right kidney"
+	desc = "Christ, this thing has teeth attached. It's the right kidney."
+	organ_name = "skele_kidney_R"
+	organ_holder_name = "right_kidney"
+	icon_state = "skele_kidney_R"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/right
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/kidney/skeleton/left
+	name = "left kidney"
+	desc = "Christ, this thing has teeth attached. It's the left kidney."
+	organ_name = "skele_kidney_L"
+	organ_holder_name = "left_kidney"
+	icon_state = "skele_kidney_L"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/left
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/kidney/martian
+	name = "right soft chunk"
+	desc = "Some sort of waste filtration... analogue."
+	organ_name = "martian_kidney_R"
+	organ_holder_name = "right_kidney"
+	icon_state = "martian_kidney"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"
+
+/obj/item/organ/kidney/martian/right
+	name = "right soft chunk"
+	desc = "Some sort of waste filtration... analogue. It's the right 'kidney'."
+	organ_name = "martian_kidney"
+	icon_state = "martian_kidney_R"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/right
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"
+
+/obj/item/organ/kidney/martian/left
+	name = "left soft chunk"
+	desc = "Some sort of waste filtration... analogue. It's the left 'kidney'."
+	organ_name = "martian_kidney_L"
+	organ_holder_name = "right_kidney"
+	icon_state = "martian_kidney_L"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/left
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

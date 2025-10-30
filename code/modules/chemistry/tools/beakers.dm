@@ -222,3 +222,8 @@
 	container_icon = 'icons/misc/janstuff.dmi'
 	container_style = "heartbottle"
 	fluid_overlay_states = 5
+
+/obj/item/reagent_containers/glass/beaker/large/round/random_acid
+	New()
+		. = ..()
+		src.reagents.add_reagent(pick("pacid", "clacid", "acid"), src.initial_volume)

@@ -51,7 +51,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
 //#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
 //#define I_WANNA_BE_THE_JOB "IMCODER" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
-//#define BANISH_PREGAME_HTML // Prevents the HTML titlescreen from loading. Useful if you experience debilitating lag due to it.
 //#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 
 //#define STOP_DISTRACTING_ME //All of the below
@@ -73,6 +72,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
 //#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
 //#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT // Stops lights from breaking or burning out when spawning or turning on/off
+//#define NO_ANTAG_POPUPS_I_DONT_CARE // Stops antag popups from coming up at the start of every game
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -105,6 +105,9 @@ o+`        `-` ``..-:yooos-..----------..`
 // Queue worker statistics
 // Probably hefty
 //#define QUEUE_STAT_DEBUG
+
+// Enable local authentication using a dummy version of the goonhub authentication process
+//#define TEST_AUTH
 
 // Makes the code crash / log when an abstract type is instantiated.
 // see _stadlib/_types.dm for details
@@ -193,6 +196,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define FUCK_OFF_WITH_THE_MAIL
 #define GHOSTDRONES_ON_STRIKE
 #define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
+#define NO_ANTAG_POPUPS_I_DONT_CARE
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE

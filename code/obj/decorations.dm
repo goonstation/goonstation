@@ -426,17 +426,12 @@ TYPEINFO(/obj/shrub/syndicateplant)
 /obj/shrub/syndicateplant
 	var/net_id
 	is_syndicate = TRUE
+	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.", "Is that an antenna?")
 
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_HYDRO)
-
-	get_desc(dist, mob/user)
-		if(istrainedsyndie(user))
-			. += SPAN_ALERT("<b>The latest in syndicate spy technology. </b>")
-		else
-			. += "Is that an antenna? "
 
 	proc/fuck_up()
 		var/datum/effects/system/spark_spread/S = new
@@ -472,12 +467,15 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "bonsai"
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
+	health = 5 //Fragile tree
 	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
 
 	destroy()
+		if(src.destroyed)
+			return
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
@@ -507,6 +505,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			user.visible_message(SPAN_ALERT("<b>[user] violently grazes on [src]!</b>"), SPAN_NOTICE("You voraciously devour the bonzai, what a feast!"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 			src.destroy()
+			logTheThing(LOG_COMBAT, src, "was eaten by [constructTarget(user,"combat")] at [log_loc(src)].")
 			user.changeStatus("food_deep_burp", 2 MINUTES)
 			user.changeStatus("food_hp_up", 2 MINUTES)
 			user.changeStatus("food_energized", 2 MINUTES)
@@ -518,28 +517,31 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		if (inafterlife(user))
 			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
-		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
 			if (issnippingtool(W))
 				boutput(user, SPAN_NOTICE("You carefully and lovingly sculpt your bonsai tree."))
 			else
 				boutput(user, SPAN_ALERT("Why would you ever destroy your precious bonsai tree?"))
-		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
-			src.destroy()
+			return
+		var/was_destroyed = src.destroyed
+		. = ..()
+		if(src.destroyed && !was_destroyed)
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
 			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"))
+			logTheThing(LOG_COMBAT, src, "was destroyed by [constructTarget(user,"combat")] with [W] at [log_loc(src)].")
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
-		return
 
 	meteorhit(obj/O as obj)
 		src.visible_message(SPAN_ALERT("<b>The meteor smashes right through [src]!</b>"))
 		src.destroy()
+		logTheThing(LOG_COMBAT, src, "was destroyed by a meteor at [log_loc(src)].")
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
 		src.visible_message(SPAN_ALERT("<b>[src] is ripped to pieces by the blast!</b>"))
 		src.destroy()
+		logTheThing(LOG_COMBAT, src, "was destroyed by an explosion at [log_loc(src)].")
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
 
@@ -582,6 +584,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			src.UpdateIcon()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
 			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"))
+			logTheThing(LOG_COMBAT, src, "was destroyed by [constructTarget(user,"combat")] with [W] at [log_loc(src)].")
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 

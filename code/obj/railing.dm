@@ -153,6 +153,11 @@
 					R.setMaterial(M)
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
+		else if (ispryingtool(W))
+			if(src.anchored)
+				boutput(user, SPAN_NOTICE("\The [src] must be unfastened to rotate!"))
+			else
+				src.set_dir(turn(src.dir, -90))
 		else if (istype(W,/obj/item/rods))
 			if(!src.is_reinforced && can_reinforce)
 				var/obj/item/rods/R = W

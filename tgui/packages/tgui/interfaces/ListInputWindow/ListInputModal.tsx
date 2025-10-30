@@ -22,7 +22,6 @@ import {
   KEY_UP,
   KEY_Z,
 } from '../../../common/keycodes';
-import { useBackend } from '../../backend';
 import { InputButtons } from '../common/InputButtons';
 
 type ListInputModalProps = {
@@ -46,7 +45,9 @@ export const ListInputModal = (props: ListInputModalProps) => {
     capitalize,
   } = props;
 
-  const [selected, setSelected] = useState(items.indexOf(default_item));
+  const [selectedIndex, setSelectedIndex] = useState(
+    items.indexOf(default_item),
+  );
   // |goonstation-change| start_with_search option
   const [searchBarVisible, setSearchBarVisible] = useState(start_with_search);
   const [searchQuery, setSearchQuery] = useState('');
@@ -79,24 +80,24 @@ export const ListInputModal = (props: ListInputModalProps) => {
         direction = 10;
         break;
     }
-    let newSelected = selected + direction;
+    let newSelected = selectedIndex + direction;
     if (newSelected < 0 && Math.abs(direction) === 1) newSelected = len;
     if (newSelected > len && Math.abs(direction) === 1) newSelected = 0;
     if (newSelected < 0) newSelected = 0;
     if (newSelected > len) newSelected = len;
-    setSelected(newSelected);
+    setSelectedIndex(newSelected);
     document!.getElementById(newSelected.toString())?.focus();
   };
   // User selects an item with mouse
   const onClick = (index: number) => {
-    if (index === selected) {
+    if (index === selectedIndex) {
       return;
     }
-    setSelected(index);
+    setSelectedIndex(index);
   };
   // User presses a letter key and searchbar is visible
   // |goonstation-change| send any text input to the search bar
-  const onFocusSearch = (letter) => {
+  const onFocusSearch = (letter: string) => {
     let searchBarInput = getSearchBar();
     if (!searchBarInput) {
       return;
@@ -112,19 +113,19 @@ export const ListInputModal = (props: ListInputModalProps) => {
     let foundIndex = items.findIndex((item, index) => {
       return (
         item?.toLowerCase().startsWith(keyChar?.toLowerCase()) &&
-        index > selected
+        index > selectedIndex
       );
     });
     if (foundIndex === -1) {
       foundIndex = items.findIndex((item, index) => {
         return (
           item?.toLowerCase().startsWith(keyChar?.toLowerCase()) &&
-          index <= selected
+          index <= selectedIndex
         );
       });
     }
     if (foundIndex !== -1) {
-      setSelected(foundIndex);
+      setSelectedIndex(foundIndex);
       document!.getElementById(foundIndex.toString())?.focus();
     }
   };
@@ -134,16 +135,16 @@ export const ListInputModal = (props: ListInputModalProps) => {
     if (query === searchQuery) {
       return;
     }
-    let currentSelectedText = filteredItems[selected];
+    let currentSelectedText = filteredItems[selectedIndex];
     let newDisplayed = items.filter((val) =>
       val.toLowerCase().includes(query.toLowerCase()),
     );
     let newSelected = newDisplayed.indexOf(currentSelectedText);
     if (newSelected === -1 && newDisplayed.length > 0) {
-      setSelected(0);
+      setSelectedIndex(0);
       document!.getElementById('0')?.scrollIntoView();
     } else if (newDisplayed.length !== 0) {
-      setSelected(newSelected);
+      setSelectedIndex(newSelected);
       document!.getElementById(newSelected.toString())?.scrollIntoView();
     }
     setSearchQuery(query);
@@ -158,7 +159,10 @@ export const ListInputModal = (props: ListInputModalProps) => {
   );
   // Grabs the cursor when no search bar is visible.
   if (!searchBarVisible) {
-    setTimeout(() => document!.getElementById(selected.toString())?.focus(), 1);
+    setTimeout(
+      () => document!.getElementById(selectedIndex.toString())?.focus(),
+      1,
+    );
   }
 
   return (
@@ -192,7 +196,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
             break;
           case KEY_ENTER:
             event.preventDefault();
-            on_selected(filteredItems[selected]);
+            on_selected(filteredItems[selectedIndex]);
             break;
           case KEY_ESCAPE:
             event.preventDefault();
@@ -200,13 +204,13 @@ export const ListInputModal = (props: ListInputModalProps) => {
             break;
           // |goonstation-change| Home support
           case KEY_HOME:
-            setSelected(0);
+            setSelectedIndex(0);
             document!.getElementById('0')?.focus();
             event.preventDefault();
             break;
           // |goonstation-change| End support
           case KEY_END:
-            setSelected(len);
+            setSelectedIndex(len);
             document!.getElementById(len.toString())?.focus();
             event.preventDefault();
             break;
@@ -214,7 +218,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
           case KEY_TAB:
             if (searchBarVisible) {
               let selectedButtonElement = document.getElementById(
-                selected.toString(),
+                selectedIndex.toString(),
               );
               if (searchBarFocused && selectedButtonElement) {
                 selectedButtonElement.focus();
@@ -254,24 +258,24 @@ export const ListInputModal = (props: ListInputModalProps) => {
           <ListDisplay
             filteredItems={filteredItems}
             onClick={onClick}
+            onDoubleClick={on_selected}
             onFocusSearch={onFocusSearch}
             searchBarVisible={searchBarVisible}
-            selected={selected}
+            selectedIndex={selectedIndex}
             capitalize={capitalize}
           />
         </Stack.Item>
         {searchBarVisible !== false && (
           <SearchBar
-            filteredItems={filteredItems}
+            onEnter={() => on_selected(filteredItems[selectedIndex])}
             onSearch={onSearch}
             searchQuery={searchQuery}
-            selected={selected}
           />
         )}
         <Stack.Item>
           <InputButtons
-            input={filteredItems[selected]}
-            on_submit={() => on_selected(filteredItems[selected])}
+            input={filteredItems[selectedIndex]}
+            on_submit={() => on_selected(filteredItems[selectedIndex])}
             on_cancel={on_cancel}
           />
         </Stack.Item>
@@ -280,18 +284,28 @@ export const ListInputModal = (props: ListInputModalProps) => {
   );
 };
 
+interface ListDisplayProps {
+  filteredItems: string[];
+  onClick: (itemIndex: number) => void;
+  onDoubleClick: (entry: string) => void;
+  onFocusSearch: (letter: string) => void;
+  searchBarVisible: boolean;
+  selectedIndex: number;
+  capitalize: boolean;
+}
+
 /**
  * Displays the list of selectable items.
  * If a search query is provided, filters the items.
  */
-const ListDisplay = (props) => {
-  const { act } = useBackend();
+const ListDisplay = (props: ListDisplayProps) => {
   const {
     filteredItems,
     onClick,
+    onDoubleClick,
     onFocusSearch,
     searchBarVisible,
-    selected,
+    selectedIndex,
     capitalize,
   } = props;
 
@@ -301,16 +315,13 @@ const ListDisplay = (props) => {
       {filteredItems.map((item, index) => {
         return (
           <Button
-            color="transparent"
-            fluid
-            id={index}
-            key={index}
             className="search-item"
+            color={index !== selectedIndex ? 'transparent' : undefined}
+            fluid
+            id={`${index}`}
+            key={index}
             onClick={() => onClick(index)}
-            onDoubleClick={(event) => {
-              event.preventDefault();
-              act('submit', { entry: filteredItems[selected] });
-            }}
+            onDoubleClick={() => onDoubleClick(item)}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
               if (searchBarVisible && event.key.length === 1) {
@@ -323,7 +334,7 @@ const ListDisplay = (props) => {
                 onFocusSearch(char);
               }
             }}
-            selected={index === selected}
+            selected={index === selectedIndex}
             style={{
               animation: 'none',
               transition: 'none',
@@ -340,13 +351,18 @@ const ListDisplay = (props) => {
   );
 };
 
+interface SearchBarProps {
+  onEnter: () => void;
+  onSearch: (search: string) => void;
+  searchQuery: string;
+}
+
 /**
  * Renders a search bar input.
  * Closing the bar defaults input to an empty string.
  */
-const SearchBar = (props) => {
-  const { act } = useBackend();
-  const { filteredItems, onSearch, searchQuery, selected } = props;
+const SearchBar = (props: SearchBarProps) => {
+  const { onEnter, onSearch, searchQuery } = props;
 
   return (
     <Input
@@ -354,11 +370,8 @@ const SearchBar = (props) => {
       autoSelect
       fluid
       id="search_bar"
-      onEnter={(event) => {
-        event.preventDefault();
-        act('submit', { entry: filteredItems[selected] });
-      }}
-      onInput={(_, value) => onSearch(value)}
+      onEnter={onEnter}
+      onChange={(value) => onSearch(value)}
       placeholder="Search..."
       value={searchQuery}
     />

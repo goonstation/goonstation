@@ -21,8 +21,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		return locate(adjustX, adjustY, target.z)
 
 	verify_position(turf/target)
-		for(var/x=0, x<prefabSizeX; x++)
-			for(var/y=0, y<prefabSizeY; y++)
+		for(var/x=0; x < prefabSizeX; x++)
+			for(var/y=0; y<prefabSizeY; y++)
 				var/turf/L = locate(target.x+x, target.y+y, target.z)
 				if(L?.loc && ((L.loc.type != /area/space) && !istype(L.loc , /area/allowGenerate)))
 					return FALSE

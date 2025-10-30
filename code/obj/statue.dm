@@ -69,14 +69,25 @@
 		// Otherwise, it's probably soft enough to cut
 		if (iscuttingtool(W) || issawingtool(W) || ischoppingtool(W))
 			var/hardness = src.material.getProperty("hard")
-			if (hardness < 2)
+			if (hardness > 2)
 				boutput(user, SPAN_ALERT("The [src.material] is too hard to cut!"))
 				return
 
-			if(isliving(src.mob_inside))
-				var/mob/living/L = src.mob_inside
-				if (L.organHolder.head)
+			if(iscarbon(src.mob_inside))
+				var/mob/living/carbon/C = src.mob_inside
+				if (C.organHolder?.head)
 					boutput(user, SPAN_ALERT("You start cutting up [src]."))
+				else
+					boutput(user, SPAN_ALERT("You're not quite sure where the head is on [src]."))
+					return
+			else if (isrobot(src.mob_inside))
+				var/mob/living/silicon/robot/R = src.mob_inside
+				R.eject_brain(user)
+				return
+			else if (isAI(src.mob_inside))
+				var/mob/living/silicon/ai/AI = src.mob_inside
+				AI.eject_brain(user)
+				return
 			else
 				boutput(user, SPAN_ALERT("You start cutting the head off of [src]."))
 			playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, TRUE)
@@ -101,7 +112,7 @@
 
 	proc/mine_statue(var/obj/item/mining_tool/tool, var/mob/user)
 		var/hardness = src.material.getProperty("hard")
-		if (hardness < 2)
+		if (hardness <= 2)
 			boutput(user, SPAN_ALERT("The [src.material] is too soft to mine!"))
 			return
 		if(!ON_COOLDOWN(user, "mine_statue", 0.5 SECONDS))
@@ -185,6 +196,15 @@
 	/// Proc to drop a list of organs from the mob inside
 	proc/drop_organs()
 		if (!isliving(src.mob_inside))
+			return
+
+		if (isrobot(src.mob_inside))
+			var/mob/living/silicon/robot/R = src.mob_inside
+			R.eject_brain()
+			return
+		if (isAI(src.mob_inside))
+			var/mob/living/silicon/ai/AI = src.mob_inside
+			AI.eject_brain()
 			return
 
 		var/mob/living/L = src.mob_inside

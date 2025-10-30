@@ -78,9 +78,15 @@
 	)
 
 /datum/clothingbooth_grouping/dirty_vest
-	item_paths = list(/datum/clothingbooth_item/w_uniform/dirty_vest)
+	name = "Dirty Vest"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/dirty_vest/,
+		/datum/clothingbooth_item/w_uniform/dirty_vest/blackpants,
+		/datum/clothingbooth_item/w_uniform/dirty_vest/bluepants,
+		/datum/clothingbooth_item/w_uniform/dirty_vest/brownpants
+	)
 	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/dress_shirt_wcoat
@@ -140,12 +146,6 @@
 		/datum/clothingbooth_item/w_uniform/little_dress/black,
 		/datum/clothingbooth_item/w_uniform/little_dress/red
 	)
-	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/casual,
-	)
-
-/datum/clothingbooth_grouping/long_sleeved_shirt
-	item_paths = list(/datum/clothingbooth_item/w_uniform/long_sleeved_shirt)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
@@ -338,4 +338,29 @@
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
+/datum/clothingbooth_grouping/tea_party_dress
+	name = "Tea Party Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/pink,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/pink_and_black,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/black_and_white,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/black,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/white,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/white_and_black,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/blue,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/dark_blue,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/light_blue,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/cyan,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/green,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/light_green,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/orange,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/red,
+		/datum/clothingbooth_item/w_uniform/tea_party_dress/yellow,
+
+
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)

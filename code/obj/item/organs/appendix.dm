@@ -70,3 +70,22 @@ TYPEINFO(/obj/item/organ/appendix/cyber)
 			donor.reagents.add_reagent("omnizine", 15) //reduced omnizine amount
 			donor.reagents.add_reagent("teporone", 20)
 			boutput(donor, SPAN_ALERT("Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon."))
+
+/obj/item/organ/appendix/amphibian
+	name = "amphibian appendix"
+	desc = "A green, bean-like... thing. You don't even know if this is technically an appendix."
+	icon_state = "amphibian_appendix"
+
+/obj/item/organ/appendix/skeleton
+	name = "skeleton appendix"
+	desc = "...This is a finger. There's no way this acts as an appendix."
+	icon_state = "skeleton_appendix"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/appendix/martian
+	name = "martian globule"
+	desc = "A purple... appendix... thingy, taken from a martian."
+	icon_state = "martian_appendix"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

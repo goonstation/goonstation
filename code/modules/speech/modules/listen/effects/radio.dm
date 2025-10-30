@@ -7,11 +7,15 @@
 		return
 
 	var/signal_frequency
-	if (length(radio.secure_frequencies))
-		// `copytext` returns the message prefix without the leading colon.
-		signal_frequency = radio.secure_frequencies[copytext(message.prefix, 2, length(message.prefix) + 1)]
-
-	signal_frequency ||= radio.frequency
+	// `copytext` returns the message prefix without the leading colon.
+	var/radio_prefix = copytext(message.prefix, 2, length(message.prefix) + 1)
+	// Only default to general frequency if you didn't try talking on a different channel
+	if (length(radio.secure_frequencies) && radio.secure_frequencies[radio_prefix])
+		signal_frequency = radio.secure_frequencies[radio_prefix]
+	else if (!radio_prefix)
+		signal_frequency = radio.frequency
+	else //Just whisper, don't try talking crime on general
+		return
 
 	if (signal_frequency != R_FREQ_DEFAULT)
 		message.hear_sound = 'sound/misc/talk/radio2.ogg'

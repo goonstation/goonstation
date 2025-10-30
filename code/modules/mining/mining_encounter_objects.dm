@@ -163,6 +163,10 @@
 		QDEL_NULL(src.decal)
 		flock_convert_turf(target)
 		playsound(target, 'sound/items/Deconstruct.ogg', 30, TRUE, extrarange = -10)
+		if (prob(10))
+			flockdronegibs(target)
+		if (prob(0.5))
+			new /obj/flock_structure/sentinel/angry(target)
 		src.converter.contained_mats -= 5
 		src.converter.inventory_counter.update_number(src.converter.contained_mats)
 		src.converter = null

@@ -153,6 +153,9 @@ var/datum/respawn_controls/respawn_controller
 				if(isnull(the_client))
 					return RESPAWNEE_STATE_WAITING
 
+			if (!the_client.authenticated)
+				return RESPAWNEE_STATE_WAITING
+
 			src.update_time_display()
 
 			// Check that the client is currently dead or in the afterlife bar

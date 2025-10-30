@@ -1821,6 +1821,9 @@
 /datum/limb/small_critter/mail
 	interact_exemptions = list(/obj/item/random_mail)
 
+	grab(mob/target, mob/living/user)
+		user.visible_message("<b>[user] scrabbles pathetically at [target]!</b>")
+
 /// same as the parent, but can pick up some heavier shit
 /datum/limb/small_critter/med
 	max_wclass = W_CLASS_SMALL

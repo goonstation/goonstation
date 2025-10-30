@@ -161,7 +161,7 @@
 		var/modifiers = get_modifiers(client)
 		if(!client)
 			return default_rep + (include_modifiers ? modifiers : 0)
-		var/val = client.player.cloudSaves.getData("rep_[lowertext(id)]")
+		var/val = client.player?.cloudSaves.getData("rep_[lowertext(id)]")
 		if(val == null)
 			set_reputation(client, default_rep, 1)
 			val = default_rep
@@ -174,7 +174,7 @@
 		if(!client)
 			return 0
 		var/curr = (absolute ? 0 : get_reputation(client, 0))
-		client.player.cloudSaves.putData("rep_[lowertext(id)]", (absolute ? amt : (curr + amt)))
+		client.player?.cloudSaves.putData("rep_[lowertext(id)]", (absolute ? amt : (curr + amt)))
 		return 0
 
 	proc/get_Nanotrasen_rank_string(var/client = null, var/include_modifiers = 1)

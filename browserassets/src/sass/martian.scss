@@ -1,4 +1,4 @@
-@import "compass/css3";
+@import 'compass/css3';
 
 //vars
 $glyphColor: rgb(175, 202, 219);
@@ -9,7 +9,7 @@ $pi: 3.14;
 //config
 $menu-items: 6;
 $open-distance: 130px;
-$opening-angle: $pi - .2;
+$opening-angle: $pi - 0.2;
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
@@ -37,7 +37,10 @@ a {
   color: inherit;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   margin: 0;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -49,7 +52,10 @@ h1 {
 
 #screen {
   background: $screenColor;
-  @include box-shadow(rgb(202, 197, 223) 0 0 20px 5px, rgb(43, 24, 87) 0 0 10px 5px inset);
+  @include box-shadow(
+    rgb(202, 197, 223) 0 0 20px 5px,
+    rgb(43, 24, 87) 0 0 10px 5px inset
+  );
   @include border-radius(60px);
 
   width: 90%;
@@ -149,8 +155,8 @@ $hamburger-spacing: 8px;
     color: $glyphColor;
   }
   @for $i from 1 through $menu-items {
-    &:nth-child(#{$i+2}) {
-      transition-duration: 10ms+(120ms*($i));
+    &:nth-child(#{$i + 2}) {
+      transition-duration: 10ms+ (120ms * ($i));
     }
   }
 }
@@ -158,7 +164,7 @@ $hamburger-spacing: 8px;
 .menu-open-button {
   @extend %ball;
   z-index: 2;
-  transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition-duration: 400ms;
   transform: scale(1.1, 1.1) translate3d(0, 0, 0);
   cursor: pointer;
@@ -175,13 +181,18 @@ $hamburger-spacing: 8px;
 }
 
 .menu-open:checked ~ .menu-item {
-  transition-timing-function: cubic-bezier(0.935, 0.000, 0.340, 1.330);
+  transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
   @for $i from 1 through $menu-items {
-    $angle: (($pi - $opening-angle)/2)+(($opening-angle/($menu-items - 1))*($i - 1));
+    $angle: (($pi - $opening-angle)/2)+
+      (($opening-angle/($menu-items - 1)) * ($i - 1));
 
-    &:nth-child(#{$i+2}) {
-      transition-duration: 80ms+(160ms*$i);
-      transform: translate3d(cos($angle)*$open-distance, sin($angle)*$open-distance, 0);
+    &:nth-child(#{$i + 2}) {
+      transition-duration: 80ms+ (160ms * $i);
+      transform: translate3d(
+        cos($angle) * $open-distance,
+        sin($angle) * $open-distance,
+        0
+      );
     }
   }
 }
@@ -231,7 +242,7 @@ $scan-crt: true;
 $scan-fps: 60;
 
 // scanline-color (rgba)
-$scan-color: rgba(#000, .2);
+$scan-color: rgba(#000, 0.2);
 
 // set z-index on 8, like in ♥ 8-bits ♥, or…
 // set z-index on 2147483648 or more to enable scanlines on Chrome fullscreen (doesn't work in Firefox or IE);
@@ -243,7 +254,7 @@ $scan-z-index: 2147483648;
 $scan-moving-line: true;
 
 // opacity of the moving scanline
-$scan-opacity: .75;
+$scan-opacity: 0.75;
 
 /* MIXINS */
 
@@ -299,12 +310,8 @@ $scan-opacity: .75;
     bottom: 0;
     left: 0;
     z-index: $scan-z-index;
-    background: linear-gradient(
-                    to bottom,
-                    transparent 50%,
-                    $scan-color 51%
-    );
-    background-size: 100% $scan-width*2;
+    background: linear-gradient(to bottom, transparent 50%, $scan-color 51%);
+    background-size: 100% $scan-width * 2;
     @include scan-crt($scan-crt);
   }
 }

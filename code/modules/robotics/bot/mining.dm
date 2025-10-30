@@ -285,8 +285,12 @@
 	show_ui(usr)
 
 /datum/digbot_ui/proc/show_ui(mob/user)
-	if (user.client?.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(bot, list("title" = "Digbot Controls", "content" = render()))
+	if (user.client?.tooltips)
+		user.client.tooltips.show(
+			TOOLTIP_PINNED, bot,
+			title = "Digbot Controls",
+			content = src.render(),
+		)
 
 /datum/digbot_ui/proc/render()
 	return {"

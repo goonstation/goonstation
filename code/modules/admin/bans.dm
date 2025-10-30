@@ -26,7 +26,7 @@
 			"page" = page,
 			"per_page" = per_page
 		)
-		var/datum/apiModel/Paginated/BanResourceList/bans
+		var/datum/apiModel/Paginated/BanList/bans
 		try
 			bans = apiHandler.queryAPI(getBans)
 		catch (var/exception/e)
@@ -39,7 +39,7 @@
 	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE, added_externally = FALSE)
 		duration = floor(duration ? duration / 10 : duration) // duration given in deciseconds, api expects seconds
 
-		var/datum/apiModel/Tracked/BanResource/ban
+		var/datum/apiModel/Tracked/Ban/ban
 		if (!added_externally)
 			var/datum/apiRoute/bans/add/addBan = new
 			addBan.buildBody(
@@ -107,17 +107,15 @@
 			logTheThing(LOG_DEBUG, ckey, "Bans: unable to find client to kick for banned ckey [ckey]")
 
 	/// Check if a ban exists
-	proc/check(ckey, comp_id, ip)
-		if (!ip || ip == "127.0.0.1") return FALSE // Ignore if localhost
-
+	proc/check(ckey, comp_id, ip, player_id)
 		var/datum/apiRoute/bans/check/checkBan = new
 		checkBan.queryParams = list(
 			"ckey" = ckey,
 			"comp_id" = comp_id,
 			"ip" = ip,
-			"server_id" = config.server_id
+			"player_id" = player_id
 		)
-		var/datum/apiModel/Tracked/BanResource/ban
+		var/datum/apiModel/Tracked/Ban/ban
 		try
 			ban = apiHandler.queryAPI(checkBan)
 		catch
@@ -127,18 +125,20 @@
 		var/recordedCkey = FALSE
 		var/recordedCompId = FALSE
 		var/recordedIp = FALSE
+		var/recordedPlayerId = FALSE
 		for (var/datum/apiModel/Tracked/BanDetail/banDetail in ban.details)
 			if (!ckey || banDetail.ckey == ckey) recordedCkey = TRUE
 			if (!comp_id || banDetail.comp_id == comp_id) recordedCompId = TRUE
 			if (!ip || banDetail.ip == ip) recordedIp = TRUE
+			if (!player_id || banDetail.player_id == player_id) recordedPlayerId = TRUE
 
 		// var/evasionAttempt = FALSE
-		if (!recordedCkey || !recordedCompId || !recordedIp)
+		if (!recordedCkey || !recordedCompId || !recordedIp || !recordedPlayerId)
 			// evasionAttempt = TRUE
 			SPAWN(0)
 				try
 					// Add these details to the existing ban
-					src.addDetails(ban.id, TRUE, "bot", ckey, comp_id, ip)
+					src.addDetails(ban.id, TRUE, "bot", ckey, comp_id, ip, player_id)
 				catch (var/exception/e)
 					var/logMsg = "Failed to add ban evasion details to ban [ban.id] because: [e.name]"
 					logTheThing(LOG_ADMIN, "bot", logMsg)
@@ -146,7 +146,7 @@
 
 		// Build a message to show to the player
 		var/message = "[ban.reason]<br>"
-		message += "Banned By: [ban.game_admin.ckey]<br>"
+		message += "Banned By: [ban.game_admin.player.ckey]<br>"
 		message += "This ban applies to [ban.server_id ? "this server only" : "all servers"].<br>"
 		if (ban.expires_at)
 			message += "(This ban will be automatically removed in [ban.duration_human])"
@@ -177,7 +177,7 @@
 			duration,
 			requires_appeal
 		)
-		var/datum/apiModel/Tracked/BanResource/ban
+		var/datum/apiModel/Tracked/Ban/ban
 		try
 			ban = apiHandler.queryAPI(updateBan)
 		catch (var/exception/e)
@@ -230,10 +230,10 @@
 		ircbot.export_async("admin", ircmsg)
 
 	/// Add details to an existing ban
-	proc/addDetails(banId, evasion = FALSE, admin_ckey, ckey, comp_id, ip)
+	proc/addDetails(banId, evasion = FALSE, admin_ckey, ckey, comp_id, ip, player_id)
 		var/datum/apiRoute/bans/add_detail/addDetail = new
 		addDetail.routeParams = list("[banId]")
-		addDetail.buildBody(admin_ckey, roundId, ckey, comp_id, ip, evasion)
+		addDetail.buildBody(admin_ckey, roundId, ckey, comp_id, ip, player_id, evasion)
 		var/datum/apiModel/Tracked/BanDetail/banDetail
 		try
 			banDetail = apiHandler.queryAPI(addDetail)
@@ -242,7 +242,7 @@
 			throw EXCEPTION(error.message)
 		var/client/adminClient = find_client(admin_ckey)
 		var/messageAdminsAdmin = admin_ckey == "bot" ? admin_ckey : key_name(adminClient ? adminClient : admin_ckey)
-		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
+		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id], PlayerID: [banDetail.player_id])"
 
 		var/original_ckey = banDetail.original_ban_detail.ckey
 

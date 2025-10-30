@@ -10,7 +10,6 @@
 	rand_pos = 0
 	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
-	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/datum/db_record/accessed_record = null // the bank account on the id card
 	var/obj/item/pen = null // slap a pen into that thang
@@ -129,7 +128,7 @@
 		icon_state = "pda-hos"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
-		setup_default_module = /obj/item/device/pda_module/alert
+		setup_default_module = /obj/item/device/pda_module/flashlight
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
@@ -138,7 +137,7 @@
 		icon_state = "pda-nt"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
-		setup_default_module = /obj/item/device/pda_module/alert
+		setup_default_module = /obj/item/device/pda_module/flashlight
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
@@ -235,7 +234,7 @@
 		name = "Security PDA"
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
-		setup_default_module = /obj/item/device/pda_module/alert
+		setup_default_module = /obj/item/device/pda_module/flashlight
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
@@ -536,7 +535,6 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<style type='text/css'>
 		hr {
 			color:#000;
@@ -1219,7 +1217,7 @@
 		return 1
 
 	proc/explode()
-		if (src.bombproof)
+		if (src.bombproof || src.uplink)
 			if (ismob(src.loc))
 				boutput(src.loc, SPAN_ALERT("<b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked."))
 			return

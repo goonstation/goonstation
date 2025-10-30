@@ -239,11 +239,11 @@ datum
 					M.take_toxin_damage(1 * mult)
 				if (probmult(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
 				if (probmult(8)) boutput(M, SPAN_NOTICE("You feel [pick("really buff", "on top of the world","like you're made of steel", "energized", "invigorated", "full of energy")]!"))
-				if (prob(5))
+				if (probmult(5))
 					boutput(M, SPAN_ALERT("You cannot breathe!"))
-					M.setStatusMin("stunned", 2 SECONDS * mult)
-					M.take_oxygen_deprivation(15 * mult)
-					M.losebreath += (1 * mult)
+					M.setStatus("slowed", 3 SECONDS)
+					M.take_oxygen_deprivation(15)
+					M.losebreath += (1)
 				..()
 				return
 
@@ -1434,6 +1434,30 @@ datum
 				..()
 				return
 
+		deageinium
+			name = "deageinium"
+			id = "deageinium"
+			description = "An over-energetic jelly that writhes with youthful excitement."
+			reagent_state = LIQUID
+			fluid_r = 89
+			fluid_g = 242
+			fluid_b = 140
+			transparency = 128
+			viscosity = 0.8
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if(prob(30) && istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					H.bioHolder.age = max(M.bioHolder.age - round(1 * mult), 18)
+					if (probmult(10))
+						boutput(H, SPAN_ALERT("You feel [pick("young", "energetic", "inexperienced", "tempermental", "odd")]."))
+					if (probmult(4))
+						H.emote("scream")
+				..()
+				return
+
 		denatured_enzyme
 			name = "denatured enzyme"
 			id = "denatured_enzyme"
@@ -2019,6 +2043,7 @@ datum
 			hunger_value = 0.8
 			threshold = THRESHOLD_INIT
 			fluid_flags = FLUID_BANNED
+			target_organs = list("stomach", "instestines")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -2053,6 +2078,9 @@ datum
 					if(prob(10))
 						boutput(M, SPAN_ALERT("[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]"))
 						M.take_toxin_damage(4 * mult)
+						if (isliving(M))
+							var/mob/living/target_mob = M
+							target_mob.organHolder?.damage_organs(tox=4*mult, organs=src.target_organs)
 				M.UpdateDamageIcon()
 				..()
 				return
@@ -2083,12 +2111,17 @@ datum
 			fluid_g = 135
 			fluid_b = 200
 			hunger_value = 0.5
+			target_organs = list("stomach", "intestines")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
 				M.HealDamage("All", mult * 2, mult * 1.5)
 				M.take_toxin_damage(0.5 * mult)
+				if (isliving(M))
+					var/mob/living/target_mob = M
+					target_mob.organHolder?.damage_organs(tox=0.5*mult, organs=src.target_organs)
+
 				if(prob(20))
 					M.setStatusMin("knockdown", 3 SECONDS)
 				if(prob(10))
@@ -3098,6 +3131,7 @@ datum
 			transparency = 170
 			hygiene_value = 0.3
 			thirst_value = -0.098
+			target_organs = list("pancreas") // endocrine system
 			var/list/flushed_reagents = list("THC","CBD")
 
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
@@ -3106,6 +3140,13 @@ datum
 					M.take_toxin_damage(3 * mult)
 				else
 					M.take_toxin_damage(2 * mult)
+					if (isliving(M))
+						var/mob/living/target_mob = M
+						target_mob.organHolder?.damage_organs(tox=2*mult, organs=target_organs)
+						for (var/organ_slot in target_mob.organHolder?.organ_list) // damages synthorgans as well
+							var/obj/item/organ/O = target_mob.organHolder?.organ_list[organ_slot]
+							if (istype(O) && O.synthetic)
+								O.take_damage(tox=2*mult, damage_type=DAMAGE_BURN)
 				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
@@ -3117,6 +3158,16 @@ datum
 					if(M.reagents)
 						M.reagents.add_reagent(src.id,volume*plant_touch_modifier,src.data)
 						. = 0
+				if (ishuman(M) && volume > 25)
+					var/mob/living/carbon/human/H = M
+					if (H.limbs?.l_arm?.kind_of_limb & LIMB_PLANT)
+						M.TakeDamage("l_arm", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
+					if (H.limbs?.r_arm?.kind_of_limb & LIMB_PLANT)
+						M.TakeDamage("r_arm", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
+					if (H.limbs?.l_leg?.kind_of_limb & LIMB_PLANT)
+						M.TakeDamage("l_leg", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
+					if (H.limbs?.r_leg?.kind_of_limb & LIMB_PLANT)
+						M.TakeDamage("r_leg", tox=min(rand(20, 40), volume), damage_type=DAMAGE_BURN)
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
@@ -3169,7 +3220,7 @@ datum
 				*/
 				var/datum/plant/growing = P.current
 				var/datum/plantgenes/DNA = P.plantgenes
-				growth_tick.cropsize_bonus += 0.24
+				growth_tick.cropsize_bonus += 0.74
 				if (DNA.harvests > 1)
 					growth_tick.harvests_bonus -= 0.24
 				if (growing.isgrass && P.growth > 2)
@@ -3192,7 +3243,7 @@ datum
 				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
 				if (DNA.cropsize > 1)
-					growth_tick.cropsize_bonus -= 0.24
+					growth_tick.cropsize_bonus -= 0.5
 
 		///////////////////////////
 		/// BODILY FLUIDS /////////
@@ -3296,7 +3347,7 @@ datum
 						// Real world changeling tests should only happen in containers at a slow pace
 						if (!ON_COOLDOWN(global, "bloodc_logging", 4 SECONDS))
 							var/datum/bioHolder/bioHolder = src.data
-							if(bioHolder && bioHolder.ownerName)
+							if(istype(bioHolder) && bioHolder.ownerName)
 								logTheThing(LOG_COMBAT, bioHolder.ownerName, "Changeling blood reaction in [holder.my_atom] at [log_loc(holder.my_atom)]")
 					else
 						for(var/turf/t in covered)
@@ -4027,7 +4078,7 @@ datum
 			blocks_sight_gas = 1
 
 		iron_oxide
-			name = "Iron Oxide"
+			name = "iron oxide"
 			id = "iron_oxide"
 			description = "Iron, artificially rusted under the effects of oxygen, acetic acid, salt and a high temperature environment."
 			fluid_r = 112

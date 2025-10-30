@@ -459,7 +459,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		15;"frozenfart",\
 		5;"negativematter",\
 		5;"plutonium",\
-		5;"uranium",\
+		5;"yuranite",\
 		100; "glowstick"
 
 /obj/item/reactor_component/fuel_rod/random_material

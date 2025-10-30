@@ -104,7 +104,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 					var/datum/http_request/request = new()
 					request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(api_args)]", "", "")
 					request.begin_async()
-					UNTIL(request.is_complete())
+					UNTIL(request.is_complete(), 10 SECONDS)
 					response = request.into_response()
 
 				if (response.errored || !response.body)

@@ -16,32 +16,60 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
-	var/satchel_compatible = TRUE
+	var/obj/item/storage/backpack/satchel_variant = /obj/item/storage/backpack/satchel
+
+	proc/convert_to_satchel(var/name_base_item)
+		if(!src.satchel_variant || !ispath(src.satchel_variant))
+			return FALSE
+		var/original_name = src.name
+		src.icon_state = src.satchel_variant::icon_state
+		src.item_state = src.satchel_variant::item_state
+		src.real_name = src.satchel_variant::real_name
+		src.name = src.satchel_variant::name
+		src.desc = src.satchel_variant::desc
+		src.wear_layer = MOB_BACK_LAYER_SATCHEL
+		src.satchel_variant = null //Is a satchel now, don't try make it a satchel again.
+		if(name_base_item)
+			src.desc += "(Base Item: [original_name])"
+		if(ismob(src.loc))
+			var/mob/wearer = src.loc
+			wearer.set_clothing_icon_dirty()
+		return TRUE
 
 	blue
 		icon_state = "backpackb"
 		item_state = "backpackb"
 		desc = "A thick, wearable container made of synthetic fibers. The blue variation is similar in shade to Abzu's ocean."
+		satchel_variant = /obj/item/storage/backpack/satchel/blue
 
 	red
 		icon_state = "backpackr"
 		item_state = "backpackr"
 		desc = "A thick, wearable container made of synthetic fibers. The red variation is striking and slightly suspicious."
+		satchel_variant = /obj/item/storage/backpack/satchel/red
 
 	brown
 		icon_state = "backpackbr"
 		item_state = "backpackbr"
 		desc = "A thick, wearable container made of synthetic fibers. The brown variation is both rustic and adventurous!"
+		satchel_variant = /obj/item/storage/backpack/satchel/brown
 
 	green
 		icon_state = "backpackg"
 		item_state = "backpackg"
 		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
+		satchel_variant = /obj/item/storage/backpack/satchel/green
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
+
+		var/mob/M = src.loc
+		if(istype(M) && M.client && M.client.preferences.use_satchel)
+			if(!src.convert_to_satchel())
+				boutput(M, SPAN_NOTICE("Your worn backpack has no satchel variant!"))
+
 
 /obj/item/storage/backpack/empty
 	spawn_contents = list()
@@ -50,27 +78,32 @@
 		icon_state = "backpackb"
 		item_state = "backpackb"
 		desc = "A thick, wearable container made of synthetic fibers. The blue variation is similar in shade to Abzu's ocean."
+		satchel_variant = /obj/item/storage/backpack/satchel/blue
 
 	red
 		icon_state = "backpackr"
 		item_state = "backpackr"
 		desc = "A thick, wearable container made of synthetic fibers. The red variation is striking and slightly suspicious."
+		satchel_variant = /obj/item/storage/backpack/satchel/red
 
 	brown
 		icon_state = "backpackbr"
 		item_state = "backpackbr"
 		desc = "A thick, wearable container made of synthetic fibers. The brown variation is both rustic and adventurous!"
+		satchel_variant = /obj/item/storage/backpack/satchel/brown
 
 	green
 		icon_state = "backpackg"
 		item_state = "backpackg"
 		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
+		satchel_variant = /obj/item/storage/backpack/satchel/green
 
 	NT
 		name = "\improper NT backpack"
 		desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 		icon_state = "NTbackpack"
 		item_state = "NTbackpack"
+		satchel_variant = /obj/item/storage/backpack/satchel/NT
 
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
@@ -79,21 +112,25 @@
 		icon_state = "backpackb"
 		item_state = "backpackb"
 		desc = "A thick, wearable container made of synthetic fibers. The blue variation is similar in shade to Abzu's ocean."
+		satchel_variant = /obj/item/storage/backpack/satchel/blue
 
 	red
 		icon_state = "backpackr"
 		item_state = "backpackr"
 		desc = "A thick, wearable container made of synthetic fibers. The red variation is striking and slightly suspicious."
+		satchel_variant = /obj/item/storage/backpack/satchel/red
 
 	brown
 		icon_state = "backpackbr"
 		item_state = "backpackbr"
 		desc = "A thick, wearable container made of synthetic fibers. The brown variation is both rustic and adventurous!"
+		satchel_variant = /obj/item/storage/backpack/satchel/brown
 
 	green
 		icon_state = "backpackg"
 		item_state = "backpackg"
 		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
+		satchel_variant = /obj/item/storage/backpack/satchel/green
 
 /obj/item/storage/backpack/NT
 	name = "\improper NT backpack"
@@ -101,6 +138,7 @@
 	icon_state = "NTbackpack"
 	item_state = "NTbackpack"
 	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/NT
 
 /obj/item/storage/backpack/syndie
 	name = "\improper Syndicate backpack"
@@ -108,6 +146,7 @@
 	icon_state = "Syndiebackpack"
 	item_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/syndie
 
 /obj/item/storage/backpack/captain
 	name = "Captain's Backpack"
@@ -115,22 +154,25 @@
 	icon_state = "capbackpack"
 	item_state = "capbackpack"
 	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/captain
 
 	blue
 		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capbackpack_blue"
 		item_state = "capbackpack_blue"
+		satchel_variant = /obj/item/storage/backpack/satchel/captain/blue
 
 	red
 		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capbackpack_red"
 		item_state = "capbackpack_red"
+		satchel_variant = /obj/item/storage/backpack/satchel/captain/red
 
 /obj/item/storage/backpack/syndie/tactical
 	name = "tactical assault rucksack"
 	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
 	icon_state = "tactical_backpack"
-	satchel_compatible = FALSE
+	satchel_variant = null
 	spawn_contents = list(/obj/item/storage/box/starter)
 	slots = 10
 
@@ -140,6 +182,7 @@
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/medic
 
 /obj/item/storage/backpack/security
 	name = "security backpack"
@@ -147,6 +190,7 @@
 	icon_state = "bp_security"
 	item_state = "bp_security"
 	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/security
 
 /obj/item/storage/backpack/robotics
 	name = "robotics backpack"
@@ -154,6 +198,7 @@
 	icon_state = "bp_robotics"
 	item_state = "bp_robotics"
 	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/robotics
 
 /obj/item/storage/backpack/genetics
 	name = "genetics backpack"
@@ -161,6 +206,7 @@
 	icon_state = "bp_genetics"
 	item_state = "bp_genetics"
 	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/genetics
 
 /obj/item/storage/backpack/engineering
 	name = "engineering backpack"
@@ -168,102 +214,124 @@
 	icon_state = "bp_engineering"
 	item_state = "bp_engineering"
 	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/engineering
 
 /obj/item/storage/backpack/research
 	name = "research backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the back of research personnel."
 	icon_state = "bp_research"
 	item_state = "bp_research"
+	satchel_variant = /obj/item/storage/backpack/satchel/research
 
 /obj/item/storage/backpack/randoseru
 	name = "randoseru"
 	desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
 	icon_state = "bp_randoseru"
 	item_state = "bp_randoseru"
+	satchel_variant = /obj/item/storage/backpack/satchel/randoseru
 
 /obj/item/storage/backpack/fjallravenred
 	name = "rucksack"
 	desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
 	icon_state = "bp_fjallraven_red"
 	item_state = "bp_fjallraven_red"
+	satchel_variant = /obj/item/storage/backpack/satchel/fjallraven
 
 /obj/item/storage/backpack/fjallravenyel
 	name = "rucksack"
 	desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
 	icon_state = "bp_fjallraven_yellow"
 	item_state = "bp_fjallraven_yellow"
+	satchel_variant = /obj/item/storage/backpack/satchel/fjallraven/yellow
 
 /obj/item/storage/backpack/anello
 	name = "travel pack"
 	desc = "A thick, wearable container made of synthetic fibers, often seen carried by tourists and travelers."
 	icon_state = "bp_anello"
 	item_state = "bp_anello"
+	satchel_variant = /obj/item/storage/backpack/satchel/anello
 
 /obj/item/storage/backpack/studdedblack
 	name = "studded backpack"
 	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
 	icon_state = "bp_studded"
 	item_state = "bp_studded"
+	satchel_variant = /obj/item/storage/backpack/satchel/studdedblack
 
 /obj/item/storage/backpack/itabag
 	name = "pink itabag"
 	desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Heisenbee!"
 	icon_state = "bp_itabag_pink"
 	item_state = "bp_itabag_pink"
+	satchel_variant = /obj/item/storage/backpack/satchel/itabag
 
 	blue
+		name = "blue itabag"
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Dr. Acula!"
 		icon_state = "bp_itabag_blue"
 		item_state = "bp_itabag_blue"
+		satchel_variant = /obj/item/storage/backpack/satchel/itabag/blue
 
 	purple
+		name = "purple itabag"
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of a Bombini!"
 		icon_state = "bp_itabag_purple"
 		item_state = "bp_itabag_purple"
+		satchel_variant = /obj/item/storage/backpack/satchel/itabag/purple
 
 	mint
+		name = "mint itabag"
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Sylvester!"
 		icon_state = "bp_itabag_mint"
 		item_state = "bp_itabag_mint"
+		satchel_variant = /obj/item/storage/backpack/satchel/itabag/mint
 
 	black
+		name = "black itabag"
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Morty!"
 		icon_state = "bp_itabag_black"
 		item_state = "bp_itabag_black"
+		satchel_variant = /obj/item/storage/backpack/satchel/itabag/black
 
 /obj/item/storage/backpack/studdedwhite
 	name = "white studded backpack"
 	desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag."
 	icon_state = "bp_studdedw"
 	item_state = "bp_studdedw"
+	satchel_variant = /obj/item/storage/backpack/satchel/studdedwhite
 
 /obj/item/storage/backpack/breadpack
 	name = "bag-uette"
 	desc = "It kind of smells like bread too! Unfortunately inedible."
 	icon_state = "bp_breadpack"
 	item_state = "bp_breadpack"
+	satchel_variant = /obj/item/storage/backpack/satchel/breadpack
 
 /obj/item/storage/backpack/bearpack
 	name = "bearpack"
 	desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful!"
 	icon_state = "bp_bear"
 	item_state = "bp_bear"
+	satchel_variant = /obj/item/storage/backpack/satchel/bearpack
 
 /obj/item/storage/backpack/turtlebrown
 	name = "brown turtle shell backpack"
 	desc = "A backpack that looks like a brown turtleshell. How childish!"
 	icon_state = "bp_turtle_brown"
+	satchel_variant = /obj/item/storage/backpack/satchel/turtlebrown
 
 /obj/item/storage/backpack/turtlegreen
 	name = "green turtle shell backpack"
 	desc = "A backpack that looks like a green turtleshell. Cowabunga!"
 	icon_state = "bp_turtle_green"
+	satchel_variant = /obj/item/storage/backpack/satchel/turtlegreen
 
 /obj/item/storage/backpack/bpangel
 	name = "angel backpack"
 	desc = "This backpack gives you wings (that are entirely non-functional)!"
 	icon_state = "bp_angel"
 	item_state = "bp_angel"
+	satchel_variant = null
 
 /obj/item/storage/backpack/recharge_bay
 	name = "portable recharge bay"
@@ -271,6 +339,7 @@
 	icon_state = "bp_recharger0"
 	slots = 6
 	spawn_contents = list()
+	satchel_variant = null
 	var/obj/item/cell/source_cell
 	///Whether the access port is open to allow for swapping of power cell (and tampering with systems)
 	var/cell_port_open = FALSE
@@ -345,7 +414,9 @@
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
 	icon_state = "satchel"
+	item_state = "satchel"
 	wear_layer = MOB_BACK_LAYER_SATCHEL // satchels show over the tail of lizards normally, they should be BEHIND the tail
+	satchel_variant = null
 
 	blue
 		icon_state = "satchelb"
@@ -427,19 +498,23 @@
 	name = "Captain's Satchel"
 	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 	icon_state = "capsatchel"
+	item_state = "capsatchel"
 
 	blue
 		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capsatchel_blue"
+		item_state = "capsatchel_blue"
 
 	red
 		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capsatchel_red"
+		item_state = "capsatchel_red"
 
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's shoulder."
 	icon_state = "satchel_medic"
+	item_state = "satchel_medic"
 
 /obj/item/storage/backpack/satchel/security
 	name = "security satchel"
@@ -486,6 +561,10 @@
 	desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
 	icon_state = "sat_fjallraven_red"
 	item_state = "sat_fjallraven_red"
+
+/obj/item/storage/backpack/satchel/fjallraven/yellow
+	icon_state = "sat_fjallraven_yellow"
+	item_state = "sat_fjallraven_yellow"
 
 /obj/item/storage/backpack/satchel/anello
 	name = "travel satchel"
@@ -1071,6 +1150,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	desc = "A sturdy shoulder-sling for storing various grenades."
 	icon_state = "grenade_bandolier"
 	item_state = "grenade_bandolier"
+	satchel_variant = null
 	can_hold = list(/obj/item/old_grenade,
 	/obj/item/chem_grenade,
 	/obj/item/storage/grenade_pouch,

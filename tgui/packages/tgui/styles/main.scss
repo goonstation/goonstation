@@ -5,58 +5,57 @@
 
 @use 'sass:meta';
 @use 'base';
+@use '~tgui-core/styles';
 
 // Core styles
 @include meta.load-css('./reset.scss');
+@include meta.load-css('./css-variables.scss');
 
-// Atomic classes
-@include meta.load-css('./atomic/candystripe.scss');
-@include meta.load-css('./atomic/centered-image.scss');
-@include meta.load-css('./atomic/color.scss');
-@include meta.load-css('./atomic/debug-layout.scss');
-@include meta.load-css('./atomic/fit-text.scss');
-@include meta.load-css('./atomic/links.scss');
-@include meta.load-css('./atomic/outline.scss');
-@include meta.load-css('./atomic/text.scss');
+// Tgui core bulk imports
+@include meta.load-css('~tgui-core/styles/all-atomic.scss');
 
-// Components
-@include meta.load-css('./components/BlockQuote.scss');
-@include meta.load-css('./components/Button.scss');
-@include meta.load-css('./components/ColorBox.scss');
-@include meta.load-css('./components/Dialog.scss');
-@include meta.load-css('./components/Dimmer.scss');
-@include meta.load-css('./components/Divider.scss');
-@include meta.load-css('./components/Dropdown.scss');
-@include meta.load-css('./components/Flex.scss');
-@include meta.load-css('./components/Icon.scss');
-// |GOONSTATION-CHANGE| This component's stylesheet includes styles that apply to other things,
-// and the component is not used by Goonstation; including here for completeness, and a note that
-// until this is fixed including *all* of tgui-styles may break a bunch of our styles
-// @include meta.load-css('./components/ImageButton.scss');
-@include meta.load-css('./components/Input.scss');
-@include meta.load-css('./components/Knob.scss');
-@include meta.load-css('./components/LabeledList.scss');
-@include meta.load-css('./components/MenuBar.scss');
-@include meta.load-css('./components/Modal.scss');
-@include meta.load-css('./components/NoticeBox.scss');
-@include meta.load-css('./components/NumberInput.scss');
-@include meta.load-css('./components/ProgressBar.scss');
-@include meta.load-css('./components/RoundGauge.scss');
-@include meta.load-css('./components/Section.scss');
-@include meta.load-css('./components/Slider.scss');
-@include meta.load-css('./components/Stack.scss');
-@include meta.load-css('./components/Table.scss');
-@include meta.load-css('./components/Tabs.scss');
-@include meta.load-css('./components/TextArea.scss');
-@include meta.load-css('./components/Tooltip.scss');
+// |GOOONSTATION-CHANGE|
+// | Only some themes |
+// @include meta.load-css('~tgui-core/styles/all-themes.scss');
+// @include meta.load-css('~tgui-core/styles/themes/abductor.scss');
+@include meta.load-css('~tgui-core/styles/themes/admin.scss');
+// @include meta.load-css('~tgui-core/styles/themes/cardtable.scss');
+@include meta.load-css('~tgui-core/styles/themes/hackerman.scss');
+// @include meta.load-css('~tgui-core/styles/themes/malfunction.scss');
+@include meta.load-css('~tgui-core/styles/themes/neutral.scss');
+@include meta.load-css('~tgui-core/styles/themes/ntos.scss');
+// @include meta.load-css('~tgui-core/styles/themes/ntOS95.scss');
+// @include meta.load-css('~tgui-core/styles/themes/ntos_cat.scss');
+// @include meta.load-css('~tgui-core/styles/themes/ntos_darkmode.scss'); //
+// @include meta.load-css('~tgui-core/styles/themes/ntos_lightmode.scss'); //
+// @include meta.load-css('~tgui-core/styles/themes/ntos_spooky.scss');
+// @include meta.load-css('~tgui-core/styles/themes/ntos_synth.scss');
+// @include meta.load-css('~tgui-core/styles/themes/ntos_terminal.scss');
+@include meta.load-css('~tgui-core/styles/themes/paper.scss');
+@include meta.load-css('~tgui-core/styles/themes/retro.scss');
+// @include meta.load-css('~tgui-core/styles/themes/spookyconsole.scss');
+@include meta.load-css('~tgui-core/styles/themes/syndicate.scss');
+// @include meta.load-css('~tgui-core/styles/themes/wizard.scss');
 
-// Goonstation Component Styles
-@include meta.load-css('./components/goon/GeneIcon.scss');
-@include meta.load-css('./components/goon/TooltipOverflow.scss');
+// |GOOONSTATION-ADD| Our themes
+@include meta.load-css('./themes/flock.scss');
+@include meta.load-css('./themes/genetek.scss');
+@include meta.load-css('./themes/retro-dark.scss');
+// |GOOONSTATION-ADD| Theme modes
+@include meta.load-css('./theme-modes/base-light.scss');
+@include meta.load-css('./theme-modes/ntos-light.scss');
+
+// |GOOONSTATION-ADD| Components
+@include meta.load-css('./components/ColorCheckbox.scss');
+@include meta.load-css('./components/ColorSection.scss');
+@include meta.load-css('./components/GeneIcon.scss');
+@include meta.load-css('./components/LED.scss');
+
+// |GOOONSTATION-ADD| Common Interfaces
+@include meta.load-css('./interfaces/common/ListSearch.scss');
 
 // Interfaces
-@include meta.load-css('./interfaces/common/ListSearch.scss');
-@include meta.load-css('./interfaces/Airlock.scss');
+// AIRLOCK.SCSS?????
 @include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/BanPanel.scss');
 @include meta.load-css('./interfaces/Cashreg.scss');
@@ -79,6 +78,7 @@
 @include meta.load-css('./interfaces/Phone.scss');
 @include meta.load-css('./interfaces/PINInputModal.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');
+@include meta.load-css('./interfaces/SpeechModuleTree.scss');
 @include meta.load-css('./interfaces/TraitorTips.scss');
 @include meta.load-css('./interfaces/WeaponVendor.scss');
 
@@ -95,7 +95,12 @@
 // NT Theme
 .Layout__content {
   background-image: url('../assets/bg-nanotrasen.svg');
-  background-size: 70%;
+  background-size: 70% 70%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+// A default, in case someone uses the vp() function outside of a <Window>
+:root {
+  --scaling-amount: 1;
 }

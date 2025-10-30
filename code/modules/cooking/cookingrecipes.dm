@@ -56,6 +56,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/burger/chicken
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/ranch_chicken/spicy = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy, //:melterfrog:
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock = /obj/item/reagent_containers/food/snacks/burger/flockburger)
 	category = "Burgers"
 

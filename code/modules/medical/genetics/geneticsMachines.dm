@@ -4,6 +4,9 @@
 #define GENETICS_EMITTERS 3
 #define GENETICS_RECLAIMER 4
 
+#define GENETICS_DATA_MUTATIONS "data_mutations"
+#define GENETICS_DATA_CHROMOSOMES "data_chromosomes"
+
 /obj/machinery/computer/genetics
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
@@ -51,6 +54,22 @@
 /obj/machinery/computer/genetics/disposing()
 	STOP_TRACKING
 	..()
+
+/obj/machinery/computer/genetics/save_board_data(obj/item/circuitboard/circuitboard)
+	. = ..()
+	circuitboard.saved_data = list(
+		GENETICS_DATA_MUTATIONS = src.saved_mutations,
+		GENETICS_DATA_CHROMOSOMES = src.saved_chromosomes,
+	)
+
+/obj/machinery/computer/genetics/load_board_data(obj/item/circuitboard/circuitboard)
+	if(..())
+		return
+
+	if (islist(circuitboard.saved_data[GENETICS_DATA_MUTATIONS]))
+		src.saved_mutations = circuitboard.saved_data[GENETICS_DATA_MUTATIONS]
+	if (islist(circuitboard.saved_data[GENETICS_DATA_CHROMOSOMES]))
+		src.saved_chromosomes = circuitboard.saved_data[GENETICS_DATA_CHROMOSOMES]
 
 /obj/machinery/computer/genetics/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/genetics_injector/dna_activator))
@@ -323,7 +342,9 @@
 			. = TRUE
 			var/datum/geneticsResearchEntry/E = locate(params["ref"])
 			if (!research_sanity_check(E))
-				if (genResearch.addResearch(E))
+				if (E.isResearched)
+					scanner_alert(ui.user, "Research already in progress.", error = TRUE)
+				else if (genResearch.addResearch(E))
 					scanner_alert(ui.user, "Research initiated successfully.")
 				else
 					scanner_alert(ui.user, "Unable to begin research.", error = TRUE)
@@ -385,6 +406,10 @@
 		if("researchmut")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
+			var/datum/bioEffect/GBE = GetBioeffectFromGlobalListByID(E.id)
+			if(GBE.research_level > EFFECT_RESEARCH_NONE)
+				scanner_alert(ui.user, "Research already in progress.", error = TRUE)
+				return
 			if (params["sample"])
 				if (bioEffect_sanity_check(E, 0))
 					return
@@ -1154,6 +1179,9 @@
 	var/datum/movable_preview/character/multiclient/P = src.get_occupant_preview()
 	P?.remove_client(user?.client)
 	src.modify_appearance?.ui_close(user)
+
+#undef GENETICS_DATA_MUTATIONS
+#undef GENETICS_DATA_CHROMOSOMES
 
 #undef GENETICS_INJECTORS
 #undef GENETICS_ANALYZER

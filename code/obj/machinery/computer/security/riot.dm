@@ -134,7 +134,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 
 		logTheThing(LOG_STATION, usr, "authorized armory access")
 		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
-		command_announcement("<br><b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>", "Security Level Increased", 'sound/misc/announcement_1.ogg')
+		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>", "Security Level Increased", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_STATION)
 		authed = 1
 		src.ClearSpecificOverlays("screen_image")
 		src.icon_state = "drawbr-alert"
@@ -164,7 +164,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			return
 
 		logTheThing(LOG_STATION, usr, "unauthorized armory access")
-		command_announcement("<br><b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg")
+		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg", alert_origin=ALERT_STATION)
 		authed = 0
 		src.ClearSpecificOverlays("screen_image")
 		icon_state = "drawbr"

@@ -7,10 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Nuclear Operative Basics',
-  theme: 'syndicate',
-  content: (
+const NukeopContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a Syndicate operative!</h1>
       <img
@@ -110,5 +108,11 @@ export const acw: AlertContentWindow = {
         </a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Nuclear Operative Basics',
+  theme: 'syndicate',
+  component: NukeopContentWindow,
 };

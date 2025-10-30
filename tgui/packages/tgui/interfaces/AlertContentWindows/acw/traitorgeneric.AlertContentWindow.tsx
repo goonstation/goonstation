@@ -7,10 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Antagonist Tips',
-  theme: 'syndicate',
-  content: (
+const GenericAntagContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are an antagonist!</h1>
       <img
@@ -27,5 +25,11 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Antagonist">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Antagonist Tips',
+  theme: 'syndicate',
+  component: GenericAntagContentWindow,
 };

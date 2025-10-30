@@ -1,4 +1,4 @@
-#ifdef AUTUMN
+#ifdef SEASON_AUTUMN
 
 /* ------------------------- Head ------------------------ */
 /datum/clothingbooth_grouping/autumn_tree

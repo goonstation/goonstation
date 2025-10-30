@@ -65,9 +65,12 @@ labelMappings:
     "[CHEM]": a-chemistry
     "[CHEMISTRY]": a-chemistry
     "[CLOTHING]": a-clothing
+    "[COMMAND]": a-command
     "[CRITTER]": a-critters
     "[CRITTERS]": a-critters
     "[MOBS]": a-critters
+    "[ENGINE]": a-engineering
+    "[ENGINEERING]": a-engineering
     "[GAME OBJECTS]": a-game-objects
     "[OBJECTS]": a-game-objects
     "[GAMEMODES]": a-gamemodes
@@ -76,6 +79,9 @@ labelMappings:
     "[HYDRO]": a-hydroponics
     "[HYDROPONICS]": a-hydroponics
     "[INTERNAL]": a-internal
+    "[LOGISTICS]": a-logistics
+    "[SUPPLY]": a-logistics
+    "[CARGO]": a-logistics
     "[MAPPING]": a-mapping
     "[MATERIALS]": a-materials
     "[MATSCI]": a-materials
@@ -84,6 +90,8 @@ labelMappings:
     "[SPECIES]": a-mutantraces
     "[PLAYER ACTIONS]": a-player-actions
     "[ACTIONS]": a-player-actions
+    "[SEC]": a-security
+    "[SECURITY]": a-security
     "[SCIENCE]": a-science
     "[SILICONS]": a-silicons
     "[BORGS]": a-silicons

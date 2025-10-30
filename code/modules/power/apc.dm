@@ -21,6 +21,11 @@ var/zapLimiter = 0
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
 
+	/// Only allow building an APC in an area if no APC currently is powering the area.
+	can_build(turf/T)
+		var/area/A = get_area(T)
+		return A.area_apc == null
+
 ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
 
 /obj/machinery/power/apc
@@ -204,6 +209,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	if (!QDELETED(src.area))
 		if(istype(src.area,/area/unconnected_zone)) //if we built in an as-yet APCless zone, we've created a new built zone as a consequence
 			unconnected_zone.propagate_zone(get_turf(src))
+			var/area/A = get_area(src)
+			src.area = A
+			A.area_apc = src
 		else
 			src.area.area_apc = src
 

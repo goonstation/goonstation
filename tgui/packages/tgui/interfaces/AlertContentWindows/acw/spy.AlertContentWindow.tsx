@@ -7,9 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'How to Spy 101',
-  content: (
+const SpyContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a Spy!</h1>
       <img
@@ -37,5 +36,10 @@ export const acw: AlertContentWindow = {
         Get help from your mindhacks for the most dangerous tasks.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'How to Spy 101',
+  component: SpyContentWindow,
 };

@@ -32,7 +32,8 @@ export const FilterFloatEntry = (props: FilterFloatEntryProps) => {
         step={step}
         format={(value) => toFixed(value, numberOfDecimalDigits(step))}
         width="80px"
-        onDrag={(value) =>
+        tickWhileDragging
+        onChange={(value) =>
           act('transition_filter_value', {
             name: filterName,
             new_data: {

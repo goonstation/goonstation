@@ -70,9 +70,9 @@ export const PortablePump = () => {
                 minValue={minRelease}
                 maxValue={maxRelease}
                 step={1}
-                onChange={(newTargetPressure) =>
-                  act('set-pressure', { targetPressure: newTargetPressure })
-                }
+                onChange={(newTargetPressure) => {
+                  act('set-pressure', { targetPressure: newTargetPressure });
+                }}
               />
               <Button
                 onClick={() =>

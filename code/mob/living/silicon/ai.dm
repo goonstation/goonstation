@@ -121,7 +121,6 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
 	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
-	var/list/connected_robots = list()
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
@@ -207,7 +206,8 @@ or don't if it uses a custom topopen overlay
 		"pumpkin" = "The casing is made out of a pumpkin. Spooky!",
 		"crt" = "The core appears to be a... CRT television. Huh.",
 		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octagonal prism at all, it's just a cube!",
-		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
+		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors.",
+		"regal" = "The core appears to be made out of a thick gold and green metal. Very fancy."
 	)
 
 	var/datum/ai_camera_tracker/tracker = null
@@ -340,7 +340,6 @@ or don't if it uses a custom topopen overlay
 	src.radio1 = new /obj/item/device/radio(src)
 	src.radio2 = new /obj/item/device/radio(src)
 	src.radio3 = new /obj/item/device/radio/headset/command/ai(src)
-	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
 	src.coreSkin = skinToApply
@@ -391,6 +390,8 @@ or don't if it uses a custom topopen overlay
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio3.icon_tooltip = "Artificial Intelligence"
 		src.radio3.toggle_microphone(FALSE)
+		//Spawn the PDA here after the client is already in the AI.
+		src.internal_pda = new /obj/item/device/pda2/ai(src)
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
 		if (src.brain && src.key)
@@ -415,7 +416,7 @@ or don't if it uses a custom topopen overlay
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
 
-		src.camera = new /obj/machinery/camera/auto/AI(src)
+		src.camera = new /obj/machinery/camera/AI(src)
 		src.camera.c_tag = src.real_name
 		src.camera.network = CAMERA_NETWORK_ROBOTS
 
@@ -832,11 +833,27 @@ or don't if it uses a custom topopen overlay
 	src.update_appearance()
 
 /mob/living/silicon/ai/emp_act()
-	if (prob(30))
-		if (prob(50))
-			src.cancel_camera()
-		else
-			src.ai_call_shuttle()
+	if (prob(50))
+		src.cancel_camera()
+		SPAWN(1 DECI SECOND)
+			src.eyecam?.return_mainframe()
+			boutput(src, SPAN_ALERT(SPAN_BOLD("CONNECTION TO REMOTE TIMED OUT.")))
+	else
+		var/client/client = src.client
+		if (!client && src.deployed_to_eyecam)
+			client = src.eyecam.client
+		if (!client && src.deployed_shell)
+			client = src.deployed_shell.client
+		if (!client || winget(client,  "mapwindow.map", "text-mode") == "true")
+			return
+		boutput(client, SPAN_ALERT(SPAN_BOLD("CATASTROPHIC PANIC IN VISION KERNEL AT ADDR [NUM_TO_ADDR(rand(1, 2000000))]. REVERTING TO TEXT DISPLAY MODE.")))
+		client.set_text_mode(TRUE)
+		var/datum/player/player = client.player
+		SPAWN(15 SECONDS)
+			if (client)
+				client.set_text_mode(FALSE)
+			else
+				LAZYLISTADDUNIQUE(player.login_queue, TYPE_PROC_REF(/client, set_text_mode))
 
 /mob/living/silicon/ai/restrained()
 	return 0
@@ -1397,8 +1414,10 @@ or don't if it uses a custom topopen overlay
 	if (src.sleeping) src.sleeping = 0
 	src.delStatus("knockdown")
 
+#define AI_CHARGE_RATE 10
 /mob/living/silicon/ai/use_power()
 	..()
+	var/mult = (max(tick_spacing, TIME - last_life_tick) / tick_spacing)
 	var/turf/T = get_turf(src)
 	if (T)
 		var/area/A = T.loc
@@ -1411,13 +1430,13 @@ or don't if it uses a custom topopen overlay
 	switch(src.power_mode)
 		if (0)
 			if (istype(src.cell,/obj/item/cell/) && src.cell.charge < src.cell.maxcharge)
-				src.cell.charge = min(src.cell.charge + 5,src.cell.maxcharge)
+				src.cell.charge = min(src.cell.charge + (AI_CHARGE_RATE * mult),src.cell.maxcharge)
 				if (src.cell.charge >= 100 && isdead(src) && try_rebooting_it())
 					src.show_text("<b>ALERT: Internal power cell has regained sufficient charge to operate. Rebooting...</b>", "blue")
 		if (1)
 			if (istype(src.cell,/obj/item/cell/))
 				if (src.cell.charge > 5)
-					src.cell.use(5)
+					src.cell.use(AI_CHARGE_RATE * mult)
 				else if (!isdead(src))
 					src.cell.charge = 0
 					src.show_text("<b>ALERT: Internal battery expired. Shutting down to prevent system damage.</b>", "red")
@@ -1465,6 +1484,7 @@ or don't if it uses a custom topopen overlay
 					src.aiRestorePowerRoutine = 1
 			else
 				src.aiRestorePowerRoutine = 0
+#undef AI_CHARGE_RATE
 
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
@@ -1691,6 +1711,11 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "State Fake Laws"
 	src.state_fake_laws()
+
+/mob/living/silicon/ai/proc/ai_show_fake_laws()
+	set category = "AI Commands"
+	set name = "Show Fake Laws"
+	src.show_fake_laws()
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
@@ -2102,10 +2127,8 @@ or don't if it uses a custom topopen overlay
 	camera_overlay_check(C) //Add static if the camera is disabled
 
 	var/mob/message_mob = src.get_message_mob()
-	if (message_mob.client && message_mob.client.tooltipHolder)
-		for (var/datum/tooltip/t in message_mob.client.tooltipHolder.tooltips)
-			if (t.isStuck)
-				t.hide()
+	if (message_mob.client && message_mob.client.tooltips)
+		message_mob.client.tooltips.hideAllClickTips()
 
 	if (!src.deployed_to_eyecam)
 		src.eye_view()
@@ -2271,7 +2294,7 @@ or don't if it uses a custom topopen overlay
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_split"), "top")
 		else if(coreSkin == "nt" || coreSkin == "industrial" || coreSkin == "lgun")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_uneven"), "top")
-		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "mauxite")
+		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "regal" || coreSkin == "mauxite")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_bulky"), "top")
 		else
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_[coreSkin]"), "top")
@@ -2501,8 +2524,7 @@ proc/get_mobs_trackable_by_AI()
 		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
-	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_COMMAND)
 
 	last_announcement = world.time
 
@@ -2562,7 +2584,7 @@ proc/get_mobs_trackable_by_AI()
 	. = ..()
 	src.camera.c_tag = src.real_name
 	src.eyecam.UpdateName()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 // For if an AI needs to disconnect, make their core a latejoin one
@@ -2865,6 +2887,7 @@ proc/get_mobs_trackable_by_AI()
 
 	do_killswitch()
 		. = ..()
-		src.ai.brain.take_damage(20, 20)
-		src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
-		src.ai.eject_brain()
+		if (.)
+			src.ai.brain.take_damage(20, 20)
+			src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
+			src.ai.eject_brain()

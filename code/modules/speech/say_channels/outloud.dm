@@ -1,6 +1,9 @@
 /datum/say_channel/delimited/local/outloud
 	channel_id = SAY_CHANNEL_OUTLOUD
 	listener_tick_cache_type = /datum/listener_tick_cache/outloud
+#ifndef RP_MODE
+	allows_urls = TRUE
+#endif
 
 /datum/say_channel/delimited/local/outloud/PassToChannel(datum/say_message/message)
 	if (!(message.flags & SAYFLAG_WHISPER))
@@ -11,7 +14,7 @@
 
 		listen_modules_by_type = list()
 
-		if (!ismob(message.message_origin.loc))
+		if (isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message)))
 			var/turf/centre = get_turf(message.message_origin)
 			if (!centre)
 				return
@@ -35,11 +38,9 @@
 							var/min_heard_range = min(input.hearing_range, message.heard_range)
 							if (!INPUT_IN_RANGE(input, centre, min_heard_range))
 								continue
-					// If the outermost listener of the listener and the speaker match, the listener may hear the message.
-					else if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
-						// If the outermost listener's loc is the speaker, the listener may hear the message.
-						if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
-							continue
+					// If the outermost listener's loc is not a turf, determine whether the message can be heard based on a shared loc chain.
+					else if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+						continue
 
 					listen_modules_by_type[type] += input
 
@@ -47,13 +48,9 @@
 			for (var/type in src.listeners)
 				listen_modules_by_type[type] ||= list()
 				for (var/datum/listen_module/input/outloud/input as anything in src.listeners[type])
-					// If the outermost listener of the listener and the speaker match, the listener may hear the message.
-					if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
-						// If the outermost listener's loc is the speaker, the listener may hear the message.
-						if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
-							// If the speaker's loc is the listener, the listener may hear the message.
-							if (message.message_origin.loc != input.parent_tree.listener_origin)
-								continue
+					// Determine whether the message can be heard based on a shared loc chain.
+					if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+						continue
 
 					listen_modules_by_type[type] += input
 
@@ -74,14 +71,15 @@
 			if (length(heard_distorted_listen_modules_by_type))
 				var/datum/say_message/distorted_message = message.Copy()
 				distorted_message.flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY
-				distorted_message.content = stars(distorted_message.content)
+				APPLY_CALLBACK_TO_MESSAGE_CONTENT(distorted_message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(stars)))
+
 				src.PassToListeners(distorted_message, heard_distorted_listen_modules_by_type)
 
 			return
 
 		heard_distorted_listen_modules_by_type = list()
 
-		if (!ismob(message.message_origin.loc))
+		if (isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message)))
 			var/turf/centre = get_turf(message.message_origin)
 			if (!centre)
 				return
@@ -98,37 +96,40 @@
 							continue
 					// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
 					if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
-						// If within `WHISPER_RANGE`, the message may be heard clearly.
+						// Use heard turfs to determine range.
 						if (!input.ignore_line_of_sight_checks)
+							// If within `WHISPER_RANGE`, the message may be heard clearly.
 							if (heard_clearly_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
 								heard_clearly_listen_modules_by_type[type] += input
 								continue
-						else if (INPUT_IN_RANGE(input, centre, WHISPER_RANGE))
-							heard_clearly_listen_modules_by_type[type] += input
-							continue
-						// If outside of `WHISPER_RANGE`, but still within message range, the message will be heard distorted.
-						if (!input.ignore_line_of_sight_checks)
-							if (heard_distorted_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
+							// If outside of `WHISPER_RANGE`, but still within message range, the message will be heard distorted.
+							else if (heard_distorted_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
 								heard_distorted_listen_modules_by_type[type] += input
 								continue
-						else if (INPUT_IN_RANGE(input, centre, message.heard_range))
-							heard_distorted_listen_modules_by_type[type] += input
+						// Compute range directly without regard for heard turfs.
+						else
+							// If within `WHISPER_RANGE`, the message may be heard clearly.
+							if (INPUT_IN_RANGE(input, centre, WHISPER_RANGE))
+								heard_clearly_listen_modules_by_type[type] += input
+								continue
+							// If outside of `WHISPER_RANGE`, but still within message range, the message will be heard distorted.
+							else if (INPUT_IN_RANGE(input, centre, message.heard_range))
+								heard_distorted_listen_modules_by_type[type] += input
+								continue
+					// If the outermost listener's loc is not a turf, determine whether the message can be heard based on a shared loc chain.
+					else
+						if (CANNOT_HEAR_WHISPER_FROM_LOC_CHAIN(input, message))
 							continue
-					// If the listener's loc is the speaker, they may hear the message clearly. Nested contents will not hear whispers.
-					else if (input.parent_tree.listener_origin.loc == message.message_origin)
+
 						heard_clearly_listen_modules_by_type[type] += input
 
 		else
 			for (var/type in src.listeners)
 				heard_clearly_listen_modules_by_type[type] ||= list()
 				for (var/datum/listen_module/input/outloud/input as anything in src.listeners[type])
-					// If the listener's loc and the speaker's loc match, the listener may hear the message clearly.
-					if (input.parent_tree.listener_origin.loc != message.message_origin.loc)
-						// If the listener's loc is the speaker, the listener may hear the message clearly.
-						if (input.parent_tree.listener_origin.loc != message.message_origin)
-							// If the speaker's loc is the listener, the listener may hear the message clearly.
-							if (message.message_origin.loc != input.parent_tree.listener_origin)
-								continue
+					// Determine whether the message can be heard based on a shared loc chain.
+					if (CANNOT_HEAR_WHISPER_FROM_LOC_CHAIN(input, message))
+						continue
 
 					heard_clearly_listen_modules_by_type[type] += input
 
@@ -137,7 +138,7 @@
 		if (length(heard_distorted_listen_modules_by_type))
 			var/datum/say_message/distorted_message = message.Copy()
 			distorted_message.flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY
-			distorted_message.content = stars(distorted_message.content)
+			APPLY_CALLBACK_TO_MESSAGE_CONTENT(distorted_message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(stars)))
 
 			src.listener_tick_cache.write_to_cache(message, heard_distorted_listen_modules_by_type, FALSE)
 			src.PassToListeners(distorted_message, heard_distorted_listen_modules_by_type)

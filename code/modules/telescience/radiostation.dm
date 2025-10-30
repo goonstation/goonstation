@@ -182,6 +182,18 @@
 		name = replacetext(name, "_", " ")
 		src.accents[name] = effect_type::id
 
+/obj/submachine/mixing_desk/attack_hand(mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
+	. = ..()
+
+/obj/submachine/mixing_desk/attackby(obj/item/I, mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
+	. = ..()
+
 /obj/submachine/mixing_desk/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		state.can_use_topic(src, user),
@@ -306,6 +318,9 @@
 		. = ..()
 
 /obj/submachine/record_player/attackby(obj/item/W, mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
 	if (istype(W, /obj/item/record))
 		if (!src.can_play_music)
 			boutput(user, SPAN_ALERT("You insert the record into the record player, but it won't turn on."))
@@ -631,6 +646,11 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 	New()
 		..()
+#ifdef NIGHTSHADE
+		//apparently second reality has copyright issues, not allowed on streamer servers
+		qdel(src)
+		return
+#endif
 		var/image/overlay = new /image(src.icon, "record_3")
 		overlay.color = list(1.5, 0, 0, 0, 0, 0, 0, 0, 0) // very red
 		src.UpdateOverlays(overlay, "recordlabel")
@@ -757,6 +777,12 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	add_overlay = 0
 	icon_state = "record_fruit"
 	song = 'sound/radio_station/music/honkmas.ogg'
+
+/obj/item/record/lay_egg_is_true
+	desc = "This egg seems to be laid particularly TRUE!!!"
+	add_overlay = 0
+	icon_state = "record_duck"
+	song = 'sound/radio_station/music/lay_egg_is_true.ogg'
 
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0

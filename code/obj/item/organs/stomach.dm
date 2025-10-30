@@ -222,3 +222,22 @@ TYPEINFO(/obj/item/organ/stomach/cyber)
 	demag(mob/user)
 		..()
 		organ_abilities = initial(organ_abilities)
+
+/obj/item/organ/stomach/amphibian
+	name = "amphibian stomach"
+	desc = "An amphibian stomach. A frog's best friend."
+	icon_state = "amphibian_stomach"
+
+/obj/item/organ/stomach/skeleton
+	name = "skeleton stomach"
+	desc = "Oh. A skeleton stomach. Cool."
+	icon_state = "skeleton_stomach"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/stomach/martian
+	name = "squishy pouch"
+	desc = "A stomach, presumably for fueling a big martian brain."
+	icon_state = "martian_stomach"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

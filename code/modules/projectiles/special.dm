@@ -797,6 +797,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		src.eye_glider.anchored = ANCHORED_ALWAYS
+		APPLY_ATOM_PROPERTY(P, PROP_ATOM_FLOATING, src)
 		for (var/mob/M in P.contents)
 			if(M.client)
 				M.client.eye = src.eye_glider
@@ -967,6 +968,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 
 /datum/projectile/special/homing/orbiter/spiritbat
+
+/datum/projectile/special/homing/orbiter/spiritbat/frost
 	name = "frost bat"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "spiritbat"
@@ -991,10 +994,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		if (istype(hit, /obj/projectile))
 			var/obj/projectile/pass_proj = hit
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
+				return
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/vamp_blood))
+				return
 			if (pass_proj.proj_data.hit_object_sound)
 				playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
-			if (pass_proj.proj_data.name != src.name)
-				pass_proj.die()
+			pass_proj.die()
 			return
 
 		hit.damage_cold(temp_reduc / 10)
@@ -1018,7 +1024,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if (P != passing_thing)
 			if (istype(passing_thing, /obj/projectile))
 				var/obj/projectile/pass_proj = passing_thing
-				return (istype(pass_proj.proj_data, src.type) || pass_proj.goes_through_walls)
+				return (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat) || pass_proj.goes_through_walls)
 
 			if (isitem(passing_thing))
 				var/obj/item/I = passing_thing
@@ -1026,8 +1032,61 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					return 0
 		.= 1
 
-//place coffin. then, we travel to it in prjoectile form and it heals us while people can beat it
-//cofin is anchored, rises outta ground at spot
+/datum/projectile/special/homing/orbiter/spiritbat/disorient
+	name = "spirit bat"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "vampbat"
+	color_blue = 50
+	color_red = 200
+	color_green = 200
+	rotate_proj = 0
+	face_desired_dir = TRUE
+	goes_through_walls = 1
+	is_magical = 1
+
+	shot_sound = 0
+	hit_mob_sound = 'sound/effects/throw.ogg'
+	hit_object_sound = 'sound/effects/throw.ogg'
+
+	on_launch(var/obj/projectile/P)
+		..()
+		P.collide_with_other_projectiles = 1
+		P.alpha = 200
+
+	on_hit(atom/hit, direction, var/obj/projectile/P)
+		..()
+
+		if (istype(hit, /obj/projectile))
+			var/obj/projectile/pass_proj = hit
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
+				return
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/vamp_blood))
+				return
+			if (pass_proj.proj_data.hit_object_sound)
+				playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
+			pass_proj.die()
+			var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+			poof.setup(P.loc)
+			playsound(P.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
+			P.die()
+			return
+
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 2 SECONDS)
+			L.do_disorient(stamina_damage = 30, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+
+	on_canpass(var/obj/projectile/P, atom/movable/passing_thing)
+		if (P != passing_thing)
+			if (istype(passing_thing, /obj/projectile))
+				var/obj/projectile/pass_proj = passing_thing
+				return (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat) || pass_proj.goes_through_walls)
+
+			if (isitem(passing_thing))
+				var/obj/item/I = passing_thing
+				if (I.throwing)
+					return 0
+		.= 1
 
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"

@@ -862,8 +862,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "froggitdogget"
 
 	munien
-		name = "\improper Elijah Retluoc"
-		icon_state = "elijahretluoc"
+		name = "\improper Elijah Caldwell"
+		icon_state = "elijahcaldwell"
 		ckey = "munien"
 
 	calliopesoups
@@ -1097,6 +1097,22 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Catherine McFluffums"
 		icon_state = "catherinemcfluffums"
 		ckey = "outbackcatgirl"
+	superbongotime
+		name = "\improper Laylith Blackwing"
+		icon_state = "laylithblackwing"
+		ckey = "superbongotime"
+	raccoonpope
+		name = "\improper Cynthia Xeonyr"
+		icon_state = "cynthiaxeonyr"
+		ckey = "raccoonpope"
+	ovaiggy
+		name = "\improper Sachie Blunt"
+		icon_state = "sachieblunt"
+		ckey = "ovaiggy"
+	ithebinman
+		name = "\improper The Mucus Man"
+		icon_state = "themucusman"
+		ckey = "ithebinman"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

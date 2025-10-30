@@ -9,14 +9,7 @@
 	if (message.output_module_channel != SAY_CHANNEL_OUTLOUD)
 		return
 
-	var/obj/item/device/radio/radio
-	if (ismob(message.message_origin))
-		var/mob/mob_speaker = message.message_origin
-		radio = mob_speaker.find_radio()
-	else
-		var/obj/item/organ/head/head = message.message_origin
-		radio = head.ears
-
+	var/obj/item/device/radio/radio = message.message_origin.find_radio()
 	if (!istype(radio))
 		return
 
@@ -30,16 +23,10 @@
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
+	message.can_relay = FALSE
 
 /datum/speech_module/prefix/postmodifier/radio/get_prefix_choices()
-	var/obj/item/device/radio/radio
-	if (ismob(src.parent_tree.speaker_origin))
-		var/mob/mob_speaker = src.parent_tree.speaker_origin
-		radio = mob_speaker.find_radio()
-	else
-		var/obj/item/organ/head/head = src.parent_tree.speaker_origin
-		radio = head.ears
-
+	var/obj/item/device/radio/radio = src.parent_tree.speaker_origin.find_radio()
 	if (!istype(radio) || radio.bricked)
 		return
 
@@ -58,14 +45,7 @@
 	prefix_id = PREFIX_TEXT_RADIO_GENERAL
 
 /datum/speech_module/prefix/postmodifier/radio/general/get_prefix_choices()
-	var/obj/item/device/radio/radio
-	if (ismob(src.parent_tree.speaker_origin))
-		var/mob/mob_speaker = src.parent_tree.speaker_origin
-		radio = mob_speaker.find_radio()
-	else
-		var/obj/item/organ/head/head = src.parent_tree.speaker_origin
-		radio = head.ears
-
+	var/obj/item/device/radio/radio = src.parent_tree.speaker_origin.find_radio()
 	if (!istype(radio) || radio.bricked)
 		return
 

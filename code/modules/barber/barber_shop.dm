@@ -80,12 +80,47 @@
 			second_color = picked_color
 		..()
 
+/// Wig that automatically attaches to humans
+/obj/item/clothing/head/wig/spawnable/attacher
+	var/static/cool_style = ""
+	var/static/cool_color = ""
+	New()
+		// If admin-spawned, let them set the style
+		if (usr && isadmin(usr))
+			if (!ON_COOLDOWN(usr, "wig_attacher_config", 10 SECONDS))
+				cool_color = randomize_hair_color(pick(list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D", "#D8C078", "#E3CC88",
+															"#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")))
+				cool_style = tgui_input_text(usr, "Enter up to 3 hairstyle IDs, separated by commas.", "Wig Setup", "")
+
+			var/list/splut = splittext(cool_style, ",")
+			if (length(splut) >= 1)
+				src.first_id = splut[1]
+				src.first_color = cool_color
+			if (length(splut) >= 2)
+				src.second_id = splut[2]
+				src.second_color = cool_color
+			if (length(splut) >= 3)
+				src.third_id = splut[3]
+				src.third_color = cool_color
+
+		. = ..()
+
+		var/mob/living/carbon/human/H = locate() in get_turf(src)
+		if (H)
+			if (H.head)
+				var/obj/item/clothing/head/hat = H.head
+				H.u_equip(hat)
+				qdel(hat)
+			H.force_equip(src, SLOT_HEAD)
+			H.visible_message(SPAN_NOTICE("[H] sprouts luscious locks!"), SPAN_NOTICE("You seem to suddenly be wearing luscious locks of hair!"))
+
+
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
 	desc = "You can't tell the difference, Honest!"
 	icon_state = "baldcap"
 	item_state = "baldcap"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/scissors
 	name = "scissors"
@@ -228,6 +263,8 @@
 					throw_return = FALSE
 					SPAWN(2 SECONDS)
 						throw_return = TRUE
+			else if(stolen_hair) //failsafe to prevent it from bricking itself
+				stolen_hair.set_loc(get_turf(src))
 
 		. = ..()
 

@@ -211,6 +211,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "bacon"
 	initial_reagents = list("porktonium"=10)
 	blood = 0
+	heal_amt = 1
 	fill_amt = 0.5 //it's only one strip
 
 	New()
@@ -228,6 +229,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		desc = "A strip of salty raw cured pork. It really should be cooked first."
 		icon_state = "bacon-raw"
 		blood = 2
+		heal_amt = 0
 		real_name = "bacon"
 		heats_into = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 

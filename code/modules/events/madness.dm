@@ -1,20 +1,13 @@
+#ifdef MAP_OVERRIDE_NEON //no, you can't have seamonsters on cogmap!
 //Lovingly Adapted from sleeper agent code
 /datum/random_event/major/antag/madness
 	name = "Broken Madness"
-#ifdef MAP_OVERRIDE_NEON
 	disabled = FALSE
-#else
-	disabled = TRUE
-#endif
 	customization_available = TRUE
 	var/num_victims = 0
 
 	admin_call(source)
 		. = ..()
-#ifndef MAP_OVERRIDE_NEON
-		boutput(usr, "The map is not Neon, aborting.")
-		UNLINT(return)
-#endif
 		src.num_victims = input(usr, "How many minds to break?", src.name, 0) as num|null
 		if (isnull(src.num_victims))
 			return
@@ -138,6 +131,7 @@
 	cleanup()
 		src.num_victims = 0
 
+#endif
 /atom/movable/seamonster_overlay
 	icon = 'icons/misc/1024x1024.dmi'
 	icon_state = "seamonster1"

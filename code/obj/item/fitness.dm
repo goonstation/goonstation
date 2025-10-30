@@ -1,7 +1,7 @@
 /obj/fitness/speedbag
 	name = "punching bag"
 	desc = "A punching bag. Can you get to speed level 4???"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "punchingbag"
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SIMPLE
@@ -44,7 +44,7 @@
 /obj/fitness/stacklifter
 	name = "Weight Machine"
 	desc = "Just looking at this thing makes you feel tired."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "fitnesslifter"
 	density = 1
 	anchored = ANCHORED
@@ -98,7 +98,7 @@
 /obj/fitness/weightlifter
 	name = "Weight Machine"
 	desc = "Just looking at this thing makes you feel tired."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "fitnessweight"
 	density = 1
 	anchored = ANCHORED
@@ -124,7 +124,7 @@
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
-			var/image/new_overlay = src.SafeGetOverlayImage("barbell", 'icons/obj/stationobjs.dmi', "fitnessweight-w", MOB_LAYER + 1)
+			var/image/new_overlay = src.SafeGetOverlayImage("barbell", 'icons/obj/gym_objs.dmi', "fitnessweight-w", MOB_LAYER + 1)
 			src.UpdateOverlays(new_overlay, "barbell")
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 			user.visible_message(SPAN_ALERT("<B>[user] is [bragmessage]!</B>"))

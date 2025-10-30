@@ -1124,8 +1124,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.menu_message += "<B>Current Bounties (Next Refresh at : [refresh_time_formatted]):</B>"
 				for(var/datum/bounty_item/B in game.active_bounties)
 					var/atext = ""
-					if (B.reveal_area && B.item && !B.claimed)
-						atext = "<br>(Last Seen : [get_area(B.item)])"
+					var/unavailable_text = null // Why the specific bounty can't be redeemed (Claimed, Destroyed or In Cryo)
+					if (B.claimed)
+						unavailable_text = "CLAIMED"
+					else if (B.reveal_area && B.item)
+						var/item_area = get_area(B.item)
+						if(!item_area) // Also includes if there's no item because if there's no item then it has no area
+							unavailable_text = "DESTROYED"
+						else if ((locate(/obj/cryotron) in get_turf(B.item)) && !isturf(B.item.loc)) //There's gotta be a better way to check for this
+							unavailable_text = "IN CRYOGENIC STORAGE"
+						else
+							atext = "<br>(Last Seen : [item_area])"
 					var/rtext = ""
 					if (B.reward)
 						if (req_bounties() <= 1)
@@ -1133,7 +1142,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						else
 							rtext = "<br><b>Reward</b> : Not available. Deliver [req_bounties()] more bounties."
 
-					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br>[(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>) [B.photo_containing ? "" : "<a href='byond://?src=\ref[src];action=print;bounty=\ref[B]'>Print</a>"]"]</td></tr></small>"
+					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br>[(unavailable_text) ? "(<b>[unavailable_text]</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>) [B.photo_containing ? "" : "<a href='byond://?src=\ref[src];action=print;bounty=\ref[B]'>Print</a>"]"]</td></tr></small>"
 
 		src.menu_message += "<HR>"
 

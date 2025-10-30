@@ -25,10 +25,7 @@
     flex-direction: row;
     background-color: color.adjust(rgb(131, 100, 74), $lightness: -30%);
 
-    &* {
-      -ms-user-select: none; /* Internet Explorer/Edge */
-      user-select: none; /* technically no worky for ie */
-    }
+    user-select: none;
   }
 
   &helpmodal {

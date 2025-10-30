@@ -45,7 +45,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 	var/last_life_update = 0
 	var/const/life_tick_spacing = LIFE_PROCESS_TICK_SPACING
 	/// standard duration of an involuntary haunt action
-	var/forced_haunt_duration = 30 SECOND
+	var/forced_haunt_duration = 15 SECONDS
 	var/death_icon_state = "wraith-die"
 	var/last_typing = null
 	var/list/area/booster_locations = list()	//Zones in which you get more points
@@ -367,13 +367,14 @@ TYPEINFO(/mob/living/intangible/wraith)
 				door.open()
 			return ..()
 
-		if (!src.density && !src.justdied)
-			for (var/obj/decal/cleanable/saltpile/salt in NewLoc)
-				src.setStatus("corporeal", src.forced_haunt_duration, TRUE)
-				var/datum/targetable/ability = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
-				ability.doCooldown()
-				boutput(src, SPAN_ALERT("You have passed over salt! You now interact with the mortal realm..."))
-				break
+		if (!src.density)
+			var/obj/decal/cleanable/saltpile/salt = locate() in NewLoc
+			if (salt)
+				if (salt.wraith_bump(src)) //destroyed it, take damage and pass
+					src.health -= 15
+					global.health_update_queue |= src
+				else //didn't destroy it, can't pass
+					return
 
 		return ..()
 

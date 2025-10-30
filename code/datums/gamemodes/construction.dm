@@ -131,7 +131,7 @@
 						new /obj/item/mining_tool(T)
 						picks++
 					var/count = pick(prob(50); 0, 1, prob(25); 2, prob(10); 3)
-					for (var/i = 0, i < count; i++)
+					for (var/i = 0; i < count; i++)
 						var/item_class = pick(1, prob(50); 2, prob(25); 3, prob(10); 4)
 						switch (item_class)
 							if (1)

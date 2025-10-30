@@ -33,6 +33,7 @@ export const TerminalOutputSection = (props: TerminalOutputSectionProps) => {
   return (
     <Section
       backgroundColor={bgColor}
+      preserveWhitespace
       scrollable
       fill
       container_id="terminalOutput"

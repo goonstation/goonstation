@@ -13,10 +13,11 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
+import { BooleanLike } from 'tgui-core/react';
 
 import { setupDrag } from './drag';
 import { globalEvents } from './events';
-import { focusMap, hasWindowFocus } from './focus';
+import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
 
@@ -105,6 +106,28 @@ export const backendReducer = (state = initialState, action) => {
         [key]: nextState,
       },
     };
+  }
+
+  // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+  if (type === 'byond/mousedown') {
+    globalEvents.emit('byond/mousedown');
+  }
+
+  // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+
+  if (type === 'byond/mouseup') {
+    globalEvents.emit('byond/mouseup');
+  }
+
+  // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+
+  if (type === 'byond/ctrldown') {
+    globalEvents.emit('byond/ctrldown');
+  }
+
+  // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+  if (type === 'byond/ctrlup') {
+    globalEvents.emit('byond/ctrlup');
   }
 
   if (type === 'backend/suspendStart') {
@@ -196,22 +219,6 @@ export const backendMiddleware = (store) => {
       return;
     }
 
-    if (type === 'byond/mousedown') {
-      globalEvents.emit('byond/mousedown');
-    }
-
-    if (type === 'byond/mouseup') {
-      globalEvents.emit('byond/mouseup');
-    }
-
-    if (type === 'byond/ctrldown') {
-      globalEvents.emit('byond/ctrldown');
-    }
-
-    if (type === 'byond/ctrlup') {
-      globalEvents.emit('byond/ctrlup');
-    }
-
     if (type === 'backend/suspendStart' && !suspendInterval) {
       logger.log(`suspending (${Byond.windowId})`);
       // Keep sending suspend messages until it succeeds.
@@ -225,12 +232,13 @@ export const backendMiddleware = (store) => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
+      // Tiny window in hell to not show previous content when resumed
       Byond.winset(Byond.windowId, {
+        size: '1x1',
+        pos: '1,1',
         'is-visible': false,
       });
-      setTimeout(() => {
-        if (hasWindowFocus()) focusMap();
-      });
+      setTimeout(() => focusMap());
     }
 
     if (type === 'backend/update') {
@@ -270,6 +278,7 @@ export const backendMiddleware = (store) => {
         Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
+        Byond.sendMessage('visible');
         perf.mark('resume/finish');
         if (process.env.NODE_ENV !== 'production') {
           logger.log(
@@ -302,6 +311,7 @@ export const backendMiddleware = (store) => {
         chunk,
       });
     }
+
     return next(action);
   };
 };
@@ -373,31 +383,31 @@ export const sendAct = (action: string, payload: object = {}) => {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
   }
-  if (Byond.BYOND_MAJOR >= '516') {
-    const stringifiedPayload = JSON.stringify(payload);
-    const urlSize = Object.entries({
+
+  const stringifiedPayload = JSON.stringify(payload);
+  const urlSize = Object.entries({
+    type: 'act/' + action,
+    payload: stringifiedPayload,
+    tgui: 1,
+    windowId: Byond.windowId,
+  }).reduce(
+    (url, [key, value], i) =>
+      url +
+      `${i > 0 ? '&' : '?'}${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    '',
+  ).length;
+  if (urlSize > 2048) {
+    let chunks: string[] = stringifiedPayload.split(chunkSplitter);
+    const id = `${Date.now()}`;
+    globalStore?.dispatch(backendCreatePayloadQueue({ id, chunks }));
+    Byond.sendMessage('oversizedPayloadRequest', {
       type: 'act/' + action,
-      payload: stringifiedPayload,
-      tgui: 1,
-      windowId: Byond.windowId,
-    }).reduce(
-      (url, [key, value], i) =>
-        url +
-        `${i > 0 ? '&' : '?'}${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
-      '',
-    ).length;
-    if (urlSize > 2048) {
-      let chunks: string[] = stringifiedPayload.split(chunkSplitter);
-      const id = `${Date.now()}`;
-      globalStore?.dispatch(backendCreatePayloadQueue({ id, chunks }));
-      Byond.sendMessage('oversizedPayloadRequest', {
-        type: 'act/' + action,
-        id,
-        chunkCount: chunks.length,
-      });
-      return;
-    }
+      id,
+      chunkCount: chunks.length,
+    });
+    return;
   }
+
   Byond.sendMessage('act/' + action, payload);
 };
 
@@ -407,14 +417,18 @@ type BackendState<TData> = {
   config: {
     title: string;
     status: number;
-    interface: string;
-    refreshing: boolean;
+    interface: {
+      name: string;
+      layout: string;
+    };
+    refreshing: BooleanLike;
     window: {
       key: string;
       size: [number, number];
-      fancy: boolean;
+      fancy: BooleanLike;
       mode: WindowMode; // |GOONSTATION-ADD|
-      locked: boolean;
+      locked: BooleanLike;
+      scale: BooleanLike;
     };
     client: {
       ckey: string;

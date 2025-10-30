@@ -182,3 +182,11 @@
 #define COMSIG_CLIENT_LOGIN "client_login"
 /// When a client logs out of a mob. (client, mob)
 #define COMSIG_CLIENT_LOGOUT "client_logout"
+/// When a client's chat is loaded
+#define COMSIG_CLIENT_CHAT_LOADED "client_chat_loaded"
+
+// ---- Extradimensional Prefab Signals ----
+/// When an `/atom/movable` enters a dimensional locker. (sender, atom_movable)
+#define COMSIG_EXTRADIMENSIONAL_PREFAB_ENTERED "extradimensional_prefab_entered"
+/// When an `/atom/movable` attempts to leave a dimensional locker. (sender, atom_movable, old_loc)
+#define COMSIG_EXTRADIMENSIONAL_PREFAB_EXIT "extradimensional_prefab_exit"
