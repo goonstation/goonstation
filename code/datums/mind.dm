@@ -182,7 +182,10 @@ datum/mind
 	proc/get_player()
 		RETURN_TYPE(/datum/player)
 		if(ckey)
-			. = make_player(ckey)
+			. = find_player(ckey)
+			if (!.)
+				stack_trace("find_player for mind with ckey [ckey] returned null, making a new player datum. This probably shouldn't happen!")
+				. = make_player(ckey)
 
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"

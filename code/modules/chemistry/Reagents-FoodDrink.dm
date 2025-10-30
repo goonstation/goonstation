@@ -2262,7 +2262,7 @@ datum
 			taste = "hot"
 			addiction_prob = 0.1 // heh
 			addiction_min = 7.5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			//penetrates_skin = 1
 			viscosity = 0.2
 
@@ -2441,7 +2441,7 @@ datum
 			transparency = 255
 			addiction_prob = 0.1 // hey man some people really like weird cheese
 			addiction_min = 5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			taste = "weird"
 			hunger_value = 1
 			viscosity = 0.6
@@ -4374,7 +4374,7 @@ datum
 			fluid_g = 255
 			addiction_prob = 0.2
 			addiction_min = 5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			overdose = 50
 			hunger_value = 0.25
 			taste = "offputting"

@@ -495,7 +495,7 @@
 		for(var/atom/limb in list(l_arm, r_arm, l_leg, r_leg))
 			var/list/limb_name_parts = splittext(limb.name, "'s")
 			if(length(limb_name_parts) == 2)
-				limb.name = "[user_name]'s [limb_name_parts[2]]"
+				limb.name = "[user_name]’s [limb_name_parts[2]]"
 
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
@@ -2420,8 +2420,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
-	W.name = "[real_name]'s hair"
-	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
+	W.name = "[real_name]’s hair"
+	W.real_name = "[real_name]’s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 

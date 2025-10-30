@@ -300,8 +300,6 @@
 			return // station areas do not get ambient effects
 		if(global.station_repair.ambient_light)
 			src.AddOverlays(global.station_repair.ambient_light, "ambient")
-		if(global.station_repair.ambient_obj)
-			src.vis_contents |= global.station_repair.ambient_obj
 		if(global.station_repair.weather_img)
 			if(islist(global.station_repair.weather_img))
 				src.AddOverlays(pick(global.station_repair.weather_img), "weather")

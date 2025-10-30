@@ -372,7 +372,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = ID.registered
-						src.name = "[ID.registered]'s [src.name]"
+						src.name = "[ID.registered]’s [src.name]"
 						src.desc = "Owned by [ID.registered]."
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")

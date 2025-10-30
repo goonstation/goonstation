@@ -239,11 +239,11 @@ datum
 					M.take_toxin_damage(1 * mult)
 				if (probmult(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
 				if (probmult(8)) boutput(M, SPAN_NOTICE("You feel [pick("really buff", "on top of the world","like you're made of steel", "energized", "invigorated", "full of energy")]!"))
-				if (prob(5))
+				if (probmult(5))
 					boutput(M, SPAN_ALERT("You cannot breathe!"))
-					M.setStatusMin("stunned", 2 SECONDS * mult)
-					M.take_oxygen_deprivation(15 * mult)
-					M.losebreath += (1 * mult)
+					M.setStatus("slowed", 3 SECONDS)
+					M.take_oxygen_deprivation(15)
+					M.losebreath += (1)
 				..()
 				return
 
@@ -3220,7 +3220,7 @@ datum
 				*/
 				var/datum/plant/growing = P.current
 				var/datum/plantgenes/DNA = P.plantgenes
-				growth_tick.cropsize_bonus += 0.24
+				growth_tick.cropsize_bonus += 0.74
 				if (DNA.harvests > 1)
 					growth_tick.harvests_bonus -= 0.24
 				if (growing.isgrass && P.growth > 2)
@@ -3243,7 +3243,7 @@ datum
 				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
 				if (DNA.cropsize > 1)
-					growth_tick.cropsize_bonus -= 0.24
+					growth_tick.cropsize_bonus -= 0.5
 
 		///////////////////////////
 		/// BODILY FLUIDS /////////

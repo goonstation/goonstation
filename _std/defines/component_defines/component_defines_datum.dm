@@ -28,10 +28,16 @@
 	#define COMSIG_AREA_ACTIVATED "area_activated"
 	/// area's active var set to false (when all clients leave)
 	#define COMSIG_AREA_DEACTIVATED "area_deactivated"
+	/// whenever a mob enters an area (entered mob)
+	#define COMSIG_AREA_ENTERED_BY_MOB "mob_entered_area"
+	/// whenever a mob exits an area (exited mob)
+	#define COMSIG_AREA_EXITED_BY_MOB "mob_exited_area"
 
 // ---- TGUI signals ----
 	/// A TGUI window was opened by a user (receives tgui datum)
 	#define COMSIG_TGUI_WINDOW_OPEN "tgui_window_open"
+	/// A TGUI window has fully opened (tgui_window, client)
+	#define COMSIG_TGUI_WINDOW_VISIBLE "tgui_window_visible"
 
 // ---- reagents signals ----
 	/// When reagent scanned

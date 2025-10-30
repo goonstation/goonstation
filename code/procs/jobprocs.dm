@@ -784,7 +784,7 @@ Equip items from body traits.
 
 		C.registered = realName
 		C.assignment = JOB.name
-		C.name = "[C.registered]'s ID Card ([C.assignment])"
+		C.name = "[C.registered]’s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
 		C.pronouns = src.get_pronouns()
 

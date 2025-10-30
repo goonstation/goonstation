@@ -365,6 +365,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	linkcolor = MEDICAL_LINK_COLOR
 	wages = PAY_DOCTORATE
 	request_limit = 1 // limited workspace
+	trait_list = list("training_therapy")
 	access_string = "Psychiatrist"
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
 	slot_card = /obj/item/card/id/medical
@@ -411,6 +412,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_lhan = list(/obj/item/pet_carrier)
 	items_in_backpack = list(/obj/item/storage/box/mousetraps)
+	access_string = "Staff Assistant"
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/vehiclemechanic

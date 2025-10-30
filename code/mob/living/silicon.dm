@@ -469,7 +469,7 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 /proc/borgify_name(var/start_name = "Robot")
@@ -820,10 +820,22 @@ var/global/list/module_editors = list()
 		if (src.duration <= 0)
 			src.do_killswitch()
 
+	proc/owner_is_immune()
+		var/mob/living/silicon/robot/borg = src.owner
+		if (istype(borg) && borg.syndicate)
+			return TRUE
+		return FALSE
+
+	//Returns TRUE if the kill should be completed, FALSE if the owner was immune to killswitching.
 	proc/do_killswitch()
 		if (ismob(src.owner))
 			var/mob/M = src.owner
-			if (M.client)
+			if (owner_is_immune())
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b><i> But you were immune! </i>"))
+				logTheThing(LOG_COMBAT, M, "would have died to the killswitch, but they were immune.")
+				return FALSE
+			else
 				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
 				playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
 				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
+				return TRUE

@@ -26,7 +26,7 @@
 			"page" = page,
 			"per_page" = per_page
 		)
-		var/datum/apiModel/Paginated/BanResourceList/bans
+		var/datum/apiModel/Paginated/BanList/bans
 		try
 			bans = apiHandler.queryAPI(getBans)
 		catch (var/exception/e)
@@ -39,7 +39,7 @@
 	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE, added_externally = FALSE)
 		duration = floor(duration ? duration / 10 : duration) // duration given in deciseconds, api expects seconds
 
-		var/datum/apiModel/Tracked/BanResource/ban
+		var/datum/apiModel/Tracked/Ban/ban
 		if (!added_externally)
 			var/datum/apiRoute/bans/add/addBan = new
 			addBan.buildBody(
@@ -113,10 +113,9 @@
 			"ckey" = ckey,
 			"comp_id" = comp_id,
 			"ip" = ip,
-			"server_id" = config.server_id,
 			"player_id" = player_id
 		)
-		var/datum/apiModel/Tracked/BanResource/ban
+		var/datum/apiModel/Tracked/Ban/ban
 		try
 			ban = apiHandler.queryAPI(checkBan)
 		catch
@@ -147,7 +146,7 @@
 
 		// Build a message to show to the player
 		var/message = "[ban.reason]<br>"
-		message += "Banned By: [ban.game_admin.ckey]<br>"
+		message += "Banned By: [ban.game_admin.player.ckey]<br>"
 		message += "This ban applies to [ban.server_id ? "this server only" : "all servers"].<br>"
 		if (ban.expires_at)
 			message += "(This ban will be automatically removed in [ban.duration_human])"
@@ -178,7 +177,7 @@
 			duration,
 			requires_appeal
 		)
-		var/datum/apiModel/Tracked/BanResource/ban
+		var/datum/apiModel/Tracked/Ban/ban
 		try
 			ban = apiHandler.queryAPI(updateBan)
 		catch (var/exception/e)

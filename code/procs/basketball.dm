@@ -283,7 +283,7 @@
 
 		if(the_id && the_id.registered == H.real_name)
 			the_id.assignment = "Lawyer"
-			the_id.name = "[H.real_name]'s ID Card (Lawyer)"
+			the_id.name = "[H.real_name]’s ID Card (Lawyer)"
 			H.wear_id = the_id
 
 		for(var/obj/item/W in H)

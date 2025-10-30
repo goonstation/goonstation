@@ -540,7 +540,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
-						src.name = "[I.registered]'s [src.name]"
+						src.name = "[I.registered]’s [src.name]"
 						src.desc = "Owned by [I.registered]."
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")

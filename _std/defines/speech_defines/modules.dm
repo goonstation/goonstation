@@ -85,6 +85,7 @@
 #define SPEECH_MODIFIER_ACCENT_ERROR "accent_error"
 #define SPEECH_MODIFIER_ACCENT_FINNISH "accent_finnish"
 #define SPEECH_MODIFIER_ACCENT_FRENCH "accent_french"
+#define SPEECH_MODIFIER_ACCENT_FROG "accent_frog"
 #define SPEECH_MODIFIER_ACCENT_GERMAN "accent_german"
 #define SPEECH_MODIFIER_ACCENT_HACKER "accent_hacker"
 #define SPEECH_MODIFIER_ACCENT_HORSE "accent_horse"

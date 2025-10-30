@@ -1,7 +1,7 @@
 var/HasturPresent = 0
 
 TYPEINFO(/mob/living/critter/hastur)
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_VOID)
 
 /mob/living/critter/hastur
 	name = "????"

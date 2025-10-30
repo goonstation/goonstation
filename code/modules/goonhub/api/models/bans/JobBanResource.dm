@@ -9,7 +9,7 @@
 	var/reason					= null // string
 	var/expires_at 			= null // date-time
 	var/deleted_at 			= null // date-time
-	var/game_admin			= null // { id: integer, ckey: string, name: string } - not required
+	var/datum/apiModel/Tracked/PlayerAdmin/game_admin	= null // Model - not required
 
 /datum/apiModel/Tracked/JobBanResource/SetupFromResponse(response)
 	. = ..()
@@ -21,7 +21,10 @@
 	src.reason = response["reason"]
 	src.expires_at = response["expires_at"]
 	src.deleted_at = response["deleted_at"]
-	src.game_admin = response["game_admin"]
+
+	if (("game_admin" in response) && islist(response["game_admin"]))
+		src.game_admin = new
+		src.game_admin.SetupFromResponse(response["game_admin"])
 
 /datum/apiModel/Tracked/JobBanResource/VerifyIntegrity()
 	. = ..()
@@ -44,4 +47,4 @@
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
 	.["deleted_at"] = src.deleted_at
-	.["game_admin"] = src.game_admin
+	.["game_admin"] = src.game_admin ? src.game_admin.ToList() : src.game_admin

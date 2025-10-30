@@ -114,27 +114,27 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/white
 	name = "White"
-	item_path = /obj/item/clothing/under/misc/frillyswimsuit/white
+	item_path = /obj/item/clothing/under/swimsuit/frillyswimsuit/white
 	swatch_background_color = "#ffffff"
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/yellow
 	name = "Yellow"
-	item_path = /obj/item/clothing/under/misc/frillyswimsuit/yellow
+	item_path = /obj/item/clothing/under/swimsuit/frillyswimsuit/yellow
 	swatch_background_color = "#e0e02c"
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/blue
 	name = "Blue"
-	item_path = /obj/item/clothing/under/misc/frillyswimsuit/blue
+	item_path = /obj/item/clothing/under/swimsuit/frillyswimsuit/blue
 	swatch_background_color = "#7fffff"
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/pink
 	name = "Pink"
-	item_path = /obj/item/clothing/under/misc/frillyswimsuit/pink
+	item_path = /obj/item/clothing/under/swimsuit/frillyswimsuit/pink
 	swatch_background_color = "#f2a9a9"
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/bubblegum
 	name = "Bubblegum"
-	item_path = /obj/item/clothing/under/misc/frillyswimsuit/bubblegum
+	item_path = /obj/item/clothing/under/swimsuit/frillyswimsuit/bubblegum
 	cost = PAY_TRADESMAN
 	swatch_background_color = "#f2a9a9"
 	swatch_foreground_color = "#7fffff"
@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/circus
 	name = "Circus"
-	item_path = /obj/item/clothing/under/misc/frillyswimsuit/circus
+	item_path = /obj/item/clothing/under/swimsuit/frillyswimsuit/circus
 	cost = PAY_TRADESMAN
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#e55b16"
@@ -153,37 +153,37 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 	cost = PAY_TRADESMAN/3
 /datum/clothingbooth_item/w_uniform/swimtrunks/white
 	name = "White"
-	item_path = /obj/item/clothing/under/misc/swimtrunks/white
+	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/white
 	swatch_background_color = "#ffffff"
 
 /datum/clothingbooth_item/w_uniform/swimtrunks/red
 	name = "Red"
-	item_path = /obj/item/clothing/under/misc/swimtrunks/red
+	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/red
 	swatch_background_color = "#e21616"
 
 /datum/clothingbooth_item/w_uniform/swimtrunks/orange
 	name = "Orange"
-	item_path = /obj/item/clothing/under/misc/swimtrunks/orange
+	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/orange
 	swatch_background_color = "#e55b16"
 
 /datum/clothingbooth_item/w_uniform/swimtrunks/green
 	name = "Green"
-	item_path = /obj/item/clothing/under/misc/swimtrunks/green
+	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/green
 	swatch_background_color = "#0c7f29"
 
 /datum/clothingbooth_item/w_uniform/swimtrunks/blue
 	name = "Blue"
-	item_path = /obj/item/clothing/under/misc/swimtrunks/blue
+	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/blue
 	swatch_background_color = "#2323b2"
 
 /datum/clothingbooth_item/w_uniform/swimtrunk/black
 	name = "Black"
-	item_path = /obj/item/clothing/under/misc/swimtrunks/black
+	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/black
 	swatch_background_color = "#2f2851"
 
 /datum/clothingbooth_item/w_uniform/swimtrunks/circus
 	name = "Circus"
-	item_path = /obj/item/clothing/under/misc/swimtrunks/circus
+	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/circus
 	cost = PAY_TRADESMAN
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#e55b16"
