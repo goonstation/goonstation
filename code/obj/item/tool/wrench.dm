@@ -76,7 +76,7 @@
 	item_state = "wrench"
 
 /obj/item/wrench/purple
-	desc = "A tool used to apply torque to turn nuts and bolts. But purple!"
+	desc = "A tool used to apply torque to turn nuts and bolts. Now comes in purple!"
 	icon_state = "wrench-purple"
 	item_state = "wrench"
 

@@ -222,6 +222,9 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/crowbar/purple
+	item_outputs = list(/obj/item/crowbar/purple)
+
 /datum/manufacture/screwdriver
 	name = "Screwdriver"
 	item_requirements = list("metal" = 1)
@@ -247,12 +250,7 @@
 	category = "Tool"
 
 /datum/manufacture/wrench/purple
-	name = "Wrench"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/wrench/purple)
-	create = 1
-	time = 5 SECONDS
-	category = "Tool"
 
 /datum/manufacture/crowbar/yellow
 	name = "Crowbar"
@@ -455,6 +453,9 @@
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
+
+/datum/manufacture/welder/purple
+	item_outputs = list(/obj/item/weldingtool/purple)
 
 /datum/manufacture/soldering
 	name = "Soldering Iron"
