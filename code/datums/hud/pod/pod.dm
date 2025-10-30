@@ -36,12 +36,15 @@
 	var/datum/hud_zone/healthbar_panel = src.create_hud_zone(
 		list(x_low = WIDE_TILE_WIDTH - 2, x_high = WIDE_TILE_WIDTH, y_low = TILE_HEIGHT + 1, y_high = TILE_HEIGHT + 1),
 		"healthbar_panel",
+		vertical_edge = NORTH,
+		horizontal_edge = EAST,
 	)
 	healthbar_panel.register_element(new /datum/hud_element(new /atom/movable/screen/hud/pod/read_only/healthbars(null, src), width = 3), "healthbars")
 
 	var/datum/hud_zone/exit_panel = src.create_hud_zone(
 		list(x_low = WIDE_TILE_WIDTH, x_high = WIDE_TILE_WIDTH, y_low = 1, y_high = 2),
 		"exit_panel",
+		horizontal_edge = EAST,
 	)
 	exit_panel.register_element(new /datum/hud_element(src.leave_pod), "leave_pod")
 	exit_panel.register_element(new /datum/hud_element(src.sensor_lock), "sensor_lock")

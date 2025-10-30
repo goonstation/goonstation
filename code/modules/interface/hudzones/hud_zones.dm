@@ -65,7 +65,7 @@
 	var/relative_pos_horizontal = null
 	// If the horizontal edge is the east edge, the relative position is taken as number of tiles from that edge.
 	if (src.horizontal_edge == "EAST")
-		relative_pos_horizontal = WIDE_TILE_WIDTH - src.coords["x_high"]
+		relative_pos_horizontal = WIDE_TILE_WIDTH - src.coords["x_high"] + (element.width - 1)
 	// If the horizontal edge is the west edge, the relative position is equal to the absolute position minus one, as absolute position is measured from the south western corner.
 	else
 		relative_pos_horizontal = src.coords["x_low"] - 1
