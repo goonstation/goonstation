@@ -1,5 +1,9 @@
 
 (t)thu oct 30 25
+(u)Hawke
+(p)25077
+(e)|
+(+)The impact pad's stand now properly plays the extension animation.
 (u)RoflCopter4
 (p)24917
 (e)🎨🛠️|C-Sprites, A-Engineering
