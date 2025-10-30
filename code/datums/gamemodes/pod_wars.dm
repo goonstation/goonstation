@@ -184,11 +184,11 @@ var/list/pw_rewards_tier3 = null
 
 	if(round_limit > 0)
 		SPAWN(round_limit) // this has got to end soon
-			command_alert("Something something radiation.","Emergency Update")
+			command_alert("The Ion Storm will dissipate in 15 minutes... Whichever team has the least points will be forced to withdraw.", "Weather Update")
 			sleep(10 MINUTES)
-			command_alert("More radiation, too much...", "Emergency Update")
+			command_alert("Ion storm dissipating in 5 minutes... Whichever team has the least points will be forced to withdraw.", "Weather Update")
 			sleep(5 MINUTES)
-			command_alert("You may feel a slight burning sensation.", "Emergency Update")
+			command_alert("Ion storm dissipating... Executing emergency procedures. ", "Weather Update")
 			sleep(10 SECONDS)
 			for(var/mob/living/carbon/M in mobs)
 				M.emote("fart")

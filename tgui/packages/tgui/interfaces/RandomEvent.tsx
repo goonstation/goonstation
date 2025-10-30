@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Box, Button, Flex, Section } from 'tgui-core/components';
+import { Box, Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -22,11 +22,7 @@ export const RandomEvent = () => {
     <Window title="Random Event" width={700} height={600}>
       <Window.Content scrollable>
         <Section title={eventName}>
-          <Flex direction="row">
-            <Flex.Item ml={1}>
-              <DataInputOptions options={eventOptions} />
-            </Flex.Item>
-          </Flex>
+          <DataInputOptions options={eventOptions} />
           <Box m={1}>
             <Button fluid onClick={() => act('activate')}>
               Confirm Event

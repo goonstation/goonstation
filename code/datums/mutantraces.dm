@@ -476,11 +476,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.mob_leg_offset = src.leg_offset
 		AH.mob_arm_offset = src.arm_offset
 
-		if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
-			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
-			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
-
 		AH.s_tone_original = AH.s_tone
 		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
 			AH.s_tone = AH.customizations["hair_bottom"].color
@@ -490,6 +485,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			AH.s_tone = AH.customizations["hair_top"].color
 		else
 			AH.s_tone = AH.s_tone_original
+		if ((src.mutant_appearance_flags & FIX_COLORS) && src.mutant_appearance_flags & (SKINTONE_USES_PREF_COLOR_1 | SKINTONE_USES_PREF_COLOR_2 | SKINTONE_USES_PREF_COLOR_3))
+			AH.s_tone = fix_colors(AH.s_tone)
 
 		AH.mutant_race = src
 		if (src.persists_on_clone)

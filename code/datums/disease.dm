@@ -344,7 +344,12 @@
 		master = get_disease_from_path(/datum/ailment/addiction)
 
 	stage_act(var/mult)
-		src.addiction_meter += affected_mob.reagents?.addiction_cache
+		var/cache = src.affected_mob.reagents?.addiction_cache
+		if (cache != 0)
+			src.addiction_meter += cache
+			if (prob(40) && !ON_COOLDOWN(src.affected_mob, "addiction_update", 60 SECONDS))
+				src.addiction_change_message(cache)
+
 		src.tick_satisfied = FALSE
 		..()
 
@@ -391,6 +396,25 @@
 			// don't want every addiction spamming this message whenever any addictive reagent is taken
 			if (!ON_COOLDOWN(src.affected_mob, "minor_addiction_relief", 2 SECONDS))
 				boutput(src.affected_mob, SPAN_NOTICE("<b>That takes the edge off, but not much.</b>"))
+
+	proc/addiction_change_message(var/update_value)
+		if (src.addiction_meter <= 0)
+			return
+		var/message
+		if (src.addiction_meter < 15)
+			message = "The thought of [src.associated_reagent] is on your mind."
+		else if (src.addiction_meter < 30)
+			message = "Your every second thought is about [src.associated_reagent]."
+		else if (src.addiction_meter < 60)
+			message = "You can't go three seconds without thinking about [src.associated_reagent]."
+		else if (src.addiction_meter < 100)
+			message = "Four walls are closing in, and [src.associated_reagent] is the only escape."
+		else
+			var/repeats = 4 + max(0, floor((src.addiction_meter - 100) / 100))
+			message = ""
+			for(var/i = 1 to repeats)
+				message += "[src.associated_reagent] "
+		boutput(src.affected_mob, update_value < 0 ? SPAN_NOTICE(message) : SPAN_ALERT(message))
 
 /datum/ailment_data/parasite
 	var/was_setup = 0
@@ -659,3 +683,12 @@
 		if (prob(numLow))
 			boutput(src, SPAN_ALERT("Your cyberheart lurches awkwardly!"))
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
+
+/// Contracts an addiction to the specified reagent.
+/// @param reagent The reagent which the mob should become addicted to. Can be a reference or a string id.
+/// @param bypass_resistance If disease resistance should be bypassed while adding a disease.
+/// @param ailment_name Name of the ailment to add. This is not cosmetic; the ailment type is retrieved via this name.
+/// @param severity_override Overrides the addiction_severity of the reagent.
+/mob/living/proc/contract_addiction(var/reagent, var/bypass_resistance = FALSE, var/ailment_name = null, var/severity_override = null)
+	var/datum/ailment_data/addiction/AD = get_disease_from_path(/datum/ailment/addiction).setup_strain(reagent, src, severity_override)
+	src.contract_disease(/datum/ailment/addiction, ailment_name, AD, bypass_resistance)

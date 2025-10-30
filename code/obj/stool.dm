@@ -1311,12 +1311,12 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 
 	update_icon()
 		if (src.dir == NORTH)
-			src.layer = FLY_LAYER+1
+			src.layer = MOB_LAYER_BASE+1
 		else
-			src.layer = OBJ_LAYER
-			if ((src.dir == WEST || src.dir == EAST) && !src.arm_image)
+			src.layer = initial(src.layer)
+			if ((src.dir == WEST || src.dir == EAST) && src.arm_icon_state && !src.arm_image)
 				src.arm_image = image(src.icon, src.arm_icon_state)
-				src.arm_image.layer = FLY_LAYER+1
+				src.arm_image.layer = MOB_LAYER_BASE+1
 				src.UpdateOverlays(src.arm_image, "arm")
 
 	left

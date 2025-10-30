@@ -64,7 +64,7 @@ If that's not there, you can press <kbd>Ctrl + Shift + P</kbd> to open the comma
 
 Now, paste the URL of the repository you created in the last step. It should look like this: `https://github.com/YOURNAME/goonstation`. Then, select a folder to keep your local repository. *The process of downloading might take a while.*
 
-Once it's downloaded, open the folder in VS Code. You now have your own local copy of the code!
+Once it's downloaded, open the new clone of the repository (likely a folder named `goonstation`) in VS Code. You now have your own local copy of the code!
 
 Next, we're going to need to get some necessary extensions!
 

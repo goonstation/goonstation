@@ -1392,6 +1392,10 @@ TYPEINFO(/atom/movable)
 		if("icon_state")
 			src.icon_state = oldval
 			src.set_icon_state(newval)
+		if("open_to_sound") //otherwise it doesn't update properly
+			for (var/atom/movable/AM in src)
+				AM.outermost_listener_tracker?.update_outermost_listener()
+
 
 /atom/movable/proc/is_that_in_this(atom/movable/target)
 	if (target.loc == src)

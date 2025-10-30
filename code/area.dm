@@ -217,6 +217,7 @@ TYPEINFO(/area)
 			//If any mobs are entering, within a thing or otherwise
 			if (length(enteringMobs) > 0)
 				for (var/mob/enteringM in enteringMobs) //each dumb mob
+					SEND_SIGNAL(src, COMSIG_AREA_ENTERED_BY_MOB, enteringM)
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
 					if(enteringM.skipped_mobs_list)
@@ -261,6 +262,7 @@ TYPEINFO(/area)
 
 			if (length(exitingMobs) > 0)
 				for (var/mob/exitingM in exitingMobs)
+					SEND_SIGNAL(src, COMSIG_AREA_EXITED_BY_MOB, exitingM)
 					src.cancel_sound_loop(exitingM)
 					if (exitingM.ckey && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)
@@ -273,6 +275,7 @@ TYPEINFO(/area)
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
 								src.population -= exitingM.mind
+
 							if (src.active == 1 && length(src.population) == 0) //Only if this area is now empty
 								src.active = 0
 								SEND_SIGNAL(src, COMSIG_AREA_DEACTIVATED)
@@ -2954,6 +2957,10 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Psychiatrist's Office"
 	icon_state = "psychiatrist"
 
+	New()
+		..()
+		AddComponent(/datum/component/area_therapy, specialist_traits=list("training_therapy"))
+
 /area/station/medical/medbay/treatment1
 	name = "Treatment Room 1"
 	icon_state = "treat1"
@@ -3059,6 +3066,11 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/interrogation
 	name = "Interrogation Room"
 	icon_state = "interrogation"
+	sound_environment = 2
+
+/area/station/security/evidence
+	name = "Evidence Room"
+	icon_state = "evidence"
 	sound_environment = 2
 
 /area/station/security/processing
@@ -3443,6 +3455,10 @@ ABSTRACT_TYPE(/area/station/chapel)
 	name = "Chapel"
 	icon_state = "chapel"
 	station_map_colour = MAPC_CHAPEL
+
+	New()
+		..()
+		AddComponent(/datum/component/area_therapy, specialist_traits=list("training_chaplain"), trait_exclusions=list("atheist"))
 
 /area/station/chapel/sanctuary
 	name = "Chapel"

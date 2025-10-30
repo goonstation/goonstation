@@ -347,8 +347,10 @@ var/global/list/players = list()
 
 		var/datum/apiRoute/players/medals/get/getMedals = new
 		var/list/filters = list()
-		if (src.id) filters["player_id"] = src.id
-		else filters["ckey"] = src.ckey
+		if (src.id)
+			filters["player_id"] = src.id
+		else
+			filters["ckey"] = src.ckey
 		getMedals.queryParams = list(
 			"filters" = filters,
 			"sort_by" = "medal_title",

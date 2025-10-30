@@ -225,6 +225,11 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 	computertype = /obj/machinery/computer/announcement/station/security
 	icon_state = "circuit_security"
 
+/obj/item/circuitboard/announcement/security/department
+	name = "circuit board (security department announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/security/department
+	icon_state = "circuit_security"
+
 /obj/item/circuitboard/announcement/research
 	name = "circuit board (research announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/research

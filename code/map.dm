@@ -79,6 +79,11 @@ var/global/list/mapNames = list(
 	var/arrivals_type = MAP_SPAWN_SHUTTLE
 	var/dir_fore = null
 
+	var/z_level_ambient_lighting = list(
+		"1" = AMBIENT_LIGHT_SRC_TERRAINIFY,
+		)
+
+
 	/// The default parallax render source types that `Z_LEVEL_NULL` should use.
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(0) = list()
 	/// The default parallax render source types that `Z_LEVEL_STATION` should use.
@@ -718,6 +723,10 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
 
+	z_level_ambient_lighting = list(
+		"1" = AMBIENT_LIGHT_SRC_OCEAN,
+		)
+
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -772,6 +781,10 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
+
+	z_level_ambient_lighting = list(
+		"1" = AMBIENT_LIGHT_SRC_OCEAN,
+		)
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -946,6 +959,10 @@ var/global/list/mapNames = list(
 	)
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
+
+	z_level_ambient_lighting = list(
+		"1" = AMBIENT_LIGHT_SRC_OCEAN,
+		)
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
