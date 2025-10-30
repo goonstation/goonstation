@@ -140,6 +140,9 @@
 			else if (src.icon_state == "skull_vampire" || istype(src, /obj/item/skull/vampire))
 				smask = new /obj/item/clothing/mask/skull/vampire(src.loc)
 
+			else if (src.icon_state == "skull_wizard" || istype(src, /obj/item/skull/wizard))
+				smask = new /obj/item/clothing/mask/skull/wizard(src.loc)
+
 			else if (src.icon_state == "skull" || istype(src, /obj/item/skull)) //Human & all other skulls without a mask sprite
 				smask = new /obj/item/clothing/mask/skull(src.loc)
 

@@ -958,6 +958,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "death"
 	see_face = FALSE
 
+/obj/item/clothing/mask/skull/wizard
+	name = "peculiar skull mask"
+	desc = "Are you really sure putting magical skulls on your face is a good idea?"
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_wizard"
+	item_state = "death"
+	see_face = FALSE
+
 /obj/item/clothing/suit/robuddy
 	name = "guardbuddy costume"
 	desc = "A costume that loosely resembles the PR-6 Guardbuddy. How adorable!"
