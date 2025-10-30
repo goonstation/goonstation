@@ -1,5 +1,9 @@
 
 (t)thu oct 30 25
+(u)Egregorious
+(p)24668
+(e)💅🔨📦|C-QoL, A-Player-Actions, A-Game-Objects
+(+)Dumping the content of storage items into a chute is now performed by click-dragging.
 (u)TDHooligan
 (p)25006
 (e)⚖⚗👮|C-Balance, A-Chemistry, A-Security
