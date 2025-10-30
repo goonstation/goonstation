@@ -241,6 +241,8 @@ datum/v_space
 		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
 		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color
 
+		character.bioHolder.mobAppearance.pronouns = user.bioHolder.mobAppearance.pronouns
+
 		sanitize_null_values(character)
 
 		character.bioHolder.mobAppearance.UpdateMob()

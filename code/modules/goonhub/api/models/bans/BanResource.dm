@@ -1,29 +1,35 @@
 
-/// BanResource
-/datum/apiModel/Tracked/BanResource
-	var/round_id										= null // integer
-	var/game_admin_id									= null // integer
-	var/server_id										= null // string
-	var/reason											= null // string
-	var/duration_human									= null // string
-	var/expires_at										= null // date-time | null
-	var/deleted_at										= null // date-time | null
-	var/datum/apiModel/GameAdminResource/game_admin	  = null // Model - not required
-	var/datum/apiModel/Tracked/GameRound/game_round		= null // Model - not required
+/// Ban
+/datum/apiModel/Tracked/Ban
+	var/round_id 				= null // integer
+	var/game_admin_id 	= null // integer
+	var/server_id				= null // string
+	var/server_group_id	= null // integer
+	var/reason					= null // string
+	var/active					= null // boolean
+	var/duration				= null // integer
+	var/duration_human	= null // string|null
+	var/requires_appeal	= null // boolean
+	var/expires_at			= null // date-time|null
+	var/deleted_at			= null // date-time|null
+	var/datum/apiModel/Tracked/PlayerAdmin/game_admin	  		 = null // Model - not required
+	var/datum/apiModel/Tracked/GameRound/game_round					 = null // Model - not required
 	var/datum/apiModel/Tracked/BanDetail/original_ban_detail = null // Model - not required
-	var/list/datum/apiModel/Tracked/BanDetail/details	= null // [Model] - not required
-	var/requires_appeal								= null // boolean
+	var/list/datum/apiModel/Tracked/BanDetail/details				 = null // [Model] - not required
 
-/datum/apiModel/Tracked/BanResource/SetupFromResponse(response)
+/datum/apiModel/Tracked/Ban/SetupFromResponse(response)
 	. = ..()
 	src.round_id = response["round_id"]
 	src.game_admin_id = response["game_admin_id"]
 	src.server_id = response["server_id"]
+	src.server_group_id = response["server_group_id"]
 	src.reason = response["reason"]
+	src.active = response["active"]
+	src.duration = response["duration"]
 	src.duration_human = response["duration_human"]
+	src.requires_appeal = response["requires_appeal"]
 	src.expires_at = response["expires_at"]
 	src.deleted_at = response["deleted_at"]
-	src.requires_appeal = response["requires_appeal"]
 
 	if (("game_admin" in response) && islist(response["game_admin"]))
 		src.game_admin = new
@@ -43,7 +49,7 @@
 		detail.SetupFromResponse(item)
 		src.details.Add(detail)
 
-/datum/apiModel/Tracked/BanResource/VerifyIntegrity()
+/datum/apiModel/Tracked/Ban/VerifyIntegrity()
 	. = ..()
 	if (
 		isnull(src.game_admin_id) \
@@ -52,28 +58,22 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/BanResource/ToList()
+/datum/apiModel/Tracked/Ban/ToList()
 	. = ..()
-	.["id"] = src.id
 	.["round_id"] = src.round_id
 	.["game_admin_id"] = src.game_admin_id
 	.["server_id"] = src.server_id
+	.["server_group_id"] = src.server_group_id
 	.["reason"] = src.reason
+	.["active"] = src.active
+	.["duration"] = src.duration
 	.["duration_human"] = src.duration_human
+	.["requires_appeal"] = src.requires_appeal
 	.["expires_at"] = src.expires_at
-	.["created_at"] = src.created_at
-	.["updated_at"] = src.updated_at
 	.["deleted_at"] = src.deleted_at
-	.["game_admin"] = src.game_admin
-	if (src.game_admin)
-		.["game_admin"] = src.game_admin.ToList()
-	.["game_round"] = src.game_round
-	if (src.game_round)
-		.["game_round"] = src.game_round.ToList()
-	.["original_ban_detail"] = src.original_ban_detail
-	if (src.original_ban_detail)
-		.["original_ban_detail"] = src.original_ban_detail.ToList()
+	.["game_admin"] = src.game_admin ? src.game_admin.ToList() : src.game_admin
+	.["game_round"] = src.game_round ? src.game_round.ToList() : src.game_round
+	.["original_ban_detail"] = src.original_ban_detail ? src.original_ban_detail.ToList() : src.original_ban_detail
 	.["details"] = list()
 	for (var/datum/apiModel/Tracked/BanDetail/detail in src.details)
 		.["details"] += list(detail.ToList())
-	.["requires_appeal"] = src.requires_appeal

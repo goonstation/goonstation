@@ -483,13 +483,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		creepify_station()
 
-		if(!istype(gamemode))
-			sleep(1 SECOND)
-			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
-
-			sleep(30 SECONDS)
-			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
-			Reboot_server()
+		if(!istype(gamemode)) //The station exploded, the cinematic has played, end the round naturally instead of forcing a reboot
+			ticker.mode.force_round_finished = TRUE
 
 	proc/change_status_display()
 		var/datum/signal/status_signal = get_free_signal()

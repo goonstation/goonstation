@@ -9,18 +9,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
-"h" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/simulated/floor/circuit/red,
-/area/dmm_suite/clear_area)
-"p" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = 10
-	},
-/turf/simulated/floor/circuit/red,
-/area/dmm_suite/clear_area)
 "y" = (
 /obj/item/screwdriver{
 	pixel_x = 12;
@@ -49,9 +37,6 @@
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "T" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
 /obj/machinery/networked/printer{
 	pixel_x = -2;
 	pixel_y = 11;
@@ -62,17 +47,11 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
-"X" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/turf/simulated/floor/circuit/red,
-/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
-h
+a
 b
-X
+a
 "}
 (2,1,1) = {"
 a
@@ -82,5 +61,5 @@ y
 (3,1,1) = {"
 T
 Q
-p
+a
 "}

@@ -391,7 +391,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 
 	on_transplant(var/mob/M)
 		..()
-		src.camera.c_tag = "[M]'s Eye"
+		src.camera.c_tag = "[M]’s Eye"
 		return ..()
 
 TYPEINFO(/obj/item/organ/eye/cyber/nightvision)

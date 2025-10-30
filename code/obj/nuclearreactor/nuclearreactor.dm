@@ -809,8 +809,8 @@
 		generate_inverse_stats()
 
 	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
-		if(isintangible(hit) || isobserver(hit))
-			return TRUE //don't irradiate ghosts
+		if(isintangible(hit) || isobserver(hit) || IS_OVERLAY_OR_EFFECT(hit) || istype(hit, /atom/movable/hotspot))
+			return TRUE //don't irradiate ghosts, overlays, atmos fires etc.
 
 		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 10 : 5
 		var/density = (hit.material ? hit.material.getProperty("density") : 3) //3 is default density

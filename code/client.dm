@@ -226,8 +226,7 @@
 	global.pre_auth_clients += src
 
 	src.sync_dark_mode()
-	src.player = make_player(src.key)
-	src.player.client = src
+	src.player = make_player(src.key, client=src)
 
 	src.loadResources()
 	src.initSizeHelpers()
@@ -253,7 +252,7 @@
 	src.send_lobby_text()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
-	src.player = make_player(src.key)
+	src.player = make_player(src.key, client=src)
 	src.player.id = src.client_auth_intent.player_id || src.player.id
 	if (!src.client_auth_intent.can_skip_player_login) src.player.record_login()
 	src.player.on_client_authenticated()
@@ -1557,3 +1556,6 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 /// Flashes the window in the Windows titlebar
 /client/proc/flash_window(times = -1)
 	winset(src, "mainwindow", "flash=[times]")
+
+/client/proc/set_text_mode(value = FALSE)
+	winset(src, "mapwindow.map", "text-mode=[value ? "true" : "false"]")

@@ -219,6 +219,14 @@
 		area_name = "Security"
 		circuit_type = /obj/item/circuitboard/announcement/security
 
+		department
+			req_access = list(access_security)
+			name = "Security Department Announcement Computer"
+			sound_to_play = 'sound/misc/bingbong.ogg'
+			sound_volume = 70
+			circuit_type = /obj/item/circuitboard/announcement/security/department
+			alert_origin = ALERT_DEPARTMENT
+
 	research
 		req_access = list(access_research_director)
 		name = "Research Announcement Computer"

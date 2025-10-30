@@ -105,12 +105,6 @@
 		var/datum/objective_set/objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
 		new objective_set_path(src.owner, src)
 
-	handle_round_end()
-		. = ..()
-
-		if (length(src.stolen_items) >= 7)
-			src.owner.current.unlock_medal("Professional Thief", TRUE)
-
 	get_statistics()
 		var/list/stolen_items = list()
 		for (var/item_name in src.stolen_items)
@@ -141,12 +135,12 @@
 
 		return list(
 			list(
-				"name" = "Stolen Items",
+				"name" = "[length(stolen_items)] Stolen Items",
 				"type" = "itemList",
 				"value" = stolen_items,
 			),
 			list(
-				"name" = "Redeemed Items",
+				"name" = "[length(redeemed_items)] Redeemed Items",
 				"type" = "itemList",
 				"value" = redeemed_items,
 			),

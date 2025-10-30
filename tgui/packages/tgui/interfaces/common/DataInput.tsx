@@ -15,15 +15,23 @@ import {
 
 import { useBackend } from '../../backend';
 
-export const DataInputOptions = (props) => {
-  const { options } = props;
+interface DataInputOptionsProps {
+  byondRef?: string;
+  options: any;
+}
+
+export const DataInputOptions = (props: DataInputOptionsProps) => {
+  const { options, byondRef } = props;
 
   return options && Object.keys(options).length
-    ? Object.keys(options).map((optionName, sectionIndex) => (
+    ? Object.keys(options).map((optionName) => (
         <DataInputEntry
           key={optionName}
+          byondRef={byondRef}
           type={options[optionName].type}
-          name={optionName}
+          name={
+            options[optionName].name ? options[optionName].name : optionName
+          }
           description={options[optionName].description}
           value={options[optionName].value}
           tooltip={options[optionName].description}
@@ -65,6 +73,8 @@ const DataInputEntry = (props) => {
     'Children of Type': <DataInputListEntry {...props} />,
     'List Var': <DataInputListEntry {...props} />,
     List: <DataInputListEntry {...props} />,
+    Button: <DataInputButtonEntry {...props} />,
+    Buttons: <DataInputButtonsEntry {...props} />,
   };
 
   return (
@@ -79,7 +89,7 @@ const DataInputEntry = (props) => {
 };
 
 export const DataInputBitFieldEntry = (props) => {
-  const { value, name, type } = props;
+  const { value, name, type, byondRef } = props;
   const { act } = useBackend();
   return (
     <Section>
@@ -93,6 +103,7 @@ export const DataInputBitFieldEntry = (props) => {
               name: name,
               type: type,
               value: value ^ (1 << buttonIndex),
+              byondRef: byondRef,
             })
           }
         >
@@ -104,7 +115,7 @@ export const DataInputBitFieldEntry = (props) => {
 };
 
 const DataInputListEntry = (props) => {
-  const { value, name, type, list } = props;
+  const { value, name, type, list, byondRef } = props;
   const { act } = useBackend();
   return (
     <Section fill scrollable height={15}>
@@ -119,6 +130,7 @@ const DataInputListEntry = (props) => {
               name: name,
               value: item,
               type: type,
+              byondRef: byondRef,
             })
           }
         >
@@ -130,7 +142,7 @@ const DataInputListEntry = (props) => {
 };
 
 const DataInputRefEntry = (props) => {
-  const { value, tooltip, name, type } = props;
+  const { value, tooltip, name, type, byondRef } = props;
   const { act } = useBackend();
   return (
     <Tooltip position="bottom" content={tooltip}>
@@ -140,6 +152,7 @@ const DataInputRefEntry = (props) => {
           act('modify_ref_value', {
             name: name,
             type: type,
+            byondRef: byondRef,
           })
         }
       >
@@ -149,8 +162,53 @@ const DataInputRefEntry = (props) => {
   );
 };
 
+const DataInputButtonEntry = (props) => {
+  const { tooltip, name, type, byondRef } = props;
+  const { act } = useBackend();
+  return (
+    <Tooltip position="bottom" content={tooltip}>
+      <Button
+        icon="play"
+        width="50px"
+        onClick={() =>
+          act('activate', {
+            name: name,
+            type: type,
+            byondRef: byondRef,
+          })
+        }
+      />
+    </Tooltip>
+  );
+};
+
+const DataInputButtonsEntry = (props) => {
+  const { name, type, list, byondRef } = props;
+  const { act } = useBackend();
+  return (
+    <Section fill>
+      {list.map((item, buttonIndex) => (
+        <Button
+          fluid
+          key={buttonIndex}
+          onClick={() =>
+            act('activate', {
+              name: name,
+              value: item,
+              type: type,
+              byondRef: byondRef,
+            })
+          }
+        >
+          {item}
+        </Button>
+      ))}
+    </Section>
+  );
+};
+
 const DataInputColorEntry = (props) => {
-  const { value, tooltip, name, type } = props;
+  const { value, tooltip, name, type, byondRef } = props;
   const { act } = useBackend();
   return (
     <Tooltip position="bottom" content={tooltip}>
@@ -160,6 +218,7 @@ const DataInputColorEntry = (props) => {
           act('modify_color_value', {
             name: name,
             type: type,
+            byondRef: byondRef,
           })
         }
       />
@@ -172,6 +231,7 @@ const DataInputColorEntry = (props) => {
             name: name,
             value: value,
             type: type,
+            byondRef: byondRef,
           });
         }}
       />
@@ -180,7 +240,7 @@ const DataInputColorEntry = (props) => {
 };
 
 const DataInputIntegerEntry = (props) => {
-  const { value, tooltip, name, type, a, b } = props;
+  const { value, tooltip, name, type, a, b, byondRef } = props;
   const { act } = useBackend();
   return (
     <Tooltip position="bottom" content={tooltip}>
@@ -189,7 +249,7 @@ const DataInputIntegerEntry = (props) => {
         minValue={a ?? 0}
         maxValue={b ?? 100}
         stepPixelSize={5}
-        width="39px"
+        width="30px"
         step={1}
         tickWhileDragging
         onChange={(value) =>
@@ -197,6 +257,7 @@ const DataInputIntegerEntry = (props) => {
             name: name,
             value: value,
             type: type,
+            byondRef: byondRef,
           })
         }
       />
@@ -205,18 +266,18 @@ const DataInputIntegerEntry = (props) => {
 };
 
 const DataInputBoolEntry = (props) => {
-  const { value, tooltip, name, type } = props;
+  const { value, tooltip, name, type, byondRef } = props;
   const { act } = useBackend();
   return (
     <Tooltip position="bottom" content={tooltip}>
       <Button.Checkbox
         checked={value}
-        // content={toggleOption}
         onClick={() =>
           act('modify_value', {
             name: name,
             value: !value,
             type: type,
+            byondRef: byondRef,
           })
         }
       />
@@ -225,19 +286,20 @@ const DataInputBoolEntry = (props) => {
 };
 
 const DataInputTextEntry = (props) => {
-  const { value, tooltip, name, type } = props;
+  const { value, tooltip, name, type, byondRef } = props;
   const { act } = useBackend();
 
   return (
     <Tooltip position="bottom" content={tooltip}>
       <Input
+        fluid
         value={value}
-        width="200px"
         onChange={(value) => {
           act('modify_value', {
             name: name,
             value: value,
             type: type,
+            byondRef: byondRef,
           });
         }}
       />

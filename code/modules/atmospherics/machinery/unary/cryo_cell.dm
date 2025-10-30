@@ -132,6 +132,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			src.on = !src.on
 			src.build_icon()
 		if("eject")
+			logTheThing(LOG_CHEMISTRY, usr, "removes a beaker [log_reagents(src.beaker)] from [src] at [log_loc(src)].")
 			src.beaker:set_loc(src.loc)
 			usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
 			src.beaker = null

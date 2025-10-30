@@ -455,7 +455,7 @@ TYPEINFO(/mob)
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(isclient(src.client) && isnull(src.client?.tg_layout))
-		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
+		src.client?.tg_layout = winget(src.client, "menu.tg_layout", "is-checked") == "true" // winget sleeps :{
 	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
@@ -3510,3 +3510,8 @@ TYPEINFO(/mob)
 
 /mob/proc/frostburn_temp()
 	return src.base_body_temp - (src.temp_tolerance * 4)
+
+/// If the mob can be affected by addictions, this will add the value to every addiction's meter on the next life tick and immediately return the
+/// total value of the cache. The cache will be reset during the tick regardless of whether or not the mob has active addictions.
+/mob/proc/try_affect_all_addictions(var/value)
+	return FALSE

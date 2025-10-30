@@ -1024,6 +1024,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			M.take_toxin_damage(5)
 			qdel(src)
 		else
+			if(prob(10) && src.plantgenes?.get_effective_value("potency") > 10)
+				M.take_radiation_dose(log(src.plantgenes.get_effective_value("potency"), 10)/10, TRUE)
 			..()
 
 	attack_self(var/mob/user as mob)

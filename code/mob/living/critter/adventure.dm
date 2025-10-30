@@ -9,7 +9,7 @@
 */
 /////////////// Transposed scientist ////////////////
 TYPEINFO(/mob/living/critter/crunched)
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_VOID)
 
 /mob/living/critter/crunched
 	name = "transposed scientist"
@@ -112,7 +112,7 @@ TYPEINFO(/mob/living/critter/crunched)
 
 ////////////// Shades ////////////////
 TYPEINFO(/mob/living/critter/shade)
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_VOID)
 
 /mob/living/critter/shade
 	name = "darkness"

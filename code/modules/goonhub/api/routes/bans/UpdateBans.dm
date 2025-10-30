@@ -5,7 +5,7 @@
 	path = "/bans"
 	routeParams = list("ban")	// integer (The ban ID)
 	body = /datum/apiBody/bans/add
-	correct_response = /datum/apiModel/Tracked/BanResource
+	correct_response = /datum/apiModel/Tracked/Ban
 
 	buildBody(
 		game_admin_ckey,
