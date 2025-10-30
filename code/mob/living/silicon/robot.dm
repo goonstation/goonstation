@@ -608,7 +608,7 @@ TYPEINFO(/mob/living/silicon/robot)
 						maptext_out = "<I>raises [thing]</I>"
 					else
 						message = "<b>[used_name]</b> raises [his_or_her(src)] distinct lack of hands."
-						maptext_out = "<I>raises a lack of hands</I>"
+						maptext_out = "<I>raises [his_or_her(src)] lack of hands</I>"
 				else
 					message = "<b>[used_name]</b> tries to move [his_or_her(src)] arm."
 					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
