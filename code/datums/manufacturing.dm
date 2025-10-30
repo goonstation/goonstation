@@ -246,6 +246,14 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/wrench/purple
+	name = "Wrench"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/wrench/purple)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
 /datum/manufacture/crowbar/yellow
 	name = "Crowbar"
 	item_requirements = list("metal" = 1)

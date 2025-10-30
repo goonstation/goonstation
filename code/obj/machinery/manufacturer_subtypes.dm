@@ -270,6 +270,7 @@
 		/datum/manufacture/lantern,
 		/datum/manufacture/gps,
 		/datum/manufacture/crowbar,
+		/datum/manufacture/wrench/purple,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
