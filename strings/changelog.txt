@@ -1,5 +1,9 @@
 
 (t)thu oct 30 25
+(u)RoflCopter4
+(p)24917
+(e)🎨🛠️|C-Sprites, A-Engineering
+(+)The connecting pipe segments between manifolds and other objects now match the color of the manifold after being welded.
 (u)Egregorious
 (p)24668
 (e)💅🔨📦|C-QoL, A-Player-Actions, A-Game-Objects
