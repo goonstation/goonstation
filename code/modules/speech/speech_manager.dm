@@ -175,6 +175,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 			break
 		prefix_id = copytext(prefix_id, 1, length(prefix_id))
 		if (frustration > 100)
+			logTheThing(LOG_DEBUG, "TruncatePrefix crashout triggered with original prefix [original_prefix]")
 			return ""
 
 	return prefix_id
