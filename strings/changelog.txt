@@ -1,5 +1,9 @@
 
 (t)fri oct 31 25
+(u)Ikea
+(p)25074
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The science manufacturer can now print purple tools alongside a purple wrench.
 (u)CalliopeSoups
 (p)19627
 (e)🆕🗺🎨🔧🔊⏰📜|C-Feature, A-Mapping, C-Sprites, A-Tooling, C-Sound, A-Status-Effects, C-Documentation
