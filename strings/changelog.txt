@@ -1,5 +1,9 @@
 
 (t)fri oct 31 25
+(u)JORJ949
+(p)25061
+(e)💅📄|C-QoL, A-UI
+(+)Emagged and Syndicate cyborgs will now appear in the other/minor antagonists section of the round summary, rather than as main antagonists.
 (u)Driftered
 (p)25076
 (e)🎨|C-Sprites
