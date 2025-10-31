@@ -1,4 +1,9 @@
 
+(t)fri oct 31 25
+(u)JORJ949
+(p)25072
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The sharks in Neon's listening post shark tank will now attack any non-syndies in the tank.
 (t)thu oct 30 25
 (u)LeahTheTech
 (+)Kitchen foodtech vending machines no longer have an access requirement.
