@@ -12115,6 +12115,14 @@
 	pixel_x = -1;
 	pixel_y = 21
 	},
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/dwainedummies,
+/obj/item/disk/data/tape{
+	layer = 3.5;
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/disk/data/tape/master/readonly,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "dty" = (
@@ -18875,6 +18883,10 @@
 	},
 /obj/cable,
 /obj/machinery/light,
+/obj/table/reinforced/auto,
+/obj/item/storage/box/diskbox,
+/obj/item/device/multitool,
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "itq" = (
@@ -24950,8 +24962,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/item/device/net_sniffer,
 /obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/obj/machinery/computer3/generic/radio{
 	dir = 4
 	},
 /turf/simulated/floor/circuit/green,
@@ -26332,11 +26346,11 @@
 	pixel_x = -10
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/radio{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer/robotics{
+	dir = 4
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
@@ -30133,18 +30147,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/table/reinforced/auto,
-/obj/item/disk/data/tape{
-	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/storage/box/diskbox,
-/obj/item/device/multitool,
-/obj/item/storage/box/tapebox,
-/obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/from_file/dwainedummies,
 /obj/machinery/power/apc/autoname_west,
+/obj/item/device/net_sniffer,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "qBc" = (

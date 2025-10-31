@@ -9531,6 +9531,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "gLt" = (
@@ -10950,8 +10953,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "hSY" = (
-/obj/machinery/turret,
 /obj/machinery/light/incandescent/cool,
+/obj/table/reinforced,
+/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "hTc" = (
@@ -12815,6 +12819,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"jmW" = (
+/obj/machinery/turret,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "jmY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -14426,12 +14434,14 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "kpP" = (
-/obj/machinery/networked/radio,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/robotics{
+	dir = 4
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "kpQ" = (
@@ -21167,12 +21177,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "pqg" = (
-/obj/machinery/networked/storage/tape_drive{
-	bank_id = "Control";
-	locked = 0;
-	name = "Databank - Control";
-	setup_drive_type = /obj/item/disk/data/tape/master
-	},
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
@@ -21180,6 +21184,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta/os_loaded{
+	dir = 4
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "pqm" = (
@@ -24015,8 +24022,16 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "rqO" = (
-/obj/table/reinforced,
-/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Control";
+	locked = 0;
+	name = "Databank - Control";
+	setup_drive_type = /obj/item/disk/data/tape/master
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "rrk" = (
@@ -27799,11 +27814,11 @@
 	name = "Communication Mast Shield Control";
 	pixel_y = 24
 	},
-/obj/machinery/computer3/terminal/zeta/os_loaded,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/networked/radio,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "uaK" = (
@@ -70004,7 +70019,7 @@ qpn
 qpn
 psH
 fdu
-sEK
+jmW
 gYR
 sEK
 hSY
