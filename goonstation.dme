@@ -2509,6 +2509,7 @@
 #include "code\obj\item\vending_restock.dm"
 #include "code\obj\item\wall_flags.dm"
 #include "code\obj\item\wall_trophy.dm"
+#include "code\obj\item\wrestlingbell.dm"
 #include "code\obj\item\yacht_dice_sheet.dm"
 #include "code\obj\item\assembly\detonator.dm"
 #include "code\obj\item\assembly\dynassemblies.dm"
