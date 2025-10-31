@@ -42,11 +42,6 @@
 	if(!delete_queue)
 		delete_queue = new /datum/dynamicQueue(100)
 
-	Z_LOG_DEBUG("World/Init", "Setting up tgui process")
-	// I don't think the file read will block that long
-	var/datum/controller/process/tgui/tgui_process = processScheduler.addNowSkipSetup(/datum/controller/process/tgui)
-	tgui_process.setup()
-
 	sun = new /datum/sun()
 
 	Z_LOG_DEBUG("World/Init", "Vox init")
@@ -98,7 +93,9 @@
 	Z_LOG_DEBUG("World/Init", "Process scheduler setup...")
 	processScheduler = new /datum/controller/processScheduler
 	processSchedulerView = new /datum/processSchedulerView
+	var/datum/controller/process/tgui/tgui_process = processScheduler.addNowSkipSetup(/datum/controller/process/tgui)
 	var/datum/controller/process/ticker/ticker_process = processScheduler.addNowSkipSetup(/datum/controller/process/ticker)
+	tgui_process.setup()
 	ticker_process.setup()
 
 	Z_LOG_DEBUG("World/Init", "Building area sims scores...")
