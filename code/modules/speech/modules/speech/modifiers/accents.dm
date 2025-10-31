@@ -294,7 +294,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent/word_replacement)
 				continue
 			// force replacements if we're running out of attempts and haven't hit the guaranteed replacement count yet. This affects the
 			// distribution less than just replacing the first N words, I *think*
-			else if((replacements < src.guaranteed_replacements && (max_replacements - number_of_attempts) < src.guaranteed_replacements) || prob(50))
+			else if((replacements < src.guaranteed_replacements && (max_replacements - number_of_attempts) <= src.guaranteed_replacements) || prob(50))
 				var/replacement_word = src.get_preserved_word(punct_regex.group[2], src.get_replacement_word())
 				speech_list[word_index] = "[punct_regex.group[1]][replacement_word][punct_regex.group[3]]" //preserve leading and trailing punctuation
 				replacements++
