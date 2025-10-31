@@ -1349,7 +1349,8 @@
 		/obj/item/clothing/under/gimmick/jcdenton,
 		/obj/item/clothing/under/misc/mobster,
 		/obj/item/clothing/under/misc/mobster/alt,
-		/obj/item/clothing/under/gimmick/guybrush)
+		/obj/item/clothing/under/gimmick/guybrush,
+		/obj/item/clothing/suit/gimmick/nightgown)
 
 	one
 		amt2spawn = 1
@@ -1421,7 +1422,8 @@
 						/obj/item/paper_mask,
 						/obj/item/clothing/mask/kitsune,
 						/obj/item/clothing/head/minotaurmask,
-						/obj/item/clothing/mask/tengu)
+						/obj/item/clothing/mask/tengu,
+						/obj/item/clothing/mask/phantom)
 
 	one
 		amt2spawn = 1
