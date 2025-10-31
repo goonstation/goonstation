@@ -143,7 +143,7 @@
 				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 				M.make_dizzy(140)
 				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
-				M.setStatus("knockdown", 3 SECONDS)
+				M.setStatus("knockdown", 10 SECONDS)
 				SPAWN(10 SECONDS)
 					if (M)
 						M.UpdateOverlays(null, "dizzy")
