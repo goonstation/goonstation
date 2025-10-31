@@ -34468,6 +34468,10 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"hOu" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space/fluid,
+/area/space)
 "hPb" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/grime,
@@ -41399,6 +41403,11 @@
 /turf/simulated/shuttle/wall/flock{
 	dir = 9
 	},
+/area/space)
+"qvt" = (
+/obj/decal/woodclutter,
+/obj/landmark/singularity_bait_spawn,
+/turf/space/fluid,
 /area/space)
 "qwj" = (
 /obj/machinery/light/small/floor/warm/very,
@@ -48569,7 +48578,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+hOu
 aqn
 aqn
 aqn
@@ -48818,7 +48827,7 @@ aqn
 aqn
 aqn
 aqn
-aTt
+qvt
 shL
 cgq
 cgq
@@ -136109,7 +136118,7 @@ cgq
 cgq
 cgq
 auI
-aqn
+hOu
 aqn
 aqn
 aqn
@@ -136700,7 +136709,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+hOu
 cgq
 cgq
 cgq

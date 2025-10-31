@@ -31539,6 +31539,10 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/crew_quarters/catering)
+"mel" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space,
+/area/space)
 "mew" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -53747,7 +53751,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+mel
 aaa
 aaa
 aaa
@@ -53824,7 +53828,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+mel
 aaa
 aaa
 aaa
@@ -141338,6 +141342,7 @@ aaa
 aaa
 aaa
 aaa
+mel
 aaa
 aaa
 aaa
@@ -141628,8 +141633,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+mel
 aaa
 aaa
 aaa

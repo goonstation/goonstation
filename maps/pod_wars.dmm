@@ -5913,6 +5913,10 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
+"vR" = (
+/obj/landmark/singularity_bait_spawn,
+/turf/space,
+/area/space)
 "vS" = (
 /obj/lattice{
 	dir = 6;
@@ -15431,6 +15435,7 @@ qg
 eC
 eC
 eC
+vR
 eC
 eC
 eC
@@ -15619,8 +15624,7 @@ eC
 eC
 eC
 eC
-eC
-eC
+vR
 eC
 eC
 eC
@@ -134409,7 +134413,7 @@ qg
 eC
 eC
 eC
-eC
+vR
 eC
 eC
 eC
@@ -134598,7 +134602,7 @@ eC
 eC
 eC
 eC
-eC
+vR
 eC
 eC
 eC
