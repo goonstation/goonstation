@@ -444,7 +444,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	enemy_team.change_points(1)
 
 	var/ourname = "<span class='[(get_pod_wars_team_num(M) == TEAM_NANOTRASEN) ? "rcommand" : "rsyndicate"]'>[M.real_name]</span>"
-	if (world.time - M.lastattackertime > 10 SECONDS)
+	if (world.time - M.lastattackertime > 25 SECONDS)
 		if (M.suiciding)
 			boutput(world, "<div class='command_alert ageneral'>[ourname] <b>bid farewell, cruel world!</b></div>")
 			return
@@ -463,11 +463,12 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		else
 			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>killed</b> [ourname]</div>")
 
-		if (src.dominatetracker[M.mind] && src.dominatetracker[M.mind][attacker.mind] >= 4)
-			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>got REVENGE on</b> [ourname]</div>")
+		if (src.dominatetracker[M.mind])
+			if (src.dominatetracker[M.mind][attacker.mind] >= 4)
+				boutput(world, "<div class='command_alert ageneral'>[attackername] <b>got REVENGE on</b> [ourname]</div>")
+				playsound_global(list(attacker.mind.get_player().client), 'sound/misc/podwars/revenge.ogg', 100)
+				get_image_group("nemesis[ref(M.mind)]").remove_mind(attacker.mind)
 			src.dominatetracker[M.mind][attacker.mind] = 0
-			playsound_global(list(attacker.mind.get_player().client), 'sound/misc/podwars/revenge.ogg', 100)
-			get_image_group("nemesis[ref(M.mind)]").remove_mind(attacker.mind)
 			return
 
 		if (isnull(src.dominatetracker[attacker.mind]))
@@ -610,8 +611,15 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		H.setStatusMin("humiliated", INFINITY)
 		H.drop_from_slot(H.l_hand, force_drop = TRUE)
 		H.drop_from_slot(H.r_hand, force_drop = TRUE)
-		H.force_equip(new /obj/item/instrument/bikehorn{cant_drop = TRUE}, SLOT_L_HAND)
-		H.force_equip(new /obj/item/instrument/bikehorn{cant_drop = TRUE}, SLOT_R_HAND)
+		qdel(H.limbs.l_arm)
+		qdel(H.limbs.r_arm)
+		H.limbs.l_arm = new /obj/item/parts/human_parts/arm/left/item(H)
+		H.limbs.l_arm.holder = H
+		H.limbs.l_arm:set_item(new /obj/item/instrument/bikehorn())
+		H.limbs.r_arm = new /obj/item/parts/human_parts/arm/right/item(H)
+		H.limbs.r_arm.holder = H
+		H.limbs.r_arm:set_item(new /obj/item/instrument/bikehorn())
+		H.update_body()
 
 	for (var/datum/mind/mind as anything in winner.members)
 		var/mob/living/carbon/human/H = mind.current
