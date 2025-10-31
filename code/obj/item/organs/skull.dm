@@ -127,6 +127,7 @@
 			else
 				C = new /obj/item/reagent_containers/food/drinks/skull_chalice(src.loc)
 			user.put_in_hand_or_drop(C)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 			qdel(src)
 			return
 
@@ -139,6 +140,9 @@
 
 			else if (src.icon_state == "skull_vampire" || istype(src, /obj/item/skull/vampire))
 				smask = new /obj/item/clothing/mask/skull/vampire(src.loc)
+
+			else if (src.icon_state == "skull_wizard" || istype(src, /obj/item/skull/wizard))
+				smask = new /obj/item/clothing/mask/skull/wizard(src.loc)
 
 			else if (src.icon_state == "skull" || istype(src, /obj/item/skull)) //Human & all other skulls without a mask sprite
 				smask = new /obj/item/clothing/mask/skull(src.loc)
@@ -155,6 +159,7 @@
 			if (src.donor || src.donor_name)
 				smask.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] skull mask"
 				smask.desc = "The hollowed out skull of [src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"]"
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, smask, user)
 			qdel(src)
 			return
 
@@ -163,6 +168,7 @@
 			"You ritualistically plant a candle on [src]. Welp.")
 			var/obj/item/device/light/spirit_candle/C = new /obj/item/device/light/spirit_candle(src.loc)
 			user.put_in_hand_or_drop(C)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 			qdel(W)
 			qdel(src)
 		else

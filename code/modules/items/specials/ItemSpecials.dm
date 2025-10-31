@@ -2307,6 +2307,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_y = -8
 		can_clash = 0
 
+	boxing
+		icon = 'icons/effects/64x64.dmi'
+		icon_state = "boxing"
+		pixel_x = -16
+		pixel_y = -8
+		can_clash = 0
+
 	flame
 		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
