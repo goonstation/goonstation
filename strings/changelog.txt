@@ -1,5 +1,9 @@
 
 (t)fri oct 31 25
+(u)Driftered
+(p)25076
+(e)🎨|C-Sprites
+(*)Adds the wizard skull mask to the game
 (u)JORJ949
 (p)25072
 (e)🆕🗺|C-Feature, A-Mapping
