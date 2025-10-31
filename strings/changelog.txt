@@ -1,5 +1,9 @@
 
 (t)fri oct 31 25
+(u)CalliopeSoups
+(p)19627
+(e)🆕🗺🎨🔧🔊⏰📜|C-Feature, A-Mapping, C-Sprites, A-Tooling, C-Sound, A-Status-Effects, C-Documentation
+(+)The boxing ring is now a bit more functional, featuring a new bell, vaultable entrances and sfx for being KOd.
 (u)Egregorious
 (p)25000
 (e)🪲🔎🍝|C-Bug, C-Code-Quality, A-Catering
