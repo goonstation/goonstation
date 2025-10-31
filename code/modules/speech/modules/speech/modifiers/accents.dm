@@ -263,6 +263,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 ABSTRACT_TYPE(/datum/speech_module/modifier/accent/word_replacement)
 /datum/speech_module/modifier/accent/word_replacement
 	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
+	var/guaranteed_replacements = 1 // The minimum number of words to replace per message
 
 	proc/replace_words(string)
 		var/list/speech_list = splittext(string, " ")
@@ -281,6 +282,8 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent/word_replacement)
 		for(var/i = 1 to list_length)
 			indices += i
 
+		var/replacements = 0
+
 		var/number_of_attempts = 0
 		while (length(indices) > 0 && number_of_attempts < max_replacements)
 			var/word_index = pick(indices)
@@ -289,9 +292,11 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent/word_replacement)
 			if(!punct_regex.Find(old_word))
 				// If the word doesn't match the regex it's probably all punctuation, so skip it
 				continue
-			else if(prob(50))
+			// force replacements if we're running out of attempts and haven't hit the guaranteed replacement count yet
+			else if((replacements < src.guaranteed_replacements && (max_replacements - number_of_attempts) < src.guaranteed_replacements) || prob(50))
 				var/replacement_word = src.get_preserved_word(punct_regex.group[2], src.get_replacement_word())
 				speech_list[word_index] = "[punct_regex.group[1]][replacement_word][punct_regex.group[3]]" //preserve leading and trailing punctuation
+				replacements++
 			number_of_attempts++
 
 		return jointext(speech_list, " ")
