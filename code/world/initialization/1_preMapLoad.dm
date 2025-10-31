@@ -26,8 +26,6 @@
 	if (should_init_tracy)
 		prof_init()
 
-	enable_auxtools_debugger()
-
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
 	world.Profile(PROFILE_START | PROFILE_AVERAGE, "sendmaps", "json")
@@ -56,7 +54,7 @@
 	world.log << "========================================"
 	world.log << ""
 #endif
-
+	enable_auxtools_debugger()
 	Z_LOG_DEBUG("Preload", "  radio")
 	radio_controller = new /datum/controller/radio()
 
@@ -97,7 +95,7 @@
 	chui = new()
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 		Z_LOG_DEBUG("Preload", "Loading local browserassets...")
-		recursiveFileLoader("browserassets/src/")
+		loadAllLocalResources("browserassets/src/")
 
 	Z_LOG_DEBUG("Preload", "Z-level datums...")
 	init_zlevel_datums()
@@ -264,6 +262,8 @@
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
+
+	sortList(global.material_cache, /proc/cmp_text_asc)
 
 /proc/buildManufacturingRequirementCache()
 	requirement_cache = list()

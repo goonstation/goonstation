@@ -40,6 +40,8 @@
 
 	var/wool_type = /obj/item/material_piece/cloth/wool/white
 
+	var/custom_icon = FALSE
+
 	species_type = /mob/living/critter/small_animal/ranch_base/sheep
 
 	egg_type = /mob/living/critter/small_animal/ranch_base/sheep
@@ -84,27 +86,29 @@
 		remove_lifeprocess(/datum/lifeprocess/ranch/sheep/grow_wool)
 
 	update_icon()
-		var/growth = null
-		if (stage == RANCH_STAGE_CHILD)
-			growth = "lamb"
-		else
-			if(is_masc)
-				growth = "ram"
+
+		if(!custom_icon)
+			var/growth = null
+			if (stage == RANCH_STAGE_CHILD)
+				growth = "lamb"
 			else
-				growth = "ewe"
+				if(is_masc)
+					growth = "ram"
+				else
+					growth = "ewe"
 
-		var/wool = null
+			var/wool = null
 
-		if(!wool_grown && stage != RANCH_STAGE_CHILD)
-			wool = "-shorn"
+			if(!wool_grown && stage != RANCH_STAGE_CHILD)
+				wool = "-shorn"
 
-		if(isalive(src))
-			icon_state = "sheep-[sheep_id]-[growth][wool]"
-			icon_state_alive = icon_state
-		icon_state_dead = "sheep-[sheep_id]-[growth]-dead"
-		icon_state_ghost = "sheep-[sheep_id]-[growth][wool]"
-		if(!isalive(src))
-			icon_state = icon_state_dead
+			if(isalive(src))
+				icon_state = "sheep-[sheep_id]-[growth][wool]"
+				icon_state_alive = icon_state
+			icon_state_dead = "sheep-[sheep_id]-[growth]-dead"
+			icon_state_ghost = "sheep-[sheep_id]-[growth][wool]"
+			if(!isalive(src))
+				icon_state = icon_state_dead
 
 
 	setup_hands()

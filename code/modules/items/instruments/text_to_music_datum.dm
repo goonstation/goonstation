@@ -76,18 +76,22 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.is_busy = TRUE
 	src.notes = list()
 	var/list/split_input = splittext("[note_input]", "|")
+	split_input -= "" // Get rid of empty strings
 	var/split_list_length = length(split_input)
 	if (split_list_length > MAX_NOTE_INPUT)
 		src.event_error_notes_over_limit(split_list_length)
 		return FALSE
-	for (var/string in split_input)
-		if (string)
-			src.notes += string
+	src.notes = split_input
 	src.is_busy = FALSE
 	return TRUE
 
 /datum/text_to_music/proc/build_notes(var/list/notes) //breaks our chunks apart and puts them into lists on the object
 	. = FALSE
+
+	// Check if we were passed notes at all
+	if (!length(notes))
+		src.event_error_invalid_note("no notes set", 1)
+		return FALSE
 
 	src.is_busy = TRUE
 	src.note_volumes     = list()

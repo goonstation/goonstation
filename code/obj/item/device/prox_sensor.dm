@@ -90,6 +90,8 @@ TYPEINFO(/obj/item/device/prox_sensor)
 
 /obj/item/device/prox_sensor/proc/sense()
 	if (src.armed == 1)
+		if (ON_COOLDOWN(src,"prox_sensor_cooldown", 0.3 SECONDS))
+			return
 		if (src.master)
 			SPAWN(0)
 				var/datum/signal/signal = get_free_signal()

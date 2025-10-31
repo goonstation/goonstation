@@ -151,6 +151,12 @@
 		logTheThing(LOG_ADMIN, message.speaker, "[message.speaker] tried to say \"[message.original_content]\" but it was garbled into \"[message.content]\", which is uncool by the following effects: [jointext(modifier_ids, ", ")]. The uncool words were garbled.")
 		message.content = replacetext(message.content, global.phrase_log.uncool_words, pick("urr", "blargh", "der", "hurr", "pllt"))
 
+	// Check for URLs if we're an IC channel, let people paste wiki links at each other in LOOC if they want to
+	if (!global.SpeechManager.GetSayChannelInstance(message.output_module_channel).allows_urls && global.url_regex.Find(message.content))
+		if (ismob(message.speaker))
+			boutput(message.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		return
+
 	// Apply sayflag message manipulation.
 	global.SpeechManager.ApplyMessageModifierPreprocessing(message)
 
@@ -278,6 +284,11 @@
 	RETURN_TYPE(/datum/speech_module/output)
 	return src.speech_outputs_by_id["[output_id][subchannel]"]
 
+/// Returns the number of subscriptions to this speech output module.
+/datum/speech_module_tree/proc/GetOutputSubcount(output_id, subchannel, combined_id)
+	var/module_id = combined_id || "[output_id][subchannel]"
+	return src.speech_output_ids_with_subcount[module_id]
+
 /// Returns a list of speech output modules that output to the specified channel.
 /datum/speech_module_tree/proc/GetOutputsByChannel(channel_id)
 	RETURN_TYPE(/list/datum/speech_module/output)
@@ -323,6 +334,10 @@
 /datum/speech_module_tree/proc/GetModifierByID(modifier_id)
 	RETURN_TYPE(/datum/speech_module/modifier)
 	return src.speech_modifiers_by_id[modifier_id]
+
+/// Returns the number of subscriptions to this speech modifier module.
+/datum/speech_module_tree/proc/GetModifierSubcount(modifier_id)
+	return src.speech_modifier_ids_with_subcount[modifier_id]
 
 /// Adds a new speech prefix module to the tree. Returns a reference to the new prefix module on success.
 /datum/speech_module_tree/proc/_AddSpeechPrefix(prefix_id, list/arguments = list(), count = 1)
@@ -375,6 +390,10 @@
 /datum/speech_module_tree/proc/GetPrefixByPrefixText(prefix_text)
 	RETURN_TYPE(/datum/speech_module/prefix)
 	return src.premodifier_speech_prefixes_by_prefix_id[prefix_text] || src.postmodifier_speech_prefixes_by_prefix_id[prefix_text]
+
+/// Returns the number of subscriptions to this speech prefix module.
+/datum/speech_module_tree/proc/GetPrefixSubcount(prefix_id)
+	return src.speech_prefix_ids_with_subcount[prefix_id]
 
 /// Returns all speech prefix modules on this speech tree.
 /datum/speech_module_tree/proc/GetAllPrefixes()

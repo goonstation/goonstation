@@ -1085,9 +1085,7 @@ particles/swarm/bees
 	count = 10
 	spawning = 0.35
 	fade = 5
-#ifndef SPACEMAN_DMM
 	fadein = 5
-#endif
 	lifespan = generator("num", 50, 80, LINEAR_RAND)
 	width = 64
 	position = generator("box", list(-10,-10,0), list(10,10,50))

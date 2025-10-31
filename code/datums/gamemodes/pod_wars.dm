@@ -185,11 +185,11 @@ var/list/pw_rewards_tier3 = null
 
 	if(round_limit > 0)
 		SPAWN(round_limit) // this has got to end soon
-			command_alert("Something something radiation.","Emergency Update")
+			command_alert("The Ion Storm will dissipate in 15 minutes... Whichever team has the least points will be forced to withdraw.", "Weather Update")
 			sleep(10 MINUTES)
-			command_alert("More radiation, too much...", "Emergency Update")
+			command_alert("Ion storm dissipating in 5 minutes... Whichever team has the least points will be forced to withdraw.", "Weather Update")
 			sleep(5 MINUTES)
-			command_alert("You may feel a slight burning sensation.", "Emergency Update")
+			command_alert("Ion storm dissipating... Executing emergency procedures. ", "Weather Update")
 			sleep(10 SECONDS)
 			for(var/mob/living/carbon/M in mobs)
 				M.emote("fart")
@@ -403,6 +403,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	else
 		board?.bar_SY.points = team.points
 		animate(board.bar_SY, transform = M1, pixel_x = offset, time = 10)
+
+	board.desc = "NT Points: [board?.bar_NT.points]\n SY Points: [board?.bar_SY.points]"
 
 //check which team they are on and iff they are a commander for said team. Deduct/award points
 //Oh man, this is fucking bad. Before I had my "system" set up where I just check for the mind.special_role,
@@ -730,13 +732,13 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	icon = 'icons/misc/128x32.dmi'
 	icon_state = "pw_backboard"
 	screen_loc = "NORTH, CENTER"
+	show_tooltip = TRUE
 	var/atom/movable/screen/border = null
 	var/atom/movable/screen/pw_score_bar/bar_NT = null
 	var/atom/movable/screen/pw_score_bar/bar_SY = null
 
 	var/list/control_points
 
-	var/theme = null
 	alpha = 150
 
 	//builds all the pieces and adds em to the score_board whose sprite is the backboard
@@ -776,22 +778,6 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 			if (true_name == C.true_name)
 				C.change_color(team_num)
 				break;	//Only ever gonna be one of em.
-
-
-	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = "NT Points: [bar_NT.points]\n SY Points: [bar_SY.points]",
-				"theme" = theme
-			))
-
-	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
 
 /atom/movable/screen/pw_score_bar
 	icon = 'icons/misc/128x32.dmi'

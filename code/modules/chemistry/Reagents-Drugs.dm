@@ -439,7 +439,7 @@ datum
 			fluid_b = 230
 			addiction_prob = 1 //Less addictive than ethanol due to its higher depletion rate
 			addiction_min = 50
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			stun_resist = 3
 			depletion_rate = 0.05
 			taste = "bitter"
@@ -747,7 +747,7 @@ datum
 			transparency = 190
 			addiction_prob = 15
 			addiction_min = 10
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			overdose = 35 // raise if too low - trying to aim for one sleepypen load being problematic, two being deadlyish
 			//var/counter = 1
 			//note that nicotine is also horribly poisonous in concentrated form IRM - could be used as a poor-man's toxin?

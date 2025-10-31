@@ -27,3 +27,34 @@
 
 /// If a command is expected to return a number, it will be signed with the databit to signify that it is not an error condition.
 #define ESIG_DATABIT	(1 << 15)
+
+
+//------------ DWAINE Shell Builtin Errors ------------//
+/// The command was carried out successfully.
+#define BUILTIN_SUCCESS		0
+/// The command has instructed the shell to halt processing.
+#define BUILTIN_BREAK		1
+/// The command has instructed the shell to move to the next line of the script.
+#define BUILTIN_CONTINUE	2
+
+
+//------------ DWAINE Shell Executable Errors ------------//
+/// The file was unable to be executed.
+#define EXEC_FAILURE		0
+/// The file was executed successfully.
+#define EXEC_SUCCESS		1
+/// The script was unable to be executed.
+#define EXEC_SCRIPT_ERROR	2
+/// A stack overflow error was encountered. In this case, `MAX_SCRIPT_ITERATIONS` was exceeded.
+#define EXEC_STACK_OVERFLOW	3
+
+
+//------------ DWAINE Shell Script Errors ------------//
+/// The script was executed successfully.
+#define SCRIPT_SUCCESS			0
+/// A stack overflow error was encountered.
+#define SCRIPT_STACK_OVERFLOW	-1
+/// A stack underflow error was encountered.
+#define SCRIPT_STACK_UNDERFLOW	-2
+/// An undefined error was encountered.
+#define SCRIPT_UNDEFINED		-3

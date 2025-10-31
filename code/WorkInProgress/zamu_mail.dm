@@ -269,7 +269,7 @@
 			var/spawn_type = weighted_pick(mail_types_by_job[J.type])
 			package = new(where)
 			package.spawn_type = spawn_type
-			package_color = J.linkcolor ? J.linkcolor : "#FFFFFF"
+			package_color = global.tgui_colours_to_rgb[J.ui_colour] || "#FFFFFF"
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
 			// just throw some random crap in there, fuck it. who cares. not us
@@ -677,15 +677,25 @@ var/global/mail_types_everyone = list(
 	/obj/item/clothing/glasses/vr/arcade = 2,
 	/obj/item/device/light/zippo = 4,
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 6,
-	/obj/item/paper/postcard/beach = 7,
-	/obj/item/paper/postcard/canyon = 7,
-	/obj/item/paper/postcard/mountain = 7,
-	/obj/item/paper/postcard/lovemd = 7,
-	/obj/item/paper/postcard/mdstatehouse = 7,
-	/obj/item/paper/postcard/moonfootprint = 7,
-	/obj/item/paper/postcard/apollo = 7,
+	/obj/item/paper/postcard/beach = 3,
+	/obj/item/paper/postcard/canyon = 3,
+	/obj/item/paper/postcard/mountain = 3,
+	/obj/item/paper/postcard/lovemd = 3,
+	/obj/item/paper/postcard/mdstatehouse = 3,
+	/obj/item/paper/postcard/moonfootprint = 3,
+	/obj/item/paper/postcard/apollo = 3,
+	/obj/item/paper/postcard/shelterfrogking = 3,
+	/obj/item/paper/postcard/cowbee = 3,
+	/obj/item/paper/postcard/believe = 3,
+	/obj/item/paper/postcard/silicongreeting = 3,
+	/obj/item/paper/postcard/thundrando = 3,
+	/obj/item/paper/postcard/pumpkinpatch = 3,
+	/obj/item/paper/postcard/chicago = 2,
+	/obj/item/paper/postcard/sadcrab = 2,
+	/obj/item/paper/postcard/spacequebec = 2,
+	/obj/item/paper/postcard/pyramid = 2,
 
-	// mostly taken from gangwar as a "relatively safe list of random hats"
+	// mostly taken from gangwar as a "relatively sa-fe list of random hats"
 	/obj/item/clothing/head/biker_cap = 1,
 	/obj/item/clothing/head/cakehat = 1,
 	/obj/item/clothing/head/chav = 1,

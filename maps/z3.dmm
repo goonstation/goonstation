@@ -4357,7 +4357,7 @@
 	},
 /area/salyut)
 "atu" = (
-/obj/item/skull/strange,
+/obj/item/skull/hunter,
 /turf/simulated/floor/plating,
 /area/salyut)
 "atv" = (
@@ -6280,10 +6280,8 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "aIu" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
+/obj/machinery/firealarm/directional/south{
+	layer = 3.5
 	},
 /turf/simulated/floor,
 /area/h7/control)
@@ -8373,10 +8371,7 @@
 	},
 /area/derelict_ai_sat/solar)
 "aPi" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor,
 /area/h7)
 "aPj" = (
@@ -8572,10 +8567,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
+/obj/machinery/firealarm/directional/south{
+	layer = 3.5
 	},
 /turf/simulated/floor,
 /area/h7/storage)
@@ -9386,7 +9379,8 @@
 	icon_state = "floor4"
 	},
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/h7/crew)
@@ -9502,16 +9496,6 @@
 /obj/item/paper{
 	info = "Why the HELL is there no bathroom in the crew module? Are we seriously supposed to run all the way over to the MINING COMPLEX to relieve ourselves?";
 	name = "Paper-Complaint #9"
-	},
-/turf/simulated/floor,
-/area/h7/crew)
-"aSU" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/noticeboard{
-	name = "Complaint Board";
-	pixel_y = 24
 	},
 /turf/simulated/floor,
 /area/h7/crew)
@@ -9643,7 +9627,8 @@
 /area/abandonedship)
 "aTo" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor/green/corner{
 	dir = 4
@@ -11171,7 +11156,8 @@
 /area/h7/lab)
 "aXO" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/h7/lab)
@@ -11806,10 +11792,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "bae" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -15509,12 +15492,6 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/timewarp/ship)
-"bPC" = (
-/obj/fakeobject/shuttlethruster{
-	dir = 8
-	},
-/turf/space,
-/area/diner/tug)
 "bPI" = (
 /obj/stool,
 /turf/simulated/floor/carpet/arcade,
@@ -15953,7 +15930,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese,
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/item/reagent_containers/food/drinks/milk/rancid,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/storage/secure/closet/fridge/kitchen{
 	locked = 0
 	},
@@ -16819,7 +16796,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hangar)
 "fiK" = (
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged2,
@@ -17039,6 +17016,12 @@
 /obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"fTH" = (
+/obj/fakeobject/shuttlethruster{
+	dir = 4
+	},
+/turf/space,
+/area/diner/tug)
 "fUB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -18847,7 +18830,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/under/swimsuit/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "kdO" = (
@@ -19625,6 +19608,11 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"lPW" = (
+/obj/stool/chair/blue,
+/obj/noticeboard/directional/north,
+/turf/simulated/floor/green/checker,
+/area/radiostation/green)
 "lQg" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -20535,11 +20523,6 @@
 	},
 /turf/space,
 /area/salyut)
-"nWz" = (
-/obj/stool/chair/blue,
-/obj/noticeboard,
-/turf/simulated/floor/green/checker,
-/area/radiostation/green)
 "nYg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/salyut)
@@ -23230,6 +23213,15 @@
 /obj/item/paper/bores_part_two,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"utv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/noticeboard/directional/north{
+	name = "Complaint Board"
+	},
+/turf/simulated/floor,
+/area/h7/crew)
 "uvN" = (
 /obj/fakeobject/shuttleengine{
 	dir = 4;
@@ -24683,7 +24675,8 @@
 /area/diner/hallway)
 "xZp" = (
 /obj/fakeobject/firealarm_broken{
-	pixel_y = 28
+	pixel_y = 28;
+	dir = 1
 	},
 /obj/machinery/vending/alcohol,
 /obj/decal/cleanable/dirt,
@@ -32755,7 +32748,7 @@ aOU
 aQH
 aRi
 aOU
-aSU
+utv
 aTK
 aTK
 aTK
@@ -66833,9 +66826,9 @@ aaa
 aaa
 aaa
 aaa
-bPC
-bPC
-bPC
+fTH
+fTH
+fTH
 aaa
 aaa
 aaa
@@ -106063,7 +106056,7 @@ adF
 obG
 aaa
 eLA
-nWz
+lPW
 adJ
 cbs
 hBh

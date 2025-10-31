@@ -1,3 +1,15 @@
+(t)thu oct 30 25
+(u)Azrun
+(*)Added 'Animation Editor' panel to create, import (JSON), export (JSON, BYOND) animations!
+(t)thu oct 02 25
+(u)Azrun
+(*)Added 'Ambient Viewer' panel, allows for viewing and adjusting lighting for Centcom, Ocean Maps, and Terrainify.
+(t)sat sept 13 25
+(u)ZeWaka
+(*)Reworked the 'Spawn Atom' panels found at the top of the game panel to be in TGUI, now with more features and QoL.
+(t)sun aug 10 25
+(u)Mr. Moriarty & ZeWaka
+(*)Added speech and listen module tree admin panels to the Player Options panel.
 (t)wed jun 18 25
 (u)LeahTheTech
 (*)Added reset cooldown buttons to the ability and bioeffect managers.

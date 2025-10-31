@@ -19,6 +19,7 @@
 
 		ShowStep()
 			if (!current_step || current_step > steps.len)
+				logTheThing(LOG_DEBUG, src, "Invalid tutorial state: Attempted to show step [current_step] (out of [length(steps)] total).")
 				boutput(owner, SPAN_ALERT("<b>Invalid tutorial state, please notify `An Admin`.</b>"))
 				qdel(src)
 				return
@@ -71,6 +72,7 @@
 
 		PerformAction(var/action, var/context)
 			if (!current_step || current_step > steps.len)
+				logTheThing(LOG_DEBUG, src, "Invalid tutorial state: Attempted to perform action '[action]' with context '[context]' for step [current_step] (out of [length(steps)]).")
 				boutput(owner, SPAN_ALERT("<b>Invalid tutorial state, please notify `An Admin`.</b>"))
 				qdel(src)
 				return 1
@@ -88,6 +90,7 @@
 
 		PerformSilentAction(var/action, var/context)
 			if (!current_step || current_step > steps.len)
+				logTheThing(LOG_DEBUG, src, "Invalid tutorial state: Attempted to perform silent action '[action]' with context '[context]' for step [current_step] (out of [length(steps)]).")
 				boutput(owner, SPAN_ALERT("<b>Invalid tutorial state, please notify `An Admin`.</b>"))
 				qdel(src)
 				return 1

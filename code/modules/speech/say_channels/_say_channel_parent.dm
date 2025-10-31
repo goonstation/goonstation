@@ -26,6 +26,8 @@ ABSTRACT_TYPE(/datum/say_channel)
 	var/suppress_hear_sound = FALSE
 	/// Whether the speaker of a message sent through this channel should display a speech bubble on sending a message.
 	var/suppress_speech_bubble = FALSE
+	/// Do we allow URLs to be sent in this channel?
+	var/allows_urls = FALSE
 
 /datum/say_channel/New()
 	. = ..()
@@ -227,7 +229,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 
 	listen_modules_by_type = list()
 
-	if (!ismob(message.message_origin.loc))
+	if (isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message)))
 		var/turf/centre = get_turf(message.message_origin)
 		if (!centre)
 			return
@@ -245,11 +247,9 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 					// If the input ignores line of sight checks, then the listener may hear the message if they are within the message's heard range.
 					else if (!INPUT_IN_RANGE(input, centre, message.heard_range))
 						continue
-				// If the outermost listener of the listener and the speaker match, the listener may hear the message.
-				else if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
-					// If the outermost listener's loc is the speaker, the listener may hear the message.
-					if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
-						continue
+				// If the outermost listener's loc is not a turf, determine whether the message can be heard based on a shared loc chain.
+				else if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+					continue
 
 				listen_modules_by_type[type] += input
 
@@ -257,13 +257,9 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 		for (var/type in src.listeners)
 			listen_modules_by_type[type] ||= list()
 			for (var/datum/listen_module/input/input as anything in src.listeners[type])
-				// If the outermost listener of the listener and the speaker match, the listener may hear the message.
-				if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
-					// If the outermost listener's loc is the speaker, the listener may hear the message.
-					if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
-						// If the speaker's loc is the listener, the listener may hear the message.
-						if (message.message_origin.loc != input.parent_tree.listener_origin)
-							continue
+				// Determine whether the message can be heard based on a shared loc chain.
+				if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+					continue
 
 				listen_modules_by_type[type] += input
 

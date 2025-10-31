@@ -209,9 +209,9 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "mechanic-reward"
@@ -242,9 +242,9 @@
 					boutput(activator, SPAN_ALERT("You're not wearing medical scrubs!"))
 					return
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "scrub-f"
@@ -501,8 +501,8 @@
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/det))
 					var/prev = M.name
-					M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+					M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 					M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 					M.icon_state = "inspectorj"
 					M.item_state = "viceG"
@@ -644,9 +644,12 @@
 					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/obj/item/clothing/suit/armor/capcoat/coat = M
+					coat.coat_style = "centcoat"
+					coat.item_state = "centcoat"
+					var/datum/component/toggle_coat/toggle_component = coat.GetComponent(/datum/component/toggle_coat)
+					toggle_component.update_coat_icon()
 					var/prev = M.name
-					M.icon_state = "centcoat"
-					M.item_state = "centcoat"
 					M.name = "commander's coat"
 					M.real_name = "commander's coat"
 					M.desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
@@ -817,9 +820,12 @@
 					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/obj/item/clothing/suit/armor/capcoat/coat = M
+					coat.coat_style = "centcoat-red"
+					coat.item_state = "centcoat-red"
+					var/datum/component/toggle_coat/toggle_component = coat.GetComponent(/datum/component/toggle_coat)
+					toggle_component.update_coat_icon()
 					var/prev = M.name
-					M.icon_state = "centcoat-red"
-					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
 					M.desc = "A luxurious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
@@ -1294,6 +1300,10 @@
 	set popup_menu = 0
 
 	SPAWN(0)
+		if (!src.authenticated)
+			boutput(usr, SPAN_ALERT("You need to be authenticated to claim rewards."))
+			return
+
 		src.verbs -= /client/verb/claimreward
 		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
 		var/list/eligible = list()

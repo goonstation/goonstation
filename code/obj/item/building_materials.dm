@@ -1286,20 +1286,13 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 		tcomputer
 			recipe_id = "tcomputer"
 			craftedType = /obj/computer3frame/terminal
-			name = "Computer Terminal Frame"
+			name = "Terminal Frame"
 			sheet_cost = 3
 			icon = 'icons/obj/terminal_frame.dmi'
 			icon_state = "0"
 		computer
 			recipe_id = "computer"
 			craftedType = /obj/computerframe
-			name = "Console Frame"
-			sheet_cost = 5
-			icon = 'icons/obj/computer_frame.dmi'
-			icon_state = "0"
-		hcomputer
-			recipe_id = "hcomputer"
-			craftedType = /obj/computer3frame
 			name = "Computer Frame"
 			sheet_cost = 5
 			icon = 'icons/obj/computer_frame.dmi'

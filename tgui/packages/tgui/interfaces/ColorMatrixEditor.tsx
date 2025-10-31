@@ -62,7 +62,8 @@ export const ColorMatrixEditor = () => {
                                 maxValue={Infinity}
                                 width="50px"
                                 format={(value) => toFixed(value, 2)}
-                                onDrag={(value: number) => {
+                                tickWhileDragging
+                                onChange={(value: number) => {
                                   let retColor = data.currentColor;
                                   retColor[row * 4 + col] = value;
                                   act('transition_color', { color: retColor });

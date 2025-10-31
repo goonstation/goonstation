@@ -543,7 +543,7 @@
 				return
 			else
 				boutput(usr, SPAN_ALERT("<b>You replace the [S] ..."))
-				del(S)
+				qdel(S)
 		if(target && BOUNDS_DIST(target, src) == 0)
 			var/obj/decal/cleanable/ritualSigil/R = new/obj/decal/cleanable/ritualSigil(target, C.type)
 			R.color = src.color
@@ -597,7 +597,7 @@
 		src.add_filter("chalkbutton_outline", 0, outline_filter(size=2, color="#000000"))
 		return ..()
 
-	MouseEntered(object,location,control,params)
+	MouseEntered(location,control,params)
 		src.add_filter("chalkbutton_drop_shadow", 0, drop_shadow_filter(x=0, y=0, size=3, offset=0, color="#FFFFFF"))
 		src.add_filter("chalkbutton_outline", 0, outline_filter(size=2, color="#FFFFFF"))
 
@@ -616,22 +616,22 @@
 			flagStr += " ???"
 			flagStr += " "
 
-		if (usr.client.tooltipHolder && (component != null))
-			var/turf/T = locate(usr.x-1, usr.y+3, usr.z) //This is so unbelievably fucking stupid. WHY ARE THE PARAMS PASSED INTO THIS NON-EXISTENT ANYWAY. FUCK.
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = T ? T.getScreenParams() : usr.getScreenParams(),
-				"title" = component.name + " ([flagStr])",
-				"content" = component.desc,
-				"theme" = "wraith"
-			))
+		if (usr.client.tooltips && (component != null))
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = component.name + " ([flagStr])",
+				content = component.desc,
+				theme = "wraith"
+			)
 		return
 
 	MouseExited(location,control,params)
 		src.add_filter("chalkbutton_drop_shadow", 0, drop_shadow_filter(x=0, y=0, size=3, offset=0, color="#000000"))
 		src.add_filter("chalkbutton_outline", 0, outline_filter(size=2, color="#000000"))
 
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 		return
 
 	clicked(list/params)
@@ -665,12 +665,12 @@
 
 	Del()
 		if(ritualComponent)
-			del(ritualComponent)
+			qdel(ritualComponent)
 		return ..()
 
 	disposing()
 		if(ritualComponent)
-			del(ritualComponent)
+			qdel(ritualComponent)
 		return ..()
 
 
@@ -692,7 +692,7 @@
 				// invisibility = INVIS_ALWAYS
 				alpha = 0
 				mouse_opacity = 0
-				del(src)
+				qdel(src)
 			else
 				// invisibility = INVIS_NONE
 				alpha = 255
@@ -798,7 +798,7 @@
 		return ..()
 
 #ifdef HALLOWEEN
-obj/eldritch_altar
+/obj/eldritch_altar
 	name = "eldritch altar"
 	desc = "A strange altar with strangely familiar symbols etched into it.. Seems to have <b>two<b> different symbols on either side of it. It looks, uhh spooky."
 	icon = 'icons/obj/spooky.dmi'

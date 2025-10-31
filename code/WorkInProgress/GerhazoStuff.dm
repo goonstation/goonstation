@@ -186,7 +186,8 @@
 		if(istype(holder.owner, /mob/living/carbon/human/cyalume_knight))
 			var/mob/living/carbon/human/cyalume_knight/my_mob = holder.owner
 			src.sword = my_mob.my_sword
-
+		else
+			src.sword = locate() in holder.owner
 
 		if(!src.sword)
 			boutput(holder.owner, SPAN_ALERT("Your sword appears to have been banished from the physical realm!"))

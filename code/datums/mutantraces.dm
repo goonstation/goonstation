@@ -85,6 +85,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/dna_mutagen_banned = TRUE
 	/// Should a genetics terminal be able to remove this mutantrace?
 	var/genetics_removable = TRUE
+	/// Should this mutantrace be kept upon cloning?
+	var/persists_on_clone = TRUE
 	/// Should they be able to walk on shards barefoot
 	var/can_walk_on_shards = FALSE
 	var/icon_state = "blank_c"
@@ -310,7 +312,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.blood_color_changed = TRUE
 
 		src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
-		if (!src.dna_mutagen_banned)
+		if (src.persists_on_clone)
 			AH.original_mutant_race = src
 		if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
 			MakeMutantDimorphic(M)
@@ -474,11 +476,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.mob_leg_offset = src.leg_offset
 		AH.mob_arm_offset = src.arm_offset
 
-		if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
-			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
-			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
-
 		AH.s_tone_original = AH.s_tone
 		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
 			AH.s_tone = AH.customizations["hair_bottom"].color
@@ -488,9 +485,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			AH.s_tone = AH.customizations["hair_top"].color
 		else
 			AH.s_tone = AH.s_tone_original
+		if ((src.mutant_appearance_flags & FIX_COLORS) && src.mutant_appearance_flags & (SKINTONE_USES_PREF_COLOR_1 | SKINTONE_USES_PREF_COLOR_2 | SKINTONE_USES_PREF_COLOR_3))
+			AH.s_tone = fix_colors(AH.s_tone)
 
 		AH.mutant_race = src
-		if (!src.dna_mutagen_banned)
+		if (src.persists_on_clone)
 			AH.original_mutant_race = src
 		AH.body_icon = src.mutant_folder
 		AH.body_icon_state = src.icon_state
@@ -616,7 +615,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
 								continue
 						var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
-						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
 					return
 
 	/// Applies or removes the bioeffect associated with the mutantrace
@@ -926,6 +925,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	movement_modifier = /datum/movement_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
+	persists_on_clone = FALSE
 	var/strain = 0
 
 	//this is terrible, but I do anyway.
@@ -1073,6 +1073,7 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 	special_head = HEAD_VAMPTHRALL
 	jerk = TRUE
 	genetics_removable = FALSE
+	persists_on_clone = FALSE
 
 	on_attach(var/mob/living/carbon/human/M)
 		..()
@@ -1191,7 +1192,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			P.setup(src.mob.loc)
 			var/obj/item/I
 			I = src.mob.organHolder.drop_organ("head", src.mob)
-			I.loc = get_turf(src.mob)
+			if (I) I.loc = get_turf(src.mob)
 			var/list/limbs = list()
 			limbs += src.mob.limbs.l_arm?.remove(FALSE)
 			limbs += src.mob.limbs.r_arm?.remove(FALSE)
@@ -1280,6 +1281,7 @@ TYPEINFO(/datum/mutantrace/abomination)
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
 	self_click_fluff = "disgusting writhing appendages"
+	persists_on_clone = FALSE
 
 	var/last_drain = 0
 	var/drains_dna_on_life = 1
@@ -1989,14 +1991,14 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			M.bioHolder.AddEffect("mattereater")
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
-			M.bioHolder.AddEffect("accent_chav")
+			M.bioHolder.AddEffect("accent_frog")
 
 	disposing()
 		if(ishuman(src.mob))
 			src.mob.bioHolder.RemoveEffect("mattereater")
 			src.mob.bioHolder.RemoveEffect("jumpy")
 			src.mob.bioHolder.RemoveEffect("vowelitis")
-			src.mob.bioHolder.RemoveEffect("accent_chav")
+			src.mob.bioHolder.RemoveEffect("accent_frog")
 		..()
 
 	emote(act, voluntary)
@@ -2092,6 +2094,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/kudzu/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | TORSO_HAS_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS | BUILT_FROM_PIECES)
 	override_attack = 1
+	persists_on_clone = FALSE
 
 	mutant_abilityholder = /datum/abilityHolder/kudzu
 	mutant_abilities = list(
@@ -2457,7 +2460,9 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (src.mob.hasStatus("poisoned"))
 			boutput(src.mob, SPAN_ALERT("You're sick and definitely aren't up for sleuthing!"))
 			return
-		var/atom/A = tgui_input_list(src.mob, "What would you like to sleuth?", "Sleuthing", src.mob.get_targets(1, "both"), 20 SECONDS)
+		var/list/targets = src.mob.get_targets(1, "both")
+		targets += src.mob // Pugs can smell themselves
+		var/atom/A = tgui_input_list(src.mob, "What would you like to sleuth?", "Sleuthing", targets, 20 SECONDS)
 		if (!A)
 			return
 		var/used_name = GET_ATOM_PROPERTY(src.mob, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src.mob
@@ -2466,16 +2471,19 @@ TYPEINFO(/datum/mutantrace/pug)
 		. = list("<B>[used_name]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
 
 		var/sleuth_text = ""
-		if (isliving(A))
-			var/mob/living/L = A
-			if (L.mind?.color)
-				sleuth_text = SPAN_NOTICE("<li>[L] mostly smells like \a [L.mind.color.id].</li>")
 		if(A.forensic_holder)
 			var/datum/forensic_group/basic_list/sleuth/sleuth_group = A.forensic_holder.get_group(FORENSIC_GROUP_SLEUTH)
 			if(istype(sleuth_group))
-				sleuth_text += sleuth_group.get_sleuth_text(A, FALSE)
+				sleuth_text = sleuth_group.get_sleuth_text(A, TRUE)
+
+		// If no sleuth group is found.
 		if(!sleuth_text)
-			sleuth_text = SPAN_NOTICE("Smells like \a [A], alright.")
+			if (isliving(A))
+				var/mob/living/L = A
+				if(L.mind?.color)
+					sleuth_text = SPAN_NOTICE("[A] mostly smells like \a [L.mind.color.id].")
+			if(!sleuth_text)
+				sleuth_text = SPAN_NOTICE("Smells like \a [A], alright.")
 		boutput(src.mob, sleuth_text)
 
 	proc/sneeze()

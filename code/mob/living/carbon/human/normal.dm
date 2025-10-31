@@ -197,7 +197,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "NT-SO Rescue Worker"
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]’s ID Card ([C.assignment])"
 			C.access = get_all_accesses()
 
 		update_clothing()
@@ -223,7 +223,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "NT-SO Special Operative"
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]’s ID Card ([C.assignment])"
 			var/list/ntso_access = get_all_accesses()
 			ntso_access += access_armory // This makes sense, right? They're highly trained and trusted.
 			C.access = ntso_access

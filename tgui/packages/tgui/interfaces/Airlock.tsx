@@ -10,27 +10,28 @@ import {
   Box,
   Button,
   Divider,
-  Flex,
   LabeledList,
   Modal,
   NoticeBox,
   ProgressBar,
   Section,
+  Stack,
   Tabs,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { truncate } from '../format';
 import { Window } from '../layouts';
 
 interface AirlockData {
-  accessCode;
-  aiControlVar;
+  accessCode: number;
+  aiControlVar: number;
   aiHacking;
   backupTimeLeft;
   boltsAreUp;
-  canAiControl;
-  canAiHack;
+  canAiControl: BooleanLike;
+  canAiHack: BooleanLike;
   hackMessage;
   hackingProgression;
   idScanner;
@@ -40,7 +41,7 @@ interface AirlockData {
   noPower;
   opened;
   panelOpen;
-  powerIsOn;
+  powerIsOn: BooleanLike;
   safety;
   shockTimeLeft;
   signalers;
@@ -69,25 +70,32 @@ export const uiCurrentUserPermissions = (data: AirlockData) => {
 
 export const Airlock = () => {
   const { data } = useBackend<AirlockData>();
+  const { name } = data;
   const userPerms = uiCurrentUserPermissions(data);
   //  We render 3 different interfaces so we can change the window sizes
   return (
-    <Window theme="ntos">
-      <Window.Content>
-        {!userPerms['airlock'] && !userPerms['accessPanel'] && (
-          <Modal textAlign="center" fontSize="24px">
-            <Box width={25} height={5} align="center">
-              Access Panel is Closed
-            </Box>
-          </Modal>
-        )}
-        {(!!userPerms['airlock'] && !!userPerms['accessPanel'] && (
-          <AirlockAndAccessPanel />
-        )) ||
-          (!!userPerms['airlock'] && <AirlockControlsOnly />) ||
-          (!!userPerms['accessPanel'] && <AccessPanelOnly />)}
-      </Window.Content>
-    </Window>
+    <>
+      {!userPerms['airlock'] && !userPerms['accessPanel'] && (
+        <Window
+          width={355}
+          height={455}
+          title={`Airlock - ${truncate(name, 19)}`}
+        >
+          <Window.Content>
+            <Modal textAlign="center" fontSize="24px">
+              <Box width={25} align="center">
+                Access Panel is Closed
+              </Box>
+            </Modal>
+          </Window.Content>
+        </Window>
+      )}
+      {(!!userPerms['airlock'] && !!userPerms['accessPanel'] && (
+        <AirlockAndAccessPanel />
+      )) ||
+        (!!userPerms['airlock'] && <AirlockControlsOnly />) ||
+        (!!userPerms['accessPanel'] && <AccessPanelOnly />)}
+    </>
   );
 };
 
@@ -98,7 +106,7 @@ const AirlockAndAccessPanel = () => {
 
   const [tabIndex, setTabIndex] = useState(1);
   return (
-    <Window width={354} height={495} title={`Airlock - ${truncate(name, 19)}`}>
+    <Window width={355} height={490} title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <Tabs>
           <Tabs.Tab
@@ -120,7 +128,7 @@ const AirlockAndAccessPanel = () => {
         </Tabs>
         {tabIndex === 1 && (
           <>
-            <Section fitted backgroundColor="transparent">
+            <Section backgroundColor="transparent">
               {(!canAiControl || !!noPower) && (
                 <Modal textAlign="center" fontSize="24px">
                   <Box width={20} height={5} align="center">
@@ -147,7 +155,7 @@ const AirlockControlsOnly = () => {
   const { name, canAiControl, hackMessage, canAiHack, noPower } = data;
 
   return (
-    <Window width={315} height={380} title={`Airlock - ${truncate(name, 19)}`}>
+    <Window width={300} height={365} title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         {(!canAiControl || !!noPower) && (
           <Modal textAlign="center" fontSize="26px">
@@ -170,7 +178,7 @@ const AccessPanelOnly = () => {
   const { name } = data;
 
   return (
-    <Window width={360} height={465} title={`Airlock - ${truncate(name, 19)}`}>
+    <Window width={355} height={455} title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <AccessPanel />
       </Window.Content>
@@ -190,16 +198,12 @@ const PowerStatus = () => {
   return (
     <Section title="Power Status">
       <Box>
-        {'Access sensor reports the net identifer is: '}
-        <Box inline italic>
-          {netId}
-        </Box>
+        {'Access sensor reports the net ID is: '}
+        <code>{netId}</code>
       </Box>
       <Box>
         {'Net access code: '}
-        <Box inline italic>
-          {accessCode}
-        </Box>
+        <code>{accessCode}</code>
       </Box>
       <Divider />
       <LabeledList>
@@ -349,41 +353,38 @@ const Electrify = () => {
             (shockTimeLeft > 0 && ` [${shockTimeLeft}s]`) ||
             (shockTimeLeft === -1 && ' [Permanent]')}
         </LabeledList.Item>
-        <LabeledList.Item color={!shockTimeLeft ? 'Average' : 'Bad'}>
-          <Box pl={shockTimeLeft ? 18 : 0} pt={0.5}>
-            {!shockTimeLeft && (
-              <Button.Confirm
-                width={9}
-                p={0.5}
-                align="center"
-                color="average"
-                confirmContent="Are you sure?"
-                icon="bolt"
-                disabled={!wires.shock || (mainTimeLeft && backupTimeLeft)}
-                onClick={() => act('shockTemp')}
-              >
-                Temporary
-              </Button.Confirm>
-            )}
-            <Button.Confirm
-              width={9}
-              p={0.5}
-              align="center"
-              color={shockTimeLeft ? 'good' : 'bad'}
-              icon="bolt"
-              confirmContent="Are you sure?"
-              disabled={!wires.shock || (mainTimeLeft && backupTimeLeft)}
-              onClick={
-                shockTimeLeft
-                  ? () => act('shockRestore')
-                  : () => act('shockPerm')
-              }
-            >
-              {shockTimeLeft ? 'Restore' : 'Permanent'}
-            </Button.Confirm>
-          </Box>
-        </LabeledList.Item>
       </LabeledList>
+
+      <Stack pt={1} justify="flex-end">
+        {!shockTimeLeft && (
+          <Button.Confirm
+            width={9}
+            p={0.5}
+            align="center"
+            color="average"
+            confirmContent="Are you sure?"
+            icon="bolt"
+            disabled={!wires.shock || (mainTimeLeft && backupTimeLeft)}
+            onClick={() => act('shockTemp')}
+          >
+            Temporary
+          </Button.Confirm>
+        )}
+        <Button.Confirm
+          width={9}
+          p={0.5}
+          align="center"
+          color={shockTimeLeft ? 'good' : 'bad'}
+          icon="bolt"
+          confirmContent="Are you sure?"
+          disabled={!wires.shock || (mainTimeLeft && backupTimeLeft)}
+          onClick={
+            shockTimeLeft ? () => act('shockRestore') : () => act('shockPerm')
+          }
+        >
+          {shockTimeLeft ? 'Restore' : 'Permanent'}
+        </Button.Confirm>
+      </Stack>
     </NoticeBox>
   );
 };
@@ -454,16 +455,12 @@ export const AccessPanel = () => {
         </Modal>
       )}
       <Box>
-        {"An identifier is engraved under the airlock's card sensors: "}
-        <Box inline italic>
-          {netId}
-        </Box>
+        {'An ID is engraved under the card sensor: '}
+        <code>{netId}</code>
       </Box>
       <Box>
         {'A display shows net access code: '}
-        <Box inline italic>
-          {accessCode}
-        </Box>
+        <code>{accessCode}</code>
       </Box>
       <Divider />
       <LabeledList>
@@ -507,8 +504,8 @@ export const AccessPanel = () => {
         ))}
       </LabeledList>
       <Divider />
-      <Flex direction="row">
-        <Flex.Item>
+      <Stack>
+        <Stack.Item grow={1}>
           <LabeledList>
             <LabeledList.Item
               label="Door bolts"
@@ -523,8 +520,8 @@ export const AccessPanel = () => {
               {powerIsOn ? 'Active' : 'Inactive'}
             </LabeledList.Item>
           </LabeledList>
-        </Flex.Item>
-        <Flex.Item>
+        </Stack.Item>
+        <Stack.Item grow={1}>
           <LabeledList>
             <LabeledList.Item
               label="AI control"
@@ -541,8 +538,8 @@ export const AccessPanel = () => {
               {safety ? 'Active' : 'Inactive'}
             </LabeledList.Item>
           </LabeledList>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };

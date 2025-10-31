@@ -10,8 +10,8 @@ body {
   height: 100%;
 }
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Twemoji',
-    'Segoe UI Emoji';
+  font-family:
+    'Helvetica Neue', Helvetica, Arial, sans-serif, 'Twemoji', 'Segoe UI Emoji';
   font-size: 12px;
   line-height: 1.4;
   overflow-x: hidden;
@@ -56,6 +56,11 @@ img.emoji {
 wbr:after {
   content: '';
   display: block;
+}
+/* reset */
+b,
+strong {
+  font-weight: bold;
 }
 
 /*****************************************
@@ -676,8 +681,8 @@ h2.alert {
 .command_alert {
   color: #000;
   margin: 0px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Twemoji',
-    'Segoe UI Emoji';
+  font-family:
+    'Helvetica Neue', Helvetica, Arial, sans-serif, 'Twemoji', 'Segoe UI Emoji';
 }
 div.command_alert {
   border: 2px solid;

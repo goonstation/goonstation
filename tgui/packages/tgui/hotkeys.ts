@@ -186,6 +186,9 @@ export const setupHotKeys = () => {
   globalEvents.on('window-blur', () => {
     releaseHeldKeys();
   });
+  globalEvents.on('input-focus', () => {
+    releaseHeldKeys();
+  });
   globalEvents.on('key', (key: KeyEvent) => {
     for (const keyListener of keyListeners) {
       keyListener(key);

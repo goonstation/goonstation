@@ -3732,7 +3732,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 						src.visible_message("<b>[src.name]</b> extends its stand.")
 						src.set_density(1)
 						src.setup_base_icon_state = "impactstand"
-						FLICK("impactpad-extend",src)
+						FLICK("impactstand-extend",src)
 						src.UpdateIcon()
 						playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					else

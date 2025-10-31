@@ -450,46 +450,6 @@ TRAYS
 		name = "donut box"
 		desc = "A box for containing and transporting \"dough-nuts\", a popular ethnic food."
 
-	egg_box
-		name = "egg carton"
-		desc = "A carton that holds a bunch of eggs. What kind of eggs? What grade are they? Are the eggs from space? Space chicken eggs?"
-		icon_state = "eggbox"
-		count = 12
-		max_count = 12
-		box_type = "eggbox"
-		contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
-		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
-		contained_food_name = "egg"
-
-		rancher
-			count = 4
-
-			//BR variants
-			void
-				name = "nebulous carton"
-				desc = "A egg carton with purple eggs, a label mentions squeezing and vulnerability."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple
-			wizard
-				name = "magical carton"
-				desc = "A oddly mystical egg carton, there is a wizard using a spell on the top."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard
-			snow
-				name = "cold carton"
-				desc = "This carton chills your hands to hold it, a slipping warning is printed on the back."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/snow
-			plant
-				name = "overgrown carton"
-				desc = "Vines try to nudge out of this carton, it has a picture of the sun on it."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant
-			mime
-				name = "monochrome carton"
-				desc = "This monochrome box shows a mime making a stop motion with their hands."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime
-			knight
-				name = "chivalrous carton"
-				desc = "This plate-mailed carton has a shield printed onto it."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight
-
 	lollipop
 		name = "lollipop bowl"
 		desc = "A little bowl of lollipops, totally healthy in every way! They're medicinal, after all!"

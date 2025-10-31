@@ -259,7 +259,7 @@ var/list/ai_move_scheduled = list()
 
 	/// Called whenever the task is started or ended. Override this instead of reset()
 	proc/on_reset()
-		holder.target = null
+		if (holder) holder.target = null
 
 	/// Evaluate the current environment and assign priority to switching to this task
 	proc/evaluate()
@@ -273,6 +273,7 @@ var/list/ai_move_scheduled = list()
 	/// targets is expected (but not required) to be ordered from best to worst - by default view() will do this if score_target() is based on distance
 	proc/get_best_target(list/atom/targets)
 		. = null
+		if (!holder) return
 		var/best_score = -INFINITY
 		var/list/best_path = null
 		if(length(targets))
@@ -298,13 +299,14 @@ var/list/ai_move_scheduled = list()
 							best_score = score
 							best_path = tmp_best_path
 							. = A
-		holder.target = .
-		holder.target_path = best_path
+		if(holder)
+			holder.target = .
+			holder.target_path = best_path
 
 	/// If overriding also override [score_by_distance_only] to FALSE!
 	proc/score_target(atom/target)
 		. = 0
-		if(target)
+		if(target && holder)
 			return 100*(max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/max_dist //normalize distance weighting
 
 	//     do not override procs below this line

@@ -20,7 +20,6 @@
 		<!doctype html>
 		<html>
 			<head>
-				<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 				<meta name="color-scheme" content="[C.darkmode ? "dark" : "light"]" />
 				<title>Login Failed</title>
 				<style>

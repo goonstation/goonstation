@@ -53,6 +53,7 @@ var/list/roles_to_prefs = list(
 	ROLE_TRAITOR = "be_traitor",
 	ROLE_SPY_THIEF = "be_spy",
 	ROLE_NUKEOP = "be_syndicate",
+	ROLE_NUKEOP_COMMANDER = "be_syndicate_commander",
 	ROLE_VAMPIRE = "be_vampire",
 	ROLE_GANG_LEADER = "be_gangleader",
 	ROLE_GANG_MEMBER = "be_gangmember",
@@ -77,6 +78,24 @@ var/list/roles_to_prefs = list(
   */
 /proc/get_preference_for_role(var/role)
 	return roles_to_prefs[role]
+
+
+var/list/antagonist_datum_types_by_id = null
+/**
+  * Return the typepath of an antagonist datum for the given role define.
+  *
+  * Arguments:
+  * * role - role to return a typepath for.
+  */
+/proc/get_antagonist_datum_type(role)
+	RETURN_TYPE(/datum/antagonist)
+
+	if (isnull(global.antagonist_datum_types_by_id))
+		global.antagonist_datum_types_by_id = list()
+		for (var/datum/antagonist/T as anything in concrete_typesof(/datum/antagonist))
+			global.antagonist_datum_types_by_id[T::id] = T
+
+	return global.antagonist_datum_types_by_id[role]
 
 
 /**

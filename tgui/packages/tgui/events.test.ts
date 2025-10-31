@@ -1,3 +1,5 @@
+import { afterEach, describe, it, vi } from 'vitest';
+
 import {
   addScrollableNode,
   canStealFocus,
@@ -8,7 +10,7 @@ import {
 
 describe('focusEvents', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('setupGlobalEvents sets the ignoreWindowFocus flag correctly', () => {
@@ -16,7 +18,9 @@ describe('focusEvents', () => {
     // Test other functionality that depends on the ignoreWindowFocus flag
   });
 
-  it('canStealFocus returns true for input and textarea elements', () => {
+  it('canStealFocus returns true for input and textarea elements', ({
+    expect,
+  }) => {
     const inputElement = document.createElement('input');
     const textareaElement = document.createElement('textarea');
     const divElement = document.createElement('div');
@@ -39,7 +43,7 @@ describe('focusEvents', () => {
     // Test other functionality that depends on the list of scrollable nodes
   });
 
-  it('KeyEvent class works correctly', () => {
+  it('KeyEvent class works correctly', ({ expect }) => {
     const keyboardEvent = new KeyboardEvent('keydown', {
       key: 'a',
       keyCode: 65,

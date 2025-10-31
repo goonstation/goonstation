@@ -28,6 +28,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	w_class = W_CLASS_NORMAL
 	burn_possible = FALSE
 	var/random_code = FALSE // sets things to already have a randomized code on spawning
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_CROWBAR
 
 /obj/item/storage/secure/New()
 	..()
@@ -160,6 +161,9 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 			src.clear_input()
 	. = TRUE
 
+
+/obj/item/storage/secure/ui_state(action, params)
+	. = tgui_physical_state // safes require physical access
 
 /obj/item/storage/secure/proc/add_input(var/key)
 	var/key_len = length(key)

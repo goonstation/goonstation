@@ -629,9 +629,7 @@ particles/music
 	bound1 = list(-1000, -240, -1000)
 	lifespan = 2 SECONDS
 	fade = 1.5 SECOND
-	#ifndef SPACEMAN_DMM // Waiting on next release of DreamChecker
 	fadein = 5
-	#endif
 	// spawn within a certain x,y,z space
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("quarter"=5, "beamed_eighth"=1, "eighth"=1)

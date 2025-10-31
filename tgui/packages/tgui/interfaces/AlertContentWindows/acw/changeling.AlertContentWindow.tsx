@@ -77,7 +77,7 @@ const ChangelingContentWindow = () => {
           <br />
           <em>Horror Form</em>, you turn into a shambling abomination with a
           special set of abilities. See the{' '}
-          <a href="http://wiki.ss13.co/Changeling#Shambling_Abomination">
+          <a href="https://wiki.ss13.co/Changeling#Shambling_Abomination">
             the wiki
           </a>
           .<br />

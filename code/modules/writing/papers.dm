@@ -540,7 +540,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	info = {"<center><h2>Finally, my own ship!</h2></center>
 	<hr>
 	<i>This is the begining of my log, I figured since I made it rich after all this time, I ought to recount my thoughts now in a log of sorts.
-	Years of working in a damm cubicle, my only worthwile cash comming from transfering dead crew members credits to my own account.
+	Years of working in a damm cubicle, my only worthwile cash comming from transferring dead crew members credits to my own account.
 	But it has all paid off, I got a beautiful ship, my dog, a whole damm vault, and plenty of room for guests!
 	I even got this bottle of blue label! I was going to save it for my first cruise with others, but I suppose it wont hurt to dip into a bit of it.</i>
 	"}
@@ -730,6 +730,94 @@ Only trained personnel should operate station systems. Follow all procedures car
 	only at the Museum of Lunar History!<br><br><br><br><br><hr>
 	Printed by Aurora Lithographics<hr></font>"}
 
+/obj/item/paper/postcard/shelterfrogking //by SnugglyCactus
+	name = "\"Remember Who You Are\""
+	desc ="A postcard with an iconic scene from... The Shelterfrog King? Huh?"
+	icon_state = "postcard-shelter-king"
+	info = {"<i>Remember who you are.</i>
+	<br><br>
+	The Shelterfrog King - Remember Who You Are<br>
+	National Notary Supply Corporation<br>
+	Image #25222"}
+
+/obj/item/paper/postcard/cowbee //by Whele
+	name = "\"Ride 'Em, Cowbee!\""
+	desc = "A postcard featuring a rugged-looking cowpoke in front of a gorgeous sunset. An obligatory cactus stands tall in the center."
+	icon_state = "postcard-cowbee"
+	info = {"Ride 'Em, Cowbee!<br>
+	National Notary Supply Corporation<br>
+	Image #25216"}
+
+/obj/item/paper/postcard/believe //by Scientifically
+	name ="\"Believe\""
+	desc = "A postcard showing a painting of a UFO above a forest, with the caption \"Believe\"."
+	icon_state = "postcard-believe"
+	info = {"Ancient aliens, it's all true,<br>
+	I'm an expert just like you!
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/postcard/silicongreeting //by Mailman T
+	name = "\"A Silicon Greeting\""
+	desc = "A postcard with some cyborgs. It has a message on the back written in binary."
+	icon_state = "postcard-silicon-greeting"
+	info = {"<font face='Courier New'>1001110 1101001 1100011 1100101 100000
+			1100010 1101001 1101110 1100001 1110010 1111001 100000 1100011
+			1101111 1101110 1110110 1100101 1110010 1110100 1100101 1110010</font>"}
+
+/obj/item/paper/postcard/thundrando //by Shiiba
+	name = "\"Greetings from Thundrando!\""
+	desc = "...Thundrando? What kind of name is that?"
+	icon_state = "postcard-thundrando"
+	info = {"<font color='#1A378D'>Greetings from Thundrando!</font>"}
+
+/obj/item/paper/postcard/pumpkinpatch //by IncendiaryCrocs
+	name = "pumpkin patch postcard"
+	desc = {"A postcard with some spooky pumpkins, set against a night sky.
+			The back contains a sinister letter, written as if from their point of view."}
+	icon_state = "postcard-pumpkin-patch"
+	info = {"Wishing you many terrifying honks.<br><br>
+	Many Disgraces,<br>
+	The Pumpkin Patch
+	<br><br>
+	Pumpkins #13<br>
+	National Notary Supply Corporation<br>
+	Image #25234"}
+
+/obj/item/paper/postcard/chicago //by Frank_Stein
+	name = "Chicago postcard"
+	desc = "A postcard showing the city of Chicago on Earth, most of it blocked out by a big hot dog. The back has a terrible tourist slogan."
+	icon_state = "postcard-chicago"
+	info = {"<font face='Comic Sans MS'>Visit Chicago! Try the hot dogs!</font>
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/postcard/sadcrab //by Elskrises
+	name = "\"Greetings from the Rave Beach.\""
+	desc = {"An image of the amazing Rave Beach. It even has an adorable crab playing a violin! Wait, is that crab crying?
+			The back of the card has a message in messy, shaky writing."}
+	icon_state = "postcard-sad-crab"
+	info = {"<font face='Brush Script MT' size=4>Cherish your happiest memories.</font>"}
+
+/obj/item/paper/postcard/spacequebec //by Gamb1t
+	name = "\"De Magnifique Vacances!\""
+	desc = {"A postcard featuring a pair of mountains by a lake on the chilly planet Mundus.
+			The back features images of frontier vacationers hiking, camping, and skiing."}
+	icon_state = "postcard-space-quebec"
+	info = {"Visit beautiful Space Quebec!
+	<br><br>
+	"De Magnifique Vacances!"<br>
+	National Notary Supply Corporation<br>
+	Image #25204"}
+
+/obj/item/paper/postcard/pyramid //by RubberRats
+	name = "New Memphis postcard"
+	desc = "A postcard with a ground-view photograph of the BonkTek Consortium's massive pyramid-shaped shopping center on the planet Fatuus."
+	icon_state = "postcard-pyramid"
+	info = {"<font face='Arial'>Greetings from New Memphis, home of the BonkTek Pyramid!
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
@@ -838,14 +926,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Needless to say, I'm not a fan.<br>
 	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
 	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
-
-//is this a bit extra? Yeess but I wanted it on a random table okay!
-proc/spawn_kitchen_note()
-	for_by_tcl(table, /obj/table)
-		if (istype(get_area(table), /area/station/crew_quarters/kitchen) && prob(50))
-			var/type = pick(concrete_typesof(/obj/item/paper/recipe) - /obj/item/paper/recipe)
-			new type(get_turf(table))
-			return
 
 /obj/item/paper/recipe/tandoori
 	name = "stained recipe clipping"
@@ -1444,8 +1524,6 @@ proc/spawn_kitchen_note()
 		pixel_y = rand(-8, 8)
 		info = PAPER_IMAGE_RENDER("images/arts/xg_tapes.png")
 
-#undef IMAGE_OFFSET_X
-#undef IMAGE_OFFSET_Y
 
 /obj/item/paper/wanderpoem
 	name = "A freshly written poem"
@@ -1625,3 +1703,20 @@ proc/spawn_kitchen_note()
 	name = "stern note"
 	info = {"so um. i spent all of our money that we were told not to spend, only after reading our leadership's note. we are so fucked. anyways, i
 	went out for a short bit and will be back in a day's time.<br><br>no, you are the one who is fucked. i'm out of here."}
+
+/obj/item/paper/hair_fall
+	name = "hairstyle flyer"
+	icon_state = "hair_fall"
+	desc = "The latest frontier hairstyle fashion for fall 2053."
+
+	sizex = 1213 + IMAGE_OFFSET_X
+	sizey = 762 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
+
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/hairstyles_fall.png")
+
+#undef IMAGE_OFFSET_X
+#undef IMAGE_OFFSET_Y

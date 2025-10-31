@@ -1012,6 +1012,18 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		pos++
 	return copytext(sanitize(output), 1, MAX_MESSAGE_LEN)
 
+
+// Some BYOND builtins don't work with `PROC_REF`, so they need to be wrapped.
+/proc/replacetext_wrapper(haystack, needle, replacement, start = 1, end = 0)
+	return replacetext(haystack, needle, replacement, start, end)
+
+/proc/uppertext_wrapper(string)
+	return uppertext(string)
+
+/proc/ckeyEx_wrapper(string)
+	return ckeyEx(string)
+
+
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
 	if(!M || !M.client)
 		return
@@ -2226,7 +2238,7 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 /// Repeat a gradient between two colors across text.
 /// Note: This is inaccurate because its a linear transformation, but human eyes do not perceive color this way.
-/proc/gradientText(color_1, color_2, message)
+/proc/gradientText(color_1, color_2, message, mutable_tags = FALSE)
 	var/list/color_list_1 = rgb2num(color_1)
 	var/list/color_list_2 = rgb2num(color_2)
 
@@ -2261,8 +2273,13 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 			dir = -1
 
 		var/col = rgb(r1 + delta_r*coeff, g1 + delta_g*coeff, b1 + delta_b*coeff)
-		var/chars = copytext(message, i, i + 3)
-		result += "<span style='color:[col]'>[chars]</span>"
+		if (mutable_tags)
+			result += MAKE_CONTENT_IMMUTABLE("<span style='color:[col]'>")
+			result += copytext(message, i, i + 3)
+			result += MAKE_CONTENT_IMMUTABLE("</span>")
+
+		else
+			result += "<span style='color:[col]'>[copytext(message, i, i + 3)]</span>"
 
 	. = jointext(result, "")
 
@@ -2444,8 +2461,10 @@ proc/total_clients_for_cap()
 
 
 proc/client_has_cap_grace(var/client/C)
-	if (C.ckey in player_cap_grace)
-		.= (player_cap_grace[C.ckey] > TIME)
+	logTheThing(LOG_DEBUG, C, "<b>PCAP Grace:</b> Checking PCAP grace for [C.client_auth_intent.ckey]...")
+	if (C.client_auth_intent.ckey in player_cap_grace)
+		.= (player_cap_grace[C.client_auth_intent.ckey] > TIME)
+		logTheThing(LOG_DEBUG, C, "<b>PCAP Grace:</b> Found PCAP grace for [C.client_auth_intent.ckey]. Current time: [TIME], Grace time: [player_cap_grace[C.client_auth_intent.ckey]], Result: [(player_cap_grace[C.client_auth_intent.ckey] > TIME) ? "PASS" : "FAIL"]")
 
 
 //TODO: refactor the below two into one proc
@@ -2783,3 +2802,22 @@ proc/pick_reagent(mob/user)
 	else
 		user.show_text("No reagents matching that name", "red")
 		return null
+
+
+/// Spawn one of `spawn_type` on a random table in `area_type`
+proc/area_table_spawn(area_type, spawn_type)
+	var/list/tables = list()
+	for_by_tcl(table, /obj/table)
+		if (istype(get_area(table), area_type))
+			tables += table
+	if (!length(tables)) //no tables FUCK
+		return
+	new spawn_type(get_turf(pick(tables)))
+
+/atom/proc/find_parent_of_type(type)
+	var/atom/parent = src.loc
+	while (!istype(parent, type) && parent.loc)
+		parent = parent.loc
+	if (istype(parent, type))
+		return parent
+	return null

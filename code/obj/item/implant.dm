@@ -77,15 +77,14 @@ THROWING DARTS
 		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
+		if (isliving(M))
+			var/mob/living/living = M
+			LAZYLISTADD(living.implant, src)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant?.Add(src)
 			if (src.scan_category == IMPLANT_SCAN_CATEGORY_OTHER || src.scan_category == IMPLANT_SCAN_CATEGORY_UNKNOWN)
 				var/image/img = H.prodoc_icons["other"]
 				img.icon_state = "implant-other"
-		else if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants?.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 
@@ -100,9 +99,11 @@ THROWING DARTS
 		SHOULD_CALL_PARENT(TRUE)
 		deactivate()
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_REMOVED, M)
+		if (isliving(M))
+			var/mob/living/living = M
+			living.implant -= src
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant -= src
 			var/has_other_imp = FALSE
 			for (var/obj/item/implant/I as anything in H.implant)
 				if (I.scan_category == IMPLANT_SCAN_CATEGORY_OTHER || I.scan_category == IMPLANT_SCAN_CATEGORY_UNKNOWN)
@@ -111,9 +112,6 @@ THROWING DARTS
 			if (!has_other_imp)
 				var/image/I = H.prodoc_icons["other"]
 				I.icon_state = null
-		if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants?.Remove(src)
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null
@@ -161,18 +159,13 @@ THROWING DARTS
 		deactivate()
 
 	proc/get_coords()
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = src.owner
-			if (locate(src) in H.implant)
-				var/turf/T = get_turf(H)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
-		else if (ismobcritter(src.owner))
-			var/mob/living/critter/C = src.owner
-			if (locate(src) in C.implants)
-				var/turf/T = get_turf(C)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
+		if (!isliving(src.owner))
+			return
+		var/mob/living/living_owner = src.owner
+		if (locate(src) in living_owner.implant)
+			var/turf/T = get_turf(src.owner)
+			if (istype(T))
+				return " at [T.x],[T.y],[T.z]"
 
 	proc/send_message(var/message, var/alertgroup, var/sender_name)
 		DEBUG_MESSAGE("sending message: [message]")
@@ -881,6 +874,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	var/uses = 1
 	var/expire = TRUE
+	var/inactive = FALSE //Has this implant been overriden on the current implantee
 	var/mob/implant_hacker = null // who is the person mindhacking the implanted person
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
@@ -909,12 +903,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
 			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return FALSE
-		// Same here, basically. Multiple active implants is just asking for trouble.
-		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
-		for (var/obj/item/implant/mindhack/MS in H.implant)
-			var/obj/item/implant/mindhack/Inew = new MS.type(H)
-			H.implant += Inew
-			qdel(MS)
 		return TRUE
 
 	implanted(var/mob/M, var/mob/I)
@@ -925,6 +913,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
 		M.changeStatus("stunned", 10 SECONDS)
 		M.changeStatus("knockdown", 10 SECONDS)
+
+		//Remove any existing mindhack statuses and override existing implants
+		var/mob/living/carbon/human/H = M
+		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
+		for (var/obj/item/implant/mindhack/MS in H.implant)
+			if(MS != src)
+				MS.inactive = TRUE
+		src.inactive = FALSE
 
 		if(M == I)
 			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
@@ -937,8 +933,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove(var/mob/M)
 		..()
 		src.former_implantee = M
-		M.delStatus("mindhack")
-		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
+		if(!src.inactive) //If this isn't the implant currently mindhacking the owner don't remove antag status
+			M.delStatus("mindhack")
+			M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
+		src.inactive = FALSE //Set back to normal incase its used again
 		return
 
 	proc/add_orders(var/orders)
@@ -947,6 +945,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.custom_orders = copytext(sanitize(html_encode(orders)), 1, MAX_MESSAGE_LEN)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
+
+/obj/item/implant/mindhack/super
+	name = "mindhack DELUXE implant"
+	expire = FALSE
+	uses = 2
 
 /obj/item/implant/marionette
 	name = "marionette implant"
@@ -1367,11 +1370,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				M.linked_address = src.net_id
 				user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
 			return TRUE
-
-/obj/item/implant/mindhack/super
-	name = "mindhack DELUXE implant"
-	expire = 0
-	uses = 2
 
 /obj/item/implant/projectile
 	name = "bullet"

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 
@@ -172,12 +172,12 @@ const setInputReadonly = (text, readonly) => {
 export const PaperSheetView = (props) => {
   const { value = '', stamps = [], backgroundColor, readOnly } = props;
   const stampList = stamps || [];
-  const textHtml = {
-    __html:
-      '<span class="paper-text">' +
-      setInputReadonly(value, readOnly) +
-      '</span>',
-  };
+  const textHtml = useMemo(
+    () => ({
+      __html: `<span class="paper-text">${setInputReadonly(value, readOnly)}</span>`,
+    }),
+    [readOnly, value],
+  );
   return (
     <Box
       className="paper__page"

@@ -286,7 +286,7 @@
 				src.name += "Little Soups flavor"
 				src.initial_reagents["juice_tomato"] = 30
 			if (10)
-				src.name += "Artifical Autumn flavor"
+				src.name += "Artificial Autumn flavor"
 				src.initial_reagents["juice_pumpkin"] = 30
 
 		..()

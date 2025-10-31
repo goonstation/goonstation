@@ -86,7 +86,24 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
 		item_path = /obj/item/clothing/under/gimmick/dinerdress_pink
 
 /datum/clothingbooth_item/w_uniform/dirty_vest
-	item_path = /obj/item/clothing/under/misc/dirty_vest
+	name = "Red Pants"
+	swatch_background_color = "#8d1422"
+	item_path = /obj/item/clothing/under/misc/dirty_vest/
+
+	blackpants
+		name = "Black Jeans"
+		swatch_background_color = "#323232"
+		item_path = /obj/item/clothing/under/misc/dirty_vest/blackpants
+
+	bluepants
+		name = "Blue Jeans"
+		swatch_background_color = "#0f5b70"
+		item_path = /obj/item/clothing/under/misc/dirty_vest/bluepants
+
+	brownpants
+		name = "Brown Pants"
+		swatch_background_color = "#724f29"
+		item_path = /obj/item/clothing/under/misc/dirty_vest/brownpants
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat)
 /datum/clothingbooth_item/w_uniform/dress_shirt_wcoat

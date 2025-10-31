@@ -10,7 +10,7 @@ import { memo } from 'react';
 import { Box } from 'tgui-core/components';
 
 interface GeneIconProps {
-  name;
+  name: string;
   size;
   style?;
 }
@@ -18,7 +18,7 @@ interface GeneIconProps {
 export const GeneIcon = memo((props: GeneIconProps) => {
   const { name, size, style = {}, ...rest } = props;
   if (size) {
-    style['fontSize'] = size * 100 + '%';
+    style['fontSize'] = size * 120 + '%';
   }
   return (
     <Box

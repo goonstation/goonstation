@@ -2970,6 +2970,7 @@
 		if (!isdead(L))
 			for (var/datum/ailment_data/ailment as anything in L.ailments)
 				ailment.stage_act(mult)
+		L.reagents?.addiction_cache = 0
 
 		for (var/mob/living/other_mob in hearers(4, L))
 			if (prob(40) && other_mob != L)
@@ -3136,6 +3137,10 @@
 		var/mob/living/L = src.owner
 		if (!isdead(L) && src.outputs_removal_msg)
 			boutput(L, SPAN_NOTICE(src.removal_msg))
+		if(id != "art_curser_displaced_soul")
+			src.linked_curser.active_cursees -= L
+		if(!length(src.linked_curser.active_cursees))
+			src.linked_curser.curse_cleanup()
 		src.linked_curser = null
 		..()
 
@@ -3179,7 +3184,6 @@
 				H.bioHolder?.AddEffect("husk")
 				H.bioHolder?.mobAppearance.flavor_text = "A desiccated husk."
 				H.set_clothing_icon_dirty()
-				src.linked_curser?.lift_curse_specific(FALSE, H)
 				src.remove_self()
 
 		onRemove()
@@ -3229,7 +3233,6 @@
 				H.death(FALSE)
 				H.decomp_stage = DECOMP_STAGE_SKELETONIZED
 				H.set_clothing_icon_dirty()
-				src.linked_curser?.lift_curse_specific(FALSE, H)
 				src.remove_self()
 
 		onRemove()
@@ -3262,7 +3265,9 @@
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			if (src.creatures_to_kill <= 0 || QDELETED(H) || isdead(H))
-				src.linked_curser.lift_curse_specific(!QDELETED(H) && !isdead(H), H)
+				if(!(QDELETED(H) || isdead(H)))
+					playsound(H, 'sound/effects/lit.ogg', 100, TRUE)
+				src.remove_self()
 				return
 			src.time_passed += timePassed
 			if (src.time_passed < 10 SECONDS)
@@ -3305,7 +3310,6 @@
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			if (QDELETED(H) || isdead(H))
-				src.linked_curser?.lift_curse_specific(FALSE, H)
 				src.remove_self()
 
 		onRemove()
@@ -3334,7 +3338,7 @@
 		onUpdate()
 			..()
 			if (QDELETED(src.original_body) || isdead(src.original_body))
-				src.linked_curser.lift_curse_specific(FALSE, src.original_body)
+				src.remove_self()
 
 		onRemove()
 			src.soul.delStatus("art_curser_displaced_soul")
@@ -3582,6 +3586,12 @@
 	icon_state = "empulsar"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
+
+	onAdd()
+		..()
+		if(istype(src.owner, /obj/vehicle))
+			var/obj/vehicle/V = src.owner
+			V.stop()
 
 /datum/statusEffect/pod_corrosion
 	id = "pod_corrosion"
@@ -3889,3 +3899,10 @@
 		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/therapy_zone
+	id = "therapy_zone"
+	name = "Therapeutic Atmosphere"
+	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
+	icon_state = "therapy_zone"
+	effect_quality = STATUS_QUALITY_POSITIVE

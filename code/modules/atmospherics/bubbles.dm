@@ -83,10 +83,11 @@
 			//https://pixabay.com/sound-effects/bubble-pop-6395/
 			//TODO: put this in the PR
 			playsound(get_turf(src), pick('sound/effects/bubble_pop1.ogg', 'sound/effects/bubble_pop2.ogg'), 50, 1)
-		var/obj/effects/bubbles/bubbles = new(get_turf(src))
-		bubbles.Scale(src.scale, src.scale)
-		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#d27ce4")
-		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas, "#8cd359")
+		if (length(viewers(world.view, src)))
+			var/obj/effects/bubbles/bubbles = new(get_turf(src))
+			bubbles.Scale(src.scale, src.scale)
+			GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#d27ce4")
+			GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas, "#8cd359")
 		qdel(src)
 
 	attackby(obj/item/I, mob/user)
@@ -173,18 +174,19 @@
 
 	proc/process()
 		if (prob(60))
-			//welcome to the _SILLY_ATMOS_MACRO zone
-			var/total_gases = 0
+			return
+		//welcome to the _SILLY_ATMOS_MACRO zone
+		var/total_gases = 0
 #define _COUNT_GASES(GAS, ...) total_gases += src.GAS;
-			APPLY_TO_GASES(_COUNT_GASES)
+		APPLY_TO_GASES(_COUNT_GASES)
 #undef _COUNT_GASES
-			var/total_amount = src.amount + rand(-src.variance, src.variance)
-			var/datum/gas_mixture/gas_mixture = new()
-			gas_mixture.temperature = src.temperature
+		var/total_amount = src.amount + rand(-src.variance, src.variance)
+		var/datum/gas_mixture/gas_mixture = new()
+		gas_mixture.temperature = src.temperature
 #define _MAKE_GASES(GAS, ...) if (src.GAS) {gas_mixture.GAS = total_amount/total_gases};
-			APPLY_TO_GASES(_MAKE_GASES)
+		APPLY_TO_GASES(_MAKE_GASES)
 #undef _MAKE_GASES
-			new /obj/bubble(src.loc, gas_mixture)
+		new /obj/bubble(src.loc, gas_mixture)
 
 /obj/bubble_vent/plasma
 	toxins = TRUE

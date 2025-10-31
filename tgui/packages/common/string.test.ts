@@ -1,7 +1,9 @@
+import { describe, it } from 'vitest';
+
 import { createSearch, decodeHtmlEntities, toTitleCase } from './string';
 
 describe('createSearch', () => {
-  it('matches search terms correctly', () => {
+  it('matches search terms correctly', ({ expect }) => {
     const search = createSearch('test', (obj: { value: string }) => obj.value);
 
     const obj1 = { value: 'This is a test string.' };
@@ -15,7 +17,7 @@ describe('createSearch', () => {
 });
 
 describe('toTitleCase', () => {
-  it('converts strings to title case correctly', () => {
+  it('converts strings to title case correctly', ({ expect }) => {
     expect(toTitleCase('hello world')).toBe('Hello World');
     expect(toTitleCase('HELLO WORLD')).toBe('Hello World');
     expect(toTitleCase('HeLLo wORLd')).toBe('Hello World');
@@ -25,7 +27,9 @@ describe('toTitleCase', () => {
 });
 
 describe('decodeHtmlEntities', () => {
-  it('decodes HTML entities and removes unnecessary HTML tags correctly', () => {
+  it('decodes HTML entities and removes unnecessary HTML tags correctly', ({
+    expect,
+  }) => {
     expect(decodeHtmlEntities('<br>')).toBe('\n');
     expect(decodeHtmlEntities('<p>Hello World</p>')).toBe('Hello World');
     expect(decodeHtmlEntities('&amp;')).toBe('&');

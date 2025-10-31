@@ -267,7 +267,7 @@ const EventCategory = (props: EventTypeData) => {
                   width="50px"
                   format={(value) => toFixed(value, numberOfDecimalDigits(0.1))}
                   unit="Min"
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('set_category_value', {
                       name: 'nextEvent',
                       category: props.name,
@@ -287,7 +287,7 @@ const EventCategory = (props: EventTypeData) => {
                   width="50px"
                   format={(value) => toFixed(value, numberOfDecimalDigits(0.1))}
                   unit="Min"
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('set_category_value', {
                       name: 'startTime',
                       category: props.name,
@@ -307,7 +307,7 @@ const EventCategory = (props: EventTypeData) => {
                   width="50px"
                   format={(value) => toFixed(value, numberOfDecimalDigits(0.1))}
                   unit="Min"
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('set_category_value', {
                       name: 'delayLow',
                       category: props.name,
@@ -325,7 +325,7 @@ const EventCategory = (props: EventTypeData) => {
                   width="50px"
                   format={(value) => toFixed(value, numberOfDecimalDigits(0.1))}
                   unit="Min"
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('set_category_value', {
                       name: 'delayHigh',
                       category: props.name,
@@ -437,7 +437,7 @@ export const EventController = () => {
                     stepPixelSize={4}
                     step={1}
                     width="30px"
-                    onDrag={(value) =>
+                    onChange={(value) =>
                       act('set_value', {
                         name: 'minPopulation',
                         new_data: value,
@@ -454,7 +454,7 @@ export const EventController = () => {
                     stepPixelSize={4}
                     step={0.01}
                     width="40px"
-                    onDrag={(value) =>
+                    onChange={(value) =>
                       act('set_value', {
                         name: 'aliveAntagonistThreshold',
                         new_data: value,
@@ -471,7 +471,7 @@ export const EventController = () => {
                     stepPixelSize={4}
                     step={0.01}
                     width="40px"
-                    onDrag={(value) =>
+                    onChange={(value) =>
                       act('set_value', {
                         name: 'deadPlayersThreshold',
                         new_data: value,

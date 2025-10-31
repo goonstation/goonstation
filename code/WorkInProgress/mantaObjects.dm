@@ -1346,7 +1346,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 /area/supply/sell_point/manta
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		addManta(Obj)
@@ -1449,7 +1449,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /area/wrecknsspolaris/outside
 	name = "Ouside the Wreck"
 	icon_state = "blue"
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 
 /area/wrecknsspolaris/outside/teleport
 	name = "Outer Wreck (with teleport)"

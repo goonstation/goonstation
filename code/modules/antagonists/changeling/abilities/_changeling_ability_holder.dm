@@ -22,7 +22,7 @@
 
 	onAttach(mob/to_whom)
 		. = ..()
-		RegisterSignal(to_whom, COMSIG_MOB_DEATH, PROC_REF(on_death))
+		RegisterSignal(to_whom, COMSIG_MOB_DEATH, PROC_REF(on_death), TRUE)
 		to_whom.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
 		to_whom.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
 

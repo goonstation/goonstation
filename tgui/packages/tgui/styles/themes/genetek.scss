@@ -1,11 +1,45 @@
 /**
- * Copyright (c) 2021 Ben Lubar
+ * Copyright (c) 2025 Ben Lubar & ZeWaka
  * SPDX-License-Identifier: MIT
  */
 
-@use 'partial/genetek';
+.theme-genetek:root {
+  // Vars
+  --genetek: #1b676b;
 
-.theme-genetek {
-  @include genetek.genetek-theme;
-  @include genetek.genetek-theme-buttons;
+  // Base
+  --color-base: color-mix(in srgb, var(--genetek), black 55%);
+  --color-primary: color-mix(in srgb, var(--genetek), white 25%);
+  --color-label: #bfcc90;
+
+  // Layouts
+  --titlebar-background: color-mix(in srgb, var(--genetek), black 25%);
+
+  // Components
+  --button-background-default: var(--genetek);
+  --button-color-transparent: rgba(234, 253, 230, 0.75);
+
+  --progress-bar-fill: var(--genetek);
+  --progress-bar-background: rgba(0, 0, 0, 0.5);
+
+  .Layout__content {
+    background-position-x: -60%;
+    background-image: url('../assets/bg-genetek.svg') !important;
+  }
+
+  .genetek-disabled {
+    --genetek: #36645d;
+    --button-color: #999;
+    --button-background-default: #999;
+    --button-background-selected: #999;
+
+    .Button--color--teal {
+      background-color: #999 !important;
+    }
+  }
+
+  // Evenly spaced list items
+  .LabeledList__cell {
+    height: 2em;
+  }
 }

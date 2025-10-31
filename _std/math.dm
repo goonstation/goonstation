@@ -38,6 +38,13 @@ proc/text2num_safe(x)
 		return
 	return null
 
+/// Similar to `text2num_safe`, but returns the original string on failure.
+/proc/text2num_if_num(x)
+	. = text2num(x)
+	if (isnum_safe(.) && ("[.]" == x))
+		return
+	return x
+
 /// rand() but for floats, returns a random floating point number between L and H
 #define randfloat(L, H) ((L) + rand() * ((H) - (L)))
 

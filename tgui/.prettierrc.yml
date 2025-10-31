@@ -1,1 +1,2 @@
 singleQuote: true
+endOfLine: 'lf' # default, but explicit

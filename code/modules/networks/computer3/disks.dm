@@ -26,6 +26,9 @@
 	var/file_used = 0
 	var/title = "Data Disk"
 
+	HELP_MESSAGE_OVERRIDE({"Use in-hand to toggle the write protect tab.
+		Zap with a <b>multitool</b> to wipe the disk."})
+
 	New()
 		..()
 		src.root = new /datum/computer/folder
@@ -63,7 +66,7 @@
 			src.root.holder = src
 			src.root.name = "root"
 		else
-			user.visible_message(SPAN_ALERT("<b>[user] is zapped as the multitool backfires! The [src.name] seems unphased.</b>"))
+			user.visible_message(SPAN_ALERT("<b>[user] is zapped as the multitool sparks off [src]'s write-protect tab! The [src.name] seems unphased.</b>"))
 			elecflash(user,0, power=2, exclude_center = 0)
 
 	emp_act()
@@ -77,7 +80,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W))
-			user.visible_message(SPAN_ALERT("<b>[user] begins to wipe [src.name]!</b>"))
+			user.visible_message(SPAN_ALERT("<b>[user] begins to wipe [src]!</b>"))
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null, null)
 
 /obj/item/disk/data/floppy
@@ -462,3 +465,11 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 		newfolder.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
 		newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
 		newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
+
+/obj/item/disk/data/floppy/office
+	var/label = ""
+
+	New()
+		. = ..()
+		src.name_suffix("([src.label])")
+		src.UpdateName()

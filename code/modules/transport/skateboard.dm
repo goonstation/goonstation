@@ -259,6 +259,8 @@
 
 /obj/vehicle/skateboard/relaymove(mob/user as mob, dir)
 	if(input_lockout) return
+	if (src.hasStatus("teleporting"))
+		return
 
 	if(rider)
 		if(istype(src.loc, /turf/space))

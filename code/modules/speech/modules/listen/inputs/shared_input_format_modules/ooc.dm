@@ -40,10 +40,10 @@
 
 	// Permit donors and contest winners to use :shelterfrog: and :shelterbee: in OOC.
 	if (mob_speaker.client.player?.cloudSaves.getData("donor"))
-		message.content = replacetext(message.content, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
+		APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(replacetext_wrapper), ":shelterfrog:", MAKE_CONTENT_IMMUTABLE("<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")))
 
 	if (mob_speaker.client.has_contestwinner_medal)
-		message.content = replacetext(message.content, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
+		APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(replacetext_wrapper), ":shelterbee:", MAKE_CONTENT_IMMUTABLE("<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")))
 
 	var/rendered_ooc_icon = ""
 	if (ooc_icon)

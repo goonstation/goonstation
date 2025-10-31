@@ -4,4 +4,4 @@
 /datum/speech_module/modifier/mutantrace/zombie/process(datum/say_message/message)
 	. = message
 
-	message.content = pick("Urgh...", "Brains...", "Hungry...", "Kill...")
+	message.content = MAKE_CONTENT_MUTABLE(pick("Urgh...", "Brains...", "Hungry...", "Kill..."))

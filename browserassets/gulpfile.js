@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
+import { compose } from 'node:stream';
 import { fileURLToPath } from 'url';
 import { series, parallel, src, dest } from 'gulp';
 import { deleteAsync } from 'del';
 import replace from 'gulp-replace';
 import htmlmin from 'gulp-htmlmin';
 import postcss from 'gulp-postcss';
-import babel from 'gulp-babel';
 import autoprefixer from 'autoprefixer';
 import postcssClean from 'postcss-clean';
 import postcssSimpleVars from 'postcss-simple-vars';
@@ -14,9 +14,15 @@ import postcssNesting from 'postcss-nesting';
 import rename from 'gulp-rename';
 import { isText } from 'istextorbinary';
 import vinyl from 'vinyl';
+import dotenv from 'dotenv';
 import performHash from './gulp-hash-filename/performHash.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV || 'development'}`,
+  quiet: true,
+});
 
 // Import gulp-uglify-es dynamically in an async function to avoid top-level await
 let uglify;
@@ -25,7 +31,8 @@ let uglify;
 })();
 
 const CDN_VERSION = process.env.CDN_VERSION || 1;
-const SERVER_TARGET = process.env.SERVER_TARGET || 'main1';
+const CDN_BASE_URL =
+  process.env.CDN_BASE_URL || 'https://cdn-main1.goonhub.com';
 
 // Build Directories
 const dirs = {
@@ -39,7 +46,8 @@ const sources = {
   styles: `${dirs.src}/css/**/*.css`,
   html: `${dirs.src}/html/**/*.(html|htm)`,
   scripts: `${dirs.src}/js/**/*.js`,
-  copyable: `${dirs.src}/(css/fonts|images|misc|tgui|vendor)/**/*.*`,
+  // Files that require no special processing
+  copyable: `${dirs.src}/(html/tooltips|css/fonts|images|misc|tgui|vendor)/**/*.*`,
   // Files that tgui includes via resource() calls
   tguiManifest: `${dirs.src}/images/**/*.*`,
 };
@@ -47,11 +55,11 @@ const sources = {
 // A list of glob patterns we ignore from all sources
 const ignoreSources = ['**/*.md'];
 
-// Build CDN subdomain from server type argument
-const cdn = `https://cdn-${SERVER_TARGET}.goonhub.com`;
-
 // Replace {{resource(path/to/file)}} in files with proper CDN URLs
 const resourceMacroRegex = /\{\{resource\([\"']?(.*?)[\"']?\)\}\}/gi;
+
+// Replace {{CDN_VERSION}} in files with the current CDN version
+const cdnVersionRegex = /{{.?CDN_VERSION.?}}/gi;
 
 const hashFormat = `{name}.{hash:8}{ext}`;
 
@@ -64,13 +72,18 @@ function cleanFilePath(filePath) {
 }
 
 function macroReplacer() {
-  return replace(resourceMacroRegex, function handleReplace(m, filePath) {
-    if (buildManifest.has(filePath)) {
-      const manifestEntry = buildManifest.get(filePath);
-      filePath = manifestEntry.path;
+  const resources = replace(
+    resourceMacroRegex,
+    function handleReplace(m, filePath) {
+      if (buildManifest.has(filePath)) {
+        const manifestEntry = buildManifest.get(filePath);
+        filePath = manifestEntry.path;
+      }
+      return `${CDN_BASE_URL}/${filePath}?v=${CDN_VERSION}`;
     }
-    return `${cdn}/${filePath}?v=${CDN_VERSION}`;
-  });
+  );
+  const cdnVersions = replace(cdnVersionRegex, CDN_VERSION);
+  return compose(resources, cdnVersions);
 }
 
 function hashRenamer(filePath, file) {
@@ -220,24 +233,11 @@ function javascript(cb) {
   return src(sources.scripts, { nocase: true, ignore: ignoreSources })
     .pipe(macroReplacer())
     .pipe(
-      babel({
-        presets: ['@babel/env'],
-        // Disables printing "use strict;" at the top of scripts
-        // As not all of our terrible code is compliant with strict mode
-        sourceType: 'script',
-      })
-    )
-    .pipe(
       uglify({
-        ecma: 5,
         mangle: {
           reserved: ['$', 'exports', 'require'],
         },
         compress: true,
-        ie8: true,
-        // output: {
-        // 	comments: 'all'
-        // }
       })
     )
     .pipe(rename(hashRenamer))
@@ -270,7 +270,11 @@ export const build = series(
   manifest,
   parallel(html, css, javascript),
   copy
-  // dev
 );
 
 build.description = 'Build CDN Assets';
+
+export const buildDev = series(build, dev);
+
+buildDev.displayName = 'build:dev';
+buildDev.description = 'Build CDN Assets for Development';
