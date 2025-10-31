@@ -131,11 +131,20 @@
 
 /datum/ambient_lightning_viewer/proc/color_shift_lights(datum/daynight_controller/DC, list/colors, list/durations)
 	if(istype(DC) && length(colors) && length(durations))
-		var/A = DC.light
 		var/iterations = min(length(colors), length(durations))
-		for(var/i in 1 to iterations)
-			if(i==1)
-				animate(A, color=colors[i], time=durations[i])
-			else
-				animate(color=colors[i], time=durations[i])
+
+		if(istype(DC.light))
+			for(var/i in 1 to iterations)
+				if(i==1)
+					animate(DC.light, color=colors[i], time=durations[i])
+				else
+					animate(color=colors[i], time=durations[i])
+
+		if(istype(DC.ambient_screen))
+			for(var/i in 1 to iterations)
+				if(i==1)
+					animate(DC.ambient_screen, color=colors[i], time=durations[i])
+				else
+					animate(color=colors[i], time=durations[i])
+
 

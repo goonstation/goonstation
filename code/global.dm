@@ -431,6 +431,9 @@ var/global
 	list/datum/chemical_reaction/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
 	list/list/datum/chemical_reaction/chem_reactions_by_result = list() // Chemical reactions indexed by result ID
 
+	/// A single reaction is only in this list once, hopefully keyed by its least likely reagent, keeping the list of possible reactions small
+	list/limited_chem_reactions = list()
+
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
 
@@ -449,8 +452,6 @@ var/global
 	list/obj/machinery/camera/dirty_cameras = list() //Cameras that should be rebuilt
 
 	list/list/obj/machinery/camera/camnets = list() //Associative list keyed by network name, contains a list of each camera in a network.
-	list/datum/particleSystem/mechanic/camera_path_list = list() //List of particlesystems that the connection display proc creates. I dunno where else to put it. :(
-	camera_network_reciprocity = 1 //If camera connections reciprocate one another or if the path is calculated separately for each camera
 	list/datum/ai_camera_tracker/tracking_list = list()
 
 	centralConn = 1 //Are we able to connect to the central server?

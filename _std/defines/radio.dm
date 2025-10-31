@@ -124,6 +124,28 @@ proc/default_frequency_color(freq)
 		if(R_FREQ_INTERCOM_BRIDGE)
 			return RADIOC_COMMAND
 
+/proc/default_frequency_class(freq)
+	var/alist/frequencies_to_classes = alist(
+		//Normal station frequencies
+		R_FREQ_DEFAULT = RADIOCL_STANDARD,
+		R_FREQ_COMMAND = RADIOCL_COMMAND,
+		R_FREQ_SECURITY = RADIOCL_SECURITY,
+		R_FREQ_DETECTIVE = RADIOCL_DETECTIVE,
+		R_FREQ_ENGINEERING = RADIOCL_ENGINEERING,
+		R_FREQ_RESEARCH = RADIOCL_RESEARCH,
+		R_FREQ_MEDICAL = RADIOCL_MEDICAL,
+		R_FREQ_CIVILIAN = RADIOCL_CIVILIAN,
+		R_FREQ_NANOTRASEN = RADIOCL_NANOTRASEN,
+		R_FREQ_INTERCOM_AI = RADIOCL_INTERCOM_AI,
+		//Antagonist frequencies
+		R_FREQ_SYNDICATE = RADIOCL_SYNDICATE,
+		R_FREQ_SALVAGER = RADIOCL_SALVAGER,
+		R_FREQ_PIRATE = RADIOCL_SYNDICATE,
+		R_FREQ_WIZARD = RADIOCL_CIVILIAN,
+		R_FREQ_GANG = RADIOCL_SYNDICATE,
+	)
+	return frequencies_to_classes[freq] || RADIOCL_OTHER
+
 /// A list of radio frequencies and their associated channel names.
 var/list/headset_channel_lookup
 

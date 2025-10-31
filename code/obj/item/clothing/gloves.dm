@@ -318,6 +318,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			user.u_equip(src)
 		var/obj/item/clothing/gloves/fingerless/cut_gloves = new()
 		cut_gloves.fibers = src.fibers
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, cut_gloves, user)
 		qdel(src)
 		user.put_in_hand_or_drop(cut_gloves)
 	else . = ..()

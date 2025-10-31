@@ -20,7 +20,6 @@ var/datum/station_zlevel_repair/station_repair = new
 /datum/station_zlevel_repair
 	var/datum/map_generator/station_generator
 	var/image/ambient_light
-	var/obj/ambient/ambient_obj
 	var/image/weather_img
 	var/obj/effects/weather_effect
 	var/overlay_delay
@@ -49,8 +48,6 @@ var/datum/station_zlevel_repair/station_repair = new
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
 					T.AddOverlays(src.ambient_light, "ambient")
-				if(src.ambient_obj)
-					T.vis_contents |= src.ambient_obj
 				if(src.weather_img)
 					if(islist(src.weather_img))
 						T.AddOverlays(pick(src.weather_img), "weather")
@@ -299,10 +296,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 				var/datum/daynight_controller/terrainify/terrainify_cycle = daynight_controllers[AMBIENT_LIGHT_SRC_TERRAINIFY]
 				if(istype(terrainify_cycle))
 					terrainify_cycle.initialize(src.ambient_color, "#000", src.day_night_cycle)
-					station_repair.ambient_obj = terrainify_cycle.light
-				else
-					station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-					station_repair.ambient_obj.color = src.ambient_color
 			else
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = src.ambient_color
@@ -415,6 +408,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	proc/place_prefabs(prefabs_to_place, flags, params)
 		var/failsafe = 800
+		var/list/turf/turfs_to_ignore = station_repair.get_turfs_to_fix()
 		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
 			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
 			if (P)
@@ -429,6 +423,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 						count++
 						continue
 					if(istype(target.loc, /area/station))
+						count++
+						continue
+
+					//Make sure we don't overlap with important stuff
+					if(length(turfs_to_ignore & block(locate(target.x, target.y, Z_LEVEL_STATION), locate(target.x + P.prefabSizeX-1, target.y + P.prefabSizeY-1, Z_LEVEL_STATION))) == 0)
 						count++
 						continue
 
@@ -456,8 +455,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/turf/T as anything in turfs)
 			if(station_repair.ambient_light)
 				T.AddOverlays(station_repair.ambient_light, "ambient")
-			if(station_repair.ambient_obj)
-				T.vis_contents |= station_repair.ambient_obj
 			if(station_repair.weather_img)
 				if(islist(station_repair.weather_img))
 					T.AddOverlays(pick(station_repair.weather_img), "weather")
@@ -1025,9 +1022,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 							S.AddOverlays(pick(station_repair.weather_img), "weather")
 						else
 							new station_repair.weather_effect(S)
-						if(params["Ambient Light Obj"])
-							S.vis_contents |= station_repair.ambient_obj
-						else
+						if(!params["Ambient Light Obj"])
 							S.AddOverlays(station_repair.ambient_light, "ambient")
 
 			log_terrainify(user, "turned space into a swamp.")
@@ -1064,9 +1059,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			for (var/turf/S in space)
 				S.UpdateOverlays(station_repair.weather_img, "weather")
 
-				if(params["Ambient Light Obj"])
-					S.vis_contents |= station_repair.ambient_obj
-				else
+				if(!params["Ambient Light Obj"])
 					ambient_value = lerp(20,80,S.x/300)
 					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
 					S.AddOverlays(station_repair.ambient_light, "ambient")
@@ -1086,9 +1079,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					T.allows_vehicles = station_repair.allows_vehicles
 				T.UpdateOverlays(station_repair.weather_img, "weather")
 
-				if(params["Ambient Light Obj"])
-					T.vis_contents |= station_repair.ambient_obj
-				else
+				if(!params["Ambient Light Obj"])
 					ambient_value = lerp(20,80,T.x/300)
 					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
 					T.AddOverlays(station_repair.ambient_light, "ambient")
@@ -1468,6 +1459,13 @@ client/proc/unterrainify()
 		var/list/turf/preconvert_turfs = station_repair.preconvert_turfs
 		station_repair = new
 		station_repair.preconvert_turfs = preconvert_turfs
+
+		var/datum/daynight_controller/terrainify/terrainify_cycle = daynight_controllers[AMBIENT_LIGHT_SRC_TERRAINIFY]
+		if(istype(terrainify_cycle))
+			terrainify_cycle.color1 = "#000"
+			terrainify_cycle.color2 = "#000"
+			terrainify_cycle.update_color( "#000" )
+			terrainify_cycle.active = FALSE
 
 		RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 		global.is_map_on_ground_terrain = FALSE

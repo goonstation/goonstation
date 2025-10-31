@@ -112,6 +112,15 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Afro: Long Stripes"
 				id = "afroSH"
 				random_allowed = FALSE
+			sidepart_afro
+				name = "Afro: Sidepart"
+				id = "sidepart_afro"
+			sidepart_afro_fade
+				name = "Afro: Sidepart Faded"
+				id = "sidepart_afro_fade"
+			sidepart_afro_split
+				name = "Afro: Sidepart Split"
+				id = "sidepart_afro_split"
 			balding
 				name = "Balding"
 				id = "balding"
@@ -227,6 +236,16 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			mohawkS
 				name = "Mohawk: Stripes"
 				id = "mohawkS"
+			puff_mohawk
+				name = "Puff Mohawk"
+				id = "puff_mohawk"
+				gender = MASCULINE | FEMININE
+			puff_mohawk_alternating
+				name = "Puff Mohawk: Alternating"
+				id = "puff_mohawk_alternating"
+			puff_mohawk_fade
+				name = "Puff Mohawk: Faded"
+				id = "puff_mohawk_fade"
 			mysterious
 				name = "Mysterious"
 				id = "mysterious"
@@ -375,6 +394,28 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Messy Waves: Split"
 				id = "messy_waves_half"
 				random_allowed = FALSE
+			messy_wicks
+				name = "Messy Wicks"
+				id = "messy_wicks"
+				gender = MASCULINE | FEMININE
+			messy_wicks_fade
+				name = "Messy Wicks: Faded"
+				id = "messy_wicks_fade"
+			messy_wicks_split
+				name = "Messy Wicks: Split"
+				id = "messy_wicks_split"
+				random_allowed = FALSE
+			neat_wicks
+				name = "Neat Wicks"
+				id = "neat_wicks"
+				gender = MASCULINE | FEMININE
+			neat_wicks_fade
+				name = "Neat Wicks: Faded"
+				id = "neat_wicks_fade"
+			neat_wicks_split
+				name = "Neat Wicks: Split"
+				id = "neat_wicks_split"
+				random_allowed = FALSE
 			blunt_bob
 				name = "Blunt Bob"
 				id = "blunt_bob"
@@ -450,16 +491,35 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "short_dreads"
 				gender = MASCULINE | FEMININE
 
-			Shaggy
+			shaggy
 				name = "Shaggy"
 				id = "shaggy"
+				gender = MASCULINE | FEMININE
+
+			blunt_pomp
+				name = "Blunt Pompadour"
+				id = "blunt_pomp"
+				gender = MASCULINE | FEMININE
+
+			big_pomp
+				name = "Big Pompadour"
+				id = "big_pomp"
+				gender = MASCULINE
+
+			duck_ass
+				name = "Ducktail"
+				id = "duck_ass"
+				gender = MASCULINE
+
+			pageboy
+				name = "Pageboy"
+				id = "pageboy"
 				gender = MASCULINE | FEMININE
 
 			cockatielbang
 				name = "Bangs: Cockatiel"
 				id = "cockatielbang"
 				random_allowed = FALSE
-
 
 			combedfringebangs
 				name = "Bangs: Combed Fringe"
@@ -501,11 +561,11 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "lopsidedbang"
 				random_allowed = FALSE
 
-
 			curtainbangs
 				name = "Bangs: Curtain"
 				id = "curtainbangs"
 				random_allowed = FALSE
+
 		long
 			chub2_s
 				name = "Bang: Left"
@@ -581,6 +641,17 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Dreadlocks: Alternating"
 				id = "dreadsA"
 				random_allowed = FALSE
+			long_dreads
+				name = "Long Dreadlocks"
+				id = "long_dreads"
+				gender = FEMININE | MASCULINE
+			long_dreads_fade
+				name = "Long Dreadlocks: Faded"
+				id = "long_dreads_fade"
+			long_dreads_split
+				name = "Long Dreadlocks: Split"
+				id = "long_dreads_split"
+				random_allowed = FALSE
 			fabio
 				name = "Fabio"
 				id = "fabio"
@@ -654,6 +725,33 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Loose Long Braid Over Shoulder"
 				id = "looselongbraidshoulder"
 				gender = FEMININE
+			box_braids
+				name = "Box Braids"
+				id = "box_braids"
+				gender = FEMININE
+			box_braids_beads
+				name = "Box Braids: Beads"
+				id = "box_braids_beads"
+			box_braids_fade
+				name = "Box Braids: Faded"
+				id = "box_braids_fade"
+			box_braids_split
+				name = "Box Braids: Split"
+				id = "box_braids_split"
+				random_allowed = FALSE
+			bubble_braids
+				name = "Bubble Braids"
+				id = "bubble_braids"
+			bubble_braids_beads
+				name = "Bubble Braids: Beads"
+				id = "bubble_braids_beads"
+			bubble_braids_fade
+				name = "Bubble Braids: Faded"
+				id = "bubble_braids_fade"
+			bubble_braids_split
+				name = "Bubble Braids: Split"
+				id = "bubble_braids_split"
+				random_allowed = FALSE
 			longsidepart_s
 				name = "Long Flip"
 				id = "longsidepart_s"
@@ -778,13 +876,12 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "royal_curls"
 				gender = FEMININE
 
-			med_Curly
+			med_curly
 				name = "Med Curls"
 				id = "med_Curly"
 				gender = MASCULINE | FEMININE
 
 			poofy_wave
-
 				name = "Poofy Wave"
 				id = "poofy_wave"
 				gender = FEMININE
@@ -795,28 +892,35 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				gender = MASCULINE | FEMININE
 
 			wild_waves
-
 				name = "Wild Wave"
 				id = "wild_waves"
 				gender = MASCULINE | FEMININE
 
 			curly_twists
-
 				name = "Curly Twists"
 				id = "curly_twists"
 				gender = FEMININE
 
 			straightened_long
-
 				name = "Straightened shoulder-length"
 				id = "straightened_long"
 				gender = MASCULINE | FEMININE
 
 			symm_bob
-
 				name = "Symmetrical Bob"
 				id = "symm_bob"
 				gender = MASCULINE | FEMININE
+
+			ringlets
+				name = "Ringlets"
+				id = "ringlet"
+				gender = FEMININE
+
+			ringlets_short //yeah, I know, it's so it shows up next to the normal ringlet hairstyle
+				name = "Short Ringlets"
+				id = "ringlet_short"
+				gender = FEMININE
+
 		hairup
 			bun
 				name = "Bun"
@@ -943,6 +1047,41 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Wavy Ponytail: Split"
 				id = "wavy_tail_half"
 				random_allowed = FALSE
+			puffball
+				name = "Puffball"
+				id = "puffball"
+			puffball_fade
+				name = "Puffball: Faded"
+				id = "puffball_fade"
+			puffball_split
+				name = "Puffball: Split"
+				id = "puffball_split"
+				random_allowed = FALSE
+
+			crown_braid
+				name = "Crown Braid"
+				id = "crown_braid"
+				gender = FEMININE
+
+			high_bun
+				name = "High Bun"
+				id = "high_bun"
+				gender = FEMININE
+
+			massive_braids
+				name = "Massive Braids"
+				id = "mega_braids"
+				gender = FEMININE
+
+			chignon
+				name = "Chignon"
+				id = "chignon"
+				gender = FEMININE
+
+			french_twist
+				name = "French Twist"
+				id = "french_twist"
+				gender = FEMININE
 
 		gimmick
 			afroHA
@@ -957,6 +1096,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			ewave_s
 				name = "Elegant Wave"
 				id = "ewave_s"
+			omegapomp
+				name = "Colossal Pompadour"
+				id = "omegapomp"
 			flames
 				name = "Flame Hair"
 				id = "flames"
@@ -996,6 +1138,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			shitty_beard_stains
 				name = "Shitty Beard Stains"
 				id = "shitty_beard_stains"
+
 	moustache
 		fu
 			name = "Biker"
@@ -1027,6 +1170,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		watson
 			name = "Watson"
 			id = "watson"
+
 	beard
 		abe
 			name = "Abe"
@@ -1079,10 +1223,12 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		trampstains
 			name = "Tramp: Beard Stains"
 			id = "trampstains"
+
 	sideburns
 		elvis
 			name = "Elvis"
 			id = "elvis"
+
 	eyebrows
 		eyebrows
 			name = "Eyebrows"
@@ -1090,6 +1236,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		thufir
 			name = "Huge Eyebrows"
 			id  = "thufir"
+
 	makeup
 		eyeshadow
 			name = "Eyeshadow"
@@ -1097,6 +1244,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		lipstick
 			name = "Lipstick"
 			id = "lipstick"
+
 	biological
 		hetcroL
 			name = "Heterochromia: Left"

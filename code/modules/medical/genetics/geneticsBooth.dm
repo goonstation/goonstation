@@ -62,6 +62,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	var/image/abilityoverlay = null
 	var/image/workingoverlay = null
 	var/eject_dir = 0
+	var/eject_strength = THROW_NORMAL
 	var/entry_time = 0
 
 	var/datum/geneboothproduct/selected_product = null
@@ -147,6 +148,11 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			src.show_admin_panel(user)
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(src.eject_strength != THROW_THROUGH_WALL)
+			boutput(user, SPAN_NOTICE("You run [E] over [src]'s eject circuitry."))
+			src.eject_strength = THROW_THROUGH_WALL
 
 	proc/reload_contexts()//IM ASORRY
 		for(var/datum/contextAction/C as anything in src.contexts)
@@ -266,7 +272,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			//occupant.set_loc(src.loc)
 
 			if (eject_dir && do_throwing)
-				occupant.throw_at(get_edge_target_turf(src, eject_dir), 2, 1)
+				occupant.throw_at(get_edge_target_turf(src, eject_dir), 2, 1, throw_type = src.eject_strength)
 			occupant = null
 
 			UpdateIcon()
