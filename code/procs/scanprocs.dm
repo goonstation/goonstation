@@ -617,7 +617,7 @@
 	return data
 
 // Yeah, another scan I made into a global proc (Convair880).
-/proc/scan_plant(var/atom/A as turf|obj, var/mob/user as mob, var/visible = 0)
+/proc/scan_plant(var/atom/A as turf|obj, var/mob/user as mob, var/visible = 0, var/show_gene_strain = TRUE)
 	if (!A || !user || !ismob(user))
 		return
 
@@ -668,7 +668,7 @@
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
 		return SPAN_ALERT("Cannot scan.")
 
-	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
+	HYPgeneticanalysis(user, A, P, DNA, show_gene_strain) // Just use the existing proc.
 	return
 
 /proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)

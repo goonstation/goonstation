@@ -69,11 +69,12 @@ ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 
 	//kudzumen can analyze seeds via ezamine when close.
 	get_desc(dist, mob/user)
-		if (dist >= 2)
+		if (dist >= 5)
 			return
-
 		if (iskudzuman(user))
-			. = scan_plant(src, user, visible = 0) // Replaced with global proc (Convair880).
+			. = scan_plant(src, user, FALSE) // Replaced with global proc (Convair880).
+		else
+			return HYPphytoscopic_scan(user, src, TRUE)
 
 	proc/docolor() //bleh, used when unpooling
 		src.plant_seed_color(src.seedcolor)
