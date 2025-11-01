@@ -21,7 +21,7 @@ TYPEINFO(/datum/component/deconstructing)
 		if (!isobj(target))
 			return
 		var/obj/O = target
-		if(!O.can_deconstruct(user))
+		if (!O.can_deconstruct(user))
 			return
 		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
