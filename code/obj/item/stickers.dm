@@ -131,6 +131,7 @@
 	dont_make_an_overlay = 1
 	vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	var/words = ""
+	var/font = null
 	var/max_message = 128
 
 	get_desc()
@@ -190,6 +191,13 @@
 				return
 			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
+			if (pen.uses_handwriting && user?.mind?.handwriting)
+				src.font = user.mind.handwriting // AH this is what I want, pen
+				// src.webfont = 1
+			else if (pen.font)
+				src.font = pen.font
+				// if (pen.webfont)
+				// 	src.webfont = 1
 			if (src.icon_state == initial(src.icon_state))
 				var/search_t = lowertext(t)
 				if (copytext(search_t, -1) == "?")
@@ -198,7 +206,7 @@
 					src.icon_state = "postit-excl"
 				else
 					src.icon_state = "postit-writing"
-			src.words += "[src.words ? "<br>" : ""][t]"
+			src.words += "[src.words ? "<br>" : ""]<span style='font-family:[src.font];'>[t]"
 			tooltip_rebuild = TRUE
 			pen.in_use = 0
 			src.add_fingerprint(user)
