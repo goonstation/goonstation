@@ -1,4 +1,14 @@
 
+(t)sat nov 01 25
+(u)Phoi
+(p)25066
+(e)💅🛠️|C-QoL, A-Engineering
+(+)Changes trench map to update hotspot color based on wether it is pinned or not
+(+)Adds pinned hotspot color to key
+(u)Ikea
+(p)25075
+(e)💅📦🔬|C-QoL, A-Game-Objects, A-Science
+(+)The handheld pipe dispenser is now manufacturable from the science manufacturer.
 (t)fri oct 31 25
 (u)Ikea
 (p)25074

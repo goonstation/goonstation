@@ -60,6 +60,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		user.client?.images += cloak_overlay
 		src.active = TRUE
 		src.UpdateIcon()
+		logTheThing(LOG_COMBAT, user, "Activates a cloaking device at [log_loc(user)]")
 		return TRUE
 
 	proc/deactivate(mob/user)
@@ -72,6 +73,7 @@ TYPEINFO(/obj/item/cloaking_device)
 			user.playsound_local(src, "sparks", 50, 0)
 		src.active = FALSE
 		src.UpdateIcon()
+		logTheThing(LOG_COMBAT, user, "Deactivates a cloaking device at [log_loc(user)]")
 
 	// Fix for the backpack exploit. Spawn call is necessary for some reason (Convair880).
 	dropped(var/mob/user)
