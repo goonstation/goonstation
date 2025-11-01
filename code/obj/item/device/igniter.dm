@@ -48,6 +48,7 @@ TYPEINFO(/obj/item/device/igniter)
 			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
 			var/obj/item/pipebomb/bomb/manipulated_pipebomb = assembly_target
 			manipulated_pipebomb.do_explode()
+			SEND_SIGNAL(parent_assembly, COMSIG_ITEM_CONVERTED, manipulated_pipebomb)
 			qdel(parent_assembly)
 			return
 		if(istype(assembly_target, /obj/item/reagent_containers/glass/beaker))
@@ -58,11 +59,13 @@ TYPEINFO(/obj/item/device/igniter)
 		if(istype(assembly_target, /obj/item/tank/plasma))
 			var/obj/item/tank/plasma/manipulated_plasma_tank = assembly_target
 			manipulated_plasma_tank.ignite()
+			SEND_SIGNAL(parent_assembly, COMSIG_ITEM_CONVERTED, manipulated_plasma_tank)
 			qdel(parent_assembly)
 			return
 		if(istype(assembly_target, /obj/item/clothing/head/butt))
 			var/obj/item/clothing/head/butt/manipulated_butt = assembly_target
 			manipulated_butt.explode_butt()
+			SEND_SIGNAL(parent_assembly, COMSIG_ITEM_CONVERTED, manipulated_butt)
 			qdel(parent_assembly)
 			return
 

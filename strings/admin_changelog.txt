@@ -1,3 +1,6 @@
+(t)thu oct 30 25
+(u)Azrun
+(*)Added 'Animation Editor' panel to create, import (JSON), export (JSON, BYOND) animations!
 (t)thu oct 02 25
 (u)Azrun
 (*)Added 'Ambient Viewer' panel, allows for viewing and adjusting lighting for Centcom, Ocean Maps, and Terrainify.

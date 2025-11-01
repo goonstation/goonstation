@@ -1932,6 +1932,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
 		logTheThing(LOG_STATION, user, "crafts a zipgun at [log_loc(user)]")
 		user.put_in_hand_or_drop(new_gun)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_gun, user)
 		qdel(to_combine_atom)
 		qdel(src)
 
@@ -1945,6 +1946,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
 			logTheThing(LOG_STATION, user, "crafts a slamgun at [log_loc(user)]")
 			user.put_in_hand_or_drop(S)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, S, user)
 			qdel(to_combine_atom)
 			qdel(src)
 			// Since the assembly was done, return TRUE
@@ -2050,7 +2052,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				qdel(src.reagents)
 				//make the hulls
 				boutput(user, SPAN_NOTICE("You add some propellant to the hulls."))
-				new /obj/item/pipehulls(get_turf(src))
+				var/pipehulls = new /obj/item/pipehulls(get_turf(src))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, pipehulls, user)
 				qdel(src)
 		// Since the assembly was done, return TRUE
 		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
@@ -2070,6 +2073,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			//add properties from item mods to the finished pipe bomb
 			complete_bomb.set_up_special_ingredients(src.item_mods)
 			user.u_equip(src)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, complete_bomb, user)
 			qdel(src)
 			used_cables.change_stack_amount(-3)
 			user.put_in_hand_or_drop(complete_bomb)

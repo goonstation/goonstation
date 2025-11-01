@@ -97,7 +97,7 @@
 		icon_state = "[hide_pipe ? "h" : "" ]off"
 		on = FALSE
 
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/broadcast_status()
 	var/datum/signal/signal = get_free_signal()
