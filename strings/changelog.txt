@@ -1,5 +1,9 @@
 
 (t)sat nov 01 25
+(u)cringe
+(p)23994
+(e)🆕🎨🔊🧛|C-Feature, C-Sprites, C-Sound, A-Gamemodes
+(*)Pod wars now has a kill log, domination mechanics, and humiliation for the losing team. Read PR for more info.
 (u)Phoi
 (p)25066
 (e)💅🛠️|C-QoL, A-Engineering
