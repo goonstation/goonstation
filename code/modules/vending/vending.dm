@@ -1896,7 +1896,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "Food storage unit."
 	icon_state = "food"
 	icon_panel = "standard-panel"
-	req_access = list(access_kitchen)
 	acceptcard = 0
 
 	light_r =1
