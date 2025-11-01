@@ -54,46 +54,69 @@
 /// internal use only. accepts an element and tries to position that element in the zone based on current element positions.
 /datum/hud_zone/proc/adjust_offset(datum/hud_element/element)
 	PRIVATE_PROC(TRUE)
-	// prework
-	var/absolute_pos_horizontal // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
+
+/*
+	HUD Zones are positioned on a client's screen using `screen_loc`, see: https://secure.byond.com/docs/ref/#/atom/movable/var/screen_loc
+	For HUD Zones, `screen_loc` takes the form `"V_DIR±V_OFFSET, H_DIR±H_OFFSET"`. This form is relative and 0-indexed,
+	whereas the HUD Zone grid is absolute and 1-indexed, so a conversion between the two must be made.
+*/
+
+	// Relative horizontal position to the horizontal edge.
+	var/relative_pos_horizontal = null
+	// If the horizontal edge is the east edge, the relative position is taken as number of tiles from that edge.
 	if (src.horizontal_edge == "EAST")
-		absolute_pos_horizontal = 21 - src.coords["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
-	else // west
-		absolute_pos_horizontal = 0 + src.coords["x_low"] // take x loc of left corner (west edge)
+		relative_pos_horizontal = WIDE_TILE_WIDTH - src.coords["x_high"] + (element.width - 1)
+	// If the horizontal edge is the west edge, the relative position is equal to the absolute position minus one, as absolute position is measured from the south western corner.
+	else
+		relative_pos_horizontal = src.coords["x_low"] - 1
 
-	var/absolute_pos_vertical // absolute vertical position (whole screen) where new elements are added, used with hud offsets
+	// Relative vertical position to the vertical edge.
+	var/relative_pos_vertical = null
+	// If the vertical edge is the north edge, the relative position is taken as number of tiles from that edge.
 	if (src.vertical_edge == "NORTH")
-		absolute_pos_vertical = 15 - src.coords["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
-	else // south
-		absolute_pos_vertical = 0 + src.coords["y_low"] // take y loc of bottom corner (south edge)
+		relative_pos_vertical = TILE_HEIGHT - src.coords["y_high"]
+	// If the vertical edge is the south edge, the relative position is equal to the absolute position minus one, as absolute position is measured from the south western corner.
+	else
+		relative_pos_vertical = src.coords["y_low"] - 1
 
-	// wraparound handling
-	if (src.ensure_empty(element) == HUD_ZONE_FULL)
-		CRASH("Tried to add an element to a full hud zone")
+	// Wraparound handling.
+	switch (src.ensure_empty(element))
+		if (HUD_ZONE_WRAPAROUND)
+			src.horizontal_offset = 0
+			src.vertical_offset += 1
+		if (HUD_ZONE_FULL)
+			CRASH("Tried to add an element to a full hud zone.")
 
-	// screenloc figuring outing
+	// Elements added with an east edge move left, elements with a west edge move right.
 	var/screen_loc_horizontal = src.horizontal_edge
-	var/horizontal_offset_adjusted = (absolute_pos_horizontal + src.horizontal_offset - 1) // Convert from 1-indexed to 0-indexed
-	if (screen_loc_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
-		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
+	var/horizontal_offset_adjusted = (relative_pos_horizontal + src.horizontal_offset)
+	if (screen_loc_horizontal == "EAST")
+		screen_loc_horizontal += SIGNED_NUM_STRING(-horizontal_offset_adjusted)
 	else
-		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
+		screen_loc_horizontal += SIGNED_NUM_STRING(horizontal_offset_adjusted)
 
+	// Elements added with a north edge move down, elements with a south edge move up.
 	var/screen_loc_vertical = src.vertical_edge
-	var/vertical_offset_adjusted = (absolute_pos_vertical + src.vertical_offset - 1) // Convert from 1-indexed to 0-indexed
-	if (screen_loc_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
-		screen_loc_vertical += "-[vertical_offset_adjusted]"
+	var/vertical_offset_adjusted = (relative_pos_vertical + src.vertical_offset)
+	if (screen_loc_vertical == "NORTH")
+		screen_loc_vertical += SIGNED_NUM_STRING(-vertical_offset_adjusted)
 	else
-		screen_loc_vertical += "+[vertical_offset_adjusted]"
+		screen_loc_vertical += SIGNED_NUM_STRING(vertical_offset_adjusted)
 
 	element.screen_obj.screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
-	src.horizontal_offset += element.width // We've added a new element
+	src.horizontal_offset += element.width
+
+/// Whether this HUD is allowed to exist beyond the screen boundaries.
+/datum/hud/var/exceeds_boundaries = FALSE
 
 /// Returns `TRUE` if a rectangle defined by coords is within screen dimensions, `FALSE` if it isnt
 /datum/hud/proc/screen_boundary_check(list/coords)
 	PRIVATE_PROC(TRUE)
 	if (!coords)
 		return null
+
+	if (src.exceeds_boundaries)
+		return TRUE
 
 	// We only support widescreen right now
 	// Zero because screen-loc coords are zero-indexed
@@ -196,14 +219,19 @@
  */
 /datum/hud_zone/proc/ensure_empty(datum/hud_element/new_elem)
 	PRIVATE_PROC(TRUE)
-	// If adding the element exceeds the length of the zone, try to wraparound
+	// If adding the element exceeds the length of the zone, try to wraparound.
 	if ((src.horizontal_offset + new_elem.width) > (HUD_ZONE_LENGTH(src.coords)))
-		// If adding 1 more element exceeds the height of the zone, its full up
-		if ((src.vertical_offset + 1) > (HUD_ZONE_HEIGHT(src.coords)))
+		// If adding one more element exceeds the height of the zone, it's full.
+		/* Why `+ 2`?
+			When the algorithm finishes adding a column, the horizontal offset is incremented accordingly. This is not the case
+			with rows, as there is no way of knowing if the next element will fill up the current row due to variable width
+			elements, so vertical offset is not incremented after an element is added. This is why the height of both the
+			current row and the new row must be added to the vertical offset, hence `+ 2`.
+		*/
+		if ((src.vertical_offset + 2) > (HUD_ZONE_HEIGHT(src.coords)))
 			return HUD_ZONE_FULL
-		else // we can wrap around
-			src.horizontal_offset = 0
-			src.vertical_offset++
+		// Otherwise the zone can wrap around.
+		else
 			return HUD_ZONE_WRAPAROUND
 	else
 		return HUD_ZONE_EMPTY
