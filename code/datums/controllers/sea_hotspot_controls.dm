@@ -89,8 +89,17 @@
 			return
 
 		var/list/hotspots = list()
+
 		for (var/datum/sea_hotspot/S in hotspot_groups)
-			hotspots += {"<div class='hotspot' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
+
+			var/hotspot_color
+
+			if (S.can_drift == 1) // draws the hotspots on the trench map and changes color if it is pinned
+				hotspot_color = "hotspot"
+			else
+				hotspot_color = "pinned_hotspot"
+
+			hotspots += {"<div class='[hotspot_color]' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
 
 		src.map_html = {"
 <!doctype html>
@@ -129,6 +138,10 @@
 			position: absolute;
 			background: rgba(255, 120, 120, 0.6);
 		}
+		.pinned_hotspot {
+			position: absolute;
+			background: rgba(0, 160, 255, 0.6);
+		}
 		.key {
 			text-align: center;
 			margin-top: 0.5em;
@@ -149,6 +162,7 @@
 		.station { background-color: [map_colors["station"]]; }
 		.other { background-color: [map_colors["other"]]; }
 		.vent { background-color: rgb(255, 120, 120); }
+		.pinnedvent { background-color: rgb(0, 160, 255); }
 	</style>
 </head>
 <body>
@@ -161,6 +175,7 @@
 			<span><span class='station'></span> NT Asset</span>
 			<span><span class='other'></span> Unknown</span>
 			[map_currently_underwater?"<span><span class='vent'></span> Hotspot</span>":""]
+			[map_currently_underwater?"<span><span class='pinnedvent'></span> Pinned Hotspot</span>":""]
 			</div>
 </body>
 </html>
@@ -251,6 +266,8 @@
 				S.drift_dir = vector_to_dir(center.x - T.x, center.y - T.y)
 
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
+
+				generate_map_html() //updates the map when hotspot gets stomped
 
 	proc/colorping_at_turf(var/turf/T)
 		for (var/datum/sea_hotspot/S in hotspot_groups)
