@@ -100,7 +100,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		src.name = "melted "+src.name
 		src.icon_state_cap += "_melted_[rand(1,4)]"
 		src.setMaterial(src.material, TRUE, FALSE, FALSE)
-		var/obj/machinery/atmospherics/binary/nuclear_reactor/parent = src.loc
+		var/obj/machinery/nuclear_reactor/parent = src.loc
 		if(istype(parent))
 			parent.MarkGridForUpdate()
 			parent.UpdateIcon()
@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			RC.material_trigger_on_temp(RC.temperature)
 			src.material_trigger_on_temp(src.temperature)
 		//heat transfer with reactor vessel
-		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
+		var/obj/machinery/nuclear_reactor/holder = src.loc
 		if(istype(holder))
 			var/deltaT = src.temperature - holder.temperature
 			var/k = calculateHeatTransferCoefficient(holder.material,src.material)

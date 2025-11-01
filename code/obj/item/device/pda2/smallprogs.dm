@@ -561,8 +561,8 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
-	var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
-	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
+	var/obj/machinery/reactor_turbine/nuke_turbine
+	var/obj/machinery/nuclear_reactor/nuke_reactor
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
@@ -584,8 +584,8 @@ Code:
 			circ2 = generator.circ2
 
 		//NUKE
-		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
-		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
+		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/reactor_turbine)
+		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/nuclear_reactor)
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 

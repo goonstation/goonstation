@@ -17,8 +17,8 @@ TYPEINFO(/obj/item/places_pipes)
 	var/static/list/atmosmachinesforcreation = null
 	var/static/list/icon/cache = list()
 	var/static/list/exemptedtypes = typecacheof(list(/obj/machinery/atmospherics/binary/circulatorTemp,
-		/obj/machinery/atmospherics/binary/nuclear_reactor,
-		/obj/machinery/atmospherics/binary/reactor_turbine,
+		/obj/machinery/nuclear_reactor,
+		/obj/machinery/reactor_turbine,
 		/obj/machinery/atmospherics/unary/cryo_cell))
 	var/const/silicon_cost_multiplier = 200
 	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple
@@ -95,10 +95,10 @@ TYPEINFO(/obj/item/places_pipes)
 	if (!can_reach(user, target))
 		return
 	if(destroying)
+		if(src.exemptedtypes[target.type]) //hilarium
+			actions.start(new /datum/action/bar/hpd_exemption_failure(target, user, src), user)
+			return
 		if(istype(target, /obj/machinery/atmospherics))
-			if(src.exemptedtypes[target.type]) //hilarium
-				actions.start(new /datum/action/bar/hpd_exemption_failure(target, user, src), user)
-				return
 			SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(destroy_item), list(user, target),\
 			 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
