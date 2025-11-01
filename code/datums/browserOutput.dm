@@ -279,13 +279,11 @@ var/global
 			if(src.owner.holder)
 				src.owner.holder.playeropt(targetMob)
 		if ("observe")
-			if(!isadmin(src.owner) && isadmin(targetMob) && !targetMob.client?.player_mode)
-				return // no
-			if (istype(src.owner.mob, /mob/dead/target_observer))
+			if (istype(src.owner.mob, /mob/dead/target_observer) && targetMob.is_observable_by(src.owner.mob))
 				var/mob/dead/target_observer/obs = src.owner.mob
 				if (!obs.locked)
 					obs.set_observe_target(targetMob)
-			if(istype(src.owner.mob, /mob/dead/observer))
+			if(istype(src.owner.mob, /mob/dead/observer) && targetMob.is_observable_by(src.owner.mob))
 				src.owner.mob:insert_observer(targetMob)
 		if ("teleport")
 			if (istype(src.owner.mob, /mob/dead/target_observer))

@@ -57,7 +57,7 @@ TYPEINFO(/mob/dead/observer)
 		if (src.client && src.client.check_key(KEY_POINT))
 			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			return
-		if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
+		if (!src.client.check_key(KEY_EXAMINE) && target.is_observable_by(src))
 			src.insert_observer(target)
 			return
 	return ..()
@@ -239,7 +239,7 @@ TYPEINFO(/mob/dead/observer)
 	if (IS_TWITCH_CONTROLLED(src))
 		var/list/candidates = list()
 		for(var/mob/M in mobs)
-			if (M.client && isliving(M) && !M.unobservable)
+			if (M.client && isliving(M) && M.is_observable_by(src))
 				candidates += M
 		if (candidates.len)
 			SPAWN(5 SECONDS)
@@ -585,10 +585,9 @@ TYPEINFO(/mob/dead/observer)
 	if (usr != src || isnull(A) || A == src) return
 	if (ismob(A))
 		var/mob/M = A
-		if (!M.unobservable || isadmin(src))
-			if (isadmin(src) || (!isadmin(src) && !isadminghost(M)) )
-				src.insert_observer(A)
-				return
+		if (M.is_observable_by(src))
+			src.insert_observer(A)
+			return
 	if (!istype(A,/turf))
 		src.Move(get_turf(A.loc))
 		return
