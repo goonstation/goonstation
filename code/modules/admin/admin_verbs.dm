@@ -123,7 +123,7 @@ var/list/admin_verbs = list(
 		/client/proc/POK,
 		/client/proc/POM,
 		/client/proc/show_rules_to_player,
-		/client/proc/view_fingerprints,
+		/client/proc/view_adminprints,
 		/client/proc/cmd_admin_intercom_announce,
 		/client/proc/cmd_admin_intercom_announce_freq,
 		/client/proc/cmd_admin_intercom_help,
@@ -1020,24 +1020,14 @@ var/list/fun_images = list()
 	else
 		M << link("http://wiki.ss13.co/Rules")
 
-/client/proc/view_fingerprints(obj/O as obj in world)
-	set name = "View Object Fingerprints"
+/client/proc/view_adminprints(obj/O as obj in world)
+	set name = "View Admin Forensics"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	if(!O.fingerprints_full || !length(O.fingerprints_full))
-		alert("There are no fingerprints on this object.", null, null, null, null, null)
-		return
-
-	boutput(src, "<b>Hidden Fingerprints on [O]:</b>")
-	for(var/i in O.fingerprints_full)
-		var/list/L = O.fingerprints_full[i]
-		boutput(src, "Key: [L["key"]], real name: [L["real_name"]], time: [L["time"]]")
-
-	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
-	return
+	boutput(src, O.get_adminprints())
 
 /client/proc/respawn_cinematic()
 	set name = "Respawn Cinematic"
@@ -2160,8 +2150,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.cmd_change_addiction(A)
 		if("View Variables")
 			C.debug_variables(A)
-		if("View Fingerprints")
-			C.view_fingerprints(A)
+		if("View Admin Forensics")
+			C.view_adminprints(A)
 		if("Delete")
 			C.cmd_admin_delete(A)
 		if("Copy Here")
