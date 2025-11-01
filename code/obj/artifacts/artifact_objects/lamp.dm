@@ -41,6 +41,7 @@
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
 	/datum/artifact_trigger/cold, /datum/artifact_trigger/language)
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	activ_text = "begins to emit a steady light!"
 	deact_text = "goes dark and quiet."
 	react_xray = list(10,90,90,11,"NONE")
@@ -69,7 +70,7 @@
 			L.vis_contents += bonus
 			bonus.active = TRUE
 			bonus.update_whacky(L)
-		L.anchored = TRUE
+		L.anchor_artifact()
 
 	proc/light_off(obj/artifact/lamp/L)
 		playsound(L, src.switch_sound, 40, TRUE, -10)
@@ -80,7 +81,7 @@
 			L.vis_contents -= bonus
 			bonus.active = FALSE
 			bonus.update_whacky(L)
-		L.anchored = FALSE
+		L.try_unanchor_artifact()
 
 	effect_touch(obj/artifact/lamp/L, mob/living/user)
 		if(..())

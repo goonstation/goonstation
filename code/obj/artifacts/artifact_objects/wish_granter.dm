@@ -14,6 +14,7 @@
 	activ_text = "begins glowing with an enticing light!"
 	deact_text = "falls dark and quiet."
 	react_xray = list(666,666,666,11,"NONE")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/list/wish_granted = list()
 	var/evil = 0
 
@@ -69,7 +70,7 @@
 				if("I wish for great power!")
 					O.visible_message(SPAN_ALERT("<b>[O] discharges a massive bolt of electricity!</b>"))
 					playsound(user, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
-					var/list/affected = drawLineObj(O,user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+					var/list/affected = drawLineObj(get_turf(O),user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
 						SPAWN(0.6 SECONDS)
 							qdel(OB)

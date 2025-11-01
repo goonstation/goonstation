@@ -142,7 +142,7 @@
 	artifact_controls.artifacts += src
 	A.post_setup()
 
-/obj/proc/ArtifactActivated()
+/obj/proc/ArtifactActivated(combined_art_activation = FALSE)
 	if (!src)
 		return 1
 	if (!src.ArtifactSanityCheck())
@@ -154,17 +154,21 @@
 		return 1 // can't activate these ones at all by design
 	if (!A.may_activate(src))
 		return 1
-	if (A.activ_sound)
+	if (A.activ_sound && !combined_art_activation)
 		playsound(src.loc, A.activ_sound, 100, 1)
 	if (A.activ_text)
 		var/turf/T = get_turf(src)
-		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
+		if (T) T.visible_message("<b>[src.get_uppermost_artifact()] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
 		A.show_fx(src)
-	A.effect_activate(src)
+	A.effect_activate(!combined_art_activation ? src : src.get_uppermost_artifact())
+	for (var/obj/O as anything in src.artifact.combined_artifact_objs)
+		O.ArtifactActivated(TRUE)
+	if (combined_art_activation)
+		return
 	for (var/mob/living/L in range(5, src))
 		for(var/datum/objective/objective in L.mind?.objectives)
 			if (istype(objective, /datum/objective/crew/scientist/artifact))
@@ -176,13 +180,13 @@
 				art_obj.artifacts_activated++
 				break
 
-/obj/proc/ArtifactDeactivated()
+/obj/proc/ArtifactDeactivated(combined_art_activation = FALSE)
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact
 	if (!A.activated) // do not deactivate if already deactivated
 		return
-	if (A.deact_sound)
+	if (A.deact_sound && !combined_art_activation)
 		playsound(src.loc, A.deact_sound, 100, 1)
 	if (A.deact_text)
 		var/turf/T = get_turf(src)
@@ -192,7 +196,9 @@
 		src.icon_state = src.icon_state - "fx"
 	else
 		A.hide_fx(src)
-	A.effect_deactivate(src)
+	A.effect_deactivate(!combined_art_activation ? src : src.get_uppermost_artifact())
+	for (var/obj/O as anything in src.artifact.combined_artifact_objs)
+		O.ArtifactDeactivated(TRUE)
 
 /obj/proc/Artifact_emp_act()
 	if (!src.ArtifactSanityCheck())
@@ -459,25 +465,37 @@
 	if (!src || !A)
 		return
 
-	if (!A.activated)
-		for (var/datum/artifact_trigger/AT in A.triggers)
-			if (A.activated)
+	if (A.activated)
+		if (!length(src.artifact.combined_artifact_objs))
+			return
+		var/subarts_activated = TRUE
+		for (var/obj/O as anything in src.artifact.combined_artifact_objs)
+			if (!O.artifact.activated)
+				subarts_activated = FALSE
 				break
-			if (AT.stimulus_required == stimtype)
-				if (AT.do_amount_check)
-					if (AT.stimulus_type == ">=" && strength >= AT.stimulus_amount)
-						src.ArtifactActivated()
-					else if (AT.stimulus_type == "<=" && strength <= AT.stimulus_amount)
-						src.ArtifactActivated()
-					else if (AT.stimulus_type == "==" && strength == AT.stimulus_amount)
-						src.ArtifactActivated()
-					else
-						if (istext(A.hint_text))
-							if (strength >= AT.stimulus_amount - AT.hint_range && strength <= AT.stimulus_amount + AT.hint_range)
-								if (prob(AT.hint_prob))
-									T.visible_message("<b>[src]</b> [A.hint_text]")
-				else
+		if (subarts_activated)
+			return
+
+	for (var/datum/artifact_trigger/AT in A.triggers)
+		if (AT.stimulus_required == stimtype)
+			if (AT.do_amount_check)
+				if (AT.stimulus_type == ">=" && strength >= AT.stimulus_amount)
 					src.ArtifactActivated()
+					break
+				else if (AT.stimulus_type == "<=" && strength <= AT.stimulus_amount)
+					src.ArtifactActivated()
+					break
+				else if (AT.stimulus_type == "==" && strength == AT.stimulus_amount)
+					src.ArtifactActivated()
+					break
+				else
+					if (istext(A.hint_text))
+						if (strength >= AT.stimulus_amount - AT.hint_range && strength <= AT.stimulus_amount + AT.hint_range)
+							if (prob(AT.hint_prob))
+								T.visible_message("<b>[src]</b> [A.hint_text]")
+			else
+				src.ArtifactActivated()
+				break
 
 /obj/proc/ArtifactTouched(mob/user as mob)
 	if (!in_interact_range(get_turf(src), user))
@@ -486,7 +504,6 @@
 		return
 	if (isobserver(user))
 		return
-
 	var/datum/artifact/A = src.artifact
 	if (istype(A,/datum/artifact/))
 		if (ishuman(user))
@@ -509,6 +526,8 @@
 				boutput(user, "You can't really tell how it feels.")
 		if (A.activated)
 			A.effect_touch(src,user)
+			for (var/obj/O as anything in src.artifact.combined_artifact_objs)
+				O.artifact.effect_touch(O, user)
 	return
 
 /obj/proc/ArtifactHitWith(var/obj/item/O, var/mob/user)
@@ -540,16 +559,15 @@
 	else if(removed > 1)
 		src.visible_message("All the artifact forms that were attached fall to the ground.")
 
-/obj/proc/ArtifactDestroyed()
+/obj/proc/ArtifactDestroyed(combined_arti_destroy = FALSE)
 	// Call this rather than straight disposing() on an artifact if you want to destroy it. This way, artifacts can have their own
 	// version of this for ones that will deliver a payload if broken.
 	if (!src.ArtifactSanityCheck())
 		return
-
 	var/datum/artifact/A = src.artifact
 
 	var/turf/T = get_turf(src)
-	if (istype(T,/turf/))
+	if (istype(T,/turf/) && !combined_arti_destroy)
 		switch(A.artitype.name)
 			if("ancient")
 				T.visible_message(SPAN_ALERT("<B>[src] sparks and sputters violently before falling apart!</B>"))
@@ -564,11 +582,14 @@
 
 	src.remove_artifact_forms()
 
-	src.ArtifactDeactivated()
+	src.ArtifactDeactivated(TRUE)
 
 	ArtifactLogs(usr, null, src, "destroyed", null, 0)
 
 	artifact_controls.artifacts -= src
+
+	for (var/obj/O as anything in src.artifact.combined_artifact_objs)
+		O.ArtifactDestroyed(TRUE)
 
 	qdel(src)
 	return
@@ -596,6 +617,80 @@
 			var/datum/artifact_fault/F = new new_fault(A)
 			F.holder = A
 			A.faults += F
+
+/obj/proc/can_combine_artifact(obj/O)
+	. = FALSE
+	if (!O || !O.artifact || O.anchored)
+		return
+
+	if (src.artifact.combine_flags & ARTIFACT_DOES_NOT_COMBINE)
+		return
+	if (O.artifact.combine_flags & ARTIFACT_DOES_NOT_COMBINE)
+		return
+	if (src.artifact.combine_flags & ARTIFACT_ACCEPTS_ANY_COMBINE)
+		if (O.artifact.combine_flags & ARTIFACT_COMBINES_INTO_ANY)
+			. = TRUE
+		else if (src.artifact.type_size == ARTIFACT_SIZE_LARGE)
+			if (O.artifact.combine_flags & ARTIFACT_COMBINES_INTO_LARGE)
+				. = TRUE
+		else
+			if (O.artifact.combine_flags & ARTIFACT_COMBINES_INTO_HANDHELD)
+				. = TRUE
+
+	for (var/obj/art as anything in O.artifact.combined_artifact_objs)
+		if (!src.can_combine_artifact(art))
+			return FALSE
+
+/// combines passed object into src
+/obj/proc/combine_artifact(obj/O)
+	if (!O || !O.artifact || O.anchored)
+		return
+
+	if (!length(src.artifact.combined_artifact_objs))
+		src.artifact.combined_artifact_objs = list()
+	if (!src.artifact.activated)
+		O.ArtifactDeactivated()
+	src.artifact.combined_artifact_objs += O
+	O.name = src.name
+	O.real_name = src.real_name
+	O.set_loc(src)
+	O.artifact.parent_artifact_obj = src
+	O.artifact.hide_fx(O)
+	src.artifact.faults |= O.artifact.faults
+	src.artifact.validtriggers |= O.artifact.validtriggers
+	src.artifact.triggers |= O.artifact.triggers
+	for (var/obj/art as anything in O.artifact.combined_artifact_objs)
+		src.combine_artifact(art)
+	O.artifact.combined_artifact_objs = null
+
+/obj/proc/get_uppermost_artifact()
+	return src.artifact?.parent_artifact_obj || src
+
+/obj/proc/get_arthints()
+	. = list("You have no idea what this thing is!")
+	if (!src.ArtifactSanityCheck())
+		return
+	var/str
+	if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+		for (var/obj/O as anything in (list(src) + (src.artifact.combined_artifact_objs || list())))
+			if (istext(O.artifact.examine_hint) && !findtext(str, O.artifact.examine_hint))
+				str += SPAN_ARTHINT(O.artifact.examine_hint)
+	. += str
+
+/obj/proc/anchor_artifact()
+	var/obj/p_art = src.get_uppermost_artifact()
+	var/anchor_sources = HAS_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES) ? GET_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES) : 0
+	APPLY_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources", anchor_sources + 1)
+	p_art.anchored = ANCHORED
+
+/obj/proc/try_unanchor_artifact()
+	var/obj/p_art = src.get_uppermost_artifact()
+	var/anchor_sources = GET_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES) - 1
+	if (anchor_sources <= 0)
+		REMOVE_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources")
+		p_art.anchored = UNANCHORED
+	else
+		APPLY_ATOM_PROPERTY(p_art, PROP_OBJ_ART_ANCHOR_SOURCES, "art_anchor_sources", anchor_sources)
 
 // Added. Very little related to artifacts was logged (Convair880).
 /proc/ArtifactLogs(var/mob/user, var/mob/target, var/obj/O, var/type_of_action, var/special_addendum, var/trigger_alert = 0)

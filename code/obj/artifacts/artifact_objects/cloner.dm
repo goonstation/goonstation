@@ -24,6 +24,7 @@
 	react_xray = list(15,90,90,11,"HOLLOW")
 	validtypes = list("wizard","eldritch")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/mob/living/carbon/human/clone = null
 	var/imprison_time = 0
 	var/evil_delay = 0
@@ -132,6 +133,6 @@
 			O.visible_message(SPAN_ALERT("<b>[O]</b> releases [clone.name] and shuts down!"))
 		else
 			O.visible_message(SPAN_ALERT("<b>[O]</b> shuts down strangely!"))
-		for(var/atom/movable/I in (O.contents-O.vis_contents))
+		for(var/atom/movable/I in (O.contents - (O.artifact.combined_artifact_objs || list()) - O.vis_contents))
 			I.set_loc(get_turf(O))
 		clone = null

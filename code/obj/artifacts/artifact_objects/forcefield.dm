@@ -15,6 +15,7 @@
 	activ_text = "comes to life, projecting out a wall of force!"
 	deact_text = "shuts down, causing the forcefield to vanish!"
 	react_xray = list(13,60,95,11,"NONE")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_LARGE
 	var/cooldown = 80
 	var/field_radius = 3
 	var/field_time = 80
@@ -42,7 +43,7 @@
 	effect_activate(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		O.anchored = ANCHORED
+		O.anchor_artifact()
 		var/turf/Aloc = get_turf(O)
 		for (var/turf/T in range(field_radius,Aloc))
 			if(GET_DIST(O,T) == field_radius)
@@ -55,7 +56,7 @@
 	effect_deactivate(obj/O)
 		if(..())
 			return
-		O.anchored = UNANCHORED
+		O.try_unanchor_artifact()
 		for (var/obj/forcefield/F in src.forcefields)
 			src.forcefields -= F
 			qdel(F)

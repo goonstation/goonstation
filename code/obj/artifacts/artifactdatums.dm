@@ -3,7 +3,7 @@
 ABSTRACT_TYPE(/datum/artifact/)
 /datum/artifact
 	/// the actual /obj type that is the artifact for this datum
-	var/associated_object = null
+	var/obj/associated_object = null
 	/// a weighted commonness, the higher it is the more often the artifact will appear
 	/// at 0 it should not appear randomly at all
 	var/rarity_weight = 0
@@ -115,6 +115,13 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based mainly on origin, but some artifact types add more descriptors.
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
+
+	/// if this artifact's object is combined in another, this var is the parent object holding that one
+	var/parent_artifact_obj = null
+	/// artifact objects combined into this artifact's object
+	var/list/combined_artifact_objs = null
+	/// what this artifact combines with
+	var/combine_flags = ARTIFACT_DOES_NOT_COMBINE
 
 	/// gets called after the artifact basics (origin, appearance, object, etc) are all set up, so the type can modify it further
 	proc/post_setup()
