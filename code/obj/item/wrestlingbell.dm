@@ -44,9 +44,9 @@
 		RegisterSignal(src.hammer, COMSIG_MOVABLE_MOVED, PROC_REF(hammer_move))
 
 	disposing()
-		if (hammer)
-			qdel(hammer)
-			hammer = null
+		if (src.hammer)
+			qdel(src.hammer)
+			src.hammer = null
 		..()
 
 	process()
@@ -57,7 +57,7 @@
 		..()
 
 	update_icon()
-		if (hammer && hammer.loc == src)
+		if (src.hammer && src.hammer.loc == src)
 			icon_state = "wrestlingbell1"
 		else
 			icon_state = "wrestlingbell0"
@@ -66,7 +66,11 @@
 		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
 		user.lastattacked = get_weakref(src)
 		..()
-		if(hammer.loc != src)
+		if(!hammer || QDELETED(src.hammer))
+			boutput(user, "The wrestling bell grows a new tiny hammer. Nature is beautiful.")
+			src.hammer = new /obj/item/tinyhammer/wrestling(src)
+			src.hammer.parent = src
+		if(src.hammer.loc != src)
 			return //if someone else has it, don't put it in user's hand
 		user.put_in_hand_or_drop(src.hammer)
 		src.hammer.parent = src
@@ -96,7 +100,7 @@
 				src.put_back_hammer()
 
 	proc/put_back_hammer()
-		if (src.hammer)
+		if (src.hammer && !QDELETED(src.hammer))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50)
 			src.hammer.force_drop(sever=TRUE)
 			src.hammer.set_loc(src)
