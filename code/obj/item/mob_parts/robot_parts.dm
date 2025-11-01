@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		if (M.amount < 1)
 			user.drop_item()
 			qdel(M)
-
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitem, user)
 		qdel(src)
 
 	proc/can_reinforce(var/obj/item/sheet/M, var/mob/user, var/need_reinforced)
@@ -302,7 +302,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		if (M.amount < 1)
 			user.drop_item()
 			qdel(M)
-
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitem, user)
 		qdel(src)
 
 /obj/item/parts/robot_parts/head/standard
@@ -506,6 +506,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 				boutput(user, SPAN_NOTICE("You remove the internal support structures of the [src]. It's structural integrity is ruined, but you could squeeze into it now."))
 				user.u_equip(src)
 				user.put_in_hand_or_drop(R)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, R, user)
 				qdel(src)
 		else
 			..()

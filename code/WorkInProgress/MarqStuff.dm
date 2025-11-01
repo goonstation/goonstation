@@ -649,7 +649,7 @@
 	spread_angle = 40
 	force = 5
 	can_dual_wield = 0
-	contraband = 0
+	contraband = 3
 	move_triggered = 1
 	var/spread_base = 40
 	var/max_draw = 3
