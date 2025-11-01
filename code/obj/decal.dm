@@ -193,7 +193,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	blood_type = null
 	anchored = ANCHORED
 
-/obj/decal/boxingrope
+/obj/decal/boxingrope // for functional ropes see below and /obj/railing/boxingrope
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
 	density = 1
@@ -276,14 +276,11 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 			. = 1
 		UNCROSS_BUMP_CHECK(O)
 
-/obj/decal/boxingropeenter
+/obj/railing/boxing
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
-	density = 0
-	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
-	layer = OBJ_LAYER
 
 /obj/decal/alienflower
 	name = "strange alien flower"

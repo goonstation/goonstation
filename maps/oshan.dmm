@@ -18176,16 +18176,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"btI" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "btJ" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -28590,17 +28580,6 @@
 "cgl" = (
 /turf/space/fluid/warp_z5,
 /area/space)
-"cgo" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table,
-/obj/item/wrestlingbell,
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "cgp" = (
 /obj/rack,
 /obj/item/bballbasket,
@@ -34208,6 +34187,16 @@
 /obj/item/seed/alien,
 /turf/simulated/floor/grass,
 /area/spacehabitat/owlery)
+"hvT" = (
+/obj/railing/boxing{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "hwl" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "QM"
@@ -36065,6 +36054,23 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator/upper)
+"jXX" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/incandescent/cool,
+/obj/noticeboard/persistent/customs/directional/north,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/obj/machinery/phone,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "green2"
+	},
+/area/station/bridge/customs)
 "jYh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -41203,6 +41209,24 @@
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"qmL" = (
+/obj/table/reinforced/auto,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/obj/machinery/cashreg,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "green2"
+	},
+/area/station/bridge/customs)
 "qnH" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
@@ -45550,23 +45574,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"wmR" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light/incandescent/cool,
-/obj/noticeboard/persistent/customs/directional/north,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 4
-	},
-/obj/window_blinds/cog2/right{
-	dir = 4
-	},
-/obj/machinery/phone,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "green2"
-	},
-/area/station/bridge/customs)
 "wnn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45803,24 +45810,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"wFF" = (
-/obj/table/reinforced/auto,
-/obj/item/bell/hop{
-	pixel_y = 15
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 4
-	},
-/obj/window_blinds/cog2/middle{
-	dir = 4
-	},
-/obj/machinery/cashreg,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "green2"
-	},
-/area/station/bridge/customs)
 "wFI" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -46792,6 +46781,17 @@
 /obj/submachine/GTM,
 /turf/simulated/wall/auto/asteroid,
 /area/spacehabitat/owlery)
+"xJc" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table,
+/obj/machinery/wrestlingbell,
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "xJL" = (
 /obj/machinery/light/incandescent/blueish,
 /obj/reagent_dispensers/foamtank,
@@ -79794,7 +79794,7 @@ pXl
 boZ
 bpF
 bqv
-cgo
+xJc
 brS
 bsC
 mRh
@@ -80402,7 +80402,7 @@ bra
 brT
 hKO
 bsD
-btI
+hvT
 bKO
 mst
 buL
@@ -96419,8 +96419,8 @@ iSf
 aij
 wea
 aij
-wmR
-wFF
+jXX
+qmL
 jiS
 hAF
 bHz
