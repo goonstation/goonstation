@@ -58,6 +58,7 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 			user.show_message(SPAN_NOTICE("You connect and secure all the loose parts!"), 1)
 			desc = "An illegal-looking signaller, clearly makeshift. If you're seeing this, alert a coder please."
 			tooltip_rebuild = TRUE
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, A, user)
 			qdel(src)
 			return
 		return

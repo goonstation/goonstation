@@ -46,7 +46,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/debug_reaction_list,\
 /client/proc/debug_reagents_cache,\
 /client/proc/set_admin_level,\
-/client/proc/show_camera_paths, \
 /*/client/proc/remove_camera_paths_verb, \*/
 /client/proc/check_gang_scores,\
 /client/proc/critter_creator_debug,\
@@ -66,8 +65,6 @@ var/list/dangerousVerbs = list(\
 /datum/admins/proc/toggle_blood_system,\
 /datum/admins/proc/toggle_bone_system,\
 /client/proc/togglebuildmode,\
-/client/proc/toggle_atom_verbs,\
-/client/proc/toggle_camera_network_reciprocity, \
 /client/proc/toggle_atom_verbs,\
 /client/proc/toggle_extra_verbs,\
 /datum/admins/proc/togglethetoggles,\

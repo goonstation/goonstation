@@ -1048,6 +1048,16 @@ DEFINE_FLOORS(minitiles/black,
 	name = "boxing mat"
 	icon_state = "boxing"
 
+	Entered(atom/movable/M, atom/OldLoc)
+		..()
+		if (!istype(OldLoc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", INFINITE_STATUS, M)
+
+	Exited(atom/movable/M, atom/newloc)
+		..()
+		if (!istype(newloc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", 5 SECONDS, M)
+
 /turf/simulated/floor/specialroom/gym/alt
 	name = "gym mat"
 	icon_state = "gym_mat"
