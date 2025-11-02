@@ -9,14 +9,22 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	bound_width = 32
 	bound_height = 32
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
+	/// Are we currently active
 	var/active = TRUE
+	/// How quickly are people allowed to change toggle the active state
+	var/cooldown = 5 SECONDS
 
 /obj/machinery/gravity_tether/attack_hand(mob/user)
-	. = ..()
+	if(..())
+		return
+	if (ON_COOLDOWN(src, "gravity_toggle", src.cooldown))
+		src.say("Mapping recent gravity change side-effects. Try again later.")
+		return
 	if (tgui_alert(user, "Really [src.active ? "disable" : "enable"] [src]?", "[src]", list("Yes", "No")) == "Yes")
 		src.toggle()
 
 /obj/machinery/gravity_tether/proc/toggle()
+	src.say("[src] [src.active ? "disabled" : "enabled"]. Have a nice day!")
 	if (src.active)
 		src.deactivate()
 		return
@@ -32,10 +40,18 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/station
 	req_access = list(access_engineering_chief)
+	cooldown = 60 SECONDS
+	/// Delay between attempting to toggle and the effect atually changing
+	var/delay = 10 SECONDS // needs to be shorter than cooldown
 
 /obj/machinery/gravity_tether/station/New()
 	. = ..()
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
+
+/obj/machinery/gravity_tether/station/toggle()
+	command_alert("The gravity tether aboard [station_name] is being [src.active ? "deactivated" : "activated"] shortly. Brace for a sudden change in gravity.", "Gravity Tether Alert", alert_origin = ALERT_STATION)
+	SPAWN(delay)
+		. = ..()
 
 /obj/machinery/gravity_tether/station/activate()
 	. = ..()
