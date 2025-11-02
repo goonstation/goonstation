@@ -6,6 +6,8 @@
 /mob/should_drift()
 	if (src.is_spacefaring())
 		return FALSE
+	if (src.anchored)
+		return FALSE
 	. = ..()
 
 /obj/item/dummy/should_drift()
