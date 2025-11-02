@@ -265,7 +265,7 @@
 
 			if (last_drift != new_drift)
 				if(new_drift)
-					animate_levitate(src, -1, 10, 1)
+					animate_drift(src)
 				else
 					animate(src, transform = matrix(), time = 1)
 				last_drift = new_drift

@@ -877,6 +877,18 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(pixel_y = initial_y, transform = M, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
+/proc/animate_drift(var/atom/A, var/loopnum = -1, floatspeed = 25)
+	if (!istype(A))
+		return
+
+	SPAWN(rand(1,10))
+		if (A)
+			var/matrix/M = matrix(A.transform)
+			var/initial_y = A.pixel_y
+			animate(A, pixel_y = initial_y + 4, time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+			animate(pixel_y = initial_y, transform = M, time = floatspeed, loop = loopnum, easing = QUAD_EASING)
+	return
+
 /proc/animate_lag(atom/A, steps=15, loopnum=-1, magnitude=10, step_time_low=0.2 SECONDS, step_time_high = 0.25 SECONDS)
 	if (!istype(A))
 		return
