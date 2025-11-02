@@ -368,9 +368,9 @@
 		A.glide_size = glide
 		var/turf/pulled_old_loc = A.loc
 		step(A, get_dir(A, old_loc))
-		A.glide_size = glide
 		A.OnMove(src)
 		if (istype(A, /mob/))
 			chain.Add(A)
 			var/mob/M = A
+			M.pushing = null
 			M.do_pulling(pulled_old_loc, glide, chain)
