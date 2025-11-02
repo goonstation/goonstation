@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether
-	name = "Gravity Tether"
+	name = "gravity tether"
 	desc = "A rather delicate piece of machinery that normalizes gravity to Earth-like levels."
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "magbeacon"
@@ -9,22 +9,59 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	bound_width = 32
 	bound_height = 32
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
+	status = REQ_PHYSICAL_ACCESS
+	speech_verb_say = list("bleeps", "bloops", "drones", "beeps", "boops", "emits")
 	/// Are we currently active
 	var/active = TRUE
+	/// Can someone toggle us currently
+	var/locked = FALSE
+	/// Is this currently processing a gravity change
+	var/working = FALSE
 	/// How quickly are people allowed to change toggle the active state
-	var/cooldown = 5 SECONDS
+	var/cooldown = 15 SECONDS
+	/// Is this machine emagged
+	var/emagged = FALSE
 
 /obj/machinery/gravity_tether/attack_hand(mob/user)
 	if(..())
 		return
-	if (ON_COOLDOWN(src, "gravity_toggle", src.cooldown))
-		src.say("Mapping recent gravity change side-effects. Try again later.")
+	if(!in_interact_range(src, user))
+		boutput(user, "You are too far away to reach the controls.")
 		return
-	if (tgui_alert(user, "Really [src.active ? "disable" : "enable"] [src]?", "[src]", list("Yes", "No")) == "Yes")
-		src.toggle()
+	if (src.working)
+		src.say("Processing existing gravity shift.")
+		return
+	if (src.locked)
+		src.say("Controls locked.")
+		return
+	var/cooldown_timer = GET_COOLDOWN(src, "gravity_toggle")
+	if (cooldown_timer)
+		src.say("Recalculating gravity matrix, [TO_SECONDS(cooldown_timer)] seconds remaining.")
+		return
+	if (tgui_alert(user, "Really [src.active ? "disable" : "enable"] [src]?", "Gravity Confirmation", list("Yes", "No")) == "Yes")
+		// tgui_alert is async, so we need to check again
+		cooldown_timer = GET_COOLDOWN(src, "gravity_toggle")
+		if (cooldown_timer)
+			src.say("Recalculating gravity matrix, [TO_SECONDS(cooldown_timer)] seconds remaining.")
+			return
+		src.toggle(user)
 
-/obj/machinery/gravity_tether/proc/toggle()
-	src.say("[src] [src.active ? "disabled" : "enabled"]. Have a nice day!")
+/obj/machinery/gravity_tether/attackby(obj/item/I, mob/user)
+	var/obj/item/card/id/id_card = get_id_card(I)
+	if (istype(id_card) && length(src.req_access))
+		if (src.allowed(user))
+			src.locked = !src.locked
+			src.say("Interface [src.locked ? "locked" : "unlocked"].")
+			if (!src.locked)
+				logTheThing(LOG_STATION, user, "unlocked gravity tether at at [log_loc(src)].")
+		else
+			src.say("Access denied.")
+		return
+	. = ..()
+
+/obj/machinery/gravity_tether/proc/toggle(mob/user)
+	src.say("Tether [src.active ? "disabled" : "enabled"]. Have a nice day!")
+	OVERRIDE_COOLDOWN(src, "gravity_toggle", src.cooldown)
 	if (src.active)
 		src.deactivate()
 		return
@@ -41,6 +78,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/station
 	req_access = list(access_engineering_chief)
 	cooldown = 60 SECONDS
+	locked = TRUE
 	/// Delay between attempting to toggle and the effect atually changing
 	var/delay = 10 SECONDS // needs to be shorter than cooldown
 
@@ -48,10 +86,13 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	. = ..()
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
 
-/obj/machinery/gravity_tether/station/toggle()
-	command_alert("The gravity tether aboard [station_name] is being [src.active ? "deactivated" : "activated"] shortly. Brace for a sudden change in gravity.", "Gravity Tether Alert", alert_origin = ALERT_STATION)
+/obj/machinery/gravity_tether/station/toggle(mob/user)
+	command_alert("[src] aboard [station_name] will [src.active ? "deactivate" : "activate"] shortly. All crew are recommended to brace for a sudden change in local gravity.", "Gravity Tether Alert", alert_origin = ALERT_STATION)
+	logTheThing(LOG_STATION, user, "[src.active ? "disabled" : "enabled"] gravity tether at at [log_loc(src)].")
+	src.working = TRUE
 	SPAWN(delay)
 		. = ..()
+		src.working = FALSE
 
 /obj/machinery/gravity_tether/station/activate()
 	. = ..()
