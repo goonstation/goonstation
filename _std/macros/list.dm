@@ -38,5 +38,5 @@
 #define LAZYLISTREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
 
 /// Accesses an associative list, returns null if nothing is found
-#define LAZYLISTACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
+#define LAZYLISTACCESSASSOC(L, K) (L ? L[K] : null)
 
