@@ -1,5 +1,7 @@
 
 (t)sun nov 02 25
+(u)LeahTheTech
+(+)Clicking on a turf to move your pulled object towards it now only works with an empty hand. Janitors rejoice as your mop bucket stays bloody still for once.
 (u)Skotcher
 (p)25016
 (e)🗺|A-Mapping
