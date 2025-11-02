@@ -1,5 +1,117 @@
 
+(t)sun nov 02 25
+(u)Skotcher
+(p)25016
+(e)🗺|A-Mapping
+(+)Pruned camera coverage across all of Kondaru. Crimers rejoice!
+(u)Valtsu0
+(p)24955
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)You now pull while being pulled, allowing you to form conga lines
+(t)sat nov 01 25
+(u)cringe
+(p)23994
+(e)🆕🎨🔊🧛|C-Feature, C-Sprites, C-Sound, A-Gamemodes
+(*)Pod wars now has a kill log, domination mechanics, and humiliation for the losing team. Read PR for more info.
+(u)Phoi
+(p)25066
+(e)💅🛠️|C-QoL, A-Engineering
+(+)Changes trench map to update hotspot color based on wether it is pinned or not
+(+)Adds pinned hotspot color to key
+(u)Ikea
+(p)25075
+(e)💅📦🔬|C-QoL, A-Game-Objects, A-Science
+(+)The handheld pipe dispenser is now manufacturable from the science manufacturer.
+(t)fri oct 31 25
+(u)Ikea
+(p)25074
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The science manufacturer can now print purple tools alongside a purple wrench.
+(u)CalliopeSoups
+(p)19627
+(e)🆕🗺🎨🔧🔊⏰📜|C-Feature, A-Mapping, C-Sprites, A-Tooling, C-Sound, A-Status-Effects, C-Documentation
+(+)The boxing ring is now a bit more functional, featuring a new bell, vaultable entrances and sfx for being KOd.
+(u)Egregorious
+(p)25000
+(e)🪲🔎🍝|C-Bug, C-Code-Quality, A-Catering
+(+)Items such as cake and dough will more consistently remain attached to kitchen islands when sliced or otherwise altered.
+(u)JORJ949
+(p)25061
+(e)💅📄|C-QoL, A-UI
+(+)Emagged and Syndicate cyborgs will now appear in the other/minor antagonists section of the round summary, rather than as main antagonists.
+(u)Driftered
+(p)25076
+(e)🎨|C-Sprites
+(*)Adds the wizard skull mask to the game
+(u)JORJ949
+(p)25072
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The sharks in Neon's listening post shark tank will now attack any non-syndies in the tank.
+(t)thu oct 30 25
+(u)LeahTheTech
+(+)Kitchen foodtech vending machines no longer have an access requirement.
+(u)Hawke
+(p)25077
+(e)|
+(+)The impact pad's stand now properly plays the extension animation.
+(u)RoflCopter4
+(p)24917
+(e)🎨🛠️|C-Sprites, A-Engineering
+(+)The connecting pipe segments between manifolds and other objects now match the color of the manifold after being welded.
+(u)Egregorious
+(p)24668
+(e)💅🔨📦|C-QoL, A-Player-Actions, A-Game-Objects
+(+)Dumping the content of storage items into a chute is now performed by click-dragging.
+(u)TDHooligan
+(p)25006
+(e)⚖⚗👮|C-Balance, A-Chemistry, A-Security
+(*)Rajaijah is now purged by Haloperidol.
+(t)wed oct 29 25
+(u)LeahTheTech
+(+)Turning around while holding a ladder will now knock over any clowns standing in the line of fire.
+(t)tue oct 28 25
+(u)Azrun
+(p)24574
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Doors will now continue to attempt to autoclose.  Autoclose tied to AI Control wire where applicable.
+(t)sat oct 25 25
+(u)Mr. Moriarty
+(p)24633
+(e)🆕📄🐣|C-Feature, A-UI, A-Respawning
+(*)The latejoin window has been converted into TGUI.
+(u)RubberRats
+(p)24723
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(*)11 new hairstyles are now available: Blunt Pompadour, Big Pompadour, Ducktail, Pageboy, Ringlets, Short Ringlets, Crown Braid, High Bun, Massive Braids, and Chignon
+(+)An additional, twelfth hairstyle can be given to you by barbers.
+(u)JORJ949
+(p)24994
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Clowns have been granted access to the Civilian radio channel for scheming with each other and begging the botanists for banana peels.
+(u)Calphrick
+(p)24996
+(e)💅👮|C-QoL, A-Security
+(+)Gave Security flashlight modules in their PDAs.
+(t)fri oct 24 25
+(u)bork
+(p)25008
+(e)🆕🧱|C-Feature, A-Materials
+(+)pickles from the food processor can be refined into pickle clumps
+(t)thu oct 23 25
+(u)LorrMaster
+(p)24745
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(*)Updated the coloring effects for more materials.
+(*)New material colors now combine properly in the nano-crucible.
+(u)LeahTheTech
+(p)24934
+(e)🔨|A-Player-Actions
+(+)Getting interrupted no longer closes your chatbox.
 (t)wed oct 22 25
+(u)JORJ949
+(p)24985
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)Spy thieves will now be informed if a target bounty is in cryogenic storage
 (u)Kanthes
 (p)24947
 (e)🆕🔬|C-Feature, A-Science

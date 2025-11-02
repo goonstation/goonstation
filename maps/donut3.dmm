@@ -9257,12 +9257,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
-"cHV" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/table/auto,
-/obj/item/wrestlingbell,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/east)
 "cHW" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -16087,6 +16081,12 @@
 /obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"eWA" = (
+/obj/table/reinforced/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "eWF" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -20871,17 +20871,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
-"gwC" = (
-/obj/machinery/light_switch/north,
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 24
-	},
-/obj/filing_cabinet,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/bridge/customs)
 "gwE" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
@@ -33351,21 +33340,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
-"kri" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/obj/disposalpipe/segment/morgue,
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "krn" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -41492,6 +41466,24 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/purple,
 /area/station/science/lab)
+"mUI" = (
+/obj/machinery/light_switch/north{
+	pixel_x = 10
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 24;
+	pixel_x = 2
+	},
+/obj/filing_cabinet,
+/obj/machinery/phone/wall{
+	pixel_y = 32;
+	pixel_x = -8
+	},
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/bridge/customs)
 "mUK" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
@@ -50377,6 +50369,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/maintenance/inner/sw)
+"pGD" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/table/auto,
+/obj/machinery/wrestlingbell,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/east)
 "pGH" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -52667,6 +52665,21 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"qtb" = (
+/obj/railing/boxing{
+	dir = 8
+	},
+/obj/disposalpipe/segment/morgue,
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "qtp" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -71430,12 +71443,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/cafeteria)
-"weI" = (
-/obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "weM" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -112563,7 +112570,7 @@ aav
 bJH
 aav
 sBt
-gwC
+mUI
 jnx
 jUy
 uNr
@@ -120702,7 +120709,7 @@ nhO
 kjG
 nHu
 tRA
-kri
+qtb
 piD
 eOk
 ieu
@@ -121604,7 +121611,7 @@ hrm
 xFf
 bBQ
 gnt
-weI
+eWA
 lJa
 eFg
 bPa
@@ -129499,7 +129506,7 @@ oYJ
 pyK
 bAt
 dKh
-cHV
+pGD
 mBa
 lVX
 cTE

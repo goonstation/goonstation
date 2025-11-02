@@ -2,6 +2,7 @@
 	id = ROLE_SYNDICATE_ROBOT
 	display_name = "\improper Syndicate cyborg"
 	antagonist_icon = "syndieborg"
+	succinct_end_of_round_antagonist_entry = TRUE
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
 	keep_equipment_on_death = TRUE
