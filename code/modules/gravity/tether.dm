@@ -13,7 +13,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/attack_hand(mob/user)
 	. = ..()
-	src.toggle()
+	if (tgui_alert(user, "Really [src.active ? "disable" : "enable"] [src]?", "[src]", list("Yes", "No")) == "Yes")
+		src.toggle()
 
 /obj/machinery/gravity_tether/proc/toggle()
 	if (src.active)
