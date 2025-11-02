@@ -4,6 +4,10 @@
 (p)25016
 (e)🗺|A-Mapping
 (+)Pruned camera coverage across all of Kondaru. Crimers rejoice!
+(u)Valtsu0
+(p)24955
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)You now pull while being pulled, allowing you to form conga lines
 (t)sat nov 01 25
 (u)cringe
 (p)23994
