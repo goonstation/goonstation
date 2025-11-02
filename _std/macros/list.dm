@@ -40,3 +40,5 @@
 /// Accesses an associative list, returns null if nothing is found
 #define LAZYLISTACCESSASSOC(L, K) (L ? L[K] : null)
 
+/// Accesses a nested associative list, returns null if nothing is found
+#define LAZYLISTACCESSASSOCDEEP(L, I, K) L ? L[I] ? L[I][K] : null : null
