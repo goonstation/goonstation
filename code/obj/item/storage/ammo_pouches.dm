@@ -212,7 +212,7 @@
 	icon_state = "ammopouch-ntsc"
 	health = 6
 	w_class = W_CLASS_SMALL
-	slots = 4
+	slots = 5
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
 	spawn_contents = list(/obj/item/handcuffs/ = 1,
