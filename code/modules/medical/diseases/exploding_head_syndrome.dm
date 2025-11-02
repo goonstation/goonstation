@@ -6,7 +6,7 @@
 	cure_desc = "Synaptizine"
 	reagentcure = list("synaptizine")
 	recureprob = 10
-	associated_reagent = "ehsjuice"
+	associated_reagent = "explodingheadjuice"
 	affected_species = list("Human","Monkey")
 
 

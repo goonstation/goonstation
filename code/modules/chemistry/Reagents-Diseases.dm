@@ -546,9 +546,9 @@ datum
 			transparency = 50
 			disease = /datum/ailment/disease/leprosy
 
-		disease/EHSjuice
+		disease/explodingheadjuice
 			name = "juice that makes your head explode"
-			id = "ehsjuice"
+			id = "explodingheadjuice"
 			description = "A liquid with an incredibly apt name."
 			reagent_state = LIQUID
 			taste = "like berries"

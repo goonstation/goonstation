@@ -5493,10 +5493,10 @@
 		result_amount = 2
 		mix_sound = 'sound/effects/radio_sweep1.ogg'
 
-	ehsjuice
+	explodingheadjuice
 		name = "Juice That Makes Your Head Explode"
-		id = "ehsjuice"
-		result = "ehsjuice"
+		id = "explodingheadjuice"
+		result = "explodingheadjuice"
 		required_reagents = list("blackpowder" = 1, "hard_punch" = 1, "juice_raspberry" = 1, "prions" = 1, "sonicpowder" = 1)
 		mix_phrase = "The mixture coalesces into a dark red liquid."
 		result_amount = 5
