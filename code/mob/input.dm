@@ -193,11 +193,11 @@
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 				var/spacemove = 0
-				if (src.no_gravity || (old_loc.throw_unlimited && !src.is_spacefaring()) )
+				if (src.should_drift())
 
 					spacemove = 1
 					for (var/atom/A in oview(1,src))
-						if (A.stops_space_move && (!src.no_gravity || !isfloor(A)))
+						if (A.stops_space_move && (!src.should_drift() || !isfloor(A)))
 							spacemove = 0
 							break
 

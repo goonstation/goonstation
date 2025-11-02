@@ -106,6 +106,9 @@ TYPEINFO(/area)
 		*/
 	var/do_not_irradiate = TRUE
 
+	/// Does this area currently have gravity?
+	var/has_gravity = TRUE
+
 	/// gang that owns this area in gang mode
 	var/datum/gang/gang_owners = null
 
@@ -519,6 +522,7 @@ TYPEINFO(/area)
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 	do_not_irradiate = FALSE
+	has_gravity = FALSE
 
 // zewaka - adventure/technical/admin areas below //
 
@@ -4136,7 +4140,8 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Plasma Reef"
 	icon_state = "purple"
 	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
-	requires_power = FALSE // find out where the fuck the check is later and change this so plasma reef doesn't have free power
+	requires_power = FALSE // TODO: find out where the fuck the check is later and change this so plasma reef doesn't have free power
+	has_gravity = TRUE
 
 // // // // // // // // // // // //
 

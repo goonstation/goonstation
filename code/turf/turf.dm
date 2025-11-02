@@ -535,7 +535,7 @@ proc/generate_space_color()
 	return ..(Obj, newloc)
 
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
-	if(ismob(M) && !src.throw_unlimited && !M.no_gravity)
+	if(ismob(M) && !src.throw_unlimited && !M.should_drift())
 		var/mob/tmob = M
 		tmob.inertia_dir = 0
 	///////////////////////////////////////////////////////////////////////////////////
@@ -549,7 +549,7 @@ proc/generate_space_color()
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
 
-	if(!src.throw_unlimited && M?.no_gravity)
+	if(!src.throw_unlimited && M?.should_drift())
 		BeginSpacePush(M)
 
 #ifdef NON_EUCLIDEAN
