@@ -21484,8 +21484,7 @@
 	})
 "bQX" = (
 /obj/item/device/radio/intercom/science{
-	dir = 4;
-	pixel_y = -6
+	dir = 4
 	},
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
