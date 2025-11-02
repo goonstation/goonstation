@@ -1,5 +1,5 @@
 /datum/ailment/disease/kuru
-	name = "Jam's Brain Degeneration"
+	name = "Rapid Brain Degeneration"
 	max_stages = 4
 	cure_flags = CURE_INCURABLE
 	associated_reagent = "prions"
