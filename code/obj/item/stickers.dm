@@ -194,12 +194,9 @@
 			src.words_length += length_char(t)
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (pen.uses_handwriting && user?.mind?.handwriting)
-				src.font = user.mind.handwriting // AH this is what I want, pen
-				// src.webfont = 1
+				src.font = user.mind.handwriting
 			else if (pen.font)
 				src.font = pen.font
-				// if (pen.webfont)
-				// 	src.webfont = 1
 			if (src.icon_state == initial(src.icon_state))
 				var/search_t = lowertext(t)
 				if (copytext(search_t, -1) == "?")
