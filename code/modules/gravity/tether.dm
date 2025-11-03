@@ -1,3 +1,6 @@
+#define TETHER_EMAG_CHANGE_CHANCE 50
+#define TETHER_EMAG_CHANGE_COUNT 20
+
 ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether
 	name = "gravity tether"
@@ -86,6 +89,21 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	. = ..()
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
 
+/obj/machinery/gravity_tether/station/emag_act(mob/user, obj/item/card/emag/E)
+	. = ..()
+	if(src.emagged)
+		return
+	boutput(user, "You slide [E] across [src]'s ID reader.")
+	src.emagged = TRUE
+	src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_SWEDISH)
+	src.emag_effect()
+
+//TODO: Way to remove emagged state
+/obj/machinery/gravity_tether/demag(mob/user)
+	. = ..()
+	src.emagged = FALSE
+	src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_SWEDISH)
+
 /obj/machinery/gravity_tether/station/toggle(mob/user)
 	command_alert("[src] aboard [station_name] will [src.active ? "deactivate" : "activate"] shortly. All crew are recommended to brace for a sudden change in local gravity.", "Gravity Tether Alert", alert_origin = ALERT_STATION)
 	logTheThing(LOG_STATION, user, "[src.active ? "disabled" : "enabled"] gravity tether at at [log_loc(src)].")
@@ -96,13 +114,30 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/station/activate()
 	. = ..()
+	if(src.emagged)
+		src.emag_effect()
+		return
 	for(var/area_name in get_accessible_station_areas())
 		station_areas[area_name].has_gravity = TRUE
 
 /obj/machinery/gravity_tether/station/deactivate()
 	. = ..()
+	if(src.emagged)
+		src.emag_effect()
+		return
 	for(var/area_name in get_accessible_station_areas())
 		station_areas[area_name].has_gravity = FALSE
+
+/// Makes gravity "swiss cheese" across the station
+/obj/machinery/gravity_tether/station/proc/emag_effect()
+	var/changed_area_count = 0
+	for(var/area_name in get_accessible_station_areas())
+		// we do little a picking on genetics, as a treat
+		if (prob(TETHER_EMAG_CHANGE_CHANCE) || istype(station_areas[area_name], /area/station/medical/research))
+			changed_area_count += 1
+			station_areas[area_name].has_gravity = !station_areas[area_name].has_gravity
+			if(changed_area_count >= TETHER_EMAG_CHANGE_COUNT)
+				break
 
 /obj/machinery/gravity_tether/current_area
 	req_access = list()
@@ -138,3 +173,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	. = ..()
 	for (var/area/A in src.area_references)
 		A.has_gravity = FALSE
+
+#undef TETHER_EMAG_CHANGE_CHANCE
+#undef TETHER_EMAG_CHANGE_COUNT
