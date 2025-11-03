@@ -222,6 +222,9 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/crowbar/purple
+	item_outputs = list(/obj/item/crowbar/purple)
+
 /datum/manufacture/screwdriver
 	name = "Screwdriver"
 	item_requirements = list("metal" = 1)
@@ -245,6 +248,9 @@
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
+
+/datum/manufacture/wrench/purple
+	item_outputs = list(/obj/item/wrench/purple)
 
 /datum/manufacture/crowbar/yellow
 	name = "Crowbar"
@@ -447,6 +453,9 @@
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
+
+/datum/manufacture/welder/purple
+	item_outputs = list(/obj/item/weldingtool/purple)
 
 /datum/manufacture/soldering
 	name = "Soldering Iron"
@@ -996,6 +1005,9 @@
 	create = 1
 	time = 90 SECONDS
 	category = "Tool"
+
+/datum/manufacture/places_pipes/science
+	item_outputs = list(/obj/item/places_pipes/research)
 
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
