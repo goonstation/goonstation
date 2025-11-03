@@ -146,8 +146,7 @@ var/global
 	"Black" = "#935D37",
 	"Dark" = "#483728")
 
-	list/handwriting_styles = list("Dancing Script",
-	"Ink Free",
+	list/handwriting_styles = list("Ink Free",
 	"MV Boli",
 	"Segoe Print",
 	"Segoe Script")
