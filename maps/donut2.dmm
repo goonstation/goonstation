@@ -51197,6 +51197,7 @@
 	pixel_x = -7;
 	pixel_y = -6
 	},
+/obj/machinery/light/small/sticky,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
