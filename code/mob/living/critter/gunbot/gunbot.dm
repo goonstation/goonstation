@@ -3,7 +3,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 				"conductive_high" = 12,
 				"dense" = 6)
 	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_ERROR)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL, SPEECH_OUTPUT_EQUIPPED)
 
 /mob/living/critter/robotic/gunbot
 	name = "robot"

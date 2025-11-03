@@ -1,4 +1,29 @@
 
+(t)sun nov 02 25
+(u)LeahTheTech
+(+)Clicking on a turf to move your pulled object towards it now only works with an empty hand. Janitors rejoice as your mop bucket stays bloody still for once.
+(u)Skotcher
+(p)25016
+(e)🗺|A-Mapping
+(+)Pruned camera coverage across all of Kondaru. Crimers rejoice!
+(u)Valtsu0
+(p)24955
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)You now pull while being pulled, allowing you to form conga lines
+(t)sat nov 01 25
+(u)cringe
+(p)23994
+(e)🆕🎨🔊🧛|C-Feature, C-Sprites, C-Sound, A-Gamemodes
+(*)Pod wars now has a kill log, domination mechanics, and humiliation for the losing team. Read PR for more info.
+(u)Phoi
+(p)25066
+(e)💅🛠️|C-QoL, A-Engineering
+(+)Changes trench map to update hotspot color based on wether it is pinned or not
+(+)Adds pinned hotspot color to key
+(u)Ikea
+(p)25075
+(e)💅📦🔬|C-QoL, A-Game-Objects, A-Science
+(+)The handheld pipe dispenser is now manufacturable from the science manufacturer.
 (t)fri oct 31 25
 (u)Ikea
 (p)25074
