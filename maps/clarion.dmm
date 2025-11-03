@@ -28336,6 +28336,9 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
+/obj/machinery/light_switch/north{
+	pixel_y = 28
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -39449,12 +39452,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"xet" = (
-/obj/machinery/light_switch/north{
-	pixel_y = 28
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation/east)
 "xeK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -88260,7 +88257,7 @@ ndN
 pJM
 pJM
 pJM
-xet
+bzA
 pay
 eBt
 bZs
