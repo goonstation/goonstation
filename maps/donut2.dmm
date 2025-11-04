@@ -14422,8 +14422,6 @@
 /area/station/science/artifact)
 "bNI" = (
 /obj/machinery/firealarm/directional/south,
-/obj/item/clothing/mask/clown_hat,
-/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side,
 /area/station/security/evidence)
 "bNW" = (
@@ -14588,8 +14586,6 @@
 	icon_state = "pipe-c";
 	dir = 1
 	},
-/obj/storage/crate,
-/obj/random_item_spawner/med_kit,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "bTl" = (
@@ -25669,7 +25665,31 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "iDQ" = (
-/obj/storage/cart/forensic/bomb_disposal,
+/obj/rack,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/gun/kinetic/riot40mm{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 6;
+	pixel_y = -9
+	},
+/obj/item/gun/implanter{
+	pixel_x = 7;
+	pixel_y = -7
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -27781,10 +27801,6 @@
 	pixel_x = -10
 	},
 /obj/machinery/flasher/portable,
-/obj/item/wrench{
-	pixel_x = 17;
-	pixel_y = -4
-	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -43333,6 +43349,10 @@
 /obj/item/device/radio/intercom/security,
 /obj/table/auto,
 /obj/item/storage/box/revimp_kit,
+/obj/item/wrench{
+	pixel_x = -4;
+	pixel_y = 6
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -45028,6 +45048,10 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"tJx" = (
+/obj/storage/cart/forensic/bomb_disposal,
+/turf/simulated/floor/red/side,
+/area/station/security/processing)
 "tJA" = (
 /obj/lattice{
 	dir = 5;
@@ -51172,32 +51196,9 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "xxD" = (
-/obj/rack,
-/obj/item/gun/kinetic/riot40mm{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/gun/kinetic/riot40mm{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/ammo/bullets/smoke{
-	pixel_x = 8;
-	pixel_y = -7
-	},
-/obj/item/ammo/bullets/smoke{
-	pixel_x = 6;
-	pixel_y = -9
-	},
-/obj/item/gun/implanter{
-	pixel_x = 7;
-	pixel_y = -7
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -7;
-	pixel_y = -6
-	},
 /obj/machinery/light/small/sticky,
+/obj/storage/secure/closet/brig,
+/obj/item/clothing/mask/clown_hat,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -98451,7 +98452,7 @@ jeU
 bgP
 rWV
 tMz
-lus
+tJx
 bmO
 bnC
 mRE
