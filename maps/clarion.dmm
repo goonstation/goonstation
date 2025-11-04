@@ -15055,8 +15055,15 @@
 /obj/machinery/computer/card{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/drainage,
+/obj/machinery/firealarm/directional/north{
+	pixel_x = -8;
+	pixel_y = 30
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32;
+	pixel_x = 8
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/bridge/customs)
 "fCF" = (
