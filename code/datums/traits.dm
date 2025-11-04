@@ -638,7 +638,7 @@
 
 /datum/trait/pawnstar
 	name = "Pawn Star"
-	desc = "You sold your trinket before you departed for the station. You start with a bonus of 25% of your starting cash in your inventory."
+	desc = "You sold your trinket before you departed for the station. You start with a bonus of 25% of your starting money in your bank account."
 	id = "pawnstar"
 	icon_state = "pawnP"
 	points = 0

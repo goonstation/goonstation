@@ -812,19 +812,10 @@ Equip items from body traits.
 	src.mind?.remembered_pin = C.pin
 
 	if (JOB.wages > 0)
-		var/cashModifier = 1
-		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
-			cashModifier = 1.25
-
-		var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
-		S.setup(src,round(JOB.wages * cashModifier))
-
-		if (isnull(src.get_slot(SLOT_R_STORE)))
-			src.equip_if_possible(S, SLOT_R_STORE)
-		else if (isnull(src.get_slot(SLOT_L_STORE)))
-			src.equip_if_possible(S, SLOT_L_STORE)
-		else
-			src.equip_if_possible(S, SLOT_IN_BACKPACK)
+		var/startingBonusModifier = 1
+		if (src.traitHolder?.hasTrait("pawnstar"))
+			startingBonusModifier += 0.25
+		C.money += round(JOB.wages * startingBonusModifier)
 	else
 		var/shitstore = rand(1,3)
 		switch(shitstore)
