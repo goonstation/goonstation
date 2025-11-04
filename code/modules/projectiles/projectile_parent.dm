@@ -81,6 +81,21 @@
 	/// For precalculated projectiles, how far along the `crossing` list have we reached
 	var/curr_t = 0
 
+	/// Used to override the speed from the projectile datum so we can have WEIRD and DANGEROUS non-static speeds (see gyrojet)
+	/// Only works with non-precalc projectiles obviously.
+	var/internal_speed = null
+
+	/// Safety check var to make sure we do some kind of sane "collide and die" behaviour if setup fails due to bad input params (0 speed etc.)
+	var/was_setup = 0
+
+	/// X position of the projectile impact, used for particles and bullet impacts
+	var/impact_x = null
+	/// y position of the projectile impact, used for particles and bullet impacts
+	var/impact_y = FALSE
+
+	/// Simulate standard atmos for any mobs inside
+	var/has_atmosphere = FALSE
+
 	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
 
 	/// Reflection normal on the current tile (NORTH if projectile came from the north, etc.)
@@ -99,16 +114,11 @@
 	/// Yeah this sucks. TODO remove. I don't care bring the bug back so we can actually fix it
 	var/is_processing = FALSE //MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 
-	var/internal_speed = null // experimental    THANKS VERY INFORMATIVE   TODO: ask yass how this works
-
 	/// Arbitrary projectile data. Currently only used to hold an object that a projectile is seeking for a singular type. TODO remove
 	var/data = 0
 
 	/// Number of impassable atoms this projectile can pierce. Decremented on pierce. Can probably be axed in favor of the component. TODO remove
 	var/pierces_left = 0
-
-	/// TODO axe this after testing. Used very infrequently, looks redundant
-	var/was_setup = 0
 
 	/// Below stuff but also this is dumb and only used for frost bats and I don't even know why it's used there. TODO remove
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
@@ -118,14 +128,6 @@
 
 	/// Turf of the called_target during projectile initialization
 	var/turf/called_target_turf
-
-	/// X position of the projectile impact, used for particles and bullet impacts
-	var/impact_x = null
-	/// y position of the projectile impact, used for particles and bullet impacts
-	var/impact_y = FALSE
-
-	/// Simulate standard atmos for any mobs inside
-	var/has_atmosphere = FALSE
 
 	disposing()
 		special_data = null

@@ -212,3 +212,35 @@ proc/load_listening_post()
 	name = "Syndicate Teleporter"
 	icon_state = "teleporter"
 	requires_power = 0
+
+/area/listeningpost/shark_tank
+	name = "Listening Post Shark Tank"
+	icon_state = "hangar"
+	requires_power = FALSE
+	unlocks_post = FALSE
+
+/obj/critter/gunbot/drone/gunshark/listening_post
+	name = "Trained Syndicate Gun Shark"
+
+	select_target(var/atom/newtarget)
+		if(!valid_target(newtarget))
+			return
+		. = ..(newtarget)
+
+	ai_think()
+		if(src.target && !valid_target(src.target))
+			src.target = null
+			src.last_found = world.time
+			src.frustration = 0
+			src.task = "thinking"
+			walk_to(src,0)
+		. = ..()
+
+	proc/valid_target(var/atom/target)
+		if(!istype(get_area(target), /area/listeningpost/shark_tank))
+			return FALSE
+		if(istrainedsyndie(target))
+			return FALSE
+		return TRUE
+
+

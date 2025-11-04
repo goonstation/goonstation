@@ -6902,12 +6902,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"awz" = (
-/obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "awA" = (
 /obj/stool/chair{
 	dir = 8
@@ -8103,37 +8097,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
-"azI" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/obj/stool,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "azJ" = (
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
-"azK" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "azL" = (
@@ -54989,6 +54953,22 @@
 	dir = 5
 	},
 /area/station/catwalk/south)
+"fNJ" = (
+/obj/railing/boxing{
+	dir = 8
+	},
+/obj/stool,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "fOH" = (
 /obj/mesh/grille/steel,
 /obj/cable{
@@ -56106,11 +56086,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/pharmacy)
-"gXc" = (
-/obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname/checkpoint/customs/east,
-/turf/simulated/floor/blueblack,
-/area/station/bridge/customs)
 "gXp" = (
 /obj/cable/blue{
 	icon_state = "4-8"
@@ -65160,6 +65135,20 @@
 	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/hotloop)
+"oXs" = (
+/obj/railing/boxing{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "oXu" = (
 /obj/shrub/random,
 /obj/machinery/firealarm/directional/west,
@@ -68294,6 +68283,12 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"rUN" = (
+/obj/table/reinforced/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "rVa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -71991,6 +71986,15 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"vCK" = (
+/obj/disposalpipe/trunk/mail/east,
+/obj/machinery/disposal/mail/small/autoname/checkpoint/customs/east,
+/obj/machinery/phone/wall{
+	pixel_x = -28;
+	pixel_y = 6
+	},
+/turf/simulated/floor/blueblack,
+/area/station/bridge/customs)
 "vCL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -110643,7 +110647,7 @@ ttZ
 atG
 atG
 fOO
-azI
+fNJ
 aBf
 aBf
 axZ
@@ -111849,9 +111853,9 @@ arn
 asp
 atJ
 atG
-awz
+rUN
 xni
-azK
+oXs
 aBh
 aCB
 ayb
@@ -138474,7 +138478,7 @@ kOh
 tDk
 nwx
 lpO
-gXc
+vCK
 lGN
 lbb
 oBV

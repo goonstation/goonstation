@@ -329,6 +329,12 @@
 	icon_state = "weldingtool-off-green"
 	icon_state_variant_suffix = "-green"
 
+/obj/item/weldingtool/purple
+	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, with an eccentric purple handle."
+	icon_state = "weldingtool-off-purple"
+	icon_state_variant_suffix = "-purple"
+
+
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"
 	icon_state_variant_suffix = "-vr"

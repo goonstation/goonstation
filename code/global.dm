@@ -452,8 +452,6 @@ var/global
 	list/obj/machinery/camera/dirty_cameras = list() //Cameras that should be rebuilt
 
 	list/list/obj/machinery/camera/camnets = list() //Associative list keyed by network name, contains a list of each camera in a network.
-	list/datum/particleSystem/mechanic/camera_path_list = list() //List of particlesystems that the connection display proc creates. I dunno where else to put it. :(
-	camera_network_reciprocity = 1 //If camera connections reciprocate one another or if the path is calculated separately for each camera
 	list/datum/ai_camera_tracker/tracking_list = list()
 
 	centralConn = 1 //Are we able to connect to the central server?
