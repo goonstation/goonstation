@@ -2708,11 +2708,6 @@
 /obj/table/reinforced/auto,
 /obj/item/wrench,
 /obj/item/device/prisoner_scanner,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -5005,17 +5000,18 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "clv" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/shrub{
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /obj/item/device/radio/intercom/security{
-	dir = 8;
-	pixel_x = 24
+	dir = 8
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -21346,6 +21342,11 @@
 	},
 /obj/item/storage/box/evidence{
 	pixel_y = -5
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -39286,6 +39287,9 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/evidence)
 "rjA" = (
@@ -54189,7 +54193,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable{
-	icon_state = "2-6"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/evidence)
