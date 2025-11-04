@@ -1388,7 +1388,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /obj/itemspecialeffect/barrier/void
 	name = "eldritch barrier"
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "voidbarrier"
+	icon_state = "void-barrier"
 
 	bullet_act(var/obj/projectile/P)
 		P.power * 2
