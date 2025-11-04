@@ -36570,12 +36570,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"dOs" = (
-/obj/disposalpipe/segment/food{
-	icon_state = "pipe-c"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northwest)
 "dOG" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -40735,11 +40729,11 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "gIk" = (
-/obj/disposalpipe/segment/food{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/decal/cleanable/dirt,
+/obj/disposalpipe/loafer{
+	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor,
 /area/station/maintenance/northwest)
 "gIq" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -41908,13 +41902,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"hzp" = (
-/obj/disposalpipe/segment/food{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/secwing)
 "hzu" = (
 /obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
@@ -42740,14 +42727,8 @@
 /area/station/crew_quarters/catering)
 "idP" = (
 /obj/table/reinforced/auto,
-/obj/item/pen/marker/blue{
-	pixel_x = -6;
-	pixel_y = -1
-	},
 /obj/machinery/door/firedoor/pyro,
-/obj/item/bell/hop{
-	pixel_y = 5
-	},
+/obj/machinery/phone,
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "ieH" = (
@@ -45648,7 +45629,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor,
 /area/station/maintenance/northwest)
 "koa" = (
 /obj/storage/closet/fire,
@@ -47289,8 +47270,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "lGf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -49722,9 +49702,8 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "nrT" = (
-/obj/storage/secure/closet/brig,
 /obj/machinery/light/small,
-/turf/simulated/floor/red,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/evidence)
 "nst" = (
 /obj/machinery/conveyor/WE{
@@ -50309,10 +50288,6 @@
 	dir = 1
 	},
 /area/station/engine/coldloop)
-"nPA" = (
-/obj/rack,
-/turf/simulated/floor/black,
-/area/station/security/evidence)
 "nPH" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -51999,7 +51974,7 @@
 	},
 /area/station/engine/monitoring)
 "oYj" = (
-/obj/disposalpipe/loafer,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/northwest)
 "oYr" = (
@@ -52279,6 +52254,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -53622,6 +53598,23 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"qid" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/door/firedoor/pyro,
+/obj/item/bell/hop{
+	pixel_y = 8;
+	pixel_x = -3
+	},
+/obj/item/pen/marker/blue{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
 "qiY" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "brig";
@@ -56687,6 +56680,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/item/storage/box/evidence,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -57597,6 +57591,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "tdb" = (
+/obj/storage/secure/closet/brig,
+/obj/machinery/light/small,
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "tdf" = (
@@ -58611,8 +58607,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "tTl" = (
-/obj/rack,
-/obj/item/storage/box/evidence,
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -60789,10 +60783,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
-"vpc" = (
-/obj/storage/secure/closet/brig,
-/turf/simulated/floor/red,
-/area/station/security/evidence)
 "vpJ" = (
 /obj/decal/tile_edge{
 	icon_state = "hazard_caution"
@@ -96375,7 +96365,7 @@ aWM
 bes
 aUk
 aZY
-oCZ
+qid
 nlB
 nIQ
 nlB
@@ -98760,7 +98750,7 @@ eym
 qPT
 tTl
 aAE
-nPA
+aAE
 vhC
 sxC
 aho
@@ -99066,9 +99056,9 @@ aAE
 aAE
 tdb
 nrT
-dOs
+auw
 oYj
-hzp
+awT
 ayw
 azU
 aBy
@@ -99367,7 +99357,7 @@ urV
 nTE
 nTE
 pff
-vpc
+uFn
 gIk
 lGe
 xME
