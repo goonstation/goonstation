@@ -48347,9 +48347,6 @@
 "qZB" = (
 /obj/table/round/auto,
 /obj/item/boardgame/chess,
-/obj/machinery/camera/directional/south{
-	pixel_x = 10
-	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
