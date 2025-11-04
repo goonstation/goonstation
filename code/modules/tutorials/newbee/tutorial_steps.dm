@@ -788,14 +788,14 @@
 
 /datum/tutorialStep/newbee/hand_swap
 	name = "Swapping Hands"
-	instructions = "Only one hand can be active at a time. You need an empty hand to take items from storage.<br>Press <b>E</b> or <b>middle-mouse click</b> to swap hands."
+	instructions = "Only one hand can be active at a time. You need an empty hand to take items from storage.<br>Press <b>E</b> to swap hands."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 	step_area = /area/tutorial/newbee/room_5
 
 	update_instructions()
 		var/swaphand = src.keymap.action_to_keybind("swaphand")
-		src.instructions = "Only one hand can be active at a time. You need an empty hand to take items from storage.<br>Press <b>[swaphand]</b> or <b>middle-mouse click</b> to swap hands."
+		src.instructions = "Only one hand can be active at a time. You need an empty hand to take items from storage.<br>Press <b>[swaphand]</b> swap hands."
 		..()
 
 	SetUp()
