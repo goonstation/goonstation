@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	name = "lesser slug"
-	desc = "Chopped up slug meat that's grown its own head, how talented."
+	desc = "Chopped up slug that's grown its own head, how talented. It yearns for the microwave."
 	icon_state = "lesserSlug"
 	fill_amt = 2
 	initial_volume = 25
