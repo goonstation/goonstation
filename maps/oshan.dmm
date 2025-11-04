@@ -31330,7 +31330,6 @@
 "eto" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/cashreg,
 /obj/noticeboard/persistent/customs/directional/north,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0;
@@ -31339,6 +31338,7 @@
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
+/obj/machinery/phone,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -31677,8 +31677,15 @@
 /area/station/medical/medbay)
 "eQC" = (
 /obj/disposalpipe/segment/mail,
-/obj/storage/secure/closet/brig,
-/obj/decal/stripe_delivery,
+/obj/rack,
+/obj/item/storage/box/evidence{
+	pixel_y = 0;
+	pixel_x = -6
+	},
+/obj/item/storage/box/evidence{
+	pixel_y = 0;
+	pixel_x = 9
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "eQF" = (
@@ -33485,6 +33492,7 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
+/obj/machinery/cashreg,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -33881,8 +33889,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/decal/stripe_delivery,
-/obj/storage/secure/closet/brig,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -39808,18 +39814,11 @@
 	dir = 4;
 	name = "interrogation pipe"
 	},
-/obj/rack,
 /obj/machinery/light/incandescent/blueish{
 	dir = 8
 	},
-/obj/item/storage/box/evidence{
-	pixel_y = 0;
-	pixel_x = 9
-	},
-/obj/item/storage/box/evidence{
-	pixel_y = 0;
-	pixel_x = -6
-	},
+/obj/storage/secure/closet/brig,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -42314,7 +42313,6 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
-/obj/machinery/vending/coffee,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "rCV" = (
@@ -42356,7 +42354,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/rack,
+/obj/storage/secure/closet/brig,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
