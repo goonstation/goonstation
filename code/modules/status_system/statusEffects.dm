@@ -1021,6 +1021,38 @@
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			. = ..()
 
+	humiliated
+		id = "humiliated"
+		name = "Humiliated"
+		desc = "Your crushing loss has humiliated you!<br>Slowed slightly, unable to sprint, unable to suicide, recieve triple damage from attacks."
+		unique = 1
+		icon_state = "-"
+		duration = INFINITE_STATUS
+		movement_modifier = /datum/movement_modifier/humiliation
+		effect_quality = STATUS_QUALITY_NEGATIVE
+
+		onAdd(optional=null)
+			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			. = ..()
+
+	victorious
+		id = "victorious"
+		name = "Victorious"
+		desc = "Your glorious win has filled you with pride!<br>Sped slightly."
+		icon_state = "janktank"
+		duration = INFINITE_STATUS
+		unique = 1
+		movement_modifier = /datum/movement_modifier/victorious
+		effect_quality = STATUS_QUALITY_POSITIVE
+
 	blocking
 		id = "blocking"
 		name = "Blocking"

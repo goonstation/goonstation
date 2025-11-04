@@ -5492,3 +5492,12 @@
 		mix_phrase = "The mixture emits a sudden whine of static and forms into swirling, many faceted shapes that hurt to look at."
 		result_amount = 2
 		mix_sound = 'sound/effects/radio_sweep1.ogg'
+
+	explodingheadjuice
+		name = "Juice That Makes Your Head Explode"
+		id = "explodingheadjuice"
+		result = "explodingheadjuice"
+		required_reagents = list("blackpowder" = 1, "hard_punch" = 1, "juice_raspberry" = 1, "prions" = 1, "sonicpowder" = 1)
+		mix_phrase = "The mixture coalesces into a dark red liquid."
+		result_amount = 5
+

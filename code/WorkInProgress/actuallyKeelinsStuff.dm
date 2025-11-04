@@ -1332,6 +1332,7 @@ Returns:
 	desc = "An ancient solution to the ancient problem of wanting to stab somebody, but not wanting them to be able to stab you back."
 	force = 10
 	throwforce = 20
+	contraband = 4
 	color = "#ffffff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "spear"

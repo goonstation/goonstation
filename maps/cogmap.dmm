@@ -4732,12 +4732,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"ats" = (
-/obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "atv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5420,20 +5414,6 @@
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
-/area/station/crew_quarters/fitness)
-"avT" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avU" = (
 /turf/simulated/floor/specialroom/gym,
@@ -20317,12 +20297,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"bxa" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/phone,
-/turf/simulated/floor/black,
-/area/station/bridge/customs)
 "bxe" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -39694,6 +39668,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"fLG" = (
+/obj/table/reinforced/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "fMv" = (
 /obj/machinery/computer/cloning,
 /obj/item/paper/Cloning,
@@ -47225,6 +47205,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/research)
+"lDZ" = (
+/obj/railing/boxing{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lED" = (
 /obj/storage/crate{
 	desc = "Wow! Crate may or may not still contain bottles.";
@@ -58366,6 +58360,12 @@
 	dir = 4
 	},
 /area/space)
+"tPC" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/phone,
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
 "tQq" = (
 /obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
@@ -95485,7 +95485,7 @@ aWM
 aUk
 aUk
 aZY
-bxa
+tPC
 nlB
 nIQ
 nlB
@@ -109351,7 +109351,7 @@ aqJ
 akT
 akT
 auH
-avT
+lDZ
 axm
 ayH
 aAl
@@ -109953,7 +109953,7 @@ aoi
 apt
 aqI
 akT
-ats
+fLG
 auI
 fxi
 aoa
