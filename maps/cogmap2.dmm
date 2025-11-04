@@ -8826,14 +8826,12 @@
 /obj/item/clothing/under/misc/mime/alt,
 /obj/item/clothing/suit/suspenders,
 /obj/item/clothing/suit/scarf,
-/obj/storage/closet/dresser{
-	anchored = 1;
-	name = "costume dresser";
-	pixel_y = 20
-	},
 /obj/ladder/embed{
 	id = "smiling";
 	pixel_y = 32
+	},
+/obj/storage/closet/dresser/hollow{
+	pixel_y = 20
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)

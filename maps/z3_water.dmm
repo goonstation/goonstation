@@ -3981,12 +3981,11 @@
 /obj/cable/green{
 	icon_state = "1-8"
 	},
-/obj/storage/closet/dresser{
-	pixel_y = 21;
-	anchored = 1
-	},
 /obj/item/clothing/mask/greencultmask,
 /obj/item/clothing/suit/green_robes,
+/obj/storage/closet/dresser/hollow{
+	pixel_y = 20
+	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "AP" = (
