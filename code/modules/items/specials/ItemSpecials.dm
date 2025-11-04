@@ -1391,7 +1391,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon_state = "void-barrier"
 
 	bullet_act(var/obj/projectile/P)
-		P.power * 2
+		P.power = P.power * 2
 		..()
 
 /datum/item_special/flame
