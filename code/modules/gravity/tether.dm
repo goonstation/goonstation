@@ -131,7 +131,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /// Makes gravity "swiss cheese" across the station
 /obj/machinery/gravity_tether/station/proc/emag_effect()
 	var/changed_area_count = 0
-	for(var/area_name in get_accessible_station_areas())
+	var/list/areas = get_accessible_station_areas()
+	shuffle_list(areas)
+	for(var/area_name in areas)
 		// we do little a picking on genetics, as a treat
 		if (prob(TETHER_EMAG_CHANGE_CHANCE) || istype(station_areas[area_name], /area/station/medical/research))
 			changed_area_count += 1
