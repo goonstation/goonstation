@@ -1048,6 +1048,16 @@ DEFINE_FLOORS(minitiles/black,
 	name = "boxing mat"
 	icon_state = "boxing"
 
+	Entered(atom/movable/M, atom/OldLoc)
+		..()
+		if (!istype(OldLoc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", INFINITE_STATUS, M)
+
+	Exited(atom/movable/M, atom/newloc)
+		..()
+		if (!istype(newloc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", 5 SECONDS, M)
+
 /turf/simulated/floor/specialroom/gym/alt
 	name = "gym mat"
 	icon_state = "gym_mat"
@@ -2322,8 +2332,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		..()
 		src.material_trigger_when_attacked(C, user, 1)
-	else
-		return attack_hand(user)
 
 /turf/simulated/floor/proc/reinforce(obj/item/rods/I)
 	src.ReplaceWithEngineFloor()

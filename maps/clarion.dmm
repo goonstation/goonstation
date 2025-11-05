@@ -1307,6 +1307,12 @@
 /obj/item/hand_labeler,
 /turf/simulated/floor/black,
 /area/station/hangar/main)
+"anN" = (
+/obj/table/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/fitness)
 "aoh" = (
 /obj/cable,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -3876,20 +3882,6 @@
 /obj/stool/bench/auto,
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
-"aGj" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "aGk" = (
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -7039,12 +7031,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/security/hos)
-"bka" = (
-/obj/table/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/fitness)
 "bkl" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -15039,6 +15025,20 @@
 	dir = 5
 	},
 /area/station/ai_monitored/armory)
+"fEU" = (
+/obj/railing/boxing{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "fFG" = (
 /obj/item/storage/wall/fire{
 	dir = 1;
@@ -29001,6 +29001,21 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
+"pFf" = (
+/obj/machinery/computer/card{
+	dir = 1
+	},
+/obj/machinery/drainage,
+/obj/machinery/phone/wall{
+	pixel_y = 32;
+	pixel_x = 8
+	},
+/obj/machinery/firealarm/directional/north{
+	pixel_x = -8;
+	pixel_y = 30
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/ne,
+/area/station/bridge/customs)
 "pFt" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail{
@@ -39640,21 +39655,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"xsl" = (
-/obj/machinery/computer/card{
-	dir = 1
-	},
-/obj/machinery/drainage,
-/obj/machinery/phone/wall{
-	pixel_y = 32;
-	pixel_x = 8
-	},
-/obj/machinery/firealarm/directional/north{
-	pixel_x = -8;
-	pixel_y = 30
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/ne,
-/area/station/bridge/customs)
 "xsx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2{
@@ -76041,7 +76041,7 @@ cmp
 qBc
 fto
 aJD
-aGj
+fEU
 aHq
 aIr
 bhd
@@ -76341,7 +76341,7 @@ aAk
 fNe
 aCi
 aDj
-bka
+anN
 aFw
 lTl
 aGk
@@ -83605,7 +83605,7 @@ myq
 uiC
 wvc
 wYg
-xsl
+pFf
 ksH
 wwT
 tMD
