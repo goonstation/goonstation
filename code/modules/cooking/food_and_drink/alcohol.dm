@@ -389,6 +389,13 @@
 		icon_state = "celery"
 		edible = 1
 
+	eyestalk
+		name = "slug eyestalk"
+		desc = "A favourite cocktail adornment of cultured ogres."
+		icon_state = "eyestalk"
+		edible = 1
+		appearance_flags = KEEP_TOGETHER
+
 // idk where to put this so here
 /obj/item/straw
 	name = "drinking straw"
