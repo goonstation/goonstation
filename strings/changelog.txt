@@ -1,5 +1,10 @@
 
 (t)wed nov 05 25
+(u)glowbold
+(p)25101
+(e)⚖💊💡|C-Balance, A-Medical, A-Station-Systems
+(*)Death alerts only send messages to the medical and spiritualaffairs mailgroups and include the type of health implant that triggered the alert.
+(+)Death alerts only indicate if the person has a clone implant, not the location of the cloner. Rejoice, mindhackers!
 (u)LeahTheTech
 (p)25099
 (e)⚖⛔|C-Balance, C-Removal
