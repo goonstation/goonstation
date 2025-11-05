@@ -39,9 +39,9 @@
 (e)🪲⚖💪|C-Bug, C-Balance, A-Traits
 (+)The list of possible addictions from the addict trait has been reworked.
 (t)sun nov 02 25
+(u)AI-the-artificial-idiot
 (p)24936
 (e)🆕⚗|C-Feature A-Chemistry
-(u)AI-the-artificial-idiot
 (*)Adds "juice that makes your head explode", a mixable disease reagent which infects the victim with exploding head syndrome.
 (u)LeahTheTech
 (+)Clicking on a turf to move your pulled object towards it now only works with an empty hand. Janitors rejoice as your mop bucket stays bloody still for once.
