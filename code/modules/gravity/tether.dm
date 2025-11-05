@@ -117,6 +117,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if(src.emagged)
 		src.emag_effect()
 		return
+	for(var/client/C in clients)
+		var/mob/M = C.mob
+		if(M?.z == src.z) shake_camera(M, 5, 32, 0.2)
 	for(var/area_name in get_accessible_station_areas())
 		station_areas[area_name].has_gravity = TRUE
 
@@ -125,6 +128,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if(src.emagged)
 		src.emag_effect()
 		return
+	for(var/client/C in clients)
+		var/mob/M = C.mob
+		if(M?.z == src.z) shake_camera(M, 5, 32, 0.2)
 	for(var/area_name in get_accessible_station_areas())
 		station_areas[area_name].has_gravity = FALSE
 
@@ -141,14 +147,23 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			if(changed_area_count >= TETHER_EMAG_CHANGE_COUNT)
 				break
 
+// TTODO: TYPEINFO for mech scanning
 /obj/machinery/gravity_tether/current_area
 
 /obj/machinery/gravity_tether/current_area/activate()
+	. = ..()
 	var/area/A = get_area(src)
+	for (var/mob/M in A)
+		if (M.client)
+			shake_camera(M, 5, 32, 0.2)
 	A.has_gravity = TRUE
 
 /obj/machinery/gravity_tether/current_area/deactivate()
+	. = ..()
 	var/area/A = get_area(src)
+	for (var/mob/M in A)
+		if (M.client)
+			shake_camera(M, 5, 32, 0.2)
 	A.has_gravity = FALSE
 
 ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
