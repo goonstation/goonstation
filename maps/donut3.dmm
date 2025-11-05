@@ -48712,7 +48712,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/red,
 /area/station/security/evidence)
 "peX" = (
 /obj/disposalpipe/segment/mail,
