@@ -310,7 +310,7 @@
 	update_icon()
 		if(src.icon_stack_value == 1)
 			var/ore_state = pick("ore1", "ore1b")
-			src.icon_state = "[ore_state]_$$[src.default_material]"
+			src.icon_state = "[ore_state]_$$molitz_b"
 		else
 			src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
