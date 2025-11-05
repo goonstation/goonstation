@@ -825,9 +825,9 @@ datum
 			description = "Gross goop that sticks to everything it touches."
 			reagent_state = LIQUID
 			depletion_rate = 0.6
-			fluid_r = 116
-			fluid_b = 73
-			fluid_g = 226
+			fluid_r = 164
+			fluid_b = 98
+			fluid_g = 188
 			transparency = 180
 			viscosity = 0.8
 			block_slippy = 1
@@ -835,7 +835,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(-1, 60 SECONDS, rgb(116,226,73))
+					simulated_target.wetify(-1, 60 SECONDS, rgb(164,188,98))
 
 		glue
 			name = "space glue"
