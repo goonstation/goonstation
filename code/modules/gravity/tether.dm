@@ -140,7 +140,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 				break
 
 /obj/machinery/gravity_tether/current_area
-	req_access = list()
 
 /obj/machinery/gravity_tether/current_area/activate()
 	var/area/A = get_area(src)
