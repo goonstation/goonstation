@@ -1616,6 +1616,7 @@
 #include "code\modules\medical\diseases\cold.dm"
 #include "code\modules\medical\diseases\corrupt_robotic_transformation.dm"
 #include "code\modules\medical\diseases\dna_spread.dm"
+#include "code\modules\medical\diseases\exploding_head_syndrome.dm"
 #include "code\modules\medical\diseases\fake_gbs.dm"
 #include "code\modules\medical\diseases\flu.dm"
 #include "code\modules\medical\diseases\food_poisoning.dm"

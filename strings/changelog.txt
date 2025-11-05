@@ -1,4 +1,49 @@
 
+(t)wed nov 05 25
+(u)glowbold
+(p)25101
+(e)⚖💊💡|C-Balance, A-Medical, A-Station-Systems
+(*)Death alerts only send messages to the medical and spiritualaffairs mailgroups and include the type of health implant that triggered the alert.
+(+)Death alerts only indicate if the person has a clone implant, not the location of the cloner. Rejoice, mindhackers!
+(u)LeahTheTech
+(p)25099
+(e)⚖⛔|C-Balance, C-Removal
+(+)Security roles no longer start with a panic button in their pouch.
+(u)CalliopeSoups
+(p)25113
+(e)🎨|C-Sprites
+(+)Lesser slugs can be placed in the microwave to promote healthy growth!
+(u)SnugglyCactus
+(p)24861
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(*)Added distorts to amphibian clothing, toggleable with *clothes.
+(u)TemThrush
+(p)25028
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Adds a nightgown and half-mask to the masquerade and novelty clothing crate.
+(u)Red Screen Of Death
+(p)25001
+(e)🆕🧱|C-Feature, A-Materials
+(+)Recent material research reports that heating miracle ore may now rarely cause it to turn into negative matter.
+(u)Egregorious
+(p)25115
+(e)🪲⚖💪|C-Bug, C-Balance, A-Traits
+(+)The list of possible addictions from the addict trait has been reworked.
+(t)sun nov 02 25
+(p)24936
+(e)🆕⚗|C-Feature A-Chemistry
+(u)AI-the-artificial-idiot
+(*)Adds "juice that makes your head explode", a mixable disease reagent which infects the victim with exploding head syndrome.
+(u)LeahTheTech
+(+)Clicking on a turf to move your pulled object towards it now only works with an empty hand. Janitors rejoice as your mop bucket stays bloody still for once.
+(u)Skotcher
+(p)25016
+(e)🗺|A-Mapping
+(+)Pruned camera coverage across all of Kondaru. Crimers rejoice!
+(u)Valtsu0
+(p)24955
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)You now pull while being pulled, allowing you to form conga lines
 (t)sat nov 01 25
 (u)cringe
 (p)23994

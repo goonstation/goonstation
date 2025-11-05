@@ -189,13 +189,12 @@
 	icon_state = "ammopouch-sec"
 	health = 6
 	w_class = W_CLASS_SMALL
-	slots = 6
+	slots = 5
 	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash,\
 	/obj/item/reagent_containers/food/snacks/donut,\
-	/obj/item/instrument/whistle/security,
-	/obj/item/device/panicbutton)
+	/obj/item/instrument/whistle/security)
 	prevent_holding = list(/obj/item/storage)
 
 	empty
@@ -205,8 +204,7 @@
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 1,\
 	/obj/item/instrument/whistle/security,\
-	/obj/item/reagent_containers/food/snacks/donut/custom/frosted,
-	/obj/item/device/panicbutton)
+	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
 /obj/item/storage/ntsc_pouch
 	name = "tacticool pouch"
@@ -220,8 +218,7 @@
 	spawn_contents = list(/obj/item/handcuffs/ = 1,
 	/obj/item/handcuffs/guardbot = 1,
 	/obj/item/device/flash,
-	/obj/item/instrument/whistle/security,
-	/obj/item/device/panicbutton)
+	/obj/item/instrument/whistle/security)
 
 
 	ntso
