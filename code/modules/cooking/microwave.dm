@@ -434,7 +434,7 @@ TYPEINFO(/obj/machinery/microwave)
 				if (src.slug)
 					src.icon_state = "mwbloodyS"
 					var/mob/adultSlug = new /mob/living/critter/small_animal/slug
-					if (rand(6))
+					if (prob(6))
 						src.visible_message(SPAN_NOTICE("Nature is beautiful."))
 					adultSlug.set_loc(get_turf(src))
 				else
