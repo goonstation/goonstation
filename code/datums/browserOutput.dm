@@ -279,6 +279,8 @@ var/global
 			if(src.owner.holder)
 				src.owner.holder.playeropt(targetMob)
 		if ("observe")
+			if(!isadmin(src.owner) && isadmin(targetMob) && !targetMob.client?.player_mode)
+				return // no
 			if (istype(src.owner.mob, /mob/dead/target_observer))
 				var/mob/dead/target_observer/obs = src.owner.mob
 				if (!obs.locked)

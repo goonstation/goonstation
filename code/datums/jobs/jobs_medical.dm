@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/datum/job/medical)
 /datum/job/medical
-	linkcolor = MEDICAL_LINK_COLOR
+	ui_colour = TGUI_COLOUR_PINK
 	slot_card = /obj/item/card/id/medical
 	job_category = JOB_MEDICAL
 
