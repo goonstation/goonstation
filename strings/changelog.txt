@@ -1,5 +1,9 @@
 
 (t)wed nov 05 25
+(u)CalliopeSoups
+(p)24914
+(e)⚖🛠️|C-Balance, A-Engineering
+(+)Mechcomp device frames and cabinets are now mechscannable.
 (u)Glamurio (Ryou)
 (p)24775
 (e)🎨💅🌱|C-Sprites, C-QoL, A-Hydroponics
