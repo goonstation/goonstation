@@ -1,5 +1,9 @@
 
 (t)wed nov 05 25
+(u)LeahTheTech
+(p)25099
+(e)⚖⛔|C-Balance, C-Removal
+(+)Security roles no longer start with a panic button in their pouch.
 (u)CalliopeSoups
 (p)25113
 (e)🎨|C-Sprites
