@@ -520,6 +520,17 @@
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/medbay/lobby)
+"afW" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/station/security/quarters)
 "aga" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -2560,6 +2571,15 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"aKi" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/evidence)
 "aKp" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -2781,9 +2801,6 @@
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "aOm" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -37284,15 +37301,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
-"lDo" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/security/evidence)
 "lDO" = (
 /obj/machinery/power/data_terminal,
 /obj/decal/stripe_delivery,
@@ -40127,12 +40135,12 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "mvU" = (
-/obj/disposalpipe/junction/right/east,
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/redwhite/corner{
 	dir = 8
@@ -40331,10 +40339,13 @@
 	},
 /area/station/security/equipment)
 "mza" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -48695,6 +48706,12 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/evidence)
 "peX" = (
@@ -49903,12 +49920,6 @@
 	},
 /area/station/medical/robotics)
 "pyY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
@@ -61906,6 +61917,16 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
+"thZ" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/evidence)
 "tif" = (
 /obj/machinery/computer/atmosphere/pumpcontrol{
 	dir = 4;
@@ -62456,12 +62477,6 @@
 /turf/space,
 /area/supply/spawn_point)
 "trA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/storage/secure/closet/brig,
 /turf/simulated/floor/redblack{
 	dir = 3
@@ -72367,20 +72382,12 @@
 	},
 /area/station/security/main)
 "wpo" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/light_switch/south,
 /obj/machinery/computer3/generic/secure_data{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
+/obj/cable,
 /turf/simulated/floor/redblack{
 	dir = 3
 	},
@@ -76905,12 +76912,6 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "xDq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/storage/secure/closet/brig,
 /obj/machinery/light/small,
 /turf/simulated/floor/redblack{
@@ -77034,6 +77035,12 @@
 	},
 /area/station/engine/inner)
 "xEz" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -104055,7 +104062,7 @@ xAh
 sao
 tbL
 cKu
-kbD
+afW
 pyY
 fDs
 kbD
@@ -104358,7 +104365,7 @@ gUz
 gUz
 gUz
 peO
-lDo
+gUz
 gUz
 jmA
 mbq
@@ -104961,7 +104968,7 @@ abJ
 gUz
 rWZ
 uLP
-qgO
+aKi
 trA
 gUz
 gYt
@@ -105263,7 +105270,7 @@ fQA
 gUz
 exy
 qgO
-qgO
+aKi
 wpo
 gUz
 cHd
@@ -105565,7 +105572,7 @@ eAA
 gUz
 eDk
 teq
-teq
+thZ
 aOm
 gUz
 oKk
