@@ -825,9 +825,9 @@ datum
 			description = "Gross goop that sticks to everything it touches."
 			reagent_state = LIQUID
 			depletion_rate = 0.6
-			fluid_r = 164
-			fluid_b = 98
-			fluid_g = 188
+			fluid_r = 116
+			fluid_b = 73
+			fluid_g = 226
 			transparency = 180
 			viscosity = 0.8
 			block_slippy = 1
