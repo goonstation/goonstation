@@ -2461,7 +2461,6 @@
 /datum/contextAction/triage_tag
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
-	close_moved = FALSE
 	desc = ""
 	icon_state = "hey"
 	var/level = -1
