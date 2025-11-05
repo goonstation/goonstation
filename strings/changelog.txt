@@ -1,5 +1,9 @@
 
 (t)wed nov 05 25
+(u)SnugglyCactus
+(p)24861
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(*)Added distorts to amphibian clothing, toggleable with *clothes.
 (u)TemThrush
 (p)25028
 (e)🎨🎩|C-Sprites, A-Clothing
