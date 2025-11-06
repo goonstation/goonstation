@@ -35,6 +35,8 @@
 
 	remove_equipment()
 		var/mob/dead/target_observer/hivemind_observer/hivemind_observer = src.owner.current
+		if (!istype(hivemind_observer))
+			return //they're something else somehow, give up
 		var/mob/dead/observer/ghost_mob = src.owner.current.ghostize()
 
 		if (!hivemind_observer.corpse)
