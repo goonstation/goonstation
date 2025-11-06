@@ -5,14 +5,15 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether
 	name = "gravity tether"
 	desc = "A rather delicate piece of machinery that normalizes gravity to Earth-like levels."
-	icon = 'icons/obj/large/32x64.dmi'
-	icon_state = "magbeacon"
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state = "grav_tether_active"
 	density = TRUE
 	anchored = ANCHORED_ALWAYS
-	bound_width = 32
+	bound_width = 64
 	bound_height = 32
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	status = REQ_PHYSICAL_ACCESS
+	layer = EFFECTS_LAYER_BASE // so it covers people who walk behind it
 	speech_verb_say = list("bleeps", "bloops", "drones", "beeps", "boops", "emits")
 	/// Are we currently active
 	var/active = TRUE
@@ -20,10 +21,14 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	var/locked = FALSE
 	/// Is this currently processing a gravity change
 	var/working = FALSE
-	/// How quickly are people allowed to change toggle the active state
+	/// How quickly are people allowed to change states
 	var/cooldown = 15 SECONDS
+	/// Delay between attempting to toggle and the effect atually changing
+	var/delay = 10 SECONDS // needs to be shorter than cooldown
 	/// Is this machine emagged
 	var/emagged = FALSE
+	/// List of target area references, populated on init
+	var/list/area/target_area_refs = list()
 
 /obj/machinery/gravity_tether/attack_hand(mob/user)
 	if(..())
@@ -39,7 +44,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return
 	var/cooldown_timer = GET_COOLDOWN(src, "gravity_toggle")
 	if (cooldown_timer)
-		src.say("Recalculating gravity matrix, [TO_SECONDS(cooldown_timer)] seconds remaining.")
+		src.say("Recalculating gravity matrix. [TO_SECONDS(cooldown_timer)] seconds remaining.")
 		return
 	if (tgui_alert(user, "Really [src.active ? "disable" : "enable"] [src]?", "Gravity Confirmation", list("Yes", "No")) == "Yes")
 		// tgui_alert is async, so we need to check again
@@ -47,6 +52,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		if (cooldown_timer)
 			src.say("Recalculating gravity matrix, [TO_SECONDS(cooldown_timer)] seconds remaining.")
 			return
+		src.say("Processing gravity change.")
 		src.toggle(user)
 
 /obj/machinery/gravity_tether/attackby(obj/item/I, mob/user)
@@ -62,34 +68,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return
 	. = ..()
 
-/obj/machinery/gravity_tether/proc/toggle(mob/user)
-	src.say("Tether [src.active ? "disabled" : "enabled"]. Have a nice day!")
-	OVERRIDE_COOLDOWN(src, "gravity_toggle", src.cooldown)
-	if (src.active)
-		src.deactivate()
-		return
-	src.activate()
-
-/obj/machinery/gravity_tether/proc/activate()
-	src.active = TRUE
-	src.icon_state = "magbeacon"
-
-/obj/machinery/gravity_tether/proc/deactivate()
-	src.active = FALSE
-	src.icon_state = "magbeacon_off"
-
-/obj/machinery/gravity_tether/station
-	req_access = list(access_engineering_chief)
-	cooldown = 60 SECONDS
-	locked = TRUE
-	/// Delay between attempting to toggle and the effect atually changing
-	var/delay = 10 SECONDS // needs to be shorter than cooldown
-
-/obj/machinery/gravity_tether/station/New()
-	. = ..()
-	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
-
-/obj/machinery/gravity_tether/station/emag_act(mob/user, obj/item/card/emag/E)
+/obj/machinery/gravity_tether/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
 	if(src.emagged)
 		return
@@ -104,13 +83,81 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.emagged = FALSE
 	src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_SWEDISH)
 
-/obj/machinery/gravity_tether/station/toggle(mob/user)
-	command_alert("[src] aboard [station_name] will [src.active ? "deactivate" : "activate"] shortly. All crew are recommended to brace for a sudden change in local gravity.", "Gravity Tether Alert", alert_origin = ALERT_STATION)
-	logTheThing(LOG_STATION, user, "[src.active ? "disabled" : "enabled"] gravity tether at at [log_loc(src)].")
+/obj/machinery/gravity_tether/proc/toggle(mob/user)
 	src.working = TRUE
 	SPAWN(delay)
-		. = ..()
 		src.working = FALSE
+		src.say("Gravity field [src.active ? "disabled" : "enabled"].")
+		OVERRIDE_COOLDOWN(src, "gravity_toggle", src.cooldown)
+		if (src.active)
+			src.deactivate()
+			return
+		src.activate()
+
+/obj/machinery/gravity_tether/proc/activate()
+	src.active = TRUE
+	src.icon_state = "grav_tether_active"
+	if(src.emagged)
+		src.emag_effect()
+		return
+	for (var/area/A in src.target_area_refs)
+		A.has_gravity = TRUE
+	for(var/client/C in clients)
+		var/mob/M = C.mob
+		if(M?.z == src.z) shake_camera(M, 5, 32, 0.2)
+
+/obj/machinery/gravity_tether/proc/deactivate()
+	src.active = FALSE
+	src.icon_state = "grav_tether_disabled"
+	if(src.emagged)
+		src.emag_effect()
+		return
+	for (var/area/A in src.target_area_refs)
+		A.has_gravity = FALSE
+	for(var/client/C in clients)
+		var/mob/M = C.mob
+		if(M?.z == src.z) shake_camera(M, 5, 32, 0.2)
+
+/obj/machinery/gravity_tether/proc/emag_effect()
+	if (prob(50))
+		src.gravity_spike()
+	else
+		src.random_gravity()
+
+/obj/machinery/gravity_tether/proc/gravity_spike()
+	var/changed_area_count = 0
+	var/max_changes = min(TETHER_EMAG_CHANGE_COUNT, length(src.target_area_refs))
+	while (changed_area_count < max_changes)
+		var/area/A = pick(src.target_area_refs)
+		for (var/mob/M in A)
+			boutput(M, SPAN_ALERT("You feel so heavy..."))
+			M.changeStatus("knockdown", 3 SECONDS)
+		changed_area_count += 1
+
+///Flips gravity randomly
+/obj/machinery/gravity_tether/proc/random_gravity()
+	var/changed_area_count = 0
+	var/max_changes = min(TETHER_EMAG_CHANGE_COUNT, length(src.target_area_refs))
+	while (changed_area_count < max_changes)
+		var/area/A = pick(src.target_area_refs)
+		A.has_gravity = !A.has_gravity
+		changed_area_count += 1
+
+
+/obj/machinery/gravity_tether/station
+	req_access = list(access_engineering_chief)
+	cooldown = 60 SECONDS
+	locked = TRUE
+
+/obj/machinery/gravity_tether/station/New()
+	. = ..()
+	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
+
+/obj/machinery/gravity_tether/station/initialize()
+	. = ..()
+	var/list/areas = get_accessible_station_areas()
+	for (var/area_name in areas)
+		src.target_area_refs += areas[area_name]
 
 /obj/machinery/gravity_tether/station/activate()
 	. = ..()
@@ -134,21 +181,25 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	for(var/area_name in get_accessible_station_areas())
 		station_areas[area_name].has_gravity = FALSE
 
-/// Makes gravity "swiss cheese" across the station
-/obj/machinery/gravity_tether/station/proc/emag_effect()
-	var/changed_area_count = 0
-	var/list/areas = get_accessible_station_areas()
-	shuffle_list(areas)
-	for(var/area_name in areas)
-		// we do little a picking on genetics, as a treat
-		if (prob(TETHER_EMAG_CHANGE_CHANCE) || istype(station_areas[area_name], /area/station/medical/research))
-			changed_area_count += 1
-			station_areas[area_name].has_gravity = !station_areas[area_name].has_gravity
-			if(changed_area_count >= TETHER_EMAG_CHANGE_COUNT)
-				break
+/obj/machinery/gravity_tether/station/toggle(mob/user)
+	command_alert("[src] aboard [station_name] will [src.active ? "deactivate" : "activate"] shortly. All crew are recommended to brace for a sudden change in local gravity.", "Gravity Tether Alert", alert_origin = ALERT_STATION)
+	logTheThing(LOG_STATION, user, "[src.active ? "disabled" : "enabled"] station gravity tether at at [log_loc(src)].")
+	. = ..()
 
-// TTODO: TYPEINFO for mech scanning
+
+// TODO: TYPEINFO for mech scanning
 /obj/machinery/gravity_tether/current_area
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state = "lockdown_safe" //TODO: 32x32 sprite
+	bound_width = 32
+	bound_height = 32
+
+/obj/machinery/gravity_tether/current_area/initialize()
+	. = ..()
+	// TODO: check for other tethers controlling this area
+	// check if station area, then check if there's a tether in the current area
+	// might need to track multi-area tethers to cross-check those
+	src.target_area_refs += get_area(src)
 
 /obj/machinery/gravity_tether/current_area/activate()
 	. = ..()
@@ -166,29 +217,25 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			shake_camera(M, 5, 32, 0.2)
 	A.has_gravity = FALSE
 
+/obj/machinery/gravity_tether/current_area/attackby(obj/item/I, mob/user)
+	. = ..()
+	// TODO: Anchor/unanchor via wrench when off?
+	// TODO: Mechanics deconstruction?
+	// Need to re-configure the area ref var
+
+
 ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 /obj/machinery/gravity_tether/multi_area
-	///List of area typepaths this machine should control. You should make a subtype instead of map varediting.
+	///List of area typepaths this machine should control.
 	var/list/area_typepaths = list()
-	/// Dynamically generated list of area refs at runtime
-	var/list/area/area_references = list()
 
-/obj/machinery/gravity_tether/multi_area/New()
+/obj/machinery/gravity_tether/multi_area/initialize()
 	. = ..()
 	for (var/area_typepath in src.area_typepaths)
 		var/area/A = get_area_by_type(area_typepath)
 		if (istype(A))
-			src.area_references.Add(A)
+			src.target_area_refs.Add(A)
 
-/obj/machinery/gravity_tether/multi_area/activate()
-	. = ..()
-	for (var/area/A in src.area_references)
-		A.has_gravity = TRUE
-
-/obj/machinery/gravity_tether/multi_area/deactivate()
-	. = ..()
-	for (var/area/A in src.area_references)
-		A.has_gravity = FALSE
 
 #undef TETHER_EMAG_CHANGE_CHANCE
 #undef TETHER_EMAG_CHANGE_COUNT
