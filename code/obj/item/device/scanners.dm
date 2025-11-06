@@ -247,12 +247,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
-
-		var/result = data_core.general.forensic_search(search)
-		if(result)
-			boutput(user, data_core.general.forensic_search(search))
-		else
-			boutput(user, SPAN_ALERT("No match found in security records."))
+		boutput(user, data_core.general.forensic_search(search))
 		return
 
 

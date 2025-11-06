@@ -126,7 +126,7 @@
 					match_result += ": [fprint_right]  |  [fprint_left]</li>"
 				result += match_result
 			return result
-		return null
+		return SPAN_ALERT("No match found in security records for \"[search_input]\".")
 
 	/// Search for records based on name, dna, or fingerprints
 	proc/forensic_search_subjects(var/search_input)
@@ -169,9 +169,9 @@
 
 		// Get the input into a more usable format
 		// Print: (..3..-4567-...?...-CDEF) => Bunches: list("_3_","4567","_?_","CDEF")
+		search_input = limit_chars(search_input, list("?",".","-"), TRUE, TRUE)
 		var/list/input_bunches = splittext(search_input, "-")
 		for(var/i in length(input_bunches) to 1 step -1)
-			limit_chars(input_bunches[i], list("?","."), TRUE, TRUE)
 			if(input_bunches[i] == "")
 				input_bunches.Cut(i, i+1)
 		if(length(input_bunches) == 0)
