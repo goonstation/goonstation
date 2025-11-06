@@ -15,13 +15,22 @@
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
+
+TYPEINFO(/obj/item/storage/mechanics/housing_large)
+	mats = list("bohrum" = 100,
+				"conductive" = 50)
+
+TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
+	mats = list("bohrum" = 80,
+				"conductive_high" = 40)
+
 /obj/item/storage/mechanics // generic
 	name="Generic MechComp Housing"
 	desc="You should not bee seeing this! Call 1-800-CODER or just crusher it"
 	icon='icons/misc/mechanicsExpansion.dmi'
 	can_hold=list(/obj/item/mechanics, /obj/item/device/gps)
 	var/list/users = list() // le chumps who have opened the housing
-	deconstruct_flags = DECON_NONE //nope, so much nope.
+	deconstruct_flags = DECON_NONE
 	slots=1
 	var/num_f_icons = 0 // how many fill icons i have
 	var/light_time=0
@@ -227,6 +236,7 @@
 	get_desc()
 		.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""]\
 		[src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
+
 	housing_large // chonker
 		can_be_welded = TRUE
 		can_be_anchored = ANCHORED

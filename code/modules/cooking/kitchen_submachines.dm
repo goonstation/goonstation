@@ -503,7 +503,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			return
 		var/list/contained = list()
 		for (var/obj/item/I in src.contents)
-			contained += icon2base64(getFlatIcon(I), "chef_oven-\ref[src]")
+			contained += icon2base64(getFlatIcon(I,no_anim=TRUE), "chef_oven-\ref[src]")
 		return contained
 
 	proc/get_content_names()
