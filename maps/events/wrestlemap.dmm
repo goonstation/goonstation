@@ -10188,7 +10188,8 @@
 /area/station/science/research_director)
 "exs" = (
 /obj/decal/boxingrope{
-	dir = 4
+	dir = 4;
+	density = 0
 	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
@@ -12450,7 +12451,8 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/decal/boxingrope{
-	dir = 8
+	dir = 8;
+	density = 0
 	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
@@ -17142,7 +17144,8 @@
 /area/station/medical/medbay)
 "hIS" = (
 /obj/decal/boxingrope{
-	dir = 8
+	dir = 8;
+	density = 0
 	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
@@ -26897,11 +26900,12 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
 "mbl" = (
-/obj/railing/boxing{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/decal/boxingrope{
+	dir = 4;
+	density = 0
 	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
@@ -35780,9 +35784,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/device/microphone,
 /turf/simulated/floor,
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
+/area/station/engine/inner)
 "qgf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36919,7 +36921,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/decal/boxingrope,
+/obj/railing/boxing{
+	density = 0
+	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -45424,8 +45428,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/railing/boxing{
-	dir = 8
+/obj/decal/boxingrope{
+	dir = 8;
+	density = 0
 	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
@@ -47283,7 +47288,8 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/decal/boxingrope{
-	dir = 4
+	dir = 4;
+	density = 0
 	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
@@ -52593,7 +52599,9 @@
 /turf/simulated/floor/grey,
 /area/station/science/research_director)
 "xRU" = (
-/obj/railing/boxing,
+/obj/railing/boxing{
+	density = 0
+	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -52908,7 +52916,9 @@
 /area/station/crew_quarters/quarters_south)
 "xYd" = (
 /obj/machinery/light/incandescent,
-/obj/railing/boxing,
+/obj/railing/boxing{
+	density = 0
+	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
