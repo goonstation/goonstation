@@ -4203,6 +4203,7 @@ ABSTRACT_TYPE(/area/mining)
 	power_light = 0
 	power_environ = 0
 	expandable = FALSE
+	has_gravity = FALSE
 
 	proc/propagate_zone(var/turf/target_turf)
 		if(target_turf.transfer_evaluation)
@@ -4265,6 +4266,7 @@ ABSTRACT_TYPE(/area/mining)
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
+	has_gravity = FALSE
 
 	proc/SetName(var/name)
 		src.name = name
