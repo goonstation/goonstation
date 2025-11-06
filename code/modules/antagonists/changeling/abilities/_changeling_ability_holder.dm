@@ -30,6 +30,7 @@
 		. = ..()
 
 		if (from_who)
+			UnregisterSignal(from_who, COMSIG_MOB_DEATH)
 			from_who.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
 			from_who.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
 
@@ -103,14 +104,19 @@
 			if (istype(antag, /datum/antagonist/subordinate/changeling_critter))
 				mind_to_be_transferred.remove_antagonist(antag)
 
-		// Remove any previous hivemind member roles, and add a new one.
-		var/already_hivemind = FALSE
-		if (mind_to_be_transferred.get_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER))
-			already_hivemind = TRUE
-			mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, silent = TRUE)
-		mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
-		if (!already_hivemind)
-			mind_to_be_transferred.current.show_antag_popup(ROLE_CHANGELING_HIVEMIND_MEMBER)
+		// "gracefully" transfer existing hivemind members without messing up lings who are backseating
+		if (istype(M, /mob/dead/target_observer/hivemind_observer))
+			var/mob/dead/target_observer/hivemind_observer/hivemind_observer = M
+			hivemind_observer.hivemind_owner = src
+			hivemind_observer.set_observe_target(src.owner)
+			var/datum/antagonist/subordinate/hivemind_member/antag_role = mind_to_be_transferred.get_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
+			//we skip this bit if they're the ling themselves, you shouldn't subordinate to yourself!
+			if (antag_role && hivemind_observer != src.master)
+				//look for our master's mind, if they've relinquished control it'll be in the stored observer, otherwise it'll just be Here
+				antag_role.master = src.master?.mind || src.owner.mind
+		else
+			mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
+
 		return mind_to_be_transferred.current
 
 	proc/return_control_to_master()
@@ -120,6 +126,7 @@
 			//Return the controller to the hivemind, with their original names.
 			boutput(src.owner,"<h2><span class='combat bold'>[master] has retaken control of the flesh!</span></h2>")
 			src.owner.mind.transfer_to(temp_controller)
+			temp_controller.set_observe_target(src.owner)
 			temp_controller = null
 			boutput(master, SPAN_NOTICE("We retake control of our form!"))
 			changeling_master_mind.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
