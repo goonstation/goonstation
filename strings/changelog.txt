@@ -1,5 +1,14 @@
 
 (t)wed nov 05 25
+(u)CalliopeSoups
+(p)24914
+(e)⚖🛠️|C-Balance, A-Engineering
+(+)Mechcomp device frames and cabinets are now mechscannable.
+(u)Glamurio (Ryou)
+(p)24775
+(e)🎨💅🌱|C-Sprites, C-QoL, A-Hydroponics
+(*)Adds phytoscopic goggles. Analyzing plants has never been so easy! Check your local hydroponics locker.
+(+)Phytoscopic goggles do not scan genes by default. You can upgrade them via requisition reward.
 (u)glowbold
 (p)25101
 (e)⚖💊💡|C-Balance, A-Medical, A-Station-Systems
@@ -30,9 +39,9 @@
 (e)🪲⚖💪|C-Bug, C-Balance, A-Traits
 (+)The list of possible addictions from the addict trait has been reworked.
 (t)sun nov 02 25
+(u)AI-the-artificial-idiot
 (p)24936
 (e)🆕⚗|C-Feature A-Chemistry
-(u)AI-the-artificial-idiot
 (*)Adds "juice that makes your head explode", a mixable disease reagent which infects the victim with exploding head syndrome.
 (u)LeahTheTech
 (+)Clicking on a turf to move your pulled object towards it now only works with an empty hand. Janitors rejoice as your mop bucket stays bloody still for once.
