@@ -76,6 +76,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	fill_amt = 2
 	initial_volume = 25
 	initial_reagents = "slime"
+	food_color = "#A4BC62"
 	var/eyes_present = TRUE
 
 	heal(var/mob/M)
