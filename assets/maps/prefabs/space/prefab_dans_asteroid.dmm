@@ -1123,7 +1123,6 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/table/reinforced/auto,
-/obj/table/reinforced/auto,
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "QA" = (

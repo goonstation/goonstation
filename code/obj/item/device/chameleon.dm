@@ -100,8 +100,8 @@ TYPEINFO(/obj/item/device/chameleon)
 		if(disrupt_on_drop)
 			disrupt()
 
-	attack_self()
-		toggle()
+	attack_self(mob/user)
+		toggle(user)
 
 	get_desc(dist)
 		if (dist < 1 && !istype(src, /obj/item/device/chameleon/bomb))
@@ -134,8 +134,12 @@ TYPEINFO(/obj/item/device/chameleon)
 		if (target.plane == PLANE_HUD && !isitem(target)) //don't grab hud stuff _unless_ it's an item. Grabs are the only exception I know
 			return
 		//Okay, enough scanning shit without actual icons yo.
-		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target))
-			if (!cham)
+		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target) && target.alpha > 5)
+			var/icon/testIcon = getFlatIcon(target)
+			if(!testIcon) //weird edgecases
+				return
+
+			if (!cham || src.cham.qdeled || src.cham.disposed)
 				cham = new(src)
 				cham.master = src
 
@@ -145,45 +149,51 @@ TYPEINFO(/obj/item/device/chameleon)
 			cham.real_name = target.name
 			cham.desc = target.desc
 			cham.real_desc = target.desc
-			cham.icon = getFlatIcon(target)
+			cham.icon = testIcon
 			cham.set_dir(target.dir)
 			can_use = 1
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			user.show_text("\The [target] is not compatible with the scanner.", "red")
 
-	proc/toggle()
+	proc/toggle(mob/user)
 		if (!can_use)
 			return
 
 		if (!anim)
 			anim = new(src)
 
+		if (!src.cham || src.cham.qdeled || src.cham.disposed) //Stop sending people to nullspace after the dummy is destroyed >:(
+			boutput(user, SPAN_ALERT("[src] detects an error in its projection registry and performs an emergency factory reset!"))
+			src.disrupt()
+			src.cham = null
+			src.can_use = FALSE //Go scan something to get a new dummy object
+			return
 		if (active) //active_dummy)
 			active = 0
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
-			boutput(usr, SPAN_NOTICE("You deactivate the [src]."))
+			boutput(user, SPAN_NOTICE("You deactivate the [src]."))
 			anim.set_loc(get_turf(src))
-			flick("emppulse",anim)
+			FLICK("emppulse",anim)
 			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
-				boutput(usr, SPAN_ALERT("As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector."))
+				boutput(user, SPAN_ALERT("As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector."))
 				return
 
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
 			src.active = 1
-			usr.set_loc(cham)
+			user.set_loc(cham)
 
-			boutput(usr, SPAN_NOTICE("You activate the [src]."))
+			boutput(user, SPAN_NOTICE("You activate the [src]."))
 			anim.set_loc(get_turf(src))
-			flick("emppulse",anim)
+			FLICK("emppulse",anim)
 			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 
@@ -195,10 +205,10 @@ TYPEINFO(/obj/item/device/chameleon)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
 			can_use = 0
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			SPAWN(10 SECONDS)
 				can_use = 1
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 
 /obj/item/device/chameleon/bomb
 	name = "chameleon bomb"

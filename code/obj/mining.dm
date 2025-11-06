@@ -136,6 +136,7 @@
 	var/turf/magnetic_center
 	alpha = 128
 	anchored = ANCHORED_ALWAYS
+	event_handler_flags = IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 
 	small
 		width = 7
@@ -159,11 +160,12 @@
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			for (var/obj/O in T)
-				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
+				continue_if_overlay_or_effect(O)
+				if (!HAS_FLAG(O.event_handler_flags, IMMUNE_MINERAL_MAGNET))
 					qdel(O)
 			T.ClearAllOverlays()
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+				if(ismobcritter(L) && L.is_npc)
 					qdel(L)
 			if(istype(T,/turf/unsimulated) && ( T.can_build || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
@@ -198,7 +200,7 @@
 		// this used to use an area, which meant it only checked
 		var/turf/origin = get_turf(src)
 		var/unacceptable = FALSE
-		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
+		for (var/turf/T in block(locate(origin.x-1, origin.y-1, origin.z), locate(origin.x + width, origin.y + height, origin.z)))
 
 			for (var/mob/living/L in T)
 				if(ismobcritter(L)) // we don't care about critters
@@ -372,6 +374,7 @@
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
 	anchored = ANCHORED_ALWAYS
+	req_access = list(access_mining, access_mining_outpost)
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -657,7 +660,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.set_opacity(0)
 				M.set_density(0)
-				M.invisibility = INVIS_INFRA
+				M.invisibility = INVIS_MESON
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
@@ -747,7 +750,7 @@
 				else
 					var/mob/living/carbon/human/H = usr
 					if(!src.allowed(H))
-						boutput(usr, SPAN_ALERT("Access denied. Please contact the Chief Engineer or Captain to access the override."))
+						boutput(usr, SPAN_ALERT("Access denied."))
 					else
 						src.cooldown_override = !src.cooldown_override
 					. = TRUE
@@ -767,7 +770,7 @@
 	var/temp = null
 	var/list/linked_magnets = list()
 	var/obj/machinery/mining_magnet/linked_magnet = null
-	req_access = list(access_engineering_chief)
+	req_access = list(access_mining)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
@@ -777,6 +780,9 @@
 			src.connection_scan()
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if(!src.allowed(user))
+			boutput(user, SPAN_ALERT("Access Denied."))
+			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "MineralMagnet", src.name)
@@ -920,7 +926,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			. = ..()
 			if (length(space_overlays)) // Are we on the edge of a chunk wall
 				if (src.ore) return // Skip if there's ore here already
-				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				var/list/color_vals = algae_controller().get_color(src)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
@@ -1040,6 +1046,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			stone_color = "#114444"
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
+
+	plasma_reef
+		name = "dense plasmacoral"
+		desc = "A large formation of plasmacoral, completely impassable."
+		invincible = TRUE
+		default_material = "plasmacoral"
+		mat_changename = TRUE
+		uses_default_material_appearance = FALSE
+		stone_color = "#A114FF"
+		color = "#A114FF"
 
 	algae
 		name = "sea foam"
@@ -1540,7 +1556,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
-	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
+	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
 	fullbright = 0
@@ -1951,6 +1967,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_item_state = "pshovel1"
 	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 6
 	powered_force = 12
 	dig_strength = 0
@@ -1993,12 +2010,12 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 
 	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
-		flick("hedron-WtoM", src)
+		FLICK("hedron-WtoM", src)
 		..()
 
 	power_down(var/mob/user)
 		src.set_icon_state("hedron-W")
-		flick("hedron-MtoW", src)
+		FLICK("hedron-MtoW", src)
 		..()
 
 	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
@@ -2169,7 +2186,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
 
 		for (var/obj/geode/geode in get_turf(src))
-			geode.ex_act(2, null, 5 * src.expl_heavy)
+			geode.ex_act(2, null, 5)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
@@ -2204,6 +2221,7 @@ TYPEINFO(/obj/item/cargotele)
 			for (var/subtype in typesof(supertype))
 				allowed_types[subtype] = 1
 		allowed_types -= /obj/storage/closet/flock
+		allowed_types -= concrete_typesof(/obj/storage/crate/gang_crate)
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
@@ -2278,7 +2296,8 @@ TYPEINFO(/obj/item/cargotele)
 
 		boutput(user, SPAN_NOTICE("Teleporting [cargo] to [src.target]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
+		var/datum/action/bar/private/icon/callback/teleport = new(user, cargo, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null, src)
+		actions.start(teleport, user)
 		return TRUE
 
 
@@ -2301,8 +2320,22 @@ TYPEINFO(/obj/item/cargotele)
 		if(!mob_teled)
 			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
 
-		cargo.set_loc(get_turf(src.target))
-		target.receive_cargo(cargo)
+		// teleportation instability causes targets to get sent randomly
+		var/obj/submachine/cargopad/pad
+		var/turf/turf
+		if (cargo.artifact?.activated && cargo.artifact.teleportationally_unstable)
+			if (prob(30))
+				turf = get_random_station_turf()
+			else
+				pad = pick(global.cargo_pad_manager.pads)
+				turf = get_turf(pad)
+		else
+			pad = src.target
+			turf = get_turf(pad)
+
+		cargo.set_loc(turf)
+		pad?.receive_cargo(cargo)
+
 		elecflash(src)
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -2724,6 +2757,8 @@ TYPEINFO(/obj/submachine/cargopad)
 	researchoutpost
 		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
+	radio
+		name = "Radio Station Pad"
 
 	New()
 		..()

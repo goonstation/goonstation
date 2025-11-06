@@ -46,6 +46,8 @@
 
 	cheat
 		charge = INFINITY
+		can_fire()
+			return TRUE
 
 /obj/machinery/power/pt_laser/New()
 	..()
@@ -64,7 +66,7 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Input", PROC_REF(_toggle_input_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Input", PROC_REF(_set_input_mechchomp))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Togle Power Output", PROC_REF(_toggle_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Output", PROC_REF(_toggle_output_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
 
 		if(!terminal)
@@ -429,7 +431,10 @@
 				animate_meltspark(A)
 		else
 			melt_prob = (abs(output)) / (0.5 MEGA WATTS)
-			if (prob(melt_prob))
+			if (istype(A, /obj/blob))
+				var/obj/blob/blob = A
+				blob.take_damage(min(100, round(melt_prob/2)), damtype = "laser")
+			else if (prob(melt_prob))
 				if (istype(A, /obj/geode))
 					A.ex_act(melt_prob > 20 ? 1 : 3, null, melt_prob / 4) //lazy severity because it doesn't really matter here
 				else
@@ -584,7 +589,7 @@
 		return
 
 	if(prob(min(power/1e5,50)))
-		INVOKE_ASYNC(L, TYPE_PROC_REF(/mob/living, emote), "scream") //might be spammy if they stand in it for ages, idk
+		INVOKE_ASYNC(L, TYPE_PROC_REF(/atom, emote), "scream") //might be spammy if they stand in it for ages, idk
 
 	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
 		var/safety = 1
@@ -616,8 +621,8 @@
 			L.TakeDamage("chest", 0, power/(1 MEGA WATT)) //ow
 			if(ishuman(L) && prob(min(power/(1 MEGA WATT),50)))
 				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
-				L:sever_limb(limb)
-				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
+				if(L:sever_limb(limb))
+					L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
 		if(200 MEGA WATTS + 1 to 5 GIGA WATTS) //you really fucked up this time buddy
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)
@@ -635,100 +640,7 @@
 	return 0
 
 
-/obj/linked_laser/ptl
-	name = "laser"
-	desc = "A powerful laser beam."
-	icon = 'icons/obj/power.dmi'
-	icon_state = "ptl_beam"
-	event_handler_flags = USE_FLUID_ENTER
-	var/obj/machinery/power/pt_laser/source = null
-
-/obj/linked_laser/ptl/New(loc, dir)
-	..()
-	src.add_simple_light("laser_beam", list(0, 0.8 * 255, 0.1 * 255, 255))
-
-/obj/linked_laser/ptl/proc/update_source_power()
-	src.alpha = clamp(((log(10, max(1,src.source.laser_power() * src.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-
-/obj/linked_laser/ptl/try_propagate()
-	. = ..()
-	var/turf/T = get_next_turf()
-	if (!T || istype(T, /turf/unsimulated/wall/trench)) //edge of z_level or oshan trench
-		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
-		if (seller.incident(src))
-			src.sink = seller
-	var/power = src.source.laser_power()
-	src.update_source_power()
-	if(istype(src.loc, /turf/simulated/floor) && prob(power/1 MEGA WATT))
-		src.loc:burn_tile()
-
-	for (var/mob/living/L in src.loc)
-		if (isintangible(L))
-			continue
-		if (!source.burn_living(L,power)) //burn_living() returns 1 if they are gibbed, 0 otherwise
-			source.affecting_mobs |= L
-
-/obj/linked_laser/ptl/copy_laser(turf/T, dir)
-	var/wonky = FALSE //are we randomly turning?
-	var/wonky_facing = -1 //var to mimic the PTL mirror's facing system so we can use the same corner icon states
-	if (src.source.wacky && prob(10))
-		wonky = TRUE
-		dir = turn(dir, pick(-90, 90))
-		if ((src.dir | dir) in list(NORTHWEST, SOUTHEAST))
-			wonky_facing = 1
-		else
-			wonky_facing = 0
-
-	var/obj/linked_laser/ptl/new_laser = ..(T, dir)
-	new_laser.source = src.source
-
-	if (wonky)
-		new_laser.icon_state = src.get_corner_icon_state(wonky_facing)
-	return new_laser
-
-/obj/linked_laser/ptl/Crossed(atom/movable/AM)
-	..()
-	if (QDELETED(src))
-		return
-	if (isliving(AM) && !isintangible(AM))
-		if (!src.source.burn_living(AM, src.source.laser_power())) //burn_living() returns 1 if they are gibbed, 0 otherwise
-			source.affecting_mobs |= AM
-
-/obj/linked_laser/ptl/Uncrossed(var/atom/movable/AM)
-	if(isliving(AM) && source)
-		source.affecting_mobs -= AM
-	..()
-
-/obj/linked_laser/ptl/proc/burn_all_living_contents()
-	for(var/mob/living/L in src.loc)
-		if(src.source.burn_living(L,src.source.laser_power()) && source) //returns 1 if they were gibbed
-			source.affecting_mobs -= L
-
-/obj/linked_laser/ptl/become_endpoint()
-	..()
-	var/turf/next_turf = get_next_turf()
-	if (next_turf?.density)
-		src.source.blocking_objects |= next_turf
-	for (var/obj/object in next_turf)
-		if (src.is_blocking(object))
-			src.source.blocking_objects |= object
-
-/obj/linked_laser/ptl/release_endpoint()
-	..()
-	var/turf/next_turf = get_next_turf()
-	src.source.blocking_objects -= next_turf
-	for (var/obj/object in next_turf)
-		if (src.is_blocking(object))
-			src.source.blocking_objects -= object
-
-/obj/linked_laser/ptl/disposing()
-	src.remove_simple_light("laser_beam")
-	src.next?.previous = null
-	src.previous?.next = null
-	..()
-
-
-///This is a stupid singleton sink that exists so that lasers that hit the edge of the z-level have something to connect to
+///This is a stupid singleton laser sink that exists so that lasers that hit the edge of the z-level have something to connect to
 /obj/laser_sink/ptl_seller
 
 /obj/laser_sink/ptl_seller/incident(obj/linked_laser/ptl/laser)

@@ -7,6 +7,9 @@ var/datum/magpie_manager/magpie_man = new
 		src.magpie = locate("M4GP13")
 
 
+TYPEINFO(/obj/npc/trader/salvager)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
 	icon = 'icons/obj/trader.dmi'
@@ -16,12 +19,14 @@ var/datum/magpie_manager/magpie_man = new
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
 	currency = "Salvage Points"
+	speech_verb_say = "beeps"
+	use_speech_bubble = TRUE
+	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
+
 	var/distribute_earnings = FALSE
 
 	New()
 		..()
-
-		src.chat_text = new(null, src)
 
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)
@@ -53,38 +58,6 @@ var/datum/magpie_manager/magpie_man = new
 
 		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
 
-	var/list/speakverbs = list("beeps", "boops")
-	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
-	var/bot_speech_color
-
-	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
-		if (!message)
-			return
-		var/image/chat_maptext/chatbot_text = null
-		if (src.chat_text && !just_chat)
-			UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
-			SPAWN(1.5 SECONDS)
-				UpdateOverlays(null, "bot_speech_bubble")
-			if(!src.bot_speech_color)
-				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
-			var/maptext_color
-			if (sing)
-				maptext_color ="#D8BFD8"
-			else
-				maptext_color = src.bot_speech_color
-			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];")
-			if(chatbot_text && src.chat_text && length(src.chat_text.lines))
-				chatbot_text.measure(src)
-				//hack until measure is unfucked
-				chatbot_text.measured_height = 20
-				for(var/image/chat_maptext/I in src.chat_text.lines)
-					if(I != chatbot_text)
-						I.bump_up(chatbot_text.measured_height)
-
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, TRUE)
-
 	sold_item(datum/commodity/C, obj/S, amount, mob/user as mob)
 		. = ..()
 		if(istype(C, /datum/commodity/magpie/buy))
@@ -114,7 +87,7 @@ var/datum/magpie_manager/magpie_man = new
 
 		animate_scanning(user, . ? "#FFFF00" : "#ff4400", scan_time)
 		sleep(scan_time)
-		src.speak(.)
+		src.say(.)
 
 	proc/appraise(obj/item/I)
 		if(I.deconstruct_flags || isitem(I))
@@ -276,7 +249,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy)
 			. = 0
 			var/obj/item/device/powersink/salvager/sink = O
 			if(istype(O))
-				. =	round(( sink.power_drained / sink.max_power ) * 20000)
+				. =	round(( sink.power_drained / sink.max_power ) * 15000)
 
 	robotics
 		comname = "Robot Parts"
@@ -304,6 +277,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
 	proc/reroll_commodity()
 		if(length(targets))
 			comtype = pick(targets)
+			targets -= comtype
 			var/obj/object_type = comtype
 			comname = initial(object_type.name)
 			var/value = targets[comtype]
@@ -311,7 +285,6 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
 			baseprice = value
 			upperfluc = value * 0.10
 			lowerfluc = value * -0.05
-			targets -= comtype
 		else
 			comtype = null
 			hidden = TRUE
@@ -347,11 +320,18 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comtype = /obj/item/weldingtool/arcwelder
 		price = 500
 
+	caxe
+		comname = "Crash axe"
+		desc = "A light utility axe that can be serviced as a vicious weapon."
+		comtype = /obj/item/crashaxe
+		price = 400
+
 	sledgehammer
 		comname = "Sledgehammer"
 		desc = "A classic means of manual demolition."
 		comtype = /obj/item/breaching_hammer/salvager
 		price = 500
+		amount = 4
 
 #ifdef SECRETS_ENABLED
 	improved_zipgun
@@ -366,6 +346,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A salvaged and rebuilt pump action shotgun."
 		comtype = /obj/item/gun/kinetic/pumpweapon/riotgun/salvager
 		price = 1200
+		amount = 6
 
 	quadbarrel
 		comname = "Four Letter Word"
@@ -385,6 +366,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A makeshift laser rifle outfitted with a tube and cell."
 		comtype = /obj/item/gun/energy/makeshift/basic_salvager
 		price = 650
+		amount = 4
 
 	rifle
 		comname = "Survival Rifle"
@@ -397,24 +379,28 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A small .22 magazine for kinetic firearms."
 		comtype = /obj/item/ammo/bullets/bullet_22
 		price = 200
+		amount = 4
 
 	bullets_22_hp
 		comname = ".22 Hollow Point magazine"
 		desc = "A small .22 HP magazine for kinetic firearms. Less penetration and more pain."
 		comtype = /obj/item/ammo/bullets/bullet_22HP
 		price = 500
+		amount = 10
 
 	rifle_9mm
 		comname = "Rifle 9mm conversion"
 		desc = "Survival rifle conversion kit to 9mm."
 		comtype = /obj/item/survival_rifle_barrel/barrel_9mm
 		price = 500
+		amount = 10
 
 	bullets_9mm
 		comname = "9mm magazine"
 		desc = "A handgun magazine with 9x19mm rounds."
 		comtype = /obj/item/ammo/bullets/bullet_9mm
 		price = 399
+		amount = 10
 
 #ifndef RP_MODE
 	rifle_556
@@ -429,12 +415,14 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A magazine of 5.56 rounds, an intermediate rifle cartridge."
 		comtype =  /obj/item/ammo/bullets/assault_rifle
 		price = 699
+		amount = 10
 
 	assault_mag_ap
 		comname = "Armor Piercing Rifle magazine"
 		desc = "A magazine of 5.56 AP rounds, an intermediate rifle cartridge."
 		comtype =  /obj/item/ammo/bullets/assault_rifle/armor_piercing
 		price = 850
+		amount = 8
 
 	pepper_nades
 		comname = "Crowd Dispersal Grenades"
@@ -448,34 +436,51 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "Flashbang and smoke grenades."
 		comtype = /obj/item/storage/grenade_pouch/salvager_distract
 		price = 350
+		amount = 6
 
 #ifndef UNDERWATER_MAP
 	pod_kinetic
-		comname = "Ballistic System"
+		comname = "SPE-12 Ballistic System"
 		comtype = /obj/item/shipcomponent/mainweapon/gun
 		desc = "A pod-mounted kinetic weapon system."
+		price = 5000
+		amount = 3
+
+	pod_kinetic_9mm
+		comname = "PEP-9L Ballistic System"
+		comtype = /obj/item/shipcomponent/mainweapon/gun_9mm/uses_ammo
+		desc = "A pod-mounted kinetic weapon system. Has limited ammunition."
 		price = 3000
+		amount = 3
+
+	pod_kinetic_22
+		comname = "PEP-22L Ballistic System"
+		comtype = /obj/item/shipcomponent/mainweapon/gun_22/uses_ammo
+		desc = "A pod-mounted kinetic weapon system. Has limited ammunition."
+		price = 2200
+		amount = 3
 
 	pod_40mm
 		comname = "40mm Assault Platform"
 		comtype = /obj/item/shipcomponent/mainweapon/artillery/lower_ammo
 		desc = "A pair of pod-mounted ballistic launchers, fires explosive 40mm shells. Holds 6 shells."
-		price = 5000
-		amount = 5
+		price = 8000
+		amount = 3
 
 	artillery_ammo
 		comname = "40mm HE Ammunition"
 		comtype = /obj/item/ammo/bullets/autocannon
 		desc = "High explosive grenades, for the resupplement of artillery assault platforms."
 		price = 1500
-		amount = 4
+		amount = 2
 #endif
 
 	barbed_wire
 		comname = "Barbed Wire"
 		comtype = /obj/item/deployer/barricade/barbed/wire
 		desc = "A coiled up length of barbed wire that can be used to make some kind of barricade."
-		price = 400
+		price = 350
+		amount = 10
 
 #ifdef SECRETS_ENABLED
 	shield
@@ -483,11 +488,12 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A giant sheet of steel with a strap.  Not quite the acme of defense but it should do."
 		comtype = /obj/item/salvager_shield
 		price = 700
+		amount = 4
 
 	shield_belt
 		comname = "Shield Belt"
 		comtype = /obj/item/storage/belt/powered/salvager
-		desc = "Belt generates an energy field around the user.  Provides some enviromental protection as well."
+		desc = "Belt generates an energy field around the user.  Provides some environmental protection as well."
 		price = 1200
 		amount = 4
 #endif
@@ -511,6 +517,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comtype = /obj/item/device/powersink/salvager
 		desc = "A device that can be used to drain power and sell it back to the M4GP13."
 		price = 1000
+		amount = 4
 
 	crank
 		comname = "Crank (5x pills)"
@@ -531,9 +538,9 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		price = 100
 
 	decon
-		comname = "Deconstructor"
-		desc = "Replacement deconstructor.  Sometimes you lose things and sometimes people yeet them into space..."
-		comtype = /obj/item/deconstructor
+		comname = "Dualconstructor"
+		desc = "Replacement dualconstructor.  Sometimes you lose things and sometimes people yeet them into space..."
+		comtype = /obj/item/tool/omnitool/dualconstruction_device
 		price = 10
 
 	omnitool
@@ -541,6 +548,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "Replacement omnitool.  No one wants to carry around each tool individually."
 		comtype = /obj/item/tool/omnitool
 		price = 100
+		amount = 6
 
 	comm_upgrade
 		comname = "Radio channel upgrade"
@@ -567,18 +575,21 @@ ABSTRACT_TYPE(/datum/commodity/magpie/special/sell/arms)
 		desc = "A rare semi-automatic 9mm pistol that was collected from an military vessel."
 		comtype = /obj/item/gun/kinetic/pistol
 		price = 1650
+		amount = 4
 
 	pulse_rifle
 		comname = "Pulse Rifle"
 		desc = "A sleek energy rifle. Often kept under lock and key at nanotrasen facilities."
 		comtype = /obj/item/gun/energy/pulse_rifle
 		price = 1800
+		amount = 6
 
 	breaching_charge
 		comname = "Thermite Breaching Charge"
 		desc = "A self-contained thermite breaching charge, useful for destroying walls."
 		comtype = /obj/item/breaching_charge/thermite
 		price = 500
+		amount = 4
 
 #ifdef RP_MODE
 	rifle_556

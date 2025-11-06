@@ -3,6 +3,7 @@
  * @copyright 2020
  * @author Original ThePotato97 (https://github.com/ThePotato97)
  * @author Changes Mordent (https://github.com/mordent-goonstation)
+ * @author Changes glowbold (https://github.com/pgmzeta)
  * @license ISC
  */
 
@@ -10,7 +11,7 @@ import { useState } from 'react';
 import {
   Box,
   Button,
-  ColorBox,
+  Divider,
   Flex,
   Icon,
   LabeledList,
@@ -22,28 +23,36 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goonstation/HealthStat';
+import { COLORS } from '../constants';
 import { Window } from '../layouts';
+import { DiskDrive } from './common/DiskDrive';
 
 interface CloningConsoleData {
+  allowDeadScan: BooleanLike;
   allowMindErasure;
   allowedToDelete;
   balance;
   cloneHack;
   cloneRecords;
   clonesForCash;
-  cloningWithRecords;
   completion;
   disk;
   diskReadOnly;
+  diskHasRecord: BooleanLike;
+  diskName: string;
+  diskColor: string;
   geneticAnalysis;
   meatLevels;
   message;
   mindWipe;
   occupantScanned;
+  podEfficient: BooleanLike[];
   podNames;
+  podSpeed: BooleanLike[];
   scannerGone;
   scannerLocked;
   scannerOccupied;
@@ -75,7 +84,6 @@ const healthToColor = (oxy, tox, burn, brute) => {
 
 const Tab = {
   Functions: 'functions',
-  Records: 'records',
   Pods: 'pods',
 };
 
@@ -97,13 +105,7 @@ const TypedNoticeBox = (props) => {
 
 export const CloningConsole = () => {
   const { data, act } = useBackend<CloningConsoleData>();
-  const {
-    balance,
-    cloneHack,
-    clonesForCash,
-    cloningWithRecords,
-    allowedToDelete,
-  } = data;
+  const { balance, cloneHack, clonesForCash, allowedToDelete } = data;
 
   // N.B. uses `deletionTarget` that is shared with Records component
   const [deletionTarget, setDeletionTarget] = useState('');
@@ -111,11 +113,7 @@ export const CloningConsole = () => {
     id: string;
     note: string;
   } | null>(null);
-  const [tab, setTab] = useSharedState('tab', Tab.Records);
-
-  if (!cloningWithRecords && tab === Tab.Records) {
-    setTab(Tab.Pods);
-  }
+  const [tab, setTab] = useSharedState('tab', Tab.Pods);
 
   return (
     <Window
@@ -187,15 +185,6 @@ export const CloningConsole = () => {
           <Stack.Item>
             <Section fitted>
               <Tabs>
-                {!!cloningWithRecords && (
-                  <Tabs.Tab
-                    icon="list"
-                    selected={tab === Tab.Records}
-                    onClick={() => setTab(Tab.Records)}
-                  >
-                    Records
-                  </Tabs.Tab>
-                )}
                 <Tabs.Tab
                   icon="box"
                   selected={tab === Tab.Pods}
@@ -222,12 +211,6 @@ export const CloningConsole = () => {
             <StatusSection />
           </Stack.Item>
           <Stack.Item grow={1}>
-            {tab === Tab.Records && !!cloningWithRecords && (
-              <Records
-                setDeletionTarget={setDeletionTarget}
-                setViewingNote={setViewingNote}
-              />
-            )}
             {tab === Tab.Pods && <Pods />}
             {tab === Tab.Functions && <Functions />}
           </Stack.Item>
@@ -240,12 +223,12 @@ export const CloningConsole = () => {
 const Functions = () => {
   const { act, data } = useBackend<CloningConsoleData>();
   const {
+    allowDeadScan,
     allowMindErasure,
     disk,
     diskReadOnly,
     geneticAnalysis,
     mindWipe,
-    cloningWithRecords,
   } = data;
 
   return (
@@ -272,6 +255,16 @@ const Functions = () => {
           </Button>
         </Box>
       </Section>
+      {!!allowDeadScan && (
+        <Section title="Necrosis Scanning Module">
+          <Box bold>Notice:</Box>
+          <Box>
+            Installation of the NecroScan II cloner upgrade module enables
+            scanning of rotted and skeletal remains. Extreme genetic degredation
+            is not covered by the NecroScan II cloner module.
+          </Box>
+        </Section>
+      )}
       {!!allowMindErasure && (
         <Section title="Criminal Rehabilitation Controls">
           <Box>
@@ -298,40 +291,6 @@ const Functions = () => {
           </Box>
         </Section>
       )}
-      {!!disk && (
-        <Section
-          title="Disk Controls"
-          buttons={
-            <>
-              {cloningWithRecords ? (
-                <Button
-                  icon="upload"
-                  color={'blue'}
-                  onClick={() => act('load')}
-                >
-                  Load from disk
-                </Button>
-              ) : (
-                <Button
-                  icon="upload"
-                  color={'blue'}
-                  onClick={() => act('loadAndClone')}
-                >
-                  Clone from disk
-                </Button>
-              )}
-              <Button icon="eject" color={'bad'} onClick={() => act('eject')}>
-                Eject Disk
-              </Button>
-            </>
-          }
-        >
-          <Box>
-            <Icon color={diskReadOnly ? 'bad' : 'good'} name={'check'} />
-            {` ${diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
-          </Box>
-        </Section>
-      )}
     </>
   );
 };
@@ -343,7 +302,11 @@ const StatusSection = () => {
     occupantScanned,
     scannerOccupied,
     scannerGone,
-    cloningWithRecords,
+    disk,
+    diskReadOnly,
+    diskHasRecord,
+    diskName,
+    diskColor,
   } = data;
 
   const message = data.message || { text: '', status: '' };
@@ -389,41 +352,55 @@ const StatusSection = () => {
           </Button>
         }
       >
-        {!!cloningWithRecords &&
-          (!!scannerGone || !!occupantScanned || !scannerOccupied) && (
+        {!!scannerGone && (
+          <Box>
+            <Icon
+              color={scannerGone || !scannerOccupied ? 'bad' : 'good'}
+              name={scannerGone || !scannerOccupied ? 'times' : 'check'}
+            />
+            {` ${scannerGone ? 'No scanner detected.' : ''}`}
+          </Box>
+        )}
+        <Button
+          width={scannerGone ? 8 : 7}
+          icon="dna"
+          align="center"
+          color={scannerGone ? 'bad' : 'good'}
+          disabled={occupantScanned || scannerGone}
+          onClick={() => act('scan')}
+        >
+          Scan
+        </Button>
+        <Button
+          icon="user-plus"
+          align="center"
+          color="good"
+          onClick={() => act('clone')}
+        >
+          Clone
+        </Button>
+        <Divider />
+        <Stack vertical>
+          <Stack.Item align="center">
+            <DiskDrive
+              onEject={() => act('diskAction')}
+              onInsert={() => act('diskAction')}
+            >
+              {disk && (
+                <DiskDrive.Disk color={diskColor}>{diskName}</DiskDrive.Disk>
+              )}
+            </DiskDrive>
+          </Stack.Item>
+          <Stack.Item align="center">
             <Box>
               <Icon
-                color={scannerGone || !scannerOccupied ? 'bad' : 'good'}
-                name={scannerGone || !scannerOccupied ? 'times' : 'check'}
+                color={!disk || diskReadOnly ? 'bad' : 'good'}
+                name={disk ? 'check' : 'xmark'}
               />
-              {` ${scannerGone ? 'No scanner detected.' : scannerOccupied ? 'Occupant scanned.' : 'Scanner has no occupant.'}`}
+              {` ${!disk ? 'No disk.' : diskHasRecord ? 'Disk has saved scan.' : diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
             </Box>
-          )}
-        {!scannerGone &&
-          !occupantScanned &&
-          !!scannerOccupied &&
-          !!cloningWithRecords && (
-            <Button
-              width={scannerGone ? 8 : 7}
-              icon="dna"
-              align="center"
-              color={scannerGone ? 'bad' : 'good'}
-              disabled={occupantScanned || scannerGone}
-              onClick={() => act('scan')}
-            >
-              Scan
-            </Button>
-          )}
-        {!scannerGone && !!scannerOccupied && !cloningWithRecords && (
-          <Button
-            icon="dna"
-            align="center"
-            color={'good'}
-            onClick={() => act('scanAndClone')}
-          >
-            Scan & Clone
-          </Button>
-        )}
+          </Stack.Item>
+        </Stack>
       </Section>
     </>
   );
@@ -463,13 +440,13 @@ const Records = (props: RecordsProps) => {
                 <Box
                   style={{
                     position: 'absolute',
-                    left: '50%',
+                    left: '48%',
                     top: '20%',
                     transform: 'translate(-40%, 22px)',
                   }}
                   fontSize="9px"
                 >
-                  OXY / TOX / BURN / BRUTE
+                  TOTAL : OXY / TOX / BURN / BRUTE
                 </Box>
               </Flex.Item>
               <Flex.Item
@@ -501,54 +478,122 @@ const Records = (props: RecordsProps) => {
                     </Flex.Item>
                     <Flex.Item
                       className="cloning-console__body__item"
-                      style={{ width: '160px' }}
+                      style={{ width: '180px' }}
                     >
-                      <ColorBox
-                        mr={1}
-                        color={healthToColor(
-                          record.health.OXY,
-                          record.health.TOX,
-                          record.health.BURN,
-                          record.health.BRUTE,
-                        )}
-                      />
                       {record.implant && record.health.OXY >= 0 ? (
                         <Box inline>
-                          <HealthStat
-                            inline
-                            align="center"
-                            type="oxy"
-                            width={2}
-                          >
-                            {shortenNumber(record.health.OXY)}
-                          </HealthStat>
-                          {'/'}
-                          <HealthStat
-                            inline
-                            align="center"
-                            type="toxin"
-                            width={2}
-                          >
-                            {shortenNumber(record.health.TOX)}
-                          </HealthStat>
-                          {'/'}
-                          <HealthStat
-                            inline
-                            align="center"
-                            type="burn"
-                            width={2}
-                          >
-                            {shortenNumber(record.health.BURN)}
-                          </HealthStat>
-                          {'/'}
-                          <HealthStat
-                            inline
-                            align="center"
-                            type="brute"
-                            width={2}
-                          >
-                            {shortenNumber(record.health.BRUTE)}
-                          </HealthStat>
+                          {!!record.health.HealthImplant && (
+                            <>
+                              <Box
+                                inline
+                                align="center"
+                                width={3}
+                                color={healthToColor(
+                                  record.health.OXY,
+                                  record.health.TOX,
+                                  record.health.BURN,
+                                  record.health.BRUTE,
+                                )}
+                              >
+                                {record.health.OXY +
+                                  record.health.TOX +
+                                  record.health.BURN +
+                                  record.health.BRUTE}
+                              </Box>
+                              {':'}
+                              <HealthStat
+                                inline
+                                align="center"
+                                type="oxy"
+                                width={2}
+                              >
+                                {shortenNumber(record.health.OXY)}
+                              </HealthStat>
+                              {'/'}
+                              <HealthStat
+                                inline
+                                align="center"
+                                type="toxin"
+                                width={2}
+                              >
+                                {shortenNumber(record.health.TOX)}
+                              </HealthStat>
+                              {'/'}
+                              <HealthStat
+                                inline
+                                align="center"
+                                type="burn"
+                                width={2}
+                              >
+                                {shortenNumber(record.health.BURN)}
+                              </HealthStat>
+                              {'/'}
+                              <HealthStat
+                                inline
+                                align="center"
+                                type="brute"
+                                width={2}
+                              >
+                                {shortenNumber(record.health.BRUTE)}
+                              </HealthStat>
+                            </>
+                          )}
+                          {!record.health.HealthImplant && (
+                            <>
+                              <Box
+                                inline
+                                align="center"
+                                width={3}
+                                color={healthToColor(
+                                  record.health.OXY,
+                                  record.health.TOX,
+                                  record.health.BURN,
+                                  record.health.BRUTE,
+                                )}
+                              >
+                                {record.health.OXY +
+                                  record.health.TOX +
+                                  record.health.BURN +
+                                  record.health.BRUTE}
+                              </Box>
+                              {':'}
+                              <Box
+                                inline
+                                align="center"
+                                width={2}
+                                color={COLORS.damageType['oxy']}
+                              >
+                                ??
+                              </Box>
+                              {'/'}
+                              <Box
+                                inline
+                                align="center"
+                                width={2}
+                                color={COLORS.damageType['toxin']}
+                              >
+                                ??
+                              </Box>
+                              {'/'}
+                              <Box
+                                inline
+                                align="center"
+                                width={2}
+                                color={COLORS.damageType['burn']}
+                              >
+                                ??
+                              </Box>
+                              {'/'}
+                              <Box
+                                inline
+                                align="center"
+                                width={2}
+                                color={COLORS.damageType['brute']}
+                              >
+                                ??
+                              </Box>
+                            </>
+                          )}
                         </Box>
                       ) : (
                         'No Implant Detected'
@@ -627,7 +672,7 @@ const Records = (props: RecordsProps) => {
 
 const Pods = () => {
   const { data } = useBackend<CloningConsoleData>();
-  const { completion, meatLevels, podNames } = data;
+  const { completion, meatLevels, podNames, podSpeed, podEfficient } = data;
 
   if (!meatLevels.length) {
     return (
@@ -670,6 +715,16 @@ const Pods = () => {
             }}
           />
         </LabeledList.Item>
+        {(!!podSpeed[i] || !!podEfficient[i]) && (
+          <LabeledList.Item label="Upgrades">
+            {[
+              podSpeed[i] && 'SpeedyClone2000',
+              podEfficient[i] && 'Recycling Unit',
+            ]
+              .filter((x) => x)
+              .join(', ')}
+          </LabeledList.Item>
+        )}
       </LabeledList>
     </Section>
   ));

@@ -13,6 +13,7 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
 	w_class = W_CLASS_SMALL
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	force = 2
 	var/armed = 0
 	var/icon_state_armed = "grenade-chem-armed"
@@ -44,14 +45,41 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	..()
 	src.create_reagents(150000)
 	src.initialize_assemby()
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+	if(src.is_dangerous)
+		src.item_function_flags |= ASSEMBLY_NEEDS_MESSAGING
+
+/obj/item/chem_grenade/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+	..()
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+/obj/item/chem_grenade/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	var/reagents_to_log = null
+	for (var/obj/item/reagent_containers/glass/checked_beaker in src.beakers)
+		if (checked_beaker.reagents.total_volume) reagents_to_log += "[log_reagents(checked_beaker)] "
+	if (reagents_to_log)
+		return " [reagents_to_log]"
+
+/obj/item/chem_grenade/proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	//since we have a lot of icons for chem grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
+	parent_assembly.applier_icon_prefix = "chem_grenade"
+
+/obj/item/chem_grenade/proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+	parent_assembly.expended = TRUE
+	src.explode() //we don't delete the assembly here because its happening in explode() because of chem-shenanigans
+
+/// ----------------------------------------------
+
 
 ///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated. Mostly for like, custom grenades or whatever
 /obj/item/chem_grenade/proc/launcher_clone()
 	return new src.type
 
 /obj/item/chem_grenade/proc/initialize_assemby()
-	// completed grenade + assemblies -> chemical grenade assembly
-	src.AddComponent(/datum/component/assembly, list(/obj/item/assembly/time_ignite, /obj/item/assembly/prox_ignite, /obj/item/assembly/rad_ignite), PROC_REF(chem_grenade_assemblies), TRUE)
 	// completed grenade + screwdriver -> adjusting of the arming time
 	src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
 
@@ -103,6 +131,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 		return 1
 	var/area/A = get_area(src)
 	if(A.sanctuary)
+		return
+	if (isghostdrone(user) || isghostcritter(user))
 		return
 	// Custom grenades only. Metal foam etc grenades cannot be modified (Convair880).
 	var/log_reagents = null
@@ -170,68 +200,6 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 
 //chem grenade-assemblies code
 
-/// chem grenade assembly creation
-/obj/item/chem_grenade/proc/chem_grenade_assemblies(var/atom/to_combine_atom, var/mob/user)
-	var/obj/item/assembly/manipulated_assembly = to_combine_atom
-	if (!manipulated_assembly || !manipulated_assembly:status)
-		return
-	boutput(user, SPAN_NOTICE("You attach the [src.name] to the [manipulated_assembly.name]!"))
-	logTheThing(LOG_BOMBING, user, "made a chemical bomb with a [manipulated_assembly.name].")
-	message_admins("[key_name(user)] made a chemical bomb with a [manipulated_assembly.name].")
-
-	var/obj/item/assembly/chem_bomb/created_bomb = new /obj/item/assembly/chem_bomb(user)
-	created_bomb.attacher = key_name(user)
-
-	//i'm sinning here, but it's still better than UNLINT(manipulated_assembly:part1)
-	var/obj/item/assembly_part1
-	var/obj/item/device/igniter/assembly_part2
-	switch(manipulated_assembly.type)
-		if(/obj/item/assembly/time_ignite)
-			var/obj/item/assembly/time_ignite/time_assembly = manipulated_assembly
-			assembly_part1 = time_assembly.part1
-			assembly_part2 = time_assembly.part2
-			time_assembly.part1 = null
-			time_assembly.part2 = null
-			created_bomb.desc = "A very intricate igniter and timer assembly mounted to a chem grenade."
-			created_bomb.name = "Timer/Igniter/Chem Grenade Assembly"
-		if(/obj/item/assembly/prox_ignite)
-			var/obj/item/assembly/prox_ignite/prox_assembly = manipulated_assembly
-			assembly_part1 = prox_assembly.part1
-			assembly_part2 = prox_assembly.part2
-			prox_assembly.part1 = null
-			prox_assembly.part2 = null
-			created_bomb.desc = "A very intricate igniter and proximity sensor electrical assembly mounted to a chem grenade."
-			created_bomb.name = "Proximity/Igniter/Chem Grenade Assembly"
-		if(/obj/item/assembly/rad_ignite)
-			var/obj/item/assembly/rad_ignite/rad_assembly = manipulated_assembly
-			assembly_part1 = rad_assembly.part1
-			assembly_part2 = rad_assembly.part2
-			rad_assembly.part1 = null
-			rad_assembly.part2 = null
-			created_bomb.desc = "A very intricate igniter and signaller electrical assembly mounted to a chem grenade."
-			created_bomb.name = "Radio/Igniter/Chem Grenade Assembly"
-
-	// now we setting up the parts of the assembly at their fitting places
-	created_bomb.triggering_device = assembly_part1
-	created_bomb.c_state(0)
-	assembly_part1.set_loc(created_bomb)
-	assembly_part1.master = created_bomb //well, for stuff like this var/master is on item, i guess *shrug
-	created_bomb.igniter = assembly_part2
-	created_bomb.igniter.status = 1
-	assembly_part2.set_loc(created_bomb)
-	assembly_part2.master = created_bomb
-	manipulated_assembly.layer = initial(manipulated_assembly.layer)
-	user.u_equip(manipulated_assembly)
-	user.put_in_hand_or_drop(created_bomb)
-	src.master = created_bomb
-	src.layer = initial(src.layer)
-	user.u_equip(src)
-	src.set_loc(created_bomb)
-	created_bomb.payload = src
-	qdel(manipulated_assembly)
-	//We don't remove the assembly procs here since the bomb can be disassembled and we could manipulate it again.
-	return TRUE
-
 /// chem grenade time adjustment
 /obj/item/chem_grenade/proc/adjust_time(var/atom/to_combine_atom, var/mob/user)
 	if(src.grenade_time >= src.maximum_grenade_time)
@@ -239,7 +207,7 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	else
 		src.grenade_time += src.interval_grenade_time
 	boutput(user, SPAN_NOTICE("You set [src] to detonate in [src.grenade_time / (1 SECOND)] seconds."))
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	return TRUE
 
 
@@ -271,6 +239,23 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	..()
 	src.fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
 	src.fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
+
+/obj/item/chem_grenade/custom/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+	..()
+
+/// ----------- Trigger/Applier-Assembly-Related Procs -----------
+
+/obj/item/chem_grenade/custom/proc/assembly_check(var/manipulated_grenade, var/obj/item/second_part, var/mob/user)
+	//if secured, we return TRUE and prevent the combination
+	if (src.stage < 2)
+		boutput(user, SPAN_NOTICE("You need to finish the assembly of the grenade first."))
+		return TRUE
+	else
+		return FALSE
+
+/// ----------------------------------------------
 
 /obj/item/chem_grenade/custom/launcher_clone()
 	var/obj/item/chem_grenade/custom/out = ..()
@@ -330,7 +315,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass), PROC_REF(chem_grenade_filling), TRUE)
 	// unsecured grenade + wrench -> disassembling of the grenade
 	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 
 /// chem grenade filling proc
 /obj/item/chem_grenade/custom/proc/chem_grenade_filling(var/atom/to_combine_atom, var/mob/user)
@@ -368,11 +353,9 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.icon_state = "grenade-chem3"
 	src.desc = "A chemical grenade. Use it to unleash chemicals over whoever you see fit."
 	src.stage = 2
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	//Since we changed the state, remove all assembly components and add the next state ones
 	src.RemoveComponentsOfType(/datum/component/assembly)
-	// completed grenade + assemblies -> chemical grenade assembly
-	src.AddComponent(/datum/component/assembly, list(/obj/item/assembly/time_ignite, /obj/item/assembly/prox_ignite, /obj/item/assembly/rad_ignite), PROC_REF(chem_grenade_assemblies), TRUE)
 	// completed grenade + screwdriver -> adjusting of the arming time
 	src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
 	// completed grenade + wrench -> disassembling of the grenade
@@ -396,7 +379,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.grenade_time = src.grenade_time_standard
 	//Since we changed the state, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	return TRUE
 
 

@@ -682,6 +682,7 @@
 /area/space)
 "FD" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/engine/glow/blue,
 /area/space)
 "Gt" = (

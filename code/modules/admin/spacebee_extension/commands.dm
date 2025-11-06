@@ -40,8 +40,8 @@
 	execute(user, ckey, note)
 		addPlayerNote(ckey, user, note)
 
-		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a note for [ckey]: [note]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "added a note for [ckey]: [note]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "added a note for [ckey]: [note]", "admin")
 		message_admins(SPAN_INTERNAL("[user] (Discord) added a note for [ckey]: [note]"))
 
 		var/ircmsg[] = new()
@@ -109,7 +109,7 @@
 			if (!id && ("oldserver" in legacyData))
 				id = legacyData["oldserver"]
 
-			var/gameAdminCkey = playerNote.game_admin?.name || playerNote.game_admin?.ckey
+			var/gameAdminCkey = playerNote.game_admin?.alias || playerNote.game_admin?.player?.ckey
 			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
 				gameAdminCkey = legacyData["game_admin_ckey"]
 
@@ -143,18 +143,18 @@
 
 	execute(user, ckey, notice)
 		var/datum/player/player = make_player(ckey)
-		player.cloudSaves.fetch()
-		if (player.cloudSaves.getData("login_notice"))
+		player?.cloudSaves.fetch()
+		if (player?.cloudSaves.getData("login_notice"))
 			system.reply("Error, [ckey] already has a login notice set.", user)
 			return
 		var/message = "Message from Admin [user] at [roundLog_date]:\n\n[notice]"
-		if (!player.cloudSaves.putData("login_notice", message))
+		if (!player?.cloudSaves.putData("login_notice", message))
 			system.reply("Error, issue saving login notice, try again later.", user)
 			return
 		// else it succeeded
 		addPlayerNote(ckey, user, "New login notice set:\n\n[notice]")
-		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "added a login notice for [ckey]: [notice]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "added a login notice for [ckey]: [notice]", "admin")
 		message_admins(SPAN_INTERNAL("[user] (Discord) added a login notice for [ckey]: [notice]"))
 
 		ircbot.export("admin", list(
@@ -192,19 +192,8 @@
 
 		data["text_ban_length"] = length
 		data["reason"] = reason
-		if (length == "hour")
-			length = 60
-		else if (length == "day")
-			length = 1440
-		else if (length == "halfweek")
-			length = 5040
-		else if (length == "week")
-			length = 10080
-		else if (length == "twoweeks")
-			length = 20160
-		else if (length == "month")
-			length = 43200
-		else if (length == "perma")
+		length = src.duration_to_minutes(length)
+		if (length == "perma")
 			length = 0
 			data["text_ban_length"] = "Permanent"
 		else if (ckey(length) == "untilappeal")
@@ -347,8 +336,8 @@
 		for(var/client/C)
 			if (C.ckey == ckey)
 				del(C)
-				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "booted [constructTarget(C,"admin")].")
-				logTheThing(LOG_DIARY, "[user] (Discord)", null, "booted [constructTarget(C,"diary")].", "admin")
+				logTheThing(LOG_ADMIN, "[user] (Discord)", "booted [constructTarget(C,"admin")].")
+				logTheThing(LOG_DIARY, "[user] (Discord)", "booted [constructTarget(C,"diary")].", "admin")
 				system.reply("Booted [ckey].", user)
 				return
 		system.reply("Could not locate [ckey].", user)
@@ -363,8 +352,8 @@
 		for(var/client/C)
 			if (C.ckey == ckey)
 				del(C)
-				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "kicked [constructTarget(C,"admin")].")
-				logTheThing(LOG_DIARY, "[user] (Discord)", null, "kicked [constructTarget(C,"diary")].", "admin")
+				logTheThing(LOG_ADMIN, "[user] (Discord)", "kicked [constructTarget(C,"admin")].")
+				logTheThing(LOG_DIARY, "[user] (Discord)", "kicked [constructTarget(C,"diary")].", "admin")
 				system.reply("Kicked [ckey].", user)
 				return
 		system.reply("Could not locate [ckey].", user)
@@ -380,8 +369,8 @@
 			if (C.ckey == ckey)
 				message_admins("[user] (Discord) displayed an alert to [ckey] with the message \"[message]\"")
 				system.reply("Displayed an alert to [ckey].", user)
-				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
-				logTheThing(LOG_DIARY, "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
+				logTheThing(LOG_ADMIN, "[user] (Discord)", "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
+				logTheThing(LOG_DIARY, "[user] (Discord)", "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
 				if (C?.mob)
 					SPAWN(0)
 						C.mob.playsound_local(C.mob, 'sound/voice/animal/goose.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
@@ -421,8 +410,8 @@
 						M.set_loc(ASLoc)
 
 					M.show_text("<h2>[SPAN_ALERT("<b>You have been unprisoned and sent back to the station.</b>")]</h2>", "red")
-					logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
-					logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+					logTheThing(LOG_ADMIN, "[user] (Discord)", "prisoned [constructTarget(C,"admin")].")
+					logTheThing(LOG_DIARY, "[user] (Discord)", "prisoned [constructTarget(C,"diary")].", "admin")
 					system.reply("Unprisoned [ckey].", user)
 					return
 
@@ -432,8 +421,8 @@
 						M.changeStatus("unconscious", 8 SECONDS)
 						M.set_loc(prison)
 						M.show_text("<h2>[SPAN_ALERT("<b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b>")]</h2>", "red")
-						logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
-						logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+						logTheThing(LOG_ADMIN, "[user] (Discord)", "prisoned [constructTarget(C,"admin")].")
+						logTheThing(LOG_DIARY, "[user] (Discord)", "prisoned [constructTarget(C,"diary")].", "admin")
 						system.reply("Prisoned [ckey].", user)
 						return
 					system.reply("Could not locate prison zone.", user)
@@ -467,8 +456,8 @@
 		body = discord_emojify(body)
 		headline = discord_emojify(headline)
 		command_alert(body, headline, 'sound/misc/announcement_1.ogg')
-		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "has created a command report: [body]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", null, "has created a command report: [body]", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "has created a command report: [body]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "has created a command report: [body]", "admin")
 		message_admins("[user] (Discord) has created a command report")
 		system.reply("Command report created.", user)
 		global.cooldowns["transmit_centcom"] = 0 // reset cooldown for reply
@@ -476,7 +465,7 @@
 /datum/spacebee_extension_command/mode
 	name = "mode"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
-	help_message = "Check the gamemode of a server or set it by providing an argument (\"secret\", \"intrigue\", \"extended\")."
+	help_message = "Check the gamemode of a server or set it by providing an argument (\"secret\", \"extended\")."
 	argument_types = list(/datum/command_argument/string/optional="new_mode")
 
 	execute(user, new_mode)
@@ -492,8 +481,8 @@
 				which = ""
 
 			world.save_mode(new_mode)
-			logTheThing(LOG_ADMIN, "[user] (Discord)", null, "set the [which]mode as [new_mode]")
-			logTheThing(LOG_DIARY, "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
+			logTheThing(LOG_ADMIN, "[user] (Discord)", "set the [which]mode as [new_mode]")
+			logTheThing(LOG_DIARY, "[user] (Discord)", "set the [which]mode as [new_mode]", "admin")
 			message_admins("[user] (Discord) set the [which]mode as [new_mode].")
 			system.reply("Set the [which]mode to [new_mode].", user)
 		else if(length(new_mode) > 0)
@@ -548,8 +537,8 @@
 	action_name = "gib"
 
 	perform_action(user, mob/target)
-		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "gibbed [constructTarget(target,"admin")]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", target, "gibbed [constructTarget(target,"diary")].", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "gibbed [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "gibbed [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) gibbed [key_name(target)].")
 		target.transforming = 1
 		target.gib()
@@ -566,8 +555,8 @@
 			return FALSE
 		var/mob/living/carbon/human/H = target
 		H.limbs.sever("all")
-		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "delimbed [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "delimbed [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) delimbed [key_name(target)].")
 		return TRUE
 
@@ -585,8 +574,8 @@
 		if (!C.add_person_to_storage(target, FALSE))
 			system.reply("Error, cryoing failed.", user)
 			return FALSE
-		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "cryos [constructTarget(target,"admin")]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", target, "cryos [constructTarget(target,"diary")].", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "cryos [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "cryos [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) cryos [key_name(target)].")
 		return TRUE
 
@@ -596,8 +585,8 @@
 	action_name = "send to arrivals"
 
 	perform_action(user, mob/target)
-		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "sent [constructTarget(target,"admin")] to arrivals")
-		logTheThing(LOG_DIARY, "[user] (Discord)", target, "sent [constructTarget(target,"diary")] to arrivals.", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "sent [constructTarget(target,"admin")] to arrivals")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "sent [constructTarget(target,"diary")] to arrivals.", "admin")
 		message_admins("[user] (Discord) sent [key_name(target)] to arrivals.")
 		target.set_loc(pick_landmark(LANDMARK_LATEJOIN, locate(150, 150, 1)))
 		return TRUE
@@ -608,8 +597,8 @@
 	action_name = "respawn"
 
 	perform_action(user, mob/target)
-		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "respawned [constructTarget(target,"admin")]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", target, "respawned [constructTarget(target,"diary")].", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "respawned [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "respawned [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) respawned [key_name(target)].")
 
 		var/mob/new_player/newM = new()
@@ -645,8 +634,8 @@
 			return FALSE
 		target.full_heal()
 		message_admins(SPAN_ALERT("Admin [user] (Discord) healed / revived [key_name(target)]!"))
-		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "healed / revived [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "healed / revived [constructTarget(target,"diary")]", "admin")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/heal/revive
@@ -739,8 +728,8 @@
 		if(isnull(src.new_name))
 			return FALSE
 		message_admins(SPAN_ALERT("Admin [user] (Discord) renamed [key_name(target)] to [src.new_name]!"))
-		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "renamed [constructTarget(target,"admin")] to [src.new_name]!")
-		logTheThing(LOG_DIARY, "[user] (Discord)", target, "renamed [constructTarget(target,"diary")] to [src.new_name]!", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "renamed [constructTarget(target,"admin")] to [src.new_name]!")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "renamed [constructTarget(target,"diary")] to [src.new_name]!", "admin")
 		target.real_name = src.new_name
 		target.name = src.new_name
 		target.choose_name(1, null, target.real_name, force_instead=TRUE)
@@ -765,7 +754,8 @@
 
 		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
-		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "Ckey [ckey] added to the VPN whitelist.")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "Ckey [ckey] added to the VPN whitelist.", "admin")
 		addPlayerNote(ckey, user, "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
@@ -805,11 +795,30 @@
 			file(hardRebootFilePath) << ""
 			logMessage = "queued a server hard reboot"
 
-		logTheThing(LOG_DEBUG, "[user] (Discord)", null, logMessage)
-		logTheThing(LOG_DIARY, "[user] (Discord)", null, "admin")
+		logTheThing(LOG_DEBUG, "[user] (Discord)", logMessage)
+		logTheThing(LOG_DIARY, "[user] (Discord)", logMessage, "admin")
 		message_admins("[user] (Discord) [logMessage]")
 		system.reply(logMessage)
 
+/datum/spacebee_extension_command/server_rebuild
+	name = "serverrebuild"
+	help_message = "Toggle a server rebuild"
+	argument_types = list()
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user)
+		var/logMessage = ""
+		if (global.rebuildServerContainer)
+			global.rebuildServerContainer = FALSE
+			logMessage = "removed a server rebuild"
+		else
+			global.rebuildServerContainer = TRUE
+			logMessage = "queued a server rebuild"
+
+		logTheThing(LOG_DEBUG, "[user] (Discord)", logMessage)
+		logTheThing(LOG_DIARY, "[user] (Discord)", logMessage, "admin")
+		message_admins("[user] (Discord) [logMessage]")
+		system.reply(logMessage)
 
 /datum/spacebee_extension_command/state_based/confirmation/renamestation
 	name = "renamestation"
@@ -827,8 +836,8 @@
 			return
 		set_station_name(user, new_name, admin_override=TRUE)
 		message_admins(SPAN_ALERT("Admin [user] (Discord) renamed station to [src.new_name]!"))
-		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "renamed station to [src.new_name]!")
-		logTheThing(LOG_DIARY, "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "renamed station to [src.new_name]!")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "renamed station to [src.new_name]!", "admin")
 		var/success_msg = "Station renamed to [src.new_name]."
 		system.reply(success_msg)
 
@@ -864,8 +873,8 @@
 
 		var/to_log = "[giverevoke == "revoke" ? "revoked" : "gave"] the [medalname] medal for [player]."
 		message_admins(SPAN_ALERT("Admin [user] (Discord) [to_log]"))
-		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "[to_log]")
-		logTheThing(LOG_DIARY, "[user] (Discord)", null, "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", to_log)
+		logTheThing(LOG_DIARY, "[user] (Discord)", to_log, "admin")
 		system.reply("[user] [to_log]")
 
 /datum/spacebee_extension_command/antagtokens

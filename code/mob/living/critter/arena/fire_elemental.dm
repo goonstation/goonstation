@@ -1,6 +1,5 @@
 /mob/living/critter/fire_elemental
 	name = "fire elemental"
-	real_name = "fire elemental"
 	desc = "You can't tell if this person is on fire, or made of it. Or both."
 	icon = 'icons/mob/critter/humanoid/elemental/fire.dmi'
 	icon_state = "fire_elemental"
@@ -67,7 +66,7 @@
 			T.hotspot_expose(1500,200)
 
 		var count = 0
-		for (var/obj/hotspot/chemfire/cf in range(4, T))
+		for (var/atom/movable/hotspot/chemfire/cf in range(4, T))
 			if (count > 7) return
 			if (cf.fire_color != CHEM_FIRE_DARKRED) continue
 			if (prob(50)) continue
@@ -107,7 +106,7 @@
 
 	on_launch(var/obj/projectile/P)
 		P.layer = EFFECTS_LAYER_BASE
-		// flick("ember",P)
+		// FLICK("ember",P)
 		P.special_data["returned"] = FALSE
 
 		..()
@@ -116,7 +115,7 @@
 		var/turf/T = get_turf(hit)
 		if (!T || istype(T, /turf/space))
 			return
-		var/obj/hotspot/chemfire/cf = locate(/obj/hotspot/chemfire) in T
+		var/atom/movable/hotspot/chemfire/cf = locate(/atom/movable/hotspot/chemfire) in T
 		if (cf == null)
 			fireflash(T, 0, 2500, 0, chemfire = CHEM_FIRE_DARKRED)
 

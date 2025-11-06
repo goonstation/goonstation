@@ -1,31 +1,40 @@
 {
-	"private": true,
-	"name": "goonstation-browserassets",
-	"version": "1.1.1",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"build": "gulp build"
-	},
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"@babel/core": "^7.25.2",
-		"@babel/preset-env": "^7.25.4",
-		"autoprefixer": "^10.4.20",
-		"cssnano": "^7.0.6",
-		"del": "^7.1.0",
-		"gulp": "^5.0.0",
-		"gulp-babel": "^8.0.0",
-		"gulp-htmlmin": "^5.0.1",
-		"gulp-imagemin": "^9.1.0",
-		"gulp-postcss": "^10.0.0",
-		"gulp-replace": "^1.1.4",
-		"gulp-uglify-es": "^3.0.0",
-		"minimist": "^1.2.8",
-		"postcss": "^8.4.47"
-	},
-	"browserslist": [
-		"ie >= 11"
-	]
+  "private": true,
+  "name": "goonstation-browserassets",
+  "version": "1.1.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "gulp build",
+    "build:dev": "gulp build:dev",
+    "tgui:manifest": "gulp tgui:manifest",
+    "prettier:check": "prettier --check src",
+    "prettier:fix": "prettier --write src",
+    "eslint:check": "eslint src --ext .js,.cjs,.ts,.tsx",
+    "eslint:fix": "eslint src --ext .js,.cjs,.ts,.tsx --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "autoprefixer": "^10.4.20",
+    "del": "^7.1.0",
+    "dotenv": "^17.2.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "gulp": "^5.0.1",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-postcss": "^10.0.0",
+    "gulp-rename": "^2.1.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-uglify-es": "^3.0.0",
+    "istextorbinary": "^9.5.0",
+    "postcss": "^8.5.6",
+    "postcss-clean": "1.2.2",
+    "postcss-nesting": "^13.0.2",
+    "postcss-simple-vars": "^7.0.1",
+    "prettier": "^3.6.2"
+  }
 }

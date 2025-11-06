@@ -497,7 +497,7 @@
 	frequency = 1732;
 	desc = "Must be some fine ice fishing around here.";
 	name = "monstre du lac";
-	broadcasting = 1
+	initial_microphone_enabled = 1
 	},
 /turf/simulated/floor/wood/six,
 /area/prefab{
@@ -1231,7 +1231,7 @@
 	icon_state = "line1"
 	},
 /obj/table/reinforced/industrial/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/concrete{
 	color = "#999999"
 	},

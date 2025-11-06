@@ -12,7 +12,7 @@ var/global/datum/apiHandler/apiHandler
 	var/debug = FALSE
 
 	/// how many times should a query attempt to run before giving up
-	var/maxApiRetries = 5
+	var/maxApiRetries = 1 //5
 	/// base delay between query attempts, gets multiplied by attempt number
 	var/apiRetryDelay = 10
 
@@ -29,7 +29,10 @@ var/global/datum/apiHandler/apiHandler
 			src.enabled = FALSE
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Goonhub endpoint doesn't exist, disabled api handler")
 			logTheThing(LOG_DIARY, null, "API Error: Goonhub endpoint doesn't exist, disabled api handler", "debug")
-
+		if (!config.goonhub_api_token)
+			src.enabled = FALSE
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Goonhub API token is not set, disabled api handler")
+			logTheThing(LOG_DIARY, null, "API Error: Goonhub API token is not set, disabled api handler", "debug")
 
 	/// Build and throw an error exception
 	proc/apiError(list/data, source)
@@ -59,10 +62,25 @@ var/global/datum/apiHandler/apiHandler
 	 * @route (string) URL of the request
 	 * @body (string) JSON encoded body of the request if applicable
 	 */
-	proc/debugLog(method, route, body)
+	proc/debugLogRequest(method, route, body)
 		var/msg = "([method]) [route]<br>[body]"
-		logTheThing(LOG_DEBUG, null, "<b>API DEBUG:</b> [msg]")
-		logTheThing(LOG_DIARY, null, "API DEBUG: [msg]", "debug")
+		logTheThing(LOG_DEBUG, null, "<b>API DEBUG (Request):</b> [msg]")
+		logTheThing(LOG_DIARY, null, "API DEBUG (Request): [msg]", "debug")
+
+	/**
+	 * Log an API response
+	 *
+	 * @method (string) HTTP method of the request
+	 * @route (string) URL of the request
+	 * @body (string) JSON encoded body of the response
+	 * @headers (list) Response headers
+	 * @status (int) Response status code
+	 */
+	proc/debugLogResponse(method, route, body, headers, status)
+		if (headers && islist(headers)) headers = json_encode(headers)
+		var/msg = "([method]) [route]<br><b>Status:</b> [status]<br><b>Headers:</b> [headers]<br><b>Body:</b> [body]"
+		logTheThing(LOG_DEBUG, null, "<b>API DEBUG (Response):</b> [msg]")
+		logTheThing(LOG_DIARY, null, "API DEBUG (Response): [msg]", "debug")
 
 
 	/**
@@ -108,7 +126,8 @@ var/global/datum/apiHandler/apiHandler
 		var/headers = list(
 			"Accept" = "application/json",
 			"Content-Type" = "application/json",
-			"Authorization" = config.goonhub_api_token
+			"Authorization" = config.goonhub_api_token,
+			"X-Server-Id" = config.server_id,
 		)
 
 		src.lazy_waiting_counter++
@@ -123,10 +142,10 @@ var/global/datum/apiHandler/apiHandler
 		var/req_body = route.body ? route.body.toJson() : ""
 		request.prepare(route.method, req_route, req_body, headers, "")
 		request.begin_async()
-		if (src.debug) src.debugLog(route.method, req_route, req_body)
+		if (src.debug) src.debugLogRequest(route.method, req_route, req_body)
 		var/time_started = TIME
 		var/time_started_unix = rustg_unix_timestamp()
-		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
+		UNTIL(request.is_complete(), 10 SECONDS)
 		if (!request.is_complete())
 			src.trackRecentError()
 			var/msg = "Request timed out during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
@@ -147,8 +166,12 @@ var/global/datum/apiHandler/apiHandler
 		// Otherwise the request did finish so we can lower this
 		src.lazy_concurrent_counter--
 		var/datum/http_response/response = request.into_response()
+		var/list/data = list()
+		if (src.debug) src.debugLogResponse(route.method, req_route, response.body, response.headers, response.status_code)
 
-		if (response.errored || !response.body)
+		if (response.errored && response.status_code)
+			data["message"] = "Status [response.status_code]"
+		else if (response.errored && !response.body)
 			src.trackRecentError()
 			var/msg = "No response from server during query [!response.body ? "during" : "to"] [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
@@ -162,23 +185,20 @@ var/global/datum/apiHandler/apiHandler
 		// At this point we assume the request was a success, so reset the error counter
 		src.trackRecentError(TRUE)
 
-		// Parse the response
-		var/list/data
-		try
-			data = json_decode(response.body)
-		catch
-			// pass so we can handle retries or build our own exception
+		if (!data.len)
+			try
+				// Parse the response
+				data = json_decode(response.body)
+			catch
+				// Bad data format
+				var/msg = "JSON decode error during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
+				logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
+				logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-		// Bad data format
-		if (!data)
-			var/msg = "JSON decode error during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
-			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
+				if (route.allow_retry && attempt < src.maxApiRetries)
+					return src.retryApiQuery(route, attempt)
 
-			if (route.allow_retry && attempt < src.maxApiRetries)
-				return src.retryApiQuery(route, attempt)
-
-			src.apiError(list("message" = "API Error: JSON decode error during [req_route]", "status_code" = response.status_code))
+				src.apiError(list("message" = "API Error: JSON decode error during [req_route]", "status_code" = response.status_code))
 
 		// Handle client and server error responses
 		if (response.status_code >= 400)

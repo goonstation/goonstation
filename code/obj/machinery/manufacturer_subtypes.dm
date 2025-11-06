@@ -14,12 +14,17 @@
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/metal,
+		/datum/manufacture/metal/bulk,
 		/datum/manufacture/metalR,
+		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/rods2,
 		/datum/manufacture/glass,
+		/datum/manufacture/glass/bulk,
 		/datum/manufacture/glassR,
+		/datum/manufacture/glassR/bulk,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
 		/datum/manufacture/miniplasmatank,
@@ -72,6 +77,7 @@
 		/datum/manufacture/harmonica,
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
+		/datum/manufacture/bullet_9mm_frangible,
 		/datum/manufacture/bullet_smoke,
 		/datum/manufacture/stapler,
 		/datum/manufacture/bagpipe,
@@ -85,6 +91,7 @@
 	free_resources = list()
 	malfunction = TRUE
 	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
+	mechanics_type_override = /obj/machinery/manufacturer/general
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -118,6 +125,7 @@
 		/datum/manufacture/cybereye_spectro,
 		/datum/manufacture/cybereye_prodoc,
 		/datum/manufacture/cybereye_camera,
+		/datum/manufacture/cybereye_monitor,
 		/datum/manufacture/shell_frame,
 		/datum/manufacture/ai_interface,
 		/datum/manufacture/latejoin_brain,
@@ -138,7 +146,6 @@
 		/datum/manufacture/stapler,
 		/datum/manufacture/surgical_spoon,
 		/datum/manufacture/implanter,
-		/datum/manufacture/secbot,
 		/datum/manufacture/medbot,
 		/datum/manufacture/firebot,
 		/datum/manufacture/floorbot,
@@ -162,6 +169,7 @@
 		/datum/manufacture/robup_visualizer,
 		/datum/manufacture/robup_efficiency,
 		/datum/manufacture/robup_repair,
+		/datum/manufacture/scream_synth,
 		/datum/manufacture/sbradio,
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
@@ -210,6 +218,7 @@
 		/datum/manufacture/glasses,
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
+		/datum/manufacture/wheelchair,
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
@@ -235,25 +244,16 @@
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
 		/datum/manufacture/floppydisk,
+		/datum/manufacture/medicalalertbutton,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/cyberappendix,
-		/datum/manufacture/cyberpancreas,
-		/datum/manufacture/cyberspleen,
-		/datum/manufacture/cyberintestines,
-		/datum/manufacture/cyberstomach,
-		/datum/manufacture/cyberkidney,
-		/datum/manufacture/cyberliver,
-		/datum/manufacture/cyberlung_left,
-		/datum/manufacture/cyberlung_right,
 		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
 	)
 
-	hidden = list(/datum/manufacture/cyberheart,
-	/datum/manufacture/cybereye)
+	hidden = list()
 
 /obj/machinery/manufacturer/science
 	name = "science fabricator"
@@ -267,10 +267,12 @@
 		/obj/item/material_piece/cobryl = 2)
 	available = list(
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/gps,
-		/datum/manufacture/crowbar,
+		/datum/manufacture/crowbar/purple,
+		/datum/manufacture/wrench/purple,
+		/datum/manufacture/welder/purple,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
@@ -279,9 +281,12 @@
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
+		/datum/manufacture/places_pipes/science,
+		/datum/manufacture/RCDammo,
 		/datum/manufacture/condenser,
 		/datum/manufacture/fractionalcondenser,
 		/datum/manufacture/dropper_funnel,
+		/datum/manufacture/portable_dispenser,
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
@@ -350,6 +355,7 @@
 		/datum/manufacture/geigercounter,
 		/datum/manufacture/eyes_meson,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/ore_accumulator,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
@@ -385,10 +391,21 @@
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/burst_ltlaser,
+		/datum/manufacture/engine_scout,
 		/datum/manufacture/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+#ifndef UNDERWATER_MAP
+		/datum/manufacture/pod/lateral_thrusters,
+		/datum/manufacture/pod/afterburner,
+#endif
+		/datum/manufacture/pod/light_shielding,
+		/datum/manufacture/pod/heavy_shielding,
+		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
+		/datum/manufacture/pod/gunner_support,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
@@ -567,14 +584,24 @@
 	free_resources = list(/obj/item/material_piece/steel = 1,
 		/obj/item/material_piece/organic/wood = 1)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/crate,
-		/datum/manufacture/packingcrate,
-		/datum/manufacture/wooden,
-		/datum/manufacture/medical,
-		/datum/manufacture/biohazard,
-		/datum/manufacture/freezer)
+	available = list(
+		/datum/manufacture/crate,
+		/datum/manufacture/crate/wooden,
+		/datum/manufacture/crate/wooden/packing,
+		/datum/manufacture/crate/medical,
+		/datum/manufacture/crate/biohazard,
+		/datum/manufacture/crate/freezer,
+		/datum/manufacture/crate/secure,
+		/datum/manufacture/crate/secure/secure_transfer,
+		/datum/manufacture/crate/secure/confiscated_items,
+		/datum/manufacture/crate/secure/armory,
+		/datum/manufacture/crate/secure/hazard,
+		/datum/manufacture/crate/secure/engineering,
+		/datum/manufacture/crate/secure/medical,
+		/datum/manufacture/crate/secure/hydroponics,
+		)
 
-	hidden = list(/datum/manufacture/classcrate)
+	hidden = list(/datum/manufacture/crate/class, /datum/manufacture/crate/secure/syndicate)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"
@@ -592,6 +619,7 @@
 		/datum/manufacture/suture,
 		/datum/manufacture/scalpel,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/armor_vest,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/harmonica,
@@ -640,6 +668,7 @@
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
 		/datum/manufacture/RCD,
+		/datum/manufacture/places_pipes,
 		/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
@@ -650,6 +679,7 @@
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/heavy_firesuit,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
@@ -658,6 +688,8 @@
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,
+		/datum/manufacture/turbine_shaft,
+		/datum/manufacture/current_turbine,
 #endif
 #ifdef MAP_OVERRIDE_OSHAN
 		/datum/manufacture/cable/reinforced,

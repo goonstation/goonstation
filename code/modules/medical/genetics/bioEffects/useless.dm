@@ -128,10 +128,6 @@
 		if (!AH)
 			return
 		AH.s_tone = holder_skin
-		if(AH.mob_appearance_flags & FIX_COLORS) // human -> achrom -> lizard -> notachrom is *bright*
-			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
-			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
-			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 		H.update_colorful_parts()
 		H.update_body()
 
@@ -182,10 +178,6 @@
 			AH.customizations["hair_bottom"].color = AH.customizations["hair_bottom"].color_original
 			AH.customizations["hair_middle"].color = AH.customizations["hair_middle"].color_original
 			AH.customizations["hair_top"].color = AH.customizations["hair_top"].color_original
-			if(AH.mob_appearance_flags & FIX_COLORS) // human -> blank -> lizard -> unblank is *bright*
-				AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
-				AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
-				AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 			H.update_colorful_parts()
 
 /datum/bioEffect/color_changer/black
@@ -420,7 +412,7 @@
 /datum/bioEffect/bee
 	name = "Apidae Metabolism"
 	desc = {"Human worker clone batch #92 may contain inactive space bee DNA.
-	If you do not have the authorization level to know that SS13 is staffed with clones, please forget this entire message."}
+	If you do not have the authorization level to know that this subject is a clone, please forget this entire message."}
 	id = "bee"
 	msgGain = "You feel buzzed!"
 	msgLose = "You lose your buzz."

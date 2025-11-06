@@ -7,21 +7,6 @@
 	// else afterattack will not be called when out of range
 	pixelaction(atom/target, params, mob/user, reach)
 		..()
-
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if (user.equipped() == src)
-			if (!src.ArtifactSanityCheck())
-				return
-			var/datum/artifact/attack_wand/A = src.artifact
-			if (!istype(A))
-				return
-			if (!A.activated)
-				return
-
-			user.lastattacked = src
-			var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
-			A.effect_click_tile(src,user,U)
-
 /datum/artifact/attack_wand
 	associated_object = /obj/item/artifact/attack_wand
 	type_name = "Elemental Wand"

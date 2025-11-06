@@ -210,7 +210,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_nt"
 
 /obj/landmark/start/job/podwars/NT/commander
-	name = "NanoTrasen Commander"
+	name = "NanoTrasen Pod Commander"
 	icon_state = "pod_nt_commander"
 
 /obj/landmark/start/job/podwars/syndie
@@ -218,7 +218,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_syndie"
 
 /obj/landmark/start/job/podwars/syndie/commander
-	name = "Syndicate Commander"
+	name = "Syndicate Pod Commander"
 	icon_state = "pod_syndie_commander"
 
 /* ===== Antagonist Starts ===== */
@@ -282,6 +282,26 @@ var/global/list/job_start_locations = list()
 	north
 		name = "missile latejoin spawn marker (north)"
 		dir = NORTH
+
+/obj/landmark/latejoin_job
+	name = "latejoin spawn marker"
+	icon_state = "x"
+
+/obj/landmark/latejoin_job/radio_show_host
+	name = "Radio Show Host Spawn"
+	name_override = LANDMARK_RADIO_SHOW_HOST_SPAWN
+
+/obj/landmark/latejoin_job/journalist
+	name = "Journalist Spawn"
+	name_override = LANDMARK_JOURNALIST_SPAWN
+
+/obj/landmark/latejoin_job/actor
+	name = "Actor Spawn"
+	name_override = LANDMARK_ACTOR_SPAWN
+
+/obj/landmark/latejoin_job/influencer
+	name = "Influencer Spawn"
+	name_override = LANDMARK_INFLUENCER_SPAWN
 
 /* ===== Misc Spawn/Start ===== */
 
@@ -512,6 +532,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/icemoon
 	name = "Senex"
 
+/obj/landmark/lrt/icemoon2
+	name = "Senex II"
+
 /obj/landmark/lrt/solarium
 	name = "Sol"
 
@@ -642,6 +665,10 @@ var/global/list/job_start_locations = list()
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
 /// target turf for projecting its contents elsewhere
 /turf/var/turf/vistarget = null
+/// turfs to project speech to (overlaps with vistarget speech)
+/turf/var/list/listening_turfs = null
+/// turfs to project reachability of objects to  (overlaps somewhat with vistarget)
+/turf/var/list/reachable_turfs = null
 /// target turf for teleporting its contents elsewhere
 /turf/var/turf/warptarget = null
 /// control who gets warped to warptarget

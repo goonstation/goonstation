@@ -1,126 +1,167 @@
-<body><h1>NT MEDICAL DIVISION</h1>
-		<h2>Introductory briefing for aspiring Medical Doctors!</h2>
-		<br>
-		<hr>
-		<h2>INTRODUCTION</h2>
-		<hr>
-		<h3>Medical Doctor</h3>
-
-		As a Medical Doctor, your task is to ensure your fellow personnel's well-being and treat any injuries that may occur as a result of work-related accidents.
-		<br>
-		You answer directly to the Medical Director. You should follow their judgement and advice when it comes to performing your duties.
-		<h3>Your equipment and preparation</h3>
-		<p>
-		Head to your station's Medbay if you are not already stationed there.
-		<br>
-		You should have been provided with a first aid kit, which you are recommended to place inside your backpack for secure storage. Within you should notice:
-		</p><li><b>A health analyzer</b> - used for analyzing patients and examining their injuries.
-		</li><li><b>An epinephrine emergency auto-injector</b> - used for stabilizing critically wounded patients.
-		</li><li><b>Styptic powder patches</b> - used for treating general wounds and bruises.
-		</li><li><b>Silver sulfadiazine patches</b> - used for treating burns.
-		</li><p></p>
-		<p>
-		These are sufficient for basic situations, but it's recommended that you additionally acquire the following items:
-		</p><li><b>A hypospray</b> - used for quick administering of medical chemicals.
-		</li><li><b>ProDoc Healthgoggles</b> - a pair of eyeglasses that allow you to quickly determine patients' medical state.
-		<br>
-		Both should be readily available in your department on the tables and will greatly improve your efficiency.
-		</li><p></p>
-		<p>
-		Finally, to finish your preparations, head towards the nearest medbay-issued NanoMed Plus vendor. In these units you will find most of the previously mentioned equipment
-		and will be your primary method of restocking as you use up your equipment on patients.
-		<br>
-		Dispense the following items:
-		</p><li><b>An epinephrine bottle</b> - use it on your previously acquired hypospray to fill it with the full contents measured at 30 units. Dispose of the bottle after completing the task.
-		</li><li><b>A syringe</b> - used to draw reagents from bottles and then to inject them. Store it in your backpack. (Notice: can be replaced with a spare hypospray device if such is still available)
-		</li><li><b>An anti-toxin bottle</b> - the contents of the bottle will be withdrawn with your previously acquired means of chemical transfer (usually syringe or hypospray) and then administered to poisoned crewmembers.
-		<br>
-		You are recommended to place the health analyzer and the epinephrine-filled hypospray in a easily accessible area on your person, such as your pockets or backpack.
-		<hr>
-		<h2>TREATING YOUR PATIENT</h2>
-		<hr>
-		<h3>First contact</h3>
-		Assuming you are wearing your issued ProDoc Healthgoggles eyewear, you will be able to ascertain the state of your patients at first glance as a shaded heart next to them having a color and fill level
-		that will range from:
-		</li><li>Green and full - healthy
-		</li><li>Yellow and half-full - moderately injured
-		</li><li>Red and nearly empty - heavily injured
-		</li><li>Blinking white and empty - critically injured
-		<br>
-		Based on this, you can tell which patients to focus on first and with what level of urgency. Remember that safety comes first, if the area you and the patient are in is depressurized, on fire or otherwise hazardous,
-		you should move to a new location before proceeding.
-		<br>
-		If your patient isn't in a critical state (flashing white) skip to the next section for information on how to begin treatment.
-		<br>
-		Otherwise, if they are, standard procedure suggests administering epinephrine through either your hypospray filled during preparations section or your first aid kit's emergency auto injector. This should stabilize them and give you time
-		to proceed to the next section on how to begin treatment.
-		<br>
-		<h3>Treatment</h3>
-		Although your goggles inform you of the patient's health state, we do not know their exact injuries. Assuming the patient is stable from having non-critical injuries or from being stabilized with epinephrine,
-		You should now use your health scanner to acquire the full details of the patient's state.
-		<br>
-		<h4>SAMPLE HEALTH ANALYZER SCAN</h4>
-		Analyzing Results for Casey Spark :  <br>
-		Overall Status: 27 % healthy 	<br>
-		Damage Specifics: 9  - 14  - 32  - 20  <br>
-		Key: Suffocation / Toxin / Burns / Brute  <br>
-		Body Temperature: 23.5092˚C (74.3166˚F)  <br>
-		Blood Pressure: 122/82 (NORMAL)  | Blood level: 500 units <br>
-		1 chemical agent found in Casey Spark. <br>
-		epinephrine - 5  <br>
-		<h3>Analysis</h3>
-		Our patient is at 27% health. The Key fields correspond to the matching damage specifics fields. This means that our patient here has:
-		</li><li>9 - Suffocation
-		</li><li>14 - Toxin
-		</li><li>32 - Burns
-		</li><li>20 - Brute
-		<br>
-		It's time to treat each of these injuries!
-		<br>
-		<h3>Healing</h3>
-		<h4>Suffocation</h4>
-		Suffocation will heal on its own as long as the patient is in a pressurized area and can breathe, unless they are in critical condition. In this case, you should have already administered epinephrine, which will
-		attempt to heal and control this type of damage already. If the damage is excessively high, NanoMed vendors contain salbutamol pills dedicated to treating this damage type.
-		<h4>Toxin</h4>
-		Your syringe can be alternatingly used to draw or inject reagents. Use the syringe to draw anti-toxin from the anti-toxin bottle we have prepared during our setup and then inject it into the patient.
-		5 units of anti-toxin (single injection) will be enough for around 18 toxin damage, so in this case we would only need to inject 5.
-		<br>
-		Note: if choosing to use a hypospray, use the anti-toxin bottle on the hypospray to load it and then use the hypospray on the patient to inject the reagent.
-		<h4>Burns</h4>
-		Apply a silver sulfadiazine patch to treat burns. It's that easy! Repeat if damage exceeds the amount healed.
-		<h4>Brute</h4>
-		Apply a styptic powder patch to treat brute damage. Also simple! Repeat if damage exceeds the amount healed.
-		<h3>Final notes</h3>
-		Epinephrine will in most cases take care of suffocation damage for you. The last two types of damage: Brute and Burns will be the most common cases you'll come to face with.
-		As a result, be sure to restock often as you might run out of patches treating these conditions! <br>
-		Also worth noting: In addition to treating toxin damage, charcoal tries to remove other reagents present in the patient. This means that it will also purge any poisons that might have caused the damage in the first place!
-
-		<h2>PATIENT LOST</h2>
-		Not every life can be saved. In the event that the patient dies in your care, you should bring their body to the cloning equipment.
-		The instructions for operating it should be available nearby, otherwise consult fellow personnel for assistance.
-		Alternatively, they can be brought to the robotics department in order to be turned into a cyborg.
-		Consult your fellow crewmembers or the station-issued AI unit for directions if you are not aware of the locations of the mentioned areas.
-		<hr>
-		<h2>SUMMARY</h2>
-		<hr>
-		If a patient is in critical state administer epinephrine, then perform a vitals scan with your health analyzer and treat the respective damages:
-		</li><li>Suffocation - administer epinephrine if you haven't already. If damage is very high, provide a salbutamol pill from a NanoMed vendor.
-		</li><li>Toxin - inject the patient with anti-toxins.
-		</li><li>Burn - apply a Silver Sulfadiazine patch on the patient.
-		</li><li>Brute - apply a Styptic Powder patch on the patient.
-		<br>
-		<hr>
-		<h2>What now?</h2>
-		<hr>
-		<h3>Develop!</h3>
-		Though the contents of this book will be sufficient for most cases, it won't be enough to save every patient and get you through all situations.
-		You probably noticed the NanoMed units contain many different reagents, of which we used only few.
-		Knowing when to use which can be greatly beneficial to your work. Knowledge of them will allow you to develop in areas such as: restoring blood, surgery and purging poisons, to name a few.
-		Worth noting is that your PDA contains a remote program for the portable NanoMed and portable Medbay emergency transport unit, allowing you to continue work in areas far away from Medbay!
-		<br>
-		<h4>Additional documentation available is at:</h4>
-	<ul>><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a>
-		<li><a href="https://wiki.ss13.co/Chemicals#Medical_Chems" target="Goonstation Wiki: Medical Chems">https://wiki.ss13.co/Medical_Chems</a> - specifically the "Medical Chems" section.</ul>
-		<br>
-		<hr>
-		<i>Contents of the book written by the S.P.A.R.K. unit which hopes to see you successful in the field!</i></li><p></p></body>
+<h1>NT Medical Division</h1>
+<h2>Medical Department Introductory Briefing, Second Edition</h2>
+<hr>
+<h3>Quick Reference</h3>
+<p>This quick reference is intended as a reminder for individual topics. For beginners, ideally, <abbr title="If you're on one of the RP servers, you can press Alt+L to talk in Local Out-Of-Character Chat (LOOC), if needed.">ask another doctor</abbr> to teach you! They'll be happy to help, really. <abbr title="The wiki is also an excellent resource!">Alternatively</abbr>, you can read this <s>enormous wall of text</s> guidebook, starting in the next section.</p>
+<ul>
+    <li><strong>OXY/Suffocation damage</strong> - Inject epinephrine to prevent increasing OXY damage in crit. Salbutamol and defibrillators heal OXY directly.</li>
+    <li><strong>TOX/Toxin damage</strong> - Inject charcoal, 38 TOX per 10 charcoal. Alternatively, 25 TOX per 10 potassium iodide. If it continues to increase, they are likely poisoned or ill.</li>
+    <li><strong>Brute damage</strong> - Red auto mender. Get mender refill cartridges from NanoMed.</li>
+    <li><strong>Burn damage</strong> - Yellow auto mender. Get mender refill cartridges from NanoMed.</li>
+    <li><strong>Bleeding</strong> - Use bandages or sutures.</li>
+    <li><strong>Shock</strong> - Inject saline-glucose solution.</li>
+    <li><strong>Cardiac failure</strong> - Inject epinephrine.</li>
+    <li><strong>Cardiac arrest</strong> - Use defibrillator.</li>
+    <li><strong>Brain damage</strong> - Feed mannitol pill from NanoMed.</li>
+    <li><strong>Radiation</strong> - Inject potassium iodide.</li>
+    <li><strong>Hypotensive</strong> - Not enough blood. Attach blood pack, inject filgrastim, or inject saline-glucose solution.</li>
+    <li><strong>Foreign object detected</strong> - Likely bullets or shrapnel. Drag patient onto operating table, and use a scalpel while targeting the chest and on help intent. Repeat until foreign objects are no longer detected.</li>
+    <li><strong>Poisons in the blood</strong> - Drag patient to dialysis machine. <abbr title="Click and drag the machine onto the person while you are both adjacent to it.">Attach</abbr> the dialysis machine onto patient to remove non-medical chemicals, the same <a target="_blank" rel="noopener noreferrer" href="https://wiki.ss13.co/Medical_Objects#Hypospray">set</a> as the hypospray.</li>
+    <li><strong>Organ damage</strong> - Anti-tox drugs for kidneys and digestive organs. Anti-oxy drugs for spleen and lungs. Cryo tube or omnizine for all organs.</li>
+    <li><strong>Blindness and Deafness</strong> - Inject or splash oculine. Alternatively, use a VISOR prosthesis / auditory headset.</li>
+    <li><strong>Organ death</strong> - Replace the dead organ. Surgery required.</li>
+    <li><strong>Death</strong> - Clone the patient. Take puritans to robotics instead. A morgue tray or embalming fluid will prevent rotting.</li>
+</ul>
+<hr>
+<h2>Table of Contents</h2>
+<ol>
+    <li>Introduction<ol>
+            <li>Welcome</li>
+            <li>Your Position</li>
+            <li>Your Starting Equipment</li>
+            <li>Additional Preparation</li>
+        </ol>
+    </li>
+    <li>Treating Your Patients<ol>
+            <li>John Pubbie Fought a Monkey</li>
+            <li>Brute and Burn Damage</li>
+            <li>Toxin Damage and Poisons</li>
+            <li>Suffocation Damage and Critical Condition</li>
+            <li>Death and Cloning</li>
+            <li>Bleeding and Blood Loss</li>
+            <li>Radiation and Brain Damage</li>
+            <li>Organ Damage and Other Ailments</li>
+        </ol>
+    </li>
+    <li>Conclusion<ol>
+            <li>Farewell</li>
+        </ol>
+    </li>
+</ol>
+<hr>
+<h2>Introduction</h2>
+<h3>Welcome!</h3>
+<p>Welcome to the Medical Department! This guidebook is intended to give new trainees and doctors the information they need to effectively treat most injuries and ailments they may encounter on board a NanoTransen space station.</p>
+<h3>Your Position</h3>
+<p>As a member of the Medical Department, you answer directly to the Medical Director. Your primary place of work will be the station's Medbay, commonly represented by a white cross on a blue background. If you are not there already, you should head there. Some stations will have arrows pointing in the direction of various <abbr title="You can also use the 'GPS' verb, located in the Commands section of your sidebar.">locations</abbr>.</p>
+<h3>Your Starting Equipment</h3>
+<p>As a Medical Trainee, you will start with a Medical Belt, containing the following equipment:</p>
+<ul>
+    <li><strong>Auto-mender</strong> (x2) - Refillable device used to apply healing chemicals to the skin.</li>
+    <li><strong>Hypospray</strong> - Adjustable instant injector for medical chemicals. Dumps any <a target="_blank" rel="noopener noreferrer" href="https://wiki.ss13.co/Medical_Objects#Hypospray">non-approved chemicals</a> poured into it.</li>
+    <li><strong>Health Analyzer</strong> (Fully upgraded) - Handheld scanner that displays the vital signs of a person. When upgraded, shows organ damage and any chemicals in a person's bloodstream.</li>
+    <li><strong>Defibrillator</strong> - A device used to shock a patient, restarting their heart and healing suffocation.</li>
+</ul>
+<p>If you are a Medical Doctor, you will start with all of the above, as well as:</p>
+<ul>
+    <li><abbr title="The ProDoc Healthgoggles will color your screen green. If you wish to disable this, go to the top left of your window, and disable view tint. (Game > Effects > View Tint)"><strong>ProDoc Healthgoggles</strong></abbr> (Upgraded) - Already on your face. Allows you to see status indicators of a person's health near them. When upgraded, allows you to see the same vital signs as an un-upgraded health analyzer on <abbr title="Right click > Examine. Or, on default Goon controls, Alt+Click. On /tg/ controls, Shift+Click.">Examine</abbr>. Solid green means good health, partial yellow or red means hurt, flashing white means near-critical condition, and solid white means critical condition (below 0% health).</li>
+</ul>
+<h3>Additional Preparation</h3>
+<p>In addition to your starting equipment, you may wish to gather:</p>
+<ul>
+    <li>Another hypospray, either laying around or from the medical fabricator, for quick access to another injectable medicine.</li>
+    <li>A suture, from the medical fabricator, or a bandage, from the NanoMed, to stop bleeding.</li>
+    <li>Auto-mender refill cartridges, from the NanoMed, to refill your menders when they empty.</li>
+</ul>
+<p>If you are a Medical Trainee, you should also get a pair of <abbr title="Again, if you wish to disable the view tint, go to the top left of your window, and disable it. (Game > Effects > View Tint)">ProDoc Healthgoggles</abbr>, from the Medical Fabricator. It will start un-upgraded, so you should attach a Health Analyzer Upgrade from the NanoMed. The goggles cannot accept the organ scan upgrade.</p>
+<p>&nbsp;</p>
+<p>Some good chemicals to keep in your hyposprays include epinephrine, to stabilize severely injured patients, and charcoal, to heal toxin damage. Both can be found laying around in reserve tank beakers in medbay, or in bottles from the NanoMed.</p>
+<hr>
+<h2>Treating Your Patients</h2>
+<h3>John Pubbie Fought a Monkey</h3>
+<p>Someone just walked into Medbay. With your goggles on, you can see that they're a bit hurt. You can quickly <abbr title="Right click > Examine. Or, on default Goon controls, Alt+Click. On /tg/ controls, Shift+Click.">Examine</abbr> them to get a more detailed readout from your goggles:</p>
+<div style="font-size:14px;" id="messages">
+    <div class="entry misc"><br>Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(204,122,29);">47</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">0</span> - <span style="color:rgb(204,122,29);">20</span> - <span style="color:rgb(230,14,78);">33</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 23.15°C (73.66°F)<br>Blood Pressure: <span style="color:rgb(19,128,21);">123/79 (NORMAL)</span></div>
+    <div class="entry misc">&nbsp;</div>
+</div>
+<p>Looks like they've got quite a bit of damage on them! Let's start breaking this down. Everyone starts with 100% health. Your health is lowered by the total of all the damage you have taken. There are four types of damage. We'll go through them and their treatments here in reverse order, as it will help us flow from one topic to the next.</p>
+<h3>Brute and Burn Damage</h3>
+<p>Brute and burn are the most common types of damage you will encounter. Your Auto-menders are the best and fastest way to heal these by far. They're color coded for your convenience: Red for brute, and yellow for burn. Simply use the auto-menders on the patient, and they'll automatically heal the corresponding damage type before shutting off.</p>
+<div style="font-size:14px;" id="messages">
+    <div class="entry misc"><br>Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">100</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">0</span> - <span style="color:rgb(204,122,29);">0</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 23.15°C (73.66°F)<br>Blood Pressure: <span style="color:rgb(19,128,21);">123/81 (NORMAL)</span></div>
+</div>
+<p>&nbsp;</p>
+<p>All better! You send them back into the world, ready to face whatever life throws at them- and they're back again. Wow, that's a lot of blood!</p>
+<h3>Toxin Damage and Poisons</h3>
+<div style="font-size:14px;" id="messages">
+    <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">73</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">26.2</span> - <span style="color:rgb(204,122,29);">0</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 24.14°C (75.46°F)<br>Blood Pressure: <span style="color:rgb(204,122,29);">94/64 (HYPOTENSIVE)</span></div>
+</div>
+<p>&nbsp;</p>
+<p>Looks like they've taken some toxin damage, AKA tox. And it's steadily increasing! Your handheld health analyzer can scan for chemicals in a person's blood, so now would be a good time to check:</p>
+<p>&nbsp;</p>
+<div style="font-size:14px;" id="messages">
+    <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">68</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">31.65</span> - <span style="color:rgb(204,122,29);">0</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 24.28°C (75.71°F)<br>Blood Pressure: <span style="color:rgb(204,122,29);">80/55 (HYPOTENSIVE)</span> | Blood level: <span style="color:rgb(204,122,29);">401 units</span><br><b class="notice"><strong>1 chemical agent found in Devin Carr.</strong></b><br><span class="notice"> hemotoxin - 12.47</span></div>
+</div>
+<p>&nbsp;</p>
+<p>Hemotoxin - snake venom! Your first priority is preventing them from getting worse. Tox damage isn't as easy to get rid of as brute and burn, but charcoal is a good chemical to start with. All chemicals have effects over time as they deplete in the body. Hemotoxin causes blood loss, and charcoal removes tox. You can fill your hypospray with charcoal, either from the anti-tox reserve beakers laying around medbay, or from charcoal bottles directly from the NanoMed. Unlike a syringe, a hypospray will instantly inject the chemicals inside into your <s>victim</s> patient. You can also customize the amount injected per use by <abbr title="While it is in your active hand, click on it. Or, on default Goon controls, press C. On /tg/ controls, press Z.">using it in your hand</abbr>. However, it can only hold a <a target="_blank" rel="noopener noreferrer" href="https://wiki.ss13.co/Medical_Objects#Hypospray">specific set</a> of benign medical chemicals. Anything else will be dumped.</p>
+<p>&nbsp;</p>
+<p>It may be a good idea to keep a full hypospray of charcoal on you at all times, as it's your best general use anti-tox.</p>
+<p>&nbsp;</p>
+<p>Finally, we have the hemotoxin itself: We don't want it just sitting in them! You can find a dialysis machine in the operating theater. <abbr title="On any default control set, Ctrl+Click. Or just grab them like a psychopath.">Pull</abbr> your patient over to it, then <abbr title="Click and drag the machine onto the person while you are both adjacent to it.">attach</abbr> the dialysis machine onto the patient. Once it's attached, it'll start filtering out all non-medical chems from their blood - the same whitelist as the hypospray.</p>
+<p>&nbsp;</p>
+<p>Good work! They're ship-shape now! Oh, nevermind.</p>
+<h3>Suffocation Damage and Critical Condition</h3>
+<p>This time, our poor lab rat gets dragged unconscious into Medbay, their health indicator a solid white, indicating critical condition.</p>
+<p>&nbsp;</p>
+<div style="font-size:14px;" id="messages">
+    <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span class="alert">-12</span>% healthy<br>  Damage Specifics: <span class="alert">111.51</span> - <span style="color:rgb(19,128,21);">0</span> - <span style="color:rgb(204,122,29);">0</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: <span class="notice">-145.17°C (-229.31°F)</span><br>Blood Pressure: <span style="color:rgb(19,128,21);">121/81 (NORMAL)</span></div>
+</div>
+<p>&nbsp;</p>
+<p>Pure suffocation damage, AKA oxy. Looks like someone decided it was too stuffy on this space station and opened a window. You usually gain oxy damage from not being able to breathe, or from being in critical condition.</p>
+<p>&nbsp;</p>
+<p>When someone reaches 0% health, they don't drop dead. Instead, they enter critical condition, AKA crit. Once someone enters crit, they start continously racking up oxy damage. The lower their health gets, AKA the deeper into crit they go, the faster the oxy damage accumulates. It's often what kills people, in the end. Once they go below -100% health, they have a chance to die. It's low at first, but gets higher the deeper into crit they get. Most people die around -400%, but there are exceptions in both directions.</p>
+<p>&nbsp;</p>
+<p>To stop the downward spiral of oxy damage, simply inject epinephrine, AKA epi. Epi will prevent oxy damage from accumulating in crit, as well as doing a bit of healing to severely injured patients. It's another good thing to keep a loaded hypospray of on you at all times.</p>
+<p>&nbsp;</p>
+<p>Your defibrillator is also an excellent healer of suffocation damage. <abbr title="While it is in your active hand, click on it. Or, on default Goon controls, press C. On /tg/ controls, press Z.">Use it in your hand</abbr> to charge it and hit the patient with it to shock them. It'll either heal a little or a lot of oxy damage, but there's no harm in it. You can also use salbutamol, as it will directly heal oxy damage over time.</p>
+<h3>Death and Cloning</h3>
+<p>Not every patient can be saved. Sometimes something gets overlooked, or they're just too badly injured. Or they get dragged in already dead. But it's not necessarily over for them. There are two main ways to revive a person who has died: one is by cloning, the other is by cyborgification.</p>
+<p>&nbsp;</p>
+<p>Before you clone someone, you'll want to check if they're a puritan. Puritans will rapidly die and explode after being cloned, and are almost always irrecoverable afterwards. You can check their puritan status either in the medical computer, or in the medical records file on your PDA. You also have the option of activating the MedTrak Scanner on your PDA, and then smacking people with it to automatically bring up their medical records. If they have a note reading “Genetic structure incompatible with cloning”, it's best to drag them off to Robotics, where the roboticists can turn them into a cyborg.</p>
+<p>&nbsp;</p>
+<p>If they're not a puritan, however, you're good to go! Drag them to the cloning machine scanner, <abbr title="Click+Drag their character onto the scanner while both you and the body are adjacent to it.">put them inside</abbr>, and press scan on the cloning console to scan them. Then, scroll down to the bottom of cloning records and hit clone to begin the process. Cloning takes biomass, so be sure to recycle, and shove their old body into the <s>blender</s> <abbr title="To use the reclaimer, switch to grab intent, grab the body, and click on the reclaimer while both you and the body are adjacent to the reclaimer.">enzymatic reclaimer</abbr>. This also has the handy side effect of spitting out all their clothes for easy access once the patient wakes up.</p>
+<p>&nbsp;</p>
+<p>Note that you can scan people who are still alive, which is preferred, as once their body begins to rot, they cannot be clone scanned, only borged. If for some reason someone cannot be scanned, or you just don't want their body to become stinky, keeping them in a morgue tray in the morgue or injecting them with embalming fluid will prevent them from rotting.</p>
+<h3>Bleeding and Blood Loss</h3>
+<div style="font-size:14px;" id="messages">
+    <div style="font-size:14px;" id="messages">
+        <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(204,122,29);">33</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">0</span> - <span style="color:rgb(204,122,29);">0</span> - <span class="alert">67</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 37°C (98.6°F)<br>Blood Pressure: <span style="color:rgb(204,122,29);">97/61 (HYPOTENSIVE)</span> | Blood level: <span style="color:rgb(204,122,29);">390 units</span> | Blood loss: <span class="alert">5 units</span></div>
+    </div>
+</div>
+<p>&nbsp;</p>
+<p>Here, we can see the patient is bleeding, and has lost quite a bit of blood, resulting in hypotension. Stopping bleeding is simple, just use a bandage from the NanoMed or a suture from the Medical Fabricator. Usually a suture is preferred, as they have unlimited uses. Please do not steal the sutures from the Operating Theater!!</p>
+<p>&nbsp;</p>
+<p>As for the blood loss, a blood pack can be attached to give the patient some more blood. Filgrastim or saline-glucose solution can also be injected to stimulate blood production.</p>
+<h3>Radiation and Brain Damage</h3>
+<div style="font-size:14px;" id="messages">
+    <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">96</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">2.27</span> - <span style="color:rgb(204,122,29);">1.69</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 37°C (98.6°F)<br> <span class="alert">The subject is barely irradiated. Dose: 0.494814 Sv</span><br>Blood Pressure: <span style="color:rgb(19,128,21);">121/81 (NORMAL)</span> | Blood level: <span style="color:rgb(19,128,21);">502 units</span><br><span class="alert">Significant brain damage detected. Subject may have had a concussion.</span></div>
+</div>
+<p>&nbsp;</p>
+<p>Radiation causes tox and burn damage, but it's fairly simple to heal. Just inject potassium iodide from the NanoMed, and keep up with the escalating damages. The potassium iodide will remove radiation from the patient over time.</p>
+<p>Brain damage can be fatal: accumulate too much, and the patient will drop dead. However, mannitol, available in pills from the NanoMed, can easily heal brain damage.</p>
+<h3>Organ Damage and Other Ailments</h3>
+<div style="font-size:14px;" id="messages">
+    <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">100</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">0</span> - <span style="color:rgb(204,122,29);">0</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 37°C (98.6°F)<br>Blood Pressure: <span style="color:rgb(19,128,21);">117/81 (NORMAL)</span> | Blood level: <span style="color:rgb(19,128,21);">500 units</span><br><span style="color:purple;"><strong>Internal Injuries:</strong></span><br><span style="color:purple;"><strong>Devin Carr's left kidney</strong> - Minor</span><br><span style="color:purple;"><strong>Devin Carr's right kidney</strong> - Minor</span><br><span style="color:purple;"><strong>Devin Carr's liver</strong> - Minor</span><br><b class="notice"><strong>No active chemical agents found in Devin Carr.</strong></b><br><span class="alert"><strong>Active Virus: The Flu</strong> </span><small><span class="alert">(Stage 3/3)</span></small><br><small><span class="alert">Spread: Airborne</span></small><br><small><span class="alert">Suggested Remedy: Sleep</span></small></div>
+</div>
+<p>&nbsp;</p>
+<p>Here, we see the patient has some organ damage, as well as the flu. Organ damage can be healed by specific drugs. Cryoxadone from the cryo tubes and omnizine can heal all organs, but these aren't always necessary. The kidneys and digestive organs can be healed by any anti-tox drugs, such as charcoal. The lungs and spleen can be healed with anti-oxy drugs, such as salbutamol.</p>
+<p>&nbsp;</p>
+<p>For patients who have become blind or deaf, you can apply oculine, which can either be injected or applied to the skin, and is available from bottles at the NanoMed. Additionally, you could use a VISOR prosthesis for blindness, or an auditory headset for deafness, both of which are available at the medical fabricator. These may come in handy for permanent cases of blindness and deafness.</p>
+<p>&nbsp;</p>
+<p>As for the flu, most ailments will have a cure listed. However, there is one set of ailments that we should take special note of: Shock, cardiac failure, and cardiac arrest. Shock is caused by blood loss or severe injury, and can be treated with saline-glucose solution. Left untreated, it becomes cardiac failure, which can be treated with epinephrine. However, it will eventually become cardiac arrest, where the heart stops beating entirely. This predictably and rapidly causes massive oxy damage, and will kill in short order if the heart is not restarted by a defibrillator.</p>
+<p>&nbsp;</p>
+<p>For other conditions, such as liver failure, appendicitis, or pancreatitis, surgical removal and/or replacement of the organ may be required. This guidebook will not deal with surgery, however. It may be best to <abbr title="Or read the wiki!">ask a fellow doctor</abbr>.</p>
+<hr>
+<h2>Conclusion</h2>
+<h3>Farewell</h3>
+<p>Thank you for taking the time to read this guide. Hopefully, you have learned something to help you on your medical journey, and don't ever be afraid to ask questions and learn new things!</p>

@@ -122,26 +122,26 @@ export const BioEffect = (props) => {
                   step={1}
                   width={'5'}
                   value={booth.price.toFixed()}
-                  onChange={(price) =>
+                  onChange={(price) => {
                     setBooth({
                       ref: booth.ref,
                       price: price,
                       desc: booth.desc,
-                    })
-                  }
+                    });
+                  }}
                 />
               </LabeledList.Item>
               <LabeledList.Item label="Description">
                 <Input
                   width={25}
                   value={booth.desc}
-                  onChange={(_, desc) =>
+                  onChange={(desc) => {
                     setBooth({
                       ref: booth.ref,
                       price: booth.price,
                       desc: desc,
-                    })
-                  }
+                    });
+                  }}
                 />
               </LabeledList.Item>
             </LabeledList>
@@ -239,7 +239,9 @@ export const BioEffect = (props) => {
               disabled={onCooldown(equipmentCooldown, 'Reclaimer')}
               icon="times"
               color="bad"
-              onClick={() => act('reclaim', { ref })}
+              onClick={() =>
+                act(isStorage ? 'reclaimStored' : 'reclaimOccupant', { ref })
+              }
             >
               Reclaim
             </Button>
@@ -342,7 +344,7 @@ export const BioEffect = (props) => {
   );
 };
 
-export const Description = (props, context) => {
+export const Description = (props) => {
   const lines = props.text?.split(/<br ?\/?>/g);
 
   return lines?.map((line, i) => <p key={i}>{line}</p>);

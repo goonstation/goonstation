@@ -2,6 +2,13 @@
 "a" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
+"b" = (
+/obj/storage/secure/closet/personal/empty,
+/obj/item/clothing/under/misc/merc01,
+/obj/item/storage/backpack/brown,
+/obj/random_item_spawner/medicine/one,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
 "c" = (
 /obj/storage/crate,
 /obj/random_item_spawner/circuitboards/two,
@@ -40,9 +47,8 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/allowGenerate)
 "l" = (
-/obj/item/bballbasket{
-	dir = 1;
-	pixel_y = 24
+/obj/item/bballbasket/mounted{
+	dir = 1
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/noGenerate)
@@ -94,6 +100,10 @@
 /area/noGenerate)
 "w" = (
 /obj/stool/chair,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"y" = (
+/mob/living/critter/human/mercenary/rifle,
 /turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "z" = (
@@ -159,11 +169,26 @@
 "M" = (
 /turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
+"N" = (
+/obj/stool/chair,
+/mob/living/critter/human/mercenary/knife,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
 "O" = (
 /turf/simulated/wall/auto/supernorn,
 /area/noGenerate)
 "P" = (
 /obj/storage/secure/closet/personal/empty,
+/obj/item/clothing/under/misc/merc01,
+/obj/item/gun/kinetic/pistol,
+/obj/item/storage/backpack/brown,
+/obj/random_item_spawner/med_kit/one_or_zero,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"R" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/mob/living/critter/human/mercenary/knife,
 /turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "S" = (
@@ -196,6 +221,14 @@
 /obj/drink_rack/mug{
 	pixel_x = 28
 	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"Z" = (
+/obj/storage/secure/closet/personal/empty,
+/obj/item/clothing/under/misc/merc01,
+/obj/item/storage/belt/security/shoulder_holster/small,
+/obj/item/storage/backpack/brown,
+/obj/random_item_spawner/snacks/one,
 /turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 
@@ -237,7 +270,7 @@ a
 a
 r
 r
-P
+Z
 P
 A
 O
@@ -253,7 +286,7 @@ a
 (4,1,1) = {"
 a
 r
-P
+b
 M
 M
 X
@@ -273,7 +306,7 @@ r
 A
 X
 M
-A
+R
 O
 n
 n
@@ -391,7 +424,7 @@ a
 r
 I
 M
-M
+y
 M
 w
 T
@@ -410,7 +443,7 @@ Y
 M
 M
 M
-w
+N
 T
 O
 n

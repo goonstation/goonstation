@@ -180,7 +180,7 @@ var/list/dirty_keystates = list()
 		if (src.mob.mob_flags & SEE_THRU_CAMERAS)
 			if(isturf(object))
 				var/turf/T = object
-				if (!length(T.camera_coverage_emitters))
+				if (!seen_by_camera(T))
 					return
 				else
 					if (parameters["right"])
@@ -209,7 +209,7 @@ var/list/dirty_keystates = list()
 				buildmode.build_click(object, location, control, parameters)
 				return
 
-		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
+		if (parameters["left"] && !mob.targeting_ability)	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
 
 			if(length(contexts))

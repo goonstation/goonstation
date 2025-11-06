@@ -15,7 +15,7 @@
 /mob/proc/do_help(var/mob/living/M)
 	if (!istype(M))
 		return
-	src.lastattacked = M
+	src.lastattacked = get_weakref(M)
 	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
@@ -53,7 +53,7 @@
 			if (src.is_heat_resistant())
 				boutput(H, SPAN_NOTICE("Being fire resistant protects you from the flames!"))
 			else
-				boutput(H, SPAN_NOTICE("Your [G] protect you from the flames!"))
+				boutput(H, SPAN_NOTICE("Your [G.name] protect you from the flames!"))
 		else
 			M.update_burning(-1.2)
 			H.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))
@@ -138,30 +138,8 @@
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src
-				var/mob/living/carbon/human/X = target
-
-				if (Z.zone_sel && Z.zone_sel.selecting == "head")
-					var/obj/item/clothing/head/sunhat/hat = X.head
-					if(istype(hat) && hat.uses)
-						src.visible_message(SPAN_ALERT("[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!"))
-						elecflash(target)
-
-						hat.uses = max(0, hat.uses - 1)
-						if (hat.uses < 1)
-							X.head.icon_state = splittext(hat.icon_state,"-")[1]
-							X.head.item_state = splittext(hat.item_state,"-")[1]
-							X.update_clothing()
-
-						if (hat.uses <= 0)
-							X.show_text("The sunhat is no longer electrically charged.", "red")
-						else
-							X.show_text("The stunhat has [hat.uses] charges left!", "red")
-
-
-						src.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
-						src.stuttering = max(target.stuttering,30)
-					else
-						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
+				if (Z.zone_sel?.selecting == "head")
+					src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
 					return
 
 			if (ismobcritter(target))
@@ -193,7 +171,7 @@
 		boutput(src, SPAN_ALERT("You're already doing CPR!"))
 		return
 
-	src.lastattacked = target
+	src.lastattacked = get_weakref(target)
 
 	actions.start(new /datum/action/bar/icon/CPR(target), src)
 
@@ -535,8 +513,8 @@
 		return 0
 
 	if (src.gloves.uses > 0)
-		src.lastattacked = target
-		target.lastattacker = src
+		src.lastattacked = get_weakref(target)
+		target.lastattacker = get_weakref(src)
 		target.lastattackertime = world.time
 		logTheThing(LOG_COMBAT, src, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
@@ -729,7 +707,7 @@
 		user.visible_message(SPAN_COMBAT("<b>[user]'s attack bounces off [target] uselessly!</B>"))
 		return
 
-	user.lastattacked = target
+	user.lastattacked = get_weakref(target)
 
 	var/damage = 0
 	var/send_flying = 0 // 1: a little bit | 2: across the room
@@ -747,7 +725,7 @@
 				BORG.compborg_lose_limb(BORG.part_head)
 			else
 				user.visible_message(SPAN_COMBAT("<b>[user] pounds on [BORG.name]'s head furiously!</B>"))
-				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
 					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
@@ -756,12 +734,12 @@
 
 	else if (isAI(target))
 		user.visible_message(SPAN_COMBAT("<b>[user] [pick("wails", "pounds", "slams")] on [target]'s terminal furiously!</B>"))
-		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 		damage = 10
 
 	else
 		user.visible_message(SPAN_COMBAT("<b>[user] smashes [target] furiously!</B>"))
-		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 		damage = 10
 		if (!target.anchored && prob(30))
 			user.visible_message(SPAN_COMBAT("<b>...and sends [him_or_her(target)] flying!</B>"))
@@ -776,7 +754,7 @@
 		random_brute_damage(target, damage)
 		target.UpdateDamageIcon()
 
-	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] for [damage] damage at [log_loc(user)].")
 	return
 
 /////////////////////////////////////////////////////// attackResult datum ////////////////////////////////////////
@@ -901,7 +879,7 @@
 		if (!(suppress & SUPPRESS_LOGS))
 			if (!length(logs))
 				if (!istype(src, /datum/attackResults/disarm))
-					logs = list("punches [constructTarget(target,"combat")]")
+					logs = list("punches [constructTarget(target,"combat")] for [src.damage] damage")
 
 //Pod wars friendly fire check
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -984,8 +962,8 @@
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
-			owner.lastattacked = target
-			target.lastattacker = owner
+			owner.lastattacked = get_weakref(target)
+			target.lastattacker = get_weakref(owner)
 			target.lastattackertime = world.time
 			target.add_fingerprint(owner)
 

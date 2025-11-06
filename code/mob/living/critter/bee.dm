@@ -6,7 +6,6 @@
 // I will probably regret this but I think the time has finally come for PLAYABLE BEES
 /mob/living/critter/small_animal/bee
 	name = "greater domestic space-bee"
-	real_name = "greater domestic space-bee"
 	icon = 'icons/misc/bee.dmi'
 #ifdef HALLOWEEN
 	icon_state = "vorbees-wings"
@@ -27,9 +26,9 @@
 	var/has_color_overlay = 1
 	var/image/image_color_overlay = null
 	var/image/image_sleep_overlay = null
-	speechverb_say = "bumbles"
-	speechverb_exclaim = "buzzes"
-	speechverb_ask = "bombles"
+	speech_verb_say = "bumbles"
+	speech_verb_exclaim = "buzzes"
+	speech_verb_ask = "bombles"
 	pet_text = list("pets","hugs","snuggles","cuddles")
 	health_brute = 25
 	health_brute_vuln = 0.8
@@ -59,8 +58,6 @@
 
 	New()
 		..()
-		// bee mobs should have their actual bee names
-		real_name = name
 		SPAWN(0)
 			ADMIN_BEES_ONLY
 			src.UpdateIcon()
@@ -249,7 +246,7 @@
 			"You feed [E] to [src]. Fuck!")
 
 		sleep(2 SECONDS)
-		E.icon_state = "gold"
+		E.icon_state = "id_gold"
 		E.desc += "  It appears to be covered in honey.  Gross."
 		src.visible_message("<b>[src]</b> regurgitates [E]!")
 		E.name = "sticky [E.name]"
@@ -745,9 +742,9 @@
 	icon_state_sleep = "moth-sleep"
 	icon_body = "moth"
 	honey_color = rgb(207, 207, 207)
-	speechverb_say = "flutters"
-	speechverb_exclaim = "squeaks"
-	speechverb_ask = "flutters"
+	speech_verb_say = "flutters"
+	speech_verb_exclaim = "squeaks"
+	speech_verb_ask = "flutters"
 
 /mob/living/critter/small_animal/bee/zombee
 	name = "zombee"
@@ -857,7 +854,6 @@
 
 /mob/living/critter/small_animal/bee/overbee
 	name = "THE OVERBEE"
-	real_name = "THE OVERBEE"
 	desc = "Not to be confused with that other stinging over-insect."
 	health_brute = 500
 	health_brute_vuln = 0.2
@@ -1089,9 +1085,7 @@ particles/swarm/bees
 	count = 10
 	spawning = 0.35
 	fade = 5
-#ifndef SPACEMAN_DMM
 	fadein = 5
-#endif
 	lifespan = generator("num", 50, 80, LINEAR_RAND)
 	width = 64
 	position = generator("box", list(-10,-10,0), list(10,10,50))

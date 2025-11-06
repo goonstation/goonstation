@@ -48,6 +48,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	var/report_freq = FREQ_HYDRO //Radio channel to report plant status/death/whatever.
 	var/net_id = null
 
+	var/base_cropcount_consistency = 70 // The base lower-bounds for cropcount consistency, used during harvesting.
 	var/health_warning = 0
 	var/harvest_warning = 0
 	var/water_level = 4 // Used for efficiency in the UpdateIcon proc with water level changing
@@ -83,6 +84,12 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))
+
+/obj/machinery/plantpot/get_desc(dist, mob/user)
+	. = ..()
+	if (dist >= 5)
+		return
+	HYPphytoscopic_scan(user, src)
 
 /obj/machinery/plantpot/proc/post_alert(var/list/alert_data)
 	if(src.status & (NOPOWER|BROKEN)) return
@@ -869,337 +876,398 @@ TYPEINFO(/obj/machinery/plantpot)
 	// This proc is where the harvesting actually happens. Again it shouldn't need tweaking
 	// with since i've tried to account for most special circumstances that might come up.
 	if(!user) return
-	var/satchelpick = 0
 	if(SA)
 		if(length(SA.contents) >= SA.maxitems)
 			boutput(user, SPAN_ALERT("Your satchel is already full! Free some space up first."))
 			return
 		else
-			satchelpick = input(user, "What do you want to harvest into the satchel?", "[src.name]", 0) in list("Everything","Produce Only","Seeds Only","Never Mind")
-			if(!HYPcheck_if_harvestable() || satchelpick == "Never Mind")
+			if(!HYPcheck_if_harvestable())
 				return
-			if(satchelpick == "Everything")
-				satchelpick = null
 	// it's okay if we don't have a satchel at all since it'll just harvest by hand instead
-	var/datum/plant/growing = src.current
-	var/datum/plantgenes/DNA = src.plantgenes
-	var/datum/plantmutation/MUT = DNA.mutation
-	if(!growing)
+
+	// setup harvesting data to make it easier to pass around data related to this harvest
+	var/datum/HYPharvesting_data/h_data = new()
+	h_data.growing = src.current
+	h_data.DNA = src.plantgenes
+	h_data.MUT = h_data.DNA.mutation
+	h_data.pot = src
+	h_data.user = user
+	// This is a modular thing suggested by Cogwerks that can affect the final quality
+	// of produce such as making fruit make you sick or herbs have less reagents.
+	h_data.base_quality_score = 1
+
+	if(!h_data.growing)
 		logTheThing(LOG_DEBUG, user, "<b>Hydro Controls</b>: Plant pot at \[[x],[y],[z]] used by ([user]) attempted a harvest without having a current plant.")
 		return
 
-	if(growing.harvested_proc)
+	if(h_data.growing.harvested_proc)
 		// Does this plant react to being harvested? If so, do it - it also functions as
 		// a check since harvesting will stop here if this returns anything other than 0.
-		if(growing.HYPharvested_proc(src,user)) return
-		if(MUT?.HYPharvested_proc_M(src,user)) return
+		if(h_data.growing.HYPharvested_proc(src,user)) return
+		if(h_data.MUT?.HYPharvested_proc_M(src,user)) return
 		//it can happen during HYPharvested_proc that the planttype in the pot gets replaced, we account for that here
-		growing = src.current
+		h_data.growing = src.current
 
+	// Setup global stuff from hydro_controls
 	if(hydro_controls)
 		src.recently_harvested = 1
 		src.harvest_warning = 0
+		h_data.harvest_cap = hydro_controls.max_harvest_cap
 		SPAWN(hydro_controls.delay_between_harvests)
 			src.recently_harvested = 0
 	else
-		logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Delay cap.")
+		logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Delay or Harvest cap.")
 
-	var/base_quality_score = 1
-	// This is a modular thing suggested by Cogwerks that can affect the final quality
-	// of produce such as making fruit make you sick or herbs have less reagents.
+	// Replace default harvest cap with mutation override if applicable
+	if(h_data.MUT?.harvest_cap)
+		h_data.harvest_cap = h_data.MUT.harvest_cap
 
-	var/harvest_cap = 10
-	if(hydro_controls)
-		harvest_cap = hydro_controls.max_harvest_cap
-	else
-		logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
-
-	if(MUT?.harvest_cap)
-		harvest_cap = MUT.harvest_cap
-
-	src.growth = max(0, growing.HYPget_growth_to_matured(DNA))
 	// Reset the growth back to the beginning of maturation so we can wait out the
 	// harvest time again.
-	var/getamount = growing.cropsize + DNA?.get_effective_value("cropsize")
-	if(src.health >= growing.starthealth * 2 && prob(30))
-		boutput(user, SPAN_NOTICE("This looks like a good harvest!"))
-		base_quality_score += 5
-		var/bonus = rand(1,3)
-		getamount += bonus
-		harvest_cap += bonus
-		// Good health levels bump the harvest amount up a bit and increase jumbo chances.
-	if(src.health >= growing.starthealth * 4 && prob(30))
-		boutput(user, SPAN_NOTICE("It's a bumper crop!"))
-		base_quality_score += 10
-		var/bonus = rand(2,5)
-		getamount += bonus
-		harvest_cap += bonus
-		// This is if the plant health is absolutely excellent.
-	if(src.health <= growing.starthealth / 2 && prob(70))
-		boutput(user, SPAN_ALERT("This is kind of a crappy harvest..."))
-		base_quality_score -= 12
-		// And this is if you've neglected the plant!
-
-	var/getitem = null
-	var/dont_rename_crop = FALSE
+	src.growth = max(0, h_data.growing.HYPget_growth_to_matured(h_data.DNA))
+	// setup initial crop size
+	h_data.cropcount = h_data.growing.cropsize
+	// handle bonuses and negatives to do with the plant's health
+	HYPharvesting_health_bonuses(h_data)
 	// Figure out what crop we use - the base crop or a mutation crop.
-	if(growing.crop || MUT?.crop)
-		if(MUT)
-			if(MUT.crop)
-				getitem = MUT.crop
-				dont_rename_crop = MUT.dont_rename_crop
-			else
-				logTheThing(LOG_DEBUG, null, "<b>I Said No/Hydroponics:</b> Plant mutation [MUT] crop is not properly configured")
-				getitem = growing.crop
-		else
-			getitem = growing.crop
-			dont_rename_crop = growing.dont_rename_crop
+	HYPharvesting_mutated_crops(h_data)
+	// handle bonuses and negatives to do with gene strains
+	HYPharvesting_gene_strains(h_data)
+	// Finalise cropcount, making sure it's in accordance with maximums
+	HYPharvesting_finalise_cropcount(h_data)
 
-	if(DNA.commuts)
-		for(var/datum/plant_gene_strain/G in DNA.commuts)
-			// And ones that mess with the quality of crops.
-			// Unstable isn't here because it'd be less random outside the loop.
-			if (istype(G, /datum/plant_gene_strain/quality))
-				var/datum/plant_gene_strain/quality/Q = G
-				if(Q.negative)
-					base_quality_score -= Q.quality_mod
-				else
-					base_quality_score += Q.quality_mod
-			// Gene strains that boost or penalize the cap.
-			else if (istype(G, /datum/plant_gene_strain/yield))
-				var/datum/plant_gene_strain/yield/Y = G
-				if(Y.negative)
-					if(harvest_cap == 0 || Y.yield_mult == 0)
-						continue
-					else
-						harvest_cap /= Y.yield_mult
-						harvest_cap -= Y.yield_mod
-				else
-					harvest_cap *= Y.yield_mult
-					harvest_cap += Y.yield_mod
-
-	var/extra_harvest_chance = 0
-
-	if(getamount > harvest_cap)
-		extra_harvest_chance += getamount - harvest_cap
-		getamount = harvest_cap
-		// Max harvest amount for all plants is capped. If we've got higher output
-		// than the cap it's probably through gene manipulation, so reward the player
-		// with greater chances for an extra harvest if this is the case.
-		// The cap is defined in hydro_controls and can be edited by coders on the fly.
-
-	getamount = round(max(getamount, 0))
-
-	if(getamount < 1)
+	if(h_data.cropcount < 1)
 		boutput(user, SPAN_ALERT("You aren't able to harvest anything worth salvaging."))
 		// We just don't bother if the output is below one.
-	else if(!getitem)
+	else if(!h_data.getitem)
 		boutput(user, SPAN_ALERT("You can't seem to find anything that looks harvestable."))
 		// mostly a fix for a runtime error if getitem was null
 	else
-		var/cropcount = getamount
-		var/seedcount = 0
+		// Generate harvest products
+		HYPharvesting_generate_products(h_data)
+		// Handle seed outputs
+		HYPharvesting_seeds(h_data)
+		// Handle experience gains
+		HYPharvesting_experience(h_data)
 
-		for (var/_ in 1 to getamount)
-			// Start up the loop of grabbing all our produce. Remember, each iteration of
-			// this loop is for one item each.
-
-			//Now we define some variables for quality calculation.
-			var/quality_status = null
-			var/quality_score = base_quality_score
-			quality_score += rand(-2,2)
-			// Just a bit of natural variance to make it interesting
-			if(DNA?.get_effective_value("potency"))
-				quality_score += round(DNA?.get_effective_value("potency") / 6)
-			if(DNA?.get_effective_value("endurance"))
-				quality_score += round(DNA?.get_effective_value("endurance") / 6)
-			if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable))
-				quality_score += rand(-7,7)
-
-			//This calculates produce quality and quality status. We need this for changing the name of the produce
-			//since quality status can override each other, they apply to quality status modifier first
-			var/quality_status_modifer = 0
-
-			switch(quality_score)
-				if(25 to INFINITY)
-					// as quality approaches 115, rate of getting jumbo increases
-					if(prob(min(100, quality_score - 15)))
-						quality_status = "jumbo"
-						quality_status_modifer = quality_score
-				if(20 to 24)
-					if(prob(4))
-						quality_status = "jumbo"
-						quality_status_modifer = quality_score
-				if(-9999 to -11)
-					quality_status = "rotten"
-					quality_status_modifer = - 20
-			if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
-				// The unstable gene can do weird shit to your produce and happily stomp on your jumbo produce.
-				quality_status = "malformed"
-				quality_status_modifer = rand(10,-10)
-
-			//Now, if we got the quality status modifier, we add it to the score for our final score
-			quality_score += quality_status_modifer
-
-
-			//Now we can create an item or mob
-			// Marquesas: I thought of everything and couldn't find another way, but we need this for synthlimbs.
-			// Okay, I meanwhile realized there might be another way but this looks cleaner. IMHO.
-			var/itemtype = null
-			if(istype(getitem, /list))
-				itemtype = pick(getitem)
-			else
-				itemtype = getitem
-
-			var/atom/CROP = new itemtype
-
-			if(istype(CROP, /obj))
-				var/obj/CROP_ITEM = CROP
-				CROP_ITEM.set_loc(src)
-
-				//We call HYPsetup_DNA on each item created before we manipulate it further
-				//This proc handles all crop-related scaling and quirks of produce
-				//This proc also on some items remove the respectable produce and returns a new one, which we will handle further as CROP
-				//This proc calls HYPadd_harvest_reagents on it's respectable items
-				if(istype(CROP_ITEM, /obj/item))
-					var/obj/item/manipulated_item = CROP_ITEM
-					CROP_ITEM = manipulated_item.HYPsetup_DNA(DNA, src, growing, quality_status)
-
-				//last but not least, we give the mob a proper name
-				CROP_ITEM.name = HYPgenerate_produce_name(CROP_ITEM, src, growing, quality_score, quality_status, dont_rename_crop)
-
-				CROP_ITEM.quality = quality_score
-
-				if(!growing.stop_size_scaling) //Keeps plant sprite from scaling if variable is enabled.
-					CROP_ITEM.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
-
-				if(istype(CROP_ITEM,/obj/critter/))
-					// If it's a critter we don't need to do reagents or shit like that but
-					// we do need to make sure they don't attack the botanist that grew it.
-					var/obj/critter/C = CROP_ITEM
-					C.friends = C.friends | src.contributors
-
-
-			if(istype(CROP, /mob))
-				// Start up the loop of grabbing all our produce. Remember, each iteration of
-				// this loop is for one item each.
-				var/obj/CROP_MOB = CROP
-				CROP_MOB.set_loc(src)
-
-				//We call HYPsetup_DNA on each mob created before we manipulate it further
-				//This proc handles all crop-related scaling and quirks of produce
-				//This proc also on some mobs remove the respectable produce and returns a new one, which we will handle further as CROP_MOB
-				if (istype(CROP_MOB, /mob/living/critter/plant))
-					var/mob/living/critter/plant/manipulated_critter = CROP_MOB
-					CROP_MOB = manipulated_critter.HYPsetup_DNA(DNA, src, growing, quality_status)
-
-				//last but not least, we give the mob a proper name
-				CROP_MOB.name = HYPgenerate_produce_name(CROP_MOB, src, growing, quality_score, quality_status, dont_rename_crop)
-
-
-
-			if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
-				// Same shit again. This isn't so much the crop as it is giving you seeds
-				// incase you couldn't get them otherwise, though.
-				seedcount++
-
-		if (seedcount > 0) HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src, seedcount)
-
-		// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
-		// This is only reached if you actually got anything harvested.
-		// (tmp_crop here was causing runtimes in a lot of cases, so changing to just use it like this)
-		// Base quality score:
-		//   1: base
-		// -12: if HP <=  50% w/ 70% chance
-		// + 5: if HP >= 200% w/ 30% chance
-		// +10: if HP >= 400% w/ 30% chance
-		// Mutations can add or remove this, of course
-		// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
-		if (base_quality_score >= 1 && prob(30))
-			if (base_quality_score >= 11)
-				JOB_XP(user, "Botanist", 4)
-			else if (base_quality_score >= 6)
-				JOB_XP(user, "Botanist", 2)
-			else
-				JOB_XP(user, "Botanist", 1)
-
-		boutput(user, SPAN_NOTICE("You harvest [cropcount] item[s_es(cropcount)][seedcount ? " and [seedcount] seed[s_es(seedcount)]" : ""]."))
-		post_alert(list("event" = "harvest", "plant" = src.current.name, "produce" = cropcount, "seeds" = seedcount))
+		boutput(user, SPAN_NOTICE("You harvest [h_data.cropcount] item[s_es(h_data.cropcount)][h_data.seedcount ? " and [h_data.seedcount] seed[s_es(h_data.seedcount)]" : ""]."))
+		post_alert(list("event" = "harvest", "plant" = src.current.name, "produce" = h_data.cropcount, "seeds" = h_data.seedcount))
 #ifdef DATALOGGER
 		game_stats.Increment("hydro_harvests")
-		game_stats.IncrementBy("hydro_produce", cropcount)
+		game_stats.IncrementBy("hydro_produce", h_data.cropcount)
 #endif
 
 		// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
-		if(istype(MUT,/datum/plantmutation/))
-			logTheThing(LOG_STATION, user, "harvests [cropcount] items from a [MUT.name] plant ([MUT.type]) at [log_loc(src)].")
+		if(istype(h_data.MUT,/datum/plantmutation/))
+			logTheThing(LOG_STATION, user, "harvests [h_data.cropcount] items from a [h_data.MUT.name] plant ([h_data.MUT.type]) at [log_loc(src)].")
 		else
-			logTheThing(LOG_STATION, user, "harvests [cropcount] items from a [growing.name] plant ([growing.type]) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "harvests [h_data.cropcount] items from a [h_data.growing.name] plant ([h_data.growing.type]) at [log_loc(src)].")
 
 		// At this point all the harvested items are inside the plant pot, and this is the
 		// part where we decide where they're going and get them out.
-		var/seeds_only = satchelpick == "Seeds Only"
-		var/produce_only = satchelpick == "Produce Only"
-		if(SA)
-			// If we're putting stuff in a satchel, this is where we do it.
-			for(var/obj/item/I in src.contents)
-				if(length(SA.contents) >= SA.maxitems)
-					boutput(user, SPAN_ALERT("Your satchel is full! You dump the rest on the floor."))
-					break
-				if(istype(I,/obj/item/seed/))
-					if(SA.check_valid_content(I) && (!satchelpick || seeds_only))
-						I.set_loc(SA)
-						I.add_fingerprint(user)
-				else
-					if(SA.check_valid_content(I) && (!satchelpick || produce_only))
-						I.set_loc(SA)
-						I.add_fingerprint(user)
-			SA.UpdateIcon()
-			SA.tooltip_rebuild = 1
-
-		// if the satchel got filled up this will dump any unharvested items on the floor
-		// if we're harvesting by hand it'll just default to this anyway! truly magical~
-		for(var/obj/I in src.contents)
-			I.set_loc(user.loc)
-			I.add_fingerprint(user)
-
-		// we got to do the same for mobs
-		for(var/mob/I in src.contents)
-			I.set_loc(user.loc)
-			I.add_fingerprint(user)
-
+		HYPharvesting_produce_output(h_data, SA)
 
 	// Now we determine the harvests remaining or grant extra ones.
-	if(!HYPCheckCommut(DNA,/datum/plant_gene_strain/immortal))
-		// Immortal is a gene strain that means infinite harvests as long as the plant
-		// is kept alive, it's on melons usually.
-		if(src.health >= growing.starthealth * 4)
-			// If we have excellent health, its a +20% chance for an extra harvest.
-			extra_harvest_chance += 20
-			extra_harvest_chance = clamp(extra_harvest_chance, 0, 100)
-			if(prob(extra_harvest_chance))
-				boutput(user, SPAN_NOTICE("The plant glistens with good health!"))
-				// We got the bonus so don't reduce harvests.
-			else
-				// No bonus, harvest is decremented as usual.
-				src.harvests--
-		else if(prob(33) && HYPCheckCommut(DNA, /datum/plant_gene_strain/variable_harvest))
-			if(prob(10))
-				src.harvests++
-			else if(prob(33))
-				src.harvests -= 2
-			// else just don't reduce the harvests
-		else
-			src.harvests--
-	if(growing.isgrass || src.harvests <= 0)
-		// Vegetable-style plants always die after one harvest irregardless of harvests
-		// remaining, though they do get bonuses for having a good harvests gene.
-		HYPkillplant()
+	HYPharvesting_remaining_harvests(h_data)
 
 	//do we have to run the next life tick manually? maybe
 	playsound(src.loc, "rustle", 50, 1, -5, 2)
 	src.UpdateIcon()
 	src.update_name()
+
+//////////////////////////////////
+// HYPharvesting helper methods //
+//////////////////////////////////
+// Could move some of these to var/datum/plant if plants ever wanted more control over how their produce is harvested
+
+/// Returns a generic quality score based on the given plant genes
+/obj/machinery/plantpot/proc/get_quality_score(datum/HYPharvesting_data/h_data)
+	var/quality_score = h_data.base_quality_score
+	quality_score += rand(-2,2)
+	// Just a bit of natural variance to make it interesting
+	if(h_data.DNA?.get_effective_value("potency"))
+		quality_score += round(h_data.DNA?.get_effective_value("potency") / 6)
+	if(h_data.DNA?.get_effective_value("endurance"))
+		quality_score += round(h_data.DNA?.get_effective_value("endurance") / 6)
+	if(HYPCheckCommut(h_data.DNA,/datum/plant_gene_strain/unstable))
+		quality_score += rand(-7,7)
+	return quality_score
+
+/// Updates a quality status and score list based. 'quality' expects list("score" = num, "status" = text).
+/obj/machinery/plantpot/proc/get_quality_and_status(datum/HYPharvesting_data/h_data, list/quality)
+	//This calculates produce quality and quality status. We need this for changing the name of the produce
+	//since quality status can override each other, they apply to quality status modifier first
+	if (!h_data)
+		return
+	var/quality_score_cache = quality["score"]
+
+	switch(quality_score_cache)
+		if(25 to INFINITY)
+			// as quality approaches 115, rate of getting jumbo increases
+			if(prob(min(100, quality["score"] - 15)))
+				quality["status"] = "jumbo"
+				quality["score"] += quality_score_cache
+		if(20 to 24)
+			if(prob(4))
+				quality["status"] = "jumbo"
+				quality["score"] += quality_score_cache
+		if(-9999 to -11)
+			quality["status"] = "rotten"
+			quality["score"] += - 20
+	if(HYPCheckCommut(h_data.DNA,/datum/plant_gene_strain/unstable) && prob(33))
+		// The unstable gene can do weird shit to your produce and happily stomp on your jumbo produce.
+		quality["status"] = "malformed"
+		quality["score"] += rand(10,-10)
+
+/// helper method for picking the item type of produce
+/obj/machinery/plantpot/proc/pick_type(datum/HYPharvesting_data/h_data)
+	var/itemtype = null
+	if(istype(h_data.getitem, /list))
+		itemtype = pick(h_data.getitem)
+	else
+		itemtype = h_data.getitem
+	return itemtype
+
+/// Handles the generation of mobs/items during harvests
+/obj/machinery/plantpot/proc/HYPharvesting_generate_products(datum/HYPharvesting_data/h_data)
+	for (var/_ in 1 to h_data.cropcount)
+		// Start up the loop of grabbing all our produce. Remember, each iteration of
+		// this loop is for one item each.
+
+		//Now we define some variables for quality calculation.
+		var/list/quality = list("status" = "", "score" = 0)
+		quality["score"] = get_quality_score(h_data)
+		get_quality_and_status(h_data, quality)
+
+		//Now we can create an item or mob
+		// Marquesas: I thought of everything and couldn't find another way, but we need this for synthlimbs.
+		// Okay, I meanwhile realized there might be another way but this looks cleaner. IMHO.
+		var/itemtype = pick_type(h_data)
+		var/atom/CROP = new itemtype
+
+		if(istype(CROP, /obj))
+			var/obj/CROP_ITEM = CROP
+			CROP_ITEM.set_loc(h_data.pot)
+
+			//We call HYPsetup_DNA on each item created before we manipulate it further
+			//This proc handles all crop-related scaling and quirks of produce
+			//This proc also on some items remove the respectable produce and returns a new one, which we will handle further as CROP
+			//This proc calls HYPadd_harvest_reagents on it's respectable items
+			if(istype(CROP_ITEM, /obj/item))
+				var/obj/item/manipulated_item = CROP_ITEM
+				CROP_ITEM = manipulated_item.HYPsetup_DNA(h_data.DNA, h_data.pot, h_data.growing, quality["status"])
+
+			//last but not least, we give the mob a proper name
+			CROP_ITEM.name = HYPgenerate_produce_name(CROP_ITEM, h_data.pot, h_data.growing, quality["score"], quality["status"], h_data.dont_rename_crop)
+
+			CROP_ITEM.quality = quality["score"]
+
+			if(!h_data.growing.stop_size_scaling) //Keeps plant sprite from scaling if variable is enabled.
+				CROP_ITEM.transform = matrix() * clamp((quality["score"] + 100) / 100, 0.35, 2)
+
+			if(istype(CROP_ITEM,/obj/critter/))
+				// If it's a critter we don't need to do reagents or shit like that but
+				// we do need to make sure they don't attack the botanist that grew it.
+				var/obj/critter/C = CROP_ITEM
+				C.friends = C.friends | h_data.pot.contributors
+
+
+		if(istype(CROP, /mob))
+			// Start up the loop of grabbing all our produce. Remember, each iteration of
+			// this loop is for one item each.
+			var/obj/CROP_MOB = CROP
+			CROP_MOB.set_loc(h_data.pot)
+
+			//We call HYPsetup_DNA on each mob created before we manipulate it further
+			//This proc handles all crop-related scaling and quirks of produce
+			//This proc also on some mobs remove the respectable produce and returns a new one, which we will handle further as CROP_MOB
+			if (istype(CROP_MOB, /mob/living/critter/plant))
+				var/mob/living/critter/plant/manipulated_critter = CROP_MOB
+				CROP_MOB = manipulated_critter.HYPsetup_DNA(h_data.DNA, h_data.pot, h_data.growing, quality["status"])
+
+			//last but not least, we give the mob a proper name
+			CROP_MOB.name = HYPgenerate_produce_name(CROP_MOB, h_data.pot, h_data.growing, quality["score"], quality["status"], h_data.dont_rename_crop)
+
+		if(((h_data.growing.isgrass || (h_data.growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(h_data.getitem,/obj/item/seed/) && !HYPCheckCommut(h_data.DNA,/datum/plant_gene_strain/seedless) && (h_data.growing.force_seed_on_harvest >= 0 ))
+			// Same shit again. This isn't so much the crop as it is giving you seeds
+			// incase you couldn't get them otherwise, though.
+			h_data.seedcount++
+
+/// Give XP based on base quality of crop harvest.
+/obj/machinery/plantpot/proc/HYPharvesting_experience(datum/HYPharvesting_data/h_data)
+	// Will make better later, like so more plants harvasted and stuff, this is just for testing.
+	// This is only reached if you actually got anything harvested.
+	// (tmp_crop here was causing runtimes in a lot of cases, so changing to just use it like this)
+	// Base quality score:
+	//   1: base
+	// -12: if HP <=  50% w/ 70% chance
+	// + 5: if HP >= 200% w/ 30% chance
+	// +10: if HP >= 400% w/ 30% chance
+	// Mutations can add or remove this, of course
+	// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
+	if (h_data.base_quality_score >= 1 && prob(30))
+		if (h_data.base_quality_score >= 11)
+			JOB_XP(h_data.user, "Botanist", 4)
+		else if (h_data.base_quality_score >= 6)
+			JOB_XP(h_data.user, "Botanist", 2)
+		else
+			JOB_XP(h_data.user, "Botanist", 1)
+
+/// Handles stat bonuses and negatives associated with gene strains
+/obj/machinery/plantpot/proc/HYPharvesting_gene_strains(datum/HYPharvesting_data/h_data)
+	if(h_data.DNA.commuts)
+		for(var/datum/plant_gene_strain/G in h_data.DNA.commuts)
+			// And ones that mess with the quality of crops.
+			// Unstable isn't here because it'd be less random outside the loop.
+			if (istype(G, /datum/plant_gene_strain/quality))
+				var/datum/plant_gene_strain/quality/Q = G
+				if(Q.negative)
+					h_data.base_quality_score -= Q.quality_mod
+				else
+					h_data.base_quality_score += Q.quality_mod
+			// Gene strains that boost or penalize the cap.
+			else if (istype(G, /datum/plant_gene_strain/yield))
+				var/datum/plant_gene_strain/yield/Y = G
+				if(Y.negative)
+					if(h_data.harvest_cap == 0 || Y.yield_mult == 0)
+						continue
+					else
+						h_data.harvest_cap /= Y.yield_mult
+						h_data.harvest_cap -= Y.yield_mod
+				else
+					h_data.harvest_cap *= Y.yield_mult
+					h_data.harvest_cap += Y.yield_mod
+
+/// Handles mutation crop produce
+/obj/machinery/plantpot/proc/HYPharvesting_mutated_crops(datum/HYPharvesting_data/h_data)
+	// Figure out what crop we use - the base crop or a mutation crop.
+	if(h_data.growing.crop || h_data.MUT?.crop)
+		if(h_data.MUT)
+			if(h_data.MUT.crop)
+				h_data.getitem = h_data.MUT.crop
+				h_data.dont_rename_crop = h_data.MUT.dont_rename_crop
+			else
+				logTheThing(LOG_DEBUG, null, "<b>I Said No/Hydroponics:</b> Plant mutation [h_data.MUT] crop is not properly configured")
+				h_data.getitem = h_data.growing.crop
+		else
+			h_data.getitem = h_data.growing.crop
+			h_data.dont_rename_crop = h_data.growing.dont_rename_crop
+
+/// Handles bonuses and negatives associated with plant health
+/obj/machinery/plantpot/proc/HYPharvesting_health_bonuses(datum/HYPharvesting_data/h_data)
+	if(h_data.pot.health >= h_data.growing.starthealth * 2 && prob(30))
+		boutput(h_data.user, SPAN_NOTICE("This looks like a good harvest!"))
+		h_data.base_quality_score += 5
+		h_data.cropcount += 1
+		h_data.harvest_cap += 1
+		h_data.cropcount_consistency += 10
+		// Good health levels bump the harvest amount up a bit and increase jumbo chances.
+	if(h_data.pot.health >= h_data.growing.starthealth * 4 && prob(30))
+		boutput(h_data.user, SPAN_NOTICE("It's a bumper crop!"))
+		h_data.base_quality_score += 10
+		h_data.cropcount += 2
+		h_data.harvest_cap += 2
+		h_data.cropcount_consistency += 20
+		// This is if the plant health is absolutely excellent.
+	if(h_data.pot.health <= h_data.growing.starthealth / 2 && prob(70))
+		boutput(h_data.user, SPAN_ALERT("This is kind of a crappy harvest..."))
+		h_data.base_quality_score -= 12
+		h_data.cropcount *= 0.6
+		h_data.harvest_cap -= h_data.cropcount
+		h_data.cropcount_consistency -= 20
+		// And this is if you've neglected the plant!
+
+/// Handles the tracking of future harvests for the plant
+/obj/machinery/plantpot/proc/HYPharvesting_remaining_harvests(datum/HYPharvesting_data/h_data)
+	if(!HYPCheckCommut(h_data.DNA,/datum/plant_gene_strain/immortal))
+		// Immortal is a gene strain that means infinite harvests as long as the plant
+		// is kept alive, it's on melons usually.
+		if(h_data.pot.health >= h_data.growing.starthealth * 4)
+			// If we have excellent health, its a +20% chance for an extra harvest.
+			h_data.extra_harvest_chance += 20
+			h_data.extra_harvest_chance = clamp(h_data.extra_harvest_chance, 0, 100)
+			if(prob(h_data.extra_harvest_chance))
+				boutput(h_data.user, SPAN_NOTICE("The plant glistens with good health!"))
+				// We got the bonus so don't reduce harvests.
+			else
+				// No bonus, harvest is decremented as usual.
+				h_data.pot.harvests--
+		else if(prob(33) && HYPCheckCommut(h_data.DNA, /datum/plant_gene_strain/variable_harvest))
+			if(prob(10))
+				h_data.pot.harvests++
+			else if(prob(33))
+				h_data.pot.harvests -= 2
+			// else just don't reduce the harvests
+		else
+			h_data.pot.harvests--
+
+	if(h_data.growing.isgrass || h_data.pot.harvests <= 0)
+		// Vegetable-style plants always die after one harvest irregardless of harvests
+		// remaining, though they do get bonuses for having a good harvests gene.
+		h_data.pot.HYPkillplant()
+
+/// Handles where the output of the harvest goes
+/obj/machinery/plantpot/proc/HYPharvesting_produce_output(datum/HYPharvesting_data/h_data, obj/item/satchel/SA)
+	if(SA)
+		// If we're putting stuff in a satchel, this is where we do it.
+		for(var/obj/item/I in h_data.pot.contents)
+			if(length(SA.contents) >= SA.maxitems)
+				boutput(h_data.user, SPAN_ALERT("Your satchel is full! You dump the rest on the floor."))
+				break
+			if(istype(I,/obj/item/seed/))
+				continue
+			else
+				if(SA.check_valid_content(I))
+					I.set_loc(SA)
+					I.add_fingerprint(h_data.user)
+		SA.UpdateIcon()
+		SA.tooltip_rebuild = TRUE
+	// if the satchel got filled up this will dump any unharvested items on the floor
+	// if we're harvesting by hand it'll just default to this anyway! truly magical~
+	for(var/obj/I in h_data.pot.contents)
+		I.set_loc(h_data.user.loc)
+		I.add_fingerprint(h_data.user)
+	// we got to do the same for mobs
+	for(var/mob/I in h_data.pot.contents)
+		I.set_loc(h_data.user.loc)
+		I.add_fingerprint(h_data.user)
+
+/// Handles the generation of seed items
+/obj/machinery/plantpot/proc/HYPharvesting_seeds(datum/HYPharvesting_data/h_data)
+	if (h_data.seedcount > 0) HYPgenerateseedcopy(h_data.pot.plantgenes, h_data.growing, h_data.pot.generation,
+													h_data.pot, h_data.seedcount)
+
+/// Handles the finalisation of cropcount
+/obj/machinery/plantpot/proc/HYPharvesting_finalise_cropcount(datum/HYPharvesting_data/h_data)
+	var/cropsize = h_data.DNA?.get_effective_value("cropsize")
+	h_data.cropcount *= (1 + ((cropsize * h_data.growing.yield_multi) / 100))
+	// A higher output for plants with higher base output helps retains some personality.
+	h_data.harvest_cap += h_data.growing.cropsize
+	// Introduce some variance at the end.
+	h_data.cropcount = src.harvest_consistency(h_data)
+	// Max harvest amount for all plants is capped. If we've got higher output
+	// than the cap it's probably through gene manipulation, so reward the player
+	// with greater chances for an extra harvest if this is the case.
+	// The cap is defined in hydro_controls and can be edited by coders on the fly.
+	if(h_data.cropcount > h_data.harvest_cap)
+		h_data.extra_harvest_chance += h_data.cropcount - h_data.harvest_cap
+		h_data.cropcount = h_data.harvest_cap
+
+	h_data.cropcount = round(max(h_data.cropcount, 0), 1)
+
+/// Handles how consistency affects cropcount
+/obj/machinery/plantpot/proc/harvest_consistency(datum/HYPharvesting_data/h_data)
+	// Get a random number between the minimum possible variance and the uncapped cropcount, to use as the varianced cropcount.
+	// This means variance always has a chance to reduce the cropcount by the maximum amount, but that increasing yield past the cap will also
+	// always increase the chances of a bigger harvest.
+	var/total_consistency = src.base_cropcount_consistency + h_data.cropcount_consistency
+	if (total_consistency >= 100)
+		return h_data.cropcount
+	var/lower_bound = round(min(h_data.cropcount, h_data.harvest_cap) * (total_consistency / 100), 1)
+	var/upper_bound = round(h_data.cropcount, 1)
+	return rand(lower_bound, upper_bound)
+
+/////////////////// end of HYPharvesting helper methods ///////////////////
 
 /obj/machinery/plantpot/proc/HYPmutateplant(var/severity = 1)
 	// This proc is for mutating the plant - gene strains, mutant variants and plain old
@@ -1233,11 +1301,6 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.health += src.plantgenes?.get_effective_value("harvests") * 2
 		// If we have a single-harvest vegetable plant, the harvests gene (which is otherwise
 		// useless) adds 2 health for every point. This works negatively also!
-
-	if(growing.cropsize + SDNA?.get_effective_value("cropsize") > 30)
-		src.health += (growing.cropsize + SDNA?.get_effective_value("cropsize")) - 30
-		// If we have a total crop yield above the maximum harvest size, we add it to the
-		// plant's starting health.
 
 	if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
 		src.AddComponent(/datum/component/proximity)
@@ -1471,7 +1534,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
 	anchored = ANCHORED
-	deconstruct_flags = 0
+	deconstruct_flags = DECON_NONE
 	icon_state = null
 	power_usage = 0
 	growth_rate = 1
@@ -1582,3 +1645,31 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 	spawn_plant = pick(/datum/plant/artifact/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
 	..()
 
+/// Holds harvest-specific variables during HYPharvesting() execution.
+/datum/HYPharvesting_data
+	// The mob that initiated the harvest
+	var/mob/living/user
+	/// The plantpot associated with this harvest
+	var/obj/machinery/plantpot/pot
+	/// The plant associated with this harvest
+	var/datum/plant/growing
+	/// The plantgenes of the plant associated with this harvest
+	var/datum/plantgenes/DNA
+	/// The plant mutation of the plant associated with this harvest
+	var/datum/plantmutation/MUT
+	/// The item or list of items that the plant can produce
+	var/getitem
+	/// Whether or not the produce should be renamed
+	var/dont_rename_crop
+	/// The number of items this harvest produces
+	var/cropcount = 0
+	// Addition to the lower bounds of the cropcount variance. A value of 1 reduces the max possible loss by 1%, negative values do the opposite.
+	var/cropcount_consistency = 0
+	/// The maximum number of items that this harvest produces
+	var/harvest_cap = 10
+	/// The number of seeds this harvest produced
+	var/seedcount = 0
+	/// The base quality score of all produce from the plant
+	var/base_quality_score
+	/// The chance that a multi-harvest plant won't reduce in harvest-count
+	var/extra_harvest_chance = 0

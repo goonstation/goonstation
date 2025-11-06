@@ -92,7 +92,7 @@
 						src.print_index()
 
 					if (2) //Search records
-						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
+						src.print_text("<br>Please enter target name, ID, DNA, rank, or fingerprint.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -522,8 +522,10 @@
 
 			if (MENU_SEARCH_PICK)
 				var/input = text2num_safe(ckey(strip_html(text)))
-				if(isnull(input) || input < 0 || input >> length(src.possible_active))
-					src.print_text("Cancelled")
+				if(isnull(input) || input < 1 || input >> length(src.possible_active))
+					src.master.temp = null
+					src.print_text(mainmenu_text())
+					src.print_text("<br>Search operation cancelled.")
 					src.menu = MENU_MAIN
 					return
 
@@ -701,28 +703,39 @@
 
 	proc
 		mainmenu_text()
-			var/dat = {"<center>M E D T R A K</center><br>
-			Welcome to Medtrak 5.1<br>
-			<b>Commands:</b>
-			<br>(1) View medical records.
-			<br>(2) Search for a record.
-			<br>(3) View viral database.
-			<br>(0) Quit."}
+			var/dat = ""
+
+			dat += @{"<center> __  __        _       _____          _   </center>"}
+			dat += @{"<center>|  \/  |___ __| | ___ |_   _|_ _ __ _| |__</center>"}
+			dat += @{"<center>| |\/| / -_) _` ||___|  | | | '_/ _` | / /</center>"}
+			dat += @{"<center>|_|  |_\___\__,_|       |_| |_| \__,_|_\_\</center>"}
+
+			dat += {"\
+				<br>\
+				<br>Welcome to Medtrak 5.1\
+				<br><b>Commands:</b>\
+				<br>(1) View medical records.\
+				<br>(2) Search for a record.\
+				<br>(3) View viral database.\
+				<br>(0) Quit.\
+			"}
 
 			return dat
 
 		virusmenu_text()
-			var/dat = {"<b>Known Diseases:</b><br>
-					(01) GBS<br>
-					(02) Common Cold<br>
-					(03) Flu<br>
-					(04) Monkey Madness<br>
-					(05) Clowning Around<br>
-					(06) Space Rhinovirus<br>
-					(07) Robot Transformation<br>
-					(08) Teleportitis<br>
-					(09) Berserker<br>
-					Enter virus number or 0 to return."}
+			var/dat = {"\
+				<b>Known Diseases:</b>\
+				<br>(01) GBS\
+				<br>(02) Common Cold\
+				<br>(03) Flu\
+				<br>(04) Monkey Madness\
+				<br>(05) Clowning Around\
+				<br>(06) Space Rhinovirus\
+				<br>(07) Robot Transformation\
+				<br>(08) Teleportitis\
+				<br>(09) Berserker\
+				<br>Enter virus number or 0 to return.\
+			"}
 
 			return dat
 
@@ -732,49 +745,55 @@
 				return 0
 			src.master.temp = null
 
-			var/view_string = {"
-			\[01]Name: [src.active_general["name"]] ID: [src.active_general["id"]]
-			<br>\[02]Full Name: [src.active_general["full_name"]]
-			<br>\[03]<b>Sex:</b> [src.active_general["sex"]]
-			<br>\[04]<b>Pronouns:</b> [src.active_general["pronouns"]]
-			<br>\[05]<b>Age:</b> [src.active_general["age"]]
-			<br>\[__]<b>Rank:</b> [src.active_general["rank"]]
-			<br>\[06]<b>Fingerprint:</b> [src.active_general["fingerprint"]]
-			<br>\[07]<b>DNA:</b> [src.active_general["dna"]]
-			<br>\[__]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
-			<br>\[08]Physical Status: [src.active_general["p_stat"]]
-			<br>\[09]Mental Status: [src.active_general["m_stat"]]"}
+			var/view_string = {"\
+				<br><center><b>Record Data</b></center>\
+				<br>\[01\]<b>Name</b>:        [src.active_general["name"]]\
+				<br>\[__\]<b>ID</b>:          [src.active_general["id"]]\
+				<br>\[02\]<b>Full Name</b>:   [src.active_general["full_name"]]\
+				<br>\[03\]<b>Sex:</b>         [src.active_general["sex"]]\
+				<br>\[04\]<b>Pronouns:</b>    [src.active_general["pronouns"]]\
+				<br>\[05\]<b>Age:</b>         [src.active_general["age"]]\
+				<br>\[__\]<b>Rank:</b>        [src.active_general["rank"]]\
+				<br>\[06\]<b>Fingerprint:</b> [src.active_general["fingerprint"]]\
+				<br>\[07\]<b>DNA:</b>         [src.active_general["dna"]]\
+				<br>\[__\]<b>Photo</b>:       [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]\
+				<br>\[08\]<b>Phys Status</b>: [src.active_general["p_stat"]]\
+				<br>\[09\]<b>Ment Status</b>: [src.active_general["m_stat"]]\
+			"}
 
 			if ((istype(src.active_medical, /datum/db_record) && data_core.medical.has_record(src.active_medical)))
-				view_string += {"<br><center><b>Medical Data:</b></center>
-				<br>\[__]Current Health: [src.active_medical["h_imp"]]
-				<br>\[[FIELDNUM_BLOODTYPE]]Blood Type: [src.active_medical["bioHolder.bloodType"]]
-				<br>\[[FIELDNUM_MINDIS]]Minor Disabilities: [src.active_medical["mi_dis"]]
-				<br>\[[FIELDNUM_MINDET]]Details: [src.active_medical["mi_dis_d"]]
-				<br>\[[FIELDNUM_MAJDIS]]<br>Major Disabilities: [src.active_medical["ma_dis"]]
-				<br>\[[FIELDNUM_MAJDET]]Details: [src.active_medical["ma_dis_d"]]
-				<br>\[[FIELDNUM_ALLERGY]]<br>Allergies: [src.active_medical["alg"]]
-				<br>\[[FIELDNUM_ALGDET]]Details: [src.active_medical["alg_d"]]
-				<br>\[[FIELDNUM_DISEASE]]<br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
-				<br>\[[FIELDNUM_DISDET]]Details: [src.active_medical["cdi_d"]]
-				<br>\[[FIELDNUM_CLDEF]]<br>Cloner Defects: [src.active_medical["cl_def"]]
-				<br>\[[FIELDNUM_CLDET]]Details: [src.active_medical["cl_def_d"]]
-				<br>\[[FIELDNUM_NOTES]]Important Notes:
-				<br>&emsp;[src.active_medical["notes"]]"}
+				view_string += {"<br>\
+					<br><center><b>Medical Data</b></center>\
+					<br>\[__\]<b>Current Health:</b>     [src.active_medical["h_imp"]]\
+					<br>\[10\]<b>Blood Type:</b>         [src.active_medical["bioHolder.bloodType"]]\
+					<br>\[11\]<b>Minor Disabilities:</b> [src.active_medical["mi_dis"]]\
+					<br>\[12\]<b>Details:</b>            [src.active_medical["mi_dis_d"]]\
+					<br>\[13\]<b>Major Disabilities:</b> [src.active_medical["ma_dis"]]\
+					<br>\[14\]<b>Details:</b>            [src.active_medical["ma_dis_d"]]\
+					<br>\[15\]<b>Allergies:</b>          [src.active_medical["alg"]]\
+					<br>\[16\]<b>Details:</b>            [src.active_medical["alg_d"]]\
+					<br>\[17\]<b>Current Diseases:</b>   [src.active_medical["cdi"]] (per disease info placed in log/comment section)\
+					<br>\[18\]<b>Details:</b>            [src.active_medical["cdi_d"]]\
+					<br>\[19\]<b>Cloner Defects:</b>     [src.active_medical["cl_def"]]\
+					<br>\[20\]<b>Details:</b>            [src.active_medical["cl_def_d"]]\
+					<br>\[21\]<b>Important Notes:</b>    [src.active_medical["notes"]]\
+				"}
 			else
-				view_string += "<br><br><b>Medical Record Lost!</b>"
-				view_string += "<br>\[99] Create New Medical Record.<br>"
+				view_string += {"<br>\
+					<br><b>Medical Record Lost!</b>\
+					<br>\[99\] Create New Medical Record.\
+				"}
 
-			view_string += "<br>Enter field number to edit a field<br>(R) Redraw (D) Delete (P) Print (0) Return to index."
+			view_string += "<br><br>Enter field number to edit a field:<br>(R) Redraw (D) Delete (P) Print (0) Return to index."
 
-			src.print_text("<b>Record Data:</b><br>[view_string]")
+			src.print_text(view_string)
 			return 1
 
 		print_index()
 			src.master.temp = null
 			var/dat = ""
 			if(!src.record_database || !length(src.record_database.records))
-				src.print_text("<b>Error:</b> No records found in database.")
+				dat += "<b>Error:</b> No records found in database."
 
 			else
 				dat = "Please select a record:"
@@ -782,10 +801,10 @@
 				for(var/x = 1, x <= src.record_database.records.len, x++)
 					var/datum/db_record/R = src.record_database.records[x]
 					if(!R || !istype(R))
-						dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b><font color=red>ERR: REDACTED</font>"
+						dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]\]</b><font color=red>ERR: REDACTED</font>"
 						continue
 
-					dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b>[R["id"]]: [R["name"]]"
+					dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]\]</b>[R["id"]]: [R["name"]]"
 
 			dat += "<br><br>Enter record number, or 0 to return."
 

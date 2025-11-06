@@ -50,59 +50,17 @@
 	switch (src.btype)
 		// radio
 		if (0)
-			var/obj/item/assembly/radio_bomb/R = new /obj/item/assembly/radio_bomb(src.loc)
-			var/obj/item/tank/plasma/p3 = new /obj/item/tank/plasma(R)
-			var/obj/item/device/radio/signaler/p1 = new /obj/item/device/radio/signaler(R)
-			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
-			R.part1 = p1
-			R.part2 = p2
-			R.part3 = p3
-			p1.master = R
-			p2.master = R
-			p3.master = R
-			R.status = explosive
-			p1.b_stat = 0
-			p2.status = 1
-			p3.air_contents.temperature = btemp + T0C
+			new /obj/item/assembly/radio_bomb(src.loc, btemp)
 
 		// proximity
 		if (1)
-			var/obj/item/assembly/proximity_bomb/R = new /obj/item/assembly/proximity_bomb(src.loc)
-			var/obj/item/tank/plasma/p3 = new /obj/item/tank/plasma(R)
-			var/obj/item/device/prox_sensor/p1 = new /obj/item/device/prox_sensor(R)
-			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
-			R.part1 = p1
-			R.part2 = p2
-			R.part3 = p3
-			p1.master = R
-			p2.master = R
-			p3.master = R
-			R.status = explosive
-
-			p3.air_contents.temperature = btemp + T0C
-			p2.status = 1
-
+			var/obj/item/assembly/proximity_bomb/R = new /obj/item/assembly/proximity_bomb(src.loc, btemp)
 			if(src.active)
-				R.part1.armed = TRUE
-				R.part1.icon_state = text("motion[]", 1)
-				R.c_state(1, src)
+				SEND_SIGNAL(R.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, R)
 
 		// timer
 		if (2)
-			var/obj/item/assembly/time_bomb/R = new /obj/item/assembly/time_bomb(src.loc)
-			var/obj/item/tank/plasma/p3 = new /obj/item/tank/plasma(R)
-			var/obj/item/device/timer/p1 = new /obj/item/device/timer(R)
-			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
-			R.part1 = p1
-			R.part2 = p2
-			R.part3 = p3
-			p1.master = R
-			p2.master = R
-			p3.master = R
-			R.status = explosive
-
-			p3.air_contents.temperature = btemp + T0C
-			p2.status = 1
+			new /obj/item/assembly/time_bomb(src.loc, btemp)
 
 	qdel(src)
 
@@ -275,11 +233,11 @@
 				else
 					boom.Add(A)
 
-		flick("boom_center", animation)
+		FLICK("boom_center", animation)
 		for(var/atom/movable/overlay/A in boom)
-			flick("boom_segment", A)
+			FLICK("boom_segment", A)
 		for(var/atom/movable/overlay/A in boom_tips)
-			flick("boom_tip", A)
+			FLICK("boom_tip", A)
 		for(var/mob/M in affected_mobs)
 			M.ex_act(3)
 		for(var/obj/O in affected_objs)

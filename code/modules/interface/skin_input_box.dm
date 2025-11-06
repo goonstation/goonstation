@@ -68,30 +68,17 @@
 	var/font_size = 7
 
 	//The values used here were sampled from BYOND in practice, I couldn't find a formula that would describe them
-	if (byond_version < 515)
-		switch(titlebarHeight)
-			if(30 to 37)
-				scaling = 1.25
-				window_width  = 402
-				window_height = 106
-				font_size = 8
-			if(37 to 42)
-				scaling = 1.5
-				window_width  = 503
-				window_height = 133
-				font_size = 8
-	else
-		switch(titlebarHeight)
-			if(40 to 50)
-				scaling = 1.25
-				window_width  = 402
-				window_height = 106
-				font_size = 8
-			if(50 to INFINITY)
-				scaling = 1.5
-				window_width  = 503
-				window_height = 133
-				font_size = 8
+	switch(titlebarHeight)
+		if(40 to 50)
+			scaling = 1.25
+			window_width  = 402
+			window_height = 106
+			font_size = 8
+		if(50 to INFINITY)
+			scaling = 1.5
+			window_width  = 503
+			window_height = 133
+			font_size = 8
 
 	if(scaling)
 		winset(src, null, "[id].size=[window_width]x[window_height];[id].say-input.font-size=[font_size];[id].accept.font-size=[font_size];[id].cancel.font-size=[font_size]")
@@ -136,9 +123,9 @@
 var/list/input_window_presets =  list(
 	"say" = list("saywindow", "say \\\"text\\\"", ".say", ".cancel_typing say"),
 	"whisper" = list("whisperwindow", "whisper \\\"text\\\"", ".whisper", ".cancel_typing whisper"),
-	"emote" = list("emotewindow", "Choose an emote to display.", ".emote", ".cancel_typing emote"),
-	"me"  = list("mewindow",  "me (text)",        ".me",  ".cancel_typing me"),
-	"radiosay" = list("radiosaywindow", "main channel radio", "say_main_radio", null),
+	"emote" = list("emotewindow", "Choose an emote to display.", ".emote", ".cancel_emote_typing emote"),
+	"me"  = list("mewindow",  "me (text)",        ".me",  ".cancel_emote_typing me"),
+	"radiosay" = list("radiosaywindow", "main channel radio", "say_over_main_radio", null),
 	"radiochannelsay" = list("radiochannelsaywindow", "radio channel radio", "say_channel_radio", null),
 )
 

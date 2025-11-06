@@ -14,7 +14,7 @@
 
 	proc/flash()
 		playsound(src.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
-		flick("[base_state]_flash", src)
+		FLICK("[base_state]_flash", src)
 		ON_COOLDOWN(src, "flash", 5 SECONDS)
 
 	EnteredProximity(atom/movable/AM)

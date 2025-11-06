@@ -1,7 +1,4 @@
 
-// REMOVE WITH 516
-#define alist list
-
 /* Note about this file:
  * A portion of this code was written by Carnie over at /tg/, back in 2014.
  * We are using the code under the terms of our license, as Carnie can't be
@@ -111,6 +108,15 @@
 	. = list()
 	for(var/key in key_list)
 		. |= key_list[key]
+
+///Flattens a keyed list into just its keys, discarding values
+/proc/flatten_list_to_keys(list/key_list)
+	RETURN_TYPE(/list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= key
 
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)
@@ -295,10 +301,23 @@ proc/params2complexlist(params)
 	var/len = length(params)
 	var/element = null
 	var/a = 1,p_count = 1
+	var/escapee = null
+
 	while(a < len)
-		a++
+
+		//Replace characters escaped with a backslash
+		if(findtext(params,"\\",a,a+1))
+			escapee = params[a+1]
+			escapee = text2ascii(escapee)
+			if(escapee <= 126 && escapee >= 31) //Only ascii, a special character will never be unicode (famous last words)
+				escapee = "%[num2hex(escapee, 2)]"
+				params = splicetext(params,a,a+2,escapee)
+				len = length(params)
+
+		a++ //Increment after escapes but before parameter-value/list parsing
+
 		//Found a separator for a parameter-value pair. Store it
-		if(findtext(params,"&",a,a+1))
+		if(findtext(params,"&",a,a+1) || findtext(params,";",a,a+1))
 			. += params2list(copytext(params,1,a))
 			params = copytext(params,a+1)
 			len = length(params)

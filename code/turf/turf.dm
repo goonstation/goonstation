@@ -64,7 +64,6 @@
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = OPENCONTAINER
 
-
 	New()
 		..()
 		src.path_old = src.type
@@ -90,6 +89,13 @@
 			if(initial(src.opacity))
 				src.set_opacity(src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 		return
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.active_liquid)
+			scan.chain_scan_target(src.active_liquid)
+		if(src.active_airborne_liquid)
+			scan.chain_scan_target(src.active_airborne_liquid)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
@@ -247,16 +253,6 @@
 		SHOULD_CALL_PARENT(FALSE)
 		return FALSE
 
-/obj/overlay/tile_gas_effect
-	name = ""
-	anchored = ANCHORED
-	density = 0
-	mouse_opacity = 0
-
-	Move()
-		SHOULD_CALL_PARENT(FALSE)
-		return FALSE
-
 /turf/unsimulated
 	pass_unstable = FALSE
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -293,7 +289,6 @@
 	var/static/image/starlight
 
 	flags = FLUID_DENSE
-	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
 	can_build = TRUE
 	dense
@@ -319,7 +314,7 @@
 		toxins = ONE_ATMOSPHERE/3
 		New()
 			..()
-			var/obj/overlay/tile_gas_effect/gas_icon_overlay = new
+			var/atom/movable/tile_gas_effect/gas_icon_overlay = new
 			gas_icon_overlay.icon = 'icons/effects/tile_effects.dmi'
 			gas_icon_overlay.icon_state = "plasma-alpha"
 			gas_icon_overlay.dir = pick(cardinal)
@@ -429,11 +424,15 @@ proc/generate_space_color()
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
-			starlight.color = starlight_color_override ? starlight_color_override : src.color
-			if(!isnull(starlight_alpha))
-				starlight.alpha = starlight_alpha
 
-		src.underlays += starlight
+		if(!isnull(starlight_alpha))
+			starlight.alpha = starlight_alpha
+		starlight.color = starlight_color_override ? starlight_color_override : src.color
+
+		if(length(src.underlays))
+			src.underlays = list(starlight)
+		else
+			src.underlays += starlight
 	else
 		src.underlays = list()
 	#endif
@@ -456,7 +455,7 @@ proc/generate_space_color()
 
 /turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
-		air_master.tiles_to_space |= src
+		air_master.tiles_to_space[src] = null
 		return TRUE
 
 /turf/cordon
@@ -626,7 +625,7 @@ proc/generate_space_color()
 			O.hide(src.intact)
 
 /turf/unsimulated/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
-	if (can_replace_with_stuff || force)
+	if (can_replace_with_stuff || force || can_dig)
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
@@ -658,7 +657,7 @@ var/global/in_replace_with = 0
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
-	var/zero_new_turf_air = (turf_flags & CAN_BE_SPACE_SAMPLE)
+	var/zero_new_turf_air = istype(src, /turf/space)
 
 	//For unsimulated static air tiles such as ice moon surface.
 	var/temp_old = null
@@ -816,6 +815,7 @@ var/global/in_replace_with = 0
 	new_turf.RL_NeedsAdditive = rlneedsadditive
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
+
 	new_turf.opaque_atom_count = old_opaque_atom_count
 	new_turf.pass_unstable += old_pass_unstable
 
@@ -852,9 +852,6 @@ var/global/in_replace_with = 0
 					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
 
 
-	//cleanup old overlay to prevent some Stuff
-	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
-	new_turf.RL_Cleanup() //Cleans up/mostly removes the lighting.
 	new_turf.RL_Init()
 
 	//The following is required for when turfs change opacity during replace. Otherwise nearby lights will not be applying to the correct set of tiles.
@@ -886,18 +883,16 @@ var/global/in_replace_with = 0
 				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
-				air_master.tiles_to_update |= N
+				air_master.tiles_to_update[N] = null
 		else if (air_master)
-			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
-			air_master.active_singletons -= src
-			if (length(air_master.tiles_to_update))
-				air_master.tiles_to_update -= src
+			air_master.high_pressure_delta.Remove(src) //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
+			air_master.active_singletons.Remove(src)
+			air_master.tiles_to_update.Remove(src)
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+			air_master.groups_to_rebuild[oldparent] = null //Puts the oldparent into a queue to update the members.
 			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
 			oldparent.borders?.Remove(src)
-
 
 	new_turf.update_nearby_tiles(1)
 
@@ -1061,8 +1056,6 @@ TYPEINFO(/turf/simulated)
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 
-	turf_flags = IS_TYPE_SIMULATED
-
 	attackby(var/obj/item/W, var/mob/user, params)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
@@ -1123,12 +1116,12 @@ TYPEINFO(/turf/simulated)
 
 /turf/simulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/unsimulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/grass
@@ -1198,7 +1191,7 @@ TYPEINFO(/turf/simulated)
 
 /turf/unsimulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 
 /turf/unsimulated/wall/bombvr
@@ -1254,12 +1247,12 @@ TYPEINFO(/turf/simulated)
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/attackby(obj/item/C, mob/user)
+/turf/attackby(obj/item/I, mob/user, params, is_special, silent)
 	if(src.can_build)
 		var/area/A = get_area (user)
-		var/obj/item/rods/R = C
+		var/obj/item/rods/R = I
 		if (istype(R))
-			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
 			if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
@@ -1270,19 +1263,24 @@ TYPEINFO(/turf/simulated)
 			var/obj/lattice/lattice = new(src)
 			lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
 			if (R.material)
-				src.setMaterial(C.material)
+				src.setMaterial(R.material)
 			return
 
-		if (istype(C, /obj/item/tile))
-			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+		if (istype(I, /obj/item/tile))
+			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
-			var/obj/item/tile/T = C
+			var/obj/item/tile/T = I
 			if (T.amount >= 1)
 				for(var/obj/lattice/L in src)
 					qdel(L)
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 				T.build(src)
+	if (src.can_dig && isdiggingtool(I))
+		if(checkTurfPassable(src))
+			actions.start(new/datum/action/bar/dig_trench(src), user)
+		else
+			boutput(user, SPAN_NOTICE("You can't start digging there with something in the way!"))
 
 #if defined(MAP_OVERRIDE_POD_WARS)
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
@@ -1311,6 +1309,10 @@ TYPEINFO(/turf/simulated)
 			if(target_turf)
 				zlevel = target_turf.z
 			V.going_home = 0
+	else if (istype(A, /mob/living/critter/space_phoenix))
+		var/mob/living/critter/space_phoenix/phoenix = A
+		if (phoenix.travel_back_to_station)
+			zlevel = Z_LEVEL_STATION
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
 		return
@@ -1379,53 +1381,25 @@ TYPEINFO(/turf/simulated)
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "grasstodirt"
+	can_dig = TRUE
 
 /turf/unsimulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "grass"
+	can_dig = TRUE
 
 /turf/unsimulated/dirt
 	name = "Dirt"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "dirt"
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/shovel))
-			if (src.icon_state == "dirt-dug")
-				boutput(user, SPAN_ALERT("That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space."))
-				return
-
-			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
-			//todo: A digging sound effect.
-			if (do_after(user, 4 SECONDS) && src.icon_state != "dirt-dug")
-				src.icon_state = "dirt-dug"
-				user.visible_message("<b>[user]</b> finishes digging.", "You finish digging.")
-				for (var/obj/tombstone/grave in orange(src, 1))
-					if (istype(grave) && !grave.robbed)
-						grave.robbed = 1
-						//idea: grave robber medal.
-						if (grave.special)
-							new grave.special (src)
-						else
-							switch (rand(1, 5))
-								if (1)
-									new /obj/item/skull {desc = "A skull.  That was robbed.  From a grave.";} ( src )
-								if (2)
-									new /obj/item/sheet/wood {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
-								if (3)
-									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
-								else
-									; // default
-						break
-
-		else
-			return ..()
+	can_dig = TRUE
 
 /turf/unsimulated/nicegrass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
+	can_dig = TRUE
 
 /turf/unsimulated/nicegrass/random
 	New()
@@ -1436,6 +1410,7 @@ TYPEINFO(/turf/simulated)
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
+	can_dig = TRUE
 
 /turf/simulated/nicegrass/random
 	New()

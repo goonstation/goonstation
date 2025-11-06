@@ -37,6 +37,23 @@
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
+/obj/machinery/atmospherics/unary/vent_pump/initialize()
+	..()
+	if(src.on)
+		src.turn_on()
+	else
+		src.turn_off()
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/turn_on()
+	src.on = TRUE
+	src.AddComponent(/datum/component/bubble_absorb, src.air_contents)
+	src.UpdateIcon()
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/turn_off()
+	src.on = FALSE
+	src.RemoveComponentsOfType(/datum/component/bubble_absorb)
+	src.UpdateIcon()
+
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	var/turf/T = get_turf(src)
 	src.hide(T.intact)
@@ -116,15 +133,20 @@
 
 	switch(signal.data["command"])
 		if("power_on")
-			src.on = TRUE
+			if (!src.on)
+				src.turn_on()
 			. = TRUE
 
 		if("power_off")
-			src.on = FALSE
+			if (src.on)
+				src.turn_off()
 			. = TRUE
 
 		if("power_toggle")
-			src.on = !src.on
+			if (src.on)
+				src.turn_off()
+			else
+				src.turn_on()
 			. = TRUE
 
 		if("set_direction")
@@ -192,7 +214,7 @@
 		var/turf/intact = get_turf(src)
 		intact = intact.intact
 		var/hide_pipe = CHECKHIDEPIPE(src)
-		flick("[hide_pipe ? "h" : "" ]alert", src)
+		FLICK("[hide_pipe ? "h" : "" ]alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 
@@ -205,9 +227,8 @@
 			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
 		icon_state = "[hide_pipe ? "h" : "" ]off"
-		on = FALSE
 
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_pump/inactive
 	icon_state = "off-map"

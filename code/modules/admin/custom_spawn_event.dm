@@ -48,8 +48,9 @@
 		if (istext(src.thing_to_spawn)) //if it's a string then it's (hopefully) a job name
 			var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(src.get_spawn_loc())
 			M.initializeBioholder(gender) //try to preserve gender if we can
+			M.job = src.thing_to_spawn
 			SPAWN(0)
-				M.JobEquipSpawned(src.thing_to_spawn)
+				M.JobEquipSpawned(src.thing_to_spawn, no_special_spawn = TRUE)
 			return M
 
 	proc/do_spawn()
@@ -111,14 +112,15 @@
 					var/obj/item/device/pda2/pda = locate() in new_mob
 					global.data_core.addManifest(new_mob, "", "", pda?.net_id, "")
 
-			if (src.antag_role == "generic_antagonist")
-				mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
-			else if (src.antag_role)
-				if (mind.get_antagonist(src.antag_role))
-					mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
-				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
-			else
-				mind.wipe_antagonists()
+			SPAWN(1) //job equip procs have to be SPAWN(0) so this has to be SPAWN(1) for them to get an uplink, yes I know but mob init order is cursed and evil
+				if (src.antag_role == "generic_antagonist")
+					mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
+				else if (src.antag_role)
+					if (mind.get_antagonist(src.antag_role))
+						mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
+					mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
+				else
+					mind.wipe_antagonists()
 
 			if (length(src.objective_text))
 				if (src.antag_role)
@@ -160,6 +162,12 @@
 		var/is_a_human = ispath(src.spawn_event.thing_to_spawn, /mob/living/carbon/human) || ishuman(src.spawn_event.thing_to_spawn)
 		//we want to display a warning if someone tries to apply an antag role to a non-human mob
 		var/potentially_incompatible = is_a_mob && !is_a_human && src.spawn_event.antag_role
+		//we want to display a warning if someone tries to spawn a job at a landmark it doesn't like (probably latejoin)
+		var/job_wanted_location
+		if (spawn_type == "job")
+			var/special_location = find_job_in_controller_by_string(src.spawn_event.thing_to_spawn).special_spawn_location
+			if (special_location != src.spawn_event.spawn_loc)
+				job_wanted_location = special_location
 
 		if (src.refresh_player_count)
 			src.eligible_player_count = length(eligible_dead_player_list(TRUE, TRUE, !!src.spawn_event.antag_role, src.spawn_event.allow_dnr))
@@ -176,6 +184,7 @@
 			"objective_text" = src.spawn_event.objective_text,
 			"spawn_type" = spawn_type,
 			"loc_type" = loc_type,
+			"job_wanted_location" = job_wanted_location,
 			"incompatible_antag" = potentially_incompatible,
 			"equip_antag" = src.spawn_event.equip_antag,
 			"ask_permission" = src.spawn_event.ask_permission,
@@ -214,6 +223,8 @@
 				src.spawn_event.spawn_loc = get_turf(pick_ref(ui.user))
 			if ("select_landmark")
 				src.spawn_event.spawn_loc = tgui_input_list(ui.user, "Select landmark", "Select", landmarks) || src.spawn_event.spawn_loc
+			if ("select_default_job_landmark")
+				src.spawn_event.spawn_loc = find_job_in_controller_by_string(src.spawn_event.thing_to_spawn).special_spawn_location || src.spawn_event.spawn_loc
 			if ("set_spawn_delay")
 				src.spawn_event.ghost_confirmation_delay = params["spawn_delay"] //no validation, admins may href exploit if they wish
 			if ("set_amount")

@@ -28,7 +28,7 @@ obj/machinery/access_button
 		signal.data["command"] = command
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, AIRLOCK_CONTROL_RANGE)
-		flick("access_button_cycle", src)
+		FLICK("access_button_cycle", src)
 
 	New()
 		..()

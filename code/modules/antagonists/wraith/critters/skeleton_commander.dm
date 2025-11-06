@@ -15,6 +15,7 @@
 	health_burn = 90
 	health_burn_vuln = 0.3
 	can_bleed = FALSE
+	name_generator_path = /datum/wraith_name_generator/wraith_summon/commander
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 
@@ -174,4 +175,4 @@
 		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_3.ogg"
 		msgs.damage_type = DAMAGE_STAB
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)

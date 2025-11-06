@@ -6,6 +6,7 @@
 	pass_unstable = FALSE
 
 	New()
+		src.flags |= UNCRUSHABLE
 		..()
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
@@ -17,7 +18,6 @@
 
 		if (!real_name)
 			real_name = name
-		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L)
 		if (random_icon_states && length(src.random_icon_states) > 0)
@@ -75,7 +75,7 @@
 		y_blur = 2
 
 		proc/activate_glimmer()
-			flick("glimmer", src)
+			FLICK("glimmer", src)
 
 /obj/decal/floatingtiles
 	name = "floating tiles"
@@ -193,7 +193,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	blood_type = null
 	anchored = ANCHORED
 
-/obj/decal/boxingrope
+/obj/decal/boxingrope // for functional ropes see below and /obj/railing/boxingrope
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
 	density = 1
@@ -276,21 +276,18 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 			. = 1
 		UNCROSS_BUMP_CHECK(O)
 
-/obj/decal/boxingropeenter
+/obj/railing/boxing
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
-	density = 0
-	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
-	layer = OBJ_LAYER
 
 /obj/decal/alienflower
 	name = "strange alien flower"
 	desc = "Is it going to eat you if you get too close?"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
-	random_dir = WEST
+	random_dir = RANDOM_DIR_ALL
 	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 

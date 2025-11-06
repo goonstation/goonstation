@@ -1,6 +1,6 @@
 /// Shoves transfer_rate volume of gas from air1 to air2
 /// Max volume flow rate.
-#define MAX_VOLUME 1000
+#define MAX_VOLUME 200
 
 /obj/machinery/atmospherics/binary/volume_pump
 	name = "Gas pump"
@@ -14,7 +14,7 @@
 	var/transfer_rate = 200
 
 	/// Radio frequency to operate on.
-	var/frequency = null
+	var/frequency = FREQ_FREE
 	/// Radio ID we respond to for multicast.
 	var/id = null
 	/// Radio ID that refers to specifically us.
@@ -33,17 +33,15 @@
 		src.on = FALSE
 
 	icon_state = src.on ? "on" : "off"
-	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
-	SET_PIPE_UNDERLAY(src.node2, src.dir, "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
+	update_pipe_underlay(src.node1, turn(src.dir, 180), "long", FALSE)
+	update_pipe_underlay(src.node2, src.dir, "long", FALSE)
 
 /obj/machinery/atmospherics/binary/volume_pump/process()
 	..()
 	if(!on)
 		return FALSE
 
-	var/transfer_ratio = max(1, transfer_rate/air1.volume)
-
-	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
+	var/datum/gas_mixture/removed = air1.remove_ratio(src.transfer_rate/air1.volume)
 
 	air2.merge(removed)
 
@@ -114,7 +112,7 @@
 
 	if(.)
 		src.UpdateIcon()
-		flick("alert", src)
+		FLICK("alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)

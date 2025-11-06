@@ -2,6 +2,9 @@
 #define MAXIMUM_MEAT_LEVEL		100
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
 #define DEFAULT_SPEED_BONUS 1
+#define SPEEDY_MODULE_SPEED_MULT 3
+#define SPEEDY_MODULE_MEAT_MULT 4
+#define EFFICIENCY_MODULE_MEAT_MULT 0.5
 // a lower bound on the amount of meat used per clone, even if ejected instantly
 #define MINIMUM_MEAT_USED 4
 
@@ -278,11 +281,14 @@ TYPEINFO(/obj/machinery/clonepod)
 			 */
 			var/generation = src.occupant.bioHolder.clone_generation
 			for (var/i in 1 to rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1))))
-				if (generation)
+				if ((generation > 1) || traits.hasTrait("defect_prone"))
 					defects.add_random_cloner_defect()
 				else
 					// First cloning can't get major defects
 					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
+
+			if (traits.hasTrait("defect_prone"))
+				defects.add_random_cloner_defect()
 
 		src.mess = FALSE
 		var/is_puritan = FALSE
@@ -299,29 +305,33 @@ TYPEINFO(/obj/machinery/clonepod)
 					is_puritan = TRUE
 
 			if (is_puritan)
-				src.mess = TRUE
-				// Puritans have a bad time.
-				// This is a little different from how it was before:
-				// - Immediately take 250 tox and 100 random brute
-				// - Always get a major cloning defect
-				// - 50% chance, per limb, to lose that limb
-				// - enforced premature_clone, which gibs you on death
-				// If you have a clone body that's been allowed to fully heal before
-				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
-				// out of deep critical health before they turn into chunky salsa
-				// This should be really rare to have happen, but I want to leave it in
-				// just in case someone manages to pull off a miracle save
-				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
-				src.occupant.bioHolder?.AddEffect("premature_clone")
-				src.occupant.take_toxin_damage(250)
-				random_brute_damage(src.occupant, 100, 0)
-				if (ishuman(src.occupant))
-					var/mob/living/carbon/human/P = src.occupant
-					if (P.limbs)
-						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
-						for (var/limb in limbs)
-							if (prob(50))
-								P.limbs.sever(limb)
+				if (clonehack) // If mindhack cloner, bypass puritan stuff.
+					boutput(src.occupant, SPAN_NOTICE("<h3>The mindhack module has forced your body to adapt, bypassing your clone instability!</h3>"))
+				else
+					src.mess = TRUE
+					// Puritans have a bad time.
+					// This is a little different from how it was before:
+					// - Immediately take 250 tox and 100 random brute
+					// - Always get a major cloning defect
+					// - 50% chance, per limb, to lose that limb
+					// - enforced premature_clone, which gibs you on death
+					// If you have a clone body that's been allowed to fully heal before
+					// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
+					// out of deep critical health before they turn into chunky salsa
+					// This should be really rare to have happen, but I want to leave it in
+					// just in case someone manages to pull off a miracle save
+					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
+					src.occupant.bioHolder?.AddEffect("premature_clone")
+					src.occupant.take_toxin_damage(350)
+					APPLY_ATOM_PROPERTY(src.occupant, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+					random_brute_damage(src.occupant, 200, 0)
+					if (ishuman(src.occupant))
+						var/mob/living/carbon/human/P = src.occupant
+						if (P.limbs)
+							var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
+							for (var/limb in limbs)
+								if (prob(50))
+									P.limbs.sever(limb)
 			#endif
 
 		if (length(defects.active_cloner_defects) > 7)
@@ -585,6 +595,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			return 0
 		if (user)
 			boutput(user, "You force an emergency ejection.")
+		logTheThing(LOG_STATION, src, "[key_name(src.occupant)] was ejected from [src] being emagged by [key_name(user)]!")
 		src.go_out(1)
 		return 1
 
@@ -617,9 +628,10 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user,SPAN_ALERT("The cloning pod emits an angry boop!"))
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
-			speed_bonus *= 3
-			meat_used_per_tick *= 4
+			speed_bonus *= SPEEDY_MODULE_SPEED_MULT
+			meat_used_per_tick *= SPEEDY_MODULE_MEAT_MULT
 			is_speedy = 1
 			user.drop_item()
 			qdel(W)
@@ -633,8 +645,9 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user,SPAN_ALERT("The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!"))
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
-			meat_used_per_tick *= 0.5
+			meat_used_per_tick *= EFFICIENCY_MODULE_MEAT_MULT
 			is_efficient = 1
 			user.drop_item()
 			qdel(W)
@@ -663,6 +676,13 @@ TYPEINFO(/obj/machinery/clonepod)
 			SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_mindhack_module), list(user), W.icon, W.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
 			return
 
+		else if (ispryingtool(W) && (src.is_speedy || src.is_efficient))
+			if (src.occupant && src.attempting)
+				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove upgrade modules.</span>")
+				return
+			user.visible_message(SPAN_NOTICE("[user] starts removing the upgrade modules."))
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_upgrade_modules), list(user), W.icon, W.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
 		else
 			..()
 
@@ -676,6 +696,26 @@ TYPEINFO(/obj/machinery/clonepod)
 		boutput(user, SPAN_ALERT("The mindhack cloning module falls to the floor!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.light.disable()
+		src.UpdateIcon()
+
+	proc/remove_upgrade_modules(mob/user)
+		var/removed_module = FALSE
+		if (src.is_speedy)
+			src.is_speedy = FALSE
+			removed_module = TRUE
+			src.speed_bonus /= SPEEDY_MODULE_SPEED_MULT
+			src.meat_used_per_tick /= SPEEDY_MODULE_MEAT_MULT
+			var/obj/speedy = new /obj/item/cloneModule/speedyclone(src.loc)
+			src.visible_message(SPAN_ALERT("The [speedy] module falls to the floor!"))
+		if (src.is_efficient)
+			src.is_efficient = FALSE
+			removed_module = TRUE
+			src.meat_used_per_tick /= EFFICIENCY_MODULE_MEAT_MULT
+			var/obj/efficient = new /obj/item/cloneModule/efficientclone(src.loc)
+			src.visible_message(SPAN_ALERT("The [efficient] module falls to the floor!"))
+			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
+		if(removed_module)
+			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.UpdateIcon()
 
 	on_reagent_change()
@@ -712,7 +752,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (!isalive(usr) || iswraith(usr))
 			return
-		src.go_out()
+		var/mob/occupant = src.occupant
+		if (src.go_out())
+			logTheThing(LOG_STATION, src, "[key_name(occupant)] was ejected from [src] by [key_name(usr)]")
 		add_fingerprint(usr)
 		return
 
@@ -762,6 +804,7 @@ TYPEINFO(/obj/machinery/clonepod)
 					step_rand(O) // cogwerks - let's spread that mess instead of having a pile! bahaha
 			if (src.occupant)
 				src.occupant.set_loc(get_turf(src))
+				. = TRUE
 				src.occupant = null
 			src.UpdateIcon()
 			return
@@ -784,6 +827,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		src.occupant.changeStatus("unconscious", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
+		. = TRUE
 		if (src.emagged) //huck em
 			src.occupant.throw_at(get_edge_target_turf(src, pick(alldirs)), 10, 3)
 		src.occupant = null
@@ -877,6 +921,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	icon_state = "grinder0"
 	anchored = ANCHORED
 	density = 1
+	power_usage = 100 WATTS
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)
@@ -902,6 +947,10 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		occupant = null
 		..()
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (src.upgraded)
+			. += "This one has an efficiency upgrade installed."
 
 	proc/find_pods()
 		if (!islist(src.pods))
@@ -946,6 +995,21 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return
 
 	process()
+		if (src.status & NOPOWER)
+			return
+
+		if (src.status & BROKEN)
+			if (process_timer > 0)
+				process_timer--
+				return
+			// we're out of meat, switch faults
+			var/datum/component/equipment_fault/messy/messy = src.GetComponent(/datum/component/equipment_fault/messy)
+			if (istype(messy))
+				var/tool_flags = messy.interactions
+				src.RemoveComponentsOfType(/datum/component/equipment_fault/messy/)
+				AddComponent(/datum/component/equipment_fault/grumble, tool_flags)
+			return
+
 		process_timer--
 		if (process_timer > 0)
 			// Add reagents for this tick
@@ -995,6 +1059,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 
 	attack_hand(mob/user)
 		interact_particle(user,src)
+		if (src.status & (BROKEN | NOPOWER))
+			boutput(user, SPAN_ALERT("The [src.name] is not functioning!"))
+			return
 
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is already running!"))
@@ -1101,9 +1168,19 @@ TYPEINFO(/obj/machinery/clonegrinder)
 				boutput(user, SPAN_ALERT("There is already an upgrade card installed."))
 				return
 			user.visible_message("[user] installs [G] into [src].", "You install [G] into [src].")
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			src.upgraded = 1
 			user.drop_item()
 			qdel(G)
+			return
+
+		if (ispryingtool(G))
+			if (src.upgraded)
+				user.visible_message("[user] begins removing the upgrade module from [src].", "You begin removing the upgrade module from [src].")
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_upgrade_module), list(user), G.icon, G.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
+			else
+				boutput(user, SPAN_ALERT("There is no upgrade card installed."))
 			return
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is still running, hold your horses!"))
@@ -1147,10 +1224,19 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		actions.start(new /datum/action/bar/icon/put_in_reclaimer(G.affecting, src, G, 50), user)
 		return
 
-	update_icon(var/update_grindpaddle=0)
+	update_icon(update_grindpaddle=FALSE)
+		if (src.status & BROKEN)
+			src.icon_state = "grinderb"
+			ClearSpecificOverlays(TRUE, "paddle")
+			return
+
 		var/fluid_level = ((src.reagents.total_volume >= (src.reagents.maximum_volume * 0.6)) ? 2 : (src.reagents.total_volume >= (src.reagents.maximum_volume * 0.2) ? 1 : 0))
 
 		src.icon_state = "grinder[fluid_level]"
+
+		if (src.status & NOPOWER)
+			UpdateOverlays(image(src.icon, "grindpaddle0"), "paddle") // stop the paddle if no power
+			return
 
 		if (update_grindpaddle)
 			UpdateOverlays(image(src.icon, "grindpaddle[src.process_timer > 0 ? 1 : 0]"),"paddle")
@@ -1174,11 +1260,37 @@ TYPEINFO(/obj/machinery/clonegrinder)
 					return
 			if(3)
 				if (prob(25))
-					src.status |= BROKEN
-					src.icon_state = "grinderb"
+					src.set_broken()
+
+	bullet_act(obj/projectile/P)
+		. = ..()
+		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+			if(prob(P.power * P.proj_data?.ks_ratio))
+				src.set_broken()
+
+	overload_act()
+		return !src.set_broken()
 
 	is_open_container()
 		return -1
+
+	power_change()
+		. = ..()
+		src.UpdateIcon(TRUE)
+		if (src.status & BROKEN)
+			src.SubscribeToProcess()
+
+	set_broken()
+		. = ..()
+		if(.) return
+		if (src.process_timer > 0)
+			AddComponent(/datum/component/equipment_fault/messy, tool_flags = TOOL_SCREWING | TOOL_WRENCHING, cleanables = list(
+				/obj/decal/cleanable/blood/gibs=50,
+				/obj/decal/cleanable/blood/gibs/core=20,
+				/obj/decal/cleanable/blood/gibs/body=10
+			))
+		else
+			AddComponent(/datum/component/equipment_fault/grumble, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -1202,6 +1314,13 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			if (user && !isdead(user)) // how????????? ?
 				user.suiciding = 0 // just in case I guess
 		return 1
+
+	proc/remove_upgrade_module(mob/user)
+		if(src.upgraded)
+			src.upgraded = FALSE
+			var/obj/upgrade = new /obj/item/grinder_upgrade(src.loc)
+			src.visible_message(SPAN_ALERT("The [upgrade] module falls to the floor!"))
+			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 
 /datum/action/bar/icon/put_in_reclaimer
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1281,5 +1400,8 @@ TYPEINFO(/obj/machinery/clonegrinder)
 #undef MAXIMUM_MEAT_LEVEL
 #undef DEFAULT_MEAT_USED_PER_TICK
 #undef DEFAULT_SPEED_BONUS
+#undef SPEEDY_MODULE_SPEED_MULT
+#undef SPEEDY_MODULE_MEAT_MULT
+#undef EFFICIENCY_MODULE_MEAT_MULT
 #undef MEAT_LOW_LEVEL
 #undef MINIMUM_MEAT_USED

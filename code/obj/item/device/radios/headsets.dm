@@ -10,6 +10,7 @@
 	rand_pos = 0
 	var/protective_temperature = 0
 	speaker_range = 0
+	initial_speaker_enabled = TRUE
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = TABLEPASS | CONDUCT
 	icon_override = "civ"
@@ -55,7 +56,7 @@
 			if (!(class in src.secure_classes))
 				src.secure_classes[class] = R.secure_classes[class]
 
-		set_secure_frequencies(src)
+		src.set_secure_frequencies(src)
 		R.set_loc(src)
 
 	proc/remove_radio_upgrade()
@@ -73,6 +74,7 @@
 	name = "wizard headset"
 	desc = "A headset reversed engineered by only the highest of archmages for use by wizards. Immune to EMPs."
 	icon_state = "wizard headset"
+	secure_frequencies = list("w" = R_FREQ_WIZARD)
 	icon_override = "wizard"
 	icon_tooltip = "Wizard"
 
@@ -84,7 +86,6 @@
 	desc = "A radio headset capable of communicating over the Command frequency, for use by support staff."
 	icon_state = "command headset"
 	secure_frequencies = list("h" = R_FREQ_COMMAND)
-	secure_classes = list("h" = RADIOCL_COMMAND)
 	icon_override = "head"
 	icon_tooltip = "Head of Staff"
 
@@ -100,40 +101,63 @@
 		"c" = R_FREQ_CIVILIAN,
 		"a" = R_FREQ_INTERCOM_AI,
 		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
-		"a" = RADIOCL_INTERCOM_AI,
-		)
 	icon_override = "ai"
 	icon_tooltip = "Artificial Intelligence"
 
 /obj/item/device/radio/headset/command/nt
-	name = "\improper NT headset"
+	name = "\improper NanoTrasen headset"
 	desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
 	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
-		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
 		)
 	icon_override = "nt"
 	icon_tooltip = "NanoTrasen Special Operative"
 
+/obj/item/device/radio/headset/command/nt/commander
+	name = "\improper NT Commander's headset"
+	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	icon_override = "ntboss"
+	icon_tooltip = "Nanotrasen Commander"
+
 /obj/item/device/radio/headset/command/nt/consultant
 	icon_tooltip = "NanoTrasen Security Consultant"
+
+/obj/item/device/radio/headset/command/nt/engineer
+	icon_tooltip = "Nanotrasen Emergency Repair Technician"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"e" = R_FREQ_ENGINEERING,
+		)
+
+/obj/item/device/radio/headset/command/nt/medic
+	icon_tooltip = "Nanotrasen Emergency Medic"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"m" = R_FREQ_MEDICAL,
+		)
 
 /obj/item/device/radio/headset/command/inspector
 	name = "inspector's headset"
 	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."
 	icon_override = "inspector"
 	icon_tooltip = "Inspector"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		)
 
 /obj/item/device/radio/headset/command/captain
 	name = "captain's headset"
@@ -147,14 +171,6 @@
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
-		)
 	icon_override = "cap"
 	icon_tooltip = "Captain"
 
@@ -167,12 +183,6 @@
 		"r" = R_FREQ_RESEARCH,
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
-		)
-	secure_classes = list(
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "rh"
 	icon_tooltip = "Radio Show Host"
@@ -192,14 +202,6 @@
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
-		)
 	icon_override = "co"
 	icon_tooltip = "Communications Officer"
 
@@ -209,10 +211,6 @@
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
-		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
 		)
 	icon_override = "hos"
 	icon_tooltip = "Head of Security"
@@ -227,14 +225,6 @@
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
-		)
 	icon_override = "hop"
 	icon_tooltip = "Head of Personnel"
 
@@ -245,11 +235,6 @@
 		"h" = R_FREQ_COMMAND,
 		"r" = R_FREQ_RESEARCH,
 		"m" = R_FREQ_MEDICAL,
-		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
 		)
 	icon_override = "rd"
 	icon_tooltip = "Research Director"
@@ -262,11 +247,6 @@
 		"r" = R_FREQ_RESEARCH,
 		"m" = R_FREQ_MEDICAL,
 		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		)
 	icon_override = "md"
 	icon_tooltip = "Medical Director"
 
@@ -277,10 +257,6 @@
 		"h" = R_FREQ_COMMAND,
 		"e" = R_FREQ_ENGINEERING,
 		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"e" = RADIOCL_ENGINEERING,
-		)
 	icon_override = "ce"
 	icon_tooltip = "Chief Engineer"
 
@@ -289,18 +265,15 @@
 	desc = "Worn by security officers, this thing could cause real problems in the wrong ears."
 	icon_state = "sec headset"
 	secure_frequencies = list("g" = R_FREQ_SECURITY)
-	secure_classes = list(
-		"g" = RADIOCL_SECURITY,
-		)
 	icon_override = "sec"
 	icon_tooltip = "Security"
 	tooltip_flags = REBUILD_USER
 
 	get_desc(dist, mob/user)
 		if (user.mind.is_antagonist())
-			. += SPAN_ALERT("<b>Good.</b>")
+			. += SPAN_ALERT("<b>Good.</b> ")
 		else
-			. += "Keep it safe!"
+			. += "Keep it safe! "
 		. += ..()
 /obj/item/device/radio/headset/detective
 	name = "detective's headset"
@@ -308,11 +281,7 @@
 	icon_state = "sec headset" //I see no use for a special sprite for the det headset itself.
 	secure_frequencies = list(
 		"g" = R_FREQ_SECURITY,
-		"d" = R_FREQ_DETECTIVE,
-		)
-	secure_classes = list(
-		"g" = RADIOCL_SECURITY,
-		"d" = RADIOCL_DETECTIVE,
+		"t" = R_FREQ_DETECTIVE,
 		)
 	icon_override = "det" //neat little magnifying glass sprite I made
 	icon_tooltip = "Detective"
@@ -322,9 +291,6 @@
 	desc = "They stopped spending extra money trying to make these heat-resistant a while ago."
 	icon_state = "engine headset"
 	secure_frequencies = list("e" = R_FREQ_ENGINEERING)
-	secure_classes = list(
-		"e" = RADIOCL_ENGINEERING,
-		)
 	icon_override = "eng"
 	icon_tooltip = "Engineer"
 
@@ -333,9 +299,6 @@
 	desc = "Nominally worn by the trained staff of the medbay, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
 	icon_state = "med headset"
 	secure_frequencies = list("m" = R_FREQ_MEDICAL)
-	secure_classes = list(
-		"m" = RADIOCL_MEDICAL,
-		)
 	icon_override = "med"
 	icon_tooltip = "Medical"
 
@@ -344,9 +307,6 @@
 	desc = "A science headset, for science. Whether directly or by proxy, these are frequently burned, exploded, corroded, dissolved, shot, and teleported, to name a few."
 	icon_state = "research headset"
 	secure_frequencies = list("r" = R_FREQ_RESEARCH)
-	secure_classes = list(
-		"r" = RADIOCL_RESEARCH,
-		)
 	icon_override = "sci"
 	icon_tooltip = "Scientist"
 
@@ -355,9 +315,6 @@
 	desc = "These headsets are used by the civilian staff, who are employed to keep the station clean, fed, and productive. As if."
 	icon_state = "civ headset"
 	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
-	secure_classes = list(
-		"c" = RADIOCL_CIVILIAN,
-		)
 	icon_tooltip = "Civilian"
 
 /obj/item/device/radio/headset/shipping
@@ -367,10 +324,6 @@
 	secure_frequencies = list(
 	"e" = R_FREQ_ENGINEERING,
 	"c" = R_FREQ_CIVILIAN)
-	secure_classes = list(
-		"e" = RADIOCL_ENGINEERING,
-		"c" = RADIOCL_CIVILIAN,
-		)
 	icon_override = "qm"
 	icon_tooltip = "Quartermaster"
 
@@ -380,9 +333,6 @@
 	icon_state = "shipping headset"
 	secure_frequencies = list(
 	"e" = R_FREQ_ENGINEERING)
-	secure_classes = list(
-		"e" = RADIOCL_ENGINEERING,
-		)
 	icon_override = "Min"
 	icon_tooltip = "Miner"
 
@@ -393,10 +343,6 @@
 	secure_frequencies = list(
 	"h" = R_FREQ_COMMAND,
 	"c" = R_FREQ_CIVILIAN)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"c" = RADIOCL_CIVILIAN,
-		)
 	icon_override = "mail"
 	icon_tooltip = "Mail Courier"
 
@@ -405,6 +351,7 @@
 	desc = "Anybody using this headset is unlikely to be taken seriously."
 	icon_override = "clown"
 	icon_tooltip = "Clown"
+	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
 
 /obj/item/device/radio/headset/ghost_buster
 	name = "\improper Ghost Buster's headset"
@@ -418,43 +365,49 @@
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
-		)
-	icon_override = "ghost_buster"
+	icon_override = "hunter_ghost"
 	icon_tooltip = "Ghost Buster"
 
-/obj/item/device/radio/headset/hall_monitor
-	name = "Hall monitor's headset"
-	desc = "So you can listen to(evesdrop on) station security(drama)."
-	icon_state = "sec headset"
-	secure_frequencies = list("g" = R_FREQ_SECURITY, "c" = R_FREQ_CIVILIAN)
-	secure_classes = list(
-		"g" = RADIOCL_SECURITY,
-		"c" = RADIOCL_CIVILIAN,
-		)
-	icon_override = "civ"
-	icon_tooltip = "Hall Monitor"
+/obj/item/device/radio/hall_monitor
+	name = "Hall monitor's radio"
+	desc = "So you can listen to(eavesdrop on) station security(drama)."
+	icon_state = "radio"
+	has_microphone = FALSE
+	frequency = R_FREQ_SECURITY
+	locked_frequency = TRUE
+	speaker_range = 0
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
 
-/obj/item/device/radio/headset/command/nt/commander
-	name = "\improper NT Commander's headset"
-	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+/obj/item/device/radio/commentator
+	name = "commentator radio"
+	icon_state = "radio"
+	chat_class = RADIOCL_COMMAND
+	locked_frequency = TRUE
+	icon_tooltip = "Commentator Radio"
+
+/obj/item/device/radio/headset/commentator
+	name = "commentator headset"
 	icon_state = "command headset"
+	icon_override = "commentator"
+	chat_class = RADIOCL_COMMAND
+	locked_frequency = TRUE
+	icon_tooltip = "Commentator"
+	secure_frequencies = list("z" = 555)
+	secure_classes = list("z" = RADIOCL_SYNDICATE)
+
+/obj/item/device/radio/headset/werewolf_hunter
+	name = "\improper Werewolf Hunter's headset"
+	desc = "To hear the cries of the downtrodden, those defenseless against The Beast."
+	icon_state = "multi headset"
 	secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
 		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY
-		)
-	icon_override = "ntboss"
-	icon_tooltip = "Nanotrasen Commander"
+	icon_override = "hunter_wolf"
+	icon_tooltip = "Werewolf Hunter"
 
 /obj/item/device/radio/headset/syndicate
 	name = "radio headset"
@@ -462,19 +415,14 @@
 	icon_state = "headset"
 	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
-	secure_classes = list(RADIOCL_SYNDICATE)
-	protected_radio = 1 // Ops can spawn with the deaf trait.
+	protected_radio = TRUE // Ops can spawn with the deaf trait.
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate Operative"
 
 	New()
 		..()
 		SPAWN(1 SECOND)
-			var/the_frequency = R_FREQ_SYNDICATE
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-				var/datum/game_mode/nuclear/N = ticker.mode
-				the_frequency = N.agent_radiofreq
-			src.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
+			src.frequency = R_FREQ_SYNDICATE // let's see if this stops rounds from being ruined every fucking time
 
 	leader
 		icon_override = "syndieboss"
@@ -484,7 +432,6 @@
 		name = "military headset"
 		desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise from guns, woofers, and tweeters."
 		secure_frequencies = list("z" = R_FREQ_SYNDICATE, "l"=R_FREQ_LOUDSPEAKERS)
-		secure_classes = list("z" = RADIOCL_SYNDICATE, "l"=RADIOC_OTHER)
 		icon_state = "comtac"
 
 		New()
@@ -534,8 +481,7 @@
 	chat_class = RADIOCL_SYNDICATE
 	locked_frequency = TRUE
 	secure_frequencies = list("p" = R_FREQ_PIRATE)
-	secure_classes = list(RADIOCL_SYNDICATE)
-	protected_radio = 1
+	protected_radio = TRUE
 	icon_override = "pirate"
 	icon_tooltip = "Space Pirate"
 
@@ -559,19 +505,11 @@
 	item_state = "headset"
 	block_hearing_when_worn = HEARING_ANTIDEAF
 
-/obj/item/device/radio/headset/gang
-	name = "radio headset"
-	desc = "A radio headset, pre-tuned to your gang's frequency. Convenient!"
-	secure_frequencies = list("g" = R_FREQ_GANG) //placeholder so it sets up right
-	secure_classes = list("g" = RADIOCL_SYNDICATE)
-	protected_radio = 1
-
 /obj/item/device/radio/headset/multifreq
 	name = "multi-frequency headset"
 	desc = "A radio headset that can communicate over multiple customizable channels."
 	icon_state = "multi headset"
 	secure_frequencies = list("q" = R_FREQ_MULTI)
-	secure_classes = list(RADIOCL_OTHER)
 
 /obj/item/device/radio/headset/multifreq/attack_self(mob/user as mob)
 	src.add_dialog(user)
@@ -586,8 +524,8 @@ Blue Wire:  <A href='byond://?src=\ref[src];wires=1'>[src.wires & 1 ? "Cut" : "M
 		t1 = "-------"
 	var/dat = {"
 <TT>
-Microphone [src.broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Always on</A>" : "<A href='byond://?src=\ref[src];talk=1'>Push to talk</A>"]<BR>
-Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>On</A>" : "<A href='byond://?src=\ref[src];listen=1'>Off</A>"]<BR>
+Microphone [src.microphone_enabled ? "<A href='byond://?src=\ref[src];talk=0'>Always on</A>" : "<A href='byond://?src=\ref[src];talk=1'>Push to talk</A>"]<BR>
+Speaker: [src.speaker_enabled ? "<A href='byond://?src=\ref[src];listen=0'>On</A>" : "<A href='byond://?src=\ref[src];listen=1'>Off</A>"]<BR>
 Frequency:
 <A href='byond://?src=\ref[src];freq=-10'>-</A>
 <A href='byond://?src=\ref[src];freq=-2'>-</A>
@@ -635,15 +573,7 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 		"c" = R_FREQ_CIVILIAN,
 		"z" = R_FREQ_SYNDICATE,
 		)
-	var/secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
-		"z" = RADIOCL_SYNDICATE,
-		)
+	var/secure_classes = list()
 
 	conspirator
 		name = "private radio channel upgrade"
@@ -673,9 +603,16 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 			src.secure_frequencies = list("z" = frequency)
 			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
 
-	// Used by syndieborgs
+	// Crimers gotta crime
 	syndicatechannel
 		name = "syndicate radio channel upgrade"
-		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
+		desc = "A device capable of upgrading a headset to allow access over the syndicate radio channel"
+		icon_state = "syndie_radio_channel_upgrade"
 		secure_frequencies = list("z" = R_FREQ_SYNDICATE)
-		secure_classes = list("z" = RADIOCL_SYNDICATE)
+
+	// For the super crimers (admin shenanigans)
+	nanotrasen
+		name = "nanotrasen radio channel upgrade"
+		desc = "A device capable of upgrading a headset to allow access over the Nanotrasen radio channel"
+		icon_state = "nt_radio_channel_upgrade"
+		secure_frequencies = list("n" = R_FREQ_NANOTRASEN)

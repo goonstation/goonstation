@@ -30,7 +30,7 @@ root_dir="$(dirname "$(tgui-realpath "${0}")")/../.."
 root_dir="$(tgui-realpath "${root_dir}")"
 ## Find a canonical path to build target folder
 target_dir_name="tgui"
-target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/${target_dir_name}"
+target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/src/${target_dir_name}"
 target_dir="$(tgui-realpath "${target_dir}")"
 
 ## Fall back to running Yarn from the repo
@@ -52,11 +52,11 @@ task-install() {
   yarn install
 }
 
-## Runs webpack
-task-webpack() {
+## Runs rspack
+task-rspack() {
   cd "${base_dir}"
   BROWSERSLIST_IGNORE_OLD_DATA=true
-  yarn run webpack-cli "${@}"
+  yarn run rspack "${@}"
 }
 
 ## Runs a development server
@@ -65,15 +65,26 @@ task-dev-server() {
   yarn run tgui:dev "${@}"
 }
 
-## Run a linter through all packages & fix
+## Run a linter through all packages
 task-lint() {
   cd "${base_dir}"
   yarn run tsc
   echo "tgui: type check passed"
-  yarn run tgui:eslint "${@}"
-  echo "tgui: eslint check passed"
+  yarn run tgui:lint "${@}"
+  echo "tgui: lint check passed"
   yarn run tgui:prettier "${@}"
   echo "tgui: prettier check passed"
+}
+
+## Run a linter through all packages & fix
+task-lint-fix() {
+  cd "${base_dir}"
+  yarn run tsc
+  echo "tgui: type check passed"
+  yarn run tgui:lint-fix "${@}"
+  echo "tgui: lint check & fix passed"
+  yarn run tgui:prettier-fix "${@}"
+  echo "tgui: prettier check & fix passed"
 }
 
 task-test() {
@@ -86,23 +97,19 @@ task-test-ci() {
   yarn run tgui:test-ci
 }
 
-task-sonar() {
-  cd "${base_dir}"
-  yarn run tgui:sonar
-}
-
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
-  rm -rf ../browserassets/tgui/.tmp
-  rm -f ../browserassets/tgui/*.map
-  rm -f ../browserassets/tgui/*.chunk.*
-  rm -f ../browserassets/tgui/*.bundle.*
-  rm -f ../browserassets/tgui/*.hot-update.*
+  rm -rf ../browserassets/src/tgui/.tmp
+  rm -f ../browserassets/src/tgui/*.map
+  rm -f ../browserassets/src/tgui/*.chunk.*
+  rm -f ../browserassets/src/tgui/*.bundle.*
+  rm -f ../browserassets/src/tgui/*.hot-update.*
   ## Yarn artifacts
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
-  rm -rf .yarn/webpack
+  rm -rf .yarn/webpack # Kept to clean up old webpack if still present
+  rm -rf .yarn/rspack
   rm -f .yarn/build-state.yml
   rm -f .yarn/install-state.gz
   rm -f .yarn/install-target
@@ -120,11 +127,47 @@ task-clean() {
 task-validate-build() {
   cd "${target_dir}/.."
   local diff
-  diff="$(git diff `ls $target_dir_name/* | grep -v css`)"
+  diff="$(git diff --ignore-all-space --text "${target_dir_name}/*")"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
-    echo "Diff: ${diff}"
+
+    # Check if the difference might just be line endings
+    local crlfCheck
+    crlfCheck="$(git diff --ignore-all-space --ignore-cr-at-eol --text "${target_dir_name}/*")"
+    if [[ -z ${crlfCheck} ]]; then
+      echo "Note: The only difference appears to be line endings (LF vs CRLF)."
+      echo "You may want to check your git core.autocrlf config."
+
+      # Examine a sample of the differing files to show line endings
+      local diffFiles
+      diffFiles="$(git diff --name-only "${target_dir_name}/*")"
+      if [[ -n ${diffFiles} ]]; then
+        local sampleFile
+        sampleFile="$(echo "${diffFiles}" | head -n 1)"
+        if [[ -n ${sampleFile} ]]; then
+          echo "Examining line endings in file: ${sampleFile}"
+          if command -v file >/dev/null 2>&1; then
+            file "${sampleFile}"
+          fi
+        fi
+      fi
+    else
+      echo "There are content differences beyond just line endings."
+
+      echo "Changed files:"
+      git diff --name-only "${target_dir_name}/*"
+
+      echo ""
+      for file in $(git diff --name-only "${target_dir_name}/*"); do
+        echo "=== Character-level diff for: ${file} ==="
+        # Move to root directory to ensure file paths are correct
+        pushd "${root_dir}" > /dev/null
+        git diff --text --word-diff=color --word-diff-regex=. -- "${file}"
+        popd > /dev/null
+        echo ""
+      done
+    fi
     exit 1
   fi
   echo "tgui: build is ok"
@@ -149,7 +192,7 @@ task-merge-bundle() {
   echo "----------------------"
   echo "tgui: rebuilding a conflicted tgui bundle, ${file_path}"
   task-install
-  task-webpack --mode=production
+  task-rspack --mode=production
   echo "tgui: replacing conflicted bundle with newly compiled bundle"
   cd ../
   cat $file_path > $file_current
@@ -182,7 +225,7 @@ if [[ ${1} == "--ci" ]]; then
   task-install
   task-test-ci
   task-lint "${@}"
-  task-webpack --mode=production
+  task-rspack --mode=production
   task-validate-build
   exit 0
 fi
@@ -206,6 +249,13 @@ if [[ ${1} == '--lint' ]]; then
   exit 0
 fi
 
+if [[ ${1} == '--lint-fix' ]]; then
+  shift 1
+  task-install
+  task-lint-fix "${@}"
+  exit 0
+fi
+
 if [[ ${1} == '--test' ]]; then
   shift 1
   task-install
@@ -220,35 +270,28 @@ if [[ ${1} == '--test-ci' ]]; then
   exit 0
 fi
 
-if [[ ${1} == '--sonar' ]]; then
-  shift 1
-  task-install
-  task-sonar "${@}"
-  exit 0
-fi
-
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
   task-install
-  task-webpack --mode=production --analyze
+  task-rspack --mode=production --analyze
   exit 0
 fi
 
-## Make a production webpack build
+## Make a production rspack build
 if [[ ${1} == '--build' ]]; then
   task-install
-  task-webpack --mode=production
+  task-rspack --mode=production
   exit 0
 fi
 
-## Make a production webpack build + Run eslint
+## Make a production rspack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
   task-lint
-  task-webpack --mode=production
+  task-rspack --mode=production
   exit 0
 fi
 
-## Run webpack with custom flags
+## Run rspack with custom flags
 task-install
-task-webpack "${@}"
+task-rspack "${@}"

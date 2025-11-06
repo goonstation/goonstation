@@ -128,6 +128,25 @@
 		/// The diner trading area
 		#define COMSIG_DOCK_TRADER_DINER "trader_diner"
 
+	// ---- Mining Shuttle docks ----
+		#define COMSIG_DOCK_MINING_STATION "mining_station"
+		#define COMSIG_DOCK_MINING_DINER "mining_diner"
+		#define COMSIG_DOCK_MINING_OUTPOST "mining_outpost"
+
+	// ---- John's Bus docks ----
+		#define COMSIG_DOCK_JOHN_OWLERY "john_owlery"
+		#define COMSIG_DOCK_JOHN_DINER "john_diner"
+		#define COMSIG_DOCK_JOHN_OUTPOST "john_outpost"
+		#define COMSIG_DOCK_JOHN_GRILLNASIUM "john_grillnasium"
+
+	// ---- Research Shuttle docks (donut2/cogmap2) ----
+		#define COMSIG_DOCK_RESEARCH_STATION "research_station"
+		#define COMSIG_DOCK_RESEARCH_OUTPOST "research_outpost"
+
+	// ---- Medical Shuttle Docks (donut3) ----
+		#define COMSIG_DOCK_MEDICAL_ASYLUM "medical_asylum"
+		#define COMSIG_DOCK_MEDICAL_MEDBAY "medical_medbay"
+		#define COMSIG_DOCK_MEDICAL_PATHOLOGY "medical_pathology"
 
 
 // ---- Light stuff, used by /datum/component/loctargeting/simple_light, .../sm_light, and .../medium_light ----
@@ -140,18 +159,34 @@
 /// When the door was bumped open, send the movable that opened it
 #define COMSIG_DOOR_OPENED "door_opened"
 
-// ---- Player Piano Automatic Linking ----
-
-#define COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE "is_player_piano_auto_linker_active"
-
 // ---- Sniper Scope integration with other gun components ----
-/// Sent to an item when its sniper_scope components scope is toggled, TRUE if on and FALSE if off
+/// Sent to an item when its sniper_scope components are enabled or disabled, TRUE if enabled and FALSE if disabled
+#define COMSIG_SCOPE_ENABLED "sniper_scope_enabled"
+/// Sent to an item when its sniper_scope components scope is toggled by sprinting, TRUE if on and FALSE if off
 #define COMSIG_SCOPE_TOGGLED "sniper_scope_toggled"
 /// Sent to a mob when its client pixel offset is changed by a scope (delta_x, delta_y)
 #define COMSIG_MOB_SCOPE_MOVED "sniper_scope_toggled"
+
+// ---- Speech System ----
+/// When a speech module tree's speaker origin is updated. (speech tree, old_speaker_origin, new_speaker_origin)
+#define COMSIG_SPEAKER_ORIGIN_UPDATED "speaker_origin_updated"
+/// When a listen module tree's listener origin is updated. (listen tree, old_listener_origin, new_listener_origin)
+#define COMSIG_LISTENER_ORIGIN_UPDATED "listener_origin_updated"
+/// When a listen module tree's listener parent is updated. (listen tree, old_listener_origin, new_listener_origin)
+#define COMSIG_LISTENER_PARENT_UPDATED "listener_parent_updated"
+/// Flush all message buffers associated with the target datum.
+#define COMSIG_FLUSH_MESSAGE_BUFFER "flush_message_buffer"
 
 // ---- Client Signals ----
 /// When a client logs into a mob. (client, mob)
 #define COMSIG_CLIENT_LOGIN "client_login"
 /// When a client logs out of a mob. (client, mob)
 #define COMSIG_CLIENT_LOGOUT "client_logout"
+/// When a client's chat is loaded
+#define COMSIG_CLIENT_CHAT_LOADED "client_chat_loaded"
+
+// ---- Extradimensional Prefab Signals ----
+/// When an `/atom/movable` enters a dimensional locker. (sender, atom_movable)
+#define COMSIG_EXTRADIMENSIONAL_PREFAB_ENTERED "extradimensional_prefab_entered"
+/// When an `/atom/movable` attempts to leave a dimensional locker. (sender, atom_movable, old_loc)
+#define COMSIG_EXTRADIMENSIONAL_PREFAB_EXIT "extradimensional_prefab_exit"

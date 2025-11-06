@@ -41,6 +41,7 @@
 			/datum/commodity/trader/josh/paintgun,
 			/datum/commodity/trader/josh/spraypaint,
 			/datum/commodity/trader/josh/rocketshoes,
+			/datum/commodity/trader/josh/firecracker,
 		),
 		TRADER_RARITY_RARE = list()
 	)
@@ -208,3 +209,12 @@
 	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
 	possible_names = list("All the up-and-coming artists are buzzing over this!",
 	"Show off your vast, oceanic soul with some ART, bro!")
+
+/datum/commodity/trader/josh/firecracker
+	comname = "Totally Legit Bangers"
+	comtype = /obj/item/device/light/sparkler/firecracker
+	price_boundary = list(PAY_UNTRAINED/2,PAY_TRADESMAN/2)
+	amount = 20 //not completely unlimited
+	possible_names = list("These are technically legal, trust me bro!",
+		"REAL firecrackers, chuck them and run!",
+		"My cousin got such a sick burn off of one of these once.")

@@ -6,15 +6,24 @@
  */
 
 import { Button, Flex, Icon, Section, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { ReagentGraph } from './common/ReagentInfo';
+import { ReagentContainer, ReagentGraph } from './common/ReagentInfo';
 
 interface IceCreamMachineData {
-  beaker;
-  cone;
-  flavors;
+  beaker: ReagentContainer;
+  has_cone: BooleanLike;
+  flavors: IceCreamFlavor[];
+}
+
+interface IceCreamFlavor {
+  name: string;
+  id: string;
+  colorR: number;
+  colorG: number;
+  colorB: number;
 }
 
 export const StandardFlavors = () => {
@@ -30,7 +39,7 @@ export const StandardFlavors = () => {
           align="left"
           width="130px"
           m=".1rem"
-          onClick={() => act('make_ice_cream', { flavor: flavor.name })}
+          onClick={() => act('make_ice_cream', { flavor: flavor.id })}
         >
           <Icon
             color={
@@ -44,6 +53,7 @@ export const StandardFlavors = () => {
             }
             name="circle"
             pt={1}
+            mr={1}
             style={{ textShadow: '0 0 3px #000' }}
           />
           {flavor.name}
@@ -103,24 +113,29 @@ export const BeakerFlavor = () => {
 
 export const IceCreamMachine = () => {
   const { act, data } = useBackend<IceCreamMachineData>();
-  const cone = data.cone;
+  const has_cone = data.has_cone;
+  // extend the window height every 3 flavors to prevent overlap
+  const bonus_window_height = Math.ceil(data.flavors.length / 3) * 20;
 
   return (
-    <Window title="Ice Cream-O-Mat 6300" width={440} height={275}>
+    <Window
+      title="Ice Cream-O-Mat 6300"
+      width={440}
+      height={255 + bonus_window_height}
+    >
       <Window.Content>
-        <Stack m="0.25rem" vertical fill>
+        <Stack vertical>
           <Stack.Item>
             <StandardFlavors />
           </Stack.Item>
           <Stack.Item>
             <BeakerFlavor />
           </Stack.Item>
-          <Stack.Item m=".25rem">
+          <Stack.Item>
             <Button
-              mt="0.5rem"
               icon="eject"
               className="chem-dispenser__buttons"
-              disabled={!cone}
+              disabled={!has_cone}
               onClick={() => act('eject_cone')}
             >
               Eject Cone

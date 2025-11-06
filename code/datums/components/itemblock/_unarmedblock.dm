@@ -30,15 +30,15 @@
 
 
 /datum/component/wearertargeting/unarmedblock/proc/on_block_begin(var/mob/living/carbon/source, var/obj/item/grab/block/B)
+	SHOULD_CALL_PARENT(1)
 	if(affectedBlock)
 		on_block_end(source, affectedBlock)
 	affectedBlock = B
 	RegisterSignal(source, signals, proctype, TRUE)
-	SHOULD_CALL_PARENT(1)
 
 //Must clean up anything you're doing to the block in here - this also gets called when the item is unequipped, so that we unmodify our block
 /datum/component/wearertargeting/unarmedblock/proc/on_block_end(var/mob/living/carbon/source, var/obj/item/grab/block/B)
+	SHOULD_CALL_PARENT(1)
 	if(affectedBlock)
 		affectedBlock = null
 	UnregisterSignal(source, signals)
-	SHOULD_CALL_PARENT(1)

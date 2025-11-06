@@ -1,4 +1,4 @@
-/client/proc/Jump(var/area/A in by_type[/area])
+/client/proc/Jump(var/area/A as null|area in by_type[/area])
 	set desc = "Area to jump to"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Jump"
@@ -8,6 +8,8 @@
 	SHOW_VERB_DESC
 
 	if(config.allow_admin_jump)
+		if (!A)
+			A = tgui_input_list(usr, "Where do you want to jump?", "Jump", by_type[/area])
 		if(flourish)
 			shrink_teleport(src.mob)
 		var/turf/origin_turf = get_turf(usr)

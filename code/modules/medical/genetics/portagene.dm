@@ -12,21 +12,24 @@
 
 	New()
 		..()
-
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
 		src.homeloc = src.loc
 		return
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		if(occupant)
 			occupant.set_loc(get_turf(src.loc))
 			occupant = null
 		..()
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		if(src.status & BROKEN)
+			return "Use <b>2 glass sheets</b> to repair [src]."
+		else
+			return ""
 
 	examine()
 		. = ..()
@@ -61,15 +64,15 @@
 			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
-	relaymove(mob/usr as mob, dir)
-		if (!isalive(usr))
+	relaymove(mob/user as mob, dir)
+		if (!isalive(user))
 			return
 		if (src.locked)
-			boutput(usr, SPAN_ALERT("<b>The scanner door is locked!</b>"))
+			boutput(user, SPAN_ALERT("<b>The scanner door is locked!</b>"))
 			return
 
 		src.go_out()
-		add_fingerprint(usr)
+		add_fingerprint(user)
 		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
@@ -110,7 +113,7 @@
 			return 0
 		if(ismobcritter(target))
 			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))				 // CHANGE TO CHECK FOR MODULE?
-				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				boutput(M, SPAN_ALERT("<B>More research is required to support this body type.</B>"))
 				return 0
 		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
@@ -125,15 +128,10 @@
 		.= 1
 
 	set_broken()
-		if (status & BROKEN)
-			return
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, src)
-		smoke.start()
+		. = ..()
+		if (.) return
 		src.go_out()
 		icon_state = "PAG_broken"
-		light.disable()
-		status |= BROKEN
 
 	attack_hand(mob/user)
 		if (src.status & BROKEN)

@@ -1,14 +1,22 @@
 /////////////////
 // FLOCKTRACE
 /////////////////
+TYPEINFO(/mob/living/intangible/flock/trace)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_RADIO_DISTORTED, LISTEN_INPUT_SILICONCHAT_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/intangible/flock/trace
 	name = "Flocktrace"
 	real_name = "Flocktrace"
 	desc = "The representation of a partition of the will of the flockmind."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flocktrace"
-
 	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
+	default_speech_output_channel = SAY_CHANNEL_FLOCK
+	say_language = LANGUAGE_FEATHER
 
 	var/creation_time = 0
 
@@ -83,8 +91,8 @@
 		was_in_drone = TRUE
 		controlled.release_control(FALSE)
 
-	boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: New functions detected. Control of Flock assumed.\]</b>"))
-	flock_speak(null, "Flocktrace [src.real_name] has been promoted to Flockmind.", src.flock)
+	src.flock.system_say_source.say("New functions detected. Control of Flock assumed.", atom_listeners_override = list(src))
+	src.flock.system_say_source.say("Flocktrace [src.real_name] has been promoted to Flockmind.")
 
 	var/mob/living/intangible/flock/flockmind/original = src.flock.flockmind
 	original.tutorial?.Finish()
@@ -135,16 +143,16 @@
 		var/mob/living/critter/flock/drone/F = src.loc
 		F.release_control_abrupt(FALSE)
 		if (F.z == Z_LEVEL_STATION)
-			flock_speak(null, "Control of drone [F.real_name] surrendered.", src.flock)
+			src.flock.system_say_source.say("Control of drone [F.real_name] surrendered.", atom_listeners_override = list(src))
 	if(src.client)
 		if (suicide)
-			flock_speak(null, "Flocktrace [src.real_name] relinquishes their computational designation and reintegrates themselves back into the Flock.", src.flock)
+			src.flock.system_say_source.say("Flocktrace [src.real_name] relinquishes their computational designation and reintegrates themselves back into the Flock.")
 		boutput(src, SPAN_ALERT("You cease to exist abruptly."))
 	src.flock?.removeTrace(src)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = FALSE
-	flick("flocktrace-death", src)
+	FLICK("flocktrace-death", src)
 	src.ghostize()
 	spawn(2 SECONDS) // wait for the animation to finish
 		qdel(src)

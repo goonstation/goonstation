@@ -2,11 +2,11 @@
  * Chemicompiler
  * v1.0 By volundr 9/24/14
  * This device is a programmable chemistry mixing and heating device.
- * The javascript code to run the frontend is in browserassets/js/chemicompiler.min.js
- *   which is minified javascript from browserassets/js/chemicompiler.js
+ * The javascript code to run the frontend is in browserassets/src/js/chemicompiler.min.js
+ *   which is minified javascript from browserassets/src/js/chemicompiler.js
  *   If you make changes to the uncompressed javascript, you'll need to install node.js,
  *   and run `npm install -g uglify-js`
- *   then run `uglifyjs browserassets/js/chemicompiler.js -c > browserassets/js/chemicompiler.min.js` to rebuild the compressed version.
+ *   then run `uglifyjs browserassets/src/js/chemicompiler.js -c > browserassets/src/js/chemicompiler.min.js` to rebuild the compressed version.
  */
 /datum/chemicompiler_core/portableCore
 	maxReservoir = 6

@@ -1,8 +1,12 @@
 // meant to be short
 #define SECHUD_FLAG_MAX_CHARS 10
 #define MAX_FINE_NO_APPROVAL 500
-#define JOBS_CAN_TICKET_SMALL list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant","Security Officer","Inspector")
-#define JOBS_CAN_TICKET_BIG list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant")
+
+//Ticketing levels used in ticket master app and for approving tickets
+#define TICKET_LEVEL_NONE 0
+#define TICKET_LEVEL_TICKET 1
+#define TICKET_LEVEL_FINE_SMALL 2
+#define TICKET_LEVEL_FINE_LARGE 3
 
 // arrest states that are displayed through security computers and/or on sechuds. note the strings are output to players and/or match up with .dmi icon
 // state names

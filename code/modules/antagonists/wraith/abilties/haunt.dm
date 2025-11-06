@@ -47,6 +47,10 @@
 					puppet.remove_emote_typing_indicator()
 					puppet.voice_type = T.copied_voice
 					T.set_loc(puppet)
+
+					for (var/mob/dead/target_observer/observer as anything in T.observers)
+						observer.set_observe_target(puppet)
+
 					return 0
 
 			//check done in case a poltergeist uses this from within their master.

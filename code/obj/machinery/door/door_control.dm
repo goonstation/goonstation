@@ -2,11 +2,16 @@
 #define CONTROLMODE_BOLT 2
 #define CONTROLMODE_ACCESS 4
 ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
+TYPEINFO(/obj/machinery/door_control)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_DOOR_CONTROL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control switch for a door."
+	speech_verb_say = "beeps"
 	/// Match to a door to have it be controlled.
 	var/id = null
 	var/timer = 0
@@ -19,13 +24,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/unpressed_icon = "doorctrl0"
 	var/pressed_icon = "doorctrl1"
 	var/unpowered_icon = "doorctrl-p"
-	/// for the speak proc, relays the message to speak.
-	var/image/chat_maptext/welcome_text
 	///alpha value for speak proc
 	var/welcome_text_alpha = 140
 	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
 	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open), 3 = nulls access (non-reversable!) - Does not change behavior for poddoors or conveyors
+	var/single_use = FALSE //If TRUE will qdel self after use
 
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -602,6 +606,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 						M.operating = 0
 			M.setdir()
 
+	if(src.single_use)
+		qdel(src)
+		return
+
 	if(src.cooldown)
 		inuse = TRUE
 		sleep(src.cooldown)
@@ -625,21 +633,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		src.visible_message(SPAN_ALERT("[src] emits a sad thunk.  That can't be good."))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
-		boutput(user, SPAN_ALERT("It's broken."))
-// Stolen from the vending module
-/// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
-/obj/machinery/door_control/proc/speak(var/message)
-	var/image/chat_maptext/speak_text = welcome_text
-	if ((src.status & NOPOWER) || !message)
-		return
-	else
-		speak_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
-		src.audible_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), assoc_maptext = speak_text)
-		if (speak_text && src.chat_text && length(src.chat_text.lines))
-			speak_text.measure(src)
-			for (var/image/chat_maptext/I in src.chat_text.lines)
-				if (I != speak_text)
-					I.bump_up(speak_text.measured_height)
+		boutput(user, "<span class='alert'>It's broken.</span>")
 
 // for buttons sitting on tables
 /obj/machinery/door_control/table
@@ -663,7 +657,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	pressed_icon = "antagscanner-u"
 	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
 	requires_power = 0
-	welcome_text = "Welcome, Agent. All facilities permanantly unlocked."
 	controlmode = CONTROLMODE_OPEN | CONTROLMODE_ACCESS
 
 /obj/machinery/door_control/ex_act(severity)
@@ -673,13 +666,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT) || user.mind?.get_antagonist(ROLE_TRAITOR) || user.mind?.get_antagonist(ROLE_NUKEOP) || user.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER))
-		user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the user and beeps, granting you access."))
-		src.toggle()
+	if (istrainedsyndie(user))
+		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
+		if (listening_post.unlocked)
+			listening_post.first_unlock(user)
+		src.toggle(user)
 		if (src.entrance_scanner)
-			src.speak(src.welcome_text)
+			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanently unlocked.")
 	else
-		boutput(user, SPAN_ALERT("Invalid biometric profile. Access denied."))
+		src.say("Invalid biometric profile. Access denied.")
 
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////
@@ -1196,24 +1191,12 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		light.enable()
 
 	Click(var/location,var/control,var/params)
-		if(GET_DIST(usr, src) < 16)
-			if(istype(usr.loc, /obj/machinery/vehicle))
-				var/obj/machinery/vehicle/V = usr.loc
-				if (!V.com_system)
-					boutput(usr, SPAN_ALERT("Your pod has no comms system installed!"))
-					return ..()
-				if (!V.com_system.active)
-					boutput(usr, SPAN_ALERT("Your communications array isn't on!"))
-					return ..()
-				if (!access_type)
-					open_door()
-				else
-					if(V.com_system.access_type.Find(src.access_type))
-						open_door()
-					else
-						boutput(usr, SPAN_ALERT("Access denied. Comms system not recognized."))
-						return ..()
+		if(GET_DIST(usr, src) > 16)
 			return ..()
+		if(istype(usr.loc, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/V = usr.loc
+			V.toggle_hangar_door(pass)
+
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -1227,7 +1210,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		boutput(user, SPAN_NOTICE("The password is \[[src.pass]\]"))
 		return
 
-	proc/open_door()
+	proc/toggle_hangar_door()
 		if(src.status & (NOPOWER|BROKEN))
 			return
 		src.use_power(5)
@@ -1245,7 +1228,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		if(..())
 			return
 		//////Open Door
-		if(signal.data["command"] =="open door")
+		if(signal.data["command"] =="toggle_hangar_door")
 			if(!signal.data["doorpass"])
 				return
 			if(!signal.data["access_type"])
@@ -1257,16 +1240,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 				return
 
 			if(signal.data["doorpass"] == src.pass)
-				if(src.status & (NOPOWER|BROKEN))
-					return
-				src.use_power(5)
-
-				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-					if (M.id == src.id)
-						if (M.density)
-							M.open()
-						else
-							M.close()
+				toggle_hangar_door()
 			return
 		////////reset pass
 		if(signal.data["command"] =="reset door pass")
@@ -1298,6 +1272,14 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	name = "Remote Door Bolt Control"
 	desc = "A remote control switch for a door's locking bolts."
 	controlmode = 2
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	new_walls
 		north

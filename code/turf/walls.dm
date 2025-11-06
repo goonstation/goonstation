@@ -20,7 +20,6 @@ TYPEINFO(/turf/simulated/wall)
 	default_material = "steel"
 
 	var/health = 100
-	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
 	var/girdermaterial = null
 
@@ -32,6 +31,8 @@ TYPEINFO(/turf/simulated/wall)
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 10)
 
+		for(var/obj/decal/cleanable/clean in src)
+			clean.plane = PLANE_FLOOR
 		src.selftilenotify() // displace fluid
 
 		#ifdef XMAS
@@ -236,7 +237,7 @@ TYPEINFO(/turf/simulated/wall)
 	return
 
 /turf/simulated/wall/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti)  || istype(W, /obj/item/gang_flyer))
+	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti))
 		return
 
 	if (istype(W, /obj/item/pen))
@@ -335,7 +336,7 @@ TYPEINFO(/turf/simulated/wall)
 		return
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti) || istype(W, /obj/item/gang_flyer))
+	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti))
 		return
 
 	if (istype(W, /obj/item/pen))

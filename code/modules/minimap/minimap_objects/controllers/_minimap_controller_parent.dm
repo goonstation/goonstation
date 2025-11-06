@@ -113,7 +113,8 @@
 	// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 	if (!src.icon || !src.icon_state)
 		var/icon/click_overlay_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
-		click_overlay_icon.Scale(src.displayed_minimap.x_max, src.displayed_minimap.y_max)
+		var/max_dim = max(src.displayed_minimap.x_max, src.displayed_minimap.y_max)
+		click_overlay_icon.Scale(max_dim * src.displayed_minimap.map_scale, max_dim * src.displayed_minimap.map_scale)
 		click_overlay_icon.ChangeOpacity(0)
 		src.icon = click_overlay_icon
 		src.mouse_opacity = 2

@@ -187,7 +187,7 @@
 
 	if (user)
 		if (ishuman(user))
-			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
+			if(user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || prob(user.get_brain_damage()))
 				boutput(user, SPAN_ALERT("You are too dazed to use [src] properly."))
 				return 1
 
@@ -237,6 +237,7 @@
 /obj/machinery/was_deconstructed_to_frame(mob/user)
 	. = ..()
 	src.power_change()
+	tgui_process.close_uis(src)
 
 /obj/machinery/was_built_from_frame(mob/user, newly_built)
 	. = ..()
@@ -309,16 +310,15 @@
 
 	A.use_power(amount, chan)
 
-
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
+///Checks the machinery's equipment channel and local power, setting the `NOPOWER` flag as needed.
+///
+///Called when the power settings of the containing area change.
+/obj/machinery/proc/power_change()
 	if(powered())
 		status &= ~NOPOWER
 	else
-
 		status |= NOPOWER
-	return
+	src.UpdateIcon()
 
 /obj/machinery/emp_act()
 	if(src.flags & EMP_SHORT) return
@@ -338,6 +338,13 @@
 		qdel(pulse2)
 	return
 
+///Attempt to break a machine. Returns `TRUE` if already broken.
+/obj/machinery/proc/set_broken()
+	if (src.is_broken())
+		return TRUE
+	src.status |= BROKEN
+	src.power_change()
+
 /obj/machinery/proc/is_broken()
 	return (src.status & BROKEN)
 
@@ -351,59 +358,11 @@
 /obj/machinery/proc/on_add_contents(obj/item/I)
 	return
 
-/obj/machinery/sec_lock
-	name = "Security Pad"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "sec_lock"
-	var/obj/item/card/id/scan = null
-	var/a_type = 0
-	var/obj/machinery/door/d1 = null
-	var/obj/machinery/door/d2 = null
-	anchored = ANCHORED
-	req_access = list(access_armory)
-
-/obj/machinery/noise_switch
-	name = "Speaker Toggle"
-	desc = "Makes things make noise."
-	icon = 'icons/obj/noise_makers.dmi'
-	icon_state = "switch"
-	anchored = ANCHORED
-	density = 0
-	var/ID = 0
-	var/noise = 0
-	var/broken = 0
-	var/sound = 0
-	var/rep = 0
-
-/obj/machinery/noise_maker
-	name = "Alert Horn"
-	desc = "Makes noise when something really bad is happening."
-	icon = 'icons/obj/noise_makers.dmi'
-	icon_state = "nm n +o"
-	anchored = ANCHORED
-	density = 0
-	machine_registry_idx = MACHINES_MISC
-	var/ID = 0
-	var/sound = 0
-	var/broken = 0
-	var/containment_fail = 0
-	var/last_shot = 0
-	var/fire_delay = 4
-
-/obj/machinery/wire
-	name = "wire"
-	icon = 'icons/obj/power_cond.dmi'
-
-/obj/machinery/transmitter
-	name = "transmitter"
-	desc = "a big radio transmitter"
-	icon = null
-	icon_state = null
-	anchored = ANCHORED
-	density = 1
-
-	var/list/signals = list()
-	var/list/transmitters = list()
+/// Called when machines are overloaded with power.
+///
+/// Returns TRUE if it did something, or FALSE if it did not.
+/obj/machinery/proc/overload_act()
+	return FALSE
 
 /obj/machinery/bug_reporter
 	name = "bug reporter"
@@ -421,7 +380,8 @@
 		if(A1) A1.machines -= src
 		if(A2) A2.machines += src
 		// call power_change on machine so it can check if the new area is powered and update it's status flag appropriately
-		src.power_change()
+		if (!QDELETED(src))
+			src.power_change()
 
 /obj/machinery/Move(atom/target)
 	var/area/A1 = get_area(src)

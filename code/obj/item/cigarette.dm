@@ -189,10 +189,11 @@
 		else
 			return ..() // CALL your GODDAMN PARENTS
 
-	attack(atom/target, mob/user)
+	attack(atom/target, mob/user, def_zone, is_special = FALSE)
 		if (isliving(target))
 			var/mob/living/M = target
-
+			if (is_special)
+				return ..()
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
@@ -292,8 +293,7 @@
 					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 						src.reagents.remove_any(puffrate)
 					else
-						if(H.bodytemperature < H.base_body_temp)
-							H.bodytemperature += 1
+						H.changeBodyTemp(1 KELVIN, max_temp = H.base_body_temp)
 						if (prob(1))
 							H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 						src.reagents.trans_to(M, puffrate)
@@ -696,7 +696,7 @@
 
 /obj/item/cigarbox
 	name = "cigar box"
-	desc = "The not-so-prestigeous brand of Space Cigars."
+	desc = "The not-so-prestigious brand of Space Cigars."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
 	item_state = "cigarbox"
@@ -759,7 +759,7 @@
 
 /obj/item/cigarbox/gold
 	name = "deluxe golden cigar box"
-	desc = "The most prestigeous brand of Space Cigars, made in Space Cuba."
+	desc = "The most prestigious brand of Space Cigars, made in Space Cuba."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
 	item_state = "cigarbox"
@@ -823,7 +823,7 @@
 /obj/item/cigpacket/cigarillo
 	max_cigs = 2
 	name = "Discount Dan's Last-Ditch Doinks"
-	desc = "These claim to be '100% all natoural* tobacco**'."
+	desc = "These claim to be '100% all natoural* tobacco**'."  // dunno if the typo was intentional but I'm keeping it - Mouse
 	cigtype = /obj/item/clothing/mask/cigarette/cigarillo/flavoured
 	icon_state = "cigarillopacket"
 	package_style = "cigarillopacket"
@@ -878,7 +878,7 @@
 				user.put_in_hand_or_drop(W)
 				if (src.match_amt != -1)
 					src.match_amt --
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 			src.UpdateIcon()
 		else
 			return ..()
@@ -922,7 +922,7 @@
 
 /obj/item/match
 	name = "match"
-	desc = "A little stick of wood with phosphorus on the tip, for lighting fires, or making you very frustrated and not lighting fires. Either or."
+	desc = "A little stick of wood with phosphorus on the tip, for lighting fires, or making you very frustrated and not lighting fires. Either/or."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "match"
 	w_class = W_CLASS_TINY
@@ -1106,6 +1106,8 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
+			if (is_special)
+				return ..()
 			if (src.on > 0)
 				var/mob/living/carbon/human/fella = target
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
@@ -1197,7 +1199,7 @@
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		set_icon_state(src.icon_on)
 		src.item_state = "[item_state_base]on"
-		flick("[icon_state]_open", src)
+		FLICK("[icon_state]_open", src)
 		light.enable()
 		processing_items |= src
 		if (user != null)
@@ -1209,7 +1211,7 @@
 		src.firesource = FALSE
 		set_icon_state(src.icon_off)
 		src.item_state = "[item_state_base]"
-		flick("[icon_state]_close", src)
+		FLICK("[icon_state]_close", src)
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
@@ -1220,6 +1222,8 @@
 		if (ishuman(target))
 			var/mob/living/carbon/human/fella = target
 
+			if (is_special)
+				return ..()
 			if (src.on)
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa

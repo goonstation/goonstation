@@ -27,7 +27,28 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command)
 
 /// the actual command code
 /datum/spacebee_extension_command/proc/execute(user, ...)
+	return
 
+///Try to convert a possibly string duration to a number of minutes
+/datum/spacebee_extension_command/proc/duration_to_minutes(duration)
+	switch (duration)
+		if ("hour")
+			return 60
+		if ("day")
+			return 1440
+		if ("halfweek")
+			return 5040
+		if ("week")
+			return 10080
+		if ("twoweeks")
+			return 20160
+		if ("month")
+			return 43200
+
+	var/num = text2num_safe(duration)
+	if (isnum(num))
+		return num
+	return duration
 
 
 ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based)
@@ -117,3 +138,4 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_tar
 		system.reply(success_msg, user)
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/proc/perform_action(user, mob/target)
+	return

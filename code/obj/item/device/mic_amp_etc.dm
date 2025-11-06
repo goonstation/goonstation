@@ -1,9 +1,14 @@
+TYPEINFO(/obj/item/device/microphone)
+	start_listen_effects = list(LISTEN_EFFECT_MICROPHONE)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+	start_listen_languages = list(LANGUAGE_ALL)
 
 /obj/item/device/microphone
 	name = "microphone"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
+
 	var/max_font = 8
 	var/font_amp = 4
 	var/on = 0
@@ -14,11 +19,11 @@
 
 	attack_self(mob/user as mob)
 		src.on = !(src.on)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		user.show_text("You switch [src] [src.on ? "on" : "off"].")
 		if (src.on && prob(5))
-			if (locate(/obj/loudspeaker) in range(2, user))
-				for_by_tcl(S, /obj/loudspeaker)
+			if (locate(/obj/machinery/loudspeaker) in range(2, user))
+				for_by_tcl(S, /obj/machinery/loudspeaker)
 					if(!IN_RANGE(S, user, 7)) continue
 					S.visible_message(SPAN_ALERT("[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
@@ -30,40 +35,6 @@
 		else
 			return ..()
 
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		if (!src.on)
-			return
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
-
-	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		if (!src.on)
-			return
-		var/speakers = 0
-		var/turf/T = get_turf(src)
-		for_by_tcl(S, /obj/loudspeaker)
-			if(!IN_RANGE(S, T, 7)) continue
-			speakers ++
-		if (!speakers)
-			return
-		speakers += font_amp // 2 ain't huge so let's give ourselves a little boost
-		var/stuff = M.say_quote(messages[1])
-		var/stuff_b = M.say_quote(messages[2])
-		var/list/mobs_messaged = list()
-		for_by_tcl(S, /obj/loudspeaker)
-			if(!IN_RANGE(S, T, 7)) continue
-			for (var/mob/H in hearers(S, null))
-				if (H in mobs_messaged)
-					continue
-				var/U = H.say_understands(M, lang_id)
-				H.show_text("<font size=[clamp(speakers - round(GET_DIST(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
-				mobs_messaged += H
-		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
-			for_by_tcl(S, /obj/loudspeaker)
-				if(!IN_RANGE(S, T, 7)) continue
-				S.visible_message(SPAN_ALERT("[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
-				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
 TYPEINFO(/obj/mic_stand)
 	mats = 10
@@ -102,13 +73,6 @@ TYPEINFO(/obj/mic_stand)
 		else
 			return ..()
 
-	hear_talk(mob/M as mob, msg, real_name)
-		if (!myMic || !myMic.on)
-			return
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			myMic.talk_into(M, msg)
-
 	update_icon()
 		if (myMic)
 			switch (myMic.icon_state)
@@ -121,21 +85,56 @@ TYPEINFO(/obj/mic_stand)
 		else
 			src.icon_state = "micstand-empty"
 
-TYPEINFO(/obj/loudspeaker)
+TYPEINFO(/obj/machinery/loudspeaker)
 	mats = 15
 
-/obj/loudspeaker
+/obj/machinery/loudspeaker
 	name = "loudspeaker"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "loudspeaker"
 	anchored = ANCHORED
 	density = 1
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
-	New()
-		. = ..()
-		START_TRACKING
+	HELP_MESSAGE_OVERRIDE("Speech into nearby microphones will be played over this loudspeaker.")
 
-	disposing()
-		. = ..()
-		STOP_TRACKING
+/obj/machinery/loudspeaker/New()
+	. = ..()
+	START_TRACKING
+	src.AddComponent(/datum/component/obj_projectile_damage)
+	src.UnsubscribeProcess()
+
+/obj/machinery/loudspeaker/disposing()
+	. = ..()
+	STOP_TRACKING
+
+/obj/machinery/loudspeaker/set_broken()
+	. = ..()
+	if(.) return
+	src.SubscribeToProcess()
+	AddComponent(/datum/component/equipment_fault/elecflash, tool_flags = TOOL_SCREWING | TOOL_WIRING | TOOL_SNIPPING)
+	src.visible_message(SPAN_ALERT("[src] sparks and pops, shorting out!"))
+	playsound(src, 'sound/effects/screech_tone.ogg', 70, 2, pitch=0.5)
+	for (var/mob/living/M in hearers(5, src))
+		M.do_disorient(50, target_type = DISORIENT_EAR, remove_stamina_below_zero = TRUE)
+
+/obj/machinery/loudspeaker/ex_act(severity)
+	. = ..()
+	if(QDELETED(src))
+		return
+	switch(severity)
+		if (2)
+			changeHealth(rand(-25, -35))
+		if (3)
+			changeHealth(rand(-5, -15))
+
+/obj/machinery/loudspeaker/process(mult)
+	. = ..()
+	if (!(src.status & BROKEN))
+		src.UnsubscribeProcess()
+
+/obj/machinery/loudspeaker/changeHealth(change)
+	. = ..()
+	if(prob(100*(src._health/src._max_health)))
+		src.set_broken()

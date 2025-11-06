@@ -45,46 +45,58 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 			if (isweldingtool(E) && E:try_weld(user,0,0,0,0))
 				if (istype(W, /obj/item/scrapweapons/parts/blade))
 					qdel(W)
+					var/machete = new/obj/item/scrapweapons/weapons/machete
+					SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, machete, user)
 					qdel(src)
-					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/machete)
+					user.put_in_hand_or_drop(machete)
 					boutput(user, SPAN_NOTICE("You fuse the handle and blade into a scrap machete."))
 					successful = TRUE
 
 				if (istype(W, /obj/item/scrapweapons/parts/shaft))
 					qdel(W)
+					var/club = new/obj/item/scrapweapons/weapons/club
+					SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, club, user)
 					qdel(src)
-					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club)
+					user.put_in_hand_or_drop(club)
 					boutput(user, SPAN_NOTICE("You fuse the handle and shaft into a scrap club."))
 					successful = TRUE
 
 
 				if (istype(W, /obj/item/scrapweapons/parts/pole))
 					qdel(W)
+					var/spear = new/obj/item/scrapweapons/weapons/spear
+					SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, spear, user)
 					qdel(src)
-					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/spear)
+					user.put_in_hand_or_drop(spear)
 					boutput(user, SPAN_NOTICE("You fuse the handle and pole into a blunt scrap spear."))
 					successful = TRUE
 
 
 				if (istype(W, /obj/item/raw_material/scrap_metal))
 					W.change_stack_amount(-1)
+					var/dagger = new/obj/item/scrapweapons/weapons/dagger
+					SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, dagger, user)
 					qdel(src)
-					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger)
+					user.put_in_hand_or_drop(dagger)
 					boutput(user, SPAN_NOTICE("You fuse the handle and scrap metal into a scrap dagger."))
 					successful = TRUE
 
 				else if (istype(W, /obj/item/raw_material/shard))
 					if (istype(W.material, /datum/material/crystal/glass))
 						W.change_stack_amount(-1)
+						var/glassdagger = new/obj/item/scrapweapons/weapons/dagger/glass
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, glassdagger, user)
 						qdel(src)
-						user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger/glass)
+						user.put_in_hand_or_drop(glassdagger)
 						boutput(user, SPAN_NOTICE("You fuse the handle and glass shard into a scrap dagger."))
 						successful = TRUE
 
 					else if (istype(W.material, /datum/material/crystal/plasmaglass))
 						W.change_stack_amount(-1)
+						var/plasmaglassdagger = new/obj/item/scrapweapons/weapons/dagger/plasmaglass
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, plasmaglassdagger, user)
 						qdel(src)
-						user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger/plasmaglass)
+						user.put_in_hand_or_drop(plasmaglassdagger)
 						boutput(user, SPAN_NOTICE("You fuse the handle and plasmaglass shard into a scrap dagger."))
 						successful = TRUE
 				if (successful == TRUE)
@@ -114,8 +126,10 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 			if (isweldingtool(E) && E:try_weld(user,2,-1,1,1))
 				if (istype(W, /obj/item/scrapweapons/parts/shaft))
 					qdel(W)
+					var/pole = new/obj/item/scrapweapons/parts/pole
+					SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, pole, user)
 					qdel(src)
-					user.put_in_hand_or_drop(new/obj/item/scrapweapons/parts/pole)
+					user.put_in_hand_or_drop(pole)
 					boutput(user, SPAN_NOTICE("You fuse the two shafts together into a <b>metal pole</b>."))
 
 /obj/item/scrapweapons/parts/pole
@@ -129,6 +143,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 /obj/item/scrapweapons/weapons
 	name = "youshouldntseemee scrapweapon"
 	force = 5
+	contraband = 4
 
 	New()
 		..()
@@ -165,25 +180,31 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					src.icon_state = "spear-wire"
 					src.item_state = "spear-wire"
 			else
-				boutput(user, "<span class='alert>You need to attach some wires before you stick anything on the spear!</span>")
+				boutput(user, "<span class='alert'>You need to attach some wires before you stick anything on the spear!</span>")
 				. = ..()
 		else if (istype(W, /obj/item/raw_material/scrap_metal))
 			W.change_stack_amount(-1)
+			var/scrapmetalspear = new/obj/item/scrapweapons/weapons/spear/scrapmetal
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, scrapmetalspear, user)
 			qdel(src)
-			user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/spear/scrapmetal)
+			user.put_in_hand_or_drop(scrapmetalspear)
 			boutput(user, SPAN_NOTICE("You combine the blunt spear with the piece of scrap metal to add a sharp point."))
 
 		else if (istype(W, /obj/item/raw_material/shard))
 			if (istype(W.material, /datum/material/crystal/glass))
 				W.change_stack_amount(-1)
+				var/glassspear = new/obj/item/scrapweapons/weapons/spear/glass
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, glassspear, user)
 				qdel(src)
-				user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/spear/glass)
+				user.put_in_hand_or_drop(glassspear)
 				boutput(user, SPAN_NOTICE("You combine the blunt spear with the shard of glass to add a sharp point."))
 
 			else if (istype(W.material, /datum/material/crystal/plasmaglass))
 				W.change_stack_amount(-1)
+				var/plasmaglassspear = new/obj/item/scrapweapons/weapons/spear/plasmaglass
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, plasmaglassspear, user)
 				qdel(src)
-				user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/spear/plasmaglass)
+				user.put_in_hand_or_drop(plasmaglassspear)
 				boutput(user, SPAN_NOTICE("You combine the blunt spear with the shard of scrap metal to add a sharp point."))
 
 			else
@@ -267,7 +288,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 /obj/item/scrapweapons/weapons/club
 	name = "scrap club"
 	desc = "A metal shaft attached to a handle. You might be able to improve it a bit."
-	HELP_MESSAGE_OVERRIDE("To improve the club you should first attach some <b>wires</b> to the spear, then attach a piece of <b>scrap metal, glass, or plasmaglass</b> as the tip.")
+	HELP_MESSAGE_OVERRIDE("To improve the club you should first attach some <b>wires</b> to the club, then attach a piece of <b>scrap metal, glass, or plasmaglass</b> as the studs.")
 	icon_state = "club"
 	item_state = "club"
 	w_class = W_CLASS_NORMAL
@@ -328,21 +349,27 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					src.item_state = "club-wire"
 		else if (istype(W, /obj/item/raw_material/scrap_metal))
 			W.change_stack_amount(-1)
+			var/scrapmetalclub = new/obj/item/scrapweapons/weapons/club/scrapmetal
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, scrapmetalclub, user)
 			qdel(src)
-			user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/scrapmetal)
+			user.put_in_hand_or_drop(scrapmetalclub)
 			boutput(user, SPAN_NOTICE("You combine the club with the piece of scrap metal to add some extra weight."))
 
 		else if (istype(W, /obj/item/raw_material/shard))
 			if (istype(W.material, /datum/material/crystal/glass))
 				W.change_stack_amount(-1)
+				var/glassclub = new/obj/item/scrapweapons/weapons/club/glass
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, glassclub, user)
 				qdel(src)
-				user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/glass)
+				user.put_in_hand_or_drop(glassclub)
 				boutput(user, SPAN_NOTICE("You combine the club with the glass shard."))
 
 			else if (istype(W.material, /datum/material/crystal/plasmaglass))
 				W.change_stack_amount(-1)
+				var/plasmaglassclub = new/obj/item/scrapweapons/weapons/club/plasmaglass
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, plasmaglassclub, user)
 				qdel(src)
-				user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/plasmaglass)
+				user.put_in_hand_or_drop(plasmaglassclub)
 				boutput(user, SPAN_NOTICE("You combine the club with the glass shard"))
 
 /obj/item/scrapweapons/weapons/club/suicide(var/mob/living/carbon/human/user as mob)
@@ -374,7 +401,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/double)
+		src.setItemSpecial(/datum/item_special/jab)
 
 	glass
 		desc = "A tiny bit of glass attached to a handle. You might cut yourself just holding it."

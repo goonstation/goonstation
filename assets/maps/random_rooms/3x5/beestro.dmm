@@ -92,8 +92,7 @@
 /area/dmm_suite/clear_area)
 "U" = (
 /obj/machinery/door/window/eastright{
-	name = "Beestro Bar Door";
-	req_access_txt = null
+	name = "Beestro Bar Door"
 	},
 /obj/critter/domestic_bee/chef,
 /turf/simulated/bar,

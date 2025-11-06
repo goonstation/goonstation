@@ -1,7 +1,13 @@
+
+//Easier way to define project only Maps
+//Will define SECRET_MAP_OVERRIDE when applicable
+#ifdef SECRETS_ENABLED
+#include "../../+secret/code_secret/secret_map.dm"
+#endif
+
 // special tests and defines up here
 #if defined(SPACE_PREFAB_RUNTIME_CHECKING)
 #include "blank.dm"
-
 #elif defined(UNIT_TESTS)
 #include "unit_tests.dm"
 
@@ -10,6 +16,10 @@
 
 #elif defined(RANDOM_ROOM_RUNTIME_CHECKING)
 #include "blank.dm"
+
+// Secret Modes
+#elif defined(SECRET_MAP_OVERRIDE)
+//noop
 
 // special modes
 #elif defined(MAP_OVERRIDE_CONSTRUCTION)
@@ -56,8 +66,6 @@
 #include "nadir.dm"
 
 // non rotation maps
-#elif defined(MAP_OVERRIDE_MANTA)
-#include "manta.dm"
 
 #elif defined(MAP_OVERRIDE_DESTINY)
 #include "destiny.dm"
@@ -91,6 +99,9 @@
 
 #elif defined(MAP_OVERRIDE_DEVTEST)
 #include "devtest.dm"
+
+#elif defined(MAP_OVERRIDE_NEON)
+#include "neon.dm"
 
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"

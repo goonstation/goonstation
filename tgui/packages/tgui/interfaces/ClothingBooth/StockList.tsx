@@ -7,11 +7,10 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { Fragment, memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import {
   Box,
   Button,
-  Divider,
   Dropdown,
   Input,
   Section,
@@ -212,9 +211,7 @@ const StockListView = (props: StockListProps) => {
                   <Input
                     autoFocus
                     fluid
-                    onInput={(_e: unknown, value: string) =>
-                      setSearchText(value)
-                    }
+                    onChange={(value: string) => setSearchText(value)}
                     placeholder="Search by name..."
                   />
                 </Stack.Item>
@@ -297,17 +294,15 @@ const StockListSectionView = (props: StockListSectionProps) => {
   } = props;
   return (
     <Section fill scrollable>
-      {groupings.map((itemGrouping, itemGroupingIndex) => (
-        <Fragment key={itemGrouping.name}>
-          {itemGroupingIndex > 0 && <Divider />}
-          <BoothGrouping
-            {...itemGrouping}
-            everythingIsFree={everythingIsFree}
-            itemsCount={Object.keys(itemGrouping.clothingbooth_items).length}
-            onSelectGrouping={onSelectGrouping}
-            selected={selectedGroupingName === itemGrouping.name}
-          />
-        </Fragment>
+      {groupings.map((itemGrouping) => (
+        <BoothGrouping
+          key={itemGrouping.name}
+          {...itemGrouping}
+          everythingIsFree={everythingIsFree}
+          itemsCount={Object.keys(itemGrouping.clothingbooth_items).length}
+          onSelectGrouping={onSelectGrouping}
+          selected={selectedGroupingName === itemGrouping.name}
+        />
       ))}
     </Section>
   );

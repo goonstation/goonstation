@@ -90,7 +90,7 @@
 
 		onActivate(var/client/C)
 			master.setFlag(C, "card_reward", "taken")
-			C.mob.put_in_hand_or_drop(new/obj/item/card/id/blank_polaris, C.mob.hand)
+			C.mob.put_in_hand_or_drop(new/obj/item/card/id/nanotrasen, C.mob.hand)
 			return
 
 	nt_reward_b
@@ -297,26 +297,26 @@
 	desc = "Rather complex circuit board, ripped straight from a syndicate drone's internal mechanism. Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
-	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
+	event_handler_flags = IMMUNE_OCEAN_PUSH | USE_FLUID_ENTER
 
 /obj/item/factionrep/ntboarddebug
 	name = "syndicate circuit board"
 	desc = "Rather complex circuit board, ripped straight from a syndicate drone's internal mechanism. Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
-	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
+	event_handler_flags = IMMUNE_OCEAN_PUSH | USE_FLUID_ENTER
 
 /obj/item/factionrep/ntboardfried
 	name = "fried syndicate circuit board"
 	desc = "This illegal-looking circuit board is fried. Looks like it was overloaded somehow, rendering it useless."
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2fried"
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 /obj/item/clothing/under/gimmick/seaman
 	name = "seaman's uniform"
 	desc = "Official seaman's uniform of Nanotrasen's naval branch."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "seaman"
 	item_state = "seaman"
@@ -324,7 +324,7 @@
 /obj/item/clothing/under/gimmick/cadet
 	name = "cadet's uniform"
 	desc = "Official cadet's uniform of Nanotrasen's naval branch."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "cadet"
 	item_state = "cadet"
@@ -332,7 +332,7 @@
 /obj/item/clothing/under/gimmick/lieutenant
 	name = "lieutenant's uniform"
 	desc = "Official lieutenant's uniform of Nanotrasen's naval branch."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "lieutenant"
 	item_state = "lieutenant"
@@ -340,7 +340,7 @@
 /obj/item/clothing/under/gimmick/officer
 	name = "officer's uniform"
 	desc = "Officers uniform of Nanotrasen's naval branch."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "officer"
 	item_state = "officer"
@@ -348,7 +348,7 @@
 /obj/item/clothing/under/gimmick/chiefofficer
 	name = "chief officer's uniform"
 	desc = "Uniform awarded to the highest ranking Nanotrasen naval officers."
-	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_reward.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "chiefofficer"
 	item_state = "chiefofficer"

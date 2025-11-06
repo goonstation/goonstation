@@ -61,7 +61,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "X" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/fakeobject/lightbulb_broken{
 	dir = 1;
 	pixel_y = 17

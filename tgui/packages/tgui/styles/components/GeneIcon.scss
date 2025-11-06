@@ -1,0 +1,121 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author BenLubar (https://github.com/BenLubar)
+ * @license ISC
+ */
+
+@use 'sass:math';
+@use 'sass:list';
+
+.GeneIcon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-image: url('../assets/genetics_powers.png');
+  background-size: 1100% 1100%;
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+}
+
+$gene-icons: (
+  template: 1 0,
+  unknown: 0 1,
+  cryokinesis: 1 1,
+  mattereater: 2 1,
+  jumpy: 3 1,
+  polymorphism: 4 1,
+  telepathy: 5 1,
+  empath: 6 1,
+  immolate: 7 1,
+  melt: 8 1,
+  superfart: 9 1,
+  eyebeams: 10 1,
+  adrenaline: 0 2,
+  midas: 1 2,
+  photokinesis: 2 2,
+  erebokinesis: 3 2,
+  firebreath: 4 2,
+  dimensionshift: 5 2,
+  healingtouch: 6 2,
+  hallucination: 7 2,
+  brownnote: 8 3,
+  tk: 9 3,
+  darkcloak: 10 3,
+  chameleon: 0 3,
+  bigpuke: 1 3,
+  ink: 2 3,
+  none: 3 3,
+  speech: 4 3,
+  speech_bad: 5 3,
+  speech_loud: 6 3,
+  speech_mime: 7 3,
+  speech_smile: 8 3,
+  speech_clown: 9 3,
+  lizard: 10 3,
+  squid: 0 4,
+  roach: 1 4,
+  frog: 2 4,
+  flashy: 3 4,
+  dwarf: 4 4,
+  cat: 5 4,
+  blank: 6 4,
+  skeleton: 7 4,
+  monkey: 8 4,
+  cow: 9 4,
+  fire_res: 10 4,
+  cold_res: 0 5,
+  thermal_res: 1 5,
+  elec_res: 2 5,
+  tox_res: 3 5,
+  alc_res: 4 5,
+  rad_res: 5 5,
+  breathless: 6 5,
+  regen: 7 5,
+  blood_od: 8 5,
+  haze: 9 5,
+  dead: 10 5,
+  strong: 0 6,
+  hulk: 1 6,
+  radiobrain: 2 6,
+  eye: 3 6,
+  eye_night: 4 6,
+  fart: 5 6,
+  bad: 6 6,
+  shoot_limb: 7 6,
+  apparition-0: 8 6,
+  apparition-1: 9 6,
+  hemochromia_rust: 1 8,
+  hemochromia_bronze: 2 8,
+  hemochromia_gold: 3 8,
+  hemochromia_lime: 4 8,
+  hemochromia_olive: 5 8,
+  hemochromia_jade: 6 8,
+  hemochromia_teal: 7 8,
+  hemochromia_cobalt: 8 8,
+  hemochromia_indigo: 9 8,
+  hemochromia_purple: 10 8,
+  hemochromia_violet: 0 9,
+  hemochromia_fuchsia: 1 9,
+  hemochromia_unknown: 2 9,
+  achromia: 3 9,
+  noir: 4 9,
+  chime_snap: 5 9,
+  aura: 6 9,
+  glowy: 7 9,
+  dermal_glitter: 8 9,
+  albinism: 9 9,
+  ethanol_prod: 10 9,
+  blazing_aura: 0 10,
+  horns: 1 10,
+  pickle: 2 10,
+);
+
+@each $name, $pos in $gene-icons {
+  .GeneIcon--#{$name} {
+    $x: list.nth($pos, 1);
+    $y: list.nth($pos, 2);
+
+    background-position: calc($x * 10%) calc($y * 10%);
+  }
+}

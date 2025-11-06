@@ -23,6 +23,8 @@ TYPEINFO(/datum/component/radioactive)
 	var/_backup_color = null //so hacky
 	/// Internal, store of turf glow overlay
 	var/static/image/_turf_glow = null
+	/// Internal, reference to light component
+	var/datum/component/loctargeting/simple_light/our_light
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
 		if(!istype(parent,/atom) || parent.type == /turf/space) //exact type check to exclude ocean floors
@@ -58,19 +60,26 @@ TYPEINFO(/datum/component/radioactive)
 
 	proc/do_filters()
 		var/atom/PA = parent
-		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(min(128, round(255 * radStrength/100)), 2) //base color + alpha
+		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(round(128 * radStrength/100) + 16, 2) //base color + alpha
 		if(PA.color && isnull(src._backup_color))
 			src._backup_color = PA.color
-			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
+			PA.add_filter("radiation_color_\ref[src]", 99, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 			PA.color = null
-		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
+		if (isturf(PA))
+			PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
+		else
+			var/list/color_composition = rgb2num(color)
+			our_light = PA.AddComponent(/datum/component/loctargeting/simple_light, color_composition[1], color_composition[2], color_composition[3], color_composition[4], TRUE)
 		if(istype(PA, /turf))
 			if(isnull(src._turf_glow))
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
 			src._turf_glow.color = color //we can do this because overlays take a copy of the image and do not preserve the link between them
+			src._turf_glow.alpha = 50
 			PA.AddOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
 		else
-			PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
+			var/outline_color = (neutron ? "#2e3ae4" : "#18e022")
+			var/outline_size = (0.85 * radStrength/100) + 0.2
+			PA.add_filter("radiation_outline_\ref[src]", 100, outline_filter(size=outline_size, color=outline_color, flags=OUTLINE_SQUARE))
 
 	proc/process()
 		if(QDELETED(parent) || !parent.datum_components)
@@ -85,6 +94,7 @@ TYPEINFO(/datum/component/radioactive)
 			global.processing_items.Remove(parent)
 		global.processing_items.Remove(src)
 		PA.remove_simple_light("radiation_light_\ref[src]")
+		QDEL_NULL(src.our_light)
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
 		PA.ClearSpecificOverlays("radiation_overlay_\ref[src]")

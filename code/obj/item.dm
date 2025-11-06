@@ -101,7 +101,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/tmp/lastTooltipDist = null
 	var/tmp/lastTooltipUser = null
 	var/tmp/lastTooltipSpectro = null
-	var/tmp/tooltip_rebuild = 1
+	var/tmp/tooltip_rebuild = TRUE
 
 	var/tmp/inventory_counter_enabled = 0 // Inventory count display. Call create_inventory_counter in New()
 	var/tmp/obj/overlay/inventory_counter/inventory_counter = null
@@ -146,6 +146,8 @@ ABSTRACT_TYPE(/obj/item)
 
 	var/brew_result = null //! What reagent will it make if it's brewable?
 
+	var/list/tooltip_options = list()
+
 	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
 	proc/setTwoHanded(var/twohanded = 1)
 		if(ismob(src.loc))
@@ -165,47 +167,49 @@ ABSTRACT_TYPE(/obj/item)
 
 		. += "<hr>"
 		if(rarity >= 4)
-			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
+			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /> Rare item</div>"
 		//combat stats
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /> Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</div>"
 		if (src.stamina_cost || src.stamina_damage)
-			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
+			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /> Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</div>"
 
 		//standard object properties
 		if(src.properties && length(src.properties))
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
-					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+					. += "<div><img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]</div>"
 
 		//unarmed block
 		if(istype(src, /obj/item/grab/block))
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
+			. += "<div><img src=\"[resource("images/tooltips/prot.png")]\" class='icon' /> Block+: "
 			//inline-blocking-based properties (disorient resist and damage-type blocks)
 			for(var/datum/objectProperty/P in src.properties)
 				if(P.inline)
-					. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					. += "<img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> "
 			//blocking-based properties
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
-					. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+					. += "<div><img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]</div>"
+			. += "</div>"
 			SEND_SIGNAL(src, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .)
 
 		//Item block section
 		if(src.c_flags & HAS_GRAB_EQUIP)
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
+			. += "<div><img src=\"[resource("images/tooltips/prot.png")]\" class='icon' /> Block+: "
 			for(var/obj/item/grab/block/B in src)
 				if(B.properties && length(B.properties))
 					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
 						if(P.inline)
-							. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+							. += "<img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> "
 					//blocking-based properties
 					for(var/datum/objectProperty/P in B.properties)
 						if(!P.hidden)
-							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
+							. += "<div><img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]</div>"
+			. += "</div>"
 			SEND_SIGNAL(src, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .)
 		else if(src.c_flags & BLOCK_TOOLTIP)
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
+			. += "<div><img src=\"[resource("images/tooltips/prot.png")]\" class='icon' /> Block+: RESIST with this item for more info</div>"
 
 		//item specials
 		//unarmed special overrides from gloves
@@ -213,73 +217,90 @@ ABSTRACT_TYPE(/obj/item)
 			var/obj/item/clothing/gloves/G = src
 			if(G.specialoverride && G.overridespecial)
 				var/content = resource("images/tooltips/[G.specialoverride.image].png")
-				. += "<br>Unarmed special attack override:<br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
+				. += "<hr><div style='display: flex;'><img src=\"[content]\" class='icon' style='width: 2.6em; height: 2.6em; flex-shrink: 0;' /><div style='margin-top: .2em;'>Unarmed special attack override:<br>[G.specialoverride.name]: [G.specialoverride.getDesc()]</div></div>"
 			. = jointext(., "")
 		//standard item specials
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
-			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
+			. += "<hr><div style='display: flex;'><img src=\"[content]\" class='icon' style='width: 2.6em; height: 2.6em; flex-shrink: 0;' /><div style='margin-top: .2em;'><div style='margin-bottom: .5em;'>[special.name]: [special.getDesc()]</div>To execute a special, use HARM or DISARM intent and click a far-away tile.</div></div>"
 		. = jointext(., "")
 
 		. += src.storage?.get_capacity_string()
 
 		lastTooltipContent = .
 
-	MouseEntered(location, control, params)
-		if (showTooltip && usr.client.tooltipHolder)
-			var/show = 1
+	proc/tooltipHook(datum/tooltipOptions/options)
+		if (src.z != 0 || options.mouse["bottom"]["tiles"] != 1) return
+		var/mob/living/carbon/human/withinMob = src.stored?.linked_item.loc || src.loc
+		if (!istype(withinMob)) return
+		var/datum/hud/human/hud = withinMob?.hud
 
-			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
-			 || (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
-			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
-			 || (GET_DIST(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
-				tooltip_rebuild = 1
+		// If the mob is using goon HUD style, and the item is within the bottom row of the two-row style inventory
+		// Then push the tooltip up so it shows above the two rows
+		if (istype(hud) && hud.layout_style != "tg" && hud.show_inventory)
+			options.pushTiles("up", 1)
+
+	MouseEntered(location, control, params)
+		if (showTooltip && usr.client.tooltips)
+			var/show = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
 			//z == 0 seems to be a good way to check if something is inworld or not... removed some ismob checks.
 			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && z != 0 && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
 
-			var/title
-			if (tooltip_rebuild || lastTooltipName != src.name)
-				if(rarity >= 7)
-					title = "<span class='rainbow'>[capitalize(src.name)]</span>"
-				else
-					title = "<span style='color:[RARITY_COLOR[rarity] || "#fff"]'>[capitalize(src.name)]</span>"
-				lastTooltipTitle = title
-				lastTooltipName = src.name
-			else
-				title = lastTooltipTitle
+			if (show)
+				if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
+				|| (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
+				|| (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
+				|| (GET_DIST(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
+					tooltip_rebuild = TRUE
 
-			if(show)
-				var/list/tooltipParams = list(
-					"params" = params,
+				var/title
+				if (tooltip_rebuild || lastTooltipName != src.name)
+					if(rarity >= 7)
+						title = "<span class='rainbow'>[capitalize(src.name)]</span>"
+					else
+						title = "<span style='color:[RARITY_COLOR[rarity] || "#fff"]'>[capitalize(src.name)]</span>"
+					lastTooltipTitle = title
+					lastTooltipName = src.name
+				else
+					title = lastTooltipTitle
+
+				var/tooltipAlign = 0
+				if (src.z == 0)
+					tooltipAlign = TOOLTIP_TOP
+
+					var/withinStorage = !!src.stored?.linked_item.loc
+					var/mob/living/carbon/human/withinMob = withinStorage ? src.stored.linked_item.loc : src.loc
+					var/datum/hud/human/hud = istype(withinMob) ? withinMob.hud : null
+
+					// If we're over an item that's stored in a container a mob has equipped
+					if (withinStorage && istype(hud) && hud.layout_style != "tg")
+						tooltipAlign = TOOLTIP_RIGHT | TOOLTIP_CENTER
+
+				usr.client.tooltips.show(arglist(list(
+					"type" = TOOLTIP_HOVER,
+					"target" = src,
+					"mouse" = params,
 					"title" = title,
 					"content" = tooltip_rebuild ? buildTooltipContent() : lastTooltipContent,
-					"theme" = usr.client?.preferences.hud_style == "New" ? "newhud" : "item"
-				)
+					"theme" = usr.client?.preferences.hud_style == "New" ? "newhud" : "item",
+					"align" = tooltipAlign
+				) + src.tooltip_options))
 
-				if (src.z == 0 && src.loc == usr)
-					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
-
-				//If we're over an item that's stored in a container the user has equipped
-				if (src.z == 0 && src.stored?.linked_item.loc == usr)
-					tooltipParams["flags"] = TOOLTIP_RIGHT
-
-				usr.client.tooltipHolder.showHover(src, tooltipParams)
-
-				tooltip_rebuild = 0
+				tooltip_rebuild = FALSE
 
 		usr.moused_over(src)
 
-	MouseExited()
-		if(showTooltip && usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+	MouseExited(location, control, params)
+		if (showTooltip && usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 		usr.moused_exit(src)
 
 	onMaterialChanged()
 		..()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (istype(src.material))
 			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
 			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
@@ -300,6 +321,12 @@ ABSTRACT_TYPE(/obj/item)
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		var/contra = GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS)
+		if(contra)
+			scan.add_text("CONTRABAND: Level [contra]")
 
 	proc/update_wear_image(mob/living/carbon/human/H, override)
 		return
@@ -799,6 +826,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	//Click-drag tk stuff.
 /obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
 	if(!src.anchored)
+		if(ismob(usr))
+			if (world.time < usr.next_click)
+				return
+			usr.next_click = world.time + max(src.click_delay, src.combat_click_delay)
 		if (iswraith(usr))
 			var/mob/living/intangible/wraith/W = usr
 			//Basically so poltergeists need to be close to an object to send it flying far...
@@ -872,6 +903,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	was_stored?.storage.transfer_stored_item(src, get_turf(src), user = user)
 
+	if(src.two_handed && !user.can_hold_two_handed() && user.is_that_in_this(src)) // prevent accidentally donating weapons to your enemies
+		boutput(user, SPAN_ALERT("You don't have the hands to hold this item."))
+		return FALSE
+
 	var/mob/living/carbon/human/target
 	if (ishuman(user))
 		target = user
@@ -885,7 +920,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					. = 1
 				else if (!user.r_hand)
 					user.u_equip(src)
-					. = user.put_in_hand(src, 0)
+					. = user.put_in_hand_or_drop(src, 0)
 				else if (!user.l_hand)
 					if (!target?.can_equip(src, SLOT_L_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
@@ -893,7 +928,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					else
 						user.swap_hand(1)
 						user.u_equip(src)
-						. = user.put_in_hand(src, 1)
+						. = user.put_in_hand_or_drop(src, 1)
 			else
 				if (user.l_hand == src)
 					.= 1
@@ -902,7 +937,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					. = 1
 				else if (!user.l_hand)
 					user.u_equip(src)
-					. = user.put_in_hand(src, 1)
+					. = user.put_in_hand_or_drop(src, 1)
 				else if (!user.r_hand)
 					if (!target?.can_equip(src, SLOT_R_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
@@ -910,7 +945,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					else
 						user.swap_hand(0)
 						user.u_equip(src)
-						. = user.put_in_hand(src, 0)
+						. = user.put_in_hand_or_drop(src, 0)
 
 		else
 			user.show_text("You need a free hand to do that!", "blue")
@@ -1015,11 +1050,11 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	src.storage?.storage_item_attack_self(user)
 
+	if (src.artifact?.activated)
+		src.artifact.effect_attack_self(user)
+
 	chokehold?.attack_self(user)
 
-	return
-
-/obj/item/proc/talk_into(mob/M as mob, text, secure, real_name, lang_id)
 	return
 
 /obj/item/proc/moved(mob/user as mob, old_loc as turf)
@@ -1063,6 +1098,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	set waitfor = 0
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
+	if (src.artifact?.activated)
+		if (reach)
+			src.artifact.effect_attack_atom(src, user, target)
+		src.artifact.effect_click_tile(src, user, get_turf(target))
 	return
 
 /obj/item/dummy/ex_act()
@@ -1169,18 +1208,33 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.Attackhand(M)
 	M.next_click = world.time + src.click_delay
 
-/obj/item/get_desc()
-	var/t
+/obj/item/get_desc(dist, mob/user)
+	var/size_desc
 	switch(src.w_class)
-		if (-INFINITY to W_CLASS_TINY) t = "tiny"
-		if (W_CLASS_SMALL) t = "small"
-		if (W_CLASS_POCKET_SIZED) t = "pocket-sized"
-		if (W_CLASS_NORMAL) t = "normal-sized"
-		if (W_CLASS_BULKY) t = "bulky"
-		if (W_CLASS_HUGE to INFINITY) t = "huge"
+		if (-INFINITY to W_CLASS_TINY) size_desc = "tiny"
+		if (W_CLASS_SMALL) size_desc = "small"
+		if (W_CLASS_POCKET_SIZED) size_desc = "pocket-sized"
+		if (W_CLASS_NORMAL) size_desc = "normal-sized"
+		if (W_CLASS_BULKY) size_desc = "bulky"
+		if (W_CLASS_HUGE to INFINITY) size_desc = "huge"
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50))
-		t = "funny-looking"
-	return "It is \an [t] item."
+		size_desc = "funny-looking"
+	. = "It is \an [size_desc] item."
+
+	if ((src in user) && src.reagents?.total_volume)
+		var/temperature_desc = null
+		var/temperature = src.reagents.total_temperature
+		//you can't tell if something's too hot if you're immune to heat
+		if (temperature > user.scald_temp() && !user.is_heat_resistant())
+			temperature_desc = "<b>[SPAN_ALERT("scalding hot!")]</b>"
+		else if (temperature > T20C)
+			temperature_desc = "warm to the touch."
+		else if (temperature < user.frostburn_temp() && !user.is_cold_resistant())
+			temperature_desc = "<b>[SPAN_ALERT("freezing cold!")]</b>"
+		else if (temperature < T0C)
+			temperature_desc = "cold to the touch."
+		if (temperature_desc)
+			. += "<br>It's [temperature_desc]"
 
 /obj/item/attack_hand(mob/user)
 	var/obj/item/checkloc = src.loc
@@ -1296,6 +1350,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.try_grab(target, user)
 			return
 
+	if (src.artifact?.activated)
+		src.artifact.effect_melee_attack(src, user, target)
+		return
+
 	def_zone = target.get_def_zone(user, def_zone)
 	var/hit_area = parse_zone(def_zone)
 
@@ -1330,7 +1388,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	msgs.clear(target)
 	msgs.def_zone = def_zone
 	msgs.logs = list()
-	msgs.logc("attacks [constructTarget(target,"combat")] with [src] ([type], object name: [initial(name)])")
 
 	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, user, src)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, target, user) & ATTACK_PRE_DONT_ATTACK)
@@ -1479,6 +1536,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (is_special && src.special)
 		msgs = src.special.modify_attack_result(user, target, msgs)
 
+	msgs.logc("attacks [constructTarget(target,"combat")] with [src] ([type]) for [msgs.damage] [DAMAGE_TYPE_TO_STRING(msgs.damage_type)] damage")
+
 	msgs.flush()
 	src.add_fingerprint(user)
 	#ifdef COMSIG_ITEM_ATTACK_POST
@@ -1585,15 +1644,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.u_equip(src)
-
-			//mbc GC tooltips (this wont 100% kill tooltip deletions but itll help?
-			if	(M.client && M.client.tooltipHolder)
-				for (var/datum/tooltip/tip in M.client.tooltipHolder.tooltips)
-					if (tip.A == src)
-						tip.A = null
-				if (M.client.tooltipHolder.transient)
-					if (M.client.tooltipHolder.transient.A == src)
-						M.client.tooltipHolder.transient.A = null
+		if(src.master)
+			SEND_SIGNAL(src.master, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, src)
 
 		return ..()
 	var/area/Ar = T.loc
@@ -1731,12 +1783,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return
 
 /obj/item/proc/pickup(mob/user)
-	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
-	#endif
-	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
-	#endif
 	src.material_on_pickup(user)
 	set_mob(user)
 	show_buttons()
@@ -1770,7 +1818,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.inhand_image = image(src.inhand_image_icon, "", MOB_INHAND_LAYER)
 
 	var/state = src.item_state ? src.item_state + "-[hand]" : (src.icon_state ? src.icon_state + "-[hand]" : hand)
-	if(!(state in icon_states(src.inhand_image_icon)))
+	if(!(state in get_icon_states(src.inhand_image_icon)))
 		// stack_trace("ZeWaka {TEMP}: [src] has no icon state [state] in [src.inhand_image_icon] | iconstate: [src.icon_state] | itemstate: [src.item_state]")
 		state = src.item_state ? src.item_state + "-L" : (src.icon_state ? src.icon_state + "-L" : "L")
 
@@ -1807,3 +1855,21 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /// Override to implement custom logic for determining whether the item should be placed onto a target object
 /obj/item/proc/should_place_on(obj/target, params)
 	return TRUE
+
+///This will be called when the item is build into a /obj/item/assembly on get_help_message()
+/obj/item/proc/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+	return
+
+///This will be called when the item is build into a /obj/item/assembly on examine()
+/obj/item/proc/assembly_get_part_examine_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	return
+
+///This will be called when the item is build into a /obj/item/assembly on get_admin_log_message(). Use this for additional information for logging.
+/obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	return
+
+///Called during attackby() to determine whether the default attack message should be suppressed.
+///Override this to add logic for suppressing the default attack message, or override it with a custom one.
+/obj/item/proc/should_suppress_attack(var/object, mob/user, params)
+	return flags & SUPPRESSATTACK
+

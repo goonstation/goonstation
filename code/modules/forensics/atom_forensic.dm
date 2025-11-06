@@ -9,22 +9,39 @@
 	//var/list/forensic_info = null
 	var/list/forensic_trace = null // list(fprint, bDNA, btype) - can't get rid of this so easy!
 
+	// -------------------- New Stuff -----------
+	var/datum/forensic_holder/forensic_holder = new() //! A place to store forensic information related to this atom
+
+/// Called before a forensics scan. You can change how the scan works here.
+/atom/proc/on_forensic_scan(var/datum/forensic_scan/scan)
+	src.forensic_holder.copy_to(scan.holder, scan.is_admin)
+	if(src.reagents)
+		src.reagents.on_forensic_scan_reagent(scan)
+
+	// Transfer old forensics to new forensics for scan
+	for(var/fingerprint in src.fingerprints)
+		scan.add_text(fingerprint, FORENSIC_HEADER_FINGERPRINTS)
+	if(src.blood_DNA)
+		var/list/DNA = params2list(src.blood_DNA)
+		for(var/i in DNA)
+			scan.add_text(i, FORENSIC_HEADER_DNA)
+	if(src.interesting)
+		scan.add_text(src.interesting, FORENSIC_HEADER_NOTES)
+	return
+
+/// Add forensic evidence to this atom's forensic_holder
+/atom/proc/add_evidence(var/datum/forensic_data/data, var/category = FORENSIC_GROUP_NOTES)
+	if(src.forensic_holder)
+		src.forensic_holder.add_evidence(data, category)
+
+/atom/proc/remove_evidence(var/removal_flags)
+	removal_flags &= FORENSIC_REMOVE_ALL
+	if(src.forensic_holder)
+		src.forensic_holder.remove_evidence(removal_flags)
+
 /atom/movable
 	var/tracked_blood = null // list(bDNA, btype, color, count)
 
-/*
-/atom/proc/add_forensic_info(var/key, var/value)
-	if (!key || !value)
-		return
-	if (!islist(src.forensic_info))
-		src.forensic_info = list("fprints" = null, "bDNA" = null, "btype" = null)
-	src.forensic_info[key] = value
-
-/atom/proc/get_forensic_info(var/key)
-	if (!key || !islist(src.forensic_info))
-		return 0
-	return src.forensic_info[key]
-*/
 /atom/proc/add_forensic_trace(var/key, var/value)
 	if (!key || !value)
 		return
@@ -61,10 +78,10 @@
 	LAZYLISTINIT(src.fingerprints_full)
 	if (src.fingerprintslast != M.key) // don't really care about someone spam touching
 		src.fingerprints_full[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME, "seen_print" = seen_print)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			src.fingerprints_full[time]["color"] = H.mind.color
 		src.fingerprintslast = M.key
+	if(M.mind?.color)
+		var/datum/forensic_data/basic/color_data = new(M.mind.color, flags = 0)
+		src.add_evidence(color_data, FORENSIC_GROUP_SLEUTH)
 
 /// Add a fingerprint to an atom directly. Doesn't interact with hidden prints at all
 /atom/proc/add_fingerprint_direct(print)
@@ -159,10 +176,13 @@
 
 // Was clean_blood. Reworked the proc to take care of other forensic evidence as well (Convair880).
 /atom/proc/clean_forensic()
+	src.remove_evidence(FORENSIC_REMOVE_CLEANING)
+
 	if (!src)
 		return
 	if (src.flags & NOFPRINT)
 		return
+
 	// The first version accidently looped through everything for every atom. Consequently, cleaner grenades caused horrendous lag on my local server. Woops.
 	if (!ismob(src)) // Mobs are a special case.
 		if (isobj(src))
@@ -229,7 +249,7 @@
 
 			M.add_forensic_trace("fprints", M.fingerprints)
 			M.fingerprints = null // Foreign fingerprints on the mob.
-			M.gunshot_residue = 0 // Only humans can have residue at the moment.
+
 			if (M.makeup || M.spiders)
 				M.makeup = null
 				M.makeup_color = null
@@ -258,38 +278,7 @@
 
 /atom/movable/proc/track_blood()
 	return
-/* needs adjustment so let's stick with mobs for now
-/obj/track_blood()
-	if (!islist(src.tracked_blood))
-		return
-	var/obj/decal/cleanable/blood/dynamic/B = locate(/obj/decal/cleanable/blood/dynamic) in get_turf(src)
-	var/blood_color_to_pass = src.tracked_blood["color"] ? src.tracked_blood["color"] : DEFAULT_BLOOD_COLOR
 
-	if (!B)
-		B = make_cleanable( /obj/decal/cleanable/blood/dynamic(get_turf(src))
-	B.add_volume(blood_color_to_pass, 1, src.tracked_blood, "smear3", src.last_move)
-
-	src.tracked_blood["count"] --
-	if (src.tracked_blood["count"] <= 0)
-		src.tracked_blood = null
-	return
-
-/obj/item/track_blood()
-	if (!islist(src.tracked_blood))
-		return
-	var/obj/decal/cleanable/blood/dynamic/B = locate(/obj/decal/cleanable/blood/dynamic) in get_turf(src)
-	var/blood_color_to_pass = src.tracked_blood["color"] ? src.tracked_blood["color"] : DEFAULT_BLOOD_COLOR
-
-	if (!B)
-		B = make_cleanable( /obj/decal/cleanable/blood/dynamic(get_turf(src))
-	var/Istate = src.w_class > 4 ? "3" : src.w_class > 2 ? "2" : "1"
-	B.add_volume(blood_color_to_pass, 1, src.tracked_blood, Istate, src.last_move)
-
-	src.tracked_blood["count"] --
-	if (src.tracked_blood["count"] <= 0)
-		src.tracked_blood = null
-	return
-*/
 /mob/living/track_blood()
 	if (!islist(src.tracked_blood))
 		return
@@ -316,13 +305,13 @@
 
 	var/list/states = src.get_step_image_states()
 
-	if (states[1] || states[2])
+	if (!src.lying && (states[1] || states[2]))
 		if (states[1])
 			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[1], src.last_move, 0)
 		if (states[2])
 			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[2], src.last_move, 0)
 	else
-		B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 1, src.tracked_blood, "smear2", src.last_move, 0)
+		B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 1, src.tracked_blood, "smear[min (3, round(src.tracked_blood["count"]/2, 1))]", src.last_move, 0)
 
 	if (src.tracked_blood && isnum(src.tracked_blood["count"])) // mirror from below
 		src.tracked_blood["count"] --

@@ -6,16 +6,16 @@
 	* Placing that EPHEMERAL_XMAS define in a type's definition will define an "ephemeral" subtype for it that will either do nothing or remove itself respectively.
 	*/
 #define EPHEMERAL_HIDDEN \
-    ephemeral { \
-        New() { \
-            SHOULD_CALL_PARENT(FALSE); \
-            src.loc = null; \
-        } \
-    }
+	ephemeral { \
+		New() { \
+			SHOULD_CALL_PARENT(FALSE); \
+			src.loc = null; \
+		} \
+	}
 
 /**
 	* Generates an "ephemeral" subtype which doesn't override anything.
 	* See [EPHEMERAL_HIDDEN][EPHEMERAL_HIDDEN] define's documentation for its purpose.
 	*/
 #define EPHEMERAL_SHOWN \
-    ephemeral
+	ephemeral

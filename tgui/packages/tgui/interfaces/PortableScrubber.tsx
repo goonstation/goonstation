@@ -7,7 +7,6 @@
 
 import {
   Button,
-  Divider,
   LabeledList,
   NumberInput,
   Section,
@@ -53,7 +52,6 @@ export const PortableScrubber = () => {
           pressure={pressure}
           maxPressure={maxPressure}
         >
-          <Divider />
           <LabeledList>
             <LabeledList.Item label="Scrubber Power">
               <Button
@@ -76,9 +74,9 @@ export const PortableScrubber = () => {
                 minValue={minFlow}
                 maxValue={maxFlow}
                 step={1}
-                onChange={(newInletFlow) =>
-                  act('set-inlet-flow', { inletFlow: newInletFlow })
-                }
+                onChange={(newInletFlow) => {
+                  act('set-inlet-flow', { inletFlow: newInletFlow });
+                }}
               />
               <Button
                 onClick={() => act('set-inlet-flow', { inletFlow: maxFlow })}

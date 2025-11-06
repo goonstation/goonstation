@@ -15,7 +15,7 @@
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("BRIXHUN MOHTYR", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("BRIXHUN MOHTYR", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
@@ -40,7 +40,7 @@
 			if (holder.owner.wizard_spellpower(src)) forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
 			if (holder.owner.wizard_spellpower(src)) forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
 
-		SPAWN(30 SECONDS)
+		SPAWN(20 SECONDS)
 			qdel(forcefield1)
 			qdel(forcefield2)
 			qdel(forcefield3)
@@ -98,7 +98,7 @@
 
 	attackby(obj/item/I, mob/user)
 		. = ..()
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 /obj/forcefield/autoexpire
 	var/duration = 30 SECONDS

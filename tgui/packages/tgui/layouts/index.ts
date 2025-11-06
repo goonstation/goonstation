@@ -5,6 +5,5 @@
  */
 
 export { Layout } from './Layout';
-export { NtosWindow } from './NtosWindow';
 export { Pane } from './Pane';
 export { Window } from './Window';

@@ -1,0 +1,78 @@
+<!doctype html>
+<html class="{theme}">
+
+<head>
+  <title>Chat</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    @font-face {
+      font-family: 'Twemoji';
+      src: url('{{resource("css/fonts/twemoji.woff2")}}') format('woff2');
+      text-rendering: optimizeLegibility;
+    }
+
+    html {
+      background: #fff;
+      color: #000;
+      color-scheme: light;
+    }
+
+    html.theme-dark {
+      background-color: #23272a;
+      color: #dfdfcf;
+      color-scheme: dark;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="{{resource('vendor/css/font-awesome.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{resource('css/browserOutput.css')}}" />
+</head>
+
+<body>
+  <div id="loading">
+    <i class="icon-spinner icon-2x"></i>
+    <div>
+      Loading...<br /><br />
+      If this takes longer than 30 seconds, it will automatically reload a
+      maximum of 5 times.<br />
+      If it STILL doesn't work, try clearing your byond and internet explorer
+      caches and restarting. If even THAT doesn't work, you can try asking for
+      help on our discord:
+      <a href="https://discord.gg/zd8t6pY">https://discord.gg/zd8t6pY</a>
+    </div>
+  </div>
+  <div id="messages"></div>
+  <div id="userBar" style="display: none">
+    <div id="ping">
+      <i class="icon-circle" id="pingDot"></i>
+      <span class="ms" id="pingMs">--ms</span>
+    </div>
+    <div id="options">
+      <a href="#" class="toggle" id="toggleOptions" title="Options"><i class="icon-cog"></i></a>
+      <div class="sub" id="subOptions">
+        <a href="#" class="decreaseFont" id="decreaseFont"><span>Decrease font size</span> <i
+            class="icon-font">-</i></a>
+        <a href="#" class="increaseFont" id="increaseFont"><span>Increase font size</span> <i
+            class="icon-font">+</i></a>
+        <a href="#" class="chooseFont" id="chooseFont">Change font <i class="icon-font"></i></a>
+        <a href="#" class="chooseTheme" id="chooseTheme">Change theme <i class="icon-puzzle-piece"></i></a>
+        <a href="#" class="togglePing" id="togglePing"><span>Toggle ping display</span> <i class="icon-circle"></i></a>
+        <a href="#" class="highlightTerm" id="highlightTerm"><span>Highlight string</span> <i class="icon-tag"></i></a>
+        <a href="#" class="saveLog" id="saveLog"><span>Save chat log</span> <i class="icon-save"></i></a>
+        <a href="#" class="clearMessages" id="clearMessages"><span>Clear all messages</span> <i
+            class="icon-eraser"></i></a>
+        <a href="#" class="toggleMessageLimit" id="toggleMessageLimit"><span>Toggle message limit</span> <i
+            class="icon-align-justify"></i></a>
+        <a href="#" class="toggleOddMsgHighlight" id="toggleOddMsgHighlight"><span>Odd message highlight</span> <i
+            class="icon-list"></i></a>
+      </div>
+    </div>
+  </div>
+  <audio id="play-music" class="hidden" autoplay></audio>
+
+  <script type="text/javascript" src="{{resource('vendor/js/jquery.min.js')}}"></script>
+  <script type="text/javascript" src="{{resource('js/errorHandler.js')}}"></script>
+  <script type="text/javascript" src="{{resource('js/browserOutput.js')}}"></script>
+</body>
+
+</html>

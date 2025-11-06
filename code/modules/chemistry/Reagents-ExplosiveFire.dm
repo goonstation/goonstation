@@ -625,9 +625,8 @@ datum
 					M.changeStatus("burning", 2 SECONDS * mult)
 				if((M.health > 20) && (prob(33)))
 					M.take_toxin_damage(1 * mult)
-				if(probmult(1))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-					M.vomit(0, null, vomit_message)
+				if(probmult(20))
+					M.nauseate(1)
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
@@ -728,7 +727,8 @@ datum
 			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if (ishuman(M) && raw_volume >= 10)
-					M.gunshot_residue = TRUE
+					var/datum/forensic_data/basic/residue_data = new(register_id("Gunshot residue found."), flags = FORENSIC_REMOVE_CLEANING)
+					M.add_evidence(residue_data, FORENSIC_GROUP_NOTES)
 
 
 		combustible/nitrogentriiodide

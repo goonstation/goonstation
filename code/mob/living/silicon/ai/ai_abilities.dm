@@ -191,8 +191,8 @@
 					var/mob/living/silicon/S = cam
 					if(S?.cell.charge < P.cost)
 						continue
-			else if(!istype_exact(cam,/obj/machinery/camera))
-				continue
+			else if (istype(cam, /obj/machinery/camera/television))
+				continue // no mobile camera turrets, please
 
 			if(!can_shoot_to(cam, T, test_projectile, max_length=15))
 				continue
@@ -351,7 +351,6 @@
 			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 			C.UpdateOverlays(nanite_overlay, "nanite_heal")
 			C.set_camera_status(TRUE)
-			C.icon_state = "camera"
 
 			SPAWN(5 SECONDS)
 				C.audible_message("[C] makes a soft clicking sound.")
@@ -372,7 +371,7 @@
 		var/list/obj/machinery/camera/cameras_to_repair = list()
 
 		. = ..()
-		for(C in camnets["SS13"])
+		for(C in camnets[CAMERA_NETWORK_STATION]) // TODO: get list of all cameras AI can see through?
 			if(!C.camera_status && istype_exact(C,/obj/machinery/camera))
 				cameras_to_repair |= C
 
@@ -384,7 +383,6 @@
 					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 					C.UpdateOverlays(nanite_overlay, "nanite_heal")
 					C.set_camera_status(TRUE)
-					C.icon_state = "camera"
 
 					SPAWN(5 SECONDS)
 						C.audible_message("[C] makes a soft clicking sound.")

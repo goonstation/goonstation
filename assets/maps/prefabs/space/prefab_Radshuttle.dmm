@@ -1,0 +1,638 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ab" = (
+/obj/decal/poster/wallsign/stencil/left/n{
+	pixel_x = 30
+	},
+/obj/decal/poster/wallsign/stencil/left/s{
+	pixel_x = 30;
+	pixel_y = -7
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ac" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 8
+	},
+/turf/space,
+/area/prefab/radshuttle)
+"ad" = (
+/turf/simulated/wall/auto/shuttle,
+/area/prefab/radshuttle)
+"ae" = (
+/obj/decal/poster/wallsign/stencil/left/s{
+	pixel_x = 30
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"af" = (
+/obj/decal/poster/wallsign/stencil/left/s{
+	pixel_x = 30;
+	pixel_y = -20
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ag" = (
+/turf/simulated/wall/auto/shuttle{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/area/prefab/radshuttle)
+"ah" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 10
+	},
+/turf/space,
+/area/prefab/radshuttle)
+"ai" = (
+/obj/decal/poster/wallsign/stencil/left/w{
+	pixel_x = 30;
+	pixel_y = 0
+	},
+/obj/decal/poster/wallsign/stencil/left/t{
+	pixel_x = 30;
+	pixel_y = -15
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aj" = (
+/mob/living/critter/small_animal/fly,
+/mob/living/critter/zombie/security,
+/obj/item/handcuffs/tape{
+	pixel_y = 8
+	},
+/obj/item_dispenser/handcuffs{
+	pixel_x = 9
+	},
+/obj/item/device/geiger{
+	pixel_x = 6
+	},
+/obj/stool/chair/comfy/shuttle/red,
+/obj/decal/cleanable/blood/splatter,
+/obj/map/light/dimreddish,
+/obj/fakeobject/apc_broken{
+	dir = 8;
+	pixel_x = -20
+	},
+/obj/decal/cleanable/tomatosplat{
+	pixel_y = 30
+	},
+/obj/decal/cleanable/eggsplat{
+	pixel_y = 30
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"ak" = (
+/obj/machinery/door/airlock/gannets/security{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"al" = (
+/obj/decal/poster/wallsign/security_left{
+	pixel_y = 25
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/obj/item/instrument/harmonica,
+/obj/item/clothing/head/merchant_hat,
+/obj/item/coin,
+/obj/decal/cleanable/writing{
+	pixel_y = 35
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"am" = (
+/obj/decal/poster/wallsign/stencil/left/four{
+	pixel_x = 30;
+	pixel_y = 11
+	},
+/obj/decal/poster/wallsign/stencil/left/three{
+	pixel_x = 30;
+	pixel_y = 0
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"an" = (
+/obj/decal/poster/wallsign/stencil/left/seven{
+	pixel_x = 30;
+	pixel_y = 11
+	},
+/obj/decal/poster/wallsign/stencil/left/seven{
+	pixel_x = 30;
+	pixel_y = 0
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ao" = (
+/obj/machinery/door/unpowered/wood/stall{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_x = 4;
+	pixel_y = 26
+	},
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"ap" = (
+/mob/living/critter/small_animal/cockroach/robo,
+/mob/living/critter/spider/baby,
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 4
+	},
+/obj/item/storage/toilet/random/escapetools,
+/obj/decal/cleanable/fungus,
+/obj/decal/cleanable/greenpuke,
+/obj/decal/cleanable/rust,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/slime,
+/obj/machinery/light/small/harsh/very{
+	dir = 1
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aq" = (
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_x = 30;
+	pixel_y = 11
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ar" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/worn{
+	desc = "A rather old-looks";
+	dir = 8
+	},
+/obj/decal/cleanable/desk_clutter,
+/obj/random_item_spawner/desk_stuff/some,
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"as" = (
+/obj/table/reinforced/auto,
+/obj/item/handcuffs/tape_roll/crappy,
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"at" = (
+/obj/item/chair/folded,
+/obj/machinery/light/worn{
+	desc = "A rather old-looks";
+	dir = 4
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"au" = (
+/turf/space,
+/area/prefab/radshuttle)
+"av" = (
+/obj/machinery/door/airlock/pyro/glass/security,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aw" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/ripped_poster{
+	pixel_y = 28
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"ax" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/decal/cleanable/ripped_poster{
+	pixel_y = 28
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"ay" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt4{
+	dir = 8
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"az" = (
+/obj/decal/cleanable/vomit,
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/landmark/spawner/loot,
+/obj/decal/poster/wallsign/cdnp{
+	pixel_y = 30
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aA" = (
+/obj/storage/crate/bloody,
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/blood/gibs,
+/obj/machinery/light/worn{
+	desc = "A rather old-looks";
+	dir = 4
+	},
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/decal/cleanable/ripped_poster{
+	pixel_y = 28
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aB" = (
+/mob/living/critter/small_animal/fly,
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 4
+	},
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/decal/cleanable/slime,
+/obj/decal/poster/wallsign/space{
+	pixel_x = -29;
+	pixel_y = 3
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aC" = (
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aD" = (
+/mob/living/critter/small_animal/cockroach,
+/obj/random_item_spawner/hat/one_or_zero,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aE" = (
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aF" = (
+/mob/living/critter/small_animal/fly,
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 8
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/cleanable/slime,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aG" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 4
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/pocket/extended/empty,
+/obj/decal/cleanable/dirt/dirt4{
+	dir = 8
+	},
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aH" = (
+/mob/living/critter/small_animal/fly,
+/obj/table/folding,
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/cleanable/dirt/dirt5,
+/obj/mapping_helper/mob_spawn/corpse/human,
+/obj/random_item_spawner/cola/one,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aI" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aJ" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 8
+	},
+/obj/random_item_spawner/hat/one_or_zero,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/obj/item/tank/pocket/extended/empty,
+/obj/item/clothing/mask/breath,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aK" = (
+/mob/living/critter/small_animal/cockroach,
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 4
+	},
+/obj/decal/cleanable/vomit,
+/obj/random_item_spawner/hat/one_or_zero,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aL" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/item/gun/kinetic/zipgun,
+/obj/item/casing/shotgun/red,
+/obj/item/casing/shotgun/red{
+	pixel_x = -5
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aM" = (
+/obj/stool/chair/green,
+/obj/decal/cleanable/greenpuke,
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aN" = (
+/obj/decal/cleanable/paper,
+/obj/decal/cleanable/wood_debris,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aO" = (
+/mob/living/critter/small_animal/cockroach,
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/dirt4{
+	dir = 4
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aP" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 4
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/decal/cleanable/slime,
+/obj/decal/cleanable/leaves,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aQ" = (
+/mob/living/critter/small_animal/cockroach,
+/obj/item/pen/omni{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aR" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/obj/item/clothing/under/misc/dirty_vest,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aS" = (
+/obj/table/folding,
+/obj/machinery/light/worn{
+	desc = "A rather old-looks";
+	dir = 8
+	},
+/obj/random_item_spawner/junk/lots,
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/reagent_containers/patch/mini/burn,
+/obj/item/reagent_containers/patch/mini/bruise{
+	pixel_y = 5
+	},
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aT" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 1
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/decal/cleanable/dirt/dirt3,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aU" = (
+/mob/living/critter/small_animal/fly,
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 1
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aV" = (
+/mob/living/critter/zombie/radiation,
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 1
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aW" = (
+/obj/table/folding,
+/obj/machinery/light/worn{
+	desc = "A rather old-looks";
+	dir = 4
+	},
+/obj/random_item_spawner/junk/lots,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/pocket/extended/empty,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aX" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aY" = (
+/obj/map/light/green,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+"aZ" = (
+/obj/machinery/power/rtg{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/prefab/radshuttle)
+"ba" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
+	},
+/turf/simulated/wall/auto/shuttle,
+/area/prefab/radshuttle)
+"bb" = (
+/obj/fakeobject/shuttleengine{
+	icon_state = "alt_heater"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/prefab/radshuttle)
+"bc" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 4
+	},
+/turf/space,
+/area/prefab/radshuttle)
+"po" = (
+/obj/fakeobject/shuttlethruster,
+/turf/space,
+/area/space)
+"Ga" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/shuttle/green,
+/area/prefab/radshuttle)
+
+(1,1,1) = {"
+aa
+aa
+ab
+ae
+aa
+af
+ai
+aa
+am
+an
+aq
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+ac
+ad
+ad
+av
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ba
+aa
+"}
+(3,1,1) = {"
+aa
+ad
+aj
+ar
+aw
+aB
+aG
+aK
+aP
+aS
+aX
+aZ
+bb
+po
+"}
+(4,1,1) = {"
+aa
+ad
+ak
+as
+ax
+aC
+aE
+aL
+Ga
+aT
+aX
+aZ
+bb
+po
+"}
+(5,1,1) = {"
+aa
+ad
+al
+at
+ay
+aD
+aH
+aM
+aQ
+aU
+aY
+aZ
+bb
+po
+"}
+(6,1,1) = {"
+aa
+ag
+ao
+au
+az
+aE
+aI
+aN
+aE
+aV
+aX
+aZ
+bb
+po
+"}
+(7,1,1) = {"
+aa
+ad
+ap
+ad
+aA
+aF
+aJ
+aO
+aR
+aW
+aX
+aZ
+bb
+po
+"}
+(8,1,1) = {"
+aa
+ah
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+bc
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

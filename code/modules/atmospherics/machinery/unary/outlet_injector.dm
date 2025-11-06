@@ -65,7 +65,7 @@
 
 		network?.update = TRUE
 
-	flick("inject", src)
+	FLICK("inject", src)
 
 /obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
 	var/datum/signal/signal = get_free_signal()
@@ -133,7 +133,7 @@
 
 	if(.)
 		src.UpdateIcon()
-		flick("alert", src)
+		FLICK("alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
@@ -141,7 +141,7 @@
 	if (!node)
 		src.on = FALSE
 	src.icon_state = src.on ? "on" : "off"
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
 
 /obj/machinery/atmospherics/unary/outlet_injector/active
 	icon_state = "on-map"

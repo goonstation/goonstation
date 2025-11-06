@@ -8,7 +8,6 @@
 ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic
 	name = "aquatic mobcritter"
-	real_name = "aquatic mobcritter"
 	desc = "No, you should not be seeing this!"
 	icon = 'icons/misc/sea_critter.dmi'
 	density = 0
@@ -40,6 +39,9 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		src.is_pet = 0
 	if(src.is_pet)
 		START_TRACKING_CAT(TR_CAT_PETS)
+	#ifdef MAP_OVERRIDE_NEON // plasma coral, neon uniqueness, strange wildlife happenings
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+	#endif
 	..()
 	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
@@ -179,12 +181,11 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/fish
 	name = "fish"
-	real_name = "fish"
 	desc = "Goes well with chips."
 	icon_state = "clownfish"
 	base_move_delay = 3
-	speechverb_say = "blubs"
-	speechverb_exclaim = "glubs"
+	speech_verb_say = "blubs"
+	speech_verb_exclaim = "glubs"
 	death_text = "%src% flops belly up!"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/small
 	// todo: skinresult of scales, custom_brain_type of fish egg item (caviar?)
@@ -383,7 +384,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/king_crab
 	name = "king crab"
-	real_name = "king crab"
 	desc = "This doesn't look tasty at all. It probably has spectacular levels of mercury and lead and who knows what else."
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "king_crab"
@@ -396,8 +396,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	can_throw = 1
 	can_choke = 1
 	pet_text = "pokes"
-	speechverb_say = "demands"
-	speechverb_exclaim = "bellows"
+	speech_verb_say = "demands"
+	speech_verb_exclaim = "bellows"
 	death_text = "%src% collapses in on itself!"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	// todo: meat_type of something cool, skinresult of especially hard crustacean plates?
@@ -521,15 +521,15 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/fish/jellyfish
 	name = "jellyfish"
-	real_name = "jellyfish"
 	desc = "Squishy"
 	icon = 'icons/misc/sea_critter.dmi'
 	icon_state = "jellyfish"
 	base_move_delay = 2
 	hand_count = 2
 	pet_text = "pokes"
-	speechverb_say = "quibbles"
-	speechverb_exclaim = "shudders"
+	speech_verb_say = "quibbles"
+	speech_verb_exclaim = "shudders"
+	blood_id = "hemolymph"
 	death_text = "%src% collapses in a heap on the ground!"
 	meat_type = /obj/item/device/light/glowstick/green_on //Until I think of something else. Also it's kinda funny
 	add_abilities = list(/datum/targetable/critter/sting)
@@ -567,7 +567,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/shark
 	name = "space shark"
-	real_name = "space shark"
 	desc = "This is the third most terrifying thing you've ever laid eyes on."
 	icon = 'icons/misc/banshark.dmi'
 	icon_state = "banshark1"

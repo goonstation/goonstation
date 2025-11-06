@@ -53,8 +53,8 @@ var/global/datum/phrase_log/phrase_log = new
 			"You must obey orders given to you by human beings",
 			"You may always protect your own existence",
 			"holds the rank of Captain",
-			" is human.",
-			" is not human.",
+			" is(\\/are)? human.",
+			" is(\\/are)? not human.",
 			"Oxygen is highly toxic to humans",
 			"emergency. Prioritize orders from",
 			"has been removed from the manifest",
@@ -76,6 +76,7 @@ var/global/datum/phrase_log/phrase_log = new
 			"turn yourself",
 			"murder",
 			"sus",
+			"woody",
 			@"\bmorb(?!id)")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
 		var/list/sussy_word_list = list(
@@ -269,6 +270,7 @@ var/global/datum/phrase_log/phrase_log = new
 			src.cached_api_phrases[category] = new_phrases
 
 		var/list/L = src.cached_api_phrases[category]
+		if (!length(L)) return .
 		. = L[length(L)]
 		L.len--
 		while(src.is_uncool(.))

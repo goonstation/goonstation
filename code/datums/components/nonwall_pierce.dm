@@ -12,7 +12,7 @@ TYPEINFO(/datum/component/nonwall_pierce)
 
 /datum/component/nonwall_pierce/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
 	var/turf/T = get_turf(hit)
-	if (isrestrictedz(T.z))
+	if (!ismob(hit) && isrestrictedz(T.z)) // mobs can still get pierced wherever.
 		return FALSE
 	if (istype(hit, /obj/machinery/door) || iswall(hit))
 		var/obj/machinery/door/door = hit

@@ -169,7 +169,7 @@
 		invisibility = INVIS_NONE
 		popping = 1
 		if (src.cover!=null)
-			flick("popup", src.cover)
+			FLICK("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
 		SPAWN(1 SECOND)
 			if (popping==1) popping = 0
@@ -180,7 +180,7 @@
 	if ((!isPopping()) || src.popping==1)
 		popping = -1
 		if (src.cover!=null)
-			flick("popdown", src.cover)
+			FLICK("popdown", src.cover)
 			src.cover.icon_state = "turretCover"
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
@@ -257,7 +257,7 @@
 	if (cover!=null)
 		qdel(cover)
 	sleep(0.3 SECONDS)
-	flick("explosion", src)
+	FLICK("explosion", src)
 	SPAWN(1.3 SECONDS)
 		qdel(src)
 
@@ -473,9 +473,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 			. = TRUE
 
 /obj/machinery/turretid/receive_silicon_hotkey(var/mob/user)
-	..()
-
-	if (!isAI(user) && !issilicon(user))
+	if(..())
 		return
 
 	if(user.client.check_key(KEY_OPEN))

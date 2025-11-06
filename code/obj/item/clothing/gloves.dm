@@ -149,6 +149,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		..()
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.glove_ID)
+			scan.add_text("Glove ID: [src.glove_ID] [src.material_prints ? "([src.material_prints])" : null]")
+
 	proc/distort_prints(var/prints as text, var/get_glove_ID = 1) // Ditto (Convair880).
 
 		var/data = null
@@ -266,8 +271,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.visible_message(SPAN_NOTICE("[user] cuts off the fingertips from [src]."))
 		if(src.loc == user)
 			user.u_equip(src)
+		var/newitem = new /obj/item/clothing/gloves/fingerless()
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitem, user)
 		qdel(src)
-		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
+		user.put_in_hand_or_drop(newitem)
 	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
@@ -509,7 +516,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
 		src.punch_damage_modifier += 3
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		qdel(W)
 	else
 		return ..()
@@ -583,7 +590,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 	proc/sheathe_blades_toggle(mob/living/user)
 		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 35, 1, -3)
@@ -702,7 +709,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			for(var/count=0, count<4, count++)
 
-				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+				var/list/affected = drawLineObj(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				SPAWN(0.6 SECONDS)
 					for(var/obj/O in affected)

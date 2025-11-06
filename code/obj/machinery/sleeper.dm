@@ -1,7 +1,7 @@
 // Contains:
 // - Sleeper control console
 // - Sleeper
-// - Portable sleeper (fake Port-a-Medbay)
+// - Portable sleeper (Port-a-Medbay)
 
 // I overhauled the sleeper to make it a little more viable. Aside from being a saline dispenser,
 // it was of practically no use to medical personnel and thus ignored in general. The current
@@ -89,7 +89,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 		// non-anchored sleeper assumed to be portable, don't want to eject
 		// in case someone is using it for body transport
 		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
-			src.our_sleeper.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Alert! No life signs detected from occupant.\"")) // TODO maptext-ize
+			src.our_sleeper.say("Alert! No life signs detected from occupant.")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.time = 0
 			src.timing = 0
@@ -236,6 +236,8 @@ TYPEINFO(/obj/machinery/sleep_console)
 
 TYPEINFO(/obj/machinery/sleeper)
 	mats = 25
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/sleeper
 	name = "sleeper"
@@ -246,6 +248,9 @@ TYPEINFO(/obj/machinery/sleeper)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -675,9 +680,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	New()
 		..()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		our_console = new /obj/machinery/sleep_console/compact/portable (src)
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
@@ -686,9 +689,10 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	disposing()
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
+		QDEL_NULL(our_console)
 		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
@@ -767,16 +771,12 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	New()
 		..()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
 		our_console = new /obj/machinery/sleep_console/compact (src)
 		our_console.our_sleeper = src
 
 	disposing()
+		QDEL_NULL(our_console)
 		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
 
 	attack_hand(mob/user)
 		if (our_console)

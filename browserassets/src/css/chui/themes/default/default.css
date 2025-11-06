@@ -1,0 +1,627 @@
+/*************************
+* STRUCTURE
+**************************/
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  position: relative;
+}
+body {
+  background-color: #ff00e4;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #fcfcfc;
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  padding: 0;
+  *border-collapse: expression('separate', cellSpacing = '0px');
+}
+
+a {
+  color: #58b4dc;
+}
+
+/* TITLEBAR START */
+#titlebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  background: #21272c;
+  border-top: 3px solid #21272c;
+  border-left: 3px solid #21272c;
+  border-right: 3px solid #21272c;
+}
+#titlebar .corner {
+  position: absolute;
+  top: -3px; /* #titlebar border-top width */
+}
+#titlebar .corner.tl {
+  left: -3px; /* #titlebar border-left width */
+  width: 23px;
+  height: 23px;
+  background: url('{{resource("images/chui/themes/default/tl.gif")}}');
+}
+#titlebar .corner.tr {
+  right: -3px; /* #titlebar border-right width */
+  width: 6px;
+  height: 6px;
+  background: url('{{resource("images/chui/themes/default/tr.gif")}}');
+}
+#titlebar h1 {
+  margin: 0;
+  padding: 12px 75px 0 20px; /* right: width of .actions plus padding */
+  color: #fcfcfc;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+#titlebar a {
+  display: block;
+  position: absolute;
+  text-decoration: none;
+  color: white;
+  width: 35px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  text-align: center;
+}
+#titlebar .min {
+  top: 0;
+  right: 41px;
+  line-height: 42px;
+}
+#titlebar .close {
+  top: 0;
+  right: 6px;
+  font-size: 15px;
+}
+#titlebar a:hover {
+  color: #58b4dc;
+}
+/* TITLEBAR END */
+
+/* CONTENT AREA START */
+#cornerWrap {
+  position: absolute;
+  top: 43px; /* #titlebar height (plus titlebar vertical borders) */
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+#cornerWrap .borderSlants {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 20px;
+  width: 27px;
+  height: 3px;
+  background: url('{{resource("images/chui/themes/default/borderSlants.png")}}')
+    no-repeat;
+}
+#cornerWrap .corner {
+  position: absolute;
+  z-index: 999;
+  bottom: 0;
+}
+#cornerWrap .corner.bl {
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: url('{{resource("images/chui/themes/default/bl.gif")}}');
+}
+#cornerWrap .corner.br {
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: url('{{resource("images/chui/themes/default/br.gif")}}');
+}
+#content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  word-wrap: break-word;
+  overflow: hidden;
+  border-top: 3px solid #58b4dc;
+  border-left: 3px solid #21272c;
+  border-right: 3px solid #21272c;
+  border-bottom: 3px solid #21272c;
+  background: #3e464e
+    url('{{resource("images/chui/themes/default/scanLine.png")}}');
+}
+#content .innerContent {
+  /* also has: .nano-content */
+  padding: 15px 15px 15px 15px;
+  background: url('{{resource("images/chui/themes/default/topShadow.png")}}')
+    repeat-x;
+}
+/* CONTENT AREA END */
+
+/* RESIZE AREAS START */
+#resizeArea {
+  display: block;
+  position: absolute;
+  z-index: 999999;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  cursor: nwse-resize;
+}
+.resizeArea {
+  position: absolute;
+  z-index: 99999;
+}
+.resizeArea.top {
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 3px;
+  cursor: n-resize;
+}
+.resizeArea.tr {
+  top: 0;
+  right: 0;
+  height: 10px;
+  width: 10px;
+  cursor: ne-resize;
+}
+.resizeArea.right {
+  top: 10px;
+  right: 0;
+  bottom: 10px;
+  width: 3px;
+  cursor: e-resize;
+}
+.resizeArea.br {
+  bottom: 0;
+  right: 0;
+  height: 20px;
+  width: 20px;
+  cursor: se-resize;
+}
+.resizeArea.bottom {
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  height: 3px;
+  cursor: s-resize;
+}
+.resizeArea.bl {
+  bottom: 0;
+  left: 0;
+  height: 10px;
+  width: 10px;
+  cursor: sw-resize;
+}
+.resizeArea.left {
+  top: 10px;
+  left: 0;
+  bottom: 10px;
+  width: 3px;
+  cursor: w-resize;
+}
+.resizeArea.tl {
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  cursor: nw-resize;
+}
+/* RESIZE AREAS END */
+
+/* CUSTOM SCROLLBARS START */
+.nano > .nano-content {
+  position: absolute;
+  overflow-y: scroll;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.nano > .nano-content:focus {
+  outline: thin dotted;
+}
+.nano > .nano-content::-webkit-scrollbar {
+  display: none;
+}
+.has-scrollbar > .nano-content::-webkit-scrollbar {
+  display: block;
+}
+.nano > .nano-pane {
+  background: #21272c;
+  position: absolute;
+  width: 10px;
+  right: 0;
+  top: 0;
+  bottom: 17px; /* #resizeArea height + padding */
+  visibility: hidden\9; /* Target only IE7 and IE8 with this hack */
+  opacity: 0.75;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+}
+.nano > .nano-pane > .nano-slider {
+  background: #58b4dc;
+  position: relative;
+  margin: 0;
+}
+.nano:hover > .nano-pane,
+.nano-pane.active,
+.nano-pane.flashed {
+  visibility: visible\9; /* Target only IE7 and IE8 with this hack */
+  opacity: 1;
+}
+/* CUSTOM SCROLLBARS END */
+
+/*************************
+* STYLESHEET ELEMENTS
+**************************/
+
+.well {
+  background-color: #21272c;
+  border-top: 1px solid #131619;
+  border-left: 1px solid #181c20;
+  border-right: 1px solid #363b40;
+  border-bottom: 1px solid #4a4f53;
+  padding: 10px;
+}
+
+/* Buttons are complicated */
+.button {
+  display: inline-block;
+  position: relative;
+  height: 22px;
+  padding: 0 15px;
+  margin: 8px 2px 8px 0;
+  line-height: 21px; /* height of self + 1 - difference between .button:before and .button:after heights */
+  background: #788492;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff;
+  border: 0;
+  border-left: 1px solid #909da7;
+  border-right: 1px solid #909da7;
+  overflow: visible;
+  cursor: pointer;
+  box-sizing: border-box;
+  outline: none;
+}
+.button[disabled] {
+  opacity: 0.5;
+}
+.button:focus {
+  border-color: transparent;
+}
+.button:active {
+  border-left-color: #788492;
+  border-right-color: #788492;
+}
+/* Right vertical shadow */
+.button:before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -3px; /* minus width of self - .button border-right width */
+  width: 2px;
+  background: #252a2f;
+}
+.button:active:before {
+  top: -8px; /* height of .button .top + .button border-top width */
+  background: #4f555c;
+}
+.button:after {
+}
+/* Left vertical shadow (active only) */
+.button:active:after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  bottom: -5px; /* height of .button .bottom */
+  left: -1px;
+  width: 2px;
+  background: #171b1f;
+}
+/* Top area */
+.button .top {
+  position: absolute;
+  height: 7px;
+  top: -8px; /* minus height of self - border-top width of self */
+  left: 7px; /* width of .button .top:before - .button border-left width */
+  right: -1px; /* .button border-right width */
+  background: #788492;
+  border-top: 1px solid #909da7;
+  border-right: 1px solid #909da7;
+}
+.button:active .top {
+  border-top-color: #788492;
+  border-right-color: #788492;
+}
+/* Top left corner */
+.button .top:before {
+  content: ' ';
+  position: absolute;
+  top: -1px;
+  left: -8px; /* width of self */
+  width: 8px;
+  height: 8px;
+  background: url('{{resource("images/chui/themes/default/buttons/btn-contrast-tl.gif")}}')
+    no-repeat left top;
+}
+.button:active .top:before {
+  background-image: url('{{resource("images/chui/themes/default/buttons/btn-contrast-active-tl.gif")}}');
+}
+/* Top horiz shadow (active only) */
+.button:active .top:after {
+  content: ' ';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: -1px;
+  height: 2px;
+  background: #171b1f;
+}
+/* Bottom area */
+.button .bottom {
+  position: absolute;
+  height: 5px;
+  bottom: -5px; /* height of self */
+  left: -1px; /* .button border-left width */
+  right: 5px; /* width of .button .bottom:after width - (.button width + .button:before width) */
+  background: #788492;
+  border-bottom: 1px solid #909da7;
+  border-left: 1px solid #909da7;
+}
+.button:hover .bottom,
+.button:active .bottom {
+  height: 4px;
+  border-bottom: 2px solid #58b4dc;
+}
+.button:active .bottom {
+  border-left-color: #788492;
+}
+/* Bottom horiz shadow */
+.button .bottom:before {
+  content: ' ';
+  position: absolute;
+  bottom: -3px; /* minus height of self -  .button .bottom border-bottom width */
+  left: 5px;
+  right: 0;
+  height: 2px;
+  background: #252a2f;
+}
+.button:hover .bottom:before {
+  bottom: -4px;
+}
+.button:active .bottom:before {
+  bottom: -4px;
+  left: -1px;
+  background: #4f555c;
+}
+/* Bottom right corner */
+.button .bottom:after {
+  content: ' ';
+  position: absolute;
+  bottom: -3px; /* minus height of .button .bottom:before height -  .button .bottom border-bottom width */
+  right: -8px; /* minus width of self */
+  width: 8px;
+  height: 8px;
+  background: url('{{resource("images/chui/themes/default/buttons/btn-contrast-br.gif")}}')
+    no-repeat left top;
+}
+.button:hover .bottom:after {
+  bottom: -4px;
+  background-image: url('{{resource("images/chui/themes/default/buttons/btn-contrast-hover-br.gif")}}');
+}
+.button:active .bottom:after {
+  bottom: -4px;
+  background-image: url('{{resource("images/chui/themes/default/buttons/btn-contrast-active-br.gif")}}');
+}
+
+/* Alt button styles */
+
+.small.button {
+  padding: 0 5px;
+  height: 12px;
+  line-height: 11px;
+  font-size: 10px;
+}
+.medium.button {
+  height: 12px;
+  line-height: 11px;
+}
+.full.button {
+  display: block;
+  width: 100%;
+}
+
+/* Button color schemes */
+
+/* Dark
+BG: #21272c
+Border: #3f4b54
+Highlight: #58B4DC
+Text: #fff
+*/
+.dark.button,
+.dark.button .top,
+.dark.button .bottom {
+  background-color: #21272c;
+}
+.dark.button:active,
+.dark.button:active .top {
+  border-color: #21272c;
+}
+.dark.button:active .bottom {
+  border-left-color: #21272c;
+}
+.dark.button,
+.dark.button .top,
+.dark.button .bottom {
+  border-color: #3f4b54;
+}
+
+.dark.button:hover .bottom,
+.dark.button:active .bottom {
+  border-bottom-color: #58b4dc;
+}
+
+.dark.button .top:before {
+  background-image: url('{{resource("images/chui/themes/default/buttons/btn-standard-tl.gif")}}');
+}
+.dark.button:active .top:before {
+  background-image: url('{{resource("images/chui/themes/default/buttons/btn-standard-active-tl.gif")}}');
+}
+.dark.button .bottom:after {
+  background-image: url('{{resource("images/chui/themes/default/buttons/btn-standard-br.gif")}}');
+}
+.dark.button:hover .bottom:after {
+  background-image: url('{{resource("images/chui/themes/default/buttons/btn-standard-hover-br.gif")}}');
+}
+.dark.button:active .bottom:after {
+  background-image: url('{{resource("images/chui/themes/default/buttons/btn-standard-active-br.gif")}}');
+}
+
+/*************************
+* INDIVIDUAL PAGES
+**************************/
+
+#createobj .selector_hs {
+  width: 400px;
+  overflow: auto;
+}
+
+.matcomptext {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  color: #000000;
+  letter-spacing: 0pt;
+  word-spacing: 1pt;
+  font-size: 12px;
+  font-family: arial, helvetica, sans-serif;
+  line-height: 1;
+}
+
+#manubody {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 15px;
+  padding-right: 0px;
+}
+#manudiv {
+  border: none 0px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+div.manuborder {
+  background-color: #0b5091;
+  border: solid 3px #0053ed;
+  border-radius: 15px;
+  width: 50%;
+  padding: 3px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  text-align: center;
+  display: block;
+}
+a.manulink {
+  border: none 0px;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  text-align: center;
+  display: block;
+}
+a.manulink:link {
+  border: none 0px;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  text-align: center;
+  display: block;
+}
+a.manulink:visited {
+  border: none 0px;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  text-align: center;
+  display: block;
+}
+a.manulink:hover {
+  border: none 0px;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  text-align: center;
+  display: block;
+}
+a.manulink:active {
+  border: none 0px;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  text-align: center;
+  display: block;
+}
+
+/*************************
+* HELPER CLASSES
+**************************/
+
+.traitorTag {
+  color: red;
+  font-weight: bold;
+}
+
+.text-normal {
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+
+.text-red {
+  color: red;
+}
+
+/* Clearfix */
+.cf:before,
+.cf:after {
+  content: ' ';
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.cf {
+  *zoom: 1;
+}
+
+.tight {
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  overflow: hidden;
+}
+
+.emoji {
+  font-family: 'Segoe UI Emoji' !important;
+}

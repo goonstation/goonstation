@@ -15,7 +15,13 @@
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
 #define LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN "artifact spawner random room"
-#define LANDMARK_RADIO_SHOW_HOST "Radio-Show-Host-Spawn"
+#define LANDMARK_SUPPLY_DELIVERY "Supply-Delivery-Point"
+
+// station job special_spawn_location landmarks
+#define LANDMARK_RADIO_SHOW_HOST_SPAWN "Radio-Show-Host-Spawn"
+#define LANDMARK_JOURNALIST_SPAWN "Journalist-Spawn"
+#define LANDMARK_ACTOR_SPAWN "Actor-Spawn"
+#define LANDMARK_INFLUENCER_SPAWN "Influencer-Spawn"
 
 // shuttle landmarks
 #define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
@@ -26,12 +32,14 @@
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
 #define LANDMARK_NUCLEAR_BOMB "Nuclear-Bomb"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
+
+//Old nukies
 #define LANDMARK_NUCLEAR_CLOSET "Nuclear-Closet"
 #define LANDMARK_SYNDICATE_GEAR_CLOSET "Syndicate-Gear-Closet"
 #define LANDMARK_SYNDICATE_BOMB "Syndicate-Bomb"
 #define LANDMARK_SYNDICATE_BREACHING_CHARGES "Breaching-Charges"
-#define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
-#define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
 
 // Pirates. Yarr!
 #define LANDMARK_PIRATE "Pirate-Spawn"
@@ -66,8 +74,52 @@
 #define LANDMARK_TELEPORT_SCROLL "Teleport-Scroll" // waldo scrolls
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
+
+// Tutorials
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 #define LANDMARK_TUTORIAL_FLOCK_CONVERSION "tutorial_flock_conversion"
+#define LANDMARK_TUTORIAL_NEWBEE_BASIC_MOVEMENT "tutorial_newbee_basic_movement"
+#define LANDMARK_TUTORIAL_NEWBEE_POWERED_DOORS "tutorial_newbee_powered_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_ID_CARD "tutorial_newbee_pickup_id_card"
+#define LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS "tutorial_newbee_idlock_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_CAN "tutorial_newbee_pickup_can"
+#define LANDMARK_TUTORIAL_NEWBEE_CAN_THROW "tutorial_newbee_can_throw"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_CROWBAR "tutorial_newbee_pickup_crowbar"
+#define LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS "tutorial_newbee_unpowered_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_HELP_PERSON "tutorial_newbee_help_person"
+#define LANDMARK_TUTORIAL_NEWBEE_DISARM_PERSON "tutorial_newbee_disarm_person"
+#define LANDMARK_TUTORIAL_NEWBEE_GRAB_PERSON "tutorial_newbee_grab_person"
+#define LANDMARK_TUTORIAL_NEWBEE_MOUSE "tutorial_newbee_mouse"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_INTENTS "tutorial_newbee_exit_intents"
+#define LANDMARK_TUTORIAL_NEWBEE_CHECK_HEALTH "tutorial_newbee_check_health"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_BRUTE_FIRST_AID "tutorial_newbee_pickup_brute_first_aid"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_FIRE_FIRST_AID "tutorial_newbee_pickup_fire_first_aid"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALTH "tutorial_newbee_exit_health"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_TOOLBOX "tutorial_newbee_pickup_toolbox"
+#define LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER "tutorial_newbee_destroy_girder"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_FLASHLIGHT "tutorial_newbee_flashlight"
+#define LANDMARK_TUTORIAL_NEWBEE_ENTER_MAINTS "tutorial_newbee_enter_maints"
+#define LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_MAINTS "tutorial_newbee_traverse_maints"
+#define LANDMARK_TUTORIAL_NEWBEE_EMERGENCY_SUPPLY_CLOSET "tutorial_newbee_emergency_supply_closet"
+#define LANDMARK_TUTORIAL_NEWBEE_ENTER_SPACE "tutorial_newbee_enter_space"
+#define LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_SPACE "tutorial_newbee_traverse_space"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_BACKPACK "tutorial_newbee_pickup_backpack"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_STORAGE "tutorial_newbee_exit_storage"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDING_MASK "tutorial_newbee_pickup_welding_mask"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDINGTOOL "tutorial_newbee_pickup_weldingtool"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_WRENCH "tutorial_newbee_pickup_wrench"
+#define LANDMARK_TUTORIAL_NEWBEE_DECON_WALL "tutorial_newbee_decon_wall"
+#define LANDMARK_TUTORIAL_NEWBEE_LAYING_DOWN "tutorial_newbee_laying_down"
+#define LANDMARK_TUTORIAL_NEWBEE_SPRINTING "tutorial_newbee_sprinting"
+#define LANDMARK_TUTORIAL_NEWBEE_WALKING "tutorial_newbee_walking"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_MOVEMENT "tutorial_newbee_exit_movement"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_HEADSET "tutorial_newbee_pickup_headset"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_RADIO "tutorial_newbee_exit_radio"
+#define LANDMARK_TUTORIAL_NEWBEE_WATER_TANK "tutorial_newbee_water_tank"
+#define LANDMARK_TUTORIAL_NEWBEE_PULL_TARGET "tutorial_newbee_pull_target"
+#define LANDMARK_TUTORIAL_NEWBEE_FINAL_ROOM "tutorial_newbee_final_room"
+#define LANDMARK_TUTORIAL_NEWBEE_CLOWN_MURDER "tutorial_newbee_clown_murder"
+
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 #define LANDMARK_CRUISER_CENTER "cruiser_center"
 

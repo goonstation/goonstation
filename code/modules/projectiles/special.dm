@@ -33,21 +33,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/acid
 	name = "acid"
-	icon_state = "radbolt"
-	damage = 45
-	dissipation_rate = 30
+	icon_state = "ecto"
+	damage = 0.001 // to bypass 0 damage checks
 	dissipation_delay = 10
 	sname = "acid"
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
-		var/power = projectile.power
-		hit.damage_corrosive(power)
-
-	potent
-		damage = 100
-
-	weak
-		damage = 15
+		if (istype(hit, /mob))
+			projectile.create_reagents(10)
+			projectile.reagents.add_reagent("pacid", 10)
+			projectile.reagents.reaction(hit, react_volume = 10)
+		else if (istype(hit, /obj/machinery/vehicle))
+			hit.changeStatus("pod_corrosion", 30 SECONDS)
+		else
+			var/power = projectile.power
+			hit.damage_corrosive(power)
 
 /datum/projectile/special/acidspit
 	name = "acid splash"
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		hit.damage_cold(projectile.power / 10)
 		if (ishuman(hit))
 			var/mob/living/L = hit
-			L.bodytemperature -= projectile.power
+			L.changeBodyTemp(-projectile.power)
 
 /datum/projectile/special/material_changer
 	name = "transmutation bolt"
@@ -136,6 +136,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/split_type = 0
 	var/pellet_shot_volume = 0
 	silentshot = 1
+	has_impact_particles = TRUE
 	// 0 = on spawn
 	// 1 = on impact
 
@@ -191,6 +192,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
+		FC.spread = P.spread + spread_angle
 
 /datum/projectile/special/spreader/buckshot_burst
 	name = "buckshot"
@@ -209,8 +211,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
 		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
 		FC.internal_speed = rand(speed_min,speed_max)
-		FC.travelled = rand(0,dissipation_variance)
+		var/dissipation_ratio = (FC.internal_speed-speed_min) / (speed_max-speed_min)
+		FC.travelled = dissipation_variance * (1-dissipation_ratio)
 		FC.launch()
+		FC.spread = P.spread + dissipation_variance
 /datum/projectile/special/spreader/buckshot_burst/plasglass
 	name = "fragments"
 	sname = "fragments"
@@ -229,13 +233,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 7
+	pellets_to_fire = 12
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
-	speed_min = 28
-	spread_angle_variance = 30
-	dissipation_variance = 40
+	speed_min = 20
+	spread_angle_variance = 20
+	dissipation_variance = 96
 
 /datum/projectile/special/spreader/buckshot_burst/scrap
 	spread_projectile_type = /datum/projectile/bullet/improvscrap
@@ -258,10 +262,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 3
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	speed_max = 30
-	speed_min = 20
+	speed_max = 40
+	speed_min = 30
 	spread_angle_variance = 25
-	dissipation_variance = 40
+	dissipation_variance = 20
 
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
@@ -279,6 +283,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "circular spread"
 	spread_angle = 180
 	pellets_to_fire = 20
+
+/datum/projectile/special/spreader/uniform_burst/circle/airburst
+		name = "cluster munition"
+		sname = "cluster munition"
+		icon_state = "400mm"
+		pellets_to_fire = 12
+		spread_projectile_type = /datum/projectile/bullet/cluster
+		split_type = 1
+
 
 /datum/projectile/special/spreader/uniform_burst/spikes
 	name = "spike wave"
@@ -309,6 +322,59 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	casing = /obj/item/casing/shotgun/gray
 	shot_sound = 'sound/weapons/kuvalda.ogg'
 
+
+/datum/projectile/special/spreader/buckshot_burst/antiair
+	name = ".50 BMG frag"
+	brightness = 2
+	window_pass = 0
+	icon_state = "20mm" // close enough
+	damage_type = D_PIERCING // very, very fast.
+	armor_ignored = 0.5
+	hit_type = DAMAGE_STAB
+	damage = 100
+	dissipation_delay = 100
+	dissipation_rate = 2
+	cost = 1
+	shot_sound = 'sound/effects/thunder.ogg'
+	shot_volume = 80
+	hit_object_sound = 'sound/effects/exlow.ogg'
+	hit_mob_sound = 'sound/effects/exlow.ogg'
+	implanted = null
+	projectile_speed = 128
+	spread_projectile_type = /datum/projectile/bullet/flak_chunk/splinters
+	pellets_to_fire = 12
+	split_type = 1
+	speed_max = 128
+	speed_min = 96
+	spread_angle_variance = 35
+	dissipation_variance = 5
+
+	impact_image_state = "bullethole-large"
+	casing = /obj/item/casing/rifle_loud
+	shot_sound_extrarange = 1
+	has_impact_particles = TRUE
+
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		var/turf/T = get_turf(hit)
+		var/turf/T2 = get_step(T, dirflag)
+		for(var/mob/M in range(T, 3))
+			shake_camera(M, 3, 5)
+		..()
+		new /obj/effects/explosion/smoky(T)
+		new /obj/effects/rendersparks (T2)
+
+		if(hit && isturf(hit))
+			T.throw_shrapnel(T, 1, 1)
+		explosion_new(null, T, 1, 1)
+
+
+
+
+		// no meteor hit on mobs, already brutal enough
 
 /datum/projectile/special/spreader/buckshot_burst/foamdarts
 	name = "foam dart"
@@ -706,6 +772,70 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					boutput(dropme, SPAN_ALERT("Your coffin was lost or destroyed! Oh no!!!"))
 		..()
 
+/datum/projectile/special/homing/mechcomp_warp
+	name = "teleporter energy ball"
+	icon_state = "heavyion"
+	auto_find_targets = 0
+	max_speed = 6
+	start_speed = 0.1
+	invisibility = INVIS_MESON
+
+	shot_sound = null
+	goes_through_walls = 1
+	goes_through_mobs = 1
+	smashes_glasses = FALSE
+
+	silentshot = 1
+	var/obj/effect/eye_glider
+	var/turf/starting_turf
+
+	on_launch(obj/projectile/P)
+		. = ..()
+		src.starting_turf = get_turf(P)
+		src.eye_glider = new(get_turf(P))
+		src.eye_glider.flags |= UNCRUSHABLE
+		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
+		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
+		src.eye_glider.anchored = ANCHORED_ALWAYS
+		APPLY_ATOM_PROPERTY(P, PROP_ATOM_FLOATING, src)
+		for (var/mob/M in P.contents)
+			if(M.client)
+				M.client.eye = src.eye_glider
+
+	tick(obj/projectile/P)
+		..()
+		src.eye_glider.set_loc(get_turf(P))
+		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
+			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
+			P.die()
+		var/obj/item/mechanics/telecomp/target_tele = P.targets[1]
+		if (!target_tele.anchored || target_tele.send_only)
+			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was [target_tele.anchored ? "de-anchored" : "set to send only"].")
+			P.die()
+		if (get_turf(P) == src.starting_turf) return
+		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
+			if (tele.anchored && !tele.send_only)
+				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(tele.loc))).Run()
+				// Dest. pad gets "from=origin&count=123"
+				SEND_SIGNAL(tele, COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[tele.teleID]&count=[P.special_data["count_sent"]]")
+				if (tele != target_tele)
+					logTheThing(LOG_STATION, tele, "intercepted teleport projectile [P] at [log_loc(tele)] (targeted destination [log_loc(target_tele)])")
+				P.die()
+
+	on_end(obj/projectile/P)
+		for (var/atom/movable/AM in P.contents)
+			AM.set_loc(get_turf(P))
+		qdel(src.eye_glider)
+		src.eye_glider = null
+		..()
+
+	on_exited(obj/projectile/P, atom/movable/AM)
+		AM.delStatus("teleporting")
+		if (istype(AM, /mob))
+			var/mob/M = AM
+			if (M.client)
+				M.client.eye = M
+
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
 	sname = "magic missile"
@@ -761,7 +891,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			M.force_laydown_standup()
 			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
-			M.lastattacker = src.master?.shooter
+			M.lastattacker = get_weakref(src.master?.shooter)
 			M.lastattackertime = TIME
 		else if(projectile.reflectcount < src.max_bounce_count)
 			shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
@@ -795,9 +925,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	goes_through_walls = 1
 
-	var/radius = 1.4
+	/// how many degrees of rotation are added per process tick
 	var/ang_inc = 15
-
 
 	on_launch(var/obj/projectile/P)
 		..()
@@ -814,6 +943,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				P.special_data["orbit_angle"] -= 360
 
 			var/atom/target = P.targets[1]
+			if (istype(target.loc, /obj/dummy/spell_batpoof))
+				target = target.loc
+
+			if (!isturf(target.loc))
+				P.special_data["diss_count"] += 1
+				if (P.special_data["diss_count"] > 40)
+					P.die()
+				return 1
 
 			//var/ang_between = get_angle(target,P)
 			var/tx = target.x + cos(P.special_data["orbit_angle"])
@@ -822,6 +959,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			desired_x = (tx - P.x)
 			desired_y = (ty - P.y)
 
+			P.special_data["diss_count"] = 0
 			.= 1
 		else
 			P.special_data["diss_count"] += 1
@@ -830,6 +968,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 
 /datum/projectile/special/homing/orbiter/spiritbat
+
+/datum/projectile/special/homing/orbiter/spiritbat/frost
 	name = "frost bat"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "spiritbat"
@@ -854,16 +994,19 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		if (istype(hit, /obj/projectile))
 			var/obj/projectile/pass_proj = hit
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
+				return
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/vamp_blood))
+				return
 			if (pass_proj.proj_data.hit_object_sound)
 				playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
-			if (pass_proj.proj_data.name != src.name)
-				pass_proj.die()
+			pass_proj.die()
 			return
 
 		hit.damage_cold(temp_reduc / 10)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.bodytemperature -= temp_reduc
+			L.changeBodyTemp(-temp_reduc)
 			L.TakeDamage("All", 3, 1, 0, 0)//magic
 
 			var/atom/targetTurf = 0
@@ -881,7 +1024,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if (P != passing_thing)
 			if (istype(passing_thing, /obj/projectile))
 				var/obj/projectile/pass_proj = passing_thing
-				return (istype(pass_proj.proj_data, src.type) || pass_proj.goes_through_walls)
+				return (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat) || pass_proj.goes_through_walls)
 
 			if (isitem(passing_thing))
 				var/obj/item/I = passing_thing
@@ -889,8 +1032,61 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					return 0
 		.= 1
 
-//place coffin. then, we travel to it in prjoectile form and it heals us while people can beat it
-//cofin is anchored, rises outta ground at spot
+/datum/projectile/special/homing/orbiter/spiritbat/disorient
+	name = "spirit bat"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "vampbat"
+	color_blue = 50
+	color_red = 200
+	color_green = 200
+	rotate_proj = 0
+	face_desired_dir = TRUE
+	goes_through_walls = 1
+	is_magical = 1
+
+	shot_sound = 0
+	hit_mob_sound = 'sound/effects/throw.ogg'
+	hit_object_sound = 'sound/effects/throw.ogg'
+
+	on_launch(var/obj/projectile/P)
+		..()
+		P.collide_with_other_projectiles = 1
+		P.alpha = 200
+
+	on_hit(atom/hit, direction, var/obj/projectile/P)
+		..()
+
+		if (istype(hit, /obj/projectile))
+			var/obj/projectile/pass_proj = hit
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
+				return
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/vamp_blood))
+				return
+			if (pass_proj.proj_data.hit_object_sound)
+				playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
+			pass_proj.die()
+			var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+			poof.setup(P.loc)
+			playsound(P.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
+			P.die()
+			return
+
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 2 SECONDS)
+			L.do_disorient(stamina_damage = 30, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+
+	on_canpass(var/obj/projectile/P, atom/movable/passing_thing)
+		if (P != passing_thing)
+			if (istype(passing_thing, /obj/projectile))
+				var/obj/projectile/pass_proj = passing_thing
+				return (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat) || pass_proj.goes_through_walls)
+
+			if (isitem(passing_thing))
+				var/obj/item/I = passing_thing
+				if (I.throwing)
+					return 0
+		.= 1
 
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
@@ -903,6 +1099,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	energy_particles_override = TRUE
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -919,6 +1116,37 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
+/datum/projectile/special/spreader/tasershotgunspread/laser
+	name = "laser"
+	sname = "shotgun spread"
+	cost = 50
+	damage = 20
+	damage_type = D_ENERGY
+	pellets_to_fire = 5
+	spread_projectile_type = /datum/projectile/laser/lasershotgun
+	split_type = 0
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+
+/datum/projectile/laser/lasershotgun
+	name = "Lethal Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "redbolt"
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+	cost = 50
+	damage = 15
+	shot_number = 1
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, 2, PROJ_HEADON_BOUNCE)
+			shot_volume = 100
+		if(proj.reflectcount >= 2)
+			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+
 /datum/projectile/special/spreader/pwshotgunspread
 	name = "blaster bolt"
 	sname = "shotgun spread"
@@ -927,6 +1155,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
 	split_type = 0
 	shot_sound = 'sound/weapons/laser_b.ogg'
+	energy_particles_override = TRUE
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -965,6 +1194,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	window_pass = 0
 	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
+	has_impact_particles = FALSE
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -1242,3 +1472,28 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		src.on_hit(target, O = O)
+
+/datum/projectile/special/firework
+	name = "firework"
+	damage = 3
+	damage_type = D_BURNING
+	hit_type = DAMAGE_BURN
+	icon_state = "4gauge-slug-blood"
+	shot_sound = 'sound/effects/firework_shoot.ogg'
+	projectile_speed = 7
+	impact_image_state = "burn1"
+	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+
+	proc/die(turf/where)
+		particleMaster.SpawnSystem(new /datum/particleSystem/fireworks_pop(where))
+		playsound(where, 'sound/effects/firework_pop.ogg', 50, 1)
+
+	on_hit(atom/hit, direction, projectile)
+		src.die(get_turf(hit))
+		..()
+
+	on_max_range_die(obj/projectile/O)
+		src.die(get_turf(O))
+		..()
+

@@ -23,16 +23,23 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 	var/FallTime = 0.3 SECONDS
 	/// Whether anchored == ANCHORED atoms are supposed to fall down or not. Currently defaults to true because minisubs and such.
 	var/allow_anchored = TRUE
+	/// Whether to delete PROP_ATOM_FLOTSAM objects that fall down here
+	var/DeleteFlotsam = FALSE
 
-	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS)
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, DeleteFlotsam = FALSE)
 		. = ..()
 		if (!istype(src.parent, /turf))
 			return COMPONENT_INCOMPATIBLE
+		SPAWN(0)
+			if (!QDELETED(src))
+				for (var/atom/movable/AM in src.parent)
+					src.start_fall(AM)
 		RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(start_fall))
 		RegisterSignal(src.parent, COMSIG_ATTACKBY, PROC_REF(update_targets))
 		RegisterSignal(src.parent, COMSIG_TURF_REPLACED, PROC_REF(RemoveComponent))
 		src.BruteDamageMax	= BruteDamageMax
 		src.FallTime		= FallTime
+		src.DeleteFlotsam   = DeleteFlotsam
 
 	UnregisterFromParent()
 		. = ..()
@@ -55,7 +62,7 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 			return
 		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 			return
-		if (AM.anchored && !allow_anchored || AM.anchored >= ANCHORED_ALWAYS || (locate(/obj/lattice) in src.parent))
+		if (AM.anchored && !allow_anchored || AM.anchored >= ANCHORED_ALWAYS || (locate(/obj/lattice) in src.parent) || ((locate(/obj/mesh/catwalk) in src.parent)))
 			return
 		if (ismob(AM))
 			var/mob/M = AM
@@ -63,7 +70,6 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 				return
 
 		return_if_overlay_or_effect(AM)
-
 		// if the fall has coyote time, then delay it
 		if (src.FallTime)
 			SPAWN(src.FallTime)
@@ -89,6 +95,9 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 	/// a proc that makes a movable atom 'A' fall from 'src.typecasted_parent()' to 'T' with a maximum of 'brutedamage' brute damage
 	proc/fall_to(var/turf/T, var/atom/movable/A, var/brutedamage = 50)
 		SHOULD_NOT_OVERRIDE(TRUE)
+		if (src.DeleteFlotsam && HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOTSAM))
+			qdel(A)
+			return
 		if(istype(A, /obj/overlay) || A.anchored >= ANCHORED_ALWAYS)
 			return
 		#ifdef CHECK_MORE_RUNTIMES
@@ -127,7 +136,7 @@ TYPEINFO(/datum/component/pitfall/target_landmark)
 	/// The landmark that the fall sends you to. Should be a landmark define.
 	var/TargetLandmark = ""
 
-	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetLandmark = "")
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, DeleteFlotsam = FALSE, TargetLandmark = "")
 		..()
 		src.TargetLandmark = TargetLandmark
 		if (!src.TargetLandmark)
@@ -149,7 +158,7 @@ TYPEINFO(/datum/component/pitfall/target_area)
 	/// The area path that the target falls into. For area targeting
 	var/TargetArea = null
 
-	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetArea = null)
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, DeleteFlotsam = FALSE, TargetArea = null)
 		..()
 		src.TargetArea = TargetArea
 		if (!src.TargetArea || !ispath(src.TargetArea, /area))
@@ -176,7 +185,7 @@ TYPEINFO(/datum/component/pitfall/target_coordinates)
 	/// If truthy, try to find a spot around the target to land on in range(x).
 	var/LandingRange = 8
 
-	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetZ = 5, LandingRange = 8)
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, DeleteFlotsam = FALSE, TargetZ = 5, LandingRange = 8)
 		..()
 		src.TargetZ			= TargetZ
 		src.LandingRange	= LandingRange
@@ -188,8 +197,9 @@ TYPEINFO(/datum/component/pitfall/target_coordinates)
 		if (..())
 			if (!src.TargetList || !length(src.TargetList))
 				src.update_targets()
+#ifndef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
 			src.fall_to(pick(src.TargetList), AM, src.BruteDamageMax)
-
+#endif
 
 	update_targets()
 		src.TargetList = list()

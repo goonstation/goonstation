@@ -26,7 +26,8 @@
 	projectile_speed = 20
 
 	max_range = 10
-
+	has_impact_particles = TRUE
+	energy_particles_override = TRUE
 	var/bioeffect = ""
 
 	on_hit(atom/hit)

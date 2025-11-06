@@ -11,7 +11,6 @@ var/list/server_toggles_tab_verbs = list(
 /client/proc/toggle_banlogin_announcements,
 /client/proc/toggle_literal_disarm,
 /client/proc/toggle_spooky_light_plane,\
-/client/proc/toggle_cloning_with_records,
 /client/proc/toggle_random_job_selection,
 /client/proc/toggle_tracy_profiling,
 /datum/admins/proc/toggleooc,
@@ -46,7 +45,6 @@ var/list/server_toggles_tab_verbs = list(
 /datum/admins/proc/toggle_pull_slowing,
 /datum/admins/proc/togglepowerdebug,
 /client/proc/admin_toggle_nightmode,
-/client/proc/toggle_camera_network_reciprocity,
 /datum/admins/proc/toggle_radio_audio,
 /datum/admins/proc/toggle_remote_music_announcements,
 )
@@ -130,29 +128,6 @@ var/global/IP_alerts = 1
 	logTheThing(LOG_ADMIN, usr, "has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
 	logTheThing(LOG_DIARY, usr, "has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
-
-/client/proc/toggle_hearing_all_looc()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Toggle Hearing All LOOC"
-	set desc = "Toggles the ability to hear all LOOC messages regardless of where you are"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	src.only_local_looc = !src.only_local_looc
-	boutput(usr, SPAN_NOTICE("Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!"))
-
-/client/proc/toggle_hearing_all()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Toggle Hearing All"
-	set desc = "Toggles the ability to hear all messages regardless of where you are, like a ghost."
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if(src.mob)
-		src.mob.mob_flags ^= MOB_HEARS_ALL
-		boutput(usr, SPAN_NOTICE("Toggled seeing all messages [src.mob.mob_flags & MOB_HEARS_ALL ? "on" : "off"]!"))
-	else
-		boutput(usr, SPAN_NOTICE("You don't have a mob, somehow, what!"))
 
 /client/proc/toggle_attack_messages()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -276,9 +251,15 @@ client/proc/toggle_ghost_respawns()
 		player_mode_asay = 0
 		player_mode_ahelp = 0
 		player_mode_mhelp = 0
+
+		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
+		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
+
 		boutput(usr, SPAN_NOTICE("Player mode now OFF."))
+
 	else
 		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to receive") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
+		var/remove_holder = FALSE
 		switch (choice)
 			if ("ASAY, AHELP & MHELP")
 				player_mode = 1
@@ -325,10 +306,16 @@ client/proc/toggle_ghost_respawns()
 				player_mode_asay = 0
 				player_mode_ahelp = 0
 				player_mode_mhelp = 0
-				cmd_admin_disable()
+				remove_holder = TRUE
 			else
 				// Cancel = don't turn on player mode
 				return
+
+		src.holder.admin_speech_tree.update_target_speech_tree()
+		src.holder.admin_listen_tree.update_target_listen_tree()
+
+		if (remove_holder)
+			src.cmd_admin_disable()
 
 		boutput(usr, SPAN_NOTICE("Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]"))
 
@@ -547,11 +534,17 @@ client/proc/toggle_ghost_respawns()
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	ooc_allowed = !( ooc_allowed )
+
+	var/ooc_allowed = !global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_OOC).enabled
+	global.toggle_ooc_allowed(ooc_allowed)
+
 	boutput(world, "<B>The OOC channel has been globally [ooc_allowed ? "en" : "dis"]abled!</B>")
 	logTheThing(LOG_ADMIN, usr, "toggled OOC.")
 	logTheThing(LOG_DIARY, usr, "toggled OOC.", "admin")
 	message_admins("[key_name(usr)] toggled OOC.")
+
+/proc/toggle_ooc_allowed(ooc_allowed)
+	global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_OOC).enabled = ooc_allowed
 
 /datum/admins/proc/togglelooc()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -560,11 +553,17 @@ client/proc/toggle_ghost_respawns()
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	looc_allowed = !( looc_allowed )
+
+	var/looc_allowed = !global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_LOOC).enabled
+	global.toggle_looc_allowed(looc_allowed)
+
 	boutput(world, "<B>The LOOC channel has been globally [looc_allowed ? "en" : "dis"]abled!</B>")
 	logTheThing(LOG_ADMIN, usr, "toggled LOOC.")
 	logTheThing(LOG_DIARY, usr, "toggled LOOC.", "admin")
 	message_admins("[key_name(usr)] toggled LOOC.")
+
+/proc/toggle_looc_allowed(looc_allowed)
+	global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_LOOC).enabled = looc_allowed
 
 /datum/admins/proc/toggleoocdead()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -687,8 +686,10 @@ client/proc/toggle_ghost_respawns()
 	NOT_IF_TOGGLES_ARE_OFF
 	if(flourish)
 		flourish = 0
+		boutput(usr, SPAN_NOTICE("Flourish Mode disabled."))
 	else
 		flourish = 1
+		boutput(usr, SPAN_NOTICE("Flourish Mode enabled."))
 
 /datum/admins/proc/adsound()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -727,7 +728,10 @@ client/proc/toggle_ghost_respawns()
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	deadchat_allowed = !( deadchat_allowed )
+
+	var/deadchat_allowed = !global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DEAD).enabled
+	global.toggle_deadchat_allowed(deadchat_allowed)
+
 	if (deadchat_allowed)
 		boutput(world, "<B>The Deadsay channel has been enabled.</B>")
 	else
@@ -735,6 +739,9 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "toggled Deadchat [deadchat_allowed ? "on" : "off"].")
 	logTheThing(LOG_DIARY, usr, "toggled Deadchat [deadchat_allowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Deadchat [deadchat_allowed ? "on" : "off"]")
+
+/proc/toggle_deadchat_allowed(deadchat_allowed)
+	global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DEAD).enabled = deadchat_allowed
 
 /datum/admins/proc/togglefarting()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -809,7 +816,6 @@ client/proc/toggle_ghost_respawns()
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	ooc_allowed = !( ooc_allowed )
 	dooc_allowed = !( dooc_allowed )
 	player_capa = !( player_capa )
 	enter_allowed = !( enter_allowed )
@@ -820,7 +826,6 @@ client/proc/toggle_ghost_respawns()
 	config.allow_admin_sounds = !(config.allow_admin_sounds)
 	config.allow_admin_spawning = !(config.allow_admin_spawning)
 	config.allow_admin_rev = !(config.allow_admin_rev)
-	deadchat_allowed = !( deadchat_allowed )
 	farting_allowed = !( farting_allowed )
 	no_emote_cooldowns = !( no_emote_cooldowns )
 	suicide_allowed = !( suicide_allowed )
@@ -828,21 +833,7 @@ client/proc/toggle_ghost_respawns()
 	no_automatic_ending = !( no_automatic_ending )
 	late_traitors = !( late_traitors )
 	sound_waiting = !( sound_waiting )
-	message_admins("[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"], Dead OOC  [dooc_allowed ? "on" : "off"], Global Player Cap  [player_capa ? "on" : "off"], Entering [enter_allowed ? "on" : "off"],Playing as the AI [config.allow_ai ? "on" : "off"], Sound Preference override [soundpref_override ? "on" : "off"], Abandoning [abandon_allowed ? "on" : "off"], Admin Jumping [config.allow_admin_jump ? "on" : "off"], Admin sound playing [config.allow_admin_sounds ? "on" : "off"], Admin Spawning [config.allow_admin_spawning ? "on" : "off"], Admin Reviving [config.allow_admin_rev ? "on" : "off"], Deadchat [deadchat_allowed ? "on" : "off"], Farting [farting_allowed ? "on" : "off"], Blood system [blood_system ? "on" : "off"], Suicide [suicide_allowed ? "on" : "off"], Monkey/Human communication [monkeysspeakhuman ? "on" : "off"], Late Traitors [late_traitors ? "on" : "off"], and Sound Queuing [sound_waiting ? "on" : "off"]   ")
-
-/client/proc/togglepersonaldeadchat()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc = "Toggle whether you can see deadchat or not"
-	set name = "Toggle Your Deadchat"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	NOT_IF_TOGGLES_ARE_OFF
-	if(deadchatoff == 0)
-		deadchatoff = 1
-		boutput(usr, SPAN_NOTICE("No longer viewing deadchat."))
-	else
-		deadchatoff = 0
-		boutput(usr, SPAN_NOTICE("Now viewing deadchat."))
+	message_admins("[key_name(usr)] toggled Dead OOC  [dooc_allowed ? "on" : "off"], Global Player Cap  [player_capa ? "on" : "off"], Entering [enter_allowed ? "on" : "off"],Playing as the AI [config.allow_ai ? "on" : "off"], Sound Preference override [soundpref_override ? "on" : "off"], Abandoning [abandon_allowed ? "on" : "off"], Admin Jumping [config.allow_admin_jump ? "on" : "off"], Admin sound playing [config.allow_admin_sounds ? "on" : "off"], Admin Spawning [config.allow_admin_spawning ? "on" : "off"], Admin Reviving [config.allow_admin_rev ? "on" : "off"], Farting [farting_allowed ? "on" : "off"], Blood system [blood_system ? "on" : "off"], Suicide [suicide_allowed ? "on" : "off"], Monkey/Human communication [monkeysspeakhuman ? "on" : "off"], Late Traitors [late_traitors ? "on" : "off"], and Sound Queuing [sound_waiting ? "on" : "off"]   ")
 
 /datum/admins/proc/toggleaprilfools()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -1152,6 +1143,7 @@ client/proc/toggle_ghost_respawns()
 		forced_desussification_worse = (getsWorse == "Nah") ? 0 : 1
 
 		message += ", with shock level [shockLevel][forced_desussification_worse ? " (and rising)" : ""]"
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_ATOM_SAY, PROC_REF(desuss_zap))
 
 	logTheThing(LOG_ADMIN, usr, message)
 	logTheThing(LOG_DIARY, usr, message, "admin")
@@ -1259,19 +1251,6 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_DIARY, usr, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
 	message_admins("[key_name(usr)] toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
 
-/client/proc/toggle_cloning_with_records()
-	set name = "Toggle Cloning With Records"
-	set desc = "toggles the cloning method between record and non-record"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	cloning_with_records = !cloning_with_records
-
-	logTheThing(LOG_ADMIN, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
-	logTheThing(LOG_DIARY, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
-	message_admins("[key_name(usr)] toggled the cloning with records [cloning_with_records ? "on" : "off"]")
-
 /client/proc/toggle_random_job_selection()
 	set name = "Toggle Random Job Selection"
 	set desc = "toggles random job rolling at the start of the round; preferences will be ignored. Has no effect on latejoins."
@@ -1310,3 +1289,22 @@ client/proc/toggle_ghost_respawns()
 		change_ghost_invisibility(INVIS_GHOST)
 		message_admins("[key_name(usr)] made ghosts invisible.")
 	logTheThing(LOG_ADMIN, usr, "toggled ghost (in)visibility")
+
+/client/proc/toggle_tutorial_enabled()
+	set name = "Toggle Tutorial Enabled"
+	set desc = "Toggle whether people can start the tutorial"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	global.newbee_tutorial_enabled = !global.newbee_tutorial_enabled
+
+	logTheThing(LOG_ADMIN, usr, "[global.newbee_tutorial_enabled ? "enabled" : "disabled"] the tutorial.")
+	message_admins("[key_name(usr)] [global.newbee_tutorial_enabled ? "enabled" : "disabled"] the tutorial.")
+
+	for (var/mob/new_player/player in mobs)
+		if (!global.newbee_tutorial_enabled)
+			if (player.ready_tutorial == TRUE)
+				boutput(player, SPAN_ALERT("An administrator has disabled the tutorial for this round!"))
+			player.ready_tutorial = FALSE
+		player.update_joinmenu()

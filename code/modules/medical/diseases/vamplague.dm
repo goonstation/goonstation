@@ -23,6 +23,7 @@
 			boutput(affected_mob, SPAN_ALERT("You feel sickly and weak."))
 			affected_mob.changeStatus("slowed", 3 SECONDS, (D.stage-1) * 3)
 		affected_mob.take_toxin_damage(toxdamage)
+		affected_mob.organHolder?.damage_organ(tox=toxdamage, organ=pick("heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix"))
 
 	if (probmult(10))
 		boutput(affected_mob, SPAN_ALERT("Your joints ache horribly!"))

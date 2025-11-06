@@ -43,7 +43,7 @@
 	var/caster
 
 	New()
-		flick("residual_electricity_start", src)
+		FLICK("residual_electricity_start", src)
 		SPAWN(duration)
 			qdel(src)
 		..()
@@ -71,7 +71,7 @@
 
 	New()
 		..()
-		flick(pick("lightning_1", "lightning_2"), src)
+		FLICK(pick("lightning_1", "lightning_2"), src)
 		SPAWN(0.7 SECONDS)
 			qdel(src)
 

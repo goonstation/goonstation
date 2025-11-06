@@ -20,7 +20,7 @@
 
 		return map_body
 
-	proc/relay_flick()
+	proc/relay_FLICK()
 		return
 
 	proc/relay_update(var/gal_x,var/gal_y,var/mag_pan,var/vel_ang,var/ship_ang)

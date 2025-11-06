@@ -34,18 +34,6 @@
 	secs_offset_x = 23
 	secs_offset_y = 7
 
-	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			if (!istype(owner, /datum/targetable/wraithAbility/spook))
-				var/theme = src.owner.theme
-
-				usr.client.tooltipHolder.showHover(src, list(
-					"params" = params,
-					"title" = src.name,
-					"content" = (src.desc ? src.desc : null),
-					"theme" = theme
-				))
-
 /datum/targetable/wraithAbility
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "template"
@@ -56,6 +44,7 @@
 	preferred_holder_type = /datum/abilityHolder/wraith
 	ignore_holder_lock = 1 //So we can still do things while our summons are coming
 	theme = "wraith"
+	show_tooltip = FALSE
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
 	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
@@ -87,6 +76,22 @@
 			if (W.forced_manifest == TRUE)
 				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (!target)
+			return CAST_ATTEMPT_SUCCESS
+		var/list/turfs = raytrace(src.holder.owner, target)
+		for (var/turf/T as anything in turfs)
+			var/obj/decal/cleanable/saltpile/salt = locate() in T
+			if (salt)
+				if (!ON_COOLDOWN(T, "wraith_ability_block", 2 SECONDS))
+					salt.add_filter("wraith_ability_block", 1, outline_filter(2, "#000"))
+					animate(salt.filters[length(salt.filters)], alpha = 0, time = 0)
+					animate(alpha = 255, time = 0.5 SECONDS)
+					animate(alpha = 0, time = 0.5 SECONDS)
+					SPAWN(1 SECOND)
+						salt.remove_filter("wraith_ability_block")
+					playsound(T, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+					boutput(src.holder.owner, SPAN_ALERT("That [SPAN_BOLD(pick("DISGUSTING", "FEARFUL", "PURE", "HOLY"))] salt blocks your power."), "wraith_ability_fail")
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return CAST_ATTEMPT_SUCCESS
 
 	doCooldown()
@@ -117,6 +122,7 @@
 	cooldown = 0
 	helpable = 0
 	special_screen_loc = "SOUTH,EAST"
+	tooltip_options = list("align" = TOOLTIP_TOP | TOOLTIP_RIGHT)
 
 	cast(atom/target)
 		if (..())
@@ -153,14 +159,17 @@
 			return TRUE
 
 		. = ..()
-		//hearghosts is checked in deadsay.dm and chatprocs.dm
+
 		W.hearghosts = !W.hearghosts
 		if (W.hearghosts)
+			W.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
 			src.icon_state = "hide_chat"
 			boutput(W, SPAN_NOTICE("Now listening to the dead again."))
 		else
+			W.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_DEADCHAT)
 			src.icon_state = "show_chat"
 			boutput(W, SPAN_NOTICE("No longer listening to the dead."))
+
 		return FALSE
 
 /obj/spookMarker

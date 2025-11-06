@@ -201,6 +201,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			else
 				src.set_opacity(1)
 		src.setIntact(TRUE)
+		for(var/obj/decal/cleanable/clean in src)
+			clean.plane = PLANE_FLOOR
 		update_nearby_tiles()
 		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits

@@ -11,25 +11,42 @@ on:
 jobs:
   lint:
     name: Run Linters
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4
 
+      - name: Read SpacemanDMM ref from config
+        id: smver
+        run: |
+          REF="$(grep -E '^SPACEMAN_DMM_REF=' buildByond.conf | cut -d= -f2)"
+          if [[ -z "$REF" ]]; then echo "SPACEMAN_DMM_REF missing"; exit 1; fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+
       - name: Cache SpacemanDMM
+        id: smcache
         uses: actions/cache@v4
         with:
-          path: $HOME/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          path: /home/runner/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm-${{ steps.smver.outputs.ref }}
 
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.1
 
+      - name: Install musl toolchain
+        if: steps.smcache.outputs.cache-hit != 'true'
+        run: |
+          rustup target add x86_64-unknown-linux-musl
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: "yarn"
-          cache-dependency-path: ./tgui/yarn.lock
+          cache-dependency-path: |
+            ./tgui/yarn.lock
+            ./tgui/package.json
 
       - uses: actions/setup-python@v5
         with:
@@ -41,8 +58,12 @@ jobs:
           touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
-          tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
+
+      - name: Build SpacemanDMM
+        if: steps.smcache.outputs.cache-hit != 'true'
+        run: |
+          tools/ci/install_spaceman_dmm.sh dreamchecker
 
       - name: Check TGUI
         run: |
@@ -67,24 +88,29 @@ jobs:
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker
+          ~/SpacemanDMM/dreamchecker
 
-  odlint:
-    name: Lint with OpenDream
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: robinraju/release-downloader@v1.11
-        with:
-          repository: "OpenDreamProject/OpenDream"
-          tag: "latest"
-          fileName: "DMCompiler_linux-x64.tar.gz"
-          extract: true
-      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=515.1635
+  # disabled while alist for loop is broken
+  # odlint:
+  #   name: Lint with OpenDream
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Setup .NET SDK
+  #       uses: actions/setup-dotnet@v4.2.0
+  #       with:
+  #         dotnet-version: 9.0.100
+  #     - uses: actions/checkout@v4
+  #     - uses: robinraju/release-downloader@v1.11
+  #       with:
+  #         repository: "OpenDreamProject/OpenDream"
+  #         tag: "latest"
+  #         fileName: "DMCompiler_linux-x64.tar.gz"
+  #         extract: true
+  #     - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=516.1666
 
   compile:
     name: Compile
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4
@@ -105,6 +131,17 @@ jobs:
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
+      - name: Add Architecture
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
+          sudo apt-get update
+
+      - name: Install Dependencies
+        uses: Eeems-Org/apt-cache-action@v1
+        with:
+          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
+
       - name: Compile
         run: |
           tools/ci/dm.sh -DCIBUILD goonstation.dme
@@ -123,7 +160,7 @@ jobs:
 
   compile_full:
     name: "Compile and Lint with Secret Submodule"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
@@ -148,18 +185,44 @@ jobs:
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
+      - name: Add Architecture
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
+          sudo apt-get update
+
+      - name: Install Dependencies
+        uses: Eeems-Org/apt-cache-action@v1
+        with:
+          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
+
+      - name: Read SpacemanDMM ref from config
+        id: smver
+        run: |
+          REF="$(grep -E '^SPACEMAN_DMM_REF=' buildByond.conf | cut -d= -f2)"
+          if [[ -z "$REF" ]]; then echo "SPACEMAN_DMM_REF missing"; exit 1; fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+
       - name: Cache SpacemanDMM
+        id: smcache
         uses: actions/cache@v4
         with:
-          path: $HOME/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          path: /home/runner/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm-${{ steps.smver.outputs.ref }}
 
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.1
 
+      - name: Install musl toolchain
+        if: steps.smcache.outputs.cache-hit != 'true'
+        run: |
+          rustup target add x86_64-unknown-linux-musl
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 
@@ -172,8 +235,12 @@ jobs:
         run: |
           pip3 install setuptools
           tools/ci/install_build_tools.sh
-          tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
+
+      - name: Build SpacemanDMM
+        if: steps.smcache.outputs.cache-hit != 'true'
+        run: |
+          tools/ci/install_spaceman_dmm.sh dreamchecker
 
       - name: Misc Checks
         run: |
@@ -187,7 +254,7 @@ jobs:
       - name: Run Linter
         id: linter
         run: |
-          ~/dreamchecker
+          ~/SpacemanDMM/dreamchecker
 
       - name: Compile
         run: |

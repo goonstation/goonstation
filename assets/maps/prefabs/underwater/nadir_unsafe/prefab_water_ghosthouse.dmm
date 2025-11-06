@@ -339,7 +339,7 @@
 /turf/simulated/floor/carpet/red/standard/narrow/northsouth,
 /area/prefab/ghost_house)
 "bz" = (
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)

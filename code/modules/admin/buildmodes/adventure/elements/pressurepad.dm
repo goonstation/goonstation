@@ -100,7 +100,7 @@
 		if (pressed)
 			return
 		pressed = 1
-		flick("pressure_[pad_type]_pressing", src)
+		FLICK("pressure_[pad_type]_pressing", src)
 		SPAWN(0.5 SECONDS)
 			icon_state = "pressure_[pad_type]_pressed"
 			post_trigger()
@@ -109,7 +109,7 @@
 		if (!pressed)
 			return
 		pressed = 0
-		flick("pressure_[pad_type]_unpressing", src)
+		FLICK("pressure_[pad_type]_unpressing", src)
 		SPAWN(0.5 SECONDS)
 			icon_state = "pressure_[pad_type]_unpressed"
 			post_untrigger()

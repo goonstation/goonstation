@@ -15,11 +15,11 @@
 
 	proc/autojump_updateworldicon()
 		if (src.overlaid)
-			var/icon/coloroverlay1 = icon("icon" = 'icons/obj/clothing/uniforms/item_js.dmi', "icon_state" = text("[]-fx1", src.icon_state))
+			var/icon/coloroverlay1 = icon("icon" = 'icons/obj/clothing/jumpsuits/item_js.dmi', "icon_state" = text("[]-fx1", src.icon_state))
 			coloroverlay1.Blend(rgb(src.base_r, src.base_g, src.base_b), ICON_ADD)
 			src.overlays += image("icon" = coloroverlay1)
 			if (src.overlaid >= 2)
-				var/icon/coloroverlay2 = icon("icon" = 'icons/obj/clothing/uniforms/item_js.dmi', "icon_state" = text("[]-fx2", src.icon_state))
+				var/icon/coloroverlay2 = icon("icon" = 'icons/obj/clothing/jumpsuits/item_js.dmi', "icon_state" = text("[]-fx2", src.icon_state))
 				coloroverlay2.Blend(rgb(src.detail_r, src.detail_g, src.detail_b), ICON_ADD)
 				src.overlays += image("icon" = coloroverlay2)
 

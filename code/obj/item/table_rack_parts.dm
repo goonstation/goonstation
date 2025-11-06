@@ -22,14 +22,10 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	var/furniture_name = "table"
 	var/reinforced = 0
 	var/build_duration = 50
-	var/obj/contained_storage = null // used for desks' drawers atm, if src is deconstructed it'll dump its contents on the ground and be deleted
 	var/density_check = TRUE //! Do we want to prevent building on turfs with something dense there?
 
-	New(loc, obj/storage_thing)
+	New(loc)
 		..()
-		if (storage_thing)
-			src.contained_storage = storage_thing
-			src.contained_storage.set_loc(src)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	proc/construct(mob/user as mob, turf/T as turf)
@@ -40,7 +36,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			if (!T) // buh??
 				return
 		if (ispath(src.furniture_type))
-			newThing = new src.furniture_type(T, src.contained_storage ? src.contained_storage : null)
+			newThing = new src.furniture_type(T)
 		else
 			stack_trace("[user] tries to build a piece of furniture from [identify_object(src)] but its furniture_type is null and it is being deleted.")
 			user.u_equip(src)
@@ -58,14 +54,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		return newThing
 
 	proc/deconstruct(var/reinforcement = 0)
-		if (src.contained_storage && length(src.contained_storage.contents))
-			var/turf/T = get_turf(src)
-			for (var/atom/movable/A in src.contained_storage)
-				A.set_loc(T)
-			var/obj/O = src.contained_storage
-			src.contained_storage = null
-			qdel(O)
-
 		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
 		if (src.material)
 			A.setMaterial(src.material)
@@ -95,18 +83,9 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	mouse_drop(atom/movable/target)
 		. = ..()
-		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target))
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target) && BOUNDS_DIST(src, usr) == 0 \
+			&& BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(usr, target) == 0 && can_reach(usr, src) && can_reach(usr, target)) // i hate mouse_drop
 			actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), usr)
-
-	disposing()
-		if (src.contained_storage && length(src.contained_storage.contents))
-			var/turf/T = get_turf(src)
-			for (var/atom/movable/A in src.contained_storage)
-				A.set_loc(T)
-			var/obj/O = src.contained_storage
-			src.contained_storage = null
-			qdel(O)
-		..()
 
 /* ---------- Table Parts ---------- */
 #define TABLE_WARNING(user) boutput(user, SPAN_ALERT("You can't build a table under yourself! You'll have to build it somewhere adjacent instead."))
@@ -124,6 +103,13 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	attack_self(mob/user)
 		TABLE_WARNING(user)
+
+	mouse_drop(atom/movable/target)
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target) && target == get_turf(usr))
+			TABLE_WARNING(usr)
+			return
+		. = ..()
+
 
 #undef TABLE_WARNING
 
@@ -669,7 +655,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 	onUpdate()
 		..()
-		if (parts == null || owner == null || BOUNDS_DIST(owner, parts) > 0 || BOUNDS_DIST(owner, target_turf) > 0)
+		if (parts == null || owner == null || BOUNDS_DIST(owner, parts) > 0 || BOUNDS_DIST(parts, target_turf) > 0 || BOUNDS_DIST(owner, target_turf) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -691,7 +677,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 			var/obj/blocker
 			for (var/obj/O in target_turf)
-				if (O.density)
+				if (O.density && !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) || (ispath(parts.furniture_type, /obj/table) && HAS_FLAG(O.object_flags, NO_BLOCK_TABLE))))
 					blocker = O
 					break
 

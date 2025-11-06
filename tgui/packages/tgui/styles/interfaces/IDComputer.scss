@@ -21,22 +21,25 @@
       -1px 1px 1px white;
   }
 
-  background-color: colors.$grey;
+  background-color: var(--color-grey);
 }
 
 // Color just the titles
-.IDComputer__DeptBox_color_blue > div:first-child {
-  background-color: colors.$blue;
+.IDComputer__DeptBox_color_civilian > div:first-child {
+  background-color: var(--color-blue);
 }
-.IDComputer__DeptBox_color_yellow > div:first-child {
-  background-color: colors.$yellow;
+.IDComputer__DeptBox_color_research > div:first-child {
+  background-color: var(--color-purple);
 }
-.IDComputer__DeptBox_color_purple > div:first-child {
-  background-color: colors.$purple;
+.IDComputer__DeptBox_color_medical > div:first-child {
+  background-color: #ff99ff;
 }
-.IDComputer__DeptBox_color_red > div:first-child {
-  background-color: colors.$red;
+.IDComputer__DeptBox_color_engineering > div:first-child {
+  background-color: var(--color-yellow);
 }
-.IDComputer__DeptBox_color_green > div:first-child {
-  background-color: colors.$green;
+.IDComputer__DeptBox_color_security > div:first-child {
+  background-color: var(--color-red);
+}
+.IDComputer__DeptBox_color_command > div:first-child {
+  background-color: var(--color-green);
 }

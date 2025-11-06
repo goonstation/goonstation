@@ -1,7 +1,7 @@
 /*CONTENTS
 Gas Sensor
 Siphon computer
-Atmos alert computer
+Mixer Control
 */
 
 /obj/machinery/computer/atmosphere
@@ -11,98 +11,144 @@ Atmos alert computer
 	light_g = 0.86
 	light_b = 1
 
-/obj/machinery/computer/atmosphere/alerts
-	name = "alert computer"
-	icon_state = "atmos"
-	circuit_type = /obj/item/circuitboard/atmospherealerts
-	var/alarms = list("Fire"=list(), "Atmosphere"=list())
-	machine_registry_idx = MACHINES_ATMOSALERTS
-
 /obj/machinery/computer/atmosphere/siphonswitch
 	name = "area air control"
 	icon_state = "atmos"
 	var/otherarea
 	var/area/area
 
-/obj/machinery/computer/atmosphere/mixercontrol
-	name = "Gas Mixer Control"
-	icon_state = "atmos"
-
-
 /obj/machinery/computer/atmosphere/siphonswitch/mastersiphonswitch
 	name = "Master Air Control"
 
+#define MAX_PRESSURE 20 * ONE_ATMOSPHERE
+/obj/machinery/computer/atmosphere/mixercontrol
+	name = "Gas Mixer Control"
+	icon_state = "atmos"
+	var/obj/machinery/atmospherics/trinary/mixer/mixerid
+	var/mixer_information
+	req_access = list(access_engineering_engine, access_tox_storage)
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	//circuit_type = /obj/item/circuitboard/air_management <This board didn't even lead here what the fuck
+	var/last_change = 0
+	var/message_delay = 600
 
-//the atmos alerts computer
-/obj/machinery/computer/atmosphere/alerts/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(status & (BROKEN|NOPOWER))
-		return
-	interacted(user)
+	frequency = FREQ_AIR_ALARM_CONTROL
 
+	New()
+		..()
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			frequency, \
+			null, \
+			"receive_signal", \
+			FALSE, \
+			"mixercontrol", \
+			FALSE \
+	)
 
-/obj/machinery/computer/atmosphere/alerts/proc/interacted(mob/user)
-	src.add_dialog(user)
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
-	dat += "<A HREF='?action=mach_close&window=alerts'>Close</A><br><br>"
-	for (var/cat in src.alarms)
-		dat += text("<B>[]</B><BR><br>", cat)
-		var/list/L = src.alarms[cat]
-		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
-				var/area/A = alm[1]
-				var/list/sources = alm[3]
-				dat += "<NOBR>"
-				dat += "[A.name]"
-				if (length(sources) > 1)
-					dat += text("- [] sources", sources.len)
-				dat += "</NOBR><BR><br>"
-		else
-			dat += "-- All Systems Nominal<BR><br>"
-		dat += "<BR><br>"
-	user.Browse(dat, "window=alerts")
-	onclose(user, "alerts")
+	save_board_data(obj/item/circuitboard/circuitboard)
+		circuitboard.saved_data = src.frequency
 
-/obj/machinery/computer/atmosphere/alerts/Topic(href, href_list)
-	if(..())
-		return
-	return
+	load_board_data(obj/item/circuitboard/circuitboard)
+		if(..())
+			return
+		src.frequency = circuitboard.saved_data
 
-/obj/machinery/computer/atmosphere/alerts/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
-	if(status & (BROKEN|NOPOWER))
-		return
-	var/list/L = src.alarms[class]
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/sources = alarm[3]
-			if (!(alarmsource in sources))
-				sources += alarmsource
-			return 1
-	var/obj/machinery/camera/C = null
-	var/list/CL = null
-	if (O && istype(O, /list))
-		CL = O
-		if (length(CL) == 1)
-			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
-		C = O
-	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-	return 1
+	attack_hand(mob/user)
+		if(status & (BROKEN | NOPOWER))
+			return
 
-/obj/machinery/computer/atmosphere/alerts/proc/cancelAlarm(var/class, area/A as area, obj/origin)
-	if(status & (BROKEN|NOPOWER))
-		return
-	var/list/L = src.alarms[class]
-	var/cleared = 0
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (length(srcs) == 0)
-				cleared = 1
-				L -= I
-	return !cleared
+		ui_interact(user)
+
+	receive_signal(datum/signal/signal)
+		//boutput(world, "[id] actually can receive a signal!")
+		if(!signal || signal.encryption) return
+
+		var/id_tag = signal.data["tag"]
+		if(!id_tag || mixerid != id_tag) return
+
+		//boutput(world, "[id] received a signal from [id_tag]!")
+		mixer_information = signal.data
+
+		tgui_process.update_uis(src)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "GasMixer")
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		.["name"] = name
+		.["mixerid"] = mixerid
+		.["MAX_PRESSURE"] = MAX_PRESSURE
+		.["mixer_information"] = mixer_information
+		.["allowed"] = src.allowed(user)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+
+		if (!src.allowed(usr))
+			boutput(usr, SPAN_ALERT("Access denied!"))
+			return FALSE
+
+		var/datum/signal/signal = get_free_signal()
+		if (!signal || !istype(signal))
+			return FALSE
+
+		signal.transmission_method = 1 //radio
+		signal.source = src
+		signal.data["tag"] = id
+
+		switch (action)
+			if ("toggle_pump")
+				var/status = mixer_information["pump_status"]
+				var/command
+				if (status)
+					if (status == "Offline")
+						command = "power_on"
+					else if (status == "Online")
+						command = "power_off"
+
+				if (command)
+					signal.data["command"] = "toggle_pump"
+					signal.data["parameter"] = command
+
+			if ("pressure_set")
+				var/target_pressure = params["target_pressure"]
+				if ((BOUNDS_DIST(src, usr) > 0 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+					return FALSE
+				if (is_incapacitated(usr) || usr.restrained())
+					return FALSE
+				if (!src.allowed(usr))
+					boutput(usr, SPAN_ALERT("Access denied!"))
+					return FALSE
+				if (!isnum_safe(target_pressure))
+					return FALSE
+
+				var/amount = clamp(target_pressure, 0, MAX_PRESSURE)
+
+				signal.data["command"] = "set_pressure"
+				signal.data["parameter"] = num2text(amount)
+
+			if ("ratio")
+				signal.data["command"] = "set_ratio"
+				signal.data["parameter"] = params["ratio"]
+
+				if (src.id == "pmix_control")
+					if (((src.last_change + src.message_delay) <= world.time))
+						src.last_change = world.time
+						logTheThing(LOG_STATION, usr, "has just edited the plasma mixer at [log_loc(src)].")
+						message_admins("[key_name(usr)] has just edited the plasma mixer at at [log_loc(src)].")
+
+			if ("refresh_status")
+				signal.data["status"] = 1
+
+		if (signal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+			. = TRUE
+
+#undef MAX_PRESSURE
+

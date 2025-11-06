@@ -131,7 +131,7 @@
 		var/turf/summon_turf = get_turf(PDA)
 		if (isAIeye(usr))
 			summon_turf = get_turf(usr)
-			if (!(summon_turf.camera_coverage_emitters && length(summon_turf.camera_coverage_emitters)))
+			if (!seen_by_camera(summon_turf))
 				summon_turf = get_turf(PDA)
 
 		if(href_list["active"])
@@ -162,7 +162,7 @@
 				var/turf/summon_location = get_turf(usr) // summon_turf is already used
 				if((BOUNDS_DIST(get_turf(usr), get_turf(src.master)) == 0) || isAIeye(usr))
 					if(guardthis == "Here")
-						if(isAIeye(usr) && (summon_location.camera_coverage_emitters && length(summon_location.camera_coverage_emitters))) // God damn AI eyes
+						if(isAIeye(usr) && seen_by_camera(summon_location)) // God damn AI eyes
 							guardthis = get_area(get_turf(usr))
 						else
 							guardthis = get_area(get_turf(src.master))

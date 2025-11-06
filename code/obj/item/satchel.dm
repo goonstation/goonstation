@@ -8,6 +8,7 @@
 	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	soundproofing = 20
 	var/maxitems = 50
 	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	var/list/allowed = null
@@ -48,7 +49,7 @@
 			if (length(src.contents) == src.maxitems)
 				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			boutput(user, SPAN_ALERT("[src] is full!"))
 
@@ -61,7 +62,7 @@
 				I.add_fingerprint(user)
 			boutput(user, SPAN_NOTICE("You empty out [src]."))
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else ..()
 
 	attack_hand(mob/user)
@@ -78,6 +79,8 @@
 				if (length(src.contents) > 1)
 					if (user.a_intent == INTENT_GRAB)
 						getItem = src.search_through(user)
+						if (!getItem) // prevents the satchel teleporting back to the hand if the search is cancelled
+							return
 
 					else
 						user.visible_message(SPAN_NOTICE("<b>[user]</b> rummages through \the [src]."),\
@@ -93,7 +96,7 @@
 					SPAN_NOTICE("You take \a [getItem.name] from [src]."))
 					user.put_in_hand_or_drop(getItem)
 					src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return ..(user)
 
 	proc/search_through(mob/user as mob)
@@ -124,6 +127,9 @@
 		sortList(satchel_contents, /proc/cmp_text_asc)
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
 		if (!chosenItem || !(satchel_contents[chosenItem] in src.contents))
+			return
+		if (!user.is_in_hands(src))
+			boutput(user, SPAN_ALERT("You could have sworn [src] was just in your hand a moment ago."))
 			return
 		return satchel_contents[chosenItem]
 
@@ -163,6 +169,7 @@
 				I.add_fingerprint(user)
 				if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					I.set_loc(src)
+					SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)
@@ -173,14 +180,66 @@
 			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
 		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
 		src.UpdateIcon()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
-	// Don't dump the satchel onto the table if using drag-and-drop to dump out other contents.
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (!in_interact_range(src, usr) || !can_act(usr))
+			return
+
+		if (istype(over_object,/obj/table) || istype(over_object, /obj/surgery_tray))
+			if (BOUNDS_DIST(over_object, usr) > 0)
+				boutput(usr, SPAN_ALERT("You need to be closer to [over_object] to do that."))
+				return
+			if (length(src.contents) < 1)
+				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))
+			else
+				var/obj/table = over_object
+				usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
+				for (var/obj/item/thing in src.contents)
+					table.place_on(thing)
+				src.tooltip_rebuild = TRUE
+				src.UpdateIcon()
+				params["satchel_dumped"] = TRUE
+				return
+
+		if (istype(over_object, /obj/machinery/disposal))
+			disposals_dump(over_object, usr)
+			return
+		. = ..()
+
+	/// The user tries to place all of the satchel's contents into the given disposal chute.
+	proc/disposals_dump(var/obj/machinery/disposal/chute, mob/user)
+		if (BOUNDS_DIST(chute, user) > 0)
+			boutput(user, SPAN_ALERT("You need to be closer to [chute] to do that."))
+			return
+		if (!length(src.contents))
+			boutput(user, SPAN_ALERT("There's nothing in [src] to dump out!"))
+			return
+		if (!(src in user.equipped_list()))
+			if (!isrobot(user))
+				boutput(user, SPAN_ALERT("You need to be holding [src] to do that."))
+			return
+		for(var/obj/item/item in src.contents)
+			if (chute.fits_in(item))
+				item.set_loc(chute)
+		user.set_dir(get_dir(user, chute))
+		src.UpdateIcon()
+		src.tooltip_rebuild = TRUE
+		chute.play_item_insert_sound(src)
+		user.visible_message("<b>[user.name]</b> dumps out [src] into [chute].")
+		chute.update()
+
+	// Don't place the satchel onto the table if we've dumped out its contents with the same command.
 	should_place_on(obj/target, params)
-		if (istype(target, /obj/table) && islist(params) && params["dragged"] && length(src.contents) > 0)
+		if (istype(target, /obj/table) && islist(params) && params["satchel_dumped"])
 			return FALSE
 		. = ..()
 
+	should_suppress_attack(var/object, mob/user)
+		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
+		if (istype(object, /obj/table) && (user.get_brain_damage() <= BRAIN_DAMAGE_MODERATE && rand(1, 10) < 10))
+			return TRUE
+		..()
 
 	proc/split_stack_into_satchel(var/obj/item/item_to_split, mob/user)
 		// This proc splits an object with multiple stacks and stuff it into the satchel until either
@@ -255,6 +314,7 @@
 		icon_state = "hydrosatchel"
 		item_state = "hydrosatchel"
 		itemstring = "items of produce"
+		maxitems = 50
 
 		New()
 			..()
@@ -269,7 +329,9 @@
 			/obj/item/raw_material/cotton,
 			/obj/item/feather,
 			/obj/item/bananapeel)
-			exceptions = list(/obj/item/plant/tumbling_creeper) // tumbling creeper have size restrictions and should not be carried in large amount
+			exceptions = list(/obj/item/plant/tumbling_creeper, /obj/item/reagent_containers/food/snacks/ingredient/egg)
+			// tumbling creeper have size restrictions and should not be carried in large amount
+			// eggs are just a bit too powerful to fit in your pocket
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()
@@ -325,6 +387,18 @@
 		New()
 			..()
 			allowed = list(/obj/item/random_mail)
+
+		large
+			name = "large mail satchel"
+			desc = "A leather satchel for carrying around mail. This one happens to be <em>really</em> big."
+			icon_state = "mailsatchel-large"
+			maxitems = 100
+
+		compressed
+			name = "spatially-compressed mail satchel"
+			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding mail."
+			icon_state = "mailsatchel-compressed"
+			maxitems = 250
 
 	figurines
 		name = "figurine case"
@@ -383,5 +457,5 @@
 			var/obj/item/toy/figure/F = new()
 			F.set_loc(src)
 			src.UpdateIcon()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 

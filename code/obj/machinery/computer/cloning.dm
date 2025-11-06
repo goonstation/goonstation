@@ -4,8 +4,7 @@
 // time to show the message for before removing it
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
-var/global/cloning_with_records = TRUE
-ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/try_clone)
 /obj/machinery/computer/cloning
 	name = "cloning console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
@@ -52,26 +51,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		STOP_TRACKING
 		..()
 
-	old
-		icon_state = "old2"
-		desc = "With the price of cloning pods nowadays it's not unexpected to skimp on the controller."
-
-		power_change()
-
-			if(status & BROKEN)
-				icon_state = "old2b"
-			else
-				if( powered() )
-					icon_state = initial(icon_state)
-					status &= ~NOPOWER
-				else
-					SPAWN(rand(0, 15))
-						src.icon_state = "old20"
-						status |= NOPOWER
-
 /obj/item/cloner_upgrade
 	name = "\improper NecroScan II cloner upgrade module"
-	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
+	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even skeletal remains may be scanned."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cloner_upgrade"
 	health = 8
@@ -138,7 +120,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 			break
 
 /obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)
-	frame.circuit.records = src.records
 	if (src.allow_dead_scanning)
 		new /obj/item/cloner_upgrade (src.loc)
 		src.allow_dead_scanning = 0
@@ -153,6 +134,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	else
 		logTheThing(LOG_STATION, usr, "disassembles [src] [log_loc(src)]")
 
+/obj/machinery/computer/cloning/save_board_data(obj/item/circuitboard/circuitboard)
+	. = ..()
+	circuitboard.saved_data = src.records
+
+/obj/machinery/computer/cloning/load_board_data(obj/item/circuitboard/circuitboard)
+	if(..())
+		return
+	src.records = circuitboard.saved_data
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/currency/spacecash))
@@ -163,13 +152,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		user.u_equip(W)
 		qdel(W)
 	else if (istype(W, /obj/item/disk/data/floppy))
-		if (!src.diskette)
-			user.drop_item()
-			W.set_loc(src)
-			src.diskette = W
-			boutput(user, "You insert [W].")
-			src.updateUsrDialog()
-			return
+		var/obj/item/disk/data/floppy/disk_to_drop = null
+		if (src.diskette) //let them swap
+			disk_to_drop = src.diskette
+			src.diskette = null
+		user.drop_item()
+		W.set_loc(src)
+		src.diskette = W
+		user.put_in_hand_or_drop(disk_to_drop)
+		boutput(user, "You insert [W].")
+		playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
+		tgui_process.update_uis(src)
+		return
 
 	else if (istype(W, /obj/item/cloner_upgrade))
 		if (allow_dead_scanning || allow_mind_erasure)
@@ -212,7 +206,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/machinery/computer/cloning/emp_act()
 	if (length(src.records))
-		for (var/i = 0 ; i <= (min(5,length(src.records))), i += 1) //eat up to 5 records
+		for (var/i = 0 ; i <= (min(5,length(src.records))); i += 1) //eat up to 5 records
 			var/RIP = pick(src.records)
 			src.records.Remove(RIP)
 			qdel(RIP)
@@ -247,7 +241,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!ishuman(subject)))
-		show_message("Error: Unable to locate valid genetic data.", "danger")
+		show_message("Error: Unable to locate valid genetic data.", "warning")
+		return
+	if (!src.diskette)
+		show_message("Error: Please insert disk.", "warning")
+		return
+	if (src.diskette.read_only)
+		show_message("Error: Disk is write protected.", "warning")
+		return
+	if((src.diskette.file_used + /datum/computer/file/clone::size + /datum/computer/file/genetics_scan::size) > src.diskette.file_amount)
+		show_message("Error: Insufficient space left on disk.", "danger")
 		return
 	if(!allow_dead_scanning && subject.decomp_stage)
 		show_message("Error: Failed to read genetic data from subject. Necrosis of tissue has been detected.")
@@ -261,11 +264,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	if (istype(subject.mutantrace, /datum/mutantrace/zombie))
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
-	if (subject.mob_flags & IS_BONEY)
+	if ((subject.mob_flags & IS_BONEY) && !allow_dead_scanning)
 		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
-		return
-	if (!cloning_with_records && isalive(subject))
-		show_message("Error: Unable to scan alive patient.")
 		return
 
 	var/datum/mind/subjMind = subject.mind
@@ -281,80 +281,74 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		else
 			show_message("Error: Mental interface failure.", "warning")
 			return
-	var/datum/db_record/R = find_record_by_mind(subjMind)
-	if (!isnull(R))
-		show_message("Subject already in database.", "info")
-		return R
 
-	R = new
-	R["ckey"] = ckey(subjMind.key)
-	R["name"] = subject.real_name
-	R["id"] = copytext("\ref[subjMind]", 4, 12)
+	var/datum/computer/file/clone/clone_file = locate() in src.diskette
+	if (!isnull(clone_file))
+		show_message("Existing clone record found on disk.", "info")
+		return clone_file
+
+	clone_file = new
+	clone_file["ckey"] = ckey(subjMind.key)
+
+	//use the subjects *visible* name, disguises can fool the scanner
+	if (subject.face_visible())
+		clone_file["name"] = subject.real_name
+	else
+		clone_file["name"] = subject.name
+	clone_file["id"] = copytext("\ref[subjMind]", 4, 12)
+	clone_file.name = "CloneRecord-[ckey(clone_file["name"])]"
 
 	var/datum/bioHolder/H = new/datum/bioHolder(null)
 	H.CopyOther(subject.bioHolder)
 
-	R["holder"] = H
+	clone_file["holder"] = H
 
-	R["abilities"] = null
+	clone_file["abilities"] = null
 	if (subject.abilityHolder)
 		var/datum/abilityHolder/A = subject.abilityHolder.deepCopy()
-		R["abilities"] = A
+		clone_file["abilities"] = A
 
-	R["traits"] = null
+	clone_file["traits"] = null
 	if(!isnull(subject.traitHolder))
-		R["traits"] = subject.traitHolder.copy(null)
+		clone_file["traits"] = subject.traitHolder.copy(null)
 
-	R["defects"] = subject.cloner_defects.copy()
+	clone_file["defects"] = subject.cloner_defects.copy()
 
 	var/obj/item/implant/cloner/imp = new(subject)
-	R["imp"] = "\ref[imp]"
+	clone_file["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
-		R["mind"] = subjMind
+		clone_file["mind"] = subjMind
 
-	src.records += R
 	show_message("Subject successfully scanned.", "success")
 	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
 
-	return R
+	src.diskette.root.add_file(clone_file)
 
-//Find a specific record by record ID (only used in UI functions)
-/obj/machinery/computer/cloning/proc/find_record_by_id(var/id)
-	RETURN_TYPE(/datum/db_record)
-	var/selected_record = null
-	for(var/datum/db_record/R as anything in src.records)
-		if (R["id"] == id)
-			selected_record = R
-			break
-	return selected_record
+	var/datum/computer/file/genetics_scan/gene_scan = create_new_dna_sample_file(subject, visible_name=TRUE)
+	src.diskette.root.add_file(gene_scan)
 
-// Find a specific record by saved mind
-/obj/machinery/computer/cloning/proc/find_record_by_mind(datum/mind/M)
-	RETURN_TYPE(/datum/db_record)
-	var/selected_record = null
-	for(var/datum/db_record/R as anything in src.records)
-		if (R["mind"] == M)
-			selected_record = R
-			break
-	return selected_record
+	//label the disk, clearing other labels
+	src.diskette.name_suffixes = list()
+	src.diskette.name_suffix("([clone_file["name"]])")
+	src.diskette.UpdateName()
+	return clone_file
 
 /obj/machinery/computer/cloning/proc/scan_someone()
 	src.scan_mob(src.scanner?.occupant)
 
-/obj/machinery/computer/cloning/proc/clone_someone()
-	for (var/datum/db_record/record in src.records)
-		var/datum/mind/mind = record["mind"]
-		if (eligible_to_clone(mind) && !mind.get_player()?.dnr)
-			src.clone_record(record)
-			return
+/obj/machinery/computer/cloning/proc/try_clone()
+	if (!src.diskette)
+		show_message("Error: Please insert disk.", "warning")
+		return FALSE
+	var/datum/computer/file/clone/clone_file = locate() in src.diskette.root.contents
+	if (!clone_file)
+		show_message("Error: No valid record found on disk.", "warning")
+		return FALSE
+	return src.clone_file(clone_file)
 
-/obj/machinery/computer/cloning/proc/clone_record(datum/db_record/C)
-	if (!istype(C))
-		show_message("Invalid or corrupt record.", "danger")
-		return
-
+/obj/machinery/computer/cloning/proc/clone_file(datum/computer/file/clone/clone_file)
 	var/obj/machinery/clonepod/pod1 = null
 	for (var/obj/machinery/clonepod/P in linked_pods)
 		if (isnull(pod1))
@@ -389,7 +383,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		show_message("Abnormal reading from cloning pod.", "danger")
 		return
 
-	var/datum/mind/mind = C["mind"]
+	var/datum/mind/mind = clone_file["mind"]
 	var/mob/selected = eligible_to_clone(mind)
 
 	if (!selected)
@@ -411,34 +405,44 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	// at this point selected = the dude we wanna revive.
 
 	if (wagesystem.clones_for_cash)
-		var/datum/db_record/Ba = FindBankAccountByName(C["name"])
+		var/datum/db_record/Ba = FindBankAccountByName(clone_file["name"])
 		var/account_credit = 0
 
 		if (Ba?["current_money"])
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
+			if (pod1.growclone(selected, clone_file["name"], clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
 				src.held_credit -= (wagesystem.clone_cost - from_account)
-				show_message("Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [C["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated.", "info")
-				src.records.Remove(C)
-				qdel(C)
+				show_message("Payment of [wagesystem.clone_cost] credits accepted. [from_account > 0 ? "Deducted [from_account] credits from [clone_file["name"]]'s account.' " : ""][from_account < wagesystem.clone_cost ? "Deducted [wagesystem.clone_cost - from_account] credits from machine credit." : ""] Cloning cycle activated.", "info")
 				src.menu = 1
+				. = TRUE
 			else
 				show_message("Unknown error when trying to start cloning process.", "info")
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
+	else if (pod1.growclone(selected, clone_file["name"], clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
 		show_message("Cloning cycle activated.", "success")
-		src.records.Remove(C)
-		qdel(C)
+		. = TRUE
 		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
-		src.records_scan()
+
+	if (.) //only wipe the disk if we're 100% sure we've succeeded
+		var/read_only = src.diskette.read_only
+		src.diskette.read_only = FALSE
+		src.diskette.root.remove_file(clone_file)
+		var/datum/computer/file/genetics_scan/gene_file = locate() in src.diskette.root.contents
+		if (gene_file)
+			src.diskette.root.remove_file(gene_file)
+		src.diskette.read_only = read_only
+
+		//clear labels, we're empty now
+		src.diskette.name_suffixes = list()
+		src.diskette.UpdateName()
 
 /// Check if a mind has a current mob, a client, and is dead/a ghost/doing afterlife stuff.
 /// Scanning var controls whether we will return ghosts, because ghosts needs special handling in clone scans
@@ -464,7 +468,7 @@ proc/eligible_to_clone(datum/mind/mind, scanning = FALSE)
 			return null
 	if(iswraith(M))
 		return null
-	if((!scanning && isdead(M)) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
+	if((!scanning && (isdead(M) || isobserver(M))) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 		return M
 	return null
 
@@ -785,7 +789,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				set_lock(0)
 				active_process = PROCESS_IDLE
 
-/obj/machinery/computer/cloning/ui_act(action, params)
+/obj/machinery/computer/cloning/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if (.)
 		return
@@ -796,45 +800,15 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			any_active = TRUE
 
 	switch(action)
-		if("delete")
-			if(!(src.allowed(usr) || src.emagged))
-				show_message("You do not have permission to delete records.", "danger")
-				return TRUE
-			var/selected_record =	find_record_by_id(params["id"])
-			if(selected_record)
-				logTheThing(LOG_STATION, usr, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
-				src.records.Remove(selected_record)
-				qdel(selected_record)
-				selected_record = null
-				show_message("Record deleted.", "danger")
-				. = TRUE
 		if("scan")
-			if (!cloning_with_records)
-				return
 			if(usr == src.scanner.occupant)
 				boutput(usr, SPAN_ALERT("You can't quite reach the scan button from inside the scanner, darn!"))
 				return TRUE
-			if(!isnull(src.scanner))
-				src.scan_mob(src.scanner.occupant)
-				. = TRUE
-		if("clone")
-			if (!cloning_with_records)
-				return
-			var/id = params["id"]
-			if(id)
-				clone_record(find_record_by_id(id))
-				. = TRUE
-		if ("scanAndClone")
-			if (cloning_with_records)
-				return
-			if(usr == src.scanner.occupant)
-				boutput(usr, SPAN_ALERT("You can't quite reach the scan button from inside the scanner, darn!"))
-				return TRUE
-			if(!isnull(src.scanner))
-				var/datum/db_record/R = src.scan_mob(src.scanner.occupant)
-				if (!isnull(R))
-					clone_record(R)
-				. = TRUE
+			if(QDELETED(src.scanner))
+				show_message("No scanner connected.", "warning")
+				return FALSE
+			src.scan_mob(src.scanner.occupant)
+			. = TRUE
 		if("toggleGeneticAnalysis")
 			if (any_active)
 				show_message("Cannot toggle any modules while cloner is active.", "warning")
@@ -844,73 +818,24 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				if (!ON_COOLDOWN(src, "sound_genetoggle", 2 SECONDS))
 					playsound(src.loc, sound_ping, 50, 1)
 				. = TRUE
-		if("saveToDisk")
-			var/id = params["id"]
-			var/datum/db_record/selected_record = find_record_by_id(id)
-			if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(selected_record)))
-				show_message("Save error.", "warning")
-				. = TRUE
 
-			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R.fields["id"] == selected_record.get_field("id"))
-					show_message("Record already exists on disk.", "info")
-					. = TRUE
-
-			var/datum/computer/file/clone/cloneFile = new
-			cloneFile.name = "CloneRecord-[ckey(selected_record["name"])]"
-			cloneFile.fields = selected_record.get_fields_copy()
-			if((src.diskette.file_used + cloneFile.size) > src.diskette.file_amount)
-				show_message("Disk is full.", "danger")
-				return TRUE
-			var/saved_status = src.diskette.root.add_file(cloneFile)
-			show_message( saved_status ? "Save successful." : "Save error.", saved_status ? "info" : "warning")
-			. = TRUE
-
-		if("eject")
-			if (!isnull(src.diskette))
-				src.diskette.set_loc(src.loc)
-				usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
-				src.diskette = null
-				. = TRUE
-		if("load")
-
-			var/loaded = 0
-
-			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
-				if (!find_record_by_id(cloneRecord.fields["id"]))
-					var/datum/db_record/R = new(null, cloneRecord.fields.Copy())
-					src.records += R
-					loaded++
-					show_message("Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred.", "success")
-					var/read_only = src.diskette.read_only
-					src.diskette.read_only = 0
-					src.diskette.root.remove_file(cloneRecord)
-					src.diskette.read_only = read_only
-					. = TRUE
-
-			if(!loaded)
-				show_message("Load error.", "warning")
-				. = TRUE
-		if ("loadAndClone")
-			if (cloning_with_records)
+		if("diskAction")
+			if (BOUNDS_DIST(ui.user, src) || isintangible(ui.user))
 				return
-			var/loaded = FALSE
-			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
-				var/mob/ghost = eligible_to_clone(cloneRecord.fields["mind"])
-				if (isnull(ghost))
-					show_message("Load error.", "warning")
-					continue
-				var/datum/db_record/R = new(null, cloneRecord.fields.Copy())
-				src.records += R
-				loaded = TRUE
-				var/read_only = src.diskette.read_only
-				src.diskette.read_only = FALSE
-				src.diskette.root.remove_file(cloneRecord)
-				src.diskette.read_only = read_only
-				clone_record(R)
-				break
-
-			. = loaded
+			var/obj/item/disk/data/floppy/disk = ui.user.equipped()
+			if (src.diskette && !istype(disk))
+				usr.put_in_hand_or_drop(src.diskette)
+				src.diskette = null
+				playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
+				. = TRUE
+				return
+			if (istype(disk))
+				src.attackby(disk, ui.user) //insert or swap
+			else if (istype(disk, /obj/item/disk))
+				boutput(ui.user, SPAN_ALERT("[disk] doesn't quite fit in [src]'s slot!"))
+		if ("clone")
+			if (src.try_clone())
+				. = TRUE
 		if("toggleLock")
 			if (!isnull(src.scanner))
 				if ((!src.scanner.locked) && (src.scanner.occupant))
@@ -926,23 +851,10 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			else
 				src.mindwipe = !src.mindwipe
 				. = TRUE
-		if("editNote")
-			var/id = params["id"]
-			var/datum/db_record/selected_record = find_record_by_id(id)
-			var/note_text = tgui_input_text(usr, "Edit note of [selected_record["name"]]", "Edit note", selected_record["note"])
-			if (note_text)
-				selected_record["note"] = note_text
-			. = TRUE
-		if ("deleteNote")
-			var/id = params["id"]
-			var/datum/db_record/selected_record = find_record_by_id(id)
-			selected_record["note"] = null
-			. = TRUE
 
 /obj/machinery/computer/cloning/ui_data(mob/user)
 
 	. = list(
-		"cloningWithRecords" = cloning_with_records,
 		"allowedToDelete" = (src.allowed(user) || src.emagged),
 		"scannerGone" = isnull(src.scanner),
 		"occupantScanned" = FALSE,
@@ -950,6 +862,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		"message" = src.currentStatusMessage,
 		"disk" = !isnull(src.diskette),
 
+		"allowDeadScan" = src.allow_dead_scanning,
 		"allowMindErasure" = src.allow_mind_erasure,
 		"clonesForCash" = wagesystem.clones_for_cash,
 		"balance" = src.held_credit,
@@ -958,12 +871,16 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		"geneticAnalysis" = src.gen_analysis,
 		"podNames" = list(),
 		"meatLevels" = list(),
+		"podSpeed" = list(),
+		"podEfficient" = list(),
 		"cloneHack" = list(),
 		"completion" = list(),
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
+		.["podSpeed"] += P.is_speedy
+		.["podEfficient"] += P.is_efficient
 		.["cloneHack"] += P.clonehack
 		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
@@ -971,35 +888,13 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			"scannerOccupied" = src.scanner.occupant,
 			"scannerLocked" = src.scanner.locked,
 		)
-		if(!isnull(src.scanner?.occupant?.mind))
-			. += list("occupantScanned" = !isnull(find_record_by_mind(src.scanner.occupant.mind)))
 
-	if(!isnull(src.diskette))
-		. += list("diskReadOnly" = src.diskette.read_only)
-
-	var/list/recordsTemp = list()
-	for (var/datum/db_record/r as anything in records)
-		var/saved = FALSE
-		var/obj/item/implant/cloner/implant = locate(r["imp"])
-		var/currentHealth = ""
-		if(istype(implant))
-			currentHealth = implant.getHealthList()
-		if(src.diskette) // checks if saved to disk
-			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				if(F.fields["id"] == r["id"])
-					saved = TRUE
-
-		recordsTemp.Add(list(list(
-			name = r["name"],
-			id = r["id"],
-			ckey = r["ckey"],
-			note = r["note"],
-			health = currentHealth,
-			implant = !isnull(implant),
-			saved = saved
-		)))
-
-	. += list("cloneRecords" = recordsTemp)
+	. += list(
+		"diskReadOnly" = src.diskette?.read_only,
+		"diskHasRecord" = !!(locate(/datum/computer/file/clone) in src.diskette?.root.contents),
+		"diskColor" = src.diskette?.disk_color,
+		"diskName" = src.diskette?.disk_name()
+	)
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

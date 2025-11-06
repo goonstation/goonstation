@@ -35,15 +35,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 		T.aiImage.appearance = ma
 		T.aiImage.dir = pick(alldirs)
 		T.aiImage.loc = T
-
-
-		if(istype(T, /turf/space))
-			aiImagesLowPriority += T.aiImage
-		else
-			aiImages += T.aiImage
-		for_by_tcl(M, /mob/living/silicon/ai)
-			if (M.client)
-				M << T.aiImage
+		T.aiImage.override = TRUE
 
 		donecount++
 		thispct = round(donecount / totalcount)

@@ -2,19 +2,28 @@
 //enables travel to other Z-Spaces.
 /obj/item/shipcomponent/engine
 	name = "Warp-1 Engine"
-	desc = "A standard engine"
+	desc = "A standard engine."
 	var/powergenerated = 200 //how much power for components the engine generates
 	var/currentgen = 200 //handles engine power debuffs
 	var/warprecharge = 300 //Interval it takes for warp to be ready again
 	//delay between dropping wormhole and being able to enter it
 	var/portaldelay = 3 SECONDS
 	var/status = "Normal"
-	var/speedmod = 2 // how fast should the vehicle be, lower is faster
+	// multiplicative speed mod this engine has on its pod's speed
+	var/engine_speed = 1
 	var/wormholeQueued = 0 //so users cant open a million inputs and bypass all cooldowns
 	var/warp_autopilot = 0		//prevents us from mistakenly moving when trying to warp. Checked in pod movement_controller
 	power_used = 0
 	system = "Engine"
 	icon_state = "engine-1"
+	var/image/engine_icon = null
+	var/startup_time = 0.8 SECONDS // Currently visual only
+
+	get_install_slot()
+		return POD_PART_ENGINE
+
+	get_desc()
+		return "Rated for [src.powergenerated] units of continuous power output."
 
 	activate()
 		..()
@@ -22,7 +31,27 @@
 			boutput(usr, "[ship.ship_message("No plasma located inside of the fuel tank!")]")
 			src.deactivate()
 			return
+
+		var/usage = 10/3000 // minimum usage @ 0.0333 moles consumed per 100W per tick
+		var/datum/gas_mixture/consumed = ship.fueltank?.remove_air(usage)
+		var/toxins = consumed?.toxins
+		if(isnull(toxins))
+			toxins = 0
+		if(consumed)
+			ship.fueltank?.assume_air(consumed)
+			if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+				boutput(usr, "[ship.ship_message("Insufficient plasma located inside of the fuel tank!")]")
+				src.deactivate()
+				return
+
 		ship.powercapacity = src.powergenerated
+		src.ship.speedmod *= src.engine_speed
+
+		// ----- Startup sequence -----
+		if(src.engine_icon) // Vehicles might not have an engine overlay
+			src.engine_icon.icon_state = "[src.icon_state]-start"
+			ship.UpdateOverlays(src.engine_icon, "engine")
+			spawn(src.startup_time) src.startup_finished()
 		return
 	////Warp requires recharge time
 	ready()
@@ -31,11 +60,17 @@
 			wormholeQueued = 0
 
 	deactivate()
+		if (src.active)
+			src.ship.speedmod /= src.engine_speed
 		..()
 		ship.powercapacity = 0
-		for(var/obj/item/shipcomponent/S in ship.components)
-			if(S.active)
-				S.deactivate()
+		for(var/part_slot in ship.installed_parts)
+			var/obj/item/shipcomponent/part = ship.get_part(part_slot)
+			if(part?.active)
+				part.deactivate()
+		if(src.engine_icon)
+			src.engine_icon.icon_state = "[src.icon_state]-off"
+			ship.UpdateOverlays(src.engine_icon, "engine")
 		return
 
 	opencomputer(mob/user as mob)
@@ -59,11 +94,35 @@
 		onclose(user, "ship_engine")
 		return
 
+	ship_install()
+		if(istype(src.ship, /obj/machinery/vehicle/pod_smooth))
+			src.engine_icon = image('icons/effects/64x64.dmi', "[src.icon_state]-off")
+			ship.AddOverlays(engine_icon, "engine")
+		else if(istype(src.ship, /obj/machinery/vehicle/miniputt) || istype(src.ship, /obj/machinery/vehicle/escape_pod) || istype(src.ship, /obj/machinery/vehicle/pod_wars_dingy))
+			src.engine_icon = image('icons/obj/ship.dmi', "[src.icon_state]-off")
+			ship.AddOverlays(engine_icon, "engine")
+		..()
+
+	ship_uninstall()
+		ship.ClearSpecificOverlays("engine")
+		src.engine_icon = null // In case the next vehicle does not have an engine overlay
+		..()
+
+	proc/startup_finished()
+		if(!src.ship || !src.engine_icon)
+			return
+		if(src.active)
+			src.engine_icon.icon_state = "[src.icon_state]-on"
+		else
+			src.engine_icon.icon_state = "[src.icon_state]-off"
+		src.ship.UpdateOverlays(src.engine_icon, "engine")
+
+
 /obj/item/shipcomponent/engine/proc/Wormhole()
 	if (wormholeQueued || warprecharge == -1)
 		return
 	//check for sensors, maybe communications too?
-	var/obj/item/shipcomponent/sensor/S = ship.sensors
+	var/obj/item/shipcomponent/sensor/S = ship.get_part(POD_PART_SENSORS)
 	if (istype(S))
 		if (!S.active)
 			boutput(usr, "[ship.ship_message("Sensors inactive! Unable to calculate warp trajectory!")]")
@@ -98,7 +157,8 @@
 #else
 	for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
 		if(W.encrypted)
-			if(QDELETED(ship.com_system) || !(W.encrypted in ship.com_system.access_type))
+			var/obj/item/shipcomponent/communications/comms_part = ship.get_part(POD_PART_COMMS)
+			if(QDELETED(comms_part) || !(W.encrypted in comms_part.access_type))
 				continue
 		count[W.name]++
 		beacons["[W.name][count[W.name] == 1 ? null : " #[count[W.name]]"]"] = W
@@ -176,31 +236,41 @@
 		if(SOUTHWEST)
 			A.pixel_y = dist*32
 			A.pixel_x = dist*32
+
+/obj/item/shipcomponent/engine/scout
+	name = "Scout Engine"
+	desc = "An engine optimized for speed and warp travel over power. Warning: Power is insufficient to operate most non-factory installed pod components."
+	powergenerated = 50
+	currentgen = 50
+	warprecharge = 5 SECONDS
+	engine_speed = 1.3
+	icon_state = "engine-0"
+
 /obj/item/shipcomponent/engine/helios
 	name = "Helios Mark-II Engine"
-	desc = "A really fast engine"
+	desc = "A really fast engine."
 	powergenerated = 300 //how much power for components the engine generates
 	currentgen = 300 //handles engine power debuffs
 	warprecharge = 150 //Interval it takes for warp to be ready again
-	speedmod = 1
+	engine_speed = 1.15
 	icon_state = "engine-2"
 
 /obj/item/shipcomponent/engine/hermes
 	name = "Hermes 3.0 Engine"
-	desc = "An incredibly powerful but slow engine"
+	desc = "An incredibly powerful but slow engine."
 	powergenerated = 500
 	currentgen = 500
 	warprecharge = 300
-	speedmod = 3
+	engine_speed = 0.7
 	icon_state = "engine-3"
 
 /obj/item/shipcomponent/engine/zero
 	name = "Warp-0 Engine"
-	desc = "An old prototype engine"
+	desc = "An old prototype engine."
 	powergenerated = 190
 	currentgen = 190
 	warprecharge = -1 //This disables the ability to create wormholes completely.
-	speedmod = 2
+	engine_speed = 1.1
 	icon_state = "engine-4"
 
 /obj/item/shipcomponent/engine/escape
@@ -208,3 +278,4 @@
 	desc = "This engine can probably make a warp jump. Once."
 	warprecharge = 20 MINUTES
 	portaldelay = 0 SECONDS
+	icon_state = "engine-esc"

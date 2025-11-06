@@ -17,8 +17,11 @@
 //supposedly for direct arg instertion. whatever that means??
 #define CONCALL(OBJ, TYPE, CALL, VARNAME) var##TYPE/##VARNAME=OBJ;if(istype(##VARNAME)) ##VARNAME.##CALL
 
+#define IS_OVERLAY_OR_EFFECT(x) (istype(x, /obj/overlay) || istype(x, /obj/effects) || istype(x, /obj/effect) || istype(x, /obj/itemspecialeffect) || istype(x, /atom/movable/tile_gas_effect))
+
 /// returns early if x is an overlay or effect
-#define return_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects)) return
+#define return_if_overlay_or_effect(x) if (IS_OVERLAY_OR_EFFECT(x)) return
+#define continue_if_overlay_or_effect(x) if (IS_OVERLAY_OR_EFFECT(x)) continue
 
 /proc/CallAsync(datum/object, delegate, list/callingArguments) // Adapted from /datum/callback/proc/InvokeAsync, which is PD, unlike this proc on tg
 	set waitfor = 0

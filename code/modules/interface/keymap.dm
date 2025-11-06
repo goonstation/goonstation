@@ -43,6 +43,10 @@
 			if(keybind)
 				winset_commands += "base_macro.[macro_id].name=[keybind]"
 		winset(cl, null, jointext(winset_commands, ";"))
+		// update tutorial keys dynamically
+		if (istype(cl.mob, /mob/living/carbon/human/tutorial))
+			var/datum/player/player = cl.mob.mind?.get_player()
+			player.tutorial.setup_keymap(src)
 
 	///Checks the input key and converts it to a usable format
 	///Wants input in the format "CTRL+F", as an example.

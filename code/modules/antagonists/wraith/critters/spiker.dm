@@ -15,6 +15,7 @@
 	health_brute_vuln = 1
 	health_burn = 50
 	health_burn_vuln = 1
+	name_generator_path = /datum/wraith_name_generator/wraith_summon/spiker
 	///Are we currently escaping?
 	var/shuffling = FALSE
 	var/mob/living/intangible/wraith/master = null
@@ -90,7 +91,7 @@
 				M.changeStatus("unconscious", 5 SECONDS)
 				M.visible_message(SPAN_ALERT("[M] gets grabbed by a tentacle and dragged!"))
 
-		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
+		previous_line = drawLineObj(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
 		SPAWN(1 DECI SECOND)	//Make it last a bit for impact
 			for (var/obj/O in previous_line)
 				qdel(O)
@@ -114,5 +115,5 @@
 		if (previous_line != null)
 			for (var/obj/O in previous_line)
 				qdel(O)
-		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
+		previous_line = drawLineObj(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
 

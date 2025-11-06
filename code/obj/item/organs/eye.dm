@@ -15,7 +15,10 @@
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()
 	var/color_g = 1
 	var/color_b = 1
-	var/show_on_examine = FALSE // do we get mentioned when our donor is examined?
+	///do we get mentioned when our donor is examined?
+	var/show_on_examine = FALSE
+	///provides sight for blindness checks
+	var/provides_sight = TRUE
 
 	New()
 		..()
@@ -105,6 +108,15 @@
 			return 0
 
 		return 1
+
+	// dead eyes stop working
+	breakme()
+		. = ..()
+		src.provides_sight = FALSE
+
+	unbreakme()
+		. = ..()
+		src.provides_sight = TRUE
 
 /obj/item/organ/eye/left
 	name = "left eye"
@@ -367,7 +379,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	icon_state = "eye-camera"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
-	var/camera_network = "public"
+	var/camera_network = CAMERA_NETWORK_PUBLIC
 	default_material = "pharosium"
 	iris_color = "#0d0558"
 
@@ -379,7 +391,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 
 	on_transplant(var/mob/M)
 		..()
-		src.camera.c_tag = "[M]'s Eye"
+		src.camera.c_tag = "[M]’s Eye"
 		return ..()
 
 TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
@@ -464,12 +476,74 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 		else // just us!
 			aholder.removeAbility(abil)
 
+TYPEINFO(/obj/item/organ/eye/cyber/monitor)
+	mats = 7
+
+/obj/item/organ/eye/cyber/monitor
+	name = "monitor cybereye"
+	organ_name = "monitor cybereye"
+	desc = "A tiny screen to replace an eye. It can view camera networks from the installed monitor."
+	organ_abilities = list(/datum/targetable/organAbility/view_camera)
+	default_material = "pharosium"
+	iris_color = "#0d0508"
+	icon_state = "eye-monitor"
+	var/obj/item/device/camera_viewer/viewer = null
+
+	HELP_MESSAGE_OVERRIDE("You can replace the installed camera monitor by clicking the eye with a monitor in-hand.")
+
+	New()
+		. = ..()
+		src.viewer = new /obj/item/device/camera_viewer/public(src)
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(!src.emagged)
+			if(user)
+				boutput(user, SPAN_ALERT("The internal monitor's network limiter shorts, fusing to \the [src] and making the lens opaque!"))
+			src.visible_message(SPAN_ALERT("<B>[src] sparks and shudders oddly!</B>"))
+			src.viewer.camera_networks = list(
+				CAMERA_NETWORK_STATION,
+				CAMERA_NETWORK_PUBLIC,
+				CAMERA_NETWORK_RANCH,
+				CAMERA_NETWORK_MINING,
+				CAMERA_NETWORK_SCIENCE,
+				CAMERA_NETWORK_TELESCI,
+				CAMERA_NETWORK_CARGO,
+			)
+			src.emagged = TRUE
+			src.provides_sight = FALSE
+
+	disposing()
+		. = ..()
+		qdel(src.viewer)
+		src.viewer = null
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/camera_viewer))
+			if(src.emagged)
+				boutput(user, "The internal monitor on [src] is fused in place and can't be removed!")
+				return
+			user.u_equip(W)
+			W.set_loc(src)
+			boutput(user, "You install [W] into [src].")
+			user.put_in_hand_or_drop(src.viewer)
+			src.viewer = W
+			return
+		..()
+
+	remove_ability(datum/abilityHolder/aholder, abil)
+		if (!ispath(abil, /datum/targetable/organAbility/view_camera) || !aholder)
+			return ..()
+		if (aholder.owner)
+			src.viewer.disconnect_user(aholder.owner)
+			aholder.removeAbility(abil)
+
+
 /obj/item/organ/eye/lizard
 	name = "slit eye"
 	desc = "I guess its owner is just a lzard now. Ugh that pun was terrible. Not worth losing an eye over."
 	icon_state = "eye-lizard"
 
-obj/item/organ/eye/skeleton
+/obj/item/organ/eye/skeleton
 	name = "boney eye"
 	desc = "Yes it also has eye sockets. How this works is unknown."
 	icon_state = "eye-bone"
@@ -486,3 +560,28 @@ obj/item/organ/eye/skeleton
 /obj/item/organ/eye/pug
 	name = "pug eye"
 	desc = "Poor guy."
+
+/obj/item/organ/eye/shelterfrog
+	name = "shelterfrog eye"
+	desc = "Oh, wow, this thing is huge. Like, larger than its owner's brain huge."
+	icon_state = "eye-shelterfrog"
+	change_iris = 0
+
+/obj/item/organ/eye/beady
+	name = "beady eye"
+	desc = "Looks like you're keeping a beady eye on this thing."
+	icon_state = "eye-beady"
+	change_iris = 0
+
+/obj/item/organ/eye/glass
+	name = "glass eye"
+	organ_name = "glass eye"
+	desc = "Straight out of the sixteenth century. Surprisingly lifelike!"
+	icon_state = "eye-glass"
+	edible = FALSE
+	iris_state_override = "eye"
+	show_on_examine = TRUE
+	provides_sight = FALSE
+	created_decal = null
+	default_material = "glass"
+	blood_reagent = null

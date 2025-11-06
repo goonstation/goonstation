@@ -4,7 +4,7 @@
 /// indicates if this is a player who is new to goonstation
 /datum/player/var/is_newbee = FALSE
 
-/client/New()
+/client/post_auth()
 	. = ..()
 	check_newbee()
 
@@ -13,7 +13,8 @@
 	set waitfor = FALSE
 	if (player.is_newbee)
 		return //already marked as newbee
-	var/list/round_stats = src.player.get_round_stats(TRUE)
+	UNTIL(src.player.fetched_round_stats, 10 SECONDS)
+	var/list/round_stats = src.player.get_round_stats()
 	if (!round_stats)
 		logTheThing(LOG_DEBUG, src, "check_newbee() failed, unable to fetch round stats.")
 		return

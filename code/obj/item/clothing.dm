@@ -157,7 +157,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under)
 			var/t = src.icon_state
 			src.icon_state = ""
 			src.icon = 'b_items.dmi'
-			flick(text("[]", t), src)
+			FLICK(text("[]", t), src)
 			sleep(1.4 SECONDS)
 			qdel(src)
 		return 0

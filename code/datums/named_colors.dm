@@ -1,9 +1,6 @@
 // Named colors
 // Used for describing appearences of reagents
 
-/// distance^2 between first and second RGB values
-#define color_dist2(_r, _g, _b, _dr, _dg, _db) ((_r-_dr)*(_r-_dr)+(_g-_dg)*(_g-_dg)+(_b-_db)*(_b-_db))
-
 /// the datum holding one named color
 /datum/named_color
 	var/name = null

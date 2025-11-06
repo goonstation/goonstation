@@ -397,7 +397,7 @@ TYPEINFO(/obj/stool/wooden)
 		return TRUE
 
 	proc/unbuckle_mob(var/mob/M as mob, var/mob/user as mob)
-		if (M.buckled && !user.restrained())
+		if (M.buckled && !user.restrained() && !is_incapacitated(user))
 			if (allow_unbuckle)
 				if (M != user)
 					user.visible_message(SPAN_NOTICE("<b>[M]</b> is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
@@ -659,16 +659,6 @@ TYPEINFO(/obj/stool/chair)
 			butt_img.icon_state = "chair_[has_butt.icon_state]"
 			UpdateOverlays(butt_img, "chairbutt")
 			return
-		if (istype(W, /obj/item/assembly/shock_kit))
-			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc, W)
-			if (src.material)
-				E.setMaterial(src.material)
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			W.set_loc(E)
-			user.u_equip(W)
-			W.layer = initial(W.layer)
-			qdel(src)
-			return
 		else
 			return ..()
 
@@ -692,7 +682,7 @@ TYPEINFO(/obj/stool/chair)
 
 			if (M.buckled && M != chair_chump)
 				if (allow_unbuckle)
-					if(user.restrained())
+					if(user.restrained() || is_incapacitated(user))
 						return
 					if (M != user)
 						user.visible_message(SPAN_NOTICE("<b>[M]</b> is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
@@ -729,6 +719,7 @@ TYPEINFO(/obj/stool/chair)
 				C.icon_state = "folded_[src.icon_state]"
 				C.item_state = C.icon_state
 
+			C.forensic_holder = src.forensic_holder
 			qdel(src)
 		else
 			src.rotate()
@@ -994,6 +985,7 @@ TYPEINFO(/obj/item/chair/folded)
 		C.setMaterial(src.material)
 	if (src.c_color)
 		C.icon_state = src.c_color
+	C.forensic_holder = src.forensic_holder
 	C.set_dir(user.dir)
 	ON_COOLDOWN(user, "chair_stand", 1 SECOND)
 	boutput(user, "You unfold [C].")
@@ -1143,8 +1135,6 @@ TYPEINFO(/obj/item/chair/folded)
 
 TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	mats = 15
-
-TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	mat_appearances_to_ignore = list("steel")
 /obj/stool/chair/comfy/wheelchair
 	name = "wheelchair"
@@ -1220,7 +1210,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 
 	set_loc(newloc)
 		. = ..()
-		unbuckle()
+		if(src.buckled_guy?.loc != src.loc)
+			unbuckle()
 
 /* ======================================================= */
 /* -------------------- Dining Chairs -------------------- */
@@ -1320,12 +1311,12 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 
 	update_icon()
 		if (src.dir == NORTH)
-			src.layer = FLY_LAYER+1
+			src.layer = MOB_LAYER_BASE+1
 		else
-			src.layer = OBJ_LAYER
-			if ((src.dir == WEST || src.dir == EAST) && !src.arm_image)
+			src.layer = initial(src.layer)
+			if ((src.dir == WEST || src.dir == EAST) && src.arm_icon_state && !src.arm_image)
 				src.arm_image = image(src.icon, src.arm_icon_state)
-				src.arm_image.layer = FLY_LAYER+1
+				src.arm_image.layer = MOB_LAYER_BASE+1
 				src.UpdateOverlays(src.arm_image, "arm")
 
 	left
@@ -1409,7 +1400,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		if (!user) return
 		if (damaged || buckled_guy) return ..()
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		playsound(src.loc, "rustle", 66, 1, -5) // todo: find a better sound.
 

@@ -1,12 +1,16 @@
 #define BLACK FALSE
 #define WHITE TRUE
 
+TYPEINFO(/obj/item/gameclock)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/item/gameclock
 	name = "game clock"
 	desc = "A set of clocks used to track time for two player board games. Fancy!"
 	icon = 'icons/obj/items/boardgame.dmi'
 	icon_state = "chessclock"
 	flags = TGUI_INTERACTIVE
+	speech_verb_say = "dings"
 	var/timing = FALSE
 	var/turn = WHITE
 	var/defaultTime = 5 MINUTES
@@ -38,12 +42,7 @@
 		return timeValue
 
 	proc/timeFlag()
-		var/winner = src.turn ? "Black" : "White"
-		var/loser = !src.turn ? "Black" : "White"
-		var/map_text = make_chat_maptext(src, "[winner] wins on time.", "color: #A8E9F0;", alpha = 150)
-		for (var/mob/O in hearers(src))
-			O.show_message(assoc_maptext = map_text)
-		src.visible_message("[src] stops. [loser] has flagged and [winner] wins on time.")
+		src.say("[src.turn ? "Black" : "White"] wins on time.")
 		src.icon_state = "[src.icon_state]_stopped"
 		playsound(src.loc, 'sound/effects/bell_high_pitch.ogg', 30)
 

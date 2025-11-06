@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Antagonist Status Removed!',
-  content: (
+const AntagRemovalContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are no longer an antagonist!</h1>
 
@@ -17,5 +16,10 @@ export const acw: AlertContentWindow = {
         unexpected development, please inquire about it in <em>adminhelp</em>.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Antagonist Status Removed!',
+  component: AntagRemovalContentWindow,
 };

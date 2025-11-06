@@ -7,10 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Nuclear Operative Basics',
-  theme: 'syndicate',
-  content: (
+const NukeopContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a Syndicate operative!</h1>
       <img
@@ -25,9 +23,11 @@ export const acw: AlertContentWindow = {
         <span className="small">
           The target location is recorded in the <em>audio log</em> and also
           viewable through the <em>Notes</em> verb.
-          <br /> If you are unsure where the target location is, check the{' '}
-          <em>map</em> button in the top right of the client, or use the{' '}
-          <em>camera monitors</em> on the bridge.
+          <br />
+          If you are unsure where the target location is, view the{' '}
+          <em>Atrium Station Map</em>, check the <em>map</em> button in the top
+          right of the client, or use the <em>camera monitors</em> on the
+          bridge.
         </span>
       </p>
 
@@ -35,10 +35,10 @@ export const acw: AlertContentWindow = {
         2. Each operative starts with a <em>requisition token</em>.<br />
         <span className="small">
           Insert it in to a <em>weapons vendor</em> and select a{' '}
-          <em>sidearm, loadout and storage</em> option from the list.
+          <em>sidearm, loadout and utility</em> option from the list.
           <br />
           <img
-            src={resource('images/antagTips/weaponvendor.png')}
+            src={resource('images/antagTips/syndicate-weapon.png')}
             className="right"
           />
           It is often worthwhile to plan your loadout purchases with your fellow
@@ -60,7 +60,7 @@ export const acw: AlertContentWindow = {
         <br />
         <br />
         <span className="small">
-          say :h I&apos;m about to activate the nuke in security. Stick
+          say :z I&apos;m about to activate the nuke in security. Stick
           together, boys!
         </span>
       </p>
@@ -108,5 +108,11 @@ export const acw: AlertContentWindow = {
         </a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Nuclear Operative Basics',
+  theme: 'syndicate',
+  component: NukeopContentWindow,
 };

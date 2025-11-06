@@ -4,6 +4,7 @@
 	mob_path = /mob/living/intangible/wraith/poltergeist
 	remove_on_death = TRUE
 	has_info_popup = FALSE
+	wiki_link = "https://wiki.ss13.co/Wraith#Poltergeists"
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current

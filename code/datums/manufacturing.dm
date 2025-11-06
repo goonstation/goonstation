@@ -157,7 +157,7 @@
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack
-	name = "AI Law Rack Mount"
+	name = "AI Law Rack"
 	item_requirements = list("metal" = 20,
 							 "metal_dense" = 5,
 							 "insulated" = 10,
@@ -222,6 +222,9 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/crowbar/purple
+	item_outputs = list(/obj/item/crowbar/purple)
+
 /datum/manufacture/screwdriver
 	name = "Screwdriver"
 	item_requirements = list("metal" = 1)
@@ -245,6 +248,9 @@
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
+
+/datum/manufacture/wrench/purple
+	item_outputs = list(/obj/item/wrench/purple)
 
 /datum/manufacture/crowbar/yellow
 	name = "Crowbar"
@@ -284,6 +290,17 @@
 							 "conductive" = 1,
 							 "crystal" = 1)
 	item_outputs = list(/obj/item/device/light/flashlight)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
+
+/datum/manufacture/lantern
+	name = "Lantern"
+	item_requirements = list("metal" = 1,
+							 "conductive" = 1,
+							 "crystal" = 1)
+	item_outputs = list(/obj/item/device/light/lantern)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -381,6 +398,17 @@
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/bullet_9mm_frangible
+	name = "9mm Frangible Rounds"
+	item_requirements = list("conductive" = 25,
+							 "rubber" = 15,
+							 "plastic" = 15,
+							 "metal" = 10)
+	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
+	create = 1
+	time = 15 SECONDS
+	category = "Resource"
+
 /datum/manufacture/bullet_12g_nail
 	name = "12 gauge nailshot"
 	item_requirements = list("metal_dense" = 40,
@@ -425,6 +453,9 @@
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
+
+/datum/manufacture/welder/purple
+	item_outputs = list(/obj/item/weldingtool/purple)
 
 /datum/manufacture/soldering
 	name = "Soldering Iron"
@@ -627,6 +658,12 @@
 	category = "Resource"
 	apply_material = TRUE
 
+/datum/manufacture/metal/bulk
+	name = "Metal Sheet (x5)"
+	item_requirements = list("metal" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/metal::time
+
 /datum/manufacture/metalR
 	name = "Reinforced Metal"
 	item_requirements = list("metal" = 2)
@@ -642,14 +679,26 @@
 		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal")])
 		S.set_reinforcement(applicable_material.material)
 
+/datum/manufacture/metalR/bulk
+	name = "Reinforced Metal (x5)"
+	item_requirements = list("metal" = 10)
+	create = 5
+	time = 5 * /datum/manufacture/metalR::time
+
 /datum/manufacture/glass
 	name = "Glass Panel"
-	item_requirements = list("crystal" = 5)
+	item_requirements = list("crystal" = 1)
 	item_outputs = list(/obj/item/sheet)
-	create = 5
-	time = 8 SECONDS
+	create = 1
+	time = 2 SECONDS
 	category = "Resource"
 	apply_material = TRUE
+
+/datum/manufacture/glass/bulk
+	name = "Glass Panel (x5)"
+	item_requirements = list("crystal" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/glass::time
 
 /datum/manufacture/glassR
 	name = "Reinforced Glass Panel"
@@ -664,8 +713,16 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal_dense")])
 		S.set_reinforcement(applicable_material.material)
+
+/datum/manufacture/glassR/bulk
+	name = "Reinforced Glass Panel (x5)"
+	item_requirements = list("crystal" = 5,
+							 "metal_dense" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/glassR::time
+
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
@@ -842,7 +899,7 @@
 
 /datum/manufacture/condenser
 	name = "Chemical Condenser"
-	item_requirements = list("molitz" = 5)
+	item_requirements = list("crystal" = 5)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser)
 	create = 1
 	time = 5 SECONDS
@@ -860,6 +917,16 @@
 	name = "Dropper Funnel"
 	item_requirements = list("molitz" = 3)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dropper)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
+/datum/manufacture/portable_dispenser
+	name = "Portable Dispenser"
+	item_requirements = list("molitz" = 3,
+							 "metal" = 2,
+							 "miracle" = 2)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dispenser)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -927,6 +994,20 @@
 	create = 1
 	time = 90 SECONDS
 	category = "Tool"
+
+/datum/manufacture/places_pipes
+	name = "Handheld Pipe Dispencer"
+	item_requirements = list("metal_superdense" = 12,
+							 "crystal_dense" = 6,
+							 "conductive_high" = 6,
+							 "energy_high" = 6)
+	item_outputs = list(/obj/item/places_pipes)
+	create = 1
+	time = 90 SECONDS
+	category = "Tool"
+
+/datum/manufacture/places_pipes/science
+	item_outputs = list(/obj/item/places_pipes/research)
 
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
@@ -1027,7 +1108,7 @@
 	item_requirements = list("dense_super" = 10,
 							 "insulated" = 20,
 							 "rubber" = 5)
-	item_outputs = list(/obj/item/tank/emergency_oxygen/extended/empty)
+	item_outputs = list(/obj/item/tank/pocket/extended/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -1108,6 +1189,15 @@
 	create = 1
 	time = 20 SECONDS
 	category = "Clothing"
+
+/datum/manufacture/wheelchair
+	name = "Wheelchair Parts"
+	item_requirements = list("metal" = 8,
+							 "fabric" = 3)
+	item_outputs = list(/obj/item/furniture_parts/wheelchair)
+	create = 1
+	time = 30 SECONDS
+	category = "Resource"
 
 /datum/manufacture/hypospray
 	name = "Hypospray"
@@ -1350,6 +1440,17 @@
 	time = 25 SECONDS
 	category = "Organ"
 
+/datum/manufacture/cybereye_monitor
+	name = "Monitor Cybereye"
+	item_requirements = list("crystal" = 3,
+							 "metal" = 1,
+							 "conductive" = 2,
+							 "insulated" = 1)
+	item_outputs = list(/obj/item/organ/eye/cyber/monitor)
+	create = 1
+	time = 25 SECONDS
+	category = "Organ"
+
 /datum/manufacture/cybereye_laser
 	name = "Laser Cybereye"
 	item_requirements = list("crystal" = 3,
@@ -1378,6 +1479,15 @@
 	item_outputs = list(/obj/item/implantcase/antirot)
 	create = 1
 	time = 30 SECONDS
+	category = "Resource"
+
+/datum/manufacture/medicalalertbutton
+	name = "Medical Alert Button"
+	item_requirements = list("conductive" = 2,
+							 "metal" = 2)
+	item_outputs = list(/obj/item/device/panicbutton/medicalalert)
+	create = 1
+	time = 3 SECONDS
 	category = "Resource"
 
 #ifdef ENABLE_ARTEMIS
@@ -1628,6 +1738,13 @@
 	time = 50 SECONDS
 	category = "Component"
 
+/datum/manufacture/clone_rack
+	name = "Clone Rack"
+	item_outputs = list(/obj/machinery/disk_rack/clone)
+	item_requirements = list("metal" = 30, "conductive" = 10)
+	create = 1
+	time = 40 SECONDS
+
 /datum/manufacture/shell_frame
 	name = "AI Shell Frame"
 	item_requirements = list("metal_dense" = 12)
@@ -1761,16 +1878,6 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 3 SECONDS
 	category = "Tool"
-
-/datum/manufacture/secbot
-	name = "Security Drone"
-	item_requirements = list("metal_dense" = 30,
-							 "conductive_high" = 20,
-							 "energy" = 20)
-	item_outputs = list(/obj/machinery/bot/secbot)
-	create = 1
-	time = 120 SECONDS
-	category = "Machinery"
 
 /datum/manufacture/floorbot
 	name = "Construction Drone"
@@ -1917,7 +2024,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	name = "Teleport Upgrade"
 	item_requirements = list("conductive" = 10,
 							 "dense" = 1,
-							 "energy_high" = 10)//Okayenoughroundstartteleportborgs.Fuck.
+							 "telecrystal" = 10)//Okayenoughroundstartteleportborgs.Fuck.
 	item_outputs = list(/obj/item/roboupgrade/teleport)
 	create = 1
 	time = 120 SECONDS
@@ -1984,6 +2091,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/visualizer)
 	create = 1
 	time = 90 SECONDS
+	category = "Component"
+
+/datum/manufacture/scream_synth
+	name = "Scream Synthesizer"
+	item_requirements = list("conductive" = 2, "metal" = 2, "insulated" = 2)
+	item_outputs = list(/obj/item/instrument/roboscream)
+	create = 1
+	time = 30 SECONDS
 	category = "Component"
 
 /datum/manufacture/implant_robotalk
@@ -2291,7 +2406,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/miniplasmatank
 	name = "Mini plasma tank"
 	item_requirements = list("metal_dense" = 1)
-	item_outputs = list(/obj/item/tank/mini_plasma/empty)
+	item_outputs = list(/obj/item/tank/mini/plasma/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Resource"
@@ -2299,7 +2414,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/minioxygentank
 	name = "Mini oxygen tank"
 	item_requirements = list("metal_dense" = 1)
-	item_outputs = list(/obj/item/tank/mini_oxygen/empty)
+	item_outputs = list(/obj/item/tank/mini/oxygen/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Resource"
@@ -2313,7 +2428,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	category = "Resource"
 
 /datum/manufacture/mender
-	name = "Auto Mender"
+	name = "Auto Mender (x2)"
 	item_requirements = list("metal_dense" = 5,
 							 "crystal" = 4,
 							 "gold" = 5)
@@ -2417,6 +2532,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	category = "Clothing"
 
 /// Ship Items -- OLD COMPONENTS
+
+/datum/manufacture/engine_scout
+	name = "Scout Engine"
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/engine/scout)
+	create = 1
+	time = 5 SECONDS
+	category = "Resource"
 
 /datum/manufacture/engine
 	name = "Warp-1 Engine"
@@ -3133,6 +3257,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 20 SECONDS
 	category = "Tool"
 
+/datum/manufacture/pod/weapon/burst_ltlaser
+	name = "Mk.1.5e Burst Phasers"
+	item_requirements = list("metal_dense" = 15,
+							 "conductive" = 45,
+							 "crystal" = 45)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser/burst_phaser)
+	create = 1
+	time = 25 SECONDS
+	category = "Tool"
+
 /datum/manufacture/pod/weapon/efif1
 	name = "EFIF-1 Construction System"
 	item_requirements = list("metal_superdense" = 50,
@@ -3150,6 +3284,76 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock)
 	create = 1
 	time = 10 SECONDS
+	category = "Tool"
+
+
+/datum/manufacture/pod/lateral_thrusters
+	name = "Lateral Thrusters"
+	item_requirements = list("metal_dense" = 20,
+							 "conductive" = 10,
+							 "energy" = 20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/lateral)
+	create = 1
+	time = 12 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/afterburner
+	name = "Afterburner"
+	item_requirements = list("metal" = 10,
+							 "conductive" = 20,
+							 "energy" = 20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/afterburner)
+	create = 1
+	time = 12 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/light_shielding
+	name = "Light Shielding System"
+	item_requirements = list("metal" = 5,
+							 "conductive" = 10,
+							 "energy_high" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/light)
+	create = 1
+	time = 15 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/heavy_shielding
+	name = "High Impact Shielding System"
+	item_requirements = list("metal" = 5,
+							 "crystal_dense" = 20,
+							 "conductive_high" = 10,
+							 "energy_extreme" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/heavy)
+	create = 1
+	time = 25 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/auto_repair_kit
+	name = "Automatic Repair System"
+	item_requirements = list("metal_dense" = 20,
+							 "conductive" = 30,
+							 "energy" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/auto_repair_kit)
+	create = 1
+	time = 10 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapons_loader
+	name = "Weapons Loader"
+	item_requirements = list("metal_dense" = 10,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/weapons_loader)
+	create = 1
+	time = 17 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/gunner_support
+	name = "Gunner Module"
+	item_requirements = list("metal_dense" = 10,
+							 "conductive" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/gunner_support)
+	create = 1
+	time = 17 SECONDS
 	category = "Tool"
 
 /datum/manufacture/pod/sps
@@ -3245,53 +3449,68 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 10 SECONDS
 	category = "Miscellaneous"
 
-/datum/manufacture/packingcrate
-	name = "Random Packing Crate"
-	item_requirements = list("wood" = 1)
-	item_outputs = list(/obj/storage/crate/packing)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
-
-/datum/manufacture/wooden
+/datum/manufacture/crate/wooden
 	name = "Wooden Crate"
 	item_requirements = list("wood" = 1)
 	item_outputs = list(/obj/storage/crate/wooden)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
 
-/datum/manufacture/medical
+/datum/manufacture/crate/wooden/packing
+	name = "Random Packing Crate"
+	item_outputs = list(/obj/storage/crate/packing)
+
+/datum/manufacture/crate/medical
 	name = "Medical Crate"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/storage/crate/medical)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
 
-/datum/manufacture/biohazard
+/datum/manufacture/crate/biohazard
 	name = "Biohazard Crate"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/storage/crate/biohazard)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
 
-/datum/manufacture/classcrate
+/datum/manufacture/crate/class
 	name = "Class Crate"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/storage/crate/classcrate)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
 
-/datum/manufacture/freezer
+/datum/manufacture/crate/freezer
 	name = "Freezer Crate"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/storage/crate/freezer)
-	create = 1
-	time = 10 SECONDS
-	category = "Miscellaneous"
+
+/datum/manufacture/crate/secure
+	name = "Secure Crate (Access: None)"
+	item_requirements = list("metal" = 1, "conductive" = 2)
+	item_outputs = list(/obj/storage/secure/crate)
+
+/datum/manufacture/crate/secure/secure_transfer
+	name = "Security Transfer Crate"
+	item_outputs = list(/obj/storage/secure/crate/gear/transfer)
+
+/datum/manufacture/crate/secure/confiscated_items
+	name = "Confiscated Items Crate"
+	item_outputs = list(/obj/storage/secure/crate/weapon/confiscated_items)
+
+/datum/manufacture/crate/secure/armory
+	name = "Armory Weapons Crate (Empty)"
+	item_outputs = list(/obj/storage/secure/crate/weapon/armory)
+
+/datum/manufacture/crate/secure/hazard
+	name = "Research Hazard Transport Crate"
+	item_outputs = list(/obj/storage/secure/crate/plasma/hazard)
+
+/datum/manufacture/crate/secure/engineering
+	name = "Secure Engineering Crate"
+	item_outputs = list(/obj/storage/secure/crate/eng/locked)
+
+/datum/manufacture/crate/secure/medical
+	name = "Medical Transport Crate"
+	item_outputs = list(/obj/storage/secure/crate/medical)
+
+/datum/manufacture/crate/secure/hydroponics
+	name = "Hydroponics Transport Crate"
+	item_outputs = list(/obj/storage/secure/crate/bee/locked)
+
+/datum/manufacture/crate/secure/syndicate
+	name = "Unmarked Syndicate Crate"
+	item_outputs = list(/obj/storage/secure/crate/gear/syndicate)
+
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor
@@ -3309,7 +3528,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_kit
 	name = "Interdictor Frame Kit"
-	item_requirements = list("metal_dense" = 10)
+	item_requirements = list("metal_dense" = 5)
 	item_outputs = list(/obj/item/interdictor_kit)
 	create = 1
 	time = 10 SECONDS
@@ -3317,7 +3536,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_board_standard
 	name = "Standard Interdictor Mainboard"
-	item_requirements = list("conductive" = 4)
+	item_requirements = list("conductive" = 2)
 	item_outputs = list(/obj/item/interdictor_board)
 	create = 1
 	time = 5 SECONDS
@@ -3325,7 +3544,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_board_nimbus
 	name = "Nimbus Interdictor Mainboard"
-	item_requirements = list("conductive" = 4,
+	item_requirements = list("conductive" = 2,
 							 "insulated" = 2,
 							 "crystal" = 2)
 	item_outputs = list(/obj/item/interdictor_board/nimbus)
@@ -3335,7 +3554,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_board_zephyr
 	name = "Zephyr Interdictor Mainboard"
-	item_requirements = list("conductive" = 4,
+	item_requirements = list("conductive" = 2,
 							 "viscerite" = 5)
 	item_outputs = list(/obj/item/interdictor_board/zephyr)
 	create = 1
@@ -3344,7 +3563,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/interdictor_board_devera
 	name = "Devera Interdictor Mainboard"
-	item_requirements = list("conductive" = 4,
+	item_requirements = list("conductive" = 2,
 							 "crystal" = 2,
 							 "syreline" = 5)
 	item_outputs = list(/obj/item/interdictor_board/devera)
@@ -3355,8 +3574,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"
 	item_requirements = list("metal_dense" = 2,
-							 "conductive" = 10,
-							 "crystal" = 5,
+							 "conductive" = 5,
+							 "crystal" = 2,
 							 "insulated" = 2)
 	item_outputs = list(/obj/item/interdictor_rod)
 	create = 1
@@ -3366,8 +3585,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_sigma
 	name = "Sigma Phase-Control Rod"
 	item_requirements = list("metal_dense" = 2,
-							 "conductive_high" = 10,
-							 "insulated" = 5,
+							 "conductive_high" = 5,
+							 "insulated" = 2,
 							 "energy" = 2)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
 	create = 1
@@ -3377,8 +3596,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_epsilon
 	name = "Epsilon Phase-Control Rod"
 	item_requirements = list("metal_dense" = 2,
-							 "electrum" = 10,
-							 "dense" = 5,
+							 "electrum" = 5,
+							 "dense" = 2,
 							 "energy" = 2)
 	item_outputs = list(/obj/item/interdictor_rod/epsilon)
 	create = 1
@@ -3388,8 +3607,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_phi
 	name = "Phi Phase-Control Rod"
 	item_requirements = list("metal_dense" = 5,
-							 "crystal" = 10,
-							 "conductive" = 5)
+							 "conductive" = 5,
+							 "crystal" = 2)
 	item_outputs = list(/obj/item/interdictor_rod/phi)
 	create = 1
 	time = 15 SECONDS
@@ -3677,5 +3896,31 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
+
+/datum/manufacture/heavy_firesuit
+	name = "Heavy Firesuit"
+	item_requirements = list(
+		"fabric" = 20,
+		"fibrilith" = 10,
+	)
+	create = 1
+	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
+	category = "Clothing"
+
+/datum/manufacture/turbine_shaft
+	name = "Turbine Shaft"
+	item_requirements = list("metal_dense" = 20)
+	create = 1
+	item_outputs = list(/obj/turbine_shaft)
+	time = 30 SECONDS
+	category = "Machinery"
+
+/datum/manufacture/current_turbine
+	name = "Current Turbine"
+	item_requirements = list("metal_dense" = 50, "conductive" = 20)
+	create = 1
+	item_outputs = list(/obj/turbine_shaft/turbine)
+	time = 50 SECONDS
+	category = "Machinery"
 
 #undef JUMPSUIT_COST

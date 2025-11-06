@@ -1,0 +1,532 @@
+/*****************************
+ * Globals
+ *****************************/
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+html {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+#cache-storage {
+  display: none;
+}
+
+a {
+  color: var(--theme-color);
+}
+
+h1 {
+  margin: 0 0 0.2em 0;
+  font-size: 1.2em;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+  line-height: 1.2;
+}
+
+hr {
+  border-color: hsl(from var(--theme-highlight) h s calc(l + 20));
+}
+
+img {
+  position: relative;
+  image-rendering: pixelated;
+}
+
+.icon {
+  display: inline-block;
+  margin: 0 0.5em 0 0;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0.75em 1em;
+  background: var(--theme-highlight);
+  border-radius: 0.1em;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+  transition: background-color 100ms;
+}
+
+.btn.btn--small {
+  padding: 0.75em 0.5em;
+}
+
+.btn:hover {
+  background: hsl(from var(--theme-highlight) h s calc(l + 10));
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+.btn-group > * {
+  flex: 1;
+}
+
+.box {
+  margin-bottom: 0.5em;
+  padding: 0.75em;
+  border-radius: 0.1em;
+  background: rgb(from var(--theme-color) r g b / 15%);
+}
+
+.box--error {
+  background: rgb(255 0 0 / 50%);
+}
+
+.box--success {
+  background: rgb(0 128 0 / 70%);
+}
+
+.loading-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgb(from var(--theme-primary) r g b / 50%);
+}
+
+.loading-overlay:before {
+  content: '';
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  border: 0.3em solid currentColor;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: rotation 1s linear infinite;
+}
+
+/* Item description colors */
+.success {
+  color: green;
+}
+
+.hint {
+  color: #9999ff;
+}
+
+.notice {
+  color: #9999ff;
+}
+
+.alert {
+  color: #ff0000;
+}
+
+/* You didn't see nothing */
+.rainbow {
+  animation: rainbow 1s infinite alternate;
+}
+
+/*****************************
+ * Animations
+ *****************************/
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    color: red;
+  }
+
+  20% {
+    color: orange;
+  }
+
+  40% {
+    color: yellow;
+  }
+
+  60% {
+    color: green;
+  }
+
+  80% {
+    color: aqua;
+  }
+
+  100% {
+    color: blue;
+  }
+}
+
+/*****************************
+ * Wrappers
+ *****************************/
+
+.tt-wrap {
+  /*
+	 Represents scaling of map icons.
+	 E.g. a 32x32 tile that is stretched to 64x64 on the users screen would have a scale factor of 2
+ */
+  --scaling-factor: 1;
+
+  /*
+	 Device pixel ratio
+	 AKA OS window scaling
+ */
+  --dpr: 1;
+  --dpr-inverse: calc(1 / var(--dpr));
+
+  /*
+	 Scale from a base of 300px
+	 With a minimum size of 200px
+	 And a maximum size of 300px
+ */
+  --max-width: min(max(calc(var(--scaling-factor) * 300px), 200px), 300px);
+  --max-height: min(max(calc(var(--scaling-factor) * 300px), 200px), 300px);
+
+  /*
+	 Just the dimensions of the game map view
+ */
+  --map-width: var(--max-width);
+  --map-height: var(--max-height);
+
+  /*
+	 Scale from a base of 12px
+	 With a minimum size of 8px
+	 And a maximum size of 12px
+ */
+  font-size: min(
+    max(calc(var(--scaling-factor) * var(--dpr-inverse) * 12px), 8px),
+    12px
+  );
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(var(--max-width), calc(var(--map-width) * var(--dpr-inverse)));
+  height: min(var(--max-height), calc(var(--map-height) * var(--dpr-inverse)));
+}
+
+.tt-content {
+  --theme-color: #fff;
+  --theme-primary: #333;
+  --theme-secondary: #222;
+  --theme-highlight: #000;
+  --theme-button: #ffffff33;
+  --theme-border-width: 0.17em;
+
+  display: inline-block;
+  /* zoom: var(--dpr); */
+  line-height: 1.2;
+  color: var(--theme-color);
+  background: var(--theme-primary);
+  user-select: none;
+  /* to include the outline */
+  padding: var(--theme-border-width);
+  /* inside border */
+  border: var(--theme-border-width) solid var(--theme-highlight);
+  /* outside border */
+  outline: var(--theme-border-width) solid var(--theme-secondary);
+  outline-offset: calc((var(--theme-border-width) * 2) * -1);
+}
+
+.tt-content > h1 {
+  display: flex;
+  margin: 0;
+  /* background: var(--theme-primary);
+	mix-blend-mode: screen; */
+  background: hsl(from var(--theme-primary) h calc(1 + 40) calc(l + 10));
+}
+
+.tt-content > h1 > span {
+  display: inline-block;
+  padding: 0.3em 0.5em;
+}
+
+.tt-content > div {
+  position: relative;
+  padding: 0.5em;
+}
+
+.tt-close {
+  align-self: flex-start;
+  appearance: none;
+  background: none;
+  border: 0;
+  margin-left: auto;
+  padding: 0.54em 0.4em 0.2em 0.4em;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 200ms;
+}
+
+.tt-close:hover {
+  opacity: 0.75;
+}
+
+/* Clearfix */
+.cf::after,
+.tt-content > *::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+/*****************************
+ * Themes
+ *****************************/
+
+[data-theme='error'] .tt-content {
+  --theme-highlight: #c70d08;
+  --theme-secondary: #303012;
+  --theme-primary: #6e0000;
+}
+
+[data-theme='default'] .tt-content,
+[data-theme='newhud'] .tt-content {
+  --theme-primary: #121a21;
+  --theme-secondary: #0a131a;
+  --theme-highlight: #1c5567;
+
+  background: var(--theme-secondary)
+    repeating-linear-gradient(
+      var(--theme-secondary),
+      var(--theme-secondary) 2px,
+      var(--theme-primary) 2px,
+      var(--theme-primary) 4px
+    );
+}
+
+[data-theme='item'] .tt-content {
+  --theme-primary: #47545f;
+  --theme-secondary: #182730;
+  --theme-highlight: #2b7ada;
+}
+
+[data-theme='blob'] .tt-content {
+  --theme-highlight: #009900;
+  --theme-secondary: #66ff00;
+  --theme-primary: #475e13;
+}
+
+[data-theme='wraith'] .tt-content {
+  --theme-highlight: #492136;
+  --theme-secondary: #331726;
+  --theme-primary: #471962;
+}
+
+[data-theme='overmind'] .tt-content {
+  --theme-highlight: #80ad32;
+  --theme-secondary: #352956;
+  --theme-primary: #5240a5;
+}
+
+[data-theme='flock'] .tt-content {
+  --theme-highlight: #40e8c4;
+  --theme-secondary: #40e8c4;
+  --theme-primary: #60a092;
+}
+
+[data-theme='pod'] .tt-content {
+  --theme-highlight: #052401;
+  --theme-secondary: #326d29;
+  --theme-primary: #569f4b;
+}
+
+[data-theme='pod-alt'] .tt-content {
+  --theme-highlight: #221e03;
+  --theme-secondary: #69622c;
+  --theme-primary: #9b924f;
+}
+
+[data-theme='colo-pod'] .tt-content {
+  --theme-highlight: #256fb9;
+  --theme-secondary: #000000;
+  --theme-primary: #000000;
+}
+
+/* Mob health stuff */
+
+[data-theme^='healthDam'] .tt-content {
+  --theme-secondary: #233b25;
+}
+
+[data-theme='healthDam0'] .tt-content,
+[data-theme='healthDam1'] .tt-content,
+[data-theme='healthDam2'] .tt-content,
+[data-theme='healthDam3'] .tt-content,
+[data-theme='healthDam6'] .tt-content {
+  --theme-highlight: #2b7ada;
+}
+
+[data-theme='healthDam4'] .tt-content,
+[data-theme='healthDam5'] .tt-content {
+  --theme-highlight: #fefe00;
+}
+
+[data-theme='healthDam0'] .tt-content {
+  --theme-primary: #59cc00;
+}
+
+[data-theme='healthDam1'] .tt-content {
+  --theme-primary: #73cc00;
+}
+
+[data-theme='healthDam2'] .tt-content {
+  --theme-primary: #cbcc00;
+}
+
+[data-theme='healthDam3'] .tt-content {
+  --theme-primary: #f79800;
+}
+
+[data-theme='healthDam4'] .tt-content {
+  --theme-primary: #c94a00;
+}
+
+[data-theme='healthDam5'] .tt-content {
+  --theme-primary: #ad0000;
+}
+
+[data-theme='healthDam6'] .tt-content {
+  --theme-primary: #540000;
+}
+
+[data-theme='statusOxy'] .tt-content {
+  --theme-highlight: #fbfe00;
+  --theme-secondary: #3e090d;
+  --theme-primary: #980400;
+}
+
+[data-theme='statusFire'] .tt-content {
+  --theme-highlight: #fbfe00;
+  --theme-secondary: #570d00;
+  --theme-primary: #db3e00;
+}
+
+[data-theme='statusToxin'] .tt-content {
+  --theme-highlight: #d0ff00;
+  --theme-secondary: #6e0000;
+  --theme-primary: #c70d08;
+}
+
+[data-theme='statusRad'] .tt-content {
+  --theme-highlight: #fbfe00;
+  --theme-secondary: #570d00;
+  --theme-primary: #df5d00;
+}
+
+/* Dead */
+
+[data-theme='healthDam7'] .tt-content {
+  --theme-highlight: #303012;
+  --theme-primary: #272727;
+}
+
+/* Bodytemp indicator */
+
+[data-theme^='tempInd'] .tt-content {
+  --theme-secondary: #233b25;
+}
+
+[data-theme='tempInd0'] .tt-content,
+[data-theme='tempInd1'] .tt-content,
+[data-theme='tempInd4'] .tt-content,
+[data-theme='tempIndF'] .tt-content,
+[data-theme='tempInd-1'] .tt-content,
+[data-theme='tempInd-4'] .tt-content {
+  --theme-highlight: #2b7ada;
+}
+
+[data-theme='tempInd2'] .tt-content,
+[data-theme='tempInd3'] .tt-content,
+[data-theme='tempInd-2'] .tt-content,
+[data-theme='tempInd-3'] .tt-content {
+  --theme-highlight: #fefe00;
+}
+
+[data-theme='tempInd0'] .tt-content {
+  --theme-primary: #59cc00;
+}
+
+[data-theme='tempInd1'] .tt-content {
+  --theme-primary: #9dcc00;
+}
+
+[data-theme='tempInd2'] .tt-content {
+  --theme-primary: #c57200;
+}
+
+[data-theme='tempInd3'] .tt-content {
+  --theme-primary: #f79800;
+}
+
+[data-theme='tempInd4'] .tt-content {
+  --theme-primary: #c50000;
+}
+
+[data-theme='tempIndF'] .tt-content {
+  --theme-primary: #c50000;
+}
+
+[data-theme='tempInd-1'] .tt-content {
+  --theme-primary: #3cbf5b;
+}
+
+[data-theme='tempInd-2'] .tt-content {
+  --theme-primary: #44cccd;
+}
+
+[data-theme='tempInd-3'] .tt-content {
+  --theme-primary: #349ace;
+}
+
+[data-theme='tempInd-4'] .tt-content {
+  --theme-primary: #1a35cf;
+}
+
+/* Stamina */
+
+[data-theme='stamina'] .tt-content {
+  --theme-highlight: #2b7ada;
+  --theme-secondary: #182730;
+  --theme-primary: #47545f;
+}

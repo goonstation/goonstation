@@ -79,11 +79,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		return
 
 	get_desc(dist, mob/user)
+		. = ..()
 		if (dist > 2)
 			return
 		if (!reagents)
 			return
-		. = "<br>[SPAN_NOTICE("[reagents.get_description(user,rc_flags)]")]"
+		. += "<br>[SPAN_NOTICE("[reagents.get_description(user,rc_flags)]")]"
 
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))
@@ -227,7 +228,7 @@ proc/ui_describe_reagents(atom/A)
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 		// this shit sucks but this is an if-else so there's no space to fit a cast in there
 		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
@@ -287,7 +288,7 @@ proc/ui_describe_reagents(atom/A)
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
 				boutput(user, SPAN_NOTICE("You fill [src] with [amt] units of [F]."))
-				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
+				if (amt) F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
@@ -467,7 +468,7 @@ proc/ui_describe_reagents(atom/A)
 		else if (istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
 			if ("silver" in src.reagents.reaction(I, react_volume = src.reagents.total_volume))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!"))
-				I.tooltip_rebuild = 1
+				I.tooltip_rebuild = TRUE
 			else
 				if(istype(I, /obj/item/ammo/bullets))
 					var/obj/item/ammo/A = I
@@ -512,7 +513,8 @@ proc/ui_describe_reagents(atom/A)
 		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
 			if(user.mind.assigned_role == "Bartender")
-				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+				user.visible_message("[user] deftly [pick("spins, twirls")] [src], managing to keep all the contents inside.",
+				 "You deftly [pick("spin", "twirl")] [src], managing to keep all the contents inside.")
 			else
 				user.visible_message(SPAN_ALERT("<b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b>"))
 				src.reagents.reaction(get_turf(user), TOUCH)
@@ -582,6 +584,7 @@ proc/ui_describe_reagents(atom/A)
 			user.u_equip(D)
 			user.put_in_hand_or_drop(B)
 			user.show_text("You add the sensor to the bucket")
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(D)
 			qdel(src)
 
@@ -605,6 +608,7 @@ proc/ui_describe_reagents(atom/A)
 			user.show_text("You cut eyeholes into [src].")
 			var/obj/item/clothing/head/helmet/bucket/B = new helmet_bucket_type(src.loc)
 			user.put_in_hand_or_drop(B)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(src)
 		else
 			return ..()
@@ -624,6 +628,7 @@ proc/ui_describe_reagents(atom/A)
 		var/obj/item/clothing/head/helmet/bucket/hat/B = new hat_bucket_type(src.loc)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
 
 	afterattack(obj/target, mob/user, flag)
@@ -680,6 +685,7 @@ proc/ui_describe_reagents(atom/A)
 					bucket_hat.set_loc(get_turf(H))
 					H.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], [splash? "splashing" : "bouncing off"] [H] and falling to the floor."), \
 										SPAN_ALERT("[src] falls from \the [targetDoor], [splash? "splashing you and " : ""]bouncing off your hat."))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, bucket_hat)
 				qdel(src) //it's a hat now
 			else
 				//aw, fine, it just falls on the floor
@@ -792,7 +798,7 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
 		add_container(container)
 	proc/add_line(var/obj/container)
-		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		var/datum/lineResult/result = drawLineImg(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		result.lineImage.layer = src.layer+0.01
@@ -895,7 +901,7 @@ proc/ui_describe_reagents(atom/A)
 		add_line(var/obj/container, var/containerNo)
 			var/x_off = 5*((containerNo+1)%2)  //alternate between 0/+5
 			var/y_off = (4*round((containerNo-1)/2)) //go up by 4 pixels for every 2nd connection
-			var/datum/lineResult/result = drawLine(src, container, "condenser_[containerNo]", "condenser_end_[containerNo]", src.pixel_x-4+x_off, src.pixel_y+5+y_off, container.pixel_x, container.pixel_y + container.get_chemical_effect_position(), mode=LINEMODE_STRETCH_NO_CLIP)
+			var/datum/lineResult/result = drawLineImg(src, container, "condenser_[containerNo]", "condenser_end_[containerNo]", src.pixel_x-4+x_off, src.pixel_y+5+y_off, container.pixel_x, container.pixel_y + container.get_chemical_effect_position(), mode=LINEMODE_STRETCH_NO_CLIP)
 			result.lineImage.layer = src.layer+0.01
 			result.lineImage.pixel_x = -src.pixel_x
 			result.lineImage.pixel_y = -src.pixel_y
@@ -947,6 +953,9 @@ proc/ui_describe_reagents(atom/A)
 	Flow rate can be adjusted either in your hand, or with a <b>screwdriver</b>.
 	To pick this up, click and drag it onto your person."})
 
+	get_desc()
+		. = " The flow rate is set to [flow_rate]."
+
 	disposing()
 		src.remove_container()
 		. = ..()
@@ -954,14 +963,14 @@ proc/ui_describe_reagents(atom/A)
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (ismob(over_object))
 			var/mob/user = over_object
-			if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
+			if (user == usr && !user.restrained() && !is_incapacitated(user) && in_interact_range(src, user))
 				if (!user.put_in_hand(src))
 					return ..()
 		else
 			..()
 
 	add_line(var/obj/container)
-		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x-1, src.pixel_y-13, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		var/datum/lineResult/result = drawLineImg(src, container, "condenser", "condenser_end", src.pixel_x-1, src.pixel_y-13, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		result.lineImage.layer = src.layer+0.01
@@ -998,20 +1007,152 @@ proc/ui_describe_reagents(atom/A)
 			set_flow(!open)
 
 	proc/adjust_flow_rate(mob/user)
-		var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
+		var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate (1-10)",flow_rate,10,1,FALSE,TRUE)
 		if (number && flow_rate != number)
 			flow_rate = number
+		src.tooltip_rebuild = TRUE
 	proc/set_flow(var/desired_state)
 		if (!desired_state && open)
 			processing_items -= src
 			open = FALSE
-			flick("dropper_funnel_swoff",src)
+			FLICK("dropper_funnel_swoff",src)
 			icon_state = "dropper_funnel_off"
 		else if(desired_state && !open)
 			processing_items |= src
 			open = TRUE
-			flick("dropper_funnel_swon",src)
+			FLICK("dropper_funnel_swon",src)
 			icon_state = "dropper_funnel_on"
+
+
+
+/obj/item/reagent_containers/glass/plumbing/dispenser
+	name = "portable chemical dispenser"
+	desc = "A synthesizer, ripped from a Chem Dispenser, capable of placing reagents in glassware at a fixed rate."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "producer"
+	splash_all_contents = FALSE
+	object_flags = SUPPRESSATTACK
+	initial_volume = 0
+	accepts_lid = TRUE
+	rc_flags = FALSE
+	fluid_overlay_states = 0
+	container_style = "condenser"
+	var/running = FALSE
+	var/flow_rate = 1
+	var/reagent_to_fabricate = ""
+	var/fabrication_tick = 0
+	var/ticks_to_fabricate = 4
+	var/image/fabricating_overlay = null
+	var/image/fabrication_tick_lights = null
+	HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+	Flow rate and chemical fabricated can be adjusted either in your hand, or with a <b>screwdriver</b>.
+	To pick this up, click and drag it onto your person."})
+
+
+	get_desc()
+		. = " It is set to dispense [flow_rate] units of [reagent_to_fabricate]."
+
+	New()
+		. = ..()
+
+	disposing()
+		src.remove_container()
+		. = ..()
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (ismob(over_object))
+			var/mob/user = over_object
+			if (user == usr && !user.restrained() && !is_incapacitated(user) && in_interact_range(src, user))
+				if (!user.put_in_hand(src))
+					return ..()
+		else
+			..()
+
+	add_line(var/obj/container)
+		var/datum/lineResult/result = drawLineImg(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		result.lineImage.layer = src.layer+0.01
+		src.UpdateOverlays(result.lineImage, "tube\ref[container]")
+	attack_self(mob/user as mob)
+		adjust_flow_rate(user)
+		return
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/screwdriver))
+			adjust_flow_rate(user)
+			user.visible_message(SPAN_NOTICE("[user.name] adjusts \the [src.name]."))
+			return
+		..()
+	process()
+		if (running)
+			fabrication_tick += 1
+			if (fabrication_tick >= ticks_to_fabricate)
+				fabrication_tick = 0
+				if(length(src.connected_containers))
+					var/reagents_per_container = flow_rate / length(src.connected_containers)
+					for(var/obj/container in src.connected_containers)
+						container.reagents.add_reagent(reagent_to_fabricate, reagents_per_container)
+			update_visuals()
+
+
+	set_loc(newloc, storage_check)
+		set_flow(FALSE)
+		. = ..()
+	Move()
+		set_flow(FALSE)
+		. = ..()
+	attack_hand(mob/user)
+		if (length(src.connected_containers) <= 0)
+			..()
+		else
+			src.add_fingerprint(user)
+			set_flow(!running)
+
+	proc/update_visuals()
+		if (running && fabrication_tick > 0)
+			fabrication_tick_lights = image('icons/obj/items/chemistry_glassware.dmi',"producer_lights_[fabrication_tick]")
+		else
+			fabrication_tick_lights = null
+
+		if (reagent_to_fabricate)
+			if (running)
+				fabricating_overlay = image('icons/obj/items/chemistry_glassware.dmi',"producer_chem_active")
+			else
+				fabricating_overlay = image('icons/obj/items/chemistry_glassware.dmi',"producer_chem")
+
+			var/datum/reagent/reagent_instance = reagents_cache[reagent_to_fabricate]
+			var/list/hsl = rgb2hsl(reagent_instance.fluid_r,reagent_instance.fluid_g,reagent_instance.fluid_b)
+			fabricating_overlay.color =  hsl2rgb(hsl[1], hsl[2], clamp(hsl[3],255,20))
+
+		else
+			fabricating_overlay = null
+		src.UpdateOverlays(src.fabrication_tick_lights, "light")
+		src.UpdateOverlays(src.fabricating_overlay, "overlay")
+
+	proc/adjust_flow_rate(mob/user)
+		var/reagent = tgui_input_list(user,"Set desired reagent", "Set reagent", basic_elements, reagent_to_fabricate)
+		if (reagent == null)
+			return
+		var/number = tgui_input_number(user,"Set fabrication volume, in units", "Set fabrication rate (1-5)",flow_rate,5,1,FALSE,TRUE)
+		if (reagent && (reagent in basic_elements) && reagent_to_fabricate != reagent)
+			reagent_to_fabricate = reagent
+		if (number && flow_rate != number)
+			flow_rate = number
+		src.tooltip_rebuild = TRUE
+		update_visuals()
+
+	proc/set_flow(var/desired_state)
+		if (!desired_state && running)
+			processing_items -= src
+			running = FALSE
+			fabrication_tick = 0
+		else if(desired_state && !running && reagent_to_fabricate)
+			processing_items |= src
+			running = TRUE
+		update_visuals()
+
+
 
 /obj/item/reagent_containers/synthflesh_pustule
 	name = "synthetic pustule"
@@ -1034,7 +1175,7 @@ proc/ui_describe_reagents(atom/A)
 		START_TRACKING
 		processing_items.Add(src)
 		original_icon_state = icon_state
-		flick("[icon_state]-plop", src)
+		FLICK("[icon_state]-plop", src)
 		..()
 
 	disposing()
@@ -1169,7 +1310,7 @@ proc/ui_describe_reagents(atom/A)
 
 		else
 			if (W.force >= 5) //gotta smack it with something a little hefty at least
-				user.lastattacked = src
+				user.lastattacked = get_weakref(src)
 				attack_particle(user,src)
 				hit_twitch(src)
 				playsound(src, 'sound/impact_sounds/Generic_Slap_1.ogg', 50,TRUE)

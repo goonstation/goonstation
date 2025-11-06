@@ -11,12 +11,14 @@
 	var/is_browser = FALSE
 	var/status = TGUI_WINDOW_CLOSED
 	var/locked = FALSE
+	var/visible = FALSE
+	var/interface = null // |GOONSTATION-ADD| Interface string used to find a similar window in the pool
 	var/datum/tgui/locked_by
 	var/datum/subscriber_object
 	var/subscriber_delegate
 	var/fatally_errored = FALSE
 	var/message_queue
-	var/list/sent_assets
+	var/list/sent_assets // |GOONSTATION-CHANGE| Initialize list in New instead
 	// Vars passed to initialize proc (and saved for later)
 	var/initial_strict_mode
 	var/initial_fancy
@@ -24,8 +26,10 @@
 	var/initial_inline_html
 	var/initial_inline_js
 	var/initial_inline_css
-	var/mouse_event_macro_set = FALSE
+	var/list/oversized_payloads = list()
+	var/mouse_event_macro_set = FALSE // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 
+	// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 	/**
 	 * Static list used to map in macros that will then emit execute events to the tgui window
 	 * A small disclaimer though I'm no tech wiz: I don't think it's possible to map in right or middle
@@ -45,16 +49,26 @@
  *
  * required client /client
  * required id string A unique window identifier.
+ * optional pooled bool
+ * optional interface string - used to find a similar window in the pool
  */
-/datum/tgui_window/New(client/client, id, pooled = FALSE)
-	. = ..()
+/datum/tgui_window/New(client/client, id, interface, pooled = FALSE) // |GOONSTATION-CHANGE|
+	. = ..() // |GOONSTATION-ADD| Probably good I guess
 	src.id = id
 	src.client = client
 	src.client.tgui_windows[id] = src
-	src.sent_assets = list()
+	src.sent_assets = list() // |GOONSTATION-ADD| Initialized here instead of above
 	src.pooled = pooled
 	if(pooled)
 		src.pool_index = TGUI_WINDOW_INDEX(id)
+	src.interface = interface // |GOONSTATION-ADD| Initialize interface string
+
+/datum/tgui_window/disposing() // |GOONSTATION-ADD|
+	src.client = null
+	src.locked_by = null
+	src.subscriber_object = null
+	src.subscriber_delegate = null
+	. = ..()
 
 /**
  * public
@@ -99,11 +113,11 @@
 	else
 		options += "titlebar=1;can_resize=1;"
 	// Generate page html
-	var/html = tgui_process.basehtml
-	html = replacetextEx(html, "\[tgui:windowId\]", id)
-	html = replacetextEx(html, "\[tgui:strictMode\]", strict_mode)
-	html = replacetextEx(html, "\[tgui:byondMajor\]", client.byond_version)
-	html = replacetextEx(html, "\[tgui:byondMinor\]", client.byond_build)
+	var/html = tgui_process.basehtml // |GOONSTATION-CHANGE| Different process holder
+	html = replacetextEx(html, "\[tgui:windowId\]", id) // |GOONSTATION-CHANGE| Escape closing ], differs to upstream
+	html = replacetextEx(html, "\[tgui:strictMode\]", strict_mode) // |GOONSTATION-CHANGE| Escape closing ], differs to upstream
+	html = replacetextEx(html, "\[tgui:byondMajor\]", client.byond_version) // |GOONSTATION-ADD| Include BYOND version
+	html = replacetextEx(html, "\[tgui:byondMinor\]", client.byond_build) // |GOONSTATION-ADD| Include BYOND build
 
 	// Inject assets
 	var/inline_assets_str = ""
@@ -119,7 +133,7 @@
 
 	if(length(inline_assets_str))
 		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
-	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
+	html = replacetextEx(html, "<!-- tgui:assets -->", inline_assets_str) // |GOONSTATION-CHANGE| (-->\n") -> (-->") I realize this syntax is confusing
 
 	// Inject inline HTML
 	if (inline_html)
@@ -132,7 +146,6 @@
 	if (inline_css)
 		inline_css = "<style>\n[isfile(inline_css) ? file2text(inline_css) : inline_css]\n</style>"
 		html = replacetextEx(html, "<!-- tgui:inline-css -->", inline_css)
-
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Detect whether the control is a browser
@@ -229,6 +242,8 @@
 	locked_by = ui
 
 /**
+ * public
+ *
  * Release the window lock.
  */
 /datum/tgui_window/proc/release_lock()
@@ -270,12 +285,14 @@
 /datum/tgui_window/proc/close(can_be_suspended = TRUE)
 	if(!client)
 		return
+	// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 	if(mouse_event_macro_set)
 		remove_mouse_macro()
 	if(can_be_suspended && can_be_suspended())
 		log_tgui(client,
 			context = "[id]/close (suspending)",
 			window = src)
+		visible = FALSE
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
@@ -283,6 +300,7 @@
 		context = "[id]/close",
 		window = src)
 	release_lock()
+	visible = FALSE
 	status = TGUI_WINDOW_CLOSED
 	message_queue = null
 	// Do not close the window to give user some time
@@ -302,6 +320,10 @@
 /datum/tgui_window/proc/send_message(type, payload, force)
 	if(!client)
 		return
+
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	var/message = TGUI_CREATE_MESSAGE(type, payload)
 	// Place into queue if window is still loading
 	if(!force && status != TGUI_WINDOW_READY)
@@ -324,6 +346,10 @@
 /datum/tgui_window/proc/send_raw_message(message, force)
 	if(!client)
 		return
+
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	// Place into queue if window is still loading
 	if(!force && status != TGUI_WINDOW_READY)
 		if(!message_queue)
@@ -334,6 +360,7 @@
 		? "[id]:update" \
 		: "[id].browser:update")
 
+// |GOONSTATION-CHANGE| Assets sent differently
 /**
  * public
  *
@@ -346,6 +373,7 @@
 		return
 	sent_assets += list(asset)
 	. = asset.deliver(client)
+	// |GOONSTATION-CHANGE| We have not implemented separate spritesheet assets yet
 	/*
 	if(istype(asset, /datum/asset/spritesheet))
 		var/datum/asset/spritesheet/spritesheet = asset
@@ -373,7 +401,10 @@
  *
  * Callback for handling incoming tgui messages.
  */
-/datum/tgui_window/proc/on_message(type, list/payload, list/href_list)
+/datum/tgui_window/proc/on_message(type, list/payload, list/href_list) // |GOONSTATION-CHANGE| Explicit list for payload/href_list
+	// |GOONSTATION-ADD| Opportunistic cleanup of expired oversized payloads
+	prune_oversized_payloads()
+
 	// Status can be READY if user has refreshed the window.
 	if(type == "ready" && status == TGUI_WINDOW_READY)
 		// Resend the assets
@@ -403,6 +434,9 @@
 	switch(type)
 		if("ping")
 			send_message("ping/reply", payload)
+		if("visible")
+			visible = TRUE
+			SEND_SIGNAL(src, COMSIG_TGUI_WINDOW_VISIBLE, client)
 		if("suspend")
 			close(can_be_suspended = TRUE)
 		if("close")
@@ -411,9 +445,22 @@
 			client << link(href_list["url"])
 		if("cacheReloaded")
 			reinitialize()
-		// if("chat/resend") TGUI CHAT
+		// |GOONSTATION-CHANGE| Not implemented tgui chat
+		// if("chat/resend")
 			// SSchat.handle_resend(client, payload)
+		if("oversizedPayloadRequest")
+			var/payload_id = payload["id"]
+			var/chunk_count = payload["chunkCount"]
+			var/permit_payload = chunk_count <= config.tgui_max_chunk_count
+			if(permit_payload)
+				create_oversized_payload(payload_id, payload["type"], chunk_count)
+			send_message("oversizePayloadResponse", list("allow" = permit_payload, "id" = payload_id))
+		if("payloadChunk")
+			var/payload_id = payload["id"]
+			append_payload_chunk(payload_id, payload["chunk"])
+			send_message("acknowlegePayloadChunk", list("id" = payload_id))
 
+// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 /datum/tgui_window/proc/set_mouse_macro()
 	if(mouse_event_macro_set)
 		return
@@ -437,9 +484,56 @@
 		winset(client, "[mouseMacro]Window[id]Macro", params)
 	mouse_event_macro_set = TRUE
 
+// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 /datum/tgui_window/proc/remove_mouse_macro()
 	if(!mouse_event_macro_set)
 		stack_trace("Unsetting mouse macro on tgui window that has none")
 	for(var/mouseMacro in byondToTguiEventMap)
 		winset(client, null, "[mouseMacro]Window[id]Macro.parent=null")
 	mouse_event_macro_set = FALSE
+
+
+/datum/tgui_window/proc/create_oversized_payload(payload_id, message_type, chunk_count)
+	if(oversized_payloads[payload_id])
+		stack_trace("Attempted to create oversized tgui payload with duplicate ID.")
+		return
+	oversized_payloads[payload_id] = list(
+		"type" = message_type,
+		"count" = chunk_count,
+		"chunks" = list(),
+		"timeout" = 1.25 SECONDS + TIME // |GOONSTATION-CHANGE|
+	)
+
+/datum/tgui_window/proc/append_payload_chunk(payload_id, chunk)
+	var/list/payload = oversized_payloads[payload_id]
+	if(!payload)
+		return
+	var/list/chunks = payload["chunks"]
+	chunks += chunk
+	if(length(chunks) < payload["count"]) // |GOONSTATION-CHANGE| Extend timeout on incomplete payloads, flip logic
+		payload["timeout"] = 1.25 SECONDS + TIME // |GOONSTATION-CHANGE|
+	else
+		payload["timeout"] = 0 // |GOONSTATION-CHANGE|
+		var/message_type = payload["type"]
+		var/final_payload = chunks.Join()
+		remove_oversized_payload(payload_id)
+		on_message(message_type, json_decode(final_payload), list("type" = message_type, "payload" = final_payload, "tgui" = TRUE, "window_id" = id))
+
+/datum/tgui_window/proc/remove_oversized_payload(payload_id)
+	oversized_payloads -= payload_id
+
+// |GOONSTATION-ADD| Lazy sweep expired oversized payloads (no timers 😿😿😿)
+/datum/tgui_window/proc/prune_oversized_payloads()
+	if(!length(oversized_payloads))
+		return
+	var/list/to_remove = list()
+	for(var/pid in oversized_payloads)
+		var/list/payload = oversized_payloads[pid]
+		if(!islist(payload))
+			to_remove += pid
+			continue
+		var/timeout = payload["timeout"]
+		if(isnum(timeout) && (timeout <= TIME))
+			to_remove += pid
+	for(var/pid in to_remove)
+		remove_oversized_payload(pid)

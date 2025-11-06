@@ -4,30 +4,26 @@
 	layer = MOB_LAYER
 	_max_health = 10
 	var/custom_desc
-	// The material that the statue consists of, as well as what its contents turn into
-	var/statue_material = "steel"
-	// The mob inside of the statue
+	///The mob inside of the statue
 	var/mob/mob_inside
-	// In case we want to free the mob after entrapping them, for statues that encase, rather than turn into a material
+	///In case we want to free the mob after entrapping them, for statues that encase, rather than turn into a material
 	var/preserve_mob = FALSE
-	// List of organs we want to drop when we release the occupant
+	///List of organs we want to drop when we release the occupant
 	var/list/organs_to_drop = list("brain")
+	HELP_MESSAGE_OVERRIDE("")
 
 	gold
 		name = "gold statue"
-		statue_material = "gold"
 
 	ice
 		name = "ice statue"
 		custom_desc = "We here at Space Station 13 believe in the transparency of our employees."
-		statue_material = "ice"
 
 	rock
 		name ="rock statue"
 		custom_desc = "It's not too uncommon for our employees to be stoned at work but this is just ridiculous!"
-		statue_material = "rock"
 
-	proc/setup_statue(var/mob/M, var/mat_id, var/new_desc)
+	proc/setup_statue(var/mob/M, datum/material/material, var/new_desc)
 		if (!istype(M))
 			return
 		src.mob_inside = M
@@ -35,9 +31,7 @@
 		src.real_name = "statue of [src.mob_inside.name]"
 		src.name = src.real_name
 
-		var/datum/material/stat_mat = mat_id ? getMaterial(mat_id) : src.statue_material
-		if (stat_mat)
-			src.setMaterial(stat_mat)
+		src.setMaterial(material)
 
 		src.set_desc(new_desc)
 		src.set_dir(src.dir)
@@ -75,14 +69,25 @@
 		// Otherwise, it's probably soft enough to cut
 		if (iscuttingtool(W) || issawingtool(W) || ischoppingtool(W))
 			var/hardness = src.material.getProperty("hard")
-			if (hardness < 2)
+			if (hardness > 2)
 				boutput(user, SPAN_ALERT("The [src.material] is too hard to cut!"))
 				return
 
-			if(isliving(src.mob_inside))
-				var/mob/living/L = src.mob_inside
-				if (L.organHolder.head)
+			if(iscarbon(src.mob_inside))
+				var/mob/living/carbon/C = src.mob_inside
+				if (C.organHolder?.head)
 					boutput(user, SPAN_ALERT("You start cutting up [src]."))
+				else
+					boutput(user, SPAN_ALERT("You're not quite sure where the head is on [src]."))
+					return
+			else if (isrobot(src.mob_inside))
+				var/mob/living/silicon/robot/R = src.mob_inside
+				R.eject_brain(user)
+				return
+			else if (isAI(src.mob_inside))
+				var/mob/living/silicon/ai/AI = src.mob_inside
+				AI.eject_brain(user)
+				return
 			else
 				boutput(user, SPAN_ALERT("You start cutting the head off of [src]."))
 			playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, TRUE)
@@ -107,7 +112,7 @@
 
 	proc/mine_statue(var/obj/item/mining_tool/tool, var/mob/user)
 		var/hardness = src.material.getProperty("hard")
-		if (hardness < 2)
+		if (hardness <= 2)
 			boutput(user, SPAN_ALERT("The [src.material] is too soft to mine!"))
 			return
 		if(!ON_COOLDOWN(user, "mine_statue", 0.5 SECONDS))
@@ -193,7 +198,18 @@
 		if (!isliving(src.mob_inside))
 			return
 
+		if (isrobot(src.mob_inside))
+			var/mob/living/silicon/robot/R = src.mob_inside
+			R.eject_brain()
+			return
+		if (isAI(src.mob_inside))
+			var/mob/living/silicon/ai/AI = src.mob_inside
+			AI.eject_brain()
+			return
+
 		var/mob/living/L = src.mob_inside
+		if (!L.organHolder)
+			return
 		for (var/organ in src.organs_to_drop)
 			var/turf/T = get_turf(src)
 			var/obj/item/organ/O = L.organHolder.drop_organ(organ, T)
@@ -229,8 +245,9 @@
 			src.mob_inside.remove()
 			src.mob_inside = null
 
-/mob/proc/become_statue(var/mat_id, var/new_desc = null, survive=FALSE)
+/mob/proc/become_statue(datum/material/material, var/new_desc = null, survive=FALSE)
 	var/statue_type = /obj/statue
+	var/mat_id = material.getID()
 	switch(mat_id)
 		if ("gold")
 			statue_type = /obj/statue/gold
@@ -250,6 +267,6 @@
 	src.canmove = FALSE
 	src.transforming = FALSE
 
-	statueperson.setup_statue(src, mat_id, new_desc)
+	statueperson.setup_statue(src, material, new_desc)
 
 	return statueperson

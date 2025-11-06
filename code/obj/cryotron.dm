@@ -112,7 +112,7 @@
 			return (folks_to_spawn.len != 0)
 
 		src.icon_state = "cryotron_down"
-		flick("cryotron_go_down", src)
+		FLICK("cryotron_go_down", src)
 
 		SPAWN(1.9 SECONDS)
 			if (!thePerson || thePerson.loc != src)
@@ -134,7 +134,7 @@
 				if (O.anchored == UNANCHORED && O != src)
 					O.set_loc(locate(src.x, src.y-1, src.z)) // dump it in front of the cyrotron
 			src.icon_state = "cryotron_up"
-			flick("cryotron_go_up", src)
+			FLICK("cryotron_go_up", src)
 
 			if (thePerson)
 				thePerson.hibernating = 0
@@ -220,8 +220,13 @@
 							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
 								antagonist.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
-							user.ghostize()
-							qdel(user)
+							var/mob/dead/observer/ghost = user.ghostize()
+							//hopefully that's all the links?
+							ghost.corpse = null
+							user.ghost = null
+							user.last_ckey = null
+							//Disabling this for now, humans don't GC usually anyway and it was messing with cloner implants
+							// qdel(user)
 							return 1
 
 		return 0
@@ -248,7 +253,12 @@
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to enter storage on their own
-		if (!user && (L.stat || L.restrained() || L.getStatusDuration("unconscious") || L.sleeping))
+		var/handless = FALSE
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if((H.limbs && (!H.limbs.l_arm && !H.limbs.r_arm)))
+				handless = TRUE
+		if (!user && (L.stat || (!handless && L.restrained()) || L.getStatusDuration("unconscious") || L.sleeping))
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to put someone else in
@@ -362,9 +372,6 @@
 
 	/// Handling dragging players in to cryo, mainly for silicon players.
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (!ishuman(target) && !isrobot(user))
-			return
-
 		if (BOUNDS_DIST(src, user) != 0)
 			return
 
@@ -385,7 +392,12 @@
 		if (isAIeye(usr) || isintangible(usr))
 			return
 
-		if (!can_act(usr) || !in_interact_range(src, usr))
+		var/handless = FALSE
+		if (ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if((H.limbs && (!H.limbs.l_arm && !H.limbs.r_arm)))
+				handless = TRUE
+		if (!in_interact_range(src, usr) || is_incapacitated(usr) || (!handless && usr.restrained()))
 			return
 
 		if (isdead(usr) || isobserver(usr))

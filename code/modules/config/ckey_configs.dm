@@ -1,18 +1,15 @@
 // Various configuration lists full of player ckeys
 
-// Some of these are loaded in world/New(), some are loaded here.
-// not sure why and don't want to risk breaking more things
-
 /// Admins ( ["ckey"] = "rank" )
 /// Populated by proc call in world.New()
 var/global/list/admins = list()
 var/global/list/onlineAdmins = list()
 
 /// HoS/NTSO-whitelisted players
-var/global/list/NT = load_config_list("config/nt.txt")
+var/global/list/NT = list()
 
 /// Mentors
-var/global/list/mentors = load_config_list("config/mentors.txt")
+var/global/list/mentors = list()
 
 /// Players whomst'd've get allowed if whitelist-only is enabled
 var/global/list/whitelistCkeys = list()
@@ -95,12 +92,36 @@ var/global/list/bypassCapCkeys = list()
 				admins[m_key] = capitalize(a_lev)
 				logDiary("ADMIN: [m_key] = [a_lev]")
 
+/proc/load_mentors()
+	mentors = load_config_list("config/mentors.txt")
+	logDiary("Mentors: [jointext(mentors, ", ")]")
+
+/proc/load_hos()
+	NT = load_config_list("config/nt.txt")
+	logDiary("HoS: [jointext(NT, ", ")]")
+
 /proc/load_whitelist(fileName = null)
 	whitelistCkeys += load_config_list(!isnull(fileName) ? fileName : config.whitelist_path)
 	logDiary("Whitelisted ckeys: [jointext(whitelistCkeys, ", ")]")
-
 
 /proc/load_playercap_bypass()
 	bypassCapCkeys += load_config_list("config/allow_thru_cap.txt")
 	logDiary("Bypass Cap ckeys: [jointext(bypassCapCkeys, ", ")]")
 
+/proc/assign_goonhub_abilities(ckey, abilities)
+	if (!ckey || !abilities) return
+
+	if (abilities["is_admin"] && abilities["admin_rank"] && !admins[ckey])
+		admins[ckey] = abilities["admin_rank"]
+
+	if (abilities["is_mentor"] && !(ckey in mentors))
+		mentors += ckey
+
+	if (abilities["is_hos"] && !(ckey in NT))
+		NT += ckey
+
+	if (abilities["is_whitelisted"] && !(ckey in whitelistCkeys))
+		whitelistCkeys += ckey
+
+	if (abilities["can_bypass_cap"] && !(ckey in bypassCapCkeys))
+		bypassCapCkeys += ckey

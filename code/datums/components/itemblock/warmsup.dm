@@ -18,8 +18,7 @@
 /datum/component/itemblock/warmsup/proc/warmup(mob/living/carbon/human/H, var/mult)
 	if(parent != H.equipped())
 		return //do nothing if not in active hand
-	if(H.bodytemperature < H.base_body_temp) // Shamelessly copy-pasted from coffee
-		H.bodytemperature = min(H.base_body_temp, H.bodytemperature+(5 * mult))
+	H.changeBodyTemp(5 KELVIN * mult, max_temp = H.base_body_temp)
 
 //proc that is called when the base item is used to block. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_BEGIN" signal
 //This gives the block some cold resistance. Properties on a block are generally only counted if the block is held in the active hand

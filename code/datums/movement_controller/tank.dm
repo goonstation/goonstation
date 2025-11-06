@@ -49,10 +49,10 @@
 		if(changed & KEY_SHOCK)
 			shooting = keys & KEY_SHOCK
 		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
-			if (!owner.engine) // fuck it, no better place to put this, only triggers on presses
+			if (!owner.get_part(POD_PART_ENGINE)) // fuck it, no better place to put this, only triggers on presses
 				boutput(user, "[owner.ship_message("WARNING! No engine detected!")]")
 				return
-			if (istype(owner,/obj/machinery/vehicle/tank) && !owner:locomotion)
+			if (istype(owner,/obj/machinery/vehicle/tank) && !owner.get_part(POD_PART_LOCOMOTION))
 				boutput(user, "[owner.ship_message("WARNING! No locomotion detected!")]")
 				return
 
@@ -79,18 +79,20 @@
 
 		var/can_user_act = user && user == owner.pilot && !is_incapacitated(user) && !isdead(user)
 
-		if(shooting && owner.m_w_system?.active && can_user_act && !GET_COOLDOWN(owner.m_w_system, "fire"))
+		var/obj/item/shipcomponent/mainweapon/main_weapon = owner?.get_part(POD_PART_MAIN_WEAPON)
+		if(shooting && main_weapon?.active && can_user_act && !GET_COOLDOWN(main_weapon, "fire"))
 			owner.fire_main_weapon(user)
 
 		var/accel = 0
 		var/rot = 0
 		if (can_user_act)
-			if (owner?.engine?.active)
+			var/obj/item/shipcomponent/engine/engine_part = owner?.get_part(POD_PART_ENGINE)
+			if (engine_part?.active)
 				accel = input_y * accel_pow * (reverse_gear ? -1 : 1)
 				rot = input_x * turn_delay
 
 				//We're on autopilot before the warp, NO FUCKING IT UP!
-				if (owner.engine.warp_autopilot)
+				if (engine_part.warp_autopilot)
 					return 0
 
 		if (!can_turn_while_parked)

@@ -122,50 +122,6 @@
 			boutput( usr, SPAN_NOTICE("<b>You can't afford [p.name]!</b>") )
 			return FALSE
 
-
-/chui/window/earn_spacebux
-	name = "Spacebux"
-	windowSize = "250x380"
-
-	var/wage_base = 0
-	var/wage_after_score = 0
-	var/escaped = 1
-	var/final_payout = 0
-	var/new_balance = 0
-	var/badguy = 0
-	var/part_time = 0
-	var/held_item = 0
-	var/completed_objs = 0
-	var/all_objs = 0
-	var/pilot = 0 //buckled into pilots chair
-	var/pilot_bonus = 0
-
-	GetBody()
-		var/ret
-		if (!badguy)
-			ret = "<p style=\"text-align:left;\">Base Wage [part_time ? "(part-time)" : ""].....<span style=\"float:right;\"><b>[wage_base]   </b></span> </p><br>"
-			ret += "<p style=\"text-align:left;\">Station Grade Tax .....<span style=\"float:right;\"><b>- [wage_base-wage_after_score]  </b></span> </p><br>"
-			if (!escaped)
-				ret += "<p style=\"text-align:left;\">Did not escape .....<span style=\"float:right;\"><b>- [wage_after_score - final_payout] </b></span> </p>"
-			if (completed_objs > 0)
-				ret += "<p style=\"text-align:left;\">Crew objective bonus .....<span style=\"float:right;\"><b>+ [completed_objs] </b></span> </p>"
-				if (all_objs > 0)
-					ret += "<p style=\"text-align:left;\">All crew objective bonus .....<span style=\"float:right;\"><b>+ [all_objs] </b></span> </p>"
-		else
-			ret = "<p style=\"text-align:left;\">Base Wage .....<span style=\"float:right;\"><b>[final_payout]   </b></span> </p><br style=\"line-height:0px;\" />"
-			ret += "<p style=\"text-align:left;\">Antagonist - No tax!</p>"
-		if (pilot)
-			ret += "<p style=\"text-align:left;\">Pilot's bonus ....<span style=\"float:right;\"><b>+ [pilot_bonus] </b></span> </p>"
-
-
-		ret += "<hr>"
-		ret += "<big><b><p style=\"text-align:left;\">PAYOUT ..... <span style=\"float:right;\">[final_payout]</span> </p></b></big><br>"
-		ret += "<p style=\"text-align:left;\"><span style=\"float:right;\">ACCOUNT BALANCE :	<b>[new_balance]</b></span></p><br>"
-		ret += "<p style=\"text-align:left;\"><span style=\"float:right;\">HELD ITEM :	<b>[held_item ? held_item : "none"]</b></span></p><br>"
-		ret += "<p style=\"font-size:75%;\">Spend Spacebux from your bank when you Declare Ready for the next round!</p>"
-		return ret
-
-
 //Subtract cash from bank on successful equip
 /mob/proc/Equip_Bank_Purchase(var/datum/bank_purchaseable/purchase)
 	if (!purchase)

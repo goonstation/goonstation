@@ -64,6 +64,8 @@
 			var/new_cooldown = round(text2num(params["value"]))
 			T.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
 			. = TRUE
+		if ("resetCooldown")
+			T.last_cast = 0
 		if ("manageAbility")
 			ui.user.client.debug_variables(T)
 			. = TRUE

@@ -117,8 +117,8 @@
 	else if (iswrenchingtool(W))
 		if ((istype(src, /obj/machinery/portable_atmospherics/canister))) //No messing with anchored canbombs. -ZeWaka
 			var/obj/machinery/portable_atmospherics/canister/C = src
-			if (!isnull(C.det) && C.anchored)
-				boutput(user, SPAN_ALERT("The detonating mechanism blocks you from modifying the anchors on the [src.name]."))
+			if (!isnull(C.det))
+				boutput(user, SPAN_ALERT("The detonating mechanism blocks you from modifying the anchors on the [src.name] with a wrench."))
 				return
 		if(connected_port)
 			logTheThing(LOG_STATION, user, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")
@@ -142,8 +142,24 @@
 			else
 				boutput(user, SPAN_NOTICE("Nothing happens."))
 				return
-
+	else if (isweldingtool(W))
+		if (!src.destroyed)
+			return
+		if (W:try_weld(user,0,-1,1,1))
+			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, /obj/machinery/portable_atmospherics/proc/canister_disassemble, list(user, src, W), W.icon, W.icon_state, null,\
+				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
 	return
+
+/obj/machinery/portable_atmospherics/proc/canister_disassemble(mob/user, obj/machinery/portable_atmospherics/canister/C)
+	user.visible_message(SPAN_NOTICE("[user] disassembles \the [C]."))
+	logTheThing(LOG_STATION, user, "disassembles \the [C] at [log_loc(C)].")
+	var/obj/item/I = new /obj/item/sheet(get_turf(C))
+	if (C.material)
+		I.setMaterial(C.material)
+	else
+		var/datum/material/M = getMaterial("steel")
+		I.setMaterial(M)
+	qdel(C)
 
 /obj/machinery/portable_atmospherics/return_air(direct = FALSE)
 	return air_contents

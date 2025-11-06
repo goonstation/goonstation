@@ -124,7 +124,7 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 		boutput(user, SPAN_NOTICE("Extinguisher refilled..."))
 		playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		return
 
 	if (!safety && !target.storage)
@@ -180,7 +180,7 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 
 		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -3)
 
-		var/direction = get_dir(src,target)
+		var/direction = get_dir_accurate(src,target)
 
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
@@ -195,7 +195,7 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 
 		logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 		for (var/a = 0, a < reagents_per_dist, a++)
 			SPAWN(0)
@@ -210,11 +210,12 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 				var/turf/my_target = pick(the_targets)
 				W.spray_at(my_target, R, try_connect_fluid = 1)
 
+		// Propel user in opposite direction
 		if (istype(user.loc, /turf/space))
-			user.inertia_dir = get_dir(target, user)
+			user.inertia_dir = get_dir_accurate(target, user)
 			step(user, user.inertia_dir)
 		else if( user.buckled && !user.buckled.anchored )
-			var/wooshdir = get_dir( target, user )
+			var/wooshdir = get_dir_accurate( target, user )
 			SPAWN(0)
 				for( var/i = 1, (user?.buckled && !user.buckled.anchored && i <= rand(3,5)), i++ )
 					step( user.buckled, wooshdir )

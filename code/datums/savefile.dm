@@ -18,10 +18,7 @@
 	// returnSaveFile returns the file rather than writing it
 	// used for cloud saves
 	savefile_save(key, profileNum = 1, returnSavefile = 0)
-		if (key)
-			if (IsGuestKey(key))
-				return 0
-		else if (!returnSavefile) // if we don't have a user and we're trying to write it, it isn't going to work
+		if (!key && !returnSavefile) // if we don't have a user and we're trying to write it, it isn't going to work
 			CRASH("Tried to write a preferences savefile with no user specified.")
 
 		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
@@ -46,6 +43,7 @@
 		F["[profileNum]_name_first"] << src.name_first
 		F["[profileNum]_name_middle"] << src.name_middle
 		F["[profileNum]_name_last"] << src.name_last
+		F["[profileNum]_hyphenate_name"] << src.hyphenate_name
 		F["[profileNum]_robot_name"] << src.robot_name
 		F["[profileNum]_gender"] << src.gender
 		F["[profileNum]_age"] << src.age
@@ -54,6 +52,8 @@
 		F["[profileNum]_voicetype"] << AH.voicetype
 		F["[profileNum]_PDAcolor"] << src.PDAcolor
 		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
+		F["[profileNum]_use_satchel"] << src.use_satchel
+		F["[profileNum]_preferred_uplink"] << src.preferred_uplink
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -117,6 +117,7 @@
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
 		F["scrollwheel_limb_targeting"] << src.scrollwheel_limb_targeting
+		F["middle_mouse_swap"] << src.middle_mouse_swap
 		F["changelog"] << src.view_changelog
 		F["score"] << src.view_score
 		F["tickets"] << src.view_tickets
@@ -153,9 +154,6 @@
 		if (user) // bypass these checks if we're loading from a savefile and don't have a user
 			if (!isclient(user))
 				CRASH("[user] isnt a client. please give me a client. please. i beg you.")
-
-			if (IsGuestKey(user.key))
-				return 0
 
 		var/savefile/F
 		var/path
@@ -216,6 +214,7 @@
 		F["[profileNum]_name_first"] >> src.name_first
 		F["[profileNum]_name_middle"] >> src.name_middle
 		F["[profileNum]_name_last"] >> src.name_last
+		F["[profileNum]_hyphenate_name"] >> src.hyphenate_name
 		F["[profileNum]_robot_name"] >> src.robot_name
 		F["[profileNum]_gender"] >> src.gender
 		F["[profileNum]_age"] >> src.age
@@ -224,6 +223,8 @@
 		F["[profileNum]_voicetype"] >> AH.voicetype
 		F["[profileNum]_PDAcolor"] >> src.PDAcolor
 		F["[profileNum]_pda_ringtone_index"] >> src.pda_ringtone_index
+		F["[profileNum]_use_satchel"] >> src.use_satchel
+		F["[profileNum]_preferred_uplink"] >> src.preferred_uplink
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -314,6 +315,7 @@
 		// Game setting options, not per-profile
 		F["tooltip"] >> src.tooltip_option
 		F["scrollwheel_limb_targeting"] >> src.scrollwheel_limb_targeting
+		F["middle_mouse_swap"] >> src.middle_mouse_swap
 		if (isnull(src.scrollwheel_limb_targeting))
 			src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 		F["changelog"] >> src.view_changelog
@@ -387,7 +389,18 @@
 			src.custom_parts = list(
 				"l_arm" = "arm_default_left",
 				"r_arm" = "arm_default_right",
+				"l_leg" = "leg_default_left",
+				"r_leg" = "leg_default_right",
+				"left_eye" = "eye_default_left",
+				"right_eye" = "eye_default_right",
 			)
+		if (length(src.custom_parts) < 6) // aa a aaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+			src.custom_parts["l_arm"] = src.custom_parts["l_arm"] || "arm_default_left"
+			src.custom_parts["r_arm"] = src.custom_parts["r_arm"] || "arm_default_right"
+			src.custom_parts["l_leg"] = src.custom_parts["l_leg"] || "leg_default_left"
+			src.custom_parts["r_leg"] = src.custom_parts["r_leg"] || "leg_default_right"
+			src.custom_parts["left_eye"] = src.custom_parts["left_eye"] || "eye_default_left"
+			src.custom_parts["right_eye"] = src.custom_parts["right_eye"] || "eye_default_right"
 
 		// Validate trait choices
 		if (src.traitPreferences.traits_selected == null)
@@ -437,15 +450,15 @@
 		src.tooltip_option = (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS) //For fucks sake.
 		src.keybind_prefs_updated(user)
 
+		winset(user, "tooltip_option_always", "is-checked=[src.tooltip_option == TOOLTIP_ALWAYS]")
+		winset(user, "tooltip_option_alt", "is-checked=[src.tooltip_option == TOOLTIP_ALT]")
+		winset(user, "tooltip_option_never", "is-checked=[src.tooltip_option == TOOLTIP_NEVER]")
 
 		return 1
 
 
 	//This might be a bad way of doing it IDK
 	savefile_get_profile_name(client/user, var/profileNum = 1)
-		if (IsGuestKey(user.key))
-			return 0
-
 		LAGCHECK(LAG_REALTIME)
 
 		var/path = savefile_path(user.ckey)
@@ -471,11 +484,7 @@
 
 	/// Load a character profile from the cloud.
 	cloudsave_load(client/user, name)
-		if (user)
-			if (IsGuestKey(user.key))
-				return FALSE
-
-		var/cloudSaveData = user.player.cloudSaves.getSave(name)
+		var/cloudSaveData = user.player?.cloudSaves.getSave(name)
 
 		var/savefile/save = new
 		save.ImportText( "/", cloudSaveData )
@@ -483,14 +492,10 @@
 
 	/// Save a character profile to the cloud.
 	cloudsave_save(client/user, name)
-		if (user)
-			if (IsGuestKey( user.key ))
-				return FALSE
-
 		var/savefile/save = src.savefile_save(user.ckey, 1, 1)
 		var/exported = save.ExportText()
 
-		return user.player.cloudSaves.putSave(name, exported)
+		return user.player?.cloudSaves.putSave(name, exported)
 
 	cloudsave_delete(client/user, name)
-		return user.player.cloudSaves.deleteSave(name)
+		return user.player?.cloudSaves.deleteSave(name)

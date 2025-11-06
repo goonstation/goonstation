@@ -396,7 +396,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 							ordershit += {"
 								<tbody class='supply-package'>
 									<tr class='row[rownum % 2]'>
-										<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
+										<th class='noborder itemtop'><a href='byond://?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
 										<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
 									</tr>
 									<tr class='row[rownum % 2]'>
@@ -850,6 +850,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		if ("print_req")
 			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				if (isnull(RC))
+					boutput(usr, SPAN_ALERT("The requisition contract has expired due to a market update."))
+					return
 				src.print_requisition(RC)
 			else
 				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))
@@ -857,6 +860,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		if ("print_req_barcode")
 			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				if (isnull(RC))
+					boutput(usr, SPAN_ALERT("The requisition contract has expired due to a market update."))
+					return
 				src.print_barcode(RC, RC.req_code)
 			else
 				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))

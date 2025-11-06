@@ -192,12 +192,16 @@
 	if (!brain)
 		return list("Missing", "red")
 	var/brain_damage = H.get_brain_damage()
-	if(brain_damage >= 100)
+	if(brain_damage >= BRAIN_DAMAGE_LETHAL)
 		return list("Braindead", "red")
-	if(brain_damage >= 60)
-		return list("Severe", "orange")
-	if(brain_damage >= 10)
-		return list("Significant", "yellow")
+	if(brain_damage >= BRAIN_DAMAGE_SEVERE)
+		return list("Severe", "red")
+	if(brain_damage >= BRAIN_DAMAGE_MAJOR)
+		return list("Major", "red")
+	if(brain_damage >= BRAIN_DAMAGE_MODERATE)
+		return list("Moderate", "orange")
+	if(brain_damage >= BRAIN_DAMAGE_MINOR)
+		return list("Minor", "yellow")
 	return list("Okay", "green")
 
 /obj/machinery/computer/operating/proc/calc_organ_damage_severity(var/obj/item/organ/O)
@@ -304,9 +308,9 @@
 			if (istype(I, /obj/item/implant/projectile))
 				foreign_object_count++
 				continue
-			if (I.scan_category == "not_shown")
+			if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
 				continue
-			if (I.scan_category != "syndicate")
+			if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
 				implant_count++
 
 	if (ishuman(L))

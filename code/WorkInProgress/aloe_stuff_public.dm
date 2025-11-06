@@ -85,7 +85,7 @@
 	New()
 		..()
 		src.occupant = new /mob/living/critter/small_animal/cat/brixley(src)
-		src.build_icon()
+		src.UpdateIcon()
 
 /obj/table/wood/auto/desk/aloe
 	has_drawer = TRUE
@@ -233,7 +233,7 @@
 			to_buckle.setStatus("chair_heal_brute", INFINITE_STATUS)
 
 	unbuckle()
-		src.buckled_guy.delStatus("chair_heal_brute")
+		src.buckled_guy?.delStatus("chair_heal_brute")
 		. = ..()
 
 /datum/statusEffect/simplehot/chair_brute

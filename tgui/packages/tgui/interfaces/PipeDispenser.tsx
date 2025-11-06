@@ -6,17 +6,11 @@
  */
 
 import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Image,
-  NumberInput,
-  Section,
-  Stack,
-} from 'tgui-core/components';
+import { Box, Button, NumberInput, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { ProductList } from './common/ProductList';
 
 interface PipeDispenserData {
   disposalpipes;
@@ -40,19 +34,21 @@ export const PipeDispenser = () => {
     max_disposal_pipes,
   } = data;
   return (
-    <Window title={windowName} width={325} height={mobile ? 365 : 270}>
+    <Window title={windowName} width={375} height={mobile ? 350 : 255}>
       <Window.Content scrollable>
-        <Section>
-          {disposalpipes.map((disposalpipe) => {
-            return (
-              <DisposalPipeRow
-                key={disposalpipe.disposaltype}
-                dispenser_ready={dispenser_ready}
-                max_disposal_pipes={max_disposal_pipes}
-                disposalpipe={disposalpipe}
-              />
-            );
-          })}
+        <Section fitted>
+          <ProductList showImage showOutput>
+            {disposalpipes.map((disposalpipe) => {
+              return (
+                <DisposalPipeRow
+                  key={disposalpipe.disposaltype}
+                  dispenser_ready={dispenser_ready}
+                  max_disposal_pipes={max_disposal_pipes}
+                  disposalpipe={disposalpipe}
+                />
+              );
+            })}
+          </ProductList>
         </Section>
         {!!mobile && (
           <AutoPipeLaying
@@ -71,55 +67,35 @@ export const DisposalPipeRow = (props) => {
   const { dispenser_ready, max_disposal_pipes, disposalpipe } = props;
 
   return (
-    <Stack style={{ borderBottom: '1px #555 solid' }}>
-      {disposalpipe.image && (
-        <Stack.Item>
-          <Box style={{ overflow: 'show', height: '32px' }}>
-            <Image src={`data:image/png;base64,${disposalpipe.image}`} />
-          </Box>
-        </Stack.Item>
-      )}
-      <Stack.Item grow>{disposalpipe.disposaltype}</Stack.Item>
-      <Stack.Item
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}
-      >
-        Amount:
-        <NumberInput
-          value={amount}
-          minValue={1}
-          maxValue={max_disposal_pipes}
-          step={1}
-          onChange={(value) => setAmount(Math.round(value))}
-        />
-      </Stack.Item>
-      <Stack.Item
-        style={{
-          marginLeft: '5px',
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}
-      >
-        <Button
-          color={dispenser_ready ? 'green' : 'grey'}
+    <ProductList.Item
+      image={disposalpipe.image}
+      extraCellsSlot={
+        <ProductList.Cell align="right">
+          <Box inline>Amount:</Box>
+          <NumberInput
+            value={amount}
+            minValue={1}
+            maxValue={max_disposal_pipes}
+            step={1}
+            onChange={(value) => setAmount(Math.round(value))}
+          />
+        </ProductList.Cell>
+      }
+      outputSlot={
+        <ProductList.OutputButton
           disabled={!dispenser_ready}
-          textAlign="center"
-          width="70px"
-          onClick={() =>
+          icon="gears"
+          onClick={() => {
             act('dmake', {
               disposal_type: disposalpipe.disposaltype,
-              amount: amount,
-            })
-          }
-        >
-          Dispense
-        </Button>
-      </Stack.Item>
-    </Stack>
+              amount,
+            });
+          }}
+        />
+      }
+    >
+      {disposalpipe.disposaltype}
+    </ProductList.Item>
   );
 };
 

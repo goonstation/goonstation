@@ -60,9 +60,8 @@
 					// these last two parts are within the for loop so that means that for EVERY MOB THAT SEES THIS, A SOUND AND DECAL ARE MADE
 */
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
-			if (O != user && prob(33))
-				var/vomit_message = SPAN_ALERT("[O] pukes all over [himself_or_herself(O)].")
-				O.vomit(0, null, vomit_message)
+			if (O != user)
+				O.nauseate(rand(7,10))
 
 		SPAWN(0.5 SECONDS)
 			if (user && skull)
@@ -184,3 +183,8 @@
 	icon_state = "buddycuff"
 	m_amt = 0
 	strength = 1
+
+/obj/item/handcuffs/silver
+/obj/item/handcuffs/silver/New()
+	. = ..()
+	src.setMaterial(getMaterial("silver"))

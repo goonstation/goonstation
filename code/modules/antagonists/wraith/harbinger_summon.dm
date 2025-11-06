@@ -4,6 +4,7 @@
 	mob_path = /mob/living/critter/wraith/nascent
 	remove_on_clone = TRUE
 	has_info_popup = FALSE
+	wiki_link = "https://wiki.ss13.co/Wraith#Path_1:_The_Harbinger"
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current

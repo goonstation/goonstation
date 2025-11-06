@@ -166,7 +166,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
-	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
+	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSMOUTH) || (H.wear_mask &&  H.wear_mask.c_flags & COVERSMOUTH) || (H.glasses && H.glasses.c_flags & COVERSMOUTH)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 		non_murderous_failure = BARBERY_FAILURE
@@ -179,33 +179,39 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		boutput(user, SPAN_ALERT("You don't know how to shave that! At least without cutting its face off."))
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(iswizard(M))
+	if(non_murderous_failure != BARBERY_FAILURE && iswizard(M))
 		if (user == M)
 			boutput(user, "<span style='font-size: 1.5em; font-weight:bold; color:red'>And just what do you think you're doing?</span>\
 							<br>It took you [SPAN_ALERT("years")] to grow that <span style='font-family: Dancing Script, cursive;'>majestic</span> thing!\
 							<br>To even <span style='font-family: Dancing Script, cursive;'>fathom</span> an existence without it fills the [voidSpeak("void")] where your soul used to be with [SPAN_ALERT("RAGE.")]")
 			non_murderous_failure = BARBERY_FAILURE
-		thing.visible_message(SPAN_ALERT("<b>[user]</b> quickly shaves off [M]'s beard!"))
-		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
-		M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
-		M.set_face_icon_dirty()
-		M.emote("cry")
-		M.emote("scream")
-		if (M.organHolder?.head)
-			M.organHolder.head.UpdateIcon()
+		if (istype(M.bioHolder.mobAppearance.customizations["hair_middle"].style, /datum/customization_style/none))
+			boutput(user, SPAN_ALERT("[M]'s beard is already gone!"))
+		else
+			thing.visible_message(SPAN_ALERT("<b>[user]</b> quickly shaves off [M]'s beard!"))
+			M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
+			M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+			M.set_face_icon_dirty()
+			M.emote("cry")
+			M.emote("scream")
+			if (M.organHolder?.head)
+				M.organHolder.head.UpdateIcon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
-	if(H.is_bald())
+	if(non_murderous_failure != BARBERY_FAILURE && H.is_bald())
 		boutput(user, SPAN_ALERT("There is nothing to cut!"))
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(!mutant_barber_fluff(M, user, "shave"))
+	if(non_murderous_failure != BARBERY_FAILURE && !mutant_barber_fluff(M, user, "shave"))
 		if (istype(H))
 			logTheThing(LOG_COMBAT, user, "tried to shave [constructTarget(H,"combat")]'s hair but failed due to target's [H?.mutantrace?.name] mutant race at [log_loc(user)].")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(non_murderous_failure)
-		if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+		if (thing.force_use_as_tool)
+			boutput(user, SPAN_NOTICE("You poke [M] with your [thing]. If you want to attack [M], you'll need to wield \the [thing] as a weapon first."))
+			return ATTACK_PRE_DONT_ATTACK
+		else if (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop)))
 			boutput(user, SPAN_NOTICE("You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first."))
 			return ATTACK_PRE_DONT_ATTACK
 		else
@@ -656,6 +662,18 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	proc/getHairStyles()
 		return list()
 
+	proc/spawn_hair_clipping(var/mob/living/carbon/human/M, var/color, var/old_style)
+		if (!M || !M.loc)
+			return
+		if (!color)
+			return
+		if (istype(old_style, /datum/customization_style/none))
+			return
+
+		var/obj/decal/cleanable/hair/hair = new(M.loc)
+		hair.color = color
+		hair.update_color()
+
 	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
 		src.M = barbee
 		src.user = barber
@@ -689,6 +707,9 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				M.tri_message(user, SPAN_ALERT("[user] mangles the absolute fuck out of [M]'s head!."),\
 					SPAN_ALERT("[user] mangles the absolute fuck out of your head!"),\
 					SPAN_ALERT("You mangle the absolute fuck out of [M]'s head!"))
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_bottom"].color, M.bioHolder.mobAppearance.customizations["hair_bottom"].style)
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_middle"].color, M.bioHolder.mobAppearance.customizations["hair_middle"].style)
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_top"].color, M.bioHolder.mobAppearance.customizations["hair_top"].style)
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
 				M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
 				M.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
@@ -701,6 +722,9 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				M.tri_message(user, SPAN_ALERT("[user] [cuts] all of [M]'s hair off!."),\
 					SPAN_ALERT("[user] [cuts] all of your hair off!"),\
 					SPAN_ALERT("You [cut] all of [M]'s hair off!"))
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_bottom"].color, M.bioHolder.mobAppearance.customizations["hair_bottom"].style)
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_middle"].color, M.bioHolder.mobAppearance.customizations["hair_middle"].style)
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_top"].color, M.bioHolder.mobAppearance.customizations["hair_top"].style)
 				var/obj/item/wig = M.create_wig()
 				wig.set_loc(M.loc)
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
@@ -716,10 +740,13 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				new_style = new hair_type
 				switch(rand(1,3))
 					if(1)
+						spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_bottom"].color, M.bioHolder.mobAppearance.customizations["hair_bottom"].style)
 						M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new_style
 					if(2)
+						spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_middle"].color, M.bioHolder.mobAppearance.customizations["hair_middle"].style)
 						M.bioHolder.mobAppearance.customizations["hair_middle"].style = new_style
 					if(3)
+						spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_top"].color, M.bioHolder.mobAppearance.customizations["hair_top"].style)
 						M.bioHolder.mobAppearance.customizations["hair_top"].style = new_style
 				M.tri_message(user, "[user] [cuts] [M]'s hair.",\
 											SPAN_NOTICE("[user] [cuts] your hair."),\
@@ -731,6 +758,9 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 					M.tri_message(user, "[user] [cuts] all of [M]'s hair off and makes it into a wig.",\
 						SPAN_NOTICE("[user] [cuts] all your hair off and makes it into a wig."),\
 						SPAN_NOTICE("You [cut] all of [M]'s hair off and make it into a wig."))
+					spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_bottom"].color, M.bioHolder.mobAppearance.customizations["hair_bottom"].style)
+					spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_middle"].color, M.bioHolder.mobAppearance.customizations["hair_middle"].style)
+					spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_top"].color, M.bioHolder.mobAppearance.customizations["hair_top"].style)
 					var/obj/item/wig = M.create_wig()
 					wig.set_loc(M.loc)
 					M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
@@ -743,10 +773,13 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 						SPAN_NOTICE("You [cut] [M]'s hair."))
 					switch(which_part)
 						if (BOTTOM_DETAIL)
+							spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_bottom"].color, M.bioHolder.mobAppearance.customizations["hair_bottom"].style)
 							M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new_style
 						if (MIDDLE_DETAIL)
+							spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_middle"].color, M.bioHolder.mobAppearance.customizations["hair_middle"].style)
 							M.bioHolder.mobAppearance.customizations["hair_middle"].style = new_style
 						if (TOP_DETAIL)
+							spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_top"].color, M.bioHolder.mobAppearance.customizations["hair_top"].style)
 							M.bioHolder.mobAppearance.customizations["hair_top"].style = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing

@@ -250,8 +250,8 @@
 	actions.stop(runningAction, src)
 	runningAction = null
 
+	src.vis_contents -= rider
 	rider = null
-	overlays = null
 
 	adjustSickness(-sickness)
 	update()
@@ -259,10 +259,13 @@
 
 /obj/vehicle/skateboard/relaymove(mob/user as mob, dir)
 	if(input_lockout) return
+	if (src.hasStatus("teleporting"))
+		return
 
 	if(rider)
 		if(istype(src.loc, /turf/space))
 			return
+		src.dir = user.dir
 		walk(src, dir, speed_delay)
 	else
 		for(var/mob/M in src.contents)
@@ -284,7 +287,7 @@
 	rider.pixel_x = 0
 	rider.pixel_y = 4
 
-	overlays += rider
+	src.vis_contents += rider
 
 	adjustSickness(-sickness)
 	update()

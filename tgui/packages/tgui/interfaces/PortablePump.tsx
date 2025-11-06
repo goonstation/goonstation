@@ -5,12 +5,7 @@
  * @license MIT
  */
 
-import {
-  Button,
-  Divider,
-  LabeledList,
-  NumberInput,
-} from 'tgui-core/components';
+import { Button, LabeledList, NumberInput } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -51,7 +46,6 @@ export const PortablePump = () => {
           pressure={pressure}
           maxPressure={maxPressure}
         >
-          <Divider />
           <LabeledList>
             <LabeledList.Item label="Pump Power">
               <Button
@@ -76,9 +70,9 @@ export const PortablePump = () => {
                 minValue={minRelease}
                 maxValue={maxRelease}
                 step={1}
-                onChange={(newTargetPressure) =>
-                  act('set-pressure', { targetPressure: newTargetPressure })
-                }
+                onChange={(newTargetPressure) => {
+                  act('set-pressure', { targetPressure: newTargetPressure });
+                }}
               />
               <Button
                 onClick={() =>

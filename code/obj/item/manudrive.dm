@@ -45,6 +45,11 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		temp_recipe_string = list(/datum/manufacture/core_frame)
 		fablimit = 2
 
+	clone_rack
+		name = "Genetics ManuDrive: Clone Rack Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture clone disk racks."
+		temp_recipe_string = list(/datum/manufacture/clone_rack)
+
 	law_rack //The law rack that the CE locker starts with
 		name = "Command ManuDrive: Artificial Intelligence Law Rack Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture AI law racks."
@@ -83,19 +88,22 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 	cleaner_grenade //Let's janitors create more grenades after running out.
 		name = "Civilian ManuDrive: Cleaning Grenade Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture cleaning grenades."
-		icon_state = "datadisk1"
+		icon_state = "datadiskjan"
+		disk_color = "#afb9c4"
 		temp_recipe_string = list(/datum/manufacture/cleaner_grenade)
 
 	lasers
 		name = "Engineering Manudrive: Laser Component Blueprints"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture laser mirrors and beam splitters."
 		icon_state = "datadiskeng"
+		disk_color = "#e49d52"
 		temp_recipe_string = list(/datum/manufacture/mechanics/laser_mirror, /datum/manufacture/mechanics/laser_splitter)
 
 	comms_dish
 		name = "Command ManuDrive: Communications Dish"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture a new communications dish."
 		icon_state = "datadiskcom"
+		disk_color = "#afb9c4"
 		temp_recipe_string = list(/datum/manufacture/mechanics/comms_dish)
 
 		singleuse

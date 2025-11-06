@@ -99,6 +99,8 @@
 	// 			)
 
 /datum/parallax_viewer/ui_act(action, list/params, datum/tgui/ui)
+	var/width
+	var/height
 	. = ..()
 	if(.)
 		return
@@ -125,7 +127,7 @@
 			source_group?.restore_parallax_render_sources_to_default()
 
 		if("add")
-			var/type = tgui_input_list(ui.user, "Add Parallax Type to [params["group"]]", "Add Parallax", concrete_typesof(/atom/movable/screen/parallax_render_source/))
+			var/type = tgui_input_list(ui.user, "Add Parallax Type to [params["group"]]", "Add Parallax", concrete_typesof(/atom/movable/screen/parallax_render_source/)-/atom/movable/screen/parallax_render_source/, default=/atom/movable/screen/parallax_render_source/planet/gimmick1)
 			source_group?.add_parallax_render_source(type, 10 SECONDS)
 
 		if("canned")
@@ -146,8 +148,8 @@
 					render_source.parallax_icon_state = ""
 				new_icon = icon(render_source.parallax_icon, render_source.parallax_icon_state)
 				if(new_icon)
-					var/width = new_icon.Width()
-					var/height = new_icon.Height()
+					width = new_icon.Width()
+					height = new_icon.Height()
 					if(width && height)
 						render_source.icon_width = width
 						render_source.icon_height = height
@@ -166,8 +168,8 @@
 					render_source.parallax_icon_state = params["value"]
 					new_icon = icon(render_source.parallax_icon, render_source.parallax_icon_state)
 					if(new_icon)
-						var/width = new_icon.Width()
-						var/height = new_icon.Height()
+						width = new_icon.Width()
+						height = new_icon.Height()
 						if(width && height)
 							render_source.icon_width = width
 							render_source.icon_height = height

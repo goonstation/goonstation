@@ -12,6 +12,8 @@ ABSTRACT_TYPE(/obj/machinery/atmospherics)
 	/// Directions to look for other atmospheric devices.
 	var/initialize_directions = 0
 	var/static/list/icon/pipe_underlay_cache = list()
+	/// Does not share space with another exclusionary object.
+	var/exclusionary = FALSE
 
 /obj/machinery/atmospherics/process()
 	src.build_network()

@@ -36,7 +36,7 @@
 	pixel_y = -16
 	var/gib_mobs = TRUE
 
-	New(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
+	New(atom/location, preDropTime = 100, obj_path, no_lootbox)
 		src.set_loc(location)
 		SPAWN(preDropTime)
 			if (gib_mobs)
@@ -59,7 +59,7 @@
 	var/dropTime = 30
 	var/gib_mobs = TRUE
 
-	New(atom/loc, var/obj_path, var/no_lootbox)
+	New(atom/loc, obj_path, no_lootbox)
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
 		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 75, 0)
@@ -73,12 +73,15 @@
 						logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
-			if (obj_path && no_lootbox)
-				new obj_path(src.loc)
-			else if (no_lootbox)
-				makeRandomLootTrash().set_loc(src.loc)
-			else
-				new/obj/lootbox(src.loc, obj_path)
+			// If obj_path is a list, this will merge it in. If it's a single path, it'll just be a single-element list
+			var/to_spawn = list() + obj_path
+			for (var/path in to_spawn)
+				if (path && no_lootbox)
+					new path(src.loc)
+				else if (path)
+					new/obj/lootbox(src.loc, path)
+				else
+					makeRandomLootTrash().set_loc(src.loc)
 			qdel(src)
 		..()
 
@@ -125,10 +128,10 @@
 		lootbox(user, obj_path)
 		return
 
-/proc/lootbox(var/mob/user, var/obj_path)
+/proc/lootbox(mob/user, obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(null, obj_path))
-	return
+	if(istype(H))
+		H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(null, obj_path))
 
 /proc/makeRandomLootTrash()
 	RETURN_TYPE(/atom/movable)
@@ -290,7 +293,7 @@
 
 			playsound(usr, pick(20;'sound/misc/openlootcrate.ogg',100;'sound/misc/openlootcrate2.ogg'), 120, 0)
 			icon_state = "lootb2"
-			flick("lootb1", src)
+			FLICK("lootb1", src)
 
 			SPAWN(2 SECONDS)
 				var/mob/living/carbon/human/H = usr

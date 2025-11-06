@@ -21,7 +21,7 @@
 	/// Are we sucking in all gas or only some?
 	var/scrubbing = SCRUBBING
 	// Sets up vars to scrub gases
-	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
+	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 0;
 	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
 	#undef _DEF_SCRUBBER_VAR
 	/// Volume of gas to take from turf.
@@ -97,7 +97,7 @@
 		icon_state = "[hide_pipe ? "h" : "" ]off"
 		on = FALSE
 
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/broadcast_status()
 	var/datum/signal/signal = get_free_signal()
@@ -108,9 +108,9 @@
 	signal.data["sender"] = src.net_id
 	signal.data["power"] = src.on ? "on": "off"
 	signal.data["mode"] = src.scrubbing ? "scrubbing" : "siphoning"
-	#define COMPILE_GAS_MOLES(GAS, ...) if(scrub_##GAS) {signal.data[#GAS] = "1"}
-	APPLY_TO_GASES(COMPILE_GAS_MOLES)
-	#undef COMPILE_GAS_MOLES
+	#define GET_GAS_SCUB_STATUS(GAS, ...) signal.data[#GAS] = scrub_##GAS;
+	APPLY_TO_GASES(GET_GAS_SCUB_STATUS)
+	#undef GET_GAS_SCUB_STATUS
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
@@ -176,7 +176,7 @@
 		var/turf/intact = get_turf(src)
 		intact = intact.intact
 		var/hide_pipe = CHECKHIDEPIPE(src)
-		flick("[hide_pipe ? "h" : "" ]alert", src)
+		FLICK("[hide_pipe ? "h" : "" ]alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/inactive
@@ -191,6 +191,9 @@
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
+	#define _DEF_SCRUBBER_VAR(GAS, ...) scrub_##GAS = 1;
+	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
+	#undef _DEF_SCRUBBER_VAR
 	scrub_oxygen = FALSE
 	scrub_nitrogen = FALSE
 

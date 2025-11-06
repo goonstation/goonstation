@@ -16,14 +16,14 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "b" = (
 /obj/stool/chair/comfy{
 	pixel_y = 19;
 	dir = 1
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "d" = (
 /obj/table/clothred/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
@@ -32,7 +32,7 @@
 	layer = 4
 	},
 /turf/simulated/floor/grasslush/thin,
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/decoration/regallamp{
 	icon_state = "lamp_regal_lit";
@@ -51,7 +51,7 @@
 	pixel_x = 16
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/decoration/regallamp{
 	icon_state = "lamp_regal_lit";
@@ -71,7 +71,7 @@
 	layer = 1
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "n" = (
 /obj/stool/chair/material/mauxite{
 	layer = 2.89;
@@ -82,7 +82,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/stool/chair/comfy/throne_gold{
 	pixel_x = 10;
@@ -96,7 +96,7 @@
 	desc = "They've been expecting you!"
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/stool/chair/dining/scrap{
 	layer = 2.89;
@@ -108,21 +108,21 @@
 	layer = 2.89
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/stool/chair/dining/wood{
 	dir = 1;
 	pixel_y = 13
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /obj/stool/chair/comfy/barber_chair{
 	pixel_y = 16;
 	dir = 1
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /obj/table/clothred/auto,
 /obj/item/reagent_containers/food/drinks/tea{
@@ -141,7 +141,7 @@
 	layer = 4
 	},
 /turf/simulated/floor/grasslush/thin,
-/area/space)
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/decoration/regallamp{
 	icon_state = "lamp_regal_lit";
@@ -161,7 +161,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "U" = (
 /obj/stool/chair/office/red{
 	pixel_x = -8;
@@ -175,7 +175,7 @@
 	pixel_x = -8
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/table/clothred/auto,
 /obj/item/plate,
@@ -201,7 +201,7 @@
 	},
 /obj/machinery/light/small/floor/harsh,
 /turf/simulated/floor/grasslush/thin,
-/area/space)
+/area/dmm_suite/clear_area)
 "X" = (
 /obj/stool/chair/dining/regal{
 	pixel_y = -6;
@@ -217,7 +217,7 @@
 	name = "pocketwatch"
 	},
 /turf/simulated/floor/grasslush/thinner,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 m

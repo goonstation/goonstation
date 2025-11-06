@@ -33,14 +33,27 @@
 	icon_opened = "weaponcrateopen"
 	icon_closed = "weaponcrate"
 
+	sec_weapons
+	name = "Security Weapons Crate"
+	req_access = list(access_securitylockers)
+	icon_state = "sec_weapons"
+	icon_opened = "sec_weaponsopen"
+	icon_closed = "sec_weapons"
+
 	confiscated_items
 		name = "confiscated items crate"
 		desc = "Secure storage for confiscated contraband."
-		req_access_txt = "2"
+		req_access = list(access_brig)
+		icon_opened = "sec_contrabandopen"
+		icon_closed = "sec_contraband"
+		icon_state = "sec_contraband"
 
 	armory
 		name = "secure weapons crate"
 		req_access = list(access_armory)
+		icon_opened = "sec_armoryopen"
+		icon_closed = "sec_armory"
+		icon_state = "sec_armory"
 
 		tranquilizer
 			name = "tranquilizer crate"
@@ -71,6 +84,11 @@
 	icon_opened = "plasmacrateopen"
 	icon_closed = "plasmacrate"
 
+	hazard
+		name = "Hazard Transport Crate"
+		desc = "A secure crate designed for transport of hazardous research materials."
+		req_access = list(access_research)
+
 	armory
 		name = "secure weapons crate"
 		req_access = list(access_armory)
@@ -88,11 +106,20 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
-/obj/storage/secure/crate/gear/saxitoxin_grenades
+/obj/storage/secure/crate/gear/syndicate
+	name = "unmarked secure crate"
+	desc = "A secure crate. It doesn't seem to be using standard identification hardware."
+	req_access = list(access_syndicate_shuttle)
+
+/obj/storage/secure/crate/gear/syndicate/saxitoxin_grenades
 	name = "nerve agent crate (DANGER)"
-	req_access_txt = "52"
 	spawn_contents = list(/obj/item/reagent_containers/syringe/atropine = 3,\
 	/obj/item/chem_grenade/saxitoxin = 3)
+
+/obj/storage/secure/crate/gear/transfer
+	name = "Secure Transfer Crate"
+	desc = "A secure crate for transferring contraband, and definitely not people.";
+	req_access = list(access_security)
 
 /obj/storage/secure/crate/gear/armory
 	name = "secure weapons crate"
@@ -122,7 +149,8 @@
 	name = "\improper Special Equipment crate"
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2)
+	/obj/item/turret_deployer/riot = 2,
+	/obj/random_item_spawner/armoryweapon/one)
 
 /obj/storage/secure/crate/gear/armory/equipment/looted
 	spawn_contents = list()
@@ -151,6 +179,10 @@
 					carton.ourEgg.blog += blog
 				return 1
 
+	locked
+		name = "Hydroponics Transfer crate"
+		req_access = list(access_hydro)
+
 /obj/storage/secure/crate/eng
 	name = "Engineering crate"
 	desc = "A yellow crate."
@@ -159,11 +191,15 @@
 	icon_opened = "engcrate-open"
 	icon_closed = "engcrate"
 
+	locked
+		name = "Secure Engineering crate"
+		req_access = list(access_engineering)
+
 	explosives
 		name = "engineering explosive crate"
 		desc = "Contains controlled explosives designed for trench use."
 		req_access = list(access_engineering)
-		spawn_contents = list(/obj/item/pipebomb/bomb/engineering = 6)
+		spawn_contents = list(/obj/item/assembly/timer_ignite_pipebomb/engineering = 6)
 
 	interdictor
 		name = "interdictor fabrication crate"

@@ -186,6 +186,14 @@ var/global/list/material_cache
 			logTheThing(LOG_DEBUG, src, "is_valid_icon_state took [TIME - start_time] ticks(!!!) to cache [icon]")
 	return state in global.valid_icon_states[icon]
 
+proc/get_icon_states(icon)
+	. = global.valid_icon_states[icon]
+	if(isnull(.))
+		global.valid_icon_states[icon] = list()
+		. = icon_states(icon)
+		for(var/icon_state in .)
+			global.valid_icon_states[icon][icon_state] = 1
+
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
 		return /obj/item/material_piece // just in case

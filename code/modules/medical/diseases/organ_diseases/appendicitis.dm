@@ -29,6 +29,10 @@
 
 	if (probmult(D.stage * 30))
 		H.organHolder.appendix.take_damage(0, 0, D.stage)
+	if (D.stage == 2)
+		H.add_vomit_behavior(/datum/vomit_behavior/blood)
+	else
+		H.remove_vomit_behavior(/datum/vomit_behavior/blood)
 	switch (D.stage)
 		if (1)
 			if (probmult(0.1))
@@ -46,17 +50,12 @@
 				H.resistances += src.type
 				H.ailments -= src
 				return
-			if (probmult(10))
-				var/vomit_message = SPAN_ALERT("[H] suddenly and violently vomits!")
-				H.vomit(0, null, vomit_message)
-			else if (probmult(2) && HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
-				H.visible_message(SPAN_ALERT("[H] vomits blood!"))
-				playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-				random_brute_damage(H, rand(5,8))
-				bleed(H, rand(5,8), 5)
-			if (probmult(8)) H.emote(pick("pale", "groan"))
+			if (probmult(30))
+				H.nauseate(1)
 			if (probmult(8))
-				H.bodytemperature += 4
+				H.emote(pick("pale", "groan"))
+			if (probmult(8))
+				H.changeBodyTemp(4 KELVIN)
 				H.show_text(pick_string("organ_disease_messages.txt", "appendicitis1"), "red")
 			if (probmult(5))
 				boutput(H, SPAN_ALERT("Your back aches terribly!"))

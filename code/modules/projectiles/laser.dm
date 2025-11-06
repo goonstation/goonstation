@@ -46,6 +46,7 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+	has_impact_particles = TRUE
 
 //Any special things when it hits shit?
 	on_hit(atom/hit)
@@ -275,6 +276,40 @@ toxic - poisons
 				P.special_data["angle"] = 0
 			..()
 
+	maser
+		name = "maser ray"
+		icon_state = "sinebeam1"
+		sname = "maser ray"
+		damage = 0.0001 /// to bypass 0 damage checks
+		dissipation_delay = 8
+		color_red = 1
+		color_green = 1
+		color_blue = 1
+		has_impact_particles = FALSE
+		var/pilot_dmg = 20
+		disruption = 5
+
+		on_hit(atom/hit)
+			if (istype(hit, /mob))
+				var/mob/M = hit
+				M.TakeDamage("All", burn = src.pilot_dmg, damage_type = DAMAGE_BURN)
+			else if (istype(hit, /obj/machinery/vehicle))
+				var/obj/machinery/vehicle/vehicle = hit
+				var/mob/M = vehicle.pilot
+				if (istype(M))
+					var/damage_pilot = TRUE
+					var/sec_part = vehicle.get_part(POD_PART_SECONDARY)
+					if (istype(sec_part, /obj/item/shipcomponent/secondary_system/shielding))
+						var/obj/item/shipcomponent/secondary_system/shielding/shielding = sec_part
+						if (shielding.active)
+							damage_pilot = FALSE
+					if (damage_pilot)
+						M.TakeDamage("All", burn = src.pilot_dmg, damage_type = DAMAGE_BURN)
+			..()
+
+		pod
+			pilot_dmg = 10
+
 	upgradeable
 		icon_state = "phaser_light"
 		var/datum/projectile/laser/light/launched = new/datum/projectile/laser/light
@@ -314,6 +349,17 @@ toxic - poisons
 				icon_state = "phaser_med"
 			else
 				icon_state = "phaser_light"
+	smg
+		name = "micro phaser bolt"
+		icon_state = "phaser_light"
+		sname = "micro phaser bolt"
+		damage = 8
+		cost = 10
+		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
+		fullauto_valid = 1
 
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
@@ -430,7 +476,7 @@ toxic - poisons
 		var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 		I.set_loc(get_turf(P))
 		I.set_dir(P.dir)
-		flick("ion_fade", I)
+		FLICK("ion_fade", I)
 		I.icon_state = "blank"
 		I.pixel_x = P.pixel_x
 		I.pixel_y = P.pixel_y
@@ -606,6 +652,7 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 45
 	impact_image_state = null
+	energy_particles_override = TRUE
 	var/damtype = DAMAGE_STAB
 
 	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
@@ -692,6 +739,7 @@ toxic - poisons
 	brute
 		icon_state = "signifer2_brute"
 		damage_type = D_KINETIC
+		energy_particles_override = TRUE
 		color_red = 0.8
 		color_green = 0.1
 		color_blue = 0.1
@@ -765,9 +813,10 @@ toxic - poisons
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	icon_state = "lasergat_laser"
 	shot_volume = 50
+	dissipation_rate = 2
 	name = "single"
 	sname = "single"
-	damage = 14
+	damage = 10
 
 /datum/projectile/laser/lasergat/burst
 	name = "burst laser"

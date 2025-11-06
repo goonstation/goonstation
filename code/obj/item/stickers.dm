@@ -137,7 +137,7 @@
 		. = "<br>[SPAN_NOTICE("It says:")]<br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user)
-		user.lastattacked = user
+		user.lastattacked = get_weakref(user)
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
 				boutput(user, "You peel \the [src] off of \the [src.attached].")
@@ -146,12 +146,12 @@
 				user.put_in_hand_or_drop(src)
 			else
 				src.attached.Attackhand(user)
-				user.lastattacked = user
+				user.lastattacked = get_weakref(user)
 		else
 			return ..()
 
 	attackby(obj/item/W, mob/living/user)
-		user.lastattacked = user
+		user.lastattacked = get_weakref(user)
 		if (istype(W, /obj/item/stamp))
 
 			var/obj/item/stamp/S = W
@@ -170,7 +170,7 @@
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			boutput(user, SPAN_NOTICE("You stamp \the [src]."))
 			return
 
@@ -199,14 +199,14 @@
 				else
 					src.icon_state = "postit-writing"
 			src.words += "[src.words ? "<br>" : ""][t]"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			pen.in_use = 0
 			src.add_fingerprint(user)
 			return
 
 		if (src.attached)
 			src.attached.Attackby(W, user)
-			user.lastattacked = user
+			user.lastattacked = get_weakref(user)
 		else
 			..()
 
@@ -413,7 +413,6 @@
 	name = "gold star sticker"
 	icon_state = "gold_star"
 	desc = "This sticker contains a tiny radio transmitter that handles audio and video. Closer inspection reveals an interface on the back with camera, radio, and visual options."
-	open_to_sound = TRUE
 
 	var/has_radio = TRUE // just in case you wanted video-only ones, I guess?
 	var/obj/item/device/radio/spy/radio = null
@@ -422,9 +421,9 @@
 	var/has_camera = TRUE // the detective's stickers don't get a camera
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "sticker"
-	var/camera_network = "stickers"
-	var/tv_network = "public"
-	var/sec_network = "SS13"
+	var/camera_network = CAMERA_NETWORK_STICKERS
+	var/tv_network = CAMERA_NETWORK_PUBLIC
+	var/sec_network = CAMERA_NETWORK_STATION
 
 	var/has_selectable_skin = 1 //
 	var/list/skins = list("gold_star" = "gold star", "banana", "umbrella", "heart", "clover", "skull", "Larrow" = "left arrow",
@@ -456,8 +455,7 @@
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
 			SPAWN(1 DECI SECOND)
-				src.radio.broadcasting = FALSE
-				//src.radio.listening = 0
+				src.radio.toggle_microphone(FALSE)
 
 	attack_self(mob/user as mob)
 		var/choice = "Set radio"
@@ -588,6 +586,7 @@
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
 	slots = 8
+	soundproofing = 20
 	spawn_contents = list(/obj/item/sticker/spy = 5,
 	/obj/item/device/camera_viewer/sticker,
 	/obj/item/device/radio/headset,
@@ -605,8 +604,8 @@
 /obj/item/device/radio/spy
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
-	listening = 0
-	hardened = 0
+	has_speaker = FALSE
+	hardened = FALSE
 
 /obj/item/device/radio/spy/det_only
 	locked_frequency = 1
@@ -632,7 +631,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 		light_c.update(0)
 
 	attack_hand(mob/user)
-		user.lastattacked = user
+		user.lastattacked = get_weakref(user)
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
 				boutput(user, "You peel \the [src] off of \the [src.attached].")
@@ -641,7 +640,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 				user.put_in_hand_or_drop(src)
 			else
 				src.attached.Attackhand(user)
-				user.lastattacked = user
+				user.lastattacked = get_weakref(user)
 		else
 			return ..()
 
@@ -658,6 +657,13 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 			src.plane = F.plane
 			F.vis_contents += src
 		light_c.update(1)
+
+	attackby(obj/item/W, mob/user, params)
+		if (src.attached)
+			src.attached.Attackby(W, user)
+			user.lastattacked = get_weakref(user)
+		else
+			. = ..()
 
 	proc/remove_from_attached()
 		if (!src.attached)

@@ -18,9 +18,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/datum/weakref/master = null //first friendly they imprint upon for /datum/aiTask/timed/targeted/follower
 	var/obj/item/old_grenade/sawfly/ourgrenade = null
 
-	speechverb_say = "whirrs"
-	speechverb_exclaim = "buzzes"
-	speechverb_ask = "hums"
+	speech_verb_say = "whirrs"
+	speech_verb_exclaim = "buzzes"
+	speech_verb_ask = "hums"
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
 	var/retaliate = FALSE
@@ -128,7 +128,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(!(issawflybuddy(user) || (user in src.friends) || (user.health < 40)))//are you an eligible target: nonantag or healthy enough?
 			if(prob(50) && !ON_COOLDOWN(src, "sawfly_retaliate_cd", 5 SECONDS) && !isdead(src))//now that you're eligible, are WE eligible?
 				if(ai && (ai.target != user))
-					src.lastattacker = user
+					src.lastattacker = get_weakref(user)
 					src.retaliate = TRUE
 					src.visible_message(SPAN_ALERT("<b>[src]'s targeting subsystems identify [user] as a high priority threat!</b>"))
 					playsound(src, pick(src.beeps), 40, 1)
@@ -210,8 +210,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			dobeep()
 
 	seek_target(range) //ai mob critter targetting behaviour - returns a list of acceptable targets
-		if(src.lastattacker && src.retaliate && GET_DIST(src, src.lastattacker) <= range)
-			return list(src.lastattacker)
+		if(src.lastattacker?.deref() && src.retaliate && GET_DIST(src, src.lastattacker.deref()) <= range)
+			return list(src.lastattacker.deref())
 		var/targetcount = 0
 		. = list()
 		for (var/mob/living/C in viewers(range, src))

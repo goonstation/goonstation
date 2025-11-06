@@ -47,7 +47,7 @@ var/datum/vote_manager/vote_manager = new/datum/vote_manager()
 		src.name = "<span style='color: green; text-decoration: underline;'>[new_name]</span>"
 
 	proc/chat_link()
-		return "<a href='?src=\ref[src]'>[src]</a>"
+		return "<a href='byond://?src=\ref[src]'>[src]</a>"
 
 	Topic(href, href_list)
 		. = ..()

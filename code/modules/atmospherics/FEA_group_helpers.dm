@@ -111,5 +111,5 @@
 		return TRUE
 
 	else
-		air_master.active_singletons += src
+		air_master.active_singletons[src] = null
 		return TRUE

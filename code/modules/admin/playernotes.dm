@@ -55,7 +55,7 @@
 		</style>
 		"})
 
-	dat += "<h1 style='text-align: center;'>Player Notes for <b>[player]</b></h1><center><a href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A> - <a href='?src=\ref[src];action=loginnotice;target=[player]'[noticelink]</a></center><br><br><table><tbody>"
+	dat += "<h1 style='text-align: center;'>Player Notes for <b>[player]</b></h1><center><a href='byond://?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A> - <a href='byond://?src=\ref[src];action=loginnotice;target=[player]'[noticelink]</a></center><br><br><table><tbody>"
 
 	if (!length(playerNotes.data))
 		dat += "No notes. <i>Yet.</i>"
@@ -78,7 +78,7 @@
 			if (!id && ("oldserver" in legacyData))
 				id = legacyData["oldserver"]
 
-			var/gameAdminCkey = playerNote.game_admin?.ckey
+			var/gameAdminCkey = playerNote.game_admin?.player?.ckey
 			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
 				gameAdminCkey = legacyData["game_admin_ckey"]
 
@@ -90,7 +90,7 @@
 			<tr class="[classes]">
 				<th>[id]</th>
 				<th>[playerNote.created_at]</th>
-				<th style='width: 0; white-space: pre;'>#[playerNote.id] <a href="?src=\ref[src];action=notes2;target=[player];type=del;id=[playerNote.id]" style="background: red; color: white; display: inline-block; text-align: center; padding: 0.1em 0.25em; border-radius: 4px; text-decoration: none;">&times;</a></th>
+				<th style='width: 0; white-space: pre;'>#[playerNote.id] <a href="byond://?src=\ref[src];action=notes2;target=[player];type=del;id=[playerNote.id]" style="background: red; color: white; display: inline-block; text-align: center; padding: 0.1em 0.25em; border-radius: 4px; text-decoration: none;">&times;</a></th>
 			</tr>
 			<tr class="[classes]" style="margin-bottom: 1em;">
 				<th>[gameAdminCkey]</th>

@@ -1,4 +1,4 @@
-
+#define IMG_OFFSET 20
 /obj/decal/poster
 	desc = "A piece of paper with an image on it. Clearly dealing with incredible technology here."
 	name = "poster"
@@ -25,7 +25,7 @@
 		if (!C || !src.popup_win)
 			return
 		// wtf why is this using wizardtips... with a custom size... fuck it im leaving this one out of the centralization -singh
-		C.Browse(grabResource("html/traitorTips/wizardTips.html"),"window=antagTips;size=[imgw]x[imgh];title=Antagonist Tips")
+		C.Browse(grabResource("html/traitorTips/wizardTips.html"),"window=antagTips;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Antagonist Tips")
 
 	wallsign
 		desc = "A sign, on a wall. Wow!"
@@ -954,14 +954,14 @@
 			var/icon_award = "rddiploma"
 			var/icon_empty = "frame"
 			var/glass_type = /obj/item/sheet/glass
+			var/obj/item/award_item
 			icon_state = "rddiploma"
 			pixel_y = -6
 
 			New()
 				..()
-				var/obj/item/M = new award_type(src.loc)
-				M.desc = src.desc
-				src.contents.Add(M)
+				src.award_item = new award_type(src)
+				src.award_item.desc = src.desc
 
 			get_desc()
 				if(award_text)
@@ -993,10 +993,9 @@
 
 					if (1)
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-						var/obj/item/award_item = locate(award_type) in src
-						if(award_item)
-							award_item.desc = src.desc
-							user.put_in_hand_or_drop(award_item)
+						if(istype(src.award_item) && src.award_item.loc == src)
+							src.award_item.desc = src.desc
+							user.put_in_hand_or_drop(src.award_item)
 							user.visible_message("[user] takes the [award_name] from the frame.", "You take the [award_name] out of the frame.")
 							src.icon_state = icon_empty
 							src.add_fingerprint(user)
@@ -1007,7 +1006,7 @@
 					return
 
 				if (src.usage_state == 2)
-					if (istype(W, award_type))
+					if (istype(W, src.award_type))
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						user.u_equip(W)
 						W.set_loc(src)
@@ -1033,13 +1032,19 @@
 		framed_award/hos_medal
 			name = "framed medal"
 			desc = "A dusty old war medal."
-			award_type = /obj/item/clothing/suit/hosmedal
+			award_type = /obj/item/clothing/suit/security_badge/hosmedal
 			award_name = "medal"
 			owner_job = "Head of Security"
 			icon_glass = "medal1"
 			icon_award = "medal"
 			icon_empty = "frame"
 			icon_state = "medal"
+
+			New()
+				..()
+				if (istype(src.award_item, src.award_type))
+					var/obj/item/clothing/suit/security_badge/hosmedal/medal = src.award_item
+					medal.award_text = src.get_award_text()
 
 			attackby(obj/item/W, mob/user)
 				if (user.stat)
@@ -1135,7 +1140,7 @@
 	show_popup_win(var/client/C)
 		if (!C || !src.popup_win)
 			return
-		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
+		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=How to Build a Space Pod")
 
 /obj/decal/poster/wallsign/pod_build/nt
 	icon_state = "nt-pod-poster"
@@ -1155,7 +1160,20 @@
 		if (!C || !src.popup_win)
 			return
 
-		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
+		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Map")
+
+/obj/decal/poster/miners_almanac
+	name = "Miner's almanac"
+	desc = "An informational poster kindly provided by Gragg Industries."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "almanac"
+	popup_win = TRUE
+	imgw = 605
+	imgh = 784
+
+	show_popup_win(client/C)
+		C?.Browse("<img src=\"[resource("images/miners_almanac.png")]\">","window=Almanac;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Miner's Almanac")
+
 
 /obj/decal/poster/banner
 	name = "banner"
@@ -1211,6 +1229,7 @@
 			var/obj/item/material_piece/cloth/C = new(user.loc)
 			if (src.material) C.setMaterial(src.material)
 			else C.setMaterial(getMaterial("cotton")) // In case the material is null
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 			qdel(src)
 
 	mouse_drop(atom/over_object, src_location, over_location)
@@ -1223,3 +1242,5 @@
 				clear_banner()
 			else
 				return
+
+#undef IMG_OFFSET

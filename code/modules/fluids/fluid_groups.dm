@@ -224,7 +224,7 @@
 		update_amt_per_tile()
 		var/my_depth_level = 0
 		for(var/x in depth_levels)
-			if (src.amt_per_tile > x)
+			if (src.amt_per_tile >= x)
 				my_depth_level++
 			else
 				break
@@ -480,7 +480,7 @@
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/my_depth_level = 0
 		for(var/x in depth_levels)
-			if (amt_per_tile > x)
+			if (amt_per_tile >= x)
 				my_depth_level++
 			else
 				break
@@ -582,6 +582,9 @@
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
+
+				if (fluid_ma.icon_state == "15" && F.last_depth_level >= 2)
+					fluid_ma.icon_state = "15-lines"
 			else
 				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 

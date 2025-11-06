@@ -60,7 +60,7 @@ var/global/total_gas_mixtures = 0
 /// Updates cached space sample if need be.
 /// Returns: New space sample.
 /datum/controller/air_system/proc/update_space_sample()
-	if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
+	if (!istype(space_sample, /turf/space))
 		space_sample = locate(/turf/space)
 	return space_sample
 
@@ -89,8 +89,8 @@ var/global/total_gas_mixtures = 0
 	set waitfor = 0
 	var/list/turf/simulated/members = list(base) // Confirmed group members
 	var/list/turf/simulated/possible_members = list(base) // Possible places for group expansion
-	var/list/turf/simulated/possible_borders
-	var/list/turf/simulated/possible_space_borders
+	var/list/turf/simulated/possible_borders = list()
+	var/list/turf/simulated/possible_space_borders = list()
 	var/possible_space_length = 0
 
 	while(length(possible_members)) //Keep expanding, looking for new members
@@ -98,17 +98,15 @@ var/global/total_gas_mixtures = 0
 			test.length_space_border = 0
 			for(var/direction in cardinal)
 				var/turf/T = get_step(test,direction)
-				if(T && !(T in members) && test.gas_cross(T))
+				if(!(T in members) && test.gas_cross(T))
 					if(issimulatedturf(T))
 						if(!T:parent)
 							possible_members += T
 							members += T
 						else
-							LAZYLISTINIT(possible_borders)
-							possible_borders |= test
+							possible_borders[test] = null
 					else if(istype(T, /turf/space) && !istype(T, /turf/space/fluid))
-						LAZYLISTINIT(possible_space_borders)
-						possible_space_borders |= test
+						possible_space_borders[test] = null
 						test.length_space_border++
 
 			if(test.length_space_border)
@@ -117,9 +115,9 @@ var/global/total_gas_mixtures = 0
 
 	if(length(members) > 1)
 		var/datum/air_group/group = new
-		if(possible_borders && length(possible_borders))
+		if(length(possible_borders))
 			group.borders = possible_borders
-		if(possible_space_borders && length(possible_space_borders))
+		if(length(possible_space_borders))
 			group.space_borders = possible_space_borders
 			group.length_space_border = possible_space_length
 
@@ -128,7 +126,7 @@ var/global/total_gas_mixtures = 0
 			group.group_processing = FALSE
 
 		group.members = members
-		air_groups += group
+		air_groups[group] = null
 
 		group.update_group_from_tiles() //Initialize air group variables
 		. = group
@@ -136,7 +134,7 @@ var/global/total_gas_mixtures = 0
 		for(var/turf/simulated/test as anything in members)
 			test.parent = group
 			test.processing = FALSE
-			active_singletons -= test
+			air_master.active_singletons.Remove(test)
 
 			test.dist_to_space = 0
 			var/dist
@@ -144,14 +142,14 @@ var/global/total_gas_mixtures = 0
 				if (possible == test)
 					test.dist_to_space = 1
 					break
-				dist = GET_DIST(possible, test)
+				dist = get_dist(possible, test) //GET_DIST isn't needed here as air groups never transcend z levels nor can turfs be in an object.
 				if (!test.dist_to_space || (dist < test.dist_to_space))
 					test.dist_to_space = dist
 	else
 		base.processing = FALSE //singletons at startup are technically unconnected anyway
 		base.parent = null
 
-		if(base.air && base.air.check_tile_graphic())
+		if(base.air?.check_tile_graphic())
 			base.update_visuals(base.air)
 
 /// This first processes the air_master update/rebuild lists then processes all groups and tiles for air calculations
@@ -177,16 +175,13 @@ var/global/total_gas_mixtures = 0
 	LAGCHECK(LAG_REALTIME)
 
 	src.process_super_conductivity()
-	LAGCHECK(LAG_REALTIME)
 
 	src.process_high_pressure_delta()
-	LAGCHECK(LAG_REALTIME)
 
 	if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
 		for(var/datum/air_group/AG as anything in air_groups)
 			AG.check_regroup()
 			LAGCHECK(LAG_REALTIME)
-
 	src.is_busy = FALSE
 	return TRUE
 
@@ -203,7 +198,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_update_tiles()
 	PROTECTED_PROC(TRUE)
-	for(var/turf/simulated/T in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
+	for(var/turf/simulated/T as anything in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
 		T.update_air_properties()
 	tiles_to_update.len = 0
 
@@ -213,13 +208,13 @@ var/global/total_gas_mixtures = 0
 	PROTECTED_PROC(TRUE)
 	var/list/turf/turf_list = list()
 
-	for(var/datum/air_group/turf_AG in groups_to_rebuild) // Deconstruct groups, gathering their old members
+	for(var/datum/air_group/turf_AG as anything in groups_to_rebuild) // Deconstruct groups, gathering their old members
 		if(turf_AG.group_processing)	// Ensure correct air is used for reconstruction, otherwise parent is destroyed
 			turf_AG.suspend_group_processing()
 		for(var/turf/simulated/T as anything in turf_AG.members)
 			T.parent = null
 			turf_list += T
-		air_master.air_groups -= turf_AG
+		air_master.air_groups.Remove(turf_AG)
 		turf_AG.members.len = 0
 		turf_AG.borders?.len = 0
 		qdel(turf_AG)
@@ -230,7 +225,7 @@ var/global/total_gas_mixtures = 0
 			src.assemble_group_turf(S)
 	LAGCHECK(LAG_REALTIME)
 
-	for(var/turf/simulated/S in tiles_to_rebuild) // update the singletons
+	for(var/turf/simulated/S as anything in tiles_to_rebuild) // update the singletons
 		if(!S.parent)
 			src.assemble_group_turf(S)
 		turf_list += S
@@ -238,7 +233,6 @@ var/global/total_gas_mixtures = 0
 
 	for(var/turf/simulated/S as anything in turf_list)
 		S.update_air_properties()
-	LAGCHECK(LAG_REALTIME)
 
 	groups_to_rebuild.len = 0
 	tiles_to_rebuild.len = 0
@@ -265,7 +259,6 @@ var/global/total_gas_mixtures = 0
 	PROTECTED_PROC(TRUE)
 	for(var/turf/simulated/hot_potato as anything in src.active_super_conductivity)
 		hot_potato.super_conduct()
-		LAGCHECK(LAG_REALTIME)
 
 /// Process any tiles queued for pressure delta movement.
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
@@ -273,6 +266,5 @@ var/global/total_gas_mixtures = 0
 	PROTECTED_PROC(TRUE)
 	for(var/turf/simulated/pressurized as anything in src.high_pressure_delta)
 		pressurized.high_pressure_movements()
-		LAGCHECK(LAG_REALTIME)
 
 	high_pressure_delta.len = 0

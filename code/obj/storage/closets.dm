@@ -27,6 +27,13 @@ TYPEINFO(/obj/storage/closet)
 		. = ..()
 		STOP_TRACKING
 
+	attackby(obj/item/I, mob/user)
+		if (I?.force > 0 && user.a_intent == INTENT_HARM && !src.open)
+			user.lastattacked = get_weakref(src)
+			src.bash(I, user)
+		else
+			..()
+
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0
 		if (!P || !istype(P.proj_data,/datum/projectile/))
@@ -37,49 +44,12 @@ TYPEINFO(/obj/storage/closet)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
-				take_damage(damage, P)
+				take_damage(damage, null, null, P)
 			if(D_PIERCING)
-				take_damage(damage, P)
+				take_damage(damage, null, null, P)
 			if(D_ENERGY)
-				take_damage(damage / 2, P)
+				take_damage(damage / 2, null, null, P)
 		return
-
-	proc/take_damage(var/amount, var/obj/projectile/P)
-		if (!P)
-			message_admins("P Gone")
-			return
-		if (!isnum(amount) || amount <= 0)
-			return
-		src._health -= amount
-		if(_health <= 0)
-			_health = 0
-			if (isnull(P))
-				logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
-			else
-				var/shooter_data = null
-				var/vehicle
-				if (P.mob_shooter)
-					shooter_data = P.mob_shooter
-				else if (ismob(P.shooter))
-					var/mob/M = P.shooter
-					shooter_data = M
-				var/obj/machinery/vehicle/V
-				if (istype(P.shooter,/obj/machinery/vehicle/))
-					V = P.shooter
-					if (!shooter_data)
-						shooter_data = V.pilot
-					vehicle = 1
-				if(shooter_data)
-					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
-				else
-					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
-			break_open()
-
-	proc/break_open()
-		src.welded = 0
-		src.unlock()
-		src.open()
-		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
 	Crossed(atom/movable/AM)
 		. = ..()
@@ -90,6 +60,17 @@ TYPEINFO(/obj/storage/closet)
 			AM.changeStatus("knockdown", 1 SECOND)
 			AM.set_loc(src.loc)
 			src.close()
+
+	get_help_message(dist, mob/user)
+		if (src.open)
+			. = " You can use a <b>wrench</b> to dismantle the closet. [src.can_leghole && !src.legholes ? "You can use a <b>welding tool</b> to cut foot holes in the bottom. " : ""]"
+		else
+			if (src.welded)
+				. += " You can use a <b>welding tool</b> to remove the weld and allow it to open."
+			else
+				. += " You can use a <b>welding tool</b> to weld it shut and prevent it being opened."
+			if (src.can_flip_bust)
+				. += " Anyone locked inside can <b>flip</b> to try to break out."
 
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
@@ -114,9 +95,9 @@ TYPEINFO(/obj/storage/closet)
 			if (prob(2))
 				new /obj/item/clothing/mask/gas/emergency(src)
 			for (var/i=rand(2,3), i>0, i--)
-				new /obj/item/tank/emergency_oxygen(src)
+				new /obj/item/tank/pocket/oxygen(src)
 				if (prob(40))
-					new /obj/item/tank/mini_oxygen(src)
+					new /obj/item/tank/mini/oxygen(src)
 				if (prob(40))
 					new /obj/item/clothing/mask/breath(src)
 
@@ -183,6 +164,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
 	auto_close = FALSE
+	can_leghole = FALSE
 
 	wood
 		icon_closed = "woodcoffin"
@@ -222,11 +204,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(
 	/obj/item/clothing/mask/breath,
 	/obj/item/clothing/under/misc/syndicate,
-#if defined(MAP_OVERRIDE_MANTA)
 	/obj/item/tank/jetpack/syndicate,
-#else
-	/obj/item/tank/jetpack,
-#endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
 	/obj/item/clothing/head/helmet/space/santahat/noslow,
@@ -445,7 +423,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
 
-	close(var/entangleLogic)
+	close(var/entangleLogic, mob/user)
 		if (!src.open)
 			return 0
 		if (!src.can_close())
@@ -524,7 +502,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 						I.set_loc(src)
 					amtload++
 				W:UpdateIcon()
-				W.tooltip_rebuild = 1
+				W.tooltip_rebuild = TRUE
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else
@@ -562,7 +540,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
-						src.name = "[I.registered]'s [src.name]"
+						src.name = "[I.registered]’s [src.name]"
 						src.desc = "Owned by [I.registered]."
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")

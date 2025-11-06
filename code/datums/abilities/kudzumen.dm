@@ -251,7 +251,7 @@
 		src.health -= dmg
 		if (src.health < 1)
 			qdel (src)
-		user.lastattacked  = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 
@@ -324,29 +324,6 @@
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
 				H.changeStatus("knockdown", -3 SECONDS)
 		return
-
-/datum/targetable/kudzu/kudzusay
-	name = "Speak Kudzu"
-	desc = "Speak to your collective consciousness."
-	icon_state = "kudzu-say"
-	cooldown = 0
-	pointCost = 0
-	targeted = 0
-	target_anything = 0
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	can_cast_anytime = 1
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
-		if (!message)
-			return
-		logTheThing(LOG_SAY, holder.owner, "[message]")
-		.= holder.owner.say_kudzu(message, holder)
-
-		return 0
 
 /datum/targetable/kudzu/seed
 	name = "Manipulate Seed"
@@ -585,19 +562,18 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = "Nutrients Meter",//src.name,
-				"content" = "[holder.points] Points",//(src.desc ? src.desc : null),
-				"theme" = theme
-			))
+		if (usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = "Nutrients Meter",
+				content = "[holder.points] Points",
+				theme = src.theme
+			)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 	proc/update()		//getting weird numbers in here
 		cur_meter_location = clamp(round((max(holder?.points,0)/holder?.MAX_POINTS)*11), 0, 11)	//length of meter
@@ -630,19 +606,18 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = "Size of Kudzu Growth",
-				"content" = "[amount] tiles",
-				"theme" = theme
-			))
+		if (usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = "Size of Kudzu Growth",
+				content = "[amount] tiles",
+				theme = src.theme
+			)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 	proc/update()
 		amount = length(kudzu_controller.kudzu)

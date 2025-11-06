@@ -34,6 +34,8 @@
 
 TYPEINFO(/obj/machinery/genetics_booth)
 	mats = 40
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/genetics_booth
 	name = "gene booth"
@@ -47,6 +49,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	event_handler_flags = USE_FLUID_ENTER
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
@@ -58,6 +62,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	var/image/abilityoverlay = null
 	var/image/workingoverlay = null
 	var/eject_dir = 0
+	var/eject_strength = THROW_NORMAL
 	var/entry_time = 0
 
 	var/datum/geneboothproduct/selected_product = null
@@ -65,6 +70,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 	var/started = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
+	var/list/datum/contextAction/contexts = list() //Custom context behaviour requiring you to click with your hand and not an item
 
 	var/datum/light/light
 	var/light_r =0.88
@@ -118,13 +124,10 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				return
 
 			started++
-			if (started == 2)
-				if (!try_billing(occupant))
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"")), 2)
-					occupant.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"")), 2)
+			if ((started == 2) && !try_billing(occupant))
+				src.say("<b>[occupant.name]</b>! You can't afford [selected_product.name] with a bank account like that.", flags = SAYFLAG_IGNORE_HTML)
+				src.eject_occupant(0)
 
-					eject_occupant(0)
 		else if (started)
 			eject_occupant(0)
 
@@ -140,37 +143,31 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		if (status & (NOPOWER | BROKEN))
 			boutput(user, SPAN_ALERT("The gene booth is currently nonfunctional."))
 			return
-
-
-		if (length(offered_genes))
-			var/list/names = list()
-			show_admin_panel(user)
-			for (var/datum/geneboothproduct/P as anything in offered_genes)
-				if(!P.locked)
-					names += P.name
-			if(length(names))
-				user.show_text("Something went wrong, showing backup menu...", "blue")
-				var/name_sel = input(user, "Offered Products", "Selection") as null|anything in names
-				if (!name_sel)
-					return
-				for (var/datum/geneboothproduct/P as anything in offered_genes)
-					if (name_sel == P.name)
-						select_product(P)
-						break
+		if(length(src.offered_genes))
+			src.show_context_options(user)
+			src.show_admin_panel(user)
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(src.eject_strength != THROW_THROUGH_WALL)
+			boutput(user, SPAN_NOTICE("You run [E] over [src]'s eject circuitry."))
+			src.eject_strength = THROW_THROUGH_WALL
+
 	proc/reload_contexts()//IM ASORRY
-		for(var/datum/contextAction/C as anything in src.contextActions)
+		for(var/datum/contextAction/C as anything in src.contexts)
 			C.dispose()
-		src.contextActions = list()
+		src.contexts = list()
 
 		for (var/datum/geneboothproduct/P as anything in offered_genes)
 			if(!P.locked)
 				var/datum/contextAction/genebooth_product/newcontext = new /datum/contextAction/genebooth_product
 				newcontext.GBP = P
 				newcontext.GB = src
-				contextActions += newcontext
+				contexts += newcontext
+
+	proc/show_context_options(var/mob/user)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
 	proc/show_admin_panel(mob/user)
 		if(user && src.allowed(user))
@@ -178,8 +175,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				. = ""
 				for (var/datum/geneboothproduct/P as() in offered_genes)
 					. += "<u>[P.name]</u><small> "
-					. += " * Price: <A href='?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
-					. += " * <A href='?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+					. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
+					. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
 
 			else
 				. += "[src] has no products available for purchase right now."
@@ -214,8 +211,6 @@ TYPEINFO(/obj/machinery/genetics_booth)
 								select_product(null)
 								eject_occupant(0)
 							reload_contexts()
-
-			show_admin_panel(usr)
 		else
 			usr.Browse(null, "window=genebooth")
 			src.remove_dialog(usr)
@@ -277,7 +272,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			//occupant.set_loc(src.loc)
 
 			if (eject_dir && do_throwing)
-				occupant.throw_at(get_edge_target_turf(src, eject_dir), 2, 1)
+				occupant.throw_at(get_edge_target_turf(src, eject_dir), 2, 1, throw_type = src.eject_strength)
 			occupant = null
 
 			UpdateIcon()
@@ -320,13 +315,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 							else
 								wagesystem.research_budget += selected_product.cost
 
-							for (var/mob/O in hearers(src, null))
-								//if (src.glitchy_slogans)
-								//	O.show_message("<span class='say'>[SPAN_NAME("[src]")] beeps,</span> \"[voidSpeak(message)]\"", 2)
-								//else
-
-								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"")), 2)
-
+							src.say("Thank you for your patronage, <b>[M.name]</b>.", flags = SAYFLAG_IGNORE_HTML)
 
 							.= 1
 							notify_sale(selected_product.cost)
@@ -400,7 +389,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 					src.eject_occupant(0,0, direction)
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		letgo_hp -= W.force
 		attack_particle(user,src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, pitch = 0.8)

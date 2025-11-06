@@ -96,11 +96,6 @@
 	req_access = list(access_engineering_storage)
 	color = ENGINEERING
 
-/obj/mapping_helper/access/engineering_eva
-	name = "engineering EVA access spawn"
-	req_access = list(access_engineering_eva)
-	color = ENGINEERING
-
 /obj/mapping_helper/access/engineering_power
 	name = "engineering power access spawn"
 	req_access = list(access_engineering_power)
@@ -319,12 +314,12 @@
 
 /obj/mapping_helper/access/owlcommand
 	name = "owlery command access spawn"
-	req_access = list(access_owlerysec)
+	req_access = list(access_owlerycommand)
 	color = COMMAND
 
 /obj/mapping_helper/access/owlsecurity
 	name = "owlery sec access spawn"
-	req_access = list(access_owlerycommand)
+	req_access = list(access_owlerysec)
 	color = SECURITY
 
 /obj/mapping_helper/access/polariscargo
@@ -336,6 +331,16 @@
 	name = "polaris important access spawn"
 	req_access = list(access_polarisimportant)
 	color = CARGO
+
+/obj/mapping_helper/access/impossible
+	name = "impossible access spawn"
+	req_access = list(access_impossible)
+	color = MORGUE_BLACK
+
+/obj/mapping_helper/access/lunar_breakdoor
+	name = "lunar breakdoor access spawn"
+	req_access = list(access_lunar_breakdoor)
+	color = ENGINEERING
 
 #undef MEDICAL
 #undef SECURITY

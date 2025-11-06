@@ -49,7 +49,7 @@
 			var/turf/target = locate(params["target"])
 			if(target)
 				busy = 1
-				flick("lrport1", src)
+				FLICK("lrport1", src)
 				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 
@@ -72,7 +72,7 @@
 			var/turf/target = locate(params["target"])
 			if(target)
 				busy = 1
-				flick("lrport1", src)
+				FLICK("lrport1", src)
 				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				for(var/atom/movable/M in target)
@@ -92,7 +92,7 @@
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL
 	var/ship_id = "artemis"
 	var/obj/machinery/lrteleporter/planetary_teleporter/my_teleporter = null
@@ -149,7 +149,7 @@
 		var/turf/target = locate(params["target"])
 		if(target)
 			busy = 1
-			flick("lrport1", my_teleporter)
+			FLICK("lrport1", my_teleporter)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)
@@ -168,7 +168,7 @@ obj/decal/teleport_mark
 	icon = 'icons/misc/artemis/temps.dmi'
 	icon_state = "decal_tele"
 	name = "teleport mark"
-	anchored = 1
+	anchored = ANCHORED
 	layer = FLOOR_EQUIP_LAYER1
 	alpha = 180
 

@@ -40,14 +40,15 @@ var/list/pw_rewards_tier3 = null
 	escape_possible = 0
 	var/list/frequencies_used = list()
 	var/list/control_points = list()		//list of /datum/control_point
+	var/list/dominatetracker = list()
 	var/datum/pw_stats_manager/stats_manager
 
 	var/datum/pod_wars_team/team_NT
 	var/datum/pod_wars_team/team_SY
 
 	var/atom/movable/screen/hud/score_board/board
-	var/round_limit = 70 MINUTES
-	var/activate_control_points_time = 15 MINUTES
+	var/round_limit = 45 MINUTES
+	var/activate_control_points_time = 5 MINUTES
 	var/round_start_time					//value of TIME macro at post_setup proc call. IDK if this value is stored somewhere already.
 	var/did_ion_storm_happen = FALSE 		//set to true when the ion storm comes.
 
@@ -88,7 +89,7 @@ var/list/pw_rewards_tier3 = null
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
-		if (player.ready && player.mind)
+		if (player.ready_play && player.mind)
 			readied_minds += player.mind
 
 	if (islist(readied_minds))
@@ -184,11 +185,11 @@ var/list/pw_rewards_tier3 = null
 
 	if(round_limit > 0)
 		SPAWN(round_limit) // this has got to end soon
-			command_alert("Something something radiation.","Emergency Update")
+			command_alert("The Ion Storm will dissipate in 15 minutes... Whichever team has the least points will be forced to withdraw.", "Weather Update")
 			sleep(10 MINUTES)
-			command_alert("More radiation, too much...", "Emergency Update")
+			command_alert("Ion storm dissipating in 5 minutes... Whichever team has the least points will be forced to withdraw.", "Weather Update")
 			sleep(5 MINUTES)
-			command_alert("You may feel a slight burning sensation.", "Emergency Update")
+			command_alert("Ion storm dissipating... Executing emergency procedures. ", "Weather Update")
 			sleep(10 SECONDS)
 			for(var/mob/living/carbon/M in mobs)
 				M.emote("fart")
@@ -403,6 +404,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		board?.bar_SY.points = team.points
 		animate(board.bar_SY, transform = M1, pixel_x = offset, time = 10)
 
+	board.desc = "NT Points: [board?.bar_NT.points]\n SY Points: [board?.bar_SY.points]"
+
 //check which team they are on and iff they are a commander for said team. Deduct/award points
 //Oh man, this is fucking bad. Before I had my "system" set up where I just check for the mind.special_role,
 //I should fix this soon, but it works good enough for now... -kyle 4/20/21
@@ -417,8 +420,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	..()
 
-datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
-	our_team.change_points(-1)
+/datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
+	our_team.change_points(-0.5)
 	var/nt_death = world.load_intra_round_value("nt_death")
 	var/sy_death = world.load_intra_round_value("sy_death")
 	if(isnull(nt_death))
@@ -439,6 +442,49 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 			our_team.first_commander_death = 1
 			src.playsound_to_team(our_team, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies{ALTS}.ogg", sound_type=PW_COMMANDER_DIES)
 	enemy_team.change_points(1)
+
+	var/ourname = "<span class='[(get_pod_wars_team_num(M) == TEAM_NANOTRASEN) ? "rcommand" : "rsyndicate"]'>[M.real_name]</span>"
+	if (world.time - M.lastattackertime > 25 SECONDS)
+		if (M.suiciding)
+			boutput(world, "<div class='command_alert ageneral'>[ourname] <b>bid farewell, cruel world!</b></div>")
+			return
+		boutput(world, "<div class='command_alert ageneral'>[ourname] <b>perished!</b></div>")
+	else
+		var/mob/attacker = M.lastattacker?.deref()
+		if (!attacker || attacker == M)
+			if (M.suiciding || attacker == M)
+				boutput(world, "<div class='command_alert ageneral'>[ourname] <b>bid farewell, cruel world!</b></div>")
+				return
+			boutput(world, "<div class='command_alert ageneral'>[ourname] <b>perished!</b></div>")
+			return
+		var/attackername = "<span class='[(get_pod_wars_team_num(attacker) == TEAM_NANOTRASEN) ? "rcommand" : "rsyndicate"]'>[attacker.real_name]</span>"
+		if (M.suiciding)
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>finished off</b> [ourname]</div>")
+		else
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>killed</b> [ourname]</div>")
+
+		if (src.dominatetracker[M.mind])
+			if (src.dominatetracker[M.mind][attacker.mind] >= 4)
+				boutput(world, "<div class='command_alert ageneral'>[attackername] <b>got REVENGE on</b> [ourname]</div>")
+				playsound_global(list(attacker.mind.get_player().client), 'sound/misc/podwars/revenge.ogg', 100)
+				get_image_group("nemesis[ref(M.mind)]").remove_mind(attacker.mind)
+			src.dominatetracker[M.mind][attacker.mind] = 0
+			return
+
+		if (isnull(src.dominatetracker[attacker.mind]))
+			src.dominatetracker[attacker.mind] = list()
+		src.dominatetracker[attacker.mind][M.mind] += 1
+		if (src.dominatetracker[attacker.mind][M.mind] == 4)
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>is DOMINATING</b> [ourname]</div>")
+			playsound_global(list(M.mind.get_player().client), 'sound/misc/podwars/nemesis.ogg', 100)
+			playsound_global(list(attacker.mind.get_player().client), 'sound/misc/podwars/dominating.ogg', 100)
+
+			var/datum/client_image_group/nemesis = get_image_group("nemesis[ref(attacker.mind)]")
+			if (!nemesis.minds_with_associated_mob_image[attacker.mind])
+				var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = "nemesis")
+				antag_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+				nemesis.add_mind_mob_overlay(attacker.mind, antag_icon)
+			nemesis.add_mind(M.mind)
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
@@ -558,6 +604,48 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 
 	src.playsound_to_team(winner, "sound/voice/pod_wars_voices/{PWTN}Win{ALTS}.ogg", sound_type=PW_WIN)
 	src.playsound_to_team(loser, "sound/voice/pod_wars_voices/{PWTN}Lose{ALTS}.ogg", sound_type=PW_LOSE)
+	for (var/datum/mind/mind as anything in loser.members)
+		var/mob/living/carbon/human/H = mind.current
+		if (!ishuman(H))
+			continue
+		H.setStatusMin("humiliated", INFINITY)
+		H.drop_from_slot(H.l_hand, force_drop = TRUE)
+		H.drop_from_slot(H.r_hand, force_drop = TRUE)
+		qdel(H.limbs.l_arm)
+		qdel(H.limbs.r_arm)
+		H.limbs.l_arm = new /obj/item/parts/human_parts/arm/left/item(H)
+		H.limbs.l_arm.holder = H
+		H.limbs.l_arm:set_item(new /obj/item/instrument/bikehorn())
+		H.limbs.r_arm = new /obj/item/parts/human_parts/arm/right/item(H)
+		H.limbs.r_arm.holder = H
+		H.limbs.r_arm:set_item(new /obj/item/instrument/bikehorn())
+		H.update_body()
+
+	for (var/datum/mind/mind as anything in winner.members)
+		var/mob/living/carbon/human/H = mind.current
+		if (!ishuman(H))
+			continue
+		H.setStatusMin("victorious", INFINITY)
+		var/obj/item/card/id/idcard = H.get_id()
+		if (!idcard)
+			var/obj/item/implant/access/implant = locate(/obj/item/implant/access) in H
+			if (!implant) continue
+			idcard = implant.access
+
+		idcard.access |= list(access_syndicate_shuttle, access_heads)
+
+
+
+	if(winner == team_NT) //putting this in a seperate code block for cleanliness
+		for (var/obj/deployable_turret/pod_wars/sy/turret in world)
+			new/obj/effects/explosion/tiny_baby(get_turf(turret))
+			robogibs(get_turf(turret))
+			qdel(turret)
+	else if(winner == team_SY)
+		for (var/obj/deployable_turret/pod_wars/nt/turret in world)
+			new/obj/effects/explosion/tiny_baby(get_turf(turret))
+			robogibs(get_turf(turret))
+			qdel(turret)
 
 	// output the player stats on its own popup.
 	stats_manager.display_HTML_to_clients()
@@ -652,13 +740,13 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	icon = 'icons/misc/128x32.dmi'
 	icon_state = "pw_backboard"
 	screen_loc = "NORTH, CENTER"
+	show_tooltip = TRUE
 	var/atom/movable/screen/border = null
 	var/atom/movable/screen/pw_score_bar/bar_NT = null
 	var/atom/movable/screen/pw_score_bar/bar_SY = null
 
 	var/list/control_points
 
-	var/theme = null
 	alpha = 150
 
 	//builds all the pieces and adds em to the score_board whose sprite is the backboard
@@ -698,22 +786,6 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 			if (true_name == C.true_name)
 				C.change_color(team_num)
 				break;	//Only ever gonna be one of em.
-
-
-	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = "NT Points: [bar_NT.points]\n SY Points: [bar_SY.points]",
-				"theme" = theme
-			))
-
-	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
 
 /atom/movable/screen/pw_score_bar
 	icon = 'icons/misc/128x32.dmi'
@@ -826,20 +898,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	maxhealth = 100
 	anchored = UNANCHORED
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
-	speed = 1.7
+	speedmod = 0.59
 
 	New()
 		..()
 		/obj/item/shipcomponent/mainweapon/phaser/short
-
-		src.m_w_system = new weapon_type( src )
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
-
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock/pw_id( src )
-		src.lock.ship = src
-		src.components += src.lock
-
+		src.install_part(null, new weapon_type(src), POD_PART_MAIN_WEAPON)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/pw_id(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -850,10 +915,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		// src.sensors = new /obj/item/shipcomponent/sensor/mining( src )
 		// src.sensors.ship = src
 		// src.components += src.sensors
-
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/orescoop( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/orescoop(src), POD_PART_SECONDARY)
 
 
 	nanotrasen

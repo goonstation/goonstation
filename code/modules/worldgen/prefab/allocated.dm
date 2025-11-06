@@ -10,6 +10,11 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 		src.applyTo(region.bottom_left, overwrite_args = DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS | DMM_BESPOKE_AREAS)
 		return region
 
+/datum/mapPrefab/allocated/newbee_tutorial
+	prefabPath = "assets/maps/allocated/newbee_tutorial.dmm"
+	prefabSizeX = 40
+	prefabSizeY = 21
+
 /datum/mapPrefab/allocated/blob_tutorial
 	prefabPath = "assets/maps/allocated/blob_tutorial.dmm"
 	prefabSizeX = 17
@@ -50,6 +55,11 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 5
 	prefabSizeY = 5
 
+/datum/mapPrefab/allocated/artifact_fissure
+	prefabPath = "assets/maps/allocated/artifact_fissure.dmm"
+	prefabSizeX = 29
+	prefabSizeY = 35
+
 /datum/mapPrefab/allocated/pirate_ship
 	prefabPath = "assets/maps/allocated/pirate_ship.dmm"
 	prefabSizeX = 33
@@ -67,3 +77,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 
 	purge
 		prefabPath = "assets/maps/allocated/htr_purge_ship.dmm"
+
+/datum/mapPrefab/allocated/phoenix_nest
+	prefabSizeX = 9
+	prefabSizeY = 9
+	prefabPath = "assets/maps/allocated/phoenix_nest.dmm"

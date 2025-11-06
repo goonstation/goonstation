@@ -3,6 +3,7 @@
 	display_name = "head revolutionary"
 	antagonist_icon = "rev_head"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/revolution
+	wiki_link = "https://wiki.ss13.co/Revolutionary"
 
 	var/static/list/datum/mind/heads_of_staff
 	/// A list of items that this head revolutionary has purchased using their uplink.
@@ -34,6 +35,30 @@
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
 
+	proc/find_uplink(var/mob/living/carbon/human/H, var/type)
+		if(!ispath(type) || !istype(H))
+			return FALSE
+		var/uplink_source
+		var/loc_string
+		if (istype(H.belt, type))
+			uplink_source = H.belt
+			loc_string = "on your belt"
+		else if (istype(H.wear_id, type))
+			uplink_source = H.wear_id
+			loc_string = "in your ID slot"
+		else if (istype(H.r_store, type))
+			uplink_source = H.r_store
+			loc_string = "in your pocket"
+		else if (istype(H.l_store, type))
+			uplink_source = H.l_store
+			loc_string = "in your pocket"
+		else if (istype(H.ears, type))
+			uplink_source = H.ears
+			loc_string = "on your head"
+		if(!uplink_source || !loc_string)
+			return FALSE
+		return list(uplink_source, loc_string)
+
 	give_equipment()
 		if (!ishuman(src.owner.current))
 			boutput(src.owner.current, SPAN_ALERT("Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you."))
@@ -43,22 +68,18 @@
 		var/obj/item/uplink_source = null
 		var/loc_string = ""
 
-		// Attempt to locate the owner's PDA or radio headset.
-		if (istype(H.belt, /obj/item/device/pda2) || istype(H.belt, /obj/item/device/radio))
-			uplink_source = H.belt
-			loc_string = "on your belt"
-		else if (istype(H.wear_id, /obj/item/device/pda2))
-			uplink_source = H.wear_id
-			loc_string = "in your ID slot"
-		else if (istype(H.r_store, /obj/item/device/pda2))
-			uplink_source = H.r_store
-			loc_string = "in your pocket"
-		else if (istype(H.l_store, /obj/item/device/pda2))
-			uplink_source = H.l_store
-			loc_string = "in your pocket"
-		else if (istype(H.ears, /obj/item/device/radio))
-			uplink_source = H.ears
-			loc_string = "on your head"
+		var/preferred_uplink = H.client?.preferences.preferred_uplink || PREFERRED_UPLINK_PDA
+		// step 1 of uplinkification: find a source! Prioritize the preferred option, then PDA, then headset, then give up and just spawn one.
+		if(preferred_uplink != PREFERRED_UPLINK_STANDALONE) //Standalone uplink, skip finding pda or headset
+			var/preference_to_type = list(PREFERRED_UPLINK_PDA = /obj/item/device/pda2, PREFERRED_UPLINK_RADIO = /obj/item/device/radio)
+			var/found_uplink_data = src.find_uplink(H, preference_to_type[preferred_uplink])
+			if(!found_uplink_data) // Couldn't find preferred, let's try PDA
+				found_uplink_data = src.find_uplink(H, /obj/item/device/pda2)
+			if(!found_uplink_data) // Uh oh, last try!
+				found_uplink_data = src.find_uplink(H, /obj/item/device/radio)
+			if(found_uplink_data)
+				uplink_source = found_uplink_data[1]
+				loc_string = found_uplink_data[2]
 
 		// Create the uplink.
 		var/obj/item/uplink/uplink

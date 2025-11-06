@@ -21,6 +21,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	hide_attack = 2 //Point blanking... gross
 	pickup_sfx = 'sound/items/pickup_gun.ogg'
 	inventory_counter_enabled = 1
+	var/scope_enabled = 0
 
 	var/suppress_fire_msg = 0
 
@@ -156,6 +157,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		boutput(user, SPAN_NOTICE("You set the output to [src.current_projectile.sname]."))
 	return
 
+/obj/item/gun/dropped(mob/user as mob)
+	var/obj/ability_button/toggle_scope/scope = locate(/obj/ability_button/toggle_scope) in src.ability_buttons
+	scope?.icon_state = "scope_off"
+	..()
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
 		return 0
@@ -209,8 +214,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
-	user.lastattacked = target
-	target.lastattacker = user
+	user.lastattacked = get_weakref(target)
+	target.lastattacker = get_weakref(user)
 	target.lastattackertime = world.time
 
 	if(user.a_intent != INTENT_HELP && isliving(target))
@@ -231,7 +236,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/proc/ShootPointBlank(atom/target, var/mob/user as mob, var/second_shot = 0)
 	if(!SEND_SIGNAL(src, COMSIG_GUN_TRY_POINTBLANK, target, user, second_shot))
-		src.shoot_point_blank(target, user, second_shot)
+		if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
+			src.shoot_point_blank(target, user, second_shot)
 
 /obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
 	if (!target || !user)
@@ -284,9 +290,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				user.show_text(src.click_msg, "red")
 		return FALSE
 
-	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
-		var/mob/living/carbon/human/H = user
-		H.gunshot_residue = 1
+	if (src.add_residue && ismob(user)) // Kinetic firearms leave behind forensic evidence
+		var/mob/M = user
+		var/datum/forensic_data/basic/residue_data = new(register_id("Gunshot residue found"), flags = FORENSIC_REMOVE_CLEANING)
+		M.add_evidence(residue_data, FORENSIC_GROUP_NOTES)
+		src.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/simulated/floor))
+			T.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
 
 	if (!src.silenced)
 		for (var/mob/O in AIviewers(target, null))
@@ -333,6 +344,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			P.mob_shooter = user
 
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
+		if(isobj(P.implanted))
+			var/obj/O = P.implanted
+			O.forensic_holder = P.forensic_holder
 		if(BOUNDS_DIST(user, target) == 0)
 			P.was_pointblank = 1
 			hit_with_existing_projectile(P, target) // Includes log entry.
@@ -416,7 +430,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
 		P.forensic_ID = src.forensic_ID
-
+		if(isobj(P.implanted))
+			var/obj/O = P.implanted
+			O.forensic_holder = P.forensic_holder
+		P.spread = spread
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)
 			for(var/mob/O in AIviewers(user, null))
@@ -432,11 +449,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	handle_recoil(user, start, target, POX, POY)
 
-	if (ismob(user))
+	if (src.add_residue && ismob(user)) // Kinetic firearms leave behind forensic evidence
 		var/mob/M = user
-		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
-			var/mob/living/carbon/human/H = user
-			H.gunshot_residue = 1
+		var/datum/forensic_data/basic/residue_data = new(register_id("Gunshot residue found"), flags = FORENSIC_REMOVE_CLEANING)
+		M.add_evidence(residue_data, FORENSIC_GROUP_NOTES)
+		src.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/simulated/floor))
+			T.add_evidence(residue_data.get_copy(), FORENSIC_GROUP_NOTES)
 
 	src.UpdateIcon()
 	return TRUE
@@ -446,7 +466,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/proc/log_shoot(mob/user, turf/T, obj/projectile/P)
-	logTheThing(LOG_COMBAT, user, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
+	logTheThing(LOG_COMBAT, user, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir_accurate(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
 
 /obj/item/gun/examine()
 	if (src.artifact)

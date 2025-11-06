@@ -114,7 +114,7 @@ TYPEINFO(/obj/tug_cart)
 				C.pixel_y += 6
 				if (C.layer < layer)
 					C.layer = layer + 0.1
-				src.UpdateOverlays(C, "load")
+				src.vis_contents += C
 
 	proc/unload()
 		if (!load)
@@ -141,8 +141,8 @@ TYPEINFO(/obj/tug_cart)
 		if(src.load == Obj)
 			src.load.pixel_y -= 6
 			src.load.layer = initial(src.load.layer)
+			src.vis_contents -= src.load
 			src.load = null
-			src.UpdateOverlays(null, "load")
 
 	Move()
 		var/oldloc = src.loc
@@ -247,8 +247,8 @@ TYPEINFO(/obj/vehicle/tug)
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				rider.throw_at(target, 5, 1)
 				rider.buckled = null
+				src.vis_contents -= rider
 				rider = null
-				src.ClearSpecificOverlays("rider")
 				return
 			if (selfdismount)
 				boutput(rider, SPAN_NOTICE("You dismount from [src]."))
@@ -258,8 +258,8 @@ TYPEINFO(/obj/vehicle/tug)
 					C.show_message("<B>[rider]</B> dismounts from [src].", 1)
 			if (rider)
 				rider.buckled = null
+				src.vis_contents -= rider
 			rider = null
-			src.ClearSpecificOverlays("rider")
 			return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
@@ -304,7 +304,7 @@ TYPEINFO(/obj/vehicle/tug)
 		target.set_loc(src)
 		rider = target
 		rider.pixel_y = 6
-		src.UpdateOverlays(rider, "rider")
+		src.vis_contents += rider
 		if (rider.restrained() || rider.stat)
 			rider.buckled = src
 

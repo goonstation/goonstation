@@ -35,7 +35,8 @@
 /obj/railing/velvet{
 	pixel_y = 17;
 	density = 0;
-	layer = 4
+	layer = 4;
+	dir = 1
 	},
 /turf/simulated/floor/marble/border_bw,
 /area/dmm_suite/clear_area)
@@ -48,7 +49,8 @@
 /obj/railing/velvet{
 	pixel_y = 17;
 	density = 0;
-	layer = 4
+	layer = 4;
+	dir = 1
 	},
 /turf/simulated/floor/marble/border_bw,
 /area/dmm_suite/clear_area)
@@ -59,7 +61,8 @@
 /obj/railing/velvet{
 	pixel_y = 17;
 	density = 0;
-	layer = 4
+	layer = 4;
+	dir = 1
 	},
 /obj/decal/poster/wallsign/dead_exec_portrait{
 	pixel_y = 32;
@@ -106,13 +109,14 @@
 	default_material = "steel";
 	rand_pos = 1
 	},
+/obj/map/light/cyan{
+	brightness = 5
+	},
 /obj/railing/velvet{
 	pixel_y = 17;
 	density = 0;
-	layer = 4
-	},
-/obj/map/light/cyan{
-	brightness = 5
+	layer = 4;
+	dir = 1
 	},
 /turf/simulated/floor/marble/border_bw,
 /area/dmm_suite/clear_area)

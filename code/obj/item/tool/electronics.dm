@@ -129,6 +129,12 @@
 	var/list/needed_parts = new/list()
 	var/obj/deconstructed_thing = null
 
+	flatpack
+		icon_state = "dbox_alt"
+		HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
+
+		attack_self(mob/user)
+			actions.start(new/datum/action/bar/icon/build_electronics_frame(src, 1 SECOND), user)
 
 	disposing()
 		if(deconstructed_thing)
@@ -158,28 +164,6 @@
 			boutput(user, SPAN_NOTICE("You add the [E.name] to the [src]."))
 			needed_parts[E.type] -= 1
 			return
-		else if(istype(E,/obj/item/electronics/soldering))
-			if(!secured)
-				secured = 1
-				viewstat = 1
-				boutput(user, SPAN_NOTICE("You secure the [src]."))
-			else if(secured == 1)
-				secured = 0
-				viewstat = 0
-				boutput(user, SPAN_NOTICE("You unsecure the [src]."))
-			else if(secured == 2)
-				if(!isturf(user.loc))
-					boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
-					return
-
-				boutput(user, SPAN_ALERT("You deploy the [src]!"))
-				logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
-				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
-					qdel(user.loc)
-
-				actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
-				//deploy()
-			return
 		else if(istype(E,/obj/item/electronics/scanner) && !secured)
 			if(!parts_check())
 				boutput(user, SPAN_NOTICE("Missing components:"))
@@ -191,7 +175,31 @@
 				boutput(user, SPAN_NOTICE("All components present"))
 			return
 
-	if (ispryingtool(W))
+	if(issolderingtool(W))
+		if(!secured)
+			secured = 1
+			viewstat = 1
+			boutput(user, SPAN_NOTICE("You secure the [src]."))
+		else if(secured == 1)
+			secured = 0
+			viewstat = 0
+			boutput(user, SPAN_NOTICE("You unsecure the [src]."))
+		else if(secured == 2)
+			if(!isturf(user.loc))
+				boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
+				return
+			if(!src.can_build(user, user.loc))
+				boutput(user, SPAN_ALERT("You can't build \the [src] here!"))
+				return
+			boutput(user, SPAN_ALERT("You deploy the [src]!"))
+			if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
+				qdel(user.loc)
+			var/datum/component/soldering/solder_comp = W.GetComponent(/datum/component/soldering)
+			var/solder_time = solder_comp ? solder_comp.solder_time : 1 SECOND
+			actions.start(new/datum/action/bar/icon/build_electronics_frame(src, solder_time), user)
+			//deploy()
+		return
+	else if(ispryingtool(W))
 		if (!anchored)
 			src.set_dir(turn(src.dir, 90))
 			return
@@ -236,7 +244,7 @@
 
 		if(0)
 			for(var/obj/item/electronics/P in src.contents)
-				dat += "[P.name]: <A href='?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
+				dat += "[P.name]: <A href='byond://?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
 
 				src.add_dialog(user)
 				user.Browse("<HEAD><TITLE>Frame</TITLE></HEAD><TT>[dat]</TT>", "window=fkit")
@@ -298,7 +306,19 @@
 		src.visible_message(SPAN_NOTICE("[src] vanishes in a puff of logic!"), SPAN_NOTICE("You hear a mild poof."), "frame_poof")
 		qdel(src)
 
+/obj/item/electronics/frame/proc/can_build(mob/user, turf/T)
+	var/type = src.store_type
+	if(src.deconstructed_thing != null)
+		type = src.deconstructed_thing.type
+	var/typeinfo/datum/type_typeinfo = get_type_typeinfo(type)
+	if(!istype(type_typeinfo, /typeinfo/atom/movable))
+		// can_build is only defined on subtypes of /typeinfo/atom/movable, if other types need can_build implementation add a stub proc and more handling here
+		return TRUE
+	var/typeinfo/atom/movable/AM_typeinfo = type_typeinfo
+	return AM_typeinfo.can_build(T)
+
 /obj/item/electronics/frame/proc/deploy(mob/user)
+	logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 	var/turf/T = get_turf(src)
 	var/atom/movable/AM = null
 	src.stored?.transfer_stored_item(src, T, user = user)
@@ -309,6 +329,7 @@
 		AM.set_loc(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 0)
+		AM.forensic_holder = src.forensic_holder
 
 		// if we have a material, give it to the object if the object doesn't have one
 		if (src.material && !AM.material)
@@ -317,6 +338,7 @@
 		AM = new store_type(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 1)
+		AM.forensic_holder = src.forensic_holder
 
 		if (src.material && !AM.material)
 			AM.setMaterial(src.material)
@@ -326,64 +348,7 @@
 		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
 
-	return
-
-/datum/action/bar/icon/build_electronics_frame
-	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	icon = 'icons/ui/actions.dmi'
-	icon_state = "working"
-	var/obj/item/electronics/frame/F
-	var/density_check = FALSE
-
-	New(Frame)
-		F = Frame
-
-		if(F.deconstructed_thing)
-			density_check = F.deconstructed_thing.density
-		else
-			var/atom/A = F.store_type
-			density_check = initial(A.density)
-		..()
-
-	onUpdate()
-		..()
-		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/turf/T = get_turf(F)
-		if(T.density || density_check && !T.can_crossed_by(F))
-			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
-			src.resumable = FALSE
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onStart()
-		..()
-		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/turf/T = get_turf(F)
-		if(T.density || density_check && !T.can_crossed_by(F))
-			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
-			src.resumable = FALSE
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onEnd()
-		..()
-		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/turf/T = get_turf(F)
-		if(T.density || density_check && !T.can_crossed_by(F))
-			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
-			src.resumable = FALSE
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-		if(owner && F)
-			F.deploy(owner)
+	return AM
 
 
 /obj/item/electronics/frame/proc/parts_check()
@@ -403,16 +368,15 @@
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 40
+	tool_flags = TOOL_SOLDERING
+
+	New()
+		..()
+		src.AddComponent(/datum/component/soldering)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!isobj(target))
-			return
-		var/obj/O = target
-		var/decon_len = O.decon_contexts ? O.decon_contexts.len : 0
-		O.decon_contexts = null
-		if (O.build_deconstruction_buttons() != decon_len)
-			boutput(user, SPAN_ALERT("You repair [target]'s deconstructed state."))
-			return
+		var/datum/component/soldering/solder_comp = src.GetComponent(/datum/component/soldering)
+		solder_comp.repair_deconstruction_buttons(target, user)
 		..()
 
 ////////////////////////////////////////////////////////////////no
@@ -446,6 +410,14 @@
 		// We display this on a separate line and with a different color to show emphasis
 		. = ..()
 		. += "<br>[SPAN_NOTICE("Use the Help, Disarm, or Grab intents to scan objects when you click them. Switch to Harm intent do other things.")]"
+		. += "<br>Scanned items:"
+		if (!length(src.scanned))
+			. += " None"
+			return
+		for (var/obj/item_type as anything in src.scanned)
+			if (initial(item_type.is_syndicate))
+				continue
+			. += "<br>-" + "\proper[initial(item_type.name)]"
 
 	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
 		if (user.a_intent == INTENT_HARM)
@@ -637,7 +609,7 @@
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
-			updateDialog()
+			tgui_process.update_uis(src)
 			return
 
 		return
@@ -662,7 +634,7 @@
 			return
 	var/strippedName = scanFile.scannedName
 	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
-	updateDialog()
+	tgui_process.update_uis(src)
 
 	if(src.net_id != host_ruck || command != "add") //Only the host sends PDA messages, and we don't send them for internal transfer
 		return
@@ -689,7 +661,7 @@
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				O.locked = targetlock
-				updateDialog()
+				tgui_process.update_uis(src)
 		return
 
 	if(signal.encryption)
@@ -796,97 +768,100 @@
 		else
 			boutput(user, SPAN_ALERT("No new items entered into kit."))
 
+		tgui_process.update_uis(src)
+
 	else
 		..()
 
 /obj/machinery/rkit/attack_hand(mob/user)
-	src.add_fingerprint(user)
-	var/dat
-	var/hide_allowed = src.allowed(user)
-	dat = "<b>Ruckingenur Kit</b><HR>"
+	src.ui_interact(user)
 
-	dat += "<b>Scanned Items:</b><br>"
-	for(var/datum/electronics/scanned_item/S in ruck_controls.scanned_items)
-		dat += "<u>[S.name]</u><small> "
-		//dat += "<A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
-		if (S.item_mats && src.olde)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
-		else if (S.blueprint)
-			if(!S.locked || hide_allowed || src.olde)
-				dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
-			else
-				dat += " * Blueprint Disabled"
-		if(hide_allowed)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=lock'>[S.locked ? "Locked" : "Unlocked"]</A>"
-		dat += "</small><br>"
-	dat += "<br>"
+/obj/machinery/rkit/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RuckingenurKit", src.name)
+		ui.open()
 
-	dat += "<HR>"
+/obj/machinery/rkit/ui_data(mob/user)
+	var/list/scanned_items = list()
 
-	src.add_dialog(user)
-	user.Browse("<HEAD><TITLE>Ruckingenur Kit Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=rkit")
-	onclose(user, "rkit")
+	for (var/datum/electronics/scanned_item/item as anything in ruck_controls.scanned_items)
+		var/atom/A = item.item_type
+		scanned_items.Add(list(list(
+			name = item.name,
+			description = initial(A.desc),
+			has_item_mats = !!item.item_mats,
+			blueprint_available = !!item.blueprint,
+			locked = item.locked,
+			imagePath = getItemIcon(item.item_type, C = user.client),
+			ref = ref(item),
+		)))
 
-/obj/machinery/rkit/Topic(href, href_list)
+	. = list(
+		hide_allowed = src.allowed(user),
+		scanned_items = scanned_items,
+		legacyElectronicFrameMode = src.olde
+	)
+
+/obj/machinery/rkit/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
 	if (usr.stat)
 		return
-	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-		src.add_dialog(usr)
+	if (!(in_interact_range(src, usr) && istype(src.loc, /turf)) && !(issilicon(usr)))
+		return
 
-		switch(href_list["tp"])
+	switch(action)
 
-			if("done")
-				if(href_list["op"])
-					var/datum/electronics/scanned_item/O = locate(href_list["op"])
-					if(istype(O,/datum/electronics/scanned_item/))
-						if (!(O.item_mats && src.olde))
-							return
-						var/obj/item/electronics/frame/F = new/obj/item/electronics/frame(src.loc)
-						F.name = "[O.name]-frame"
-						F.store_type = O.item_type
-						F.needed_parts = O.item_mats
+		if("done")
+			var/datum/electronics/scanned_item/O = locate(params["op"])
+			if(istype(O,/datum/electronics/scanned_item/))
+				if (!(O.item_mats && src.olde))
+					return
+				var/obj/item/electronics/frame/F = new/obj/item/electronics/frame(src.loc)
+				F.name = "[O.name]-frame"
+				F.store_type = O.item_type
+				F.needed_parts = O.item_mats
+				. = TRUE
 
-			if("blueprint")
-				if(href_list["op"])
-					if (ON_COOLDOWN(src,"anti_print_spam", 2.5 SECONDS))
-						usr.show_text("[src] isn't done with the previous print job.", "red")
-						return
-					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
-					if (istype(O.blueprint, /datum/manufacture/mechanics/))
-						if (!(!O.locked || src.allowed(usr) || src.olde))
-							return
-						logTheThing(LOG_STATION, usr, "printed manufactuerer blueprint for [O.item_type] from [src]")
-						usr.show_text("Print job started...", "blue")
-						var/datum/manufacture/mechanics/M = O.blueprint
-						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
-						SPAWN(2.5 SECONDS)
-							if (src)
-								new /obj/item/paper/manufacturer_blueprint(src.loc, M)
-			if("lock")
-				if(href_list["op"])
-					if (!src.allowed(usr))
-						return
-					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
-					O.locked = !O.locked
-					logTheThing(LOG_STATION, usr, "[O.locked ? "" : "un"]locked rkit blueprint for [O.item_type]")
-					for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
-						if(O.name == OP.name)
-							OP.locked = O.locked
-					updateDialog()
-					var/datum/signal/newsignal = get_free_signal()
-					newsignal.source = src
-					newsignal.data["address_tag"] = "TRANSRKIT"
-					newsignal.data["acc_code"] = netpass_heads
-					newsignal.data["LOCK"] = O.locked
-					newsignal.data["DATA"] = O.name
-					newsignal.data["sender"] = src.net_id
-					newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
+		if("blueprint")
+			if (ON_COOLDOWN(src,"anti_print_spam", 2.5 SECONDS))
+				usr.show_text("[src] isn't done with the previous print job.", "red")
+				return
+			var/datum/electronics/scanned_item/O = locate(params["op"]) in ruck_controls.scanned_items
+			if (istype(O.blueprint, /datum/manufacture/mechanics/))
+				if (!(!O.locked || src.allowed(usr) || src.olde))
+					return
+				logTheThing(LOG_STATION, usr, "printed manufactuerer blueprint for [O.item_type] from [src]")
+				usr.show_text("Print job started...", "blue")
+				var/datum/manufacture/mechanics/M = O.blueprint
+				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
+				SPAWN(2.5 SECONDS)
+					if (src)
+						new /obj/item/paper/manufacturer_blueprint(src.loc, M)
+				. = TRUE
+		if("lock")
+			if (!src.allowed(usr))
+				return
+			var/datum/electronics/scanned_item/O = locate(params["op"]) in ruck_controls.scanned_items
+			O.locked = !O.locked
+			logTheThing(LOG_STATION, usr, "[O.locked ? "" : "un"]locked rkit blueprint for [O.item_type]")
+			for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
+				if(O.name == OP.name)
+					OP.locked = O.locked
 
-	else
-		usr.Browse(null, "window=rkit")
-		src.remove_dialog(usr)
-	return
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.data["address_tag"] = "TRANSRKIT"
+			newsignal.data["acc_code"] = netpass_heads
+			newsignal.data["LOCK"] = O.locked
+			newsignal.data["DATA"] = O.name
+			newsignal.data["sender"] = src.net_id
+			newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
+			. = TRUE
 
 /obj/item/deconstructor
 	name = "deconstruction device"
@@ -899,86 +874,31 @@
 	throwforce = 4
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
-	tool_flags = TOOL_SAWING
+	tool_flags = TOOL_SAWING | TOOL_DECONSTRUCTING
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
+	HELP_MESSAGE_OVERRIDE("Use the Help, Disarm, or Grab intents to attempt deconstructing objects when you click them. Switch to Harm intent to use as a weapon.")
 
-	proc/finish_decon(atom/target,mob/user) // deconstructing work
-		if (!isobj(target))
-			return
-		var/obj/O = target
-		if(!O.can_deconstruct(user))
-			return
-		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
-		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		user.visible_message("<B>[user.name]</B> deconstructs [target].")
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/deconstructing)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
-		var/turf/target_loc = get_turf(target)
-		var/obj/item/electronics/frame/F = new(target_loc)
-		F.name = "[target.name] frame"
-		if(O.deconstruct_flags & DECON_DESTRUCT)
-			F.store_type = O.type
-			qdel(O)
-		else
-			F.deconstructed_thing = target
-			if(ismob(O.loc))
-				var/mob/M = O.loc
-				M.u_equip(O)
-			O.set_loc(F)
-		// move frame to the location after object is gone, so crushers do not crusher themselves
-		F.viewstat = 2
-		F.secured = 2
-		F.icon_state = "dbox_big"
-		F.w_class = W_CLASS_BULKY
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
+		. = ..()
 
-		elecflash(src,power=2)
-		if(!QDELETED(O))
-			O.was_deconstructed_to_frame(user)
-			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
+	dropped(var/mob/user)
+		. = ..()
+		user?.closeContextActions()
 
 	MouseDrop_T(atom/target, mob/user)
-		if (!isobj(target))
-			return
-		src.AfterAttack(target,user)
+		src.pre_attackby(src, target, user)
 		..()
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!isobj(target))
-			return
-		var/obj/O = target
-
-		var/decon_complexity = O.build_deconstruction_buttons()
-		if (!decon_complexity || !O.can_deconstruct(user))
-			boutput(user, SPAN_ALERT("[target] cannot be deconstructed."))
-			if (O.deconstruct_flags & DECON_NULL_ACCESS)
-				boutput(user, SPAN_ALERT("[target] is under an access lock and must have its access requirements removed first."))
-			return
-		if (istext(decon_complexity))
-			boutput(user, SPAN_ALERT("[decon_complexity]"))
-			return
-		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
-			boutput(user, SPAN_ALERT("Cyborgs cannot deconstruct this [target]."))
-			return
-		if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
-			boutput(user, SPAN_ALERT("You cannot deconstruct [target] without sufficient access to operate it."))
-			return
-
-		if(length(get_all_mobs_in(O)))
-			boutput(user, SPAN_ALERT("You cannot deconstruct [target] while someone is inside it!"))
-			return
-
-		if (isrestrictedz(O.z) && !isitem(target) && !istype(get_area(O), /area/salvager)) //let salvagers deconstruct on the magpie
-			boutput(user, SPAN_ALERT("You cannot bring yourself to deconstruct [target] in this area."))
-			return
-
-		if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
-			boutput(user, "Deconstructing [O], please remain still...")
-			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
-			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)
-		else
-			user.showContextActions(O.decon_contexts, O)
-			boutput(user, SPAN_ALERT("You need to use some tools on [target] before it can be deconstructed."))
-			return
+	proc/pre_attackby(source, atom/target, mob/user)
+		var/datum/component/deconstructing/decon_comp = src.GetComponent(/datum/component/deconstructing)
+		return decon_comp.pre_attackby_decon(target, user, src)
 
  // here be extra surgery penalties
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -1002,7 +922,7 @@
 			JOB_XP(user, "Clown", 3)
 
 
-		else // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
+		else if(!is_special) // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
 			saw_surgery(target,user)
 
 
@@ -1015,7 +935,7 @@
 	throwforce = 0
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
-	tool_flags = 0
+	tool_flags = TOOL_DECONSTRUCTING
 	w_class = W_CLASS_NORMAL
 
 
@@ -1071,47 +991,4 @@
 			decon_contexts += newcon
 
 		.+= length(decon_contexts)
-
-
-/datum/action/bar/icon/deconstruct_obj
-	duration = 20
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	icon = 'icons/ui/actions.dmi'
-	icon_state = "decon"
-	var/obj/O
-	var/obj/item/deconstructor/D
-	New(Obj, Decon, ExtraTime)
-		O = Obj
-		D = Decon
-		duration += ExtraTime
-		..()
-
-	onUpdate()
-		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onStart()
-		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onEnd()
-		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		if (ismob(owner))
-			var/mob/M = owner
-			if (!(D in M.equipped_list()))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-		D.finish_decon(O,owner)
-
-	onInterrupt()
-		if (O && owner)
-			boutput(owner, SPAN_ALERT("Deconstruction of [O] interrupted!"))
-		..()
 

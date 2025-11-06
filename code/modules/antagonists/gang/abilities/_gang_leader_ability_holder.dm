@@ -226,7 +226,7 @@
 
 	proc/check_valid(mob/M, area/targetArea)
 		var/turf/T = get_turf(M)
-		if(!istype(targetArea, /area/station) || get_z(T) != Z_LEVEL_STATION)
+		if(!istype(targetArea, /area/station) || istype(targetArea, /area/station/medical/asylum) || get_z(T) != Z_LEVEL_STATION)
 			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
 			return FALSE
 
@@ -249,8 +249,7 @@
 		return TRUE
 	proc/confirm(mob/M)
 		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
-		antag_role.gang.select_gang_uniform()
-		return TRUE
+		return antag_role.gang.select_gang_uniform()
 
 	proc/after_cast(mob/M, area/area, datum/antagonist/gang_leader/antag_role)
 		for(var/datum/mind/member in antag_role.gang.members)
@@ -259,6 +258,7 @@
 		var/obj/ganglocker/locker = new /obj/ganglocker(get_turf(M))
 		locker.set_gang(antag_role.gang)
 		antag_role.gang.locker = locker
+		locker.post_move_locker()
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
 		var/datum/targetable/gang/set_gang_base/migrate/newAbil = M.abilityHolder.addAbility(/datum/targetable/gang/set_gang_base/migrate)
@@ -318,10 +318,11 @@
 				locker = new /obj/ganglocker(get_turf(M))
 				locker.set_gang(antag_role.gang)
 				antag_role.gang.locker = locker
+				locker.post_move_locker()
 			else
-				antag_role.gang.unclaim_tiles(locker.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+				locker.pre_move_locker()
 				locker.set_loc(get_turf(M))
-				antag_role.gang.claim_tiles(locker.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+				locker.post_move_locker()
 
 
 			return CAST_ATTEMPT_SUCCESS

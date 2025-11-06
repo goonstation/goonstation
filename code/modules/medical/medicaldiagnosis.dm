@@ -20,10 +20,10 @@
 	throw_range = 20
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(ishuman(target))
+		if(ishuman(target) && can_act(user))
 			var/mob/living/carbon/human/H = target
 			if(user.a_intent == "help")
-				if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50) || (!user.traitHolder.hasTrait("training_medical") && prob(2)))
+				if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR) && prob(50) || (!user.traitHolder.hasTrait("training_medical") && prob(2)))
 					user.visible_message(SPAN_ALERT("<b>[user]</b> stabs themselves in the ears with [src]!"), SPAN_ALERT("You stab yourself in the ears with [src]!"))
 					user.apply_sonic_stun(0, 0, 0, 0, 0, 12, 6)
 					take_bleeding_damage(user, user, 15)
@@ -41,7 +41,7 @@
 					user.tri_message(H, SPAN_NOTICE("<b>[user]</b> puts [src] to [(user != H) ? "[H]'s" : "their"] chest."),
 						SPAN_NOTICE("You put [src] to [(user != H) ? "[H]'s" : "your"] chest and begin listening."),
 						SPAN_NOTICE("[user] puts [src] to your chest and begins listening intently."))
-					if(do_after(user, (user.traitHolder.hasTrait("training_medical") ? 2 SECONDS : 4 SECONDS)) && !(user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.getStatusDuration("unconscious") > 0 || !isalive(user) || user.restrained()))
+					if(do_after(user, (user.traitHolder.hasTrait("training_medical") ? 2 SECONDS : 4 SECONDS)) && can_act(user))
 						if(!user.traitHolder.hasTrait("training_medical") && prob(15))
 							boutput(user, SPAN_ALERT("You attempt to listen to [(user != H) ? "[H]'s" : "your"] lungs before realizing after a few attempts that you've been listening to [(user != H) ? "[H]'s" : "your"] [pick("liver", "kidneys", "spleen", "leg", "PDA", "eyes")], a shameful [user]"))
 						else

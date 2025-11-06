@@ -1,5 +1,6 @@
 TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	mats = 0
+	start_listen_inputs = null
 
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
@@ -7,11 +8,11 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "amp_stack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-
+	use_speech_bubble = TRUE
 	anchored = UNANCHORED
 	speaker_range = 7
-	broadcasting = 0
-	listening = 0
+	initial_microphone_enabled = FALSE
+	initial_speaker_enabled = FALSE
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
 	locked_frequency = TRUE
@@ -27,28 +28,18 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		pixel_y = 0
 		effect = new
 		src.vis_contents += effect
-		set_secure_frequency("l", R_FREQ_LOUDSPEAKERS)
 		headset_channel_lookup["[R_FREQ_LOUDSPEAKERS]"] = "Loudspeakers"
 
-	send_hear()
-		flick("amp_stack_actv", src)
+	receive_signal()
+		. = ..()
 
-		last_transmission = world.time
-		var/list/hear = hearers(src.speaker_range, get_turf(src))
+		if (.)
+			return
 
-		if(ismob(loc))
-			hear |= loc
+		FLICK("amp_stack_actv", src)
 
-		if(istype(loc, /obj)) //modified so people in the same object as it can hear it
-			for(var/mob/M in loc)
-				hear |= M
-
-		return hear
-
-	speech_bubble()
-		UpdateOverlays(global.living_speech_bubble, "speech_bubble")
-		SPAWN(1.5 SECONDS)
-			UpdateOverlays(null, "speech_bubble")
+	toggle_speaker(speaker_enabled)
+		. = ..(TRUE)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -439,7 +430,6 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	id = "infrasound_nausea"
 	name = "Nausea"
 	desc = "Something doesn't feel quite right."
-	icon_state = "miasma1"
 	unique = 1
 	duration = 10 SECONDS
 	maxDuration = null
@@ -461,7 +451,6 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 				L.do_disorient(25, disorient=1 SECOND)
 			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
 			L.vomit(0, null, vomit_message)
-			icon_state = "miasma5"
 
 		return ..(timePassed)
 
@@ -640,9 +629,7 @@ particles/music
 	bound1 = list(-1000, -240, -1000)
 	lifespan = 2 SECONDS
 	fade = 1.5 SECOND
-	#ifndef SPACEMAN_DMM // Waiting on next release of DreamChecker
 	fadein = 5
-	#endif
 	// spawn within a certain x,y,z space
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("quarter"=5, "beamed_eighth"=1, "eighth"=1)

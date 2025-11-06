@@ -41,6 +41,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	var/inert = 0
 
 	var/list/addiction_tally = null
+	/// Cache for misc addiction changes, this value will be added to every addiction's meter and then reset to 0 every life tick
+	var/addiction_cache = 0
 
 	var/tmp/list/datum/chemical_reaction/possible_reactions = list()
 	var/tmp/list/datum/chemical_reaction/active_reactions = list()
@@ -199,10 +201,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return R
 
 	proc/remove_any_except(var/amount=1, var/exception)
-		if(amount > total_volume) amount = total_volume
+		if (!(exception in src.reagent_list))
+			src.remove_any(amount)
+			return
+
+		var/datum/reagent/exception_reagent = reagent_list[exception]
+		var/effective_total_volume = total_volume - exception_reagent.volume
+		if(amount > effective_total_volume) amount = effective_total_volume
 		if(amount <= 0) return
 
-		var/remove_ratio = amount/total_volume
+		var/remove_ratio = amount/effective_total_volume
 
 		for(var/reagent_id in reagent_list)
 			if (reagent_id == exception)
@@ -332,11 +340,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				/*if(istype(current_reagent, /datum/reagent/disease))
 					target_reagents.add_reagent_disease(current_reagent, (transfer_amt * multiplier), current_reagent.data, current_reagent.temperature)
 				else*/
-				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 
 				current_reagent.on_transfer(src, target_reagents, receive_amt)
 
-				src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
+				src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
 		else //Only transfer one reagent
 			var/CI = 1
 			for(var/reagent_id in reagent_list)
@@ -345,26 +353,29 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				if ( CI++ == index )
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 					if (isnull(current_reagent) || current_reagent.volume == 0)
-						return 0
+						break
 					var/transfer_amt = min(current_reagent.volume,amount)
 					var/receive_amt = transfer_amt * multiplier
-					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 					current_reagent.on_transfer(src, target_reagents, receive_amt)
-					src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
-					return 0
+					src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
+					break
 
 		if (update_self_reagents)
 			src.update_total()
+			src.temperature_react()
 			src.handle_reactions()
 			// this was missing. why was this missing? i might be breaking the shit out of something here
-			reagents_changed()
+			src.reagents_changed()
 
 		if (!target_reagents) // on_transfer may murder the target, see: nitroglycerin
 			return amount
 
 		if (update_target_reagents)
 			target_reagents.update_total()
+			target_reagents.temperature_react()
 			target_reagents.handle_reactions()
+			target_reagents.reagents_changed(TRUE)
 
 		reagents_transferred()
 		return amount
@@ -627,7 +638,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					total_volume += current_reagent.volume
 		if(isitem(my_atom))
 			var/obj/item/I = my_atom
-			I.tooltip_rebuild = 1
+			I.tooltip_rebuild = TRUE
 		return 0
 
 	proc/clear_reagents()
@@ -687,13 +698,13 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 							boutput(H, SPAN_ALERT("You are scalded by the hot chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 							H.emote("scream")
-							H.bodytemperature += clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500)
+							H.changeBodyTemp(clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500))
 					else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 						if (chem_helmet_check(H, "cold"))
 							boutput(H, SPAN_ALERT("You are frostbitten by the freezing cold chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 							H.emote("scream")
-							H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
+							H.changeBodyTemp(-clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500))
 
 				for(var/current_id in reagent_list)
 					if (current_id == exception)
@@ -742,14 +753,14 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								dmg_multiplier = paramslist["dmg_multiplier"]
 
 						if(C.bioHolder)
-							if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
+							if(temp_to_burn_with > C.scald_temp() && !C.is_heat_resistant())
 								boutput(C, SPAN_ALERT("You scald yourself trying to consume the boiling hot substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-								C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
-							else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
+								C.changeBodyTemp(clamp((temp_to_burn_with - T0C) - 20, 5, 700))
+							else if(temp_to_burn_with < C.frostburn_temp() && !C.is_cold_resistant())
 								boutput(C, SPAN_ALERT("You frostburn yourself trying to consume the freezing cold substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-								C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
+								C.changeBodyTemp(-clamp((temp_to_burn_with - T0C) - 20, 5, 700))
 
 
 				// These spawn calls were breaking stuff elsewhere. Since they didn't appear to be necessary and
@@ -764,7 +775,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						if(ismob(A) && !isobserver(A))
 							//SPAWN(0)
 								//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist))
+							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist, current_reagent.volume*volume_fraction))
 								.+= current_id
 						if(isturf(A))
 							//SPAWN(0)
@@ -951,7 +962,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
-		if (rc_flags == 0)	// Report nothing about the reagents in this case
+		if (rc_flags == 0 || !user.sight_check(1))	// Report nothing about the reagents in this case
 			return null
 
 		if (length(reagent_list))
@@ -1229,6 +1240,14 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	proc/is_airborne()
 		return FALSE
+
+	proc/on_forensic_scan_reagent(datum/forensic_scan/scan)
+		if(src.has_reagent("blood"))
+			var/datum/reagent/blood/B = src.reagent_list["blood"]
+			if (B && istype(B.data, /datum/bioHolder))
+				var/datum/bioHolder/BH = B.data
+				if (BH.Uid)
+					scan.add_text("[BH.Uid] (Reagents)", FORENSIC_HEADER_DNA)
 
 ///////////////////////////////////////////////////////////////////////////////////
 

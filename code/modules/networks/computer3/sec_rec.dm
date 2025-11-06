@@ -57,18 +57,11 @@
 	initialize() //Forms "SECMATE" ascii art. Oh boy.
 		if (..())
 			return TRUE
-	/*
-		var/title_art = {"<pre> ____________________    _ __________________
-\\  ___\\  ___\\  ___\\ -./  \\  __ \\ _  _\\  ___\\
-\\ \\___  \\  __\\\\ \\___\\ \\-./\\ \\  __ \\/\\ \\ \\  __\\
- \\/\\_____\\_____\\_____\\ \\_\\ \\ \\ \\_\\ \\ \\ \\ \\_____\\
-  \\/_____/_____/_____/_/  \\/_/_/\\/_/\\/_/\\/_____/ </pre>"}
-*/
+
 		src.record_database = data_core.general
 		src.master.temp = null
 		src.menu = MENU_MAIN
 		src.field_input = 0
-		//src.print_text(" [title_art]")
 
 		src.radiocard = locate() in src.master.peripherals
 		if(!radiocard || !istype(src.radiocard))
@@ -104,7 +97,7 @@
 						src.print_index()
 
 					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, rank, fingerprint, or criminal status.")
+						src.print_text("<br>Please enter target name, ID, DNA, rank, fingerprint, or criminal status.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -584,7 +577,7 @@
 				if(isnull(input) || input < 1 || input >> length(src.possible_active))
 					src.master.temp = null
 					src.print_text(mainmenu_text())
-					src.print_text("Previous operation cancelled.")
+					src.print_text("<br>Search operation cancelled.")
 					src.menu = MENU_MAIN
 					return
 
@@ -718,13 +711,23 @@
 
 	proc
 		mainmenu_text()
-			var/dat = {"<center>S E C M A T E 7</center><br>
-			Welcome to SecMate 7<br>
-			<b>Commands:</b>
-			<br>(1) View security records.
-			<br>(2) Search for a record.
-			<br>(3) Adjust settings.
-			<br>(0) Quit."}
+			var/dat = ""
+
+			dat += @{"<center> ____________________    ____________________   </center>"}
+			dat += @{"<center>/\  ___\  ___\  ___\ "-./  \  __ \ _  _\  ___\  </center>"}
+			dat += @{"<center>\ \___  \  __\\ \___\ \-./\ \ \_\ \/\ \/\  __\  </center>"}
+			dat += @{"<center> \/\_____\_____\_____\ \-\ \ \ \/\ \ \ \ \_____\</center>"}
+			dat += @{"<center>  \/_____/_____/_____/_/  \/_/_/\/_/\/_/\/_____/</center>"}
+
+			dat += {"\
+				<br>\
+				<br>Welcome to SecMate 7\
+				<br><b>Commands:</b>\
+				<br>(1) View security records.\
+				<br>(2) Search for a record.\
+				<br>(3) Adjust settings.\
+				<br>(0) Quit.\
+			"}
 
 			return dat
 
@@ -734,44 +737,49 @@
 				return 0
 			src.master.temp = null
 
-			var/view_string = {"
-			\[01]Name: [src.active_general["name"]] ID: [src.active_general["id"]]
-			<br>\[02]Full Name: [src.active_general["full_name"]]
-			<br>\[03]<b>Sex:</b> [src.active_general["sex"]]
-			<br>\[04]<b>Pronouns:</b> [src.active_general["pronouns"]]
-			<br>\[05]<b>Age:</b> [src.active_general["age"]]
-			<br>\[06]<b>Rank:</b> [src.active_general["rank"]]
-			<br>\[07]<b>Fingerprint:</b> [src.active_general["fingerprint"]]
-			<br>\[__]<b>DNA:</b> [src.active_general["dna"]]
-			<br>\[08]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
-			<br>\[__]Physical Status: [src.active_general["p_stat"]]
-			<br>\[__]Mental Status: [src.active_general["m_stat"]]"}
+			var/view_string = {"\
+				<br><center><b>Record Data</b></center>\
+				<br>\[01\]<b>Name</b>:        [src.active_general["name"]]\
+				<br>\[__\]<b>ID</b>:          [src.active_general["id"]]\
+				<br>\[02\]<b>Full Name</b>:   [src.active_general["full_name"]]\
+				<br>\[03\]<b>Sex:</b>         [src.active_general["sex"]]\
+				<br>\[04\]<b>Pronouns:</b>    [src.active_general["pronouns"]]\
+				<br>\[05\]<b>Age:</b>         [src.active_general["age"]]\
+				<br>\[06\]<b>Rank:</b>        [src.active_general["rank"]]\
+				<br>\[07\]<b>Fingerprint:</b> [src.active_general["fingerprint"]]\
+				<br>\[__\]<b>DNA:</b>         [src.active_general["dna"]]\
+				<br>\[08\]<b>Photo</b>:       [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]\
+				<br>\[__\]<b>Phys Status</b>: [src.active_general["p_stat"]]\
+				<br>\[__\]<b>Ment Status</b>: [src.active_general["m_stat"]]\
+			"}
 
 			if ((istype(src.active_secure, /datum/db_record) && data_core.security.has_record(src.active_secure)))
-				view_string +={"
-				<br><center><b>Security Data</b></center>
-				<br>\[09]<b>Criminal Status:</b> [src.active_secure["criminal"]]
-				<br>\[10]<b>SecHUD Flag:</b> [src.active_secure["sec_flag"]]
-				<br>\[11]<b>Minor Crimes:</b> [src.active_secure["mi_crim"]]
-				<br>\[12]<b>Details:</b> [src.active_secure["mi_crim_d"]]
-				<br>\[13]<b><br>Major Crimes:</b> [src.active_secure["ma_crim"]]
-				<br>\[14]<b>Details:</b> [src.active_secure["ma_crim_d"]]
-				<br>\[15]<b>Important Notes:</b> [src.active_secure["notes"]]"}
+				view_string += {"<br>\
+					<br><center><b>Security Data</b></center>\
+					<br>\[09\]<b>Criminal Status:</b> [src.active_secure["criminal"]]\
+					<br>\[10\]<b>SecHUD Flag:</b>     [src.active_secure["sec_flag"]]\
+					<br>\[11\]<b>Minor Crimes:</b>    [src.active_secure["mi_crim"]]\
+					<br>\[12\]<b>Details:</b>         [src.active_secure["mi_crim_d"]]\
+					<br>\[13\]<b>Major Crimes:</b>    [src.active_secure["ma_crim"]]\
+					<br>\[14\]<b>Details:</b>         [src.active_secure["ma_crim_d"]]\
+					<br>\[15\]<b>Important Notes:</b> [src.active_secure["notes"]]\
+				"}
 			else
-				view_string += "<br><br><b>Security Record Lost!</b>"
-				view_string += "<br>\[[FIELDNUM_NEWREC]] Create New Security Record.<br>"
+				view_string += {"<br>\
+					<br><b>Security Record Lost!</b>\
+					<br>\[[FIELDNUM_NEWREC]\] Create New Security Record.\
+				"}
 
-			view_string += "<br>Enter field number to edit a field<br>(R) Redraw (D) Delete (P) Print (0) Return to index."
+			view_string += "<br><br>Enter field number to edit a field:<br>(R) Redraw (D) Delete (P) Print (0) Return to index."
 
-			src.print_text("<b>Record Data:</b><br>[view_string]")
+			src.print_text(view_string)
 			return 1
 
 		print_index()
 			src.master.temp = null
 			var/dat = ""
 			if(!src.record_database || !length(src.record_database.records))
-				src.print_text("<b>Error:</b> No records found in database.")
-				dat += "<br><b>\[[FIELDNUM_NEWREC]]</b> Create New Record.<br>"
+				dat += "<b>Error:</b> No records found in database."
 
 			else
 				dat = "Please select a record:"
@@ -779,19 +787,22 @@
 				for(var/x = 1, x <= src.record_database.records.len, x++)
 					var/datum/db_record/R = src.record_database.records[x]
 					if(!R || !istype(R))
-						dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b><font color=red>ERR: REDACTED</font>"
+						dat += "<br><b>\[[add_zero("[x]", leadingZeroCount)]\]</b><font color=red>ERR: REDACTED</font>"
 						continue
 
-					dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b>[R["id"]]: [R["name"]]"
+					dat += "<br><b>\[[add_zero("[x]", leadingZeroCount)]\]</b>[R["id"]]: [R["name"]]"
 
-				dat += "<br><b>\[[FIELDNUM_NEWREC]]</b> Create New Record.<br>"
-			dat += "<br><br>Enter record number, or 0 to return."
+			dat += {"\
+				<br><b>\[[FIELDNUM_NEWREC]]</b> Create New Record.\
+				<br>\
+				<br>Enter record number, or 0 to return.\
+			"}
 
 			src.print_text(dat)
 			return 1
 
 		print_settings()
-			var/dat = "Options:"
+			var/dat = "<br><b>Options:</b>"
 
 			if (src.connected)
 				dat += "<br>(1) Disconnect from print server."

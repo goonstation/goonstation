@@ -143,22 +143,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	return
 
 // Grandma, no! you picked the wrong one!
+TYPEINFO(/obj/machinery/bot/guardbot/bootleg)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_BOOTLEG)
+
 /obj/machinery/bot/guardbot/bootleg
 	name = "Super Protector Friend III"
 	desc = "The label on the back reads 'New technology! Blinking light action!'."
 	icon = 'icons/obj/bots/robuddy/super-protector-friend.dmi'
 
-	speak(var/message)
-		var/fontmode = rand(1,4)
-		switch(fontmode)
-			if(1) return ..("<font face='Comic Sans MS' size=3>[uppertext(message)]!!</font>")
-			if(2) return ..("<font face='Curlz MT'size=3>[uppertext(message)]!!</font>")
-			if(3) return ..("<font face='System'size=3>[uppertext(message)]!!</font>")
-			else
-				var/honk = pick("WACKA", "QUACK","QUACKY","GAGGLE")
-				if(!ON_COOLDOWN(src, "bootleg_sound", 15 SECONDS))
-					playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 0)
-				return ..("<font face='Comic Sans MS' size=3>[honk]!!</font>")
 	Move()
 		if(..())
 			pixel_x = rand(-6, 6)
@@ -169,21 +161,20 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 			return TRUE
 
+TYPEINFO(/obj/machinery/bot/guardbot/xmas)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_XMAS)
+
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
 	desc = "Festive!"
 	skin_icon_state = "xmasbuddy"
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
-	speak(var/message)
-		message = ("<font face='Segoe Script'><i><b>[message]</b></i></font>")
-		. = ..()
-
 	explode()
 		if(src.exploding) return
 		src.exploding = 1
 		var/death_message = pick("I'll be back again some day!", "And to all a good night!", "A buddy is never truly happy until it is loved by a child. ", "I guess Spacemas isn't coming this year.", "Ho ho hFATAL ERROR")
-		speak(death_message)
+		src.say(death_message)
 		src.visible_message(SPAN_COMBAT("<b>[src] blows apart!</b>"))
 		var/turf/T = get_turf(src)
 		if(src.mover)
@@ -309,7 +300,7 @@ proc/compare_ornament_score(list/a, list/b)
 	EPHEMERAL_XMAS
 	name = "Spacemas tree"
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
-	icon = 'icons/effects/160x160.dmi'
+	icon = 'icons/obj/xmastree.dmi'
 	icon_state = "xmastree_2023"
 	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
@@ -620,7 +611,7 @@ proc/compare_ornament_score(list/a, list/b)
 		if (!M || !isliving(M))
 			return
 		var/mob/living/L = M
-		L.bodytemperature -= rand(1, 10)
+		L.changeBodyTemp(-rand(1, 10) KELVIN)
 		L.show_text("That was chilly!", "blue")
 		..()
 
@@ -632,7 +623,7 @@ proc/compare_ornament_score(list/a, list/b)
 		M.change_eye_blurry(25)
 		M.make_dizzy(rand(0, 5))
 		M.stuttering += rand(0, 1)
-		M.bodytemperature -= rand(1, 10)
+		M.changeBodyTemp(-rand(1, 10) KELVIN)
 		if (message)
 			M.visible_message(SPAN_ALERT("<b>[M]</b> is hit by [src]!"),\
 			SPAN_ALERT("You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]"))
@@ -763,11 +754,6 @@ proc/compare_ornament_score(list/a, list/b)
 
 // Santa Stuff
 
-/obj/item/card/id/captains_spare/santa
-	name = "Spacemas Card"
-	registered = "Santa Claus"
-	assignment = "Spacemas Spirit"
-
 /mob/living/carbon/human/santa
 	New()
 		..()
@@ -816,7 +802,6 @@ proc/compare_ornament_score(list/a, list/b)
 	icon_state = "hunter"
 	human_compatible = 0
 	uses_human_clothes = 0
-	voice_message = "bellows"
 	jerk = 1
 
 	sight_modifier()
@@ -1257,10 +1242,10 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		if(user.ckey in src.downvoted)
 			highlight_down = "font-weight: 900;"
 		. += {"<br>
-		<a href='?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href='?src=\ref[src];downvote=1' style='color:#ff8888;[highlight_down]'>👎 (dislike)</a>"}
+		<a href='byond://?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href='byond://?src=\ref[src];downvote=1' style='color:#ff8888;[highlight_down]'>👎 (dislike)</a>"}
 		if(user?.client?.holder?.level >= LEVEL_SA)
-			. += "<br><a href='?src=\ref[src];remove_ornament=1' style='color:red;'>Annihilate ornament</a>"
+			. += "<br><a href='byond://?src=\ref[src];remove_ornament=1' style='color:red;'>Annihilate ornament</a>"
 
 	Topic(href, href_list)
 		if(href_list["remove_ornament"])
@@ -1391,14 +1376,14 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
 		if(new_color)
 			src.font_color = new_color
-			boutput(user, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
+			boutput(user, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='byond://?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
 			src.UpdateIcon()
 
 	Topic(href, href_list)
 		. = ..()
 		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
 			src.font_color = "#" + href_list["setcolor"]
-			boutput(usr, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
+			boutput(usr, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='byond://?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
 			src.UpdateIcon()
 
 	afterattack(atom/target, mob/user)

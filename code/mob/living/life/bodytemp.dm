@@ -13,9 +13,10 @@
 			loc_temp = S.temperature
 		else if (istype(owner.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = owner.loc
-			if (ship.life_support)
-				if (ship.life_support.active)
-					loc_temp = ship.life_support.tempreg
+			var/obj/item/shipcomponent/life_support/life_support_part = ship.get_part(POD_PART_LIFE_SUPPORT)
+			if (life_support_part)
+				if (life_support_part.active)
+					loc_temp = life_support_part.tempreg
 				else
 					loc_temp = environment.temperature
 		// why am i repeating this shit?
@@ -95,7 +96,7 @@
 /mob/living/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity, mult)
 	if (exposed_temperature > src.base_body_temp && src.is_heat_resistant())
 		return
-	if (exposed_temperature < src.base_body_temp && src.is_cold_resistant())
+	if (exposed_temperature < src.base_body_temp && (src.is_cold_resistant() || HAS_ATOM_PROPERTY(src, PROP_MOB_SPACE_DAMAGE_IMMUNE)))
 		return
 	var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1)
 

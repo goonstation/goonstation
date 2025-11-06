@@ -29,7 +29,7 @@
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (!pry_surgery(target, user))
+		if (is_special || !pry_surgery(target, user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -55,6 +55,10 @@
 /obj/item/crowbar/blue
 	desc = "A tool used as a lever to pry objects. The handle is painted an appropriate light blue."
 	icon_state = "crowbar-blue"
+
+/obj/item/crowbar/purple
+	desc = "A tool used as a lever to pry objects. This one is curiously purple."
+	icon_state = "crowbar-purple"
 
 /obj/item/crowbar/grey
 	desc = "A tool used as a lever to pry objects. Now in grey!"

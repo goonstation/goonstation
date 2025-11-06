@@ -38,6 +38,12 @@
 /obj/stool/chair/couch/red,
 /turf/unsimulated/floor/carpet/green/fancy/edge/north,
 /area/shuttle/escape/centcom)
+"ay" = (
+/obj/railing/boxing{
+	dir = 8
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
 "aF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -387,10 +393,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"jE" = (
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "kc" = (
 /obj/machinery/door/window{
 	dir = 4
@@ -430,6 +432,11 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"lg" = (
+/obj/table/auto,
+/obj/machinery/wrestlingbell,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
 "lG" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -535,6 +542,12 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"of" = (
+/obj/railing/boxing{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
 "oh" = (
 /obj/stool/chair/couch/red{
@@ -719,12 +732,6 @@
 "uT" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/centcom/outside)
-"va" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "wH" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
@@ -746,12 +753,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"zk" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "zn" = (
 /obj/fakeobject/pipe{
 	dir = 5;
@@ -863,10 +864,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"DA" = (
-/obj/loudspeaker,
-/turf/unsimulated/floor/wood/three,
-/area/shuttle/escape/centcom)
 "DE" = (
 /obj/fitness/weightlifter,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -997,6 +994,10 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"JA" = (
+/obj/railing/boxing,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
 "JS" = (
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
@@ -1315,6 +1316,10 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"RU" = (
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
 "Sh" = (
 /obj/window/crystal/north,
 /obj/machinery/light{
@@ -1364,11 +1369,6 @@
 /area/shuttle/escape/centcom)
 "TB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/white,
-/area/shuttle/escape/centcom)
-"Ua" = (
-/obj/table/auto,
-/obj/item/wrestlingbell,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "Uk" = (
@@ -1689,7 +1689,7 @@ zj
 zj
 Mw
 Tr
-DA
+RU
 oc
 rn
 oc
@@ -1719,7 +1719,7 @@ TB
 Pc
 lQ
 Mx
-zk
+ay
 lQ
 wH
 Ov
@@ -1777,7 +1777,7 @@ sU
 sU
 sU
 sU
-jE
+JA
 sw
 JS
 JS
@@ -1805,7 +1805,7 @@ sU
 MH
 MH
 sU
-jE
+JA
 cY
 JS
 JS
@@ -1827,13 +1827,13 @@ Qp
 TB
 ru
 dD
-Ua
+lg
 TB
 sU
 MH
 MH
 sU
-jE
+JA
 cY
 JS
 JS
@@ -1861,7 +1861,7 @@ sU
 sU
 sU
 sU
-jE
+JA
 ND
 JS
 En
@@ -1915,7 +1915,7 @@ TB
 bE
 BI
 Pw
-va
+of
 BI
 Yn
 Bc
@@ -1941,7 +1941,7 @@ Ok
 Ok
 HE
 Tr
-DA
+RU
 po
 Wg
 po

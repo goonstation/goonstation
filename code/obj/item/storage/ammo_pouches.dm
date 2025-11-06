@@ -189,9 +189,9 @@
 	icon_state = "ammopouch-sec"
 	health = 6
 	w_class = W_CLASS_SMALL
-	slots = 6
+	slots = 5
 	opens_if_worn = TRUE
-	spawn_contents = list(/obj/item/handcuffs = 3,\
+	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash,\
 	/obj/item/reagent_containers/food/snacks/donut,\
 	/obj/item/instrument/whistle/security)
@@ -202,7 +202,7 @@
 
 /obj/item/storage/security_pouch/assistant
 	spawn_contents = list(/obj/item/handcuffs = 2,\
-	/obj/item/device/flash = 2,\
+	/obj/item/device/flash = 1,\
 	/obj/item/instrument/whistle/security,\
 	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
@@ -216,7 +216,7 @@
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
 	spawn_contents = list(/obj/item/handcuffs/ = 1,
-	/obj/item/handcuffs/guardbot = 2,
+	/obj/item/handcuffs/guardbot = 1,
 	/obj/item/device/flash,
 	/obj/item/instrument/whistle/security)
 
@@ -363,3 +363,32 @@
 		/obj/item/remote/sawflyremote
 	)
 
+/obj/item/storage/werewolf_hunter_pouch
+	name = "werewolf hunter's pouch"
+	desc = "A pouch for carrying some useful herbal grenades."
+	icon_state = "ammopouch"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 4
+	opens_if_worn = TRUE
+	prevent_holding = list(/obj/item/storage)
+	spawn_contents = list(
+		/obj/item/old_grenade/thing_thrower/aconite = 2,
+		/obj/item/old_grenade/thing_thrower/garlic
+	)
+
+// Pod wars pouches
+/obj/item/storage/pw_medical_pouch
+	name = "injector pouch"
+	icon_state = "ammopouch-medic"
+	health = 6
+	w_class = W_CLASS_TINY
+	slots = 4
+	opens_if_worn = TRUE
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/bloodbak,
+	/obj/item/reagent_containers/emergency_injector/qwikheal,
+	/obj/item/reagent_containers/emergency_injector/painstop,
+	/obj/item/reagent_containers/emergency_injector/bringbak)
+	prevent_holding = list(/obj/item/storage)
+
+// End of pod wars pouches

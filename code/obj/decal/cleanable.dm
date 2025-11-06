@@ -60,7 +60,9 @@ proc/make_cleanable(var/type,var/loc)
 				T.messy++
 				if (istype(T, /turf/simulated/floor))
 					var/turf/simulated/floor/floor = T
-					floor.cleanable_fluid_react()
+					SPAWN(0)
+						if (istype(floor)) //pls help my floor is become space
+							floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
@@ -617,7 +619,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "You can try to clean it up, but there'll always be a little bit left."
 	icon = 'icons/effects/glitter.dmi'
 	icon_state = "glitter"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
 	random_icon_states = list("glitter-1", "glitter-2", "glitter-3", "glitter-4", "glitter-5", "glitter-6", "glitter-7", "glitter-8", "glitter-9", "glitter-10")
 	can_sample = 1
 	sample_reagent = "glitter"
@@ -644,7 +646,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "Ripped up little flecks of paper."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "paper"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
 	can_sample = 1
 	sample_reagent = "paper"
 	sample_verb = "scrape"
@@ -660,14 +662,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "A sad little pile of leaves from a sad, destroyed bush."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "leaves"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
 
 /obj/decal/cleanable/wood_debris
 	name = "wood debris"
 	desc = "A few scattered pieces of wood that broke off something bigger."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "wood"
-	random_dir = NORTH
+	random_dir = RANDOM_DIR_CARDINAL
 
 /obj/decal/cleanable/rust
 	name = "rust"
@@ -689,7 +691,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		return 0
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop) || (W.is_open_container() && W.reagents))
 			..()
 		else
 			src.loc.Attackby(user.equipped(), user)
@@ -971,10 +973,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				for (var/mob/M in AIviewers(user, null))
 					if (M != user)
 						M.show_message(SPAN_NOTICE("<b>[user]</b> is sticking their fingers into [src] and pushing it into [I]. It's all slimy and stringy. Oh god."), 1)
-						if (prob(33) && ishuman(M) && !isdead(M))
+						if (ishuman(M) && !isdead(M))
 							M.show_message(SPAN_ALERT("You feel ill from watching that."))
-							var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-							M.vomit(0, null, vomit_message)
+							M.nauseate(rand(2,4)) //this may be a bad idea
 
 				I.reagents.handle_reactions()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
@@ -1002,6 +1003,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_amt = 5
 	sample_reagent = "egg"
+
+/obj/decal/cleanable/potatosplat
+	name = "smashed potato"
+	desc = "A ruined potato."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "potatosplat"
+	slippery = 2
+	can_sample = 0
 
 /obj/decal/cleanable/ash
 	name = "ashes"
@@ -1067,7 +1076,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "Someone should clean that up."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "dirt"
-	random_dir = NORTH
+	random_dir = RANDOM_DIR_CARDINAL
 	stain = /datum/stain/dirt
 	can_sample = 1
 	sample_reagent = "carbon"
@@ -1301,6 +1310,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /obj/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
+	sample_amt = 5
 
 /obj/decal/cleanable/paint
 	name = "marker paint"
@@ -1351,6 +1361,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "salt"
 	sample_verb = "scrape"
 	var/health = 30
+	var/bump_stacks = 0
 
 	New()
 		..()
@@ -1366,6 +1377,27 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/turf/T = get_turf(src)
 		if (T)
 			updateSurroundingSalt(T)
+
+	/// When a wraith or similar bumps into this, returns TRUE if destroyed
+	proc/wraith_bump(mob/living/intangible/wraith/wraith)
+		if (ON_COOLDOWN(src, "wraith_bumped", 1 SECOND))
+			return
+		hit_twitch(src)
+		src.bump_stacks += 1
+		if (src.bump_stacks >= 3)
+			new /obj/effects/impact_energy/smoke(get_turf(src))
+			qdel(src)
+			boutput(wraith, SPAN_NOTICE("You force your way past the holy barrier, losing some of your life force in the process."))
+			return TRUE
+		global.processing_items |= src
+		boutput(wraith, SPAN_NOTICE("The salt stings, but it gives a little as you exert your will against it..."))
+		return FALSE
+
+	process()
+		if (!GET_COOLDOWN(src, "wraith_bumped"))
+			src.bump_stacks -= 1
+			if (src.bump_stacks <= 0)
+				global.processing_items -= src
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
@@ -1602,7 +1634,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	density = 0
 	anchored = ANCHORED
 	layer = OBJ_LAYER
-	icon = 'icons/obj/decals/graffiti.dmi'
+	icon = 'icons/obj/decals/gang_tags.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
 
@@ -1735,3 +1767,21 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				if (!src.reagents)
 					src.create_reagents(src.sample_amt)
 				src.reagents.add_reagent("thermite", src.sample_amt)
+
+/obj/decal/cleanable/hair
+	name = "hair pile"
+	desc = "A small pile of cut hair. Gross."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "hair"
+	random_dir = RANDOM_DIR_CARDINAL
+	var/color_name = ""
+
+	New()
+		..()
+		src.pixel_y += rand(-4,4)
+		src.pixel_x += rand(-4,4)
+
+	proc/update_color()
+		if (src.color)
+			color_name = hex2color_name(src.color)
+			src.name = "[color_name] hair pile"

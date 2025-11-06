@@ -24,7 +24,6 @@
 
 /mob/living/critter/killertomato
 	name = "killer tomato"
-	real_name = "killer tomato"
 	desc = "Today, Space Station 13 - tomorrow, THE WORLD!"
 	density = 1
 	icon_state = "ktomato"

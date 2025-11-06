@@ -80,25 +80,6 @@
 		if(one && two) return 1
 		else return 0
 
-/datum/material_recipe/censorium
-	name = "censorium"
-	result_id = "censorium"
-	result_item = /obj/item/material_piece/metal/censorium
-
-	validate(var/datum/material/M)
-		var/hasChar = 0
-		var/hasRock = 0
-
-		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "char") hasChar = 1
-			if(CM.getID() == "rock") hasRock = 1
-
-		if(M.getID() == "char") hasChar = 1
-		if(M.getID() == "rock") hasRock = 1
-
-		if(hasChar && hasRock) return 1
-		else return 0
-
 /datum/material_recipe/copper // this doesn't REALLY make sense how steel recipe does but I don't care. Need a way to make copper for coroisum
 	name = "copper"
 	result_id = "copper"
@@ -144,6 +125,22 @@
 		if(one && two) return 1
 		else return 0
 
+/datum/material_recipe/voltite
+	name = "voltite"
+	result_id = "voltite"
+
+	validate(datum/material/M)
+		var/has_electrum = FALSE
+		var/has_veranium = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "electrum")
+				has_electrum = TRUE
+			else if (mat.getID() == "veranium")
+				has_veranium = TRUE
+
+		return has_electrum && has_veranium
+
 /datum/material_recipe/plasmasteel
 	name = "plasmasteel"
 	result_id = "plasmasteel"
@@ -158,6 +155,38 @@
 
 		if(one && two) return 1
 		else return 0
+
+/datum/material_recipe/neutrite
+	name = "neutrite"
+	result_id = "neutrite"
+
+	validate(datum/material/M)
+		var/has_yuranite = FALSE
+		var/has_plutonium = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "yuranite")
+				has_yuranite = TRUE
+			else if (mat.getID() == "plutonium")
+				has_plutonium = TRUE
+
+		return has_yuranite && has_plutonium
+
+/datum/material_recipe/neutronium
+	name = "neutronium"
+	result_id = "neutronium"
+
+	validate(datum/material/M)
+		var/has_neutrite = FALSE
+		var/has_erebite = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "neutrite")
+				has_neutrite = TRUE
+			else if (mat.getID() == "erebite")
+				has_erebite = TRUE
+
+		return has_neutrite && has_erebite
 
 // Glass
 

@@ -19,6 +19,7 @@ TYPEINFO(/obj/item/mine)
 
 	New()
 		..()
+		RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
 		if (src.armed)
 			src.UpdateIcon()
 
@@ -27,8 +28,14 @@ TYPEINFO(/obj/item/mine)
 			src.our_timer.master = src
 
 	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
 		our_timer = null
 		..()
+
+	proc/on_storage_interaction(var/affected_mine, var/mob/user)
+		if(src.armed)
+			src.triggered(user)
+			return TRUE
 
 	examine()
 		. = ..()
@@ -121,6 +128,8 @@ TYPEINFO(/obj/item/mine)
 		..()
 		if (AM == src || !(istype(AM, /obj/vehicle) || istype(AM, /obj/machinery/bot) || ismob(AM)))
 			return
+		if (HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+			return
 		if (ismob(AM) && (!isliving(AM) || isintangible(AM) || iswraith(AM)))
 			return
 		if (src.used_up)
@@ -185,7 +194,7 @@ TYPEINFO(/obj/item/mine)
 		if (!src || !istype(src))
 			return
 		var/logtarget = (T && ismob(T) ? T : null)
-		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 
 /obj/item/mine/radiation
 	name = "radiation land mine"

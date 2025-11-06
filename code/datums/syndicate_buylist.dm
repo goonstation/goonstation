@@ -92,6 +92,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
+/datum/syndicate_buylist/generic/rifle
+	name = "Old Hunting Rifle"
+	items = list(/obj/item/storage/box/hunting_rifle)
+	cost = 7
+	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/generic/radbow
 	name = "Rad Poison Crossbow"
 	items = list(/obj/item/gun/energy/crossbow)
@@ -145,6 +152,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/card/id/syndicate)
 	cost = 1
 	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a one-time programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
+
+/datum/syndicate_buylist/generic/cashcase
+	name = "Cash Briefcase"
+	items = list(/obj/item/cash_briefcase/syndicate/loaded)
+	cost = 2
+	max_buy = 2
+	desc = "A syndicate briefcase designed to hold large quantities of cash. Comes loaded with 15 thousand credits."
 
 /datum/syndicate_buylist/generic/emag
 	name = "Electromagnet Card (EMAG)"
@@ -201,7 +215,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Signal Jammer"
 	items = list(/obj/item/radiojammer)
 	cost = 3
-	desc = "Silences radios in an area around you while activated. No one will hear them scream."
+	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream."
 
 /datum/syndicate_buylist/generic/psink
 	name = "Power Sink"
@@ -284,7 +298,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Wrestling Belt"
 	items = list(/obj/item/storage/belt/wrestling)
 	cost = 7
-	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves, which can be accessed in a separate command tab."
+	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves."
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
@@ -298,7 +312,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Syndicate Omnitool"
 	items = list(/obj/item/tool/omnitool/syndicate)
 	cost = 2
-	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes."
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes. The handle is insulated, no gloves needed!"
 	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/bighat
@@ -335,17 +349,17 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
-	items = list(/obj/item/pipebomb/bomb/miniature_syndicate)
+	items = list(/obj/item/assembly/timer_ignite_pipebomb/mini_syndicate)
 	cost = 3
 	vr_allowed = FALSE
-	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
+	desc = "A rather volatile pipe bomb packed with miniature syndicate troops. Assembled and ready for use"
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
 	items = list(/obj/item/device/chameleon)
-	cost = 5
+	cost = 3
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
 
 /datum/syndicate_buylist/traitor/holographic_disguiser
@@ -586,7 +600,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/storage/briefcase/satan)
 	cost = 8
 	desc = "Comes complete with three soul binding contracts, three extra-pointy pens, and one suit provided by Lucifer himself."
-	job = list("Chaplain")
+	job = list("Chaplain", "Lawyer")
 	not_in_crates = TRUE
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY
@@ -984,7 +998,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 6
 	vr_allowed = FALSE
 	desc = "A barrel of bloodthirsty apes. Careful!"
-	br_allowed = TRUE
 	job = list("Staff Assistant","Test Subject","Geneticist","Pathologist")
 
 /datum/syndicate_buylist/traitor/mindhack_module
@@ -1020,10 +1033,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/syndicate_radio_upgrade
-	name = "Syndicate Radio Upgrade"
-	items = list(/obj/item/device/radio_upgrade/syndicatechannel)
+	name = "Syndicate Radio Upgrades"
+	items = list(/obj/item/device/radio_upgrade/syndicatechannel,
+				/obj/item/device/radio_upgrade/syndicatechannel)
 	cost = 1
-	desc = "A small device that may be installed in a headset to grant access to a radio channel reserved for Syndicate operatives."
+	desc = "A pair of small devices that may be installed in a headset to grant access to a secure radio channel reserved for Syndicate operatives."
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR
 
@@ -1044,7 +1058,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/rose
 	name = "Poison rose"
-	items = list(/obj/item/plant/flower/rose/poisoned)
+	items = list(/obj/item/clothing/head/flower/rose/poisoned)
 	cost = 4
 	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
 	job = list("Mime")
@@ -1077,6 +1091,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A tactical fishing rod designed to reel in and filet the biggest catch- enemies of the Syndicate. Bait the hologram lure by hitting it with an item, then maim foes with a barbed hook that causes more damage the longer they fight back."
 	job = list("Rancher", "Angler")
 	can_buy = UPLINK_TRAITOR
+	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/ai_laser
 	name = "AI Camera Laser Module"
@@ -1106,6 +1121,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "An AI law module that at a glance looks completely normal, but could tell the AI to do anything."
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/barberang
+	name = "Barberang"
+	items = list(/obj/item/razor_blade/barberang)
+	cost = 5
+	desc = "An aerodynamic, extra-sharp hand razor designed to be thrown, knocking down and shearing the hair off of anyone it hits. The razor will then return, allowing for stolen hair to be easily retrieved. Notice: hitting a bald target will disrupt the razor's aerodynamic properties and void the warranty."
+	job = list("Barber")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
@@ -1151,9 +1174,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"
-	items = list(/obj/item/gun/kinetic/hunting_rifle)
-	cost = 3
-	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
+	items = list(/obj/item/storage/box/hunting_rifle)
+	cost = 6
+	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	spy
@@ -1302,7 +1325,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 /datum/syndicate_buylist/commander/deployment_pods
 	name = "Rapid Deployment Remote"
 	items = list(/obj/item/device/deployment_remote, /obj/item/paper/deployment_info)
-	cost = 4
+	cost = 2
 	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
 	category = "Main"
 
@@ -1320,6 +1343,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 	cost = 3
 	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles. Warning: Can and will target other Operatives."
 	category = "Main"
+
+/datum/syndicate_buylist/commander/capella
+	name = "Capella Mk. 8"
+	items = list(/obj/item/storage/box/capella)
+	cost = 1
+	desc = "An extremely accurate competition pistol with two spare clips of match-grade ammo."
+	category = "Main"
+
+/datum/syndicate_buylist/commander/alphard
+	name = "Alphard recoiling cannon"
+	items = list(/obj/item/storage/box/alphard)
+	cost = 3
+	desc = "A brutally powerful antimateriel cannon on a shortened frame. Capable of piercing multiple walls and airlocks. Beware of shrapnel!"
+	category = "Main"
+
 
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
 
@@ -1344,7 +1382,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 
 /datum/syndicate_buylist/generic/trick_telecrystal
 	name = "Trick Pure Telecrystal"
-	items = list(/obj/item/explosive_uplink_telecrystal)
+	items = list(/obj/item/uplink_telecrystal/trick)
 	cost = 1
 	desc = "A small, highly volatile explosive designed to look like a pure Telecrystal."
 	telecrystal = TRUE
@@ -1442,3 +1480,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	items = list(/obj/item/tool/quickhack/syndicate)
 	cost = 1
 	desc = "An illegal, home-made tool able to fake up to 10 AI 'open' signals to unbolted doors."
+
+/datum/syndicate_buylist/surplus/basketball
+	name = "Extremely illegal basketball"
+	items = list(/obj/item/basketball/lethal)
+	cost = 3
+	desc = "An even more illegal basketball capable of dangerous levels of balling."

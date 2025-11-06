@@ -77,9 +77,9 @@ Turfs and decal for the space rift
 		src.UpdateIcon()
 		if(!warm_boot)
 			src.scratchpad.len = 0
-			src.speak("Guardbuddy V2.9 Online.")
+			src.say("Guardbuddy V2.9 Online.")
 			if (src.health < initial(src.health))
-				src.speak("Self-check indicates [src.health < (initial(src.health) / 2) ? "severe" : "moderate"] structural damage!")
+				src.say("Self-check indicates [src.health < (initial(src.health) / 2) ? "severe" : "moderate"] structural damage!")
 
 			if(!src.tasks.len && (src.model_task || src.setup_default_startup_task))
 				if(!src.model_task)
@@ -99,7 +99,7 @@ Turfs and decal for the space rift
 		if(src.exploding) return
 		src.exploding = 1
 		var/death_message = pick("It is now safe to shut off your buddy.","I regret nothing, but I am sorry I am about to leave my friends.","Malfunction!","I had a good run.","Es lebe die Freiheit!","Life was worth living.","It's time to split!")
-		speak(death_message)
+		src.say(death_message)
 		src.visible_message(SPAN_COMBAT("<b>[src] blows apart!</b>"))
 		var/turf/T = get_turf(src)
 		if(src.mover)
@@ -179,7 +179,7 @@ Turfs and decal for the space rift
 				if (!(dialogChecklist & WD_SLEEPER_SCREAM))
 					dialogChecklist |= WD_SLEEPER_SCREAM
 
-					src.master.speak("Oh no oh no oh no no no no")
+					src.master.say("Oh no oh no oh no no no no")
 					src.master.visible_message( SPAN_ALERT("[src.master] points repeatedly at [maybe_that_somebody]![prob(50) ? "  With both arms, no less!" : null]"))
 					src.master.set_emotion("screaming")
 					SPAWN(4 SECONDS)
@@ -194,33 +194,33 @@ Turfs and decal for the space rift
 			if(!(dialogChecklist & WD_HELLO))
 				dialogChecklist |= WD_HELLO
 
-				src.master.speak( pick(greet_strings) )
+				src.master.say(pick(greet_strings))
 				return
 
 			else if (!(dialogChecklist & WD_SLEEPER_WARNING) && (locate(/obj/machinery/sleeper/future) in range(somebody_to_talk_to, 1)))
 				dialogChecklist |= WD_SLEEPER_WARNING
 
-				src.master.speak("Aaa! Please stay away from there! You can't wake him up, okay? It's not safe!")
+				src.master.say("Aaa! Please stay away from there! You can't wake him up, okay? It's not safe!")
 				SPAWN(1.5 SECONDS)
-					src.master.speak("I mean, for him.  Sleepers slow down aging, but it turns out that DNA or whatever still ages really, really slowly.")
+					src.master.say("I mean, for him.  Sleepers slow down aging, but it turns out that DNA or whatever still ages really, really slowly.")
 					sleep(1 SECOND)
-					src.master.speak("And um, it's been so long that when the cell tries to divide it...doesn't work.")
+					src.master.say("And um, it's been so long that when the cell tries to divide it...doesn't work.")
 
 				return
 
 			else if (prob(2))
-				src.master.speak( pick(idle_dialog_strings) )
+				src.master.say(pick(idle_dialog_strings))
 
 		if (istype(get_area(src.master), /area/solarium) && !(dialogChecklist & WD_SOLARIUM))
 			dialogChecklist |= WD_SOLARIUM
 
-			src.master.speak( "Oh, this place is familiar!  It looks like a ship, a model...um...")
+			src.master.say( "Oh, this place is familiar!  It looks like a ship, a model...um...")
 			SPAWN(1 SECOND)
-				src.master.speak("I'm sorry, I don't recognize this ship!  Maybe I can interface with its onboard computer though?")
+				src.master.say("I'm sorry, I don't recognize this ship!  Maybe I can interface with its onboard computer though?")
 				sleep(2 SECONDS)
-				src.master.speak("Okay, it's yelling at me in a language I do not understand!  Weird!")
+				src.master.say("Okay, it's yelling at me in a language I do not understand!  Weird!")
 				sleep(2 SECONDS)
-				src.master.speak("...and now it's not responding. So much for that!")
+				src.master.say("...and now it's not responding. So much for that!")
 
 			return
 
@@ -229,10 +229,10 @@ Turfs and decal for the space rift
 			if (istype(sovbud))
 				dialogChecklist |= WD_SOVBUDDY
 
-				src.master.speak("Privet, tovarishch! Novyy rassvet zhdet vas.")
+				src.master.say("Privet, tovarishch! Novyy rassvet zhdet vas.")
 				SPAWN(1 SECOND)
 					if (src.master)
-						src.master.speak("Please, um, pay no attention to that.  Just saying hello.")
+						src.master.say("Please, um, pay no attention to that.  Just saying hello.")
 
 		return
 

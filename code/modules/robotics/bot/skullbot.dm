@@ -1,5 +1,10 @@
 // fart
 
+TYPEINFO(/obj/machinery/bot/skullbot)
+	start_listen_effects = list(LISTEN_EFFECT_SKULLBOT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_CLACK)
+
 /obj/machinery/bot/skullbot
 	name = "skullbot"
 	desc = "A skull on a leg. Useful, somehow. I guess."
@@ -11,20 +16,21 @@
 	on = 1
 	health = 5
 	no_camera = 1
-	bot_voice = 'sound/misc/talk/skelly.ogg'
-	speakverbs = list("rattles", "clacks")
 	/// a bonehead on a stick doesnt need to process a million times a sec
 	dynamic_processing = 0
+
+	voice_sound_override = 'sound/misc/talk/skelly.ogg'
+	speech_verb_say = list("rattles", "clacks")
 
 	process()
 		. = ..()
 		if (prob(10) && src.on == 1)
 			var/message = pick("clak clak", "clak")
-			speak(message)
+			src.say(message)
 		if (prob(33) && src.emagged == 1)
 			var/message = pick("i have a bone to pick with you", "make no bones about it", "this is very humerus", "my favorite singer is pelvis presley", "im going to give you a sternum talking to", "i play the trombone", "don't be a coccyx", "this is sacrum ground", "im only ribbing you", "this is going tibia fun experience", "ill vertabreak you in two", "im the skeleton crew", "you're bone-idle", "my favourite drink is bone jack, but it goes right through me", "i can't feel my head, im a numbskull", "once i get to you, youre boned", "id eat you, but i don't have the stomach for it", "im just skullking around", "can i thorax you a question", "thats a load of mandibleshit", "reticulataing spines...")
 			playsound(src.loc, 'sound/items/Scissor.ogg', 50, 1)
-			speak(message)
+			src.say(message)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
@@ -51,27 +57,6 @@
 		if (src.health <= 0)
 			src.explode()
 
-	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if (!messages || !src.on)
-			return
-		var/m_id = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
-		if (prob(25))
-			var/list/speech_list = splittext(messages[m_id], " ")
-			if(!speech_list || !length(speech_list))
-				return
-
-			var/num_claks = rand(1,4)
-			var/counter = 0
-			while (num_claks)
-				counter++
-				num_claks--
-				speech_list[rand(1,speech_list.len)] = "clak"
-				if (counter >= (speech_list.len / 2) )
-					num_claks = 0
-
-			src.speak( jointext(speech_list, " ") )
-		return
-
 	gib()
 		return src.explode()
 
@@ -85,30 +70,30 @@
 		qdel(src)
 		return
 
-/obj/machinery/bot/skullbot/crystal
+/obj/machinery/bot/skullbot/omnitraitor
 	name = "crystal skullbot"
-	icon_state = "skullbot-crystal"
+	icon_state = "skullbot_omnitraitor"
 
-/obj/machinery/bot/skullbot/strange
+/obj/machinery/bot/skullbot/hunter
 	name = "strange skullbot"
-	icon_state = "skullbot-P"
+	icon_state = "skullbot_hunter"
 
-/obj/machinery/bot/skullbot/peculiar
+/obj/machinery/bot/skullbot/wizard
 	name = "peculiar skullbot"
-	icon_state = "skullbot-strange"
+	icon_state = "skullbot_wizard"
 
-/obj/machinery/bot/skullbot/odd
+/obj/machinery/bot/skullbot/changeling
 	name = "odd skullbot"
-	icon_state = "skullbot-A"
+	icon_state = "skullbot_changeling"
 
-/obj/machinery/bot/skullbot/faceless
+/obj/machinery/bot/skullbot/cluwne
 	name = "faceless skullbot"
-	icon_state = "skullbot-noface"
+	icon_state = "skullbot_cluwne"
 
-/obj/machinery/bot/skullbot/gold
+/obj/machinery/bot/skullbot/macho
 	name = "golden skullbot"
-	icon_state = "skullbot-gold"
+	icon_state = "skullbot_macho"
 
 /obj/machinery/bot/skullbot/ominous
 	name = "ominous skullbot"
-	icon_state = "skullbot-ominous"
+	icon_state = "skullbot_ominous"

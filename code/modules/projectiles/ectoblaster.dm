@@ -22,6 +22,8 @@
 
 	hits_ghosts = 1
 	hits_wraiths = 1
+	has_impact_particles = TRUE
+	energy_particles_override = TRUE
 
 	on_hit(atom/hit)
 		if(istype(hit, /mob/living/intangible/wraith))

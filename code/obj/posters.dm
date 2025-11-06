@@ -55,7 +55,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
-				flick("printer-printing",P)
+				FLICK("printer-printing",P)
 				playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
@@ -120,7 +120,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			continue
 		if (P.z != Z_LEVEL_STATION)
 			continue
-		flick("printer-printing",P)
+		FLICK("printer-printing",P)
 		playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 		SPAWN(3.2 SECONDS)
 			var/obj/item/poster/titled_photo/wp = new(get_turf(P))
@@ -402,7 +402,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		C.Browse(src.poster_HTML, "window=[src.line_title]_poster;size=[src.imgw]x[src.imgh];title=[src.line_title]")
 
 	proc/generate_poster()
-		src.poster_HTML = {"<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"/></head><body><title>Poster</title>\
+		src.poster_HTML = {"<html><body><title>Poster</title>\
 		[src.line_title ? "<h2><center><b>[src.line_title]</b></center></h2>" : null]<hr>\
 		[src.poster_image ? "<center><img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=posterimage.png height=96 width=96></center><br>" : null]\
 		[src.line_photo_subtitle ? "<center><small><sup>[src.line_photo_subtitle]</sup></small></center>" : null]<hr>\
@@ -455,25 +455,20 @@ TYPEINFO(/obj/submachine/poster_creator)
 			qdel(W)
 			return
 
-		else if (istype(W, /obj/item/paper_bin))
-			var/obj/item/paper_bin/B = W
-			var/n = B.amount
-			for (var/obj/item/paper/P in W)
-				n++
-			if (n <= 0)
-				boutput(user, SPAN_ALERT("\The [B] is empty!"))
+		else if (istype_exact(W, /obj/item/paper_bin)) // no artifact or robots pls
+			var/obj/item/paper_bin/bin = W
+			var/total_amount = bin.amount_left
+			for(var/obj/item/paper/P in bin)
+				total_amount += 1
+				qdel(P)
+			if (total_amount <= 0)
+				boutput(user, SPAN_ALERT("\The [bin] is empty!"))
 				return
-			user.visible_message("[user] loads [W] into [src].",\
-			"You load [W] into [src].")
-			src.papers += n
-			for (n, n>0, n--)
-				if (B.amount <= 0)
-					var/obj/item/paper/P = locate(/obj/item/paper) in B
-					if (P)
-						qdel(P)
-				else
-					B.amount --
-			B.update()
+			user.visible_message("[user] loads [bin] into [src].",\
+			"You load [total_amount] sheets from [bin] into [src].")
+			src.papers += total_amount
+			bin.amount_left -= bin.amount_left
+			bin.update()
 
 		else if (istype(W, /obj/item/photo))
 			var/obj/item/photo/P = W
@@ -514,16 +509,16 @@ TYPEINFO(/obj/submachine/poster_creator)
 	proc/generate_html()
 		src.ensure_plist()
 
-		src.pdata = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"/></head><body><title>Wanted Poster</title>"
-		src.pdata += "<right><A href='?src=\ref[src];print=1'>PRINT</A></right><br>"
-		src.pdata += "<h2><center><b><A href='?src=\ref[src];entername=1'>NAME: [src.plist["name"]]</A></b></center></h2><hr>"
+		src.pdata = "<html><body><title>Wanted Poster</title>"
+		src.pdata += "<right><A href='byond://?src=\ref[src];print=1'>PRINT</A></right><br>"
+		src.pdata += "<h2><center><b><A href='byond://?src=\ref[src];entername=1'>NAME: [src.plist["name"]]</A></b></center></h2><hr>"
 		src.pdata += "<center><img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=pm_posterimage.png height=96 width=96></center><br>"
 		src.pdata += "<center><small><sup>[src.plist["subtitle"]]<br>"
-		src.pdata += "<A href='?src=\ref[src];selectphoto=1'>\[SEARCH\]</A> <A href='?src=\ref[src];resetphoto=1'>\[X\]</A></sup></small></center><hr>"
-		src.pdata += "<b><big><center><A href='?src=\ref[src];enterdoa=1'>WANTED: [src.plist["wanted"]]</A></center></big></b><br>"
-		src.pdata += "<center><b><A href='?src=\ref[src];enterreward=1'>[src.plist["reward"]] CREDIT REWARD</A></b></center><br>"
-		src.pdata += "<A href='?src=\ref[src];enterfor=1'><b>WANTED FOR:</b> [src.plist["for"]]</A><br>"
-		src.pdata += "<A href='?src=\ref[src];enternotes=1'><b>NOTES:</b> [src.plist["notes"]]</A><br>"
+		src.pdata += "<A href='byond://?src=\ref[src];selectphoto=1'>\[SEARCH\]</A> <A href='byond://?src=\ref[src];resetphoto=1'>\[X\]</A></sup></small></center><hr>"
+		src.pdata += "<b><big><center><A href='byond://?src=\ref[src];enterdoa=1'>WANTED: [src.plist["wanted"]]</A></center></big></b><br>"
+		src.pdata += "<center><b><A href='byond://?src=\ref[src];enterreward=1'>[src.plist["reward"]] CREDIT REWARD</A></b></center><br>"
+		src.pdata += "<A href='byond://?src=\ref[src];enterfor=1'><b>WANTED FOR:</b> [src.plist["for"]]</A><br>"
+		src.pdata += "<A href='byond://?src=\ref[src];enternotes=1'><b>NOTES:</b> [src.plist["notes"]]</A><br>"
 		src.pdata += "</body></html>"
 
 	proc/print_poster(mob/user as mob)

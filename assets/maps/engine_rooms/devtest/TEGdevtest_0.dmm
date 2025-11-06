@@ -31,14 +31,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
-"fm" = (
-/obj/machinery/atmospherics/binary/pump/active{
-	id = "Auxiliary Purge Pump";
-	target_pressure = 2000
-	},
-/obj/window/crystal/reinforced/south,
-/turf/simulated/floor/engine,
-/area/station/devzone)
 "gu" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -54,7 +46,10 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "hM" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	transfer_rate = 1000;
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -207,11 +202,13 @@
 /obj/machinery/meter,
 /turf/simulated/floor/engine,
 /area/station/devzone)
+"rB" = (
+/obj/machinery/atmospherics/unary/vent,
+/turf/space,
+/area/station/devzone)
 "sq" = (
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 4;
-	id = "Cold Loop Purge Pump";
-	target_pressure = 2000
+/obj/machinery/atmospherics/binary/pump{
+	dir = 4
 	},
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor/engine,
@@ -314,11 +311,6 @@
 /obj/window/crystal/reinforced/north,
 /turf/space,
 /area/station/devzone)
-"zC" = (
-/obj/machinery/atmospherics/binary/valve,
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/engine,
-/area/station/devzone)
 "zD" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
@@ -350,13 +342,6 @@
 /obj/machinery/atmospherics/pipe/quadway/overfloor,
 /turf/simulated/floor/engine,
 /area/station/devzone)
-"BK" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/obj/machinery/atmospherics/unary/portables_connector,
-/turf/simulated/floor/engine,
-/area/station/devzone)
 "BM" = (
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
@@ -368,14 +353,6 @@
 /area/station/devzone)
 "CG" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/station/devzone)
-"Dj" = (
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 1
-	},
-/obj/window/crystal/reinforced/east,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/engine,
 /area/station/devzone)
 "DT" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -416,6 +393,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
+"GF" = (
+/obj/window/crystal/reinforced/north,
+/obj/machinery/atmospherics/binary/pump/active{
+	id = "Auxiliary Purge Pump";
+	target_pressure = 2000;
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
 "Hf" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -449,6 +435,13 @@
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/east,
 /turf/space,
+/area/station/devzone)
+"Jv" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine,
 /area/station/devzone)
 "Kp" = (
 /obj/window/crystal/reinforced/south,
@@ -509,9 +502,7 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "PL" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
+/obj/machinery/atmospherics/binary/valve,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/station/devzone)
 "Re" = (
@@ -737,9 +728,9 @@ NE
 NE
 CG
 xM
-hN
-zC
-Dj
+Jv
+NE
+OJ
 NE
 NE
 NE
@@ -758,11 +749,11 @@ yH
 NE
 aG
 SM
-BK
-fm
-lE
-nt
-we
+SM
+Kp
+rB
+GF
+GE
 NE
 NE
 BM
@@ -782,7 +773,7 @@ DT
 nZ
 kI
 hP
-NE
+we
 we
 NE
 NE

@@ -20,7 +20,7 @@ TYPEINFO(/obj/item/camera/large)
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items/device.dmi'
-	desc = "A reusable polaroid camera."
+	desc = "The Asteroid 120, a popular reusable instant-print camera."
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
@@ -30,7 +30,7 @@ TYPEINFO(/obj/item/camera/large)
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 10
-	var/pictures_left = 10 // set to a negative to take INFINITE PICTURES
+	var/pictures_left = 12 // set to a negative to take INFINITE PICTURES
 	var/pictures_max = 30
 	var/can_use = 1
 	var/takes_voodoo_pics = 0
@@ -41,7 +41,15 @@ TYPEINFO(/obj/item/camera/large)
 		src.setItemSpecial(null)
 
 	large
-		pictures_left = 30
+		name = "camera deluxe"
+		desc = "The Asteroid 220 Pro, a surveillance and forensics camera with a superzoom lens and self-printing instant film."
+		icon_state = "camera_zoom"
+		rarity = 3
+		pictures_left = 24
+
+		New()
+			..()
+			AddComponent(/datum/component/holdertargeting/sniper_scope/always_on, 8, 0, /datum/overlayComposition/telephoto, 'sound/machines/pod_switch.ogg')
 
 
 	examine()
@@ -149,7 +157,7 @@ TYPEINFO(/obj/item/camera/large)
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-		flick("camera_flash-anim", src)
+		FLICK("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
 		var/blind_msg_others = "!"
@@ -177,17 +185,17 @@ TYPEINFO(/obj/item/camera_film/large)
 
 /obj/item/camera_film
 	name = "film cartridge"
-	desc = "A replacement film cartridge for an instant camera."
+	desc = "A replacement film cartridge for an instant camera. Produces a six by six centimeter image."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "camera_film"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	w_class = W_CLASS_SMALL
-	var/pictures = 10
+	var/pictures = 12
 
 	large
 		name = "film cartridge (large)"
-		pictures = 30
+		pictures = 24
 
 	examine()
 		. = ..()
@@ -226,6 +234,9 @@ TYPEINFO(/obj/item/camera_film/large)
 	/// Resize and update photo overlay (layer)
 	proc/render_photo_image(var/layer)
 		var/image/IM = src.fullImage
+		if (!IM)
+			return
+		// Scale and position the image to fit on the photo
 		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 		IM.pixel_y = 1
 		IM.layer = layer
@@ -239,6 +250,8 @@ TYPEINFO(/obj/item/camera_film/large)
 	// Update overlay layer for photo when dropping on floor or in belt/bag/container
 	dropped()
 		..()
+		if(src.disposed)
+			return
 		render_photo_image(initial(src.layer))
 
 /obj/item/photo/get_desc(var/dist)
@@ -270,7 +283,7 @@ TYPEINFO(/obj/item/camera_film/large)
 				signature.layer = OBJ_LAYER + 0.01
 				src.overlays += signature
 				signed += "<span style='color: [P.font_color]'>[t]</span>"
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			else if (signwrite == "write")
 				var/image/writing = image(icon='icons/misc/photo_writing.dmi',icon_state="[signwrite]")
 				writing.color = P.font_color
@@ -281,7 +294,7 @@ TYPEINFO(/obj/item/camera_film/large)
 				else
 					src.overlays -= src.my_writing
 					written = "[src.written] <span style='color: [P.font_color]'>[t]</span>"
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				src.my_writing = writing
 				src.overlays += writing
 		return

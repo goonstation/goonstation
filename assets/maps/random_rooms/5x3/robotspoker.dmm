@@ -57,7 +57,7 @@
 	},
 /obj/machinery/light/small/floor/cool/very,
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /obj/table/wood/auto,
 /obj/item/device/light/zippo{

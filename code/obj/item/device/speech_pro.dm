@@ -1,5 +1,6 @@
 TYPEINFO(/obj/item/device/speech_pro)
 	mats = 14
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
 
 /obj/item/device/speech_pro
 	name = "Speech Pro"
@@ -11,6 +12,7 @@ TYPEINFO(/obj/item/device/speech_pro)
 	rand_pos = 0
 	c_flags = ONBELT
 	contextLayout = new /datum/contextLayout/experimentalcircle
+	speech_verb_say = list("squawks", "beeps", "boops", "says", "screeches")
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
@@ -31,19 +33,3 @@ TYPEINFO(/obj/item/device/speech_pro)
 
 	attack_self(mob/user as mob)
 		user.showContextActions(src.contexts, src, src.contextLayout)
-
-	proc/speak(var/string, var/mob/user)
-		string = trimtext(sanitize(html_encode(string)))
-		var/maptext = null
-		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
-
-		var/list/atom/movable/loc_chain = obj_loc_chain(src)
-		maptext_loc = loc_chain[length(loc_chain)] // location of stop most container or possibly a mob.
-		maptext = make_chat_maptext(maptext_loc, "[string]", "color: #FFBF00;", alpha = 255)
-
-		for(var/mob/O in all_hearers(7, maptext_loc))
-			O.show_message("<span class='radio' style='color: #FFBF00;'>[SPAN_NAME("[src]")]<b> [bicon(src)] [pick("squawks",  \
-			"beeps", "boops", "says", "screeches")], </b> [SPAN_MESSAGE("\"[string]\"")]</span>",1, //Places text in the radio
-				assoc_maptext = maptext) //Places text in world
-
-		logTheThing(LOG_DEBUG, src, "[user] said [string] using [src].")

@@ -12,7 +12,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 	desc = "A large wheel used to generate power."
 	icon = 'icons/obj/power.dmi'
 	icon_state = ""
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	p_class = 3
 	soundproofing = 0
@@ -51,7 +51,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 			occupant.Attackhand(user)
 			if(user.a_intent == INTENT_DISARM || user.a_intent == INTENT_GRAB)
 				eject_occupant()
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 		else
 			. = ..()
 
@@ -62,7 +62,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the external reinforcing bolts to the floor.")
 				desc = "[initial(desc)]  It has been bolted to the floor."
-				src.anchored = 1
+				src.anchored = ANCHORED
 				return
 
 			else if(state == WRENCHED)
@@ -70,11 +70,11 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You undo the external reinforcing bolts.")
 				desc = initial(desc)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				return
 		else if(src.occupant && W.force)
 			W.attack(src.occupant, user)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (occupant.hasStatus(list("knockdown", "unconscious", "stunned")))
 				eject_occupant()
 			W.visible_message(SPAN_ALERT("[user] swings at [src.occupant] with [W]!"))

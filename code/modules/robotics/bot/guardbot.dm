@@ -379,9 +379,11 @@
 
 			src.net_id = generate_net_id(src)
 
+			#ifndef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", control_freq)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "beacon", beacon_freq)
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
+			#endif
 
 			var/obj/machinery/guardbot_dock/dock = null
 			if(setup_spawn_dock)
@@ -445,13 +447,13 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(get_id_card(W), /obj/item/card/id))
 			if (src.gunlocklock)
-				speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
+				src.say(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
 				"Yeah I'm going to need a signed permission slip from your mother first",\
 				"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
 				"You're not the boss of me!", "Couldn't even if I wanted to!"))
 			else if ((src.allowed(user)) && !src.gunlocklock)
 				src.locked = !src.locked
-				speak("Okay, my control panel and equipment locks are now [src.locked ? "enabled!" : "disabled!"]")
+				src.say("Okay, my control panel and equipment locks are now [src.locked ? "enabled!" : "disabled!"]")
 			else
 				DeceptionCheck(W, user, "togglelock")
 
@@ -555,15 +557,15 @@
 
 		if (!unsafe) // we're a good little robot
 			if (!istype(src.budgun.current_projectile, /datum/projectile/laser))
-				speak("Aww, [src.slept_through_laser_class ? "whoever gave me this [src.budgun] knows" : "you know"] just how I like my Multiple-Firemode Energy Weapons!")
+				src.say("Aww, [src.slept_through_laser_class ? "whoever gave me this [src.budgun] knows" : "you know"] just how I like my Multiple-Firemode Energy Weapons!")
 				set_emotion("love")
 			else
 				if(slept_through_laser_class)
 					src.visible_message("[src] looks at the [src.budgun] in its hand, curious.")
-					speak("Huh, that's new.")
-				speak("[(src.slept_through_laser_class || !user) ? "" : "Thank you, [user]! "]Oh... but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
+					src.say("Huh, that's new.")
+				src.say("[(src.slept_through_laser_class || !user) ? "" : "Thank you, [user]! "]Oh... but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
 				SPAWN(2 SECONDS)
-					speak("Oh! This weapon has a stun setting! That makes it [pick("A-OK", "totally fine", "well within certain loopholes of the law")] for me to use!")
+					src.say("Oh! This weapon has a stun setting! That makes it [pick("A-OK", "totally fine", "well within certain loopholes of the law")] for me to use!")
 					src.budgun.set_current_projectile(new /datum/projectile/energy_bolt)
 					src.budgun.item_state = "egun"
 					src.budgun.icon_state = "energystun100"
@@ -571,9 +573,9 @@
 					src.budgun.UpdateIcon()
 					UpdateIcon()
 		else if (!istype(src.budgun.current_projectile, /datum/projectile/laser)) // Our Egun is set to stun
-			speak("I can't kill anything with this!")
+			src.say("I can't kill anything with this!")
 			SPAWN(2 SECONDS)
-				speak("Much better!")
+				src.say("Much better!")
 				src.budgun.set_current_projectile(new /datum/projectile/laser)
 				src.budgun.item_state = "egun"
 				src.budgun.icon_state = "energykill100"
@@ -586,25 +588,25 @@
 			src.said_dumb_things = 1
 			SPAWN(15 SECONDS)
 				src.said_dumb_things = 0
-			speak("[user ? "Thank you, [user]! Oh... but a" : "A"]rticle-[rand(1,6)] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
+			src.say("[user ? "Thank you, [user]! Oh... but a" : "A"]rticle-[rand(1,6)] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
 			SPAWN(2 SECONDS)
 				if (user)
-					speak("But, you wouldn't say that I'm [fluffbud], would you?")
+					src.say("But, you wouldn't say that I'm [fluffbud], would you?")
 				else
-					speak("But hey, the law's for [pick("chumps", "the spacebirds", "losers")], right?")
+					src.say("But hey, the law's for [pick("chumps", "the spacebirds", "losers")], right?")
 				if (prob(25))
 					sleep(2 SECONDS)
 					if(user)
-						speak("Cus I'd say I'm more [fluffbad1] [fluffbad2].")
+						src.say("Cus I'd say I'm more [fluffbad1] [fluffbad2].")
 					else
-						speak("Right?")
+						src.say("Right?")
 					if (prob(25))
 						sleep(10 SECONDS)
 						if (src?.on)	// Are they even still alive or something
 							if(user)
-								speak("Yup. That's me. Definitely [fluffbad1] [fluffbad2] through and through.")
+								src.say("Yup. That's me. Definitely [fluffbad1] [fluffbad2] through and through.")
 							else
-								speak("Yeah. I'm right. Heck the law. Heck the law for real!")
+								src.say("Yeah. I'm right. Heck the law. Heck the law for real!")
 		if (src.slept_through_laser_class)
 			src.slept_through_laser_class = 0
 
@@ -643,7 +645,7 @@
 												"Time for crime... to stop!",\
 												"If only [istype(src, /obj/machinery/bot/guardbot/ranger) ? "I could see myself" : "Ol' Harner could see me"] now!")
 		if (!changemode)
-			speak(saytheline)	//owner_prints
+			src.say(saytheline)	//owner_prints
 		var/local_ordinance = null
 		var/changemode_tries = 3 // you get three tries to pick a mode that isnt the one you have
 		while(local_ordinance == null && changemode_tries > 0) // please dont fuck things up
@@ -668,51 +670,51 @@
 				SPAWN(1 SECOND)
 					if (!loose)
 						src.visible_message(dothevoice)
-					speak(loose ? "CLOWN." : "Clownshot!")
+					src.say(loose ? "CLOWN." : "Clownshot!")
 					playsound(src, 'sound/vox/clown.ogg', 30)
 			if ("detain")
 				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
-					speak("Detain!")
+					src.say("Detain!")
 					playsound(src, 'sound/vox/detain.ogg', 30)
 			if ("pulse")
 				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/pulse)
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
-					speak("Pulse!")
+					src.say("Pulse!")
 					playsound(src, 'sound/vox/push.ogg', 30)
 			if ("knockout")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/tranq_dart/law_giver)
 				src.budgun.current_projectile.cost = 60
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
-					speak("Knockout!")
+					src.say("Knockout!")
 					playsound(src, 'sound/vox/sleep.ogg', 30)
 			if ("smoke")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/smoke)
 				src.budgun.current_projectile.cost = 50
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
-					speak("Smokeshot!")
+					src.say("Smokeshot!")
 					playsound(src, 'sound/vox/smoke.ogg', 30)
 			if ("execute")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/revolver_38)
 				src.budgun.current_projectile.cost = 30
 				SPAWN(1 SECOND)
-					speak("EXTERMINATE.")
+					src.say("EXTERMINATE.")
 					playsound(src, 'sound/vox/exterminate.ogg', 30)
 			if ("hotshot")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/flare)
 				src.budgun.current_projectile.cost = 60
 				SPAWN(1 SECOND)
-					speak("HOTSHOT.")
+					src.say("HOTSHOT.")
 					playsound(src, 'sound/vox/hot.ogg', 30)
 			if ("bigshot")	// impossible to get to without admin intervention
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/aex/lawbringer)
 				src.budgun.current_projectile.cost = 170
 				SPAWN(1 SECOND) // just call proc BeTheLaw(1, 0, 1) on a Buddy with a lawbringer and it should work
-					speak("HIGH EXPLOSIVE.")
+					src.say("HIGH EXPLOSIVE.")
 					playsound(src, 'sound/vox/high.ogg', 50)
 					sleep(0.4 SECONDS)
 					playsound(src, 'sound/vox/explosive.ogg', 50)
@@ -764,7 +766,7 @@
 				boutput(user, SPAN_ALERT("The tendril extends into the magazine port of [src]'s gun, welding itself in place!"))
 			else
 				if(src.on)
-					speak("Hah, that tickles. Probably.")
+					src.say("Hah, that tickles. Probably.")
 				else
 					src.visible_message("[src] twitches slightly.[pick(" It must be dreaming!", "")]")
 
@@ -786,14 +788,14 @@
 		switch(trickery)
 			if ("togglelock")
 				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
-					speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
+					src.say("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
 				if (deceptioncheck_passed)
 					src.locked = !src.locked
 					SPAWN(2 SECONDS)
 						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
-							speak(its_the_rd)
-							speak(long_day)
-							speak("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
+							src.say(its_the_rd)
+							src.say(long_day)
+							src.say("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
 					return 1
 				else
 					return 0
@@ -802,21 +804,21 @@
 					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				if (src.gunlocklock && src.tool.tool_id == "GUN")
 					if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
-						speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
+						src.say(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
 						"Yeah I'm going to need a signed permission slip from your mother first",\
 						"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
 						"You're not the boss of me!", "Couldn't even if I wanted to!"))
 					return 0
 				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
-					speak("Sorry, only people authorized by Thinktronic Data Systems may modify my accessories.")
+					src.say("Sorry, only people authorized by Thinktronic Data Systems may modify my accessories.")
 				if (deceptioncheck_passed && src.tool.tool_id)
 					src.locked = 0
 					SPAWN(2 SECONDS)
 						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
-							speak(its_the_rd)
-							speak(long_day)
+							src.say(its_the_rd)
+							src.say(long_day)
 							DropTheThing("tool", null, 0, 1, TdurgTrick)
-							speak("Alright, my [src.tool]'s all popped out. I've also unlocked everything, just in case!")
+							src.say("Alright, my [src.tool]'s all popped out. I've also unlocked everything, just in case!")
 						else
 							DropTheThing("tool", null, 0, 1, TdurgTrick)
 					return 1
@@ -827,22 +829,22 @@
 					user.visible_message("<b>[user]</b> tries to pry the gun off of [src]'s gun mount, but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				if (src.gunlocklock)
 					if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
-						speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
+						src.say(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
 						"Yeah I'm going to need a signed permission slip from your mother first",\
 						"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
 						"You're not the boss of me!", "Couldn't even if I wanted to!"))
 					return 0
 				else
 					if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
-						speak("Sorry, only people authorized by Thinktronic Data Systems may steal my defensive weapon system.")
+						src.say("Sorry, only people authorized by Thinktronic Data Systems may steal my defensive weapon system.")
 				if (deceptioncheck_passed)
 					src.locked = 0
 					SPAWN(2 SECONDS)
 						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
-							speak(its_the_rd)
-							speak(long_day)
+							src.say(its_the_rd)
+							src.say(long_day)
 							DropTheThing("gun", null, 0, 1, TdurgTrick)
-							speak("There you go, I've placed my [src.budgun] on the ground. I've also unlocked my tool and gun mounts, just in case you wanted to give me a new one. Please.")
+							src.say("There you go, I've placed my [src.budgun] on the ground. I've also unlocked my tool and gun mounts, just in case you wanted to give me a new one. Please.")
 						else
 							DropTheThing("gun", null, 0, 1, TdurgTrick)
 					return 1
@@ -850,7 +852,7 @@
 					return 0
 			else
 				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
-					speak("Sorry, only people authorized by Thinktronic Data Systems may do... whatever it is you're trying to do.")
+					src.say("Sorry, only people authorized by Thinktronic Data Systems may do... whatever it is you're trying to do.")
 				return 0
 
 	proc/DropTheThing(obj/item/thing as text, mob/user as mob|null, var/by_force = 0, var/announce_it = 1, var/location, var/ignoregunlocklock)
@@ -882,7 +884,7 @@
 				if (src.tool.tool_id == "GUN")
 					if (announce_it)
 						if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
-							speak("It looks like you're trying to remove my tool module! Well... someone beat you to it.")
+							src.say("It looks like you're trying to remove my tool module! Well... someone beat you to it.")
 					return
 				else if (by_force && user)
 					src.visible_message(SPAN_ALERT("[user] pries the [src.tool] out of [src]'s tool port!"), SPAN_ALERT("You pry the [src.tool] out of [src]'s tool port!"))
@@ -959,9 +961,9 @@
 					if(src.on && !src.idle)
 						src.visible_message(SPAN_ALERT("[src] refuses to wield an unauthorized weapon!"),\
 																SPAN_ALERT("[src] graciously refuses your [Q]."))
-						speak("Sorry, but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] weapon.")
+						src.say("Sorry, but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] weapon.")
 						SPAWN(2 SECOND)
-							speak("...basically meaning I can only hold a weapon that can't explicitly hurt anyone. Rules are rules!")
+							src.say("...basically meaning I can only hold a weapon that can't explicitly hurt anyone. Rules are rules!")
 						return
 					else
 						boutput(user, "You try to give [src] your [Q], but it just slides out of its hand! Maybe its Spacelaw circuits don't like that gun?")
@@ -974,11 +976,11 @@
 						else
 							src.visible_message(SPAN_ALERT("[src] picks up [Q]!"))
 						if (!weirdgimmickgun)
-							speak("[user ? "Thank you, [user]! " : ""]I'll put this [Q] to good use.")
+							src.say("[user ? "Thank you, [user]! " : ""]I'll put this [Q] to good use.")
 						else
-							speak("[user ? "Thank you, [user]! " : ""]I'll-- uh, hold on, let me check Spacelaw to see if I can actually keep holding this thing... whatever it is.")
+							src.say("[user ? "Thank you, [user]! " : ""]I'll-- uh, hold on, let me check Spacelaw to see if I can actually keep holding this thing... whatever it is.")
 							SPAWN(2 SECOND)
-								speak("...okay, I mean, Spacelaw doesn't <I>explicitly</I> say I can't use this [Q]. It <I>is</I> a gun, right? At any rate, I'll put it to good use.")
+								src.say("...okay, I mean, Spacelaw doesn't <I>explicitly</I> say I can't use this [Q]. It <I>is</I> a gun, right? At any rate, I'll put it to good use.")
 					else
 						boutput(user, "You slip your [Q] into [src]'s hand, and it reflexively closes around the grip.[prob(23) ? " How adorable." : ""]")
 				else // bot's emagged or ammofabbed. Or both.
@@ -1009,11 +1011,11 @@
 					if(src.on && !src.idle)
 						if(!DeceptionCheck(null, user, "togglelock")) // maybe we can ask them nicely?
 							if (src.tool.tool_id != "GUN") // AKA, we have a tool
-								speak("That's a neat tool module you have there! Maybe you could get someone on this station's science team to install it for you!")
+								src.say("That's a neat tool module you have there! Maybe you could get someone on this station's science team to install it for you!")
 								return	// welp
 							else // No tool?
-								speak("That's a neat tool module you have there! But... my accessory lock is engaged, and I can't just unlock it for anybody.[prob(25 ? " Seriously, I can't! Ask the superuser to check line 805 of the Robuddy source code if you don't believe me!" : "")]")
-								speak("If you really want to give me a tool module, and I really want you to, go find a member of the station's science team. Almost 60% sure the Research Director authorized them to unlock me.")
+								src.say("That's a neat tool module you have there! But... my accessory lock is engaged, and I can't just unlock it for anybody.[prob(25 ? " Seriously, I can't! Ask the superuser to check line 805 of the Robuddy source code if you don't believe me!" : "")]")
+								src.say("If you really want to give me a tool module, and I really want you to, go find a member of the station's science team. Almost 60% sure the Research Director authorized them to unlock me.")
 								return
 					else
 						boutput(user, "You try to install your [Q] into [src], but the port is locked down tight!")
@@ -1029,7 +1031,7 @@
 				// Okay, prechecks passed! Lets give em that tool!
 				if (user)
 					user.visible_message("<b>[user]</b> inserts the [Q] into [src].","You insert the [Q] into [src].")
-					speak("Thank you, [user]![prob(25) ? " You know what they say, [thing_they_say]" : ""]")
+					src.say("Thank you, [user]![prob(25) ? " You know what they say, [thing_they_say]" : ""]")
 				else
 					src.visible_message("[Q] slots into [src] somehow.")
 				// Since we already dropped our tool if we had one, we should have a non-tool
@@ -1066,7 +1068,7 @@
 				if (ishuman(griffed))
 					SPAWN(1 SECONDS)
 						src.visible_message("[src] gasps!")
-						speak(pick("Sorry!", "Are you okay?", "Whoops!", "Heads up!", "Oh no!"))
+						src.say(pick("Sorry!", "Are you okay?", "Whoops!", "Heads up!", "Oh no!"))
 				else
 					ShootTheGun()
 					src.visible_message(SPAN_ALERT("<B>BOOM!</B> [src] misses its head... screen... thing, sending the bullet flying!"))
@@ -1282,18 +1284,18 @@
 			if(signal.data["command"] == "dock_return" && !src.idle) //Return to dock for new instructions.
 				if(!istype(src.task, /datum/computer/file/guardbot_task/recharge/dock_sync))
 					src.add_task(/datum/computer/file/guardbot_task/recharge/dock_sync, 0, 1)
-					speak("Software update requested.")
+					src.say("Software update requested.")
 					set_emotion("update")
 				return
 
 			else if (signal.data["command"] == "captain_greet" && !src.idle && istype(src.hat, /obj/item/clothing/head/caphat))
-				speak(pick("Yes...thank you.", "Hello yes.  I'm...the captain.", "Good day to you too.  A good day from the captain.  Me.  The captain."))
+				src.say(pick("Yes...thank you.", "Hello yes.  I'm...the captain.", "Good day to you too.  A good day from the captain.  Me.  The captain."))
 				return
 
 			else if (signal.data["command"] == "wizard_greet" && !src.idle && istype(src.hat, /obj/item/clothing/head/wizard))
 				var/wizdom = pick("Never eat shredded wheat.", "A stitch in time saves nine.", "The pen is mightier than...a dull thing I guess.  Maybe a string?", "Rome wasn't built in a day.  Actually, a lot of things aren't.  I don't think any city was, to be honest.")
-				speak("Um...[wizdom].")
-				speak("SO SAYETH THE WIZARD!")
+				src.say("Um...[wizdom].")
+				src.say("SO SAYETH THE WIZARD!")
 				return
 
 		src.task?.receive_signal(signal, is_beacon)
@@ -1388,7 +1390,7 @@
 		if(src.exploding) return
 		src.exploding = 1
 		var/death_message = pick("I regret nothing, but I am sorry I am about to leave my friends.","I had a good run.","Es lebe die Freiheit!","It is now safe to shut off your buddy.","System error.","Now I know why you cry.","Stay gold...","Malfunction!","Rosebud...","No regrets!", "Time to die...")
-		speak(death_message)
+		src.say(death_message)
 		src.visible_message(SPAN_ALERT("<b>[src] blows apart!</b>"))
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		var/turf/T = get_turf(src)
@@ -1484,7 +1486,7 @@
 
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
 				if(!ON_COOLDOWN(src, "critical_battery_speak", 5 SECONDS))
-					speak("Critical battery.")
+					src.say("Critical battery.")
 					INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 				return 0
 
@@ -1540,9 +1542,9 @@
 			src.UpdateIcon()
 			if(!warm_boot)
 				src.scratchpad.len = 0
-				src.speak("Guardbuddy V1.4 Online.")
+				src.say("Guardbuddy V1.4 Online.")
 				if (src.health < initial(src.health))
-					src.speak("Self-check indicates [src.health < (initial(src.health) / 2) ? "severe" : "moderate"] structural damage!")
+					src.say("Self-check indicates [src.health < (initial(src.health) / 2) ? "severe" : "moderate"] structural damage!")
 
 				if(!src.tasks.len && (src.model_task || src.setup_default_startup_task))
 					if(!src.model_task)
@@ -1600,11 +1602,11 @@
 						if(6)
 							src.visible_message("[src] looks more disappointed than angry.")
 						if(7)
-							src.speak("Uhm, when you get a moment, would you please ask the superuser to outfit me with a tool module?")
+							src.say("Uhm, when you get a moment, would you please ask the superuser to outfit me with a tool module?")
 						if(8)
-							src.speak("ERROR: Defensive weapon system not found!")
+							src.say("ERROR: Defensive weapon system not found!")
 						if(9)
-							src.speak("ERROR: Unable to prosecute beatdown.arrest_target!")
+							src.say("ERROR: Unable to prosecute beatdown.arrest_target!")
 					src.set_emotion("screaming")	// *scream
 					src.remove_current_task()		// welp
 					. = TRUE
@@ -1739,7 +1741,7 @@
 
 			else
 
-				dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
+				dat += "Status: <a href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
 			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]\]</b><br>"
 
@@ -1954,7 +1956,7 @@
 
 		if (length(task.arrested_messages))
 			var/arrest_message = pick(task.arrested_messages)
-			master.speak(arrest_message)
+			master.say(arrest_message)
 
 		var/bot_location = get_area(master)
 		var/last_target = task.arrest_target
@@ -1972,7 +1974,7 @@
 		if (prob(5))
 			message2send = "Notification: Tactical law operation agent [master] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill.txt", "drugs")]-[pick_string("shittybill.txt", "insults")]\" \
 			in [bot_location] at grid reference [LT_loc.x][prob(50)?"-niner":""] mark [LT_loc.y][prob(50)?"-niner":""]. Unit requesting law enforcement personnel for further suspect prosecution. [master] over and out."
-			master.speak(message2send)
+			master.say(message2send)
 		else
 			message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="BUDDY-MAILBOT", "group"=list(MGD_SCIENCE), "sender"="00000000", "message"="[message2send]")
@@ -2242,7 +2244,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 			for(var/count=0, count<4, count++)
 
-				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+				var/list/affected = drawLineObj(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
 					SPAWN(0.6 SECONDS) qdel(O)
@@ -2434,7 +2436,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					master.reply_wait = 2
 					if(!announced)
 						announced++
-						master.speak("Low battery.")
+						master.say("Low battery.")
 						master.set_emotion("battery")
 					else
 						announced = 1
@@ -2509,14 +2511,14 @@ TYPEINFO(/obj/item/device/guardbot_module)
 
 			switch (state)
 				if (0)
-					master.speak("Break time. Rumpus protocol initiated.")
+					master.say("Break time. Rumpus protocol initiated.")
 					src.state = 1
 
 				if (1)	//Seeking the bar.
 					if (src.awaiting_beacon)
 						src.awaiting_beacon--
 						if (src.awaiting_beacon <= 0)
-							src.master.speak("Error: Bar not found. Break canceled.")
+							src.master.say("Error: Bar not found. Break canceled.")
 							src.master.set_emotion("sad")
 							src.master.remove_current_task()
 							return
@@ -2551,7 +2553,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (secondary_targets.len)
 							src.target = pick(secondary_targets)
 						else
-							master.speak("Error: No seating available. Break canceled.")
+							master.say("Error: No seating available. Break canceled.")
 							src.master.set_emotion("sad")
 							src.master.remove_current_task()
 							return
@@ -2577,13 +2579,13 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						src.state = 4
 						src.master.set_emotion("ugh")
 						if (its_beepsky.emagged == 2)
-							src.master.speak(pick("Oh, look at the time.", "I need to go.  I have a...dentist appointment.  Yes", "Oh, is the break over already? I better be off.", "I'd best be leaving."))
+							src.master.say(pick("Oh, look at the time.", "I need to go.  I have a...dentist appointment.  Yes", "Oh, is the break over already? I better be off.", "I'd best be leaving."))
 							src.master.remove_current_task()
 						return
 
 					if (party_counter-- <= 0)
 						src.master.set_emotion()
-						src.master.speak("Break complete.")
+						src.master.say("Break complete.")
 						src.master.remove_current_task()
 						return
 
@@ -2597,7 +2599,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if (party_idle_counter-- <= 0)
 						party_idle_counter = rand(4,14)
 						if (prob(50))
-							src.master.speak(pick("Yay!", "Woo-hoo!", "Yee-haw!", "Oh boy!", "Oh yeah!", "My favorite color is probably [pick("red","green","mauve","anti-flash white", "aureolin", "coquelicot")].", "I'm glad we have the opportunity to relax like this.", "Imagine if I had two arms. I could hug twice as much!", "I like [pick("tea","coffee","hot chocolate","soda", "diet soda", "milk", "almond milk", "soy milk", "horchata", "hot cocoa with honey mixed in", "green tea", "black tea")]. I have no digestive system or even a mouth, but I'm pretty sure I would like it.", "Sometimes I wonder what it would be like if I could fly."))
+							src.master.say(pick("Yay!", "Woo-hoo!", "Yee-haw!", "Oh boy!", "Oh yeah!", "My favorite color is probably [pick("red","green","mauve","anti-flash white", "aureolin", "coquelicot")].", "I'm glad we have the opportunity to relax like this.", "Imagine if I had two arms. I could hug twice as much!", "I like [pick("tea","coffee","hot chocolate","soda", "diet soda", "milk", "almond milk", "soy milk", "horchata", "hot cocoa with honey mixed in", "green tea", "black tea")]. I have no digestive system or even a mouth, but I'm pretty sure I would like it.", "Sometimes I wonder what it would be like if I could fly."))
 
 						else
 							var/actiontext = pick("does a little dance. It's not very good but there's good effort there.", "slowly rotates around in a circle.", "attempts to do a flip, but is unable to jump.", "hugs an invisible being only it can see.", "rocks back and forth repeatedly.", "tilts side to side.", "claps.  Whaaat.", prob(1);"looks directly at you, the viewer.")
@@ -2611,7 +2613,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 
 					if (!its_beepsky || get_area(master) != get_area(its_beepsky))
 						if (prob(10))
-							src.master.speak(pick("Took long enough.", "Thought he'd never leave.", "Thought he'd never leave.  Too bad it smells like him in here now."))
+							src.master.say(pick("Took long enough.", "Thought he'd never leave.", "Thought he'd never leave.  Too bad it smells like him in here now."))
 
 						src.master.set_emotion(rumpus_emotion)
 						src.state = 3
@@ -2626,7 +2628,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				return
 
 			if (input == "path_error")
-				src.master.speak("Error: Destination unreachable. Break canceled.")
+				src.master.say("Error: Destination unreachable. Break canceled.")
 				src.master.set_emotion("sad")
 				src.master.remove_current_task()
 				return
@@ -2766,7 +2768,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if(BOUNDS_DIST(master, hug_target) == 0)
 							if(hug_target.traitHolder?.hasTrait("wasitsomethingisaid"))
 								master.bot_attack(hug_target, TRUE) //betrayal!!
-								master.speak(pick("As if!", "You know what you did.", "Level [rand(32,80)] dork alert!"))
+								master.say(pick("As if!", "You know what you did.", "Level [rand(32,80)] dork alert!"))
 								drop_hug_target()
 								master.moving = FALSE
 								return
@@ -2775,7 +2777,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 								hug_target.reagents.add_reagent("hugs", 10)
 
 							if (prob(1) && istype(hug_target) && hug_target.client && hug_target.client.IsByondMember())
-								master.speak("You might want a breath mint.")
+								master.say("You might want a breath mint.")
 
 							drop_hug_target()
 							master.set_emotion("love")
@@ -2959,11 +2961,11 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if (lethal_stat && !src.lethal)
 						src.lethal = 1
 						if (src.master)
-							master.speak("Notice: Lethal force authorized.")
+							master.say("Notice: Lethal force authorized.")
 					else if (src.lethal)
 						src.lethal = 0
 						if (src.master)
-							master.speak("Notice: Lethal force is no longer authorized.")
+							master.say("Notice: Lethal force is no longer authorized.")
 
 			if (confList["name"] && !src.master)
 				var/target_name = ckey(confList["name"])
@@ -2982,7 +2984,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if(!(newtarget_name in src.target_names))
 							src.target_names += newtarget_name
 							if (src.master)
-								master.speak("Notice: Criminal database updated.")
+								master.say("Notice: Criminal database updated.")
 						return 0
 					if ("remove_target")
 						if(confList["acc_code"] != netpass_heads)
@@ -2995,9 +2997,9 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							src.target_names -= seltarget_name
 							if (src.master)
 								if(src.target_names.len)
-									master.speak("Notice: Criminal database updated.")
+									master.say("Notice: Criminal database updated.")
 								else
-									master.speak("Notice: Criminal database cleared.")
+									master.say("Notice: Criminal database cleared.")
 						return 0
 
 					if("clear_targets")
@@ -3007,7 +3009,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if(src.target_names.len)
 							src.target_names = list()
 							if (src.master)
-								master.speak("Notice: Criminal database cleared.")
+								master.say("Notice: Criminal database cleared.")
 						return 0
 
 			return 0
@@ -3035,7 +3037,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						src.mode = 1
 						src.master.frustration = 0
 						master.set_emotion("angry")
-						master.speak("Level [threat] infraction alert!")
+						master.say("Level [threat] infraction alert!")
 						master.point(C, 1)
 						if(istype(C, /mob/living/carbon/human/npc/monkey))
 							var/mob/living/carbon/human/npc/monkey/npcmonkey = C
@@ -3055,12 +3057,12 @@ TYPEINFO(/obj/item/device/guardbot_module)
 								if (3,4)
 									//hugs!!
 									master.point(C, 1)
-									master.speak( pick("Level [rand(1,32)] hug deficiency alert!", "Somebody needs a hug!", "Cheer up!") )
+									master.say(pick("Level [rand(1,32)] hug deficiency alert!", "Somebody needs a hug!", "Cheer up!"))
 									src.hug_target = C
 								if (5)
 									master.visible_message("<b>[master]</b> appears to be having a [pick("great","swell","rad","wonderful")] day!")
 									if (prob(50))
-										master.speak("Woo!")
+										master.say("Woo!")
 					return
 
 			drop_arrest_target()
@@ -3085,7 +3087,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target, max_dist=40)
+						master.navigate_to(target, max_dist=80)
 					return
 				else
 					find_nearest_beacon()
@@ -3171,7 +3173,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if (..("filler"))
 						return 1
 
-					src.master.speak( pick("Yayyy! Thank you!", "Whoohoo, candy!", "Thank you!  I can't actually eat candy, but I enjoy the aesthetic aspect of it.") )
+					src.master.say(pick("Yayyy! Thank you!", "Whoohoo, candy!", "Thank you!  I can't actually eat candy, but I enjoy the aesthetic aspect of it."))
 					src.master.set_emotion("happy")
 				else
 					if (..())
@@ -3187,14 +3189,14 @@ TYPEINFO(/obj/item/device/guardbot_module)
 
 					if(BOUNDS_DIST(master, hug_target) == 0)
 						if (prob(2))
-							master.speak("Merry Spacemas!")
+							master.say("Merry Spacemas!")
 							SPAWN(1 SECOND)
 								if (master)
-									master.speak("Warning: Real-time clock battery low or missing.")
+									master.say("Warning: Real-time clock battery low or missing.")
 						else
-							master.speak("Trick or treat!")
+							master.say("Trick or treat!")
 						if (prob(50) && hug_target.client && hug_target.client.IsByondMember())
-							master.speak("Oh wait, you're the one who just hands out [pick("religious tracts","pennies", "toothbrushes")].")
+							master.say("Oh wait, you're the one who just hands out [pick("religious tracts","pennies", "toothbrushes")].")
 						master.set_emotion("love")
 
 						hug_target = null
@@ -3318,9 +3320,9 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(isdead(protected))
 						protected = null
 						if (buddy_is_dork && prob(50))
-							master.speak(pick("Rest in peace.  I guess", "At least that's over.", "I didn't have the courage to tell you this, but you smelled like rotten ham."))
+							master.say(pick("Rest in peace.  I guess", "At least that's over.", "I didn't have the courage to tell you this, but you smelled like rotten ham."))
 						else
-							master.speak(pick("Rest in peace.","Guard protocol...inactive.","I'm sorry it had to end this way.","It was an honor to serve alongside you."))
+							master.say(pick("Rest in peace.","Guard protocol...inactive.","I'm sorry it had to end this way.","It was an honor to serve alongside you."))
 						return
 
 					if(!master.path || !master.path.len || (3 < GET_DIST(protected,master.path[master.path.len])) )
@@ -3358,7 +3360,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 
 			if(attacker == src.protected && !attacked_by_buddy)
 				attacked_by_buddy = 1
-				master.speak(pick("Check your fire!","Watch it!","Friendly fire will not be tolerated!"))
+				master.say(pick("Check your fire!","Watch it!","Friendly fire will not be tolerated!"))
 				return
 
 			if(!src.arrest_target)
@@ -3393,8 +3395,8 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						C.unlock_medal("Ol' buddy ol' pal", 1)
 						src.buddy_is_dork = (C.client && C.client.IsByondMember())
 						//if (buddy_is_dork && prob(50))
-							//master.speak(pick("I am here to protect...Oh, it's <i>you</i>.", "I have been instructed to guard you. Welp.", "You are now under guard.  I guess."))
-						master.speak(pick("I am here to protect you.","I have been instructed to guard you.","You are now under guard.","Come with me if you want to live!"))
+							//master.say(pick("I am here to protect...Oh, it's <i>you</i>.", "I have been instructed to guard you. Welp.", "You are now under guard.  I guess."))
+						master.say(pick("I am here to protect you.","I have been instructed to guard you.","You are now under guard.","Come with me if you want to live!"))
 						master.point(C, 1)
 						break
 
@@ -3410,12 +3412,12 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(!(protected in view(7,master)))
 					return 0
 				//Has our buddy been attacked??
-				if(protected.lastattacker && (protected.lastattackertime + 40) >= world.time)
-					if(protected.lastattacker != protected)
+				if(protected.lastattacker?.deref() && (protected.lastattackertime + 40) >= world.time)
+					if(protected.lastattacker.deref() != protected)
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
-						src.arrest_target = protected.lastattacker
+						src.arrest_target = protected.lastattacker.deref()
 						src.follow_attempts = 0
 						src.arrest_attempts = 0
 						return 1
@@ -3442,7 +3444,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				return
 
 			if (src.protected && prob(10))
-				master.speak(pick_smart_string("buddy_phrases.txt", "heckles"))
+				master.say(pick_smart_string("buddy_phrases.txt", "heckles"))
 				master.point(src.protected, 1)
 
 		look_for_protected() //Search for a mob in view with the name we are programmed to guard.
@@ -3459,7 +3461,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					src.protected = C
 					buddy_is_dork = 1
 					//src.desired_emotion = GUARDING_EMOTION
-					master.speak("Level 9F [pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")] detected!")
+					master.say("Level 9F [pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")] detected!")
 					master.point(C)
 					return
 
@@ -3485,16 +3487,16 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if (src.protected && prob(5))
 
 				if (prob(40))
-					master.speak(pick_smart_string("buddy_phrases.txt", "jokes"))
+					master.say(pick_smart_string("buddy_phrases.txt", "jokes"))
 					master.point(src.protected, 1)
 				else
 					var/split_joke = splittext(pick_smart_string("buddy_phrases.txt", "setupjokes"), "#")
 					if(length(split_joke) != 2)
-						master.speak("Error 404: Joke not found!")
+						master.say("Error 404: Joke not found!")
 						return
-					master.speak(split_joke[1])
+					master.say(split_joke[1])
 					master.point(src.protected, 1)
-					master.speak(split_joke[2])
+					master.say(split_joke[2])
 
 
 
@@ -3511,7 +3513,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if (ckey(check_name) == ckey(src.protected_name))
 					src.protected = C
 					buddy_is_dork = 1
-					master.speak(pick("Insufficient happiness detected!","Person in need of cheering-up detected!","Coolest person on the station located!","Genius detected!","Wonderful friend detected!","Level 9F Joke-defiency detected!"))
+					master.say(pick("Insufficient happiness detected!","Person in need of cheering-up detected!","Coolest person on the station located!","Genius detected!","Wonderful friend detected!","Level 9F Joke-defiency detected!"))
 
 					master.point(C)
 					return
@@ -3607,10 +3609,6 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if(master.emotion != desired_emotion)
 				master.set_emotion(desired_emotion)
 
-			if(state != STATE_AT_BEACON && state != STATE_FINDING_BEACON)
-				if(prob(tip_prob) && !ON_COOLDOWN(src.master, "tip", 3 SECONDS))
-					master.speak(get_random_tip())
-
 			switch (state)
 				if (STATE_FINDING_BEACON)
 					if (awaiting_beacon)
@@ -3633,6 +3631,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						state = STATE_FINDING_BEACON
 						return
 
+					if(prob(tip_prob) && !src.distracted && !GET_COOLDOWN(src.master, "tip"))
+						master.say(get_random_tip())
+						ON_COOLDOWN(src.master, "tip", 10 SECONDS)
+
 					if (!src.distracted && prob(20))
 						src.look_for_neat_thing()
 
@@ -3642,7 +3644,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc, max_dist=30)
+							master.navigate_to(current_beacon_loc, max_dist=60)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -3652,20 +3654,36 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						return	//I realize this doesn't check if they're dead.  Buddies can't always tell, ok!! Maybe if people had helpful power lights too
 
 					speak_with_pause(current_tour_text, yield_to_neat=TRUE)
+					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 					if (next_beacon_id)
 						state = STATE_FINDING_BEACON
 						awaiting_beacon = max(awaiting_beacon, 1) //This will just serve as a delay so the buddy isn't zipping around at light speed between stops.
 					else
 						state = STATE_POST_TOUR_IDLE
-						tour_delay = 30
-						master.speak("And that concludes the tour session.  Please visit the gift shop on your way out.")
+						var/obj/machinery/guardbot_dock/dock = null
+						dock = locate() in master.loc
+						if(dock && istype(dock))
+							// Check for tour console, manual wake if present, auto wake if not
+							if (locate(/obj/machinery/computer/tour_console) in orange(1, src.master))
+								dock.connect_robot(master,0)
+							else
+								dock.connect_robot(master,2)
+							return
+						else
+							desired_emotion = "angry"
+							if(master.emotion != desired_emotion)
+								master.set_emotion(desired_emotion)
+							master.say(pick("My dock... it's missing!", "Where's my dock? I was ready for a break.", "Hey you sleaze! My bed!"))
+							tour_delay = 30
 					return
 
 				if (STATE_POST_TOUR_IDLE)
 					if (tour_delay-- > 0)
 						return
-
+					desired_emotion = "happy"
+					if(master.emotion != desired_emotion)
+						master.set_emotion(desired_emotion)
 					next_beacon_id = initial(next_beacon_id)
 					state = STATE_FINDING_BEACON
 					neat_things = 0
@@ -3720,22 +3738,21 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
 
 			if(remaining <= MAPTEXT_SLICE_SIZE)
-				master.speak(text)
+				master.say(text)
 				return
 
 			if(pause_for_beacon)
 				src.awaiting_beacon += round((remaining / MAPTEXT_SLICE_SIZE)*(MAPTEXT_PAUSE/proc_delay))
 
-			master.speak(text, just_chat=TRUE)
 			while(remaining - slice > MAPTEXT_SLICE_SIZE)
 				slice = findlasttext(text," ", slice+MAPTEXT_SLICE_SIZE, slice+1)
 				if(!slice)
 					break
-				master.speak(copytext(text,start+1,slice), just_float = TRUE)
+				master.say(copytext(text,start+1,slice))
 				start = slice
 				sleep(MAPTEXT_PAUSE)
 
-			master.speak(copytext(text,start), just_float = TRUE)
+			master.say(copytext(text,start))
 #undef MAPTEXT_SLICE_SIZE
 
 		attack_response(mob/attacker as mob)
@@ -4050,14 +4067,14 @@ TYPEINFO(/obj/item/device/guardbot_module)
 
 			if (!announced)
 				announced = 1
-				master.speak(pick("Hey, who turned out the lights?","Error: Visual sensor impaired!","Whoa hey, what's the big deal?","Where did everyone go?"))
+				master.say(pick("Hey, who turned out the lights?","Error: Visual sensor impaired!","Whoa hey, what's the big deal?","Where did everyone go?"))
 
 			if (escape_counter-- > 0)
-				flick("robuddy-ghostfumble", master)
+				FLICK("robuddy-ghostfumble", master)
 				master.visible_message(SPAN_ALERT("[master] fumbles around in the sheet!"))
 			else
 				master.visible_message("[master] cuts a hole in the sheet!")
-				master.speak(pick("Problem solved.","Oh, alright","There we go!"))
+				master.say(pick("Problem solved.","Oh, alright","There we go!"))
 				master.bedsheet = 2
 				master.UpdateIcon()
 				src.master.remove_current_task()
@@ -4326,13 +4343,13 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += "<br>Configuration Switches:<br><table border='1' style='background-color:#7A7A7A'><tr>"
 			for (var/i = 8, i >= 1, i >>= 1)
 				var/styleColor = (net_number & i) ? "#60B54A" : "#CD1818"
-				dat += "<td style='background-color:[styleColor]'><a href='?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
+				dat += "<td style='background-color:[styleColor]'><a href='byond://?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
 
 			dat += "</tr></table>"
 
@@ -4762,6 +4779,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	icon_state = "tour"
 	pixel_y = 8
 	var/obj/machinery/bot/guardbot/linked_bot = null
+	object_flags = NO_BLOCK_TABLE
 
 	New()
 		..()
@@ -4782,7 +4800,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 			dat += "<b>Guide:</b> <center>\[[linked_bot.name]]</center><br>"
 
 			if ((linked_bot in orange(1, src)) && linked_bot.charge_dock)
-				dat += "<center><a href='?src=\ref[src];start_tour=1'>Begin Tour</a></center>"
+				dat += "<center><a href='byond://?src=\ref[src];start_tour=1'>Begin Tour</a></center>"
 
 			else
 				var/area/guideArea = get_area(linked_bot)
@@ -4805,6 +4823,9 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		src.updateUsrDialog()
 		return
 
+TYPEINFO(/obj/machinery/bot/guardbot/old)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_OLD)
+
 /obj/machinery/bot/guardbot/old
 	name = "Robuddy"
 	desc = "A PR-4 Robuddy. That's two models back by now! You didn't know any of these were still around."
@@ -4816,10 +4837,6 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	no_camera = 1
 	setup_charge_maximum = 800
 	setup_default_tool_path = /obj/item/device/guardbot_tool/flash
-	bot_chat_style = "font-family: 'Consolas', monospace;"
-
-	speak(var/message, var/sing, var/just_float, var/just_chat)
-		return ..("[uppertext(message)]", just_float=just_float, just_chat=just_chat)
 
 	interacted(mob/user as mob)
 		var/dat = "<tt><B>PR-4 Robuddy v0.8</B></tt><br><br>"
@@ -4862,7 +4879,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 
 		else
 
-			dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
+			dat += "Status: <a href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
 		dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]]</b><br>"
 
@@ -4874,7 +4891,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		if(src.exploding) return
 		src.exploding = 1
 		var/death_message = pick("It is now safe to shut off your buddy.","I regret nothing, but I am sorry I am about to leave my friends.","Malfunction!","I had a good run.","Es lebe die Freiheit!","Life was worth living.","Time to die...")
-		speak(death_message)
+		src.say(death_message)
 		src.visible_message(SPAN_ALERT("<b>[src] blows apart!</b>"))
 		var/turf/T = get_turf(src)
 		if(src.mover)
@@ -5008,6 +5025,17 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	New()
 		..()
 		src.hat.name = "Mabel's beret"
+
+/obj/machinery/bot/guardbot/old/tourguide/neon
+	name = "Earle"
+	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Earle'."
+	access_lookup = "Staff Assistant"
+	beacon_freq = FREQ_TOUR_NAVBEACON
+	HatToWear = /obj/item/clothing/head/sea_captain
+
+	New()
+		..()
+		src.hat.name = "Earle's ship captain hat"
 
 /obj/machinery/computer/hug_console
 	name = "Hug Console"

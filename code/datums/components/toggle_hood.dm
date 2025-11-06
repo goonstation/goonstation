@@ -1,5 +1,4 @@
 /datum/component/toggle_hood
-	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/hooded = FALSE
 	var/hood_style = null
 	var/obj/item/clothing/suit/suit = null
@@ -29,7 +28,7 @@
 		var/mob/M = suit.loc
 		if (!ishuman(M))
 			suit.body_parts_covered ^= HEAD
-			suit.over_hair = !suit.over_hair
+			suit.c_flags ^= COVERSHAIR
 		M.set_clothing_icon_dirty()
 
 	suit.UpdateIcon()

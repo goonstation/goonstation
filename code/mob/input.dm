@@ -1,7 +1,13 @@
 
-/mob/var/move_dir = 0
-/mob/var/next_move = 0
+/mob/var/prev_loc = 0 //! The location of the mob before it last moved
+/mob/var/move_dir = 0 //! The direction the mob is moving/last moved
+/mob/var/prev_move = 0 //! The time the mob last moved
+/mob/var/next_move = 0 //! The next time the mob can move
+/mob/var/is_running = 0 //! If the mob is running
 
+/mob/var/movement_last_modified = 0 //! When mob's movement was last modified
+/mob/var/movement_last_delay = 0 //! The last speed the mob was moving at
+/mob/var/movement_last_progress = 0 //! The progress of the move the mob was at when it was last modified. between 0-1
 
 /mob/hotkey(name)
 	var/datum/movement_controller/controller = src.override_movement_controller
@@ -67,9 +73,36 @@
 	if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 		src.update_cursor()
 
+
+/mob/proc/get_move_delay()
+	var/delay = max(src.movement_delay(get_step(src,src.move_dir), is_running), world.tick_lag) // don't divide by zero
+	if (move_dir & (move_dir-1))
+		delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
+	if (src.buckled && istype(src.buckled, /obj/stool/chair))
+		var/obj/stool/chair/C = src.buckled
+		delay += C.buckle_move_delay //GriiiiIIIND
+	for (var/obj/item/grab/G as anything in src.grabbed_by)
+		if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
+			if (G.state > GRAB_STRONG)
+				delay += G.assailant.p_class
+	return delay
+
+/mob/proc/process_movespeed_update()
+	if (next_move > world.time)
+		var/new_delay = get_move_delay()
+
+		// calculate how far the player has moved
+		var/move_complete = src.movement_last_progress + (world.time - src.movement_last_modified)/src.movement_last_delay
+
+		src.glide_size = (world.icon_size / ceil(new_delay / world.tick_lag))
+		next_move = world.time + (1-move_complete)*new_delay
+		src.movement_last_modified = world.time
+		src.movement_last_delay = new_delay
+		src.movement_last_progress = move_complete
+		return
+
 /mob/proc/process_move(keys)
 	set waitfor = 0
-
 	var/datum/movement_controller/controller = src.override_movement_controller
 	if (controller)
 		return controller.process_move(src, keys)
@@ -85,26 +118,28 @@
 		return max(world.tick_lag, (src.next_move - world.time) - world.tick_lag / 10)
 
 	if (src.move_dir)
-		var/running = 0
 		var/mob/living/carbon/human/H = src
 		if ((keys & KEY_RUN) && \
 		      ((H.get_stamina() > STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) ||  H.get_stamina() > STAMINA_SPRINT) && \
 			  !HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
-			running = 1
+			src.is_running = 1
+		else
+			src.is_running = 0
 		if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 			H.pushing = 0
 
-		var/delay = max(src.movement_delay(get_step(src,src.move_dir), running), world.tick_lag) // don't divide by zero
+		var/delay = get_move_delay()
+		movement_last_delay = delay
+		movement_last_modified = world.time
+		movement_last_progress = 0
 		var/move_dir = src.move_dir
-		if (move_dir & (move_dir-1))
-			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 		if (src.client && src.client.flying || (ismob(src) && HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP)))
 			if(isnull(get_step(src, move_dir)))
 				return
-			var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
+			var/glide = 32 / (is_running ? 0.5 : 1.5) * world.tick_lag
 			if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 				last_move_trigger = ticker.round_elapsed_ticks
-				deliver_move_trigger(running ? "sprint" : m_intent)
+				deliver_move_trigger(is_running ? "sprint" : m_intent)
 
 			src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 			src.animate_movement = SLIDE_STEPS
@@ -113,8 +148,9 @@
 				src.set_dir(move_dir)
 			OnMove()
 			src.glide_size = glide
-			next_move = world.time + (running ? 0.5 : 1.5)
-			return (running ? 0.5 : 1.5)
+			next_move = world.time + (is_running ? 0.5 : 1.5)
+			prev_move = world.time
+			return (is_running ? 0.5 : 1.5)
 		src.update_canmove()
 		if (src.canmove)
 			if (src.restrained())
@@ -140,7 +176,6 @@
 			else if (isturf(src.loc))
 				if (src.buckled && istype(src.buckled, /obj/stool/chair))
 					var/obj/stool/chair/C = src.buckled
-					delay += C.buckle_move_delay //GriiiiIIIND
 					if (C.rotatable)
 						C.rotate(src.move_dir)
 
@@ -149,11 +184,10 @@
 						qdel(G)
 				for (var/obj/item/grab/G as anything in src.grabbed_by)
 					if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
-						if (G.state > GRAB_STRONG)
-							delay += G.assailant.p_class
 						qdel(G)
 
 				var/turf/old_loc = src.loc
+				src.prev_loc = old_loc
 
 				//use commented bit if you wanna have world fps different from client. But its not perfect!
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
@@ -190,7 +224,7 @@
 						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(src.loc)
 						I.set_dir(src.dir)
-						flick("ion_fade", I)
+						FLICK("ion_fade", I)
 						I.icon_state = "blank"
 						I.pixel_x = src.pixel_x
 						I.pixel_y = src.pixel_y
@@ -203,7 +237,7 @@
 
 					if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 						last_move_trigger = ticker ? ticker.round_elapsed_ticks : 0 //Wire note: Fix for Cannot read null.round_elapsed_ticks
-						deliver_move_trigger(running ? "sprint" : m_intent)
+						deliver_move_trigger(is_running ? "sprint" : m_intent)
 
 					// Tripping (the physical kind)
 					var/trip_chance = 2 // because of how often this is called, 2% seems like more than enough
@@ -250,12 +284,12 @@
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*
 							step(G.assailant, move_dir)
+							delay += G.assailant.p_class
 							stepped |= G.assailant
-							if(G.assailant)
-								delay += G.assailant.p_class
+
 
 					if (src.loc != old_loc)
-						if (running)
+						if (is_running)
 							src.remove_stamina((src.lying ? 3 : 1) * STAMINA_COST_SPRINT)
 							if (src.pulling)
 								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
@@ -264,47 +298,29 @@
 							if (!src?.client?.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
 								//just fall over in place when in space (to prevent zooming)
 								var/turf/current_turf = get_turf(src)
-								if (!(current_turf.turf_flags & CAN_BE_SPACE_SAMPLE))
+								if (!(istype(current_turf, /turf/space)))
 									src.throw_at(get_step(src, move_dir), 1, 1)
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()
 								src.emote("wheeze")
 								boutput(src, SPAN_ALERT("You flop over, too winded to continue running!"))
 
-						var/list/pulling = list()
-						if (src.pulling)
-							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
-								src.remove_pulling()
-								//hud.update_pulling() // FIXME
-							else
-								pulling += src.pulling
-						for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-							pulling += G.affecting
-
-						for (var/atom/movable/A in pulling)
-							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
-								continue
-							if (A == src || A == pushing)
-								continue
-							if (!isturf(A.loc) || A.anchored)
-								continue // whoops
-							A.animate_movement = SYNC_STEPS
-							A.glide_size = glide
-							step(A, get_dir(A, old_loc))
-							A.glide_size = glide
-							A.OnMove(src)
+						var/list/chain = list()
+						chain.Add(src)
+						src.do_pulling(old_loc, glide, chain)
 			else
 				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
 					src.set_dir(move_dir)
 				if (src.loc) //ZeWaka: Fix for null.relaymove
-					delay = src.loc.relaymove(src, move_dir, delay, running) //relaymove returns 1 if we dont want to override delay
+					delay = src.loc.relaymove(src, move_dir, delay, is_running) //relaymove returns 1 if we dont want to override delay
 					if (!delay)
 						delay = 0.5
 
 			next_move = world.time + delay
+			prev_move = world.time
 			return delay
 		else
-			if (src.restrained() || !isalive(src))
+			if (src.restrained() || !isalive(src) || src.hasStatus("stunned") || src.hasStatus("paralysis") || src.hasStatus("knockdown"))
 				return
 			for (var/obj/item/grab/G as anything in src.grabbed_by)
 				if (G.state == GRAB_PIN)
@@ -312,3 +328,49 @@
 						return
 					src.last_resist = world.time + 20
 					G.do_resist()
+
+/mob/proc/do_pulling(var/turf/old_loc, var/glide, var/list/chain)
+	var/list/pulling = list()
+	if (src.pulling)
+		if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+			src.remove_pulling()
+		else
+			var/can_pull = TRUE
+			if (ismob(src.pulling))
+				var/mob/M = src.pulling
+				for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
+					if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > GRAB_PASSIVE)
+						can_pull = FALSE
+						src.remove_pulling()
+						break
+			if (can_pull)
+				pulling += src.pulling
+	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+		var/can_pull = TRUE
+		if (G.affecting)
+			for(var/obj/item/grab/grab_grabbed_by in G.affecting.grabbed_by)
+				if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > G.state)
+					can_pull = FALSE
+					break
+			if (can_pull)
+				pulling += G.affecting
+
+	for (var/atom/movable/A in pulling)
+		if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+			continue
+		if (A == src || A == pushing)
+			continue
+		if (!isturf(A.loc) || A.anchored)
+			continue // whoops
+		if (chain.Find(A))
+			continue // no loops
+		A.animate_movement = SLIDE_STEPS
+		A.glide_size = glide
+		var/turf/pulled_old_loc = A.loc
+		step(A, get_dir(A, old_loc))
+		A.OnMove(src)
+		if (istype(A, /mob/))
+			chain.Add(A)
+			var/mob/M = A
+			M.pushing = null
+			M.do_pulling(pulled_old_loc, glide, chain)

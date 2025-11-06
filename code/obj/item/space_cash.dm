@@ -201,7 +201,7 @@
 	name = "buttcoin"
 	real_name = "credit"
 	desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
-	icon_state = "cashblue"
+	icon_state = "buttcoin"
 	stack_type = /obj/item/currency/buttcoin
 	display_name = "cash"
 
@@ -270,7 +270,7 @@
 		set_amt(amt)
 
 	set_amt(amt = 1)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		src.amount = amt
 		src.UpdateStackAppearance()
 
@@ -356,7 +356,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 /obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
 	name = "stamped bullion"
 	desc = "Oh wow! This stuff's got to be worth a lot of money!"
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "stamped_gold"
 	force = 4
 	throwforce = 6

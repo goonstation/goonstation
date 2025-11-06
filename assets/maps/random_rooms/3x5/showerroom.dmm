@@ -29,7 +29,7 @@
 /area/dmm_suite/clear_area)
 "k" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/dmm_suite/clear_area)
 "L" = (

@@ -25,7 +25,7 @@
 		src.equip_if_possible(new /obj/item/clothing/shoes/swat, SLOT_SHOES)
 		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/tanning, SLOT_GLASSES)
 		src.equip_if_possible(new /obj/item/clothing/mask/gas/swat, SLOT_WEAR_MASK)
-		src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended, SLOT_L_STORE)
+		src.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen, SLOT_L_STORE)
 		src.equip_if_possible(new /obj/item/device/radio/headset/syndicate, SLOT_EARS)
 		var/obj/item/card/id/ID = new/obj/item/card/id(src)
 		ID.name = "Syndicate Identification Card"
@@ -197,7 +197,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "NT-SO Rescue Worker"
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]’s ID Card ([C.assignment])"
 			C.access = get_all_accesses()
 
 		update_clothing()
@@ -223,7 +223,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "NT-SO Special Operative"
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]’s ID Card ([C.assignment])"
 			var/list/ntso_access = get_all_accesses()
 			ntso_access += access_armory // This makes sense, right? They're highly trained and trusted.
 			C.access = ntso_access
@@ -254,3 +254,19 @@
 		src.equip_new_if_possible(newunder, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(newbelt, SLOT_BELT)
 		src.equip_new_if_possible(newshoes, SLOT_SHOES)
+
+/mob/living/carbon/human/normal/baller
+	New()
+		. = ..()
+		src.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/jersey)), SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES) //sneakers or something
+		src.throw_mode_on()
+
+	hitby(obj/item/item, datum/thrown_thing/thr)
+		. = ..()
+		if (!(item in src))
+			return
+		SPAWN(0)
+			src.drop_item(item)
+			item.throw_at(thr.thrown_by, 10, 1, thrown_by = src, thrown_from = get_turf(src))
+			src.throw_mode_on()

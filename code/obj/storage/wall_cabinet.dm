@@ -15,11 +15,12 @@ TYPEINFO(/obj/item/storage/wall)
 	deconstruct_flags = DECON_SIMPLE
 	burn_possible = FALSE
 	mechanics_type_override = /obj/item/storage/wall
+	slots = 13 // these can't move so I guess we may as well let them store more stuff?
+	max_wclass = W_CLASS_BULKY
 
 	New()
 		..()
-		// these can't move so I guess we may as well let them store more stuff?
-		src.create_storage(/datum/storage/unholdable, slots = 13, max_wclass = W_CLASS_BULKY)
+		src.create_storage(/datum/storage/unholdable, slots = src.slots, max_wclass = src.max_wclass)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -42,9 +43,9 @@ TYPEINFO(/obj/item/storage/wall)
 		if (prob(2))
 			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		for (var/i=rand(2,3), i>0, i--)
-			src.storage.add_contents(new /obj/item/tank/emergency_oxygen(src))
+			src.storage.add_contents(new /obj/item/tank/pocket/oxygen(src))
 			if (prob(40))
-				src.storage.add_contents(new /obj/item/tank/mini_oxygen(src))
+				src.storage.add_contents(new /obj/item/tank/mini/oxygen(src))
 			if (prob(40))
 				src.storage.add_contents(new /obj/item/clothing/mask/breath(src))
 

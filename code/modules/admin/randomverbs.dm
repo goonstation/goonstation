@@ -1,9 +1,10 @@
 /verb/restart_the_fucking_server_i_mean_it()
 	set name = "Emergency Restart"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	if(config.update_check_enabled)
-		world.installUpdate()
-	world.Reboot()
+	if (world.installUpdate())
+		Shutdown_server()
+	else
+		world.Reboot()
 
 /client/proc/rebuild_flow_networks()
 	set name = "Rebuild Flow Networks"
@@ -318,7 +319,7 @@
 	if (law_num < 1 || law_num > 9)
 		return
 	else
-		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE,/obj/item/aiModule/custom/centcom)
 	boutput(usr, "Uploaded '[input]' as law # [law_num]")
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws() //I don't love this, but meh
 
@@ -367,7 +368,7 @@
 					ticker.ai_law_rack_manager.default_ai_rack.ai_abilities |= expansion.ai_abilities
 
 			else
-				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE,/obj/item/aiModule/custom/centcom)
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
@@ -448,6 +449,28 @@
 		logTheThing(LOG_ADMIN, usr, "healed / revived [healed] mobs via Heal All")
 		logTheThing(LOG_DIARY, usr, "healed / revived [healed] mobs via Heal All", "admin")
 		message_admins(SPAN_ALERT("Admin [key_name(usr)] healed / revived [healed] mobs via Heal All!"))
+
+/client/proc/cmd_admin_stabilize(mob/M as mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Stabilize"
+	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if(!src.mob)
+		return
+	if(isobserver(M))
+		alert("Cannot stabilize a ghost")
+		return
+	if(isdead(M))
+		alert("Cannot stabilize a dead mob")
+		return
+
+	M.stabilize()
+
+	logTheThing(LOG_ADMIN, usr, "stabilized [constructTarget(M,"admin")]")
+	logTheThing(LOG_DIARY, usr, "stabilized [constructTarget(M,"diary")]", "admin")
+	message_admins(SPAN_ALERT("Admin [key_name(usr)] stabilized [key_name(M)]!"))
 
 /client/proc/cmd_admin_create_centcom_report()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -937,7 +960,7 @@
 		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.s_tone]\"><table bgcolor=\"[src.tf_holder.mobAppearance.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
 		dat += "Mutant Hair: <a href='byond://?src=\ref[src];hair_override=1'>[src.hair_override ? "YES" : "NO"]</a><br>"
 
-		if (usr.client.holder.level >= LEVEL_ADMIN)
+		if (usercl.holder.level >= LEVEL_ADMIN)
 			dat += "Mutant Race: <a href='byond://?src=\ref[src];mutantrace=1'>[src.mutantrace ? capitalize(src.mutantrace.name) : "None"]</a><br>"
 
 		dat += "Update ID/PDA/Manifest: <a href='byond://?src=\ref[src];updateid=1'>[src.update_wearid ? "YES" : "NO"]</a><br>"
@@ -1336,6 +1359,20 @@
 
 	src.check_reagents_internal(target)
 
+/client/proc/cmd_change_addiction(var/atom/target as null|mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 0
+	set name = "Adjust Addictions"
+	set desc = "Increase the addiction meter of all of someone's addictions by an amount."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (!ismob(target))
+		return
+	var/value = input("Value:", "Increase all active addiction meters by value", "0") as num
+	var/mob/mobtarget = target
+	mobtarget.try_affect_all_addictions(value)
+
 /client/proc/check_reagents_internal(var/atom/target as null|mob|obj|turf in world, refresh = 0)
 	if (!target)
 		return
@@ -1545,23 +1582,9 @@
 		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
 		reagents = A.reagents
 
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-
-	var/type
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
+	var/datum/reagent/reagent = pick_reagent(src.mob)
+	if (!reagent)
 		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
 
 	var/amount = input(usr, "Amount:", "Amount", 50) as null|num
 	if(!amount)
@@ -1618,6 +1641,27 @@
 		return
 	A.setMaterial(material_selected)
 	boutput(src, "Set material of [A] to [material_selected]")
+
+/client/proc/cmd_say(atom/A)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Say"
+	set desc = "Force an atom to say a line of text."
+	set popup_menu = 0
+
+	var/message = tgui_input_text(src, "Force [A] to say something:", "Say", "")
+
+	if (!message)
+		return
+
+	A.say(message)
+
+	message = copytext(sanitize(message), 1, MAX_MESSAGE_LEN)
+	logTheThing(LOG_ADMIN, usr, "forced [constructTarget(A, "admin")] to say: [message]")
+	logTheThing(LOG_DIARY, usr, "forced [constructTarget(A, "diary")] to say: [message]", "admin")
+
+	var/mob/M = A
+	if(istype(M) && M.client)
+		message_admins("<span class='internal'>[key_name(src)] forced [key_name(M)] to say: [message]</span>")
 
 /client/proc/cmd_cat_county()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1863,25 +1907,9 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
+	var/datum/reagent/reagent = pick_reagent(src.mob)
+	if (!reagent)
 		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
 
 	var/amount = input(usr,"Amount:","Amount",50) as null|num
 	if(!amount) return
@@ -1909,25 +1937,9 @@
 	if (!T)
 		return
 
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type = 0
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
+	var/datum/reagent/reagent = pick_reagent(src.mob)
+	if (!reagent)
 		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
 	var/amount = input(usr,"Amount:","Amount",100) as null|num
 	if(!amount) return
 
@@ -1936,58 +1948,6 @@
 	message_admins("[key_name(src)] created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].)")
 
 	T.fluid_react_single(reagent.id, amount)
-
-/*
-/client/proc/admin_airborne_fluid(var/turf/T in world)
-	set name = "Create Airborne Fluid"
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set desc = "Attempt an airborne fluid reaction on a turf."
-	set popup_menu = 1
-	ADMIN_ONLY
-
-	if (!T)
-		return
-
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type = 0
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
-		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
-	var/amount = input(usr,"Amount:","Amount",100) as null|num
-	if(!amount) return
-
-
-	logTheThing(LOG_ADMIN, src, "created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].")
-	message_admins("[key_name(src)] created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].)")
-
-	T.fluid_react_single(reagent.id, amount, airborne = 1)
-
-
-	if (T.active_airborne_liquid && T.active_airborne_liquid.group)
-		var/datum/fluid_group/FG
-		FG = T.active_airborne_liquid.group
-		spawn()
-			FG.required_to_spread = 1
-			FG.update_once()
-			FG.update_once()
-			FG.update_once()
-			FG.required_to_spread = initial(FG.required_to_spread)
-*/
-
 
 /client/proc/admin_follow_mobject(var/atom/target as mob|obj in world)
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
@@ -2665,8 +2625,7 @@ var/global/night_mode_enabled = 0
 	logTheThing(LOG_ADMIN, usr, "has toggled [constructTarget(C.mob,"admin")]'s text mode to [!is_text]")
 	logTheThing(LOG_DIARY, usr, "has toggled [constructTarget(C.mob,"diary")]'s text mode to [!is_text]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
-	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
-
+	C.set_text_mode(!is_text)
 
 /client/proc/retreat_to_office()
 	set name = "Retreat To Office"
@@ -2772,6 +2731,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")
 				playsound(src.mob, 'sound/machines/door_open.ogg', 50, 1)
 				if (!mirrored_physical_zone_created)
+					logTheThing(LOG_DEBUG, null, "mirrored physical zone enabled by office summon")
 					mirrored_physical_zone_created = TRUE
 			else
 				src.mob.visible_message("[src.mob] returns the fabric of spacetime to normal! Wow!", "You wave your office away, returning the space to normal.", "You have no idea what's happening but it sure does sound cool!")
@@ -3201,6 +3161,16 @@ var/global/force_radio_maptext = FALSE
 		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
 		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
 	usr.put_in_hand_or_drop(container)
+
+/client/proc/show_mining_map()
+	set name = "Show Mining Map"
+	set desc = "Show the Z5 Mining Zlevel map."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (usr.client && hotspot_controller)
+		hotspot_controller.show_map(usr.client)
 
 #undef ARTIFACT_BULK_LIMIT
 #undef ARTIFACT_HARD_LIMIT

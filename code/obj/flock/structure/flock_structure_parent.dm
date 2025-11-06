@@ -3,6 +3,9 @@ ABSTRACT_TYPE(/obj/flock_structure)
 TYPEINFO(/obj/flock_structure)
 	var/cancellable = TRUE
 	mat_appearances_to_ignore = list("gnesis")
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
@@ -21,6 +24,9 @@ TYPEINFO(/obj/flock_structure)
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"
+	default_speech_output_channel = SAY_CHANNEL_FLOCK
+	say_language = LANGUAGE_FEATHER
+
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
@@ -250,7 +256,7 @@ TYPEINFO(/obj/flock_structure)
 
 /obj/flock_structure/attack_hand(var/mob/user)
 	attack_particle(user, src)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 	if(user.a_intent == INTENT_HARM)
 		if(isflockmob(user))
@@ -276,7 +282,7 @@ TYPEINFO(/obj/flock_structure)
 	src.visible_message(SPAN_ALERT("<b>[user]</b> attacks [src] with [W]!"))
 	src.report_attack()
 	attack_particle(user, src)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 	var/damtype = "brute"
 	if (W.hit_type == DAMAGE_BURN)
@@ -293,7 +299,7 @@ TYPEINFO(/obj/flock_structure)
 
 /obj/flock_structure/proc/report_attack()
 	if (!ON_COOLDOWN(src, "attack_alert", 10 SECONDS))
-		flock_speak(src, "ALERT: Under attack", flock)
+		src.say("ALERT: Under attack!")
 
 /obj/flock_structure/ex_act(severity)
 	src.report_attack()

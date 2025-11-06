@@ -8,11 +8,8 @@ import { Section } from 'tgui-core/components';
 
 import type { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  width: 800,
-  height: 600,
-  title: 'Goonstation RP Server Guidelines and Rules',
-  content: (
+const RpRulesContentWindow = () => {
+  return (
     <Section title="Welcome to Goonstation!">
       The roleplay servers use our main rules and unique roleplay rules listed
       below. If you do not agree to this second set of rules, please play on our
@@ -26,7 +23,9 @@ export const acw: AlertContentWindow = {
         for non-antagonists. Avoid memes (e.g. sus, pog, amogus), txt spk (e.g.
         lol, wtf), and out of game terminology when you are playing your
         character. LOOC is available if you need to communicate out of
-        character.
+        character. In addition, if you notice a character who is
+        Afk/disconnected, please do not attack or mess with them beyond taking
+        them to cryo.
       </Section>
       <Section title="2. Escalate through roleplay before attacking other players.">
         The goal of the roleplay server is character interaction and interesting
@@ -84,5 +83,12 @@ export const acw: AlertContentWindow = {
         administration about the RP rules or core rules.
       </Section>
     </Section>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  width: 800,
+  height: 600,
+  title: 'Goonstation RP Server Guidelines and Rules',
+  component: RpRulesContentWindow,
 };

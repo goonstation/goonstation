@@ -196,7 +196,7 @@ TYPEINFO(/obj/mesh)
 	src.icon_state = "[src.icon_state_prefix][src.get_icon_direction()][src.get_damage_icon_suffix()]"
 
 /obj/mesh/attackby(obj/item/I, mob/user)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 	attack_particle(user, src)
 	src.visible_message(SPAN_ALERT("<b>[user]</b> attacks [src] with [I]."))
 	playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
@@ -221,16 +221,14 @@ TYPEINFO(/obj/mesh)
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
 			var/connectable_turf = FALSE
-			if(length(connects_to_turf))
-				for (var/i in 1 to length(connects_to_turf))
-					if (istype(T, connects_to_turf[i]))
-						connectdir |= dir
-						connectable_turf = TRUE
-						break
-			if (!connectable_turf && length(connects_to_obj)) //no turfs to connect to, check for obj's
-				for (var/i in 1 to length(connects_to_obj))
-					var/atom/movable/AM = locate(connects_to_obj[i]) in T
-					if (AM?.anchored)
+			if(connects_to_turf?[T.type])
+				connectdir |= dir
+				connectable_turf = TRUE
+			if (!connectable_turf) //no turfs to connect to, check for obj's
+				for (var/atom/movable/AM as anything in T)
+					if (!AM.anchored)
+						continue
+					if (connects_to_obj?[AM.type])
 						connectdir |= dir
 						break
 	return connectdir
@@ -241,11 +239,11 @@ TYPEINFO(/obj/mesh)
 	switch(diff)
 		if(-INFINITY to 25)
 			return "-3"
-		if(26 to 50)
+		if(25 to 50)
 			return "-2"
-		if(51 to 75)
+		if(50 to 75)
 			return "-1"
-		if(76 to INFINITY)
+		if(75 to INFINITY)
 			return "-0"
 
 ///Handle special icon states for cut/corroded/melted meshes
@@ -331,7 +329,7 @@ TYPEINFO_NEW(/obj/mesh/grille)
 
 /obj/mesh/grille/attack_hand(mob/user)
 	if(!src.shock(user, 70))
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		var/damage = 1
 		var/message = "[user.kickMessage] [src]"
 
@@ -502,7 +500,7 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	icon_state = "C15-0"
 	layer = CATWALK_LAYER
 	plane = PLANE_FLOOR
-	event_handler_flags = 0
+	event_handler_flags = IMMUNE_MINERAL_MAGNET
 	default_material = "steel"
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
@@ -551,7 +549,7 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 /obj/mesh/catwalk/dubious
 	name = "rusty catwalk"
 	desc = "This one looks even less safe than usual."
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MINERAL_MAGNET
 	///How far are we along to collapsing
 	var/collapse_counter = 0
 

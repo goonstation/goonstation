@@ -16,8 +16,10 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	return
 
 /obj/laser_sink/Move()
-	src.exident(src.in_laser)
+	var/old_loc = src.loc
 	..()
+	if (old_loc != src.loc)
+		src.exident(src.in_laser)
 
 /obj/laser_sink/set_loc(loc)
 	if (loc != src.loc)

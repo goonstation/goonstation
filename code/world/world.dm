@@ -10,16 +10,14 @@
 /world
 	mob = /mob/new_player
 
-	#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
-	turf = /turf/space/fluid/manta
-	#elif defined(UNDERWATER_MAP)
+	#ifdef UNDERWATER_MAP
 	turf = /turf/space/fluid
 	#else
 	turf = /turf/space
 	#endif
 
 	area = /area/space
-	movement_mode = TILE_MOVEMENT_MODE
+	movement_mode = TILE_MOVEMENT_MODE //Touching this will almost certainly break all glides. DO NOT TOUCH THIS unless you are willing to shoulder an absolute mountain of work.
 
 	view = "15x15"
 
@@ -160,3 +158,11 @@
 
 /world/proc/setupZLevel(new_zlevel)
 	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
+
+/world/proc/total_player_count()
+	var/n = 0
+	for(var/client/C)
+		if (C.stealth && !C.fakekey) // stealthed admins don't count
+			continue
+		n++
+	return n

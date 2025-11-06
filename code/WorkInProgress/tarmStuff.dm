@@ -118,7 +118,7 @@
 		var/Px = Sx + sin(P.angle) * dist
 		var/Py = Sy + cos(P.angle) * dist
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
 		for(var/obj/O in affected)
 			O.color = list(1,2.30348,-4.4382,0,0,1.96078,0,-1.3074,3.46173)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
@@ -171,7 +171,7 @@
 		var/Px = Sx + sin(P.angle) * dist
 		var/Py = Sy + cos(P.angle) * dist
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
 		for(var/obj/O in affected)
 			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
@@ -201,7 +201,7 @@
 		. = ..()
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			O.alpha = 0
 			O.color = "#ff0000"
@@ -241,7 +241,7 @@
 		. = ..()
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(P))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
 		SPAWN(1 SECOND)
@@ -381,10 +381,6 @@
 		ammo.amount_left = 30
 		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
 
-
-/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
-	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
-
 //smart extinguisher
 /obj/item/gun/flamethrower/extinguisher
 	name = "smart fire extinguisher"
@@ -437,7 +433,7 @@
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
-	projectile_speed = 6
+	projectile_speed = 7
 	max_range = 500
 	dissipation_rate = 0
 	damage = 10
@@ -450,10 +446,10 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.25, 32)
+		O.internal_speed = min(O.internal_speed * 1.33, 72)
 
 	get_power(obj/projectile/P, atom/A)
-		return 15 + P.internal_speed
+		return 15 + (P.internal_speed * 0.66)
 
 //desert eagle. The biggest, baddest handgun
 /obj/item/gun/kinetic/deagle
@@ -619,7 +615,7 @@
 		src.rarity = max(src.rarity, round((currentench+incr+1)/2) + 2)
 	else
 		src.rarity = initial(src.rarity)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	src.UpdateName()
 	return currentench + incr
 
@@ -747,16 +743,47 @@ TYPEINFO(/obj/item/device/geiger)
 	New()
 		. = ..()
 		AddComponent(/datum/component/holdertargeting/geiger)
-		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(change_icon_state))
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(on_geiger_tick))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
+		// geiger counter + assembly-applier -> geiger counter/Applier-Assembly
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
-	proc/change_icon_state(source, stage)
-		switch(stage)
-			if(1 to 2)
-				flick("geiger-1", src)
-			if(3 to 4)
-				flick("geiger-2", src)
-			if(5)
-				flick("geiger-3", src)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_get_state(var/manipulated_geiger, var/obj/item/assembly/parent_assembly)
+		return TRUE
+
+	proc/assembly_setup(var/manipulated_geiger, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to apply the component onto the assembly as well
+		parent_assembly.AddComponent(/datum/component/holdertargeting/geiger)
+
+	proc/assembly_removal(var/manipulated_geiger, var/obj/item/assembly/parent_assembly, var/mob/user)
+		//we need to remove the component from the assembly once we remove this
+		parent_assembly.RemoveComponentsOfType(/datum/component/holdertargeting/geiger)
+
+
+/// ----------------------------------------------
+
+
+
+	proc/on_geiger_tick(source, stage)
+		if(src.master && !ON_COOLDOWN(src, "geiger_assembly", 0.5 SECONDS))
+			SPAWN( 0 )
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["message"] = "ACTIVATE"
+				src.master.receive_signal(signal)
+		else
+			switch(stage)
+				if(1 to 2)
+					FLICK("geiger-1", src)
+				if(3 to 4)
+					FLICK("geiger-2", src)
+				if(5)
+					FLICK("geiger-3", src)
 
 
 /obj/decal/fireplace  //for Jan's chrismas event
@@ -864,7 +891,7 @@ TYPEINFO(/obj/item/device/geiger)
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/timeshot ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/timeshot ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0)
 		var/datum/theBulletThatShootsTheFutureController/controller = new(affected, start, end, P.shooter, P.mob_shooter, followup)
 		for(var/obj/line_obj/timeshot/ts in affected)
 			ts.controller = controller
@@ -997,7 +1024,7 @@ TYPEINFO(/obj/item/device/geiger)
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	can_swap_cell = 0
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+	color = COLOR_MATRIX_INVERSE
 
 	New()
 		set_current_projectile(new/datum/projectile/special/timegun/theBulletThatShootsTheFuture)

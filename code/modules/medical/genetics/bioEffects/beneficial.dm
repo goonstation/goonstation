@@ -21,6 +21,17 @@
 			overlay_image.color = "#FFA200"
 
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		return
 
 /datum/bioEffect/coldres
 	name = "Cold Resistance"
@@ -42,6 +53,17 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#009DFF"
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		return
 
 /datum/bioEffect/thermalres
 	name = "Thermal Resistance"
@@ -66,15 +88,24 @@
 		if(overlay_image_two)
 			var/mob/living/L = owner
 			L.UpdateOverlays(overlay_image_two, id + "2")
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 50)
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 50)
-		owner.temp_tolerance *= 10
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+		owner.temp_tolerance *= 5 * src.power
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+		owner.temp_tolerance /= 5 * oldval
+		owner.temp_tolerance *= 5 * newval
 
 	OnRemove()
 		..()
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
-		owner.temp_tolerance /= 10
+		owner.temp_tolerance /= 5 * src.power
 		if(overlay_image_two)
 			if(isliving(owner))
 				var/mob/living/L = owner
@@ -86,7 +117,7 @@
 	desc = "Protects the subject's cellular structure from electrical energy."
 	id = "resist_electric"
 	effectType = EFFECT_TYPE_POWER
-	probability = 66
+	probability = 33
 	blockCount = 3
 	blockGaps = 3
 	stability_loss = 15
@@ -94,6 +125,7 @@
 	msgLose = "The tingling in your skin fades."
 	degrade_to = "funky_limb"
 	icon_state  = "elec_res"
+	effect_group = "elec"
 
 	OnAdd()
 		if (ishuman(owner))
@@ -302,6 +334,7 @@
 	var/heal_per_tick = 0.66
 	var/regrow_prob = 250
 	var/roundedmultremainder
+	var/blood_regen_amt = 1
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 	effect_group = "regen"
@@ -310,6 +343,9 @@
 		if(..()) return
 		var/mob/living/L = owner
 		L.HealDamage("All", heal_per_tick * mult * power, heal_per_tick * power)
+		if (L.blood_volume < initial(L.blood_volume) && L.blood_volume > 0)
+			L.blood_volume += 1*mult*power
+
 		var/roundedmult = round(mult)
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
@@ -340,6 +376,7 @@
 	msgLose = "Your flesh stops mending itself together."
 	heal_per_tick = 7 // decrease to 5 if extreme narcolepsy doesn't counterbalance this enough
 	regrow_prob = 50 //increase to 100 if not counterbalanced
+	blood_regen_amt = 2
 
 /datum/bioEffect/regenerator/wolf
 	name = "Lupine Regeneration"
@@ -360,6 +397,7 @@
 	heal_per_tick = 2
 	regrow_prob = 50
 	acceptable_in_mutini = 0 // fun is banned
+	blood_regen_amt = 8
 
 	OnAdd()
 		. = ..()
@@ -423,6 +461,19 @@
 	stability_loss = 5
 	icon_state  = "haze"
 	isBad = 1
+
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, src.power)
+
+	OnRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, newval)
 
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
@@ -527,19 +578,36 @@
 	stability_loss = 5
 	degrade_to = "involuntary_teleporting"
 	icon_state  = "radiobrain"
+	var/current_module = null
 
 	OnAdd()
-		radio_brains[owner] = power
+		src.onPowerChange(0, src.power)
+
 		. = ..()
 
 	onPowerChange(oldval, newval)
-		radio_brains[owner] = newval
+		if (src.owner && src.current_module)
+			src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		switch (newval)
+			if (1)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_DEFAULT_ONLY
+			if (2)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_UNPROTECTED_ONLY
+			else
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL
+
+		if (src.owner)
+			src.owner.listen_tree.AddListenInput(src.current_module)
 
 	OnRemove()
-		. = ..()
-		radio_brains -= owner
+		if (!src.owner || !src.current_module)
+			return
 
-var/list/radio_brains = list()
+		src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		. = ..()
+
 
 /datum/bioEffect/hulk
 	name = "Gamma Ray Exposure"
@@ -596,10 +664,6 @@ var/list/radio_brains = list()
 				HAH.customizations["hair_middle"].color = HAH.customizations["hair_middle"].color_original
 				HAH.customizations["hair_top"].color = HAH.customizations["hair_top"].color_original
 				HAH.s_tone = HAH.s_tone_original
-				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
-					HAH.customizations["hair_bottom"].color = fix_colors(HAH.customizations["hair_bottom"].color)
-					HAH.customizations["hair_middle"].color = fix_colors(HAH.customizations["hair_middle"].color)
-					HAH.customizations["hair_top"].color = fix_colors(HAH.customizations["hair_top"].color)
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 
@@ -1022,7 +1086,7 @@ var/list/radio_brains = list()
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
 		else
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 
@@ -1051,9 +1115,9 @@ var/list/radio_brains = list()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/M = owner
 			if (M.AH_we_spawned_with)
-				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_bottom"].color)
-				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_middle"].color)
-				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_top"].color)
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= M.AH_we_spawned_with.customizations["hair_bottom"].color
+				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= M.AH_we_spawned_with.customizations["hair_middle"].color
+				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= M.AH_we_spawned_with.customizations["hair_top"].color
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style 			= M.AH_we_spawned_with.customizations["hair_bottom"].style
 				M.bioHolder.mobAppearance.customizations["hair_middle"].style 			= M.AH_we_spawned_with.customizations["hair_middle"].style
 				M.bioHolder.mobAppearance.customizations["hair_top"].style 			= M.AH_we_spawned_with.customizations["hair_top"].style
@@ -1073,3 +1137,198 @@ var/list/radio_brains = list()
 			M.hair_override = 0
 			M.bioHolder.mobAppearance.UpdateMob()
 			M.update_colorful_parts()
+
+/datum/bioEffect/skitter
+	id = "skitter"
+	name = "Insectoid locomotion"
+	desc = "The subject is capable of skittering across the floor like a bug."
+	occur_in_genepools = 0
+
+	OnAdd()
+		RegisterSignal(src.owner, COMSIG_MOB_SPRINT, PROC_REF(on_sprint))
+		. = ..()
+
+	proc/on_sprint()
+		set waitfor = FALSE
+		if (!src.owner.lying || is_incapacitated(src.owner) || length(src.owner.grabbed_by))
+			return
+		if (!isturf(src.owner.loc))
+			return
+		var/turf/T = get_turf(src.owner)
+		if (!istype(T) || T.throw_unlimited)
+			return
+		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
+			return
+		src.owner.visible_message(SPAN_ALERT("[src.owner] skitters away!"))
+		playsound(src.owner, 'sound/voice/animal/bugchitter.ogg', 80, TRUE)
+		src.owner.flags |= TABLEPASS
+		src.owner.layer = OBJ_LAYER-0.2
+		var/initial_glide = src.owner.glide_size
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src) //stop them from rolling out from under the table
+		var/stop_delay = 0
+		for (var/i in 1 to 4)
+			src.owner.glide_size = (32 / 1) * world.tick_lag
+			var/move_dir = src.owner.dir
+			var/misstep_angle = 0
+			if (prob(owner.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
+				misstep_angle += randfloat(0,owner.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+
+			if(misstep_angle)
+				misstep_angle = min(misstep_angle,90)
+				var/move_angle = dir2angle(move_dir)
+				move_angle += pick(-misstep_angle,misstep_angle)
+				move_dir = angle2dir(move_angle)
+
+			step(src.owner, move_dir)
+			if (locate(/obj/table) in src.owner.loc)
+				stop_delay = 1 SECOND
+				break
+			sleep(0.1 SECONDS)
+		src.owner.glide_size = initial_glide
+		src.owner.flags &= ~TABLEPASS
+		if (locate(/obj/table) in src.owner.loc)
+			src.owner.setStatus("undertable", INFINITE_STATUS)
+		else
+			src.owner.layer = initial(src.owner.layer)
+		sleep(stop_delay)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src)
+
+	OnRemove()
+		UnregisterSignal(src.owner, COMSIG_MOB_SPRINT)
+		. = ..()
+
+/datum/bioEffect/plasma_metabolism
+	id = "plasma_metabolism"
+	name = "Plasma metabolism"
+	desc = "The subject's body is capable of metabolising solid and liquid forms of plasma into electric charge."
+	occur_in_genepools = FALSE
+	effectType = EFFECT_TYPE_POWER
+	msgGain = "You feel a sudden hunger for plasma..."
+	msgLose = "Your hunger for purple recedes."
+	effect_group = "elec"
+	///Absorbed plasma material
+	VAR_PRIVATE/material = 0
+	///Separate counter between burps
+	VAR_PRIVATE/burp_counter = 0
+	///Stored to keep UpdateOverlays calls to a minimum
+	VAR_PRIVATE/eye_state = -1
+
+	OnLife(mult)
+		. = ..()
+		//if we haven't absorbed plasma in a while, drain a little bit
+		if (!GET_COOLDOWN(src.owner, "plasma_absorb") && src.material < 10)
+			src.material = max(0, src.material - 0.5)
+			src.update_eyes()
+			return
+		src.do_madness()
+		//too little or too often
+		if (src.material < 10 || GET_COOLDOWN(src.owner, "plasma_electricity"))
+			return
+		//a little bit random
+		if (prob(20))
+			return
+		ON_COOLDOWN(src.owner, "plasma_electricity", 7 SECONDS)
+		src.material -= 5
+		src.update_eyes()
+		var/obj/item/found_item = null
+		if (prob(15)) //most of the time we try to ground into an item, sometimes it misses
+			boutput(src.owner, SPAN_ALERT("Electricty arcs wildly from your fingers!"))
+			elecflash(src.owner, 0, 2, exclude_center = FALSE)
+			arcFlash(src.owner, pick(view(3, src.owner)), 5000)
+			return
+		for (var/obj/item/item in src.owner)
+			//ammo type power cell or holder (welcome to comsig hell)
+			if ((SEND_SIGNAL(item, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
+				//is it full?
+				var/list/ret = list()
+				if ((SEND_SIGNAL(item, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST) && (ret["charge"] >= ret["max_charge"]))
+					continue
+				SEND_SIGNAL(item, COMSIG_CELL_CHARGE, 20)
+				found_item = item
+				break
+			if (istype(item, /obj/item/cell))
+				var/obj/item/cell/cell = item
+				if (cell.charge >= cell.maxcharge)
+					continue
+				cell.give(1000)
+				found_item = cell
+				break
+		if (found_item)
+			boutput(src.owner, SPAN_NOTICE("Your [found_item.name] sparks quietly!"))
+			playsound(src.owner.loc, "sparks", 50, 1)
+		else
+			boutput(src.owner, SPAN_ALERT("With nowhere to ground itself, electricity arcs from your fingers!"))
+			elecflash(src.owner, 0, 2, exclude_center = FALSE)
+
+	///Disclaimer: may or may not be a rock
+	proc/absorb_tasty_rock(obj/item/rock)
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/human = src.owner
+			human.sims?.affectMotive("Hunger", rock.w_class * 3)
+		src.gain_material(rock.w_class * 10)
+		qdel(rock)
+
+	proc/absorb_liquid_plasma(amount)
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/human = src.owner
+			human.sims?.affectMotive("Thirst", amount)
+		src.gain_material(amount)
+
+	proc/gain_material(amount)
+		src.material += amount
+		src.burp_counter += amount
+		ON_COOLDOWN(src.owner, "plasma_absorb", 10 SECONDS)
+		if (src.burp_counter > 20 && !ON_COOLDOWN(src.owner, "plasma_burp", 5 SECONDS))
+			src.burp_counter = 0
+			src.owner.emote("burp")
+			var/turf/T = get_turf(src.owner)
+			if (T)
+				var/datum/gas_mixture/plasma_burp = new()
+				plasma_burp.toxins = 8
+				plasma_burp.temperature = T20C
+				T.assume_air(plasma_burp)
+		src.update_eyes()
+
+	proc/update_eyes()
+		if (!ishuman(src.owner)) //no standard way to get critter eye position
+			return
+		var/new_eye_state
+		switch (src.material)
+			if (1 to 20)
+				new_eye_state = 1
+			if (15 to INFINITY)
+				new_eye_state = 2
+			else
+				new_eye_state = 0
+		if (src.eye_state != new_eye_state)
+			src.eye_state = new_eye_state
+			if (src.eye_state == 0)
+				src.owner.ClearSpecificOverlays("plasma_eyes")
+				src.owner.remove_color_matrix(COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
+			else
+				src.owner.apply_color_matrix(COLOR_MATRIX_PLASMA_MADNESS, COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
+				var/mutable_appearance/eye_overlay = mutable_appearance('icons/effects/genetics.dmi', "plasma_eyes_[src.eye_state]")
+				eye_overlay.plane = PLANE_SELFILLUM
+				src.owner.UpdateOverlays(eye_overlay, "plasma_eyes")
+
+	proc/do_madness()
+		if (src.eye_state >= 2 && prob(10))
+			src.owner.AddComponent(\
+				/datum/component/hallucination/random_image_override,\
+				timeout = 20,\
+				image_list = list(\
+					image('icons/turf/floors.dmi', "void")\
+				),\
+				target_list = list(/turf/simulated/floor, /turf/unsimulated/floor),\
+			)
+		if (src.eye_state >= 1)
+			if (prob(5))
+				src.owner.playsound_local_not_inworld('sound/ambience/spooky/Void_Calls.ogg', 50, 1)
+			if (prob(20))
+				var/speech_id = pick(global.sounds_speak)
+				src.owner.playsound_local_not_inworld(global.sounds_speak[speech_id], rand(20, 60), 0.01)
+
+	OnRemove()
+		src.owner.ClearSpecificOverlays("plasma_eyes")
+		src.owner.remove_color_matrix(COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
+		. = ..()

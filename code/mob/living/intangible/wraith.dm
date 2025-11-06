@@ -1,5 +1,12 @@
 // Wraith
 
+TYPEINFO(/mob/living/intangible/wraith)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_WRAITHCHAT, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL_GHOST)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_WRAITHCHAT_WRAITH, SPEECH_OUTPUT_DEADCHAT_WRAITH)
+
 /mob/living/intangible/wraith
 	name = "wraith"
 	real_name = "wraith"
@@ -15,6 +22,9 @@
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	alpha = 180
 	plane = PLANE_NOSHADOW_ABOVE
+
+	default_speech_output_channel = SAY_CHANNEL_WRAITH
+	voice_type = null
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
@@ -35,7 +45,7 @@
 	var/last_life_update = 0
 	var/const/life_tick_spacing = LIFE_PROCESS_TICK_SPACING
 	/// standard duration of an involuntary haunt action
-	var/forced_haunt_duration = 30 SECOND
+	var/forced_haunt_duration = 15 SECONDS
 	var/death_icon_state = "wraith-die"
 	var/last_typing = null
 	var/list/area/booster_locations = list()	//Zones in which you get more points
@@ -44,6 +54,7 @@
 	var/next_area_change = 10 MINUTES
 	var/list/mob/living/critter/summons = list()	//Keep track of who we summoned to the material plane
 	var/datum/abilityHolder/wraith/AH = null
+	var/name_generator_path = /datum/wraith_name_generator/wraith
 
 	var/list/poltergeists
 	/// how much formaldehyde a corpse can have while still being absorbable
@@ -63,33 +74,6 @@
 	// Wraith Overrides
 	//////////////
 
-	proc/make_name()
-		var/len = rand(4, 8)
-		var/vowel_prob = 0
-		var/list/con = list("x", "z", "n", "k", "s", "l", "t", "r", "sh", "m", "d")
-		#ifdef APRIL_FOOLS
-		con += list("j", "j", "j", "j", "j", "j", "j", "j")
-		#endif
-		var/list/vow = list("y", "o", "a", "ae", "u", "ou")
-		var/theName = ""
-		for (var/i = 1, i <= len, i++)
-			if (prob(vowel_prob))
-				vowel_prob = 0
-				theName += pick(vow)
-			else
-				vowel_prob += rand(15, 40)
-				theName += pick(con)
-		var/fc = copytext(theName, 1, 2)
-		theName = "[uppertext(fc)][copytext(theName, 2)]"
-
-		#ifdef APRIL_FOOLS
-		var/suffix = pick(" the Jimpaler", " the Jormentor", " the Jorsaken", " the Jestroyer", " the Jevourer", " the Jyrant", " the Joverlord", " the Jamned", " the Jesolator", " the Jexiled")
-		#else
-		var/suffix = pick(" the Impaler", " the Tormentor", " the Forsaken", " the Destroyer", " the Devourer", " the Tyrant", " the Overlord", " the Damned", " the Desolator", " the Exiled")
-		#endif
-		theName = theName  + suffix
-		return theName
-
 	New(var/mob/M)
 		. = ..()
 		START_TRACKING
@@ -98,6 +82,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
@@ -124,7 +109,8 @@
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
-		real_name = make_name()
+		var/datum/wraith_name_generator/name_generator = global.get_singleton(src.name_generator_path)
+		src.real_name = name_generator.generate_name()
 		src.UpdateName()
 
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_mob(src)
@@ -272,7 +258,7 @@
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.icon_state = "wraithdie"
 			animation.master = src
-			flick(death_icon_state, animation)
+			FLICK(death_icon_state, animation)
 
 			src.ghostize()
 			qdel(src)
@@ -381,13 +367,14 @@
 				door.open()
 			return ..()
 
-		if (!src.density && !src.justdied)
-			for (var/obj/decal/cleanable/saltpile/salt in NewLoc)
-				src.setStatus("corporeal", src.forced_haunt_duration, TRUE)
-				var/datum/targetable/ability = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
-				ability.doCooldown()
-				boutput(src, SPAN_ALERT("You have passed over salt! You now interact with the mortal realm..."))
-				break
+		if (!src.density)
+			var/obj/decal/cleanable/saltpile/salt = locate() in NewLoc
+			if (salt)
+				if (salt.wraith_bump(src)) //destroyed it, take damage and pass
+					src.health -= 15
+					global.health_update_queue |= src
+				else //didn't destroy it, can't pass
+					return
 
 		return ..()
 
@@ -432,63 +419,14 @@
 			if (length(string))
 				boutput(src, string)
 
-
-	say(var/message)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		if (!message)
+	emote(act)
+		if (!src.density)
 			return
 
-		if (src.density) //If corporeal speak to the living (garbled)
-			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
-			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-			if (src.client && src.client.ismuted())
-				boutput(src, "You are currently muted and may not speak.")
-				return
-
-			else
-				if (copytext(message, 1, 2) == "*")
-					src.emote(copytext(message, 2))
-					return
-				else
-					src.emote(pick("hiss", "murmur", "drone", "wheeze", "grustle", "rattle"))
-
-		else //Speak in ghostchat if not corporeal
-			if (copytext(message, 1, 2) == "*")
-				return
-
-			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
-
-			if (src.client && src.client.ismuted())
-				boutput(src, "You are currently muted and may not speak.")
-				return
-
-			. = src.say_dead(message, 1)
-
-	emote(var/act)
-		if (!density)
-			return
-		..()
-		var/acts = null
-		switch (act)
-			if ("hiss")
-				acts = "hisses"
-			if ("murmur")
-				acts = "murmurs"
-			if ("drone")
-				acts = "drones"
-			if ("wheeze")
-				acts = "wheezes"
-			if ("grustle")
-				acts = "grustles"
-			if ("rattle")
-				acts = "rattles"
-
-		if (acts)
-			for (var/mob/M in hearers(src, null))
-				M.show_message(SPAN_ALERT("[src] [acts]!"))
+		. = ..()
 
 	attack_hand(var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.a_intent != "harm")
 			visible_message("[user] pets [src]!")
 		else
@@ -592,7 +530,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/poison)
 		src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 		src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
-		src.addAbility(/datum/targetable/wraithAbility/speak)
+
 /mob/living/intangible/wraith/wraith_harbinger
 	name = "Harbinger"
 	real_name = "harbinger"
@@ -611,7 +549,6 @@
 		src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 		src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
 		src.addAbility(/datum/targetable/wraithAbility/harbinger_summon)
-		src.addAbility(/datum/targetable/wraithAbility/speak)
 
 /mob/living/intangible/wraith/wraith_trickster
 	name = "trickster"

@@ -9,6 +9,7 @@ caseSensitive: false
 
 # Explicit keyword mappings to labels. Form of match:label. Required.
 labelMappings:
+# Priority
     "[BUG - CRITICAL]": p-critical
     "[CRITICAL]": p-critical
     "[BUG - MAJOR]": p-major
@@ -17,14 +18,12 @@ labelMappings:
     "[MINOR]": p-minor
     "[BUG - TRIVIAL]": p-trivial
     "[TRIVIAL]": p-trivial
+# Category
     "[BUG]": c-bug
     "[FIX]": c-bug
     "[BUGFIX]": c-bug
     "fixes #": c-bug
     "[RUNTIME]": c-runtime
-    "[INPUT WANTED]": e-input-wanted
-    "[INPUT]": e-input-wanted
-    "[FEEDBACK]": e-input-wanted
     "[ENHANCEMENT]": c-feature
     "[FEATURE]": c-feature
     "[FEAT]": c-feature
@@ -40,18 +39,23 @@ labelMappings:
     "[REMOVAL]": c-removal
     "[REVERT]": c-revert
     "[REWORK]": c-rework
+# Extra
+    "[INPUT WANTED]": e-input-wanted
+    "[INPUT]": e-input-wanted
+    "[FEEDBACK]": e-input-wanted
+    "[EASY]": e-good-first-issue
+    "[GFI]": e-good-first-issue
+    "[GOOD FIRST ISSUE]": e-good-first-issue
+    "[WIKI]": e-add-to-wiki
+    "[ADD TO WIKI]": e-add-to-wiki
+    "[CONTEST]": e-contest
+# Area
     "[SECRET]": a-secret
     "[TGUI]": a-ui
     "[UI]": a-ui
     "[TOOLS]": a-tooling
     "[TOOLING]": a-tooling
-    "[EASY]": e-good-first-issue
-    "[GFI]": e-good-first-issue
-    "[GOOD FIRST ISSUE]": e-good-first-issue
     "[MEDAL]": a-medal
-    "[WIKI]": e-add-to-wiki
-    "[ADD TO WIKI]": e-add-to-wiki
-    "[CONTEST]": e-contest
     "[ADMIN]": a-admin
     "[AI]": a-ai
     "[API]": a-api
@@ -61,9 +65,12 @@ labelMappings:
     "[CHEM]": a-chemistry
     "[CHEMISTRY]": a-chemistry
     "[CLOTHING]": a-clothing
+    "[COMMAND]": a-command
     "[CRITTER]": a-critters
     "[CRITTERS]": a-critters
     "[MOBS]": a-critters
+    "[ENGINE]": a-engineering
+    "[ENGINEERING]": a-engineering
     "[GAME OBJECTS]": a-game-objects
     "[OBJECTS]": a-game-objects
     "[GAMEMODES]": a-gamemodes
@@ -72,6 +79,9 @@ labelMappings:
     "[HYDRO]": a-hydroponics
     "[HYDROPONICS]": a-hydroponics
     "[INTERNAL]": a-internal
+    "[LOGISTICS]": a-logistics
+    "[SUPPLY]": a-logistics
+    "[CARGO]": a-logistics
     "[MAPPING]": a-mapping
     "[MATERIALS]": a-materials
     "[MATSCI]": a-materials
@@ -80,6 +90,8 @@ labelMappings:
     "[SPECIES]": a-mutantraces
     "[PLAYER ACTIONS]": a-player-actions
     "[ACTIONS]": a-player-actions
+    "[SEC]": a-security
+    "[SECURITY]": a-security
     "[SCIENCE]": a-science
     "[SILICONS]": a-silicons
     "[BORGS]": a-silicons

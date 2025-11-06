@@ -670,7 +670,7 @@
 		result_amount = 0.2
 		instant = 0
 		reaction_speed = 0.4
-		mix_phrase = "The oil starts to bubble and turn into a back tar."
+		mix_phrase = "The oil starts to bubble and turn into a black tar."
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			if(holder?.my_atom?.is_open_container())
@@ -925,6 +925,10 @@
 		id = "laurapalmer_fresh"
 		required_reagents = list("lemonade" = 1, "coffee_fresh" = 1)
 
+	laurapalmer/espresso
+		id = "laurapalmer_espresso"
+		required_reagents = list("lemonade" = 1, "espresso" = 1)
+
 	eggnog
 		name = "Eggnog"
 		id = "eggnog"
@@ -1046,6 +1050,10 @@
 	cafe_gele/fresh
 		id = "cafe_gele_fresh"
 		required_reagents = list("coffee_fresh" = 6, "vanilla" = 1, "sugar" = 1)
+
+	cafe_gele/espresso
+		id = "cafe_gele_espresso"
+		required_reagents = list("espresso" = 6, "vanilla" = 1, "sugar" = 1)
 
 	sodawater
 		name = "soda water"
@@ -1570,7 +1578,11 @@
 
 	cocktail_w_russian/fresh
 		id = "w_russian_fresh"
-		required_reagents = list("vodka" = 1, "coffee_fresh" = 1)
+		required_reagents = list("vodka" = 1, "coffee_fresh" = 1, "milk" = 1)
+
+	cocktail_w_russian/espresso
+		id = "w_russian_espresso"
+		required_reagents = list("vodka" = 1, "espresso" = 1, "milk" = 1)
 
 	cocktail_w_russian/w_russian2
 		id = "w_russian2"
@@ -1589,6 +1601,10 @@
 	cocktail_irishcoffee/fresh
 		id = "irishcoffee_fresh"
 		required_reagents = list("coffee_fresh" = 1, "bourbon" = 1, "milk" = 1, "sugar" = 1)
+
+	cocktail_irishcoffee/espresso
+		id = "irishcoffee_espresso"
+		required_reagents = list("espresso" = 1, "bourbon" = 1, "milk" = 1, "sugar" = 1)
 
 	cocktail_dbreath
 		name = "Dragon's Breath"
@@ -1648,6 +1664,10 @@
 	cocktail_eraser/fresh
 		id = "eraser_fresh"
 		required_reagents = list("vtonic" = 1, "coffee_fresh" = 1)
+
+	cocktail_eraser/espresso
+		id = "eraser_espresso"
+		required_reagents = list("vtonic" = 1, "espresso" = 1)
 
 	cocktail_madmen
 		name = "Old Fashioned"
@@ -1747,6 +1767,10 @@
 	cocktail_bull/fresh
 		id = "bull_fresh"
 		required_reagents = list("tequila" = 1, "coffee_fresh" = 1)
+
+	cocktail_bull/espresso
+		id = "bull_espresso"
+		required_reagents = list("tequila" = 1, "espresso" = 1)
 
 	cocktail_longisland_rcola
 		name = "Long Island Iced Tea"
@@ -2175,6 +2199,10 @@
 		id = "duckfart_fresh"
 		required_reagents = list("bourbon" = 1, "coffee_fresh" =1 , "milk" = 1)
 
+	duck_fart/espresso
+		id = "duckfart_espresso"
+		required_reagents = list("bourbon" = 1, "espresso" =1 , "milk" = 1)
+
 	pink_lemonade
 		name = "Pink lemonade"
 		id = "pinklemonade"
@@ -2271,6 +2299,10 @@
 		id = "thaiicedcoffee_fresh"
 		required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
 
+	iced/thaiicedcoffee/espresso
+		id = "thaiicedcoffee_espresso"
+		required_reagents = list("espresso" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+
 	pepperminthotchocolate
 		name = "Peppermint Hot Chocolate"
 		id = "pepperminthotchocolate"
@@ -2304,7 +2336,7 @@
 		result = "pumpkinspicelatte"
 		required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1, "cinnamon"=1)
 		result_amount = 5
-		mix_phrase = "The drink smells vaguely like artifical autumn."
+		mix_phrase = "The drink smells vaguely like artificial autumn."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	lavenderlatte
@@ -3459,7 +3491,7 @@
 		instant = 0
 		reaction_speed = 1
 		max_temperature = T0C + 50
-		mix_phrase = "The solution bubbles as frost precipitates from the sorrounding air."
+		mix_phrase = "The solution bubbles as frost precipitates from the surrounding air."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_ice-1", "reaction_ice-2")
 		reaction_icon_color = "#24ccff"
@@ -3704,7 +3736,7 @@
 				reaction_loc.visible_message(SPAN_ALERT("[bicon(my_atom)] The mixture turns into pure energy which promptly flows into the alchemy circle."))
 				var/gathered = 0
 				for(var/mob/living/M in view(5,reaction_loc))
-					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out.")) //Anima ravages the soul, but doesn't actually remove any part of it, so it's still saleable to Zoldorf
+					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out.")) //Anima ravages the soul, but doesn't actually remove any part of it
 					gathered += round(M.max_health / 2)
 					var/datum/statusEffect/maxhealth/decreased/current_status = M.hasStatus("maxhealth-")
 					var/old_maxhealth_decrease = current_status ? current_status.change : 0
@@ -4708,6 +4740,10 @@
 		id = "energydrink_fresh"
 		required_reagents = list("voltagen" = 1, "coffee_fresh" = 1, "cola" = 3)
 
+	energydrink/espresso
+		id = "energydrink_espresso"
+		required_reagents = list("voltagen" = 1, "espresso" = 1, "cola" = 3)
+
 	voltagen_arc
 		name = "Voltagen Arc"
 		id = "voltagen_arc"
@@ -4824,6 +4860,28 @@
 		result_amount = 3
 		min_temperature = T0C + 117 // world's oldest person!
 		mix_phrase = "The bubbling mixture gives off a scent of perfume, hard candy, and death."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
+	deageinium
+		name = "Deageinium"
+		id = "deageinium"
+		result = "deageinium"
+		required_reagents = list("sugar" = 1, "epinephrine" = 1, "juice_apple" = 1, "chickensoup" = 1, "milk_powder" = 1)
+		result_amount = 3
+		min_temperature = T0C + 21
+		mix_phrase = "The bubbling mixture gives off a scent of angst, sickeningly sweet soda and life."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
+	deageinium_alt
+		name = "Deageinium"
+		id = "deageinium_alt"
+		result = "deageinium"
+		required_reagents = list("ageinium" = 1, "reversium" = 1)
+		result_amount = 1
+		min_temperature = T0C + 21
+		mix_phrase = "The bubbling mixture gives off a scent of angst, sickeningly sweet soda and life."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
 
@@ -4989,6 +5047,16 @@
 		mix_phrase = "The solution makes a little 'chirp' noise and settles."
 		hidden = TRUE
 
+	painbow_eggs
+		name = "painbow eggs"
+		id = "painbow_eggs"
+		result = "painbow_eggs"
+		required_reagents = list("painbow fluid" = 1, "spiders" = 2, "helium" = 1)
+		result_amount = 1
+		mix_phrase = "The painbow and the spider concoct into a horrific mix."
+		hidden = TRUE
+		mix_sound = 'sound/musical_instruments/Boathorn_1.ogg'
+
 	mewtini
 		name = "Mewtini"
 		id = "mewtini"
@@ -5128,7 +5196,7 @@
 			for(var/turf/T in range(1, get_turf(holder.my_atom)))
 				for(var/mob/mob in T)
 					if(!mob.is_heat_resistant())
-						mob.bodytemperature += 10
+						mob.changeBodyTemp(10 KELVIN)
 				T.hotspot_expose(1000, 100, holder.my_atom)
 				var/obj/particle/heat_swirl/swirl = new /obj/particle/heat_swirl
 				swirl.set_loc(T)
@@ -5180,7 +5248,7 @@
 			for(var/turf/T in range(1, get_turf(holder.my_atom)))
 				for(var/mob/mob in T)
 					if(!mob.is_cold_resistant() || ischangeling(mob))
-						mob.bodytemperature -= 10
+						mob.changeBodyTemp(-10 KELVIN)
 				T.hotspot_expose(0, 100, holder.my_atom)
 				var/obj/particle/cryo_sparkle/sparkle = new /obj/particle/cryo_sparkle
 				sparkle.set_loc(T)
@@ -5424,3 +5492,12 @@
 		mix_phrase = "The mixture emits a sudden whine of static and forms into swirling, many faceted shapes that hurt to look at."
 		result_amount = 2
 		mix_sound = 'sound/effects/radio_sweep1.ogg'
+
+	explodingheadjuice
+		name = "Juice That Makes Your Head Explode"
+		id = "explodingheadjuice"
+		result = "explodingheadjuice"
+		required_reagents = list("blackpowder" = 1, "hard_punch" = 1, "juice_raspberry" = 1, "prions" = 1, "sonicpowder" = 1)
+		mix_phrase = "The mixture coalesces into a dark red liquid."
+		result_amount = 5
+

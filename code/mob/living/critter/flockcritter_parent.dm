@@ -1,23 +1,31 @@
 TYPEINFO(/mob/living/critter/flock)
 	mat_appearances_to_ignore = list("gnesis")
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/critter/flock
 	var/resources = 0
 	name = "concept of a bird machine"
 	desc = "Well, that's a thing."
 	icon = 'icons/misc/featherzone.dmi'
 	density = FALSE
-	say_language = "feather"
 	voice_name = "synthetic chirps"
-	speechverb_say = "chirps"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "inquires"
-	speechverb_gasp = "clatters"
-	speechverb_stammer = "buzzes"
+	speech_verb_say = "chirps"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "inquires"
+	speech_verb_gasp = "clatters"
+	speech_verb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
+	default_speech_output_channel = SAY_CHANNEL_FLOCK
+	say_language = LANGUAGE_FEATHER
+
 	// HEALTHS
 	health_brute = 1
 	health_burn = 1
@@ -60,6 +68,7 @@ TYPEINFO(/mob/living/critter/flock)
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	src.flock = F || get_default_flock()
+
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
@@ -159,28 +168,6 @@ TYPEINFO(/mob/living/critter/flock)
 		return
 	src.resources -= amount
 
-/mob/living/critter/flock/say(message, involuntary = FALSE)
-	if(isdead(src) && src.is_npc)
-		return
-	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	..(message) // caw at the non-drones
-
-	if (message == "" || stat)
-		return
-	if (dd_hasprefix(message, "*"))
-		return
-
-	var/prefixAndMessage = separate_radio_prefix_and_message(message)
-	message = prefixAndMessage[2]
-
-	flock_speak(src, message, src.flock, involuntary)
-
-/mob/living/critter/flock/understands_language(var/langname)
-	if (langname == say_language || langname == "feather" || langname == "english")
-		return TRUE
-	return FALSE
-
 /mob/living/critter/flock/Life(datum/controller/process/mobs/parent)
 	if (..(parent) || isdead(src))
 		return TRUE
@@ -188,7 +175,7 @@ TYPEINFO(/mob/living/critter/flock)
 	// automatic extinguisher! after some time, anyway
 	if(getStatusDuration("burning") > 0 && !src.extinguishing)
 		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, TRUE, -3)
-		boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b>"))
+		src.flock.system_say_source.say("Fire detected in critical systems. Integrated extinguishing systems are engaging.", atom_listeners_override = list(src))
 		src.extinguishing = TRUE
 		SPAWN(5 SECONDS)
 			var/obj/fire_foam/F = (locate(/obj/fire_foam) in src.loc)
@@ -229,7 +216,8 @@ TYPEINFO(/mob/living/critter/flock)
 			var/datum/aiHolder/flock/flockai = ai
 			flockai.rally(target)
 	else
-		boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: The flockmind requests your presence immediately.\]</b>"))
+		src.flock.system_say_source.say("The flockmind requests your presence immediately.", atom_listeners_override = list(src))
+
 
 /mob/living/critter/flock/death(var/gibbed)
 	..()
@@ -290,29 +278,7 @@ TYPEINFO(/mob/living/critter/flock)
 			return
 
 		boutput(F, SPAN_NOTICE("You begin spraying nanite strands onto the structure. You need to stay still for this."))
-		playsound(target, 'sound/misc/flockmind/flockdrone_convert.ogg', 30, TRUE, extrarange = -10)
-
-		var/flick_anim = "spawn-floor"
-		if(istype(target, /turf/space))
-			var/make_floor = FALSE
-			for (var/obj/O in target)
-				if (istype(O, /obj/lattice) || istype(O, /obj/mesh/catwalk))
-					make_floor = TRUE
-					src.decal = new /obj/decal/flock_build_floor
-					flick_anim = "spawn-floor"
-					break
-			if (!make_floor)
-				src.decal = new /obj/decal/flock_build_fibrenet
-				flick_anim = "spawn-fibrenet"
-		else if(istype(target, /turf/simulated/floor))
-			src.decal = new /obj/decal/flock_build_floor
-			flick_anim = "spawn-floor"
-		else if(istype(target, /turf/simulated/wall))
-			src.decal = new /obj/decal/flock_build_wall
-			flick_anim = "spawn-wall"
-		if(src.decal)
-			src.decal.set_loc(target)
-			flick(flick_anim, src.decal)
+		src.decal = start_flock_conversion(src.target)
 
 		F.flock?.reserveTurf(target, F.real_name)
 
@@ -338,6 +304,33 @@ TYPEINFO(/mob/living/critter/flock)
 		else
 			flock_convert_turf(target)
 		F.pay_resources(FLOCK_CONVERT_COST)
+
+proc/start_flock_conversion(turf/target)
+	var/obj/decal/decal
+	playsound(target, 'sound/misc/flockmind/flockdrone_convert.ogg', 30, TRUE, extrarange = -10)
+	var/flick_anim = "spawn-floor"
+	if(istype(target, /turf/space))
+		var/make_floor = FALSE
+		for (var/obj/O in target)
+			if (istype(O, /obj/lattice) || istype(O, /obj/mesh/catwalk))
+				make_floor = TRUE
+				decal = new /obj/decal/flock_build_floor
+				flick_anim = "spawn-floor"
+				break
+		if (!make_floor)
+			decal = new /obj/decal/flock_build_fibrenet
+			flick_anim = "spawn-fibrenet"
+	else if(istype(target, /turf/simulated/floor))
+		decal = new /obj/decal/flock_build_floor
+		flick_anim = "spawn-floor"
+	else if(istype(target, /turf/simulated/wall))
+		decal = new /obj/decal/flock_build_wall
+		flick_anim = "spawn-wall"
+	if(decal)
+		decal.set_loc(target)
+		FLICK(flick_anim, decal)
+
+	return decal
 
 /////////////////////////////////////////////////////////////////////////////////
 // CONSTRUCT ACTION
@@ -386,7 +379,7 @@ TYPEINFO(/mob/living/critter/flock)
 		src.decal = new /obj/decal/flock_build_barricade
 		if(src.decal)
 			src.decal.set_loc(target)
-			flick(flick_anim, src.decal)
+			FLICK(flick_anim, src.decal)
 
 	onInterrupt(var/flag)
 		..()

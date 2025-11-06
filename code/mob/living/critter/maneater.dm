@@ -29,13 +29,12 @@
 
 /mob/living/critter/plant/maneater
 	name = "man-eating plant"
-	real_name = "man-eating plant"
 	desc = "It looks hungry..."
 	density = TRUE
 	icon_state = "maneater"
 	icon_state_dead = "maneater-dead"
 	custom_gib_handler = /proc/vegetablegibs
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	skinresult = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	custom_vomit_type = /obj/decal/cleanable/blood
@@ -311,7 +310,6 @@
 
 /mob/living/critter/plant/maneater/polymorph
 	name = "man-eating plant"
-	real_name = "Wizard-eating plant"
 	desc = "It looks upset about something..."
 	is_npc = FALSE
 	add_abilities = list(/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)

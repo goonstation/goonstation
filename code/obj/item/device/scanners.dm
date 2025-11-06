@@ -231,7 +231,11 @@ TYPEINFO(/obj/item/device/detective_scanner)
 
 					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 					P.info = scans[index]
-					P.name = "forensic readout"
+					var/print_title = href_list["title"]
+					if (print_title)
+						P.name = print_title
+					else
+						P.name = "forensic readout"
 
 
 	attack_self(mob/user as mob)
@@ -265,30 +269,28 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if(distancescan)
 			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant forensic scan of [target]."))
-				last_scan = scan_forensic(target, visible = 1)
-				boutput(user, last_scan)
-				src.add_fingerprint(user)
+				scan_target(target, user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-
 		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
-
 		user.visible_message(SPAN_ALERT("<b>[user]</b> has scanned [A]."))
+		scan_target(A, user)
 
+
+	proc/scan_target(var/atom/target, var/mob/user)
 		if (scans == null)
 			scans = new/list(maximum_scans)
-		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
+		last_scan = scan.build_report()
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		var/scan_output = "--- <a href='byond://?src=\ref[src];print=[number_of_scans];title=Analysis of [target];'>PRINT REPORT</a> ---<br>" + last_scan
 		number_of_scans += 1
-
 		boutput(user, scan_output)
-		src.add_fingerprint(user)
 
-		if(!active && istype(A, /obj/decal/cleanable/blood))
-			var/obj/decal/cleanable/blood/B = A
+		if(!active && istype(target, /obj/decal/cleanable/blood))
+			var/obj/decal/cleanable/blood/B = target
 			if(B.dry > 0) //Fresh blood is -1
 				boutput(user, SPAN_ALERT("Targeted blood is too dry to be useful!"))
 				return
@@ -361,6 +363,48 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		..()
 		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
 		AddOverlays(scanner_status, "status")
+		RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(assembly_on_wearer_death))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_building))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_building))
+		// Health-analyser + assembly-applier -> health-analyser/Applier-Assembly
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION)
+		..()
+
+/// ----------- Assembly-Related Procs -----------
+
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+		return " You can add this to a armor vest in order to craft a suicide bomb vest."
+
+	proc/assembly_on_wearer_death(var/affected_analyser, var/mob/dying_mob)
+		if (src.master && istype(src.master, /obj/item/assembly))
+			var/obj/item/assembly/triggering_assembly = src.master
+			if (dying_mob.suiciding && prob(60)) // no suiciding
+				dying_mob.visible_message(SPAN_ALERT("<b>[dying_mob]'s [src.master.name] clicks softly, but nothing happens.</b>"))
+				return
+			//we give our potential victims a time of 3 seconds to react and flee
+			triggering_assembly.last_armer = dying_mob
+			dying_mob.visible_message(SPAN_ALERT("<B>With [him_or_her(dying_mob)] last breath, the [triggering_assembly.name] on them is set off!</B>"),\
+			SPAN_ALERT("<B>With your last breath, you trigger the [src.master.name]!</B>"))
+			logTheThing(LOG_BOMBING, dying_mob, "initiated a health-analyser on a [triggering_assembly.name] at [log_loc(src.master)].")
+			playsound(get_turf(dying_mob), 'sound/machines/twobeep.ogg', 40, TRUE)
+			SPAWN(3 SECONDS)
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["message"] = "ACTIVATE"
+				src.master.receive_signal(signal)
+
+	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icon states for health analysers, but they have no effect, we take a single one
+		parent_assembly.trigger_icon_prefix = "health-scanner"
+		//health-analyser-assembly + armor vest -> suicide vest
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/clothing/suit/armor/vest), TYPE_PROC_REF(/obj/item/assembly, create_suicide_vest), TRUE)
+
+/// ----------------------------------------------
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)
@@ -407,11 +451,11 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 			boutput(user, SPAN_NOTICE("Organ scanner [src.organ_scan ? "enabled" : "disabled"]."))
 
 	attackby(obj/item/W, mob/user)
-		addUpgrade(src, W, user, src.reagent_upgrade)
+		addUpgrade(W, user, src.reagent_upgrade)
 		..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
+		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR) && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> slips and drops [src]'s sensors on the floor!"))
 			user.show_message("Analyzing Results for [SPAN_NOTICE("The floor:<br>&emsp; Overall Status: Healthy")]", 1)
 			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
@@ -425,8 +469,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		boutput(user, scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
-		scan_health_overhead(target, user)
-
+		DISPLAY_MAPTEXT(target, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, target)
 		update_medical_record(target)
 
 		if (isdead(target))
@@ -653,7 +696,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)
-		addUpgrade(src, W, user, src.analyzer_upgrade)
+		addUpgrade(W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button))
@@ -665,11 +708,10 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		src.add_fingerprint(user)
 		return
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
+			if ("attach")
+				det.initial_wire_functions += src
 			if ("pulse")
 				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>\The [src]'s external display turns off for a moment before booting up again.</span>")
 			if ("cut")
@@ -699,7 +741,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 	throw_range = 10
 
 ///////////////// method to upgrade an analyzer if the correct upgrade cartridge is used on it /////////////////
-/obj/item/device/analyzer/proc/addUpgrade(obj/item/device/src as obj, obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
+/obj/item/device/analyzer/proc/addUpgrade(obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
 	if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade) || istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade) || istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 		//Health Analyzers
 		if (istype(src, /obj/item/device/analyzer/healthanalyzer))
@@ -845,7 +887,18 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			src.active1["p_stat"] = "Active"
 			src.active1["m_stat"] = "Stable"
 			data_core.general.add_record(src.active1)
-			found = 0
+
+			// Bank Records
+			var/bank_record = new/datum/db_record()
+			bank_record["name"] = src.active1["name"]
+			bank_record["id"] = src.active1["id"]
+			bank_record["current_money"] = 0
+			bank_record["wage"] = 0
+			bank_record["notes"] = "No notes."
+			if(istype(target.wear_id, /obj/item/device/pda2))
+				var/obj/item/device/pda2/worn_pda = target.wear_id
+				bank_record["pda_net_id"] = worn_pda.net_id
+			data_core.bank.add_record(bank_record)
 
 		////Security Records
 		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
@@ -868,6 +921,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			E["sec_flag"] = src.sechud_flag
 			target.update_arrest_icon()
 			return
+
 
 		src.active2 = new /datum/db_record()
 		src.active2["name"] = src.active1["name"]
@@ -998,6 +1052,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
+	var/paper_icon_state = "paper_caution"
 
 	attack_self(mob/user)
 		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
@@ -1016,7 +1071,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		else if (issilicon(user))
 			var/mob/living/silicon/S = user
 			I = S.botcard
-		if (!I || !(access_security in I.access))
+		if (!I || !(access_ticket in I.access))
 			boutput(user, SPAN_ALERT("Insufficient access."))
 			return
 		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
@@ -1050,13 +1105,14 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			user.put_in_hand_or_drop(p)
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
-			p.icon_state = "paper_caution"
+			p.icon_state = src.paper_icon_state
 
 		return T.target_byond_key
 
 /obj/item/device/ticket_writer/crust
 	name = "crusty old security TicketWriter 1000"
 	desc = "An old TicketWriter model held together by hopes and dreams alone."
+	paper_icon_state = "paper_burned"
 
 TYPEINFO(/obj/item/device/appraisal)
 	mats = 5
@@ -1154,13 +1210,5 @@ TYPEINFO(/obj/item/device/appraisal)
 		if (sell_value > 0)
 			playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
 
-		if (user.client && !user.client.preferences?.flying_chat_hidden)
-			var/image/chat_maptext/chat_text = null
-			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
-			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
-			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
-			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-			if (chat_text)
-				// don't bother bumping up other things
-				chat_text.show_to(user.client)
 
+		DISPLAY_MAPTEXT(A, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/appraisal, sell_value)

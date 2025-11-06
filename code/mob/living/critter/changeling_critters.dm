@@ -1,6 +1,13 @@
 // a shared parent for changeling critters that need common functionality, like a master, DNA point store, hivemind, ability to wear hats, y'know, the real important stuff
 //mbc : the indentation of this file got all fucked up somehow. That's why we work on different indentation levels depending on the proc. Have fun!
 
+TYPEINFO(/mob/living/critter/changeling)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/critter/changeling
 	name = "fire me into the sun"
 	real_name = "for this should not be seen"
@@ -14,6 +21,7 @@
 	table_hide = 0
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
 	butcherable = BUTCHER_ALLOWED
+	default_speech_output_channel = null
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
@@ -32,26 +40,14 @@
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
 		src.original_bodypart?.set_loc(src)
-
-	say(message, involuntary = 0)
-		if (hivemind_owner)
-			message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
-
-			if (!message)
-				return
-
-			if (dd_hasprefix(message, "*"))
-				return src.emote(copytext(message, 2),1)
-
-			logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
-
-			if (src.client && src.client.ismuted())
-				boutput(src, "You are currently muted and may not speak.")
-				return
-
-			. = src.say_hive(message, hivemind_owner)
-		else
-			..()
+		if(istype(original_bodypart, /obj/item/organ) || istype(original_bodypart, /obj/item/clothing/head/butt))
+			var/obj/item/organ/org = original_bodypart
+			org.donor_DNA = src.bioHolder?.Uid
+			org.blood_DNA = org.donor_DNA
+		else if(istype(original_bodypart, /obj/item/parts/human_parts))
+			var/obj/item/parts/human_parts/hpart = original_bodypart
+			hpart.original_DNA = src.bioHolder?.Uid
+			hpart.blood_DNA = hpart.original_DNA
 
 	canRideMailchutes()
 		return 1
@@ -137,7 +133,6 @@
 
 /mob/living/critter/changeling/handspider
 	name = "handspider"
-	real_name = "handspider"
 	desc = "It's a living disembodied hand with shifting flesh... Disgusting!"
 	icon_state = "handspider"
 	icon_state_dead = "handspider-dead"
@@ -350,7 +345,6 @@
 
 /mob/living/critter/changeling/eyespider
 	name = "eyespider"
-	real_name = "eyespider"
 	desc = "It's a living disembodied eye with freaky spindly legs... That's messed up!"
 	density = 0
 	icon_state = "eyespider"
@@ -440,7 +434,6 @@
 
 /mob/living/critter/changeling/legworm
 	name = "legworm"
-	real_name = "legworm"
 	desc = "A writhing, angry disembodied leg!"
 	icon_state = "legworm"
 	icon_state_dead = "legworm-dead"
@@ -573,7 +566,6 @@
 
 /mob/living/critter/changeling/buttcrab
 	name = "buttcrab"
-	real_name = "buttcrab"
 	desc = "Well. OK then. Thats a thing."
 	icon_state = "buttcrab"
 	icon_state_dead = "buttcrab-dead"
@@ -645,7 +637,6 @@
 
 /mob/living/critter/changeling/headspider
 	name = "headspider"
-	real_name = "headspider"
 	desc = "Oh my god!"
 	icon_state = "headspider"
 	icon_state_dead = "headspider-dead"
@@ -698,18 +689,19 @@
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
 	if(ishuman(M) && !isdead(M))
 		var/mob/living/carbon/human/H = M
-		random_brute_damage(H, 10)
-		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
-		playsound(src, 'sound/misc/headspiderability.ogg', 60)
-		src.set_loc(H)
-		H.setStatusMin("unconscious", 10 SECONDS)
 
 		var/datum/ailment_data/parasite/ailment_data = get_disease_from_path(/datum/ailment/parasite/headspider).setup_strain()
 		ailment_data.affected_mob = H
 		ailment_data.source = src
-		H.contract_disease(/datum/ailment/parasite/headspider, null, ailment_data, TRUE)
-
-		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		if(H.contract_disease(/datum/ailment/parasite/headspider, null, ailment_data, TRUE))
+			random_brute_damage(H, 10)
+			src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
+			playsound(src, 'sound/misc/headspiderability.ogg', 60)
+			src.set_loc(H)
+			H.setStatusMin("unconscious", 10 SECONDS)
+			logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		else //The only way we can fail is if they are immune to disease (ling/vamp/thrall/zombie/godmode) or they already have a headspider
+			boutput(src, SPAN_ALERT("[H]'s inhuman nature renders us unable to infect their form."))
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))

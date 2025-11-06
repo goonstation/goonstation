@@ -23,6 +23,7 @@ var/global/admin_sound_channel = SOUNDCHANNEL_ADMIN_LOW // current admin channel
 #define VOLUME_CHANNEL_ADMIN 4
 #define VOLUME_CHANNEL_EMOTE 5
 #define VOLUME_CHANNEL_MENTORPM 6
+#define VOLUME_CHANNEL_INSTRUMENTS 7
 
 var/global/list/audio_channel_name_to_id = list(
 	"master" = VOLUME_CHANNEL_MASTER,
@@ -31,7 +32,8 @@ var/global/list/audio_channel_name_to_id = list(
 	"radio" = VOLUME_CHANNEL_RADIO,
 	"admin" = VOLUME_CHANNEL_ADMIN,
 	"emote" = VOLUME_CHANNEL_EMOTE,
-	"mentorpm" = VOLUME_CHANNEL_MENTORPM
+	"mentorpm" = VOLUME_CHANNEL_MENTORPM,
+	"instruments" = VOLUME_CHANNEL_INSTRUMENTS
 )
 
 //Area Ambience

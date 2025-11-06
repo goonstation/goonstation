@@ -7,9 +7,8 @@
 	item_state = "c_box"
 	density = 1
 	see_face = FALSE
-	over_hair = 1
 	wear_layer = MOB_LAYER_OVER_FUCKING_EVERYTHING_LAYER
-	c_flags = COVERSEYES | COVERSMOUTH
+	c_flags = COVERSEYES | COVERSMOUTH | COVERSHAIR
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS|C_GLASSES|C_MASK
 	var/eyeholes = FALSE
@@ -87,10 +86,17 @@
 		else
 			..()
 
+TYPEINFO(/obj/item/clothing/suit/cardboard_box/head_surgeon)
+	start_speech_modifiers = list(SPEECH_MODIFIER_DECTALK_HEAD_SURGEON)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/item/clothing/suit/cardboard_box/head_surgeon
 	name = "cardboard box - 'Head Surgeon'"
 	desc = "The HS looks a lot different today!"
 	face = "HS"
+	speech_verb_say = list("rustles", "folds", "womps", "boxes", "foffs", "flaps")
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/text2speech = 1
 
 	New()
@@ -103,22 +109,6 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		. = ..()
-
-	proc/speak(var/message)
-		if (!message)
-			return
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\""))
-		if (src.text2speech)
-			var/audio = dectalk("\[:nk\][message]", BOTTALK_VOLUME)
-			if (audio["audio"])
-				for (var/mob/O in hearers(src, null))
-					if (!O.client)
-						continue
-					ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-				return 1
-			else
-				return 0
-		return
 
 /obj/item/clothing/suit/cardboard_box/captain
 	name = "cardboard box - 'Captain'"

@@ -4,14 +4,21 @@
 	desc = "A magical saw-like device for unmaking things. Is that a soldering iron on the back?"
 	default_material = "miracle"
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/deconstructing)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+
+	pre_attackby(source, atom/target, mob/user)
 		if (!isobj(target))
 			return
-		if(istype(target, /obj/item/electronics/frame))
+		if (istype(target, /obj/item/electronics/frame))
 			var/obj/item/electronics/frame/F = target
 			F.deploy(user)
+			return ATTACK_PRE_DONT_ATTACK
 
-		finish_decon(target, user)
+		var/datum/component/deconstructing/decon_comp = src.GetComponent(/datum/component/deconstructing)
+		return decon_comp.finish_decon(target, user, src)
 
 /obj/item/paper/artemis_todo
 	icon = 'icons/obj/electronics.dmi';
@@ -225,6 +232,7 @@
 				boutput(src.owner,SPAN_ALERT("You feel something work its way into your body from \the [src]."))
 
 	on_death()
+		. = ..()
 		if(!online)
 			return
 		if(prob(80))
@@ -252,6 +260,7 @@
 	on_death()
 		if(!online)
 			return
+		. = ..()
 		var/atom/movable/P = locate(/obj/machinery/plantpot/bareplant) in src.owner
 
 		// Uhhh.. just one thanks, don't need a pew pew army growing out of someone

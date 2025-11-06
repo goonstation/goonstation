@@ -81,3 +81,16 @@
 
 /datum/aiTask/succeedable/critter/vomit_egg/on_reset()
 	src.has_started = FALSE
+
+
+
+/datum/aiHolder/tutorial_clown_spider_queen
+	New()
+		..()
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/tutorial_clown_spider_queen, list(src))
+
+/datum/aiTask/prioritizer/critter/tutorial_clown_spider_queen/New()
+	..()
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/scavenge, list(holder, src))

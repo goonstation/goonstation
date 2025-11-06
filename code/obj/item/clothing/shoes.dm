@@ -43,13 +43,13 @@
 					. += "The laces are cut."
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
+		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini/oxygen) || istype(W, /obj/item/tank/jetpack))
 			if ((src.equipped_in_slot == SLOT_SHOES) && (src.cant_self_remove || src.cant_other_remove))
 				return
 
 			var/uses = 0
 
-			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
+			if(istype(W, /obj/item/tank/mini/oxygen)) uses = 2
 			else if(istype(W, /obj/item/tank/air)) uses = 4
 			else if(istype(W, /obj/item/tank/oxygen)) uses = 4
 			else if(istype(W, /obj/item/tank/jetpack)) uses = 6
@@ -58,13 +58,14 @@
 			var/obj/item/clothing/shoes/rocket/R = new/obj/item/clothing/shoes/rocket(T)
 			R.uses = uses
 			boutput(user, SPAN_NOTICE("You haphazardly kludge together some rocket shoes."))
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, R, user)
 			qdel(W)
 			qdel(src)
 
 		if (src.laces == LACES_TIED && istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 			boutput(user, "You neatly cut the knot and most of the laces away. Problem solved forever!")
 			src.laces = LACES_CUT
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 /obj/item/clothing/shoes/rocket
 	name = "rocket shoes"
@@ -187,20 +188,46 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	step_priority = STEP_PRIORITY_LOW
 	abilities = list(/obj/ability_button/magboot_toggle)
 
-	proc/activate()
+	proc/activate(mob/M)
+		if (src.check_move(M, get_turf(M), null, TRUE))
+			boutput(M, SPAN_ALERT("There's nothing to anchor to!"))
+			playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+			return FALSE
 		src.magnetic = 1
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
 		step_lots = TRUE
-		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
-	proc/deactivate()
+		playsound(M.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+		RegisterSignal(M, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_move))
+		return TRUE
+
+	proc/deactivate(mob/M)
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
 		step_lots = FALSE
-		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
+
+	unequipped(mob/user)
+		. = ..()
+		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
+
+	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
+		//is the turf we're on solid?
+		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid) || T.throw_unlimited))
+			return FALSE
+		//this is kind of expensive to put on Move BUT in my defense it will only happen for magboots wearers standing on a space tile
+		//what are the chances they're also next to botany's server lag weed pile at the same time?
+		for (var/atom/A in oview(1,T))
+			if (A.stops_space_move)
+				if (!quiet && iswall(A) && prob(30)) //occasionally play a clonk for the people inside to hear
+					playsound(A, src.step_sound, 50, 1, extrarange = global.footstep_extrarange)
+				return FALSE
+		//if we've got here then there would be nothing stopping us drifting off, so block the move
+		return TRUE
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
 	mats = 0
@@ -324,6 +351,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 					I.set_loc(get_turf(src))
 				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
 				boutput(user, SPAN_NOTICE("You spraypaint the clown shoes in a sleek black!"))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, I, user)
 				qdel(src)
 			else
 				boutput(user, SPAN_ALERT("You don't feel like insulting the clown like this."))
@@ -536,6 +564,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 				else
 					I.set_loc(get_turf(src))
 				boutput(user, SPAN_NOTICE("You cover the heavy boots in crayon!"))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, I, user)
 				qdel(src)
 			else
 				boutput(user, SPAN_ALERT("You don't feel brave enough to do this."))
@@ -612,7 +641,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 
 	New()
 		..()
-		src.tank = new /obj/item/tank/mini_oxygen(src)
+		src.tank = new /obj/item/tank/mini/oxygen(src)
 
 	setupProperties()
 		..()
@@ -629,7 +658,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 			if (src.tank)
 				boutput(user, SPAN_ALERT("There's already a tank installed!"))
 				return
-			if (!istype(W, /obj/item/tank/mini_oxygen))
+			if (!istype(W, /obj/item/tank/mini/oxygen))
 				boutput(user, SPAN_ALERT("[W] doesn't fit!"))
 				return
 			boutput(user, SPAN_NOTICE("You install [W] into [src]."))

@@ -6,10 +6,16 @@ ABSTRACT_TYPE(/datum/game_mode)
 	var/regular = TRUE
 	var/probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	var/crew_shortage_enabled = 1
+	var/force_round_finished = FALSE //Force the ticker to immediately declare the round as finished
 
 	var/shuttle_available = 1 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
 	var/shuttle_available_threshold = 12000 // 20 min. Only works when shuttle_available == SHUTTLE_AVAILABLE_DELAY.
-	var/shuttle_auto_call_time = 90 MINUTES // 120 minutes.  Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
+	///Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
+	#ifdef RP_MODE
+	var/shuttle_auto_call_time = 90 MINUTES
+	#else
+	var/shuttle_auto_call_time = 60 MINUTES
+	#endif
 	var/shuttle_last_auto_call = 0
 	var/shuttle_initial_auto_call_done = 0 // set to 1 after first call so we know to start checking shuttle_auto_call_time/2
 	var/shuttle_prevent_recall_time = 120 MINUTES // After how long do we prevent recalling the Shuttle (only applied upon an automatic call)
@@ -34,7 +40,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	boutput(world, "<B>[src] did not define announce()</B>")
 
 /datum/game_mode/proc/pre_setup()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/post_setup()
 
@@ -64,7 +70,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 			announcement += " Central Command has prohibited further recalls."
 		else
 			announcement += " Please recall the shuttle to extend the shift."
-		command_alert(announcement,"Shift Shuttle Update")
+		command_alert(announcement,"Shift Shuttle Update", alert_origin=ALERT_GENERAL)
 		shuttle_last_auto_call = ticker.round_elapsed_ticks
 		if (!shuttle_initial_auto_call_done)
 			shuttle_initial_auto_call_done = 1
@@ -176,16 +182,14 @@ ABSTRACT_TYPE(/datum/game_mode)
 	for(var/client/C)
 		if (istype(C.mob, /mob/new_player))
 			var/mob/new_player/new_player = C.mob
-			if (!new_player.ready)
+			if (!new_player.ready_play)
 				continue
 		else if(istype(C.mob, /mob/living/carbon))
 			if(!allow_carbon)
 				continue
 			var/datum/job/job = find_job_in_controller_by_string(C.mob.job)
 			if (job)
-				if(!job.allow_traitors)
-					continue
-				if (!job.can_join_gangs && (type == ROLE_GANG_LEADER || type == ROLE_GANG_MEMBER))
+				if(!job.can_be_antag(type))
 					continue
 		else
 			continue
@@ -227,12 +231,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
 /// Should only be used for roundstart setup
 /datum/game_mode/proc/equip_antag(datum/mind/antag)
-	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
-		// vamp will burn in the chapel before he can react
-		if (prob(50))
-			antag.special_role = ROLE_TRAITOR
-		else
-			antag.special_role = ROLE_CHANGELING
 
 	antag.add_antagonist(antag.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
 
@@ -264,19 +262,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/proc/roundstart_player_count(loud = TRUE)
-	var/readied_count = 0
-	var/unreadied_count = 0
-	for (var/client/C in global.clients)
-		var/mob/new_player/mob = C.mob
-		if (istype(mob))
-			if (mob.ready)
-				readied_count++
-			else
-				unreadied_count++
-	var/total = readied_count + (unreadied_count/2)
-	if (loud)
-		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
-	return total
+	return global.ticker.roundstart_player_count(loud)
 
 ////////////////////////////
 // Objective related code //

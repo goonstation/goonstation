@@ -70,18 +70,18 @@ const OutputTargetPressure = () => {
             maxValue={MAX_PRESSURE}
             step={5}
             value={mixer_information.target_pressure}
-            onChange={(value) =>
-              act('pressure_set', { target_pressure: value })
-            }
+            onChange={(value) => {
+              act('pressure_set', { target_pressure: value });
+            }}
             unit="kPa"
             fluid
           />
         </Stack.Item>
         <Stack.Item>
           <Button
-            onClick={() =>
-              act('pressure_set', { target_pressure: MAX_PRESSURE })
-            }
+            onClick={() => {
+              act('pressure_set', { target_pressure: MAX_PRESSURE });
+            }}
           >
             Max
           </Button>

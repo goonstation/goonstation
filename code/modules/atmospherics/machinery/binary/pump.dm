@@ -53,8 +53,8 @@ Thus, the two variables affect pump operation are set in New():
 		src.on = FALSE
 
 	icon_state = src.on ? "on" : "off"
-	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
-	SET_PIPE_UNDERLAY(src.node2, src.dir, "medium", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
+	update_pipe_underlay(src.node1, turn(src.dir, 180), "medium", FALSE)
+	update_pipe_underlay(src.node2, src.dir, "medium", FALSE)
 
 /obj/machinery/atmospherics/binary/pump/process()
 	..()
@@ -150,7 +150,7 @@ Thus, the two variables affect pump operation are set in New():
 		var/turf/intact = get_turf(src)
 		intact = intact.intact
 		var/hide_pipe = CHECKHIDEPIPE(src)
-		flick("[hide_pipe ? "h" : "" ]alert", src)
+		FLICK("[hide_pipe ? "h" : "" ]alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)

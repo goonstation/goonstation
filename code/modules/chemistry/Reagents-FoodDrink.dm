@@ -46,7 +46,7 @@ datum
 				if (severity == 1) //lesser
 					M.stuttering += 1
 					if(effect <= 1)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly clutches [his_or_her(M)] gut!"))
 						M.emote("scream")
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 3)
@@ -62,7 +62,7 @@ datum
 				else if (severity == 2) // greater
 					if(effect <= 5)
 						M.visible_message(pick(SPAN_ALERT("<b>[M.name]</b> jerks bolt upright, then collapses!"),
-							SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!")))
+							SPAN_ALERT("<b>[M.name]</b> suddenly clutches [his_or_her(M)] gut!")))
 						M.setStatusMin("knockdown", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
@@ -295,18 +295,10 @@ datum
 				if(!istype(holder) || !istype(holder.my_atom) || !ishuman(holder.my_atom))
 					return
 				var/mob/living/carbon/human/H = holder.my_atom
-				if(seen_by_camera(H))
-					// determine the name of the perp (goes by ID if wearing one)
-					var/perpname = H.name
-					if(H:wear_id && H:wear_id:registered)
-						perpname = H:wear_id:registered
-					var/datum/db_record/gen_record = data_core.general.find_record("name", perpname)
-					var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-					// Yes. Its 21. This is Space America. That is canon now.
-					if(gen_record && sec_record && text2num(gen_record["age"]) < 21 && sec_record["criminal"] != ARREST_STATE_ARREST)
-						sec_record["criminal"] = ARREST_STATE_ARREST
-						sec_record["mi_crim"] = "Underage drinking."
-						H.update_arrest_icon()
+				var/datum/db_record/gen_record = data_core.general.find_record("name", H.name)
+				// Yes. Its 21. This is Space America. That is canon now.
+				if(gen_record && text2num(gen_record["age"]) < 21)
+					H.apply_automated_arrest("Underage drinking.")
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
@@ -925,10 +917,7 @@ datum
 					boutput(M, SPAN_ALERT("Ugh! Why did you drink that?!"))
 					M.setStatusMin("stunned", 3 SECONDS)
 					M.setStatusMin("knockdown", 3 SECONDS)
-					if (prob(25))
-
-						M.visible_message(SPAN_ALERT("[M] horks all over [himself_or_herself(M)]. Gross!"))
-						M.vomit()
+					M.nauseate(5)
 
 
 		fooddrink/alcoholic/whiskey_sour
@@ -1354,9 +1343,7 @@ datum
 					M.setStatusMin("knockdown", 3 SECONDS)
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
-					if (prob(10))
-						M.visible_message(SPAN_ALERT("[M] horks all over [himself_or_herself(M)]. Gross!"))
-						M.vomit()
+					L.nauseate(6)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1382,9 +1369,8 @@ datum
 				flush(holder, 4.8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
-				if(probmult(20))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)]!")
-					M.vomit(0, null, vomit_message)
+				if(probmult(40))
+					M.nauseate(2)
 				if(probmult(10))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
@@ -1597,8 +1583,7 @@ datum
 			taste = list("rich", "fruity")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if(M.bodytemperature < 400)
-					M.bodytemperature = min(M.bodytemperature+(5 * mult),400)
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = 400 KELVIN)
 				..()
 
 		fooddrink/alcoholic/tomcollins
@@ -1738,8 +1723,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -1820,7 +1804,7 @@ datum
 					boutput(M, SPAN_NOTICE("<b>Oh. God.</b>"))
 					SPAWN(2 SECONDS)
 						if (M)
-							M.become_statue("ice")
+							M.become_statue(getMaterial("ice"))
 				..()
 				return
 
@@ -2073,8 +2057,7 @@ datum
 			taste = list("sweet", "festive")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (M.bodytemperature < (T0C + 40))
-					M.bodytemperature += 5 * mult
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = T0C + 40)
 				..()
 
 		fooddrink/alcoholic/ironbrew
@@ -2279,7 +2262,7 @@ datum
 			taste = "hot"
 			addiction_prob = 0.1 // heh
 			addiction_min = 7.5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			//penetrates_skin = 1
 			viscosity = 0.2
 
@@ -2291,14 +2274,13 @@ datum
 						M.emote(pick("choke","gasp","cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 						M.take_oxygen_deprivation(rand(0,10) * mult)
-						M.bodytemperature += rand(5,20) * mult
+						M.changeBodyTemp(rand(5,20) KELVIN * mult)
 				else
 					if(prob(10) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
 						M.emote(pick("cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 				M.stuttering += rand(0,2)
-				M.bodytemperature += rand(0,3) * mult
-
+				M.changeBodyTemp(rand(0,3) KELVIN * mult)
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2361,9 +2343,9 @@ datum
 				if(prob(25))
 					M.emote(pick("choke","gasp"))
 					M.take_oxygen_deprivation(rand(0,10) * mult)
-					M.bodytemperature += rand(0,7) * mult
+					M.changeBodyTemp(rand(0,7) KELVIN * mult)
 				M.stuttering += rand(0,2)
-				M.bodytemperature += rand(0,3) * mult
+				M.changeBodyTemp(rand(0,3) KELVIN * mult)
 				if(probmult(10))
 					M.emote(pick("cough"))
 
@@ -2399,8 +2381,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.changeStatus("drowsy", -10 SECONDS)
-				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = M.base_body_temp)
 				..()
 				return
 
@@ -2421,8 +2402,7 @@ datum
 					var/mob/living/carbon/human/H = M
 					if (H.sims)
 						H.sims.affectMotive("Bladder", (-0.05 * mult))
-				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = M.base_body_temp)
 				..(M, mult)
 				return
 
@@ -2461,7 +2441,7 @@ datum
 			transparency = 255
 			addiction_prob = 0.1 // hey man some people really like weird cheese
 			addiction_min = 5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			taste = "weird"
 			hunger_value = 1
 			viscosity = 0.6
@@ -2529,8 +2509,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if (M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
 
 		fooddrink/caffeinated/coffee/fresh
 			name = "freshly brewed coffee"
@@ -2570,7 +2549,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if(M.get_brain_damage() < 60 || killer)
+				if(M.get_brain_damage() < BRAIN_DAMAGE_MAJOR || killer)
 					M.take_brain_damage(2 * mult)
 
 			killer
@@ -2732,8 +2711,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -2771,8 +2749,7 @@ datum
 			var/ticks = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
 				M.reagents.add_reagent("sugar", 2 * src.calculate_depletion_rate(M, mult))
 				if (ispug(M) || istype(M, /mob/living/critter/small_animal/dog))
 					M.changeStatus("poisoned", 8 SECONDS * mult)
@@ -3500,8 +3477,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -4398,7 +4374,7 @@ datum
 			fluid_g = 255
 			addiction_prob = 0.2
 			addiction_min = 5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			overdose = 50
 			hunger_value = 0.25
 			taste = "offputting"
@@ -4469,6 +4445,18 @@ datum
 			transparency = 255
 			taste = "like the surface of the sun"
 
+			on_add()
+				if (ismob(holder.my_atom))
+					RegisterSignal(holder.my_atom, COMSIG_MOB_VOMIT, PROC_REF(on_vomit))
+
+			proc/on_vomit()
+				boutput(holder.my_atom, SPAN_NOTICE("Thank goodness. You're not sure how long you could have held out with heat that intense!"))
+				holder.my_atom.reagents.del_reagent("ghostchilijuice")
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					UnregisterSignal(holder.my_atom, COMSIG_MOB_VOMIT)
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				//If the user drinks milk, they'll be fine.
@@ -4486,11 +4474,9 @@ datum
 					boutput(M, SPAN_ALERT("Why!? WHY!?"))
 				if(probmult(8))
 					boutput(M, SPAN_ALERT("ARGHHHH!"))
-				if(probmult(33))
-					M.visible_message(SPAN_ALERT("[M] suddenly and violently vomits!"))
-					M.vomit()
-					boutput(M, SPAN_NOTICE("Thank goodness. You're not sure how long you could have held out with heat that intense!"))
-					M.reagents.del_reagent("ghostchilijuice")
+				if(probmult(50))
+					M.nauseate(2)
+
 				if(probmult(min(10,5 * volume)))
 					boutput(M, SPAN_ALERT("<b>OH GOD OH GOD PLEASE NO!!</b>"))
 					var/mob/living/L = M

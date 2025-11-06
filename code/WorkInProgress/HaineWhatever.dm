@@ -105,10 +105,11 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
-		if (user.zone_sel.selecting == "head")
-			target.emote("sneeze")
-		else
-			target.emote(pick("giggle", "laugh"))
+		if (isalive(target))
+			if (user.zone_sel.selecting == "head")
+				target.emote("sneeze")
+			else
+				target.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -996,7 +997,7 @@ TYPEINFO(/obj/submachine/blackjack)
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
-		playsound(src.loc, "swoosh", 50, 1)
+		playsound(src.loc, 'sound/effects/swoosh.ogg', 50, 1)
 		if (usr)
 			usr.say("MOON TIARA ACTION!")
 		return ..(target)
@@ -1660,7 +1661,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	name = "mola ram thing"
 	desc = "kali ma motherfuckers"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "bedsheet"
 	item_state = "bedsheet"
@@ -1901,7 +1902,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 			M.emote(pick("grin", "smirk", "nod", "laugh", "chuckle", "scream"))
 /*		if(prob(6))
 			boutput(M, SPAN_ALERT("<b>You feel warm.</b>"))
-			M.bodytemperature += rand(1,10)
+			M.changeBodyTemp(rand(1,10) KELVIN)
 		if(prob(4))
 			boutput(M, SPAN_ALERT("<b>You feel kinda awful!</b>"))
 			M.take_toxin_damage(1)
@@ -1925,7 +1926,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))
 			else if (effect <= 4)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"), SPAN_ALERT("<b>Did it get way fucking hotter in here?</b>"))
-				M.bodytemperature += rand(10,30)
+				M.changeBodyTemp(rand(10,30) KELVIN)
 				M.brainloss++
 				M.take_toxin_damage(1)
 			else if (effect <= 7)
@@ -1939,7 +1940,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine_major_od)
 			if (effect <= 2)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> is sweating like a pig!"), SPAN_ALERT("<b>Fuck, someone turn on the AC!</b>"))
-				M.bodytemperature += rand(20,100)
+				M.changeBodyTemp(rand(20,100) KELVIN)
 				M.take_toxin_damage(5)
 			else if (effect <= 4)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> starts freaking the fuck out!"), SPAN_ALERT("<b>Holy shit, what the fuck was that?!</b>"))

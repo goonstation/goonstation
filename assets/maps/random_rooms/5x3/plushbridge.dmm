@@ -76,7 +76,7 @@
 /area/dmm_suite/clear_area)
 "x" = (
 /obj/table/wood,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/decal/poster/wallsign/poster_nt{

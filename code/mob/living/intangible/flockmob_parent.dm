@@ -10,6 +10,9 @@
 /// The relay either transmitted the Signal, or was otherwise destroyed
 #define STAGE_DESTROYED 3
 
+TYPEINFO(/mob/living/intangible/flock)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/living/intangible/flock
 	name = "caw"
 	desc = "please report this to a coder you shouldn't see this"
@@ -24,6 +27,8 @@
 	use_stamina = 0//no puff tomfuckery
 	respect_view_tint_settings = TRUE
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	speech_verb_say = list("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")
+
 	var/compute = 0
 	var/tmp/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
@@ -114,7 +119,6 @@
 	..()
 
 /mob/living/intangible/flock/is_spacefaring() return 1
-/mob/living/intangible/flock/say_understands() return 1
 /mob/living/intangible/flock/can_use_hands() return 0
 
 /mob/living/intangible/flock/movement_delay()
@@ -218,37 +222,6 @@
 
 	src.examine_verb(target) //default to examine
 
-/mob/living/intangible/flock/say_quote(var/text)
-	var/speechverb = pick("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")
-	return "[speechverb], \"[text]\""
-
-/mob/living/intangible/flock/get_heard_name(just_name_itself=FALSE)
-	if (just_name_itself)
-		return src.real_name
-	return "<span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span>"
-
-/mob/living/intangible/flock/say(message, involuntary = 0)
-	if (!message || message == "" || stat)
-		return
-	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
-		return
-	SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-	if (dd_hasprefix(message, "*"))
-		return src.emote(copytext(message, 2),1)
-
-	if (isdead(src))
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		return src.say_dead(message)
-
-	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	logTheThing(LOG_DIARY, src, ": [message]", "say")
-
-	var/prefixAndMessage = separate_radio_prefix_and_message(message)
-	message = prefixAndMessage[2]
-
-	flock_speak(src, message, src.flock)
-
 /mob/living/intangible/flock/get_tracked_examine_atoms()
 	return ..() + src.flock.structures
 
@@ -315,6 +288,8 @@
 	icon_state = "structure-relay"
 	screen_loc = "NORTH, EAST-1"
 	alpha = 0
+	show_tooltip = TRUE
+	tooltip_options = list("theme" = "flock")
 
 /// Update everything about the icon and description
 /atom/movable/screen/hud/relay/proc/update_value(new_stage = null, new_alpha = null, new_desc = null)
@@ -342,12 +317,7 @@
 	if (src.alpha < 50)
 		return // if you can't see the icon why bother
 	src.update_value()
-	usr.client.tooltipHolder.showHover(src, list(
-		"params" = params,
-		"title" = src.name,
-		"content" = (src.desc ? src.desc : null),
-		"theme" = "flock"
-	))
+	..()
 
 /// Back of the relay HUD icon
 /atom/movable/screen/hud/relay_back

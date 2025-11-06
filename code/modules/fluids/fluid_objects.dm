@@ -151,7 +151,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 
 	var/datum/reagents/R
 
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 	New()
 		..()
@@ -465,6 +465,7 @@ TYPEINFO(/obj/item/sea_ladder)
 	stamina_damage = 30
 	stamina_cost = 20
 	stamina_crit_chance = 6
+	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 
 	New()
@@ -504,6 +505,31 @@ TYPEINFO(/obj/item/sea_ladder)
 		src.set_loc(L)
 		L.og_ladder_item = src
 		L.linked_ladder.og_ladder_item = src
+
+	pickup(mob/user)
+		. = ..()
+		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGED, PROC_REF(turn_around))
+
+	dropped(mob/user)
+		. = ..()
+		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGED)
+
+	proc/turn_around(mob/user, old_dir, new_dir)
+		//have they turned from EW to NS or vice versa? ie not doing a 180
+		if ((old_dir in list(NORTH, SOUTH)) && (new_dir in list(WEST, EAST)) || (old_dir in list(WEST, EAST)) && (new_dir in list(NORTH, SOUTH)))
+			for (var/turf/T in list(get_step(user, new_dir), get_step(user, turn(new_dir, 180))))
+				for (var/mob/living/carbon/human/clown in T)
+					if (clown.clown_tally() < 2) //are they clown enough to get clonked?
+						continue
+					if (clown.lying)
+						continue
+					if (ON_COOLDOWN(clown, "ladder_clonk", 7 SECONDS))
+						continue
+					clown.setStatus("knockdown", 5 SECONDS)
+					random_brute_damage(clown, rand(3, 10))
+					clown.force_laydown_standup()
+					clown.visible_message(SPAN_COMBAT("[user] turns around too quickly and clonks [clown] with [src]!"))
+					playsound(get_turf(clown), src.hitsound, 50, 1)
 
 TYPEINFO(/obj/naval_mine)
 	mats = 16

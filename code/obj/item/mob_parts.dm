@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		object.set_loc(src.holder.loc)
 
 		//https://forum.ss13.co/showthread.php?tid=1774
-		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
+		//object.name = "[src.holder.real_name]’s [initial(object.name)]"
 		object.add_fingerprint(src.holder)
 
 		if(show_message) holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] falls off!"))
@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.holder = null
 		return object
 
-	proc/sever(var/mob/user)
+	proc/sever(var/mob/user, var/setDir=TRUE)
 		if (!src.holder) // fix for Cannot read null.loc, hopefully - haine
 			if (remove_object)
 				src.remove_object = null
@@ -233,32 +233,33 @@ ABSTRACT_TYPE(/obj/item/parts)
 			remove_stage = 3
 
 		object.set_loc(src.holder.loc)
-		var/direction = src.holder.dir
 
 		//https://forum.ss13.co/showthread.php?tid=1774
-		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
+		//object.name = "[src.holder.real_name]’s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
-		holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
+		if (setDir)
+			var/direction = src.holder.dir
+			switch(direction)
+				if(NORTH)
+					direction = WEST
+				if(EAST)
+					direction = NORTH
+				if(SOUTH)
+					direction = EAST
+				if(WEST)
+					direction = SOUTH
 
-		switch(direction)
-			if(NORTH)
-				direction = WEST
-			if(EAST)
-				direction = NORTH
-			if(SOUTH)
-				direction = EAST
-			if(WEST)
-				direction = SOUTH
+			if(side != "left")
+				direction = turn(direction,180)
 
-		if(side != "left")
-			direction = turn(direction,180)
+			if (isitem(object))
+				object.streak_object(direction, src.streak_decal)
 
-		if (isitem(object))
-			object.streak_object(direction, src.streak_decal)
+			if(prob(60))
+				INVOKE_ASYNC(holder, TYPE_PROC_REF(/atom, emote), "scream")
 
-		if(prob(60))
-			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
+			holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder

@@ -127,9 +127,7 @@
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
-			if (M.bodytemperature > M.base_body_temp + 3)
-				for(var/i in 1 to times)
-					M.bodytemperature -= 2
+			M.changeBodyTemp(-2 KELVIN * times, min_temp = M.base_body_temp + 3)
 
 /datum/statusEffect/foodwarm
 	id = "food_warm"
@@ -152,9 +150,7 @@
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
-			if (M.bodytemperature < M.base_body_temp + 8)
-				for(var/i in 1 to times)
-					M.bodytemperature += 6
+			M.changeBodyTemp(6 KELVIN * times, max_temp = M.base_body_temp + 8)
 
 /datum/statusEffect/staminaregen/food
 	id = "food_refreshed"
@@ -413,6 +409,22 @@
 
 	getChefHint()
 		. = "Gives the consumer an absolutely terrible breath smell."
+
+	onAdd()
+		. = ..()
+		RegisterSignal(owner, COMSIG_ATOM_SAY, PROC_REF(smell_breath))
+
+	onRemove()
+		UnregisterSignal(owner,COMSIG_ATOM_SAY)
+		. = ..()
+
+	proc/smell_breath()
+		for (var/mob/living/L in oview(2, owner))
+			if (prob(50))
+				continue
+
+			boutput(L, SPAN_ALERT("Good lord, [owner]'s breath smells bad!"))
+			L.nauseate(1)
 
 /datum/statusEffect/slimy
 	id = "food_slimy"

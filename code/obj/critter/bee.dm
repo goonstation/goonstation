@@ -1,5 +1,7 @@
-
 ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
+TYPEINFO(/obj/critter/domestic_bee)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_COMIC)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
@@ -22,6 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	flying = 1
 	min_quality = -60
 	p_class = 2
+	speech_verb_say = "buzzes"
 
 	var/honey_production_amount = 50
 	var/nectar_check = 10
@@ -118,10 +121,10 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 					src.visible_message(SPAN_ALERT("<b>[src]</b> bumbles MOURNFULLY."))
 					return
 
-				if (beeMom.lastattacker && beeMom.lastattacker != beeMom && (beeMom.lastattackertime + 140) >= world.time)
-					src.target = beeMom.lastattacker
+				if (beeMom.lastattacker?.deref() && beeMom.lastattacker.deref() != beeMom && (beeMom.lastattackertime + 140) >= world.time)
+					src.target = beeMom.lastattacker.deref()
 					src.oldtarget_name = "[src.target]"
-					src.visible_message(SPAN_ALERT("<b>[src] buzzes angrily at [beeMom.lastattacker]!</b>"))
+					src.visible_message(SPAN_ALERT("<b>[src] buzzes angrily at [beeMom.lastattacker.deref()]!</b>"))
 					src.task = "chasing"
 					return ..()
 
@@ -352,7 +355,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 							src.visible_message("<b>[src]</b> drops \a [D] on the floor in an attempt to cheer [user] up!")
 							playsound(D.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg' , 30, 1)
 			else
-				E.icon_state = "gold"
+				E.icon_state = "id_gold"
 				E.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [E]!")
 				E.name = "sticky [E.name]"
@@ -880,7 +883,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				hat.transform = trans
 				trans.Translate(0, -7 * ((ubertier - 4) / 3 - 1))
 				hat.wear_image.transform = trans
-		hat.name = "[src]'s [hat.name]"
+		hat.name = "[src]’s [hat.name]"
 		src.original_hat = hat
 		src.hat_that_bee(hat)
 		src.UpdateIcon()

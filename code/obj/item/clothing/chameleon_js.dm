@@ -1,9 +1,9 @@
 /obj/item/clothing/under/chameleon
 	name = "black jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 	icon_state = "black"
 	item_state = "black"
 	var/list/clothing_choices = list()
@@ -37,6 +37,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
+			P.hide_underwear = U.hide_underwear
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -49,9 +50,9 @@
 			src.desc = "Groovy!"
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
-			icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+			icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 			wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-			inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+			inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
@@ -81,17 +82,20 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.hide_underwear = T.hide_underwear
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
+			usr.update_body()
 
 /datum/chameleon_jumpsuit_pattern
 	var/name = "black jumpsuit"
 	var/desc = "A generic jumpsuit with no rank markings."
 	var/icon_state = "black"
 	var/item_state = "black"
-	var/sprite_item = 'icons/obj/clothing/uniforms/item_js.dmi'
+	var/sprite_item = 'icons/obj/clothing/jumpsuits/item_js.dmi'
 	var/sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
-	var/sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+	var/sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
+	var/hide_underwear = FALSE
 
 	white
 		name = "white jumpsuit"
@@ -157,9 +161,9 @@
 		desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
 		icon_state = "assistant"
 		item_state = "assistant"
-		sprite_item = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
+		sprite_item = 'icons/obj/clothing/jumpsuits/item_js_rank.dmi'
 		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
-		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
+		sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js_rank.dmi'
 
 	rank/engineer
 		name = "engineer's jumpsuit"
@@ -298,9 +302,9 @@
 		desc = "The crisp threads of a postmaster."
 		icon_state = "mail"
 		item_state = "mail"
-		sprite_item = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+		sprite_item = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
 		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
-		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+		sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 
 /obj/item/clothing/head/chameleon
 	name = "hat"
@@ -314,7 +318,6 @@
 	var/current_choice = new/datum/chameleon_hat_pattern
 	blocked_from_petasusaphilic = TRUE
 	item_function_flags = IMMUNE_TO_ACID
-	seal_hair = FALSE
 
 	New()
 		..()
@@ -344,7 +347,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
-			P.seal_hair = U.seal_hair
+			P.seal_hair = U.c_flags & COVERSHAIR
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -360,7 +363,7 @@
 			src.hides_from_examine = null
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.seal_hair = FALSE
+			src.c_flags &= ~COVERSHAIR
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -389,7 +392,10 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
-			src.seal_hair = T.seal_hair
+			if (T.seal_hair)
+				c_flags |= COVERSHAIR
+			else
+				c_flags &= ~COVERSHAIR
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
@@ -572,7 +578,6 @@
 	item_state = "hoodie"
 	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
-	over_hair = FALSE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_suit_pattern/hoodie
 
@@ -604,7 +609,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
-			P.over_hair = U.over_hair
+			P.over_hair = U.c_flags & COVERSHAIR
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -647,11 +652,14 @@
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
 			src.icon = T.sprite_item
-			src.over_hair = T.over_hair
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			if (T.over_hair)
+				c_flags |= COVERSHAIR
+			else
+				c_flags &= ~COVERSHAIR
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
@@ -900,7 +908,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-		over_hair = FALSE
+		over_hair = TRUE
 		hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES|C_GLASSES|C_EARS
 
 	chef_coat
@@ -1543,6 +1551,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	spawn_contents = list()
 	check_wclass = TRUE
 	can_hold = list(/obj/item/storage/belt/chameleon)
+	satchel_variant = null //Set and then unset in convert_to_satchel, but should remain null as we don't know what we're disguised as.
 
 	New()
 		..()
@@ -1618,6 +1627,27 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
+
+	//Needs special casing to first figure out which bag we're disguised as, then call parent when we've figured out which satchel we need to be
+	convert_to_satchel(name_base_item)
+		var/list/bag_types = concrete_typesof(/obj/item/storage/backpack)
+		for (var/obj/item/storage/backpack/bag as anything in bag_types)
+			if((bag::icon_state == src.icon_state) && (bag::icon == src.icon))
+				src.satchel_variant = bag::satchel_variant
+		. = ..(name_base_item)
+		//Make sure to add the new satchel disguise to our list if it isn't already there
+		for(var/datum/chameleon_backpack_pattern/check_pattern in src.clothing_choices)
+			if(check_pattern.name == src.name)
+				return .
+		var/datum/chameleon_backpack_pattern/P = new /datum/chameleon_backpack_pattern(src)
+		P.name = src.name
+		P.desc = src.desc
+		P.icon_state = src.icon_state
+		P.item_state = src.item_state
+		P.sprite_item = src.icon
+		P.sprite_worn = src.wear_image_icon
+		P.sprite_hand = src.inhand_image_icon
+		src.clothing_choices += P
 
 	verb/change()
 		set name = "Change Appearance"

@@ -1,10 +1,9 @@
 @use '../colors';
-@use '../components/Button';
 @use '../base';
 
 .AccessPanel-wires-btn {
   &.Button--selected {
-    background-color: colors.bg(colors.$average) !important;
+    background-color: colors.bg(var(--color-average)) !important;
   }
 }
 

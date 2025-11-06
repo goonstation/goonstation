@@ -71,7 +71,7 @@
 			if (I.hitsound)
 				playsound(I, I.hitsound, 50, 1)
 			src._health -= I.force
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (src._health <= 0)
 				if (src.falling)
 					return
@@ -217,7 +217,7 @@
 
 /obj/shrub
 	name = "shrub"
-	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
+	desc = "A bush. Despite your best efforts, you can't tell if it's real or not. "
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "shrub"
 	anchored = ANCHORED
@@ -274,7 +274,7 @@
 		else if (destroyed)
 			return ..()
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (iscow(user) && user.a_intent == INTENT_HELP)	//Cow people may want to eat some of the bush's leaves
 			graze(user)
 			return 0
@@ -333,14 +333,14 @@
 			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
 
 	attackby(var/obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		attack_particle(user,src)
 		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, 0)
 		src.take_damage(W.force)
 		user.visible_message(SPAN_ALERT("<b>[user] hacks at [src] with [W]!</b>"))
 
-	proc/graze(mob/living/carbon/human/user)
+	proc/take_bite()
 		src.bites -= 1
 		var/desired_mask = (src.bites / initial(src.bites)) * 5
 		desired_mask = round(desired_mask)
@@ -350,6 +350,10 @@
 			current_mask = desired_mask
 			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
+		if(src.bites <= 0)
+			destroy()
+
+	proc/graze(mob/living/carbon/human/user)
 		eat_twitch(user)
 		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
@@ -363,9 +367,13 @@
 			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src]."), SPAN_NOTICE("You munch on some of [src]'s leaves, like any normal human would."))
 			user.sims?.affectMotive("Hunger", 10)
 
-		if(src.bites <= 0)
-			destroy()
+		src.take_bite()
+
 		return 0
+
+	clamp_act(mob/clamper, obj/item/clamp)
+		src.take_bite()
+		return TRUE
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
@@ -418,6 +426,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 /obj/shrub/syndicateplant
 	var/net_id
 	is_syndicate = TRUE
+	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.", "Is that an antenna?")
+
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
@@ -457,12 +467,15 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "bonsai"
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
+	health = 5 //Fragile tree
 	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
 
 	destroy()
+		if(src.destroyed)
+			return
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
@@ -483,7 +496,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 				boutput(M, SPAN_ALERT("You suddenly feel hollow. Something very dear to you has been lost."))
 
 	graze(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.mind && user.mind.assigned_role == "Captain")
 			boutput(user, SPAN_NOTICE("You catch yourself almost taking a bite out of your precious bonzai but stop just in time!"))
 			return
@@ -492,6 +505,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			user.visible_message(SPAN_ALERT("<b>[user] violently grazes on [src]!</b>"), SPAN_NOTICE("You voraciously devour the bonzai, what a feast!"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 			src.destroy()
+			logTheThing(LOG_COMBAT, src, "was eaten by [constructTarget(user,"combat")] at [log_loc(src)].")
 			user.changeStatus("food_deep_burp", 2 MINUTES)
 			user.changeStatus("food_hp_up", 2 MINUTES)
 			user.changeStatus("food_energized", 2 MINUTES)
@@ -503,28 +517,31 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		if (inafterlife(user))
 			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
-		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
 			if (issnippingtool(W))
 				boutput(user, SPAN_NOTICE("You carefully and lovingly sculpt your bonsai tree."))
 			else
 				boutput(user, SPAN_ALERT("Why would you ever destroy your precious bonsai tree?"))
-		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
-			src.destroy()
+			return
+		var/was_destroyed = src.destroyed
+		. = ..()
+		if(src.destroyed && !was_destroyed)
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
 			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"))
+			logTheThing(LOG_COMBAT, src, "was destroyed by [constructTarget(user,"combat")] with [W] at [log_loc(src)].")
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
-		return
 
 	meteorhit(obj/O as obj)
 		src.visible_message(SPAN_ALERT("<b>The meteor smashes right through [src]!</b>"))
 		src.destroy()
+		logTheThing(LOG_COMBAT, src, "was destroyed by a meteor at [log_loc(src)].")
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
 		src.visible_message(SPAN_ALERT("<b>[src] is ripped to pieces by the blast!</b>"))
 		src.destroy()
+		logTheThing(LOG_COMBAT, src, "was destroyed by an explosion at [log_loc(src)].")
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
 
@@ -567,6 +584,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			src.UpdateIcon()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
 			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"))
+			logTheThing(LOG_COMBAT, src, "was destroyed by [constructTarget(user,"combat")] with [W] at [log_loc(src)].")
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 
@@ -1272,6 +1290,11 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			name = "Space Station 10"
 			desc = "Looks like the regional Nanotrasen hub station passing by your orbit."
 			icon_state = "ss10"
+	earth
+		name = "Earth"
+		desc = "Oh shit, it's Earth!"
+		icon = 'icons/obj/large/160x160.dmi'
+		icon_state = "earthrise"
 
 obj/decoration
 
@@ -1609,6 +1632,7 @@ obj/decoration/gibberBroken
 	mouse_opacity = 0
 
 /obj/decoration/damagedchair
+	name = "damaged chair"
 	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "damagedchair"
@@ -1848,18 +1872,53 @@ obj/decoration/pottedfern
 	density = 1
 	anchored = ANCHORED
 	opacity = 0
-
+	var/on = TRUE
 	var/datum/light/light
+	var/movable = TRUE
+	var/extinguishable = TRUE
 
 	New()
-		UpdateParticles(new/particles/barrel_embers, "embers")
-		UpdateParticles(new/particles/barrel_smoke, "smoke")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
-		light.enable()
+		src.set_on(src.on, TRUE)
 		..()
+
+	get_help_message(dist, mob/user)
+		return "You can use a <b>wrench</b> to [src.anchored ? "unbolt it" : "bolt it down"]."
+
+	proc/set_on(on, quiet = FALSE)
+		if (on)
+			src.UpdateParticles(new/particles/barrel_embers, "embers")
+			src.UpdateParticles(new/particles/barrel_smoke, "smoke")
+			src.light.enable()
+			src.on = TRUE
+			name = initial(name)
+			desc = initial(desc)
+			if (!quiet)
+				playsound(src, 'sound/effects/lit.ogg', 80, 0, 1)
+			global.processing_items |= src //shut up
+		else
+			src.light.disable()
+			src.ClearAllParticles()
+			src.on = FALSE
+			src.name = "crusty barrel"
+			src.desc = "A grody old barrel full of flammable looking wood."
+			global.processing_items -= src
+		src.UpdateIcon()
+
+	proc/process()
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+		T.hotspot_expose(T0C + 300, 100, TRUE, FALSE)
+
+	update_icon(...)
+		if (src.on)
+			src.icon_state = "barrel1"
+		else
+			src.icon_state = "barrel-planks"
 
 	disposing()
 		light.disable()
@@ -1870,36 +1929,69 @@ obj/decoration/pottedfern
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
-			if(!C.on)
+			if(!C.on && src.on)
 				C.light(user, SPAN_ALERT("[user] lights the [C] with [src]. That seems appropriate."))
+			return
+		if (src.movable && (isscrewingtool(W) || iswrenchingtool(W)))
+			if (istype(src.loc, /turf/space))
+				boutput(user, SPAN_ALERT("There's nothing to bolt it to!"))
+				return
+			src.anchored = !src.anchored
+			src.visible_message(SPAN_NOTICE("[user] [src.anchored ? "bolts down" : "unbolts"] [src]"))
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, TRUE)
+			return
+		if (W.firesource && !src.on)
+			src.set_on(TRUE)
+			W.firesource_interact()
+			return
+		. = ..()
+
+	reagent_act(reagent_id, volume, datum/reagentsholder_reagents)
+		if (..() || !src.extinguishable)
+			return
+		if (reagent_id == "ff-foam" || reagent_id == "water" && volume >= 20)
+			src.set_on(FALSE)
 
 /obj/fireworksbox
 	name = "Box of Fireworks"
 	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
-	density = 0
-	anchored = UNANCHORED
-	opacity = 0
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "fireworksbox"
-	var/fireworking = 0
+	var/fireworking = FALSE
+	var/amount_left = 25
+
+	New()
+		. = ..()
+		src.amount_left = rand(15, 25)
 
 	attack_hand(mob/user)
 		if(fireworking) return
-		fireworking = 1
+		fireworking = TRUE
 		boutput(user, SPAN_ALERT("The fireworks go off as soon as you touch the box. This is some high quality stuff."))
 		anchored = ANCHORED
 
 		SPAWN(0)
-			for(var/i=0, i<rand(15,25), i++)
+			for(var/i=0, i<src.amount_left, i++)
 				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
 				playsound(src.loc, 'sound/effects/firework.ogg', 50, 1)
 				sleep(rand(2, 15))
 
-			for(var/mob/O in oviewers(world.view, src))
-				O.show_message(SPAN_NOTICE("The box of fireworks magically disappears."), 1)
-
+			src.visible_message(SPAN_NOTICE("The box of fireworks magically disappears."))
 			qdel(src)
 		return
+
+	attackby(obj/item/I, mob/user)
+		if (issnippingtool(I) && !src.fireworking)
+			var/a_firework = weighted_pick(list(/obj/item/roman_candle=5, /obj/item/firework=5, /obj/item/firework/bootleg=1))
+			var/obj/item/the_firework = new a_firework(src.loc)
+			boutput(user, "You take [the_firework] from the box.")
+			user.put_in_hand_or_drop(the_firework)
+			src.amount_left -= 1
+			if (src.amount_left <= 0)
+				src.visible_message(SPAN_NOTICE("The box of fireworks magically disappears."))
+				qdel(src)
+			return
+		. = ..()
 
 ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 /obj/lever
@@ -1921,12 +2013,12 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 		if (on)
 			on = FALSE
-			flick("wall-lever-up-anim", src)
+			FLICK("wall-lever-up-anim", src)
 			src.icon_state = "wall-lever-up"
 			src.off()
 		else
 			on = TRUE
-			flick("wall-lever-down-anim", src)
+			FLICK("wall-lever-down-anim", src)
 			src.icon_state = "wall-lever-down"
 			src.on()
 
@@ -1935,6 +2027,33 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 
 	proc/off()
 		return
+
+
+ADMIN_INTERACT_PROCS(/obj/lever/custom, proc/set_up)
+/obj/lever/custom
+	var/datum/target = null
+	var/on_proc = ""
+	var/off_proc = ""
+
+	proc/set_up()
+		var/list/data = usr.client.get_proccall_arglist(list(
+			ARG_INFO("target_datum", DATA_INPUT_REFPICKER, "Target"),
+			ARG_INFO("on_proc", DATA_INPUT_TEXT, "Name of proc to call when the lever is pulled ON"),
+			ARG_INFO("off_proc", DATA_INPUT_TEXT, "Name of proc to call when the lever is pulled OFF")
+		))
+		src.target = data["target_datum"]
+		src.on_proc = data["on_proc"]
+		src.off_proc = data["off_proc"]
+
+	on()
+		if (src.target && length(src.on_proc))
+			call(src.target, src.on_proc)()
+
+	off()
+		if (src.target && length(src.off_proc))
+			call(src.target, src.off_proc)()
+
+
 /obj/decoration/paperstack/massive
 	name = "Pile of papers"
 	desc = "The pile of papers is so overwhelming it crush you."

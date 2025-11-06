@@ -58,6 +58,8 @@
 	light = new /datum/light/point
 	light.attach(src)
 	light.set_brightness(0.4)
+	AddComponent(/datum/component/mechanics_holder)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"ignite", PROC_REF(ignite))
 
 /obj/machinery/sparker/power_change()
 	if ( powered() && disable == 0 )
@@ -97,7 +99,7 @@
 		return
 
 
-	flick("[base_state]-spark", src)
+	FLICK("[base_state]-spark", src)
 	elecflash(src)
 	use_power(1000)
 	var/turf/location = src.loc

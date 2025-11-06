@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 //Gas channel
 /obj/item/reactor_component/gas_channel
 	name = "gas channel"
-	desc = "A gas coolant channel component for a nuclear reactor."
+	desc = "A gas coolant channel component for a nuclear reactor. Rated for 100 liters of gas flow volume."
 	icon_state_inserted = "gas"
 	icon_state_cap = "gas_cap"
 	thermal_cross_section = 15
@@ -459,6 +459,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		15;"frozenfart",\
 		5;"negativematter",\
 		5;"plutonium",\
+		5;"yuranite",\
 		100; "glowstick"
 
 /obj/item/reactor_component/fuel_rod/random_material

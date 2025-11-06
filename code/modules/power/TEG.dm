@@ -1148,7 +1148,7 @@ datum/pump_ui/circulator_ui
 
 			if(target == null) break
 
-			var/list/affected = DrawLine(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			var/list/affected = drawLineObj(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
 				SPAWN(0.6 SECONDS) qdel(O)
@@ -1291,6 +1291,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				boutput(owner, SPAN_NOTICE("You snip the last piece of the electrical system connected to the semiconductor."))
 				playsound(generator, 'sound/items/Scissor.ogg', 80, TRUE)
 				generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
+				logTheThing(LOG_STATION, owner, "disabled the TEG by unscrewing the semiconductor.")
 				generator.status |= BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
 				generator.UpdateIcon()
 
@@ -1306,6 +1307,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				generator.semiconductor_state = TEG_SEMI_STATE_MISSING
 				boutput(owner, SPAN_NOTICE("You finish prying the metal out of \the [generator]."))
 				playsound(generator, 'sound/items/Deconstruct.ogg', 80, TRUE)
+				logTheThing(LOG_STATION, owner, "removed the TEG semiconductor.")
 				generator.semiconductor_repair = "The semiconductor is missing..."
 
 				var/obj/item/sheet/S = new /obj/item/sheet(get_turf(generator))
@@ -1384,6 +1386,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 						generator.semiconductor_state = TEG_SEMI_STATE_DISCONNECTED
 						playsound(generator, 'sound/items/Deconstruct.ogg', 80, TRUE)
+						logTheThing(LOG_STATION, owner, "installed a semiconductor into the TEG with material [the_tool.material ? the_tool.material.getName() : "default"].")
 						owner.visible_message(SPAN_NOTICE("[owner] places [the_tool] inside [generator]."), SPAN_NOTICE("You successfully place semiconductor inside \the [generator]."))
 						generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
 					else if(istype(the_tool, /obj/item/sheet))
@@ -1396,8 +1399,9 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 						generator.semiconductor_state = TEG_SEMI_STATE_BOOTLEG_SEMI
 						playsound(generator, 'sound/items/Deconstruct.ogg', 80, TRUE)
+						logTheThing(LOG_STATION, owner, "installed metal plates as a bootleg TEG semiconductor with material [the_tool.material ? the_tool.material.getName() : "steel"].")
 						owner.visible_message(SPAN_NOTICE("[owner] places [the_tool] inside [generator]."), SPAN_NOTICE("You successfully placed the sheets inside \the [generator]."))
-						generator.semiconductor_repair = "The semiconductor has stuffed with some sheets they need to but and fused with a welder to probably make it work."
+						generator.semiconductor_repair = "There's some metal sheets where the semiconductor is supposed to be, but they need to be fused with a welder to make it work."
 
 			if(TEG_SEMI_STATE_BOOTLEG_SEMI)
 				if (the_tool != null)
@@ -1421,6 +1425,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 					generator.semiconductor_state = TEG_SEMI_STATE_CONNECTED
 					boutput(owner, SPAN_NOTICE("You wire up the semicondoctor to \the [generator]."))
+					logTheThing(LOG_STATION, owner, "fixed the TEG by re-wiring the semiconductor.")
 					playsound(generator, 'sound/items/Deconstruct.ogg', 80, TRUE)
 					generator.semiconductor_repair = "The semiconductor has been wired in but has excess cable that must be removed."
 					generator.status &= ~BROKEN // SEMICONDUCTOR RECONNECTED IT UNBROKEN
@@ -1603,7 +1608,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /// Signals which claim the device to be of identifier "AGP" are exclusively pumps or pump wannabes (fine)
 #define DEVICE_IS_PUMP(signal) (signal.data["device"] == "AGP")
 /// Do we have all the information we should Really Really Have?
-#define HAS_REQUIRED_DATA(signal) ((signal.data["netid"] != null) && (signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
+#define HAS_REQUIRED_DATA(signal) ((signal.data["sender"] != null) && (signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
 
 /obj/machinery/computer/atmosphere/pumpcontrol
 	icon = 'icons/obj/computer.dmi'
@@ -1651,11 +1656,13 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	"area_name" - Name of the area the pump is in
 	"alive" - Whether or not the pump has broadcasted back. Used while checking for if pumps are unreachable or not
 	*/
-	var/list/pump_data_ref = src.getPump(signal.data["netid"])
+	var/list/pump_data_ref = src.getPump(signal.data["sender"])
 	if (pump_data_ref)
 		// We exist in the list already, update information instead
 		for (var/key in signal.data)
 			pump_data_ref[key] = signal.data[key]
+			if (key == "sender")
+				pump_data_ref["netid"] = signal.data[key]
 		pump_data_ref["processing"] = FALSE
 		pump_data_ref["alive"] = PUMP_ALIVE
 		return
@@ -1663,6 +1670,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	var/list/infoset = new()
 	for (var/key in signal.data)
 		infoset[key] = signal.data[key]
+		if (key == "sender")
+			infoset["netid"] = signal.data[key]
 	var/area/A = get_area(signal.source)
 	if (!A)
 		return

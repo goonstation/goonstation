@@ -5,14 +5,15 @@
 	icon_state = "scuttlebot"
 	flags = TABLEPASS | DOORPASS
 	hand_count = 1
+	density = FALSE
 	can_help = TRUE
 	can_throw = TRUE
 	can_grab = FALSE
 	can_disarm = TRUE
 	fits_under_table = TRUE
-	speechverb_say = "beeps"
-	speechverb_exclaim = "boops"
-	speechverb_ask = "beeps curiously"
+	speech_verb_say = "beeps"
+	speech_verb_exclaim = "boops"
+	speech_verb_ask = "beeps curiously"
 	add_abilities = list(/datum/targetable/critter/takepicture,
 						/datum/targetable/critter/flash,
 						/datum/targetable/critter/scuttle_scan,
@@ -28,6 +29,9 @@
 	New()
 		..()
 		//Comes with the goggles
+		src.spawn_goggles()
+
+	proc/spawn_goggles()
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 		R.connected_scuttlebot = src
 
@@ -121,10 +125,40 @@
 
 	setup_hands()
 
+/mob/living/critter/robotic/scuttlebot/mail
+	name = "\improper CARR13R P1G30N"
+	desc = "A pigeon that must've escaped from the ranch and been trained to deliver mail... wait why is 8G labeled on its leg?"
+	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
+	icon_state = "pigeon"
+	speech_verb_say = "tweets"
+	speech_verb_exclaim = "chirps"
+	speech_verb_ask = "tweets curiously"
+	var/obj/item/clothing/suit/pigeon/linked_pigeon = null
+
+	add_abilities = list(/datum/targetable/critter/control_owner/mail)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/mail
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "claw"
+		HH.limb_name = "claws"
+
+	spawn_goggles()
+		var/obj/item/clothing/glasses/scuttlebot_vr/mail/R = new /obj/item/clothing/glasses/scuttlebot_vr/mail(src.loc)
+		R.connected_scuttlebot = src
+
+	make_inspector()
+		return
+
+
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 
-	add_abilities = list(/datum/targetable/critter/takepicture)
+	add_abilities = list(/datum/targetable/critter/takepicture/nostorage)
 
 
 	setup_hands()
 
+	spawn_goggles()

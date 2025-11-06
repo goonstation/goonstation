@@ -1,7 +1,7 @@
 //This file contains stuff that is still *mostly* my code.
 
 /*
-Proc: drawLine
+Proc: drawLineImg
 Arguments:
 	source: The source atom where the beam begins.
 	target: The target atom where the beam ends.
@@ -25,12 +25,12 @@ Arguments:
 	adjustTiles: If 1, will attempt to correct the list of crossed turfs based on the offsets passed into the proc.
 				 If 0, will ignore the offsets and just go from source to target.
 Returns:
-	An instance of /datum/lineResult. See below drawLine.
+	An instance of /datum/lineResult. See below drawLineImg.
 		lineImage contains the finished line image. You will still need to output it for it to be visible. addGlobalImage is an option.
 		By default the image is attached to source. You can change this by setting the image's loc to something else.
 		crossed contains a list of crossed turfs if getCrossed was set to 1.
 */
-/proc/drawLine(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1, var/applyTransform = TRUE)
+/proc/drawLineImg(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1, var/applyTransform = TRUE)
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
@@ -207,7 +207,7 @@ Returns:
 /proc/testLine()
 	var/atom/source = get_turf(usr)
 	var/atom/target = get_turf(pick(oview(5)))
-	var/datum/lineResult/R = drawLine(source, target, list("elec1","elec2","elec3"), "eleccap")
+	var/datum/lineResult/R = drawLineImg(source, target, list("elec1","elec2","elec3"), "eleccap")
 	var/globalImageKey = "linetest[rand(0,INFINITY)]"
 	R.lineImage.color = "#4b8aff"
 	addGlobalImage(R.lineImage, globalImageKey)
@@ -1332,6 +1332,7 @@ Returns:
 	desc = "An ancient solution to the ancient problem of wanting to stab somebody, but not wanting them to be able to stab you back."
 	force = 10
 	throwforce = 20
+	contraband = 4
 	color = "#ffffff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "spear"
@@ -3005,7 +3006,7 @@ var/list/lag_list = new/list()
 		active = 1
 		walk_towards(src,L,3)
 		src.invisibility = INVIS_NONE
-		flick("apparition",src)
+		FLICK("apparition",src)
 		sleep(1.5 SECONDS)
 		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
@@ -3106,8 +3107,10 @@ var/list/lag_list = new/list()
 	name = "Spawn ID card"
 	desc = "Allows you to spawn an id card with a certain access level."
 	used(atom/user, atom/target)
-		var/obj/item/card/id/blank_deluxe/D = new/obj/item/card/id/blank_deluxe(get_turf(target))
+		var/obj/item/card/id/gold/D = new/obj/item/card/id/gold(get_turf(target))
 		D.access = get_access(input(usr) in get_all_jobs() + "Club member")
+		D.registered = "Member"
+		D.assignment = "Member"
 		return
 
 /datum/engibox_mode/fwall
@@ -3301,7 +3304,7 @@ var/list/lag_list = new/list()
 			return
 		var/dat = "Engie-box modes:<BR><BR>"
 		for(var/datum/engibox_mode/D in modes)
-			dat += "<A href='?src=\ref[src];set_mode=\ref[D]'>[D.name]</A> [active_mode == D ? "<<<" : ""]<BR>"
+			dat += "<A href='byond://?src=\ref[src];set_mode=\ref[D]'>[D.name]</A> [active_mode == D ? "<<<" : ""]<BR>"
 			dat += "[D.desc]<BR><BR>"
 		user.Browse(dat, "window=engibox;can_minimize=0;can_resize=0;size=250x600")
 		onclose(user, "window=engibox")
@@ -3318,8 +3321,10 @@ var/list/lag_list = new/list()
 				active_mode.saved_var = input(usr,"Enter ID","ID","MyId") as text
 				if(!active_mode.saved_var || isnull(active_mode.saved_var)) active_mode = null
 
-			if(istype(active_mode,/datum/engibox_mode/transmute)) //You only have yourself to blame for this. This shitty code is the fault of whoever changed this!!!
-				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","brullbarhide","cotton","fibrilith")
+			// Get a list of every material ID
+			if(istype(active_mode,/datum/engibox_mode/transmute))
+				var/datum/engibox_mode/transmute/transmute_mode = src.active_mode
+				transmute_mode.mat_id = input(usr,"Select material","material","gold") in global.material_cache
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null

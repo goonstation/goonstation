@@ -29,6 +29,9 @@
 	return result
 */
 
+TYPEINFO(/obj/machinery/computer/tetris)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/computer/tetris
 	name = "Robustris Pro cabinet"
 	icon = 'icons/obj/computer.dmi'
@@ -36,6 +39,7 @@
 	desc = "Instructions:<ul style='margin: 0;'><li>Left/Right Arrows: Move</li><li>Up Arrow/Space: Hard Drop</li><li>Down Arrow/S: Soft Drop</li><li>W/E/R: Rotate CW</li><li>Q/Z: Rotate CCW</li></ul>"
 	machine_registry_idx = MACHINES_MISC
 	circuit_type = /obj/item/circuitboard/tetris
+	speech_verb_say = "beeps"
 	var/datum/game/tetris/tetris
 
 /obj/machinery/computer/tetris/New()
@@ -115,7 +119,7 @@ ABSTRACT_TYPE(/datum/game)
 
 
 				if (src.owner && msg)
-					src.owner.obj_speak(msg)
+					src.owner.say(msg)
 					if (score >= highscore || score >= 30000)
 						// >= here becuase it was updated earlier
 						particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.owner.loc))
@@ -125,7 +129,7 @@ ABSTRACT_TYPE(/datum/game)
 
 	new_game(mob/user as mob)
 		var/dat = replacetext(code, "{{HIGHSCORE}}", num2text(highscore))
-		dat = replacetext(dat, "{{TOPICURL}}", "'?src=\ref[src];highscore='+this.ScoreCur;")
+		dat = replacetext(dat, "{{TOPICURL}}", "'byond://?src=\ref[src];highscore='+this.ScoreCur;")
 
 		user.Browse(dat, "window=tetris;size=375x546")
 		onclose(user, "tetris")

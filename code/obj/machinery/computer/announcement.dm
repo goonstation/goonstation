@@ -12,17 +12,16 @@
 	var/announce_status = "Insert Card"
 	var/max_length = 400
 	var/announces_arrivals = 0
-	var/say_language = "english"
+	var/atom/movable/abstract_say_source/radio/announcement_computer/computer_say_source
+	var/computer_say_source_name = "Announcement Computer"
 	var/arrivalalert = "$NAME has signed up as $JOB."
 	var/departurealert = "$NAME the $JOB has entered cryogenic storage."
-	var/obj/item/device/radio/intercom/announcement_radio = null
-	var/voice_message = "broadcasts"
-	var/voice_name = "Announcement Computer"
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
 	var/sound_volume = 100
-	var/override_font = null
 	///Override for where this says it's coming from
 	var/area_name = null
+	/// Determines colors for alert text
+	var/alert_origin = ALERT_COMMAND
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -31,9 +30,9 @@
 	light_b = 0.1
 
 	New()
-		..()
-		if (src.announces_arrivals)
-			src.announcement_radio = new(src)
+		. = ..()
+		src.computer_say_source = new()
+		src.computer_say_source.name = src.computer_say_source_name
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/card/id))
@@ -67,7 +66,7 @@
 			"max_length" = src.max_length
 		)
 
-	ui_act(action, params)
+	ui_act(action, params, datum/tgui/ui)
 		. = ..()
 		if (.)
 			return
@@ -102,7 +101,7 @@
 				src.set_arrival_alert(usr, params["value"])
 				. = TRUE
 			if ("log")
-				logTheThing(LOG_STATION, usr, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
+				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
 
 	proc/update_status()
 		if(!src.ID)
@@ -113,36 +112,25 @@
 			announce_status = ""
 
 	proc/send_message(var/mob/user, message)
-		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0) return
-		var/area/A = get_area(src)
+		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0)
+			return
 
-		if(user.bioHolder.HasEffect("mute"))
-			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
+		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.content
+		if (!message)
 			return
-		if(url_regex?.Find(message))
-			boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
-			boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
-			return
-		message = sanitize(adminscrub(message, src.max_length))
 
 		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
 		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
 		var/msg_sound = src.sound_to_play
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			message = process_accents(H, message) //Slurred announcements? YES!
+
 		if (isflockmob(user))
 			message = radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
-
+		var/area/A = get_area(src)
 		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
-		if (override_font )
-			message = "<font face = '[override_font]'> [message] </font>"
-			header = "<font face = '[override_font]'> [header] </font>"
-
-		command_announcement(message, header, msg_sound, volume = src.sound_volume)
+		command_announcement(message, header, msg_sound, volume = src.sound_volume, alert_origin = src.alert_origin)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
 
@@ -164,58 +152,50 @@
 		playsound(src.loc, "keyboard", 50, 1, -15)
 		return
 
-	proc/say_quote(var/text)
-		return "[src.voice_message], \"[text]\""
+	proc/announce_arrival(mob/living/person)
+		if (!src.announces_arrivals || !src.arrivalalert)
+			return TRUE
 
-	proc/process_language(var/message)
-		var/datum/language/L = languages.language_cache[src.say_language]
-		if (!L)
-			L = languages.language_cache["english"]
-		return L.get_messages(message)
-
-	proc/announce_arrival(var/mob/living/person)
-		var/background_trait = person.traitHolder.getTraitWithCategory("background")
-		if (!src.announces_arrivals)
-			return 1
-		if (!src.arrivalalert)
-			return 1
-		if (background_trait)
-			return 1 //people who have been on the ship the whole time, or who aren't on the ship, won't be announced
-		if (!src.announcement_radio)
-			src.announcement_radio = new(src)
+		// People who have been on the ship the whole time, or who aren't on the ship, shouldn't be announced.
+		if (person.traitHolder.getTraitWithCategory("background"))
+			return TRUE
 
 		var/job = person.mind.assigned_role
-		if(!job || job == "MODE")
+		if (!job || (job == "MODE"))
+			job = "Staff Assistant"
+		if (issilicon(person) && !isAI(person))
+			job = "Cyborg"
+
+		var/message = src.arrivalalert
+		message = replacetext(message, "$NAME", person.real_name)
+		message = replacetext(message, "$JOB", job)
+		message = replacetext(message, "$STATION", "[station_name()]")
+		message = replacetext(message, "$THEY", "[he_or_she(person)]")
+		message = replacetext(message, "$THEM", "[him_or_her(person)]")
+		message = replacetext(message, "$THEIR", "[his_or_her(person)]")
+
+		src.computer_say_source.say(message)
+		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
+		return TRUE
+
+	proc/announce_departure(mob/living/person)
+		var/job = person.mind.assigned_role
+		if(!job || (job == "MODE"))
 			job = "Staff Assistant"
 		if(issilicon(person) && !isAI(person))
 			job = "Cyborg"
 
-		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
-		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
+		var/message = src.departurealert
+		message = replacetext(message, "$NAME", person.real_name)
+		message = replacetext(message, "$JOB", job)
+		message = replacetext(message, "$STATION", "[station_name()]")
+		message = replacetext(message, "$THEY", "[he_or_she(person)]")
+		message = replacetext(message, "$THEM", "[him_or_her(person)]")
+		message = replacetext(message, "$THEIR", "[his_or_her(person)]")
 
-		var/list/messages = process_language(message)
-		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
+		src.computer_say_source.say(message)
 		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
-		return 1
-
-	proc/announce_departure(var/mob/living/person)
-		if (!src.announcement_radio)
-			src.announcement_radio = new(src)
-
-		var/job = person.mind.assigned_role
-		if(!job || job == "MODE")
-			job = "Staff Assistant"
-		if(issilicon(person) && !isAI(person))
-			job = "Cyborg"
-
-		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
-		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
-
-
-		var/list/messages = process_language(message)
-		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
-		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
-		return 1
+		return TRUE
 
 /obj/machinery/computer/announcement/station
 	req_access = null
@@ -238,6 +218,14 @@
 		name = "Security Announcement Computer"
 		area_name = "Security"
 		circuit_type = /obj/item/circuitboard/announcement/security
+
+		department
+			req_access = list(access_security)
+			name = "Security Department Announcement Computer"
+			sound_to_play = 'sound/misc/bingbong.ogg'
+			sound_volume = 70
+			circuit_type = /obj/item/circuitboard/announcement/security/department
+			alert_origin = ALERT_DEPARTMENT
 
 	research
 		req_access = list(access_research_director)
@@ -269,6 +257,7 @@
 		sound_to_play = 'sound/misc/bingbong.ogg'
 		sound_volume = 70
 		circuit_type = /obj/item/circuitboard/announcement/cargo
+		alert_origin = ALERT_DEPARTMENT
 
 	catering
 		req_access = list(access_bar, access_kitchen)
@@ -277,6 +266,7 @@
 		sound_to_play = 'sound/misc/bingbong.ogg'
 		sound_volume = 70 //a little less earsplitting
 		circuit_type = /obj/item/circuitboard/announcement/catering
+		alert_origin = ALERT_DEPARTMENT
 
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -287,11 +277,13 @@
 
 /obj/machinery/computer/announcement/syndicate
 	name = "Syndicate Announcement computer"
+	computer_say_source_name = "Syndicate Announcement computer"
 	theme = "syndicate"
 	icon_state = "announcementsyndie"
 	area_name = "Syndicate"
 	req_access = list(access_syndicate_shuttle)
 	circuit_type = /obj/item/circuitboard/announcement/syndicate
+	alert_origin = ALERT_SYNDICATE
 
 	commander
 		area_name = null
@@ -309,9 +301,9 @@
 	circuit_type = /obj/item/circuitboard/announcement/clown
 	var/emagged = FALSE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
-	override_font = "Comic Sans MS"
 	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."
 	sound_volume = 50
+	alert_origin = ALERT_CLOWN
 
 	send_message(mob/user, message)
 		. = ..()
@@ -322,17 +314,16 @@
 				src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
 				user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
 
-				var/mob/living/carbon/clown = user
+				var/mob/living/carbon/human/clown = user
 				if(istype(clown))
-					var/datum/db_record/S = data_core.security.find_record("id", clown.datacore_id)
-					S?["criminal"] = "*Arrest*"
-					S?["mi_crim"] = "Making a very irritating announcement."
+					//Computer is normally offcams and the clown normally has mask on + ID in computer so visible name will be Unknown
+					clown.apply_automated_arrest("Making a very irritating announcement.", requires_camera_seen = FALSE, use_visible_name = FALSE)
 
 					clown.update_burning(15) // placed here since update_burning is only for mob/living
-				if(ID)
-					user.put_in_hand_or_eject(ID)
+				if(src.ID)
+					user.put_in_hand_or_eject(src.ID)
 
-				if (emagged)
+				if (src.emagged)
 					var/turf/T = get_turf(src.loc)
 					if(T)
 						src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
@@ -351,13 +342,13 @@
 		..()
 		switch(action)
 			if ("id")
-				if ( ID.icon_state != "id_clown")
+				if (src.ID && (src.ID.icon_state != "id_clown"))
 					src.unlocked = 0 // clowns ONLY
 					update_status()
 
 
 	emag_act(mob/user, obj/item/card/emag/E)
-		if (!emagged)
+		if (!src.emagged)
 			src.visible_message(SPAN_ALERT("<B>The clown on the screen grins in horrid delight!</B>"))
-		emagged = TRUE
+		src.emagged = TRUE
 

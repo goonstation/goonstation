@@ -110,12 +110,12 @@
 /mob/living/carbon/human/remove_stamina(var/x)
 	..()
 	if (x >= 30 && src.hud && src.hud.stamina_back)
-		flick("stamina_back", src.hud.stamina_back)
+		FLICK("stamina_back", src.hud.stamina_back)
 
 /mob/living/critter/remove_stamina(var/x)
 	..()
 	if (x >= 30 && src.hud && src.hud.stamina_back)
-		flick("stamina_back", src.hud.stamina_back)
+		FLICK("stamina_back", src.hud.stamina_back)
 
 
 //Sets stamina

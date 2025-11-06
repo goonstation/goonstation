@@ -1,40 +1,60 @@
 @use '../colors';
 @use '../functions' as *;
-@use '../components/Button';
+@use 'sass:list';
 
+// Color of categories (bg, text [default: white])
 $categories: (
-  'sidearm': colors.$teal,
-  'loadout': colors.$yellow,
-  'utility': colors.$blue,
-  'ammo': colors.$orange,
-  'assistant': colors.$grey,
-  'fishing': colors.$blue,
+  'sidearm': (
+    var(--color-teal),
+  ),
+  'loadout': (
+    var(--color-yellow),
+    var(--color-black),
+  ),
+  'utility': (
+    var(--color-blue),
+  ),
+  'ammo': (
+    var(--color-orange),
+  ),
+  'assistant': (
+    var(--color-grey),
+  ),
+  'fishing': (
+    var(--color-blue),
+  ),
+  'armor': (
+    var(--color-grey),
+  ),
 );
 
 .WeaponVendor {
-  @each $category, $color in $categories {
-    .Button__#{$category} {
-      @include Button.button-color($color);
+  @each $category, $colors in $categories {
+    $bg: list.nth($colors, 1);
+    &__Button--#{$category} {
+      --color: #{$bg};
     }
   }
 }
 
-@each $category, $color in $categories {
+@each $category, $colors in $categories {
+  $bg: list.nth($colors, 1);
+  $text: if(list.length($colors) > 1, list.nth($colors, 2), var(--color-white));
   .WeaponVendor__Credits {
     @at-root &--#{$category} {
-      color: $color;
+      color: $bg;
     }
   }
   .WeaponVendor__Category--#{$category} {
-    $luminance: luminance($color);
-    $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
-    background-color: $color;
-    color: $text-color;
+    --color: #{$bg};
+    --button-color: #{$text};
+    background-color: var(--color);
+    color: var(--button-color);
   }
 }
 
 .WeaponVendor__Row {
   &:not(:last-child) {
-    border-bottom: 2px solid colors.bg(colors.$primary);
+    border-bottom: 2px solid colors.bg(--color-primary);
   }
 }

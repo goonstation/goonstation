@@ -155,6 +155,9 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	proc/onPowerChange(oldval, newval)
 		return
 
+	proc/onResearched()
+		return
+
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "power")
@@ -394,7 +397,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		src.action_key_number = ability.action_key_number
 		src.waiting_for_hotkey = ability.waiting_for_hotkey
 		src.theme = ability.theme
-		src.tooltip_flags = ability.tooltip_flags
+		src.tooltip_options = ability.tooltip_options
 
 		..()
 

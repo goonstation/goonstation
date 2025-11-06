@@ -46,7 +46,7 @@
 			//	return 0.62 //todo : a cooler underwater effect if possible
 			//if (istype(T, /turf/space))
 			//	return 0 // in space nobody can hear you fart
-		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
+		if (issimulatedturf(T)) //danger :)
 			var/datum/gas_mixture/air = T.return_air()
 			if (air)
 				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -69,7 +69,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 /// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
-	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM")
+	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM", "Instruments")
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
@@ -77,7 +77,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
+	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.", "Music from in-game instruments.")
 
 /// Get the friendly description for a specific sound channel.
 /client/proc/getVolumeChannelDescription(channel)
@@ -104,7 +104,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
-	src.player.cloudSaves.putData("audio_volume", json_encode(volumes))
+	src.player?.cloudSaves.putData("audio_volume", json_encode(volumes))
 
 	var/list/playing = src.SoundQuery()
 	if( channel == VOLUME_CHANNEL_MASTER )
@@ -417,7 +417,11 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		else
 			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
 	else if(target == world)
-		clients = global.clients
+		clients = list()
+		for (var/client/C in global.clients)
+			if (istype(C.mob, /mob/living/carbon/human/tutorial))
+				continue
+			clients += C
 	else if(isnum(target))
 		clients = list()
 		for(var/client/client as anything in global.clients)
@@ -527,6 +531,8 @@ var/global/number_of_sound_generated = 0
 			if ("step_flipflop") soundin = pick(sounds_step_flipflop)
 			if ("step_heavyboots") soundin = pick(sounds_step_heavyboots)
 			if ("step_military") soundin = pick(sounds_step_military)
+			if ("step_snow") soundin = pick(sounds_step_snow)
+			if ("chute_insert") soundin = pick(sounds_chute_insert)
 
 	if(islist(soundin))
 		soundin = pick(soundin)
@@ -745,6 +751,7 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/sounds_warp = list(sound('sound/effects/warp1.ogg'),sound('sound/effects/warp2.ogg'))
 /var/global/list/sounds_engine = list(sound('sound/machines/tractor_running2.ogg'),sound('sound/machines/tractor_running3.ogg'))
 /var/global/list/sounds_keyboard = list(sound('sound/machines/keyboard1.ogg'),sound('sound/machines/keyboard2.ogg'),sound('sound/machines/keyboard3.ogg'))
+/var/global/list/sounds_chute_insert = list(sound('sound/effects/chute_place_1.ogg'),sound('sound/effects/chute_place_2.ogg'),sound('sound/effects/chute_place_3.ogg'),sound('sound/effects/chute_place_4.ogg'))
 
 /var/global/list/sounds_enginegrump = list(sound('sound/machines/engine_grump1.ogg'),sound('sound/machines/engine_grump2.ogg'),sound('sound/machines/engine_grump3.ogg'),sound('sound/machines/engine_grump4.ogg'))
 
@@ -791,6 +798,7 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/sounds_step_flipflop = 	list(sound('sound/misc/step/step_flipflop_1.ogg'),sound('sound/misc/step/step_flipflop_2.ogg'),sound('sound/misc/step/step_flipflop_3.ogg'))
 /var/global/list/sounds_step_heavyboots = 	list(sound('sound/misc/step/step_heavyboots_1.ogg'),sound('sound/misc/step/step_heavyboots_2.ogg'),sound('sound/misc/step/step_heavyboots_3.ogg'))
 /var/global/list/sounds_step_military = 	list(sound('sound/misc/step/step_military_1.ogg'),sound('sound/misc/step/step_military_2.ogg'),sound('sound/misc/step/step_military_3.ogg'),sound('sound/misc/step/step_military_4.ogg'))
+/var/global/list/sounds_step_snow = 	    list(sound('sound/misc/step/step_snow_01.ogg'),sound('sound/misc/step/step_snow_02.ogg'),sound('sound/misc/step/step_snow_03.ogg'))
 
 
 
@@ -810,6 +818,7 @@ proc/narrator_mode_sound_file(sound_file)
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
 		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
+		"cyborg_distorted" = sound('sound/misc/talk/cyborg_distorted.ogg'),	"cyborg_distorted!" = sound('sound/misc/talk/cyborg_exclaim_distorted.ogg'),"cyborg_distorted?" = sound('sound/misc/talk/cyborg_ask_distorted.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
 

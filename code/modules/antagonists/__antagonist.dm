@@ -43,6 +43,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/faction = list()
 	/// Used in lieu of the id for antag_popups.dm
 	var/popup_name_override
+	/// Set when the antagonist is in the process of being removed, to prevent double removals.
+	var/removing = FALSE
+	/// Link to this antagonist's wiki page
+	var/wiki_link = null
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -102,7 +106,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			if (isnull(antagonists["[src.id]"]))
 				antagonists -= "[src.id]"
 
-			owner.former_antagonist_roles.Add(owner.special_role)
+			owner.former_antagonist_roles.Add(src.id)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks.Remove(src.owner)
@@ -112,6 +116,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
 	proc/remove_self(take_gear = TRUE, source, silent = FALSE)
+		src.removing = TRUE
 		if (take_gear)
 			src.remove_equipment()
 
@@ -187,6 +192,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		RETURN_TYPE(/image)
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		image.plane = PLANE_ANTAG_ICONS
 		. = image
 
 	proc/add_to_image_groups()
@@ -249,11 +255,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
 	proc/announce()
-		boutput(owner.current, SPAN_ALERT("<h3>You are \a [src.display_name]!</h3>"))
+		boutput(owner.current, SPAN_ALERT("<h1 class='system'>You are \a [src.display_name]!</h1>"))
 
 	/// Display something when this antagonist is removed.
 	proc/announce_removal(source)
-		boutput(owner.current, SPAN_ALERT("<h3>You are no longer \a [src.display_name]!</h3>"))
+		boutput(owner.current, SPAN_ALERT("<h1 class='system'>You are no longer \a [src.display_name]!</h1>"))
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
 	proc/do_popup()

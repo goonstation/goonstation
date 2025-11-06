@@ -252,9 +252,23 @@ MATERIAL
 			boutput(user, SPAN_NOTICE("You whittle [src] down to make a useful stick."))
 			new /obj/item/stick(get_turf(src))
 			src.change_stack_amount(-1)
+		else if (istype(W, /obj/item/cable_coil) && (src.material?.getMaterialFlags() & MATERIAL_METAL) && ((src in user) && (W in user)))
+			var/turf/T = get_turf(user)
+			if (T.intact)
+				boutput(user, SPAN_ALERT("You must remove the plating first."))
+				return
+			boutput(user, SPAN_NOTICE("You begin assembling a data terminal."))
+			SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, PROC_REF(build_terminal), list(W, user),\
+				/obj/machinery/power/data_terminal::icon, /obj/machinery/power/data_terminal::icon_state,\
+				SPAN_NOTICE("[user] assembles a data terminal."), INTERRUPT_MOVE | INTERRUPT_STUNNED)
 		else
 			..()
-		return
+
+	proc/build_terminal(obj/item/cable_coil/cable, mob/user)
+		if ((src in user) && (cable in user))
+			new /obj/machinery/power/data_terminal(get_turf(user))
+			src.change_stack_amount(-1)
+			cable.change_stack_amount(-1)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]!"))
@@ -405,10 +419,10 @@ MATERIAL
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
 
-					if (!istype(T, /turf/simulated/floor))
+					if (!(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/space_phoenix_ice_tunnel)))
 						boutput(usr, SPAN_ALERT("You can't build girders here."))
 						return
-					if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+					if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 						boutput(usr, SPAN_ALERT("You can't build girders here."))
 						return
 					if (!amount_check(2,usr)) return
@@ -1000,7 +1014,7 @@ MATERIAL
 			var/obj/item/tile/F = split_stack(1)
 			if (!istype(F))
 				return
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			user.put_in_hand_or_drop(F)
 		else
 			..()
@@ -1022,14 +1036,14 @@ MATERIAL
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T
 					F.Attackby(src, user)
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 				else
 					boutput(user, "You cannot build on or repair this turf!")
 					return
 			else
 				// Otherwise, try to build on top of it
 				src.build(S)
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 		src.add_fingerprint(user)
 		return
 
@@ -1051,10 +1065,10 @@ MATERIAL
 			boutput(user, SPAN_NOTICE("You add [success] tiles to the stack. It now has [W.amount] tiles."))
 		else
 			boutput(user, SPAN_NOTICE("You add [src.amount - success] tiles to the stack. It now has [src.amount] tiles."))
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (!W.disposed)
 			W.add_fingerprint(user)
-			W.tooltip_rebuild = 1
+			W.tooltip_rebuild = TRUE
 		return
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
@@ -1272,20 +1286,13 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 		tcomputer
 			recipe_id = "tcomputer"
 			craftedType = /obj/computer3frame/terminal
-			name = "Computer Terminal Frame"
+			name = "Terminal Frame"
 			sheet_cost = 3
 			icon = 'icons/obj/terminal_frame.dmi'
 			icon_state = "0"
 		computer
 			recipe_id = "computer"
 			craftedType = /obj/computerframe
-			name = "Console Frame"
-			sheet_cost = 5
-			icon = 'icons/obj/computer_frame.dmi'
-			icon_state = "0"
-		hcomputer
-			recipe_id = "hcomputer"
-			craftedType = /obj/computer3frame
 			name = "Computer Frame"
 			sheet_cost = 5
 			icon = 'icons/obj/computer_frame.dmi'

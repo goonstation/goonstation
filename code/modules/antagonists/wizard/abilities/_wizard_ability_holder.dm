@@ -170,8 +170,12 @@
 	var/voice_grim = null
 	var/voice_fem = null
 	var/voice_other = null
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
-	var/maptext_colors = null
+	var/list/maptext_style = list(
+		"color" = "white !important",
+		"text-shadow" = "1px 1px 3px white",
+		"-dm-text-outline" = "1px black",
+	)
+	var/list/maptext_colors = null
 	var/voice_on_cast_start = TRUE //override if e.g.: spell does voiceline at the end of an actionbar
 
 	proc/calculate_cooldown()

@@ -50,10 +50,15 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+	/// when an atom say()s anything
+	/// I swear if you use this to modify a message when you should be using a speech_module, I will hurt you - Amylizzle
+	#define COMSIG_ATOM_SAY "atom_say"
 	/// when this atom has clean_forensic called, send this signal.
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
 	/// sent to the parent object when its handset retracts, see /datum/component/cord
 	#define COMSIG_CORD_RETRACT "cord_retract"
+	/// sent to the signal jamming thing when it successfully blocks a signal (signal)
+	#define COMSIG_SIGNAL_JAMMED "signal_jammed"
 
 // ---- minimap ----
 
@@ -138,7 +143,7 @@
 	#define COMSIG_ITEM_UNEQUIPPED "itm_unequip"
 	/// When an item is picked up (user)
 	#define COMSIG_ITEM_PICKUP "itm_pickup"
-	/// When an item is picked dropped (user)
+	/// When an item is dropped (user)
 	#define COMSIG_ITEM_DROPPED "itm_drop"
 	/// When an item is used to attack a mob
 	#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
@@ -166,6 +171,15 @@
 	#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
 	/// When the item in hand is twirl emoted and spun in hand. (user, item)
 	#define COMSIG_ITEM_TWIRLED "itm_twirled"
+	/// After an item has been placed into another item (backpack, satchel, toolbox, etc)
+	#define COMSIG_ITEM_STORED "itm_stored"
+	/// When an item reacting to being seen in a storage or dumped out of it (e.g. mousetraps)
+	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
+	/// Send out to every item directly in and on the person on no-suicide-death
+	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
+	/// After an item is altered by being removed and replaced with another item, sent shortly before being removed. The original is not always
+	/// deleted but instead treated as if it were a part of the new item, see assemblies. (item or list of items produced by conversion, user)
+	#define COMSIG_ITEM_CONVERTED "itm_converted"
 
 	// ---- bomb assembly signals ----
 
@@ -173,6 +187,39 @@
 	#define COMSIG_ITEM_BOMB_SIGNAL_START "bomb_signal_start"
 	/// Triggers when an assembly bomb's signalling is cancelled
 	#define COMSIG_ITEM_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
+
+	// ---- general assembly signals ----
+
+	/// Triggers on attack_self of the assembly if it is unsecured
+	#define COMSIG_ITEM_ASSEMBLY_MANIPULATION "assembly_manipulation"
+	/// Triggers on attack_self of the assembly if it is secured
+	#define COMSIG_ITEM_ASSEMBLY_ACTIVATION "assembly_activation"
+	/// Triggers if the assembly fires it's applier
+	#define COMSIG_ITEM_ASSEMBLY_APPLY "assembly_apply"
+	/// Triggers on an item when it is build into an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_SETUP "assembly_item_setup"
+	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION "assembly_item_on_target_addition"
+	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION "assembly_item_on_misc_addition"
+	/// Triggers on an item when it is removed from an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL "assembly_item_removal"
+	/// Checks on any item if they have special conditions under which they cannot be used in the assembly, e.g. igniters needing to be unsecured
+	#define COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK "assembly_combination_check"
+	/// Checks if that item, as additional component, adds any odd overlays on the assembly
+	#define COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS "assembly_overlay_additions"
+	/// Returns the state of the trigger of the assembly
+	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE "assembly_get_trigger_state"
+	/// Pass here a assembly_signal_helper datum here to get the time left on the trigger of the assembly (if it has any, else its 0)
+	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT "assembly_get_trigger_time_left"
+	/// Set's the timer of the trigger to the respectable time (if it is able to)
+	#define COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME "assembly_set_trigger_time"
+	/// Will be send to the assembly if one of its components gets disposed
+	#define COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL "assembly_on_part_disposal"
+	/// Will be send to the attacking_component of the assembly when it is about to be used. If it returns TRUE, the attack proc will prevent the attack entirely
+	#define COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE "assembly_on_attack_override"
+	/// Will be send to the attacking_component of the assembly when it is being used. If it returns TRUE, the attack proc will not call the attack parent of the assembly
+	#define COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE "assembly_do_attack_override"
 
 	// ---- implant signals ----
 
@@ -192,7 +239,7 @@
 	#define COMSIG_MOB_LOGOUT "mob_logout"
 	/// At the beginning of when an attackresults datum is being set up
 	#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
-	/// When a mob dies
+	/// When a mob dies (gibbed bool)
 	#define COMSIG_MOB_DEATH "mob_death"
 	/// When a mob fakes death
 	#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
@@ -218,7 +265,7 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
-	/// Sent when a mob is grabbed by another mob (grab object)
+	/// Sent when a mob is grabbed by another mob, and when the grab is upgraded (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 	/// Sent when a mob emotes (emote, voluntary, emote target)
 	#define COMSIG_MOB_EMOTE "mob_emote"
@@ -234,26 +281,19 @@
 	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
 	/// Sent when the mob points at something (point target)
 	#define COMSIG_MOB_POINT "mob_point"
+	/// Sent when a mob is pulled
+	#define COMSIG_MOB_PULL_TRIGGER "pull_trigger"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
-	/// Sent when the mob says something (message)
-	#define COMSIG_MOB_SAY "mob_say"
 	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
 	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
+	/// Sent when a mob changes its lying state (lying)
+	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
 
 	// ---- cloaking device signal ----
 
 	/// Make cloaking devices turn off - sent to the mob
 	#define COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
-
-	// ---- typing indicator signals ----
-
-	/// Create typing indicator
-	#define COMSIG_CREATE_TYPING "create_typing"
-	/// Remove typing indicator
-	#define COMSIG_REMOVE_TYPING "remove_typing"
-	/// Speech bubble
-	#define COMSIG_SPEECH_BUBBLE "speech_bubble"
 
 	// ---- disguiser device signal ----
 
@@ -261,7 +301,7 @@
 	#define COMSIG_MOB_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- living signals ----
-		// When Life() ticks (mult)
+		/// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----

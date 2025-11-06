@@ -43,7 +43,15 @@
 		/datum/clothingbooth_item/wear_suit/hoodie/white,
 		/datum/clothingbooth_item/wear_suit/hoodie/dull_grey,
 		/datum/clothingbooth_item/wear_suit/hoodie/grey,
-		/datum/clothingbooth_item/wear_suit/hoodie/black
+		/datum/clothingbooth_item/wear_suit/hoodie/black,
+		/datum/clothingbooth_item/wear_suit/hoodie_large/orange,
+		/datum/clothingbooth_item/wear_suit/hoodie_large/pink,
+		/datum/clothingbooth_item/wear_suit/hoodie_large/red,
+		/datum/clothingbooth_item/wear_suit/hoodie_large/green,
+		/datum/clothingbooth_item/wear_suit/hoodie_large/blue,
+		/datum/clothingbooth_item/wear_suit/hoodie_large/white,
+		/datum/clothingbooth_item/wear_suit/hoodie_large/black,
+		/datum/clothingbooth_item/wear_suit/hoodie_large/purple
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
@@ -82,6 +90,12 @@
 	)
 /datum/clothingbooth_grouping/overcoat_and_scarf
 	item_paths = list(/datum/clothingbooth_item/wear_suit/overcoat_and_scarf)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual,
+	)
+
+/datum/clothingbooth_grouping/long_sleeved_shirt
+	item_paths = list(/datum/clothingbooth_item/wear_suit/long_sleeved_shirt)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
@@ -151,4 +165,19 @@
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
+	)
+
+
+/datum/clothingbooth_grouping/denim_dress
+	name = "Denim Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/denim_dress/blue,
+		/datum/clothingbooth_item/wear_suit/denim_dress/turquoise,
+		/datum/clothingbooth_item/wear_suit/denim_dress/white,
+		/datum/clothingbooth_item/wear_suit/denim_dress/black,
+		/datum/clothingbooth_item/wear_suit/denim_dress/grey,
+		/datum/clothingbooth_item/wear_suit/denim_dress/khaki,
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
 	)

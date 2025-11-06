@@ -5,11 +5,6 @@
 		x:block_vision \
 	)
 
-//Put any items that NPCs physically cannot pickup here
-#define IS_NPC_ILLEGAL_ITEM(x) ( \
-		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
-	)
-
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
@@ -239,7 +234,7 @@
 
 		//Why do we WANT to go after this jerk?
 		if(M.client) rating += 20 //We'd rather go after actual non-braindead players
-		if(src.lastattacker == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
+		if(src.lastattacker?.deref() == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
 
 
 		//Why do we NOT want to go after this jerk
@@ -357,7 +352,7 @@
 			if(iscarbon(ai_target))
 				var/mob/living/carbon/carbon_target = ai_target
 
-				if(src.get_brain_damage() >= 60)
+				if(src.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 					src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
 					return
 
@@ -493,6 +488,7 @@
 
 /mob/living/carbon/human/proc/ai_attack_target(atom/target, obj/item/weapon)
 	var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
+	src.set_dir(get_dir(src, target))
 	if(weapon)
 		return src.weapon_attack(target, weapon, 1, attack_params)
 	else
@@ -811,8 +807,8 @@
 
 	if(pickup && !src.r_hand)
 		src.swap_hand(0)
-		if(src.put_in_hand_or_drop(pickup))
-			src.set_clothing_icon_dirty()
+		pickup.Attackhand(src)
+		src.set_clothing_icon_dirty()
 
 
 /mob/living/carbon/human/proc/ai_avoid(var/turf/T)
@@ -985,4 +981,3 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
-#undef IS_NPC_ILLEGAL_ITEM

@@ -20,5 +20,5 @@
 		holder.owner.set_loc(T)
 		elecflash(T)
 		playsound(T, 'sound/effects/ghost2.ogg', 100, TRUE)
-		holder.owner.say("TELEPORT!", 1)
+		holder.owner.say("TELEPORT!", flags = SAYFLAG_IGNORE_STAMINA)
 		return 0

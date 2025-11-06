@@ -222,6 +222,7 @@ To remove:
 #define PROP_MOB_THERMALVISION(x) x("thermalvision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
 #define PROP_MOB_THERMALVISION_MK2(x) x("thermalvisionmk2", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT) // regular thermal sight + see mobs through walls
 #define PROP_MOB_SPECTRO(x) x("spectrovision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_MOB_PHYTOVISION(x) x("phytovision", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
 #define PROP_MOB_EXAMINE_ALL_NAMES(x) x("examine_all", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_EXAMINE_HEALTH(x) x("healthvison", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_EXAMINE_HEALTH_SYNDICATE(x) x("healthvison_syndicate", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) // doesn't work without PROP_MOB_EXAMINE_HEALTH; TODO rename this to further reduce confusion
@@ -294,6 +295,11 @@ To remove:
 #define PROP_MOB_BLOOD_ABSORPTION_RATE(x) x("blood_absorption_rate", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 #define PROP_MOB_CANNOT_VOMIT(x) x("cannot_vomit", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_PRE_POSSESSION(x) x("pre_possession", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_NO_BLOOD_REGEN(x) x("no_blood_regen", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_SPACE_DAMAGE_IMMUNE(x) x("space_damage_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_NOEXAMINE(x) x("no_examine", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+
+#define PROP_HUMAN_DROP_BRAIN_ON_GIB(x) x("drop_brain_on_gib", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 /// Hides med/sec HUDs and name tags from the mob
 #define PROP_MOB_HIDE_ICONS(x) x("hide_icons", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_HIDE_ICONS)
@@ -309,6 +315,7 @@ To remove:
 #define PROP_MOVABLE_VISIBLE_GUNS(x) x("visible_firearms", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM) //! The visible firearm contraband level of this movable
 #define PROP_MOVABLE_CONTRABAND_OVERRIDE(x) x("contraband_pverride", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX) //! Thing is considered to have this contraband value, takes max if has multiple of these props
 #define PROP_MOVABLE_KLEPTO_IGNORE(x) x("klepto_go_away", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOVABLE_OCEAN_PUSH(x) x("ocean_push", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Value is the interval of the push
 //-------------------- TURF PROPS -----------------------
 //-------------------- ATOM PROPS -----------------------
 #define PROP_ATOM_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
@@ -316,10 +323,12 @@ To remove:
 #define PROP_ATOM_TELEPORT_JAMMER(x) x("teleport_jammer", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM, PROP_UPDATE_TELEBLOCK_CAT)
 #define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_FLOTSAM(x) x("flotsam", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 /// Thing will redirect clicks to a fluid on its tile when clicked by a relevant item (beaker mop etc)
 #define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 ///for tracking if a borg/cyborg frame was a roundstart one, for stats purposes
 #define PROP_ATOM_ROUNDSTART_BORG(x) x("rounstart_borg", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_ART_FISSURE_CORROSION_COUNT(x) x("art_fissure_corrosion_count", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
 #define PROP_ATOM_LUCK(x) x("luck", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
@@ -347,6 +356,9 @@ To remove:
 
 // sliiiiiiiightly faster if you don't care about the value
 #define HAS_ATOM_PROPERTY(target, property) (target.atom_properties?[GET_PROP_NAME(property)] ? TRUE : FALSE)
+
+// use this to check if an atom got a property from a specific source
+#define HAS_ATOM_PROPERTY_FROM_SOURCE(target, property, source) (target.atom_properties?[GET_PROP_NAME(property)] ? (source in target.atom_properties[GET_PROP_NAME(property)][ATOM_PROPERTY_SOURCES_LIST]) : FALSE)
 
 
 #define APPLY_ATOM_PROPERTY_MAX(target, property, do_update, update_macro, source, value) \

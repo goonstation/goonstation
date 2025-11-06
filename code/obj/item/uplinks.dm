@@ -231,21 +231,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/uplink_telecrystal))
-			if (!src.locked)
-				var/crystal_amount = W.amount
-				uses = uses + crystal_amount
-				boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
-				qdel(W)
-		if (istype(W, /obj/item/explosive_uplink_telecrystal))
-			if (!src.locked)
-				boutput(user, SPAN_ALERT("The [W] explodes!"))
-				var/turf/T = get_turf(W.loc)
-				if(T)
-					T.hotspot_expose(700,125)
-					explosion(W, T, -1, -1, 2, 3) //about equal to a PDA bomb
-				W.set_loc(user.loc)
-				qdel(W)
+		if(src.locked)
+			return
+		if (istype(W, /obj/item/uplink_telecrystal/trick))
+			boutput(user, SPAN_ALERT("The [W] explodes!"))
+			var/turf/T = get_turf(W.loc)
+			if(T)
+				T.hotspot_expose(700,125)
+				explosion(W, T, -1, -1, 2, 3) //about equal to a PDA bomb
+			W.set_loc(user.loc)
+			qdel(W)
+		else if (istype(W, /obj/item/uplink_telecrystal))
+			var/crystal_amount = W.amount
+			uses = uses + crystal_amount
+			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
+			qdel(W)
 
 	proc/generate_menu()
 		if (src.uses < 0)
@@ -809,7 +809,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				R.traitorradio = src
 				if (src.lock_code_autogenerate == 1)
 					R.traitor_frequency = src.generate_code()
-				R.protected_radio = 1
+				R.protected_radio = TRUE
 				src.name = R.name
 				src.icon = R.icon
 				src.icon_state = R.icon_state
@@ -1124,8 +1124,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.menu_message += "<B>Current Bounties (Next Refresh at : [refresh_time_formatted]):</B>"
 				for(var/datum/bounty_item/B in game.active_bounties)
 					var/atext = ""
-					if (B.reveal_area && B.item && !B.claimed)
-						atext = "<br>(Last Seen : [get_area(B.item)])"
+					var/unavailable_text = null // Why the specific bounty can't be redeemed (Claimed, Destroyed or In Cryo)
+					if (B.claimed)
+						unavailable_text = "CLAIMED"
+					else if (B.reveal_area && B.item)
+						var/item_area = get_area(B.item)
+						if(!item_area) // Also includes if there's no item because if there's no item then it has no area
+							unavailable_text = "DESTROYED"
+						else if ((locate(/obj/cryotron) in get_turf(B.item)) && !isturf(B.item.loc)) //There's gotta be a better way to check for this
+							unavailable_text = "IN CRYOGENIC STORAGE"
+						else
+							atext = "<br>(Last Seen : [item_area])"
 					var/rtext = ""
 					if (B.reward)
 						if (req_bounties() <= 1)
@@ -1133,7 +1142,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						else
 							rtext = "<br><b>Reward</b> : Not available. Deliver [req_bounties()] more bounties."
 
-					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br>[(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>) [B.photo_containing ? "" : "<a href='?src=\ref[src];action=print;bounty=\ref[B]'>Print</a>"]"]</td></tr></small>"
+					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br>[(unavailable_text) ? "(<b>[unavailable_text]</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>) [B.photo_containing ? "" : "<a href='byond://?src=\ref[src];action=print;bounty=\ref[B]'>Print</a>"]"]</td></tr></small>"
 
 		src.menu_message += "<HR>"
 
@@ -1503,7 +1512,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/prismatic_spray
 	name = "Prismatic Spray"
 	eqtype = "Offensive"
-	desc = "This spell allows you to launch a spray of colorful and wildly innaccurate projectiles outwards in a cone aimed roughly at a nearby target."
+	desc = "This spell allows you to launch a spray of colorful and wildly inaccurate projectiles outwards in a cone aimed roughly at a nearby target."
 	assoc_spell = /datum/targetable/spell/prismatic_spray
 	cost = 1
 
@@ -1612,13 +1621,13 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/empower
 	name = "Empower"
 	eqtype = "Utility"
-	desc = "This spell causes you to turn into a hulk, and gain passive wrestling powers for a short while."
+	desc = "This spell removes stuns on use, causes you to turn into a hulk, and gain passive wrestling powers for a short while."
 	assoc_spell = /datum/targetable/spell/mutate
 
 /datum/SWFuplinkspell/summongolem
 	name = "Summon Golem"
 	eqtype = "Utility"
-	desc = "This spell allows you to turn a reagent you currently hold (in a jar, bottle or other container) into a golem. Golems will attack your enemies, and release their contents as chemical smoke when destroyed."
+	desc = "This spell allows you to turn a reagent you currently hold (in a jar, bottle, or other container) into a golem. Golems will attack your enemies, and release their contents as chemical smoke when destroyed."
 	assoc_spell = /datum/targetable/spell/golem
 	cost = 2
 

@@ -131,7 +131,8 @@
 	name = "\improper RCD crate"
 	desc = "A crate for the Chief Engineer's personal RCD."
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
-	/obj/item/rcd/construction/chiefEngineer)
+	/obj/item/rcd/construction/chiefEngineer,
+	/obj/item/places_pipes)
 
 /obj/storage/crate/abcumarker
 	name = "\improper ABCU-Marker crate"
@@ -255,13 +256,13 @@
 	/obj/item/clothing/shoes/clown_shoes/autumn,
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,
-	/obj/item/clothing/under/gimmick/clown_autumn,
+	/obj/item/clothing/under/misc/clown/autumn,
 	#endif
 	#ifdef SEASON_WINTER
 	/obj/item/clothing/shoes/clown_shoes/winter,
 	/obj/item/clothing/head/clown_winter_hat,
 	/obj/item/clothing/mask/clown_hat/winter,
-	/obj/item/clothing/under/gimmick/clown_winter,
+	/obj/item/clothing/under/misc/clown/winter,
 	#endif
 	/obj/item/storage/box/balloonbox)
 
@@ -528,7 +529,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
 		/obj/item/storage/fanny/syndie/large,
-		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
+		/obj/item/clothing/suit/space/syndicate/specialist/heavy,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	assault
@@ -556,7 +557,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	infiltrator
 		name = "Class Crate - Infiltrator" // for actually fitting in among the crew.
-		desc = "A crate containing a Specialist Operative loadout."
+		desc = "A crate containing a Specialist Operative loadout. Includes a tranquilizer pistol, chameleon outfit, chameleon projector and a DNA scrambler."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
 		/obj/item/pinpointer/disk,
@@ -598,7 +599,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	medic_rework
 		name = "Class Crate - Field Medic"
-		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
+		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies and a personal defense sub-machine gun."
 		spawn_contents = list(/obj/item/gun/kinetic/veritate,
 		/obj/item/storage/pouch/veritate,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
@@ -610,7 +611,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	engineer
 		name = "Class Crate - Combat Engineer"
-		desc = "A crate containing a Specialist Operative loadout."
+		desc = "A crate containing a Specialist Operative loadout. This one contains a SPES-12, NAS-T Turret and tools for fixing a nuclear bomb."
 		spawn_contents = list(/obj/item/paper/nast_manual,
 		/obj/item/turret_deployer/syndicate,
 		/obj/item/wrench/battle,
@@ -623,7 +624,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	pyro
 		name = "Class Crate - Firebrand"
-		desc = "A crate containing a Specialist Operative loadout."
+		desc = "A crate containing a Specialist Operative loadout. This one contains a fire axe, a napalm-filled flamethrower and fireproof armor."
 		spawn_contents = list(/obj/item/gun/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
 		/obj/item/storage/grenade_pouch/napalm,
@@ -634,7 +635,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	sniper
 		name = "Class Crate - Marksman"
-		desc = "A crate containing a Specialist Operative loadout."
+		desc = "A crate containing a Specialist Operative loadout. Features a wall-piercing sniper rifle and high-grade thermal optical goggles."
 		spawn_contents = list(/obj/item/gun/kinetic/sniper,
 		/obj/item/storage/pouch/sniper,
 		/obj/item/storage/grenade_pouch/smoke,
@@ -645,16 +646,16 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	melee //wip, not ready for use
 		name = "Class Crate - Knight"
-		desc = "A crate containing a Specialist Operative loadout."
+		desc = "A crate containing a Specialist Operative loadout. This one contains a Hadar power-sword and heavy-duty combat armor."
 		spawn_contents = list(/obj/item/heavy_power_sword,
 		/obj/item/clothing/shoes/swat/knight,
 		/obj/item/clothing/gloves/swat/syndicate/knight,
-		/obj/item/clothing/suit/space/syndicate/knight,
+		/obj/item/clothing/suit/space/syndicate/specialist/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	bard
 		name = "Class Crate - Bard"
-		desc = "A crate containing a Specialist Operative loadout."
+		desc = "A crate containing a Specialist Operative loadout. Features a flying V electric guitar, a concert-grade headet and studio monitors."
 		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
 		/obj/item/device/radio/headset/syndicate/bard,
 		/obj/item/storage/fanny/syndie/large,
@@ -818,7 +819,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,
-		/obj/item/pipebomb/bomb/engineering = 2)
+		/obj/item/assembly/timer_ignite_pipebomb/engineering = 2)
 
 // evil nasty biohazard crate
 /obj/storage/crate/stxcrate
@@ -855,7 +856,19 @@ TYPEINFO(/obj/storage/crate/chest)
 		var/datum/loot_generator/shotgun_gen
 		src.vis_controller = new(src)
 		shotgun_gen =  new /datum/loot_generator(4,3)
-		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23_empty)
+		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23)
 		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
 		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
 		..()
+
+/obj/storage/crate/eng_reinforcedcables
+	name = "reinforced cable crate"
+	spawn_contents = list(
+		/obj/item/storage/box/cablesbox/reinforced = 4
+	)
+
+/obj/storage/crate/eng_dowsingrods
+	name = "dowsing rod crate"
+	spawn_contents = list(
+		/obj/item/heat_dowsing = 10
+	)

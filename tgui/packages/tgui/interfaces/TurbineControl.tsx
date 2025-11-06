@@ -16,6 +16,7 @@ interface TurbineControlData {
   load;
   power;
   volume;
+  volume_max;
   history;
   overspeed;
   overtemp;
@@ -24,8 +25,17 @@ interface TurbineControlData {
 
 export const TurbineControl = () => {
   const { act, data } = useBackend<TurbineControlData>();
-  const { rpm, load, power, volume, history, overspeed, overtemp, undertemp } =
-    data;
+  const {
+    rpm,
+    load,
+    power,
+    volume,
+    volume_max,
+    history,
+    overspeed,
+    overtemp,
+    undertemp,
+  } = data;
   const rpmHistory = history.map((v) => v[0]);
   const rpmHistoryData = rpmHistory.map((v, i) => [i, v]);
 
@@ -99,7 +109,7 @@ export const TurbineControl = () => {
           <Stack.Item>
             <LabeledList>
               <LabeledList.Item label="Turbine Load">
-                {load} Joules/Revolution
+                {load / 1000} kJ/Revolution
               </LabeledList.Item>
             </LabeledList>
             <Chart.Line
@@ -116,18 +126,18 @@ export const TurbineControl = () => {
             Stator Load:
             <NumberInput
               minValue={1}
-              maxValue={10e30}
-              value={load}
-              format={(value) => value + ' Joules/Revolution'}
+              maxValue={10e30 / 1000}
+              value={load / 1000}
+              format={(value) => value + ' kJ/Revolution'}
               step={1}
-              onChange={(value) => act('loadChange', { newVal: value })}
+              onChange={(value) => act('loadChange', { newVal: value * 1000 })}
             />
           </Stack.Item>
           <Stack.Item>
             Flow Rate:
             <NumberInput
               minValue={1}
-              maxValue={10e5}
+              maxValue={volume_max}
               value={volume}
               format={(value) => value + ' L/s'}
               step={1}

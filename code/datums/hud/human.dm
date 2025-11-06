@@ -239,50 +239,51 @@
 						break
 
 		//Has to go over the mini health elements
-		health = create_screen("health","Health", src.icon_hud, "health0", "EAST, NORTH", HUD_LAYER+1, tooltipTheme = "healthDam healthDam0")
+		health = create_screen("health","Health", src.icon_hud, "health0", "EAST, NORTH", HUD_LAYER+1, tooltip_options = list("theme" = "healthDam0"))
 		health.desc = "You feel fine."
 
-		health_brute = create_screen("mbrute","Brute Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-		health_burn = create_screen("mburn","Burn Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-		health_tox = create_screen("mtox","Toxin Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-		health_oxy = create_screen("moxy","Oxygen Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		health_brute = create_screen("mbrute","Brute Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
+		health_burn = create_screen("mburn","Burn Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
+		health_tox = create_screen("mtox","Toxin Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
+		health_oxy = create_screen("moxy","Oxygen Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 
-		bleeding = create_screen("bleeding","Bleed Warning", src.icon_hud, "blood0", "EAST-3, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		bleeding = create_screen("bleeding","Bleed Warning", src.icon_hud, "blood0", "EAST-3, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 		bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
-		stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltipTheme = "stamina")
+		stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltip_options = list("theme" = "stamina"))
+		stamina.mouse_opacity = 2
 		stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
 		if (master?.stamina_bar)
 			stamina.desc = master.stamina_bar.getDesc(master)
 
-		bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
+		bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltip_options = list("theme" = "tempInd0"))
 		bodytemp.desc = "The temperature feels fine."
 
-		oxygen = create_screen("oxygen","Suffocation Warning", src.icon_hud, "oxy0", "EAST-4, NORTH", HUD_LAYER, tooltipTheme = "statusOxy")
+		oxygen = create_screen("oxygen","Suffocation Warning", src.icon_hud, "oxy0", "EAST-4, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusOxy"))
 		oxygen.desc = "This indicator warns that you are currently suffocating. You will take oxygen damage until the situation is remedied."
 
-		fire = create_screen("fire","Fire Warning", src.icon_hud, "fire0", "EAST-5, NORTH", HUD_LAYER, tooltipTheme = "statusFire")
+		fire = create_screen("fire","Fire Warning", src.icon_hud, "fire0", "EAST-5, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusFire"))
 		fire.desc = "This indicator warns that you are either on fire, or too hot. You will take burn damage until the situation is remedied."
 
-		toxin = create_screen("toxin","Toxic Warning",src.icon_hud, "toxin0", "EAST-6, NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
+		toxin = create_screen("toxin","Toxic Warning",src.icon_hud, "toxin0", "EAST-6, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusToxin"))
 		toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
-		rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-7, NORTH", HUD_LAYER, tooltipTheme = "statusRad")
+		rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-7, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusRad"))
 		rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 		ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
 		stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
-			tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
+			tooltip_options = list("theme" = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item", "align" = TOOLTIP_TOP, "bounds" = list(16, 32)))
 		stats.desc = "..."
 
 		legend = create_screen("legend", "Inline Icon Legend", src.icon_hud, "legend", layouts[layout_style]["legend"], HUD_LAYER,
-			tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
+			tooltip_options = list("theme" = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item", "align" = TOOLTIP_TOP, "bounds" = list(10, 10)))
 		legend.desc = "When blocking:"+\
-		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/cutprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs cutting attacks"+\
-		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stabprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs stabbing attacks"+\
-		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
-		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
-		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 20%"
+		"<br><img src=\"[resource("images/tooltips/cutprot.png")]\" class='icon' /> Increased armor vs cutting attacks"+\
+		"<br><img src=\"[resource("images/tooltips/stabprot.png")]\" class='icon' /> Increased armor vs stabbing attacks"+\
+		"<br><img src=\"[resource("images/tooltips/burnprot.png")]\" class='icon' /> Increased armor vs burning attacks"+\
+		"<br><img src=\"[resource("images/tooltips/bluntprot.png")]\" class='icon' /> Increased armor vs blunt attacks"+\
+		"<br><img src=\"[resource("images/tooltips/protdisorient.png")]\" class='icon' /> Body Insulation (Disorient Resist): 20%"
 
 		sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
 		sel.mouse_opacity = 0
@@ -338,20 +339,7 @@
 						master.autoequip_slot(I, SLOT_R_STORE)
 					return
 				show_inventory = !show_inventory
-				if (show_inventory)
-					for (var/atom/movable/screen/hud/S in inventory_bg)
-						src.add_screen(S)
-					for (var/obj/O in inventory_items)
-						src.add_object(O, HUD_LAYER+2)
-					if (layout_style == "tg")
-						src.add_screen(legend)
-				else
-					for (var/atom/movable/screen/hud/S in inventory_bg)
-						src.remove_screen(S)
-					for (var/obj/O in inventory_items)
-						src.remove_object(O)
-					if (layout_style == "tg")
-						src.remove_screen(legend)
+				src.update_inventory()
 
 			if ("lhand")
 				master.swap_hand(1)
@@ -423,9 +411,9 @@
 
 			if ("mintent")
 				if (master.m_intent == "run")
-					master.m_intent = "walk"
+					master.set_m_intent("walk")
 				else
-					master.m_intent = "run"
+					master.set_m_intent("run")
 				boutput(master, "You are now [master.m_intent == "walk" ? "walking" : "running"].")
 				src.update_mintent()
 
@@ -541,7 +529,7 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_y <= 16)
 					if (icon_x < 16)
-						master.say_radio()
+						master.say_over_channel()
 					else
 						master.client << link("https://wiki.ss13.co/Construction")
 
@@ -579,53 +567,35 @@
 		var/obj/item/W = null
 		var/obj/item/I
 
-		#define entered_slot(slot) W = master.get_slot(slot); if (W) { W.MouseEntered(location,control,params); }
 		#define test_slot(slot) if (!W) { I = master.equipped(); if (I && !master.can_equip(I, slot)) { I = null; } if (I && sel) { sel.screen_loc = H.screen_loc; } }
 
 		switch(H.id)
 			if("belt")
-				entered_slot(SLOT_BELT)
 				test_slot(SLOT_BELT)
 			if("storage1")
-				entered_slot(SLOT_L_STORE)
 				test_slot(SLOT_L_STORE)
 			if("storage2")
-				entered_slot(SLOT_R_STORE)
 				test_slot(SLOT_R_STORE)
 			if("back") //mousing over the bag to trigger a sel outline is handled in small_storage_parent.dm off of the storage hud so we dont have to do typechecks
-				entered_slot(SLOT_BACK)
 				test_slot(SLOT_BACK)
 			if("shoes")
-				entered_slot(SLOT_SHOES)
 				test_slot(SLOT_SHOES)
 			if("gloves")
-				entered_slot(SLOT_GLOVES)
 				test_slot(SLOT_GLOVES)
 			if("id")
-				entered_slot(SLOT_WEAR_ID)
 				test_slot(SLOT_WEAR_ID)
 			if("under")
-				entered_slot(SLOT_W_UNIFORM)
 				test_slot(SLOT_W_UNIFORM)
 			if("suit")
-				entered_slot(SLOT_WEAR_SUIT)
 				test_slot(SLOT_WEAR_SUIT)
 			if("glasses")
-				entered_slot(SLOT_GLASSES)
 				test_slot(SLOT_GLASSES)
 			if("ears")
-				entered_slot(SLOT_EARS)
 				test_slot(SLOT_EARS)
 			if("mask")
-				entered_slot(SLOT_WEAR_MASK)
 				test_slot(SLOT_WEAR_MASK)
 			if("head")
-				entered_slot(SLOT_HEAD)
 				test_slot(SLOT_HEAD)
-			if ("lhand")
-				entered_slot(SLOT_L_HAND)
-			if ("rhand")
-				entered_slot(SLOT_R_HAND)
 			if ("intent")
 				switch (master.a_intent)
 					if (INTENT_DISARM)
@@ -645,10 +615,9 @@
 					sel.icon_state = "throw0_over"
 				sel.screen_loc = H.screen_loc
 
-		#undef entered_slot
 		#undef test_slot
 
-	MouseExited(atom/movable/screen/hud/H)
+	MouseExited(atom/movable/screen/hud/H, location, control, params)
 		if (!H || usr != src.master) return
 		if (sel)
 			sel.screen_loc = null
@@ -730,7 +699,7 @@
 				mdrop_slot(SLOT_R_HAND)
 		#undef mdrop_slot
 
-	proc/add_other_object(obj/item/I, loc) // this is stupid but necessary
+	proc/add_other_object(obj/item/I, loc, mouse_item = TRUE) // this is stupid but necessary
 
 		var/hide = 0 //hide from layotu based on the ignore_inventory_hide thingo
 		for (var/atom/movable/screen/hud/H in inventory_bg)
@@ -741,9 +710,25 @@
 			inventory_items += I
 
 		if (show_inventory || !hide)
-			src.add_object(I, HUD_LAYER+2, loc)
+			src.add_object(I, HUD_LAYER+2, loc, mouse_item)
 		else
 			I.screen_loc = loc
+
+	proc/update_inventory()
+		if (src.show_inventory)
+			for (var/atom/movable/screen/hud/S in inventory_bg)
+				src.add_screen(S)
+			for (var/obj/O in inventory_items)
+				src.add_object(O, HUD_LAYER+2)
+			if (layout_style == "tg")
+				src.add_screen(legend)
+		else
+			for (var/atom/movable/screen/hud/S in inventory_bg)
+				src.remove_screen(S)
+			for (var/obj/O in inventory_items)
+				src.remove_object(O)
+			if (layout_style == "tg")
+				src.remove_screen(legend)
 
 	proc/remove_item(obj/item/I)
 		if (length(inventory_items))
@@ -880,9 +865,9 @@
 		var/stage = 0
 		if (master?.mini_health_hud)
 			healthicon = "healthpip"
-			if (isdead(master) || master.fakedead)
+			if (isdead(master))
 				health_brute.icon_state = "mhealth7" // rip
-				health_brute.tooltipTheme = "healthDam healthDam7"
+				health_brute.tooltip_options = list("theme" = "healthDam7")
 				health_brute.name = "Health"
 				health_brute.desc = "Seems like you've died. Bummer."
 				health_burn.icon_state = "blank"
@@ -914,7 +899,7 @@
 
 			health_brute.name = "Brute Damage"
 			health_brute.icon_state = "mbrute[stage]"
-			health_brute.tooltipTheme = "healthDam healthDam[stage]"
+			health_brute.tooltip_options = list("theme" = "healthDam[stage]")
 
 			switch (burndam)
 				if (-INFINITY to 0)
@@ -934,7 +919,7 @@
 
 			health_burn.name = "Burn Damage"
 			health_burn.icon_state = "mburn[stage]"
-			health_burn.tooltipTheme = "healthDam healthDam[stage]"
+			health_burn.tooltip_options = list("theme" = "healthDam[stage]")
 
 			switch (toxdam)
 				if (-INFINITY to 0)
@@ -954,7 +939,7 @@
 
 			health_tox.name = "Toxin Damage"
 			health_tox.icon_state = "mtox[stage]"
-			health_tox.tooltipTheme = "healthDam healthDam[stage]"
+			health_tox.tooltip_options = list("theme" = "healthDam[stage]")
 
 			switch (oxydam)
 				if (-INFINITY to 0)
@@ -974,7 +959,7 @@
 
 			health_oxy.name = "Oxygen Damage"
 			health_oxy.icon_state = "moxy[stage]"
-			health_oxy.tooltipTheme = "healthDam healthDam[stage]"
+			health_oxy.tooltip_options = list("theme" = "healthDam[stage]")
 
 
 		else
@@ -983,9 +968,9 @@
 			health_tox.icon_state = "blank"
 			health_oxy.icon_state = "blank"
 
-			if (isdead(master) || master.fakedead)
+			if (isdead(master))
 				health.icon_state = "health7" // dead
-				health.tooltipTheme = "healthDam healthDam7"
+				health.tooltip_options = list("theme" = "healthDam7")
 				health.desc = "Seems like you've died. Bummer."
 				return
 
@@ -1015,13 +1000,13 @@
 				health.desc = "You're pretty sure you're dying!"
 
 		health.icon_state = "[healthicon][stage]"
-		health.tooltipTheme = "healthDam healthDam[stage]"
+		health.tooltip_options = list("theme" = "healthDam[stage]")
 
 	proc/update_blood_indicator()
 		if (!src.bleeding) return //doesn't have a hud element to update
 		if (isdead(master))
 			bleeding.icon_state = "blood0"
-			bleeding.tooltipTheme = "healthDam healthDam0"
+			bleeding.tooltip_options = list("theme" = "healthDam0")
 			return
 
 		var/state = 0
@@ -1053,14 +1038,14 @@
 				theme = 6
 */
 		bleeding.icon_state = "blood[state]"
-		bleeding.tooltipTheme = "healthDam healthDam[theme]"
+		bleeding.tooltip_options = list("theme" = "healthDam[theme]")
 
 	proc/update_temp_indicator()
 		if (!bodytemp)
 			return
 		if(master.getStatusDuration("burning") && !master.is_heat_resistant())
 			bodytemp.icon_state = "tempF" // on fire
-			bodytemp.tooltipTheme = "tempInd tempIndF"
+			bodytemp.tooltip_options = list("theme" = "tempIndF")
 			bodytemp.desc = "OH FUCK FIRE FIRE FIRE OH GOD FIRE AAAAAAA"
 			return
 
@@ -1096,7 +1081,7 @@
 				bodytemp.desc = "The temperature feels fine."
 
 		bodytemp.icon_state = "temp[state]"
-		bodytemp.tooltipTheme = "tempInd tempInd[state]"
+		bodytemp.tooltip_options = list("theme" = "tempInd[state]")
 
 	proc/update_breathing_indicators(datum/organ_status/lung/status_updates)
 		src.update_oxy_indicator(status_updates.show_oxy_indicator)

@@ -12,6 +12,7 @@
 		desc = "A metal support for an incomplete wall."
 		HELP_MESSAGE_OVERRIDE({"
 			You can use a <b>crowbar</b> to displace it,
+			use a <b>wrench</b> to deconstruct it,
 			add metal to finish the wall,
 			or add reinforced metal to make the girder stronger.
 		"})
@@ -24,6 +25,7 @@
 			desc = "An unsecured support for an incomplete wall."
 			HELP_MESSAGE_OVERRIDE({"
 				You can use a <b>screwdriver</b> to seperate the metal into sheets,
+				use a <b>wrench</b> to anchor the girder in place,
 				or add metal or reinforced metal to turn it into fake wall that can opened by hand.
 			"})
 
@@ -241,6 +243,9 @@ obj/structure/ex_act(severity)
 				else
 					var/datum/material/defaultMaterial = getMaterial("steel")
 					A.setMaterial(defaultMaterial)
+
+				var/obj/item/sheet/S = the_tool
+				S?.change_stack_amount(-2)
 				qdel(the_girder)
 			if (GIRDER_SECURE)
 				if (!istype(the_girder.loc, /turf/simulated/floor/))
@@ -352,6 +357,7 @@ TYPEINFO(/obj/structure/woodwall)
 	projectile_passthrough_chance = 30
 	_health = 30
 	_max_health = 30
+	flags = ON_BORDER
 	var/builtby = null
 	var/anti_z = 0
 	// for projectile damage component
@@ -359,7 +365,7 @@ TYPEINFO(/obj/structure/woodwall)
 	var/projectile_gib_streak = FALSE
 
 	New()
-		src.AddComponent(/datum/component/obj_projectile_damage, src.type, src.projectile_gib, src.projectile_gib_streak)
+		src.AddComponent(/datum/component/obj_projectile_damage, /obj/decal/cleanable/wood_debris, src.projectile_gib, src.projectile_gib_streak)
 		. = ..()
 
 	virtual
@@ -417,7 +423,7 @@ TYPEINFO(/obj/structure/woodwall)
 				return
 
 		if (ishuman(user))
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			src.visible_message(SPAN_ALERT("<b>[user]</b> bashes [src]!"))
 			playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 100, 1)
 			//Zombies do less damage
@@ -438,15 +444,48 @@ TYPEINFO(/obj/structure/woodwall)
 			actions.start(new /datum/action/bar/icon/wood_repair_wall(W, src, 30), user)
 			return
 		..()
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.changeHealth(-W.force)
 		hit_twitch(src)
 		return
+
+	disposing()
+		var/turf/T = src.loc
+		. = ..()
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(T,1))
+			A.UpdateIcon()
 
 /obj/structure/woodwall/Cross(obj/projectile/mover)
 	if (istype(mover) && !mover.proj_data.always_hits_structures && prob(src.projectile_passthrough_chance))
 		return TRUE
 	return (!density)
+
+/obj/structure/woodwall/fake_asteroid
+	name = "odd asteroid wall"
+	icon = 'icons/turf/walls/asteroid.dmi'
+	icon_state = "asteroid-map"
+	projectile_gib = FALSE
+	color = "#d1e6ff"
+	plane = PLANE_WALL
+
+	New()
+		..()
+		var/image/top_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi', pick("top1", "top2", "top3"))
+		var/icon/top_icon = icon('icons/turf/walls/asteroid.dmi',"mask2[src.icon_state]")
+		top_overlay.filters += filter(type="alpha", icon=top_icon)
+		top_overlay.layer = src.layer + 0.1
+		AddOverlays(top_overlay, "ast_top_rock")
+
+	updateHealth()
+		if (_health <= 0)
+			src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
+			src.onDestroy()
+
+/obj/structure/woodwall/fake_asteroid/left_edge
+	icon_state = "asteroid-55"
+
+/obj/structure/woodwall/fake_asteroid/right_edge
+	icon_state = "asteroid-3"
 
 /datum/action/bar/icon/wood_repair_wall
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

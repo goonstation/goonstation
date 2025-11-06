@@ -66,20 +66,25 @@
 
 				robot_owner.sight &= ~SEE_OBJS
 				robot_owner.see_in_dark = SEE_DARK_FULL
+			if(hivebot_owner)
+				hivebot_owner.see_invisible = INVIS_CLOAK
+			if(ai_mainframe_owner)
+				ai_mainframe_owner.see_invisible = INVIS_CLOAK
 ////Ship sight
 		if (istype(owner.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = owner.loc
-			if (ship.sensors)
-				if (ship.sensors.active)
-					owner.sight |= ship.sensors.sight
-					owner.sight &= ~ship.sensors.antisight
-					owner.see_in_dark = ship.sensors.see_in_dark
+			var/obj/item/shipcomponent/sensor/sensors_part = ship.get_part(POD_PART_SENSORS)
+			if (sensors_part)
+				if (sensors_part.active)
+					owner.sight |= sensors_part.sight
+					owner.sight &= ~sensors_part.antisight
+					owner.see_in_dark = sensors_part.see_in_dark
 					if (owner.client?.adventure_view)
 						owner.see_invisible = INVIS_ADVENTURE
 					else
-						owner.see_invisible = ship.sensors.see_invisible
-					if(ship.sensors.centerlight)
-						owner.render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
+						owner.see_invisible = sensors_part.see_invisible
+					if(sensors_part.centerlight)
+						owner.render_special.set_centerlight_icon(sensors_part.centerlight, sensors_part.centerlight_color)
 					return ..()
 
 		if (owner.traitHolder && owner.traitHolder.hasTrait("infravision"))
@@ -139,8 +144,8 @@
 			if (owner.see_in_dark < initial(owner.see_in_dark) + 1)
 				owner.see_in_dark++
 			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
-			if (owner.see_invisible < INVIS_INFRA)
-				owner.see_invisible = INVIS_INFRA
+			if (owner.see_invisible < INVIS_MESON)
+				owner.see_invisible = INVIS_MESON
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type
 			if (istype(human_owner.glasses, /obj/item/clothing/glasses/construction) && (T && !isrestrictedz(T.z)))

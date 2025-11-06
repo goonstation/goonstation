@@ -7,31 +7,31 @@
 
 // returns true if hit
 /atom/movable/proc/hit_check(datum/thrown_thing/thr)
-	if(src.throwing)
-		for (var/atom/A as anything in get_turf(src))
-			if (!src.throwing)
-				break
-			if(A == src) continue
-			if(A.GetComponent(/datum/component/glued)) continue
-			if(isliving(A))
-				var/mob/living/L = A
-				if (!L.throws_can_hit_me) continue
-				if (L.lying) continue
+	for (var/atom/A as anything in get_turf(src))
+		if (!src.throwing)
+			break
+		if(A == src) continue
+		if(A.GetComponent(/datum/component/glued)) continue
+		if(isliving(A))
+			var/mob/living/L = A
+			if (!L.throws_can_hit_me) continue
+			if (L.lying) continue
+			if (L.buckled == src) continue
+			src.throw_impact(A, thr)
+			if (thr.stops_on_mob_hit)
+				. = TRUE
+		// **TODO: Better behaviour for windows
+		// which are dense, but shouldn't always stop movement
+		if(isobj(A))
+			if(!A.Cross(src))
 				src.throw_impact(A, thr)
-				if (thr.stops_on_mob_hit)
-					. = TRUE
-			// **TODO: Better behaviour for windows
-			// which are dense, but shouldn't always stop movement
-			if(isobj(A))
-				if(!A.Cross(src))
-					src.throw_impact(A, thr)
-					. = TRUE
-			//Would be an idea to move all these checks into its own proc so non-humans don't need to check for this
-			if(ishuman(src) && istype(A, /obj/item/plant/tumbling_creeper))
-				var/obj/item/plant/tumbling_creeper/M = A
-				if(M.armed)
-					src.throw_impact(M, thr)
-					. = TRUE
+				. = TRUE
+		//Would be an idea to move all these checks into its own proc so non-humans don't need to check for this
+		if(ishuman(src) && istype(A, /obj/item/plant/tumbling_creeper))
+			var/obj/item/plant/tumbling_creeper/M = A
+			if(M.armed)
+				src.throw_impact(M, thr)
+				. = TRUE
 
 /atom/movable/proc/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 
@@ -118,7 +118,7 @@
 	src.throwforce += bonus_throwforce
 
 	var/matrix/transform_original = src.transform
-	if (src.throw_spin == 1 && !(throwing & THROW_SLIP) && !(throwing & THROW_PEEL_SLIP))
+	if (src.throw_spin && !(throwing & THROW_SLIP) && !(throwing & THROW_PEEL_SLIP))
 		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)

@@ -102,6 +102,50 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
 		swatch_background_color = "#3f4c5b"
 		item_path = /obj/item/clothing/suit/hoodie/black
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie_large)
+/datum/clothingbooth_item/wear_suit/hoodie_large
+	cost = PAY_UNTRAINED / 3
+
+	orange
+		name = "Orange - Large"
+		swatch_background_color = "#ebb02c"
+		item_path = /obj/item/clothing/suit/hoodie/large
+
+	pink
+		name = "Pink - Large"
+		swatch_background_color = "#ff009d"
+		item_path = /obj/item/clothing/suit/hoodie/large/pink
+
+	red
+		name = "Red - Large"
+		swatch_background_color = "#d73715"
+		item_path = /obj/item/clothing/suit/hoodie/large/red
+
+	green
+		name = "Green - Large"
+		swatch_background_color = "#3eb54e"
+		item_path = /obj/item/clothing/suit/hoodie/large/green
+
+	blue
+		name = "Blue - Large"
+		swatch_background_color = "#63a5ee"
+		item_path = /obj/item/clothing/suit/hoodie/large/blue
+
+	white
+		name = "White - Large"
+		swatch_background_color = "#ebf0f2"
+		item_path = /obj/item/clothing/suit/hoodie/large/white
+
+	black
+		name = "Black - Large"
+		swatch_background_color = "#3f4c5b"
+		item_path = /obj/item/clothing/suit/hoodie/large/black
+
+	purple
+		name = "Purple - Large"
+		swatch_background_color = "#8c00ff"
+		item_path = /obj/item/clothing/suit/hoodie/large/purple
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 /datum/clothingbooth_item/wear_suit/jacket
 	cost = PAY_TRADESMAN/3
@@ -159,6 +203,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 /datum/clothingbooth_item/wear_suit/overcoat_and_scarf
 	name = "Overcoat and Scarf"
 	item_path = /obj/item/clothing/suit/johnny_coat
+
+/datum/clothingbooth_item/wear_suit/long_sleeved_shirt
+	item_path = /obj/item/clothing/suit/lshirt
 
 // todo: distinguish these two somehow
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
@@ -233,3 +280,38 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/sweater_vest)
 		name = "Black"
 		swatch_background_color = "#343442"
 		item_path = /obj/item/clothing/suit/sweater_vest/black
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/denim_dress)
+/datum/clothingbooth_item/wear_suit/denim_dress
+	cost = PAY_UNTRAINED/3
+	name = "Denim Dress"
+
+	blue
+		name = "Blue"
+		swatch_background_color = "#3c6dc3"
+		item_path = /obj/item/clothing/suit/dress/denim/blue
+
+	turquoise
+		name = "Turquoise"
+		swatch_background_color = "#053a4e"
+		item_path = /obj/item/clothing/suit/dress/denim/turquoise
+
+	white
+		name = "White"
+		swatch_background_color = "#ffffff"
+		item_path = /obj/item/clothing/suit/dress/denim/white
+
+	black
+		name = "Black"
+		swatch_background_color = "#1c1c1c"
+		item_path = /obj/item/clothing/suit/dress/denim/black
+
+	grey
+		name = "Grey"
+		swatch_background_color = "#9fa6a9"
+		item_path = /obj/item/clothing/suit/dress/denim/grey
+
+	khaki
+		name = "Khaki"
+		swatch_background_color = "#c9a46e"
+		item_path = /obj/item/clothing/suit/dress/denim/khaki

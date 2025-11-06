@@ -41,7 +41,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		..()
 		icon_state = "[src.icon_state_base]-[appearanceString]"
 
-
 	examine()
 		. = ..()
 		switch(ropart_get_damage_percentage(1))
@@ -185,7 +184,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		if (M.amount < 1)
 			user.drop_item()
 			qdel(M)
-
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitem, user)
 		qdel(src)
 
 	proc/can_reinforce(var/obj/item/sheet/M, var/mob/user, var/need_reinforced)
@@ -242,14 +241,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
 				boutput(user, SPAN_ALERT("This brain doesn't look any good to use."))
 				return
-			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
-				boutput(user, SPAN_ALERT("The brain disintigrates in your hands!"))
-				user.drop_item()
-				qdel(B)
-				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-				smoke.set_up(1, 0, user.loc)
-				smoke.start()
-				return
 			user.drop_item()
 			B.set_loc(src)
 			src.brain = B
@@ -291,7 +282,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			..()
 
 	reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
-		if (!src.can_reinforce(M, need_reinforced))
+		if (!src.can_reinforce(M, user, need_reinforced))
 			return
 
 		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
@@ -311,7 +302,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		if (M.amount < 1)
 			user.drop_item()
 			qdel(M)
-
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitem, user)
 		qdel(src)
 
 /obj/item/parts/robot_parts/head/standard
@@ -515,6 +506,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 				boutput(user, SPAN_NOTICE("You remove the internal support structures of the [src]. It's structural integrity is ruined, but you could squeeze into it now."))
 				user.u_equip(src)
 				user.put_in_hand_or_drop(R)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, R, user)
 				qdel(src)
 		else
 			..()
@@ -535,10 +527,22 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	name = "placeholder item (don't use this!)"
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
 	material_amt = ROBOT_LIMB_COST
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	max_health = 60
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
 	var/emagged = FALSE //contains: technical debt
+	var/add_to_tools = FALSE
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		. = ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!ismob(target))
@@ -633,6 +637,54 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		robot.equip_slot(robo_slot, chosen_tool)
 		if (last_active)
 			robot.swap_hand(last_active)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+		if(!parent_assembly.target)
+			return " You can add a pie onto this assembly in order to modify it further."
+
+	proc/assembly_setup(var/manipulated_arm, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have different robot arms (including left and right versions)
+		parent_assembly.applier_icon_prefix = "robot_arm"
+		if (!parent_assembly.target)
+			// trigger-robotarm-Assembly + pie -> trigger-robotarm-pie-assembly
+			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+
+	proc/assembly_application(var/manipulated_arm, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		var/mob/mob_target = null
+		var/turf/current_turf = get_turf(src)
+		for(var/mob/iterated_mob in viewers(6, current_turf))
+			//the first mob within the return of view() should also be the nearest
+			if (!isintangible(iterated_mob))
+				mob_target = iterated_mob
+				break
+		if(!assembly_target)
+			//if there is no target, we don't do anything. Else, we give them the finger.
+			if(mob_target)
+				mob_target.visible_message(SPAN_ALERT("<b>[parent_assembly.name]'s [src] flips [mob_target] off! How rude...</b>"),\
+				SPAN_ALERT("<b>[parent_assembly.name]'s [src] flips you off! How rude...</b>"))
+		else
+			var/atom/throw_target = mob_target
+			var/obj/item/pie_to_throw = parent_assembly.target
+			//if no target is found, we throw at a random turf which is 6 tiles away instead
+			if(!throw_target)
+				throw_target = get_ranged_target_turf(current_turf, pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST), 6 * 32)
+			else
+				throw_target.visible_message(SPAN_ALERT("<b>[parent_assembly.name]'s [src] launches [pie_to_throw] at [throw_target]!</b>"),\
+				SPAN_ALERT("<b>[parent_assembly.name]'s [src] launches [pie_to_throw] at you!</b>"))
+			parent_assembly.remove_until_minimum_components()
+			//after the pie is removed from the assembly and positioned at the ground, lets launch it!
+			if(mob_target && get_turf(mob_target) == current_turf)
+				//if the pie and the person is on the same tile, we gotta make them meet directly
+				var/datum/thrown_thing/simulated_throw = new
+				simulated_throw.user = parent_assembly.last_armer
+				simulated_throw.thing = pie_to_throw
+				pie_to_throw.throw_impact(throw_target, simulated_throw)
+			else
+				pie_to_throw.throw_at(throw_target, 6, 2, thrown_by = parent_assembly.last_armer)
+
+/// ----------- ---------------------------------------------- -----------
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
@@ -784,23 +836,23 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 			var/obj/item/skull/Skull = W
 			var/obj/machinery/bot/skullbot/B
 
-			if (Skull.icon_state == "skull_crystal" || istype(Skull, /obj/item/skull/crystal))
-				B = new /obj/machinery/bot/skullbot/crystal(get_turf(user))
+			if (Skull.icon_state == "skull_omnitraitor" || istype(Skull, /obj/item/skull/omnitraitor))
+				B = new /obj/machinery/bot/skullbot/omnitraitor(get_turf(user))
 
-			else if (Skull.icon_state == "skullP" || istype(Skull, /obj/item/skull/strange))
-				B = new /obj/machinery/bot/skullbot/strange(get_turf(user))
+			else if (Skull.icon_state == "skull_hunter" || istype(Skull, /obj/item/skull/hunter))
+				B = new /obj/machinery/bot/skullbot/hunter(get_turf(user))
 
-			else if (Skull.icon_state == "skull_strange" || istype(Skull, /obj/item/skull/peculiar))
-				B = new /obj/machinery/bot/skullbot/peculiar(get_turf(user))
+			else if (Skull.icon_state == "skull_wizard" || istype(Skull, /obj/item/skull/wizard))
+				B = new /obj/machinery/bot/skullbot/wizard(get_turf(user))
 
-			else if (Skull.icon_state == "skullA" || istype(Skull, /obj/item/skull/odd))
-				B = new /obj/machinery/bot/skullbot/odd(get_turf(user))
+			else if (Skull.icon_state == "skull_changeling" || istype(Skull, /obj/item/skull/changeling))
+				B = new /obj/machinery/bot/skullbot/changeling(get_turf(user))
 
-			else if (Skull.icon_state == "skull_noface" || istype(Skull, /obj/item/skull/noface))
-				B = new /obj/machinery/bot/skullbot/faceless(get_turf(user))
+			else if (Skull.icon_state == "skull_cluwne" || istype(Skull, /obj/item/skull/cluwne))
+				B = new /obj/machinery/bot/skullbot/cluwne(get_turf(user))
 
-			else if (Skull.icon_state == "skull_gold" || istype(Skull, /obj/item/skull/gold))
-				B = new /obj/machinery/bot/skullbot/gold(get_turf(user))
+			else if (Skull.icon_state == "skull_macho" || istype(Skull, /obj/item/skull/macho))
+				B = new /obj/machinery/bot/skullbot/macho(get_turf(user))
 
 			else
 				B = new /obj/machinery/bot/skullbot(get_turf(user))
@@ -849,6 +901,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	partlistPart = "legL-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
+	movement_modifier = null
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 	breaks_cuffs = FALSE
@@ -887,6 +940,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	partlistPart = "legR-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
+	movement_modifier = null
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 	breaks_cuffs = FALSE
@@ -1203,23 +1257,35 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			return
 
 		if(borg.part_head.brain?.owner?.key)
-			if(borg.part_head.brain.owner.current)
-				borg.gender = borg.part_head.brain.owner.current.gender
-				if(borg.part_head.brain.owner.current.client)
-					borg.lastKnownIP = borg.part_head.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(borg.part_head.brain.owner.key)
+			var/obj/item/organ/brain/brain = borg.part_head.brain
+			if(brain.owner.current)
+				borg.gender = brain.owner.current.gender
+				if(brain.owner.current.client)
+					borg.lastKnownIP = brain.owner.current.client.address
+			var/mob/M = find_ghost_by_key(brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message(SPAN_ALERT("<b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached."))
 				borg.death()
 				qdel(src)
 				return
+			// job-banned, DNR, or cyber-incompatible
+			if ((brain.owner && (jobban_isbanned(brain.owner.current,"Cyborg") || brain.owner.get_player().dnr)) || brain.cyber_incompatible)
+				src.visible_message(SPAN_ALERT("The brain inside [src] disintegrates!"))
+				borg.part_head.brain = null
+				qdel(brain)
+				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+				smoke.set_up(1, 0, src.loc)
+				smoke.start()
+				borg.death()
+				qdel(src)
+				return
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
-				borg.part_head.brain.owner = M.ghostize()?.mind
+				brain.owner = M.ghostize()?.mind
 				qdel(M)
 			else
 				boutput(M, SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
-			borg.part_head.brain.owner.transfer_to(borg)
+			brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
 
@@ -1273,7 +1339,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		return
 
 /obj/item/parts/robot_parts/robot_frame/syndicate
+	tooltip_flags = REBUILD_USER
 	syndicate = TRUE
+	SYNDICATE_STEALTH_DESCRIPTION("The law connection light is blinking a sinister syndicate red.", null)
 
 // UPGRADES
 // Cyborg
@@ -1318,3 +1386,181 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		AI.verbs -= whatever the vox verb is i guess
 */
 
+// ancient robot stuff
+
+///Returns TRUE on successful clamping
+/atom/movable/proc/clamp_act(mob/clamper, obj/item/clamp)
+	return FALSE
+
+proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
+	if (ON_COOLDOWN(clamper, "clamp", 1 SECOND))
+		return
+	if (isturf(clamped))
+		return
+	APPLY_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+	APPLY_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
+	playsound(clamper.loc, 'sound/machines/hydraulic.ogg', 40, 1)
+	clamper.visible_message(SPAN_ALERT("[clamper] CLAMPS [clamped] with [his_or_her(clamper)] [clamp.name]!"))
+	sleep(1 SECOND)
+	if (!can_reach(clamper, clamped))
+		REMOVE_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+		REMOVE_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
+		return
+
+	if (!clamped.clamp_act(clamper, clamp))
+		clamper.visible_message(SPAN_ALERT("...but [clamped] remains unclamped."))
+
+	REMOVE_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+	REMOVE_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
+
+/obj/item/parts/robot_parts/arm/right/ancient
+	name = "ancient right arm"
+	desc = "The right arm of an ancient utility construct."
+	icon_state = "r_arm-ancient"
+	appearanceString = "ancient"
+	max_health = 200
+	weight = 0.4
+	handlistPart = "armR-sturdy"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_right
+
+	stonecutter
+		name = "ancient stonecutter arm"
+		desc = "The cutting arm of an ancient stonemason construct."
+		icon_state = "r_arm-ancient2"
+		appearanceString = "ancient2"
+		max_health = 150
+		weight = 0.2
+		handlistPart = "armR-light"
+		robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
+
+	actuator
+		name = "ancient actuator arm"
+		desc = "A massive clamping arm from an ancient lifter construct."
+		icon_state = "r_arm-ancient3"
+		appearanceString = "ancient3"
+		max_health = 300
+		weight = 0.5
+		handlistPart = "armR-heavy"
+		add_to_tools = TRUE
+		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
+
+		New()
+			. = ..()
+			RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(clamp_proxy))
+
+		proc/clamp_proxy(_, target, user)
+			if (issilicon(user) && !(target in user))
+				do_clamp(target, user, src)
+				return TRUE
+
+/obj/item/parts/robot_parts/arm/left/ancient
+	name = "ancient left arm"
+	desc = "The left arm of an ancient silicon construct."
+	icon_state = "l_arm-ancient"
+	appearanceString = "ancient"
+	max_health = 200
+	weight = 0.4
+	handlistPart = "armL-sturdy"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_left
+
+	stonecutter
+		name = "ancient stonecutter arm"
+		desc = "The cutting arm of an ancient stonemason construct."
+		icon_state = "l_arm-ancient2"
+		appearanceString = "ancient2"
+		max_health = 150
+		weight = 0.2
+		handlistPart = "armL-light"
+		robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
+
+	actuator
+		name = "ancient actuator arm"
+		desc = "A massive clamping arm from an ancient lifter construct."
+		icon_state = "l_arm-ancient3"
+		appearanceString = "ancient3"
+		max_health = 350
+		weight = 0.5
+		handlistPart = "armL-heavy"
+		add_to_tools = TRUE
+		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
+
+		New()
+			. = ..()
+			RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(clamp_proxy))
+
+		proc/clamp_proxy(_, target, user)
+			if (issilicon(user) && !(target in user))
+				do_clamp(target, user, src)
+				return TRUE
+
+/obj/item/parts/robot_parts/head/ancient
+	name = "ancient head"
+	desc = "The pseudocranium of an ancient silicon utility construct."
+	icon_state = "head-ancient"
+	appearanceString = "ancient"
+	max_health = 200
+	weight = 0.5
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_head
+
+	stonecutter
+		name = "stonecutter head"
+		desc = "The pseudocranium of an ancient silicon stonecutter."
+		icon_state = "head-ancient2"
+		appearanceString = "ancient2"
+		max_health = 100
+		weight = 0.3
+		robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
+
+	actuator
+		name = "actuator head"
+		desc = "The pseudocranium of an ancient silicon loader."
+		icon_state = "head-ancient3"
+		appearanceString = "ancient3"
+		max_health = 300
+		weight = 0.6
+		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
+
+		New()
+			. = ..()
+			AddComponent(/datum/component/loctargeting/medium_directional_light, 255, 0, 0, 210)
+			SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+
+	worker
+		name = "worker head"
+		desc = "The pseudocranium of an ancient silicon worker."
+		icon_state = "head-ancient4"
+		appearanceString = "ancient4"
+		max_health = 200
+		weight = 0.3
+		robot_movement_modifier = /datum/movement_modifier/robot_part/standard_head
+
+	guardian
+		name = "guardian head"
+		desc = "The pseudocranium of an ancient silicon guardian."
+		icon_state = "head-ancient5"
+		appearanceString = "ancient5"
+		max_health = 400
+		weight = 0.6
+		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
+
+/obj/item/parts/robot_parts/chest/ancient
+	name = "ancient chest"
+	desc = "The thoracic carapace of an ancient silicon construct."
+	icon_state = "body-ancient"
+	appearanceString = "ancient"
+	max_health = 350
+	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_chest
+
+	stonecutter
+		name = "stonecutter chest"
+		desc = "The thoracic carapace of an ancient silicon stonecutter."
+		icon_state = "body-ancient2"
+		appearanceString = "ancient2"
+		max_health = 250
+
+	actuator
+		name = "actuator chest"
+		desc = "The heavy actuator frame of an ancient silicon loader."
+		icon_state = "body-ancient3"
+		appearanceString = "ancient3"
+		max_health = 450

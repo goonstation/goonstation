@@ -4,18 +4,14 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 /datum/bomb_monitor
 	var/lists_built = 0
 	var/list/obj/item/device/transfer_valve/TVs = list()
-	var/list/obj/item/assembly/detonator/dets = list()
-	var/list/obj/item/assembly/proximity_bomb/ST_prox = list()
-	var/list/obj/item/assembly/time_bomb/ST_time = list()
-	var/list/obj/item/assembly/radio_bomb/ST_radio = list()
+	var/list/obj/item/canbomb_detonator/dets = list()
+	var/list/obj/item/assembly/bomb_assemblies = list()
 	var/filter_active_only = 1
 	disposing()
 		lists_built = 0
 		TVs.Cut()
 		dets.Cut()
-		ST_prox.Cut()
-		ST_time.Cut()
-		ST_radio.Cut()
+		bomb_assemblies.Cut()
 		filter_active_only = 1
 		..()
 
@@ -24,20 +20,16 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 		if(lists_built && !force) return
 		TVs.Cut()
 		dets.Cut()
-		ST_prox.Cut()
-		ST_time.Cut()
-		ST_radio.Cut()
+		bomb_assemblies.Cut()
 		for(var/obj/item/I in world)
 			if(istype(I, /obj/item/device/transfer_valve))
 				TVs += I
-			else if (istype(I, /obj/item/assembly/detonator))
+			else if (istype(I, /obj/item/canbomb_detonator))
 				dets += I
-			else if (istype(I, /obj/item/assembly/proximity_bomb/))
-				ST_prox += I
-			else if (istype(I, /obj/item/assembly/time_bomb/))
-				ST_time += I
-			else if (istype(I, /obj/item/assembly/radio_bomb/))
-				ST_radio += I
+			else if (istype(I, /obj/item/assembly))
+				var/obj/item/assembly/checked_bomb = I
+				if(istype(checked_bomb.target, /obj/item/tank/plasma))
+					src.bomb_assemblies += I
 			LAGCHECK(LAG_LOW)
 
 		lists_built = 1
@@ -57,8 +49,8 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 						device_name += " (DEFAULT)"
 
 				if (!T || !isturf(T)) continue
-				var/ref_a = "<a href='?src=\ref[src];airmon=\ref[TV.tank_one]'>[TV.tank_one]</a>"
-				var/ref_b = "<a href='?src=\ref[src];airmon=\ref[TV.tank_two]'>[TV.tank_two]</a>"
+				var/ref_a = "<a href='byond://?src=\ref[src];airmon=\ref[TV.tank_one]'>[TV.tank_one]</a>"
+				var/ref_b = "<a href='byond://?src=\ref[src];airmon=\ref[TV.tank_two]'>[TV.tank_two]</a>"
 				temp += {"<tr>
 							<td>
 								[TV.name]
@@ -82,10 +74,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[TV.fingerprintslast ? TV.fingerprintslast : "N/A"]
 							</td>
 							<td>
-								<a href='?src=\ref[src];toggle_dud=\ref[TV]'>[TV.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+								<a href='byond://?src=\ref[src];toggle_dud=\ref[TV]'>[TV.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 							</td>
 							<td>
-								<a href='?src=\ref[src];trigger=\ref[TV]'><B>[TV.tank_one && TV.tank_two ? "Trigger" : ""]</B></a>
+								<a href='byond://?src=\ref[src];trigger=\ref[TV]'><B>[TV.tank_one && TV.tank_two ? "Trigger" : ""]</B></a>
 							</td>
 						</tr>"}
 
@@ -98,75 +90,15 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 						</table>"}
 
 		temp = ""
-		for (var/obj/item/assembly/proximity_bomb/PB in ST_prox)
-			var/turf/T = get_turf(PB)
-			if (!T || !isturf(T)) continue
-			var/ref_PB = "<a href='?src=\ref[src];airmon=\ref[PB.part3]'>[PB.part3]</a>"
-			temp += {"<tr>
-						<td>
-							[PB.name]
-						</td>
-						<td>
-							[get_area(T)]
-						</td>
-						<td>
-							[showCoords(T.x, T.y, T.z, 0, user.client.holder)]
-						</td>
-						<td>
-							[PB.part3 ? ref_PB : "Nothing"]
-						</td>
-						<td>
-							[PB.part1 ? PB.part1 : "Nothing"]
-						</td>
-						<td>
-							[PB.fingerprintslast ? PB.fingerprintslast : "N/A"]
-						</td>
-						<td>
-							<a href='?src=\ref[src];toggle_dud=\ref[PB]'>[PB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
-						</td>
-						<td>
-							<a href='?src=\ref[src];trigger=\ref[PB]'><B>[PB.part3 ? "Trigger" : ""]</B></a>
-						</td>
-					</tr>"}
 
-		for (var/obj/item/assembly/time_bomb/TB in ST_time)
-			var/turf/T = get_turf(TB)
-			if (!T || !isturf(T)) continue
-			var/ref_TB = "<a href='?src=\ref[src];airmon=\ref[TB.part3]'>[TB.part3]</a>"
-			temp += {"<tr>
-						<td>
-							[TB.name]
-						</td>
-						<td>
-							[get_area(T)]
-						</td>
-						<td>
-							[showCoords(T.x, T.y, T.z, 0, user.client.holder)]
-						</td>
-						<td>
-							[TB.part3 ? ref_TB : "Nothing"]
-						</td>
-						<td>
-							[TB.part1 ? TB.part1 : "Nothing"]
-						</td>
-						<td>
-							[TB.fingerprintslast ? TB.fingerprintslast : "N/A"]
-						</td>
-						<td>
-							<a href='?src=\ref[src];toggle_dud=\ref[TB]'>[TB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
-						</td>
-						<td>
-							<a href='?src=\ref[src];trigger=\ref[TB]'><B>[TB.part3 ? "Trigger" : ""]</B></a>
-						</td>
-					</tr>"}
 
-		for (var/obj/item/assembly/radio_bomb/RB in ST_radio)
-			var/turf/T = get_turf(RB)
+		for (var/obj/item/assembly/checked_bomb in bomb_assemblies)
+			var/turf/T = get_turf(checked_bomb)
 			if (!T || !isturf(T)) continue
-			var/ref_RB = "<a href='?src=\ref[src];airmon=\ref[RB.part3]'>[RB.part3]</a>"
+			var/ref_checked_bomb = "<a href='byond://?src=\ref[src];airmon=\ref[checked_bomb.target]'>[checked_bomb.target]</a>"
 			temp += {"<tr>
 						<td>
-							[RB.name]
+							[checked_bomb.name]
 						</td>
 						<td>
 							[get_area(T)]
@@ -175,19 +107,19 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							[showCoords(T.x, T.y, T.z, 0, user.client.holder)]
 						</td>
 						<td>
-							[RB.part3 ? ref_RB : "Nothing"]
+							[checked_bomb.target ? ref_checked_bomb : "Nothing"]
 						</td>
 						<td>
-							[RB.part1 ? RB.part1 : "Nothing"]
+							[checked_bomb.trigger ? checked_bomb.trigger : "Nothing"]
 						</td>
 						<td>
-							[RB.fingerprintslast ? RB.fingerprintslast : "N/A"]
+							[checked_bomb.fingerprintslast ? checked_bomb.fingerprintslast : "N/A"]
 						</td>
 						<td>
-							<a href='?src=\ref[src];toggle_dud=\ref[RB]'>[RB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+							<a href='byond://?src=\ref[src];toggle_dud=\ref[checked_bomb]'>[checked_bomb.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 						</td>
 						<td>
-							<a href='?src=\ref[src];trigger=\ref[RB]'><B>[RB.part3 ? "Trigger" : ""]</B></a>
+							<a href='byond://?src=\ref[src];trigger=\ref[checked_bomb]'><B>[checked_bomb.target ? "Trigger" : ""]</B></a>
 						</td>
 					</tr>"}
 
@@ -200,11 +132,11 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 						</table>"}
 
 		temp = ""
-		for(var/obj/item/assembly/detonator/det in dets)
+		for(var/obj/item/canbomb_detonator/det in dets)
 			if(!filter_active_only || det.attachedTo)
 				var/turf/T = get_turf(det)
 				if (!T || !isturf(T)) continue
-				var/ref = "<a href='?src=\ref[src];airmon=\ref[det.attachedTo]'>[det.attachedTo]</a>"
+				var/ref = "<a href='byond://?src=\ref[src];airmon=\ref[det.attachedTo]'>[det.attachedTo]</a>"
 				temp += {"<tr>
 							<td>
 								[det.name]
@@ -225,10 +157,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[det.attachedTo && det.attachedTo.fingerprintslast ? det.attachedTo.fingerprintslast : "N/A"]
 							</td>
 							<td>
-								<a href='?src=\ref[src];toggle_dud=\ref[det]'>[det.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+								<a href='byond://?src=\ref[src];toggle_dud=\ref[det]'>[det.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 							</td>
 							<td>
-								<a href='?src=\ref[src];trigger=\ref[det]'><B>[det.attachedTo ? "Trigger" : ""]</B></a>
+								<a href='byond://?src=\ref[src];trigger=\ref[det]'><B>[det.attachedTo ? "Trigger" : ""]</B></a>
 							</td>
 						</tr>"}
 
@@ -274,7 +206,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							</style>
 						</head>
 						<body>
-							<a href='?src=\ref[src];refresh=rebuild'>Rebuild Lists</a> <a href='?src=\ref[src];refresh=interface'>Refresh</a> <a href='?src=\ref[src];filter=1'>Filtering: [filter_active_only ? "Only Complete" : "All"]</a><br>
+							<a href='byond://?src=\ref[src];refresh=rebuild'>Rebuild Lists</a> <a href='byond://?src=\ref[src];refresh=interface'>Refresh</a> <a href='byond://?src=\ref[src];filter=1'>Filtering: [filter_active_only ? "Only Complete" : "All"]</a><br>
 							[TTVtable]
 							<BR>
 							[STtable]
@@ -308,7 +240,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 				boutput(usr, SPAN_ALERT("Unable to locate the object (it's been deleted, somehow. Explosion, probably)."))
 				return
 
-			if (istype(I, /obj/item/assembly/detonator) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/))
+			if (istype(I, /obj/item/canbomb_detonator) || (istype(I, /obj/item/assembly) || istype(I, /obj/item/device/transfer_valve)))
 				I:force_dud = !I:force_dud
 				display_ui(usr)
 				message_admins("[key_name(usr)] made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
@@ -338,21 +270,15 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			logTheThing(LOG_ADMIN, usr, "made \the [I] at [log_loc(I)] detonate!")
 			logTheThing(LOG_DIARY, usr, "made \the [I] at [log_loc(I)]  detonate!", "admin")
 
-			if (istype(I, /obj/item/assembly/detonator))
-				var/obj/item/assembly/detonator/D = I
+			if (istype(I, /obj/item/canbomb_detonator))
+				var/obj/item/canbomb_detonator/D = I
 				D.detonate()
 			else if (istype(I, /obj/item/device/transfer_valve))
 				var/obj/item/device/transfer_valve/TV = I
 				TV.toggle_valve()
-			else if (istype(I, /obj/item/assembly/proximity_bomb/))
-				var/obj/item/assembly/proximity_bomb/PB = I
-				PB.part3.ignite()
-			else if (istype(I, /obj/item/assembly/time_bomb/))
-				var/obj/item/assembly/time_bomb/TB = I
-				TB.part3.ignite()
-			else if (istype(I, /obj/item/assembly/radio_bomb/))
-				var/obj/item/assembly/radio_bomb/RB = I
-				RB.part3.ignite()
+			else if (istype(I, /obj/item/assembly))
+				var/obj/item/assembly/checked_bomb = I
+				SEND_SIGNAL(checked_bomb.applier, COMSIG_ITEM_ASSEMBLY_APPLY, checked_bomb, checked_bomb.target)
 			display_ui(usr, 1)
 		if(href_list["close"])
 			usr.Browse(null, "window=bomb_monitor")

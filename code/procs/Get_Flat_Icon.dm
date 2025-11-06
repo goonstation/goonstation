@@ -34,7 +34,7 @@
 	var/curstate = A.icon_state || defstate
 
 	if(!((noIcon = (!curicon))))
-		var/curstates = icon_states(curicon)
+		var/curstates = get_icon_states(curicon)
 		if(!(curstate in curstates))
 			if("" in curstates)
 				curstate = ""

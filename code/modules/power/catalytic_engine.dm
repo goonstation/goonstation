@@ -323,15 +323,15 @@
 			src.indicator_update()
 
 			src.ovr_door.icon_state = "nonvis"
-			flick("door-open",src.ovr_door)
+			FLICK("door-open",src.ovr_door)
 			playsound(src, 'sound/machines/sleeper_open.ogg', 40, TRUE)
 
 			if(src.contained_rod)
 				src.ovr_rod.icon_state = "rod-high"
-				flick("rod-raise-[src.dir]",src.ovr_rod)
+				FLICK("rod-raise-[src.dir]",src.ovr_rod)
 
 			src.ovr_clamp.icon_state = "clamp-high"
-			flick("clamp-raise-[src.dir]",src.ovr_clamp)
+			FLICK("clamp-raise-[src.dir]",src.ovr_clamp)
 
 			SPAWN(1.6 SECONDS)
 				src.toggling = FALSE
@@ -340,15 +340,15 @@
 
 			if(src.contained_rod)
 				src.ovr_rod.icon_state = "nonvis"
-				flick("rod-lower-[src.dir]",src.ovr_rod)
+				FLICK("rod-lower-[src.dir]",src.ovr_rod)
 
 			src.ovr_clamp.icon_state = "nonvis"
-			flick("clamp-lower-[src.dir]",src.ovr_clamp)
+			FLICK("clamp-lower-[src.dir]",src.ovr_clamp)
 
 			SPAWN(1 SECOND)
 
 				src.ovr_door.icon_state = "door-shut"
-				flick("door-close",src.ovr_door)
+				FLICK("door-close",src.ovr_door)
 				playsound(src, 'sound/machines/sleeper_close.ogg', 40, TRUE)
 
 				SPAWN(0.6 SECONDS)

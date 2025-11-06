@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import {
   BlockQuote,
   Box,
@@ -10,15 +11,16 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface AIRackData {
-  lawTitles;
-  lawText;
-  welded;
-  screwed;
+  powered: BooleanLike;
+  lawTitles: string[];
+  lawText: string[];
+  welded: BooleanLike[];
+  screwed: BooleanLike[];
 }
 
 export const AIRack = () => {
   const { act, data } = useBackend<AIRackData>();
-  const { lawTitles, lawText, welded, screwed } = data;
+  const { powered, lawTitles, lawText, welded, screwed } = data;
   return (
     <Window title="AI Law Rack" width={600} height={800}>
       <Window.Content scrollable>
@@ -36,7 +38,17 @@ export const AIRack = () => {
                 <Button
                   icon={item ? 'circle' : 'circle-o'}
                   onClick={() => act('rack', { rack_index: index + 1 })}
-                  disabled={welded[index] || screwed[index]}
+                  disabled={
+                    (!powered && item ? true : false) ||
+                    welded[index] ||
+                    screwed[index]
+                  }
+                  tooltip={moduleTooltip(
+                    item ? true : false,
+                    powered,
+                    welded[index],
+                    screwed[index],
+                  )}
                 >
                   {item ? 'Remove' : 'Empty'}
                 </Button>
@@ -61,4 +73,28 @@ export const AIRack = () => {
       </Window.Content>
     </Window>
   );
+};
+
+const moduleTooltip = (
+  filled: BooleanLike,
+  powered: BooleanLike,
+  welded: BooleanLike,
+  screwed: BooleanLike,
+) => {
+  if (!filled) {
+    return 'Insert a module';
+  }
+  if (!powered) {
+    return 'The AI Law Rack is unpowered';
+  }
+  if (welded && screwed) {
+    return 'The module is welded and screwed in place';
+  }
+  if (welded) {
+    return `The module is welded in place`;
+  }
+  if (screwed) {
+    return 'The module is screwed in place';
+  }
+  return 'Remove the module';
 };

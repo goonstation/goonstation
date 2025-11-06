@@ -5,8 +5,7 @@
  * @license MIT
  */
 
-import { capitalize } from 'common/string';
-import { useCallback, useState } from 'react';
+import { useMemo } from 'react';
 import {
   Button,
   Input,
@@ -31,26 +30,27 @@ interface ChemRequesterData {
   silicon_user;
 }
 
-const ReagentSearch = (props) => {
+const ReagentSearch = (props: Partial<ChemRequesterData>) => {
   const { act } = useBackend();
-  const { chemicals } = props;
-  const [searchText, setSearchText] = useState('');
-  const filteredReagents = Object.keys(chemicals).filter((chemical) =>
-    chemical.includes(searchText),
-  );
-  const handleSelectReagent = (reagent) => {
+  const { chemicals, selected_reagent } = props;
+  const reagentNames = useMemo(() => {
+    return Object.keys(chemicals).sort();
+  }, [chemicals]);
+
+  const handleSelectReagent = (reagent: string) => {
     act('set_reagent', {
       reagent_name: reagent,
       reagent_id: chemicals[reagent],
     });
-    setSearchText('');
   };
+
   return (
     <ListSearch
       autoFocus
-      currentSearch={searchText}
-      options={filteredReagents}
-      onSearch={setSearchText}
+      fuzzy="smart"
+      height={26}
+      options={reagentNames}
+      selectedOptions={selected_reagent ? [selected_reagent] : []}
       onSelect={handleSelectReagent}
     />
   );
@@ -67,10 +67,8 @@ export const ChemRequester = () => {
     notes,
     silicon_user,
   } = data;
-  const [notesText, setNotesText] = useState('');
-  const handleNotesInput = useCallback((e, value) => setNotesText(value), []);
   return (
-    <Window title="Chemical Request" width={400} height={600}>
+    <Window title="Chemical Request" width={350} height={485}>
       <Window.Content align="center">
         {!!card && (
           <Stack vertical>
@@ -83,20 +81,10 @@ export const ChemRequester = () => {
               />
             </Stack.Item>
             <Stack.Item>
-              {!selected_reagent && (
-                <Section height={36} fill scrollable>
-                  <ReagentSearch chemicals={chemicals} />
-                </Section>
-              )}
-              {!!selected_reagent && (
-                <Button
-                  onClick={() => {
-                    act('set_reagent', { reagent: null });
-                  }}
-                >
-                  {capitalize(selected_reagent)}
-                </Button>
-              )}
+              <ReagentSearch
+                chemicals={chemicals}
+                selected_reagent={selected_reagent}
+              />
             </Stack.Item>
             <Stack.Item>
               <LabeledList>
@@ -115,15 +103,12 @@ export const ChemRequester = () => {
                 <LabeledList.Item label="Notes">
                   <Input
                     width="100%"
-                    value={notesText}
+                    value={notes}
                     maxLength={65}
-                    onInput={handleNotesInput}
-                    onChange={(e, value) => {
+                    onBlur={(value) => {
                       act('set_notes', { notes: value });
                     }}
-                  >
-                    {notes}
-                  </Input>
+                  />
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
@@ -131,7 +116,7 @@ export const ChemRequester = () => {
               <Button
                 onClick={() => {
                   act('submit');
-                  setNotesText('');
+                  act('set_notes', { notes: '' });
                 }}
               >
                 Submit request

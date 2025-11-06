@@ -7,6 +7,9 @@
 	var/hud_state = "blank"
 	icon_state= "sec_system"
 
+	get_install_slot()
+		return POD_PART_SECONDARY
+
 	proc/Use(mob/user as mob)
 		boutput(user, "[ship.ship_message("No special function for this ship!")]")
 		return
@@ -265,6 +268,10 @@
 			// out of range (this should never happen)
 			boutput(user, SPAN_ALERT("Something is too far away to do that."))
 			return
+		if (4)
+			// crate is anchored
+			boutput(user, SPAN_ALERT("The pod's cargo autoloader fails to budge [A]!"))
+			return
 		if (0)
 			// success
 			src.visible_message(SPAN_NOTICE("[user] loads the [A] into [src]'s cargo bay."))
@@ -289,6 +296,10 @@
 			break
 	if (!inrange)
 		return 3
+
+	if(C.anchored)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		return 4
 
 	// if a crate, close before loading
 	var/obj/storage/crate/crate = C
@@ -413,6 +424,68 @@
 		src.dummy_storage = null
 		..()
 
+/obj/item/shipcomponent/secondary_system/auto_repair_kit
+	name = "Automatic Repair System"
+	desc = "When fueled with welding fuel, consumes it over time to automatically repair any damage to the ship."
+	hud_state = "auto_repair"
+	power_used = 25
+
+	New()
+		src.flags |= OPENCONTAINER
+		..()
+		src.create_reagents(100)
+
+	activate()
+		if (src.reagents.get_reagent_amount("fuel") <= 0)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is out of fuel!")]")
+			return
+		var/obj/machinery/vehicle/vehicle = src.ship
+		if (vehicle.health >= vehicle.maxhealth)
+			boutput(src.ship.pilot, "[src.ship.ship_message("The ship is at full health!")]")
+			return
+
+		return ..()
+
+	run_component(mult)
+		if (!src.active)
+			return
+		if (GET_COOLDOWN(src.ship, "in_combat"))
+			return
+		if (src.reagents.get_reagent_amount("fuel") <= 0)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is out of fuel!")]")
+			src.deactivate()
+			return
+		var/obj/machinery/vehicle/vehicle = src.ship
+		if (vehicle.health >= vehicle.maxhealth)
+			boutput(src.ship.pilot, "[src.ship.ship_message("The ship is now at full health.")]")
+			src.deactivate()
+			return
+		var/fuel_to_use = min(src.reagents.get_reagent_amount("fuel"), 1 * mult)
+		src.reagents.remove_reagent("fuel", fuel_to_use)
+		vehicle.health = min(vehicle.health + 15 * mult, vehicle.maxhealth)
+		vehicle.checkhealth()
+
+	get_desc(dist, mob/user)
+		. = ..()
+		. += "<br>[SPAN_NOTICE("[src.reagents.get_description(user, RC_SCALE)]")]"
+
+	attack_self(mob/user)
+		..()
+		if (tgui_alert(user, "Empty reagents?", "Confirmation", list("Yes", "No")) == "Yes")
+			src.reagents.trans_to(get_turf(src), src.reagents.maximum_volume)
+
+	afterattack(obj/O, mob/user)
+		..()
+		if (src.reagents.total_volume >= src.reagents.maximum_volume)
+			boutput(user, SPAN_ALERT("[src] is at max capacity!"))
+			return
+		if ((istype(O, /obj/reagent_dispensers) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
+			if (O.reagents.total_volume)
+				O.reagents.trans_to(src, 100)
+				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, TRUE, -6)
+			else
+				boutput(user, SPAN_ALERT("The [O.name] is empty!"))
+
 /obj/item/shipcomponent/secondary_system/storage/Use(mob/user)
 	src.dummy_storage.storage.show_hud(user)
 
@@ -449,6 +522,111 @@
 		..()
 		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 10)
 		src.set_loc(parent_storage)
+
+ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
+/obj/item/shipcomponent/secondary_system/thrusters
+	f_active = TRUE
+	power_used = 50
+	var/power_in_use = FALSE
+	var/cooldown_time
+	var/cd_message
+
+	Use(mob/user)
+		src.activate(user)
+
+	toggle()
+		src.activate()
+
+	activate(mob/user)
+		. = TRUE
+
+		user = user || usr
+
+		if (user != src.ship.pilot)
+			return FALSE
+
+		if (src.disrupted)
+			boutput(src.ship.pilot, "[src.ship.ship_message("ALERT: [src] is temporarily disabled!")]")
+			return FALSE
+
+		if (ON_COOLDOWN(src, "thruster_movement", src.cooldown_time))
+			boutput(user, "[src.ship.ship_message("[src.cd_message] [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left.")]")
+			return FALSE
+
+		if (!src.power_in_use)
+			if (src.ship.powercapacity < (src.ship.powercurrent + src.power_used))
+				boutput(src.ship.pilot, "[src.ship.ship_message("Not enough power to activate [src]! ([ship.powercurrent + power_used]/[ship.powercapacity])")]")
+				return FALSE
+			src.ship.powercurrent += src.power_used
+			src.active = TRUE
+			src.power_in_use = TRUE
+
+		src.use_thrusters(user)
+
+	deactivate()
+		..()
+		src.power_in_use = FALSE
+
+	proc/use_thrusters(mob/user)
+		return
+
+	proc/change_thruster_direction()
+		return
+
+/obj/item/shipcomponent/secondary_system/thrusters/lateral
+	name = "Lateral Thrusters"
+	desc = "A thruster system that provides a burst of lateral movement upon use. Note, NanoTrasen is not liable for any resulting injuries."
+	help_message = "Initialized to provide movement to the right. When installed in a pod, click the pod and use the context menu button to change direction."
+	hud_state = "lat_thrusters_right"
+	cooldown_time = 5 SECONDS
+	cd_message = "Thrusters are cooling down!"
+	var/turn_dir = "right"
+
+	use_thrusters(mob/user)
+		var/turn_angle = src.turn_dir == "right" ? -90 : 90
+
+		// spawn to allow button clunk sound to play right away
+		SPAWN(0)
+			for (var/i in 1 to 5)
+				step(src.ship, turn(src.ship.dir, turn_angle))
+				sleep(0.125 SECONDS)
+			src.deactivate(FALSE)
+
+	change_thruster_direction()
+		if (src.turn_dir == "right")
+			src.turn_dir = "left"
+			src.hud_state = "lat_thrusters_left"
+			src.ship.myhud.update_states()
+		else
+			src.turn_dir = "right"
+			src.hud_state = "lat_thrusters_right"
+			src.ship.myhud.update_states()
+		boutput(usr, SPAN_NOTICE("Thrusters will now provide ship movement to the [src.turn_dir]."))
+
+/obj/item/shipcomponent/secondary_system/thrusters/afterburner
+	name = "Afterburner"
+	desc = "An engine augment that enhances the burning of plasma, increasing maximum velocity for a short duration."
+	icon_state = "afterburner"
+	hud_state = "lat_thrusters_right"
+	f_active = TRUE
+	power_used = 50
+	cooldown_time = 20 SECONDS
+	cd_message = "Afterburner is recharging!"
+
+
+	use_thrusters(mob/user)
+		// spawn to allow button clunk sound to play right away
+		SPAWN(0)
+			boutput(user, "[src.ship.ship_message("Afterburner is now active!")]")
+			src.ship.afterburner_accel_mod *= 1.1
+			src.ship.afterburner_speed_mod *= 1.75
+			sleep(5 SECONDS)
+			src.deactivate()
+
+	deactivate()
+		..()
+		src.ship.afterburner_accel_mod /= 1.1
+		src.ship.afterburner_speed_mod /= 1.75
 
 /obj/item/shipcomponent/secondary_system/tractor_beam
 	name = "Tri-Corp Tractor Beam"
@@ -657,7 +835,7 @@
 		var/dat = "<TT><B>[src] Console</B><BR><HR>"
 		for(var/mob/M in ship)
 			if(M == ship.pilot) continue
-			dat +="<A href='?src=\ref[src];release=[M.name]'><B><U>[M.name]</U></B></A><BR>"
+			dat +="<A href='byond://?src=\ref[src];release=[M.name]'><B><U>[M.name]</U></B></A><BR>"
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 
@@ -686,12 +864,14 @@
 	icon_state = "lock"
 	var/code = ""
 	var/configure_mode = 0 //If true, entering a valid code sets that as the code.
+	var/can_reset = TRUE //! Can you reset the code for this lock?
+
+	get_install_slot()
+		return POD_PART_LOCK
 
 	disposing()
 		if (ship)
 			ship.locked = 0
-			ship.lock = null
-
 		..()
 
 	deactivate()
@@ -749,7 +929,7 @@
 		<tr><td><a href='#' onclick='keypadIn(1); return false;'>1</a></td><td><a href='#' onclick='keypadIn(2); return false;'>2</a></td><td><a href='#' onclick='keypadIn(3); return false;'>3</a></td></td><td><a href='#' onclick='keypadIn("C"); return false;'>C</a></td></tr>
 		<tr><td><a href='#' onclick='keypadIn(0); return false;'>0</a></td><td><a href='#' onclick='keypadIn("F"); return false;'>F</a></td><td><a href='#' onclick='keypadIn("E"); return false;'>E</a></td></td><td><a href='#' onclick='keypadIn("D"); return false;'>D</a></td></tr>
 
-		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
+		<tr><td colspan=2 width = 100px><a id = "enterkey" href='byond://?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
 	</table>
 
 <script language="JavaScript">
@@ -931,23 +1111,28 @@
 				boutput(usr, SPAN_ALERT("You must be inside the ship to do that!"))
 				return
 
+			if (src.is_set())
+				if(!src.can_reset)
+					boutput(usr, SPAN_ALERT("This lock cannot have its code reset."))
+					return
+				boutput(usr, SPAN_NOTICE("Code reset. Please type new code and press enter."))
+
 			src.configure_mode = 1
 			if (src.ship)
 				src.ship.locked = 0
 			src.code = ""
 
-			boutput(usr, "Code reset.  Please type new code and press enter.")
 			show_lock_panel(usr)
+		ship.myhud.update_states()
+
+	/// Has this lock been set
+	proc/is_set()
+		return !(code == "")
 
 /obj/item/shipcomponent/secondary_system/lock/bioscan
 	name = "Biometric Hatch Locking Unit"
 	desc = "A basic hatch locking mechanism with a biometric scan."
-	system = "Lock"
-	f_active = 1
-	power_used = 0
-	icon_state = "lock"
-	code = ""
-	configure_mode = 0 //If true, entering a valid code sets that as the code.
+	can_reset = FALSE
 	var/bdna = null
 
 	show_lock_panel(mob/living/user)
@@ -979,6 +1164,12 @@
 						src.ship.visible_message("[user] holds [valid_dna_source] against the [src.ship] for a moment.")
 					ship.locked = !ship.locked
 					boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
+				else
+					boutput(user, SPAN_ALERT("You are not recognized by the biometric lock for [ship]!"))
+			ship.myhud.update_states()
+
+	is_set()
+		return !isnull(bdna)
 
 /obj/item/shipcomponent/secondary_system/crash
 	name = "Syndicate Explosive Entry Device"
@@ -1160,7 +1351,7 @@
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is missing."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
 			core_inserted = TRUE
@@ -1168,5 +1359,204 @@
 			set_icon_state("SRS")
 			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
+
+ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
+/obj/item/shipcomponent/secondary_system/shielding
+	name = "Shielding System"
+	desc = "Provides a timed shield to block incoming projectiles and explosions. Recharge is required between uses."
+	f_active = TRUE
+	hud_state = "shielding"
+	/// % of damage, that the shielding blocks (0.5 would make a 40 dmg projectile deal 20 dmg instead)
+	var/block_pct = 0
+	/// health of the shield in dmg points
+	var/life = 100
+	/// how long the shield stays on
+	var/duration = 0 SECONDS
+	/// once deactivated, how long it takes for the shield to be ready again
+	var/recharge_time = 0 SECONDS
+	/// color of the shield
+	var/shield_color
+
+	New()
+		..()
+		src.desc += " Has a life of [src.life] damage, providing [round(block_pct * 100, 1)]% damage reduction. Shielding can be provided for [src.duration / 10] seconds" + \
+					" with a shield recharge time of [src.recharge_time / 10] seconds."
+
+	activate()
+		var/cooldown = GET_COOLDOWN(src, "ship_shielding_recharge")
+		if (cooldown)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is currently recharging, and cannot be turned on. Wait [cooldown / 10] seconds.")]")
+			return
+		if (!..())
+			return
+
+		src.ship.add_filter("shield_outline", 0, outline_filter(2, src.shield_color))
+
+		playsound(src.ship.loc, 'sound/effects/MagShieldUp.ogg', 75, TRUE, pitch = 1.5)
+
+		SPAWN(src.duration)
+			if (src.active)
+				src.deactivate()
+
+	deactivate()
+		if (src.active)
+			ON_COOLDOWN(src, "ship_shielding_recharge", src.recharge_time)
+			for (var/mob/M in src.ship)
+				boutput(M, "[src.ship.ship_message("[src]'s shield is now offline. Please wait for full recharge after [src.recharge_time / 10] seconds.")]")
+			src.ship.remove_filter("shield_outline")
+			playsound(src.ship.loc, 'sound/effects/MagShieldDown.ogg', 75, TRUE, pitch = 1.5)
+			src.life = initial(src.life)
+		..()
+
+	// takes incoming damage "dmg", returns damage dealt to pod
+	proc/process_incoming_dmg(dmg)
+		var/dmg_dealt = dmg * (1 - src.block_pct)
+
+		src.life -= dmg * src.block_pct
+
+		if (src.life <= 0)
+			src.deactivate()
+
+		return dmg_dealt
+
+/obj/item/shipcomponent/secondary_system/shielding/light
+	name = "Light Shielding System"
+	power_used = 50
+	block_pct = 0.25
+	life = 100
+	duration = 10 SECONDS
+	recharge_time = 60 SECONDS
+	shield_color = "#1a4cf0"
+
+/obj/item/shipcomponent/secondary_system/shielding/heavy
+	name = "High Impact Shielding System"
+	power_used = 150
+	block_pct = 0.9
+	life = 1000
+	duration = 3 SECONDS
+	recharge_time = 120 SECONDS
+	shield_color = "#ff3916"
+
+/obj/item/shipcomponent/secondary_system/trailblazer
+	name = "Inferno Trailblazer"
+	desc = "A totally RADICAL plasma igniter for your ship! Leave behind the COOLEST flames in the Frontier! Manufacturer is not responsible for deaths this device may cause."
+	hud_state = "trailblazer"
+	icon_state = "trailblazer"
+	f_active = TRUE
+
+	Use()
+		return
+
+	toggle()
+		return
+
+	activate()
+		return
+
+	deactivate()
+		return
+/obj/item/shipcomponent/secondary_system/weapons_loader
+	name = "Weapons Loader"
+	desc = "An automatic weapon loading system that quickly swaps a stored weapon with the ship's main weapon."
+	icon_state = "weapons_loader-unloaded"
+	help_message = "Attack with a pod weapon to load it in. Use in-hand to eject the loaded weapon."
+	hud_state = "weapon-swap"
+	f_active = TRUE
+	var/obj/item/shipcomponent/mainweapon/loaded_wep = null
+
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		if(istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			vehicle.install_part(user, src, POD_PART_SECONDARY)
+
+	Use(mob/user)
+		src.activate(user)
+
+	toggle()
+		src.activate()
+
+	activate()
+		. = ..(FALSE)
+		src.active = FALSE
+		if (!.)
+			return
+
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.ship.get_part(POD_PART_MAIN_WEAPON)
+		if (!src.loaded_wep && !main_weapon)
+			return
+
+		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || main_weapon && GET_COOLDOWN(main_weapon, "weapon_swap_cd"))
+			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(main_weapon, "weapon_swap_cd")) / 10, 1)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src.ship]'s weapons are too hot to swap out! [swap_cd] seconds left.")]")
+			return
+
+		for (var/mob/M in src.ship)
+			if (src.loaded_wep && main_weapon)
+				boutput(M, "[src.ship.ship_message("[main_weapon] has been swapped out for [src.loaded_wep].")]")
+			else if (main_weapon)
+				boutput(M, "[src.ship.ship_message("[main_weapon] has been swapped out.")]")
+				src.ship.UpdateOverlays(null, "mainweapon") //todo: make pod components actually clean up their own overlays
+			else
+				boutput(M, "[src.ship.ship_message("[src.loaded_wep] has been swapped in.")]")
+
+		var/currently_active = main_weapon.active
+		if(main_weapon)
+			src.ship.eject_part(null, POD_PART_MAIN_WEAPON)
+		var/obj/item/shipcomponent/mainweapon/stored_weapon = src.loaded_wep
+		if (stored_weapon)
+			src.ship.install_part(null, stored_weapon, POD_PART_MAIN_WEAPON, currently_active)
+			src.loaded_wep = null
+			src.UpdateIcon()
+		if (istype(main_weapon))
+			src.loaded_wep = main_weapon
+			src.loaded_wep.set_loc(src)
+			src.UpdateIcon()
+
+		src.ship.myhud.update_systems()
+
+	attack_self(mob/user)
+		src.eject_wep(user)
+
+	attack_hand(mob/user)
+		if (!src.loaded_wep || src.loc != user)
+			return ..()
+		src.eject_wep(user)
+
+	proc/eject_wep(mob/user)
+		if (!src.loaded_wep)
+			return
+		src.loaded_wep.set_loc(get_turf(src))
+		user.put_in_hand_or_drop(src.loaded_wep)
+		src.loaded_wep = null
+		src.UpdateIcon()
+
+	attackby(obj/item/W, mob/user, params)
+		..()
+		if (src.loaded_wep)
+			return
+		if (!istype(W, /obj/item/shipcomponent/mainweapon))
+			return
+		user.drop_item(W)
+		src.loaded_wep = W
+		src.loaded_wep.set_loc(src)
+		src.UpdateIcon()
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, FALSE)
+
+	update_icon()
+		..()
+		src.icon_state = "weapons_loader-[src.loaded_wep ? "loaded" : "unloaded"]"
+
+/obj/item/shipcomponent/secondary_system/gunner_support
+	name = "Gunner Module"
+	desc = "An upper-pod gunner module that allows passengers to fire weak phaser bolts in an ordinal direction of their choosing."
+	icon_state = "gunner_support"
+	hud_state = "gunner_support"
+	power_used = 50
+
+	proc/fire_at(atom/A, mob/gunner)
+		if (ON_COOLDOWN(src, "fire", 0.8 SECONDS))
+			return
+		src.ship.ShootProjectiles(gunner, new/datum/projectile/laser/light/pod/support_gunner, get_dir(src.ship, A), 1)

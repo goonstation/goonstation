@@ -1,0 +1,1919 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/stool/chair/red{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"an" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/space,
+/area/listeningpost/landing_bay)
+"aC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
+"bg" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/vestibule)
+"br" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/comm_dish)
+"bx" = (
+/obj/storage/closet/emergency,
+/obj/item/tank/oxygen,
+/obj/item/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/vestibule)
+"bA" = (
+/obj/machinery/vending/cola/blue,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 22
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"bE" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/listeningpost/landing_bay)
+"bS" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/listeningpost/barracks)
+"cU" = (
+/obj/marker/supplymarker,
+/turf/simulated/floor/caution/north,
+/area/listeningpost/general)
+"dC" = (
+/obj/table/wood/auto,
+/obj/item/pinpointer/disk{
+	pixel_y = 4
+	},
+/obj/item/paper/telecrystal_update,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+"dE" = (
+/obj/decal/tile_edge/stripe{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
+"dK" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/landing_bay)
+"eY" = (
+/obj/table/auto,
+/obj/item/reagent_containers/bath_bomb,
+/obj/item/reagent_containers/bath_bomb,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"fX" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/listeningpost/comm_dish)
+"gb" = (
+/obj/machinery/computer/camera_viewer,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"gu" = (
+/obj/item/clothing/under/misc/syndicate,
+/obj/item/clothing/under/misc/syndicate,
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/crash,
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/listeningpost/barracks)
+"ha" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/power_monitor,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"hp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/listeningpost/barracks)
+"hE" = (
+/obj/machinery/drainage,
+/obj/machinery/light/small/blueish{
+	brightness = 1.6;
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"iB" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/listeningpost/landing_bay)
+"jn" = (
+/obj/storage/crate/furnacefuel,
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Security Intercom";
+	pixel_x = 26
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"jB" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	name = "Bathroom"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"kr" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"kK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/listeningpost/barracks)
+"ld" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_x = 32
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/vestibule)
+"lp" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/caution/north,
+/area/listeningpost/general)
+"ls" = (
+/obj/railing/boxing{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"lM" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/listeningpost/barracks)
+"mz" = (
+/obj/machinery/bathtub,
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"nV" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
+"oz" = (
+/obj/cable/orange,
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/turf/simulated/floor/caution/north,
+/area/listeningpost/power)
+"oU" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/decoration/ashtray,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 22
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"pB" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/paper/printout/emerg1,
+/obj/item/pen,
+/turf/simulated/floor/caution/north,
+/area/listeningpost/general)
+"pZ" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/listeningpost/comm_dish)
+"rK" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	dir = null
+	},
+/obj/machinery/power/apc/autoname_east/hardened,
+/turf/simulated/floor/redblack,
+/area/listeningpost/vestibule)
+"rR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
+"sj" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/vestibule)
+"st" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/railing/boxing{
+	dir = 10
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
+"tF" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/listeningpost/barracks)
+"vO" = (
+/obj/submachine/syndicate_teleporter,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/syndicate_teleporter)
+"ww" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+"wU" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/communications_dish,
+/obj/cable,
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/comm_dish)
+"xj" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/syndicate_teleporter)
+"xO" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"yS" = (
+/turf/simulated/floor/redblack,
+/area/listeningpost/vestibule)
+"zz" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/break_room)
+"Be" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"Br" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/listeningpost/comm_dish)
+"Cc" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"Cj" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/barracks)
+"Cn" = (
+/turf/simulated/wall/auto/asteroid,
+/area/space)
+"Cy" = (
+/obj/machinery/light_switch/west,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"CC" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/power/apc/autoname_south/hardened,
+/turf/simulated/floor/caution/north,
+/area/listeningpost/power)
+"CR" = (
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"CT" = (
+/obj/table/reinforced/auto,
+/obj/item/plate/tray,
+/obj/item/reagent_containers/food/snacks/hardtack,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Dy" = (
+/obj/item/storage/toilet{
+	dir = 8;
+	tag = ""
+	},
+/obj/item/toy/plush/small/bunny/mask,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"Et" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/general)
+"FD" = (
+/obj/securearea,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/landing_bay)
+"FP" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/landing_bay)
+"FR" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/listeningpost/barracks)
+"Hv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Ir" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/listeningpost/barracks)
+"Iv" = (
+/obj/stool/chair/office/red{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/listeningpost/barracks)
+"Iy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+"IR" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/listeningpost/comm_dish)
+"IS" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/space,
+/area/listeningpost/landing_bay)
+"JI" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "How old is this?";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "dwaine";
+	name = "old mainframe"
+	},
+/obj/item/device/radio/intercom{
+	frequency = 1489;
+	name = "Brig Intercom";
+	pixel_x = 26
+	},
+/turf/simulated/floor/caution/north,
+/area/listeningpost/general)
+"Kc" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
+"Kl" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"Kr" = (
+/obj/rack,
+/obj/item/clothing/shoes/clown_shoes,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/random_item_spawner/shoe/lots,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+"KW" = (
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/landing_bay)
+"Ln" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west/hardened,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Lz" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Mh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/listeningpost/barracks)
+"Nd" = (
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_x = -32
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Ou" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/listeningpost/landing_bay)
+"Ov" = (
+/obj/machinery/firealarm/directional/north{
+	text = "NF"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"OH" = (
+/obj/decal/tile_edge/stripe{
+	icon_state = "bot2";
+	tag = ""
+	},
+/obj/rack,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/clothing/head/helmet/space/syndicate,
+/obj/item/clothing/suit/space/syndicate,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/vestibule)
+"OI" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/listeningpost/landing_bay)
+"OR" = (
+/turf/space,
+/area/space)
+"Pi" = (
+/obj/decal/boxingrope,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"QC" = (
+/obj/machinery/light/small/cool{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/landing_bay)
+"QD" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/railing/boxing,
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
+"QQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/vestibule)
+"RC" = (
+/obj/securearea,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/break_room)
+"RR" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/power)
+"Si" = (
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Sq" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	name = "Power Room"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 5
+	},
+/area/listeningpost/power)
+"SH" = (
+/obj/table/wood/auto,
+/obj/machinery/computer3/generic/personal,
+/obj/item/paper/pipebombs{
+	pixel_y = -9
+	},
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+"Ud" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"Um" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"Uw" = (
+/turf/space,
+/area/listeningpost/landing_bay)
+"Vb" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Bedroom"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+"VS" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Wz" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	dir = 4;
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/vestibule)
+"WB" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Xl" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/smes{
+	charge = 100000;
+	chargelevel = 4000;
+	output = 2500
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"Xo" = (
+/obj/railing/boxing{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"XV" = (
+/obj/storage/closet/syndicate/personal,
+/obj/item/clothing/under/misc/clown,
+/obj/random_item_spawner/dressup/lots,
+/obj/random_item_spawner/hat/lots,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+"Yp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"YK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/railing/boxing{
+	dir = 6
+	},
+/turf/simulated/floor/engine{
+	icon_state = "gym_mat"
+	},
+/area/listeningpost/syndicate_teleporter)
+"YY" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/landing_bay)
+"Zq" = (
+/obj/table/wood/auto,
+/obj/machinery/cell_charger,
+/obj/item/cigpacket,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+"ZT" = (
+/obj/table/wood/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
+
+(1,1,1) = {"
+OR
+OR
+OR
+OR
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(2,1,1) = {"
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(3,1,1) = {"
+OR
+OR
+OR
+OR
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+"}
+(4,1,1) = {"
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+bE
+OI
+Ou
+Cn
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+"}
+(5,1,1) = {"
+OR
+OR
+OR
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+IS
+Uw
+Uw
+Uw
+Uw
+IS
+Cn
+OR
+OR
+OR
+OR
+OR
+"}
+(6,1,1) = {"
+OR
+OR
+OR
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+OR
+IS
+Uw
+Uw
+Uw
+Uw
+IS
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(7,1,1) = {"
+OR
+OR
+OR
+OR
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+an
+Uw
+Uw
+Uw
+Uw
+an
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(8,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+zz
+zz
+zz
+RC
+iB
+iB
+iB
+iB
+FD
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(9,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+zz
+mz
+eY
+zz
+KW
+KW
+KW
+KW
+FP
+Cn
+OR
+OR
+OR
+OR
+OR
+"}
+(10,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+zz
+hE
+Cc
+zz
+dK
+KW
+QC
+YY
+FP
+Cn
+Cn
+OR
+OR
+OR
+OR
+"}
+(11,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+zz
+Kl
+Dy
+zz
+sj
+Wz
+sj
+FP
+FP
+Cn
+OR
+OR
+OR
+OR
+OR
+"}
+(12,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+Cn
+Cj
+Cj
+Cj
+Cj
+Cj
+jB
+zz
+zz
+bx
+yS
+sj
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+"}
+(13,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+xj
+xj
+xj
+xj
+xj
+Cj
+ZT
+lM
+bS
+Cj
+Ov
+Nd
+sj
+OH
+yS
+sj
+Cn
+fX
+br
+br
+OR
+OR
+OR
+OR
+"}
+(14,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+xj
+CR
+CR
+xO
+Cy
+Cj
+dC
+Ir
+FR
+Cj
+bA
+WB
+bg
+ld
+rK
+QQ
+Br
+IR
+wU
+br
+OR
+OR
+OR
+OR
+"}
+(15,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+xj
+ls
+nV
+dE
+st
+Cj
+Zq
+kK
+gu
+Cj
+Lz
+Hv
+sj
+sj
+sj
+sj
+Cn
+pZ
+br
+br
+OR
+OR
+OR
+OR
+"}
+(16,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+xj
+Pi
+aC
+vO
+QD
+ww
+Iy
+hp
+Mh
+Vb
+kr
+VS
+Ln
+pB
+Et
+Cn
+Be
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(17,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+xj
+Xo
+Kc
+rR
+YK
+Cj
+SH
+Iv
+tF
+Cj
+gb
+ac
+Hv
+cU
+Et
+Cn
+Cn
+Be
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(18,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+xj
+CR
+CR
+Um
+CR
+Cj
+Cj
+Kr
+XV
+Cj
+oU
+Si
+Hv
+lp
+Et
+Cn
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+"}
+(19,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+xj
+xj
+xj
+xj
+xj
+Cj
+Cj
+Cj
+Cj
+Cj
+CT
+jn
+Hv
+JI
+Et
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(20,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+RR
+RR
+RR
+Sq
+RR
+Et
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(21,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+RR
+ha
+Yp
+CC
+RR
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(22,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+RR
+Xl
+Ud
+oz
+RR
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(23,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+RR
+RR
+RR
+RR
+RR
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(24,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+Cn
+OR
+OR
+OR
+OR
+"}
+(25,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+Cn
+OR
+OR
+OR
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(26,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(27,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+OR
+OR
+OR
+OR
+OR
+Cn
+OR
+OR
+"}
+(28,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Be
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(29,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+OR
+OR
+OR
+OR
+"}
+(30,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(31,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}
+(32,1,1) = {"
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+Cn
+Cn
+Cn
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+OR
+"}

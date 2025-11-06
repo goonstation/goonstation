@@ -3,8 +3,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
-	opacity = 0;
-	req_access_txt = null
+	opacity = 0
 	},
 /obj/mapping_helper/access/medical,
 /turf/unsimulated/floor/red,
@@ -180,8 +179,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
-	opacity = 0;
-	req_access_txt = null
+	opacity = 0
 	},
 /obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/red,
@@ -190,8 +188,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
-	opacity = 0;
-	req_access_txt = null
+	opacity = 0
 	},
 /obj/mapping_helper/access/security,
 /turf/unsimulated/floor/red,

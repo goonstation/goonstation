@@ -8,19 +8,19 @@ TYPEINFO(/area/diner/tug)
 	valid_bounty_area = FALSE
 /area/diner/tug
 	icon_state = "green"
-	name = "Big Yank's Cheap Tug"
+	name = "Big Yank’s Cheap Tug"
 TYPEINFO(/area/diner/juicer_trader)
 	valid_bounty_area = FALSE
 /area/diner/jucer_trader
 	icon_state = "green"
-	name = "Placeholder Paul's $STORE_NAME.shuttle"
+	name = "Placeholder Paul’s $STORE_NAME.shuttle"
 
 /obj/item/clothing/head/paper_hat/john
-	name = "John Bill's paper bus captain hat"
+	name = "John Bill’s paper bus captain hat"
 	desc = "This is made from someone's tax returns"
 
 /obj/item/clothing/mask/cigarette/john
-	name = "John Bill's cigarette"
+	name = "John Bill’s cigarette"
 	on = 1
 	put_out(var/mob/user as mob, var/message as text)
 		// how about we do literally nothing instead?
@@ -70,6 +70,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	icon_off = "monkey-off"
 	icon_broken = "monkey-broken"
 	icon_fallen = "monkey-fallen"
+	icon_fallen_broken = "monkey-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("It's meat you can buy!",
@@ -341,7 +342,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 					say("[JOHN_PICK("greetings")] Murray! How's it [JOHN_PICK("verbs")]?")
 					SPAWN(rand(20,40))
 						if (murray?.on && !murray.idle)
-							murray.speak("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
+							murray.say("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
 
 				else
 					var/mob/M = pick(alive_mobs)
@@ -524,7 +525,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	icon_state = "engineshit2"
 
 /obj/item/paper/tug/invoice
-	name = "Big Yank's Space Tugs, Limited."
+	name = "Big Yank’s Space Tugs, Limited."
 	desc = "Looks like a bill of sale."
 	info = {"<b>Client:</b> Bill, John
 			<br><b>Date:</b> TBD
@@ -535,7 +536,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 			<br>Big Yank's Cheap Tug"}
 
 /obj/item/paper/tug/warehouse
-	name = "Big Yank's Space Tugs, Limited."
+	name = "Big Yank’s Space Tugs, Limited."
 	desc = "Looks like a bill of sale. It is blank"
 	info = {"<b>Client:</b>
 			<br><b>Date:</b>
@@ -607,7 +608,7 @@ Urs' Hauntdog critter
 		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 
 		if(isturf(moveto) && !moveto.density)
-			flick("hauntdog-hop",src)
+			FLICK("hauntdog-hop",src)
 			step_towards(src, moveto)
 		if(src.aggressive) seek_target()
 		steps += 1
@@ -620,7 +621,7 @@ Urs' Hauntdog critter
 
 	proc/flip()
 		src.visible_message("<b>[src]</b> does a flip!")
-		flick("hauntdog-flip",src)
+		FLICK("hauntdog-flip",src)
 		sleep(1.3 SECONDS)
 
 	CritterDeath()
@@ -646,8 +647,8 @@ Urs' Hauntdog critter
 	desc = "the hogg vorbis."
 	icon_state = "hogg"
 	icon_state_dead = "hogg-dead"
-	speechverb_say = "screams!"
-	speechverb_exclaim = "screams!"
+	speech_verb_say = "screams!"
+	speech_verb_exclaim = "screams!"
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "scream" && src.emote_check(voluntary, 50))

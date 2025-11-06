@@ -16,21 +16,39 @@
 	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/created_cleanbot_type = /obj/machinery/bot/cleanbot
+	var/created_name = "Cleanbot"
 
-	attackby(var/obj/item/parts/robot_parts/P, mob/user as mob)
-		if (!istype(P, /obj/item/parts/robot_parts/arm/))
+	attackby(var/obj/item/I, mob/user as mob)
+		if (!istype(I, /obj/item/parts/robot_parts/arm/) && !istype(I, /obj/item/pen))
 			return
 
-		var/obj/machinery/bot/cleanbot/A = new created_cleanbot_type
-		if (user.r_hand == src || user.l_hand == src)
-			A.set_loc(get_turf(user))
-		else
-			A.set_loc(get_turf(src))
+		if(istype(I, /obj/item/parts/robot_parts/arm))
+			var/obj/machinery/bot/cleanbot/A = new created_cleanbot_type
+			if (user.r_hand == src || user.l_hand == src)
+				A.set_loc(get_turf(user))
+			else
+				A.set_loc(get_turf(src))
 
-		boutput(user, "You add the robot arm to the bucket and sensor assembly! Beep boop!")
-		qdel(P)
-		qdel(src)
-		return
+			boutput(user, "You add the robot arm to the bucket and sensor assembly! Beep boop!")
+			A.name = src.created_name
+			qdel(I)
+			qdel(src)
+			return
+
+		if (istype(I, /obj/item/pen))
+			var/t = input(user, "Enter new robot name", src.name, src.created_name) as null|text
+			if (!t)
+				return
+			if(t && t != src.name && t != src.created_name)
+				phrase_log.log_phrase("bot-clean", t)
+				t = strip_html(replacetext(t, "'",""))
+				t = copytext(t, 1, 45)
+			if (!t)
+				return
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+
+			src.created_name = t
 
 	red
 		icon_state = "bucket_proxy-red"
@@ -162,14 +180,15 @@
 
 		dat += "<tt><b>Automatic Station Cleaner v1.1</b></tt>"
 		dat += "<br><br>"
-		dat += "Status: <A href='?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
+		dat += "Status: <A href='byond://?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = "Cleanerbot v1.1 controls",
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = "Cleanerbot v1.1 controls",
+				content = dat,
+			)
 
 		return
 
@@ -360,7 +379,7 @@
 			return
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.traitHolder.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
+			if(H.traitHolder?.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
 				src.visible_message(SPAN_COMBAT("[src] [pick("sneakily","slyly","guilefully","deviously","rudely","devilishly","cleanly","delightfully devilishly","duplicitously","dastardly","connivingly","fucking rudely")] trips [M.name] with their mop!"))
 				H.setStatus("resting", duration = INFINITE_STATUS)
 				H.force_laydown_standup()
@@ -421,13 +440,13 @@
 
 			if (master.emagged)
 				if (master.reagents) // ZeWaka: Fix for null.remove_reagent()
-					master.reagents.remove_reagent(master.reagent_emagged, 10)
-					if (master.reagents.get_reagent_amount(master.reagent_emagged) <= 0)
+					master.reagents.remove_any(10)
+					if (master.reagents.total_volume <= 0)
 						master.reagents.add_reagent(master.reagent_emagged, 50)
 			else
 				if (master.reagents)
-					master.reagents.remove_reagent(master.reagent_normal, 10)
-					if (master.reagents.get_reagent_amount(master.reagent_normal) <= 0)
+					master.reagents.remove_any(10)
+					if (master.reagents.total_volume <= 0)
 						master.reagents.add_reagent(master.reagent_normal, 50)
 
 			if (T.active_liquid)

@@ -30,7 +30,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		src.add_fingerprint(user)
 		if (src.active)
 			user.show_text("The [src.name] is now inactive.", "blue")
-			src.deactivate(user)
+			src.deactivate(user, TRUE)
 		else
 			if (src.activate(user))
 				user.show_text("The [src.name] is now active.", "blue")
@@ -60,9 +60,10 @@ TYPEINFO(/obj/item/cloaking_device)
 		user.client?.images += cloak_overlay
 		src.active = TRUE
 		src.UpdateIcon()
+		logTheThing(LOG_COMBAT, user, "Activates a cloaking device at [log_loc(user)]")
 		return TRUE
 
-	proc/deactivate(mob/user)
+	proc/deactivate(mob/user, deliberate = FALSE)
 		UnregisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak")
 		cloak_overlay.loc = null
@@ -72,6 +73,10 @@ TYPEINFO(/obj/item/cloaking_device)
 			user.playsound_local(src, "sparks", 50, 0)
 		src.active = FALSE
 		src.UpdateIcon()
+		if (deliberate)
+			logTheThing(LOG_COMBAT, user, "deactivates a cloaking device at [log_loc(user)]")
+		else
+			logTheThing(LOG_COMBAT, user || src.loc, "has their cloaking device disrupted at [log_loc(user)]")
 
 	// Fix for the backpack exploit. Spawn call is necessary for some reason (Convair880).
 	dropped(var/mob/user)
@@ -134,7 +139,7 @@ TYPEINFO(/obj/item/cloaking_device)
 				src.AddComponent(/datum/component/send_to_target_mob, src)
 				src.hunter_key = M.mind.key
 				START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-				flick("[src.base_icon_state]-tele", src)
+				FLICK("[src.base_icon_state]-tele", src)
 
 		disposing()
 			. = ..()

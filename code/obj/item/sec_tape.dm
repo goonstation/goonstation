@@ -31,7 +31,7 @@
 
 	change_stack_amount(diff)
 		. = ..()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		src.UpdateIcon()
 
 	custom_suicide = 1
@@ -79,7 +79,7 @@
 	if (issnippingtool(W) && src.amount > 1) //Cut some of it off to share
 		var/obj/item/sec_tape/split_tape = split_stack(1)
 		user.put_in_hand_or_drop(split_tape)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		boutput(user, SPAN_NOTICE("You cut a piece off the [base_name]."))
 		src.UpdateIcon()
 		return
@@ -94,7 +94,7 @@
 		if ((C.amount + src.amount <= src.max_stack))
 			stack_item(W)
 			boutput(user, SPAN_NOTICE("You join the tape ends together."))
-			C.tooltip_rebuild = 1
+			C.tooltip_rebuild = TRUE
 			C.UpdateIcon()
 			return
 
@@ -102,10 +102,10 @@
 			boutput(user, SPAN_NOTICE("You transfer [src.max_stack - src.amount] length\s of tape from one roll to the other."))
 			src.amount -= (src.max_stack-C.amount)
 			src.UpdateIcon()
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			C.amount = src.max_stack
 			C.UpdateIcon()
-			C.tooltip_rebuild = 1
+			C.tooltip_rebuild = TRUE
 			return
 
 /obj/item/sec_tape/MouseDrop_T(atom/movable/O as obj, mob/user as mob)

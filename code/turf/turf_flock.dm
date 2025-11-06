@@ -69,7 +69,7 @@ TYPEINFO(/turf/simulated/floor/feather)
 	else
 		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks [src] with [C]!"))
 		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 25, TRUE)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 /turf/simulated/floor/feather/break_tile_to_plating()
 	off()
@@ -80,7 +80,8 @@ TYPEINFO(/turf/simulated/floor/feather)
 	off()
 	icon_state = "floor-broken"
 	broken = TRUE
-	src.flock.all_owned_tiles -= src
+	if (src.flock)
+		src.flock.all_owned_tiles -= src
 	for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()
@@ -233,7 +234,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches the [initial(src.name)], shattering it!"))
 			else
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]! Ouch!"))
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user, src)
 
 /turf/simulated/wall/auto/feather/attackby(obj/item/C, mob/user)
@@ -247,7 +248,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 		src.destroy()
 	else
 		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks [src] with [C]!"))
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 	attack_particle(user, src)
 
 /turf/simulated/wall/auto/feather/burn_down()
@@ -390,3 +391,9 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 /turf/simulated/wall/auto/feather/proc/off()
 	src.on = FALSE
 	src.UpdateIcon()
+
+/turf/simulated/wall/auto/feather/strong
+	name = "strong glowing wall"
+	desc = "You can feel it thrumming and pulsing. It looks very strong, you probably won't be able to tear it down."
+	health = INFINITY
+	max_health = INFINITY

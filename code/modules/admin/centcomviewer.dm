@@ -28,7 +28,7 @@
 	var/datum/http_request/request = new()
 	request.prepare(RUSTG_HTTP_METHOD_GET, "https://centcom.melonmesa.com/ban/search/[target_key]", "", "")
 	request.begin_async()
-	UNTIL(request.is_complete())
+	UNTIL(request.is_complete(), 10 SECONDS)
 	var/datum/http_response/response = request.into_response()
 	var/list/ban_data
 	if (rustg_json_is_valid(response.body))

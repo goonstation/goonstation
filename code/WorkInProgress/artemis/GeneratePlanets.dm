@@ -175,14 +175,25 @@ DEFINE_PLANET(indigo, "Indigo")
 
 /datum/planetData
 	var/name
-	var/image/ambient_light
+	var/obj/ambient/ambient_light
 	var/datum/map_generator/generator
 
-	New(name, light, generator)
+	New(name, obj/ambient/light, datum/map_generator/generator)
 		. = ..()
 		src.name = name
 		src.ambient_light = light
 		src.generator = generator
+		var/datum/daynight_controller/terrainify/DC = new
+		DC.light = light
+		DC.color1 = light.color
+		DC.current_color = light.color
+
+		var/list_name = name
+		var/i = 0
+		while(list_name in daynight_controllers)
+			list_name = "[name]_[i++]"
+		daynight_controllers[list_name] = DC
+		daynight_controllers[list_name].light = light
 
 /datum/planetManager
 	var/list/datum/allocated_region/regions = list()
@@ -200,6 +211,7 @@ DEFINE_PLANET(indigo, "Indigo")
 					var/datum/planetData/planet = regions[region]
 					if(planet)
 						planet.generator.generate_terrain(list(T), reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
+						T.vis_contents |= planet.ambient_light
 						T.AddOverlays(planet.ambient_light, "ambient")
 						return TRUE
 
@@ -214,6 +226,7 @@ DEFINE_PLANET(indigo, "Indigo")
 var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 /proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)
+	var/startTime = world.timeofday
 	var/turf/T
 	if(istext(generator)) generator = text2path(generator)
 	if(ispath(generator)) generator = new generator()
@@ -283,18 +296,18 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				T = region.turf_at(x, y)
 				if(T)
 					border_area.contents += T
-
-			generator.lag_check()
+			generator.lag_check(mapgen_flags)
 
 	//Lighten' Up the Place
-	var/image/ambient_light = new /image/ambient
+
+	var/obj/ambient/ambient_light = new
 	if(!color)
 		ambient_light.color = "#888888"
 	else
 		ambient_light.color = color
 
 	for(T in turfs)
-		T.AddOverlays(ambient_light, "ambient")
+		T.vis_contents |= ambient_light
 		LAGCHECK(LAG_LOW)
 
 	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
@@ -327,8 +340,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 							space_turfs -= T
 					generator.generate_terrain(space_turfs, reuse_seed=TRUE)
 					for(T in space_turfs)
-						T.AddOverlays(ambient_light, "ambient")
-						LAGCHECK(LAG_LOW)
+						T.vis_contents |= ambient_light
+						generator.lag_check(mapgen_flags)
 
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 					n++
@@ -336,6 +349,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				else
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
 				count++
+				generator.lag_check(mapgen_flags)
 			if (count == maxTries)
 				logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""].")
 		else break
@@ -348,7 +362,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			var/seed_density = clamp(length(mountains)/500, 2, 30)
 			for(var/j in 1 to seed_density)
 				Turfspawn_Asteroid_SeedOre(mountains, fullbright=FALSE)
-				LAGCHECK(LAG_LOW)
+				generator.lag_check(mapgen_flags)
 
 			for(var/i in 1 to seed_density/2)
 				if(length(mountains))
@@ -358,6 +372,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 						ast_list |= AST
 					Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
 					Turfspawn_Asteroid_SeedEvents(mountains)
+					generator.lag_check(mapgen_flags)
 
 	//Allow folks to like uh, get here?
 	if(use_lrt)
@@ -371,6 +386,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			T = pick(turfs)
 			if(!checkTurfPassable(T))
 				maxTries--
+				generator.lag_check(mapgen_flags)
 				continue
 
 			new /obj/landmark/lrt/planet(T, name)
@@ -378,9 +394,10 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			lrt_placed = TRUE
 			special_places.Add(name)
 
-	logTheThing(LOG_ADMIN, usr, "Planet region generated at [log_loc(region.bottom_left)] with [generator].")
-	logTheThing(LOG_DIARY, usr, "Planet region generated at [log_loc(region.bottom_left)] with [generator].", "admin")
-	message_admins("Planet region generated at [log_loc(region.bottom_left)] with [generator].")
+	var/gen_text = "Planet region generated at [log_loc(region.bottom_left)] with [generator] in [(world.timeofday - startTime)/10] seconds."
+	logTheThing(LOG_ADMIN, usr, gen_text)
+	logTheThing(LOG_DIARY, usr, gen_text, "admin")
+	message_admins(gen_text)
 
 	return turfs
 

@@ -35,6 +35,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/has_crush = TRUE //flagged to true when the door has a secret admirer. also if the var == 1 then the door does have the ability to crush items.
 	var/close_trys = 0
 	var/autoclose_delay = 15 SECONDS
+	var/autoclose_timer = 0
 
 	var/health = 400
 	var/health_max = 400
@@ -105,7 +106,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		var/mob/living/carbon/human/H = user
 		if (isdead(H)) //No need to call for dead people!
 			return 0
-		if (H.get_brain_damage() >= 60)
+		if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 			// No text spam, please. Bumped() is called more than once by some doors, though.
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
@@ -289,7 +290,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if (src.density && src.cant_emag <= 0)
 		last_used = world.time
 		src.operating = -1
-		flick(text("[]_spark", src.icon_base), src)
+		FLICK(text("[]_spark", src.icon_base), src)
 		SPAWN(0.6 SECONDS)
 			open()
 		return TRUE
@@ -315,7 +316,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 				src.take_damage(I.force*4, user)
 			else
 				src.take_damage(I.force, user)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			playsound(src, src.hitsound , 50, 1, pitch = 1.6)
 			..()
@@ -361,7 +362,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		var/resolvedForce = I.force
 		if (I.tool_flags & TOOL_CHOPPING)
 			resolvedForce *= 4
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
 		src.take_damage(resolvedForce, user)
@@ -387,6 +388,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (src.sound_deny)
 			playsound(src, src.sound_deny, 25, 0)
 		return 0
+
+// we have to do these explicitly to bypass checks for smashing handcuffed people into doors
+/obj/machinery/door/grab_smash(obj/item/grab/G, mob/user)
+	var/mob/grabbee = G.affecting
+	if (..())
+		if (src.density)
+			src.bumpopen(grabbee)
+
+/obj/machinery/door/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+	if (src.density && ismob(AM))
+		src.bumpopen(AM)
 
 /obj/machinery/door/blob_act(var/power)
 	if(prob(power))
@@ -482,18 +495,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	switch(animation)
 		if("opening")
 			if(src.panel_open)
-				flick("o_[icon_base]c0", src)
+				FLICK("o_[icon_base]c0", src)
 			else
-				flick("[icon_base]c0", src)
+				FLICK("[icon_base]c0", src)
 			icon_state = "[icon_base]0"
 		if("closing")
 			if(src.panel_open)
-				flick("o_[icon_base]c1", src)
+				FLICK("o_[icon_base]c1", src)
 			else
-				flick("[icon_base]c1", src)
+				FLICK("[icon_base]c1", src)
 			icon_state = "[icon_base]1"
 		if("deny")
-			flick("[icon_base]_deny", src)
+			FLICK("[icon_base]_deny", src)
 	return
 
 /obj/machinery/door/proc/open()
@@ -606,8 +619,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			src.operating = 0
 
 /obj/machinery/door/proc/opened()
-	if(autoclose)
+	if(!autoclose)
+		return
+
+	// Create a local copy of the autoclose timer to detect changes if it has changed outside this proc
+	src.autoclose_timer = TIME
+	var/lcl_autoclose = src.autoclose_timer
+
+	while(autoclose && !density && !QDELETED(src))
 		sleep(src.autoclose_delay)
+
+		if(lcl_autoclose != src.autoclose_timer) //newer open command received,  don't autoclose
+			break
+
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
 		else

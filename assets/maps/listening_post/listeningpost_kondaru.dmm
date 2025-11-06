@@ -1,0 +1,2071 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aB" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost/general)
+"ck" = (
+/obj/table/wood/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/listeningpost/break_room)
+"cY" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/general)
+"cZ" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable/black{
+	icon_state = "0-8"
+	},
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"dM" = (
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"dO" = (
+/obj/machinery/door/airlock,
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"dW" = (
+/obj/storage/crate,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/machinery/power/apc/autoname_north/hardened,
+/obj/cable/black{
+	icon_state = "0-4"
+	},
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"eh" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"ei" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/landing_bay)
+"fo" = (
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/listeningpost/break_room)
+"gs" = (
+/obj/machinery/vending/computer3{
+	profit = 0
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"gC" = (
+/obj/table/wood/auto,
+/obj/item/clothing/suit/wcoat,
+/obj/item/matchbook,
+/obj/item/pen/marker/red,
+/obj/item/paper/pipebombs{
+	pixel_y = 7;
+	pixel_x = 9
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"gU" = (
+/obj/machinery/power/rtg/erebite_loaded,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/cable/orange,
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"hc" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"hh" = (
+/obj/table/auto,
+/obj/item/sheet/glass/reinforced{
+	amount = 50
+	},
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/listeningpost/general)
+"ik" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 8
+	},
+/area/listeningpost/power)
+"iT" = (
+/obj/submachine/ATM{
+	pixel_x = 32
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost/general)
+"jr" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/space)
+"kK" = (
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/obj/cable/black{
+	icon_state = "2-4"
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/power)
+"lf" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/listeningpost/landing_bay)
+"ll" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"lo" = (
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"lt" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/listeningpost/landing_bay)
+"lL" = (
+/obj/machinery/vending/snack,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/listeningpost/break_room)
+"lY" = (
+/obj/machinery/vending/jobclothing/syndicate,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west/hardened,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
+"mh" = (
+/obj/table/wood/auto,
+/obj/machinery/cell_charger,
+/obj/item/cigpacket,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"mr" = (
+/obj/machinery/light/small,
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/power)
+"mK" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/obj/item/device/radio/intercom/brig{
+	dir = 8
+	},
+/obj/cable/black{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"nd" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/general)
+"nk" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"nC" = (
+/obj/machinery/vending/floppy{
+	profit = 0
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"nK" = (
+/obj/machinery/power/apc/autoname_east/hardened,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/cable/black,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/listeningpost/break_room)
+"nZ" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/peripheral/network/radio/locked,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"oD" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/obj/machinery/light_switch/west,
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
+"oO" = (
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"pj" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/power)
+"pn" = (
+/obj/machinery/drainage,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"pr" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/listeningpost/landing_bay)
+"px" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost/general)
+"pB" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
+	icon = 'icons/obj/large/64x96.dmi';
+	icon_state = "air_gizmo";
+	name = "damaged vaporator unit"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"rQ" = (
+/turf/variableTurf/floor,
+/area/space)
+"sw" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/comm_dish)
+"sO" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"sT" = (
+/turf/variableTurf/clear,
+/area/space)
+"tf" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"tz" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/airless/plating,
+/area/listeningpost/comm_dish)
+"tA" = (
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"tS" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"tW" = (
+/obj/machinery/door/airlock{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"uy" = (
+/obj/table/wood/auto,
+/obj/item/storage/firstaid/regular,
+/obj/item/bandage,
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"va" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/crash,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
+"vx" = (
+/obj/cable/black{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost/general)
+"vH" = (
+/obj/machinery/power/smes{
+	charge = 100000;
+	chargelevel = 40000;
+	output = 15000
+	},
+/obj/cable/black{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"vK" = (
+/obj/cable/black{
+	icon_state = "2-4"
+	},
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost/general)
+"vW" = (
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"vZ" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/black{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"wk" = (
+/obj/machinery/light/small,
+/obj/cable/orange{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"wu" = (
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/cable/black,
+/obj/machinery/power/apc/autoname_east/hardened,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"wX" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/space)
+"xR" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"yo" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/syndicate_teleporter)
+"zt" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Bd" = (
+/obj/machinery/power/rtg/erebite_loaded,
+/obj/cable/orange,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"Be" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/general)
+"Bi" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"BP" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/general)
+"Cd" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
+/obj/item/card_group/plain,
+/obj/item/currency/spacecash/hundred,
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"Dh" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/machinery/door/window/westleft,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+"Dm" = (
+/turf/simulated/floor/airless/engine,
+/area/listeningpost/landing_bay)
+"DE" = (
+/obj/marker/supplymarker,
+/obj/decal/poster/wallsign/poster_nt{
+	desc = "A cheerful-looking version of the NT corporate logo, with 'LIVE FAST BREAK GLASS KICK ASS' drawn over it in red marker.";
+	name = "defaced NanoTrasen poster";
+	pixel_y = 28
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"DN" = (
+/obj/machinery/door/airlock,
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/power)
+"En" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/listeningpost/power)
+"EY" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Fl" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/stairs/wide/other{
+	dir = 8
+	},
+/area/listeningpost/power)
+"FD" = (
+/obj/machinery/power/rtg/erebite_loaded,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"FE" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/black{
+	icon_state = "0-4"
+	},
+/obj/computer3frame{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"Gl" = (
+/obj/table/wood/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/snack_cake/golden,
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/listeningpost/break_room)
+"Gw" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost/general)
+"Gx" = (
+/obj/machinery/door/airlock{
+	dir = 4
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
+"Gz" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/tech_room)
+"GG" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost/general)
+"GJ" = (
+/obj/table/wood/auto,
+/obj/item/crowbar,
+/obj/item/crowbar,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"Hg" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/bot/medbot/no_camera,
+/obj/noticeboard/directional/north,
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"Hu" = (
+/obj/storage/secure/crate/gear/syndicate,
+/obj/item/cell/cerenkite/charged,
+/obj/item/cell/cerenkite/charged,
+/obj/item/cell/cerenkite/charged,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Ic" = (
+/turf/simulated/floor/carpet/red,
+/area/listeningpost/break_room)
+"Ii" = (
+/obj/machinery/power/apc/autoname_north/hardened,
+/obj/cable/black{
+	icon_state = "0-8"
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"IF" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/obj/cable/black{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/listeningpost/power)
+"Jp" = (
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_x = -32
+	},
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost/general)
+"JC" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"JR" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Ki" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion"
+	},
+/turf/variableTurf/floor,
+/area/listeningpost/general)
+"Kv" = (
+/obj/machinery/light/small,
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"KG" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/glassbox,
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/listeningpost/break_room)
+"KJ" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/barracks)
+"KM" = (
+/obj/table/wood/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"Lf" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/paper/printout/emerg1,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"Lu" = (
+/obj/item/storage/wall/fire{
+	pixel_x = -28;
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"MN" = (
+/obj/table/auto,
+/obj/item/device/t_scanner,
+/obj/item/wrench,
+/obj/item/mining_tools/pick,
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/listeningpost/general)
+"MO" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating,
+/area/listeningpost/comm_dish)
+"Nm" = (
+/obj/machinery/computer/announcement/syndicate,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"NF" = (
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"NI" = (
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/break_room)
+"Oe" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"Om" = (
+/obj/machinery/light_switch/north,
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"Pf" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	dir = 4;
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/turf/simulated/floor,
+/area/listeningpost/general)
+"PF" = (
+/obj/securearea,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/power)
+"PJ" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool,
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/listeningpost/general)
+"Qv" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/space)
+"QE" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost/general)
+"Sc" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 2.5;
+	name = "VACUUM AREA";
+	pixel_y = -32
+	},
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Sz" = (
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"SJ" = (
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost/general)
+"Tw" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/communications_dish,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating,
+/area/listeningpost/comm_dish)
+"TX" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/cable/black{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/listeningpost/break_room)
+"UA" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
+	},
+/turf/variableTurf/floor,
+/area/listeningpost/landing_bay)
+"UW" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = -16
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"VD" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/power)
+"VQ" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/machinery/light/small,
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Wc" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/power_monitor,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/power)
+"Wg" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs,
+/area/listeningpost/break_room)
+"WC" = (
+/turf/variableTurf/wall,
+/area/space)
+"WU" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/general)
+"XA" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small,
+/obj/item/pinpointer/disk,
+/obj/item/disk/data/cartridge/captain,
+/obj/item/disk/data/cartridge/captain,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"XW" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
+"XY" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "It is still kinda warm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "busted machine"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Yc" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine,
+/area/listeningpost/landing_bay)
+"Yl" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/break_room)
+"Zj" = (
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/obj/cable/black{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/listeningpost/power)
+"ZF" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"ZS" = (
+/obj/submachine/syndicate_teleporter,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"ZW" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room)
+
+(1,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(2,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(3,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(4,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(5,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(6,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+pr
+lt
+lt
+lt
+lf
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(7,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+lt
+Dm
+Dm
+Dm
+lt
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(8,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+lt
+Dm
+Yc
+Dm
+lt
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(9,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+lt
+Dm
+Dm
+Dm
+lt
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(10,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+WC
+WC
+ei
+UA
+ei
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(11,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+KJ
+KJ
+KJ
+KJ
+Pf
+cY
+WC
+WC
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(12,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+WC
+KJ
+lY
+oD
+KJ
+Sc
+cY
+cY
+cY
+cY
+cY
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(13,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+WC
+WC
+WC
+KJ
+va
+XW
+KJ
+Pf
+cY
+MN
+PJ
+hh
+cY
+cY
+cY
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+"}
+(14,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+pj
+pj
+pj
+PF
+KJ
+KJ
+Gx
+KJ
+zt
+cY
+JR
+oO
+oO
+Lu
+Hu
+cY
+WC
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+"}
+(15,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+pj
+pj
+FE
+vZ
+pj
+Gw
+aB
+vx
+Jp
+vK
+dO
+EY
+wu
+EY
+EY
+VQ
+cY
+cY
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+"}
+(16,1,1) = {"
+sT
+sT
+sT
+Qv
+wX
+WC
+WC
+pj
+Wc
+kK
+mr
+pj
+DE
+WU
+uy
+KM
+Kv
+Yl
+Yl
+Yl
+Yl
+Yl
+cZ
+XY
+cY
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+"}
+(17,1,1) = {"
+sT
+sT
+sT
+tz
+tz
+tz
+WC
+pj
+pj
+Fl
+ik
+pj
+Hg
+WU
+Cd
+gC
+ll
+Yl
+lL
+KG
+ck
+Yl
+oO
+pB
+BP
+Ki
+rQ
+rQ
+sT
+sT
+sT
+sT
+"}
+(18,1,1) = {"
+sT
+sT
+sT
+tz
+Tw
+MO
+sw
+VD
+En
+IF
+Zj
+DN
+Bi
+Bi
+nk
+tf
+dM
+Wg
+NI
+Ic
+Gl
+Yl
+oO
+oO
+nd
+Ki
+rQ
+rQ
+sT
+sT
+sT
+sT
+"}
+(19,1,1) = {"
+sT
+sT
+sT
+tz
+tz
+tz
+WC
+pj
+dW
+ZF
+Sz
+pj
+SJ
+QE
+iT
+px
+GG
+Yl
+TX
+nK
+fo
+Yl
+oO
+oO
+Be
+Ki
+rQ
+rQ
+sT
+sT
+sT
+sT
+"}
+(20,1,1) = {"
+sT
+sT
+sT
+Qv
+jr
+WC
+WC
+pj
+vH
+vW
+wk
+pj
+Gz
+Gz
+Gz
+xR
+Gz
+Gz
+tW
+yo
+Oe
+yo
+yo
+yo
+yo
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+"}
+(21,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+pj
+pj
+FD
+gU
+Bd
+Gz
+Om
+tA
+eh
+mh
+Gz
+pn
+yo
+tS
+hc
+lo
+sO
+yo
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+"}
+(22,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+pj
+pj
+pj
+pj
+Gz
+nZ
+tA
+eh
+XA
+Gz
+ZW
+yo
+Ii
+ZS
+lo
+yo
+yo
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+"}
+(23,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+WC
+WC
+WC
+Gz
+Nm
+JC
+NF
+Lf
+Gz
+Dh
+yo
+GJ
+yo
+yo
+yo
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+"}
+(24,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+WC
+Gz
+nC
+UW
+mK
+gs
+Gz
+Yl
+yo
+yo
+yo
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(25,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+Gz
+Gz
+Gz
+Gz
+Gz
+Gz
+WC
+WC
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(26,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+WC
+WC
+WC
+WC
+WC
+WC
+WC
+WC
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(27,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(28,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(29,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(30,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(31,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}
+(32,1,1) = {"
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+sT
+"}

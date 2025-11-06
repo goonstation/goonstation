@@ -46,22 +46,30 @@ const JobItem = ({
   />
 );
 
-const JobCategory = ({ title, jobs, act }) => (
-  <Collapsible title={title}>
-    <LabeledList>
-      {jobs.map((job) => (
-        <JobItem
-          key={job.name}
-          name={job.name}
-          count={job.count}
-          limit={job.limit}
-          type={job.type}
-          onEdit={() => act('edit', { job: job.name })}
-          onAlterCap={() => act('alter_cap', { job: job.name })}
-          onRemove={() => act('remove_job', { job: job.name })}
-        />
-      ))}
-    </LabeledList>
+const JobList = ({ jobs, act }) => (
+  <LabeledList>
+    {jobs.map((job) => (
+      <JobItem
+        key={job.name}
+        name={job.name}
+        count={job.count}
+        limit={job.limit}
+        type={job.type}
+        onEdit={() => act('edit', { job: job.name })}
+        onAlterCap={() => act('alter_cap', { job: job.name })}
+        onRemove={() => act('remove_job', { job: job.name })}
+      />
+    ))}
+  </LabeledList>
+);
+
+const JobCategory = ({ title, jobs, color, act }) => (
+  <Collapsible
+    title={title}
+    color={color}
+    childStyles={{ paddingLeft: '10px' }}
+  >
+    <JobList jobs={jobs} act={act} />
   </Collapsible>
 );
 
@@ -69,6 +77,7 @@ interface JobManagerData {
   allowSpecialJobs;
   hiddenJobs;
   specialJobs;
+  categorisedSpecialJobs;
   stapleJobs;
 }
 
@@ -78,6 +87,7 @@ export const JobManager = () => {
   const {
     stapleJobs = [],
     specialJobs = [],
+    categorisedSpecialJobs = [],
     hiddenJobs = [],
     allowSpecialJobs,
   } = data;
@@ -85,23 +95,51 @@ export const JobManager = () => {
   const jobCategories = [
     {
       name: 'Command Jobs',
+      color: 'green',
       jobs: stapleJobs.filter((job) => job.type === 'command'),
     },
     {
       name: 'Security Jobs',
+      color: 'red',
       jobs: stapleJobs.filter((job) => job.type === 'security'),
     },
     {
       name: 'Research Jobs',
+      color: 'violet',
       jobs: stapleJobs.filter((job) => job.type === 'research'),
     },
     {
+      name: 'Medical Jobs',
+      color: 'pink',
+      jobs: stapleJobs.filter((job) => job.type === 'medical'),
+    },
+    {
       name: 'Engineering Jobs',
+      color: 'orange',
       jobs: stapleJobs.filter((job) => job.type === 'engineering'),
     },
     {
       name: 'Civilian Jobs',
+      color: 'blue',
       jobs: stapleJobs.filter((job) => job.type === 'civilian'),
+    },
+  ];
+
+  const specialJobCategories = [
+    {
+      name: 'Nanotrasen Jobs',
+      color: 'navy',
+      jobs: categorisedSpecialJobs.filter((job) => job.type === 'nanotrasen'),
+    },
+    {
+      name: 'Syndicate Jobs',
+      color: 'crimson',
+      jobs: categorisedSpecialJobs.filter((job) => job.type === 'syndicate'),
+    },
+    {
+      name: 'Halloween Jobs',
+      color: 'orange',
+      jobs: categorisedSpecialJobs.filter((job) => job.type === 'halloween'),
     },
   ];
 
@@ -124,11 +162,31 @@ export const JobManager = () => {
               key={category.name}
               title={category.name}
               jobs={category.jobs}
+              color={category.color}
               act={act}
             />
           ))}
-          <JobCategory title="Special Jobs" jobs={specialJobs} act={act} />
-          <JobCategory title="Hidden Jobs" jobs={hiddenJobs} act={act} />
+          <Collapsible
+            title="Special Jobs"
+            childStyles={{ paddingLeft: '10px' }}
+          >
+            {specialJobCategories.map((category) => (
+              <JobCategory
+                key={category.name}
+                title={category.name}
+                jobs={category.jobs}
+                color={category.color}
+                act={act}
+              />
+            ))}
+            <JobList jobs={specialJobs} act={act} />
+          </Collapsible>
+          <JobCategory
+            title="Hidden Jobs"
+            jobs={hiddenJobs}
+            color={'grey'}
+            act={act}
+          />
           <Button.Checkbox
             checked={allowSpecialJobs}
             onClick={() => act('toggle_special_jobs')}

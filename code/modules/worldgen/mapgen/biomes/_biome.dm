@@ -96,13 +96,20 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	flora_types = list(/obj/stone/snow/random = 100, /obj/stone/random = 20, /obj/fakeobject/smallrocks = 20)
 	flora_density = 5
 
+	fauna_types = list(/mob/living/critter/small_animal/bunny/hare=5, /mob/living/critter/small_animal/goat=1)
+	fauna_density = 0.05
+
 /datum/biome/snow/forest
 	flora_types = list(/obj/tree/snow_random = 50, /obj/shrub/snow/random{last_use=INFINITY} = 100, /obj/stone/snow/random = 10, /obj/fakeobject/smallrocks = 5)
 	flora_density = 20
 
+	fauna_density = 0.1
+	minimum_fauna_distance = 10
+
 /datum/biome/snow/forest/thick
 	flora_density = 30
 
+	fauna_types = list(/mob/living/critter/small_animal/bunny/hare=25, /mob/living/critter/small_animal/jackalope=1)
 	fauna_density = 0.2
 	minimum_fauna_distance = 10
 
@@ -111,6 +118,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	flora_types = list(/obj/stone/snow/random = 100, /obj/fakeobject/smallrocks = 50, /obj/stone/random = 5)
 	flora_density = 3
 
+	fauna_types = list(/mob/living/critter/small_animal/bunny/hare=15, /mob/living/critter/small_animal/goat=1)
 	fauna_density = 0.2
 	minimum_fauna_distance = 20
 
@@ -181,8 +189,14 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 /datum/biome/water/ice
 	turf_type = /turf/unsimulated/floor/auto/water/ice
 
+	fauna_types = list(/mob/living/critter/small_animal/seal_arctic/baby=1, /mob/living/critter/small_animal/seal_arctic/adult=5)
+	fauna_density = 0.2
+
 /datum/biome/water/ice/rough
 	turf_type = /turf/unsimulated/floor/auto/water/ice/rough
+
+	fauna_density = 0.5
+
 
 /datum/biome/mountain
 	turf_type = /turf/simulated/wall/auto/asteroid/mountain

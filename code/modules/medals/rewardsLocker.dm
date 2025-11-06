@@ -29,248 +29,14 @@
 			return
 
 		var/obj/item/storage/backpack/M = activator.back
-		var/prev_desc
 
 		if(!istype(M))
 			boutput(activator, SPAN_ALERT("Whatever it is you've got on your back, it isn't a backpack!"))
 			return
 
-		//SPACEBUX REWARD BACKPACKS
-		if (istype(M, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
-			M.icon_state = "NTsatchel"
-			M.item_state = "NTsatchel"
-			M.name = "\improper NT Satchel"
-			M.real_name = "NT satchel"
-			M.desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: NT backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/randoseru) || activator.back.icon_state == "bp_randoseru")
-			M.icon_state = "sat_randoseru"
-			M.item_state = "sat_randoseru"
-			M.name = "randoseru satchel"
-			M.real_name = "randoseru satchel"
-			M.desc = "Inconspicuous, nostalgic and quintessentially Space Japanese. (Base Item: randoseru)"
-
-		else if (istype(M, /obj/item/storage/backpack/fjallravenyel) || activator.back.icon_state == "bp_fjallraven_yellow")
-			M.icon_state = "sat_fjallraven_yellow"
-			M.item_state = "sat_fjallraven_yellow"
-			M.name = "rucksack satchel"
-			M.real_name = "rucksack satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff. (Base Item: rucksack)"
-
-		else if (istype(M, /obj/item/storage/backpack/fjallravenred) || activator.back.icon_state == "bp_fjallraven_red")
-			M.icon_state = "sat_fjallraven_red"
-			M.item_state = "sat_fjallraven_red"
-			M.name = "rucksack satchel"
-			M.real_name = "rucksack satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff. (Base Item: rucksack)"
-
-		else if (istype(M, /obj/item/storage/backpack/anello) || activator.back.icon_state == "bp_anello")
-			M.icon_state = "sat_anello"
-			M.item_state = "sat_anello"
-			M.name = "travel satchel"
-			M.real_name = "travel satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, often seen carried by tourists and travelers. (Base Item: travel pack)"
-
-		else if (istype(M, /obj/item/storage/backpack/studdedblack) || activator.back.icon_state == "bp_studded")
-			M.icon_state = "sat_studded"
-			M.item_state = "sat_studded"
-			M.name = "studded satchel"
-			M.real_name = "studded satchel"
-			M.desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag. (Base Item: studded backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag/blue) || activator.back.icon_state == "bp_itabag_blue")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_blue"
-			M.item_state = "sat_itabag_blue"
-			M.name = "blue itabag satchel"
-			M.real_name = "blue itabag satchel"
-			M.desc = "[prev_desc] (Base Item: blue itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag/purple) || activator.back.icon_state == "bp_itabag_purple")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_purple"
-			M.item_state = "sat_itabag_purple"
-			M.name = "purple itabag satchel"
-			M.real_name = "purple itabag satchel"
-			M.desc = "[prev_desc] (Base Item: purple itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag/mint) || activator.back.icon_state == "bp_itabag_mint")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_mint"
-			M.item_state = "sat_itabag_mint"
-			M.name = "mint itabag satchel"
-			M.real_name = "mint itabag satchel"
-			M.desc = "[prev_desc] (Base Item: mint itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag/black) || activator.back.icon_state == "bp_itabag_black")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_black"
-			M.item_state = "sat_itabag_black"
-			M.name = "black itabag satchel"
-			M.real_name = "black itabag satchel"
-			M.desc = "[prev_desc] (Base Item: black itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/itabag) || activator.back.icon_state == "bp_itabag_pink")
-			prev_desc = M.desc
-			M.icon_state = "sat_itabag_pink"
-			M.item_state = "sat_itabag_pink"
-			M.name = "pink itabag satchel"
-			M.real_name = "pink itabag satchel"
-			M.desc = "[prev_desc] (Base Item: pink itabag)"
-
-		else if (istype(M, /obj/item/storage/backpack/brown) || activator.back.icon_state == "backpackbr")
-			M.icon_state = "satchelbr"
-			M.item_state = "satchelbr"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers. This brown variation is both rustic and adventurous! (Base Item: backpack)"
-
-		//OTHER NON-JOB BAGS
-		else if (istype(M, /obj/item/storage/backpack/NT) || activator.back.icon_state == "Syndiebackpack")
-			M.icon_state = "Syndiesatchel"
-			M.item_state = "Syndiesatchel"
-			M.name = "\improper Syndicate Satchel"
-			M.real_name = "Syndicate Satchel"
-			M.desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's shoulder. (Base Item: Syndicate backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/studdedwhite) || activator.back.icon_state == "bp_studdedw")
-			M.icon_state = "sat_studdedw"
-			M.item_state = "sat_studdedw"
-			M.name = "white studded satchel"
-			M.real_name = "white studded satchel"
-			M.desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag. (Base Item: white studded backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/bearpack) || activator.back.icon_state == "bp_bear")
-			M.icon_state = "sat_bear"
-			M.item_state = "sat_bear"
-			M.name = "bear-satchel"
-			M.real_name = "bear-satchel"
-			M.desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful! (Base Item: bearpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/breadpack) || activator.back.icon_state == "bp_breadpack")
-			M.icon_state = "sat_breadpack"
-			M.item_state = "sat_breadpack"
-			M.name = "bag-uette satchel"
-			M.real_name = "bag-uette satchel"
-			M.desc = "It kind of smells like bread too! Definitely not edible, sadly. (Base Item: bag-uette)"
-
-		else if (istype(M, /obj/item/storage/backpack/turtlegreen) || activator.back.icon_state == "bp_turtle_green")
-			M.icon_state = "sat_turtle_green"
-			M.name = "green turtle shell satchel"
-			M.real_name = "green turtle shell backpack"
-			M.desc = "A satchel that looks like a green turtleshell. Cowabunga! (Base Item: green turtle shell backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/turtlebrown) || activator.back.icon_state == "bp_turtle_brown")
-			M.icon_state = "sat_turtle_brown"
-			M.name = "brown turtle shell satchel"
-			M.real_name = "brown turtle shell backpack"
-			M.desc = "A satchel that looks like a brown turtleshell. How childish! (Base Item: brown turtle shell backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/blue) || activator.back.icon_state == "backpackb")
-			M.icon_state = "satchelb"
-			M.item_state = "satchelb"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers. The blue variation is similar in shade to Abzu's ocean. (Base Item: backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/red) || activator.back.icon_state == "backpackr")
-			M.icon_state = "satchelr"
-			M.item_state = "satchelr"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers. The red variation is striking and slightly suspicious. (Base Item: backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/green) || activator.back.icon_state == "backpackg")
-			M.icon_state = "satchelg"
-			M.item_state = "satchelg"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden... (Base Item: backpack)"
-
-		//JOB BAGS
-		else if (istype(M, /obj/item/storage/backpack/medic) || activator.back.icon_state == "bp_medic")
-			M.icon_state = "satchel_medic"
-			M.item_state = "satchel_medic"
-			M.name = "medic's satchel"
-			M.real_name = "medic's satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a medical doctor's shoulder. (Base Item: medic's backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/security) || activator.back.icon_state == "bp_security")
-			M.icon_state = "satchel_security"
-			M.item_state = "satchel_security"
-			M.name = "security satchel"
-			M.real_name = "security satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects stylishly on the shoulder of security personnel.(Base Item: security backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/robotics) || activator.back.icon_state == "bp_robotics")
-			M.icon_state = "satchel_robotics"
-			M.item_state = "satchel_robotics"
-			M.name = "robotics satchel"
-			M.real_name = "robotics satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromatically on the shoulder of roboticists.(Base Item: robotics backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/genetics) || activator.back.icon_state == "bp_genetics")
-			M.icon_state = "satchel_genetics"
-			M.item_state = "satchel_genetics"
-			M.name = "genetics satchel"
-			M.real_name = "genetics satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists.(Base Item: genetics backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/engineering) || activator.back.icon_state == "bp_engineering")
-			M.icon_state = "satchel_engineering"
-			M.item_state = "satchel_engineering"
-			M.name = "engineering satchel"
-			M.real_name = "engineering satchel"
-			M.desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the shoulder of engineers.(Base Item: engineering backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/research) || activator.back.icon_state == "bp_research")
-			M.icon_state = "satchel_research"
-			M.item_state = "satchel_research"
-			M.name = "research satchel"
-			M.real_name = "research satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the shoulder of scientists.(Base Item: research backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/captain/blue) || activator.back.icon_state == "capbackpack_blue")
-			M.icon_state = "capsatchel_blue"
-			M.item_state = "capsatchel_blue"
-			M.name = "Captain's Satchel"
-			M.real_name = "Captain's Satchel"
-			M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: Captain's Backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/captain/red) || activator.back.icon_state == "capbackpack_red")
-			M.icon_state = "capsatchel_red"
-			M.item_state = "capsatchel_red"
-			M.name = "Captain's Satchel"
-			M.real_name = "Captain's Satchel"
-			M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: Captain's Backpack)"
-
-		else if (istype(M, /obj/item/storage/backpack/captain) || activator.back.icon_state == "capbackpack")
-			M.icon_state = "capsatchel"
-			M.item_state = "capbackpack"
-			M.name = "Captain's Satchel"
-			M.real_name = "Captain's Satchel"
-			M.desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: Captain's Backpack)"
-
-		//GENERIC BACKPACK
-		else if (M.satchel_compatible && (istype(M, /obj/item/storage/backpack) || activator.back.icon_state == "backpack"))
-			M.icon_state = "satchel"
-			M.item_state = "satchel"
-			M.name = "satchel"
-			M.real_name = "satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: backpack)"
-		else
+		if(!M.convert_to_satchel(TRUE))
 			boutput(activator, SPAN_ALERT("Whatever it is you've got on your back, it can't be reskinned!"))
 			return
-
-		//Updates to ensure satchel is displayed correctly
-		M.icon = 'icons/obj/items/storage.dmi'
-		M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
-		if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-		M.wear_image_icon = 'icons/mob/clothing/back.dmi'
-		if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
-		activator.set_clothing_icon_dirty()
-		M.wear_layer = MOB_BACK_LAYER_SATCHEL
-
 		return 1
 
 /datum/achievementReward/hightechpodskin
@@ -443,9 +209,9 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "mechanic-reward"
@@ -476,9 +242,9 @@
 					boutput(activator, SPAN_ALERT("You're not wearing medical scrubs!"))
 					return
 				var/prev = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+				M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "scrub-f"
@@ -735,8 +501,8 @@
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/det))
 					var/prev = M.name
-					M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+					M.icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 					M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 					M.icon_state = "inspectorj"
 					M.item_state = "viceG"
@@ -878,9 +644,12 @@
 					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/obj/item/clothing/suit/armor/capcoat/coat = M
+					coat.coat_style = "centcoat"
+					coat.item_state = "centcoat"
+					var/datum/component/toggle_coat/toggle_component = coat.GetComponent(/datum/component/toggle_coat)
+					toggle_component.update_coat_icon()
 					var/prev = M.name
-					M.icon_state = "centcoat"
-					M.item_state = "centcoat"
 					M.name = "commander's coat"
 					M.real_name = "commander's coat"
 					M.desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
@@ -1051,9 +820,12 @@
 					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/obj/item/clothing/suit/armor/capcoat/coat = M
+					coat.coat_style = "centcoat-red"
+					coat.item_state = "centcoat-red"
+					var/datum/component/toggle_coat/toggle_component = coat.GetComponent(/datum/component/toggle_coat)
+					toggle_component.update_coat_icon()
 					var/prev = M.name
-					M.icon_state = "centcoat-red"
-					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
 					M.desc = "A luxurious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
@@ -1222,32 +994,6 @@
 		else
 			boutput(activator, SPAN_ALERT("You need to be a cyborg to use this, you goof!"))
 
-/*
-/datum/achievementReward/secbelt
-	title = "(Skin) Security Toolbelt"
-	desc = "Turns your worn Utility Belt into a Security Toolbelt."
-	required_medal = "Suitable? How about the Oubliette?!"
-
-	rewardActivate(var/mob/living/carbon/human/activator)
-
-	rewardActivate(var/mob/activator)
-		if (!ishuman(activator))
-			return
-
-		var/mob/living/carbon/human/H = activator
-
-		if (H.belt && istype(H.belt, /obj/item/storage/belt/utility))
-			var/obj/item/storage/belt/utility/M = H.belt
-			var/prev = M.name
-			M.icon_state = "secbelt"
-			M.item_state = "secbelt"
-			M.name = "security toolbelt"
-			M.real_name = "security toolbelt"
-			M.desc = "For the trend-setting Security Officer on the go. (Base Item: [prev])"
-			H.set_clothing_icon_dirty()
-		return
-*/
-
 /datum/achievementReward/goldenGun
 	title = "Golden Gun"
 	desc = "Gold plates a shotgun, hunting rifle, detective revolver, or AK-47 you're holding."
@@ -1355,7 +1101,7 @@
 			boutput(activator, SPAN_ALERT("You gotta be a ghost to use this, you goof!"))
 			return
 		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
-		O.say_language = "animal"
+		O.say_language = LANGUAGE_ANIMAL
 		O.literate = 0
 		return 1
 
@@ -1554,6 +1300,10 @@
 	set popup_menu = 0
 
 	SPAWN(0)
+		if (!src.authenticated)
+			boutput(usr, SPAN_ALERT("You need to be authenticated to claim rewards."))
+			return
+
 		src.verbs -= /client/verb/claimreward
 		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
 		var/list/eligible = list()

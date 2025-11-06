@@ -1,3 +1,22 @@
+/// Updates the color of the short, connecting underlays between pipes.
+/obj/machinery/atmospherics/proc/update_pipe_underlay(obj/machinery/atmospherics/node, var/direction, var/size, var/hide_pipe)
+	PROTECTED_PROC(TRUE)
+	var/color = null;
+	if (issimplepipe(node))
+		color = node.color;
+	else if (ismanifoldorquad(node))
+		if (ismanifoldorquad(src))
+			// If both we and the node are manifolds, we want to update the color only if we are both of the same material. This avoids weird patches of conflicting colors.
+			if (src.material == node.material)
+				color = src.color;
+		else
+			color = node.color;
+	else if (ismanifoldorquad(src))
+		// If we are a manifold and the node is neither manifold nor pipe, we want to use our color.
+		color = src.color;
+
+	SET_PIPE_UNDERLAY(node, direction, size, color, hide_pipe);
+
 /// The basic pipe parent for things that can support pipelines and bursting and stuff.
 /obj/machinery/atmospherics/pipe
 	text = ""
@@ -10,6 +29,205 @@
 	var/datum/pipeline/parent
 	/// Our volume for gas.
 	var/volume = 0
+	/// Pressure needed before the pipe gets a chance to burst, see proc/effective_fatigue_pressure for the value that takes into account material stats too
+	var/fatigue_pressure = 150*ONE_ATMOSPHERE
+	/// Can this pipe rupture?
+	var/can_rupture = FALSE // Currently only used for simple pipes and manifolds
+	/// How broken is our pipe.
+	var/ruptured = 0
+	/// What do I change back to when repaired???
+	var/initial_icon_state = null
+	/// Do we weld this pipe at a right angle to its actual direction?
+	var/orthogonal_welding = FALSE
+
+/obj/machinery/atmospherics/pipe/New()
+	. = ..()
+	initial_icon_state = icon_state
+
+/obj/machinery/atmospherics/pipe/proc/effective_fatigue_pressure()
+	var/output = src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
+	var/turf/pipe_location = get_turf(src)
+	//pipes encased by walls get a bonus in fatigue pressure equal to the density of the material times 5, times 10 for reinforced walls. So pipes that lay bare should be the main weak point of the engine.
+	if(istype(pipe_location, /turf/simulated/wall))
+		var/turf/simulated/wall/wall_location = pipe_location
+		output *= ((wall_location.material?.getProperty("density") * 5) || 1)
+		if(istype(pipe_location, /turf/simulated/wall/auto/reinforced))
+			output *= 2
+	return output
+
+/// Returns list of coordinates to start and stop welding animation.
+/obj/machinery/atmospherics/pipe/proc/get_welding_positions()
+	var/start
+	var/stop
+	var/axis_start_value
+	var/axis_stop_value
+	if(icon_state=="broken")
+		axis_start_value = 6
+		axis_stop_value = 6
+	else
+		axis_start_value = 12
+		axis_stop_value = 12
+	var/dir = src.dir
+	if (src.orthogonal_welding)
+		dir = turn(dir, 90)
+	switch(dir)
+		if(SOUTH, NORTH)
+			start = list(0, axis_start_value)
+			stop = list(0, -axis_stop_value)
+		if(EAST, WEST)
+			start = list(-axis_start_value, 0)
+			stop = list(axis_stop_value, 0)
+		if(SOUTHEAST)
+			start = list(0, -axis_start_value)
+			stop = list(axis_start_value, 0)
+		if(SOUTHWEST)
+			start = list(0, -axis_start_value)
+			stop = list(-axis_start_value, 0)
+		if(NORTHEAST)
+			start = list(0, axis_start_value)
+			stop = list(axis_start_value, 0)
+		if(NORTHWEST)
+			start = list(0, axis_start_value)
+			stop = list(-axis_start_value, 0)
+
+	if(rand(50))
+		. = list(start, stop)
+	else
+		. = list(stop, start)
+
+/// Repairs the pipe back to orginal state.
+/obj/machinery/atmospherics/pipe/proc/repair_pipe()
+	src.ruptured = 0
+	desc = initial(desc)
+	UpdateIcon()
+	ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
+
+/// Ruptures the pipe, with varying levels of leakage.
+/obj/machinery/atmospherics/pipe/proc/rupture(pressure)
+	var/new_rupture
+
+	if(pressure && src.fatigue_pressure)
+		var/iterations = clamp(log(pressure/effective_fatigue_pressure())/log(2),0,20)
+		for(var/i = iterations; i>0 && i>=ruptured; i--)
+			if(prob(5/i))
+				new_rupture = i + 1
+				break
+	if(new_rupture > src.ruptured)
+		ON_COOLDOWN(parent, "pipeline_rupture_protection", 16 SECONDS + rand(4 SECONDS, 24 SECONDS))
+	ruptured = max(src.ruptured, new_rupture, 1)
+	for (var/obj/window/window in get_turf(src))
+		window.smash()
+	src.desc = "[initial(src.desc)] Still looks salvageable through some careful welding."
+	UpdateIcon()
+
+/// Moves gas from the high pressure mixture to the low pressure mixture, usually pipe to tile.
+/obj/machinery/atmospherics/pipe/proc/leak_gas()
+	var/datum/gas_mixture/gas = return_air()
+	var/datum/gas_mixture/environment = loc.return_air()
+
+	var/datum/gas_mixture/hi_side = gas
+	var/datum/gas_mixture/lo_side = environment
+
+	// vacuum
+	if( MIXTURE_PRESSURE(lo_side) > MIXTURE_PRESSURE(hi_side) )
+		hi_side = environment
+		lo_side = gas
+
+	var/pressure = lerp(100*(src.ruptured**2), MIXTURE_PRESSURE(hi_side)*(ruptured/150), 0.1 )
+	pressure = min(pressure,  MIXTURE_PRESSURE(hi_side) - MIXTURE_PRESSURE(lo_side))
+
+	if(pressure > 0 && hi_side.temperature )
+		var/transfer_moles = pressure*lo_side.volume/(hi_side.temperature * R_IDEAL_GAS_EQUATION)
+		var/datum/gas_mixture/removed = hi_side.remove(transfer_moles)
+		if(removed) lo_side==environment ? loc.assume_air(removed) : lo_side.merge(removed)
+		UpdateIcon()
+
+#define SHEETS_TO_REINFORCE 5
+/obj/machinery/atmospherics/pipe/attackby(var/obj/item/W, var/mob/user)
+	if (!src.can_rupture) //can't rupture, so can't reinforce either
+		return ..()
+
+	if(isweldingtool(W))
+		if(!ruptured)
+			boutput(user, SPAN_ALERT("That isn't damaged!"))
+			return
+
+		if(!W:try_weld(user, 0.8, noisy=2))
+			return
+
+		boutput(user, "You start to repair the [src.name].")
+
+		var/positions = src.get_welding_positions()
+		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/proc/repair_pipe, \
+				list(user), SPAN_NOTICE("[user] repairs the [src.name]."), positions[1], positions[2]),user)
+
+	else if (istype(W, /obj/item/sheet))
+		if (actions.hasAction(user, /datum/action/bar/private/welding))
+			return
+		if (src.ruptured)
+			boutput(user, SPAN_ALERT("You should repair [src] first."))
+			return
+		if (!(W.material?.getMaterialFlags() & MATERIAL_METAL))
+			boutput(user, SPAN_ALERT("You can't weld that!"))
+			return
+		if (W.material?.isSameMaterial(src.material))
+			boutput(user, SPAN_ALERT("[src] is already reinforced with [src.material.getName()]!"))
+			return
+		var/obj/item/weldingtool/welder = user.find_tool_in_hand(TOOL_WELDING)
+		if (W.amount < SHEETS_TO_REINFORCE)
+			boutput(user, SPAN_ALERT("You need at least 10 sheets to reinforce [src]."))
+		if (!welder || !welder.welding)
+			boutput(user, SPAN_ALERT("You need something to weld [W] to [src] with!"))
+			return
+		if (!welder.try_weld(user, 0.8, noisy=2))
+			return
+		var/positions = src.get_welding_positions()
+		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, PROC_REF(weld_sheet), \
+				list(W, user), SPAN_NOTICE("[user] welds [W] to [src]"), positions[1], positions[2]),user)
+
+/obj/machinery/atmospherics/pipe/proc/weld_sheet(obj/item/sheet/sheet, mob/user)
+	if (sheet.amount < SHEETS_TO_REINFORCE)
+		return
+	src.setMaterial(sheet.material)
+	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
+	if (!("reinforced" in src.name_prefixes))
+		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
+	src.UpdateName()
+	src.UpdateIcon()
+
+#undef SHEETS_TO_REINFORCE
+
+/obj/machinery/atmospherics/pipe/update_icon()
+	if(ruptured)
+		icon_state = "[src.initial_icon_state]-broken"
+
+		var/image/leak
+		var/datum/gas_mixture/gas = return_air()
+		var/datum/gas_mixture/environment = loc.return_air()
+
+		if( (MIXTURE_PRESSURE(gas) - (2 * MIXTURE_PRESSURE(environment))) > 0 )
+			leak = SafeGetOverlayImage("leak", 'icons/obj/atmospherics/pipes/pipe.dmi', "leak")
+			leak.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
+			leak.alpha = clamp(ruptured * 10, 40, 200)
+		UpdateOverlays(leak,"leak")
+	else
+		icon_state = src.initial_icon_state
+		ClearSpecificOverlays("leak")
+	alpha = invisibility ? 128 : 255
+
+
+/obj/machinery/atmospherics/pipe/check_pressure(pressure)
+	if (!loc)
+		return
+
+	var/datum/gas_mixture/environment = loc.return_air()
+
+	var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
+
+	if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > src.effective_fatigue_pressure())
+		var/rupture_prob = (pressure_difference - src.effective_fatigue_pressure())/50000
+		if(prob(rupture_prob))
+			rupture(pressure_difference)
 
 /// Returns a list of nodes that we can add to the pipeline. List may be null or contain nulls.
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
@@ -84,137 +302,9 @@
 	var/minimum_temperature_difference = 300
 	/// How well we share temperature.
 	var/thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	/// Pressure needed before the pipe gets a chance to burst, see proc/effective_fatigue_pressure for the value that takes into account material stats too
-	var/fatigue_pressure = 150*ONE_ATMOSPHERE
-	/// Can this pipe rupture?
-	var/can_rupture = FALSE // Currently only used for red pipes (insulated).
-	/// How broken is our pipe.
-	var/ruptured = 0
-	/// Are we destroyed and need replacement?
-	var/destroyed = FALSE
-	/// Are we currently in a disconnected state?
-	var/disconnected = FALSE
-	var/initial_icon_state = null //what do i change back to when repaired???
 
 	level = UNDERFLOOR
 	alpha = 128
-
-/obj/machinery/atmospherics/pipe/simple/proc/effective_fatigue_pressure()
-	return src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
-
-/// Returns list of coordinates to start and stop welding animation.
-/obj/machinery/atmospherics/pipe/simple/proc/get_welding_positions()
-	var/start
-	var/stop
-	var/axis_start_value
-	var/axis_stop_value
-	if(icon_state=="broken")
-		axis_start_value = 6
-		axis_stop_value = 6
-	else
-		axis_start_value = 12
-		axis_stop_value = 12
-
-	switch(dir)
-		if(SOUTH, NORTH)
-			start = list(0, axis_start_value)
-			stop = list(0, -axis_stop_value)
-		if(EAST, WEST)
-			start = list(-axis_start_value, 0)
-			stop = list(axis_stop_value, 0)
-		if(SOUTHEAST)
-			start = list(0, -axis_start_value)
-			stop = list(axis_start_value, 0)
-		if(SOUTHWEST)
-			start = list(0, -axis_start_value)
-			stop = list(-axis_start_value, 0)
-		if(NORTHEAST)
-			start = list(0, axis_start_value)
-			stop = list(axis_start_value, 0)
-		if(NORTHWEST)
-			start = list(0, axis_start_value)
-			stop = list(-axis_start_value, 0)
-
-	if(rand(50))
-		. = list(start, stop)
-	else
-		. = list(stop, start)
-
-/// Repairs the pipe back to orginal state.
-/obj/machinery/atmospherics/pipe/simple/proc/repair_pipe()
-	src.ruptured = 0
-	src.disconnected = FALSE
-	desc = initial(desc)
-	UpdateIcon()
-	ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
-
-/// Rebuilds pipe from completely destroyed state to disconnected state.
-/obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe(mob/M, obj/item/rods/R)
-	if(istype(R) && istype(M))
-		R.change_stack_amount(-1)
-		src.setMaterial(R.material)
-		src.destroyed = FALSE
-		src.disconnected = TRUE
-		// create valid edges back to us and rebuild from here out to merge pipeline(s)
-		src.initialize()
-		src?.node1.initialize()
-		src?.node2.initialize()
-		src.parent.build_pipeline(src)
-		src.icon_state = "disco"
-		src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
-
-/// Ruptures the pipe, with varying levels of leakage.
-/obj/machinery/atmospherics/pipe/simple/proc/rupture(pressure, destroy=FALSE)
-	var/new_rupture
-	if (src.destroyed || destroy)
-		ruptured = 10
-		src.destroyed = TRUE
-		src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
-		parent?.mingle_with_turf(loc, volume)
-		node1?.disconnect(src)
-		node2?.disconnect(src)
-		src.node1 = null
-		src.node2 = null
-		UpdateIcon()
-		return
-
-	if(pressure && src.fatigue_pressure)
-		var/iterations = clamp(log(pressure/effective_fatigue_pressure())/log(2),0,20)
-		for(var/i = iterations; i>0 && i>=ruptured; i--)
-			if(prob(5/i))
-				new_rupture = i + 1
-				break
-	if(new_rupture > src.ruptured)
-		ON_COOLDOWN(parent, "pipeline_rupture_protection", 16 SECONDS + rand(4 SECONDS, 24 SECONDS))
-	ruptured = max(src.ruptured, new_rupture, 1)
-	src.desc = "A one meter section of ruptured pipe still looks salvageable through some careful welding."
-	UpdateIcon()
-
-/// Moves gas from the high pressure mixture to the low pressure mixture, usually pipe to tile.
-/obj/machinery/atmospherics/pipe/simple/proc/leak_gas()
-	var/datum/gas_mixture/gas = return_air()
-	var/datum/gas_mixture/environment = loc.return_air()
-
-	var/datum/gas_mixture/hi_side = gas
-	var/datum/gas_mixture/lo_side = environment
-
-	if(destroyed)
-		parent.mingle_with_turf(loc, volume) // maintain network for simplicity but replicate behavior of it being disconnected
-		return
-
-	// vacuum
-	if( MIXTURE_PRESSURE(lo_side) > MIXTURE_PRESSURE(hi_side) )
-		hi_side = environment
-		lo_side = gas
-
-	var/pressure = lerp(100*(src.ruptured**2), MIXTURE_PRESSURE(hi_side)*(ruptured/150), 0.1 )
-	pressure = min(pressure,  MIXTURE_PRESSURE(hi_side) - MIXTURE_PRESSURE(lo_side))
-
-	if(pressure > 0 && hi_side.temperature )
-		var/transfer_moles = pressure*lo_side.volume/(hi_side.temperature * R_IDEAL_GAS_EQUATION)
-		var/datum/gas_mixture/removed = hi_side.remove(transfer_moles)
-		if(removed) lo_side==environment ? loc.assume_air(removed) : lo_side.merge(removed)
-		UpdateIcon()
 
 /obj/machinery/atmospherics/pipe/simple/New()
 	..()
@@ -226,31 +316,36 @@
 		else
 			initialize_directions = dir
 
-	initial_icon_state = icon_state
-
 /obj/machinery/atmospherics/pipe/simple/hide(var/i)
 	if(level == UNDERFLOOR && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 	UpdateIcon()
 
-/obj/machinery/atmospherics/pipe/simple/process()
-	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
+/obj/machinery/atmospherics/pipe/process()
+	if (!src.parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 		..()
 	if(!parent?.air || !loc)
 		return
-
-	if(TOTAL_MOLES(parent.air) < ATMOS_EPSILON )
-		if(ruptured) leak_gas()
+	if(TOTAL_MOLES(src.parent.air) < ATMOS_EPSILON)
+		if(src.ruptured)
+			leak_gas()
 		return
+	if(src.ruptured)
+		leak_gas()
+		return
+	if (src.can_rupture)
+		var/datum/gas_mixture/gas = src.return_air()
+		var/pressure = MIXTURE_PRESSURE(gas)
+		if(pressure > src.effective_fatigue_pressure())
+			src.check_pressure(pressure)
 
+/obj/machinery/atmospherics/pipe/simple/process()
+	..()
 	if(!node1)
 		parent.mingle_with_turf(loc, volume)
 
 	else if(!node2)
 		parent.mingle_with_turf(loc, volume)
-
-	else if(ruptured)
-		leak_gas()
 
 	else if(parent)
 		var/environment_temperature = 0
@@ -270,143 +365,34 @@
 		if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
 			parent.temperature_interact(loc, volume, src.thermal_conductivity)
 
-	var/datum/gas_mixture/gas = return_air()
-	var/pressure = MIXTURE_PRESSURE(gas)
-	if(pressure > src.effective_fatigue_pressure())
-		src.check_pressure(pressure)
-
-
-
-/obj/machinery/atmospherics/pipe/simple/check_pressure(pressure)
-	if (!loc)
-		return
-
-	var/datum/gas_mixture/environment = loc.return_air()
-
-	var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
-
-	if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > src.effective_fatigue_pressure())
-		var/rupture_prob = (pressure_difference - src.effective_fatigue_pressure())/50000
-		if(prob(rupture_prob))
-			rupture(pressure_difference)
-
 /obj/machinery/atmospherics/pipe/simple/ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 	switch(severity)
 		if(1)
-			if(prob(5))
-				qdel(src)
-			else
-				rupture(destroy=TRUE)
+			qdel(src)
 		if(2)
-			if(prob(10))
-				rupture(destroy=TRUE)
+			if(prob(30))
+				qdel(src)
 			else
 				rupture()
 		if(3)
 			if (prob(50))
 				rupture()
 
-#define SHEETS_TO_REINFORCE 5
-/obj/machinery/atmospherics/pipe/simple/attackby(var/obj/item/W, var/mob/user)
-	if(isweldingtool(W))
-		if(!ruptured)
-			boutput(user, SPAN_ALERT("That isn't damaged!"))
-			return
-		else if(destroyed)
-			boutput(user, SPAN_ALERT("This needs more than just a welder. We need to make a new pipe!"))
-			return
-
-		if(!W:try_weld(user, 0.8, noisy=2))
-			return
-
-		boutput(user, "You start to repair the [src.name].")
-
-		var/positions = src.get_welding_positions()
-		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
-				list(user), SPAN_NOTICE("[user] repairs the [src.name]."), positions[1], positions[2]),user)
-
-	else if(destroyed && istype(W, /obj/item/rods))
-		var/duration = 15 SECONDS
-		if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
-			duration = round(duration / 2)
-		var/obj/item/rods/S = W
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
-		list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
-		actions.start(action_bar, user)
-
-	else if (istype(W, /obj/item/sheet))
-		if (actions.hasAction(user, /datum/action/bar/private/welding))
-			return
-		if (src.destroyed || src.ruptured)
-			boutput(user, SPAN_ALERT("You should repair [src] first."))
-			return
-		if (!(W.material?.getMaterialFlags() & MATERIAL_METAL))
-			boutput(user, SPAN_ALERT("You can't weld that!"))
-			return
-		if (W.material?.isSameMaterial(src.material))
-			boutput(user, SPAN_ALERT("[src] is already reinforced with [src.material.getName()]!"))
-			return
-		var/obj/item/weldingtool/welder = user.find_tool_in_hand(TOOL_WELDING)
-		if (W.amount < SHEETS_TO_REINFORCE)
-			boutput(user, SPAN_ALERT("You need at least 10 sheets to reinforce [src]."))
-		if (!welder || !welder.welding)
-			boutput(user, SPAN_ALERT("You need something to weld [W] to [src] with!"))
-			return
-		if (!welder.try_weld(user, 0.8, noisy=2))
-			return
-		var/positions = src.get_welding_positions()
-		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, PROC_REF(weld_sheet), \
-				list(W, user), SPAN_NOTICE("[user] welds [W] to [src]"), positions[1], positions[2]),user)
-
-/obj/machinery/atmospherics/pipe/simple/proc/weld_sheet(obj/item/sheet/sheet, mob/user)
-	if (sheet.amount < SHEETS_TO_REINFORCE)
-		return
-	src.setMaterial(sheet.material)
-	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
-	if (!("reinforced" in src.name_prefixes))
-		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
-	src.UpdateName()
-	src.UpdateIcon()
+/obj/machinery/atmospherics/pipe/simple/weld_sheet(obj/item/sheet/sheet, mob/user)
+	. = ..()
 	src.node1?.UpdateIcon()
 	src.node2?.UpdateIcon()
-
-#undef SHEETS_TO_REINFORCE
 
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)
 	node2?.disconnect(src)
-	parent = null
 	..()
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
-	. = list(node1, node2)
-	if(destroyed)
-		. = list(null, null)
+	return list(node1, node2)
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
-	if(destroyed)
-		icon_state = "destroyed"
-		src.ClearSpecificOverlays("1", "2", "4", "8")
-		return
-
-	if(disconnected)
-		return
-	if(ruptured)
-		icon_state = "broken"
-
-		var/image/leak
-		var/datum/gas_mixture/gas = return_air()
-		var/datum/gas_mixture/environment = loc.return_air()
-
-		if( (MIXTURE_PRESSURE(gas) - (2 * MIXTURE_PRESSURE(environment))) > 0 )
-			leak = SafeGetOverlayImage("leak", src.icon, "leak")
-			leak.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
-			leak.alpha = clamp(ruptured * 10, 40, 200)
-		UpdateOverlays(leak,"leak")
-	else
-		icon_state = "normal"
-		ClearSpecificOverlays("leak")
-	alpha = invisibility ? 128 : 255
+	. = ..()
 	switch(src.dir)
 		if(NORTH, SOUTH, EAST, WEST)
 			SET_SIMPLE_PIPE_UNDERLAY(src.node1, turn(src.dir, 180))
@@ -616,9 +602,11 @@
 	icon_state = "manifold"
 #endif
 	name = "pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 	level = UNDERFLOOR
 	volume = 105
+	can_rupture = TRUE
+	orthogonal_welding = TRUE
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
@@ -633,9 +621,15 @@
 /obj/machinery/atmospherics/pipe/manifold/hide(var/intact)
 	var/hide_pipe = CHECKHIDEPIPE(src)
 	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
-	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 90), "short", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node2, turn(src.dir, 180), "short", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node3, turn(src.dir, -90), "short", issimplepipe(src.node3) ?  src.node3.color : null, hide_pipe)
+	update_pipe_underlay(src.node1, turn(src.dir, 90),  "short", hide_pipe)
+	update_pipe_underlay(src.node2, turn(src.dir, 180), "short", hide_pipe)
+	update_pipe_underlay(src.node3, turn(src.dir, -90), "short", hide_pipe)
+
+/obj/machinery/atmospherics/pipe/manifold/weld_sheet(obj/item/sheet/sheet, mob/user)
+	. = ..()
+	src.node1?.UpdateIcon()
+	src.node2?.UpdateIcon()
+	src.node3?.UpdateIcon()
 
 /obj/machinery/atmospherics/pipe/manifold/pipeline_expansion()
 	return list(node1, node2, node3)
@@ -680,6 +674,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
+	. = ..()
 	var/turf/T = get_turf(src)
 	src.hide(T.intact)
 	alpha = invisibility ? 128 : 255
@@ -728,6 +723,7 @@
 	desc = "A manifold composed of regular pipes"
 	level = UNDERFLOOR
 	volume = 140
+	can_rupture = TRUE
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
@@ -743,10 +739,10 @@
 /obj/machinery/atmospherics/pipe/quadway/hide(var/intact)
 	var/hide_pipe = CHECKHIDEPIPE(src)
 	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
-	SET_PIPE_UNDERLAY(src.node1, SOUTH, "short", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node2, WEST, "short", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node3, NORTH, "short", issimplepipe(src.node3) ?  src.node3.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node4, EAST, "short", issimplepipe(src.node4) ?  src.node4.color : null, hide_pipe)
+	update_pipe_underlay(src.node1, SOUTH,  "short", hide_pipe)
+	update_pipe_underlay(src.node2, WEST,   "short", hide_pipe)
+	update_pipe_underlay(src.node3, NORTH,  "short", hide_pipe)
+	update_pipe_underlay(src.node4, EAST,   "short", hide_pipe)
 
 /obj/machinery/atmospherics/pipe/quadway/pipeline_expansion()
 	return list(src.node1, src.node2, src.node3, src.node4)
@@ -795,6 +791,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/quadway/update_icon()
+	. = ..()
 	var/turf/T = get_turf(src)
 	src.hide(T.intact)
 

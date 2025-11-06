@@ -1,0 +1,3 @@
+/obj/item/food/snacks/steak_h : /obj/item/food/snacks/steak/human {@OLD}
+/obj/item/food/snacks/steak_m : /obj/item/food/snacks/steak/monkey {@OLD}
+/obj/item/food/snacks/steak_s : /obj/item/food/snacks/steak/synth {@OLD}

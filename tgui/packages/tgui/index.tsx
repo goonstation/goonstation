@@ -6,21 +6,9 @@
 
 // Themes
 import './styles/main.scss';
-import './styles/themes/genetek.scss';
-import './styles/themes/genetek-disabled.scss';
-// import './styles/themes/hackerman.scss';
-// import './styles/themes/malfunction.scss';
-// import './styles/themes/neutral.scss';
-import './styles/themes/ntos.scss';
-import './styles/themes/paper.scss';
-import './styles/themes/retro-dark.scss';
-import './styles/themes/syndicate.scss';
-import './styles/themes/flock.scss';
-import './styles/theme-modes/nanotrasen-light.scss';
-import './styles/theme-modes/ntos-light.scss';
 
 import { perf } from 'common/perf';
-import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { setGlobalStore } from './backend';
 import { setupGlobalEvents } from './events';

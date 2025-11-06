@@ -9,6 +9,11 @@
 /obj/storage/crate/wooden,
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
+"aU" = (
+/obj/table/auto,
+/obj/machinery/wrestlingbell,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
 "aY" = (
 /obj/fakeobject/tallsmes,
 /turf/unsimulated/floor{
@@ -123,6 +128,10 @@
 "fD" = (
 /turf/simulated/wall/auto/shuttle,
 /area/shuttle/escape/centcom)
+"fQ" = (
+/obj/railing/boxing,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
 "fX" = (
 /turf/unsimulated/floor/arrival{
 	dir = 4
@@ -148,6 +157,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"hj" = (
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "hv" = (
@@ -181,6 +194,12 @@
 	layer = 2.9
 	},
 /turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"ie" = (
+/obj/railing/boxing{
+	dir = 8
+	},
+/turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
 "ir" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -371,12 +390,6 @@
 	},
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
-"oQ" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "pd" = (
 /obj/window/crystal/south,
 /turf/simulated/floor/airless/black/grime,
@@ -427,13 +440,6 @@
 "qq" = (
 /obj/machinery/vending/cola/red,
 /turf/unsimulated/floor/wood/three,
-/area/shuttle/escape/centcom)
-"qI" = (
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/stairs{
-	dir = 1;
-	icon_state = "stairs_middle"
-	},
 /area/shuttle/escape/centcom)
 "qO" = (
 /turf/unsimulated/wall/generic{
@@ -613,10 +619,6 @@
 	},
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
-"wq" = (
-/obj/loudspeaker,
-/turf/unsimulated/floor/wood/three,
-/area/shuttle/escape/centcom)
 "wI" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
@@ -670,11 +672,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
-"ye" = (
-/obj/table/auto,
-/obj/item/wrestlingbell,
-/turf/unsimulated/floor/white,
-/area/shuttle/escape/centcom)
 "yK" = (
 /obj/fitness/weightlifter,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -682,6 +679,13 @@
 	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"yN" = (
+/obj/railing/boxing,
+/turf/unsimulated/floor/stairs{
+	dir = 1;
+	icon_state = "stairs_middle"
+	},
 /area/shuttle/escape/centcom)
 "zm" = (
 /turf/unsimulated/floor/specialroom/gym,
@@ -742,14 +746,6 @@
 "AA" = (
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"AG" = (
-/obj/machinery/light/small/floor,
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/stairs{
-	dir = 1;
-	icon_state = "Stairs_wide"
-	},
-/area/shuttle/escape/centcom)
 "AM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -802,12 +798,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"BQ" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "CB" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -887,6 +877,14 @@
 	dir = 6
 	},
 /area/centcom)
+"Fc" = (
+/obj/machinery/light/small/floor,
+/obj/railing/boxing,
+/turf/unsimulated/floor/stairs{
+	dir = 1;
+	icon_state = "Stairs2_wide"
+	},
+/area/shuttle/escape/centcom)
 "Fl" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -1171,6 +1169,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/airless/black/grime,
 /area/shuttle/escape/centcom)
+"Ny" = (
+/obj/machinery/light/small/floor,
+/obj/railing/boxing,
+/turf/unsimulated/floor/stairs{
+	dir = 1;
+	icon_state = "Stairs_wide"
+	},
+/area/shuttle/escape/centcom)
 "NG" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
@@ -1263,14 +1269,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"Ra" = (
-/obj/machinery/light/small/floor,
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/stairs{
-	dir = 1;
-	icon_state = "Stairs2_wide"
-	},
-/area/shuttle/escape/centcom)
 "Rd" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -1313,6 +1311,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"RZ" = (
+/obj/railing/boxing{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
 "Sa" = (
 /obj/stool/chair/blue,
 /turf/unsimulated/floor{
@@ -1461,10 +1465,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"Xn" = (
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "Xs" = (
 /obj/fitness/stacklifter,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -1747,7 +1747,7 @@ vQ
 vQ
 qb
 vQ
-wq
+hj
 Oc
 QB
 xF
@@ -1773,7 +1773,7 @@ wT
 gy
 jA
 jA
-oQ
+ie
 jA
 mu
 Oc
@@ -1803,7 +1803,7 @@ eb
 zm
 zm
 eb
-Xn
+fQ
 Tl
 Yu
 Yu
@@ -1826,7 +1826,7 @@ ve
 ve
 Bu
 wT
-Ra
+Fc
 zm
 zm
 zm
@@ -1854,7 +1854,7 @@ xj
 Jb
 wT
 wT
-qI
+yN
 zm
 eb
 eb
@@ -1882,14 +1882,14 @@ op
 Xs
 wT
 wT
-qI
+yN
 zm
 eb
 eb
 zm
 sz
 hY
-ye
+aU
 wI
 bM
 xT
@@ -1910,7 +1910,7 @@ Rh
 sx
 wT
 wT
-AG
+Ny
 zm
 zm
 zm
@@ -1943,7 +1943,7 @@ eb
 zm
 zm
 eb
-Xn
+fQ
 Tl
 Yu
 Yu
@@ -1969,7 +1969,7 @@ wT
 ns
 Fv
 Fv
-BQ
+RZ
 Fv
 IS
 Oc
@@ -1999,7 +1999,7 @@ hR
 hR
 oh
 hR
-wq
+hj
 Oc
 km
 kq

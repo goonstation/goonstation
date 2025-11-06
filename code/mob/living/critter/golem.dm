@@ -1,6 +1,5 @@
 /mob/living/critter/golem
 	name = "golem"
-	real_name = "golem"
 	desc = "An elemental being, crafted by local artisans using traditional techniques."
 	icon = 'icons/mob/critter/humanoid/golem.dmi'
 	icon_state = "golem"
@@ -36,6 +35,7 @@
 				src.reagents.add_reagent(src.reagent_id, 10)
 			src.color = src.reagents?.get_master_color()
 			src.name = "[capitalize(src.reagents?.get_master_reagent_name())] Golem"
+			src.real_name = src.name
 		var/image/eyes = SafeGetOverlayImage("golem_eyes", 'icons/mob/critter/humanoid/golem.dmi', "golem-eyes", MOB_OVERLAY_BASE)
 		eyes.plane = PLANE_SELFILLUM
 		eyes.appearance_flags |= RESET_COLOR

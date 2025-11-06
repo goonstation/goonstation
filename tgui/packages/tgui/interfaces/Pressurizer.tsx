@@ -126,7 +126,6 @@ export const Pressurizer = () => {
           pressure={pressure}
           maxPressure={maxPressure}
         >
-          <Divider />
           <LabeledList>
             <LabeledList.Item label="Emergency Blast Release">
               <Button

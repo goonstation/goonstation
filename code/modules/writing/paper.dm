@@ -96,7 +96,7 @@
 	else if (menuchoice == "Read")
 		src.examine(user)
 	else
-		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball", "Cigarette packet"))
+		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet"))
 		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
@@ -115,11 +115,16 @@
 			if (fold == "Paper plane")
 				user.show_text("You fold the paper into a plane! Neat.", "blue")
 				F = new /obj/item/paper/folded/plane(user)
+
+			else if (fold == "Paper crane")
+				user.show_text("You fold the paper into a crane! Neat.", "blue")
+				F = new /obj/item/paper/folded/crane(user)
 			else
 				user.show_text("You crumple the paper into a ball! Neat.", "blue")
 				F = new /obj/item/paper/folded/ball(user)
 			F.info = src.info
 			F.old_desc = src.desc
+			F.icon_old = src.icon
 			F.old_icon_state = src.icon_state
 			F.stamps = src.stamps
 			F.setMaterial(src.material)
@@ -284,7 +289,7 @@
 		var/obj/item/pen/PEN = O
 		. += list(
 			"penFont" = PEN.font,
-			"penColor" = PEN.color,
+			"penColor" = PEN.font_color, // PEN.color uses the color of the object, this uses the font color set by object
 			"editMode" = PAPER_MODE_WRITING,
 			"isCrayon" = FALSE,
 			"stampClass" = "FAKE",
@@ -314,9 +319,6 @@
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
 		if(src.sealed)
 			boutput(user, SPAN_ALERT("You can't write on [src]."))
-			return
-		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
-			boutput(user, SPAN_ALERT("This sheet of paper is full!"))
 			return
 		ui_interact(user)
 		return
@@ -603,10 +605,10 @@
 	bin_type = /obj/item/sticker/postit/artifact_paper
 
 	update()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /obj/item/paper_bin/proc/update()
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	src.icon_state = "paper_bin[(src.amount_left || locate(bin_type, src)) ? "1" : null]"
 	return
 
@@ -621,13 +623,16 @@
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
-		if (src.amount_left >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
-			src.amount_left--
-			var/obj/item/P = new bin_type(src)
-			user.put_in_hand_or_drop(P)
-			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
-				var/obj/item/paper/PA = P
-				PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+		if (user) //Wire: Fix for Cannot read null.loc (user)
+			if (src.amount_left >= 1)
+				src.amount_left--
+				var/obj/item/P = new bin_type(src)
+				user.put_in_hand_or_drop(P)
+				if (rand(1,100) == 13 && istype(P, /obj/item/paper))
+					var/obj/item/paper/PA = P
+					PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+			else
+				user.put_in_hand_or_drop(src)
 	src.update()
 
 /obj/item/paper_bin/attack_self(mob/user as mob)
@@ -872,6 +877,8 @@
 			src.UpdateOverlays(stamp_overlay, "stamps_[i % PAPER_MAX_STAMPS_OVERLAYS]")
 			i++
 		if(src.old_icon_state)
+			if(src.icon_old)
+				src.icon = icon_old
 			src.icon_state = src.old_icon_state
 		else
 			if(src.info)
@@ -884,7 +891,7 @@
 
 /obj/item/paper/folded/examine()
 	if (src.sealed)
-		return list(desc)
+		return list("This is \an [src.name].", desc)
 	else
 		return ..()
 
@@ -894,6 +901,12 @@
 	icon_state = "paperplane"
 	throw_speed = 1
 	throw_spin = 0
+
+/obj/item/paper/folded/crane
+	name = "paper crane"
+	desc = "If you fold a lot of these do you get a wish granted?"
+	icon_state = "papercrane"
+	throw_speed = 1
 
 /obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
 	if(src.throwing && src.sealed)

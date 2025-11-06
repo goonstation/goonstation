@@ -8,6 +8,8 @@
 	var/const/pop_divisor = 6
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	///IMPORTANT: we need to hold this reference or the allocated region *will* be GCed and overwritten by other areas
+	var/datum/allocated_region/pirate_base
 
 	announce()
 		boutput(world, "<B>The current game mode is - Pirates!</B>")
@@ -33,7 +35,7 @@
 			return 0
 
 		//load in the ship dmm
-		get_singleton(/datum/mapPrefab/allocated/pirate_ship).load()
+		src.pirate_base = get_singleton(/datum/mapPrefab/allocated/pirate_ship).load()
 
 		// choose the antags
 		var/list/chosen_antags = antagWeighter.choose(pool = possible_pirates, role = ROLE_PIRATE, amount = target_antag_count, recordChosen = 1)

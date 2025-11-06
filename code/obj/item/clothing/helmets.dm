@@ -19,12 +19,11 @@
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
 	icon_state = "space"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	see_face = FALSE
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
-	seal_hair = 1
 
 	setupProperties()
 		..()
@@ -46,7 +45,7 @@
 		icon_state = "space-fish"
 		desc = "You're about 90% sure this isn't just a regular fishbowl."
 		item_state = "s_helmet"
-		seal_hair = 0
+		c_flags = parent_type::c_flags & ~COVERSHAIR
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
@@ -104,13 +103,13 @@
 		name = "commander's space helmet"
 		icon_state = "space-captain-blue"
 		item_state = "space-captain-blue"
-		desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander."
+		desc = "Helps protect against vacuum. Comes in a fashionable blue befitting a commander."
 
 	red
 		name = "commander's space helmet"
 		icon_state = "space-captain-red"
 		item_state = "space-captain-red"
-		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
+		desc = "Helps protect against vacuum. Comes in a fashionable red befitting a commander."
 
 /obj/item/clothing/head/helmet/space/neon
 	name = "neon space helmet"
@@ -181,7 +180,7 @@
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
 	name = "diving helmet"
-	desc = "Comes equipped with a builtin flashlight."
+	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "diving0"
 	acid_survival_time = 8 MINUTES
 
@@ -271,12 +270,10 @@
 /obj/item/clothing/head/helmet/space/light // Similar stats to normal space helmets, but way less armor or slowdown
 	name = "light space helmet"
 	desc = "A lightweight space helmet."
-	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	icon_state = "spacelight-civ"
 	see_face = FALSE
 	item_state = "s_helmet"
 	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
-	seal_hair = 1
 	acid_survival_time = 5 MINUTES
 
 	setupProperties()
@@ -297,6 +294,18 @@
 		icon_state = "spacelight-e"
 		see_face = TRUE
 
+	chiefengineer
+		name = "chief engineer's light space helmet"
+		desc = "A lightweight engineering space helmet that has been modified to protect the wearer from environmental hazards."
+		icon_state = "spacelight-ce"
+		see_face = TRUE
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 15)
+			setProperty("radprot", 15)
+			setProperty("meleeprot_head", 3)
+
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
 	icon_state = "syndicate"
@@ -309,57 +318,20 @@
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
-		setProperty("chemprot",30)
-		setProperty("heatprot", 15)
-
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
-
-	setupProperties()
-		..()
-		setProperty("space_movespeed", 0)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
+		setProperty("chemprot",30)
+		setProperty("heatprot", 15)
 	old
 		icon_state = "syndicate-OLD"
 		desc = "A relic of the past."
 		item_state = null
-
-	commissar_cap
-		name = "commander's cap"
-		icon_state = "syndie_commander"
-		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
-		seal_hair = 0
-		see_face = TRUE
-		team_num = TEAM_SYNDICATE
-
-		setupProperties()
-			..()
-			setProperty("exploprot", 10)
-
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The cap <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
 
 	specialist
 		name = "specialist combat helmet"
@@ -372,14 +344,17 @@
 			setProperty("exploprot", 10)
 			setProperty("radprot", 50)
 
+		commissar_cap
+			name = "commander's cap"
+			icon_state = "syndie_commander"
+			desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
+			c_flags = parent_type::c_flags & ~COVERSHAIR
+
 		infiltrator
-			name = "specialist combat helmet"
-			desc = "A modified combat helmet for syndicate operative specialists."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
 		firebrand
-			name = "specialist combat helmet"
 			icon_state = "syndie_specialist-firebrand"
 			item_state = "syndie_specialist-firebrand"
 
@@ -389,10 +364,8 @@
 
 		engineer
 			name = "specialist welding helmet"
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
+			desc = "A modified combat helmet for syndicate operative specialists. Comes with advanced visor showing meson vision and protecting eyes."
 			c_flags = SPACEWEAR | COVERSEYES
-			see_face = FALSE
 			protective_temperature = 1300
 			abilities = list(/obj/ability_button/nukie_meson_toggle)
 			var/on = 0
@@ -426,8 +399,7 @@
 
 		medic
 			name = "specialist health monitor"
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
+			desc = "A modified combat helmet for syndicate operative specialists. Comes with advanced visor showing health of friends and foes."
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 
 			setupProperties()
@@ -501,18 +473,6 @@
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
-	team_num = TEAM_NANOTRASEN
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
 
 	setupProperties()
 		..()
@@ -670,8 +630,7 @@ obj/item/clothing/head/helmet/hardhat/security/hos
 	name = "elite helmet"
 	icon_state = "helmet-sec-elite"
 	desc = "Better protection from getting your head bashed in."
-	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	seal_hair = 1
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	item_state = "helmet-sec-elite"
 
 	setupProperties()
@@ -697,7 +656,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
-	var/camera_network = "public"
+	var/camera_network = CAMERA_NETWORK_PUBLIC
 	var/static/camera_counter = 0
 
 	New()
@@ -719,7 +678,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "telescience camera helmet"
 	desc = "A helmet with a built in camera. It has \"Telescience\" written on it in marker."
 	camera_tag = "Telescience Helmet Cam"
-	camera_network = "telesci"
+	camera_network = CAMERA_NETWORK_TELESCI
 
 /obj/item/clothing/head/helmet/camera/security
 	name = "security camera helmet"
@@ -1050,8 +1009,12 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 			return
 		src.remove_visor(user)
 
+TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
+	mats = list("metal_superdense" = 5,
+				"conductive_high" = 5,
+				"crystal_dense" = 5)
 /obj/item/clothing/head/helmet/space/industrial/syndicate
-	name = "\improper Syndicate Command Helmet"
+	name = "\improper Syndicate command helmet"
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
@@ -1062,6 +1025,14 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		..()
 		setProperty("meleeprot_head", 7)
 		setProperty("space_movespeed", 0)
+
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	mats = list("metal_superdense" = 20,
@@ -1139,7 +1110,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	item_state = "buckethat"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	block_vision = 1
-	seal_hair = 1
+	c_flags = parent_type::c_flags | COVERSHAIR
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
@@ -1183,10 +1154,9 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 /obj/item/clothing/head/helmet/firefighter
 	name = "firefighter helm"
 	desc = "For fighting fires."
-	c_flags = COVERSEYES | BLOCKCHOKE
+	c_flags = COVERSEYES | BLOCKCHOKE | COVERSHAIR
 	icon_state = "firefighter"
 	item_state = "firefighter"
-	seal_hair = 1
 
 	setupProperties()
 		..()
@@ -1198,7 +1168,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 
 /obj/item/clothing/head/helmet/captain
 	name = "captain's helmet"
-	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriqueing shade of green befitting of a captain"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriguing shade of green befitting of a captain"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"

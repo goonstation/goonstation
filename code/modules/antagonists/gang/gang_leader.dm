@@ -3,6 +3,7 @@
 	display_name = "gang leader"
 	antagonist_icon = "gang_head"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/gang
+	wiki_link = "https://wiki.ss13.co/Gang"
 
 	/// The gang that this gang leader belongs to.
 	var/datum/gang/gang
@@ -115,11 +116,8 @@
 
 	announce()
 		. = ..()
-		var/datum/game_mode/gang/gamemode = ticker.mode
 		src.owner.current.show_antag_popup(ROLE_GANG_LEADER)
 		boutput(src.owner.current, SPAN_ALERT("Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel."))
-		if(!gamemode.random_gangs)
-			boutput(src.owner.current, SPAN_ALERT("You must recruit people to your gang and compete for wealth and territory!"))
 		boutput(src.owner.current, SPAN_ALERT("To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker is where your territory starts. You can only do this once!"))
 		boutput(src.owner.current, SPAN_ALERT("Once your locker is spawned, grab your gear and spraycans, then expand your territory!"))
 		boutput(src.owner.current, SPAN_ALERT("------"))
@@ -131,21 +129,18 @@
 		boutput(src.owner.current, SPAN_ALERT("------"))
 		boutput(src.owner.current, SPAN_ALERT("You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!"))
 
-
-		if(!gamemode.random_gangs)
-			boutput(src.owner.current, SPAN_ALERT("Use recruitment flyers obtained from the locker to invite new members, up to a limit of [src.gang.current_max_gang_members]."))
 		boutput(src.owner.current, SPAN_ALERT("<b>Keep in mind: As the gang leader, you have a special pool of 'Street Cred' to hire new gang members & buy revival syringes at your locker!</b>"))
-		if(gamemode.random_gangs)
-			var/list/member_strings = list()
-			for(var/datum/mind/member in src.gang.members)
-				if(!member.current || member == src.owner)
-					continue
-				var/job = member.current?.job
-				member_strings += "[member.current.real_name] as [job]"
-			if(length(member_strings))
-				boutput(src.owner.current, SPAN_ALERT("Your gang members are:<br>\t[jointext(member_strings, "<br>\t")]"))
-			else
-				boutput(src.owner.current, SPAN_ALERT("You have no gang members, ouch!"))
+
+		var/list/member_strings = list()
+		for(var/datum/mind/member in src.gang.members)
+			if(!member.current || member == src.owner)
+				continue
+			var/job = member.current?.job
+			member_strings += "[member.current.real_name] as [job]"
+		if(length(member_strings))
+			boutput(src.owner.current, SPAN_ALERT("Your gang members are:<br>\t[jointext(member_strings, "<br>\t")]"))
+		else
+			boutput(src.owner.current, SPAN_ALERT("You have no gang members, ouch!"))
 
 	get_statistics()
 		var/list/purchased_items = list()

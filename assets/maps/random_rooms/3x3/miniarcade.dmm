@@ -15,10 +15,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/dmm_suite/clear_area)
 "X" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor/carpet/arcade,
 /area/dmm_suite/clear_area)
 

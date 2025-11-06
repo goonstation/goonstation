@@ -10,11 +10,30 @@
 	var/appearanceString = "minisub_treads"
 	var/movement_controller_type = "treads"
 
+	can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		if(istype(vehicle, /obj/machinery/vehicle/tank))
+			return TRUE
+		return FALSE
+
+	get_install_slot()
+		return POD_PART_LOCOMOTION
+
 	activate()
 		..()
 		if (src.active == 1 && ship)
 			var/path = text2path("/datum/movement_controller/tank/[movement_controller_type]")
 			ship.movement_controller = new path(ship)
+
+	ship_install()
+		..()
+		if(istype(src.ship, /obj/machinery/vehicle/tank))
+			var/obj/machinery/vehicle/tank/tank = src.ship
+			tank.UpdateOverlays(image('icons/obj/machines/8dirvehicles.dmi', "[tank.body_type]_[src.appearanceString]"), "locomotion")
+		src.activate() // Locomotion should always be active
+
+	ship_uninstall()
+		. = ..()
+		src.ship.UpdateOverlays(null, "locomotion")
 
 /obj/item/shipcomponent/locomotion/treads
 	name = "Treads"

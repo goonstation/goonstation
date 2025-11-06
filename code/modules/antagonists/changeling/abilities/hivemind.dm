@@ -217,36 +217,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		return original_butt
 
 
-/datum/targetable/changeling/hivesay
-	name = "Speak Hivemind"
-	desc = "Speak to your own collected minds telepathically."
-	icon_state = "hivesay"
-	cooldown = 0
-	targeted = 0
-	target_anything = 0
-	human_only = 0
-	can_use_in_container = 1
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	do_logs = FALSE
-	interrupt_action_bars = FALSE
-
-	incapacitationCheck()
-		return 0
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
-		if (!message)
-			return
-		logTheThing(LOG_SAY, holder.owner, "<b>(HIVESAY):</b> [message]")
-		//logTheThing(LOG_DIARY, holder.owner, "(HIVEMIND): [message]", "hivesay")
-		.= holder.owner.say_hive(message, holder)
-
-		return 0
-
 /datum/targetable/changeling/boot
 	name = "Silence Hivemind Member"
 	desc = "Remove a member of your hivemind at no penalty."
@@ -302,7 +272,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 /datum/targetable/changeling/give_control
 	name = "Grant Control to Hivemind Member"
 	desc = "Allow one of the members of the hive mind to control our form."
-	icon_state = "hivesay"
+	icon_state = "givecontrol"
 	cooldown = 0
 	targeted = 0
 	target_anything = 0

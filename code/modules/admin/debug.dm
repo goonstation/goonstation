@@ -233,6 +233,7 @@ var/global/debug_messages = 0
 
 /datum/proccall_editor
 	var/atom/movable/target
+	/// The current key value state of the arguments we want to return
 	var/list/listargs
 	var/list/initialization_args
 	/// Boolean field describing if the tgui_color_picker was closed by the user.
@@ -242,7 +243,7 @@ var/global/debug_messages = 0
 	..()
 	src.target = target
 	initialization_args = init_args
-	src.listargs = list()
+	src.setup_listargs()
 
 /datum/proccall_editor/disposing()
 	src.target = null
@@ -272,36 +273,46 @@ var/global/debug_messages = 0
 	. = ..()
 	closed = TRUE
 
-
-/datum/proccall_editor/ui_static_data(mob/user)
-	. = ui_data()
-	.["name"] = "Variables"
+///Set up the default values stored in listargs before we open the interface
+/datum/proccall_editor/proc/setup_listargs()
+	src.listargs = list()
 	for(var/customization in initialization_args)
-		.["options"][customization[ARG_INFO_NAME]] += list(
-			"type" = customization[ARG_INFO_TYPE],
-			"description" = customization[ARG_INFO_DESC])
 		if(length(customization) >= ARG_INFO_DEFAULT)
-			.["options"][customization[ARG_INFO_NAME]]["value"] = customization[ARG_INFO_DEFAULT]
-			src.listargs[customization[ARG_INFO_NAME]] = customization[ARG_INFO_DEFAULT]
+			if (customization[ARG_INFO_TYPE] == DATA_INPUT_LIST_PROVIDED)
+				var/list/supplied_list = customization[ARG_INFO_DEFAULT]
+				src.listargs[customization[ARG_INFO_NAME]] = supplied_list[1]
+			else
+				src.listargs[customization[ARG_INFO_NAME]] = customization[ARG_INFO_DEFAULT]
 		else
-			.["options"][customization[ARG_INFO_NAME]]["value"] = null
+			src.listargs[customization[ARG_INFO_NAME]] = null
 
-/datum/proccall_editor/ui_data()
+/datum/proccall_editor/ui_data(mob/user)
 	. = list()
+	.["name"] = "Variables"
 	.["options"] = list()
 	for(var/customization in initialization_args)
 		.["options"][customization[ARG_INFO_NAME]] += list(
 			"type" = customization[ARG_INFO_TYPE],
-			"description" = customization[ARG_INFO_DESC],
-			"value" = src.listargs[customization[ARG_INFO_NAME]]
-		)
+			"description" = customization[ARG_INFO_DESC])
+
+		//show coordinates as well as actual value
 		if(customization[ARG_INFO_TYPE] == DATA_INPUT_REFPICKER)
 			var/atom/target = src.listargs[customization[ARG_INFO_NAME]]
 			if(isatom(target))
 				.["options"][customization[ARG_INFO_NAME]]["value"] = "([target.x],[target.y],[target.z]) [target]"
 			else
 				.["options"][customization[ARG_INFO_NAME]]["value"] = "null"
-
+			continue
+		//supplied lists have a different interface with a `list` var and `value` being the currently selected list item
+		//confusing!!
+		if (customization[ARG_INFO_TYPE] == DATA_INPUT_LIST_PROVIDED)
+			var/list/key_list = list()
+			for (var/key in customization[ARG_INFO_DEFAULT])
+				key_list += "[key]" //stringify here to prevent encoding issues with letting the frontend do it
+			.["options"][customization[ARG_INFO_NAME]]["list"] = key_list
+			.["options"][customization[ARG_INFO_NAME]]["value"] = src.listargs[customization[ARG_INFO_NAME]]
+		//normal variable
+		.["options"][customization[ARG_INFO_NAME]]["value"] = src.listargs[customization[ARG_INFO_NAME]]
 
 /datum/proccall_editor/ui_act(action, list/params, datum/tgui/ui)
 	USR_ADMIN_ONLY
@@ -337,7 +348,16 @@ var/global/debug_messages = 0
 					listargs[params["name"]] = target
 					. = TRUE
 					break;
-
+		if ("modify_list_value")
+			for(var/customization in initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE])
+					//go through the actual values and compare their stringified value to the one we got from the frontend
+					//so we don't end up returning a string instead of a type for instance
+					for (var/list_option in customization[ARG_INFO_DEFAULT])
+						if (strip_illegal_characters("[list_option]") == params["value"])
+							src.listargs[params["name"]] = list_option
+							return TRUE
 		if("activate")
 			closed = TRUE
 			ui.close()
@@ -345,7 +365,7 @@ var/global/debug_messages = 0
 		if("unsupported_type")
 			src.closed = TRUE
 			src.listargs = null
-			boutput(usr, "DataInput.js does not support type: [params["type"]] for name:[params["name"]]")
+			boutput(usr, "DataInput.tsx does not support type: [params["type"]] for name:[params["name"]]")
 			ui.close()
 
 /client/proc/get_proccall_arglist(list/arginfo = null, var/list/custom_options = null)
@@ -924,73 +944,6 @@ body
 		if ("Babby")
 			src.holder.level = LEVEL_BABBY
 
-var/global/debug_camera_paths = 0
-/client/proc/show_camera_paths()
-	set name = "Toggle camera connections"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (!debug_camera_paths && alert(src, "DO YOU REALLY WANT TO TURN THIS ON? THE SERVER WILL SHIT ITSELF AND DIE DO NOT DO IT ON THE LIVE SERVERS THANKS", "Confirmation", "Yes", "No") == "No")
-		return
-
-	debug_camera_paths = !(debug_camera_paths)
-	if (debug_camera_paths)
-		display_camera_paths()
-	else
-		remove_camera_paths()
-
-	message_admins("[key_name(usr)] [debug_camera_paths ? "displayed" : "hid"] all camera connections!")
-	logTheThing(LOG_ADMIN, usr, "[debug_camera_paths ? "displayed" : "hid"] all camera connections!")
-	logTheThing(LOG_DIARY, usr, "[debug_camera_paths ? "displayed" : "hid"] all camera connections!", "admin")
-
-proc/display_camera_paths()
-	remove_camera_paths() //Clean up any old ones laying around before displaying this
-	for_by_tcl(C, /obj/machinery/camera)
-		if (C.c_north)
-			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_north.loc)))
-
-		if (C.c_east)
-			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_east.loc)))
-
-		if (C.c_south)
-			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_south.loc)))
-		if (C.c_west)
-			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_west.loc)))
-
-/*
-/client/proc/remove_camera_paths_verb()
-	set name = "Hide camera connections"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	remove_camera_paths()
-*/
-
-/proc/remove_camera_paths()
-	for (var/datum/particleSystem/mechanic/M in camera_path_list)
-		M.Die()
-	camera_path_list.Cut()
-
-/client/proc/toggle_camera_network_reciprocity()
-	set name = "Toggle Camnet Reciprocity"
-	set desc = "Toggle AI camera connection behaviour, off to select each node based on the individual camera, on to force cameras to reciprocate the connection"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	camera_network_reciprocity = !camera_network_reciprocity
-	boutput(usr, SPAN_NOTICE("Toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]"))
-	logTheThing(LOG_ADMIN, usr, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
-	logTheThing(LOG_DIARY, usr, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]", "admin")
-	message_admins("[key_name(usr)] toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
-
-	//Force a complete rebuild
-	disconnect_camera_network()
-	build_camera_network()
-
-	if(length(camera_path_list) > 0) //Refresh the display
-		display_camera_paths()
 
 /* Wire note: View Runtimes supercedes this in a different way
 /client/proc/show_runtime_window()

@@ -217,6 +217,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 		if (global_instance.research_level < EFFECT_RESEARCH_DONE)
 			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
+			global_instance.onResearched()
 		..()
 
 // TIER ONE
@@ -457,14 +458,23 @@ var/datum/geneticsResearchManager/genResearch = new()
 // Things related to DNA samples //
 ///////////////////////////////////
 
-/proc/create_new_dna_sample_file(var/mob/living/L)
+/proc/create_new_dna_sample_file(var/mob/living/L, visible_name=FALSE)
 	if (!istype(L) && L.has_genetics())
 		return null
 	if (!istype(L.bioHolder))
 		return null
 
 	var/datum/computer/file/genetics_scan/scan = new /datum/computer/file/genetics_scan()
-	scan.subject_name = L.real_name
+
+	if (visible_name)
+		var/mob/living/carbon/human/H = L
+		if (H.face_visible())
+			scan.subject_name = H.real_name
+		else
+			scan.subject_name = H.name
+	else
+		scan.subject_name = L.real_name
+
 	scan.subject_uID = L.bioHolder.Uid
 	scan.subject_stability = L.bioHolder.genetic_stability
 	scan.scanned_at = TIME

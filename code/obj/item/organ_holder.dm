@@ -544,7 +544,7 @@
 			organ_list["brain"] = brain
 			SPAWN(2 SECONDS)
 				if (src.brain && src.donor)
-					src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					src.brain.name = "[src.donor.real_name]’s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 
@@ -553,12 +553,16 @@
 				src.left_eye = new /obj/item/organ/eye/synth(src.donor, src)
 			else
 				src.left_eye = new /obj/item/organ/eye/left(src.donor, src)
+			if (src.head)
+				src.head.left_eye = left_eye
 			organ_list["left_eye"] = left_eye
 		if (!src.right_eye)
 			if (prob(2) || all_synth)
 				src.right_eye = new /obj/item/organ/eye/synth(src.donor, src)
 			else
 				src.right_eye = new /obj/item/organ/eye/right(src.donor, src)
+			if (src.head)
+				src.head.right_eye = right_eye
 			organ_list["right_eye"] = right_eye
 
 		if (!src.chest)
@@ -620,9 +624,9 @@
 			var/obj/item/organ/O = organ_list[thing]
 			if(isnull(O))
 				continue
-			var/list/organ_name_parts = splittext(O.name, "'s")
+			var/list/organ_name_parts = splittext(O.name, "’s")
 			if(length(organ_name_parts) == 2)
-				O.name = "[user_name]'s [organ_name_parts[2]]"
+				O.name = "[user_name]’s [organ_name_parts[2]]"
 				O.donor_name = user_name
 
 	//input organ = string value of organ_list assoc list
@@ -741,9 +745,9 @@
 						W.set_loc(myHead)
 						myHead.wear_mask = W
 					if (isskeleton(src.donor) && myHead.head_type == HEAD_SKELETON) // must be skeleton AND have skeleton head
-						src.donor.set_eye(myHead)
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						S.set_head(myHead)
+						S.head_moved(TRUE) // update tracking
 
 				myHead.set_loc(location)
 				myHead.update_head_image()
@@ -1031,7 +1035,8 @@
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
-	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
+	/// is_transformation prevents people from being ghostized by brain swapping, their brain is TRANSFORMING, not being swapped for someone else's
+	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0, is_transformation = FALSE)
 		if (!src.donor || !I || !organ)
 			return 0
 
@@ -1104,7 +1109,7 @@
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
 							S.set_head(newHead)
-							H.set_eye(null)
+							S.head_moved() // update tracking
 					else
 						H.set_eye(null)
 
@@ -1140,18 +1145,19 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
-				src.donor.ghostize()
-				if (newBrain.owner)
-					var/mob/G
-					G = find_ghost_by_key(newBrain?.owner?.key)
-					if (G)
-						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
-							G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
-							G.ghostize()?.mind?.transfer_to(src.donor)
-						else
-							G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
-							G.mind?.transfer_to(src.donor)
+				if (!is_transformation)
+					boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
+					src.donor.ghostize()
+					if (newBrain.owner)
+						var/mob/G
+						G = find_ghost_by_key(newBrain?.owner?.key)
+						if (G)
+							if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+								G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
+								G.ghostize()?.mind?.transfer_to(src.donor)
+							else
+								G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
+								G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
@@ -1161,11 +1167,7 @@
 					var/mob/living/carbon/human/H = src.head.linked_human
 					if (H && (!isskeleton(src.donor) && H != src.donor))
 						var/datum/mutantrace/skeleton/S = H?.mutantrace
-						S.head_tracker = null
-						H.set_eye(null)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_SPEECH_BUBBLE)
+						S.set_head(null)
 
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
@@ -1421,9 +1423,11 @@
 				newtail.holder = src
 				organ_list["tail"] = newtail
 				src.donor.update_body()
+				src.donor.bioHolder.RemoveEffect(newtail.failure_ability)
 				success = 1
 
 		if (success)
+			logTheThing(LOG_COMBAT, src.donor, "received a surgical transplant of \the [I] ([I.type]) by [constructTarget(usr,"combat")]")
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
@@ -1490,6 +1494,13 @@
 					REMOVE_ATOM_PROPERTY(donor, PROP_MOB_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2
+
+	/// Unbreak all organs. Use sparingly.
+	proc/unbreak_all_organs()
+		for (var/organ_slot in src.organ_list)
+			var/obj/item/organ/O = src.organ_list[organ_slot]
+			if(istype(O))
+				O.unbreakme()
 
 /*=================================*/
 /*---------- Human Procs ----------*/
@@ -1569,7 +1580,7 @@
 			organ_list["brain"] = brain
 			SPAWN(2 SECONDS)
 				if (src.brain && src.donor)
-					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					//src.brain.name = "[src.donor.real_name]’s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 
@@ -1872,3 +1883,27 @@
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/view_camera
+	name = "View Monitor"
+	desc = "Look through a camera via your monitor eye."
+	icon_state = "eye-monitor"
+	targeted = FALSE
+	toggled = TRUE
+	is_on = FALSE
+
+	cast(atom/target)
+		if (..())
+			return 1
+		var/obj/item/organ/eye/cyber/monitor/linked_eye = linked_organ
+		if(src.is_on)
+			src.is_on = FALSE
+			linked_eye.viewer.disconnect_user(holder.owner)
+			if(linked_eye.emagged)
+				linked_eye.provides_sight = FALSE
+			return
+		else //TODO: give them a non-janky viewport instead, once they exist
+			if(linked_eye.viewer.AttackSelf(holder.owner))
+				src.is_on = TRUE
+				if(linked_eye.emagged)
+					linked_eye.provides_sight = TRUE

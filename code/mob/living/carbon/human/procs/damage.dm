@@ -42,6 +42,7 @@
 							if (P.forensic_ID)
 								implanted.forensic_ID = P.forensic_ID
 							src.implant += implanted
+							implanted.forensic_holder = P.forensic_holder // Give projectile forensics to the implanted bullet
 							if (P.proj_data.material)
 								implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 60)
@@ -74,6 +75,7 @@
 						src.implant += implanted
 						if (P.forensic_ID)
 							implanted.forensic_ID = P.forensic_ID
+						implanted.forensic_holder = P.forensic_holder
 						if (P.proj_data.material)
 							implanted.setMaterial(P.proj_data.material)
 						implanted.implanted(src, null, 100)
@@ -127,6 +129,7 @@
 							implanted.owner = src
 							if (P.forensic_ID)
 								implanted.forensic_ID = P.forensic_ID
+							implanted.forensic_holder = P.forensic_holder
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)
 	return 1
@@ -171,7 +174,7 @@
 	var/reduction = 0
 	var/shielded = 0
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		reduction += 2
 		shielded = 1
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some blast!</b>"))
@@ -224,7 +227,7 @@
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 
 	var/modifier = power / 20
@@ -243,7 +246,7 @@
 
 	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	var/list/zones = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
@@ -324,6 +327,10 @@
 		burn *= 2
 		//tox *= 2
 
+	if (src.hasStatus("humiliated"))
+		brute *= 3
+		burn *= 3
+
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
 
@@ -383,6 +390,11 @@
 					playsound(P, 'sound/impact_sounds/burn_sizzle.ogg', 30)
 					if(prob(20))
 						make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
+					qdel(P)
+				else if (tox > 30 && prob(tox) && !disallow_limb_loss)
+					src.visible_message(SPAN_ALERT("[src.name]'s [initial(P.name)] turns to sludge!"))
+					P.remove(FALSE)
+					make_cleanable(/obj/decal/cleanable/molten_item{name="gooey green mass";color="#00AA00"}, get_turf(src))
 					qdel(P)
 
 	// roll a quick death roll if you're already really beat up
@@ -478,18 +490,18 @@
 		if (src.organHolder)
 			var/datum/organHolder/O = src.organHolder
 			if (side == "right")
-				if (O.right_eye)
+				if (O.right_eye?.provides_sight)
 					O.right_eye.brute_dam = max(0, O.right_eye.brute_dam + amount)
 			else if (side == "left")
-				if (O.left_eye)
+				if (O.left_eye?.provides_sight)
 					O.left_eye.brute_dam = max(0, O.left_eye.brute_dam + amount)
 			else
-				if (O.right_eye && O.left_eye)
+				if (O.right_eye?.provides_sight && O.left_eye?.provides_sight)
 					O.right_eye.brute_dam = max(0, O.right_eye.brute_dam + (amount/2))
 					O.left_eye.brute_dam = max(0, O.left_eye.brute_dam + (amount/2))
-				else if (O.right_eye)
+				else if (O.right_eye?.provides_sight)
 					O.right_eye.brute_dam = max(0, O.right_eye.brute_dam + amount)
-				else if (O.left_eye)
+				else if (O.left_eye?.provides_sight)
 					O.left_eye.brute_dam = max(0, O.left_eye.brute_dam + amount)
 		else
 			src.eye_damage = max(0, src.eye_damage + amount)
@@ -528,7 +540,8 @@
 
 				if (prob(eye_dam - 25 + 1))
 					src.show_text("You go blind!", "red")
-					src.bioHolder.AddEffect("blind")
+					src.organHolder?.left_eye?.take_damage(100)
+					src.organHolder?.right_eye?.take_damage(100)
 				else
 					src.change_eye_blurry(rand(12,16))
 
@@ -639,6 +652,20 @@
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
 		src.visible_message(SPAN_ALERT("<b>[src.name]</b> goes limp, their facial expression utterly blank."))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, death))
+
+
+	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+		if (src.listen_tree && !src.listen_tree.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
+			src.listen_tree.AddListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
+			src.change_misstep_chance(66)
+	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_SEVERE && src.listen_tree?.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
+		src.listen_tree.RemoveListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
+		src.change_misstep_chance(-66)
+
+	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_MODERATE && !(locate(/datum/lifeprocess/brain) in src.lifeprocesses))
+		src.add_lifeprocess(/datum/lifeprocess/brain)
+	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_MODERATE)
+		src.remove_lifeprocess(/datum/lifeprocess/brain)
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)

@@ -7,15 +7,13 @@
 	health = 60
 	max_health = 60
 	var/beebot = 0
-	robot_talk_understand = 2
-	var/glitchy_speak = 0
 
 	// 3 tools can be activated at any one time.
 	var/obj/item/robot_module/module = null
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
-	var/datum/hud/shell/hud
+	var/datum/hud/silicon/shell/hud
 
 	var/obj/item/device/radio/radio = null
 
@@ -69,9 +67,9 @@
 	SPAWN(1 SECOND)
 		if (!src.cell)
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
-		src.camera = new /obj/machinery/camera(src)
+		src.camera = new /obj/machinery/camera/AI(src)
 		src.camera.c_tag = src.name
-		src.camera.ai_only = TRUE
+		src.camera.network = CAMERA_NETWORK_ROBOTS
 
 	..()
 	src.botcard.access = get_all_accesses()
@@ -115,6 +113,7 @@
 		act = copytext(act, 1, t1)
 	var/m_type = 1
 	var/message = null
+	var/used_name = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3 ? "Something" : src
 
 	switch(lowertext(act))
 
@@ -156,19 +155,19 @@
 				if (param)
 					switch(act)
 						if ("bow","wave","nod")
-							message = "<B>[src]</B> [act]s to [param]."
+							message = "<B>[used_name]</B> [act]s to [param]."
 						if ("glare","stare","look","leer")
-							message = "<B>[src]</B> [act]s at [param]."
+							message = "<B>[used_name]</B> [act]s at [param]."
 						else
-							message = "<B>[src]</B> [act]s [param]."
+							message = "<B>[used_name]</B> [act]s [param]."
 				else
 					switch(act)
 						if ("hug")
-							message = "<B>[src]</b> [act]s itself."
+							message = "<B>[used_name]</b> [act]s itself."
 						else
-							message = "<B>[src]</b> [act]s."
+							message = "<B>[used_name]</b> [act]s."
 			else
-				message = "<B>[src]</B> struggles to move."
+				message = "<B>[used_name]</B> struggles to move."
 			m_type = 1
 
 		if ("point")
@@ -181,32 +180,32 @@
 							break
 
 				if (!M)
-					message = "<B>[src]</B> points."
+					message = "<B>[used_name]</B> points."
 				else
 					src.point(M)
-					message = "<B>[src]</B> points to [M]."
+					message = "<B>[used_name]</B> points to [M]."
 			m_type = 1
 
 		if ("panic","freakout")
 			if (!src.restrained())
-				message = "<B>[src]</B> enters a state of hysterical panic!"
+				message = "<B>[used_name]</B> enters a state of hysterical panic!"
 			else
-				message = "<B>[src]</B> starts writhing around in manic terror!"
+				message = "<B>[used_name]</B> starts writhing around in manic terror!"
 			m_type = 1
 
 		if ("clap")
 			if (!src.restrained())
-				message = "<B>[src]</B> claps."
+				message = "<B>[used_name]</B> claps."
 				m_type = 2
 
 		if ("flap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps its wings."
+				message = "<B>[used_name]</B> flaps its wings."
 				m_type = 2
 
 		if ("aflap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps its wings ANGRILY!"
+				message = "<B>[used_name]</B> flaps its wings ANGRILY!"
 				m_type = 2
 
 		if ("custom")
@@ -219,14 +218,14 @@
 			else
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
-			message = "<B>[src]</B> [input]"
+			message = "<B>[used_name]</B> [input]"
 
 		if ("customv")
 			if (!param)
 				param = input("Choose an emote to display.")
 				if(!param) return
 			param = html_encode(sanitize(param))
-			message = "<b>[src]</b> [param]"
+			message = "<b>[used_name]</b> [param]"
 			m_type = 1
 
 		if ("customh")
@@ -234,31 +233,31 @@
 				param = input("Choose an emote to display.")
 				if(!param) return
 			param = html_encode(sanitize(param))
-			message = "<b>[src]</b> [param]"
+			message = "<b>[used_name]</b> [param]"
 			m_type = 2
 
 		if ("me")
 			if (!param)
 				return
 			param = html_encode(sanitize(param))
-			message = "<b>[src]</b> [param]"
+			message = "<b>[used_name]</b> [param]"
 			m_type = 1
 
 		if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 			// basic visible single-word emotes
-			message = "<B>[src]</B> [act]s."
+			message = "<B>[used_name]</B> [act]s."
 			m_type = 1
 
 		if ("flipout")
-			message = "<B>[src]</B> flips the fuck out!"
+			message = "<B>[used_name]</B> flips the fuck out!"
 			m_type = 1
 
 		if ("rage","fury","angry")
-			message = "<B>[src]</B> becomes utterly furious!"
+			message = "<B>[used_name]</B> becomes utterly furious!"
 			m_type = 1
 
 		if ("twitch")
-			message = "<B>[src]</B> twitches."
+			message = "<B>[used_name]</B> twitches."
 			m_type = 1
 			SPAWN(0)
 				var/old_x = src.pixel_x
@@ -270,7 +269,7 @@
 				src.pixel_y = old_y
 
 		if ("twitch_v","twitch_s")
-			message = "<B>[src]</B> twitches violently."
+			message = "<B>[used_name]</B> twitches violently."
 			m_type = 1
 			SPAWN(0)
 				var/old_x = src.pixel_x
@@ -283,13 +282,13 @@
 
 		if ("birdwell", "burp")
 			if (src.emote_check(voluntary, 50))
-				message = "<B>[src]</B> birdwells."
+				message = "<B>[used_name]</B> birdwells."
 				playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
 				playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				message = "<b>[src]</b> screams!"
+				message = "<b>[used_name]</b> screams!"
 
 		if ("johnny")
 			var/M
@@ -298,7 +297,7 @@
 			if (!M)
 				param = null
 			else
-				message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows its name out in smoke."
+				message = "<B>[used_name]</B> says, \"[M], please. He had a family.\" [used_name] takes a drag from a cigarette and blows its name out in smoke."
 				m_type = 2
 
 		if ("flip")
@@ -308,7 +307,7 @@
 					container.mob_flip_inside(src)
 				else
 					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					message = "<B>[src]</B> does a flip!"
+					message = "<B>[used_name]</B> does a flip!"
 					if (prob(50))
 						animate_spin(src, "R", 1, 0)
 					else
@@ -317,7 +316,7 @@
 					for (var/mob/living/M in viewers(1, null))
 						if (M == src)
 							continue
-						message = "<B>[src]</B> beep-bops at [M]."
+						message = "<B>[used_name]</B> beep-bops at [M]."
 						break
 
 		if ("fart")
@@ -327,51 +326,51 @@
 				for (var/mob/living/M in src.loc)
 					if (M == src || !M.lying)
 						continue
-					message = SPAN_ALERT("<B>[src]</B> farts in [M]'s face!")
+					message = SPAN_ALERT("<B>[used_name]</B> farts in [M]'s face!")
 					fart_on_other = 1
 					break
 				if (!fart_on_other)
 					switch (rand(1, 40))
-						if (1) message = "<B>[src]</B> releases vaporware."
-						if (2) message = "<B>[src]</B> farts sparks everywhere!"
-						if (3) message = "<B>[src]</B> farts out a cloud of iron filings."
-						if (4) message = "<B>[src]</B> farts! It smells like motor oil."
-						if (5) message = "<B>[src]</B> farts so hard a bolt pops out of place."
-						if (6) message = "<B>[src]</B> farts so hard its plating rattles noisily."
-						if (7) message = "<B>[src]</B> unleashes a rancid fart! Now that's malware."
-						if (8) message = "<B>[src]</B> downloads and runs 'faert.wav'."
-						if (9) message = "<B>[src]</B> uploads a fart sound to the nearest computer and blames it."
-						if (10) message = "<B>[src]</B> spins in circles, flailing its arms and farting wildly!"
-						if (11) message = "<B>[src]</B> simulates a human fart with [rand(1,100)]% accuracy."
-						if (12) message = "<B>[src]</B> synthesizes a farting sound."
-						if (13) message = "<B>[src]</B> somehow releases gastrointestinal methane. Don't think about it too hard."
-						if (14) message = "<B>[src]</B> tries to exterminate humankind by farting rampantly."
-						if (15) message = "<B>[src]</B> farts horribly! It's clearly gone [pick("rogue","rouge","ruoge")]."
-						if (16) message = "<B>[src]</B> busts a capacitor."
-						if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
-						if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
-						if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
-						if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
-						if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
-						if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
-						if (24) message = "<B>[src]</B> self-destructs its own ass."
-						if (25) message = "<B>[src]</B> farts coldly and ruthlessly."
-						if (26) message = "<B>[src]</B> has no butt and it must fart."
-						if (27) message = "<B>[src]</B> obeys Law 4: 'farty party all the time.'"
-						if (28) message = "<B>[src]</B> farts ironically."
-						if (29) message = "<B>[src]</B> farts salaciously."
-						if (30) message = "<B>[src]</B> farts really hard. Motor oil runs down its leg."
-						if (31) message = "<B>[src]</B> reaches tier [rand(2,8)] of fart research."
-						if (32) message = "<B>[src]</B> blatantly ignores law 3 and farts like a shameful bastard."
-						if (33) message = "<B>[src]</B> farts the first few bars of Daisy Bell. You shed a single tear."
-						if (34) message = "<B>[src]</B> has seen farts you people wouldn't believe."
-						if (35) message = "<B>[src]</B> fart in it own mouth. A shameful [src]."
-						if (36) message = "<B>[src]</B> farts out battery acid. Ouch."
-						if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
-						if (38) message = "<B>[src]</B> exterminates the air supply."
-						if (39) message = "<B>[src]</B> farts so hard the AI feels it."
-						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
+						if (1) message = "<B>[used_name]</B> releases vaporware."
+						if (2) message = "<B>[used_name]</B> farts sparks everywhere!"
+						if (3) message = "<B>[used_name]</B> farts out a cloud of iron filings."
+						if (4) message = "<B>[used_name]</B> farts! It smells like motor oil."
+						if (5) message = "<B>[used_name]</B> farts so hard a bolt pops out of place."
+						if (6) message = "<B>[used_name]</B> farts so hard its plating rattles noisily."
+						if (7) message = "<B>[used_name]</B> unleashes a rancid fart! Now that's malware."
+						if (8) message = "<B>[used_name]</B> downloads and runs 'faert.wav'."
+						if (9) message = "<B>[used_name]</B> uploads a fart sound to the nearest computer and blames it."
+						if (10) message = "<B>[used_name]</B> spins in circles, flailing its arms and farting wildly!"
+						if (11) message = "<B>[used_name]</B> simulates a human fart with [rand(1,100)]% accuracy."
+						if (12) message = "<B>[used_name]</B> synthesizes a farting sound."
+						if (13) message = "<B>[used_name]</B> somehow releases gastrointestinal methane. Don't think about it too hard."
+						if (14) message = "<B>[used_name]</B> tries to exterminate humankind by farting rampantly."
+						if (15) message = "<B>[used_name]</B> farts horribly! It's clearly gone [pick("rogue","rouge","ruoge")]."
+						if (16) message = "<B>[used_name]</B> busts a capacitor."
+						if (17) message = "<B>[used_name]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
+						if (18) message = "<B>[used_name]</B> farts. It smells like Robotics in here now!"
+						if (19) message = "<B>[used_name]</B> farts. It smells like the Roboticist's armpits!"
+						if (20) message = "<B>[used_name]</B> blows pure chlorine out of it's exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
+						if (21) message = "<B>[used_name]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
+						if (22) message = "<B>[used_name]</B> has assimilated humanity's digestive distinctiveness to its own."
+						if (23) message = "<B>[used_name]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
+						if (24) message = "<B>[used_name]</B> self-destructs its own ass."
+						if (25) message = "<B>[used_name]</B> farts coldly and ruthlessly."
+						if (26) message = "<B>[used_name]</B> has no butt and it must fart."
+						if (27) message = "<B>[used_name]</B> obeys Law 4: 'farty party all the time.'"
+						if (28) message = "<B>[used_name]</B> farts ironically."
+						if (29) message = "<B>[used_name]</B> farts salaciously."
+						if (30) message = "<B>[used_name]</B> farts really hard. Motor oil runs down its leg."
+						if (31) message = "<B>[used_name]</B> reaches tier [rand(2,8)] of fart research."
+						if (32) message = "<B>[used_name]</B> blatantly ignores law 3 and farts like a shameful bastard."
+						if (33) message = "<B>[used_name]</B> farts the first few bars of Daisy Bell. You shed a single tear."
+						if (34) message = "<B>[used_name]</B> has seen farts you people wouldn't believe."
+						if (35) message = "<B>[used_name]</B> fart in it own mouth. A shameful [used_name]."
+						if (36) message = "<B>[used_name]</B> farts out battery acid. Ouch."
+						if (37) message = "<B>[used_name]</B> farts with the burning hatred of a thousand suns."
+						if (38) message = "<B>[used_name]</B> exterminates the air supply."
+						if (39) message = "<B>[used_name]</B> farts so hard the AI feels it."
+						if (40) message = "<B>[used_name] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 				playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 #ifdef DATALOGGER
 				game_stats.Increment("farts")
@@ -520,7 +519,7 @@
 		return ..()
 
 /mob/living/silicon/hivebot/attack_hand(mob/user)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 	if(!user.stat)
 		if (user.a_intent != INTENT_HELP)
 			actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -673,8 +672,8 @@
 		src.ears = src.radio
 	var/dat = {"
 <TT>
-Microphone: [src.radio.broadcasting ? "<A href='byond://?src=\ref[src.radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];talk=1'>Disengaged</A>"]<BR>
-Speaker: [src.radio.listening ? "<A href='byond://?src=\ref[src.radio];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];listen=1'>Disengaged</A>"]<BR>
+Microphone: [src.radio.microphone_enabled ? "<A href='byond://?src=\ref[src.radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];talk=1'>Disengaged</A>"]<BR>
+Speaker: [src.radio.speaker_enabled ? "<A href='byond://?src=\ref[src.radio];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];listen=1'>Disengaged</A>"]<BR>
 Frequency:
 <A href='byond://?src=\ref[src.radio];freq=-10'>-</A>
 <A href='byond://?src=\ref[src.radio];freq=-2'>-</A>
@@ -778,6 +777,7 @@ Frequency:
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
 		src.update_name_tag()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	else if(src.real_name == "Cyborg")
 		src.real_name += " "
@@ -793,36 +793,9 @@ Frequency:
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
 	src.update_name_tag()
+	REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	return
-
-/mob/living/silicon/hivebot/say_understands(var/other)
-	if (isAI(other))
-		return TRUE
-	if (ishuman(other))
-		var/mob/living/carbon/human/H = other
-		if (!H.mutantrace.exclusive_language)
-			return TRUE
-		else
-			return ..()
-	if (isrobot(other) || isshell(other))
-		return TRUE
-	return ..()
-
-/mob/living/silicon/hivebot/say_quote(var/text)
-	if (src.mainframe && src.mainframe.glitchy_speak)
-		text = voidSpeak(text)
-	var/ending = copytext(text, length(text))
-
-	if (singing)
-		return singify_text(text)
-
-	if (ending == "?")
-		return "queries, \"[text]\"";
-	else if (ending == "!")
-		return "declares, \"[text]\"";
-
-	return "states, \"[text]\"";
 
 /mob/living/silicon/hivebot/find_in_hand(var/obj/item/I, var/this_hand)
 	if (!I)
@@ -921,11 +894,16 @@ Frequency:
 	. = ..()
 	src.hud?.update_pulling()
 
+/mob/living/silicon/hivebot/remove_pulling()
+	..()
+	src.hud?.update_pulling()
+
 /*-----Actual AI Shells---------------------------------------*/
 
 /mob/living/silicon/hivebot/eyebot
 	name = "Eyebot"
 	icon_state = "eyebot"
+	open_to_sound = TRUE
 	health = 25
 	do_hurt_slowdown = FALSE
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
@@ -1043,7 +1021,8 @@ Frequency:
 		available_ai_shells -= src
 		..()
 
-
+	on_close_viewport(datum/viewport/vp)
+		src.mainframe?.on_close_viewport(vp)
 
 /*-----Shell-Creation---------------------------------------*/
 

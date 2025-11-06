@@ -1,5 +1,5 @@
 /obj/machinery/lawrack
-	name = "AI Law Mount Rack"
+	name = "AI Law Rack"
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs."
@@ -46,6 +46,7 @@
 			src.screwed[i] = FALSE
 			if(src.law_circuits[i])
 				src.law_circuits[i].set_loc(get_turf(src))
+				src.law_circuits[i].on_removed(i, src, null)
 				src.law_circuits[i] = null
 
 	disposing()
@@ -207,6 +208,14 @@
 		else
 			. += "It's about to collapse!"
 
+		if (isobserver(user))
+			. += "<br>"
+			if(user.mind.get_player()?.dnr)
+				. += "Current Laws:<br>"
+				. += src.format_for_logs()
+			else
+				. += SPAN_ALERT("You must enable DNR to see the current laws.")
+
 	blob_act(power)
 		changeHealth(-power*0.15,"blob")
 
@@ -252,14 +261,17 @@
 			circuit_image = null
 			color_overlay = null
 			if(law_circuits[i])
-				circuit_image = image(src.icon, "aimod")
-				circuit_image.pixel_x = 0
-				circuit_image.pixel_y = -36 + i*4
-				circuit_image.color = law_circuits[i].color
-				color_overlay = image(src.icon, "aimod_over")
-				color_overlay.color = law_circuits[i].highlight_color
-				color_overlay.pixel_x = 0
-				color_overlay.pixel_y = -36 + i*4
+				var/obj/item/aiModule/module = law_circuits[i]
+				if (module.rack_state)
+					circuit_image = image(src.icon, module.rack_state)
+					circuit_image.pixel_x = module.pixel_x
+					circuit_image.pixel_y = -36 + i*4
+					circuit_image.color = module.color
+				if (module.rack_overlay_state)
+					color_overlay = image(src.icon, module.rack_overlay_state)
+					color_overlay.color = module.highlight_color
+					color_overlay.pixel_x = module.pixel_x
+					color_overlay.pixel_y = -36 + i*4
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
@@ -302,7 +314,7 @@
 			var/area/A = get_area(src.loc)
 			boutput(user,"Linker: Linked to law rack at "+ A.name)
 			return
-		else if (istype(I, /obj/item/aiModule) && !issilicon(user))
+		else if (istypes(I, list(/obj/item/aiModule, /obj/item/reagent_containers/food/snacks/breadslice)) && !issilicon(user))
 			var/obj/item/aiModule/AIM = I
 			var/inserted = FALSE
 			var/count = 1
@@ -335,6 +347,12 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
+	// the law rack TGUI represents a physical rack, area power shouldn't disable it
+	broken_state_topic(mob/user)
+		. = user.shared_ui_interaction(src)
+		if (src.status & NOPOWER)
+			return min(., UI_INTERACTIVE)
+		. = ..()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -359,6 +377,7 @@
 				src.screwed[i] = FALSE
 
 		. = list(
+			"powered" = src.powered(),
 			"lawTitles" = lawTitles,
 			"lawText" = lawText,
 			"welded" = src.welded,
@@ -434,6 +453,9 @@
 					if(issilicon(ui.user))
 						boutput(ui.user,"Your clunky robot hands can't grip the module!")
 						return
+					if (src.status & NOPOWER)
+						ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but the retaining mag-locks are unpowered!"), SPAN_ALERT("You struggle with the module but [src] is unpowered!"))
+						return
 					ui.user.visible_message(SPAN_ALERT("[ui.user] starts removing a module!"), SPAN_ALERT("You start removing the module!"))
 					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(remove_module_callback), list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
@@ -442,7 +464,7 @@
 					if(!equipped)
 						return
 
-					if(!istype(equipped,/obj/item/aiModule))
+					if(!istypes(equipped, list(/obj/item/aiModule, /obj/item/reagent_containers/food/snacks/breadslice)))
 						ui.user.visible_message(SPAN_ALERT("[ui.user] tries to shove \a [equipped] into the rack. Silly [ui.user]!"), SPAN_ALERT("You try to put \a [equipped] into the rack. You feel very foolish."))
 						return
 
@@ -596,6 +618,8 @@
 		update_last_laws()
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
+		if (!src.law_circuits[slot_number].can_weld(slot_number, src, user))
+			return
 		if(src.welded[slot_number])
 			user.visible_message(SPAN_ALERT("[user] cuts the welds on the module."),SPAN_ALERT("You cut the welds on the module."))
 		else
@@ -604,6 +628,8 @@
 		tgui_process.update_uis(src)
 
 	proc/toggle_screwed_callback(var/slot_number,var/mob/user)
+		if (!src.law_circuits[slot_number].can_screw(slot_number, src, user))
+			return
 		if(src.screwed[slot_number])
 			user.visible_message(SPAN_ALERT("[user] unscrews the module."),SPAN_ALERT("You unscrew the module from the rack."))
 		else
@@ -614,9 +640,20 @@
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
 		if(src.law_circuits[slotNum])
 			return FALSE
-		src.law_circuits[slotNum]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)
+		if (istype(equipped, /obj/item/reagent_containers/food/snacks/breadslice))
+			var/obj/item/aiModule/bread/bread_module = new(src)
+			bread_module.bread = equipped
+			bread_module.highlight_color = equipped.get_average_color(TRUE)
+			bread_module.name = equipped.name
+			bread_module.lawText = "CATASTROPHIC [prob(5) ? "B" : ""]READ ERROR: [copytext(bread_module.highlight_color, 2)]-[rand(200, 999)]"
+			equipped = bread_module
+		if (!equipped.wonky)
+			equipped.pixel_x = 0
+		else
+			equipped.pixel_x = rand(-2, 2)
+		src.law_circuits[slotNum]=equipped
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		user.visible_message(SPAN_ALERT("[user] slides a module into the law rack"), SPAN_ALERT("You slide the module into the rack."))
 		tgui_process.update_uis(src)
@@ -634,6 +671,8 @@
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		if(isnull(src.law_circuits[slotNum]))
 			return FALSE
+		if (!src.law_circuits[slotNum].can_remove(slotNum, src, user))
+			return FALSE
 		//add circuit to hand
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> an AI law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
@@ -646,6 +685,7 @@
 		else if(istype(src.law_circuits[slotNum],/obj/item/aiModule/ability_expansion))
 			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slotNum]
 			src.ai_abilities -= expansion.ai_abilities
+		src.law_circuits[slotNum].on_removed(slotNum, src, user)
 		src.law_circuits[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
@@ -695,6 +735,8 @@
 			if (I)
 				fireflash(I,0, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 				I.combust()
+			sleep(1 SECONDS)
+			src.toast_laws(TRUE)
 
 	/**
 	 * Sets an arbitrary slot to the passed aiModule - will override any module in the slot.
@@ -727,8 +769,10 @@
 	 * Does not call UpdateLaws()
 	 * Intended for Admemery
 	 */
-	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE)
-		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
+	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE, path)
+		if(!path || !ispath(path))
+			path = /obj/item/aiModule/custom
+		var/mod = new path(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
 	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
@@ -750,6 +794,26 @@
 	proc/DeleteAllLaws()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
+
+	///toasts each bread-law in the law rack and eject them out
+	proc/toast_laws(var/update_laws = TRUE)
+		var/amount_of_toast = 0
+		for (var/i in 1 to MAX_CIRCUITS)
+			if(istype(src.law_circuits[i], /obj/item/aiModule/bread))
+				src.DeleteLaw(i)
+				amount_of_toast++
+		if (amount_of_toast < 1)
+			return
+		logTheThing(LOG_ADMIN, null, "[log_object(src)] toasted a total of [amount_of_toast] bread. Scrumptious!")
+		src.visible_message(SPAN_ALERT("[src] expels some fresh toast!"))
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		for(var/i in 1 to amount_of_toast)
+			var/obj/item/reagent_containers/food/snacks/breadslice/toastslice/new_slice = new /obj/item/reagent_containers/food/snacks/breadslice/toastslice(get_turf(src))
+			var/turf/target_turf = get_ranged_target_turf(get_turf(src), pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST), 7 * 32)
+			new_slice.throw_at(target_turf, 7, rand(2,4))
+		if(update_laws)
+			src.UpdateLaws()
+
 
 	/**
 	 * This will cause a module to glitch, either totally replace it law or adding picked_law to its text (depening on replace).
@@ -830,7 +894,7 @@
 
 
 /obj/machinery/lawrack/syndicate
-	name = "AI Law Mount Rack - Syndicate Model"
+	name = "AI Law Rack - Syndicate Model"
 	icon_state = "airack_syndicate_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one has a little S motif on the side."
 

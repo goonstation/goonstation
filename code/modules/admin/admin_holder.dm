@@ -1,3 +1,63 @@
+#ifdef NO_ADMIN_SPEECH_MODULES
+
+	#define ADMIN_SPEECH_OUTPUTS null
+	#define ADMIN_SPEECH_MODIFIERS null
+	#define ADMIN_SPEECH_PREFIXES null
+	#define ADMIN_LISTEN_INPUTS null
+	#define ADMIN_LISTEN_MODIFIERS null
+	#define ADMIN_LISTEN_EFFECTS null
+	#define ADMIN_LISTEN_CONTROLS null
+	#define ADMIN_UNDERSTOOD_LANGUAGES null
+
+#else
+
+	#define ADMIN_SPEECH_OUTPUTS list( \
+		SPEECH_OUTPUT_BLOBCHAT, \
+		SPEECH_OUTPUT_DEADCHAT_ADMIN, \
+		SPEECH_OUTPUT_FLOCK_GLOBAL, \
+		SPEECH_OUTPUT_GHOSTDRONE, \
+		SPEECH_OUTPUT_HIVECHAT_GLOBAL, \
+		SPEECH_OUTPUT_KUDZUCHAT_ADMIN, \
+		SPEECH_OUTPUT_MARTIAN, \
+		SPEECH_OUTPUT_SILICONCHAT_ADMIN, \
+		SPEECH_OUTPUT_THRALLCHAT_GLOBAL, \
+		SPEECH_OUTPUT_WRAITHCHAT_ADMIN, \
+	)
+
+	#define ADMIN_SPEECH_MODIFIERS null
+
+	#define ADMIN_SPEECH_PREFIXES null
+
+	#define ADMIN_LISTEN_INPUTS list( \
+		LISTEN_INPUT_BLOBCHAT, \
+		LISTEN_INPUT_DEADCHAT_ADMIN, \
+		LISTEN_INPUT_FLOCK_GLOBAL, \
+		LISTEN_INPUT_GHOSTDRONE, \
+		LISTEN_INPUT_GLOBAL_HEARING, \
+		LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART, \
+		LISTEN_INPUT_HIVECHAT_GLOBAL, \
+		LISTEN_INPUT_KUDZUCHAT, \
+		LISTEN_INPUT_MARTIAN, \
+		LISTEN_INPUT_SILICONCHAT, \
+		LISTEN_INPUT_THRALLCHAT_GLOBAL, \
+		LISTEN_INPUT_WRAITHCHAT, \
+	)
+
+	#define ADMIN_LISTEN_MODIFIERS list( \
+		LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS, \
+	)
+
+	#define ADMIN_LISTEN_EFFECTS null
+
+	#define ADMIN_LISTEN_CONTROLS null
+
+	#define ADMIN_UNDERSTOOD_LANGUAGES list( \
+		LANGUAGE_ALL, \
+	)
+
+#endif
+
+
 /datum/admins
 	var/name = "admins"
 	var/rank = null
@@ -56,9 +116,24 @@
 	var/skip_manifest = FALSE
 	var/slow_stat = FALSE
 
+	/// This admin holder's auxiliary speech module tree.
+	var/datum/speech_module_tree/auxiliary/admin_speech_tree
+	/// This admin holder's auxiliary listen module tree.
+	var/datum/listen_module_tree/auxiliary/admin_listen_tree
+
 	New(client/C)
-		..()
+		. = ..()
+
 		src.owner = C
+		src.admin_speech_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS, ADMIN_SPEECH_PREFIXES, src.owner.ensure_speech_tree(), "Admin")
+		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_LISTEN_EFFECTS, ADMIN_LISTEN_CONTROLS, ADMIN_UNDERSTOOD_LANGUAGES, src.owner.ensure_listen_tree(), "Admin")
+
+		if (src.owner.preferences.listen_ooc)
+			src.admin_listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
+
+		if (src.owner.preferences.listen_looc)
+			src.admin_listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
+
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)
 			src.owner.chatOutput.getContextFlag()
@@ -88,6 +163,7 @@
 			"Copy Here",\
 			"Ship to Cargo",\
 			"Set Material",\
+			"Say",\
 			)
 			admin_interact_verbs["mob"] = list(\
 			"Player Options",\
@@ -95,12 +171,14 @@
 			"Subtle Message",\
 			"Check Health",\
 			"Heal",\
+			"Stabilize",\
 
 			"Manage Bioeffects",\
 			"Manage Abilities",\
 			"Manage Traits",\
 			"Add Reagents",\
 			"Check Reagents",\
+			"Adjust Addictions",\
 			"View Variables",\
 			"Get Thing",\
 			"Follow Thing",\
@@ -120,6 +198,7 @@
 			"Create Poster",\
 			"Ship to Cargo",\
 			"Set Material",\
+			"Say",\
 			)
 			admin_interact_verbs["turf"] = list(\
 			"Jump To Turf",\
@@ -136,53 +215,53 @@
 			"Delete",\
 			"Create Poster",\
 			"Set Material",\
+			"Say",\
 			)
 
 
 
 	proc/show_pref_window(mob/user)
 		var/list/HTML = list("<html><head><title>Admin Preferences</title></head><body>")
-		HTML += "<a href='?src=\ref[src];action=refresh_admin_prefs'>Refresh</a></b><br>"
-		HTML += "<b>Automatically Set Alternate Key?: <a href='?src=\ref[src];action=toggle_auto_alt_key'>[(src.auto_alt_key ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Auto Alt Key: <a href='?src=\ref[src];action=set_auto_alt_key_name'>[(src.auto_alt_key_name ? "[src.auto_alt_key_name]" : "N/A")]</a></b><br>"
-		HTML += "<b>Automatically Set Stealth Mode?: <a href='?src=\ref[src];action=toggle_auto_stealth'>[(src.auto_stealth ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Auto Stealth Name: <a href='?src=\ref[src];action=set_auto_stealth_name'>[(src.auto_stealth_name ? "[src.auto_stealth_name]" : "N/A")]</a></b><br>"
+		HTML += "<a href='byond://?src=\ref[src];action=refresh_admin_prefs'>Refresh</a></b><br>"
+		HTML += "<b>Automatically Set Alternate Key?: <a href='byond://?src=\ref[src];action=toggle_auto_alt_key'>[(src.auto_alt_key ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Auto Alt Key: <a href='byond://?src=\ref[src];action=set_auto_alt_key_name'>[(src.auto_alt_key_name ? "[src.auto_alt_key_name]" : "N/A")]</a></b><br>"
+		HTML += "<b>Automatically Set Stealth Mode?: <a href='byond://?src=\ref[src];action=toggle_auto_stealth'>[(src.auto_stealth ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Auto Stealth Name: <a href='byond://?src=\ref[src];action=set_auto_stealth_name'>[(src.auto_stealth_name ? "[src.auto_stealth_name]" : "N/A")]</a></b><br>"
 		HTML += "<i>Note: Auto Stealth will override Auto Alt Key settings on load</i><br>"
-		HTML += "<b>Use this Key / Stealth Name on all servers?: <a href='?src=\ref[src];action=set_auto_alias_global_save'>[(src.auto_alias_global_save ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Use this Key / Stealth Name on all servers?: <a href='byond://?src=\ref[src];action=set_auto_alias_global_save'>[(src.auto_alias_global_save ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		//if (src.owner.holder:level >= LEVEL_CODER)
-			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Ghost respawn offers?: <a href='?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Alerts For Uncool Words?: <a href='?src=\ref[src];action=toggle_uncool_word_filtering'>[(src.uncool_word_filtering ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
-		HTML += "<b>Audible Admin Helps?: <a href='?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
-		HTML += "<b>Hide ATags?: <a href='?src=\ref[src];action=toggle_atags'>[(src.see_atags ? "No" : "Yes")]</a></b><br>"
-		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
-		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Show Topic log?: <a href='?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Don't create manifest entries when respawning?: <a href='?src=\ref[src];action=toggle_skip_manifest'>[(src.skip_manifest ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide offline indicators when mob jumping?: <a href='?src=\ref[src];action=toggle_hide_offline'>[(src.hide_offline_indicators ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Slow down Stat panel update speed to non-admin speed?: <a href='?src=\ref[src];action=toggle_slow_stat'>[(src.slow_stat ? "Yes" : "No")]</a></b><br>"
+			//HTML += "<b>Hide Extra Verbs?: <a href='byond://?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide Server Toggles Tab?: <a href='byond://?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='byond://?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Attack Alerts?: <a href='byond://?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Ghost respawn offers?: <a href='byond://?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Who/Adminwho alerts?: <a href='byond://?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='byond://?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Alerts For Uncool Words?: <a href='byond://?src=\ref[src];action=toggle_uncool_word_filtering'>[(src.uncool_word_filtering ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>See Prayers?: <a href='byond://?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Audible Prayers?: <a href='byond://?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
+		HTML += "<b>Audible Admin Helps?: <a href='byond://?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
+		HTML += "<b>Hide ATags?: <a href='byond://?src=\ref[src];action=toggle_atags'>[(src.see_atags ? "No" : "Yes")]</a></b><br>"
+		HTML += "<b>Change view when using buildmode?: <a href='byond://?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
+		HTML += "<b>Spawn verb spawns in your loc?: <a href='byond://?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Show Topic log?: <a href='byond://?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Don't create manifest entries when respawning?: <a href='byond://?src=\ref[src];action=toggle_skip_manifest'>[(src.skip_manifest ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide offline indicators when mob jumping?: <a href='byond://?src=\ref[src];action=toggle_hide_offline'>[(src.hide_offline_indicators ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Slow down Stat panel update speed to non-admin speed?: <a href='byond://?src=\ref[src];action=toggle_slow_stat'>[(src.slow_stat ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		for(var/cat in toggleable_admin_verb_categories)
-			HTML += "<b>Hide [cat] verbs?: <a href='?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
-		HTML += "<hr><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
+			HTML += "<b>Hide [cat] verbs?: <a href='byond://?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
+		HTML += "<hr><b><a href='byond://?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='byond://?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
 		user.Browse(HTML.Join(),"window=aprefs;size=385x540")
 
 	proc/load_admin_prefs()
 		var/list/AP
-		if (!owner.player.cloudSaves.loaded)
-			owner.player.cloudSaves.fetch()
 
-		var/json_data = owner.player.cloudSaves.getData("admin_preferences")
+		UNTIL(owner.player?.cloudSaves.loaded, 10 SECONDS)
+		var/json_data = owner.player?.cloudSaves.getData("admin_preferences")
 		if (json_data)
 			AP = json_decode(json_data)
 		else
@@ -342,7 +421,7 @@
 	proc/save_admin_prefs()
 		if (!src.owner)
 			return
-		var/data = owner.player.cloudSaves.getData("admin_preferences")
+		var/data = owner.player?.cloudSaves.getData("admin_preferences")
 		var/list/auto_aliases = list()
 		if (data) // decoding null will runtime
 			data = json_decode(data)
@@ -385,7 +464,7 @@
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)
 
-		if (!owner.player.cloudSaves.putData("admin_preferences", json_encode(AP)))
+		if (!owner.player?.cloudSaves.putData("admin_preferences", json_encode(AP)))
 			tgui_alert(src.owner, "ERROR: Unable to reach cloud.")
 		else
 			boutput(src.owner, SPAN_NOTICE("Admin preferences saved."))
@@ -429,3 +508,13 @@
 		if(vrb:category == cat)
 			src.hidden_verbs -= vrb
 			src.verbs |= vrb
+
+
+#undef ADMIN_SPEECH_OUTPUTS
+#undef ADMIN_SPEECH_MODIFIERS
+#undef ADMIN_SPEECH_PREFIXES
+#undef ADMIN_LISTEN_INPUTS
+#undef ADMIN_LISTEN_MODIFIERS
+#undef ADMIN_LISTEN_EFFECTS
+#undef ADMIN_LISTEN_CONTROLS
+#undef ADMIN_UNDERSTOOD_LANGUAGES

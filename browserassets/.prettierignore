@@ -1,0 +1,7 @@
+node_modules
+**/*.json
+**/*.yml
+**/*.md
+
+src/tgui
+src/vendor

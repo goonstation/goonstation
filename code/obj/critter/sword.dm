@@ -845,7 +845,7 @@
 					random_brute_damage(M, 80 / dam_type)
 			M.changeStatus("knockdown", 4 SECOND)
 			M.changeStatus("stunned", 1 SECOND)
-			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/atom, emote), "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			leavescan(T, 1)

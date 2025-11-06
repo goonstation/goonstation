@@ -489,7 +489,7 @@
 /turf/simulated/floor/bluegreen,
 /area/ship/artemis)
 "ln" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -898,7 +898,7 @@
 /area/ship/arjuna)
 "ya" = (
 /obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue3"
@@ -1335,7 +1335,7 @@
 /turf/space,
 /area/space)
 "Jd" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet{
 	dir = 8;

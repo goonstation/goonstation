@@ -224,7 +224,7 @@
 				else
 					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
+						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively!"), 1)
 					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material_piece/cloth))
 						SPAWN(0.3 SECONDS) //wait for them to move in
 							if (!QDELETED(src))
@@ -238,20 +238,22 @@
 									transfering_chemicals = TRUE
 					icon_state = "reinforce"
 					src.state = GRAB_AGGRESSIVE //used to be '1'. SKIP LEVEL 1
+					SEND_SIGNAL(src.affecting, COMSIG_MOB_GRABBED, src)
 					set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
 			if (GRAB_STRONG)
 				icon_state = "!reinforce"
 				src.state = GRAB_AGGRESSIVE
+				SEND_SIGNAL(src.affecting, COMSIG_MOB_GRABBED, src)
 				if (!src.affecting.buckled)
 					set_affected_loc()
-				src.assailant.lastattacked = src.affecting
-				src.affecting.lastattacker = src.assailant
+				src.assailant.lastattacked = get_weakref(src.affecting)
+				src.affecting.lastattacker = get_weakref(src.assailant)
 				src.affecting.lastattackertime = world.time
 				logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
-				src.assailant.visible_message(SPAN_ALERT("[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now aggressive)!"))
+				src.assailant.visible_message(SPAN_ALERT("[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting]!"))
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
@@ -287,9 +289,10 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!"), 1)
 		src.state = GRAB_CHOKE
+		SEND_SIGNAL(src.affecting, COMSIG_MOB_GRABBED, src)
 		REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
-		src.assailant.lastattacked = src.affecting
-		src.affecting.lastattacker = src.assailant
+		src.assailant.lastattacked = get_weakref(src.affecting)
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
@@ -316,9 +319,10 @@
 			O.show_message(SPAN_ALERT("[src.assailant] has pinned [src.affecting] to [get_turf(T)]!"), 1)
 
 		src.state = GRAB_PIN
+		SEND_SIGNAL(src.affecting, COMSIG_MOB_GRABBED, src)
 
-		src.assailant.lastattacked = src.affecting
-		src.affecting.lastattacker = src.assailant
+		src.assailant.lastattacked = get_weakref(src.affecting)
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 
 		step_to(src.assailant,T)
@@ -444,7 +448,7 @@
 			qdel(src)
 			return 0
 
-		src.affecting.lastattacker = src.assailant
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
@@ -832,7 +836,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
-			I.tooltip_rebuild = 1
+			I.tooltip_rebuild = TRUE
 		setProperty("I_disorient_resist", 20)
 
 	disposing()
@@ -842,7 +846,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
-			I.tooltip_rebuild = 1
+			I.tooltip_rebuild = TRUE
 			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
 		else
 			if (assailant)
@@ -916,7 +920,7 @@
 		var/target_dir = get_dir(user,target)
 		if(!target_dir)
 			target_dir = user.dir
-		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir)
+		if (!istype(T, /turf/space) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir &&!isghostcritter(user))
 
 			user.changeStatus("knockdown", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
@@ -934,6 +938,7 @@
 
 				if (dive_attack_hit)
 					var/damage = rand(1,6)
+					var/area/AR = get_area(dive_attack_hit)
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
@@ -943,15 +948,16 @@
 						else if (H.limbs.l_leg)
 							damage += H.limbs.l_leg.limb_hit_bonus
 					if(issilicon(dive_attack_hit))
-						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
+						playsound(user, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+						user.visible_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
+					else if (AR.sanctuary)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
+						user.visible_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit] harmlessly!</B>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 						dive_attack_hit.was_harmed(user)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"), 1)
+						user.visible_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"))
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 

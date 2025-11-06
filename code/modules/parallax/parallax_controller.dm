@@ -62,7 +62,14 @@
 	for (var/atom/movable/screen/parallax_layer/parallax_layer as anything in src.parallax_layers)
 		// Multiply the pixel change by the parallax value to determine the number of pixels the layer should move by.
 		// Update the position of the parallax layer on the client's screen, and animate the movement, using a time value derived from the client's mob's speed.
-		animate(parallax_layer, animation_time, transform = matrix(1, 0, x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 0, 1, y_pixel_change * parallax_layer.parallax_render_source.parallax_value), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		// Round to 1s to not blur sprites
+		animate( \
+			parallax_layer, \
+			animation_time, \
+			transform = matrix(	1, 0, round(x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1), \
+								0, 1, round(y_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1)), \
+			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE \
+		)
 
 		// Check whether the layer should be realigned on the client's screen.
 		UPDATE_TESSELLATION_ALIGNMENT(parallax_layer)
@@ -155,7 +162,7 @@
 	src.update_z_level_parallax_layers(null, null, src.outermost_movable.z)
 
 /datum/parallax_controller/proc/unregister_signals(client/C, mob/M)
-	if (!M.GetComponent(/datum/component/complexsignal/outermost_movable))
+	if (!M?.GetComponent(/datum/component/complexsignal/outermost_movable))
 		return
 
 	src.UnregisterSignal(M, XSIG_MOVABLE_TURF_CHANGED)

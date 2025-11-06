@@ -13,7 +13,7 @@ on:
 jobs:
   runtime:
     name: Runtime Checker
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       fail-fast: false
@@ -28,10 +28,11 @@ jobs:
             "OSHAN",
             "KONDARU",
             "NADIR",
-            "ATLAS",
+            "NEON",
             "SPACE_PREFAB",
             "UNDERWATER_PREFAB",
             "RANDOM_ROOMS",
+            "RP_MODE",
             "FULL",
           ]
         compiletype: ["default"]
@@ -45,10 +46,9 @@ jobs:
           sudo apt-get update
 
       - name: Install Dependencies
-        uses: awalsh128/cache-apt-pkgs-action@latest
+        uses: Eeems-Org/apt-cache-action@v1
         with:
-          packages: libssl-dev:i386 libgcc-s1:i386
-          version: 1.0
+          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
 
       - name: Cache BYOND
         uses: actions/cache@v4
@@ -68,7 +68,7 @@ jobs:
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
       - name: Setup for assjam
-        if: "matrix.compiletype == 'ass'"
+        if: matrix.compiletype == 'ass'
         run: |
           sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
 
@@ -77,27 +77,32 @@ jobs:
           tools/ci/install_rust_g.sh
 
       - name: Compile map
-        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
+        if: matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'RANDOM_ROOMS' && matrix.map != 'RP_MODE' && matrix.map != 'FULL'
         run: |
           tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DCI_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile space prefabs
-        if: "matrix.map == 'SPACE_PREFAB'"
+        if: matrix.map == 'SPACE_PREFAB'
         run: |
           tools/ci/dm.sh -DCIBUILD -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile underwater prefabs
-        if: "matrix.map == 'UNDERWATER_PREFAB'"
+        if: matrix.map == 'UNDERWATER_PREFAB'
         run: |
           tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile random rooms
-        if: "matrix.map == 'RANDOM_ROOMS'"
+        if: matrix.map == 'RANDOM_ROOMS'
         run: |
           tools/ci/dm.sh -DCIBUILD -DRANDOM_ROOM_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
+      - name: Compile with RP_MODE
+        if: matrix.map == 'RP_MODE'
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
+
       - name: Compile with full pre-round setup
-        if: "matrix.map == 'FULL'"
+        if: matrix.map == 'FULL'
         run: |
           tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING goonstation.dme
 
@@ -107,7 +112,7 @@ jobs:
 
   runtime_full:
     name: "Runtime Checker with Secret Submodule"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     strategy:
@@ -123,9 +128,11 @@ jobs:
             "OSHAN",
             "KONDARU",
             "NADIR",
-            "ATLAS",
+            "NEON",
             "SPACE_PREFAB",
             "UNDERWATER_PREFAB",
+            "RANDOM_ROOMS",
+            "RP_MODE",
             "FULL",
           ]
         compiletype: ["default"]
@@ -143,10 +150,9 @@ jobs:
           sudo apt-get update
 
       - name: Install Dependencies
-        uses: awalsh128/cache-apt-pkgs-action@latest
+        uses: Eeems-Org/apt-cache-action@v1
         with:
-          packages: libssl-dev:i386 libgcc-s1:i386
-          version: 1.0
+          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
 
       - name: Cache BYOND
         uses: actions/cache@v4
@@ -166,7 +172,7 @@ jobs:
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
       - name: Setup for assjam
-        if: "matrix.compiletype == 'ass'"
+        if: matrix.compiletype == 'ass'
         run: |
           sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
 
@@ -175,22 +181,32 @@ jobs:
           tools/ci/install_rust_g.sh
 
       - name: Compile map
-        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
+        if: matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'RANDOM_ROOMS' && matrix.map != 'RP_MODE' && matrix.map != 'FULL'
         run: |
           tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DCI_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile space prefabs
-        if: "matrix.map == 'SPACE_PREFAB'"
+        if: matrix.map == 'SPACE_PREFAB'
         run: |
           tools/ci/dm.sh -DCIBUILD -DSPACE_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile underwater prefabs
-        if: "matrix.map == 'UNDERWATER_PREFAB'"
+        if: matrix.map == 'UNDERWATER_PREFAB'
         run: |
           tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
+      - name: Compile random rooms
+        if: matrix.map == 'RANDOM_ROOMS'
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DRANDOM_ROOM_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+
+      - name: Compile with RP_MODE
+        if: matrix.map == 'RP_MODE'
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
+
       - name: Compile with full pre-round setup
-        if: "matrix.map == 'FULL'"
+        if: matrix.map == 'FULL'
         run: |
           tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING goonstation.dme
 
@@ -200,7 +216,7 @@ jobs:
 
   unit_test:
     name: Unit Tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4
@@ -212,10 +228,9 @@ jobs:
           sudo apt-get update
 
       - name: Install Dependencies
-        uses: awalsh128/cache-apt-pkgs-action@latest
+        uses: Eeems-Org/apt-cache-action@v1
         with:
-          packages: libssl-dev:i386 libgcc-s1:i386
-          version: 1.0
+          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
 
       - name: Cache BYOND
         uses: actions/cache@v4

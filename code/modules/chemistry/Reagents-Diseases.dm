@@ -94,7 +94,7 @@ datum
 		disease/lungrot
 			name = "lungrot bloom"
 			id = "lungrot_bloom"
-			description = "highly toxic fungal colonies created in the enviroment of a weakened lung."
+			description = "highly toxic fungal colonies created in the environment of a weakened lung."
 			reagent_state = SOLID
 			minimum_to_infect = 7.5
 			fluid_r = 43
@@ -159,15 +159,21 @@ datum
 			disease = /datum/ailment/disease/monkey_madness
 
 		disease/liquid_plasma // Plasmatoid
-			name = "liquid plasma"
-			id = "liquid plasma"
-			description = "Liquid plasma."
+			name = "activated plasma"
+			id = "activated plasma"
+			description = "This liquid plasma seems to be moving on its own."
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 0
 			fluid_b = 200
 			transparency = 80
 			disease = /datum/ailment/disease/plasmatoid
+
+			on_mob_life(mob/M, mult = 1)
+				. = ..()
+				var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = M.bioHolder?.GetEffect("plasma_metabolism")
+				if (plasma_bioeffect)
+					plasma_bioeffect.absorb_liquid_plasma(mult * 2)
 
 		disease/hootonium // Owlstone juice
 			name = "Hootonium"
@@ -426,6 +432,17 @@ datum
 			minimum_to_infect = 0.4
 			disease = /datum/ailment/parasite/bee_larva
 
+		disease/cluwnespider
+			name = "painbow eggs"
+			id = "painbow_eggs"
+			description = "the yolk of a monstrosity"
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 0
+			disease = /datum/ailment/parasite/cluwnespider
+
 		disease/concentrated_initro // please do not give a recipe, just a thing for testing heart-related things atm
 			name = "concentrated initropidril"
 			id = "concentrated_initro"
@@ -528,3 +545,18 @@ datum
 			fluid_b = 40
 			transparency = 50
 			disease = /datum/ailment/disease/leprosy
+
+		disease/explodingheadjuice
+			name = "juice that makes your head explode"
+			id = "explodingheadjuice"
+			description = "A liquid with an incredibly apt name."
+			reagent_state = LIQUID
+			taste = "like berries"
+			fluid_r = 205
+			fluid_g = 0
+			fluid_b = 75
+			transparency = 180
+			disease = /datum/ailment/disease/exploding_head_syndrome
+			minimum_to_infect = 4
+
+

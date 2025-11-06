@@ -7,7 +7,7 @@ Shield and graivty well generators
 /obj/shieldgen
 	name = "shield generator"
 	desc = "Used to seal minor hull breaches."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldoff"
 
 	density = 1
@@ -174,6 +174,14 @@ TYPEINFO(/obj/gravity_well_generator)
 	var/strength = 144		//strength is basically G if you know your newton law of gravitation
 
 /obj/gravity_well_generator
+
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_SINGULO_MAGNETS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_SINGULO_MAGNETS)
+		. = ..()
 
 	meteorhit(obj/O as obj)
 		if(prob(75))

@@ -29,6 +29,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	throw_speed = 4
 	throw_range = 20
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
 	is_syndicate = FALSE
 	stamina_damage = 0
@@ -38,12 +39,39 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
-	var/not_in_mousetraps = 0
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
 	var/detonating = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		if(src.is_dangerous)
+			src.item_function_flags |= ASSEMBLY_NEEDS_MESSAGING
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icons for grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
+		parent_assembly.applier_icon_prefix = "chem_grenade"
+
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		//can't qdel them here or we have stuff like smoke grenades creating smoke at the center of the map.... ugh
+		parent_assembly.invisibility = INVIS_ALWAYS_ISH
+		parent_assembly.qdel_on_tear_apart = TRUE
+		parent_assembly.expended = TRUE
+		src.detonate()
+
+	/// ----------------------------------------------
+
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -212,8 +240,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
-	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
+	var/payload = /obj/item/bananapeel
 	var/count = 7
+	var/throw_radius = 5
 
 	detonate()
 		var/turf/T = ..()
@@ -221,16 +250,88 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
-				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
+				var/turf/target = locate(T.x + rand(-throw_radius, throw_radius), T.y + rand(-throw_radius, throw_radius), T.z)
 				if(target)
-					thing.throw_at(target, rand(0, 10), rand(1, 4))
+					before_throwing(thing, target)
+					thing.throw_at(target, rand(0, 10), rand(1, throw_radius))
+
 		qdel(src)
+
 
 	launcher_clone() //for varedit shenanigans
 		var/obj/item/old_grenade/thing_thrower/out = ..()
 		out.payload = src.payload
 		out.count = src.count
 		return out
+
+	proc/before_throwing(var/thing, var/turf/target)
+		return
+
+/obj/item/old_grenade/thing_thrower/aconite
+	desc = "It is set to detonate in 3 seconds."
+	name = "aconite grenade"
+	icon_state = "aconite"
+	icon_state_armed = "aconite1"
+
+	payload = /obj/item/plant/herb/aconite
+	count = 8
+
+/obj/item/old_grenade/thing_thrower/garlic
+	desc = "It is set to detonate in 3 seconds."
+	name = "garlic grenade"
+	icon_state = "garlic"
+	icon_state_armed = "garlic1"
+
+	payload = /obj/item/reagent_containers/food/snacks/plant/garlic
+	count = 16
+
+/obj/item/old_grenade/thing_thrower/csword
+	desc = "It is set to detonate in 3 seconds."
+	name = "cyalume saber grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+	payload = /obj/item/sword
+	count = 12
+
+	before_throwing(var/thing, var/turf/target)
+		if (istype(thing, /obj/item/sword))
+			var/obj/item/sword/sword = thing
+			sword.active = TRUE
+			sword.UpdateIcon()
+			// SET_BLOCKS(BLOCK_ALL)
+			sword.throwforce = 15
+			sword.hit_type = DAMAGE_CUT
+			sword.stamina_damage = sword.active_stamina_dmg
+			if(prob(50))
+				playsound(target,'sound/weapons/male_cswordturnon.ogg', 70, FALSE, 5, clamp(1.0 , 0.7, 1.2))
+			else
+				playsound(target,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0, 0.7, 1.4))
+			sword.force = sword.active_force
+			sword.stamina_cost = sword.active_stamina_cost
+			sword.w_class = W_CLASS_BULKY
+			sword.leaves_slash_wound = TRUE
+			sword.setItemSpecial(/datum/item_special/swipe/csaber)
+
+		return
+
+/obj/item/old_grenade/thing_thrower/pie
+	desc = "It is set to detonate in 3 seconds."
+	name = "pie grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+
+	payload = /obj/item/reagent_containers/food/snacks/pie/cream
+	count = 20
+
+
+/obj/item/old_grenade/thing_thrower/shuriken
+	desc = "It is set to detonate in 3 seconds."
+	name = "shuriken grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+
+	payload = /obj/item/implant/projectile/shuriken
+	count = 12
 
 TYPEINFO(/obj/item/old_grenade/graviton)
 	mats = 12
@@ -258,7 +359,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, SPAN_ALERT("Huh? How does this thing work?!"))
 				src.icon_state = src.icon_state_exploding
-				flick(src.icon_state_armed, src)
+				FLICK(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
@@ -267,7 +368,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 			else
 				boutput(user, SPAN_ALERT("You prime [src]! [det_time/10] seconds!"))
 				src.icon_state = src.icon_state_exploding
-				flick(src.icon_state_armed, src)
+				FLICK(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
@@ -327,7 +428,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, SPAN_ALERT("Huh? How does this thing work?!"))
 				src.icon_state = src.icon_state_exploding
-				flick(src.icon_state_armed, src)
+				FLICK(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
@@ -336,7 +437,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			else
 				boutput(user, SPAN_ALERT("You prime [src]! [det_time/10] seconds!"))
 				src.icon_state = src.icon_state_exploding
-				flick(src.icon_state_armed, src)
+				FLICK(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
@@ -816,7 +917,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon = 'icons/obj/items/weapons.dmi'
 	desc = "It's a small cast-iron egg-shaped object, with the words \"Pick Me Up\" in gold in it."
 	armed = FALSE
-	not_in_mousetraps = TRUE
+	tool_flags = 0 // No
 	var/old_light_grenade = 0
 	var/destination
 	HELP_MESSAGE_OVERRIDE({""})
@@ -925,6 +1026,32 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 	var/is_dangerous = TRUE
 	var/icon_state_armed = null
+	tool_flags = TOOL_ASSEMBLY_APPLIER
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icons for grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
+		parent_assembly.applier_icon_prefix = "chem_grenade"
+
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		parent_assembly.invisibility = INVIS_ALWAYS_ISH
+		parent_assembly.qdel_on_tear_apart = TRUE
+		parent_assembly.expended = TRUE
+		//why the fuck is do gimickbombs only vanish after 15 seconds, what the fuck?
+		src.detonate()
+
+	/// ----------------------------------------------
 
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
@@ -954,12 +1081,12 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
-	proc/arm(mob/usr as mob)
+	proc/arm(mob/user as mob)
 
-		usr.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
-		for(var/mob/O in viewers(usr))
+		user.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
+		for(var/mob/O in viewers(user))
 			if (O.client)
-				O.show_message(SPAN_ALERT("<B>[usr] has armed the [src.name]! Run!</B>"), 1)
+				O.show_message(SPAN_ALERT("<B>[user] has armed the [src.name]! Run!</B>"), 1)
 
 		if (icon_state_armed)
 			icon_state = icon_state_armed
@@ -1048,6 +1175,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
+			if (isnukeop(M)) continue
 			src.dress_up(M)
 		..()
 
@@ -1088,15 +1216,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			src.dress_up(M)
 		..()
 
-/obj/item/gimmickbomb/butt
-	name = "Butt Bomb"
-	desc = "What a crappy grenade."
-	icon_state = "fartbomb"
-	sound_beep = 'sound/voice/farts/poo2.ogg'
-	icon_state_armed = "fartbomb_beep"
-	sound_explode = 'sound/voice/farts/superfart.ogg'
-	is_dangerous = FALSE
-
 /obj/item/gimmickbomb/gold
 	name = "Gold Bomb"
 	desc = "Why explode when you can gold!"
@@ -1134,18 +1253,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				M.become_statue("gold")
+				M.become_statue(getMaterial("gold"))
 		..()
 
-
-/obj/item/gimmickbomb/butt/prearmed
-	armed = TRUE
-	anchored = ANCHORED
-
-	New()
-		SPAWN(0)
-			src.beep(10)
-		return ..()
 
 /obj/item/gimmickbomb/owlgib/prearmed
 	armed = TRUE
@@ -1339,6 +1449,126 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 		..()
 
+
+#define ROMAN_CANDLE_UNLIT 0
+#define ROMAN_CANDLE_LIT 1
+#define ROMAN_CANDLE_BURNT 2
+
+/obj/item/roman_candle
+	name = "roman candle"
+	desc = "Contains 10 exploding stars. Only use outdoors. Only point towards sky. All liability is waived."
+	icon = 'icons/obj/items/sparklers.dmi'
+	icon_state = "sparkler-off"
+	inhand_image_icon = 'icons/obj/items/sparklers.dmi'
+	item_state = "sparkler-off"
+	w_class = W_CLASS_SMALL
+	var/base_icon_state = "sparkler-"
+	var/state = ROMAN_CANDLE_UNLIT
+	var/charges = 10
+
+/obj/item/roman_candle/New()
+	. = ..()
+	src.charges = rand(8,10) // cheap ass fireworks
+
+/obj/item/roman_candle/attackby(obj/item/W, mob/user, params)
+	if (src.state == ROMAN_CANDLE_UNLIT)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+			src.light(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
+
+		else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
+			src.light(user, SPAN_ALERT("Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit."))
+
+		else if (istype(W, /obj/item/device/igniter))
+			src.light(user, SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
+
+		else if (istype(W, /obj/item/device/light/zippo) && W:on)
+			src.light(user, SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
+
+		else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+			src.light(user, SPAN_ALERT("<b>[user] lights [src] with [W]."))
+
+		else if (W.burning)
+			src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
+	else
+		return ..()
+
+/obj/item/roman_candle/temperature_expose(datum/gas_mixture/air, temperature, volume)
+	if((temperature > T0C+400))
+		src.light(src.loc, SPAN_ALERT("\The [src] cooks off!"))
+	..()
+
+/obj/item/roman_candle/reagent_act(reagent_id, volume, datum/reagentsholder_reagents)
+	if (src.state == ROMAN_CANDLE_LIT)
+		if (reagent_id == "ff-foam" || reagent_id == "water" && volume >= 10)
+			src.snuff(src.loc)
+	. = ..()
+
+/obj/item/roman_candle/process()
+	if (src.state != ROMAN_CANDLE_LIT)
+		processing_items -= src
+		return
+
+	var/turf/T = get_turf(src.loc)
+
+	if (T)
+		T.hotspot_expose(700,5)
+
+	if (prob(66))
+		var/direction = pick(alldirs)
+		var/turf/location = src.loc
+		if (ismob(location))
+			var/mob/M = location
+			if (M.find_in_hand(src))
+				location = M.loc
+				direction = M.dir
+		src.shoot_firework(T, direction)
+
+/obj/item/roman_candle/update_icon()
+	. = ..()
+	var/new_state = src.base_icon_state
+	switch (src.state)
+		if(ROMAN_CANDLE_UNLIT)
+			new_state += "off"
+		if(ROMAN_CANDLE_LIT)
+			new_state += "on"
+		if(ROMAN_CANDLE_BURNT)
+			new_state += "burnt"
+	src.icon_state = new_state
+	src.item_state = new_state
+
+/obj/item/roman_candle/proc/light(mob/user, message)
+	if (!src) return
+	if (src.state != ROMAN_CANDLE_UNLIT) return
+	src.state = ROMAN_CANDLE_LIT
+	logTheThing(LOG_STATION, user, "lights the [src] at [log_loc(src)].")
+	src.hit_type = DAMAGE_BURN
+	src.force = 3
+	src.UpdateIcon()
+	processing_items |= src
+	if(istype(user))
+		user.update_inhands()
+
+/obj/item/roman_candle/proc/shoot_firework(turf/T, direction)
+	var/datum/projectile/special/firework/firework = new
+	shoot_projectile_ST_pixel_spread(src.loc, firework, get_step(src.loc, direction))
+	src.charges--
+	if (src.charges <= 0)
+		src.snuff(src.loc)
+
+/obj/item/roman_candle/proc/snuff(mob/user)
+	if (!src) return
+	if (src.state != ROMAN_CANDLE_LIT) return
+	src.state = ROMAN_CANDLE_BURNT
+	src.UpdateIcon()
+	processing_items -= src
+	if (istype(user))
+		user.update_inhands()
+
+#undef ROMAN_CANDLE_UNLIT
+#undef ROMAN_CANDLE_LIT
+#undef ROMAN_CANDLE_BURNT
+
+
 //////////////////////// Breaching charges //////////////////////////////////
 
 /obj/item/breaching_charge
@@ -1469,6 +1699,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		return
 
 	proc/check_placeable_target(atom/A)
+		if (A.plane == PLANE_HUD) //stop putting mining charges on your HUD buttons
+			return FALSE
 		if (!istype(A, /obj/item))
 			return TRUE
 		if (A.storage) // no blowing yourself up if you have full storage
@@ -1634,7 +1866,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	 							/obj/item/reagent_containers/food/snacks/ectoplasm, /obj/item/scrap, /obj/item/raw_material/scrap_metal, /obj/item/cell,/obj/item/cable_coil,\
 	 							/obj/item/item_box/medical_patches, /obj/item/item_box/gold_star, /obj/item/item_box/assorted/stickers, /obj/item/material_piece/cloth,\
 	 							/obj/item/raw_material/shard, /obj/item/raw_material/telecrystal, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/ingredient/butter,\
-	 							/obj/item/rcd_ammo)
+	 							/obj/item/rcd_ammo, /obj/item/raw_material/plasmastone, /obj/item/material_piece/plasmastone)
 
 	get_help_message(dist, mob/user)
 		switch(src.state)
@@ -1644,9 +1876,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				return "You can add fuel to begin making a pipebomb, a staple gun to create a zip gun, a pipe frame to create a slam gun, or use <b>wirecutters</b> to create hollow pipe hulls."
 			if (3) // Hollowed out with chem inside
 				return "You can add a cable coil to continue making a pipebomb."
-			if (4) // Hollowed out with chem and wiring
-				return "You can add an igniter assembly and secure it with a <b>screwdriver</b> to finish making the pipebomb."
-			if (5) // Hollowed out Pipeshot
+			if (4) // Hollowed out Pipeshot
 				return "You can add fuel and glass shards or scrap to make pipeshot."
 
 	attack_self(mob/user as mob)
@@ -1664,8 +1894,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(pipeframe_welding), FALSE)
 		// unwelded frame + hollow frame -> slamgun
 		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
-		// unwelded frame + mousetrap -> mousetrap roller
-		src.AddComponent(/datum/component/assembly, /obj/item/mousetrap, PROC_REF(mousetrap_roller_crafting), TRUE)
 
 	// Pipebomb/shot assembly procs
 
@@ -1702,29 +1930,11 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		user.u_equip(src)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
+		logTheThing(LOG_STATION, user, "crafts a zipgun at [log_loc(user)]")
 		user.put_in_hand_or_drop(new_gun)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_gun, user)
 		qdel(to_combine_atom)
 		qdel(src)
-
-	///mousetrap roller crafting proc
-	proc/mousetrap_roller_crafting(var/atom/to_combine_atom, var/mob/user)
-		//This could theoretically be moved to mousetrap and enabled if a bomb is attached.
-		//But you either check if a bomb is attached or if the pipeframe is state 2, so it won't change much
-
-		var/obj/item/mousetrap/checked_trap = to_combine_atom
-
-		// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
-		// likely to bump into an inanimate object.
-		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.gimmickbomb)
-			user.show_text("[checked_trap] must have a grenade or pipe bomb attached first.", "red")
-			return FALSE
-
-		user.u_equip(checked_trap)
-		user.u_equip(src)
-		new /obj/item/mousetrap_roller(get_turf(checked_trap), checked_trap, src)
-		// we don't remove the components here since the frame can be retreived by disassembling the roller
-		// Since the assembly was done, return TRUE
-		return TRUE
 
 	/// Slamgun crafting proc
 	proc/slamgun_crafting(var/atom/to_combine_atom, var/mob/user)
@@ -1734,7 +1944,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			user.u_equip(to_combine_atom)
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+			logTheThing(LOG_STATION, user, "crafts a slamgun at [log_loc(user)]")
 			user.put_in_hand_or_drop(S)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, S, user)
 			qdel(to_combine_atom)
 			qdel(src)
 			// Since the assembly was done, return TRUE
@@ -1744,7 +1956,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	proc/pipeshot_crafting(var/atom/to_combine_atom, var/mob/user)
 		src.name = "hollow pipe hulls"
 		boutput(user, SPAN_NOTICE("You cut the pipe into four neat hulls."))
-		src.state = 5
+		src.state = 4
 		src.icon_state = "Pipeshot"
 		src.desc = "Four open pipe shells. They're currently empty."
 		//Since we changed the state, remove all assembly components and add the next state ones
@@ -1778,7 +1990,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	proc/pipebomb_filling(var/atom/to_combine_atom, var/mob/user)
 		//There is less room for explosive material when you use item mods
 		var/obj/item/reagent_containers/filling_glass = to_combine_atom
-		var/max_allowed = 20 - src.item_mods.len * 5
+		var/max_allowed = 20
 		if(filling_glass.reagents.total_volume < max_allowed)
 			boutput(user, SPAN_NOTICE("There is not enough chemicals in [filling_glass] to fill the frame."))
 		else
@@ -1798,7 +2010,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				src.strength = 0
 			else
 				src.strength *= avg_volatility
-				src.strength -= item_mods.len * 0.5 //weakened by having mods
 
 			src.icon_state = "Pipe_Filled"
 			src.state = 3
@@ -1841,59 +2052,44 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				qdel(src.reagents)
 				//make the hulls
 				boutput(user, SPAN_NOTICE("You add some propellant to the hulls."))
-				new /obj/item/assembly/pipehulls(get_turf(src))
+				var/pipehulls = new /obj/item/pipehulls(get_turf(src))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, pipehulls, user)
 				qdel(src)
 		// Since the assembly was done, return TRUE
 		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
 		return TRUE
 
-
 	/// Pipebomb cabling proc
 	proc/pipebomb_cabling(var/atom/to_combine_atom, var/mob/user)
-		boutput(user, SPAN_NOTICE("You link the cable, fuel and pipes."))
-		src.state = 4
-		src.icon_state = "Pipe_Wired"
-
-		if (src.material)
-			src.name = "[src.material.getName()] pipe bomb frame"
+		var/obj/item/cable_coil/used_cables = to_combine_atom
+		if(used_cables.amount >= 3)
+			boutput(user, SPAN_NOTICE("You link the cable, fuel and pipes."))
+			var/turf/target_turf = get_turf(src)
+			var/obj/item/pipebomb/bomb/complete_bomb = new /obj/item/pipebomb/bomb(target_turf)
+			complete_bomb.strength = src.strength
+			logTheThing(LOG_STATION, user, "crafts a pipe bomb at [log_loc(user)], power: [complete_bomb.strength], modifiers: [length(src.item_mods) ? english_list(src.item_mods) : "none"]")
+			if (src.material)
+				complete_bomb.setMaterial(src.material)
+			//add properties from item mods to the finished pipe bomb
+			complete_bomb.set_up_special_ingredients(src.item_mods)
+			user.u_equip(src)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, complete_bomb, user)
+			qdel(src)
+			used_cables.change_stack_amount(-3)
+			user.put_in_hand_or_drop(complete_bomb)
 		else
-			src.name = "pipe bomb frame"
-
-		src.desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
-		src.flags &= ~NOSPLASH
-		//Since we changed the state, remove all assembly components and add the next state ones
-		src.RemoveComponentsOfType(/datum/component/assembly)
-		// timer + wired pipebomb -> standard pipebomb
-		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(standard_pipebomb_crafting), TRUE)
-		// Since the assembly was done, return TRUE
-		return TRUE
-
-	/// Standard pipebomb without assemblies
-	proc/standard_pipebomb_crafting(var/atom/to_combine_atom, var/mob/user)
-		boutput(user, SPAN_NOTICE("You connect the cable to the timer."))
-		var/turf/target_turf = get_turf(src)
-		var/obj/item/pipebomb/bomb/complete_bomb = new /obj/item/pipebomb/bomb(target_turf)
-		complete_bomb.strength = src.strength
-		if (src.material)
-			complete_bomb.setMaterial(src.material)
-		//add properties from item mods to the finished pipe bomb
-		complete_bomb.set_up_special_ingredients(src.item_mods)
-		user.u_equip(to_combine_atom)
-		qdel(to_combine_atom)
-		qdel(src)
+			boutput(user, SPAN_NOTICE("You need more cables for this step."))
 		// Since the assembly was done, return TRUE
 		return TRUE
 
 
-ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 /obj/item/pipebomb/bomb
 	name = "pipe bomb"
-	desc = "An improvised explosive made primarily out of two pipes."
-	icon_state = "Pipe_Timed"
+	desc = "An improvised explosive made primarily out of two pipes. It needs some kind of ignition switch."
+	icon_state = "Pipe_Wired"
 	contraband = 4
 
 	var/strength = 5
-	var/armed = FALSE
 	var/is_dangerous = TRUE
 
 	var/glowsticks = 0
@@ -1914,10 +2110,6 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 	var/list/throw_objs = new /list()
 
-	attack_self(mob/user)
-		if (src.armed)
-			return
-		src.arm(user)
 
 	/// This proc handles the addition of special effects to the pipebomb. Pass a list with the items to items_to_account for this
 	proc/set_up_special_ingredients(var/list/items_to_account)
@@ -1953,7 +2145,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
 					src.bleed += 1
 			if (istype(checked_item, /obj/item/raw_material/telecrystal))
-				src.tele += 1
+				src.tele += 2
 			if (istype(checked_item, /obj/item/instrument))
 				var/obj/item/instrument/R = checked_item
 				src.sound_effect = islist(R.sounds_instrument) ? pick(R.sounds_instrument) : R.sounds_instrument
@@ -1974,21 +2166,6 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				src.throw_objs += B.contained_items
 			if (istype(checked_item, /obj/item/material_piece/plasmastone) || istype(checked_item, /obj/item/raw_material/plasmastone))
 				src.plasma += 1
-
-	proc/arm(mob/user)
-		boutput(user, SPAN_ALERT("You activate the pipe bomb! 5 seconds!"))
-		armed = TRUE
-		var/area/A = get_area(src)
-		if(!A.dont_log_combat && user)
-			if(is_dangerous)
-				message_admins("[key_name(user || usr)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
-			logTheThing(LOG_COMBAT, user, "arms a [src.name] (power [strength]) at [log_loc(src)])")
-
-		if (sound_effect)
-			SPAWN(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
-				playsound(src, sound_effect, 50, TRUE)
-		SPAWN(5 SECONDS)
-			do_explode()
 
 	ex_act(severity)
 		do_explode()
@@ -2017,62 +2194,62 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				if (istype(hero))
 					hero.reagents.add_reagent("radium", 10 * radium_amt, null, T0C + 300)
 				else // leave a radium puddle instead
-					for (var/turf/splat in view(1,src.loc))
+					for (var/turf/splat in view(1,origin))
 						make_cleanable( /obj/decal/cleanable/greenglow,splat)
-					for (var/mob/M in view(3,src.loc))
+					for (var/mob/M in view(3,origin))
 						if(iscarbon(M))
 							if (M.reagents)
 								M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
 						boutput(M, SPAN_ALERT("You are splashed with hot green liquid!"))
 			if (butt)
 				if (butt > 1)
-					playsound(src.loc, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(origin, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
-				for (var/mob/M in view(istype(hero) ? 1 : 3 + butt,src.loc))
+					playsound(origin, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+				for (var/mob/M in view(istype(hero) ? 1 : 3 + butt,origin))
 					ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
-					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
+					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(origin))
 				else
-					particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.loc))
+					particleMaster.SpawnSystem(new /datum/particleSystem/confetti(origin))
 			if (meat)
 				if (meat > 1)
-					gibs(src.loc)
-				for (var/turf/splat in view(meat,src.loc))
+					gibs(origin)
+				for (var/turf/splat in view(meat,origin))
 					make_cleanable( /obj/decal/cleanable/blood,splat)
 			if (ghost) //throw objects towards bomb center
 				if (ghost > 1)
-					for (var/mob/M in view(2+ghost,src.loc))
+					for (var/mob/M in view(2+ghost,origin))
 						if(iscarbon(M))
 							boutput(M, SPAN_ALERT("You are yanked by an unseen force!"))
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
 							M.throw_at(origin, yank_distance, 2)
-				for (var/obj/O in view(1,src.loc))
+				for (var/obj/O in view(1,origin))
 					O.throw_at(origin, 2, 2)
 			if (extra_shrapnel)
 				throw_shrapnel(origin, 4, extra_shrapnel * (istype(hero) ? 1 : 3))
 			if (cable && charge) //arc flash
 				var/target_count = 0
-				for (var/mob/living/L in view(5, src.loc))
+				for (var/mob/living/L in view(5, origin))
 					target_count++
 				if (target_count)
-					for (var/mob/living/L in oview(5, src.loc))
+					for (var/mob/living/L in oview(5, origin))
 						// reducing range increases impact, reduce mob shock intensity instead
 						arcFlash(src, L, max((charge*7) / (target_count * (istype(hero) ? 2 : 1)), 1))
 				else
-					for (var/turf/T in oview(3,src.loc))
+					for (var/turf/T in oview(3,origin))
 						if (prob(2))
 							arcFlashTurf(src, T, max((charge*6) * rand(),1))
 			if (bleed)
-				for (var/mob/M in view(istype(hero) ? 1 : 3,src.loc))
+				for (var/mob/M in view(istype(hero) ? 1 : 3,origin))
 					take_bleeding_damage(M, null, bleed * 3, DAMAGE_CUT)
 			if (src.reagents)
 				if (istype(hero))
 					src.reagents.trans_to_direct(hero, src.reagents.total_volume / 2)
-				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), src.loc))
+				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), origin))
 					src.reagents.reaction(T,1,5)
 
 			if (istype(hero))
@@ -2083,27 +2260,27 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 			//do mod effects : post-explosion
 			if (tele)
-				for (var/mob/M in view(2+tele,src.loc))
+				for (var/mob/M in view(4,origin))
 					if(isturf(M.loc) && !isrestrictedz(M.loc.z))
-						var/turf/warp_to = get_turf(pick(orange(3 + tele, M.loc)))
+						var/turf/warp_to = get_turf(pick(orange(3 * tele, M.loc)))
 						if (isturf(warp_to))
 							playsound(M.loc, "warp", 50, 1)
 							M.visible_message(SPAN_ALERT("[M] is warped away!"))
 							boutput(M, SPAN_ALERT("You suddenly teleport ..."))
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(src, 'sound/items/Deconstruct.ogg', 70, TRUE)
-				for (var/turf/T in view(rcd,src.loc))
+				playsound(origin, 'sound/items/Deconstruct.ogg', 70, TRUE)
+				for (var/turf/T in view(rcd,origin))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()
 						F.setMaterial(getMaterial(rcd_mat))
 				if (rcd > 1)
-					for (var/turf/T in view(3,src.loc))
+					for (var/turf/T in view(3,origin))
 						if (prob(rcd * 10))
 							new /obj/mesh/grille/steel(T)
 
 			if (plasma)
-				for (var/turf/simulated/floor/target in range(1,src.loc))
+				for (var/turf/simulated/floor/target in range(1,origin))
 					if(!target.gas_impermeable && target.air)
 						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
@@ -2117,7 +2294,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 			if (throw_objs.len && length(throw_objs) > 0)
 				var/count = 20
 				var/obj/spawn_item
-				for (var/mob/living/L in oview(5, src.loc))
+				for (var/mob/living/L in oview(5, origin))
 					spawn_item = pick(throw_objs)
 					var/obj/O = new spawn_item(origin)
 					if (istype(O,/obj/item/reagent_containers/patch))
@@ -2126,7 +2303,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 					O.throw_at(L, istype(hero) ? 2 : 5, 3) // thrown short of far targets
 					count--
 				if (count > 0)
-					for (var/turf/target in oview(4,src.loc))
+					for (var/turf/target in oview(4,origin))
 						if (prob(4))
 							spawn_item = pick(throw_objs)
 							var/obj/O = new spawn_item(origin)
@@ -2143,16 +2320,11 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 			visible_message(SPAN_ALERT("[src] sparks and emits a small cloud of smoke, crumbling into a pile of dust."))
 			qdel(src)
 
-/obj/item/pipebomb/bomb/syndicate
-	name = "pipe bomb"
-	desc = "An improvised explosive made primarily out of two pipes." // cogwerks - changed the name
-	icon_state = "Pipe_Timed"
-	strength = 32
 
 /obj/item/pipebomb/bomb/miniature_syndicate
 	name = "pipe bomb"
-	desc = "This pipe bomb seems funny. You can hear muffled tiny screams inside."
-	icon_state = "Pipe_Timed"
+	desc = "This pipe bomb seems funny. You can hear muffled tiny screams inside. It needs some kind of ignition switch."
+	icon_state = "Pipe_Wired_Syndicate"
 	strength = 1
 	var/how_many_miniatures = 4
 
@@ -2165,15 +2337,15 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 /obj/item/pipebomb/bomb/engineering
 	name = "controlled demolition pipe"
-	desc = "A weak explosive designed to blast open holes in the sea floor."
-	icon_state = "Pipe_Yellow"
+	desc = "A weak explosive designed to blast open holes in the sea floor. It needs some kind of ignition switch."
+	icon_state = "Pipe_Wired_Yellow"
 	strength = 1
 	is_dangerous = FALSE
 
 	on_blowthefuckup(strength) //always blow hole!
 		..(strength)
-		if (istype(src.loc,/turf/space/fluid))
-			var/turf/space/fluid/T = src.loc
+		if (istype(get_turf(src),/turf/space/fluid))
+			var/turf/space/fluid/T = get_turf(src)
 			T.blow_hole()
 
 /obj/effects/explosion/tiny_baby
@@ -2182,7 +2354,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 		src.transform = matrix(0.5, MATRIX_SCALE)
 
 /obj/proc/on_blowthefuckup(strength)
-	new /obj/effects/explosion/tiny_baby (src.loc)
+	new /obj/effects/explosion/tiny_baby (get_turf(src))
 	src.material_trigger_on_temp(T0C + strength * 100)
 	src.material_trigger_on_explosion(1)
 
