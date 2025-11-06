@@ -5,7 +5,7 @@
 	var/scan_time = 0
 	var/accuracy = 0 //! The quality of the scan
 	var/is_admin = FALSE
-	var/list/datum/forensic_id/scan_effects = list()
+	var/list/scan_effects = list()
 
 	var/report_title = "Unknown Forensic Analysis"
 
@@ -49,10 +49,10 @@
 			src.next_chain.chain_scan(new_scan)
 
 	proc/add_effect(var/effect_id)
-		src.scan_effects += register_id(effect_id)
+		src.scan_effects += effect_id
 
 	proc/has_effect(var/effect_id)
-		return src.scan_effects.Find(register_id(effect_id))
+		return src.scan_effects.Find(effect_id)
 
 // The results of a forensics scan in text format.
 /datum/forensic_report

@@ -111,13 +111,15 @@ datum
 				. = ..()
 				if(volume < 1)
 					return
-				T.changeStatus("forensic_silver_nitrate", 30 SECONDS)
+				OVERRIDE_COOLDOWN(T, "forensic_silver_nitrate", 30 SECONDS)
+				holder.remove_reagent(src.id, 1)
 
 			reaction_obj(var/obj/O, var/volume)
 				. = ..()
 				if(volume < 1)
 					return
-				O.changeStatus("forensic_silver_nitrate", 30 SECONDS)
+				OVERRIDE_COOLDOWN(O, "forensic_silver_nitrate", 30 SECONDS)
+				holder.remove_reagent(src.id, 1)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()

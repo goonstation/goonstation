@@ -403,10 +403,10 @@
 /* -------------------- Forensic -------------------- */
 /* ================================================== */
 
-/obj/item/reagent_containers/glass/bottle/silver_nitrate
-	name = "bottle (silver nitrate)"
-	desc = "A small bottle containing silver nitrate, used for revealing partial fingerprints."
-	amount_per_transfer_from_this = 5
+/obj/item/reagent_containers/glass/vial/silver_nitrate
+	name = "vial (silver nitrate)"
+	desc = "A small vial containing silver nitrate, used for revealing partial fingerprints."
+	amount_per_transfer_from_this = 1
 	splash_all_contents = FALSE
 	initial_reagents = "silver_nitrate"
 
