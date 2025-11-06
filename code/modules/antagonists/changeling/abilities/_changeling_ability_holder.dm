@@ -220,6 +220,8 @@
 		..()
 		for(var/mob/dead/target_observer/hivemind_observer/HO in hivemind)
 			src.insert_into_hivemind(HO)
+		src.owner.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[src]")
+		src.owner.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src]")
 
 // ----------------------------------------
 // Generic abilities that critters may have

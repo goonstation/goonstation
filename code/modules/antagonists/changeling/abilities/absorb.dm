@@ -200,6 +200,8 @@
 			ownerMob.UpdateName()
 			ownerMob.bioHolder.AddEffect("husk")
 			ownerMob.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
+			ownerMob.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER)
+			ownerMob.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT)
 
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
