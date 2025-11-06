@@ -237,6 +237,13 @@ TYPEINFO(/obj/item/places_pipes)
 		ui = new(user, src, "HandPipeDispenser", name)
 		ui.open()
 
+/obj/item/places_pipes/proc/getBase64Img(datum/pipe_recipe/recipe, direction = SOUTH)
+	. = src.cache["[recipe.name][direction]"]
+	if(.)
+		return
+	. = icon2base64(icon = icon(icon = recipe.icon, icon_state = recipe.icon_state, dir = direction))
+	src.cache["[recipe.name][direction]"] = .
+
 /obj/item/places_pipes/ui_data(mob/user)
 	var/mob/living/silicon/S
 	if (issilicon(user))
@@ -304,12 +311,11 @@ TYPEINFO(/obj/item/places_pipes)
 			src.UpdateIcon()
 			. = TRUE
 
-/obj/item/places_pipes/proc/getBase64Img(datum/pipe_recipe/recipe, direction = SOUTH)
-	. = src.cache["[recipe.name][direction]"]
-	if(.)
-		return
-	. = icon2base64(icon = icon(icon = recipe.icon, icon_state = recipe.icon_state, dir = direction))
-	src.cache["[recipe.name][direction]"] = .
+/obj/item/places_pipes/adminshenanigans
+	name = "extremely powerful handheld pipe dispenser"
+	resources = INFINITY
+	max_resources = INFINITY
+	dispenser_delay = 1 DECI SECOND
 
 /datum/pipe_recipe
 	var/icon = 'icons/obj/atmospherics/hhd_recipe_images.dmi'

@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 		return
 
 	if (I.reagents.total_volume >= I.reagents.maximum_volume)
-		boutput(user, SPAN_ALERT("[src] is full."))
+		boutput(user, SPAN_ALERT("[I] is full."))
 		return
 
 	FLICK("output1", src)

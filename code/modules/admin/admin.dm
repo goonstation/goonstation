@@ -1571,10 +1571,13 @@ var/global/noir = 0
 
 			var/atom/A = locate(href_list["target"])
 
-			if (!A.reagents) // || !target.reagents.total_volume)
+			var/datum/reagents/reagents = A.reagents
+			if (istype(A, /obj/fluid_pipe))
+				var/obj/fluid_pipe/pipe = A
+				reagents = pipe.network.reagents
+			if (!reagents) // || !target.reagents.total_volume)
 				boutput(usr, SPAN_NOTICE("<b>[A] contains no reagents.</b>"))
 				return
-			var/datum/reagents/reagents = A.reagents
 
 			var/pick_id
 			var/pick
@@ -1605,8 +1608,8 @@ var/global/noir = 0
 			if (!amt || amt < 0)
 				return
 
-			if (A.reagents)
-				if (!A.reagents.remove_reagent(pick_id,amt))
+			if (reagents)
+				if (!reagents.remove_reagent(pick_id,amt))
 					boutput(usr, SPAN_ALERT("Failed to remove [amt] units of [pick_id] from [A.name]."))
 					return
 

@@ -1374,6 +1374,9 @@
 			var/obj/fluid/F = target
 			if (F.group && F.group.reagents)
 				reagents = F.group.reagents
+		if (istype(target, /obj/fluid_pipe))
+			var/obj/fluid_pipe/pipe = target
+			reagents = pipe.network.reagents
 		if (!reagents)
 			boutput(usr, SPAN_NOTICE("<b>[target] contains no reagents.</b>"))
 			return
