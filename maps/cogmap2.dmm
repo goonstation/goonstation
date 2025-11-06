@@ -55760,10 +55760,9 @@
 /area/station/medical/staff)
 "gLv" = (
 /obj/machinery/bot/secbot/beepsky,
-/obj/machinery/light{
+/obj/machinery/light/small{
 	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
+	pixel_x = -12
 	},
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
