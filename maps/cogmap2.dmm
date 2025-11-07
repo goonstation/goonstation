@@ -19829,7 +19829,8 @@
 /obj/item/sticker/postit{
 	words = "Sword was confiscated from clown after destroying second shift captain's egun in a duel";
 	pixel_y = -7;
-	pixel_x = -5
+	pixel_x = -5;
+	icon_state = "postit-writing"
 	},
 /turf/simulated/floor/redblack{
 	dir = 9
@@ -55768,6 +55769,9 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "gLK" = (
@@ -60296,6 +60300,9 @@
 	dir = 8
 	},
 /area/station/engine/hotloop)
+"kBE" = (
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "kBM" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -65949,7 +65956,7 @@
 "pJo" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
@@ -129038,8 +129045,8 @@ lco
 sIc
 qMV
 gOW
+kBE
 sME
-gmx
 gmx
 dyj
 bir
