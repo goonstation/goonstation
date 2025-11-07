@@ -80,6 +80,14 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	. = ..()
 	src.emagged = FALSE
 
+/obj/machinery/gravity_tether/overload_act()
+	. = ..()
+	if (!ON_COOLDOWN(src, "overload_cooldown", 5 MINUTES))
+		src.visible_message("The pylons on [src] short together!")
+		src.random_fault(3)
+		return TRUE
+	return FALSE
+
 /obj/machinery/gravity_tether/set_broken()
 	. = ..()
 	src.random_fault(20)
