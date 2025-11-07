@@ -1,5 +1,9 @@
 
 (t)fri nov 07 25
+(u)Smearfo
+(p)25078
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Cyborgs can now *raisehand.
 (u)JORJ949
 (p)25090
 (e)⚖💊|C-Balance, A-Medical
