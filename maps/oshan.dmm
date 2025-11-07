@@ -45158,7 +45158,7 @@
 	pixel_y = -3;
 	pixel_x = 9
 	},
-/obj/item/random_trinket_spawner,
+/obj/item/assembly/flash_cell,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
