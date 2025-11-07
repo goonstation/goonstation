@@ -19871,7 +19871,6 @@
 	pixel_y = 2;
 	pixel_x = -2
 	},
-/obj/item/random_trinket_spawner,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
