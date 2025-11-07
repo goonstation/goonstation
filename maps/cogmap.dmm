@@ -47347,6 +47347,10 @@
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/item/toy/sword{
+	pixel_y = -3;
+	pixel_x = -4
+	},
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -53435,6 +53439,11 @@
 /area/station/security/main)
 "qcv" = (
 /obj/rack,
+/obj/item/gun/kinetic/foamdartgun,
+/obj/item/ammo/bullets/foamdarts{
+	pixel_y = -5;
+	pixel_x = 5
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
