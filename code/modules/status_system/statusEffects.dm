@@ -1021,6 +1021,11 @@
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			. = ..()
 
+		gravity
+			id = "staggered_gravity"
+			desc = "You have been staggered by local gravity.<br>Slowed slightly, unable to sprint."
+			maxDuration = 20 SECONDS
+
 	humiliated
 		id = "humiliated"
 		name = "Humiliated"

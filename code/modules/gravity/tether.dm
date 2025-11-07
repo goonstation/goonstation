@@ -1,6 +1,3 @@
-#define TETHER_EMAG_CHANGE_CHANCE 50
-#define TETHER_EMAG_CHANGE_COUNT 20
-
 ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether
 	name = "gravity tether"
@@ -71,19 +68,26 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
 	if(src.emagged)
+		boutput(user, "It looks like [src] is already glitching out...")
 		return
+	logTheThing(LOG_STATION, src, "was emagged by [user] at [log_loc(src)].")
 	boutput(user, "You slide [E] across [src]'s ID reader.")
 	src.emagged = TRUE
-	src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_SWEDISH)
-	src.emag_effect()
+	src.random_fault(69) // chaos reigns
 
 //TODO: Way to remove emagged state
 /obj/machinery/gravity_tether/demag(mob/user)
 	. = ..()
 	src.emagged = FALSE
-	src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_SWEDISH)
+
+/obj/machinery/gravity_tether/set_broken()
+	. = ..()
+	src.random_fault(20)
 
 /obj/machinery/gravity_tether/proc/toggle(mob/user)
+	if (src.working)
+		return
+	logTheThing(LOG_STATION, user, "toggled [src] to [src.active ? "disabled" : "enabled"] at [log_loc(src)]")
 	src.working = TRUE
 	SPAWN(delay)
 		src.working = FALSE
@@ -98,8 +102,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.active = TRUE
 	src.icon_state = "grav_tether_active"
 	if(src.emagged)
-		src.emag_effect()
-		return
+		src.random_fault()
 	for (var/area/A in src.target_area_refs)
 		A.has_gravity = TRUE
 	for(var/client/C in clients)
@@ -110,39 +113,68 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.active = FALSE
 	src.icon_state = "grav_tether_disabled"
 	if(src.emagged)
-		src.emag_effect()
-		return
+		src.random_fault()
 	for (var/area/A in src.target_area_refs)
 		A.has_gravity = FALSE
 	for(var/client/C in clients)
 		var/mob/M = C.mob
 		if(M?.z == src.z) shake_camera(M, 5, 32, 0.2)
 
-/obj/machinery/gravity_tether/proc/emag_effect()
+/*
+Fault effects have an area parameter, and return a number inidcating the severity of what occurred.
+This is so we can mix high-impact and low-impact effects without completely overwhelming the station
+*/
+
+/// When a fault should occur, roll random faults up to the severity of the
+/obj/machinery/gravity_tether/proc/random_fault(severity_points = 1)
+	if (!isnum(severity_points))
+		logTheThing(LOG_DEBUG, src, "random fault proc called with non-number severity points, aborting.")
+		return
+	while (severity_points > 0)
+		var/area/A = pick(src.target_area_refs)
+		switch(rand(1, 3))
+			if(1)
+				severity_points -= src.gravity_spike(A)
+			if(2)
+				severity_points -= src.toggle_gravity(A)
+			if(3)
+				severity_points -= src.form_hole(A)
+
+/// TETHER FAULT: Knock and slow down people in an area
+/obj/machinery/gravity_tether/proc/gravity_spike(area/A)
+	. = 1
+	logTheThing(LOG_STATION, src, "triggered a gravity spike in [A].")
+	for (var/mob/M in A.population)
+		shake_camera(M, 5, 32, 0.2)
+		if (M.client)
+			boutput(M, SPAN_ALERT("You suddenly feel heavy..."))
+		M.changeStatus("knockdown", 2 SECONDS)
+		M.changeStatus("staggered_gravity", 15 SECONDS)
+
+/// TETHER FAULT: Toggle gravity in an area
+/obj/machinery/gravity_tether/proc/toggle_gravity(area/A)
+	. = 1
+	logTheThing(LOG_STATION, src, "reversed gravity in [A].")
+	A.has_gravity = !A.has_gravity
+
+/// TETHER FAULT: Forms a white or black hole in an area
+/obj/machinery/gravity_tether/proc/form_hole(area/A)
+	. = 20
+	var/list/turfs = get_area_turfs(A, floors_only = TRUE)
+	if (!length(turfs)) // if no floors, try all turfs
+		turfs = get_area_turfs(A, floors_only = FALSE)
+	if (!length(turfs)) // we got an area with no turfs, somehow, bail
+		logTheThing(LOG_DEBUG, src, "failed to form a white/black hole in area [A.name] due to no turfs inside.")
+		return 0
+	var/turf/T = pick(turfs)
+	var/hole_type
 	if (prob(50))
-		src.gravity_spike()
+		hole_type = "white hole"
+		new /obj/whitehole(T)
 	else
-		src.random_gravity()
-
-/obj/machinery/gravity_tether/proc/gravity_spike()
-	var/changed_area_count = 0
-	var/max_changes = min(TETHER_EMAG_CHANGE_COUNT, length(src.target_area_refs))
-	while (changed_area_count < max_changes)
-		var/area/A = pick(src.target_area_refs)
-		for (var/mob/M in A)
-			boutput(M, SPAN_ALERT("You feel so heavy..."))
-			M.changeStatus("knockdown", 3 SECONDS)
-		changed_area_count += 1
-
-///Flips gravity randomly
-/obj/machinery/gravity_tether/proc/random_gravity()
-	var/changed_area_count = 0
-	var/max_changes = min(TETHER_EMAG_CHANGE_COUNT, length(src.target_area_refs))
-	while (changed_area_count < max_changes)
-		var/area/A = pick(src.target_area_refs)
-		A.has_gravity = !A.has_gravity
-		changed_area_count += 1
-
+		hole_type = "black hole"
+		new /obj/anomaly/bhole_spawner(T)
+	logTheThing(LOG_STATION, src, "spawned a [hole_type] at [log_loc(T)].")
 
 /obj/machinery/gravity_tether/station
 	req_access = list(access_engineering_chief)
@@ -162,7 +194,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/station/activate()
 	. = ..()
 	if(src.emagged)
-		src.emag_effect()
 		return
 	for(var/client/C in clients)
 		var/mob/M = C.mob
@@ -173,7 +204,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/station/deactivate()
 	. = ..()
 	if(src.emagged)
-		src.emag_effect()
 		return
 	for(var/client/C in clients)
 		var/mob/M = C.mob
@@ -235,7 +265,3 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 		var/area/A = get_area_by_type(area_typepath)
 		if (istype(A))
 			src.target_area_refs.Add(A)
-
-
-#undef TETHER_EMAG_CHANGE_CHANCE
-#undef TETHER_EMAG_CHANGE_COUNT
