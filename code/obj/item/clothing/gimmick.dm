@@ -2154,3 +2154,19 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "chompskysuit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+
+//Phantom of the Opera
+
+/obj/item/clothing/mask/phantom
+	name = "half mask"
+	desc = "Someone must've taken a bite out of this mask, half of it is missing!"
+	icon_state = "phantom"
+	item_state = "phantom"
+	see_face = TRUE
+
+/obj/item/clothing/suit/gimmick/nightgown
+
+	name = "nightgown"
+	desc = "A fancy frilly nightgown. Candelabra not included."
+	icon_state = "nightgown"
+	item_state = "nightgown"

@@ -10512,6 +10512,10 @@
 "hBO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
+"hCw" = (
+/obj/turbine_shaft/turbine,
+/turf/simulated/floor/black,
+/area/station/engine/substation/northwest)
 "hCM" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow/checker{
@@ -78687,7 +78691,7 @@ aiG
 xCH
 lGN
 lhL
-lGN
+hCw
 bOq
 oCp
 lko
