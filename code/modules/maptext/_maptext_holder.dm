@@ -76,23 +76,22 @@
 	animate(src, pixel_y = src.pixel_y + text_height, time = MAPTEXT_FADE_IN_DURATION, flags = ANIMATION_PARALLEL)
 
 	// Now look for nearby mobs and bump their maptext with an empty line (setting param to avoid infinite recursion)
+	var/turf/our_turf = get_turf(src.parent.parent)
 	if (!no_bump_others)
-		var/turf/T = get_turf(src.parent.parent)
-		for(var/i = 0; i < 2; i++)
-			T = get_step(T, WEST)
-		for(var/i = 0; i < 5; i++)
+		for (var/mob/living/other_mob in hearers(4, src.parent.parent))
+			if(other_mob == src.parent.parent)
+				continue
+			var/turf/other_turf = get_turf(other_mob)
+			if (other_turf.y != our_turf.y)
+				continue
 			//this is restricted to mobs only for performance reasons, and living mobs only to not let ghosts interfere
-			for(var/mob/living/other_mob in T)
-				if(other_mob == src.parent.parent)
-					continue
-				var/atom/movable/maptext_holder/holder = other_mob.maptext_manager?.maptext_holders_by_client?[src.client]
-				if (holder)
-					var/image/maptext/blank_line = NEW_MAPTEXT(/image/maptext)
-					blank_line.maptext = text.maptext
-					blank_line.maptext_height = text.maptext_height
-					blank_line.alpha = 0
-					holder.add_line(blank_line, TRUE)
-			T = get_step(T, EAST)
+			var/atom/movable/maptext_holder/holder = other_mob.maptext_manager?.maptext_holders_by_client?[src.client]
+			if (holder)
+				var/image/maptext/blank_line = NEW_MAPTEXT(/image/maptext)
+				blank_line.maptext = text.maptext
+				blank_line.maptext_height = text.maptext_height
+				blank_line.alpha = 0
+				holder.add_line(blank_line, TRUE)
 
 	// Animate the new line's fade-in.
 	animate(text, alpha = target_alpha, pixel_y = target_pixel_y, time = MAPTEXT_FADE_IN_DURATION, flags = ANIMATION_PARALLEL)
