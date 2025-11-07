@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	name = "gravity tether"
 	desc = "A rather delicate piece of machinery that normalizes gravity to Earth-like levels."
 	icon = 'icons/obj/large/64x64.dmi'
-	icon_state = "grav_tether_active"
+	icon_state = "grav_tether_base"
 	density = TRUE
 	anchored = ANCHORED_ALWAYS
 	bound_width = 64
@@ -64,8 +64,28 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 				logTheThing(LOG_STATION, user, "unlocked gravity tether at at [log_loc(src)].")
 		else
 			src.say("Access denied.")
+		src.UpdateIcon()
 		return
 	. = ..()
+
+/obj/machinery/gravity_tether/update_icon()
+	. = ..()
+	if (src.has_no_power())
+		src.UpdateOverlays(null, "tether_function")
+		src.UpdateOverlays(null, "tether_locked")
+		return
+
+	if (src.is_broken())
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_broken", 'icons/obj/large/64x64.dmi', "tether_overlay-broken"), "tether_function")
+	else if (src.active)
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_active", 'icons/obj/large/64x64.dmi', "tether_overlay-enabled"), "tether_function")
+	else
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_inactive", 'icons/obj/large/64x64.dmi', "tether_overlay-disabled"), "tether_function")
+
+	if (src.locked)
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_locked", 'icons/obj/large/64x64.dmi', "tether_overlay-locked"), "tether_lock_state")
+	else
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_unlocked", 'icons/obj/large/64x64.dmi', "tether_overlay-unlocked"), "tether_lock_state")
 
 /obj/machinery/gravity_tether/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
@@ -130,10 +150,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			src.deactivate()
 			return
 		src.activate()
+		src.UpdateIcon()
 
 /obj/machinery/gravity_tether/proc/activate()
 	src.active = TRUE
-	src.icon_state = "grav_tether_active"
 	if(src.emagged)
 		src.random_fault()
 	for (var/area/A in src.target_area_refs)
@@ -141,10 +161,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	for(var/client/C in clients)
 		var/mob/M = C.mob
 		if(M?.z == src.z) shake_camera(M, 5, 32, 0.2)
+	src.UpdateIcon()
 
 /obj/machinery/gravity_tether/proc/deactivate()
 	src.active = FALSE
-	src.icon_state = "grav_tether_disabled"
 	if(src.emagged)
 		src.random_fault()
 	for (var/area/A in src.target_area_refs)
@@ -152,6 +172,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	for(var/client/C in clients)
 		var/mob/M = C.mob
 		if(M?.z == src.z) shake_camera(M, 5, 32, 0.2)
+	src.UpdateIcon()
 
 /*
 Fault effects have an area parameter, and return a number inidcating the severity of what occurred.
