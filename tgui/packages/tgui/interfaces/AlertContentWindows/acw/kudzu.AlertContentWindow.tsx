@@ -13,6 +13,9 @@ const KudzuAlertWindow = () => {
       <h1 className="center">You are a member of the Kudzu hivemind!</h1>
       <img src={resource('images/antagTips/kudzuman.png')} className="center" />
 
+      <h2 className="center">
+        <em>Kudzupeople are Antagonists!</em>
+      </h2>
       <p>
         1. Your new goal is very straightforward, protect and grow the kudzu so
         that all may enjoy, or be consumed by, your beauty!
