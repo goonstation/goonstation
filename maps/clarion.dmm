@@ -10944,7 +10944,6 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/north,
-/obj/item/random_trinket_spawner,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
