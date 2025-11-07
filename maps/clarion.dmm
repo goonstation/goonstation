@@ -10944,6 +10944,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/item/random_trinket_spawner,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -14172,6 +14173,13 @@
 	},
 /obj/item/storage/box/evidence{
 	pixel_x = -6
+	},
+/obj/item/mousetrap{
+	pixel_x = -8
+	},
+/obj/item/parts/robot_parts/arm/left/light{
+	pixel_y = -3;
+	pixel_x = -7
 	},
 /turf/simulated/floor/redwhite{
 	dir = 6
