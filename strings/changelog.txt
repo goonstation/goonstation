@@ -1,4 +1,9 @@
 
+(t)fri nov 07 25
+(u)JORJ949
+(p)25090
+(e)⚖💊|C-Balance, A-Medical
+(+)Empowered xray now only grants meson level vision, instead of cloaker vision.
 (t)wed nov 05 25
 (u)CalliopeSoups
 (p)24914
