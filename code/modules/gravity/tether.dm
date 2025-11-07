@@ -9,9 +9,11 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	bound_width = 64
 	bound_height = 32
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
-	status = REQ_PHYSICAL_ACCESS
 	layer = EFFECTS_LAYER_BASE // so it covers people who walk behind it
 	speech_verb_say = list("bleeps", "bloops", "drones", "beeps", "boops", "emits")
+	status = REQ_PHYSICAL_ACCESS
+	power_usage = 1 KILO WATT // same as baseline AI rack
+
 	/// Are we currently active
 	var/active = TRUE
 	/// Can someone toggle us currently
@@ -80,17 +82,40 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	. = ..()
 	src.emagged = FALSE
 
+/obj/machinery/gravity_tether/ex_act(severity)
+	switch(severity)
+		if(1)
+			if(prob(50))
+				src.set_broken()
+			else if (prob(50))
+				src.random_fault(20)
+			else
+				src.random_fault(5)
+			return
+		if(2)
+			if (prob(10))
+				src.set_broken()
+			else if (prob(50))
+				src.random_fault(5)
+			else
+				src.random_fault()
+		if(3)
+			if (prob(10))
+				src.random_fault(5)
+			else
+				src.random_fault()
+
 /obj/machinery/gravity_tether/overload_act()
 	. = ..()
-	if (!ON_COOLDOWN(src, "overload_cooldown", 5 MINUTES))
-		src.visible_message("The pylons on [src] short together!")
-		src.random_fault(3)
+	if (!ON_COOLDOWN(src, "overload_cooldown", 1 MINUTE))
+		src.visible_message("The pylons on [src] birefly short together!")
+		src.random_fault(5)
 		return TRUE
 	return FALSE
 
 /obj/machinery/gravity_tether/set_broken()
 	. = ..()
-	src.random_fault(20)
+	src.random_fault(30)
 
 /obj/machinery/gravity_tether/proc/toggle(mob/user)
 	if (src.working)
