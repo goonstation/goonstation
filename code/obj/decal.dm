@@ -201,6 +201,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	plane = PLANE_DEFAULT
+	object_flags = HAS_DIRECTIONAL_BLOCKING
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	pass_unstable = TRUE
@@ -208,10 +209,13 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
+		if (!src.density || (mover.flags & TABLEPASS) || istype(mover, /obj/newmeteor) || istype(mover, /obj/linked_laser) )
+			return 1
+		if (mover.throwing)
+			return 1
+		if (src.dir == 2)
 			return 0
 		if(get_dir(loc, mover) & dir)
-
 			return !density
 		else
 			return 1
@@ -219,6 +223,8 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
 			. = 1
+		if (O.throwing)
+			return 1
 		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
 			. = 0
 		else
@@ -232,6 +238,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
+	object_flags = HAS_DIRECTIONAL_BLOCKING
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	pass_unstable = TRUE
@@ -259,17 +266,22 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
+		if (!src.density || mover.flags & TABLEPASS || istype(mover, /obj/newmeteor) || istype(mover, /obj/linked_laser) )
+			return 1
+		if (mover.throwing)
+			return 1
+		if (src.dir == 5 || src.dir == 6)
 			return 0
 		if(get_dir(loc, mover) & dir)
-
 			return !density
 		else
 			return 1
 
 	Uncross(atom/movable/O, do_bump = TRUE)
-		if (!src.density)
+		if (!src.density || O.flags & TABLEPASS  || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
 			. = 1
+		if (O.throwing)
+			return 1
 		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
 			. = 0
 		else
