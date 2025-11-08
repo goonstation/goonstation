@@ -8,7 +8,7 @@
 
 
 /**
- *	Maptext holders are `atom/movable`s that are attached to a parent maptext manager, and are responsible for displaying maptext
+ *	Maptext holders are `/atom/movable`s that are attached to a parent maptext manager, and are responsible for displaying maptext
  *	images to a single client. When maptext is required to be displayed to a client, the parent maptext manager will instruct the
  *	maptext holder associated with that client to add a line of maptext to itself and add it to the client's images list.
  */
@@ -16,11 +16,11 @@
 	mouse_opacity = 0
 
 	/// The maptext manager that this maptext holder belongs to.
-	var/atom/movable/maptext_manager/parent
+	var/atom/movable/maptext_manager/parent = null
 	/// The client that this maptext holder is displaying maptext to.
-	var/client/client
+	var/client/client = null
 	/// A list of maptext images currently displayed to the client.
-	var/list/image/maptext/lines
+	var/list/image/maptext/lines = null
 	/// The amount by which this maptext holder's `pixel_y` value has been increased as a result of new maptext lines.
 	var/aggregate_height = 0
 
