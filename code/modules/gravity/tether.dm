@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		// tgui_alert is async, so we need to check again
 		cooldown_timer = GET_COOLDOWN(src, "gravity_toggle")
 		if (cooldown_timer)
-			src.say("Recalculating gravity matrix, [TO_SECONDS(cooldown_timer)] seconds remaining.")
+			src.say("Recalculating gravity matrix. [TO_SECONDS(cooldown_timer)] seconds remaining.")
 			return
 		src.say("Processing gravity change.")
 		src.toggle(user)
