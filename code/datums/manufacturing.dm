@@ -166,6 +166,28 @@
 	time = 60 SECONDS
 	frame_path = /obj/machinery/lawrack
 
+/******************** Gravity Tether *******************/
+
+/datum/manufacture/mechanics/gravity_tether_station
+	name = "Station Gravity Tether"
+	item_requirements = list("metal" = 20,
+							 "metal_dense" = 10,
+							 "insulated" = 10,
+							 "conductive" = 20)
+	create = 1
+	time = 60 SECONDS
+	frame_path = /obj/machinery/gravity_tether/station
+
+/datum/manufacture/mechanics/gravity_tether_area
+	name = "Local Gravity Tether"
+	item_requirements = list("metal" = 10,
+							 "metal_dense" = 5,
+							 "insulated" = 10,
+							 "conductive" = 10)
+	create = 1
+	time = 20 SECONDS
+	frame_path = /obj/machinery/gravity_tether/current_area
+
 /******************** AI display (temp) *******************/
 
 /datum/manufacture/mechanics/ai_status_display

@@ -690,6 +690,8 @@
 		/datum/manufacture/flippers,
 		/datum/manufacture/turbine_shaft,
 		/datum/manufacture/current_turbine,
+#else
+		/datum/manufacture/mechanics/gravity_tether_area,
 #endif
 #ifdef MAP_OVERRIDE_OSHAN
 		/datum/manufacture/cable/reinforced,

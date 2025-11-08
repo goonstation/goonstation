@@ -550,6 +550,7 @@
 	/obj/securearea, \
 	/obj/machinery/mixer, \
 	/obj/submachine/foodprocessor, \
+	/obj/machinery/gravity_tether/current_area, \
 	\
 )
 // blacklist overrules whitelist
