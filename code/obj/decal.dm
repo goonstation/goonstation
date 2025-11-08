@@ -213,7 +213,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 			return 1
 		if (mover.throwing)
 			return 1
-		if (src.dir == 2)
+		if (src.dir == SOUTH)
 			return 0
 		if(get_dir(loc, mover) & dir)
 			return !density
@@ -270,7 +270,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 			return 1
 		if (mover.throwing)
 			return 1
-		if (src.dir == 5 || src.dir == 6)
+		if (src.dir == SOUTHEAST || src.dir == WEST)
 			return 0
 		if(get_dir(loc, mover) & dir)
 			return !density
