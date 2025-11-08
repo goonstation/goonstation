@@ -3,16 +3,17 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	name = "gravity tether"
 	desc = "A rather delicate piece of machinery that normalizes gravity to Earth-like levels."
 	icon = 'icons/obj/large/64x64.dmi'
-	icon_state = "grav_tether_base"
+	icon_state = "station_tether"
 	density = TRUE
 	anchored = ANCHORED_ALWAYS
 	bound_width = 64
 	bound_height = 32
-	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	layer = EFFECTS_LAYER_BASE // so it covers people who walk behind it
 	speech_verb_say = list("bleeps", "bloops", "drones", "beeps", "boops", "emits")
 	status = REQ_PHYSICAL_ACCESS
 	power_usage = 1 KILO WATT // same as baseline AI rack
+
+	var/base_icon_state = "station_tether"
 
 	/// Are we currently active
 	var/active = TRUE
@@ -28,6 +29,15 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	var/emagged = FALSE
 	/// List of target area references, populated on init
 	var/list/area/target_area_refs = list()
+
+
+/obj/machinery/gravity_tether/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_GRAVITY_TETHERS)
+
+/obj/machinery/gravity_tether/disposing()
+	. = ..()
+	STOP_TRACKING_CAT(TR_CAT_GRAVITY_TETHERS)
 
 /obj/machinery/gravity_tether/attack_hand(mob/user)
 	if(..())
@@ -76,16 +86,16 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return
 
 	if (src.is_broken())
-		src.UpdateOverlays(src.SafeGetOverlayImage("tether_broken", 'icons/obj/large/64x64.dmi', "tether_overlay-broken"), "tether_function")
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_broken", src.icon, "[base_icon_state]-broken"), "tether_function")
 	else if (src.active)
-		src.UpdateOverlays(src.SafeGetOverlayImage("tether_active", 'icons/obj/large/64x64.dmi', "tether_overlay-enabled"), "tether_function")
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_active", src.icon, "[base_icon_state]-enabled"), "tether_function")
 	else
-		src.UpdateOverlays(src.SafeGetOverlayImage("tether_inactive", 'icons/obj/large/64x64.dmi', "tether_overlay-disabled"), "tether_function")
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_inactive", src.icon, "[base_icon_state]-disabled"), "tether_function")
 
 	if (src.locked)
-		src.UpdateOverlays(src.SafeGetOverlayImage("tether_locked", 'icons/obj/large/64x64.dmi', "tether_overlay-locked"), "tether_lock_state")
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_locked", src.icon, "[base_icon_state]-locked"), "tether_lock_state")
 	else
-		src.UpdateOverlays(src.SafeGetOverlayImage("tether_unlocked", 'icons/obj/large/64x64.dmi', "tether_overlay-unlocked"), "tether_lock_state")
+		src.UpdateOverlays(src.SafeGetOverlayImage("tether_unlocked", src.icon, "[base_icon_state]-unlocked"), "tether_lock_state")
 
 /obj/machinery/gravity_tether/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
@@ -273,10 +283,12 @@ This is so we can mix high-impact and low-impact effects without completely over
 
 // TODO: TYPEINFO for mech scanning
 /obj/machinery/gravity_tether/current_area
-	icon = 'icons/obj/large/64x64.dmi'
-	icon_state = "lockdown_safe" //TODO: 32x32 sprite
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "area_tether"
 	bound_width = 32
 	bound_height = 32
+
+	base_icon_state = "area_tether"
 
 /obj/machinery/gravity_tether/current_area/initialize()
 	. = ..()
@@ -310,6 +322,7 @@ This is so we can mix high-impact and low-impact effects without completely over
 
 ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 /obj/machinery/gravity_tether/multi_area
+	mechanics_type_override = /obj/machinery/gravity_tether/current_area
 	///List of area typepaths this machine should control.
 	var/list/area_typepaths = list()
 
