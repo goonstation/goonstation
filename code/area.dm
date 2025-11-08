@@ -522,7 +522,11 @@ TYPEINFO(/area)
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 	do_not_irradiate = FALSE
+	#ifdef UNDERWATER_MAP
+	has_gravity = TRUE
+	#else
 	has_gravity = FALSE
+	#endif
 
 // zewaka - adventure/technical/admin areas below //
 

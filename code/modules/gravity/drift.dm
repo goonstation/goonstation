@@ -1,7 +1,7 @@
 /atom/movable/proc/should_drift()
 	var/turf/T = src.loc
 	var/area/A = get_area(src)
-	return istype(T, /turf/space) || (istype(T) && T.throw_unlimited) || src.no_gravity || !A?.has_gravity
+	return A.has_gravity == FALSE || (istype(T) && T.throw_unlimited) || src.no_gravity
 
 /mob/should_drift()
 	if (src.is_spacefaring())

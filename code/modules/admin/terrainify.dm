@@ -335,6 +335,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 		if (src.generates_solid_ground)
 			global.is_map_on_ground_terrain = TRUE
+			var/area/space_area = get_area_by_type(/area/space)
+			space_area.has_gravity = TRUE
 
 		log_terrainify(user, "has turned space and the station into [src.name].")
 
@@ -1469,6 +1471,8 @@ client/proc/unterrainify()
 
 		RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 		global.is_map_on_ground_terrain = FALSE
+		var/area/space_area = get_area_by_type(/area/space)
+		space_area.has_gravity = FALSE
 
 		message_admins("Finished returning the station to space!")
 
