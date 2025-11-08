@@ -196,7 +196,7 @@
 			if (pen.uses_handwriting && user?.mind?.handwriting)
 				src.font = user.mind.handwriting
 			else if (pen.font)
-				src.font = pen.font
+				src.font = null
 			if (src.icon_state == initial(src.icon_state))
 				var/search_t = lowertext(t)
 				if (copytext(search_t, -1) == "?")
@@ -205,7 +205,7 @@
 					src.icon_state = "postit-excl"
 				else
 					src.icon_state = "postit-writing"
-			src.words += "[src.words ? "<br>" : ""]<span style='font-family:[src.font];'>[t]"
+			src.words += "[src.words ? "<br>" : ""]<span style='font-family:[src.font];font-size:16px;'>[t]"
 			tooltip_rebuild = TRUE
 			pen.in_use = 0
 			src.add_fingerprint(user)
