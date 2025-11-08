@@ -84,5 +84,5 @@
 		new_outermost = new_outermost.loc
 
 	new_outermost.vis_contents += src
-	src.pixel_x = new_outermost.maptext_offset_x
-	src.pixel_y = new_outermost.maptext_offset_y
+	src.pixel_x = new_outermost.maptext_manager_x
+	src.pixel_y = new_outermost.maptext_manager_y

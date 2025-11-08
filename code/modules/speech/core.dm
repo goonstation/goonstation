@@ -79,9 +79,9 @@ TYPEINFO(/atom)
 
 	// Maptext Variables:
 	/// The `pixel_x` value that any maptext managers present in this atom's `vis_contents` should use.
-	var/maptext_offset_x = 0
+	var/maptext_manager_x = 0
 	/// The `pixel_y` value that any maptext managers present in this atom's `vis_contents` should use.
-	var/maptext_offset_y = 0
+	var/maptext_manager_y = 0
 
 /atom/New()
 	if (length(src.get_typeinfo().start_listen_inputs))
