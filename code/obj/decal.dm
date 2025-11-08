@@ -202,7 +202,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon_state = "ringrope"
 	plane = PLANE_DEFAULT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
-	layer = OBJ_LAYER
+	layer = MOB_LAYER + 0.1
 	event_handler_flags = USE_FLUID_ENTER
 	pass_unstable = TRUE
 
@@ -213,8 +213,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 			return 1
 		if (mover.throwing)
 			return 1
-		if (src.dir == SOUTH)
-			return 0
+
 		if(get_dir(loc, mover) & dir)
 			return !density
 		else
@@ -270,7 +269,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 			return 1
 		if (mover.throwing)
 			return 1
-		if (src.dir == SOUTHEAST || src.dir == WEST)
+		if (src.dir == NORTHEAST || src.dir == NORTHWEST || src.dir == SOUTHEAST || src.dir == SOUTHWEST)
 			return 0
 		if(get_dir(loc, mover) & dir)
 			return !density
