@@ -373,6 +373,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else if (istype(A, /obj/item/plutonium_core)) // as a treat
 			gain += 5000
 			qdel(A)
+		else if (istype(A, /obj/hologram)) // holograms are fun to eat but low in calories
+			var/obj/O = A
+			gain = 0
+			O.set_loc(src.get_center())
+			O.ex_act(1)
+			if (O)
+				qdel(O)
 		else
 			var/obj/O = A
 			succ_cache[A.type] += 1

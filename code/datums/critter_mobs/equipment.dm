@@ -134,7 +134,7 @@
 
 		intercom
 			after_setup(var/datum/hud/hud)
-				var/obj/item/device/radio/intercom/O = new(holder)
+				var/obj/item/device/radio/headset/O = new(holder)
 				equip(O)
 				// it's a built in radio, they can't take it off.
 				O.cant_self_remove = TRUE
@@ -142,7 +142,7 @@
 
 			syndicate
 				after_setup(var/datum/hud/hud)
-					var/obj/item/device/radio/intercom/syndicate/S = new(holder)
+					var/obj/item/device/radio/headset/syndicate/S = new(holder)
 					equip(S)
 					// it's a built in radio, they can't take it off.
 					S.cant_self_remove = TRUE

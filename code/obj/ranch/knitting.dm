@@ -125,12 +125,12 @@
 			if(W.ball != src.ball)
 				boutput(usr, SPAN_ALERT("You can't combine spun and unspun wool!"))
 				. = 0
-		if(src.color != O.color)
-			boutput(usr, SPAN_ALERT("You can't combine different colors of wool!"))
-			. = 0
-		if (!O.material?.isSameMaterial(src.material))
-			boutput(usr, SPAN_ALERT("You can't combine two different kinds of wool!"))
-			. = 0
+			if(src.color != O.color)
+				boutput(usr, SPAN_ALERT("You can't combine different colors of wool!"))
+				. = 0
+			if (!O.material?.isSameMaterial(src.material))
+				boutput(usr, SPAN_ALERT("You can't combine two different kinds of wool!"))
+				. = 0
 
 	split_stack(var/toRemove)
 		. = ..()

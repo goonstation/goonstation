@@ -309,13 +309,15 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		if((M.target in .) || (M.target == center))
 			. += M
 
-/proc/AIviewers(Depth=world.view,Center=usr)
+/proc/AIviewers(Depth=world.view, atom/movable/Center=usr)
 	if (istype(Depth, /atom))
 		var/newDepth = isnum(Center) ? Center : world.view
 		Center = Depth
 		Depth = newDepth
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	if (ismob(Center?.loc))
+		. |= Center.loc
 	for(var/mob/living/intangible/aieye/eye in .)
 		. -= eye
 

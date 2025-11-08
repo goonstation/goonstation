@@ -256,7 +256,7 @@
 //takes string input, for name in organholder.organ_list and checks if the organholder has anything
 //obfuscate, if true then don't show the exact organ health amount. Minor damage, moderate damage, severe damage, critical damage
 /proc/organ_health_scan(var/input, var/mob/living/carbon/human/H, var/obfuscate = 0)
-	var/obj/item/organ/O = H.organHolder.organ_list[input]
+	var/obj/item/organ/O = H.organHolder?.organ_list[input]
 	if (istype(O))
 		var/damage = O.get_damage()
 		if (obfuscate)
@@ -617,7 +617,7 @@
 	return data
 
 // Yeah, another scan I made into a global proc (Convair880).
-/proc/scan_plant(var/atom/A as turf|obj, var/mob/user as mob, var/visible = 0)
+/proc/scan_plant(var/atom/A as turf|obj, var/mob/user as mob, var/visible = 0, var/show_gene_strain = TRUE)
 	if (!A || !user || !ismob(user))
 		return
 
@@ -668,7 +668,7 @@
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
 		return SPAN_ALERT("Cannot scan.")
 
-	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
+	HYPgeneticanalysis(user, A, P, DNA, show_gene_strain) // Just use the existing proc.
 	return
 
 /proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)

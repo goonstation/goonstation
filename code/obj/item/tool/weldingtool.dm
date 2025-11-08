@@ -66,7 +66,8 @@
 
 	examine()
 		. = ..()
-		. += "It has [get_fuel()] units of fuel left!"
+		if (src.fuel_capacity)
+			. += "It has [src.get_fuel()] units of fuel left!"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (is_special)
@@ -327,6 +328,12 @@
 	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, with a green handle."
 	icon_state = "weldingtool-off-green"
 	icon_state_variant_suffix = "-green"
+
+/obj/item/weldingtool/purple
+	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, with an eccentric purple handle."
+	icon_state = "weldingtool-off-purple"
+	icon_state_variant_suffix = "-purple"
+
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"

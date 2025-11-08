@@ -77,15 +77,14 @@ THROWING DARTS
 		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
+		if (isliving(M))
+			var/mob/living/living = M
+			LAZYLISTADD(living.implant, src)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant?.Add(src)
 			if (src.scan_category == IMPLANT_SCAN_CATEGORY_OTHER || src.scan_category == IMPLANT_SCAN_CATEGORY_UNKNOWN)
 				var/image/img = H.prodoc_icons["other"]
 				img.icon_state = "implant-other"
-		else if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants?.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 
@@ -100,9 +99,11 @@ THROWING DARTS
 		SHOULD_CALL_PARENT(TRUE)
 		deactivate()
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_REMOVED, M)
+		if (isliving(M))
+			var/mob/living/living = M
+			living.implant -= src
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant -= src
 			var/has_other_imp = FALSE
 			for (var/obj/item/implant/I as anything in H.implant)
 				if (I.scan_category == IMPLANT_SCAN_CATEGORY_OTHER || I.scan_category == IMPLANT_SCAN_CATEGORY_UNKNOWN)
@@ -111,9 +112,6 @@ THROWING DARTS
 			if (!has_other_imp)
 				var/image/I = H.prodoc_icons["other"]
 				I.icon_state = null
-		if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants?.Remove(src)
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null
@@ -161,18 +159,13 @@ THROWING DARTS
 		deactivate()
 
 	proc/get_coords()
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = src.owner
-			if (locate(src) in H.implant)
-				var/turf/T = get_turf(H)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
-		else if (ismobcritter(src.owner))
-			var/mob/living/critter/C = src.owner
-			if (locate(src) in C.implants)
-				var/turf/T = get_turf(C)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
+		if (!isliving(src.owner))
+			return
+		var/mob/living/living_owner = src.owner
+		if (locate(src) in living_owner.implant)
+			var/turf/T = get_turf(src.owner)
+			if (istype(T))
+				return " at [T.x],[T.y],[T.z]"
 
 	proc/send_message(var/message, var/alertgroup, var/sender_name)
 		DEBUG_MESSAGE("sending message: [message]")
@@ -334,9 +327,11 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 	scan_category = IMPLANT_SCAN_CATEGORY_HEALTH
-	var/healthstring = ""
 	uses_radio = 1
 	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+
+	var/healthstring = ""
+	var/affected = "CREW"
 
 	implanted(mob/M, mob/I)
 		..()
@@ -432,21 +427,12 @@ THROWING DARTS
 			if(cl_implant.owner != src.owner || !cl_implant.scanned_here)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
-		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
-		if (he_or_she(src.owner) == "they")
-			message += "they " + (length(cloner_areas) ? "were clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning implant.")
-		else
-			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "was clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning implant.")
-
+		var/message = "[affected] DEATH ALERT: [src.owner] in [myarea]. [length(cloner_areas) ? "Clone implant detected." : "No cloning implant detected."]"
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
-
-	death_alert()
-		mailgroups.Add(MGD_SECURITY)
-		..()
-		mailgroups.Remove(MGD_SECURITY)
+	affected = "SECURITY"
 
 /obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
@@ -457,6 +443,10 @@ THROWING DARTS
 		. = ..()
 		src.on_remove(src.owner)
 		qdel(src)
+
+/obj/item/implant/health/security/anti_mindhack/command
+	name = "health implant - command issue"
+	affected = "COMMAND"
 
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"

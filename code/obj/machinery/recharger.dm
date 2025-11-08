@@ -49,6 +49,7 @@ TYPEINFO(/obj/machinery/recharger)
 								/obj/item/power_pack, \
 								/obj/item/terminus_drive, \
 								/obj/item/robodefibrillator, \
+								/obj/item/assembly, \
 								)
 
 	var/obj/item/charging = null

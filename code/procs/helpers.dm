@@ -2461,8 +2461,10 @@ proc/total_clients_for_cap()
 
 
 proc/client_has_cap_grace(var/client/C)
-	if (C.ckey in player_cap_grace)
-		.= (player_cap_grace[C.ckey] > TIME)
+	logTheThing(LOG_DEBUG, C, "<b>PCAP Grace:</b> Checking PCAP grace for [C.client_auth_intent.ckey]...")
+	if (C.client_auth_intent.ckey in player_cap_grace)
+		.= (player_cap_grace[C.client_auth_intent.ckey] > TIME)
+		logTheThing(LOG_DEBUG, C, "<b>PCAP Grace:</b> Found PCAP grace for [C.client_auth_intent.ckey]. Current time: [TIME], Grace time: [player_cap_grace[C.client_auth_intent.ckey]], Result: [(player_cap_grace[C.client_auth_intent.ckey] > TIME) ? "PASS" : "FAIL"]")
 
 
 //TODO: refactor the below two into one proc
@@ -2800,3 +2802,22 @@ proc/pick_reagent(mob/user)
 	else
 		user.show_text("No reagents matching that name", "red")
 		return null
+
+
+/// Spawn one of `spawn_type` on a random table in `area_type`
+proc/area_table_spawn(area_type, spawn_type)
+	var/list/tables = list()
+	for_by_tcl(table, /obj/table)
+		if (istype(get_area(table), area_type))
+			tables += table
+	if (!length(tables)) //no tables FUCK
+		return
+	new spawn_type(get_turf(pick(tables)))
+
+/atom/proc/find_parent_of_type(type)
+	var/atom/parent = src.loc
+	while (!istype(parent, type) && parent.loc)
+		parent = parent.loc
+	if (istype(parent, type))
+		return parent
+	return null

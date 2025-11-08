@@ -4,7 +4,7 @@
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/players"
 	body = /datum/apiBody/players/login
-	correct_response = /datum/apiModel/Tracked/PlayerResource
+	correct_response = /datum/apiModel/Tracked/Player
 
 	buildBody(
 		ckey,

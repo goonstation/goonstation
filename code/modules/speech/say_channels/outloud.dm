@@ -1,6 +1,9 @@
 /datum/say_channel/delimited/local/outloud
 	channel_id = SAY_CHANNEL_OUTLOUD
 	listener_tick_cache_type = /datum/listener_tick_cache/outloud
+#ifndef RP_MODE
+	allows_urls = TRUE
+#endif
 
 /datum/say_channel/delimited/local/outloud/PassToChannel(datum/say_message/message)
 	if (!(message.flags & SAYFLAG_WHISPER))

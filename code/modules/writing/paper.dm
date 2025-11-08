@@ -124,6 +124,7 @@
 				F = new /obj/item/paper/folded/ball(user)
 			F.info = src.info
 			F.old_desc = src.desc
+			F.icon_old = src.icon
 			F.old_icon_state = src.icon_state
 			F.stamps = src.stamps
 			F.setMaterial(src.material)
@@ -288,7 +289,7 @@
 		var/obj/item/pen/PEN = O
 		. += list(
 			"penFont" = PEN.font,
-			"penColor" = PEN.color,
+			"penColor" = PEN.font_color, // PEN.color uses the color of the object, this uses the font color set by object
 			"editMode" = PAPER_MODE_WRITING,
 			"isCrayon" = FALSE,
 			"stampClass" = "FAKE",
@@ -876,6 +877,8 @@
 			src.UpdateOverlays(stamp_overlay, "stamps_[i % PAPER_MAX_STAMPS_OVERLAYS]")
 			i++
 		if(src.old_icon_state)
+			if(src.icon_old)
+				src.icon = icon_old
 			src.icon_state = src.old_icon_state
 		else
 			if(src.info)

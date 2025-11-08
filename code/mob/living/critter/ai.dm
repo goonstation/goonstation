@@ -299,8 +299,9 @@ var/list/ai_move_scheduled = list()
 							best_score = score
 							best_path = tmp_best_path
 							. = A
-		holder.target = .
-		holder.target_path = best_path
+		if(holder)
+			holder.target = .
+			holder.target_path = best_path
 
 	/// If overriding also override [score_by_distance_only] to FALSE!
 	proc/score_target(atom/target)

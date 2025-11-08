@@ -54,8 +54,8 @@
 	. = ..()
 
 // common helper procs for all power machines
-/obj/machinery/power/proc/add_avail(var/amount)
-	powernet?.newavail += amount
+/obj/machinery/power/proc/add_avail(var/amount, var/process_loop = PROCESSING_EIGHTH)
+	powernet?.newavail += amount / 2**(PROCESSING_EIGHTH - process_loop)
 
 #ifdef MACHINE_PROCESSING_DEBUG
 	if(!detailed_power_data) detailed_power_data = new
@@ -66,9 +66,9 @@
 		station_power_generation["[round(world.time / ( 1 MINUTE ))]"] += amount
 
 
-/obj/machinery/power/proc/add_load(var/amount)
+/obj/machinery/power/proc/add_load(var/amount, process_loop = PROCESSING_EIGHTH)
 	if(powernet && powernet.newload + amount <= powernet.avail)
-		powernet.newload += amount
+		powernet.newload += amount / 2**(PROCESSING_EIGHTH - process_loop)
 		. = TRUE
 
 /obj/machinery/power/proc/surplus()

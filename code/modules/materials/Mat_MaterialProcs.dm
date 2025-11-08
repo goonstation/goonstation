@@ -320,6 +320,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		var/turf/T = get_turf(attacked)
 		var/mob/attacked_mob = attacked
+		if (isobj(attacked)) // teleportationally unstable artifacts react to telecrystals so that scientists can determine that they are
+			var/obj/target = attacked
+			if (target.artifact?.activated && target.artifact?.teleportationally_unstable)
+				attacker.visible_message(SPAN_ALERT("[attacked] reacts to [owner]!"))
+				if (target.anchored) // anchored artis shouldn't move, but there should still be feedback for the purpose of reactivity testing
+					if (!ON_COOLDOWN(attacked, "telecrystal_warp", 3 SECONDS)) // reduce potential for sound spam
+						playsound(target.loc, "warp", 50)
+					return
+				. = get_offset_target_turf(get_turf(attacked), rand(-2, 2), rand(-2, 2))
+				playsound(target.loc, "warp", 50) // No cooldown on this one because the teleportyness makes it difficult to spam already
+				if(attacker.is_that_in_this(target))
+					attacker.drop_item(target)
+				target.set_loc(.)
+				return
 		if(!istype(attacked_mob) || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
 			return
 		if(prob(33) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
@@ -477,8 +491,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
-		if (!isturf(location))
-			animate_flash_color_fill_inherit(location, "#69e46f", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, 1)
 		return
 
@@ -492,8 +504,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
-		if (!isturf(location))
-			animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, 1)
 		return
 
@@ -503,11 +513,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate(location)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
-		return
-
-/datum/materialProc/erebite_flash
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#FF7711",-1,10)
 		return
 
 /datum/materialProc/erebite_temp
@@ -621,10 +626,57 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate_levitate(owner)
 		return
 
+// Apply a secondary HSL colorspace matrix.
+// Typically used for turning all non-grayscale colors into a single color, or having a secondary highlight color.
+/datum/materialProc/add_color_hsl
+	execute(var/atom/owner)
+		var/added_mat_id = owner.material.getID()
+		if(!owner.material.hsl_color)
+			return
+		if(!owner.mat_changeappearance)
+			return
+		if(endswith(owner.icon_state, "$$[added_mat_id]")) // Ignore if it is a material version of a sprite
+			return
+		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
+			return
+		var/color_filter = color_matrix_filter(owner.material.hsl_color, FILTER_COLOR_HSL)
+		owner.add_filter("[added_mat_id]_hsl_color", 5, color_filter)
+		return
+
+/datum/materialProc/remove_color_hsl
+	execute(atom/owner)
+		owner.remove_filter("[owner.material.getID()]_hsl_color")
+
 /datum/materialProc/spacelag_add
 	execute(atom/owner)
+		if(endswith(owner.icon_state, "$$spacelag"))
+			return
 		if (!isturf(owner))
 			animate_lag(owner)
+			var/outline_filter = outline_filter(1, "#003800", OUTLINE_SHARP) // Outline color gets changed by material color
+			owner.add_filter("spacelag_outline", 20, outline_filter)
+		return
+
+/datum/materialProc/spacelag_remove
+	execute(var/atom/location)
+		location.remove_filter("spacelag_outline")
+		return
+
+/datum/materialProc/honey_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$honey") || ("honey" in location.get_typeinfo().mat_appearances_to_ignore))
+			return
+		var/offset = 0
+		if(!isturf(location))
+			offset = rand()
+		var/wave_filter = wave_filter(16, 16, 1, offset, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		location.add_filter("honey_wave", 4, wave_filter)
+		return
+
+/datum/materialProc/honey_remove
+	execute(var/atom/location)
+		location.remove_filter("honey_wave")
+		return
 
 /datum/materialProc/temp_miraclium
 	execute(var/atom/location, var/temp)
@@ -634,7 +686,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		SPAWN(1 SECOND)
 			if(location?.material?.getID() == "miracle")
 				location.visible_message(SPAN_NOTICE("[location] bends and twists, changing colors rapidly."))
-				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
+				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "negativematter",prob(6); "ectoplasm")
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)
 		return
 

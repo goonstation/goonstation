@@ -1021,6 +1021,38 @@
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			. = ..()
 
+	humiliated
+		id = "humiliated"
+		name = "Humiliated"
+		desc = "Your crushing loss has humiliated you!<br>Slowed slightly, unable to sprint, unable to suicide, recieve triple damage from attacks."
+		unique = 1
+		icon_state = "-"
+		duration = INFINITE_STATUS
+		movement_modifier = /datum/movement_modifier/humiliation
+		effect_quality = STATUS_QUALITY_NEGATIVE
+
+		onAdd(optional=null)
+			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			. = ..()
+
+	victorious
+		id = "victorious"
+		name = "Victorious"
+		desc = "Your glorious win has filled you with pride!<br>Sped slightly."
+		icon_state = "janktank"
+		duration = INFINITE_STATUS
+		unique = 1
+		movement_modifier = /datum/movement_modifier/victorious
+		effect_quality = STATUS_QUALITY_POSITIVE
+
 	blocking
 		id = "blocking"
 		name = "Blocking"
@@ -2938,6 +2970,7 @@
 		if (!isdead(L))
 			for (var/datum/ailment_data/ailment as anything in L.ailments)
 				ailment.stage_act(mult)
+		L.reagents?.addiction_cache = 0
 
 		for (var/mob/living/other_mob in hearers(4, L))
 			if (prob(40) && other_mob != L)
@@ -3211,7 +3244,7 @@
 	nightmare
 		id = "art_nightmare_curse"
 		name = "Nightmare Curse"
-		extra_desc = "You're being haunted by nightmares! Kill them 7 of them or perish."
+		extra_desc = "You're being haunted by nightmares! Kill 7 of them or perish."
 		removal_msg = "The nightmare ends, along with the creatures..."
 		var/list/created_creatures = list()
 		var/creatures_to_kill = 7
@@ -3554,6 +3587,12 @@
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
 
+	onAdd()
+		..()
+		if(istype(src.owner, /obj/vehicle))
+			var/obj/vehicle/V = src.owner
+			V.stop()
+
 /datum/statusEffect/pod_corrosion
 	id = "pod_corrosion"
 	effect_quality = STATUS_QUALITY_NEGATIVE
@@ -3860,3 +3899,10 @@
 		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/therapy_zone
+	id = "therapy_zone"
+	name = "Therapeutic Atmosphere"
+	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
+	icon_state = "therapy_zone"
+	effect_quality = STATUS_QUALITY_POSITIVE

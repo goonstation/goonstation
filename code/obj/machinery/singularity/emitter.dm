@@ -63,25 +63,46 @@ TYPEINFO(/obj/machinery/emitter)
 
 	return
 
+/obj/machinery/emitter/proc/set_active(var/turn_on, var/check_lock, mob/user)
+	if(user)
+		if(state != WELDED)
+			boutput(user, "The emitter needs to be firmly secured to the floor first.")
+			return FALSE
+		if(!in_interact_range(src, user))
+			boutput(user, "You are too far away to reach the emitter's controls.")
+			return FALSE
+	if(check_lock && src.locked)
+		boutput(user, "The controls are locked!")
+		return FALSE
+	if(turn_on && !src.active)
+		src.active = TRUE
+		icon_state = "Emitter +a"
+		boutput(user, "You turn on the emitter.")
+		logTheThing(LOG_STATION, user, "activated emitter at [log_loc(src)].")
+		src.shot_number = 0
+		src.fire_delay = 100
+		if(user)
+			message_admins("[key_name(user)] activated emitter at [log_loc(src)].")
+		return TRUE
+	else if(!turn_on && src.active)
+		src.active = FALSE
+		icon_state = "Emitter"
+		boutput(user, "You turn off the emitter.")
+		logTheThing(LOG_STATION, user, "deactivated active emitter at [log_loc(src)].")
+		if(user)
+			message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
+		return TRUE
+	return FALSE
+
 /obj/machinery/emitter/attack_hand(mob/user)
 	if(state == WELDED)
 		if(!src.locked)
-			if(src.active==1)
+			if(src.active)
 				if(tgui_alert(user, "Turn off the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
-					src.active = 0
-					icon_state = "Emitter"
-					boutput(user, "You turn off the emitter.")
-					logTheThing(LOG_STATION, user, "deactivated active emitter at [log_loc(src)].")
-					message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
+					src.set_active(FALSE, TRUE, user)
 			else
 				if(tgui_alert(user, "Turn on the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
-					src.active = 1
-					icon_state = "Emitter +a"
-					boutput(user, "You turn on the emitter.")
-					logTheThing(LOG_STATION, user, "activated emitter at [log_loc(src)].")
-					src.shot_number = 0
-					src.fire_delay = 100
-					message_admins("[key_name(user)] activated emitter at [log_loc(src)].")
+					src.set_active(TRUE, TRUE, user)
 		else
 			boutput(user, "The controls are locked!")
 	else
@@ -94,22 +115,12 @@ TYPEINFO(/obj/machinery/emitter)
 		boutput(user, SPAN_NOTICE("Unable to interface with [src]!"))
 		return
 	if(state == WELDED)
-		if(src.active==1)
+		if(src.active)
 			if(tgui_alert(user, "Turn off the emitter?","Switch",list("Yes","No")) == "Yes")
-				src.active = 0
-				icon_state = "Emitter"
-				boutput(user, "You turn off the emitter.")
-				logTheThing(LOG_STATION, user, "deactivated active emitter at [log_loc(src)].")
-				message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
+				src.set_active(FALSE, FALSE, user)
 		else
 			if(tgui_alert(user, "Turn on the emitter?","Switch",list("Yes","No")) == "Yes")
-				src.active = 1
-				icon_state = "Emitter +a"
-				boutput(user, "You turn on the emitter.")
-				logTheThing(LOG_STATION, user, "activated emitter at [log_loc(src)].")
-				src.shot_number = 0
-				src.fire_delay = 100
-				message_admins("[key_name(user)] activated emitter at [log_loc(src)].")
+				src.set_active(TRUE, FALSE, user)
 	else
 		boutput(user, "The emitter needs to be firmly secured to the floor first.")
 	src.add_fingerprint(user)
@@ -120,11 +131,11 @@ TYPEINFO(/obj/machinery/emitter)
 	if(status & (NOPOWER|BROKEN))
 		return
 
-	if(!src.state == WELDED)
-		src.active = 0
+	if(src.active && (src.state != WELDED))
+		src.set_active(FALSE, FALSE, user = null)
 		return
 
-	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
+	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active))
 		src.last_shot = world.time
 		if(src.shot_number < 3)
 			src.fire_delay = 2
@@ -286,14 +297,10 @@ TYPEINFO(/obj/machinery/emitter)
 
 	//Oh okay, time to start up.
 	if(sigcommand == "activate" && !src.active)
-		src.active = 1
-		icon_state = "Emitter +a"
-		src.shot_number = 0
-		src.fire_delay = 100
+		src.set_active(TRUE, FALSE, user = null)
 	//oh welp shutdown time.
 	else if(sigcommand == "deactivate" && src.active)
-		src.active = 0
-		icon_state = "Emitter"
+		src.set_active(FALSE, FALSE, user = null)
 
 	return
 

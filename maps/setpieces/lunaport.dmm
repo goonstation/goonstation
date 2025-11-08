@@ -1154,7 +1154,7 @@
 	ambient_light = "#223333"
 	})
 "adU" = (
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /obj/machinery/light/flamp{
 	pixel_y = 14
 	},
@@ -3814,7 +3814,7 @@
 /obj/item/cigbutt,
 /obj/item/cigbutt,
 /obj/decal/cleanable/dirt/dirt2,
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /obj/item/decoration{
 	icon = 'icons/obj/writing.dmi';
 	icon_state = "thermal_paper";
@@ -5619,7 +5619,7 @@
 	name = "note";
 	pixel_y = 29
 	},
-/obj/noticeboard,
+/obj/noticeboard/directional/north,
 /obj/item/reagent_containers/food/drinks/coffee{
 	pixel_x = -7;
 	pixel_y = 11;

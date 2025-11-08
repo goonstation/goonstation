@@ -185,3 +185,8 @@ var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
   */
 #define stripTextMacros(text) replacetext(text, regexTextMacro, "")
 
+var/global/regex/sentence_end_regex = regex(".*\[\\.\\?\\!\\-\]$")
+proc/end_sentence(sentence, punctuation = ".")
+	if (sentence_end_regex.Find(sentence))
+		return sentence
+	return sentence + punctuation

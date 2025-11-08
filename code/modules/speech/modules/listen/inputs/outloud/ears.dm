@@ -25,7 +25,7 @@
 
 		if (!matched_loc)
 			var/atom/movable/hearer_loc = src.parent_tree.listener_origin.loc
-			while (!isturf(hearer_loc))
+			while (hearer_loc && !isturf(hearer_loc))
 				relative_thickness += hearer_loc.soundproofing
 				hearer_loc = hearer_loc.loc
 

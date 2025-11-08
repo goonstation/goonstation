@@ -488,6 +488,7 @@
 
 /mob/living/carbon/human/proc/ai_attack_target(atom/target, obj/item/weapon)
 	var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
+	src.set_dir(get_dir(src, target))
 	if(weapon)
 		return src.weapon_attack(target, weapon, 1, attack_params)
 	else

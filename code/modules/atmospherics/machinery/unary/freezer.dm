@@ -15,7 +15,7 @@
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
 	icon_state = src.on ? "freezer_1" : "freezer_0"
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, FALSE)
+	update_pipe_underlay(src.node, src.dir, "long", FALSE)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/process()
 	..()

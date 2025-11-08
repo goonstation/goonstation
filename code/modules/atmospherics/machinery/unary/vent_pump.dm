@@ -228,7 +228,7 @@
 	else
 		icon_state = "[hide_pipe ? "h" : "" ]off"
 
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_pump/inactive
 	icon_state = "off-map"

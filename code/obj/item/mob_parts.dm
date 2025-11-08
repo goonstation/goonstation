@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		object.set_loc(src.holder.loc)
 
 		//https://forum.ss13.co/showthread.php?tid=1774
-		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
+		//object.name = "[src.holder.real_name]’s [initial(object.name)]"
 		object.add_fingerprint(src.holder)
 
 		if(show_message) holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] falls off!"))
@@ -235,7 +235,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		object.set_loc(src.holder.loc)
 
 		//https://forum.ss13.co/showthread.php?tid=1774
-		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
+		//object.name = "[src.holder.real_name]’s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
 		if (setDir)

@@ -232,11 +232,13 @@
 		part.deactivate(give_message)
 		part.ship_uninstall()
 		part.ship = null
-		part.set_loc(get_turf(src))
-		if(user)
-			user.put_in_hand_or_drop(part)
 		src.installed_parts[slot] = null
-		return part
+
+		if (!QDELETED(part))
+			part.set_loc(get_turf(src))
+			if(user)
+				user.put_in_hand_or_drop(part)
+			return part
 
 	/// Don't know which slot a part is in? Use this.
 	proc/find_part_slot(var/obj/item/shipcomponent/part)
@@ -750,9 +752,7 @@
 		if (movement_controller)
 			movement_controller.dispose()
 
-		myhud.detach_all_clients()
-		myhud.master = null
-		myhud = null
+		QDEL_NULL(src.myhud)
 
 		if (pilot)
 			pilot = null
