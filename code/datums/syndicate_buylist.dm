@@ -490,7 +490,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/ammo_38R //
 	name = ".38 Ricochet ammo"
 	items = list(/obj/item/storage/box/ammo38R)
-	cost = 2
+	cost = 3
 	desc = "Bouncy ammo for a .38 Special revolver (not included)."
 	can_buy = UPLINK_TRAITOR
 
