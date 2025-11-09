@@ -108,7 +108,7 @@
 	desc = "A box containing standard revolver rounds."
 	spawn_contents = list(/obj/item/ammo/bullets/a357 = 3)
 
-/obj/item/storage/box/ammo38R
+/obj/item/storage/box/ammo38ricochet
 	name = ".38 Ricochet ammo box"
 	icon_state = "revolver"
 	desc = "A box containing couple of ricocheting speedloaders for a .38 Special revolver."

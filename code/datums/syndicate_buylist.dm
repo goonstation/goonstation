@@ -487,9 +487,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 4
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/ammo_38R //
+/datum/syndicate_buylist/traitor/ammo_38ricochet //
 	name = ".38 Ricochet ammo"
-	items = list(/obj/item/storage/box/ammo38R)
+	items = list(/obj/item/storage/box/ammo38ricochet)
 	cost = 3
 	desc = "Bouncy ammo for a .38 Special revolver (not included)."
 	can_buy = UPLINK_TRAITOR

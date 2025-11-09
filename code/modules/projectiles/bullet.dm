@@ -534,7 +534,7 @@ toxic - poisons
 	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 
-/datum/projectile/bullet/revolver_38/R
+/datum/projectile/bullet/revolver_38/ricochet
 	damage = 35
 	implanted = /obj/item/implant/projectile/bullet_38R
 	ricochets = FALSE // seems counter intuitive but prevents interference with our other bounces
