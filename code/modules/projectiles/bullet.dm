@@ -536,7 +536,7 @@ toxic - poisons
 
 /datum/projectile/bullet/revolver_38/ricochet
 	damage = 35
-	implanted = /obj/item/implant/projectile/bullet_38R
+	implanted = /obj/item/implant/projectile/bullet_38ricochet
 	ricochets = FALSE // seems counter intuitive but prevents interference with our other bounces
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
