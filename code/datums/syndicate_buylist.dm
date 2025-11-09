@@ -487,19 +487,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 4
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/ammo_38ricochet //
-	name = ".38 Ricochet ammo"
-	items = list(/obj/item/storage/box/ammo38ricochet)
-	cost = 3
-	desc = "Bouncy ammo for a .38 Special revolver (not included)."
-	can_buy = UPLINK_TRAITOR
-
-	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
-		if(in_surplus_crate)
-			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
-			return
-		..()
-
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/idtracker
@@ -960,6 +947,20 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/storage/box/ammo38AP)
 	cost = 2
 	desc = "Armor-piercing ammo for a .38 Special revolver (not included)."
+	job = list("Detective")
+	can_buy = UPLINK_TRAITOR
+
+	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
+			return
+		..()
+
+/datum/syndicate_buylist/traitor/ammo_38ricochet
+	name = ".38 Ricochet ammo"
+	items = list(/obj/item/storage/box/ammo38ricochet)
+	cost = 2
+	desc = "Bouncy ammo for a .38 Special revolver (not included)."
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR
 
