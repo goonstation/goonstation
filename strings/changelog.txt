@@ -1,6 +1,10 @@
 
 (t)sun nov 09 25
 (u)LeahTheTech
+(p)25150
+(e)🔄💨|C-Rework, A-Atmospherics
+(+)Chemical fires now heat up the air less but much more consistently.
+(u)LeahTheTech
 (+)Blobs now have a slightly higher natural temperature tolerance.
 (t)fri nov 07 25
 (u)Smearfo
