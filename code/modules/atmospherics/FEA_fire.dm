@@ -78,8 +78,9 @@
 	if (issimulatedturf(src))
 		var/turf/simulated/self = src
 		self.processing = TRUE
-		if(!self.parent)
-			air_master.active_singletons[src] = null
+		air_master.active_singletons[src] = null
+		if(self.parent?.group_processing)
+			self.parent.suspend_group_processing()
 	return hotspot
 
 // ABSTRACT_TYPE(/atom/movable/hotspot) // i dont feel like touching code outside of atmos oh well
