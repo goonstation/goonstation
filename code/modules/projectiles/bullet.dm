@@ -127,6 +127,7 @@ toxic - poisons
 	damage = 0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
+	max_range = 0
 	implanted = FALSE
 	ricochets = FALSE
 	has_impact_particles = TRUE
