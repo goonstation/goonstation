@@ -537,11 +537,12 @@ toxic - poisons
 /datum/projectile/bullet/revolver_38/R
 	damage = 35
 	implanted = /obj/item/implant/projectile/bullet_38R
+	ricochets = FALSE // seems counter intuitive but prevents interference with our other bounces
 
-	on_hit(atom/hit, dirflag, obj/projectile/proj) // shameless copy of wavegun code
-		if(!ismob(hit) && proj.reflectcount <= 3)
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
 			shot_volume = 0
-			shoot_reflected_bounce(proj, hit, 2, PROJ_NO_HEADON_BOUNCE)
+			shoot_reflected_bounce(proj, hit, 4, PROJ_NO_HEADON_BOUNCE)
 			shot_volume = 100
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
