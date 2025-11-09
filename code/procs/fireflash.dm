@@ -39,8 +39,8 @@
 				continue
 
 		// create hotspots
-		var/atom/movable/hotspot/hotspot = T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 15, chemfire)
-		T.hotspot_expose(temp - GET_DIST(center_turf, T) * falloff, 15)
+		var/atom/movable/hotspot/hotspot = T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400, chemfire)
+		T.hotspot_expose(temp - GET_DIST(center_turf, T) * falloff, 400)
 
 		if (!QDELETED(hotspot))
 			created_hotspots += hotspot

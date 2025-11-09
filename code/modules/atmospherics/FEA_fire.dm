@@ -101,6 +101,9 @@
 #endif
 	/// Volume to expose to other atoms. Also used while [/atom/movable/hotspot/var/bypassing] is FALSE to act on a volume of gas on our turf.
 	var/volume = 125
+	/// How much the volume of this hotspot is scaled by when affecting gas temperature
+	/// Importantly this is ONLY gas temperature and not other "expose" effects like objects being caught in the fire
+	var/atmos_heating_mult = 1
 	/// Our temperature.
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	/// If we've just spawned then don't process yet, wait a cycle.
@@ -156,7 +159,9 @@
 			src.temperature = location.air.temperature
 	else
 		bypassing = FALSE
-		var/datum/gas_mixture/affected = location.air.remove_ratio(src.volume/max((location.air.volume/5),1))
+		var/affected_volume = src.volume/max((location.air.volume/5),1)
+		affected_volume *= src.atmos_heating_mult
+		var/datum/gas_mixture/affected = location.air.remove_ratio(affected_volume)
 
 		affected.temperature = src.temperature
 		if( affected.react() & CATALYST_ACTIVE)
@@ -395,6 +400,8 @@
 	plane = PLANE_NOSHADOW_BELOW
 	layer = OBJ_LAYER - 0.2 // so that part of the fire appears behind objects. 0.2 to account for vending machine, etc layering
 	blend_mode = BLEND_DEFAULT
+	//chemical fires heat things up less than the air itself being on fire, this makes sense I think
+	atmos_heating_mult = 1/20
 
 	var/fire_color = CHEM_FIRE_RED
 
