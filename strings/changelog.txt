@@ -1,4 +1,7 @@
 
+(t)sun nov 09 25
+(u)LeahTheTech
+(+)Blobs now have a slightly higher natural temperature tolerance.
 (t)fri nov 07 25
 (u)Smearfo
 (p)25078
