@@ -1023,7 +1023,7 @@
 
 		gravity
 			id = "staggered_gravity"
-			desc = "You have been staggered by local gravity.<br>Slowed slightly, unable to sprint."
+			desc = "You have been staggered by high gravity.<br>Slowed slightly, unable to sprint."
 			maxDuration = 20 SECONDS
 
 	humiliated

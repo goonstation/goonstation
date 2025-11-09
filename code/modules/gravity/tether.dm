@@ -11,6 +11,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	layer = EFFECTS_LAYER_BASE // so it covers people who walk behind it
 	speech_verb_say = list("bleeps", "bloops", "drones", "beeps", "boops", "emits")
 	status = REQ_PHYSICAL_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	power_usage = 1 KILO WATT // same as baseline AI rack
 
 	var/base_icon_state = "station_tether"
@@ -20,7 +21,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	/// Can someone toggle us currently
 	var/locked = FALSE
 	/// Is this currently processing a gravity change
-	var/working = FALSE
+	var/in_use = FALSE
 	/// How quickly are people allowed to change states
 	var/cooldown = 15 SECONDS
 	/// Delay between attempting to toggle and the effect atually changing
@@ -39,13 +40,26 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	. = ..()
 	STOP_TRACKING_CAT(TR_CAT_GRAVITY_TETHERS)
 
+/obj/machinery/gravity_tether/build_deconstruction_buttons(mob/user)
+	if (src.active)
+		return "[src] cannot be deconstructed while it is active!"
+	return ..()
+
+/obj/machinery/gravity_tether/was_deconstructed_to_frame(mob/user)
+	logTheThing(LOG_STATION, user, "<b>deconstructed</b> gravity tether [constructName(src)]")
+	. = ..()
+
+/obj/machinery/gravity_tether/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH
+
 /obj/machinery/gravity_tether/attack_hand(mob/user)
 	if(..())
 		return
 	if(!in_interact_range(src, user))
 		boutput(user, "You are too far away to reach the controls.")
 		return
-	if (src.working)
+	if (src.in_use)
 		src.say("Processing existing gravity shift.")
 		return
 	if (src.locked)
@@ -61,7 +75,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		if (cooldown_timer)
 			src.say("Recalculating gravity matrix. [TO_SECONDS(cooldown_timer)] seconds remaining.")
 			return
-		src.say("Processing gravity change.")
+		src.say("Engaging gravity matrix.")
 		src.toggle(user)
 
 /obj/machinery/gravity_tether/attackby(obj/item/I, mob/user)
@@ -107,7 +121,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.emagged = TRUE
 	src.random_fault(69) // chaos reigns
 
-//TODO: Way to remove emagged state
 /obj/machinery/gravity_tether/demag(mob/user)
 	. = ..()
 	src.emagged = FALSE
@@ -148,12 +161,12 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.random_fault(30)
 
 /obj/machinery/gravity_tether/proc/toggle(mob/user)
-	if (src.working)
+	if (src.in_use)
 		return
 	logTheThing(LOG_STATION, user, "toggled [src] to [src.active ? "disabled" : "enabled"] at [log_loc(src)]")
-	src.working = TRUE
+	src.in_use = TRUE
 	SPAWN(delay)
-		src.working = FALSE
+		src.in_use = FALSE
 		src.say("Gravity field [src.active ? "disabled" : "enabled"].")
 		OVERRIDE_COOLDOWN(src, "gravity_toggle", src.cooldown)
 		if (src.active)
@@ -166,7 +179,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.active = TRUE
 	if(src.emagged)
 		src.random_fault()
-	for (var/area/A in src.target_area_refs)
+	for (var/area/A as anything in src.target_area_refs)
 		A.has_gravity = TRUE
 	for(var/client/C in clients)
 		var/mob/M = C.mob
@@ -241,6 +254,7 @@ This is so we can mix high-impact and low-impact effects without completely over
 	logTheThing(LOG_STATION, src, "spawned a [hole_type] at [log_loc(T)].")
 
 /obj/machinery/gravity_tether/station
+	name = "station gravity tether"
 	req_access = list(access_engineering_chief)
 	cooldown = 60 SECONDS
 	locked = TRUE
@@ -280,8 +294,12 @@ This is so we can mix high-impact and low-impact effects without completely over
 	logTheThing(LOG_STATION, user, "[src.active ? "disabled" : "enabled"] station gravity tether at at [log_loc(src)].")
 	. = ..()
 
-
-// TODO: TYPEINFO for mech scanning
+TYPEINFO(/obj/machinery/gravity_tether/current_area)
+	mats = list("metal" = 30,
+				"crystal_dense" = 10,
+				"metal_superdense" = 10,
+				"energy_extreme" = 5,
+				)
 /obj/machinery/gravity_tether/current_area
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "area_tether"
@@ -292,9 +310,6 @@ This is so we can mix high-impact and low-impact effects without completely over
 
 /obj/machinery/gravity_tether/current_area/initialize()
 	. = ..()
-	// TODO: check for other tethers controlling this area
-	// check if station area, then check if there's a tether in the current area
-	// might need to track multi-area tethers to cross-check those
 	src.target_area_refs += get_area(src)
 
 /obj/machinery/gravity_tether/current_area/activate()
@@ -312,13 +327,6 @@ This is so we can mix high-impact and low-impact effects without completely over
 		if (M.client)
 			shake_camera(M, 5, 32, 0.2)
 	A.has_gravity = FALSE
-
-/obj/machinery/gravity_tether/current_area/attackby(obj/item/I, mob/user)
-	. = ..()
-	// TODO: Anchor/unanchor via wrench when off?
-	// TODO: Mechanics deconstruction?
-	// Need to re-configure the area ref var
-
 
 ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 /obj/machinery/gravity_tether/multi_area

@@ -106,8 +106,8 @@ TYPEINFO(/area)
 		*/
 	var/do_not_irradiate = TRUE
 
-	/// Does this area currently have gravity?
-	var/has_gravity = TRUE
+	/// How many gravity tethers are currently affecting this area
+	var/gravity_tether_count = 0
 
 	/// gang that owns this area in gang mode
 	var/datum/gang/gang_owners = null

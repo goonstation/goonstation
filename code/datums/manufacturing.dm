@@ -170,23 +170,25 @@
 
 /datum/manufacture/mechanics/gravity_tether_station
 	name = "Station Gravity Tether"
-	item_requirements = list("metal" = 20,
-							 "metal_dense" = 10,
-							 "insulated" = 10,
-							 "conductive" = 20)
+	item_requirements = list("metal" = 50,
+							 "crystal_dense" = 20,
+							 "metal_superdense" = 20,
+							 "energy_extreme" = 10,)
 	create = 1
 	time = 60 SECONDS
 	frame_path = /obj/machinery/gravity_tether/station
+	category = "Machinery"
 
 /datum/manufacture/mechanics/gravity_tether_area
 	name = "Local Gravity Tether"
-	item_requirements = list("metal" = 10,
-							 "metal_dense" = 5,
-							 "insulated" = 10,
-							 "conductive" = 10)
+	item_requirements = list("metal" = 30,
+							 "crystal_dense" = 10,
+							 "metal_superdense" = 10,
+							 "energy_extreme" = 5,)
 	create = 1
 	time = 20 SECONDS
 	frame_path = /obj/machinery/gravity_tether/current_area
+	category = "Machinery"
 
 /******************** AI display (temp) *******************/
 
