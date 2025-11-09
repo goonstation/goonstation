@@ -1,5 +1,10 @@
 
 (t)sun nov 09 25
+(u)CalliopeSoups
+(p)25128
+(e)🆕🎨🍝🐁|C-Feature, C-Sprites, A-Catering, A-Critters
+(+)Lesser slugs can have an eyestalk harvested using a snipping tool, for use in swampy cocktails. Don't worry, eyes grow back.
+(+)Slugs, lesser slugs, slugburgers and snails have been resprited with animations.
 (u)LeahTheTech
 (p)25150
 (e)🔄💨|C-Rework, A-Atmospherics
