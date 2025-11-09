@@ -77,6 +77,7 @@
 		/datum/manufacture/harmonica,
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
+		/datum/manufacture/bullet_22/blank,
 		/datum/manufacture/bullet_9mm_frangible,
 		/datum/manufacture/bullet_smoke,
 		/datum/manufacture/stapler,

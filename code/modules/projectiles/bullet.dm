@@ -123,6 +123,14 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_22HP
 	ricochets = TRUE
 
+/datum/projectile/bullet/bullet_22/blank
+	damage = 0
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	implanted = FALSE
+	ricochets = FALSE
+	has_impact_particles = TRUE
+
 /datum/projectile/bullet/bullet_22/match
 	damage = 35
 	armor_ignored = 0.33

@@ -398,6 +398,16 @@
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/bullet_22/blank
+	name = ".22 Blanks"
+	item_requirements = list("metal_dense" = 15,
+							 "conductive" = 12) // Cheaper because they're practically useless
+	item_outputs = list(/obj/item/ammo/bullets/bullet_22/blank)
+	create = 1
+	time = 30 SECONDS
+	category = "Resource"
+
+
 /datum/manufacture/bullet_9mm_frangible
 	name = "9mm Frangible Rounds"
 	item_requirements = list("conductive" = 25,

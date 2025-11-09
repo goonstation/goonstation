@@ -402,6 +402,16 @@
 	ammo_type = new/datum/projectile/bullet/bullet_22/HP
 	ammo_cat = AMMO_PISTOL_22
 
+/obj/item/ammo/bullets/bullet_22/blank
+	sname = ".22 Blank"
+	name = ".22 Blank magazine"
+	desc = "Blank bullets. They don't do any damage, but they sure sound scary!"
+	icon_state = "pistol_magazine_blank"
+	amount_left = 10
+	max_amount = 10
+	ammo_type = new/datum/projectile/bullet/bullet_22/blank
+	ammo_cat = AMMO_PISTOL_22
+
 /obj/item/ammo/bullets/bullet_22match
 	sname = ".22 Match grade"
 	name = ".22 Match grade magazine"
