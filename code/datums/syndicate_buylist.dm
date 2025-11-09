@@ -487,6 +487,19 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 4
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/ammo_357R
+	name = "Ricocheting revolver ammo"
+	items = list(/obj/item/storage/box/revolver_ammo3)
+	cost = 2
+	desc = "Bouncy ammo for a Kestrel revolver (not included)."
+	can_buy = UPLINK_TRAITOR
+
+	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
+			return
+		..()
+
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/idtracker
