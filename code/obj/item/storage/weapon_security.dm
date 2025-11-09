@@ -114,7 +114,6 @@
 	desc = "A box containing ricocheting revolver rounds."
 	spawn_contents = list(/obj/item/ammo/bullets/a357/R = 3)
 
-
 /obj/item/storage/box/ammo38AP // 2 TC for 1 speedloader was very poor value compared to other guns and traitor items in general (Convair880).
 	name = ".38 AP ammo box"
 	icon_state = "revolver"
