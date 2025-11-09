@@ -407,7 +407,6 @@
 	time = 30 SECONDS
 	category = "Resource"
 
-
 /datum/manufacture/bullet_9mm_frangible
 	name = "9mm Frangible Rounds"
 	item_requirements = list("conductive" = 25,
