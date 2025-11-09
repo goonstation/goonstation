@@ -544,7 +544,6 @@ toxic - poisons
 			shoot_reflected_bounce(proj, hit, 2, PROJ_NO_HEADON_BOUNCE)
 			shot_volume = 100
 
-
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
 	name = "stun bullet"
 	damage = 0
