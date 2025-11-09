@@ -1,5 +1,9 @@
 
 (t)sun nov 09 25
+(u)Egregorious
+(p)25103
+(e)🪲💅🍝|C-Bug, C-QoL, A-Catering
+(+)Deep fryers now cook much faster and more consistently, and are largely unaffected by the stresses placed upon the universe.
 (u)CalliopeSoups
 (p)25128
 (e)🆕🎨🍝🐁|C-Feature, C-Sprites, A-Catering, A-Critters
