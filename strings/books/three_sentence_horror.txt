@@ -1,6 +1,6 @@
 <font face=Georgia>
 <font size='9'><bold><center>Splinters of a Haunted Station</center></bold></font>
-<font size='5'><bold><center>A Horror Anthrology</center></bold></font>
+<font size='5'><bold><center>A Horror Anthology</center></bold></font>
 <hr>
 <center><h2>Tiny Terrors</h2></center>
 <hr>
