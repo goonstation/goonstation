@@ -527,7 +527,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 		for(var/I in possible.ingredients)
 			var/atom/item_path = I
-			src.output_icon = icon2base64(getFlatIcon(I, no_anim=TRUE), "chef_oven-\ref[src]")
+			src.output_icon = icon2base64(getFlatIcon(item_path, no_anim=TRUE), "chef_oven-\ref[src]")
 			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
 
 		if (ispath(possible.output))
