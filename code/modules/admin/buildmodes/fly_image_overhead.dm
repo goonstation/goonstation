@@ -1,5 +1,5 @@
 /datum/buildmode/fly_image_overhead
-	name = "Throw"
+	name = "Fly Image Overhead"
 	desc = {"***********************************************************<br>
 Ctrl + RMB on buildmode button         = Set image and ending effect<br>
 Ctrl + LMB on buildmode button         = Set audio<br>
@@ -10,44 +10,34 @@ Right Mouse Button                     = Target turf to fly toward<br>
 ***********************************************************"}
 	// settings
 	var/move_delay = 1
-	var/icon/image_overlay
+	var/icon/image
 	var/turf/target_loc
-	var/dir_input
+	var/dir_input = "Random"
 	var/end_effect = "Leave zlevel"
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if (ctrl)
-			var/icon/I = input("Pick an icon:","Icon") as null|icon
-			if (I)
-				src.image_overlay = I
-				for (var/client/C in clients)
-					fun_image.add_client(C)
-				logTheThing(LOG_ADMIN, src, "has uploaded icon [I] to all players")
-				logTheThing(LOG_DIARY, src, "has uploaded icon [I] to all players", "admin")
-				message_admins("[key_name(src)] has uploaded icon [I] to all players")
+			src.image = input("Pick an icon:","Icon") as null|icon
 			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list("Leave zlevel", "Explode", "Fade away"))
 
 	click_right(atom/object)
-		src.target_loc = get_turf(object)
 		src.dir_input = tgui_input_list(usr, "Pick starting direction", "Direction", list(NORTH, SOUTH, EAST, WEST, "Random"))
 
 	click_left(atom/object)
-		create_pilot()
+		src.target_loc = get_turf(object)
+		aim_pilot()
 
-	proc/create_pilot()
+	proc/aim_pilot()
 		var/turf/start
 		var/random_dir = pick(NORTH, SOUTH, EAST, WEST)
-		var/times_to_travel
+		var/new_dir
+		if (!src.target_loc || !src.dir_input)
+			return
 		if (dir_input == "Random")
 			start = get_edge_target_turf(src.target_loc, random_dir)
 		else
 			start = get_edge_target_turf(src.target_loc, src.dir_input)
 
-		var/obj/pilot = new /obj/image_pilot
-		var/new_dir
-		var/overlay = image(src.image, overlay_state)
-		UpdateOverlays(overlay, "image")
-		pilot.set_loc(start)
 		switch (start)
 			if (EAST)
 				new_dir = WEST
@@ -58,15 +48,26 @@ Right Mouse Button                     = Target turf to fly toward<br>
 			if (SOUTH)
 				new_dir = NORTH
 
-		while (pilot.loc <= src.target_loc)
+		send_pilot(startloc=start,direction=new_dir)
+
+	proc/send_pilot(var/turf/startloc,var/direction=NORTH)
+		var/obj/image_pilot/pilot = new /obj/image_pilot()
+		pilot.image_overlay = image
+		pilot.set_loc(startloc)
+
+		var/glide = 0
+		while (pilot.loc != src.target_loc)
 			glide = (32 / src.move_delay) * world.tick_lag
 			pilot.glide_size = glide
 			pilot.animate_movement = SLIDE_STEPS
-			var/old_loc = src.loc
-			src.set_loc(get_step(src, src.move_dir))
-			SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, new_dir)
-			if (!src.loc)
-				qdel(src)
+			var/old_loc = pilot.loc
+			pilot.set_loc(get_step(pilot, direction))
+			SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, direction)
+			if (!pilot.loc)
+				SPAWN(2 SECONDS)
+					if (!pilot.loc)
+						qdel(pilot)
+						break
 			pilot.glide_size = glide
 			pilot.animate_movement = SLIDE_STEPS
 			sleep(src.move_delay)
@@ -88,5 +89,12 @@ Right Mouse Button                     = Target turf to fly toward<br>
 	desc = ""
 	anchored = ANCHORED
 	density = 0
-	layer = 30
+	flags = KEEP_TOGETHER
 	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	var/icon/image_overlay
+
+	New()
+		..()
+		SPAWN(0)
+			var/image/ship = image(icon=src.image_overlay, loc=src, layer = 30)
+			src.overlays += ship

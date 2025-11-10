@@ -39,7 +39,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
 //#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
 //#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
-//#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
+#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DISABLE_DEVFILE // Don't load things defined in '__build.local.dm'. Use if you have some breaking changes in there or whatnot
@@ -50,7 +50,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
 //#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
-//#define I_WANNA_BE_THE_JOB "IMCODER" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
+#define I_WANNA_BE_THE_JOB "IMCODER" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
 //#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 
 //#define STOP_DISTRACTING_ME //All of the below
