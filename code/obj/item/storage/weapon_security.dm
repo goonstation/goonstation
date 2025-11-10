@@ -111,7 +111,7 @@
 /obj/item/storage/box/ammo38ricochet
 	name = ".38 Ricochet ammo box"
 	icon_state = "revolver"
-	desc = "A box containing couple of ricocheting speedloaders for a .38 Special revolver."
+	desc = "A box containing a couple of ricocheting speedloaders for a .38 Special revolver."
 	spawn_contents = list(/obj/item/ammo/bullets/a38/ricochet = 3)
 
 /obj/item/storage/box/ammo38AP // 2 TC for 1 speedloader was very poor value compared to other guns and traitor items in general (Convair880).
