@@ -395,10 +395,14 @@
 		icon_state = "eyestalk1"
 		edible = 1
 		appearance_flags = KEEP_TOGETHER
+		var/second = FALSE
 
 		New()
 			..()
 			src.icon_state = "eyestalk[pick(1,2)]"
+			if (!src.second)
+				var/obj/item/second_one = new /obj/item/cocktail_stuff/eyestalk
+				second_one.set_loc(src)
 			// I'd make more than 2 states, but due to byond jank they need to have a lot of frames instead of using frame delays.
 			// Figured that might cause marginally more lag/bloat if more were added just for animation de-syncing when making lots.
 
