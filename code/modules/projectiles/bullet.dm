@@ -534,6 +534,17 @@ toxic - poisons
 	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 
+/datum/projectile/bullet/revolver_38/ricochet
+	damage = 35
+	implanted = /obj/item/implant/projectile/bullet_38ricochet
+	ricochets = FALSE // seems counter intuitive but prevents interference with our other bounces
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, 4, PROJ_NO_HEADON_BOUNCE)
+			shot_volume = 100
+
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
 	name = "stun bullet"
 	damage = 0
