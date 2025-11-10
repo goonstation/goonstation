@@ -3367,9 +3367,8 @@ TYPEINFO(/mob)
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as null|anything in items
-		if (A)
-			src.client?.Click(A, get_turf(A))
+		var/atom/A = tgui_input_list(src, "What do you want to pick up?", "", items, start_with_search = TRUE)
+		src.client?.Click(A, get_turf(A))
 
 /mob/proc/can_eat(var/atom/A)
 	return 1
