@@ -1,4 +1,9 @@
 
+(t)mon nov 10 25
+(u)lyzmat
+(p)25148
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(+)Syndicate detectives can now buy extra bouncy .38 special rounds from their uplinks.
 (t)sun nov 09 25
 (u)Egregorious
 (p)25103
