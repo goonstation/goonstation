@@ -17,8 +17,8 @@
 	var/atom/movable/stomach_contents = list()
 	///Amount of reagents we digest from each bite per life tick, also how fast the bites dissolve
 	var/digestion_per_tick = 3
-	///Amount of reagents in fluid we digest per tick
-	var/digestion_per_tick_fluid = 10
+	///Amount of reagents in fluid we digest per digestion event, faster than chemicals in food
+	var/digestion_per_tick_fluid = 20
 	///Minimum delay for fluid digestion per tick
 	var/initial_digestion_delay = 6
 	var/digestion_delay = 6
