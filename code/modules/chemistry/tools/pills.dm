@@ -114,7 +114,10 @@
 			if (src.reagents.total_volume)
 				src.reagents.reaction(target, INGEST)
 				sleep(0.1 SECONDS)
-				reagents?.trans_to(target, src.reagents.total_volume)
+				if(iscarbon(target))
+					var/mob/living/carbon/C = target
+					if (C.organHolder.stomach) reagents?.trans_to(C.organHolder.stomach, src.reagents.total_volume)
+				else reagents?.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			qdel(src)
 
