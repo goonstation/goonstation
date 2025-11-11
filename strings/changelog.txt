@@ -1,4 +1,9 @@
 
+(t)tue nov 11 25
+(u)LeahTheTech
+(p)25167
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The cyalume saber's swipe special attack now does full stamina damage and 0.8x base damage instead of 0.54x.
 (t)mon nov 10 25
 (u)lyzmat
 (p)25148
