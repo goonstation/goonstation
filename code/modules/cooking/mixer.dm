@@ -5,7 +5,7 @@
 /// Mixing time in seconds
 #define MIX_TIME 2 SECONDS
 
-var/list/mixer_recipes = list()
+var/list/mixer_recipes
 
 TYPEINFO(/obj/machinery/mixer)
 	mats = 15
@@ -24,7 +24,7 @@ TYPEINFO(/obj/machinery/mixer)
 	var/image/blender_off
 	var/image/blender_powered
 	var/image/blender_working
-	var/list/recipes = null
+	var/static/list/recipes = null
 	var/list/to_remove = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
@@ -32,27 +32,25 @@ TYPEINFO(/obj/machinery/mixer)
 
 	New()
 		..()
+		if (!mixer_recipes)
+			mixer_recipes = list()
+			mixer_recipes += new /datum/recipe/cooking/mixer/mix_cake_custom()
+			mixer_recipes += new /datum/recipe/cooking/mixer/pancake_batter()
+			mixer_recipes += new /datum/recipe/cooking/mixer/brownie_batter()
+			mixer_recipes += new /datum/recipe/cooking/mixer/cake_batter()
+			mixer_recipes += new /datum/recipe/cooking/mixer/raw_flan()
+			mixer_recipes += new /datum/recipe/cooking/mixer/custard()
+			mixer_recipes += new /datum/recipe/cooking/mixer/mashedpotatoes()
+			mixer_recipes += new /datum/recipe/cooking/mixer/mashedbrains()
+			mixer_recipes += new /datum/recipe/cooking/mixer/gruel()
+			mixer_recipes += new /datum/recipe/cooking/mixer/fishpaste()
+			mixer_recipes += new /datum/recipe/cooking/mixer/meatpaste()
+			mixer_recipes += new /datum/recipe/cooking/mixer/wonton_wrapper()
+			mixer_recipes += new /datum/recipe/cooking/mixer/butters()
+			mixer_recipes += new /datum/recipe/cooking/mixer/soysauce()
+			mixer_recipes += new /datum/recipe/cooking/mixer/gravy()
+
 		src.recipes = mixer_recipes
-		if (!src.recipes)
-			src.recipes = list()
-
-		if (!src.recipes.len)
-			src.recipes += new /datum/cookingrecipe/mixer/mix_cake_custom(src)
-			src.recipes += new /datum/cookingrecipe/mixer/pancake_batter(src)
-			src.recipes += new /datum/cookingrecipe/mixer/brownie_batter(src)
-			src.recipes += new /datum/cookingrecipe/mixer/cake_batter(src)
-			src.recipes += new /datum/cookingrecipe/mixer/raw_flan(src)
-			src.recipes += new /datum/cookingrecipe/mixer/custard(src)
-			src.recipes += new /datum/cookingrecipe/mixer/mashedpotatoes(src)
-			src.recipes += new /datum/cookingrecipe/mixer/mashedbrains(src)
-			src.recipes += new /datum/cookingrecipe/mixer/gruel(src)
-			src.recipes += new /datum/cookingrecipe/mixer/fishpaste(src)
-			src.recipes += new /datum/cookingrecipe/mixer/meatpaste(src)
-			src.recipes += new /datum/cookingrecipe/mixer/wonton_wrapper(src)
-			src.recipes += new /datum/cookingrecipe/mixer/butters(src)
-			src.recipes += new /datum/cookingrecipe/mixer/soysauce(src)
-			src.recipes += new /datum/cookingrecipe/mixer/gravy(src)
-
 		src.blender_off = image(src.icon, "blender_off")
 		src.blender_powered = image(src.icon, "blender_powered")
 		src.blender_working = image(src.icon, "blender_working")
@@ -153,17 +151,12 @@ TYPEINFO(/obj/machinery/mixer)
 			return src.Attackby(W, user)
 		return ..()
 
-	proc/bowl_checkitem(var/recipeitem, var/recipecount)
-		if (!locate(recipeitem) in src.contents) return 0
-		var/count = 0
-		for(var/obj/item/I in src.contents)
-			if(istype(I, recipeitem))
-				count++
-				to_remove += I
-
-		if (count < recipecount)
-			return 0
-		return 1
+	proc/mixer_get_valid_recipe()
+		// For every recipe, check if we can make it with our current contents
+		for (var/datum/recipe/cooking/R in src.recipes)
+			if (R.can_cook_recipe(src.contents))
+				return R
+		return null
 
 	proc/mix()
 
@@ -195,9 +188,8 @@ TYPEINFO(/obj/machinery/mixer)
 			return
 
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
-		var/derivename = 0
-		check_recipe:
-			for (var/datum/cookingrecipe/R in src.recipes)
+		/* check_recipe:
+			for (var/datum/recipe/cooking/R in src.recipes)
 				to_remove.len = 0
 				for(var/I in R.ingredients)
 					if (!bowl_checkitem(I, R.ingredients[I])) continue check_recipe
@@ -212,28 +204,16 @@ TYPEINFO(/obj/machinery/mixer)
 						output = R.output
 				if (R.useshumanmeat)
 					derivename = 1
-				break
+				break */
+		var/datum/recipe/cooking/recipe = mixer_get_valid_recipe(src.contents)
+		output = recipe.get_output(src.contents, src)
 
-		if (!isnull(output))
-			var/obj/item/reagent_containers/food/snacks/F
-			if (ispath(output))
-				F = new output(get_turf(src))
-			else
-				F = output
-				F.set_loc(get_turf(src))
+		deal_with_output(output, recipe)
 
-			if (derivename)
-				var/foodname = F.name
-				for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
-					F.name = "[M.subjectname] [foodname]"
-					F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-					if(!isnull(F.unlock_medal_when_eaten))
-						continue
-					else if (M.subjectjob && M.subjectjob == "Clown")
-						F.unlock_medal_when_eaten = "That tasted funny"
-					else
-						F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-		for (var/obj/item/I in to_remove)
+		var/list/content = src.contents.Copy()
+		recipe.separate_ingredients(content)
+
+		for (var/obj/item/I in content)
 			qdel(I)
 		to_remove.len = 0
 
@@ -251,6 +231,23 @@ TYPEINFO(/obj/machinery/mixer)
 		src.power_usage = 0
 		UnsubscribeProcess()
 		return
+
+	proc/deal_with_output(var/output, var/datum/recipe/cooking/recipe)
+		for(var/obj/item in output)
+			item?.set_loc(get_turf(src))
+			if (!recipe.useshumanmeat || !istype(item, /obj/item/reagent_containers/food/snacks))
+				return
+			var/obj/item/reagent_containers/food/snacks/F = item
+			var/foodname = F.name
+			for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
+				F.name = "[M.subjectname] [foodname]"
+				F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
+				if(!isnull(F.unlock_medal_when_eaten))
+					continue
+				else if (M.subjectjob && M.subjectjob == "Clown")
+					F.unlock_medal_when_eaten = "That tasted funny"
+				else
+					F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 
 	power_change()
 		. = ..()
