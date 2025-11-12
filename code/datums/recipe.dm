@@ -83,14 +83,14 @@ ABSTRACT_TYPE(/datum/recipe)
 	/// and moves them to the 'extras' list if it is provided.
 	/// Wildcards are assumed to be the first x items in the list that aren't explicitly used by ingredients.
 	/// This isn't a ridiculously efficient method, it's not recommended to use this in heavy loops.
-	proc/separate_ingredients(list/ingredients, list/extras = null, wildcard_override = null)
-		if (!src.ingredients || length(src.ingredients) < 1)
+	proc/separate_ingredients(list/seperatable_ingredients, list/extras = null, wildcard_override = null)
+		if (!seperatable_ingredients || length(seperatable_ingredients) < 1)
 			return
 		var/wildcards = wildcard_override == null ? src.wildcard_quantity : wildcard_override
-		if (length(src.ingredients) >= src.recipe_length + wildcards)
+		if (length(seperatable_ingredients) <= src.recipe_length + wildcards)
 			return
 
-		var/list/remaining = src.ingredients.Copy()
+		var/list/remaining = seperatable_ingredients.Copy()
 		var/list/used_for_recipe = list()
 
 		for (var/obj/required_type as anything in src.ingredients)
@@ -114,7 +114,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			remaining.Cut(1, 2)
 
 		for (var/obj/item/unused in remaining)
-			src.ingredients -= unused
+			seperatable_ingredients -= unused
 			if (extras)
 				extras += unused
 
