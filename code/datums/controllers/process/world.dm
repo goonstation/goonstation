@@ -132,22 +132,25 @@ input:checked + div { display: block; }
 "}
 
 	var/list/recipies = list()
-	for (var/datum/cookingrecipe/R in oven_recipes)
+	for (var/datum/recipe/R in oven_recipes)
 		// do not show recipies set to a null category
 		if (!R.category)
 			continue
 		var/list/tmp2 = list("<tr>")
 
-		if (ispath(R.output))
-			var/atom/item_path = R.output
-			tmp2 += "<th>[bicon(R.output)][initial(item_path.name)]</th><td>"
+		var/list/mascot_data = R.get_mascot_data()
+		if (mascot_data)
+			tmp2 += "<th>[bicon(icon(file(mascot_data["icon"]), mascot_data["icon_state"], SOUTH, 1))][mascot_data["name"]]</th><td>"
 		else
 			tmp2 += "<th>???</th><td>"
-		for(var/I in R.ingredients)
-			var/atom/item_path = I
-			tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(I)][R.ingredients[I] > 1 ? "<span>x[R.ingredients[I]]</span>" : ""]</div>"
+		for(var/list/Idata in R.get_ingredients_data())
+			var/icon = icon(file(Idata["icon"]), Idata["icon_state"], SOUTH, 1)
+			tmp2 += "<div class='item' title=\"[html_encode(Idata["name"])]\">[bicon(icon)][Idata["amount"] > 1 ? "<span>x[Idata["amount"]]</span>" : ""]</div>"
 
-		tmp2 += "</td><td class='x'>[R.cookbonus >= 10 ? "[round(R.cookbonus / 2)] HI" : "[round(R.cookbonus)] LO"]</td></tr>"
+		var/datum/recipe_instructions/oven_instructions/instructions = R.get_recipe_instructions("oven")
+		if (!instructions)
+			instructions = new /datum/recipe_instructions/oven_instructions/default()
+		tmp2 += "</td><td class='x'>[instructions.cookbonus >= 10 ? "[round(instructions.cookbonus / 2)] HI" : "[round(instructions.cookbonus)] LO"]</td></tr>"
 
 		if (!recipies[R.category])
 			recipies[R.category] = list("<label for='[R.category]'><b>[R.category]</b></label><input type='checkbox' id='[R.category]'><div><table>")
