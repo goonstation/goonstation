@@ -1,13 +1,12 @@
 ABSTRACT_TYPE(/datum/recipe/cooking)
 /datum/recipe/cooking
-	var/cookbonus = null // how much cooking it needs to get a healing bonus
-	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims. TODO: this should perhaps work off components
+	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims.
 
 	get_output(list/item_list, atom/cook_source = null, mob/user = null)
 		. = ..(item_list, cook_source, user)
 		if (!useshumanmeat)
 			return
-		// naming of food after human products
+		// naming of food after human products. TODO this should perhaps work off components
 		for(var/obj/item/reagent_containers/food/snacks/F in .)
 			var/foodname = F.name
 			for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in item_list)
@@ -19,10 +18,6 @@ ABSTRACT_TYPE(/datum/recipe/cooking)
 					F.unlock_medal_when_eaten = "That tasted funny"
 				else
 					F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-
-ABSTRACT_TYPE(/datum/recipe/cooking/mixer)
-/datum/recipe/cooking/mixer
-
 
 
 /datum/recipe/cooking/spicychickensandwich
@@ -791,8 +786,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2)
 	output = /obj/item/reagent_containers/food/snacks/breakfast
 
-/datum/recipe/cooking/mixer/wonton_wrapper
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/wonton_wrapper)
+/datum/recipe/cooking/wonton_wrapper // mixer
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/flour = 1)
@@ -1337,8 +1331,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/pie/fish
 	category = "Pies"
 
-/datum/recipe/cooking/mixer/raw_flan
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/raw_flan)
+/datum/recipe/cooking/raw_flan // mixer
 	ingredients = list(\
 		/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
 		/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
@@ -1346,15 +1339,13 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 		/obj/item/reagent_containers/food/drinks/milk = 1)
 	output = /obj/item/reagent_containers/food/snacks/ingredient/raw_flan
 
-/datum/recipe/cooking/mixer/custard
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/custard)
+/datum/recipe/cooking/custard // mixer
 	ingredients = list(\
 	/obj/item/reagent_containers/food/drinks/milk = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
 	output = /obj/item/reagent_containers/food/snacks/condiment/custard
 
-/datum/recipe/cooking/mixer/gruel
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/gruel)
+/datum/recipe/cooking/gruel // mixer
 	ingredients = list(/obj/item/reagent_containers/food/snacks/yuck = 3)
 	output = /obj/item/reagent_containers/food/snacks/soup/gruel
 
@@ -1446,8 +1437,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison = /obj/item/reagent_containers/food/snacks/candy/candy_apple/poison)
 
 //Cakes!
-/datum/recipe/cooking/mixer/cake_batter
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/cake_batter)
+/datum/recipe/cooking/cake_batter // mixer
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2)
@@ -1574,7 +1564,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 
 		return list(B)
 
-/datum/recipe/cooking/mixer/mix_cake_custom
+/datum/recipe/cooking/mix_cake_custom // mixer
 	ingredients = list(/obj/item/reagent_containers/food/snacks/cake_batter = 1)
 	output = null
 	wildcard_quantity = 100
@@ -1609,8 +1599,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/omelette
 	variants = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee = /obj/item/reagent_containers/food/snacks/omelette/bee)
 
-/datum/recipe/cooking/mixer/pancake_batter
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/pancake_batter)
+/datum/recipe/cooking/pancake_batter // mixer
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/drinks/milk = 1,
@@ -1622,35 +1611,29 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/pancake_batter = 1)
 	output = /obj/item/reagent_containers/food/snacks/pancake
 
-/datum/recipe/cooking/mixer/mashedpotatoes
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/mashedpotatoes)
+/datum/recipe/cooking/mashedpotatoes // mixer
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/potato = 3)
 	output = /obj/item/reagent_containers/food/snacks/mashedpotatoes
 
-/datum/recipe/cooking/mixer/mashedbrains
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/mashedbrains)
+/datum/recipe/cooking/mashedbrains // mixer
 	ingredients = list(/obj/item/organ/brain = 1)
 	output = /obj/item/reagent_containers/food/snacks/mashedbrains
 
-/datum/recipe/cooking/mixer/meatpaste
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/meatpaste)
+/datum/recipe/cooking/meatpaste // mixer
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 
-/datum/recipe/cooking/mixer/soysauce
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/soysauce)
+/datum/recipe/cooking/soysauce // mixer
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/soy = 1)
 	output = /obj/item/reagent_containers/food/snacks/condiment/soysauce
 
-/datum/recipe/cooking/mixer/gravy
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/gravy)
+/datum/recipe/cooking/gravy // mixer
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/flour = 1)
 	output = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
 
-/datum/recipe/cooking/mixer/fishpaste
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/fishpaste)
+/datum/recipe/cooking/fishpaste // mixer
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = 1)
 	output = /obj/item/reagent_containers/food/snacks/ingredient/fishpaste
 
@@ -2002,8 +1985,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 
 		return list(b_cupcake)
 
-/datum/recipe/cooking/mixer/butters
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/butters)
+/datum/recipe/cooking/butters // mixer
 	ingredients = list(\
 	/obj/item/clothing/head/butt = 1,
 	/obj/item/reagent_containers/food/drinks/milk = 1)
@@ -2034,8 +2016,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	/obj/item/plate/tray = 1)
 	output = /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar
 
-/datum/recipe/cooking/mixer/brownie_batter
-	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/brownie_batter)
+/datum/recipe/cooking/brownie_batter
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2,

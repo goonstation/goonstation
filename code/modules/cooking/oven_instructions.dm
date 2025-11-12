@@ -6,14 +6,7 @@ ABSTRACT_TYPE(/datum/recipe_instructions)
 	proc/get_id()
 		return null
 
-ABSTRACT_TYPE(/datum/recipe_instructions/microwave_instructions)
-/datum/recipe_instructions/microwave_instructions
-	var/cook_time = 8
-	var/end_state
-
 ABSTRACT_TYPE(/datum/recipe_instructions/oven_instructions)
-/datum/recipe_instructions/oven_instructions
-
 /datum/recipe_instructions/oven_instructions
 	var/cookbonus = 10 // how much cooking it needs to get a healing bonus
 
@@ -590,45 +583,3 @@ ABSTRACT_TYPE(/datum/recipe_instructions/oven_instructions/sandwich)
 
 /datum/recipe_instructions/oven_instructions/flan
 	cookbonus = 6
-
-/datum/recipe_instructions/oven_instructions/mixer/raw_flan
-	cookbonus = 4
-
-/datum/recipe_instructions/oven_instructions/mixer/custard
-	cookbonus = 6
-
-/datum/recipe_instructions/oven_instructions/mixer/gruel
-	cookbonus = 10
-
-/datum/recipe_instructions/oven_instructions/mixer/brownie_batter
-	cookbonus = 10
-
-/datum/recipe_instructions/oven_instructions/mixer/butters
-	cookbonus = 14
-
-/datum/recipe_instructions/oven_instructions/mixer/mashedpotatoes
-	cookbonus = 10
-
-/datum/recipe_instructions/oven_instructions/mixer/mashedbrains
-	cookbonus = 10
-
-/datum/recipe_instructions/oven_instructions/mixer/meatpaste
-	cookbonus = 4
-
-/datum/recipe_instructions/oven_instructions/mixer/soysauce
-	cookbonus = 4
-
-/datum/recipe_instructions/oven_instructions/mixer/gravy
-	cookbonus = 4
-
-/datum/recipe_instructions/oven_instructions/mixer/fishpaste
-	cookbonus = 4
-
-/datum/recipe_instructions/oven_instructions/mixer/pancake_batter
-	cookbonus = 4
-
-/datum/recipe_instructions/oven_instructions/mixer/cake_batter
-	cookbonus = 10
-
-/datum/recipe_instructions/oven_instructions/mixer/wonton_wrapper
-	cookbonus = 1
