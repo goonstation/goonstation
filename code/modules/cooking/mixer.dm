@@ -25,7 +25,6 @@ TYPEINFO(/obj/machinery/mixer)
 	var/image/blender_powered
 	var/image/blender_working
 	var/static/list/recipes = null
-	var/list/to_remove = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
 	var/timeMixEnd = 0
@@ -154,7 +153,7 @@ TYPEINFO(/obj/machinery/mixer)
 	proc/mixer_get_valid_recipe()
 		// For every recipe, check if we can make it with our current contents
 		for (var/datum/recipe/cooking/R in src.recipes)
-			if (R.can_cook_recipe(src.contents))
+			if (R.can_cook_recipe(src.contents, 10))
 				return R
 		return null
 
@@ -187,35 +186,17 @@ TYPEINFO(/obj/machinery/mixer)
 		if (TIME < src.timeMixEnd)
 			return
 
-		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
-		/* check_recipe:
-			for (var/datum/recipe/cooking/R in src.recipes)
-				to_remove.len = 0
-				for(var/I in R.ingredients)
-					if (!bowl_checkitem(I, R.ingredients[I])) continue check_recipe
-				output = R.specialOutput(src)
-				if (!output)
-					if(R.variants)//replace all of this with getVariant() once cooking machines are given a common type
-						for(var/specialIngredient in R.variants)
-							if(output) break
-							if(bowl_checkitem(specialIngredient, R.variant_quantity))
-								output = R.variants[specialIngredient]
-					else
-						output = R.output
-				if (R.useshumanmeat)
-					derivename = 1
-				break */
+		var/output = null
 		var/datum/recipe/cooking/recipe = mixer_get_valid_recipe(src.contents)
-		output = recipe.get_output(src.contents, src)
+		if (recipe)
+			output = recipe.get_output(src.contents, src)
 
-		deal_with_output(output, recipe)
+			deal_with_output(output, recipe)
+			var/list/content = src.contents.Copy()
+			recipe.separate_ingredients(content)
 
-		var/list/content = src.contents.Copy()
-		recipe.separate_ingredients(content)
-
-		for (var/obj/item/I in content)
-			qdel(I)
-		to_remove.len = 0
+			for (var/obj/item/I in content)
+				qdel(I)
 
 		for (var/obj/I in src.contents)
 			I.set_loc(src.loc)
