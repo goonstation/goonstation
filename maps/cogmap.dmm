@@ -4734,7 +4734,7 @@
 /area/station/crew_quarters/fitness)
 "ats" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -5422,7 +5422,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "avT" = (
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -20319,14 +20319,8 @@
 /area/station/engine/combustion_chamber)
 "bxa" = (
 /obj/table/reinforced/auto,
-/obj/item/pen/marker/blue{
-	pixel_x = -6;
-	pixel_y = -1
-	},
 /obj/machinery/door/firedoor/pyro,
-/obj/item/bell/hop{
-	pixel_y = 5
-	},
+/obj/machinery/phone,
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "bxe" = (
@@ -54949,10 +54943,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
-"rmR" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space,
-/area/space)
 "rnn" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -60101,6 +60091,23 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"uWj" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/door/firedoor/pyro,
+/obj/item/pen/marker/blue{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/bell/hop{
+	pixel_y = 8;
+	pixel_x = -3
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
 "uWP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -65754,7 +65761,6 @@ adC
 adC
 adC
 adC
-rmR
 adC
 adC
 adC
@@ -66045,7 +66051,8 @@ adC
 adC
 adC
 adC
-rmR
+adC
+adC
 adC
 adC
 adC
@@ -96082,7 +96089,7 @@ aWM
 bes
 aUk
 aZY
-oCZ
+uWj
 nlB
 nIQ
 nlB
@@ -141242,7 +141249,7 @@ adC
 adC
 adC
 adC
-rmR
+adC
 adC
 adC
 adC
@@ -153636,7 +153643,7 @@ adC
 adC
 adC
 adC
-rmR
+adC
 adC
 adC
 adC

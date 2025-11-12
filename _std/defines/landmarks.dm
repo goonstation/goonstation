@@ -60,7 +60,6 @@
 
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
-#define LANDMARK_ARTIFACT_SINGULARITY_SPAWN "Singularity-Bait-spawn"
 
 /// Twitch Plays Shitty Bill respawn points
 #define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn"

@@ -2167,10 +2167,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
-"aZB" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space/fluid/acid,
-/area/space)
 "aZC" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -5304,9 +5300,6 @@
 "csT" = (
 /obj/lattice,
 /obj/machinery/launcher_loader/south,
-/obj/machinery/camera/directional/north{
-	pixel_x = 6
-	},
 /turf/space/fluid/acid/clear,
 /area/space)
 "ctc" = (
@@ -10737,7 +10730,7 @@
 /area/station/crewquarters/cryotron)
 "eTx" = (
 /obj/stool,
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -17463,6 +17456,10 @@
 /obj/item/pen,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
+"hGF" = (
+/obj/machinery/camera/directional/east,
+/turf/space/fluid/acid/clear,
+/area/space)
 "hGK" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/fork{
@@ -17548,7 +17545,7 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "hHS" = (
-/obj/decal/boxingropeenter,
+/obj/railing/boxing,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -25675,6 +25672,12 @@
 	dir = 4
 	},
 /area/pasiphae/bridge)
+"lfk" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "lfn" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1
@@ -26734,16 +26737,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"lEf" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/camera/directional/south{
-	pixel_x = 10
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "lEg" = (
 /obj/landmark/start/job/security_assistant,
 /obj/stool/chair/red{
@@ -32673,13 +32666,14 @@
 /area/pasiphae/sys)
 "ofG" = (
 /obj/table/reinforced/auto,
+/obj/item/stamp{
+	pixel_x = 6
+	},
 /obj/item/item_box/postit{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/stamp{
-	pixel_x = 6
-	},
+/obj/machinery/phone,
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -35760,7 +35754,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/ghostdrone_factory)
 "pBT" = (
-/obj/decal/boxingropeenter,
+/obj/railing/boxing,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -36900,7 +36894,7 @@
 	name = "Cargo Auxiliary Endpoint"
 	})
 "qcT" = (
-/obj/decal/boxingropeenter,
+/obj/railing/boxing,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
@@ -37194,7 +37188,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/east)
 "qlx" = (
-/obj/decal/boxingropeenter,
+/obj/railing/boxing,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
@@ -38560,7 +38554,7 @@
 /area/station/science/bot_storage)
 "qSK" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/decal/stage_edge{
 	dir = 4
 	},
@@ -38699,16 +38693,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"qWO" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "qWR" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -41565,12 +41549,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
-"ssk" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = -10
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "ssp" = (
 /obj/machinery/floorflusher/solitary2,
 /obj/disposalpipe/trunk/brig{
@@ -44340,6 +44318,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/head)
+"tDn" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "tDs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -52036,6 +52020,12 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
+"xhz" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "xhJ" = (
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
@@ -53436,7 +53426,7 @@
 /area/station/maintenance/southeast)
 "xPC" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
@@ -76501,7 +76491,7 @@ oeA
 oeA
 oeA
 lZF
-aZB
+bzS
 bzS
 bzS
 bzS
@@ -77834,7 +77824,7 @@ bzS
 bzS
 bzS
 bzS
-aZB
+bzS
 oeA
 oeA
 oeA
@@ -78372,7 +78362,7 @@ rXj
 rXj
 rXj
 rJg
-rJg
+hGF
 rJg
 rXj
 rXj
@@ -79564,7 +79554,7 @@ rJg
 rJg
 rJg
 rJg
-ssk
+rJg
 rJg
 rJg
 rJg
@@ -79596,7 +79586,7 @@ rJg
 rJg
 rJg
 rJg
-ssk
+rJg
 rJg
 rJg
 rJg
@@ -79862,7 +79852,7 @@ bzS
 bzS
 rJg
 rJg
-rJg
+xhz
 dqY
 dqY
 dqY
@@ -79870,7 +79860,7 @@ dqY
 dqY
 dqY
 dqY
-rJg
+tDn
 rJg
 rJg
 rJg
@@ -79894,7 +79884,7 @@ rJg
 rJg
 rJg
 rJg
-rJg
+xhz
 dqY
 dqY
 dqY
@@ -79902,7 +79892,7 @@ dqY
 dqY
 dqY
 dqY
-rJg
+tDn
 rJg
 rJg
 bzS
@@ -85966,7 +85956,7 @@ jjE
 jjE
 jjE
 jjE
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -86786,7 +86776,7 @@ bzS
 bzS
 bzS
 bzS
-lEf
+lAH
 xQv
 bRa
 bRa
@@ -89198,7 +89188,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 bRa
@@ -91610,7 +91600,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 bRa
@@ -94022,7 +94012,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 bRa
@@ -94130,7 +94120,7 @@ tZe
 uqC
 uqC
 jjE
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -96434,7 +96424,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 bAt
@@ -96550,7 +96540,7 @@ tZe
 uqC
 uqC
 jjE
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -97640,7 +97630,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 xQv
 bRa
 dsa
@@ -97760,7 +97750,7 @@ uqC
 nPT
 uqC
 jjE
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -97942,7 +97932,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+aWz
 xQv
 mKY
 sRh
@@ -98062,7 +98052,7 @@ uqC
 tWS
 mkU
 jjE
-bzS
+fWG
 bzS
 bzS
 bzS
@@ -100055,7 +100045,7 @@ bzS
 bzS
 bzS
 bzS
-aWz
+bzS
 oPd
 dJj
 epj
@@ -100177,7 +100167,7 @@ caB
 vtr
 uJG
 dQM
-fWG
+bzS
 bzS
 bzS
 bzS
@@ -102170,7 +102160,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+ftF
 rne
 uVs
 nFp
@@ -102290,7 +102280,7 @@ neB
 vTb
 xTE
 dAB
-bzS
+omv
 bzS
 bzS
 bzS
@@ -102472,7 +102462,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 sJU
@@ -102592,7 +102582,7 @@ neB
 vTb
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -103682,7 +103672,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 wUo
@@ -103798,7 +103788,7 @@ nGi
 neB
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -106102,7 +106092,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 uNU
@@ -106210,7 +106200,7 @@ lCi
 neB
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -108522,7 +108512,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 uNU
@@ -108622,7 +108612,7 @@ lCi
 neB
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -110942,7 +110932,7 @@ bzS
 bzS
 bzS
 bzS
-ftF
+bzS
 rne
 uNU
 uNU
@@ -111034,7 +111024,7 @@ lCi
 neB
 neB
 dAB
-omv
+bzS
 bzS
 bzS
 bzS
@@ -113446,7 +113436,7 @@ lCi
 neB
 neB
 dAB
-qWO
+vnv
 bzS
 bzS
 bzS
@@ -120970,7 +120960,7 @@ rJg
 rJg
 rJg
 rJg
-rJg
+lfk
 rJg
 rJg
 rJg
@@ -128403,7 +128393,7 @@ oeA
 oeA
 oeA
 lZF
-aZB
+bzS
 bzS
 bzS
 bzS
@@ -129775,7 +129765,7 @@ bzS
 bzS
 bzS
 bzS
-aZB
+bzS
 bzS
 bzS
 oeA

@@ -3877,7 +3877,7 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
 "aGj" = (
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -7041,7 +7041,7 @@
 /area/station/security/hos)
 "bka" = (
 /obj/table/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
@@ -31193,10 +31193,6 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
-"ruW" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space,
-/area/space)
 "rvc" = (
 /obj/stool/chair{
 	dir = 4
@@ -39648,8 +39644,15 @@
 /obj/machinery/computer/card{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/drainage,
+/obj/machinery/phone/wall{
+	pixel_y = 32;
+	pixel_x = 8
+	},
+/obj/machinery/firealarm/directional/north{
+	pixel_x = -8;
+	pixel_y = 30
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/bridge/customs)
 "xsx" = (
@@ -42041,7 +42044,6 @@ aaa
 aaa
 aaa
 aaa
-ruW
 aaa
 aaa
 aaa
@@ -42332,7 +42334,8 @@ aaa
 aaa
 aaa
 aaa
-ruW
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -116926,7 +116929,7 @@ aaa
 aaa
 aaa
 aaa
-ruW
+aaa
 aaa
 aaa
 aaa
@@ -129923,7 +129926,7 @@ aaa
 aaa
 aaa
 aaa
-ruW
+aaa
 aaa
 aaa
 aaa

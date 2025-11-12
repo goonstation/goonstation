@@ -18177,7 +18177,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "btI" = (
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/grey{
@@ -28598,7 +28598,7 @@
 	icon_state = "4-8"
 	},
 /obj/table,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "cgp" = (
@@ -34468,10 +34468,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"hOu" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space/fluid,
-/area/space)
 "hPb" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/grime,
@@ -41404,11 +41400,6 @@
 	dir = 9
 	},
 /area/space)
-"qvt" = (
-/obj/decal/woodclutter,
-/obj/landmark/singularity_bait_spawn,
-/turf/space/fluid,
-/area/space)
 "qwj" = (
 /obj/machinery/light/small/floor/warm/very,
 /turf/unsimulated/floor/shuttle/red,
@@ -45562,7 +45553,6 @@
 "wmR" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/cashreg,
 /obj/noticeboard/persistent/customs/directional/north,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0;
@@ -45571,6 +45561,7 @@
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
+/obj/machinery/phone,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -45824,6 +45815,7 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
+/obj/machinery/cashreg,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -48577,7 +48569,7 @@ aqn
 aqn
 aqn
 aqn
-hOu
+aqn
 aqn
 aqn
 aqn
@@ -48826,7 +48818,7 @@ aqn
 aqn
 aqn
 aqn
-qvt
+aTt
 shL
 cgq
 cgq
@@ -136117,7 +136109,7 @@ cgq
 cgq
 cgq
 auI
-hOu
+aqn
 aqn
 aqn
 aqn
@@ -136708,7 +136700,7 @@ aqn
 aqn
 aqn
 aqn
-hOu
+aqn
 cgq
 cgq
 cgq

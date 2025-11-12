@@ -9260,7 +9260,7 @@
 "cHV" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/table/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "cHW" = (
@@ -20872,12 +20872,19 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
 "gwC" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/north{
+	pixel_x = 10
+	},
 /obj/machinery/light/emergency{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 24;
+	pixel_x = 2
 	},
 /obj/filing_cabinet,
+/obj/machinery/phone/wall{
+	pixel_y = 32;
+	pixel_x = -8
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -23055,10 +23062,6 @@
 	name = "solar paneling"
 	},
 /area/station/solar/east)
-"hfM" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space,
-/area/space)
 "hfR" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/knife{
@@ -33356,7 +33359,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
 "kri" = (
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,
@@ -71436,7 +71439,7 @@
 /area/station/crew_quarters/cafeteria)
 "weI" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -80398,7 +80401,6 @@ rdj
 rdj
 rdj
 rdj
-hfM
 rdj
 rdj
 rdj
@@ -80689,7 +80691,8 @@ rdj
 rdj
 rdj
 rdj
-hfM
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -154075,7 +154078,7 @@ rdj
 rdj
 rdj
 rdj
-hfM
+rdj
 rdj
 rdj
 rdj
@@ -168280,7 +168283,7 @@ rdj
 rdj
 rdj
 rdj
-hfM
+rdj
 rdj
 rdj
 rdj

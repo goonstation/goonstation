@@ -7163,10 +7163,6 @@
 	icon_state = "4"
 	},
 /area/shuttle/arrival/station)
-"Yh" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space,
-/area/space)
 "Yi" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
@@ -8719,7 +8715,6 @@ Rf
 Rf
 Rf
 Rf
-Yh
 Rf
 Rf
 Rf
@@ -8959,7 +8954,8 @@ Rf
 Rf
 Rf
 Rf
-Yh
+Rf
+Rf
 Rf
 Rf
 Rf
@@ -96652,7 +96648,6 @@ Rf
 Rf
 Rf
 Rf
-Yh
 Rf
 Rf
 Rf
@@ -96841,7 +96836,8 @@ Rf
 Rf
 Rf
 Rf
-Yh
+Rf
+Rf
 Rf
 Rf
 Rf

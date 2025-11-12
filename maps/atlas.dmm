@@ -22166,10 +22166,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"woM" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space,
-/area/space)
 "wra" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24584,7 +24580,6 @@ aaa
 aaa
 aaa
 aaa
-woM
 aaa
 aaa
 aaa
@@ -24875,7 +24870,8 @@ aaa
 aaa
 aaa
 aaa
-woM
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93127,7 +93123,7 @@ aaa
 aaa
 aaa
 aaa
-woM
+aaa
 aaa
 aaa
 aaa
@@ -112466,7 +112462,7 @@ aaa
 aaa
 aaa
 aaa
-woM
+aaa
 aaa
 aaa
 aaa

@@ -17058,7 +17058,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "drp" = (
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/grey{
@@ -31539,10 +31539,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/crew_quarters/catering)
-"mel" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space,
-/area/space)
 "mew" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -32931,7 +32927,7 @@
 /area/station/science/lab)
 "mTi" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /obj/machinery/light/small/floor,
 /obj/decal/stage_edge{
@@ -49767,7 +49763,7 @@
 /area/station/crew_quarters/stockex)
 "wDk" = (
 /obj/stool,
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -53751,7 +53747,7 @@ aaa
 aaa
 aaa
 aaa
-mel
+aaa
 aaa
 aaa
 aaa
@@ -53828,7 +53824,7 @@ aaa
 aaa
 aaa
 aaa
-mel
+aaa
 aaa
 aaa
 aaa
@@ -141342,7 +141338,6 @@ aaa
 aaa
 aaa
 aaa
-mel
 aaa
 aaa
 aaa
@@ -141633,7 +141628,8 @@ aaa
 aaa
 aaa
 aaa
-mel
+aaa
+aaa
 aaa
 aaa
 aaa

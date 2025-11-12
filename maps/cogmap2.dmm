@@ -6904,7 +6904,7 @@
 /area/station/crew_quarters/fitness)
 "awz" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -8104,7 +8104,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
 "azI" = (
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 8
 	},
 /obj/stool,
@@ -8123,7 +8123,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "azK" = (
-/obj/decal/boxingropeenter{
+/obj/railing/boxing{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/black{
@@ -56111,6 +56111,10 @@
 "gXc" = (
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/disposal/mail/small/autoname/checkpoint/customs/east,
+/obj/machinery/phone/wall{
+	pixel_x = -28;
+	pixel_y = 6
+	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
 "gXp" = (
@@ -58385,10 +58389,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"iTX" = (
-/obj/landmark/singularity_bait_spawn,
-/turf/space,
-/area/space)
 "iUL" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -75817,7 +75817,6 @@ aaa
 aaa
 aaa
 aaa
-iTX
 aaa
 aaa
 aaa
@@ -76108,7 +76107,8 @@ aaa
 aaa
 aaa
 aaa
-iTX
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -150098,7 +150098,7 @@ aaa
 aaa
 aaa
 aaa
-iTX
+aaa
 aaa
 aaa
 aaa
@@ -163699,7 +163699,7 @@ aaa
 aaa
 aaa
 aaa
-iTX
+aaa
 aaa
 aaa
 aaa

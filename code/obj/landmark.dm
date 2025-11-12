@@ -575,9 +575,6 @@ var/global/list/job_start_locations = list()
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 
-/obj/landmark/singularity_bait_spawn
-	name = LANDMARK_ARTIFACT_SINGULARITY_SPAWN
-
 /obj/landmark/tutorial/flock_conversion
 	name = LANDMARK_TUTORIAL_FLOCK_CONVERSION
 	icon_state = "tutorial"
