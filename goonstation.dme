@@ -1096,6 +1096,7 @@
 #include "code\modules\atmospherics\machinery\unary\cryo_cell.dm"
 #include "code\modules\atmospherics\machinery\unary\freezer.dm"
 #include "code\modules\atmospherics\machinery\unary\heat_source.dm"
+#include "code\modules\atmospherics\machinery\unary\node.dm"
 #include "code\modules\atmospherics\machinery\unary\outlet_injector.dm"
 #include "code\modules\atmospherics\machinery\unary\portables_connector.dm"
 #include "code\modules\atmospherics\machinery\unary\pressure_tank.dm"

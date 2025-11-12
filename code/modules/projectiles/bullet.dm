@@ -2456,7 +2456,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	damage = 100
 
 	on_hit(atom/hit, angle, obj/projectile/O)
-		if(istype(hit, /obj/machinery/atmospherics/binary/nuclear_reactor))
+		if(istype(hit, /obj/machinery/nuclear_reactor))
 			return FALSE //the turbine blades sail gracefully over the reactor
 		if(istype(hit, /mob/living/carbon/human)) //run a chance to cut off a limb or head
 			var/mob/living/carbon/human/H = hit
