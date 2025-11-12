@@ -1,78 +1,64 @@
-ABSTRACT_TYPE(/datum/cookingrecipe)
-/datum/cookingrecipe
-	var/list/ingredients
+ABSTRACT_TYPE(/datum/recipe/cooking)
+/datum/recipe/cooking
 	var/cookbonus = null // how much cooking it needs to get a healing bonus
-	var/output = null // what you get from this recipe
-	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims
-	var/category = "Unsorted" /// category for sorting, use null to hide
-	var/list/variants = null
-	var/variant_quantity = 1
+	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims. TODO: this should perhaps work off components
 
-	proc/specialOutput(var/obj/submachine/ourCooker)
-		return null //If returning an object, that is used as the output
+	get_output(list/item_list, atom/cook_source = null, mob/user = null)
+		. = ..(item_list, cook_source, user)
+		if (!useshumanmeat)
+			return
+		// naming of food after human products
+		for(var/obj/item/reagent_containers/food/snacks/F in .)
+			var/foodname = F.name
+			for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in item_list)
+				F.name = "[M.subjectname] [foodname]"
+				F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
+				if(!isnull(F.unlock_medal_when_eaten))
+					continue
+				else if (M.subjectjob && M.subjectjob == "Clown")
+					F.unlock_medal_when_eaten = "That tasted funny"
+				else
+					F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 
-	proc/render()
-		var/list/icons = list()
-		for (var/obj/item/type as anything in src.ingredients)
-			icons += bicon(type, 2)
-		. = jointext(icons, "<span style='font-size: 300%'> + </span>")
-		. += "<span style='font-size: 300%'> = </span>[bicon(src.output, 2)]"
-
-//TODO: replace variant checking code with this once cooking machines have been unified under one type
-/*	proc/getVariant(var/obj/submachine/ourCooker)
-		for(var/specialIngredient in variants)
-			if(ourCooker.check_item(specialIngredient, variant_quantity))
-				return new variants[specialIngredient]
-		return new output
-*/
-
-// potential future update:
-// specialOutput should have a flag for if it is used or not,
-// rather than relying on its output being null and using output if so
-// (there are cases where specialOutput can return null as a "didn't work" result,
-//  and not just a default fallback)
-
-ABSTRACT_TYPE(/datum/cookingrecipe/oven)
-/datum/cookingrecipe/oven
-ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
-/datum/cookingrecipe/mixer
+ABSTRACT_TYPE(/datum/recipe/cooking/mixer)
+/datum/recipe/cooking/mixer
 
 
 
-/datum/cookingrecipe/oven/spicychickensandwich
+/datum/recipe/cooking/spicychickensandwich
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1)
-	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
 	category = "Burgers"
+	recipe_instructions = list(\
+	/datum/recipe_instructions/oven_instructions/sandwich)
 
-/datum/cookingrecipe/oven/chickensandwich
+/datum/recipe/cooking/chickensandwich
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1)
-	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/chicken
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/ranch_chicken/spicy = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy, //:melterfrog:
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock = /obj/item/reagent_containers/food/snacks/burger/flockburger)
 	category = "Burgers"
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/sandwich)
 
-ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
-/datum/cookingrecipe/oven/burger
-	cookbonus = 13
+ABSTRACT_TYPE(/datum/recipe/cooking/burger)
+/datum/recipe/cooking/burger
 	category = "Burgers"
-	specialOutput(obj/submachine/ourCooker)
+	get_output(var/list/item_list)
 		//this is dumb and assumes the second thing is always the meat but it usually is so :iiam:
-		var/obj/item/possibly_meat = locate(ingredients[2]) in ourCooker
+		var/obj/item/possibly_meat = locate(ingredients[2]) in item_list
 		if (possibly_meat?.reagents?.get_reagent_amount("crime") >= 5)
 			var/obj/item/reagent_containers/food/snacks/burger/burgle/burgle = new()
 			possibly_meat.transfer_all_reagents(burgle)
 			return burgle
 
-/datum/cookingrecipe/oven/burger/meat
+/datum/recipe/cooking/burger/meat
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
@@ -86,383 +72,382 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/burger/synthburger,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat = /obj/item/reagent_containers/food/snacks/burger/mysteryburger)
 
-
-/datum/cookingrecipe/oven/burger/cheeseburger
+/datum/recipe/cooking/burger/cheeseburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/cheeseburger)
 
-/datum/cookingrecipe/oven/burger/cheeseburger/monkey
+/datum/recipe/cooking/burger/cheeseburger/monkey
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/cheeseburger)
 
-/datum/cookingrecipe/oven/burger/wcheeseburger
+/datum/recipe/cooking/burger/wcheeseburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/gcheeseslice = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/wcheeseburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/wcheeseburger)
 
-/datum/cookingrecipe/oven/burger/luauburger
+/datum/recipe/cooking/burger/luauburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/plant/pineappleslice = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/luauburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/luauburger)
 
-/datum/cookingrecipe/oven/burger/coconutburger
+/datum/recipe/cooking/burger/coconutburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/plant/coconutmeat = 1)
 	output = /obj/item/reagent_containers/food/snacks/burger/coconutburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/coconutburger)
 
-/datum/cookingrecipe/oven/burger/tikiburger
+/datum/recipe/cooking/burger/tikiburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/plant/pineappleslice = 1,
 	/obj/item/reagent_containers/food/snacks/plant/coconutmeat = 1)
-	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/burger/tikiburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/tikiburger)
 
-/datum/cookingrecipe/oven/burger/buttburger
+/datum/recipe/cooking/burger/buttburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/clothing/head/butt = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/buttburger
 	variants = list(\
 	/obj/item/clothing/head/butt/synth = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth,
 	/obj/item/clothing/head/butt/cyberbutt = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber)
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/buttburger)
 
-/datum/cookingrecipe/oven/burger/heartburger
+/datum/recipe/cooking/burger/heartburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/organ/heart = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/heartburger
 	variants = list(\
 	/obj/item/organ/heart/flock = /obj/item/reagent_containers/food/snacks/burger/heartburger/flock,
 	/obj/item/organ/heart/cyber = /obj/item/reagent_containers/food/snacks/burger/heartburger/cyber,
 	/obj/item/organ/heart/synth = /obj/item/reagent_containers/food/snacks/burger/heartburger/synth)
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/heartburger)
 
-/datum/cookingrecipe/oven/burger/brainburger
+/datum/recipe/cooking/burger/brainburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/organ/brain = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/brainburger
 	variants = list(\
 	/obj/item/organ/brain/synth = /obj/item/reagent_containers/food/snacks/burger/brainburger/synth,
 	/obj/item/organ/brain/latejoin = /obj/item/reagent_containers/food/snacks/burger/brainburger/cyber,
 	/obj/item/organ/brain/flockdrone = /obj/item/reagent_containers/food/snacks/burger/brainburger/flock)
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/brainburger)
 
-/datum/cookingrecipe/oven/burger/roburger
+/datum/recipe/cooking/burger/roburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/parts/robot_parts/head = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/roburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/roburger)
 
-/datum/cookingrecipe/oven/burger/cheeseborger
+/datum/recipe/cooking/burger/cheeseborger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/parts/robot_parts/head = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseborger
 
-/datum/cookingrecipe/oven/burger/baconburger
+/datum/recipe/cooking/burger/baconburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1)
 	output = /obj/item/reagent_containers/food/snacks/burger/baconburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger)
 
-/datum/cookingrecipe/oven/burger/baconator
+/datum/recipe/cooking/burger/baconator
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/bigburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger)
 
-/datum/cookingrecipe/oven/burger/butterburger
+/datum/recipe/cooking/burger/butterburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/butterburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger)
 
-/datum/cookingrecipe/oven/burger/aburgination
+/datum/recipe/cooking/burger/aburgination
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling = 1)
-	cookbonus = 6 // still mostly raw, since we don't kill it
 	output = /obj/item/reagent_containers/food/snacks/burger/aburgination
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger)
 
-/datum/cookingrecipe/oven/burger/monster
+/datum/recipe/cooking/burger/monster
 	ingredients = list(/obj/item/reagent_containers/food/snacks/burger/bigburger = 4)
-	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/burger/monsterburger
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger)
 
-/datum/cookingrecipe/oven/swede_mball
+/datum/recipe/cooking/swede_mball
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/meatball = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/flour = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/swedishmeatball
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/swede_mball)
 
-/datum/cookingrecipe/oven/donkpocket
+/datum/recipe/cooking/donkpocket
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/meatball = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/donkpocket/warm
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/donkpocket)
 	variants = list(\
 	/obj/item/instrument/bikehorn = /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm)
 
-/datum/cookingrecipe/oven/donkpocket2
+/datum/recipe/cooking/donkpocket2
 	ingredients = list(/obj/item/reagent_containers/food/snacks/donkpocket = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/donkpocket/warm
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/donkpocket)
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/donkpocket/honk = /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm)
 
-/datum/cookingrecipe/oven/donut
+/datum/recipe/cooking/donut
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_circle = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/donut
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/donut)
 
-/datum/cookingrecipe/oven/bagel
+/datum/recipe/cooking/bagel
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_circle = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/bagel
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bagel)
 
-/datum/cookingrecipe/oven/crumpet //another good idea for this is to cook a trumpet
+/datum/recipe/cooking/crumpet //another good idea for this is to cook a trumpet
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/holey_dough = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/crumpet
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/crumpet)
 
-/datum/cookingrecipe/oven/ice_cream_cone
+/datum/recipe/cooking/ice_cream_cone
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/ice_cream_cone
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/ice_cream_cone)
 
-/datum/cookingrecipe/oven/nougat
+/datum/recipe/cooking/nougat
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/honey = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
-	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/candy/nougat
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/nougat)
 
-/datum/cookingrecipe/oven/candy_cane
+/datum/recipe/cooking/candy_cane
 	ingredients = list(\
 	/obj/item/plant/herb/mint = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
-	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/candy/candy_cane
 
-/datum/cookingrecipe/oven/waffles
+/datum/recipe/cooking/waffles
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/waffles
 
-/datum/cookingrecipe/oven/spaghetti_p
+/datum/recipe/cooking/spaghetti_p
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/spaghetti_p)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/spaghetti_t
+/datum/recipe/cooking/spaghetti_t
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/spaghetti_t)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/sauce
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/spaghetti_s
+/datum/recipe/cooking/spaghetti_s
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/spaghetti_s)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/spaghetti_m
+/datum/recipe/cooking/spaghetti_m
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/spaghetti_m)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 1,
 	/obj/item/reagent_containers/food/snacks/meatball = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/meatball
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/lasagna
+/datum/recipe/cooking/lasagna
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/lasagna)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/lasagna
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/alfredo
+/datum/recipe/cooking/alfredo
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/alfredo)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/alfredo
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/chickenparm
+/datum/recipe/cooking/chickenparm
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/chickenparm)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenparm
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/chickenalfredo
+/datum/recipe/cooking/chickenalfredo
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/chickenalfredo)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/spaghetti_pg
+/datum/recipe/cooking/spaghetti_pg
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/spaghetti_pg)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1,
 	/obj/item/reagent_containers/food/snacks/pizza = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti
 	category = "Pasta"
 
-/datum/cookingrecipe/oven/spooky_bread
+/datum/recipe/cooking/spooky_bread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ectoplasm = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/spooky
 	category = "Bread"
 
-/datum/cookingrecipe/oven/elvis_bread
+/datum/recipe/cooking/elvis_bread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/plant/banana = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/elvis
 	category = "Bread"
 
-/datum/cookingrecipe/oven/banana_bread
+/datum/recipe/cooking/banana_bread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/plant/banana = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/banana
 	category = "Bread"
 
-/datum/cookingrecipe/oven/banana_bread_alt
+/datum/recipe/cooking/banana_bread_alt
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/banana = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/banana
 	category = "Bread"
 
-/datum/cookingrecipe/oven/cornbread1
+/datum/recipe/cooking/cornbread1
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cornbread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/plant/corn = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/corn
 	category = "Bread"
 
-/datum/cookingrecipe/oven/cornbread2
+/datum/recipe/cooking/cornbread2
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cornbread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/corn = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet
 	category = "Bread"
 
-/datum/cookingrecipe/oven/cornbread3
+/datum/recipe/cooking/cornbread3
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cornbread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/plant/corn = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet
 	category = "Bread"
 
-/datum/cookingrecipe/oven/cornbread4
+/datum/recipe/cooking/cornbread4
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cornbread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/plant/corn = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/honey = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey
 	category = "Bread"
 
-/datum/cookingrecipe/oven/pumpkin_bread
+/datum/recipe/cooking/pumpkin_bread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/plant/pumpkin = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/pumpkin
 	category = "Bread"
 
-/datum/cookingrecipe/oven/bread
+/datum/recipe/cooking/bread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bread)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/breadloaf
 	category = "Bread"
 
-/datum/cookingrecipe/oven/honeywheat_bread
+/datum/recipe/cooking/honeywheat_bread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/honey = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/honeywheat
 	category = "Bread"
 
-/datum/cookingrecipe/oven/brain_bread
+/datum/recipe/cooking/brain_bread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/brain_bread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadloaf = 1,
 	/obj/item/organ/brain = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/brain
 	category = "Bread"
 
-/datum/cookingrecipe/oven/toast_bread
+/datum/recipe/cooking/toast_bread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/toast_bread)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/breadloaf = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/toast
 	category = "Bread"
 
-/datum/cookingrecipe/oven/toast
+/datum/recipe/cooking/toast
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/toast)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice = 1)
-	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/banana = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/banana,
@@ -472,13 +457,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/breadslice/french = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/french)
 	category = "Toast"
 
-ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
-/datum/cookingrecipe/oven/sandwich
+ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
+/datum/recipe/cooking/sandwich
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/sandwich)
 	variant_quantity = 2
-	cookbonus = 7
 	category = "Sandwich"
 
-/datum/cookingrecipe/oven/sandwich/human
+/datum/recipe/cooking/sandwich/human
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = 1)
@@ -488,7 +473,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_h,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_meat_h)
 
-/datum/cookingrecipe/oven/sandwich/monkey
+/datum/recipe/cooking/sandwich/monkey
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 1)
@@ -498,7 +483,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_meat_m)
 
 
-/datum/cookingrecipe/oven/sandwich/synth
+/datum/recipe/cooking/sandwich/synth
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = 1)
@@ -507,7 +492,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_s,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_meat_s)
 
-/datum/cookingrecipe/oven/sandwich/cheese
+/datum/recipe/cooking/sandwich/cheese
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
@@ -516,7 +501,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_cheese,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_cheese)
 
-/datum/cookingrecipe/oven/sandwich/peanutbutter
+/datum/recipe/cooking/sandwich/peanutbutter
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 1)
@@ -526,7 +511,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_pb)
 
 
-/datum/cookingrecipe/oven/sandwich/peanutbutter_honey
+/datum/recipe/cooking/sandwich/peanutbutter_honey
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 1,
@@ -536,7 +521,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_pbh,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_pbh)
 
-/datum/cookingrecipe/oven/sandwich/blt
+/datum/recipe/cooking/sandwich/blt
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon= 1,
@@ -547,65 +532,66 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_blt,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_blt)
 
-/datum/cookingrecipe/oven/sandwich/c_butty
+/datum/recipe/cooking/sandwich/c_butty
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1,
 	/obj/item/reagent_containers/food/snacks/fries = 1)
 	output = /obj/item/reagent_containers/food/snacks/sandwich/c_butty
 
-/datum/cookingrecipe/oven/sandwich/meatball //Original meatball sub recipe
+/datum/recipe/cooking/sandwich/meatball //Original meatball sub recipe
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/sandwich/meatball)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadloaf = 1,
 	/obj/item/reagent_containers/food/snacks/meatball = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/meatball
 
-/datum/cookingrecipe/oven/sandwich/meatball_alt //Secondary recipe that uses the baguette
+/datum/recipe/cooking/sandwich/meatball_alt //Secondary recipe that uses the baguette
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/sandwich/meatball)
 	ingredients = list(\
 	/obj/item/baguette = 1,
 	/obj/item/reagent_containers/food/snacks/meatball = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/meatball
 
-/datum/cookingrecipe/oven/sandwich/egg
+/datum/recipe/cooking/sandwich/egg
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/eggsalad = 1)
 	output = /obj/item/reagent_containers/food/snacks/sandwich/eggsalad
 
-/datum/cookingrecipe/oven/sandwich/bahnmi //Original banh mi recipe
+/datum/recipe/cooking/sandwich/bahnmi //Original banh mi recipe
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/sandwich/bahnmi)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadloaf/honeywheat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1,
 	/obj/item/reagent_containers/food/snacks/plant/carrot = 1,
 	/obj/item/reagent_containers/food/snacks/plant/cucumber = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/banhmi
 
-/datum/cookingrecipe/oven/sandwich/bahnmi_alt //Secondary recipe that uses the baguette
+/datum/recipe/cooking/sandwich/bahnmi_alt //Secondary recipe that uses the baguette
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/sandwich/bahnmi)
 	ingredients = list(\
 	/obj/item/baguette = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1,
 	/obj/item/reagent_containers/food/snacks/plant/carrot = 1,
 	/obj/item/reagent_containers/food/snacks/plant/cucumber = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/banhmi
 
-/datum/cookingrecipe/oven/sandwich/custom
+/datum/recipe/cooking/sandwich/custom
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/sandwich/custom)
 	ingredients =  list(/obj/item/reagent_containers/food/snacks/breadslice = 2)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich
+	wildcard_quantity = 100
 
-	specialOutput(obj/submachine/ourCooker)
-		if (!ourCooker)
+	get_output(list/item_list)
+		if (!item_list)
 			return null
 
-		var/obj/item/reagent_containers/food/snacks/sandwich/customSandwich = new /obj/item/reagent_containers/food/snacks/sandwich (ourCooker)
+		var/obj/item/reagent_containers/food/snacks/sandwich/customSandwich = new /obj/item/reagent_containers/food/snacks/sandwich ()
 		customSandwich.heal_amt = 1 // no filling yet, so less than regular sandwich
 		customSandwich.reagents = new /datum/reagents(100)
 		customSandwich.reagents.my_atom = customSandwich
@@ -619,7 +605,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 		var/isToast = FALSE
 
 		var/i = 1
-		for (var/obj/item/reagent_containers/food/snacks/snack in ourCooker)
+		for (var/obj/item/reagent_containers/food/snacks/snack in item_list)
 			if (snack == customSandwich)
 				continue
 
@@ -752,281 +738,281 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 
 			customSandwich.overlays += newFilling
 
-		return customSandwich
+		return list(customSandwich)
 
-/datum/cookingrecipe/oven/pizza_custom
+/datum/recipe/cooking/pizza_custom
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pizza_custom)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/pizza_base = 1)
-	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/pizza/bespoke
 	category = "Pizza"
 
-	specialOutput(obj/submachine/ourCooker)
-		if (!ourCooker)
+	get_output(var/list/item_list)
+		if (!item_list)
 			return null
 
-		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P in ourCooker)
-			return P.bake_pizza()
+		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P in item_list)
+			return list(P.bake_pizza())
 
-/datum/cookingrecipe/oven/cheesetoast
+/datum/recipe/cooking/cheesetoast
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cheesetoast)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1)
-	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastcheese
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/toastcheese/elvis)
 	category = "Toast (Meal)"
 
 
-/datum/cookingrecipe/oven/bacontoast
+/datum/recipe/cooking/bacontoast
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bacontoast)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1)
-	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastbacon
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/toastbacon/elvis)
 	category = "Toast (Meal)"
 
-/datum/cookingrecipe/oven/eggtoast
+/datum/recipe/cooking/eggtoast
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/eggtoast)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2)
-	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastegg
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/toastegg/elvis)
 	category = "Toast (Meal)"
 
-/datum/cookingrecipe/oven/breakfast
+/datum/recipe/cooking/breakfast
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/breakfast)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/breakfast
 
-/datum/cookingrecipe/mixer/wonton_wrapper
+/datum/recipe/cooking/mixer/wonton_wrapper
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/wonton_wrapper)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/flour = 1)
-	cookbonus = 1
 	output = /obj/item/reagent_containers/food/snacks/wonton_spawner
 
-/datum/cookingrecipe/oven/taco_shell
+/datum/recipe/cooking/taco_shell
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/taco_shell)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/tortilla = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/taco
 
-/datum/cookingrecipe/oven/eggnog
+/datum/recipe/cooking/eggnog
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/eggnog)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/drinks/milk = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 3)
-	cookbonus = 3
 	output = /obj/item/reagent_containers/food/drinks/eggnog
 
 // Pastries and bread-likes
 
-/datum/cookingrecipe/oven/baguette
+/datum/recipe/cooking/baguette
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/baguette)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_strip = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/flour = 1)
-	cookbonus = 8
 	output = /obj/item/baguette
 	category = "Pastries and bread-likes" // not sorry
 
-/datum/cookingrecipe/oven/garlicbread
+/datum/recipe/cooking/garlicbread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/garlicbread)
 	ingredients = list(\
 	/obj/item/baguette = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/garlicbread
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/garlicbread_ch
+/datum/recipe/cooking/garlicbread_ch
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/garlicbread_ch)
 	ingredients = list(\
 	/obj/item/baguette = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/garlicbread_ch
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/painauchocolat
+/datum/recipe/cooking/painauchocolat
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/painauchocolat)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/painauchocolat
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/croissant
+/datum/recipe/cooking/croissant
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/croissant)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/croissant
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/danish_apple
+/datum/recipe/cooking/danish_apple
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/danish_apple)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/plant/apple = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_apple
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/danish_cherry
+/datum/recipe/cooking/danish_cherry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/danish_cherry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/plant/cherry = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_cherry
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/danish_blueb
+/datum/recipe/cooking/danish_blueb
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/danish_blueb)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/plant/blueberry = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_blueb
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/danish_weed
+/datum/recipe/cooking/danish_weed
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/danish_weed)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/plant/herb/cannabis = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_weed
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/danish_cheese
+/datum/recipe/cooking/danish_cheese
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/danish_cheese)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_cheese
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/fairybread
+/datum/recipe/cooking/fairybread
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/fairybread)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/fairybread
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/cinnamonbun
+/datum/recipe/cooking/cinnamonbun
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cinnamonbun)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/plant/cinnamon = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/cinnamonbun
 	category = "Pastries and bread-likes"
 
-/datum/cookingrecipe/oven/chocolate_cherry
+/datum/recipe/cooking/chocolate_cherry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/chocolate_cherry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1,
 	/obj/item/reagent_containers/food/snacks/plant/cherry = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1)
-	cookbonus = 3
 	output = /obj/item/reagent_containers/food/snacks/chocolate_cherry
 
 //Cookies
-/datum/cookingrecipe/oven/stroopwafel
+/datum/recipe/cooking/stroopwafel
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/stroopwafel)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 2,
 	/obj/item/reagent_containers/food/snacks/condiment/syrup = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/stroopwafel
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie
+/datum/recipe/cooking/cookie
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie_iron
+/datum/recipe/cooking/cookie_iron
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie_iron)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ironfilings = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/metal
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie_chocolate_chip
+/datum/recipe/cooking/cookie_chocolate_chip
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie_chocolate_chip)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie_oatmeal
+/datum/recipe/cooking/cookie_oatmeal
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie_oatmeal)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/oatmeal
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie_bacon
+/datum/recipe/cooking/cookie_bacon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie_bacon)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/bacon
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie_jaffa
+/datum/recipe/cooking/cookie_jaffa
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie_jaffa)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
 	/obj/item/reagent_containers/food/snacks/plant/orange = 1,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/jaffa
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie_spooky
+/datum/recipe/cooking/cookie_spooky
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie_spooky)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
 	/obj/item/reagent_containers/food/snacks/ectoplasm = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/spooky
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie_butter
+/datum/recipe/cooking/cookie_butter
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie_butter)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/butter
 	category = "Cookies"
 
-/datum/cookingrecipe/oven/cookie_peanut
+/datum/recipe/cooking/cookie_peanut
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cookie_peanut)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/peanut
 	category = "Cookies"
 
 //Moon pies!
-/datum/cookingrecipe/oven/moon_pie
+/datum/recipe/cooking/moon_pie
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/moon_pie)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cookie = 2,
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1)
-	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/moon_pie
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/cookie/metal = /obj/item/reagent_containers/food/snacks/moon_pie/metal,
@@ -1038,75 +1024,75 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	variant_quantity = 2
 	category = "Moon Pies"
 
-/datum/cookingrecipe/oven/moon_pie_chocolate
+/datum/recipe/cooking/moon_pie_chocolate
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/moon_pie_chocolate)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip = 2,
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/moon_pie/chocolate
 	category = "Moon Pies"
 
-/datum/cookingrecipe/oven/onionchips
+/datum/recipe/cooking/onionchips
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/onionchips)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/onion_slice = 2,
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/onionchips
 
-/datum/cookingrecipe/oven/fries
+/datum/recipe/cooking/fries
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/fries)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/chips = 1)
-	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/fries
 
-/datum/cookingrecipe/oven/chilifries
+/datum/recipe/cooking/chilifries
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/chilifries)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/fries = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1)
-	cookbonus = 3
 	output = /obj/item/reagent_containers/food/snacks/chilifries
 
-/datum/cookingrecipe/oven/chilifries_alt //Secondary recipe for chili cheese fries
+/datum/recipe/cooking/chilifries_alt
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/chilifries_alt) //Secondary recipe for chili cheese fries
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/chips = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1)
-	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chilifries
 
-/datum/cookingrecipe/oven/poutine
+/datum/recipe/cooking/poutine
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/poutine)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/fries = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/gravyboat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1)
-	cookbonus = 3
 	output = /obj/item/reagent_containers/food/snacks/chilifries/poutine
 
-/datum/cookingrecipe/oven/poutine_alt
+/datum/recipe/cooking/poutine_alt
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/poutine_alt)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/chips = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/gravyboat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1)
-	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chilifries/poutine
 
-/datum/cookingrecipe/oven/bakedpotato
+/datum/recipe/cooking/bakedpotato
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bakedpotato)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/potato = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/bakedpotato
 
-/datum/cookingrecipe/oven/hotdog
+/datum/recipe/cooking/hotdog
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/hotdog)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/hotdog
 
-/datum/cookingrecipe/oven/cook_meat //Very jank, will need future work.
+/datum/recipe/cooking/cook_meat//Very jank, will need future work.
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cook_meat)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak
-	useshumanmeat = TRUE //see /datum/cookingrecipe/oven/burger/meat
+	useshumanmeat = TRUE //see /datum/recipe/cooking/burger/meat
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = /obj/item/reagent_containers/food/snacks/steak/human,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/steak/synth,
@@ -1114,141 +1100,142 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep = /obj/item/reagent_containers/food/snacks/steak/sheep,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/fish_fingers)
 
-/datum/cookingrecipe/oven/steak_ling
+/datum/recipe/cooking/steak_ling
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/steak_ling)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling = 1)
-	cookbonus = 12 // tough meat
 	output = /obj/item/reagent_containers/food/snacks/steak/ling
 
-/datum/cookingrecipe/oven/shrimp
+/datum/recipe/cooking/shrimp
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/shrimp)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/shrimp
 
-/datum/cookingrecipe/oven/bacon
+/datum/recipe/cooking/bacon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bacon)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 
-/datum/cookingrecipe/oven/turkey
+/datum/recipe/cooking/turkey
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/turkey)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/turkey = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/turkey
 
-/datum/cookingrecipe/oven/pie_strawberry
+/datum/recipe/cooking/pie_strawberry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_strawberry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/strawberry = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/strawberry
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_cherry
+/datum/recipe/cooking/pie_cherry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_cherry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/cherry = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/cherry
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_blueberry
+/datum/recipe/cooking/pie_blueberry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_blueberry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/blueberry = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/blueberry
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_raspberry
+/datum/recipe/cooking/pie_raspberry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_raspberry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/raspberry = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/raspberry
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry = /obj/item/reagent_containers/food/snacks/pie/blackberry)
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_apple
+/datum/recipe/cooking/pie_apple
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_apple)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/apple = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/apple
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_lime
+/datum/recipe/cooking/pie_lime
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_lime)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/lime = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/lime
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_lemon
+/datum/recipe/cooking/pie_lemon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_lemon)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/lemon = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/lemon
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_slurry
+/datum/recipe/cooking/pie_slurry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_slurry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/slurryfruit = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/slurry
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_pumpkin
+/datum/recipe/cooking/pie_pumpkin
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_pumpkin)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/pumpkin = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pumpkin
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_chocolate
+/datum/recipe/cooking/pie_chocolate
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_chocolate)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_anything/pie_cream
+/datum/recipe/cooking/pie_anything/pie_cream
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_anything/pie_cream)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/pie/cream
 	category = "Pies"
 	base_pie_name = "cream pie"
 
-/datum/cookingrecipe/oven/pie_anything
+/datum/recipe/cooking/pie_anything
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_anything)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/pie/anything
 	category = "Pies"
 	var/base_pie_name = "pie"
+	wildcard_quantity = 100
 
-	specialOutput(var/obj/submachine/ourCooker)
-		if (!ourCooker)
+	get_output(list/item_list)
+		if (!item_list)
 			return null
-		if (length(ourCooker.contents) <= 2)
-			return new src.output
+		if (length(item_list) <= 2)
+			return list(new src.output)
 
 		var/obj/item/reagent_containers/food/snacks/anItem
 		var/obj/item/reagent_containers/food/snacks/pie/custom_pie = new src.output
 		var/pieDesc
 		var/pieName
-		var/contentAmount = ourCooker.contents.len - 2
+		var/contentAmount = length(item_list) - 2
 		var/count = 1
 		var/found1 = 0
 		var/found2 = 0
-		for (var/obj/item/T in ourCooker.contents)
+		for (var/obj/item/T in item_list)
 
 			if (!found1 && istype(T, ingredients[1]))
 				found1 = TRUE
@@ -1297,250 +1284,251 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 		I.Blend(thing.get_average_color(), ICON_ADD)
 		custom_pie.icon = I
 
-		return custom_pie
+		return list(custom_pie)
 
-/datum/cookingrecipe/oven/pie_custard
+/datum/recipe/cooking/pie_custard
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_custard)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/custard = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/pie/custard
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_bacon
+/datum/recipe/cooking/pie_bacon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_bacon)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/bacon
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_ass
+/datum/recipe/cooking/pie_ass
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_ass)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/clothing/head/butt = 1)
-	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/ass
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pot_pie
+/datum/recipe/cooking/pot_pie
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pot_pie)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
 	/obj/item/reagent_containers/food/snacks/plant/carrot = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pot
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_weed
+/datum/recipe/cooking/pie_weed
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_weed)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
 	/obj/item/plant/herb/cannabis = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/weed
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_fish
+/datum/recipe/cooking/pie_fish
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pie_fish)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = 1,
 	/obj/item/reagent_containers/food/snacks/plant/potato = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pie/fish
 	category = "Pies"
 
-/datum/cookingrecipe/mixer/raw_flan
+/datum/recipe/cooking/mixer/raw_flan
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/raw_flan)
 	ingredients = list(\
 		/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
 		/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
 		/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 		/obj/item/reagent_containers/food/drinks/milk = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/raw_flan
 
-/datum/cookingrecipe/mixer/custard
+/datum/recipe/cooking/mixer/custard
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/custard)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/drinks/milk = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/condiment/custard
 
-/datum/cookingrecipe/mixer/gruel
+/datum/recipe/cooking/mixer/gruel
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/gruel)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/yuck = 3)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/soup/gruel
 
-/datum/cookingrecipe/oven/porridge
+/datum/recipe/cooking/porridge
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/porridge)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/rice = 2)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/soup/porridge
 
-/datum/cookingrecipe/oven/oatmeal
+/datum/recipe/cooking/oatmeal
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/oatmeal)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/soup/oatmeal
 
-/datum/cookingrecipe/oven/tomsoup
+/datum/recipe/cooking/tomsoup
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/tomsoup)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/tomato = 2)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/soup/tomato
 
-/datum/cookingrecipe/oven/mint_chutney
+/datum/recipe/cooking/mint_chutney
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mint_chutney)
 	ingredients = list(\
 	/obj/item/plant/herb/mint = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1,
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/soup/mint_chutney
 
-/datum/cookingrecipe/oven/refried_beans
+/datum/recipe/cooking/refried_beans
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/refried_beans)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/plant/bean = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/soup/refried_beans
 
-/datum/cookingrecipe/oven/chili
+/datum/recipe/cooking/chili
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/chili)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/soup/chili
 
-/datum/cookingrecipe/oven/queso
+/datum/recipe/cooking/queso
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/queso)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/soup/queso
 
-/datum/cookingrecipe/oven/superchili
+/datum/recipe/cooking/superchili
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/superchili)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 2)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/soup/superchili
 
-/datum/cookingrecipe/oven/ultrachili
+/datum/recipe/cooking/ultrachili
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/ultrachili)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/soup/chili = 1,
 	/obj/item/reagent_containers/food/snacks/soup/superchili = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 1)
-	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/soup/ultrachili
 
-/datum/cookingrecipe/oven/salad
+/datum/recipe/cooking/salad
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/salad)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/lettuce = 2)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/salad
 
-/datum/cookingrecipe/oven/creamofmushroom
+/datum/recipe/cooking/creamofmushroom
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/creamofmushroom)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/mushroom = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/mushroom/psilocybin = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin,
 	/obj/item/reagent_containers/food/snacks/mushroom/amanita = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita)
 
 //Delightful Halloween Recipes
-/datum/cookingrecipe/oven/candy_apple
+/datum/recipe/cooking/candy_apple
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/candy_apple)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/plant/apple/stick = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/candy/candy_apple
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison = /obj/item/reagent_containers/food/snacks/candy/candy_apple/poison)
 
 //Cakes!
-/datum/cookingrecipe/mixer/cake_batter
+/datum/recipe/cooking/mixer/cake_batter
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/cake_batter)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/cake_batter
 
-/datum/cookingrecipe/oven/cake_cream
+/datum/recipe/cooking/cake_cream
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cake_cream)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cake_batter = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/cream
 	category = "Cakes"
 
-/datum/cookingrecipe/oven/cake_chocolate
+/datum/recipe/cooking/cake_chocolate
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cake_chocolate)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cake_batter = 1,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/chocolate
 	category = "Cakes"
 
-/datum/cookingrecipe/oven/cake_meat
+/datum/recipe/cooking/cake_meat
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cake_meat)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cake_batter = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/meat
 	category = "Cakes"
 
-/datum/cookingrecipe/oven/cake_bacon
+/datum/recipe/cooking/cake_bacon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cake_bacon)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cake_batter = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 3)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/bacon
 	category = "Cakes"
 
-/datum/cookingrecipe/oven/cake_true_bacon
+/datum/recipe/cooking/cake_true_bacon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cake_true_bacon)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 7)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/true_bacon
 	category = "Cakes"
 
 #ifdef XMAS
 
-/datum/cookingrecipe/oven/cake_fruit
+/datum/recipe/cooking/cake_fruit
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cake_fruit)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/yuck = 1,
 	/obj/item/reagent_containers/food/snacks/yuck/burn = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	category = "Cakes"
 
-	specialOutput(var/obj/submachine/ourCooker)
-		if (!ourCooker)
+	get_output(list/item_list, atom/cook_source = null)
+		if (!item_list)
 			return null
 
 		var/fruitcake = new /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
-		playsound(ourCooker.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+		if (cook_source)
+			playsound(cook_source.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
-		return fruitcake
+		return list(fruitcake)
 
 #endif
 
-/datum/cookingrecipe/oven/cake_custom
+/datum/recipe/cooking/cake_custom
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cake_custom)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/cake_batter = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake
 	category = "Cakes"
 
-	specialOutput(var/obj/submachine/ourCooker)
-		if(!ourCooker)
+	get_output(list/item_list)
+		if(!item_list)
 			return null
 
-		var/obj/item/reagent_containers/food/snacks/cake_batter/docakeitem = locate() in ourCooker.contents
+		var/obj/item/reagent_containers/food/snacks/cake_batter/docakeitem = locate() in item_list
 
 		var/obj/item/reagent_containers/food/snacks/S
 		if(docakeitem.custom_item)
 			S = docakeitem.custom_item
-		var/obj/item/reagent_containers/food/snacks/cake/B = new /obj/item/reagent_containers/food/snacks/cake(ourCooker)
+		var/obj/item/reagent_containers/food/snacks/cake/B = new /obj/item/reagent_containers/food/snacks/cake()
 		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-base_custom")
 		B.food_color = S ? S.get_average_color() : "#CC8555"
 		overlay.color = B.food_color
@@ -1563,37 +1551,39 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 			B.name = "plain cake"
 
 		B.desc = "Mmm! A delicious-looking [B.name]!"
-		return B
+		return list(B)
 
 
-/datum/cookingrecipe/oven/cake_custom_item
+/datum/recipe/cooking/cake_custom_item
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cake_custom_item)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/cake/cream = 1)
-	cookbonus = 14
 	output = /obj/item/cake_item
 	category = "Cakes"
+	wildcard_quantity = 100
 
-	specialOutput(var/obj/submachine/ourCooker)
-		if (!ourCooker)
+	get_output(list/item_list)
+		if (!item_list)
 			return null
 
-		var/obj/item/cake_item/B = new /obj/item/cake_item(ourCooker)
-		for (var/obj/item/I in ourCooker.contents)
+		var/obj/item/cake_item/B = new /obj/item/cake_item()
+		for (var/obj/item/I in item_list)
 			if (istype(I,/obj/item/cake_item))
 				continue
 			I.set_loc(B)
 			break
 
-		return B
+		return list(B)
 
-/datum/cookingrecipe/mixer/mix_cake_custom
+/datum/recipe/cooking/mixer/mix_cake_custom
 	ingredients = list(/obj/item/reagent_containers/food/snacks/cake_batter = 1)
 	output = null
+	wildcard_quantity = 100
 
-	specialOutput(var/obj/submachine/ourCooker)
-		if (!ourCooker)
+	get_output(list/item_list)
+		if (!item_list)
 			return null
 
-		for (var/obj/item/I in ourCooker.contents)
+		for (var/obj/item/I in item_list)
 			if (istype(I, ingredients[1]))
 				continue
 			else if (istype(I,/obj/item/reagent_containers/food/snacks/))
@@ -1602,403 +1592,404 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 				batter.custom_item = I
 				I.set_loc(batter)
 				batter.name = "[I:real_name ? I:real_name : I.name] cake batter"
-				for (var/obj/M in ourCooker.contents)
+				for (var/obj/M in item_list)
 					qdel(M)
 
-				return batter
+				return list(batter)
 
 		return null
 
 
-/datum/cookingrecipe/oven/omelette
+/datum/recipe/cooking/omelette
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/omelette)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/omelette
 	variants = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee = /obj/item/reagent_containers/food/snacks/omelette/bee)
 
-/datum/cookingrecipe/mixer/pancake_batter
+/datum/recipe/cooking/mixer/pancake_batter
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/pancake_batter)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/drinks/milk = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
 
-/datum/cookingrecipe/oven/pancake
+/datum/recipe/cooking/pancake
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/pancake)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/pancake_batter = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pancake
 
-/datum/cookingrecipe/mixer/mashedpotatoes
+/datum/recipe/cooking/mixer/mashedpotatoes
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/mashedpotatoes)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/potato = 3)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/mashedpotatoes
 
-/datum/cookingrecipe/mixer/mashedbrains
+/datum/recipe/cooking/mixer/mashedbrains
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/mashedbrains)
 	ingredients = list(/obj/item/organ/brain = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/mashedbrains
 
-/datum/cookingrecipe/mixer/meatpaste
+/datum/recipe/cooking/mixer/meatpaste
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/meatpaste)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 
-/datum/cookingrecipe/mixer/soysauce
+/datum/recipe/cooking/mixer/soysauce
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/soysauce)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/soy = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/condiment/soysauce
 
-/datum/cookingrecipe/mixer/gravy
+/datum/recipe/cooking/mixer/gravy
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/gravy)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/flour = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
 
-/datum/cookingrecipe/mixer/fishpaste
+/datum/recipe/cooking/mixer/fishpaste
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/fishpaste)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/fishpaste
 
-/datum/cookingrecipe/oven/burger/sloppyjoe
+/datum/recipe/cooking/burger/sloppyjoe
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/burger/sloppyjoe)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/burger/sloppyjoe
 
-/datum/cookingrecipe/oven/meatloaf
+/datum/recipe/cooking/meatloaf
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/meatloaf)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/breadloaf = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/meatloaf
 
-/datum/cookingrecipe/oven/cereal_box
+/datum/recipe/cooking/cereal_box
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cereal_box)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cereal_box
 
-/datum/cookingrecipe/oven/cereal_honey
+/datum/recipe/cooking/cereal_honey
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cereal_honey)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cereal_box = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/honey = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cereal_box/honey
 
-/datum/cookingrecipe/oven/cereal_tanhony
+/datum/recipe/cooking/cereal_tanhony
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cereal_tanhony)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cereal_box = 1,
 	/obj/item/reagent_containers/food/snacks/plant/banana = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cereal_box/tanhony
 
-/datum/cookingrecipe/oven/cereal_roach
+/datum/recipe/cooking/cereal_roach
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cereal_roach)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cereal_box = 1,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cereal_box/roach
 
-/datum/cookingrecipe/oven/cereal_syndie
+/datum/recipe/cooking/cereal_syndie
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cereal_syndie)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cereal_box = 1,
 	/obj/item/uplink_telecrystal = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cereal_box/syndie
 
-/datum/cookingrecipe/oven/cereal_flock
+/datum/recipe/cooking/cereal_flock
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cereal_flock)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/cereal_box = 1,
 	/obj/item/organ/brain/flockdrone = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cereal_box/flock
 
-/datum/cookingrecipe/oven/granola_bar
+/datum/recipe/cooking/granola_bar
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/granola_bar)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/honey = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/granola_bar
 
-/datum/cookingrecipe/oven/hardboiled
+/datum/recipe/cooking/hardboiled
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/hardboiled)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 
-/datum/cookingrecipe/oven/chocolate_egg
+/datum/recipe/cooking/chocolate_egg
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/chocolate_egg)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate
+	wildcard_quantity = 100
 
-	specialOutput(obj/submachine/ourCooker)
-		if (!length(ourCooker.contents))
-			return new src.output()
-		for (var/obj/item/item in ourCooker.contents)
+	get_output(list/item_list)
+		if (!item_list || !length(item_list))
+			return list(new src.output())
+		for (var/obj/item/item in item_list)
 			if (istypes(item, list(src.ingredients[1], src.ingredients[2])))
 				continue
 			if (item.w_class > W_CLASS_SMALL)
 				continue
-			var/obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate/choc_egg = new(ourCooker)
+			var/obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate/choc_egg = new()
 			choc_egg.AddComponent(/datum/component/contraband, 1) //illegal unsafe dangerous egg
 			item.set_loc(choc_egg)
-			return choc_egg
+			return list(choc_egg)
 
-/datum/cookingrecipe/oven/eggsalad
+/datum/recipe/cooking/eggsalad
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/eggsalad)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled = 1,
 	/obj/item/reagent_containers/food/snacks/salad = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/mayo = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/eggsalad
 
-/datum/cookingrecipe/oven/biscuit
+/datum/recipe/cooking/biscuit
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/biscuit)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/flour = 1)
-	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/biscuit
 
-/datum/cookingrecipe/oven/dog_biscuit
+/datum/recipe/cooking/dog_biscuit
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/dog_biscuit)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/granola_bar = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/cookie/dog
 
-/datum/cookingrecipe/oven/hardtack
+/datum/recipe/cooking/hardtack
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/hardtack)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ironfilings = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/hardtack
 
-/datum/cookingrecipe/oven/macguffin
+/datum/recipe/cooking/macguffin
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/macguffin)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/emuffin = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/macguffin
 
-/datum/cookingrecipe/oven/haggis
+/datum/recipe/cooking/haggis
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/haggis)
 	ingredients = list(\
 	/obj/item/organ = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1,
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1)
-	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/haggis
 
-/datum/cookingrecipe/oven/haggass
+/datum/recipe/cooking/haggass
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/haggass)
 	ingredients = list(\
 	/obj/item/clothing/head/butt = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1,
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1)
-	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/haggis/ass
 
-/datum/cookingrecipe/oven/scotch_egg
+/datum/recipe/cooking/scotch_egg
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/scotch_egg)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/scotch_egg
 
-/datum/cookingrecipe/oven/rice_ball
+/datum/recipe/cooking/rice_ball
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/rice_ball)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/rice = 1)
-	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/rice_ball
 
-/datum/cookingrecipe/oven/nigiri_roll
+/datum/recipe/cooking/nigiri_roll
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/nigiri_roll)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice = 1,
 	/obj/item/reagent_containers/food/snacks/rice_ball = 1)
-	cookbonus = 2
 	output = /obj/item/reagent_containers/food/snacks/nigiri_roll
 
-/datum/cookingrecipe/oven/sushi_roll
+/datum/recipe/cooking/sushi_roll
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/sushi_roll)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet= 1,
 	/obj/item/reagent_containers/food/snacks/rice_ball = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 1)
-	cookbonus = 2
 	output = /obj/item/reagent_containers/food/snacks/sushi_roll
 
-/datum/cookingrecipe/oven/riceandbeans
+/datum/recipe/cooking/riceandbeans
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/riceandbeans)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/plant/bean = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/rice = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/riceandbeans
 
-/datum/cookingrecipe/oven/friedrice
+/datum/recipe/cooking/friedrice
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/friedrice)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1,
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/friedrice
 
-/datum/cookingrecipe/oven/omurice
+/datum/recipe/cooking/omurice
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/omurice)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/omurice
 
-/datum/cookingrecipe/oven/risotto
+/datum/recipe/cooking/risotto
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/risotto)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1,
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/risotto
 
-/datum/cookingrecipe/oven/tandoorichicken
+/datum/recipe/cooking/tandoorichicken
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/tandoorichicken)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/currypowder = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
-	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/tandoorichicken
 
-/datum/cookingrecipe/oven/potatocurry
+/datum/recipe/cooking/potatocurry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/potatocurry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/currypowder = 1,
 	/obj/item/reagent_containers/food/snacks/plant/potato = 1,
 	/obj/item/reagent_containers/food/snacks/plant/carrot = 1,
 	/obj/item/reagent_containers/food/snacks/plant/peas = 1)
-	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/potatocurry
 
-/datum/cookingrecipe/oven/coconutcurry
+/datum/recipe/cooking/coconutcurry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/coconutcurry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/currypowder = 1,
 	/obj/item/reagent_containers/food/snacks/plant/coconutmeat = 1,
 	/obj/item/reagent_containers/food/snacks/plant/carrot = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/rice = 1)
-	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/coconutcurry
 
-/datum/cookingrecipe/oven/chickenpineapplecurry
+/datum/recipe/cooking/chickenpineapplecurry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/chickenpineapplecurry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/currypowder = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/plant/pineappleslice = 1)
-	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
 
-/datum/cookingrecipe/oven/ramen_bowl
+/datum/recipe/cooking/ramen_bowl
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/ramen_bowl)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/soysauce = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/ramen_bowl
 
-/datum/cookingrecipe/oven/udon_bowl
+/datum/recipe/cooking/udon_bowl
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/udon_bowl)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/soysauce = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/kamaboko = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/udon_bowl
 
-/datum/cookingrecipe/oven/curry_udon_bowl
+/datum/recipe/cooking/curry_udon_bowl
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/curry_udon_bowl)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/currypowder = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
 
-/datum/cookingrecipe/oven/mapo_tofu
+/datum/recipe/cooking/mapo_tofu
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mapo_tofu)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/plant/soy = 1,
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/mapo_tofu_meat
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/mapo_tofu_synth)
 
-/datum/cookingrecipe/oven/cheesewheel
+/datum/recipe/cooking/cheesewheel
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cheesewheel)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/cheese = 2)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cheesewheel
 
-/datum/cookingrecipe/oven/ratatouille
+/datum/recipe/cooking/ratatouille
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/ratatouille)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/plant/cucumber = 1,
 	/obj/item/reagent_containers/food/snacks/plant/tomato = 1,
 	/obj/item/reagent_containers/food/snacks/plant/eggplant = 1,
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/ratatouille
 
-/datum/cookingrecipe/oven/churro
+/datum/recipe/cooking/churro
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/churro)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_strip = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dippable/churro
 
-/datum/cookingrecipe/oven/french_toast
+/datum/recipe/cooking/french_toast
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/french_toast)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2,
 	/obj/item/reagent_containers/food/drinks/milk = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/french_toast
 
-/datum/cookingrecipe/oven/zongzi
+/datum/recipe/cooking/zongzi
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/zongzi)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/plant/bamboo = 1,
 	/obj/item/reagent_containers/food/snacks/rice_ball = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/zongzi
 
-/datum/cookingrecipe/oven/beefood
+/datum/recipe/cooking/beefood
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/beefood)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/honey = 1,
 	/obj/item/plant/wheat = 1,
 	/obj/item/reagent_containers/food/snacks/yuck = 1)
-	cookbonus = 22
 	output = /obj/item/reagent_containers/food/snacks/beefood
 
-/datum/cookingrecipe/oven/b_cupcake
+/datum/recipe/cooking/b_cupcake
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/b_cupcake)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/beefood = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly = 1,
 	/obj/item/device/light/candle/small = 1)
-	cookbonus = 22
 	output = /obj/item/reagent_containers/food/snacks/b_cupcake
 
-	specialOutput(var/obj/submachine/ourCooker)
-		if (!ourCooker)
+	get_output(list/item_list)
+		if (!item_list)
 			return null
 
 		var/obj/item/reagent_containers/food/snacks/b_cupcake = new /obj/item/reagent_containers/food/snacks/b_cupcake
@@ -2009,136 +2000,136 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 		I.Blend(random_color, ICON_ADD)
 		b_cupcake.icon = I
 
-		return b_cupcake
+		return list(b_cupcake)
 
-/datum/cookingrecipe/mixer/butters
+/datum/recipe/cooking/mixer/butters
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/butters)
 	ingredients = list(\
 	/obj/item/clothing/head/butt = 1,
 	/obj/item/reagent_containers/food/drinks/milk = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/condiment/butters
 
-/datum/cookingrecipe/oven/lipstick
+/datum/recipe/cooking/lipstick
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/lipstick)
 	ingredients = list(\
 	/obj/item/pen/crayon = 1,
 	/obj/item/item_box/figure_capsule = 1)
-	cookbonus = 10
 	output = /obj/item/pen/crayon/lipstick
 
-	specialOutput(obj/submachine/ourCooker)
-		if (!ourCooker)
+	get_output(list/item_list)
+		if (!item_list)
 			return null
 		var/obj/item/pen/crayon/lipstick/lipstick = new /obj/item/pen/crayon/lipstick
-		for (var/obj/item/pen/crayon/C in ourCooker.contents)
+		for (var/obj/item/pen/crayon/C in item_list)
 			lipstick.font_color = C.font_color
 			lipstick.color_name = hex2color_name(lipstick.font_color)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
-		return lipstick
+		return list(lipstick)
 
-/datum/cookingrecipe/oven/melted_sugar
+/datum/recipe/cooking/melted_sugar
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/melted_sugar)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
 	/obj/item/plate/tray = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar
 
-/datum/cookingrecipe/mixer/brownie_batter
+/datum/recipe/cooking/mixer/brownie_batter
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/mixer/brownie_batter)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
 
-/datum/cookingrecipe/oven/brownie_batch
+/datum/recipe/cooking/brownie_batch
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/brownie_batch)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/brownie_batter = 1)
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dessert_batch/brownie
 
-/datum/cookingrecipe/oven/flapjack_batch
+/datum/recipe/cooking/flapjack_batch
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/flapjack_batch)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/syrup = 1) //technically this should be GOLDEN syrup but this works too
-	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dessert_batch/flapjack
 
-/datum/cookingrecipe/oven/rice_bowl
+/datum/recipe/cooking/rice_bowl
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/rice_bowl)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/rice_bowl
 
-/datum/cookingrecipe/oven/egg_on_rice
+/datum/recipe/cooking/egg_on_rice
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/egg_on_rice)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/soysauce = 1)
-	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/egg_on_rice
 
-/datum/cookingrecipe/oven/katsudon_bacon
+/datum/recipe/cooking/katsudon_bacon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/katsudon_bacon)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/katsudon
 
-/datum/cookingrecipe/oven/katsudon_chicken
+/datum/recipe/cooking/katsudon_chicken
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/katsudon_chicken)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/katsudon
 
-/datum/cookingrecipe/oven/gyudon
+/datum/recipe/cooking/gyudon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/gyudon)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/onion_slice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/gyudon
 
-/datum/cookingrecipe/oven/cheese_gyudon
+/datum/recipe/cooking/cheese_gyudon
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/cheese_gyudon)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1,
 	/obj/item/reagent_containers/food/snacks/onion_slice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
-	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/cheese_gyudon
 
-/datum/cookingrecipe/oven/miso_soup
+/datum/recipe/cooking/miso_soup
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/miso_soup)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 1,
 	/obj/item/reagent_containers/food/snacks/plant/soy = 1)
-	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/miso_soup
 
-/datum/cookingrecipe/oven/bibimbap
+/datum/recipe/cooking/bibimbap
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/bibimbap)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 1,
 	/obj/item/reagent_containers/food/snacks/plant/lettuce = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/bibimbap
 
-/datum/cookingrecipe/oven/katsu_curry
+/datum/recipe/cooking/katsu_curry
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/katsu_curry)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/currypowder = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
-	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/katsu_curry
 
-/datum/cookingrecipe/oven/flan
+/datum/recipe/cooking/flan
+	recipe_instructions = list(/datum/recipe_instructions/oven_instructions/flan)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/raw_flan = 1)
-	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/flan
