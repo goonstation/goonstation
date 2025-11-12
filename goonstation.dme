@@ -1195,7 +1195,6 @@
 #include "code\modules\cooking\kitchen_submachines.dm"
 #include "code\modules\cooking\kitchenspike.dm"
 #include "code\modules\cooking\microwave.dm"
-#include "code\modules\cooking\microwave2.dm"
 #include "code\modules\cooking\microwave_recipes.dm"
 #include "code\modules\cooking\mixer.dm"
 #include "code\modules\cooking\shitty_grill.dm"
