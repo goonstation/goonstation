@@ -359,8 +359,8 @@ proc/filter_carrier_pets(var/type)
 			return
 		src.visible_message("[src] sniffs \the [food].")
 		var/list/possible_recipes = list()
-		for (var/datum/cookingrecipe/recipe in global.oven_recipes)
-			if (istypes(food, recipe.ingredients))
+		for (var/datum/recipe/cooking/recipe in global.oven_recipes)
+			if (recipe.type_in_ingredients(food))
 				possible_recipes += recipe
 		src.set_dir(get_dir(src, user))
 		src.ai.disable()
@@ -369,7 +369,7 @@ proc/filter_carrier_pets(var/type)
 				if (length(possible_recipes) > 2)
 					possible_recipes -= src.last_recipe
 				src.emote("scream")
-				var/datum/cookingrecipe/chosen = pick(possible_recipes)
+				var/datum/recipe/cooking/chosen = pick(possible_recipes)
 				boutput(user, chosen.render())
 			else
 				src.visible_message("[src] shakes [his_or_her(src)] head sadly.")
