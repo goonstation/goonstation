@@ -50,7 +50,7 @@
 			M.initializeBioholder(gender) //try to preserve gender if we can
 			M.job = src.thing_to_spawn
 			SPAWN(0)
-				M.JobEquipSpawned(src.thing_to_spawn)
+				M.JobEquipSpawned(src.thing_to_spawn, no_special_spawn = TRUE)
 			return M
 
 	proc/do_spawn()
@@ -162,6 +162,12 @@
 		var/is_a_human = ispath(src.spawn_event.thing_to_spawn, /mob/living/carbon/human) || ishuman(src.spawn_event.thing_to_spawn)
 		//we want to display a warning if someone tries to apply an antag role to a non-human mob
 		var/potentially_incompatible = is_a_mob && !is_a_human && src.spawn_event.antag_role
+		//we want to display a warning if someone tries to spawn a job at a landmark it doesn't like (probably latejoin)
+		var/job_wanted_location
+		if (spawn_type == "job")
+			var/special_location = find_job_in_controller_by_string(src.spawn_event.thing_to_spawn).special_spawn_location
+			if (special_location != src.spawn_event.spawn_loc)
+				job_wanted_location = special_location
 
 		if (src.refresh_player_count)
 			src.eligible_player_count = length(eligible_dead_player_list(TRUE, TRUE, !!src.spawn_event.antag_role, src.spawn_event.allow_dnr))
@@ -178,6 +184,7 @@
 			"objective_text" = src.spawn_event.objective_text,
 			"spawn_type" = spawn_type,
 			"loc_type" = loc_type,
+			"job_wanted_location" = job_wanted_location,
 			"incompatible_antag" = potentially_incompatible,
 			"equip_antag" = src.spawn_event.equip_antag,
 			"ask_permission" = src.spawn_event.ask_permission,
@@ -216,6 +223,8 @@
 				src.spawn_event.spawn_loc = get_turf(pick_ref(ui.user))
 			if ("select_landmark")
 				src.spawn_event.spawn_loc = tgui_input_list(ui.user, "Select landmark", "Select", landmarks) || src.spawn_event.spawn_loc
+			if ("select_default_job_landmark")
+				src.spawn_event.spawn_loc = find_job_in_controller_by_string(src.spawn_event.thing_to_spawn).special_spawn_location || src.spawn_event.spawn_loc
 			if ("set_spawn_delay")
 				src.spawn_event.ghost_confirmation_delay = params["spawn_delay"] //no validation, admins may href exploit if they wish
 			if ("set_amount")

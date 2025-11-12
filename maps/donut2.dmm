@@ -17057,16 +17057,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
-"drp" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "drq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27798,6 +27788,26 @@
 /obj/machinery/light/traffic_light/research_station,
 /turf/space,
 /area/space)
+"jYi" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/rust/jen,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/clown)
 "jYO" = (
 /obj/stool/chair{
 	dir = 8
@@ -32292,26 +32302,6 @@
 	dir = 1
 	},
 /area/station/science/hall)
-"mBp" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -8;
-	pixel_y = 14
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/decal/cleanable/rust/jen,
-/obj/item/clothing/mask/clown_nose,
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/clown)
 "mBV" = (
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/cobryl,
@@ -32926,16 +32916,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"mTi" = (
-/obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
-/obj/machinery/light/small/floor,
-/obj/decal/stage_edge{
-	dir = 8
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "mTA" = (
 /obj/stone{
 	dir = 1
@@ -35088,6 +35068,16 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
+"ofS" = (
+/obj/railing/boxing{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "ofV" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40609,6 +40599,16 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"rgt" = (
+/obj/table/reinforced/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/obj/machinery/light/small/floor,
+/obj/decal/stage_edge{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "rgR" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
@@ -41250,6 +41250,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
+"rDl" = (
+/obj/stool,
+/obj/railing/boxing{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "rDq" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
@@ -49762,18 +49774,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/station/crew_quarters/stockex)
-"wDk" = (
-/obj/stool,
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "wDG" = (
 /obj/stool/chair{
 	dir = 4
@@ -80190,7 +80190,7 @@ xbF
 swi
 myA
 kXC
-mBp
+jYi
 eAg
 aaa
 adQ
@@ -90164,8 +90164,8 @@ aJC
 aJC
 aNr
 aOJ
-wDk
-drp
+rDl
+ofS
 mIj
 qiW
 ptj
@@ -90468,7 +90468,7 @@ aNr
 jyZ
 hEQ
 pBy
-mTi
+rgt
 hEQ
 qRg
 aUn

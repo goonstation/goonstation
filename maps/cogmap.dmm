@@ -4732,12 +4732,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"ats" = (
-/obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "atv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5420,20 +5414,6 @@
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
-/area/station/crew_quarters/fitness)
-"avT" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avU" = (
 /turf/simulated/floor/specialroom/gym,
@@ -20317,18 +20297,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"bxa" = (
-/obj/table/reinforced/auto,
-/obj/item/pen/marker/blue{
-	pixel_x = -6;
-	pixel_y = -1
-	},
-/obj/machinery/door/firedoor/pyro,
-/obj/item/bell/hop{
-	pixel_y = 5
-	},
-/turf/simulated/floor/black,
-/area/station/bridge/customs)
 "bxe" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -39700,6 +39668,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"fLG" = (
+/obj/table/reinforced/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "fMv" = (
 /obj/machinery/computer/cloning,
 /obj/item/paper/Cloning,
@@ -41864,29 +41838,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"hxh" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -8;
-	pixel_y = 14
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/clown_nose,
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/clown)
 "hxp" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -47232,6 +47183,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/research)
+"lDZ" = (
+/obj/railing/boxing{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lED" = (
 /obj/storage/crate{
 	desc = "Wow! Crate may or may not still contain bottles.";
@@ -47627,6 +47592,23 @@
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
+"lWg" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/door/firedoor/pyro,
+/obj/item/pen/marker/blue{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/bell/hop{
+	pixel_y = 8;
+	pixel_x = -3
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
 "lWj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -58356,6 +58338,12 @@
 	dir = 4
 	},
 /area/space)
+"tPC" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/phone,
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
 "tQq" = (
 /obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
@@ -58684,6 +58672,29 @@
 	dir = 1
 	},
 /area/station/engine/coldloop)
+"tYY" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/clown)
 "tZh" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -95475,7 +95486,7 @@ aWM
 aUk
 aUk
 aZY
-bxa
+tPC
 nlB
 nIQ
 nlB
@@ -96079,7 +96090,7 @@ aWM
 bes
 aUk
 aZY
-oCZ
+lWg
 nlB
 nIQ
 nlB
@@ -106609,7 +106620,7 @@ tQq
 adU
 aeE
 afk
-hxh
+tYY
 agQ
 ahI
 aiG
@@ -109341,7 +109352,7 @@ aqJ
 akT
 akT
 auH
-avT
+lDZ
 axm
 ayH
 aAl
@@ -109943,7 +109954,7 @@ aoi
 apt
 aqI
 akT
-ats
+fLG
 auI
 fxi
 aoa

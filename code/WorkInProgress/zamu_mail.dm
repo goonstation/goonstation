@@ -269,7 +269,7 @@
 			var/spawn_type = weighted_pick(mail_types_by_job[J.type])
 			package = new(where)
 			package.spawn_type = spawn_type
-			package_color = J.linkcolor ? J.linkcolor : "#FFFFFF"
+			package_color = global.tgui_colours_to_rgb[J.ui_colour] || "#FFFFFF"
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
 			// just throw some random crap in there, fuck it. who cares. not us
@@ -551,6 +551,9 @@ var/global/mail_types_by_job = list(
 		/obj/item/seed/alien = 10,
 		/obj/item/satchel/hydro = 7,
 		/obj/item/satchel/hydro/large = 5,
+		/obj/item/clothing/glasses/phyto = 10,
+		/obj/item/clothing/glasses/phyto/upgraded = 7,
+		/obj/item/device/analyzer/phytoscopic_upgrade = 7,
 		/obj/item/reagent_containers/glass/bottle/powerplant = 5,
 		/obj/item/reagent_containers/glass/bottle/fruitful = 5,
 		/obj/item/reagent_containers/glass/bottle/topcrop = 5,

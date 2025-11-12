@@ -1896,7 +1896,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "Food storage unit."
 	icon_state = "food"
 	icon_panel = "standard-panel"
-	req_access = list(access_kitchen)
 	acceptcard = 0
 
 	light_r =1
@@ -2680,7 +2679,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/wateringcan, 5)
-		product_list += new/datum/data/vending_product(/obj/item/plantanalyzer, 5)
+		product_list += new/datum/data/vending_product(/obj/item/plantanalyzer, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/compostbag, 5)
 		product_list += new/datum/data/vending_product(/obj/item/saw, 3)
 		product_list += new/datum/data/vending_product(/obj/item/gardentrowel, 5)

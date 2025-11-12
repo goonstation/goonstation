@@ -2,7 +2,7 @@
 
 ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
-	linkcolor = CIVILIAN_LINK_COLOR
+	ui_colour = TGUI_COLOUR_BLUE
 	slot_card = /obj/item/card/id/civilian
 	job_category = JOB_CIVILIAN
 
@@ -52,6 +52,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc1 = list(/obj/item/paper/botany_guide)
+	slot_poc2 = list(/obj/item/plantanalyzer)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	wiki_link = "https://wiki.ss13.co/Botanist"
 
@@ -149,7 +150,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	request_cost = PAY_TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
-	linkcolor = MEDICAL_LINK_COLOR // :o)
+	ui_colour = TGUI_COLOUR_PINK
 	slot_back = list()
 	slot_belt = list(/obj/item/storage/fanny/funny)
 	slot_mask = list(/obj/item/clothing/mask/clown_hat)
@@ -170,7 +171,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/AI
 	name = "AI"
-	linkcolor = SILICON_LINK_COLOR
+	ui_colour = TGUI_COLOUR_GREY
 	limit = 1
 	no_late_join = TRUE
 	high_priority_job = TRUE
@@ -193,7 +194,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/cyborg
 	name = "Cyborg"
-	linkcolor = SILICON_LINK_COLOR
+	ui_colour = TGUI_COLOUR_GREY
 	limit = 8
 	no_late_join = TRUE
 	can_roll_antag = FALSE
