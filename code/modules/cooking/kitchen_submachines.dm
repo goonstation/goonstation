@@ -432,7 +432,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	var/output_icon
 	var/output_name
 	var/cooktime
-	var/datum/recipe_instructions/oven_instructions/default_instructions = new /datum/recipe_instructions/oven_instructions/default()
+	var/datum/recipe_instructions/oven/default_instructions = new /datum/recipe_instructions/oven/default()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!emagged)
@@ -537,7 +537,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.output_icon = icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
 
-		var/datum/recipe_instructions/oven_instructions/instructions = possible.get_recipe_instructions("oven")
+		var/datum/recipe_instructions/oven/instructions = possible.get_recipe_instructions(RECIPE_ID_OVEN)
 		if (!instructions)
 			instructions = src.default_instructions
 		if (instructions.cookbonus < 10)
@@ -832,7 +832,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 		else
 			// Non-emagged cooking
 			var/datum/recipe/cooking/R = src.OVEN_get_valid_recipe()
-			var/datum/recipe_instructions/oven_instructions/instructions = R?.get_recipe_instructions("oven")
+			var/datum/recipe_instructions/oven/instructions = R?.get_recipe_instructions(RECIPE_ID_OVEN)
 			if (!instructions)
 				instructions = src.default_instructions
 			if (R)

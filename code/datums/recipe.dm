@@ -165,3 +165,12 @@ ABSTRACT_TYPE(/datum/recipe)
 			for(var/key in recipe_output)
 				return key
 		return recipe_output
+
+
+/// recipe instructions are the machine-specific portions of a recipe. They might include cooking times, or special interactions such as
+/// forcing breakage
+ABSTRACT_TYPE(/datum/recipe_instructions)
+/datum/recipe_instructions
+
+	proc/get_id()
+		return null
