@@ -1,3 +1,13 @@
+/**
+ * A generic structure for recipes, which interfaces with a list of atoms and matches them against an internal list of ingredients. Also responsible
+ * for instantiating the output object.
+ *
+ * the most performance-critical responsibility of the recipe is the pattern-matching, due to its usage in loops. Everything else can/should be
+ * abstracted away as needed.
+ *
+ * The basic usage of this is to first find a recipe that matches the list of ingredients you have, with can_cook_recipe(), and then use the same
+ * list to instantiate the output using get_output(). For machine-specific interactions, implement a bespoke recipe_instruction for that machine.
+*/
 ABSTRACT_TYPE(/datum/recipe)
 /datum/recipe
 	VAR_PROTECTED/list/ingredients
@@ -34,9 +44,9 @@ ABSTRACT_TYPE(/datum/recipe)
 		return TRUE
 
 	/// Instantiates a copy of the intended output based on the given list of input and returns it
-	/// When overriding this, 'cook_source' and 'user' should only be used for optional extraneous effects, such as sfx, and should be expected to
+	/// When overriding this, 'source' and 'user' should only be used for optional extraneous effects, such as sfx, and should be expected to
 	/// often be null. For machine-specific actions or data, use bespoke recipe_instructions instead.
-	proc/get_output(list/item_list, atom/cook_source = null, mob/user = null)
+	proc/get_output(list/item_list, atom/source_source = null, mob/user = null)
 		RETURN_TYPE(/list)
 		var/output_paths = get_variant(item_list)
 		var/list/instantiated_output = list()
@@ -64,7 +74,8 @@ ABSTRACT_TYPE(/datum/recipe)
 					return variant
 		return output
 
-	/// Finds the cooking instructions for the relevant cooking machine, if any appropriate ones exist for the recipe
+	/// Finds the specific instructions for the relevant machine, if any appropriate ones exist for the recipe
+	/// For a list of IDs, check defines\recipe.dm
 	proc/get_recipe_instructions(var/id)
 		if (isnull(src.recipe_instructions))
 			return null
@@ -118,6 +129,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			if (extras)
 				extras += unused
 
+	/// returns whether the given type exists within the recipe's ingredients list
 	proc/type_in_ingredients(var/atom/type)
 		return istypes(type, src.ingredients)
 
@@ -128,8 +140,9 @@ ABSTRACT_TYPE(/datum/recipe)
 		. = jointext(icons, "<span style='font-size: 300%'> + </span>")
 		. += "<span style='font-size: 300%'> = </span>[bicon(src.get_mascot(), 2)]"
 
-	/// Returns the list of ingredients intended to be used for icon/name displays
+	/// Returns a list of associative lists representing the displayable data for each atom used in the recipe and their amounts
 	proc/get_ingredients_data()
+		RETURN_TYPE(/list)
 		var/list/out = list()
 		for(var/atom/item_path as anything in src.ingredients)
 			var/amount = src.ingredients[item_path]
@@ -142,6 +155,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			out += list(item)
 		return out
 
+	/// Returns an associative list representing the displayable data for the mascot, the single atom that represents the output for this recipe
 	proc/get_mascot_data(list/item_list)
 		var/atom/mascot = src.get_mascot(item_list)
 		var/amount = islist(src.output) ? src.output[mascot] : 1
@@ -153,7 +167,8 @@ ABSTRACT_TYPE(/datum/recipe)
 		)
 		return item
 
-	/// Returns the first-found output path, for obtaining a single icon/name etc relevant to the recipe when multiple outputs exist
+	/// Returns a single atom path that represents the output for this recipe. By default this will be the first-found path in the ingredient list.
+	/// Although note that associated lists are not necessarily ordered the same as they're added.
 	proc/get_mascot(list/item_list)
 		var/recipe_output
 		if (item_list)
@@ -168,7 +183,7 @@ ABSTRACT_TYPE(/datum/recipe)
 
 
 /// recipe instructions are the machine-specific portions of a recipe. They might include cooking times, or special interactions such as
-/// forcing breakage
+/// forcing breakage.
 ABSTRACT_TYPE(/datum/recipe_instructions)
 /datum/recipe_instructions
 
