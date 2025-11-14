@@ -188,7 +188,7 @@ TYPEINFO(/obj/machinery/mixer)
 
 		var/output = list()
 		var/datum/recipe/cooking/recipe = mixer_get_valid_recipe(src.contents)
-		if (recipe && recipe.get_output(src.contents, output, src))
+		if (recipe && recipe.try_get_output(src.contents, output, src))
 
 			deal_with_output(output, recipe)
 			var/list/content = src.contents.Copy()

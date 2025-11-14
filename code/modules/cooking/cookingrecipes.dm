@@ -51,7 +51,9 @@ ABSTRACT_TYPE(/datum/recipe/cooking/burger)
 			var/obj/item/reagent_containers/food/snacks/burger/burgle/burgle = new()
 			possibly_meat.transfer_all_reagents(burgle)
 			output_list += burgle
-		return TRUE
+			return TRUE
+		else
+			return ..()
 
 /datum/recipe/cooking/burger/meat
 	ingredients = list(\
