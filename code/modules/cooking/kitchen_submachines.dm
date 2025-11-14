@@ -799,6 +799,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 		var/recipebonus = 0 /// the ideal amount of cook time for the bonus
 		var/recook = 0
 		var/bad_recipe = FALSE // is the recipe a yuck item
+		var/atom/yucktype = null // this becomes a typepath if a yuck item wants to be made
 
 		// If emagged produce random output.
 		if (emagged)
@@ -825,7 +826,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			// Bail out to a mess if we didn't get a valid recipe
 			if (!xrecipeok || !contentsok || !xrecipe.try_get_output(src.contents, output, src))
 				bad_recipe = TRUE
-				output += new /obj/item/reagent_containers/food/snacks/yuck
+				yucktype = /obj/item/reagent_containers/food/snacks/yuck
 			// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
 			recipebonus = 0
 			bonus = -1
@@ -850,30 +851,35 @@ TYPEINFO(/obj/submachine/chef_oven)
 				else if (cook_amt >= recipebonus + 5)
 					bad_recipe = TRUE
 					// severely overcooked and burnt
-					output += new /obj/item/reagent_containers/food/snacks/yuck/burn
+					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
 					bonus = 0
 
 			// the case where there are no valid recipies is handled below in the outer context
 			// (namely it replaces them with yuck)
 		if (length(output) < 1)
-			output += new /obj/item/reagent_containers/food/snacks/yuck
+			yucktype = /obj/item/reagent_containers/food/snacks/yuck
 			bad_recipe = TRUE
+
 		// this only happens if the output is a yuck item, either from an
 		// invalid recipe or otherwise...
-		if (amount == 1 && bad_recipe)
+		if (bad_recipe && amount == 1)
 			for (var/obj/item/reagent_containers/food/snacks/F in src)
-				if(F.quality < 1)
-					// @TODO cook_amt == F.quality can never happen here
-					// (cook_amt is the time the oven is set to from 1-10,
-					//  and F.quality has to be 0 or below to get here)
-					recook = 1
-					if (cook_amt == F.quality) F.quality = 1.5
-					else if (cook_amt == F.quality + 1) F.quality = 1
-					else if (cook_amt == F.quality - 1) F.quality = 1
-					else if (cook_amt <= F.quality - 5) F.quality = 0.5
-					else if (cook_amt >= F.quality + 5)
-						output += new /obj/item/reagent_containers/food/snacks/yuck/burn
-						bonus = 0
+				if(F.quality >= 1)
+					continue
+				// @TODO cook_amt == F.quality can never happen here
+				// (cook_amt is the time the oven is set to from 1-10,
+				//  and F.quality has to be 0 or below to get here)
+				recook = 1
+				if (cook_amt == F.quality) F.quality = 1.5
+				else if (cook_amt == F.quality + 1) F.quality = 1
+				else if (cook_amt == F.quality - 1) F.quality = 1
+				else if (cook_amt <= F.quality - 5) F.quality = 0.5
+				else if (cook_amt >= F.quality + 5)
+					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
+					bonus = 0
+
+		if (ispath(yucktype))
+			output += new yucktype()
 
 		// this is all stuff relating to re-cooking with yuck items
 		// suitably it is very gross
