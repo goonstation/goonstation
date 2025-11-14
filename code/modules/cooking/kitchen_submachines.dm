@@ -830,6 +830,8 @@ TYPEINFO(/obj/submachine/chef_oven)
 			// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
 			recipebonus = 0
 			bonus = -1
+			for (var/atom/movable/I in src.contents)
+				qdel(I)
 		else
 			// Non-emagged cooking
 			var/datum/recipe/cooking/R = src.OVEN_get_valid_recipe()
