@@ -180,8 +180,8 @@
 
 			src.reagents.trans_to(src.donor, digestion_per_tick_fluid, src.reagents.has_reagent("charcoal", 5)? 0.5 : 1) // Charcoal reduces chemical absorbtion in the stomach
 		else
-			if (counter == 0) digestion_delay = (src.reagents.has_reagent("aluminium_hydroxide")? 2 * initial_digestion_delay : initial_digestion_delay)
-			counter += mult * (src.reagents.has_reagent("salcaprozate_sodium")? 2 : 1) // Antacids and permeability increasers respectively alter the stomach absorbtion timings
+			if (counter == 0) digestion_delay = (src.reagents.has_reagent("antacid")? 2 * initial_digestion_delay : initial_digestion_delay)
+			counter += mult * (src.reagents.has_reagent("snac")? 2 : 1) // Antacids and permeability increasers respectively alter the stomach absorbtion timings
 		return
 
 	proc/digest_organ(obj/item/organ/selectedorgan)

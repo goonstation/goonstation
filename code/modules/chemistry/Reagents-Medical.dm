@@ -40,9 +40,9 @@ datum
 				return
 
 		medical/antacid
-			name = "aluminium hydroxide"
-			id = "aluminium_hydroxide"
-			description = "A common antacid that can relieve stomach pain."
+			name = "space antacid"
+			id = "antacid"
+			description = "Aluminum hydroxide, a common antacid that can relieve stomach pain."
 			reagent_state = LIQUID
 			fluid_r = 100
 			fluid_g = 120
@@ -61,9 +61,9 @@ datum
 				return
 
 		medical/snac
-			name = "salcaprozate sodium"
-			id = "salcaprozate_sodium"
-			description = "An intestinal permeability amplificator used in accelerating oral chemical absorbtion."
+			name = "SNAC"
+			id = "snac"
+			description = "Shorthand for Salcaprozate sodium. An intestinal permeability amplificator used in accelerating oral chemical absorbtion."
 			reagent_state = LIQUID
 			fluid_r = 100
 			fluid_g = 120

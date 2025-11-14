@@ -2626,18 +2626,18 @@
 		result_amount = 4
 
 	antacid
-		name = "Aluminium hydroxide"
+		name = "Antacid"
 		id = "antacid"
-		result = "aluminium_hydroxide"
+		result = "antacid"
 		required_reagents = list("aluminium" = 1, "oxygen" = 1, "hydrogen" = 1, "sodium" = 1)
 		result_amount = 3
 		min_temperature = T0C + 60
 		mix_phrase = "The chemicals condense together into a gray-ish colorless liquid."
 
 	snac
-		name = "Salcaprozate sodium"
+		name = "SNAC"
 		id = "snac"
-		result = "salcaprozate_sodium"
+		result = "snac"
 		required_reagents = list("carbon" = 1, "oxygen" = 1, "nitrogen" = 1, "sodium" = 1)
 		result_amount = 4
 		min_temperature = T0C + 85
