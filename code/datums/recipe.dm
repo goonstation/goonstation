@@ -43,28 +43,50 @@ ABSTRACT_TYPE(/datum/recipe)
 
 		return TRUE
 
-	/// Instantiates a copy of the intended output based on the given list of input and returns it
+
+	/// Attempts to instantiates a copy of the intended output based on the given list of input and puts it in the 'output' list provided.
+	/// Returns true or false based on success with the given input.
 	/// When overriding this, 'source' and 'user' should only be used for optional extraneous effects, such as sfx, and should be expected to
 	/// often be null. For machine-specific actions or data, use bespoke recipe_instructions instead.
-	proc/get_output(list/item_list, atom/source_source = null, mob/user = null)
-		RETURN_TYPE(/list)
-		var/output_paths = get_variant(item_list)
-		var/list/instantiated_output = list()
+	proc/try_get_output(list/input, list/output, atom/source = null, mob/user = null )
+		if (!islist(input))
+			stack_trace("Recipe aborting. Input of type list required, received '[string_type_of_anything(input)]' instead.")
+			return FALSE
+		if (!islist(output))
+			stack_trace("Recipe aborting. Output of type list required, received '[string_type_of_anything(output)]' instead.")
+			return FALSE
+		. = get_output(input, output, source, user)
+		output_post_process(input, output, source, user)
 
+
+	proc/get_output(list/input_list, list/output_list, atom/source = null, mob/user = null)
+		PROTECTED_PROC(TRUE)
+		var/output_paths = get_variant(input_list)
+		. = FALSE
 		if(islist(output_paths))
 			for(var/path in output_paths)
 				var/amount = output_paths[path]
 				if(isnum(amount))
 					for(var/i = 1, i <= amount, i++)
-						instantiated_output += new path
+						output_list += new path
+						. = TRUE
 				else if(ispath(path))
-					instantiated_output += new path
+					output_list += new path
+					. = TRUE
 		else if(ispath(output_paths))
-			instantiated_output += new output_paths
+			output_list += new output_paths
+			. = TRUE
+		if (!.)
+			// By default, a failure here likely means the recipe has been set up wrong. This isn't necessarily true if this proc gets overriden.
+			stack_trace("Recipe of type [string_type_of_anything(src)] failed with input: [english_list(input_list)].")
 
-		return instantiated_output
+	/// called after get_output(), performs any post-instantiation changes to every item in the 'output' list.
+	proc/output_post_process(list/input, list/output, atom/source = null, mob/user = null)
+		PROTECTED_PROC(TRUE)
+		return
 
 	proc/get_variant(list/item_list)
+		PROTECTED_PROC(TRUE)
 		for(var/specialIngredient in src.variants)
 			var/count_needed = src.variant_quantity
 			var/count_found = 0

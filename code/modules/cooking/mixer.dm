@@ -186,10 +186,9 @@ TYPEINFO(/obj/machinery/mixer)
 		if (TIME < src.timeMixEnd)
 			return
 
-		var/output = null
+		var/output = list()
 		var/datum/recipe/cooking/recipe = mixer_get_valid_recipe(src.contents)
-		if (recipe)
-			output = recipe.get_output(src.contents, src)
+		if (recipe && recipe.get_output(src.contents, output, src))
 
 			deal_with_output(output, recipe)
 			var/list/content = src.contents.Copy()

@@ -2,14 +2,13 @@ ABSTRACT_TYPE(/datum/recipe/cooking)
 /datum/recipe/cooking
 	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims.
 
-	get_output(list/item_list, atom/cook_source = null, mob/user = null)
-		. = ..(item_list, cook_source, user)
-		if (!useshumanmeat)
+	output_post_process(list/input_list, list/output_list, atom/cook_source = null, mob/user = null)
+		if (!src.useshumanmeat)
 			return
 		// naming of food after human products. TODO this should perhaps work off components
-		for(var/obj/item/reagent_containers/food/snacks/F in .)
+		for(var/obj/item/reagent_containers/food/snacks/F in output)
 			var/foodname = F.name
-			for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in item_list)
+			for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in input_list)
 				F.name = "[M.subjectname] [foodname]"
 				F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
 				if(!isnull(F.unlock_medal_when_eaten))
@@ -18,7 +17,6 @@ ABSTRACT_TYPE(/datum/recipe/cooking)
 					F.unlock_medal_when_eaten = "That tasted funny"
 				else
 					F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-
 
 /datum/recipe/cooking/spicychickensandwich
 	ingredients = list(\
@@ -45,13 +43,15 @@ ABSTRACT_TYPE(/datum/recipe/cooking)
 ABSTRACT_TYPE(/datum/recipe/cooking/burger)
 /datum/recipe/cooking/burger
 	category = "Burgers"
-	get_output(var/list/item_list)
+
+	get_output(var/list/input_list, var/list/output_list)
 		//this is dumb and assumes the second thing is always the meat but it usually is so :iiam:
-		var/obj/item/possibly_meat = locate(ingredients[2]) in item_list
+		var/obj/item/possibly_meat = locate(ingredients[2]) in input_list
 		if (possibly_meat?.reagents?.get_reagent_amount("crime") >= 5)
 			var/obj/item/reagent_containers/food/snacks/burger/burgle/burgle = new()
 			possibly_meat.transfer_all_reagents(burgle)
-			return burgle
+			output_list += burgle
+		return TRUE
 
 /datum/recipe/cooking/burger/meat
 	ingredients = list(\
@@ -582,10 +582,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/sandwich
 	wildcard_quantity = 100
 
-	get_output(list/item_list)
-		if (!item_list)
-			return null
-
+	get_output(var/list/input_list, var/list/output_list)
 		var/obj/item/reagent_containers/food/snacks/sandwich/customSandwich = new /obj/item/reagent_containers/food/snacks/sandwich ()
 		customSandwich.heal_amt = 1 // no filling yet, so less than regular sandwich
 		customSandwich.reagents = new /datum/reagents(100)
@@ -600,7 +597,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 		var/isToast = FALSE
 
 		var/i = 1
-		for (var/obj/item/reagent_containers/food/snacks/snack in item_list)
+		for (var/obj/item/reagent_containers/food/snacks/snack in input_list)
 			if (snack == customSandwich)
 				continue
 
@@ -733,7 +730,8 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 
 			customSandwich.overlays += newFilling
 
-		return list(customSandwich)
+		output_list += customSandwich
+		return TRUE
 
 /datum/recipe/cooking/pizza_custom
 	recipe_instructions = list(/datum/recipe_instructions/oven/pizza_custom)
@@ -741,12 +739,10 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/pizza/bespoke
 	category = "Pizza"
 
-	get_output(var/list/item_list)
-		if (!item_list)
-			return null
-
-		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P in item_list)
-			return list(P.bake_pizza())
+	get_output(var/list/input_list, var/list/output_list)
+		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P in input_list)
+			output_list += P.bake_pizza()
+		return TRUE
 
 /datum/recipe/cooking/cheesetoast
 	recipe_instructions = list(/datum/recipe_instructions/oven/cheesetoast)
@@ -1215,21 +1211,20 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	var/base_pie_name = "pie"
 	wildcard_quantity = 100
 
-	get_output(list/item_list)
-		if (!item_list)
-			return null
-		if (length(item_list) <= 2)
-			return list(new src.output)
+	get_output(var/list/input_list, var/list/output_list)
+		if (length(input_list) <= 2)
+			output_list += new src.output
+			return TRUE
 
 		var/obj/item/reagent_containers/food/snacks/anItem
 		var/obj/item/reagent_containers/food/snacks/pie/custom_pie = new src.output
 		var/pieDesc
 		var/pieName
-		var/contentAmount = length(item_list) - 2
+		var/contentAmount = length(input_list) - 2
 		var/count = 1
 		var/found1 = 0
 		var/found2 = 0
-		for (var/obj/item/T in item_list)
+		for (var/obj/item/T in input_list)
 
 			if (!found1 && istype(T, ingredients[1]))
 				found1 = TRUE
@@ -1278,7 +1273,8 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 		I.Blend(thing.get_average_color(), ICON_ADD)
 		custom_pie.icon = I
 
-		return list(custom_pie)
+		output_list += custom_pie
+		return TRUE
 
 /datum/recipe/cooking/pie_custard
 	recipe_instructions = list(/datum/recipe_instructions/oven/pie_custard)
@@ -1491,15 +1487,12 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	category = "Cakes"
 
-	get_output(list/item_list, atom/cook_source = null)
-		if (!item_list)
-			return null
-
+	get_output(var/list/input_list, var/list/output_list, var/atom/cook_source = null)
 		var/fruitcake = new /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 		if (cook_source)
 			playsound(cook_source.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
-		return list(fruitcake)
+		output_list += fruitcake
 
 #endif
 
@@ -1509,11 +1502,9 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/cake
 	category = "Cakes"
 
-	get_output(list/item_list)
-		if(!item_list)
-			return null
+	get_output(var/list/input_list, var/list/output_list)
 
-		var/obj/item/reagent_containers/food/snacks/cake_batter/docakeitem = locate() in item_list
+		var/obj/item/reagent_containers/food/snacks/cake_batter/docakeitem = locate() in input_list
 
 		var/obj/item/reagent_containers/food/snacks/S
 		if(docakeitem.custom_item)
@@ -1541,7 +1532,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 			B.name = "plain cake"
 
 		B.desc = "Mmm! A delicious-looking [B.name]!"
-		return list(B)
+		output_list += B
 
 
 /datum/recipe/cooking/cake_custom_item
@@ -1551,29 +1542,25 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	category = "Cakes"
 	wildcard_quantity = 100
 
-	get_output(list/item_list)
-		if (!item_list)
-			return null
+	get_output(var/list/input_list, var/list/output_list)
 
 		var/obj/item/cake_item/B = new /obj/item/cake_item()
-		for (var/obj/item/I in item_list)
+		for (var/obj/item/I in input_list)
 			if (istype(I,/obj/item/cake_item))
 				continue
 			I.set_loc(B)
 			break
 
-		return list(B)
+		output_list += B
+		return TRUE
 
 /datum/recipe/cooking/mix_cake_custom // mixer
 	ingredients = list(/obj/item/reagent_containers/food/snacks/cake_batter = 1)
 	output = null
 	wildcard_quantity = 100
 
-	get_output(list/item_list)
-		if (!item_list)
-			return null
-
-		for (var/obj/item/I in item_list)
+	get_output(var/list/input_list, var/list/output_list)
+		for (var/obj/item/I in input_list)
 			if (istype(I, ingredients[1]))
 				continue
 			else if (istype(I,/obj/item/reagent_containers/food/snacks/))
@@ -1582,12 +1569,13 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 				batter.custom_item = I
 				I.set_loc(batter)
 				batter.name = "[I:real_name ? I:real_name : I.name] cake batter"
-				for (var/obj/M in item_list)
+				for (var/obj/M in input_list)
 					qdel(M)
 
-				return list(batter)
+				output_list += batter
+				return TRUE
 
-		return null
+		return FALSE
 
 
 /datum/recipe/cooking/omelette
@@ -1714,10 +1702,11 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate
 	wildcard_quantity = 100
 
-	get_output(list/item_list)
-		if (!item_list || !length(item_list))
-			return list(new src.output())
-		for (var/obj/item/item in item_list)
+	get_output(var/list/input_list, var/list/output_list)
+		if (!input_list || !length(input_list))
+			output_list += new src.output()
+			return TRUE
+		for (var/obj/item/item in input_list)
 			if (istypes(item, list(src.ingredients[1], src.ingredients[2])))
 				continue
 			if (item.w_class > W_CLASS_SMALL)
@@ -1725,7 +1714,8 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 			var/obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate/choc_egg = new()
 			choc_egg.AddComponent(/datum/component/contraband, 1) //illegal unsafe dangerous egg
 			item.set_loc(choc_egg)
-			return list(choc_egg)
+			output_list += choc_egg
+			return TRUE
 
 /datum/recipe/cooking/eggsalad
 	recipe_instructions = list(/datum/recipe_instructions/oven/eggsalad)
@@ -1971,9 +1961,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	/obj/item/device/light/candle/small = 1)
 	output = /obj/item/reagent_containers/food/snacks/b_cupcake
 
-	get_output(list/item_list)
-		if (!item_list)
-			return null
+	get_output(var/list/input_list, var/list/output_list)
 
 		var/obj/item/reagent_containers/food/snacks/b_cupcake = new /obj/item/reagent_containers/food/snacks/b_cupcake
 
@@ -1983,7 +1971,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 		I.Blend(random_color, ICON_ADD)
 		b_cupcake.icon = I
 
-		return list(b_cupcake)
+		output_list += b_cupcake
 
 /datum/recipe/cooking/butters // mixer
 	ingredients = list(\
@@ -1998,16 +1986,14 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	/obj/item/item_box/figure_capsule = 1)
 	output = /obj/item/pen/crayon/lipstick
 
-	get_output(list/item_list)
-		if (!item_list)
-			return null
+	get_output(var/list/input_list, var/list/output_list)
 		var/obj/item/pen/crayon/lipstick/lipstick = new /obj/item/pen/crayon/lipstick
-		for (var/obj/item/pen/crayon/C in item_list)
+		for (var/obj/item/pen/crayon/C in input_list)
 			lipstick.font_color = C.font_color
 			lipstick.color_name = hex2color_name(lipstick.font_color)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
-		return list(lipstick)
+		output_list += lipstick
 
 /datum/recipe/cooking/melted_sugar
 	recipe_instructions = list(/datum/recipe_instructions/oven/melted_sugar)
