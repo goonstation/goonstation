@@ -835,7 +835,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			var/datum/recipe_instructions/oven/instructions = R?.get_recipe_instructions(RECIPE_ID_OVEN)
 			if (!instructions)
 				instructions = src.default_instructions
-			if (R && R.get_output(src.contents, output, src))
+			if (R && R.try_get_output(src.contents, output, src))
 				// derive the bonus amount from cooking
 				// being off by one in either direction is OK
 				// being off by 5 either burns it or makes it taste like shit
