@@ -1705,9 +1705,6 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 	wildcard_quantity = 100
 
 	get_output(var/list/input_list, var/list/output_list)
-		if (!input_list || !length(input_list))
-			output_list += new src.output()
-			return TRUE
 		for (var/obj/item/item in input_list)
 			if (istypes(item, list(src.ingredients[1], src.ingredients[2])))
 				continue
@@ -1717,7 +1714,8 @@ ABSTRACT_TYPE(/datum/recipe/cooking/sandwich)
 			choc_egg.AddComponent(/datum/component/contraband, 1) //illegal unsafe dangerous egg
 			item.set_loc(choc_egg)
 			output_list += choc_egg
-			return TRUE
+		if (!length(output_list))
+			return ..()
 
 /datum/recipe/cooking/eggsalad
 	recipe_instructions = list(/datum/recipe_instructions/oven/eggsalad)
