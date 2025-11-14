@@ -4,8 +4,9 @@
 Protip: tinker with this on a local first so you know what you're doing.
 RMB on buildmode button                = Set image and ending effect<br>
 Ctrl + RMB on buildmode button         = Set audio<br>
-Shift + Left Mouse Button              = Spawn flying object<br>
+Alt + Right mouse button               = Set optional obj/mob spawns<br>
 Shift + Right Mouse Button             = Set direction and speed<br>
+Shift + Left Mouse Button              = Spawn flying object<br>
 ***********************************************************"}
 	// settings
 	var/move_delay = 1
@@ -15,18 +16,23 @@ Shift + Right Mouse Button             = Set direction and speed<br>
 	var/audio_choice = "Once"
 	var/dir_input = "Random"
 	var/end_effect = "Leave zlevel"
+	var/spawnpath
+	var/spawnamount = 1
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		if (!ctrl)
+		if (!ctrl || !alt || !shift)
 			var/choice = tgui_input_list(usr, "Upload or clear file?", "Choose", list("Upload", "Clear"))
 			if (choice == "Upload")
 				src.image = input(usr, "Upload an image:","File Uploader - Downsize your images to fit on the screen, local testing helps!", null) as null|icon
 			else
 				src.image = null
 			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list("Leave zlevel", "Explode", "Fade away", "Run away"))
-		else
-			src.audio_choice = tgui_input_list(usr, "Loop sound globally or play once on arrival?", "Choose", list("Global loop", "Once"))
-			src.audio = input(usr, "Upload a file:", "File Uploader - Long files WILL lag people out, sounds will loop.", null) as null|sound
+		if (ctrl)
+			src.audio_choice = tgui_input_list(usr, "Loop sound globally or play once on arrival?", "Choose", list("Global loop", "Once", "Clear"))
+			if (src.audio_choice == "Clear")
+				src.audio = null
+			else
+				src.audio = input(usr, "Upload a file:", "File Uploader - Long files WILL lag people out, sounds will loop.", null) as null|sound
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
@@ -34,16 +40,25 @@ Shift + Right Mouse Button             = Set direction and speed<br>
 			var/choice = tgui_input_list(usr, "Choose a set speed or random values", "Choose", list("Set", "Clear"))
 			switch(choice)
 				if ("Set")
-					src.move_delay = tgui_input_number(usr, "Enter speed value", "Higher is slower", 1)
+					src.move_delay = tgui_input_number(usr, "Enter speed value", "Higher is slower, gets very slow by 5", 1)
 				else
 					src.move_delay = 1
+		if (alt)
+			var/choice = tgui_input_list(usr, "Spawn mobs/objects or clear?", "Choose", list("Spawn", "Clear"))
+			if (choice == "Spawn")
+				src.spawnpath = get_one_match(input("Type path", "Type path", "[src.spawnpath]"), /atom)
+				src.spawnamount = tgui_input_number(usr, "Amount to spawn", "Amount - Be responsible!!", 1)
+			else
+				src.spawnpath = null
+				src.spawnamount = 1
+				return
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
 			src.target_loc = get_turf(object)
 			aim_pilot()
 
-	proc/aim_pilot()
+	proc/aim_pilot() // Spawn pilot at edge of zlevel then redirect to target
 		var/turf/start
 		var/random_dir = pick(NORTH, SOUTH, EAST, WEST)
 		var/new_dir
@@ -72,7 +87,7 @@ Shift + Right Mouse Button             = Set direction and speed<br>
 
 		if (direction == WEST || direction == EAST)
 			while (pilot.x != src.target_loc.x)
-				if(QDELETED(pilot))
+				if(QDELETED(pilot)) // pilot gets deleted in move_forward when it is without a loc
 					break
 				move_forward(pilot, direction)
 				sleep(src.move_delay)
@@ -83,23 +98,35 @@ Shift + Right Mouse Button             = Set direction and speed<br>
 				move_forward(pilot, direction)
 				sleep(src.move_delay)
 
+		// everything below is after the pilot reaches its destination
+
 		if (!pilot.loopsound && src.audio)
 			for (var/mob/player in view(25, pilot))
 				player << sound(src.audio, volume=10)
 
+		if (src.spawnpath)
+			if(ispath(src.spawnpath, /atom/movable))
+				var/counter
+				playsound(pilot.loc, 'sound/effects/poff.ogg', 30, TRUE, pitch = 1)
+				for (counter=0, counter<src.spawnamount, counter++)
+					var/turf/T = get_turf(pilot)
+					new src.spawnpath(T)
+					var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
+					P.setup(T)
+
 		switch (src.end_effect)
 			if ("Leave zlevel")
-				while (pilot.loc) // pilot gets deleted if they don't have a loc in move_foward
+				while (pilot.loc)
 					move_forward(pilot, direction)
 					sleep(src.move_delay)
 			if ("Run away")
 				SPAWN(3 SECONDS)
 					direction = turn(direction, 180)
 					sprint_particle(pilot, pilot.loc)
-					playsound(pilot.loc, 'sound/effects/sprint_puff.ogg', 29, 1)
+					playsound(pilot.loc, 'sound/effects/sprint_puff.ogg', 30, 1)
 					while (pilot.loc)
 						move_forward(pilot, direction, TRUE)
-						sleep(src.move_delay)
+						sleep(1)
 			if ("Explode")
 				var/turf/T = get_turf(pilot)
 				playsound(T, "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
@@ -107,7 +134,7 @@ Shift + Right Mouse Button             = Set direction and speed<br>
 				qdel(pilot)
 				robogibs(T)
 			if ("Fade away")
-				animate(pilot, transform = matrix(), alpha  = 0, time = 10)
+				animate(pilot, transform = matrix(), alpha  = 0, time = 1 SECONDS)
 				pilot.ClearAllOverlays()
 				SPAWN(2 SECONDS)
 					qdel(pilot)
@@ -140,7 +167,6 @@ Shift + Right Mouse Button             = Set direction and speed<br>
 	var/icon/image_overlay
 	var/sound/attached_sound
 	var/loopsound = FALSE
-	var/dirturncheck = FALSE
 
 	New()
 		..()
@@ -157,7 +183,7 @@ Shift + Right Mouse Button             = Set direction and speed<br>
 		..()
 
 	proc/play()
-		while (!QDELETED(src))
+		while (!QDELETED(src)) // replay sound if another spawned pilot is disposed, good for spamming
 			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
 			world << src.attached_sound
 			sleep(2 SECONDS)
