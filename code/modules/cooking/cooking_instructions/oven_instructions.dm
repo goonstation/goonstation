@@ -133,7 +133,6 @@ ABSTRACT_TYPE(/datum/recipe_instructions/oven)
 /datum/recipe_instructions/oven/toast
 	cookbonus = 5
 
-ABSTRACT_TYPE(/datum/recipe_instructions/oven/sandwich)
 /datum/recipe_instructions/oven/sandwich
 	cookbonus = 7
 
