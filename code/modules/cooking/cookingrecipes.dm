@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/recipe/cooking)
 		if (!src.useshumanmeat)
 			return
 		// naming of food after human products. TODO this should perhaps work off components
-		for(var/obj/item/reagent_containers/food/snacks/F in output)
+		for(var/obj/item/reagent_containers/food/snacks/F in output_list)
 			var/foodname = F.name
 			for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in input_list)
 				F.name = "[M.subjectname] [foodname]"
