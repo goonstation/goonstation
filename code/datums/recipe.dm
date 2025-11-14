@@ -10,8 +10,8 @@
 */
 ABSTRACT_TYPE(/datum/recipe)
 /datum/recipe
-	VAR_PROTECTED/list/ingredients
-	VAR_PROTECTED/output = null // what you get from this recipe
+	VAR_PROTECTED/list/ingredients /// An associative list of [paths = amounts] representing the required ingredients for this recipe
+	VAR_PROTECTED/output = null /// what you get from this recipe. This can be a path, a list of paths, or an associative list of [paths = amounts]
 	var/category = "Unsorted" /// category for sorting, use null to hide
 	VAR_PROTECTED/list/variants = null
 	VAR_PROTECTED/variant_quantity = 1
