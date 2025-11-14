@@ -526,15 +526,14 @@ TYPEINFO(/obj/submachine/chef_oven)
 		if (!possible)
 			return
 
-
 		var/list/items = possible.get_ingredients_data()
 		for(var/I in items)
-			src.possible_recipe_icons += icon2base64(icon(I["icon"], I["icon_state"]), "chef_oven-\ref[src]")
+			src.possible_recipe_icons += icon2base64(getFlatIcon(image(I["icon"], I["icon_state"])), "chef_oven-\ref[src]")
 			src.possible_recipe_names += "[I["name"]][I["amount"] > 1 ? " x[I["amount"]]" : ""]"
 
 		var/atom/item_path = possible.get_mascot(src.contents)
 		if (ispath(item_path))
-			src.output_icon = icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			src.output_icon = icon2base64(getFlatIcon(image(initial(item_path.icon), initial(item_path.icon_state))), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
 
 		var/datum/recipe_instructions/oven/instructions = possible.get_recipe_instructions(RECIPE_ID_OVEN)

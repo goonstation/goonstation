@@ -1,4 +1,36 @@
 
+(t)wed nov 12 25
+(u)Studenterhue
+(p)25156
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Book4u now has a book of three-sentence horror stories from the Goonstation Fall 2025 Seasonal Contest. Congratulations to Cropsey, Nautical-eX, FlameArrow57, Solenoid, Munien, Xenonia, and Asterion0!
+(+)Frank_Stein, sunkiisu, and Whele didn't win, but their stories were so good that they were included anyway.
+(t)tue nov 11 25
+(u)LeahTheTech
+(p)25167
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The cyalume saber's swipe special attack now does full stamina damage and 0.8x base damage instead of 0.54x.
+(t)mon nov 10 25
+(u)lyzmat
+(p)25148
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(+)Syndicate detectives can now buy extra bouncy .38 special rounds from their uplinks.
+(t)sun nov 09 25
+(u)Egregorious
+(p)25103
+(e)🪲💅🍝|C-Bug, C-QoL, A-Catering
+(+)Deep fryers now cook much faster and more consistently, and are largely unaffected by the stresses placed upon the universe.
+(u)CalliopeSoups
+(p)25128
+(e)🆕🎨🍝🐁|C-Feature, C-Sprites, A-Catering, A-Critters
+(+)Lesser slugs can have an eyestalk harvested using a snipping tool, for use in swampy cocktails. Don't worry, eyes grow back.
+(+)Slugs, lesser slugs, slugburgers and snails have been resprited with animations.
+(u)LeahTheTech
+(p)25150
+(e)🔄💨|C-Rework, A-Atmospherics
+(+)Chemical fires now heat up the air less but much more consistently.
+(u)LeahTheTech
+(+)Blobs now have a slightly higher natural temperature tolerance.
 (t)fri nov 07 25
 (u)Smearfo
 (p)25078
