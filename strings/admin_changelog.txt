@@ -1,3 +1,6 @@
+(t)fri nov 14 25
+(u)CalliopeSoups
+(*)Added 'Fly Object Overhead' to buildmode, fly uploaded images/sounds with effects! Test on a local first.
 (t)thu oct 30 25
 (u)Azrun
 (*)Added 'Animation Editor' panel to create, import (JSON), export (JSON, BYOND) animations!
