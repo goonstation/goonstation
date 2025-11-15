@@ -20,6 +20,7 @@ interface SpawnEventData {
   objective_text;
   spawn_type;
   loc_type;
+  job_wanted_location;
   incompatible_antag;
   equip_antag;
   ask_permission;
@@ -41,6 +42,7 @@ export const SpawnEvent = () => {
     objective_text,
     spawn_type,
     loc_type,
+    job_wanted_location,
     incompatible_antag,
     equip_antag,
     ask_permission,
@@ -156,6 +158,14 @@ export const SpawnEvent = () => {
               >
                 {loc_type === 'landmark' ? spawn_loc : 'Landmark'}
               </Button>
+              {!!job_wanted_location && (
+                <Button
+                  onClick={() => act('select_default_job_landmark')}
+                  color="red"
+                  icon="exclamation"
+                  tooltip="Selected job wants to spawn at a specific landmark, click me to select that landmark."
+                />
+              )}
             </LabeledList.Item>
             <LabeledList.Item label="Antagonist status">
               <Button selected={antag_role} onClick={() => act('select_antag')}>
