@@ -3244,7 +3244,7 @@
 	nightmare
 		id = "art_nightmare_curse"
 		name = "Nightmare Curse"
-		extra_desc = "You're being haunted by nightmares! Kill them 7 of them or perish."
+		extra_desc = "You're being haunted by nightmares! Kill 7 of them or perish."
 		removal_msg = "The nightmare ends, along with the creatures..."
 		var/list/created_creatures = list()
 		var/creatures_to_kill = 7
