@@ -432,7 +432,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	var/output_icon
 	var/output_name
 	var/cooktime
-	var/datum/recipe_instructions/oven_instructions/default_instructions = new /datum/recipe_instructions/oven_instructions/default()
+	var/datum/recipe_instructions/oven/default_instructions = new /datum/recipe_instructions/oven/default()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!emagged)
@@ -526,18 +526,17 @@ TYPEINFO(/obj/submachine/chef_oven)
 		if (!possible)
 			return
 
-
 		var/list/items = possible.get_ingredients_data()
 		for(var/I in items)
-			src.possible_recipe_icons += icon2base64(icon(I["icon"], I["icon_state"]), "chef_oven-\ref[src]")
+			src.possible_recipe_icons += icon2base64(getFlatIcon(image(I["icon"], I["icon_state"])), "chef_oven-\ref[src]")
 			src.possible_recipe_names += "[I["name"]][I["amount"] > 1 ? " x[I["amount"]]" : ""]"
 
 		var/atom/item_path = possible.get_mascot(src.contents)
 		if (ispath(item_path))
-			src.output_icon = icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			src.output_icon = icon2base64(getFlatIcon(image(initial(item_path.icon), initial(item_path.icon_state))), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
 
-		var/datum/recipe_instructions/oven_instructions/instructions = possible.get_recipe_instructions("oven")
+		var/datum/recipe_instructions/oven/instructions = possible.get_recipe_instructions(RECIPE_ID_OVEN)
 		if (!instructions)
 			instructions = src.default_instructions
 		if (instructions.cookbonus < 10)
@@ -793,11 +792,13 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 	proc/cook_food()
 		var/amount = length(src.contents)
-		var/atom/movable/output = null /// what path / item is (getting) created
+		var/list/output = list() /// what path / item is (getting) created
 		var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
 		var/bonus = 0 /// correct-cook-time bonus
 		var/recipebonus = 0 /// the ideal amount of cook time for the bonus
 		var/recook = 0
+		var/bad_recipe = FALSE // is the recipe a yuck item
+		var/atom/yucktype = null // this becomes a typepath if a yuck item wants to be made
 
 		// If emagged produce random output.
 		if (emagged)
@@ -822,23 +823,21 @@ TYPEINFO(/obj/submachine/chef_oven)
 			if (xrecipe.useshumanmeat)
 				xrecipeok = 0
 			// Bail out to a mess if we didn't get a valid recipe
-			if (xrecipeok && contentsok)
-				output = xrecipe.get_output(src.contents, src)
-			else
-				output = /obj/item/reagent_containers/food/snacks/yuck
+			if (!xrecipeok || !contentsok || !xrecipe.try_get_output(src.contents, output, src))
+				bad_recipe = TRUE
+				yucktype = /obj/item/reagent_containers/food/snacks/yuck
 			// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
 			recipebonus = 0
 			bonus = -1
+			for (var/atom/movable/I in src.contents)
+				qdel(I)
 		else
 			// Non-emagged cooking
 			var/datum/recipe/cooking/R = src.OVEN_get_valid_recipe()
-			var/datum/recipe_instructions/oven_instructions/instructions = R?.get_recipe_instructions("oven")
+			var/datum/recipe_instructions/oven/instructions = R?.get_recipe_instructions(RECIPE_ID_OVEN)
 			if (!instructions)
 				instructions = src.default_instructions
-			if (R)
-				// this is null if it uses normal outputs (see below),
-				// otherwise it will be the created item from this
-				output = R.get_output(src.contents, src)
+			if (R && R.try_get_output(src.contents, output, src))
 				// derive the bonus amount from cooking
 				// being off by one in either direction is OK
 				// being off by 5 either burns it or makes it taste like shit
@@ -851,29 +850,37 @@ TYPEINFO(/obj/submachine/chef_oven)
 					// severely undercooked
 					bonus = -1
 				else if (cook_amt >= recipebonus + 5)
+					bad_recipe = TRUE
 					// severely overcooked and burnt
-					output = new /obj/item/reagent_containers/food/snacks/yuck/burn
+					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
 					bonus = 0
+
 			// the case where there are no valid recipies is handled below in the outer context
 			// (namely it replaces them with yuck)
-		if (isnull(output))
-			output = new /obj/item/reagent_containers/food/snacks/yuck
+		if (length(output) < 1)
+			yucktype = /obj/item/reagent_containers/food/snacks/yuck
+			bad_recipe = TRUE
+
 		// this only happens if the output is a yuck item, either from an
 		// invalid recipe or otherwise...
-		if (amount == 1 && istype(output, /obj/item/reagent_containers/food/snacks/yuck))
+		if (bad_recipe && amount == 1)
 			for (var/obj/item/reagent_containers/food/snacks/F in src)
-				if(F.quality < 1)
-					// @TODO cook_amt == F.quality can never happen here
-					// (cook_amt is the time the oven is set to from 1-10,
-					//  and F.quality has to be 0 or below to get here)
-					recook = 1
-					if (cook_amt == F.quality) F.quality = 1.5
-					else if (cook_amt == F.quality + 1) F.quality = 1
-					else if (cook_amt == F.quality - 1) F.quality = 1
-					else if (cook_amt <= F.quality - 5) F.quality = 0.5
-					else if (cook_amt >= F.quality + 5)
-						output = /obj/item/reagent_containers/food/snacks/yuck/burn
-						bonus = 0
+				if(F.quality >= 1)
+					continue
+				// @TODO cook_amt == F.quality can never happen here
+				// (cook_amt is the time the oven is set to from 1-10,
+				//  and F.quality has to be 0 or below to get here)
+				recook = 1
+				if (cook_amt == F.quality) F.quality = 1.5
+				else if (cook_amt == F.quality + 1) F.quality = 1
+				else if (cook_amt == F.quality - 1) F.quality = 1
+				else if (cook_amt <= F.quality - 5) F.quality = 0.5
+				else if (cook_amt >= F.quality + 5)
+					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
+					bonus = 0
+
+		if (ispath(yucktype))
+			output += new yucktype()
 
 		// this is all stuff relating to re-cooking with yuck items
 		// suitably it is very gross
@@ -889,11 +896,8 @@ TYPEINFO(/obj/submachine/chef_oven)
 					F.from_emagged_oven = 1
 				F.set_loc(src.loc)
 
-		else if (islist(output))
-			for(var/item in output)
-				src.normal_cooking(item, bonus, recipebonus, cook_amt)
-		else
-			src.normal_cooking(output, bonus, recipebonus, cook_amt)
+		for(var/item in output)
+			src.normal_cooking(item, bonus, recipebonus, cook_amt)
 
 		// done with checking outputs...
 		// change icon back, ding, and remove used ingredients

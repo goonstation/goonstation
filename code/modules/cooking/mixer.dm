@@ -25,7 +25,6 @@ TYPEINFO(/obj/machinery/mixer)
 	var/image/blender_powered
 	var/image/blender_working
 	var/static/list/recipes = null
-	var/list/to_remove = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
 	var/timeMixEnd = 0
@@ -34,21 +33,21 @@ TYPEINFO(/obj/machinery/mixer)
 		..()
 		if (!mixer_recipes)
 			mixer_recipes = list()
-			mixer_recipes += new /datum/recipe/cooking/mixer/mix_cake_custom()
-			mixer_recipes += new /datum/recipe/cooking/mixer/pancake_batter()
-			mixer_recipes += new /datum/recipe/cooking/mixer/brownie_batter()
-			mixer_recipes += new /datum/recipe/cooking/mixer/cake_batter()
-			mixer_recipes += new /datum/recipe/cooking/mixer/raw_flan()
-			mixer_recipes += new /datum/recipe/cooking/mixer/custard()
-			mixer_recipes += new /datum/recipe/cooking/mixer/mashedpotatoes()
-			mixer_recipes += new /datum/recipe/cooking/mixer/mashedbrains()
-			mixer_recipes += new /datum/recipe/cooking/mixer/gruel()
-			mixer_recipes += new /datum/recipe/cooking/mixer/fishpaste()
-			mixer_recipes += new /datum/recipe/cooking/mixer/meatpaste()
-			mixer_recipes += new /datum/recipe/cooking/mixer/wonton_wrapper()
-			mixer_recipes += new /datum/recipe/cooking/mixer/butters()
-			mixer_recipes += new /datum/recipe/cooking/mixer/soysauce()
-			mixer_recipes += new /datum/recipe/cooking/mixer/gravy()
+			mixer_recipes += new /datum/recipe/cooking/mix_cake_custom()
+			mixer_recipes += new /datum/recipe/cooking/pancake_batter()
+			mixer_recipes += new /datum/recipe/cooking/brownie_batter()
+			mixer_recipes += new /datum/recipe/cooking/cake_batter()
+			mixer_recipes += new /datum/recipe/cooking/raw_flan()
+			mixer_recipes += new /datum/recipe/cooking/custard()
+			mixer_recipes += new /datum/recipe/cooking/mashedpotatoes()
+			mixer_recipes += new /datum/recipe/cooking/mashedbrains()
+			mixer_recipes += new /datum/recipe/cooking/gruel()
+			mixer_recipes += new /datum/recipe/cooking/fishpaste()
+			mixer_recipes += new /datum/recipe/cooking/meatpaste()
+			mixer_recipes += new /datum/recipe/cooking/wonton_wrapper()
+			mixer_recipes += new /datum/recipe/cooking/butters()
+			mixer_recipes += new /datum/recipe/cooking/soysauce()
+			mixer_recipes += new /datum/recipe/cooking/gravy()
 
 		src.recipes = mixer_recipes
 		src.blender_off = image(src.icon, "blender_off")
@@ -154,7 +153,7 @@ TYPEINFO(/obj/machinery/mixer)
 	proc/mixer_get_valid_recipe()
 		// For every recipe, check if we can make it with our current contents
 		for (var/datum/recipe/cooking/R in src.recipes)
-			if (R.can_cook_recipe(src.contents))
+			if (R.can_cook_recipe(src.contents, 10))
 				return R
 		return null
 
@@ -187,35 +186,16 @@ TYPEINFO(/obj/machinery/mixer)
 		if (TIME < src.timeMixEnd)
 			return
 
-		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
-		/* check_recipe:
-			for (var/datum/recipe/cooking/R in src.recipes)
-				to_remove.len = 0
-				for(var/I in R.ingredients)
-					if (!bowl_checkitem(I, R.ingredients[I])) continue check_recipe
-				output = R.specialOutput(src)
-				if (!output)
-					if(R.variants)//replace all of this with getVariant() once cooking machines are given a common type
-						for(var/specialIngredient in R.variants)
-							if(output) break
-							if(bowl_checkitem(specialIngredient, R.variant_quantity))
-								output = R.variants[specialIngredient]
-					else
-						output = R.output
-				if (R.useshumanmeat)
-					derivename = 1
-				break */
+		var/output = list()
 		var/datum/recipe/cooking/recipe = mixer_get_valid_recipe(src.contents)
-		output = recipe.get_output(src.contents, src)
+		if (recipe && recipe.try_get_output(src.contents, output, src))
 
-		deal_with_output(output, recipe)
+			deal_with_output(output, recipe)
+			var/list/content = src.contents.Copy()
+			recipe.separate_ingredients(content)
 
-		var/list/content = src.contents.Copy()
-		recipe.separate_ingredients(content)
-
-		for (var/obj/item/I in content)
-			qdel(I)
-		to_remove.len = 0
+			for (var/obj/item/I in content)
+				qdel(I)
 
 		for (var/obj/I in src.contents)
 			I.set_loc(src.loc)

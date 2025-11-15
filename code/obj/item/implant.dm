@@ -1403,6 +1403,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
 
+	bullet_38ricochet
+		name = ".38 ricochet round"
+		desc = "A bouncy variant of the .38 round. Huh. Aren't these illegal?"
+
 	bullet_9mm
 		name = "9mm round"
 		desc = "An extremely common bullet fired by a myriad of different cartridges."

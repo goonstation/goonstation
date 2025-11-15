@@ -147,9 +147,9 @@ input:checked + div { display: block; }
 			var/icon = icon(file(Idata["icon"]), Idata["icon_state"], SOUTH, 1)
 			tmp2 += "<div class='item' title=\"[html_encode(Idata["name"])]\">[bicon(icon)][Idata["amount"] > 1 ? "<span>x[Idata["amount"]]</span>" : ""]</div>"
 
-		var/datum/recipe_instructions/oven_instructions/instructions = R.get_recipe_instructions("oven")
+		var/datum/recipe_instructions/oven/instructions = R.get_recipe_instructions(RECIPE_ID_OVEN)
 		if (!instructions)
-			instructions = new /datum/recipe_instructions/oven_instructions/default()
+			instructions = new /datum/recipe_instructions/oven/default()
 		tmp2 += "</td><td class='x'>[instructions.cookbonus >= 10 ? "[round(instructions.cookbonus / 2)] HI" : "[round(instructions.cookbonus)] LO"]</td></tr>"
 
 		if (!recipies[R.category])

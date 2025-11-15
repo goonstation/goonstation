@@ -579,3 +579,10 @@ all for the love of you.</tt>"}
 			I heard something scary, so I leave for a few minutes, leaving my key behind. I come back. AND THEY'RE LOCKED... WITH A NOTE ON THE TABLE
 			SAYING THE KEY'S INSIDE ONE OF THEM. WHY??? I kicked the table, and YES, there is something metal in there. Well... what am I going to do
 			now?"}
+
+/obj/item/paper/book/from_file/horrorcontest
+	name = "Splinters of a Haunted Station"
+	desc = "A book containing a series of short horror stories to tell in the dark."
+	icon_state = "sbook"
+	file_path = "strings/books/three_sentence_horror.txt"
+

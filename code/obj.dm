@@ -362,8 +362,7 @@
 			W.set_dir(dirbuffer)
 		W.set_loc(src.loc)
 		if (imprecise) // place item imprecisely by randomising offset
-			W.pixel_x = rand(-10, 10) // offsets avoid the edges just for niceness
-			W.pixel_y = rand(-10, 10)
+			RANDOMIZE_PIXEL_OFFSET(W, 10)
 		else if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16

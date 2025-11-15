@@ -234,7 +234,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/sardine = 20)
 
 /datum/fishing_spot/nuclear_reactor
-	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor
+	fishing_atom_type = /obj/machinery/nuclear_reactor
 	rod_tier_required = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
 	/obj/item/reagent_containers/food/fish/bass = 20,\

@@ -721,6 +721,16 @@
 	icon_short = "38A"
 	icon_empty = "speedloader_empty"
 
+/obj/item/ammo/bullets/a38/ricochet
+	sname = ".38 Spc Ricochet"
+	name = ".38 Ricochet speedloader"
+	desc = "A speedloader of .38 special ricocheting revolver bullets."
+	icon_state = "38R-7"
+	ammo_type = new/datum/projectile/bullet/revolver_38/ricochet
+	icon_dynamic = 1
+	icon_short = "38R"
+	icon_empty = "speedloader_empty"
+
 /obj/item/ammo/bullets/a38/stun
 	sname = ".38 Spc Stun"
 	name = ".38 Stun speedloader"

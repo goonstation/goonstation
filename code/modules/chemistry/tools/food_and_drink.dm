@@ -1228,7 +1228,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				var/x_offset = 0
 				var/y_offset = 0
 
-				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
+				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella) || istype(in_glass, /obj/item/cocktail_stuff/eyestalk))
 					x_offset = src.umbrella_x_offset
 					y_offset = src.umbrella_y_offset
 				else

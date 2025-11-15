@@ -2,6 +2,12 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	mats = 20
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
 
+
+#define COOK_STATE_LIGHTLY_FRIED 1
+#define COOK_STATE_FRIED 2
+#define COOK_STATE_DEEP_FRIED 3
+#define COOK_STATE_BURNED 4
+
 /obj/machinery/deep_fryer
 	name = "Deep Fryer"
 	desc = "An industrial deep fryer.  A big hit at state fairs!"
@@ -14,10 +20,11 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/atom/movable/fryitem = null
-	var/cooktime = 0
+	var/cook_start_time = 0
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?
 	var/max_wclass = W_CLASS_NORMAL
 	var/fed_ice = FALSE // hungy
+	var/cook_state
 
 /obj/machinery/deep_fryer/New()
 	..()
@@ -121,14 +128,14 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (!src.fryitem)
 		boutput(user, SPAN_ALERT("There is nothing in the fryer."))
 		return
-	if (src.cooktime < 5)
+	if (TIME - src.cook_start_time < 5 SECONDS)
 		boutput(user, SPAN_ALERT("Frying things takes time! Be patient!"))
 		return
 
 	user.visible_message(SPAN_NOTICE("[user] removes [src.fryitem] from [src]!"), SPAN_NOTICE("You remove [src.fryitem] from [src]."))
 	src.eject_food()
 
-/obj/machinery/deep_fryer/process()
+/obj/machinery/deep_fryer/process(mult)
 	if (status & BROKEN)
 		UnsubscribeProcess()
 		return
@@ -144,8 +151,6 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if(!src.fryitem)
 		UnsubscribeProcess()
 		return
-	else
-		src.cooktime++
 
 	if (src.fryitem.material?.getID() == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
 		if (ismob(fed_ice)) // have we asked someone for ice?
@@ -166,16 +171,26 @@ TYPEINFO(/obj/machinery/deep_fryer)
 
 	src.reagents.trans_to(src.fryitem, 2)
 
-	if (src.cooktime < 60)
-		if (src.cooktime == 30)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			src.audible_message(SPAN_NOTICE("[src] dings!"))
-		else if (src.cooktime == 60) //Welp!
-			src.visible_message(SPAN_ALERT("[src] emits an acrid smell!"))
-	else if(src.cooktime >= 120)
-		if((src.cooktime % 5) == 0 && prob(10))
-			src.visible_message(SPAN_ALERT("[src] sprays burning oil all around it!"))
-			fireflash(src, 1, chemfire = CHEM_FIRE_RED)
+	var/cook_time = TIME - src.cook_start_time
+
+	switch(src.cook_state)
+		if (COOK_STATE_LIGHTLY_FRIED)
+			if (cook_time > 15 SECONDS)
+				src.cook_state = COOK_STATE_FRIED
+		if (COOK_STATE_FRIED)
+			if (cook_time > 30 SECONDS)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+				src.audible_message(SPAN_NOTICE("[src] dings!"))
+				src.cook_state = COOK_STATE_DEEP_FRIED
+		if (COOK_STATE_DEEP_FRIED)
+			if (cook_time > 60 SECONDS)
+				playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+				src.visible_message(SPAN_ALERT("[src] emits an acrid smell!"))
+				src.cook_state = COOK_STATE_BURNED
+		else
+			if (cook_time > 120 SECONDS && prob(5 * mult))
+				src.visible_message(SPAN_ALERT("[src] sprays burning oil all around it!"))
+				fireflash(src, 1, chemfire = CHEM_FIRE_RED)
 
 /obj/machinery/deep_fryer/custom_suicide = TRUE
 /obj/machinery/deep_fryer/suicide(var/mob/user as mob)
@@ -200,7 +215,8 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (!istype(frying))
 		return
 	frying.set_loc(src)
-	src.cooktime = 0
+	src.cook_start_time = TIME
+	src.cook_state = COOK_STATE_LIGHTLY_FRIED
 	src.fryitem = frying
 	src.UpdateIcon()
 	if (!src.fryitem.reagents)
@@ -236,17 +252,16 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		var/image/I = O
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 
-	switch(src.cooktime)
-		if (0 to 15)
+	switch(src.cook_state)
+		if (COOK_STATE_LIGHTLY_FRIED)
 			fryholder.name = "lightly-fried [thing.name]"
 			fryholder.color = ( rgb(166,103,54) )
 
-
-		if (16 to 49)
+		if (COOK_STATE_FRIED)
 			fryholder.name = "fried [thing.name]"
 			fryholder.color = ( rgb(103,63,24) )
 
-		if (50 to 59)
+		if (COOK_STATE_DEEP_FRIED)
 			fryholder.name = "deep-fried [thing.name]"
 			fryholder.color = ( rgb(63, 23, 4) )
 
@@ -255,7 +270,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			fryholder.reagents.maximum_volume += 25
 			fryholder.reagents.add_reagent("friedessence",25)
 
-	fryholder.charcoaliness = src.cooktime
+	fryholder.charcoaliness = (TIME - src.cook_start_time) / 10
 	fryholder.icon = composite
 	fryholder.overlays = thing.overlays
 	if (isitem(thing))
@@ -280,7 +295,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		UnsubscribeProcess()
 		return
 
-	var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = src.fryify(src.fryitem, src.cooktime >= 60)
+	var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = src.fryify(src.fryitem, src.cook_state >= COOK_STATE_BURNED)
 	fryholder.set_loc(get_turf(src))
 
 /obj/machinery/deep_fryer/Exited(Obj, newloc)
@@ -319,3 +334,8 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		fed_ice = M // asked this mob
 		src.name = "Absolutely Famished [src.name]"
 		src.say("I'm SO hungry! Please feed me a 20 pound bag of ice!", atom_listeners_override = list(M))
+
+#undef COOK_STATE_LIGHTLY_FRIED
+#undef COOK_STATE_FRIED
+#undef COOK_STATE_DEEP_FRIED
+#undef COOK_STATE_BURNED
