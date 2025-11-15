@@ -190,7 +190,9 @@ TYPEINFO(/obj/machinery/mixer)
 		var/datum/recipe/cooking/recipe = mixer_get_valid_recipe(src.contents)
 		if (recipe && recipe.try_get_output(src.contents, output, src))
 
-			deal_with_output(output, recipe)
+			for(var/atom/movable/out in output)
+				out.set_loc(get_turf(src))
+
 			var/list/content = src.contents.Copy()
 			recipe.separate_ingredients(content)
 
@@ -211,23 +213,6 @@ TYPEINFO(/obj/machinery/mixer)
 		src.power_usage = 0
 		UnsubscribeProcess()
 		return
-
-	proc/deal_with_output(var/output, var/datum/recipe/cooking/recipe)
-		for(var/obj/item in output)
-			item?.set_loc(get_turf(src))
-			if (!recipe.useshumanmeat || !istype(item, /obj/item/reagent_containers/food/snacks))
-				return
-			var/obj/item/reagent_containers/food/snacks/F = item
-			var/foodname = F.name
-			for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
-				F.name = "[M.subjectname] [foodname]"
-				F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-				if(!isnull(F.unlock_medal_when_eaten))
-					continue
-				else if (M.subjectjob && M.subjectjob == "Clown")
-					F.unlock_medal_when_eaten = "That tasted funny"
-				else
-					F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 
 	power_change()
 		. = ..()
