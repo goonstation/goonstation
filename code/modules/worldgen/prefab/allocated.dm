@@ -84,6 +84,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabPath = "assets/maps/allocated/phoenix_nest.dmm"
 
 /datum/mapPrefab/allocated/syndicate_hideout
-	prefabSizeX = 20
-	prefabSizeY = 20
+	prefabSizeX = 13
+	prefabSizeY = 12
 	prefabPath = "assets/maps/allocated/syndicate_hideout.dmm"
