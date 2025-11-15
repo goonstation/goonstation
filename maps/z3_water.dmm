@@ -3295,6 +3295,9 @@
 	name = "External Access"
 	},
 /obj/creepy_sound_trigger,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/outdoors)
 "nv" = (
@@ -3430,9 +3433,8 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "pA" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/mapping_helper/algae,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/wall/auto/adventure/fake_window,
 /area/cult_base/acolyte)
 "pL" = (
 /obj/decal/cleanable/machine_debris{
@@ -3617,10 +3619,9 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "tD" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/mapping_helper/algae,
 /obj/structure/woodwall,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/wall/auto/adventure/fake_window,
 /area/cult_base/initate)
 "tM" = (
 /obj/cable/green{
@@ -4034,6 +4035,7 @@
 /area/cult_base/leader)
 "BB" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/unsimulated/floor/plating,
 /area/cult_base)
 "BO" = (
@@ -4261,9 +4263,8 @@
 /turf/space/fluid/noexplosion,
 /area/cult_base)
 "Gi" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/mapping_helper/algae,
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/wall/auto/adventure/fake_window,
 /area/cult_base/initate)
 "Gj" = (
 /obj/stool/bed,
@@ -4608,6 +4609,7 @@
 	dir = 4;
 	id = "creature_containment"
 	},
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/unsimulated/floor,
 /area/cult_base/leader/outdoors)
 "Ot" = (

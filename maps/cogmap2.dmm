@@ -8795,7 +8795,8 @@
 	pixel_y = 32
 	},
 /obj/storage/closet/dresser/hollow{
-	pixel_y = 20
+	pixel_y = 20;
+	name = "costume dresser"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)
