@@ -1,7 +1,8 @@
 /datum/buildmode/fly_image_overhead
 	name = "Fly Image Overhead"
 	desc = {"***********************************************************<br>
-Protip: tinker with this on a local first so you know what you're doing.
+Upload an image and/or audio and have it fly to target turf then play an ending effect.
+Protip: tinker with this on a local first so you know what you're doing.<br>
 RMB on buildmode button                = Set image and ending effect<br>
 Ctrl + RMB on buildmode button         = Set audio<br>
 Alt + Right mouse button               = Set optional obj/mob spawns<br>
@@ -21,7 +22,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	var/startnearby = TRUE
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		if (!ctrl || !alt || !shift)
+		if (!ctrl && !alt && !shift)
 			var/choice = tgui_input_list(usr, "Upload or clear file?", "Choose", list("Upload", "Clear"))
 			if (choice == "Upload")
 				src.image = input(usr, "Upload an image:","File Uploader - Downsize your images to fit on the screen, local testing helps!", null) as null|icon
@@ -118,7 +119,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				var/counter
 				playsound(pilot.loc, 'sound/effects/poff.ogg', 30, TRUE, pitch = 1)
 				for (counter=0, counter<src.spawnamount, counter++)
-					var/turf/T = get_turf(pilot)
+					var/turf/T = GetRandomPerimeterTurf(get_turf(pilot), 1)
 					new src.spawnpath(T)
 					var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 					P.setup(T)
@@ -143,12 +144,15 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				qdel(pilot)
 				robogibs(T)
 			if ("Fade away")
-				animate(pilot, transform = matrix(), alpha = 0, time = 2 SECONDS)
-				SPAWN(2 SECONDS)
+				animate(pilot, transform = matrix(), alpha = 0, time = 0.5 SECONDS)
+				while (pilot.loc)
+					move_forward(pilot, direction, TRUE)
+					sleep(2)
+				SPAWN(1 SECONDS)
 					pilot.ClearAllOverlays()
 					qdel(pilot)
 
-	proc/move_forward(var/mob/image_pilot/pilot, var/direction,var/defaultspeed)
+	proc/move_forward(var/mob/image_pilot/pilot, var/direction,var/defaultspeed=FALSE)
 		var/glide = 0 // this system seems to desync sometimes, not a huge issue it seems to add a bit of variety to the way they move
 		if (defaultspeed) // should be checked if you're changing speed at any point, so you don't change every called version's speed too
 			glide = (32 / 1) * world.tick_lag
