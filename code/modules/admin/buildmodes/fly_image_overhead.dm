@@ -18,6 +18,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	var/end_effect = "Leave zlevel"
 	var/spawnpath
 	var/spawnamount = 1
+	var/startnearby = TRUE
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if (!ctrl || !alt || !shift)
@@ -38,11 +39,15 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		if (shift)
 			src.dir_input = tgui_input_list(usr, "Pick starting direction", "Direction", list(NORTH, SOUTH, EAST, WEST, "Random"))
 			var/choice = tgui_input_list(usr, "Choose a set speed or random values", "Choose", list("Set", "Clear"))
-			switch(choice)
-				if ("Set")
-					src.move_delay = tgui_input_number(usr, "Enter speed value", "Higher is slower, gets very slow by 5", 1)
-				else
-					src.move_delay = 1
+			var/choice2 = tgui_input_list(usr, "Start from edge of zlevel or nearby? (About 2 screens away)", "Choose", list("Edge", "Nearby"))
+			if (choice2 == "Nearby")
+				src.startnearby = TRUE
+			else
+				src.startnearby = FALSE
+			if (choice == "Set")
+				src.move_delay = tgui_input_number(usr, "Enter speed value of image", "Higher is slower, gets very slow by 5", 1)
+			else
+				src.move_delay = 1
 		if (alt)
 			var/choice = tgui_input_list(usr, "Spawn mobs/objects or clear?", "Choose", list("Spawn", "Clear"))
 			if (choice == "Spawn")
@@ -62,25 +67,29 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		var/turf/start
 		var/random_dir = pick(NORTH, SOUTH, EAST, WEST)
 		var/new_dir
-
 		if (!src.target_loc || !src.dir_input)
 			return
+
 		if (src.dir_input == "Random")
-			start = get_edge_target_turf(src.target_loc, random_dir)
 			new_dir = random_dir
 		else
-			start = get_edge_target_turf(src.target_loc, src.dir_input)
 			new_dir = src.dir_input
 
-		new_dir = turn(new_dir, 180)
+		if (src.startnearby)
+			start = get_ranged_target_turf(src.target_loc, new_dir, 35)
+		else
+			start = get_edge_target_turf(src.target_loc, new_dir)
 
+		new_dir = turn(new_dir, 180)
 		send_pilot(start,new_dir)
 
 	proc/send_pilot(var/turf/startloc,var/direction=EAST)
 		var/mob/image_pilot/pilot = new /mob/image_pilot()
-		pilot.image_overlay = image
+		pilot.image_overlay = src.image
+		pilot.alpha = 0
 		pilot.set_loc(startloc)
 		pilot.attached_sound = src.audio
+		animate(pilot, transform = matrix(), alpha = 255, time = 1.5 SECONDS)
 
 		if (src.audio_choice == "Global loop" && src.audio)
 			pilot.loopsound = TRUE
@@ -134,13 +143,13 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				qdel(pilot)
 				robogibs(T)
 			if ("Fade away")
-				animate(pilot, transform = matrix(), alpha  = 0, time = 1 SECONDS)
-				pilot.ClearAllOverlays()
+				animate(pilot, transform = matrix(), alpha = 0, time = 2 SECONDS)
 				SPAWN(2 SECONDS)
+					pilot.ClearAllOverlays()
 					qdel(pilot)
 
 	proc/move_forward(var/mob/image_pilot/pilot, var/direction,var/defaultspeed)
-		var/glide = 0
+		var/glide = 0 // this system seems to desync sometimes, not a huge issue it seems to add a bit of variety to the way they move
 		if (defaultspeed) // should be checked if you're changing speed at any point, so you don't change every called version's speed too
 			glide = (32 / 1) * world.tick_lag
 		else
@@ -187,13 +196,3 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
 			world << src.attached_sound
 			sleep(2 SECONDS)
-
-
-
-
-
-
-
-
-
-
