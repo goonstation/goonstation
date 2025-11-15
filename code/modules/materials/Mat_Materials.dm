@@ -1993,13 +1993,13 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "carbonfibre"
 	name = "carbon nanofiber"
 	desc = "Carbon Nanofibers are highly graphitic carbon nanomaterials with excellent mechanical properties, electrical conductivity and thermal conductivity."
-	color = list(0.30, 0.30, 0.30, 0.00,\
+	color = list(0.20, 0.20, 0.20, 0.00,\
 				0.10, 0.10, 0.10, 0.00,\
-				0.20, 0.20, 0.20, 0.00,\
+				0.15, 0.15, 0.15, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
 	texture = "hex_lattice"
-	texture_blend = BLEND_ADD
+	texture_blend = BLEND_DEFAULT
 
 	New()
 		..()
