@@ -311,6 +311,15 @@
 	id = "muscly"
 	msgGain = "Damn, where do you work out?"
 	msgLose = "You feel like you worked out at a library."
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
 	var/filter = null
 	var/tmp/obj/effect/rt/muscly/distort = new
 	var/size = 20
