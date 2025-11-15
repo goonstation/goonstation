@@ -1,4 +1,6 @@
-
+(t)fri nov 14 25
+(u)LeahTheTech
+(+)Changeling transformation now includes traits.
 (t)wed nov 12 25
 (u)Studenterhue
 (p)25156
