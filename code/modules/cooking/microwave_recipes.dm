@@ -86,3 +86,8 @@
 	flour_amount = 1
 	extra_item = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	creates = "/obj/item/reagent_containers/food/snacks/burger/butterburger"
+
+
+/datum/recipe_instructions/microwave_instructions
+	var/cook_time = 8
+	var/end_state = ""
