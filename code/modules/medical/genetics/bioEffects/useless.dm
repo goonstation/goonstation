@@ -301,6 +301,56 @@
 		owner.vis_contents -= src.distort
 		src.filter = null
 
+/obj/effect/rt/muscly
+	icon = 'icons/effects/distort.dmi'
+	icon_state = "muscly"
+
+/datum/bioEffect/muscly
+	name = "Muscly"
+	desc = "Gives the subject illusion of having absolutely MASSIVE muscles."
+	id = "muscly"
+	msgGain = "Damn, where do you work out?"
+	msgLose = "You feel like you worked out at a library."
+	var/filter = null
+	var/tmp/obj/effect/rt/muscly/distort = new
+	var/size = 20
+	var/muscliness_factor = 7
+
+	OnAdd()
+		. = ..()
+		src.applyFilter()
+
+	OnRemove()
+		src.removeFilter()
+		. = ..()
+
+	disposing()
+		qdel(src.distort)
+		src.distort = null
+		. = ..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "size" && src.filter)
+			src.removeFilter()
+			src.applyFilter()
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		src.removeFilter()
+		src.applyFilter()
+
+	proc/applyFilter()
+		owner.add_filter("muscly", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "muscly"), size=0))
+		owner.vis_contents += src.distort
+		src.filter = owner.get_filter("muscly") // Shamelessly stolen from Pali's muscly belt (/obj/item/storage/belt/muscly). Thank you Pali.
+		animate(owner.get_filter("muscly"), size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
+
+	proc/removeFilter()
+		owner.remove_filter("muscly")
+		owner.vis_contents -= src.distort
+		src.filter = null
+
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
 	desc = "Encourages growth of ethanol-producing symbiotic fungus in the subject's body."
