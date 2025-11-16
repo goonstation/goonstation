@@ -154,13 +154,20 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 
 	var/list/chant_list = list("Do you hear it?", "I see now...", "IT WANTS BLOOD", "IT SCREAMS", "The dream walks...", "GET OUT OF MY HEAD", "What beautiful lights...", "The Deep promises.", "BELIEVE DAMN YOU.",
 	"The water stirs...", "Its all crashing down...", "Would you like to hear about our lords and saviours the old ones?", "What... is that melody?")
+	var/chant_cooldown = 0
+	var/last_use = 0
+
+	New()
+		. = ..()
+		chant_cooldown = rand(3.5, 13.5)
 
 	Life(datum/controller/process/mobs/parent) // shamelessly stolen from the crunched cause adding this as a AI task was a nightmare
 		if (..(parent))
 			return 1
 
-		if (src.ai?.enabled && prob(10))
+		if (src.ai?.enabled && (world.time - chant_cooldown) >= last_use)
 			src.say(pick(chant_list))
+			last_use = world.time
 
 /mob/living/critter/human/cultist/initiate
 	name = "Broken Initiate"
