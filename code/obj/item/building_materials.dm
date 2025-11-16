@@ -515,22 +515,20 @@ MATERIAL
 /obj/item/sheet/steel
 	item_state = "sheet-metal"
 	default_material = "steel"
-	// color = "#8C8C8C"
 
 	reinforced
 		icon_state = "sheet-m-r_5"
-		item_state = "sheet-rmetal"
+		item_state = "sheet-m-r"
 		default_reinforcement = "steel"
 
 /obj/item/sheet/glass
 	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
 	item_state = "sheet-glass"
 	default_material = "glass"
-	// color = "#A3DCFF"
 
 	reinforced
 		icon_state = "sheet-g-r_5"
-		item_state = "sheet-rglass"
+		item_state = "sheet-g-r"
 		default_reinforcement = "steel"
 
 	crystal
