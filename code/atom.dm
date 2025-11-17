@@ -1374,7 +1374,7 @@ TYPEINFO(/atom/movable)
 	else
 		G.icon_state = "[gift_type]-[style]"
 	G.gift = src
-
+	G.RegisterSignal(G.gift, COMSIG_MOVABLE_SET_LOC, TYPE_PROC_REF(/obj/item/gift, item_moved))
 	return G
 
 /atom/onVarChanged(variable, oldval, newval)
