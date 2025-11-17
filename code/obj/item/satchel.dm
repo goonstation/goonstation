@@ -50,6 +50,7 @@
 				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
 			tooltip_rebuild = TRUE
+			RANDOMIZE_PIXEL_OFFSET(W, 10)
 		else
 			boutput(user, SPAN_ALERT("[src] is full!"))
 
@@ -170,6 +171,7 @@
 				if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					I.set_loc(src)
 					SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
+					RANDOMIZE_PIXEL_OFFSET(I, 10)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)

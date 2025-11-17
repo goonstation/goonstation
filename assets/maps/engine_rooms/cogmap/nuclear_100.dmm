@@ -153,7 +153,7 @@
 	icon_state = "1-4"
 	},
 /obj/cable/orange,
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
+/obj/machinery/nuclear_reactor/prefilled/normal,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "uc" = (
@@ -359,7 +359,7 @@
 /area/station/engine/inner)
 "Wj" = (
 /obj/cable/orange,
-/obj/machinery/atmospherics/binary/reactor_turbine,
+/obj/machinery/reactor_turbine,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "WB" = (
