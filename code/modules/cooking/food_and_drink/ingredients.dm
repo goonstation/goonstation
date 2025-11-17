@@ -76,10 +76,27 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	fill_amt = 2
 	initial_volume = 25
 	initial_reagents = "slime"
+	food_color = "#A4BC62"
+	var/eyes_present = TRUE
 
 	heal(var/mob/M)
 		boutput(M, SPAN_ALERT("You can feel it wriggling..."))
 		..()
+
+	attackby(obj/item/W, mob/user)
+		if (!src.eyes_present)
+			user.visible_message(SPAN_NOTICE("You can't possibly cut more than one at a time, company policy."))
+			return
+		if (issnippingtool(W))
+			user.visible_message(SPAN_NOTICE("You snip off an eyestalk. The slug seems unaware."))
+			playsound(src.loc, 'sound/items/Scissor.ogg', 50, TRUE)
+			var/obj/item/eyes = new /obj/item/cocktail_stuff/eyestalk
+			eyes.set_loc(src.loc)
+			src.icon_state = "lesserSlug-eyeless"
+			src.eyes_present = FALSE
+			SPAWN(20 SECONDS)
+				src.icon_state = "lesserSlug"
+				src.eyes_present = TRUE
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	name = "fish fillet"

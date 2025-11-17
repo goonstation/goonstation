@@ -111,6 +111,9 @@
 			return 1
 		if (O.throwing)
 			return 1
+		if (istype(src, /obj/railing/boxing))
+			if (src.dir == SOUTH) // incase you chairflip yourself next to an entrance rope
+				return 0
 		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
