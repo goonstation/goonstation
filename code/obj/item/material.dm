@@ -719,6 +719,7 @@
 	material_name = "Glass"
 	default_material = "glass"
 	mat_changename = TRUE
+	can_arcplate = FALSE
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
