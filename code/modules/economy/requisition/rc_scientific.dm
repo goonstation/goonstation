@@ -396,6 +396,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 	proc/AddReward(var/probability)
 		src.item_rewarders += new /datum/rc_itemreward/large_satchel
+		src.item_rewarders += new /datum/rc_itemreward/phyto_upgrade
 		if(prob(probability))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else if (prob(probability))
@@ -532,6 +533,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 	build_reward()
 		return new /obj/item/satchel/hydro/large
+
+/datum/rc_itemreward/phyto_upgrade
+	name = "phytoscopic analyzer upgrade"
+
+	build_reward()
+		return new /obj/item/device/analyzer/phytoscopic_upgrade
 
 /datum/rc_itemreward/tumbleweed
 	name = "aggressive plant specimen"

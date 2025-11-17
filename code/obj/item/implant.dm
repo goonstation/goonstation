@@ -327,9 +327,11 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 	scan_category = IMPLANT_SCAN_CATEGORY_HEALTH
-	var/healthstring = ""
 	uses_radio = 1
 	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+
+	var/healthstring = ""
+	var/affected = "CREW"
 
 	implanted(mob/M, mob/I)
 		..()
@@ -425,21 +427,12 @@ THROWING DARTS
 			if(cl_implant.owner != src.owner || !cl_implant.scanned_here)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
-		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
-		if (he_or_she(src.owner) == "they")
-			message += "they " + (length(cloner_areas) ? "were clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning implant.")
-		else
-			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "was clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning implant.")
-
+		var/message = "[affected] DEATH ALERT: [src.owner] in [myarea]. [length(cloner_areas) ? "Clone implant detected." : "No cloning implant detected."]"
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
-
-	death_alert()
-		mailgroups.Add(MGD_SECURITY)
-		..()
-		mailgroups.Remove(MGD_SECURITY)
+	affected = "SECURITY"
 
 /obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
@@ -450,6 +443,10 @@ THROWING DARTS
 		. = ..()
 		src.on_remove(src.owner)
 		qdel(src)
+
+/obj/item/implant/health/security/anti_mindhack/command
+	name = "health implant - command issue"
+	affected = "COMMAND"
 
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
@@ -1405,6 +1402,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_38AP
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
+
+	bullet_38ricochet
+		name = ".38 ricochet round"
+		desc = "A bouncy variant of the .38 round. Huh. Aren't these illegal?"
 
 	bullet_9mm
 		name = "9mm round"

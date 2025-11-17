@@ -1938,6 +1938,14 @@ TYPEINFO(/datum/mutantrace/cat/bingus)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/left
 
+
+/obj/effect/rt/frog_distorts
+	icon = 'icons/mob/shelterfrog.dmi'
+/obj/effect/rt/frog_distorts/uniform // frogs are wide
+	icon_state = "suit_distort"
+/obj/effect/rt/frog_distorts/shoes // frogs have long feet
+	icon_state = "shoes_distort"
+
 TYPEINFO(/datum/mutantrace/amphibian)
 	icon = 'icons/mob/amphibian.dmi'
 /datum/mutantrace/amphibian
@@ -1951,9 +1959,6 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	voice_name = "amphibian"
 	jerk = FALSE
 	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
-	head_offset = 0
-	hand_offset = -3
-	body_offset = -3
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
@@ -1982,6 +1987,10 @@ TYPEINFO(/datum/mutantrace/amphibian)
 
 	ghost_icon_state = "ghost-amphibian"
 
+	var/clothes_filters_active = TRUE // see cow for explanation
+	var/obj/effect/rt/frog_distorts/uniform/distort_uniform = new
+	var/obj/effect/rt/frog_distorts/shoes/distort_shoes = new
+
 	say_verb()
 		return "croaks"
 
@@ -1992,6 +2001,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
 			M.bioHolder.AddEffect("accent_frog")
+			src.mob.vis_contents += list(src.distort_uniform,src.distort_shoes)
 
 	disposing()
 		if(ishuman(src.mob))
@@ -1999,6 +2009,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			src.mob.bioHolder.RemoveEffect("jumpy")
 			src.mob.bioHolder.RemoveEffect("vowelitis")
 			src.mob.bioHolder.RemoveEffect("accent_frog")
+			src.mob.vis_contents -= list(src.distort_uniform,src.distort_shoes)
 		..()
 
 	emote(act, voluntary)
@@ -2016,7 +2027,28 @@ TYPEINFO(/datum/mutantrace/amphibian)
 					message = "<B>[used_name]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return message
-			else ..()
+
+			if ("clothes")
+				src.clothes_filters_active = !src.clothes_filters_active
+				boutput(src.mob, src.clothes_filters_active ? "Amphibian-specific clothes filters activated." : "Disabled amphibian-specific clothes filters.")
+				src.mob.update_clothing()
+				message = "<B>[used_name]</B> adjusts [his_or_her(src.mob)] clothing."
+				return message
+			else
+				..()
+
+	apply_clothing_filters(var/obj/item/worn)
+		. = ..()
+		if (!src.clothes_filters_active) return
+		var/list/output = list()
+
+		if (istype(worn, /obj/item/clothing/suit))
+			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/under))
+			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/shoes))
+			output += filter(type="displace", render_source = src.distort_shoes.render_target, size = 127)
+		return output
 
 TYPEINFO(/datum/mutantrace/amphibian/shelter)
 	icon = 'icons/mob/shelterfrog.dmi'
