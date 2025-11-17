@@ -1,576 +1,579 @@
-ABSTRACT_TYPE(/datum/recipe_instructions/oven)
-/datum/recipe_instructions/oven
+ABSTRACT_TYPE(/datum/recipe_instructions/cooking/oven)
+/datum/recipe_instructions/cooking/oven
 	var/cookbonus = 10 // how much cooking it needs to get a healing bonus
 
 	get_id()
 		return RECIPE_ID_OVEN
 
 /// The instructions used by the oven if no other appropriate instructions exist in the recipe
-/datum/recipe_instructions/oven/default
+/datum/recipe_instructions/cooking/oven/default
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/spicychickensandwich
 
-/datum/recipe_instructions/oven/chickensandwich
+/datum/recipe_instructions/cooking/oven/burger/burger_meat
+	cookbonus = 10
+	useshumanmeat = TRUE //this is a bit hacky, but it shouldn't affect anything when cooking any of the non-human recipes
 
-/datum/recipe_instructions/oven/burger/cheeseburger
+/datum/recipe_instructions/cooking/oven/burger/cheeseburger
 	cookbonus = 13
 
-/datum/recipe_instructions/oven/burger/cheeseburger/monkey
+/datum/recipe_instructions/cooking/oven/burger/cheeseburger/monkey
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/burger/wcheeseburger
+/datum/recipe_instructions/cooking/oven/burger/wcheeseburger
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/burger/luauburger
+/datum/recipe_instructions/cooking/oven/burger/luauburger
 	cookbonus = 15
 
-/datum/recipe_instructions/oven/burger/coconutburger
+/datum/recipe_instructions/cooking/oven/burger/coconutburger
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/burger/tikiburger
+/datum/recipe_instructions/cooking/oven/burger/tikiburger
 	cookbonus = 18
 
-/datum/recipe_instructions/oven/burger/buttburger
+/datum/recipe_instructions/cooking/oven/burger/buttburger
 	cookbonus = 15
 
-/datum/recipe_instructions/oven/burger/heartburger
+/datum/recipe_instructions/cooking/oven/burger/heartburger
 	cookbonus = 13
 
-/datum/recipe_instructions/oven/burger/brainburger
+/datum/recipe_instructions/cooking/oven/burger/brainburger
 	cookbonus = 13
 
-/datum/recipe_instructions/oven/burger/roburger
+/datum/recipe_instructions/cooking/oven/burger/roburger
 	cookbonus = 13
 
-/datum/recipe_instructions/oven/burger/cheeseborger
+/datum/recipe_instructions/cooking/oven/burger/cheeseborger
 	cookbonus = 13
 
-/datum/recipe_instructions/oven/burger/baconburger
+/datum/recipe_instructions/cooking/oven/burger/baconburger
 	cookbonus = 13
 
-/datum/recipe_instructions/oven/burger/baconator
+/datum/recipe_instructions/cooking/oven/burger/baconator
 	cookbonus = 13
 
-/datum/recipe_instructions/oven/burger/butterburger
+/datum/recipe_instructions/cooking/oven/burger/butterburger
 	cookbonus = 15
 
-/datum/recipe_instructions/oven/burger/aburgination
+/datum/recipe_instructions/cooking/oven/burger/aburgination
 	cookbonus = 6 // still mostly raw, since we don't kill it
 
-/datum/recipe_instructions/oven/burger/monster
+/datum/recipe_instructions/cooking/oven/burger/monster
 	cookbonus = 20
 
-/datum/recipe_instructions/oven/swede_mball
+/datum/recipe_instructions/cooking/oven/swede_mball
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/donkpocket
+/datum/recipe_instructions/cooking/oven/donkpocket
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/donkpocket2
+/datum/recipe_instructions/cooking/oven/donkpocket2
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/donut
+/datum/recipe_instructions/cooking/oven/donut
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/bagel
+/datum/recipe_instructions/cooking/oven/bagel
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/crumpet //another good idea for this is to cook a trumpet
+/datum/recipe_instructions/cooking/oven/crumpet //another good idea for this is to cook a trumpet
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/ice_cream_cone
+/datum/recipe_instructions/cooking/oven/ice_cream_cone
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/nougat
+/datum/recipe_instructions/cooking/oven/nougat
 	cookbonus = 5
 
-/datum/recipe_instructions/oven/candy_cane
+/datum/recipe_instructions/cooking/oven/candy_cane
 	cookbonus = 5
 
-/datum/recipe_instructions/oven/waffles
+/datum/recipe_instructions/cooking/oven/waffles
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/spaghetti_p
+/datum/recipe_instructions/cooking/oven/spaghetti_p
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/spaghetti_t
+/datum/recipe_instructions/cooking/oven/spaghetti_t
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/spaghetti_s
+/datum/recipe_instructions/cooking/oven/spaghetti_s
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/spaghetti_m
+/datum/recipe_instructions/cooking/oven/spaghetti_m
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/lasagna
+/datum/recipe_instructions/cooking/oven/lasagna
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/alfredo
+/datum/recipe_instructions/cooking/oven/alfredo
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/chickenparm
+/datum/recipe_instructions/cooking/oven/chickenparm
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/chickenalfredo
+/datum/recipe_instructions/cooking/oven/chickenalfredo
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/spaghetti_pg
+/datum/recipe_instructions/cooking/oven/spaghetti_pg
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/cornbread
+/datum/recipe_instructions/cooking/oven/cornbread
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/bread
+/datum/recipe_instructions/cooking/oven/bread
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/brain_bread
+/datum/recipe_instructions/cooking/oven/brain_bread
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/toast_bread
+/datum/recipe_instructions/cooking/oven/toast_bread
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/toast
+/datum/recipe_instructions/cooking/oven/toast
 	cookbonus = 5
 
-/datum/recipe_instructions/oven/sandwich
+/datum/recipe_instructions/cooking/oven/sandwich
 	cookbonus = 7
 
-/datum/recipe_instructions/oven/sandwich
+/datum/recipe_instructions/cooking/oven/sandwich/human
+	useshumanmeat = TRUE
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/sandwich/meatball
+/datum/recipe_instructions/cooking/oven/sandwich/meatball
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/sandwich/egg
+/datum/recipe_instructions/cooking/oven/sandwich/egg
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/sandwich/bahnmi
+/datum/recipe_instructions/cooking/oven/sandwich/bahnmi
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/sandwich/custom
+/datum/recipe_instructions/cooking/oven/sandwich/custom
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pizza_custom
+/datum/recipe_instructions/cooking/oven/pizza_custom
 	cookbonus = 18
 
-/datum/recipe_instructions/oven/cheesetoast
+/datum/recipe_instructions/cooking/oven/cheesetoast
 	cookbonus = 5
 
-/datum/recipe_instructions/oven/bacontoast
+/datum/recipe_instructions/cooking/oven/bacontoast
 	cookbonus = 5
 
-/datum/recipe_instructions/oven/eggtoast
+/datum/recipe_instructions/cooking/oven/eggtoast
 	cookbonus = 5
 
-/datum/recipe_instructions/oven/breakfast
+/datum/recipe_instructions/cooking/oven/breakfast
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/taco_shell
+/datum/recipe_instructions/cooking/oven/taco_shell
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/eggnog
+/datum/recipe_instructions/cooking/oven/eggnog
 	cookbonus = 3
 
-/datum/recipe_instructions/oven/baguette
+/datum/recipe_instructions/cooking/oven/baguette
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/garlicbread
+/datum/recipe_instructions/cooking/oven/garlicbread
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/garlicbread_ch
+/datum/recipe_instructions/cooking/oven/garlicbread_ch
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/painauchocolat
+/datum/recipe_instructions/cooking/oven/painauchocolat
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/croissant
+/datum/recipe_instructions/cooking/oven/croissant
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/danish_apple
+/datum/recipe_instructions/cooking/oven/danish_apple
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/danish_cherry
+/datum/recipe_instructions/cooking/oven/danish_cherry
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/danish_blueb
+/datum/recipe_instructions/cooking/oven/danish_blueb
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/danish_weed
+/datum/recipe_instructions/cooking/oven/danish_weed
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/danish_cheese
+/datum/recipe_instructions/cooking/oven/danish_cheese
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/fairybread
+/datum/recipe_instructions/cooking/oven/fairybread
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/cinnamonbun
+/datum/recipe_instructions/cooking/oven/cinnamonbun
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/chocolate_cherry
+/datum/recipe_instructions/cooking/oven/chocolate_cherry
 	cookbonus = 3
 
-/datum/recipe_instructions/oven/stroopwafel
+/datum/recipe_instructions/cooking/oven/stroopwafel
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie
+/datum/recipe_instructions/cooking/oven/cookie
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie_iron
+/datum/recipe_instructions/cooking/oven/cookie_iron
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie_chocolate_chip
+/datum/recipe_instructions/cooking/oven/cookie_chocolate_chip
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie_oatmeal
+/datum/recipe_instructions/cooking/oven/cookie_oatmeal
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie_bacon
+/datum/recipe_instructions/cooking/oven/cookie_bacon
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie_jaffa
+/datum/recipe_instructions/cooking/oven/cookie_jaffa
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie_spooky
+/datum/recipe_instructions/cooking/oven/cookie_spooky
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie_butter
+/datum/recipe_instructions/cooking/oven/cookie_butter
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cookie_peanut
+/datum/recipe_instructions/cooking/oven/cookie_peanut
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/moon_pie
+/datum/recipe_instructions/cooking/oven/moon_pie
 	cookbonus = 5
 
-/datum/recipe_instructions/oven/moon_pie_chocolate
+/datum/recipe_instructions/cooking/oven/moon_pie_chocolate
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/onionchips
+/datum/recipe_instructions/cooking/oven/onionchips
 	cookbonus = 15
 
-/datum/recipe_instructions/oven/fries
+/datum/recipe_instructions/cooking/oven/fries
 	cookbonus = 7
 
-/datum/recipe_instructions/oven/chilifries
+/datum/recipe_instructions/cooking/oven/chilifries
 	cookbonus = 3
 
-/datum/recipe_instructions/oven/chilifries_alt //Secondary recipe for chili cheese fries
+/datum/recipe_instructions/cooking/oven/chilifries_alt //Secondary recipe for chili cheese fries
 	cookbonus = 7
 
-/datum/recipe_instructions/oven/poutine
+/datum/recipe_instructions/cooking/oven/poutine
 	cookbonus = 3
 
-/datum/recipe_instructions/oven/poutine_alt
+/datum/recipe_instructions/cooking/oven/poutine_alt
 	cookbonus = 7
 
-/datum/recipe_instructions/oven/bakedpotato
+/datum/recipe_instructions/cooking/oven/bakedpotato
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/hotdog
+/datum/recipe_instructions/cooking/oven/hotdog
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/cook_meat //Very jank, will need future work.
+/datum/recipe_instructions/cooking/oven/cook_meat
+	useshumanmeat = TRUE
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/steak_ling
-	cookbonus = 12 // tough meat
+/datum/recipe_instructions/cooking/oven/steak_ling
+	cookbonus = 12
 
-/datum/recipe_instructions/oven/shrimp
+/datum/recipe_instructions/cooking/oven/shrimp
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/bacon
+/datum/recipe_instructions/cooking/oven/bacon
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/turkey
+/datum/recipe_instructions/cooking/oven/turkey
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/pie_strawberry
+/datum/recipe_instructions/cooking/oven/pie_strawberry
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_cherry
+/datum/recipe_instructions/cooking/oven/pie_cherry
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_blueberry
+/datum/recipe_instructions/cooking/oven/pie_blueberry
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_raspberry
+/datum/recipe_instructions/cooking/oven/pie_raspberry
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_apple
+/datum/recipe_instructions/cooking/oven/pie_apple
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_lime
+/datum/recipe_instructions/cooking/oven/pie_lime
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_lemon
+/datum/recipe_instructions/cooking/oven/pie_lemon
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_slurry
+/datum/recipe_instructions/cooking/oven/pie_slurry
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_pumpkin
+/datum/recipe_instructions/cooking/oven/pie_pumpkin
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_chocolate
+/datum/recipe_instructions/cooking/oven/pie_chocolate
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/pie_anything/pie_cream
+/datum/recipe_instructions/cooking/oven/pie_anything/pie_cream
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/pie_anything
+/datum/recipe_instructions/cooking/oven/pie_anything
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/pie_custard
+/datum/recipe_instructions/cooking/oven/pie_custard
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/pie_bacon
+/datum/recipe_instructions/cooking/oven/pie_bacon
 	cookbonus = 15
 
-/datum/recipe_instructions/oven/pie_ass
+/datum/recipe_instructions/cooking/oven/pie_ass
 	cookbonus = 15
 
-/datum/recipe_instructions/oven/pot_pie
+/datum/recipe_instructions/cooking/oven/pot_pie
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_weed
+/datum/recipe_instructions/cooking/oven/pie_weed
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pie_fish
+/datum/recipe_instructions/cooking/oven/pie_fish
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/porridge
+/datum/recipe_instructions/cooking/oven/porridge
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/oatmeal
+/datum/recipe_instructions/cooking/oven/oatmeal
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/tomsoup
+/datum/recipe_instructions/cooking/oven/tomsoup
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/mint_chutney
+/datum/recipe_instructions/cooking/oven/mint_chutney
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/refried_beans
+/datum/recipe_instructions/cooking/oven/refried_beans
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/chili
+/datum/recipe_instructions/cooking/oven/chili
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/queso
+/datum/recipe_instructions/cooking/oven/queso
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/superchili
+/datum/recipe_instructions/cooking/oven/superchili
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/ultrachili
+/datum/recipe_instructions/cooking/oven/ultrachili
 	cookbonus = 20
 
-/datum/recipe_instructions/oven/salad
+/datum/recipe_instructions/cooking/oven/salad
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/creamofmushroom
+/datum/recipe_instructions/cooking/oven/creamofmushroom
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/candy_apple
+/datum/recipe_instructions/cooking/oven/candy_apple
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/cake_cream
+/datum/recipe_instructions/cooking/oven/cake_cream
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/cake_chocolate
+/datum/recipe_instructions/cooking/oven/cake_chocolate
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/cake_meat
+/datum/recipe_instructions/cooking/oven/cake_meat
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/cake_bacon
+/datum/recipe_instructions/cooking/oven/cake_bacon
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/cake_true_bacon
+/datum/recipe_instructions/cooking/oven/cake_true_bacon
 	cookbonus = 14
 
 #ifdef XMAS
 
-/datum/recipe_instructions/oven/cake_fruit
+/datum/recipe_instructions/cooking/oven/cake_fruit
 	cookbonus = 14
 
 #endif
 
-/datum/recipe_instructions/oven/cake_custom
+/datum/recipe_instructions/cooking/oven/cake_custom
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/cake_custom_item
+/datum/recipe_instructions/cooking/oven/cake_custom_item
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/omelette
+/datum/recipe_instructions/cooking/oven/omelette
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/pancake
+/datum/recipe_instructions/cooking/oven/pancake
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/burger/sloppyjoe
+/datum/recipe_instructions/cooking/oven/burger/sloppyjoe
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/meatloaf
+/datum/recipe_instructions/cooking/oven/meatloaf
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/cereal_box
+/datum/recipe_instructions/cooking/oven/cereal_box
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cereal_honey
+/datum/recipe_instructions/cooking/oven/cereal_honey
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cereal_tanhony
+/datum/recipe_instructions/cooking/oven/cereal_tanhony
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cereal_roach
+/datum/recipe_instructions/cooking/oven/cereal_roach
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cereal_syndie
+/datum/recipe_instructions/cooking/oven/cereal_syndie
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/cereal_flock
+/datum/recipe_instructions/cooking/oven/cereal_flock
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/granola_bar
+/datum/recipe_instructions/cooking/oven/granola_bar
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/hardboiled
+/datum/recipe_instructions/cooking/oven/hardboiled
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/chocolate_egg
+/datum/recipe_instructions/cooking/oven/chocolate_egg
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/eggsalad
+/datum/recipe_instructions/cooking/oven/eggsalad
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/biscuit
+/datum/recipe_instructions/cooking/oven/biscuit
 	cookbonus = 4
 
-/datum/recipe_instructions/oven/dog_biscuit
+/datum/recipe_instructions/cooking/oven/dog_biscuit
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/hardtack
+/datum/recipe_instructions/cooking/oven/hardtack
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/macguffin
+/datum/recipe_instructions/cooking/oven/macguffin
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/haggis
+/datum/recipe_instructions/cooking/oven/haggis
 	cookbonus = 18
 
-/datum/recipe_instructions/oven/haggass
+/datum/recipe_instructions/cooking/oven/haggass
 	cookbonus = 18
 
-/datum/recipe_instructions/oven/scotch_egg
+/datum/recipe_instructions/cooking/oven/scotch_egg
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/rice_ball
+/datum/recipe_instructions/cooking/oven/rice_ball
 	cookbonus = 5
 
-/datum/recipe_instructions/oven/nigiri_roll
+/datum/recipe_instructions/cooking/oven/nigiri_roll
 	cookbonus = 2
 
-/datum/recipe_instructions/oven/sushi_roll
+/datum/recipe_instructions/cooking/oven/sushi_roll
 	cookbonus = 2
 
-/datum/recipe_instructions/oven/riceandbeans
+/datum/recipe_instructions/cooking/oven/riceandbeans
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/friedrice
+/datum/recipe_instructions/cooking/oven/friedrice
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/omurice
+/datum/recipe_instructions/cooking/oven/omurice
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/risotto
+/datum/recipe_instructions/cooking/oven/risotto
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/tandoorichicken
+/datum/recipe_instructions/cooking/oven/tandoorichicken
 	cookbonus = 18
 
-/datum/recipe_instructions/oven/potatocurry
+/datum/recipe_instructions/cooking/oven/potatocurry
 	cookbonus = 7
 
-/datum/recipe_instructions/oven/coconutcurry
+/datum/recipe_instructions/cooking/oven/coconutcurry
 	cookbonus = 7
 
-/datum/recipe_instructions/oven/chickenpineapplecurry
+/datum/recipe_instructions/cooking/oven/chickenpineapplecurry
 	cookbonus = 7
 
-/datum/recipe_instructions/oven/ramen_bowl
+/datum/recipe_instructions/cooking/oven/ramen_bowl
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/udon_bowl
+/datum/recipe_instructions/cooking/oven/udon_bowl
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/curry_udon_bowl
+/datum/recipe_instructions/cooking/oven/curry_udon_bowl
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/mapo_tofu
+/datum/recipe_instructions/cooking/oven/mapo_tofu
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/cheesewheel
+/datum/recipe_instructions/cooking/oven/cheesewheel
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/ratatouille
+/datum/recipe_instructions/cooking/oven/ratatouille
 	cookbonus = 6
 
-/datum/recipe_instructions/oven/churro
+/datum/recipe_instructions/cooking/oven/churro
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/french_toast
+/datum/recipe_instructions/cooking/oven/french_toast
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/zongzi
+/datum/recipe_instructions/cooking/oven/zongzi
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/beefood
+/datum/recipe_instructions/cooking/oven/beefood
 	cookbonus = 22
 
-/datum/recipe_instructions/oven/b_cupcake
+/datum/recipe_instructions/cooking/oven/b_cupcake
 	cookbonus = 22
 
-/datum/recipe_instructions/oven/lipstick
+/datum/recipe_instructions/cooking/oven/lipstick
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/melted_sugar
+/datum/recipe_instructions/cooking/oven/melted_sugar
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/brownie_batch
+/datum/recipe_instructions/cooking/oven/brownie_batch
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/flapjack_batch
+/datum/recipe_instructions/cooking/oven/flapjack_batch
 	cookbonus = 14
 
-/datum/recipe_instructions/oven/rice_bowl
+/datum/recipe_instructions/cooking/oven/rice_bowl
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/egg_on_rice
+/datum/recipe_instructions/cooking/oven/egg_on_rice
 	cookbonus = 10
 
-/datum/recipe_instructions/oven/katsudon_bacon
+/datum/recipe_instructions/cooking/oven/katsudon_bacon
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/katsudon_chicken
+/datum/recipe_instructions/cooking/oven/katsudon_chicken
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/gyudon
+/datum/recipe_instructions/cooking/oven/gyudon
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/cheese_gyudon
+/datum/recipe_instructions/cooking/oven/cheese_gyudon
 	cookbonus = 12
 
-/datum/recipe_instructions/oven/miso_soup
+/datum/recipe_instructions/cooking/oven/miso_soup
 	cookbonus = 8
 
-/datum/recipe_instructions/oven/bibimbap
+/datum/recipe_instructions/cooking/oven/bibimbap
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/katsu_curry
+/datum/recipe_instructions/cooking/oven/katsu_curry
 	cookbonus = 16
 
-/datum/recipe_instructions/oven/flan
+/datum/recipe_instructions/cooking/oven/flan
 	cookbonus = 6

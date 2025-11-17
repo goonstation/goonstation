@@ -25,29 +25,32 @@ TYPEINFO(/obj/machinery/mixer)
 	var/image/blender_powered
 	var/image/blender_working
 	var/static/list/recipes = null
+	var/static/datum/recipe_instructions/cooking/mixer/default_instructions
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
 	var/timeMixEnd = 0
 
 	New()
 		..()
+		if (!default_instructions)
+			default_instructions = new /datum/recipe_instructions/cooking/mixer/default()
 		if (!mixer_recipes)
 			mixer_recipes = list()
-			mixer_recipes += new /datum/recipe/cooking/mix_cake_custom()
-			mixer_recipes += new /datum/recipe/cooking/pancake_batter()
-			mixer_recipes += new /datum/recipe/cooking/brownie_batter()
-			mixer_recipes += new /datum/recipe/cooking/cake_batter()
-			mixer_recipes += new /datum/recipe/cooking/raw_flan()
-			mixer_recipes += new /datum/recipe/cooking/custard()
-			mixer_recipes += new /datum/recipe/cooking/mashedpotatoes()
-			mixer_recipes += new /datum/recipe/cooking/mashedbrains()
-			mixer_recipes += new /datum/recipe/cooking/gruel()
-			mixer_recipes += new /datum/recipe/cooking/fishpaste()
-			mixer_recipes += new /datum/recipe/cooking/meatpaste()
-			mixer_recipes += new /datum/recipe/cooking/wonton_wrapper()
-			mixer_recipes += new /datum/recipe/cooking/butters()
-			mixer_recipes += new /datum/recipe/cooking/soysauce()
-			mixer_recipes += new /datum/recipe/cooking/gravy()
+			mixer_recipes += new /datum/recipe/mix_cake_custom()
+			mixer_recipes += new /datum/recipe/pancake_batter()
+			mixer_recipes += new /datum/recipe/brownie_batter()
+			mixer_recipes += new /datum/recipe/cake_batter()
+			mixer_recipes += new /datum/recipe/raw_flan()
+			mixer_recipes += new /datum/recipe/custard()
+			mixer_recipes += new /datum/recipe/mashedpotatoes()
+			mixer_recipes += new /datum/recipe/mashedbrains()
+			mixer_recipes += new /datum/recipe/gruel()
+			mixer_recipes += new /datum/recipe/fishpaste()
+			mixer_recipes += new /datum/recipe/meatpaste()
+			mixer_recipes += new /datum/recipe/wonton_wrapper()
+			mixer_recipes += new /datum/recipe/butters()
+			mixer_recipes += new /datum/recipe/soysauce()
+			mixer_recipes += new /datum/recipe/gravy()
 
 		src.recipes = mixer_recipes
 		src.blender_off = image(src.icon, "blender_off")
@@ -152,7 +155,7 @@ TYPEINFO(/obj/machinery/mixer)
 
 	proc/mixer_get_valid_recipe()
 		// For every recipe, check if we can make it with our current contents
-		for (var/datum/recipe/cooking/R in src.recipes)
+		for (var/datum/recipe/R in src.recipes)
 			if (R.can_cook_recipe(src.contents, 10))
 				return R
 		return null
@@ -187,10 +190,16 @@ TYPEINFO(/obj/machinery/mixer)
 			return
 
 		var/output = list()
-		var/datum/recipe/cooking/recipe = mixer_get_valid_recipe(src.contents)
+		var/datum/recipe/recipe = mixer_get_valid_recipe(src.contents)
+		var/datum/recipe_instructions/cooking/mixer/instructions = recipe?.get_recipe_instructions(RECIPE_ID_MIXER)
+		if (!instructions)
+			instructions = src.default_instructions
 		if (recipe && recipe.try_get_output(src.contents, output, src))
+			instructions.output_post_process(src.contents, output, src)
 
-			deal_with_output(output, recipe)
+			for(var/atom/movable/out in output)
+				out.set_loc(get_turf(src))
+
 			var/list/content = src.contents.Copy()
 			recipe.separate_ingredients(content)
 
@@ -211,23 +220,6 @@ TYPEINFO(/obj/machinery/mixer)
 		src.power_usage = 0
 		UnsubscribeProcess()
 		return
-
-	proc/deal_with_output(var/output, var/datum/recipe/cooking/recipe)
-		for(var/obj/item in output)
-			item?.set_loc(get_turf(src))
-			if (!recipe.useshumanmeat || !istype(item, /obj/item/reagent_containers/food/snacks))
-				return
-			var/obj/item/reagent_containers/food/snacks/F = item
-			var/foodname = F.name
-			for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
-				F.name = "[M.subjectname] [foodname]"
-				F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-				if(!isnull(F.unlock_medal_when_eaten))
-					continue
-				else if (M.subjectjob && M.subjectjob == "Clown")
-					F.unlock_medal_when_eaten = "That tasted funny"
-				else
-					F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 
 	power_change()
 		. = ..()
