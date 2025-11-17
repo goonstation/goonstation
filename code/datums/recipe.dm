@@ -5,6 +5,15 @@
  * the most performance-critical responsibility of the recipe is the pattern-matching, due to its usage in loops. Everything else can/should be
  * abstracted away as needed.
  *
+ * For example, you might want to have a recipe that works with stacks of items. In that case, it would be unwise to add the logic into the base
+ * can_cook_recipe proc, since that would bloat the performance for every other recipe. It would be encouraged to create a recipe subclass for that
+ * override behaviour. On the other hand, if you instead wanted a group of recipes that had some shared behaviour such as all results being turned
+ * blue after instantiation, it would be better to implement that in a cooking_instructions child or some other abstracted subsystem, so the behaviour
+ * can be shared regardless of the pattern of ingredients.
+ *
+ * Other examples of patterns that would warrant a recipe subclass would be handling items with complex components, states, or working with reagent
+ * containers when their contents matter to the recipe.
+ *
  * The basic usage of this is to first find a recipe that matches the list of ingredients you have, with can_cook_recipe(), and then use the same
  * list to instantiate the output using get_output(). For machine-specific interactions, implement a bespoke recipe_instruction for that machine.
 */

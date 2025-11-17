@@ -1199,6 +1199,7 @@
 #include "code\modules\cooking\mixer.dm"
 #include "code\modules\cooking\shitty_grill.dm"
 #include "code\modules\cooking\soup.dm"
+#include "code\modules\cooking\cooking_instructions\cooking_instructions.dm"
 #include "code\modules\cooking\cooking_instructions\mixer_instructions.dm"
 #include "code\modules\cooking\cooking_instructions\oven_instructions.dm"
 #include "code\modules\cooking\food_and_drink\alcohol.dm"
