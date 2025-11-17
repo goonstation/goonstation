@@ -123,7 +123,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/contraband = 0 // If nonzero, bots consider this a thing people shouldn't be carrying without authorization
 	var/edible = 0 // can you eat the thing?
 	var/eat_sound = 'sound/items/eatfood.ogg'
-	var/can_arcplate = TRUE // Can this item be arcplated by default
+	var/can_arcplate = TRUE //! Determines whether this item can be arcplated by default
 
 	/*_____*/
 	/*Other*/
