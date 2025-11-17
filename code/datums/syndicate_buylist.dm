@@ -491,7 +491,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = ".38 AP ammo box"
 	items = list(/obj/item/storage/box/ammo38AP)
 	cost = 2
-	desc = "Armor-piercing ammo for a .38 Special revolver (not included)."
+	desc = "Armor-piercing ammo for a .38 Special or Kestrel revolver (not included)."
 	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
@@ -501,10 +501,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 		..()
 
 /datum/syndicate_buylist/traitor/ammo_38ricochet
-	name = ".38 Ricochet ammo"
+	name = ".38 Ricochet ammo box"
 	items = list(/obj/item/storage/box/ammo38ricochet)
 	cost = 2
-	desc = "Bouncy ammo for a .38 Special revolver (not included)."
+	desc = "Bouncy ammo for a .38 Special or Kestrel revolver (not included)."
 	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
