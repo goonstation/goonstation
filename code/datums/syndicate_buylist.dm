@@ -492,7 +492,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/storage/box/ammo38AP)
 	cost = 2
 	desc = "Armor-piercing ammo for a .38 Special revolver (not included)."
-	job = list("Detective")
 	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
@@ -506,7 +505,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/storage/box/ammo38ricochet)
 	cost = 2
 	desc = "Bouncy ammo for a .38 Special revolver (not included)."
-	job = list("Detective")
 	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
