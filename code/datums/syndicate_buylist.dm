@@ -487,6 +487,35 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 4
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/ammo_38AP // 2 TC for 1 speedloader was very poor value compared to other guns and traitor items in general (Convair880).
+	name = ".38 AP ammo box"
+	items = list(/obj/item/storage/box/ammo38AP)
+	cost = 2
+	desc = "Armor-piercing ammo for a .38 Special revolver (not included)."
+	job = list("Detective")
+	can_buy = UPLINK_TRAITOR
+
+	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
+			return
+		..()
+
+/datum/syndicate_buylist/traitor/ammo_38ricochet
+	name = ".38 Ricochet ammo"
+	items = list(/obj/item/storage/box/ammo38ricochet)
+	cost = 2
+	desc = "Bouncy ammo for a .38 Special revolver (not included)."
+	job = list("Detective")
+	can_buy = UPLINK_TRAITOR
+
+	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
+			return
+		..()
+
+
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/idtracker
@@ -941,34 +970,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "Tired of destroying your own face with acid reactions? Want to make the janitor feel incompetent? This pouch gets you started with five grenades. Just add beakers and screw!"
 	job = list("Scientist","Research Director")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/ammo_38AP // 2 TC for 1 speedloader was very poor value compared to other guns and traitor items in general (Convair880).
-	name = ".38 AP ammo box"
-	items = list(/obj/item/storage/box/ammo38AP)
-	cost = 2
-	desc = "Armor-piercing ammo for a .38 Special revolver (not included)."
-	job = list("Detective")
-	can_buy = UPLINK_TRAITOR
-
-	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
-		if(in_surplus_crate)
-			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
-			return
-		..()
-
-/datum/syndicate_buylist/traitor/ammo_38ricochet
-	name = ".38 Ricochet ammo"
-	items = list(/obj/item/storage/box/ammo38ricochet)
-	cost = 2
-	desc = "Bouncy ammo for a .38 Special revolver (not included)."
-	job = list("Detective")
-	can_buy = UPLINK_TRAITOR
-
-	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
-		if(in_surplus_crate)
-			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
-			return
-		..()
 
 /datum/syndicate_buylist/traitor/traitorthermalscanner
 	name = "Advanced Optical Thermal Scanner"
