@@ -86,10 +86,13 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 
 	proc/send_pilot(var/turf/startloc,var/direction=EAST)
 		var/mob/image_pilot/pilot = new /mob/image_pilot()
+		var/speedinput = src.move_delay
+		var/pathinput = src.spawnpath
+		var/pathamountinput = src.spawnamount
 		pilot.image_overlay = src.image
+		pilot.attached_sound = src.audio
 		pilot.alpha = 0
 		pilot.set_loc(startloc)
-		pilot.attached_sound = src.audio
 		animate(pilot, transform = matrix(), alpha = 255, time = 1.5 SECONDS)
 
 		if (src.audio_choice == "Global loop" && src.audio)
@@ -99,43 +102,43 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			while (pilot.x != src.target_loc.x)
 				if(QDELETED(pilot)) // pilot gets deleted in move_forward when it is without a loc
 					break
-				move_forward(pilot, direction)
-				sleep(src.move_delay)
+				move_forward(pilot, direction, speed=speedinput)
+				sleep(speedinput)
 		if (direction == NORTH || direction == SOUTH)
 			while (pilot.y != src.target_loc.y)
 				if(QDELETED(pilot))
 					break
-				move_forward(pilot, direction)
-				sleep(src.move_delay)
+				move_forward(pilot, direction, speed=speedinput)
+				sleep(speedinput)
 
 		// everything below is after the pilot reaches its destination
 
-		if (!pilot.loopsound && src.audio)
+		if (!pilot.loopsound && pilot.attached_sound)
 			for (var/mob/player in view(25, pilot))
-				player << sound(src.audio, volume=10)
+				player << sound(pilot.attached_sound, volume=10)
 
-		if (src.spawnpath)
-			if(ispath(src.spawnpath, /atom/movable))
+		if (pathinput)
+			if(ispath(pathinput, /atom/movable))
 				var/counter
 				playsound(pilot.loc, 'sound/effects/poff.ogg', 30, TRUE, pitch = 1)
-				for (counter=0, counter<src.spawnamount, counter++)
+				for (counter=0, counter<pathamountinput, counter++)
 					var/turf/T = GetRandomPerimeterTurf(get_turf(pilot), 1)
-					new src.spawnpath(T)
+					new pathinput(T)
 					var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 					P.setup(T)
 
 		switch (src.end_effect)
 			if ("Leave zlevel")
 				while (pilot.loc)
-					move_forward(pilot, direction)
-					sleep(src.move_delay)
+					move_forward(pilot, direction, speed=speedinput)
+					sleep(speedinput)
 			if ("Run away")
 				SPAWN(3 SECONDS)
 					direction = turn(direction, 180)
 					sprint_particle(pilot, pilot.loc)
 					playsound(pilot.loc, 'sound/effects/sprint_puff.ogg', 30, 1)
 					while (pilot.loc)
-						move_forward(pilot, direction, TRUE)
+						move_forward(pilot, direction)
 						sleep(1)
 			if ("Explode")
 				var/turf/T = get_turf(pilot)
@@ -145,19 +148,16 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				robogibs(T)
 			if ("Fade away")
 				animate(pilot, transform = matrix(), alpha = 0, time = 0.5 SECONDS)
-				while (pilot.loc)
-					move_forward(pilot, direction, TRUE)
+				for (var/i=0,i<=3,i++)
+					move_forward(pilot, direction, 3)
 					sleep(2)
-				SPAWN(1 SECONDS)
+				SPAWN(0)
 					pilot.ClearAllOverlays()
 					qdel(pilot)
 
-	proc/move_forward(var/mob/image_pilot/pilot, var/direction,var/defaultspeed=FALSE)
+	proc/move_forward(var/mob/image_pilot/pilot, var/direction, var/speed=1)
 		var/glide = 0 // this system seems to desync sometimes, not a huge issue it seems to add a bit of variety to the way they move
-		if (defaultspeed) // should be checked if you're changing speed at any point, so you don't change every called version's speed too
-			glide = (32 / 1) * world.tick_lag
-		else
-			glide = (32 / src.move_delay) * world.tick_lag
+		glide = (32 / speed) * world.tick_lag
 		pilot.glide_size = glide
 		pilot.animate_movement = SLIDE_STEPS
 		var/old_loc = pilot.loc
@@ -191,12 +191,13 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				play()
 
 	disposing()
+		src.attached_sound = null
 		var/sound/stopsound = sound(null, wait = 0, channel=1020)
 		world << stopsound
 		..()
 
 	proc/play()
-		while (!QDELETED(src)) // replay sound if another spawned pilot is disposed, good for spamming
+		while (src) // replay sound if another spawned pilot is disposed, good for spamming
 			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
 			world << src.attached_sound
-			sleep(2 SECONDS)
+			sleep(1 SECONDS)
