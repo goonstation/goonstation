@@ -65,8 +65,6 @@ ABSTRACT_TYPE(/datum/recipe)
 			stack_trace("Recipe aborting. Output of type list required, received '[string_type_of_anything(output)]' instead.")
 			return FALSE
 		. = get_output(input, output, source, user)
-		output_post_process(input, output, source, user)
-
 
 	proc/get_output(list/input_list, list/output_list, atom/source = null, mob/user = null)
 		PROTECTED_PROC(TRUE)
@@ -88,11 +86,6 @@ ABSTRACT_TYPE(/datum/recipe)
 		if (!.)
 			// By default, a failure here likely means the recipe has been set up wrong. This isn't necessarily true if this proc gets overriden.
 			stack_trace("Recipe of type [string_type_of_anything(src)] failed with input: [english_list(input_list)].")
-
-	/// called after get_output(), performs any post-instantiation changes to every item in the 'output' list.
-	proc/output_post_process(list/input, list/output, atom/source = null, mob/user = null)
-		PROTECTED_PROC(TRUE)
-		return
 
 	proc/get_variant(list/item_list)
 		PROTECTED_PROC(TRUE)
