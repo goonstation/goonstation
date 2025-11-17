@@ -11,8 +11,8 @@
  * blue after instantiation, it would be better to implement that in a cooking_instructions child or some other abstracted subsystem, so the behaviour
  * can be shared regardless of the pattern of ingredients.
  *
- * Other examples of patterns that would warrant a recipe subclass would be handling items with complex components, states, or working with reagent
- * containers when their contents matter to the recipe.
+ * Other examples of patterns that would warrant a non-unique recipe subclass would be handling items with complex components, states, or working with
+ * reagent containers when their contents matter to the recipe.
  *
  * The basic usage of this is to first find a recipe that matches the list of ingredients you have, with can_cook_recipe(), and then use the same
  * list to instantiate the output using get_output(). For machine-specific interactions, implement a bespoke recipe_instruction for that machine.
