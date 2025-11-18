@@ -40,6 +40,7 @@ var/list/pw_rewards_tier3 = null
 	escape_possible = 0
 	var/list/frequencies_used = list()
 	var/list/control_points = list()		//list of /datum/control_point
+	var/list/dominatetracker = list()
 	var/datum/pw_stats_manager/stats_manager
 
 	var/datum/pod_wars_team/team_NT
@@ -442,6 +443,49 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 			src.playsound_to_team(our_team, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies{ALTS}.ogg", sound_type=PW_COMMANDER_DIES)
 	enemy_team.change_points(1)
 
+	var/ourname = "<span class='[(get_pod_wars_team_num(M) == TEAM_NANOTRASEN) ? "rcommand" : "rsyndicate"]'>[M.real_name]</span>"
+	if (world.time - M.lastattackertime > 25 SECONDS)
+		if (M.suiciding)
+			boutput(world, "<div class='command_alert ageneral'>[ourname] <b>bid farewell, cruel world!</b></div>")
+			return
+		boutput(world, "<div class='command_alert ageneral'>[ourname] <b>perished!</b></div>")
+	else
+		var/mob/attacker = M.lastattacker?.deref()
+		if (!attacker || attacker == M)
+			if (M.suiciding || attacker == M)
+				boutput(world, "<div class='command_alert ageneral'>[ourname] <b>bid farewell, cruel world!</b></div>")
+				return
+			boutput(world, "<div class='command_alert ageneral'>[ourname] <b>perished!</b></div>")
+			return
+		var/attackername = "<span class='[(get_pod_wars_team_num(attacker) == TEAM_NANOTRASEN) ? "rcommand" : "rsyndicate"]'>[attacker.real_name]</span>"
+		if (M.suiciding)
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>finished off</b> [ourname]</div>")
+		else
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>killed</b> [ourname]</div>")
+
+		if (src.dominatetracker[M.mind])
+			if (src.dominatetracker[M.mind][attacker.mind] >= 4)
+				boutput(world, "<div class='command_alert ageneral'>[attackername] <b>got REVENGE on</b> [ourname]</div>")
+				playsound_global(list(attacker.mind.get_player().client), 'sound/misc/podwars/revenge.ogg', 100)
+				get_image_group("nemesis[ref(M.mind)]").remove_mind(attacker.mind)
+			src.dominatetracker[M.mind][attacker.mind] = 0
+			return
+
+		if (isnull(src.dominatetracker[attacker.mind]))
+			src.dominatetracker[attacker.mind] = list()
+		src.dominatetracker[attacker.mind][M.mind] += 1
+		if (src.dominatetracker[attacker.mind][M.mind] == 4)
+			boutput(world, "<div class='command_alert ageneral'>[attackername] <b>is DOMINATING</b> [ourname]</div>")
+			playsound_global(list(M.mind.get_player().client), 'sound/misc/podwars/nemesis.ogg', 100)
+			playsound_global(list(attacker.mind.get_player().client), 'sound/misc/podwars/dominating.ogg', 100)
+
+			var/datum/client_image_group/nemesis = get_image_group("nemesis[ref(attacker.mind)]")
+			if (!nemesis.minds_with_associated_mob_image[attacker.mind])
+				var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = "nemesis")
+				antag_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+				nemesis.add_mind_mob_overlay(attacker.mind, antag_icon)
+			nemesis.add_mind(M.mind)
+
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
 	switch(team_num)
@@ -560,6 +604,48 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	src.playsound_to_team(winner, "sound/voice/pod_wars_voices/{PWTN}Win{ALTS}.ogg", sound_type=PW_WIN)
 	src.playsound_to_team(loser, "sound/voice/pod_wars_voices/{PWTN}Lose{ALTS}.ogg", sound_type=PW_LOSE)
+	for (var/datum/mind/mind as anything in loser.members)
+		var/mob/living/carbon/human/H = mind.current
+		if (!ishuman(H))
+			continue
+		H.setStatusMin("humiliated", INFINITY)
+		H.drop_from_slot(H.l_hand, force_drop = TRUE)
+		H.drop_from_slot(H.r_hand, force_drop = TRUE)
+		qdel(H.limbs.l_arm)
+		qdel(H.limbs.r_arm)
+		H.limbs.l_arm = new /obj/item/parts/human_parts/arm/left/item(H)
+		H.limbs.l_arm.holder = H
+		H.limbs.l_arm:set_item(new /obj/item/instrument/bikehorn())
+		H.limbs.r_arm = new /obj/item/parts/human_parts/arm/right/item(H)
+		H.limbs.r_arm.holder = H
+		H.limbs.r_arm:set_item(new /obj/item/instrument/bikehorn())
+		H.update_body()
+
+	for (var/datum/mind/mind as anything in winner.members)
+		var/mob/living/carbon/human/H = mind.current
+		if (!ishuman(H))
+			continue
+		H.setStatusMin("victorious", INFINITY)
+		var/obj/item/card/id/idcard = H.get_id()
+		if (!idcard)
+			var/obj/item/implant/access/implant = locate(/obj/item/implant/access) in H
+			if (!implant) continue
+			idcard = implant.access
+
+		idcard.access |= list(access_syndicate_shuttle, access_heads)
+
+
+
+	if(winner == team_NT) //putting this in a seperate code block for cleanliness
+		for (var/obj/deployable_turret/pod_wars/sy/turret in world)
+			new/obj/effects/explosion/tiny_baby(get_turf(turret))
+			robogibs(get_turf(turret))
+			qdel(turret)
+	else if(winner == team_SY)
+		for (var/obj/deployable_turret/pod_wars/nt/turret in world)
+			new/obj/effects/explosion/tiny_baby(get_turf(turret))
+			robogibs(get_turf(turret))
+			qdel(turret)
 
 	// output the player stats on its own popup.
 	stats_manager.display_HTML_to_clients()

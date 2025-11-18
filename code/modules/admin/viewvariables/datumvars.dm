@@ -876,7 +876,7 @@
 
 	logTheThing(LOG_ADMIN, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing(LOG_DIARY, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
-	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
+	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	if(!set_global && istype(D, /datum))
 		D.onVarChanged(variable, var_value, D.vars[variable])
 	if(src.refresh_varedit_onchange)

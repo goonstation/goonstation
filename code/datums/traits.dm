@@ -1061,7 +1061,8 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = 2
 	afterlife_blacklisted = TRUE
 	var/selected_reagent = "ethanol"
-	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine", "ethanol", "nicotine")
+	var/addictive_reagents = list("space_drugs", "methamphetamine", "ethanol", "nicotine", "caffeine", "morphine", "cold_medicine",
+									 "crank", "krokodil")
 	var/do_addiction = FALSE
 
 	New()
@@ -1085,12 +1086,7 @@ TYPEINFO(/datum/trait/partyanimal)
 			addAddiction(owner)
 
 	proc/addAddiction(var/mob/living/owner)
-		var/datum/ailment_data/addiction/AD = get_disease_from_path(/datum/ailment/addiction).setup_strain()
-		AD.associated_reagent = selected_reagent
-		AD.last_reagent_dose = world.timeofday
-		AD.name = "[selected_reagent] addiction"
-		AD.affected_mob = owner
-		owner.contract_disease(/datum/ailment/addiction, null, AD, TRUE)
+		owner.contract_addiction(src.selected_reagent, TRUE, severity_override = HIGH_ADDICTION_SEVERITY)
 
 	onRemove(mob/owner)
 		for(var/datum/ailment_data/addiction/AD in owner.ailments)

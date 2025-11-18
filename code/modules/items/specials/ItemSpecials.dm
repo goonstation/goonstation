@@ -750,14 +750,12 @@
 					playsound(master, 'sound/effects/flame.ogg', 50, FALSE)
 		return
 
-	csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
+	csaber
 
-		damageMult = 0.54
+		damageMult = 0.8
 
 		onAdd()
 			if(master)
-				//cooldown = master.click_delay
-				overrideStaminaDamage = master.stamina_damage * 0.9
 				var/obj/item/sword/saber = master
 				if (istype(saber))
 					swipe_color = get_hex_color_from_blade(saber.bladecolor)
@@ -2303,6 +2301,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	derev
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "derev"
+		pixel_x = -16
+		pixel_y = -8
+		can_clash = 0
+
+	boxing
+		icon = 'icons/effects/64x64.dmi'
+		icon_state = "boxing"
 		pixel_x = -16
 		pixel_y = -8
 		can_clash = 0

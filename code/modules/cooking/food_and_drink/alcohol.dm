@@ -389,6 +389,19 @@
 		icon_state = "celery"
 		edible = 1
 
+	eyestalk
+		name = "slug eyestalk"
+		desc = "A favourite cocktail adornment of cultured ogres."
+		icon_state = "eyestalk1"
+		edible = 1
+		appearance_flags = KEEP_TOGETHER
+
+		New()
+			..()
+			src.icon_state = "eyestalk[pick(1,2)]"
+			// I'd make more than 2 states, but due to byond jank they need to have a lot of frames instead of using frame delays.
+			// Figured that might cause marginally more lag/bloat if more were added just for animation de-syncing when making lots.
+
 // idk where to put this so here
 /obj/item/straw
 	name = "drinking straw"
