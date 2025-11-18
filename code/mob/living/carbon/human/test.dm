@@ -13,6 +13,12 @@
 		QDEL_NULL(src.stam_monitor)
 		. = ..()
 
+/mob/living/carbon/human/tdummy/security
+	real_name = "Security Dummy"
+	New()
+		. = ..()
+		JobEquipSpawned("Security Officer")
+
 /mob/living/carbon/human/bald
 	real_name = "Test Subject"
 	New()
