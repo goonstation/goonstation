@@ -524,7 +524,6 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon_state = "command headset"
 	chat_class = RADIOCL_COMMAND
 	secure_frequencies = list("g" = R_FREQ_NANOTRASEN)
-	secure_classes = list("g" = RADIOCL_NANOTRASEN)
 	icon_override = "nt"
 	icon_tooltip = "NanoTrasen"
 	team = TEAM_NANOTRASEN
