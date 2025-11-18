@@ -194,10 +194,10 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		src.attached_sound = null
 		var/sound/stopsound = sound(null, wait = 0, channel=1020)
 		world << stopsound
+		for (var/mob/image_pilot/pilotobj in world)
+			pilotobj.play()
 		..()
 
 	proc/play()
-		while (src) // replay sound if another spawned pilot is disposed, good for spamming
-			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
-			world << src.attached_sound
-			sleep(1 SECONDS)
+		src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
+		world << src.attached_sound
