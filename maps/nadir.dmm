@@ -2228,6 +2228,9 @@
 /obj/machinery/light/small{
 	status = 2
 	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "baj" = (
@@ -7061,9 +7064,6 @@
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/northeast)
 "djo" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
 /obj/rack,
 /obj/item/storage/pill_bottle/methamphetamine{
 	pixel_x = -10;
@@ -23873,7 +23873,6 @@
 	},
 /area/station/hallway/primary/northeast)
 "kqQ" = (
-/obj/machinery/camera/directional/west,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
