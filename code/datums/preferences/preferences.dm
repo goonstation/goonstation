@@ -509,30 +509,20 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-nameLast")
-				var/new_name = tgui_input_text(usr, "Please select a last name:", "Character Generation", src.name_last)
+				var/new_name = tgui_input_text(usr, "Please select a last name:", "Character Generation", src.name_last, allowEmpty = TRUE)
 				if (isnull(new_name))
-					return
+					new_name = ""
 				new_name = trimtext(new_name)
 				new_name = remove_bad_name_characters(new_name)
-				if (length(new_name) < NAME_CHAR_MIN)
-					tgui_alert(usr, "Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
-					return
-				else if (length(new_name) > NAME_CHAR_MAX)
+				if (length(new_name) > NAME_CHAR_MAX)
 					tgui_alert(usr, "Your last name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
-				else if (is_blank_string(new_name))
-					tgui_alert(usr, "Your last name cannot contain only spaces.", "Blank name")
-					return
-				else if (!character_name_validation.Find(new_name))
-					tgui_alert(usr, "Your last name must contain at least one letter.", "Letters required")
-					return
-				new_name = capitalize(new_name)
-
-				if (new_name)
-					src.name_last = new_name
-					src.set_real_name()
-					src.profile_modified = TRUE
-					return TRUE
+				else if (is_blank_string(new_name) && new_name != "")
+					new_name = ""
+				new_name = capitalize(new_name) // No point in calling this if the name is blank
+				src.name_last = new_name // Last names are now optional fun allowed
+				src.profile_modified = TRUE
+				return TRUE
 
 			if ("toggle-hyphenation")
 				src.hyphenate_name = !src.hyphenate_name
@@ -1234,16 +1224,20 @@ var/list/removed_jobs = list(
 		if (length(src.name_middle) > NAME_CHAR_MAX)
 			src.randomize_name(0, 1, 0)
 
-		if (length(src.name_last) < NAME_CHAR_MIN || length(src.name_last) > NAME_CHAR_MAX || is_blank_string(src.name_last) || !character_name_validation.Find(src.name_last))
+		if (length(src.name_last) > NAME_CHAR_MAX)
 			src.randomize_name(0, 0, 1)
 
 		src.set_real_name()
 
 	proc/set_real_name()
-		if (!src.name_middle)
+		if (!src.name_middle && src.name_last) // This code is now a bit messy but it does work, could rework it to be cleaner but eh
 			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-") + src.name_last
-		else
+		else if (src.name_middle && src.name_last)
 			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-[src.name_middle]-") + src.name_last
+		else if (src.name_middle && !src.name_last)
+			src.real_name = src.name_first + (!src.hyphenate_name ? "" : "-[src.name_middle]")
+		else if (!src.name_middle && !src.name_last)
+			src.real_name = src.name_first
 
 
 	proc/update_preview_icon()

@@ -53,8 +53,11 @@ export const GeneralTab = () => {
                 <Box italic>None</Box>
               )}
             </Button>
-            <Button onClick={() => act('update-nameLast')}>
-              {data.nameLast}
+            <Button
+              onClick={() => act('update-nameLast')}
+              color={data.nameLast === '' ? 'grey' : 'default'}
+            >
+              {data.nameLast !== '' ? data.nameLast : <Box italic>None</Box>}
             </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Hyphenate Name">

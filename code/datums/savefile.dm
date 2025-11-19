@@ -347,7 +347,7 @@
 		F["tgui_lock"] >> src.tgui_lock
 
 
-		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))
+		if (isnull(src.name_first) || !length(src.name_first))
 			// Welp, you get a random name then.
 			src.randomize_name()
 
