@@ -437,11 +437,27 @@ TYPEINFO(/obj/item/device/speechtotext)
 			boutput(user, "did you already kill the dummy? either way wait a bit!")
 			return
 
+		var/list/dummy_types = list(
+			"Naked Dummy" = /mob/living/carbon/human/tdummy,
+			"Security Dummy" = /mob/living/carbon/human/tdummy/security,
+			// Add more types here
+		)
+
+		var/choice = input(user, "Choose a dummy to spawn:", "Dummy Spawner") in dummy_types
+		if (!choice)
+			return
+
+		var/type_to_spawn = dummy_types[choice]
+		if (!type_to_spawn)
+			boutput(user, "Invalid dummy type selected.")
+			return
+
 		active = 1
 		alpha = 128
-		boutput(user, "Spawning target dummy, stand by") //no need to be rude
+		boutput(user, "Spawning [choice], stand by") //no need to be rude
 
-		var/mob/living/carbon/human/tdummy/tdu = new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+
+		var/mob/living/carbon/human/tdummy/tdu = new type_to_spawn(locate(src.x+1, src.y, src.z))
 		tdu.shutup = TRUE
 		//T.x = src.x + 1 // move it to the right
 
