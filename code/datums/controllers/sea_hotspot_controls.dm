@@ -572,16 +572,16 @@ TYPEINFO(/obj/item/heat_dowsing)
 				speak_count = 0
 				var/val = 0 //my friend valerie
 				var/true_center = 0
-				var/pinnable_spot = "not_pinnable"
+				var/pinnable_spot
 				for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(src.loc))
 					var/turf/center = H.center.turf()
 					if (src.loc == center)
 						true_center += 1
 
 					if (BOUNDS_DIST(src, H.center.turf()) == 0) //variable for determining wether to play a sound if turf is able to be pinned
-						pinnable_spot = "pinnable"
+						pinnable_spot = "true"
 					else
-						pinnable_spot = "not_pinnable"
+						pinnable_spot = "false"
 
 					var/d = GET_DIST(src.loc,center)
 					if (d < dist_last)
@@ -608,12 +608,12 @@ TYPEINFO(/obj/item/heat_dowsing)
 
 					src.speech_bubble_icon_say = "[val]"
 
-					if(pinnable_spot == "pinnable")
+					if(pinnable_spot == "true")
 						src.say("Estimated distance to centre: [val], Location able to be pinned", flags = SAYFLAG_NO_MAPTEXT)
 					else
 						src.say("Estimated distance to centre: [val]", flags = SAYFLAG_NO_MAPTEXT)
 
-					if (pinnable_spot == "pinnable" && true_center == 0 ) //plays sound if turf is able to be pinned
+					if (pinnable_spot == "true" && true_center == 0 ) //plays sound if turf is able to be pinned
 						playsound(src, 'sound/machines/found.ogg', 50, TRUE,0.1,0.7)
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
