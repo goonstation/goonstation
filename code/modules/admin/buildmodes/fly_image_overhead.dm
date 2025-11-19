@@ -9,9 +9,10 @@ Alt + Right mouse button               = Set optional obj/mob spawns<br>
 Shift + Right Mouse Button             = Set direction and speed<br>
 Shift + Left Mouse Button              = Spawn flying object<br>
 ***********************************************************"}
-	// settings
+	// settings. behold my vars
 	var/move_delay = 1
 	var/icon/image
+	var/atom/icon_from_thing
 	var/turf/target_loc
 	var/audio
 	var/audio_choice = "Once"
@@ -23,11 +24,18 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if (!ctrl && !alt && !shift)
-			var/choice = tgui_input_list(usr, "Upload or clear file?", "Choose", list("Upload", "Clear"))
-			if (choice == "Upload")
-				src.image = input(usr, "Upload an image:","File Uploader - Downsize your images to fit on the screen, local testing helps!", null) as null|icon
-			else
-				src.image = null
+			src.icon_from_thing = tgui_input_list(usr, "Upload an image, set it from an icon or clear?", "Choose", list("Upload", "Icon Ref", "Clear"))
+			switch (src.icon_from_thing)
+				if ("Upload")
+					src.icon_from_thing = null
+					src.image = input(usr, "Upload an image:","File Uploader - Downsize your images to fit on the screen, local testing helps!", null) as null|icon
+				if ("Clear")
+					src.image = null
+					usr.visible_message("Image cleared.")
+				if ("Icon Ref")
+					src.image = null
+					src.icon_from_thing = get_one_match(input("Type path", "Type path", "[src.spawnpath]"), /atom)
+
 			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list("Leave zlevel", "Explode", "Fade away", "Run away"))
 		if (ctrl)
 			src.audio_choice = tgui_input_list(usr, "Loop sound globally or play once on arrival?", "Choose", list("Global loop", "Once", "Clear"))
@@ -57,7 +65,6 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			else
 				src.spawnpath = null
 				src.spawnamount = 1
-				return
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
@@ -89,6 +96,10 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		var/speedinput = src.move_delay
 		var/pathinput = src.spawnpath
 		var/pathamountinput = src.spawnamount
+		var/turf/target_locinput = src.target_loc
+		if (src.icon_from_thing)
+			pilot.icon = src.icon_from_thing.icon
+			pilot.icon_state = src.icon_from_thing.icon_state
 		pilot.image_overlay = src.image
 		pilot.attached_sound = src.audio
 		pilot.alpha = 0
@@ -99,13 +110,13 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			pilot.loopsound = TRUE
 
 		if (direction == WEST || direction == EAST)
-			while (pilot.x != src.target_loc.x)
+			while (pilot.x != target_locinput.x)
 				if(QDELETED(pilot)) // pilot gets deleted in move_forward when it is without a loc
 					break
 				move_forward(pilot, direction, speed=speedinput)
 				sleep(speedinput)
 		if (direction == NORTH || direction == SOUTH)
-			while (pilot.y != src.target_loc.y)
+			while (pilot.y != target_locinput.y)
 				if(QDELETED(pilot))
 					break
 				move_forward(pilot, direction, speed=speedinput)
@@ -162,6 +173,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		pilot.animate_movement = SLIDE_STEPS
 		var/old_loc = pilot.loc
 		pilot.set_loc(get_step(pilot, direction))
+		pilot.dir = direction
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, direction)
 		if (!pilot.loc)
 			qdel(pilot)
@@ -174,7 +186,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	anchored = ANCHORED
 	density = 0
 	nodamage = 1
-	layer = EFFECTS_LAYER_4
+	layer = 104 // AAAAAAAAA
 	flags = KEEP_TOGETHER
 	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	var/icon/image_overlay
