@@ -1061,7 +1061,8 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = 2
 	afterlife_blacklisted = TRUE
 	var/selected_reagent = "ethanol"
-	var/addictive_reagents = list("bathsalts", "LSD", "space_drugs", "psilocybin", "catdrugs", "methamphetamine", "ethanol", "nicotine")
+	var/addictive_reagents = list("space_drugs", "methamphetamine", "ethanol", "nicotine", "caffeine", "morphine", "cold_medicine",
+									 "crank", "krokodil")
 	var/do_addiction = FALSE
 
 	New()

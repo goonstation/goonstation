@@ -1886,6 +1886,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/elective_prosthetics_for_dummies, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/teg_guide, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/horrorcontest, 2, cost=PAY_UNTRAINED/5)
 
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/the_trial, 1, cost=PAY_UNTRAINED/5, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/critter_compendium, 1, cost=PAY_UNTRAINED/5, hidden=1)
@@ -1896,7 +1897,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "Food storage unit."
 	icon_state = "food"
 	icon_panel = "standard-panel"
-	req_access = list(access_kitchen)
 	acceptcard = 0
 
 	light_r =1
@@ -2680,7 +2680,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/wateringcan, 5)
-		product_list += new/datum/data/vending_product(/obj/item/plantanalyzer, 5)
+		product_list += new/datum/data/vending_product(/obj/item/plantanalyzer, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/compostbag, 5)
 		product_list += new/datum/data/vending_product(/obj/item/saw, 3)
 		product_list += new/datum/data/vending_product(/obj/item/gardentrowel, 5)

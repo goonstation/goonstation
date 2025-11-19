@@ -958,6 +958,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "death"
 	see_face = FALSE
 
+/obj/item/clothing/mask/skull/wizard
+	name = "peculiar skull mask"
+	desc = "Are you really sure putting magical skulls on your face is a good idea?"
+	icon = 'icons/obj/items/organs/skull.dmi'
+	icon_state = "skull_wizard"
+	item_state = "death"
+	see_face = FALSE
+
 /obj/item/clothing/suit/robuddy
 	name = "guardbuddy costume"
 	desc = "A costume that loosely resembles the PR-6 Guardbuddy. How adorable!"
@@ -2146,3 +2154,19 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "chompskysuit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+
+//Phantom of the Opera
+
+/obj/item/clothing/mask/phantom
+	name = "half mask"
+	desc = "Someone must've taken a bite out of this mask, half of it is missing!"
+	icon_state = "phantom"
+	item_state = "phantom"
+	see_face = TRUE
+
+/obj/item/clothing/suit/gimmick/nightgown
+
+	name = "nightgown"
+	desc = "A fancy frilly nightgown. Candelabra not included."
+	icon_state = "nightgown"
+	item_state = "nightgown"

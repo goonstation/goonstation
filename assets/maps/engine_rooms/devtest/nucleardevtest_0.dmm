@@ -296,7 +296,7 @@
 	},
 /area/station/devzone)
 "FN" = (
-/obj/machinery/atmospherics/binary/reactor_turbine,
+/obj/machinery/reactor_turbine,
 /obj/cable/brown{
 	icon_state = "0-2"
 	},
@@ -412,7 +412,7 @@
 	},
 /area/station/devzone)
 "Sh" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor,
+/obj/machinery/nuclear_reactor,
 /obj/cable/brown{
 	icon_state = "0-4"
 	},

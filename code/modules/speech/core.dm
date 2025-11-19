@@ -77,6 +77,12 @@ TYPEINFO(/atom)
 	/// The default speech bubble for sung phrases that were either sung loudly or poorly.
 	var/speech_bubble_icon_sing_bad = "notebad"
 
+	// Maptext Variables:
+	/// The `pixel_x` value that any maptext managers present in this atom's `vis_contents` should use.
+	var/maptext_manager_x = 0
+	/// The `pixel_y` value that any maptext managers present in this atom's `vis_contents` should use.
+	var/maptext_manager_y = 0
+
 /atom/New()
 	if (length(src.get_typeinfo().start_listen_inputs))
 		src.ensure_listen_tree()
