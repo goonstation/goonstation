@@ -18,10 +18,10 @@
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null
 	var/list/equipment = list(
-		GENETICS_INJECTORS = 0,
-		GENETICS_ANALYZER = 0,
-		GENETICS_EMITTERS = 0,
-		GENETICS_RECLAIMER = 0,
+		/* GENETICS_INJECTORS = */ 0,
+		/* GENETICS_ANALYZER = */ 0,
+		/* GENETICS_EMITTERS = */ 0,
+		/* GENETICS_RECLAIMER = */ 0,
 	)
 	var/list/datum/bioEffect/saved_mutations = list()
 	var/list/datum/dna_chromosome/saved_chromosomes = list()

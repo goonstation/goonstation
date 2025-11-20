@@ -11,19 +11,19 @@
 	asshole = 1
 
 	base_goods_buy = list(
-		TRADER_RARITY_COMMON = list(
+		/* TRADER_RARITY_COMMON = */ list(
 			/datum/commodity/trader/pianzi/herbs,
 			/datum/commodity/trader/pianzi/crystalglass,
 			/datum/commodity/trader/pianzi/telecrystal,
 			/datum/commodity/trader/pianzi/artifact,
 			/datum/commodity/trader/pianzi/cigarettes
 		),
-		TRADER_RARITY_UNCOMMON = list(),
-		TRADER_RARITY_RARE = list()
+		/* TRADER_RARITY_UNCOMMON = */ list(),
+		/* TRADER_RARITY_RARE = */ list()
 	)
 
 	base_goods_sell = list(
-		TRADER_RARITY_COMMON = list(
+		/* TRADER_RARITY_COMMON = */ list(
 			/datum/commodity/trader/pianzi/metal,
 			/datum/commodity/trader/pianzi/bees,
 			/datum/commodity/trader/pianzi/cameraviewers,
@@ -31,12 +31,12 @@
 			/datum/commodity/trader/pianzi/concgloves,
 			/datum/commodity/trader/pianzi/seeds
 		),
-		TRADER_RARITY_UNCOMMON = list(
+		/* TRADER_RARITY_UNCOMMON = */ list(
 			/datum/commodity/trader/pianzi/medicine,
 			/datum/commodity/trader/pianzi/recdrugs,
 			/datum/commodity/trader/pianzi/wine,
 		),
-		TRADER_RARITY_RARE = list()
+		/* TRADER_RARITY_RARE = */ list()
 	)
 
 	dialogue_greet = list("Why hello there, my good friend! Plenty of wares today, as usual! Care to take a browse?",
