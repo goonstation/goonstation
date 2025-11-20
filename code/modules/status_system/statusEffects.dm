@@ -102,7 +102,9 @@
 			sweat.color = rgb(sweatReagent.fluid_r, sweatReagent.fluid_g, sweatReagent.fluid_b)
 			sweat.alpha = sweatReagent.transparency
 			sweat.sample_reagent = sweatReagent.id
-			sweat.dry_time = 40
+			sweat.name = "sweat"
+			sweat.desc = "A bunch of sweat on the floor. Ew!"
+			sweat.dry_time = 60
 
 	/**
 		* Called when the status is changed using setStatus. Called after duration is updated etc.
