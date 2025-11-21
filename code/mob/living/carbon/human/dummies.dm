@@ -25,6 +25,20 @@
 		. = ..()
 		JobEquipSpawned("Captain")
 
+/mob/living/silicon/robot/spawnable/standard/borgtdummy
+	real_name = "Borg Dummy"
+	var/shutup = FALSE
+	var/stam_monitor
+
+	New()
+		. = ..()
+		src.stam_monitor = new /obj/machinery/maptext_monitor/stamina(src)
+		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_TEST_DUMMY)
+
+	disposing()
+		QDEL_NULL(src.stam_monitor)
+		. = ..()
+
 /mob/living/carbon/human/bald
 	real_name = "Test Subject"
 	New()

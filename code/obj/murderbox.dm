@@ -56,6 +56,7 @@
 			"Naked Dummy" = /mob/living/carbon/human/tdummy,
 			"Security Dummy" = /mob/living/carbon/human/tdummy/security,
 			"Captain Dummy" = /mob/living/carbon/human/tdummy/captain,
+			"Borg Dummy" = /mob/living/silicon/robot/spawnable/standard/borgtdummy
 			// Add more types here
 		)
 
