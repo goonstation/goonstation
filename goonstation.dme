@@ -2316,6 +2316,7 @@
 #include "code\obj\mining.dm"
 #include "code\obj\mining_cloud_storage.dm"
 #include "code\obj\mopbucket.dm"
+#include "code\obj\murderbox.dm"
 #include "code\obj\neon_lining.dm"
 #include "code\obj\noticeboard.dm"
 #include "code\obj\npc.dm"
