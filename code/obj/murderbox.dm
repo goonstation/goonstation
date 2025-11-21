@@ -55,6 +55,7 @@
 		var/list/dummy_types = list(
 			"Naked Dummy" = /mob/living/carbon/human/tdummy,
 			"Security Dummy" = /mob/living/carbon/human/tdummy/security,
+			"Captain Dummy" = /mob/living/carbon/human/tdummy/captain,
 			// Add more types here
 		)
 

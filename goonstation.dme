@@ -552,7 +552,7 @@
 #include "code\mob\living\carbon\human\monkeys.dm"
 #include "code\mob\living\carbon\human\normal.dm"
 #include "code\mob\living\carbon\human\npc.dm"
-#include "code\mob\living\carbon\human\test.dm"
+#include "code\mob\living\carbon\human\dummies.dm"
 #include "code\mob\living\carbon\human\virtual.dm"
 #include "code\mob\living\carbon\human\procs\damage.dm"
 #include "code\mob\living\carbon\human\procs\emote.dm"

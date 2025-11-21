@@ -19,6 +19,12 @@
 		. = ..()
 		JobEquipSpawned("Security Officer")
 
+/mob/living/carbon/human/tdummy/captain
+	real_name = "Captain Dummy"
+	New()
+		. = ..()
+		JobEquipSpawned("Captain")
+
 /mob/living/carbon/human/bald
 	real_name = "Test Subject"
 	New()
