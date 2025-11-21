@@ -1,4 +1,9 @@
 
+(t)fri nov 21 25
+(u)Smallsandman
+(p)25057
+(e)🆕🗺👮|C-Feature, A-Mapping, A-Security
+(*)Added an evidence room to Cogmap 1.
 (t)wed nov 19 25
 (u)SnugglyCactus
 (p)25173
