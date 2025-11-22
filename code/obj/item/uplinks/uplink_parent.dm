@@ -173,10 +173,10 @@
 
 			src.items_objective = sortList(sort3, /proc/cmp_text_asc)
 
-		if (length(src.items_telecrystal))
+		if (length(src.items_ammo))
 			var/list/sort4 = list()
 
-			for (var/datum/syndicate_buylist/S4 in src.items_telecrystal)
+			for (var/datum/syndicate_buylist/S4 in src.items_ammo)
 				var/name = S4.name
 				if (name in names)
 					namecounts[name]++
@@ -187,12 +187,12 @@
 
 				sort4[name] = S4
 
-			src.items_telecrystal = sortList(sort4, /proc/cmp_text_asc)
+			src.items_ammo = sortList(sort4, /proc/cmp_text_asc)
 
-		if (length(src.items_ammo))
+		if (length(src.items_telecrystal))
 			var/list/sort5 = list()
 
-			for (var/datum/syndicate_buylist/S5 in src.items_ammo)
+			for (var/datum/syndicate_buylist/S5 in src.items_telecrystal)
 				var/name = S5.name
 				if (name in names)
 					namecounts[name]++
@@ -203,8 +203,7 @@
 
 				sort5[name] = S5
 
-			src.items_ammo = sortList(sort5, /proc/cmp_text_asc)
-
+			src.items_telecrystal = sortList(sort5, /proc/cmp_text_asc)
 
 		return
 
