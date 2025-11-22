@@ -5930,14 +5930,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
-"avu" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/storage/goodybag,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown,
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/clown)
 "avv" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/power/apc/autoname_west,
@@ -37684,6 +37676,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/science/lobby)
+"maO" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/storage/goodybag,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/clown)
 "maS" = (
 /mob/living/critter/small_animal/seal,
 /turf/simulated/floor/grass,
@@ -102396,7 +102397,7 @@ arC
 arz
 aek
 azU
-avu
+maO
 acc
 arz
 ayN

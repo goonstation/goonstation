@@ -1375,6 +1375,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"aEm" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "aEp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5314,11 +5320,6 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
-"csT" = (
-/obj/lattice,
-/obj/machinery/launcher_loader/south,
-/turf/space/fluid/acid/clear,
-/area/space)
 "ctc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26843,12 +26844,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"lEf" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "lEg" = (
 /obj/landmark/start/job/security_assistant,
 /obj/stool/chair/red{
@@ -33048,6 +33043,18 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"oob" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/storage/goodybag,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "oon" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -33096,17 +33103,6 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon1_start,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"opp" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "opv" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -36382,6 +36378,12 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"pQl" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "pQE" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -38777,12 +38779,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"qWO" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "qWR" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -41658,12 +41654,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
-"ssk" = (
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "ssp" = (
 /obj/machinery/floorflusher/solitary2,
 /obj/disposalpipe/trunk/brig{
@@ -43440,6 +43430,11 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
+"tgR" = (
+/obj/lattice,
+/obj/machinery/launcher_loader/south,
+/turf/space/fluid/acid/clear,
+/area/space)
 "tgS" = (
 /obj/rack,
 /obj/item/crowbar,
@@ -44131,6 +44126,12 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
+"twY" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "txe" = (
 /obj/machinery/door_control{
 	id = "nadirclomp";
@@ -79989,7 +79990,7 @@ bzS
 bzS
 rJg
 rJg
-qWO
+aEm
 dqY
 dqY
 dqY
@@ -79997,7 +79998,7 @@ dqY
 dqY
 dqY
 dqY
-lEf
+twY
 rJg
 rJg
 rJg
@@ -80021,7 +80022,7 @@ rJg
 rJg
 rJg
 rJg
-qWO
+aEm
 dqY
 dqY
 dqY
@@ -80029,7 +80030,7 @@ dqY
 dqY
 dqY
 dqY
-lEf
+twY
 rJg
 rJg
 bzS
@@ -91837,7 +91838,7 @@ tZe
 uqC
 uqC
 jjE
-csT
+tgR
 tfq
 rJg
 rJg
@@ -106322,7 +106323,7 @@ wvG
 akC
 uoh
 vqn
-opp
+oob
 dcB
 lGD
 lGD
@@ -121097,7 +121098,7 @@ rJg
 rJg
 rJg
 rJg
-ssk
+pQl
 rJg
 rJg
 rJg

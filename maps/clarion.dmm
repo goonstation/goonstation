@@ -11498,17 +11498,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
-"cTK" = (
-/obj/table/auto,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown)
 "cUr" = (
 /obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
@@ -12107,6 +12096,18 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"dtB" = (
+/obj/table/auto,
+/obj/item/storage/goodybag,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown)
 "dtW" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -67996,7 +67997,7 @@ axQ
 azX
 aAP
 rFd
-cTK
+dtB
 aCR
 hRm
 bkJ

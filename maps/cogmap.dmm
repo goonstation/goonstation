@@ -41804,28 +41804,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"hxh" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -8;
-	pixel_y = 14
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/clown)
 "hxp" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -58884,6 +58862,29 @@
 	dir = 1
 	},
 /area/station/engine/coldloop)
+"tYY" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/clown)
 "tZh" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -106904,7 +106905,7 @@ tQq
 adU
 aeE
 afk
-hxh
+tYY
 agQ
 ahI
 aiG

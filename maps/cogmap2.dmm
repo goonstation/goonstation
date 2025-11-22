@@ -1214,21 +1214,6 @@
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/station/maintenance/north)
-"aeq" = (
-/obj/table/auto,
-/obj/decal/cleanable/desk_clutter,
-/obj/decal/cleanable/dirt,
-/obj/item/instrument/bikehorn,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
-/obj/item/stamp/clown,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "aer" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/carpet/arcade,
@@ -59594,6 +59579,22 @@
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
+"jTJ" = (
+/obj/table/auto,
+/obj/decal/cleanable/desk_clutter,
+/obj/decal/cleanable/dirt,
+/obj/item/instrument/bikehorn,
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/obj/item/stamp/clown,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "jUc" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -109120,7 +109121,7 @@ abR
 aaa
 adf
 adD
-aeq
+jTJ
 nuC
 afW
 biF
