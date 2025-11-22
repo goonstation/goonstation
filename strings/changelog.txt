@@ -1,6 +1,10 @@
 
 (t)fri nov 21 25
 (u)Smallsandman
+(p)25047
+(e)🗺|A-Mapping
+(*)Added an evidence room to Nadir's security.
+(u)Smallsandman
 (p)25011
 (e)🗺⚖👮|A-Mapping, C-Balance, A-Security
 (*)Added a new evidence room and second solitary brig to donut 3.
