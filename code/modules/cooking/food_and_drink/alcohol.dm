@@ -395,7 +395,7 @@
 		icon_state = "eyestalk1"
 		edible = 1
 		appearance_flags = KEEP_TOGETHER
-		var/second = FALSE
+		var/second_stalk = FALSE
 
 		New()
 			..()
@@ -403,10 +403,10 @@
 			// Figured that might cause marginally more lag/bloat if more were added just for animation de-syncing when making lots.
 			src.icon_state = "eyestalk[pick(1,2)]"
 			SPAWN(0)
-				if (!src.second)
-					var/obj/item/cocktail_stuff/eyestalk/second_one = new /obj/item/cocktail_stuff/eyestalk
-					second_one.second = TRUE
-					second_one.set_loc(src)
+				if (!src.second_stalk)
+					var/obj/item/cocktail_stuff/eyestalk/new_stalk = new /obj/item/cocktail_stuff/eyestalk
+					new_stalk.second_stalk = TRUE
+					new_stalk.set_loc(src)
 
 // idk where to put this so here
 /obj/item/straw
