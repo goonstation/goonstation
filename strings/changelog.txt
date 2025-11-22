@@ -1,6 +1,10 @@
 
 (t)fri nov 21 25
 (u)Smallsandman
+(p)25065
+(e)🆕🗺👮|C-Feature, A-Mapping, A-Security
+(*)Added an evidence room to Clarion.
+(u)Smallsandman
 (p)25057
 (e)🆕🗺👮|C-Feature, A-Mapping, A-Security
 (*)Added an evidence room to Cogmap 1.
