@@ -489,10 +489,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 4
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+//////////////////////////////////////////////// Special ammunition //////////////////////////////////////////////
+
 /datum/syndicate_buylist/traitor/ammo_38AP // 2 TC for 1 speedloader was very poor value compared to other guns and traitor items in general (Convair880).
 	name = ".38 AP ammo box"
 	items = list(/obj/item/storage/box/ammo38AP)
 	cost = 2
+	ammo = true
 	desc = "Armor-piercing ammo for a .38 Special or Kestrel revolver (not included)."
 	can_buy = UPLINK_TRAITOR
 
@@ -506,23 +509,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = ".38 Ricochet ammo box"
 	items = list(/obj/item/storage/box/ammo38ricochet)
 	cost = 2
-	desc = "Bouncy ammo for a .38 Special or Kestrel revolver (not included)."
-	can_buy = UPLINK_TRAITOR
-
-	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
-		if(in_surplus_crate)
-			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
-			return
-		..()
-
-//////////////////////////////////////////////////// Special ammunition (traitor uplink) ///////////////////////////////////
-
-ABSTRACT_TYPE(/datum/syndicate_buylist/ammo)
-/datum/syndicate_buylist/ammo
-	name = "You shouldn't see me!"
-	cost = 0
-	desc = "You shouldn't see me!"
 	ammo = TRUE
+	desc = "Bouncy ammo for a .38 Special or Kestrel revolver (not included)."
 	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
@@ -530,20 +518,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/ammo)
 			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
 			return
 		..()
-
-/datum/syndicate_buylist/ammo/ammo_38AP // 2 TC for 1 speedloader was very poor value compared to other guns and traitor items in general (Convair880).
-	name = ".38 AP ammo box"
-	items = list(/obj/item/storage/box/ammo38AP)
-	cost = 2
-	desc = "Armor-piercing ammo for a .38 Special or Kestrel revolver (not included)."
-	can_buy = UPLINK_TRAITOR
-
-/datum/syndicate_buylist/ammo/ammo_38ricochet
-	name = ".38 Ricochet ammo box"
-	items = list(/obj/item/storage/box/ammo38ricochet)
-	cost = 2
-	desc = "Bouncy ammo for a .38 Special or Kestrel revolver (not included)."
-	can_buy = UPLINK_TRAITOR
 
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
