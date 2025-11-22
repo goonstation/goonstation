@@ -1,5 +1,9 @@
 
 (t)fri nov 21 25
+(u)Smallsandman
+(p)25067
+(e)🆕🗺👮|C-Feature, A-Mapping, A-Security
+(*)Added an evidence room to Oshan Labs.
 (u)Skotcher
 (p)24993
 (e)🗺|A-Mapping
