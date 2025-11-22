@@ -405,7 +405,7 @@
 			SPAWN(0)
 				if (!src.second_stalk)
 					var/obj/item/cocktail_stuff/eyestalk/new_stalk = new /obj/item/cocktail_stuff/eyestalk
-					new_stalk.second_stalk = TRUE
+					new_stalk.second_stalk = TRUE // don't inf loop us
 					new_stalk.set_loc(src)
 
 // idk where to put this so here
