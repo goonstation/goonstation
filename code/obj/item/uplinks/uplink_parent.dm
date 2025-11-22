@@ -9,6 +9,7 @@
 	var/list/datum/syndicate_buylist/items_job = list()
 	var/list/datum/syndicate_buylist/items_objective = list()
 	var/list/datum/syndicate_buylist/items_telecrystal = list()
+	var/list/datum/syndicate_buylist/items_ammo = list()
 	var/is_VR_uplink = 0
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
@@ -39,7 +40,7 @@
 		if (istype(get_area(src), /area/sim/gunsim))
 			src.is_VR_uplink = TRUE
 		SPAWN(1 SECOND)
-			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal)))
+			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal) && !length(src.items_ammo)))
 				src.setup()
 
 	disposing()
@@ -68,6 +69,8 @@
 			src.items_objective = list()
 		if (!islist(src.items_telecrystal))
 			src.items_telecrystal = list()
+		if (!islist(src.items_ammo))
+			src.items_ammo = list()
 
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			if (src.is_VR_uplink)
@@ -99,6 +102,10 @@
 					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
+						if (S.ammo)
+							src.items_ammo.Add(S)
+							src.items_general.Remove(S)
+
 
 					if (S.objective)
 						if (ownermind.objectives)
@@ -166,10 +173,10 @@
 
 			src.items_objective = sortList(sort3, /proc/cmp_text_asc)
 
-		if (length(src.items_telecrystal))
+		if (length(src.items_ammo))
 			var/list/sort4 = list()
 
-			for (var/datum/syndicate_buylist/S4 in src.items_telecrystal)
+			for (var/datum/syndicate_buylist/S4 in src.items_ammo)
 				var/name = S4.name
 				if (name in names)
 					namecounts[name]++
@@ -180,7 +187,23 @@
 
 				sort4[name] = S4
 
-			src.items_telecrystal = sortList(sort4, /proc/cmp_text_asc)
+			src.items_ammo = sortList(sort4, /proc/cmp_text_asc)
+
+		if (length(src.items_telecrystal))
+			var/list/sort5 = list()
+
+			for (var/datum/syndicate_buylist/S5 in src.items_telecrystal)
+				var/name = S5.name
+				if (name in names)
+					namecounts[name]++
+					name = text("[] ([])", name, namecounts[name])
+				else
+					names.Add(name)
+					namecounts[name] = 1
+
+				sort5[name] = S5
+
+			src.items_telecrystal = sortList(sort5, /proc/cmp_text_asc)
 
 		return
 
@@ -302,6 +325,11 @@
 					for (var/G in src.items_general)
 						var/datum/syndicate_buylist/I1 = src.items_general[G]
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A> [I1.max_buy == INFINITY  ? "" :"([src.purchase_log[I1.type] ? src.purchase_log[I1.type] : 0]/[I1.max_buy])"]</td>"
+				if (src.items_ammo && islist(src.items_ammo) && length(src.items_ammo))
+					dat += "</table><B>Special ammunition:</B><BR><table cellspacing=5>"
+					for (var/A in src.items_ammo)
+						var/datum/syndicate_buylist/I5 = src.items_ammo[A]
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_ammo[A]]'>[I5.name]</A> ([I5.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_ammo[A]]'>About</A> [I5.max_buy == INFINITY  ? "" :"([src.purchase_log[I5.type] ? src.purchase_log[I5.type] : 0]/[I5.max_buy])"]</td>"
 				dat += "</table>"
 				var/do_divider = 1
 
