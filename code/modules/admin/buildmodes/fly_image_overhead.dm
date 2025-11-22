@@ -20,6 +20,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	var/end_effect = "Leave zlevel"
 	var/spawnpath
 	var/spawnamount = 1
+	var/alphainput = 255
 	var/startnearby = TRUE
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
@@ -32,9 +33,11 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				if ("Clear")
 					src.image = null
 					usr.visible_message("Image cleared.")
+					return
 				if ("Icon Ref")
 					src.image = null
 					src.icon_from_thing = get_one_match(input("Type path", "Type path", "[src.spawnpath]"), /atom)
+			src.alphainput = tgui_input_number(usr, "Enter an alpha level.", "Alpha", 255, 255, 0)
 
 			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list("Leave zlevel", "Explode", "Fade away", "Run away"))
 		if (ctrl)
@@ -104,7 +107,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		pilot.attached_sound = src.audio
 		pilot.alpha = 0
 		pilot.set_loc(startloc)
-		animate(pilot, transform = matrix(), alpha = 255, time = 1.5 SECONDS)
+		animate(pilot, transform = matrix(), alpha = src.alphainput, time = 1.5 SECONDS)
 
 		if (src.audio_choice == "Global loop" && src.audio)
 			pilot.loopsound = TRUE
