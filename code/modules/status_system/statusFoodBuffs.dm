@@ -435,7 +435,7 @@
 	unique = 1
 
 	onUpdate(timePassed)
-		dropSweat(/datum/reagent/slime, 5, 5, sweatpools=TRUE)
+		dropSweat("slime", 5, 5, sweatpools=TRUE)
 
 /datum/statusEffect/sweaty
 	id = "food_sweaty"
@@ -449,7 +449,7 @@
 	var/sweat_adjective = "" // used for getChefHint()
 
 	onUpdate(timePassed)
-		dropSweat(/datum/reagent/water)
+		dropSweat("water")
 
 	big
 		name = "Food (Sweaty+)"
@@ -459,7 +459,7 @@
 		maxDuration = 600
 
 		onUpdate(timePassed)
-			dropSweat(/datum/reagent/water, 5, 10, sweatpools=TRUE)
+			dropSweat("water", 5, 10, sweatpools=TRUE)
 
 	bigger
 		name ="Food (Sweaty++)"
@@ -469,7 +469,7 @@
 		maxDuration = 300
 
 		onUpdate(timePassed)
-			dropSweat(/datum/reagent/water, 15, 35, sweatpools=TRUE)
+			dropSweat("water", 15, 35, sweatpools=TRUE)
 
 	getChefHint()
 		. = "Makes the consumer [sweat_adjective]sweaty."
