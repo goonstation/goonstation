@@ -1,5 +1,9 @@
 
 (t)fri nov 21 25
+(u)Egregorious
+(p)25052
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)The 'butt' accent has received some minor improvements to preserve tone.
 (u)Smallsandman
 (p)25047
 (e)🗺|A-Mapping
