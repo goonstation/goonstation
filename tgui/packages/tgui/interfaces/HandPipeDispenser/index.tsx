@@ -28,6 +28,8 @@ export const HandPipeDispenser = () => {
   const {
     atmospipes,
     atmosmachines,
+    fluidpipes,
+    fluidmachines,
     destroying,
     selectedimage,
     selectedcost,
@@ -38,7 +40,7 @@ export const HandPipeDispenser = () => {
   const [tab, setTab] = useSharedState('tab', Tab.AtmosPipes);
   const RESOURCE_ICON_NAME = issilicon ? 'bolt' : 'boxes-stacked';
   return (
-    <Window width={450} height={350}>
+    <Window width={525} height={350}>
       <Flex height="100%">
         <Flex.Item fill>
           <Section
@@ -146,13 +148,25 @@ export const HandPipeDispenser = () => {
                   selected={tab === Tab.AtmosPipes}
                   onClick={() => setTab(Tab.AtmosPipes)}
                 >
-                  Pipes
+                  Atmos Pipes
                 </Tabs.Tab>
                 <Tabs.Tab
                   selected={tab === Tab.AtmosMachines}
                   onClick={() => setTab(Tab.AtmosMachines)}
                 >
-                  Machines
+                  Atmos Machines
+                </Tabs.Tab>
+                <Tabs.Tab
+                  selected={tab === Tab.FluidPipes}
+                  onClick={() => setTab(Tab.FluidPipes)}
+                >
+                  Fluid Pipes
+                </Tabs.Tab>
+                <Tabs.Tab
+                  selected={tab === Tab.FluidMachines}
+                  onClick={() => setTab(Tab.FluidMachines)}
+                >
+                  Fluid Machines
                 </Tabs.Tab>
               </Tabs>
               {tab === Tab.AtmosPipes && (
@@ -207,6 +221,64 @@ export const HandPipeDispenser = () => {
                           }
                         >
                           {atmosmachine.name}
+                        </ProductList.Item>
+                      );
+                    })}
+                  </ProductList>
+                </Section>
+              )}
+              {tab === Tab.FluidPipes && (
+                <Section fitted>
+                  <ProductList showImage showOutput>
+                    {fluidpipes.map((fluidpipes: PipeData) => {
+                      return (
+                        <ProductList.Item
+                          key={fluidpipes.name}
+                          image={fluidpipes.image}
+                          outputSlot={
+                            <ProductList.OutputButton
+                              icon={RESOURCE_ICON_NAME}
+                              onClick={() =>
+                                act('select', {
+                                  name: fluidpipes.name,
+                                })
+                              }
+                              tooltip="Select"
+                            >
+                              {fluidpipes.cost}
+                            </ProductList.OutputButton>
+                          }
+                        >
+                          {fluidpipes.name}
+                        </ProductList.Item>
+                      );
+                    })}
+                  </ProductList>
+                </Section>
+              )}
+              {tab === Tab.FluidMachines && (
+                <Section fitted>
+                  <ProductList showImage showOutput>
+                    {fluidmachines.map((fluidmachines: PipeData) => {
+                      return (
+                        <ProductList.Item
+                          key={fluidmachines.name}
+                          image={fluidmachines.image}
+                          outputSlot={
+                            <ProductList.OutputButton
+                              icon={RESOURCE_ICON_NAME}
+                              onClick={() =>
+                                act('select', {
+                                  name: fluidmachines.name,
+                                })
+                              }
+                              tooltip="Select"
+                            >
+                              {fluidmachines.cost}
+                            </ProductList.OutputButton>
+                          }
+                        >
+                          {fluidmachines.name}
                         </ProductList.Item>
                       );
                     })}
