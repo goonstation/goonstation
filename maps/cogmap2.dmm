@@ -60063,6 +60063,10 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
+"kqn" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/darkblue/checker/white,
+/area/station/maintenance/inner/central)
 "kqp" = (
 /mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/pool/no_animate,
@@ -68656,6 +68660,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
+"scR" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/turf/simulated/floor/darkblue/checker/white,
+/area/station/maintenance/inner/central)
 "sed" = (
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
@@ -68698,6 +68710,30 @@
 	dir = 6
 	},
 /area/station/catwalk/north)
+"sgl" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/item/cigbutt{
+	pixel_y = -10;
+	pixel_x = -11
+	},
+/obj/item/cigbutt{
+	pixel_y = -6;
+	pixel_x = 11
+	},
+/obj/decal/cleanable/ash{
+	pixel_y = -7;
+	pixel_x = -8
+	},
+/turf/simulated/floor/darkblue/checker/white,
+/area/station/maintenance/inner/central)
 "sgE" = (
 /obj/disposalpipe/segment/morgue,
 /obj/mesh/catwalk,
@@ -73180,6 +73216,22 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"wNn" = (
+/obj/table/wood,
+/obj/item/decoration/ashtray{
+	pixel_y = 2;
+	pixel_x = -5
+	},
+/obj/item/clothing/mask/cigarette/propuffs{
+	pixel_y = 9;
+	pixel_x = 3
+	},
+/obj/item/cigpacket/propuffs{
+	pixel_y = 1;
+	pixel_x = 6
+	},
+/turf/simulated/floor/darkblue/checker/white,
+/area/station/maintenance/inner/central)
 "wNU" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
@@ -132640,7 +132692,7 @@ aam
 qKM
 aaI
 bgK
-bgK
+wNn
 bix
 fey
 fey
@@ -132941,8 +132993,8 @@ aah
 aaF
 qKM
 aaF
-aaB
 bgK
+sgl
 bix
 fey
 bkx
@@ -133243,8 +133295,8 @@ aaa
 aam
 qKM
 aaI
-aaa
 bgK
+scR
 bix
 fey
 bky
@@ -133545,8 +133597,8 @@ aaa
 aam
 qKM
 aaI
-aaa
 bgK
+kqn
 biy
 bji
 bkz
@@ -133847,7 +133899,7 @@ aaa
 aam
 qKM
 aaI
-aaa
+bgK
 gwk
 biz
 fey
