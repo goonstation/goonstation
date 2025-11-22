@@ -74,52 +74,50 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	targeted = TRUE
 	target_anything = TRUE
 
-	cast(atom/target)
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
+		src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> points at [target]!"))
+		playsound(src.owner.loc, 'sound/effects/bamf.ogg', 50, 0)
+		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(src.owner),"8x8snowflake","#88FFFF"))
+
+		if (misfire) cast_mis(target)
+		return cast_reg(target)
+
+	proc/cast_reg(atom/target)
 		var/turf/T = get_turf(target)
 
-		target.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(target, 'sound/effects/bamf.ogg', 50, 0)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(target),"8x8snowflake","#88FFFF"))
-
 		var/obj/decal/icefloor/B
-		for (var/turf/TF in range(linked_power.power - 1,T))
+		for (var/turf/TF in range(src.linked_power.power - 1,T))
 			B = new /obj/decal/icefloor(TF)
 			SPAWN(80 SECONDS)
 				B.dispose()
 
 		for (var/mob/living/L in T.contents)
-			if (L == owner && linked_power.safety)
+			if (L == src.owner && src.linked_power.safety)
 				continue
 			boutput(L, SPAN_NOTICE("You are struck by a burst of ice cold air!"))
 			if(L.getStatusDuration("burning"))
 				L.delStatus("burning")
 			L.bodytemperature = 100
-			if (linked_power.power > 1)
+			if (src.linked_power.power > 1)
 				new /obj/icecube(get_turf(L), L)
 
-		return
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire(atom/target)
-		if (..())
-			return 1
-
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(owner.loc, 'sound/effects/bamf.ogg', 50, 0)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(owner),"8x8snowflake","#88FFFF"))
-
-		if (!linked_power.safety)
-			boutput(owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
-			if(owner.getStatusDuration("burning"))
-				owner.delStatus("burning")
-			owner.bodytemperature = 100
-			new /obj/icecube(get_turf(owner), owner)
+	proc/cast_mis(atom/target)
+		if (!src.linked_power.safety)
+			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
+			if(src.owner.getStatusDuration("burning"))
+				src.owner.delStatus("burning")
+			src.owner.bodytemperature = 100
+			new /obj/icecube(get_turf(src.owner), src.owner)
 		else
-			boutput(owner, SPAN_ALERT("Your cryokinesis misfires!"))
-			if(owner.getStatusDuration("burning"))
-				owner.delStatus("burning")
+			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires!"))
+			if(src.owner.getStatusDuration("burning"))
+				src.owner.delStatus("burning")
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
