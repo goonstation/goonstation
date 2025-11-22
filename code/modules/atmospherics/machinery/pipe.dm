@@ -105,7 +105,7 @@
 /// Ruptures the pipe, with varying levels of leakage.
 /obj/machinery/atmospherics/pipe/proc/rupture(pressure)
 	if(!can_rupture)
-		return // if we can't rupture, then pass.
+		return // nah, don't feel like it.
 
 	var/new_rupture
 
