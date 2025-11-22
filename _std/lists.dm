@@ -386,3 +386,18 @@ proc/params2complexlist(params)
 	for(var/i in 1 to round(listlen / 2)) \
 		x.Swap(i, listlen - i + 1) \
 	} while (0)
+
+/// Cuts elements from the start and end of the list.
+#define trim_list(L, start_amt, end_amt) \
+	do { \
+	L.Cut(length(L) - end_amt + 1); \
+	L.Cut(1, start_amt + 1) \
+	} while (0)
+
+/// Remove every matching value from the list
+#define remove_all_list(L, x) \
+	do { \
+	for(var/remove_index in length(L) to 1 step -1) \
+		if(x == L[remove_index]) \
+			L.Cut(remove_index, remove_index+1) \
+	} while (0)
