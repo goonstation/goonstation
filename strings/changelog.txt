@@ -1,5 +1,9 @@
 
 (t)fri nov 21 25
+(u)Skotcher
+(p)24993
+(e)🗺|A-Mapping
+(*)Created a contraband processing room in Kondaru.
 (u)Egregorious
 (p)25052
 (e)💅🔨|C-QoL, A-Player-Actions
