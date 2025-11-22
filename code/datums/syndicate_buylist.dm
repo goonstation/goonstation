@@ -495,7 +495,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = ".38 AP ammo box"
 	items = list(/obj/item/storage/box/ammo38AP)
 	cost = 2
-	ammo = true
+	ammo = TRUE
 	desc = "Armor-piercing ammo for a .38 Special or Kestrel revolver (not included)."
 	can_buy = UPLINK_TRAITOR
 
