@@ -456,6 +456,7 @@
 #include "code\datums\hud\ai.dm"
 #include "code\datums\hud\battlersleft.dm"
 #include "code\datums\hud\cinematic.dm"
+#include "code\datums\hud\colorblind.dm"
 #include "code\datums\hud\compass_display.dm"
 #include "code\datums\hud\critter.dm"
 #include "code\datums\hud\drone.dm"
