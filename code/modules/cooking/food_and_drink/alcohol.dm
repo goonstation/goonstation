@@ -395,7 +395,7 @@
 		icon_state = "eyestalk1"
 		edible = 1
 		appearance_flags = KEEP_TOGETHER
-		var/second_stalk = FALSE
+		var/second_stalk = FALSE // you get two! :D
 
 		New()
 			..()
@@ -406,7 +406,7 @@
 				if (!src.second_stalk)
 					var/obj/item/cocktail_stuff/eyestalk/new_stalk = new /obj/item/cocktail_stuff/eyestalk
 					new_stalk.second_stalk = TRUE // don't inf loop us
-					new_stalk.set_loc(src)
+					new_stalk.set_loc(get_turf(src))
 
 // idk where to put this so here
 /obj/item/straw
