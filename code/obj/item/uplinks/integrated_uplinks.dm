@@ -110,9 +110,14 @@
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_objective[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.purchase_log[I3.type] ? src.purchase_log[I3.type] : 0]/[I3.max_buy])"]</td>"
 		if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
 			src.menu_message += "</table><B>Ejectable [syndicate_currency]:</B><BR><table cellspacing=5>"
-			for (var/O in src.items_telecrystal)
-				var/datum/syndicate_buylist/I3 = src.items_telecrystal[O]
-				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.purchase_log[I3.type] ? src.purchase_log[I3.type] : 0]/[I3.max_buy])"]</td>"
+			for (var/T in src.items_telecrystal)
+				var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
+				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[T]]'>About</A> [I4.max_buy == INFINITY  ? "" :"([src.purchase_log[I4.type] ? src.purchase_log[I4.type] : 0]/[I4.max_buy])"]</td>"
+		if (src.items_ammo && islist(src.items_ammo) && length(src.items_ammo))
+			for (var/A in src.items_ammo)
+				src.menu_message += "</table><B>Special ammunition:</B><BR><table cellspacing=5>"
+				var/datum/syndicate_buylist/I5 = src.items_ammo[A]
+				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_ammo[A]]'>[I5.name]</A> ([I5.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_ammo[A]]'>About</A> [I5.max_buy == INFINITY  ? "" :"([src.purchase_log[I5.type] ? src.purchase_log[I5.type] : 0]/[I5.max_buy])"]</td>"
 
 		src.menu_message += "</table><HR>"
 		if(has_synd_int && !src.is_VR_uplink)
