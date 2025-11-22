@@ -1,6 +1,10 @@
 
 (t)fri nov 21 25
 (u)Smallsandman
+(p)25011
+(e)🗺⚖👮|A-Mapping, C-Balance, A-Security
+(*)Added a new evidence room and second solitary brig to donut 3.
+(u)Smallsandman
 (p)25065
 (e)🆕🗺👮|C-Feature, A-Mapping, A-Security
 (*)Added an evidence room to Clarion.
