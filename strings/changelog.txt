@@ -1,5 +1,9 @@
 
 (t)fri nov 21 25
+(u)CalliopeSoups
+(p)25215
+(e)💅⏰🍝|C-QoL, A-Status-Effects, A-Catering
+(+)Sweating is now less extreme for most foods.
 (u)Smallsandman
 (p)25058
 (e)🆕🗺👮|C-Feature, A-Mapping, A-Security
