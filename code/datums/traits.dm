@@ -981,6 +981,13 @@ TYPEINFO(/datum/trait/partyanimal)
 	disability_name = "Hemophilia"
 	disability_desc = "Prone to blood loss"
 
+/datum/trait/cashless
+	name = "Cashless"
+	desc = "You lost all of your cash after a particularly devastating batch of laundry. Spawn with no cash in your inventory."
+	id = "cashless"
+	icon_state = "cashless"
+	points = 0
+
 /datum/trait/weakorgans
 	name = "Frail Constitution"
 	desc = "Your internal organs (brain included) are extremely vulnerable to damage."

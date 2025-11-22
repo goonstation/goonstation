@@ -811,7 +811,7 @@ Equip items from body traits.
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
 	src.mind?.remembered_pin = C.pin
 
-	if (JOB.wages > 0)
+	if (JOB.wages > 0 && !(src.traitHolder && src.traitHolder.hasTrait("cashless")))
 		var/cashModifier = 1
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
