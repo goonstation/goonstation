@@ -102,6 +102,10 @@
 					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
+							if(S.ammo)
+							src.items_ammo.Add(S)
+							src.items_general.Remove(S)
+
 
 					if (S.objective)
 						if (ownermind.objectives)
