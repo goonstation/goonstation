@@ -541,7 +541,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		get_name()
 			return pick("pig", "DAT FUKKEN PIG")
 	spider
-		fake_icon_state = "big_spide"
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "spider"
 		get_name()
 			return pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 	slime
