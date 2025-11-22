@@ -2,6 +2,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random
 	limit = 0
 	name = "Random"
+	job_category = JOB_RANDOM
 	request_limit = 2
 	request_cost = PAY_IMPORTANT*4
 
