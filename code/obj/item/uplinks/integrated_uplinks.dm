@@ -114,8 +114,8 @@
 				var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[T]]'>About</A> [I4.max_buy == INFINITY  ? "" :"([src.purchase_log[I4.type] ? src.purchase_log[I4.type] : 0]/[I4.max_buy])"]</td>"
 		if (src.items_ammo && islist(src.items_ammo) && length(src.items_ammo))
+			src.menu_message += "</table><B>Special ammunition:</B><BR><table cellspacing=5>"
 			for (var/A in src.items_ammo)
-				src.menu_message += "</table><B>Special ammunition:</B><BR><table cellspacing=5>"
 				var/datum/syndicate_buylist/I5 = src.items_ammo[A]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_ammo[A]]'>[I5.name]</A> ([I5.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_ammo[A]]'>About</A> [I5.max_buy == INFINITY  ? "" :"([src.purchase_log[I5.type] ? src.purchase_log[I5.type] : 0]/[I5.max_buy])"]</td>"
 
