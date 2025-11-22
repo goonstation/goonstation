@@ -203,6 +203,7 @@ TYPEINFO(/mob)
 	var/last_cubed = 0
 
 	var/datum/movement_controller/override_movement_controller = null
+	var/list/movement_controller_list = list()
 
 	var/dir_locked = FALSE
 
@@ -1238,6 +1239,7 @@ TYPEINFO(/mob)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	// stop piloting pods or whatever
 	src.override_movement_controller = null
+	src.movement_controller_list = list()
 	// stop pulling shit!!
 	src.remove_pulling()
 
@@ -3515,3 +3517,27 @@ TYPEINFO(/mob)
 /// total value of the cache. The cache will be reset during the tick regardless of whether or not the mob has active addictions.
 /mob/proc/try_affect_all_addictions(var/value)
 	return FALSE
+
+/mob/proc/add_movement_controller(datum/movement_controller/movement_controller)
+	override_movement_controller = movement_controller
+	movement_controller_list.Add(movement_controller)
+
+/mob/proc/remove_movement_controller(datum/movement_controller/movement_controller = null)
+	if (!movement_controller)
+		movement_controller_list = list()
+		override_movement_controller = null
+		return
+
+	movement_controller_list.Remove(movement_controller)
+
+	if (override_movement_controller != movement_controller)
+		return
+
+	if (movement_controller_list.len)
+		override_movement_controller = movement_controller_list[movement_controller_list.len]
+	else
+		override_movement_controller = null
+
+
+
+
