@@ -24,6 +24,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		src.plantgenes = new /datum/plantgenes(src)
 		src.make_reagents()
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (dist >= 5)
+			return
+		HYPphytoscopic_scan(user, src)
+
 	clamp_act(mob/clamper, obj/item/clamp)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		if(src.reagents)
@@ -122,11 +128,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			"You cut the flying [src] with your [wielded_sword] midair!].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			var/list/slices = list()
 			for (var/i in 1 to src.slice_amount)
 				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
+				slices.Add(slice)
 				src.process_sliced_products(slice, amount_to_transfer)
 				var/target_point = get_turf(pick(orange(4, src)))
 				slice.throw_at(target_point, rand(0, 10), rand(1, 4))
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, slices)
 			qdel (src)
 		else
 			..()
@@ -246,6 +255,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/obj/item/reagent_containers/food/snacks/new_popcorn = new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
 			new_popcorn.reagents.maximum_volume = max(new_popcorn.reagents.maximum_volume, src.reagents.total_volume)
 			src.reagents.trans_to(new_popcorn, src.reagents.total_volume)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_popcorn)
 			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/corn/clear
@@ -379,6 +389,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/datum/plantgenes/PDNA = P.plantgenes
 			if(DNA)
 				HYPpassplantgenes(DNA,PDNA)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, P, user)
 			qdel(W)
 			qdel(src)
 		..()
@@ -671,8 +682,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 					if(src.reagents)
 						amount_per_slice = src.reagents.total_volume / 5
 						src.reagents.inert = 1
+					var/list/slices = list()
 					while(n_slices)
 						var/obj/item/reagent_containers/food/snacks/plant/melonslice/slice = new(get_turf(src))
+						slices.Add(slice)
 						slice.name = "[src.name] slice"
 						if(src.reagents)
 							slice.reagents = new
@@ -693,6 +706,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 							slice.throw_at(target, rand(0, 10), rand(1, 4))
 						n_slices--
 					sleep(0.1 SECONDS)
+					SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, slices, user)
 					qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/chili
@@ -932,14 +946,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 				if(S.broken)
 					boutput(user, SPAN_ALERT("You can't use a broken stick!"))
 					return
-
+			var/apple_stick
 			// Create apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/poison))
 				boutput(user, SPAN_NOTICE("You create an apple on a stick..."))
-				new/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison(get_turf(src))
+				apple_stick = new/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison(get_turf(src))
 			else
 				boutput(user, SPAN_NOTICE("You create a delicious apple on a stick..."))
-				new/obj/item/reagent_containers/food/snacks/plant/apple/stick(get_turf(src))
+				apple_stick = new/obj/item/reagent_containers/food/snacks/plant/apple/stick(get_turf(src))
 
 			// Consume a rod or stick
 			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
@@ -947,7 +961,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 			// If no rods or sticks left, delete item
 			if(!W.amount) qdel(W)
-
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, apple_stick, user)
 			// Consume apple
 			qdel(src)
 		else ..()
@@ -1093,6 +1107,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				var/obj/item/ai_plating_kit/result = new src.wire_result(user.loc)
 				user.put_in_hand_or_drop(result)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, result, user)
 				qdel(src)
 				if (coil.amount < 1)
 					user.drop_item()
@@ -1104,6 +1119,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/obj/item/clothing/head/result = new src.carving_result(user.loc)
 			result.name = "carved [src.name]"
 			result.transform = src.transform
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, result, user)
 			qdel(src)
 		else if (isspooningtool(W))
 			src.spoon_message(W, user)
@@ -1111,6 +1127,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			result.reagents.maximum_volume = max(result.reagents.maximum_volume, src.reagents.total_volume)
 			src.reagents.trans_to(result, src.reagents.maximum_volume)
 			result.transform = src.transform
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, result, user)
 			qdel(src)
 
 	proc/carving_message(obj/item/knife, mob/user)
@@ -1288,7 +1305,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 				src.desc = "It needs to be cooked."
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] chops up [src].", "You chop up [src].")
-				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
+				var/chips = new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, chips, user)
 				qdel(src)
 		var/obj/item/cable_coil/C = W
 		if (istype(C)) //kubius potato battery: creation operation
@@ -1298,6 +1316,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 				var/obj/item/cell/potato/P = new /obj/item/cell/potato(get_turf(src),DNA?.get_effective_value("potency"),DNA?.get_effective_value("endurance"))
 				P.name = "[src.name] battery"
 				P.transform = src.transform
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, P, user)
 				qdel (src)
 			else if (src.icon_state == "potato-peeled" && C.use(1))
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift battery.")
@@ -1305,6 +1324,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA?.get_effective_value("potency"),DNA?.get_effective_value("endurance"))
 				P.name = "[src.name] battery"
 				P.transform = src.transform
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, P, user)
 				qdel (src)
 		else ..()
 
@@ -1447,6 +1467,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		if (throws_food)
 			var/target_point = get_turf(pick(orange(4, src)))
 			drink.throw_at(target_point, rand(0, 10), rand(1, 4))
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, drink)
 		qdel(src)
 
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)

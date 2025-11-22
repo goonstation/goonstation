@@ -686,7 +686,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		SPAWN(1 SECOND)
 			if(location?.material?.getID() == "miracle")
 				location.visible_message(SPAN_NOTICE("[location] bends and twists, changing colors rapidly."))
-				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
+				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "negativematter",prob(6); "ectoplasm")
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)
 		return
 
@@ -870,8 +870,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(mob/living/L, obj/item/I, mult)
 		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
 			return
-		if (istype(L))
-			L.shock(I, src.wattage, "All", 1, FALSE)
+		if (!istype(L))
+			return
+
+		if(istype(I, /obj/item/raw_material/veranium))
+			var/obj/item/raw_material/veranium/ore = I
+			FLICK("ore[ore.icon_stack_value]_shock$$veranium", ore)
+		else if(istype(I, /obj/item/rocko))
+			var/obj/item/rocko/rocko = I
+			var/flick_state = replacetextEx(rocko.icon_state, "$$veranium", "shock$$veranium")
+			FLICK(flick_state, rocko)
+		L.shock(I, src.wattage, "All", 1, FALSE)
 
 /datum/materialProc/arcflash_life
 	var/cd_min

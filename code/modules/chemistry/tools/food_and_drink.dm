@@ -135,24 +135,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			src.onSlice(user)
 			//the hacky place_on zone of sadness
-			var/obj/surgery_tray/tray = locate() in src.loc
-			if (!tray || !(src in tray.attached_objs))
-				tray = null
 			var/obj/item/plate/plate = src.loc
 			if (istype(plate))
 				plate.remove_contents(src)
 			else
 				plate = null
+			var/list/new_items = list()
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
 					var/obj/item/reagent_containers/food/slice = slice_result
 					src.process_sliced_products(slice, amount_to_transfer)
-				//try to put it on the plate/tray if we're on one
-				if (tray && tray.place_on(slice_result))
-					tray.attach(slice_result)
-				else if (plate)
+				new_items.Add(slice_result)
+				//try to put it on the plate if we're on one
+				if (plate)
 					plate.add_contents(slice_result)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_items, user)
 			qdel (src)
 		else
 			..()
@@ -1230,7 +1228,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				var/x_offset = 0
 				var/y_offset = 0
 
-				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
+				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella) || istype(in_glass, /obj/item/cocktail_stuff/eyestalk))
 					x_offset = src.umbrella_x_offset
 					y_offset = src.umbrella_y_offset
 				else

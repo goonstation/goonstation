@@ -57,6 +57,7 @@
 						user.u_equip(src)
 						var/obj/item/c_tube/C = new /obj/item/c_tube(src.loc)
 						user.put_in_hand_or_drop(C)
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 						qdel(src)
 					return
 			if(istype(W, /obj/item/phone_handset/))
@@ -80,6 +81,7 @@
 				user.u_equip(src)
 				var/obj/item/c_tube/C = new /obj/item/c_tube(src.loc)
 				user.put_in_hand_or_drop(C)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 				qdel(src)
 				return
 		else
@@ -141,8 +143,14 @@
 
 
 	modify_christmas_cheer(2)
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, src.gift, user)
 	qdel(src)
 	return
+
+/obj/item/gift/proc/item_moved(obj/item/item)
+	if (item.loc != src)
+		UnregisterSignal(item, COMSIG_MOVABLE_SET_LOC)
+		qdel(src)
 
 /obj/item/a_gift
 	name = "gift"
@@ -206,6 +214,7 @@
 	M.u_equip(src)
 	M.put_in_hand_or_drop(prize)
 	modify_christmas_cheer(2)
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, prize, M)
 	qdel(src)
 
 /obj/item/a_gift/ex_act()

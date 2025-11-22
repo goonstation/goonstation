@@ -600,6 +600,20 @@ TYPEINFO(/mob/living/silicon/robot)
 					maptext_out = "<I>flexes [his_or_her(src)] arms</I>"
 					m_type = 1
 
+			if ("raisehand")
+				if (!src.restrained())
+					var/obj/item/thing = src.equipped()
+					if (thing)
+						message = "<b>[used_name]</b> raises [thing]."
+						maptext_out = "<I>raises [thing]</I>"
+					else
+						message = "<b>[used_name]</b> raises [his_or_her(src)] distinct lack of hands."
+						maptext_out = "<I>raises [his_or_her(src)] lack of hands</I>"
+				else
+					message = "<b>[used_name]</b> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
+
 			if ("fart")
 				if (farting_allowed && src.emote_check(voluntary))
 					m_type = 2

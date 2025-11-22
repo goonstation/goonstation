@@ -866,11 +866,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 						boutput(user, SPAN_ALERT("You were interrupted!"))
 						return
 					else
+						var/list/bandages = list()
 						for (var/i=3, i>0, i--)
-							new /obj/item/bandage(get_turf(src))
+							bandages.Add(new /obj/item/bandage(get_turf(src)))
 						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 						boutput(user, "You cut [src] into bandages.")
 						user.u_equip(src)
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, bandages, user)
 						qdel(src)
 						return
 				if ("Cut cable")
@@ -919,10 +921,11 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			src.bed.untuck_sheet()
 		src.bed = null
 		src.cape = TRUE
-		block_vision = FALSE
+		src.block_vision = FALSE
+		src.hides_from_examine = C_BACK
 		src.UpdateIcon()
 		src.update_examine()
-		desc = "It's a bedsheet that's been tied into a cape."
+		src.desc = "It's a bedsheet that's been tied into a cape."
 
 	proc/cut_cape()
 		if (!src.cape)
@@ -931,10 +934,11 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			src.bed.untuck_sheet()
 		src.bed = null
 		src.cape = FALSE
-		block_vision = !src.eyeholes
+		src.block_vision = !src.eyeholes
+		src.hides_from_examine = initial(src.hides_from_examine)
 		src.UpdateIcon()
 		src.update_examine()
-		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
+		src.desc = initial(src.desc)
 
 	proc/update_examine()
 		if(src.cape)
@@ -1306,6 +1310,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 		var/obj/item/newsuit = new /obj/item/clothing/suit/space/emerg
 		user.put_in_hand_or_drop(newsuit)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newsuit, user)
 		qdel(src)
 
 /obj/item/clothing/suit/space/emerg/science

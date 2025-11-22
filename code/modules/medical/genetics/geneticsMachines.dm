@@ -17,7 +17,7 @@
 	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null
-	var/list/equipment = list(
+	var/list/equipment = alist(
 		GENETICS_INJECTORS = 0,
 		GENETICS_ANALYZER = 0,
 		GENETICS_EMITTERS = 0,
