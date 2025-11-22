@@ -203,7 +203,7 @@
 
 				sort5[name] = S5
 
-			src.items_telecrystal = sortList(sort5, /proc/cmp_text_asc)
+			src.items_ammo = sortList(sort5, /proc/cmp_text_asc)
 
 
 		return
