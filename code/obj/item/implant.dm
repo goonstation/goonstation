@@ -46,6 +46,7 @@ THROWING DARTS
 	var/list/mailgroups = null
 	var/net_id = null
 	var/alert_frequency = FREQ_PDA
+	can_arcplate = FALSE
 
 	New()
 		..()
