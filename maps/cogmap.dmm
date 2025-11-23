@@ -37734,7 +37734,8 @@
 /area/station/hallway/primary/south)
 "eAo" = (
 /obj/machinery/light/small{
-	dir = 4
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -39875,7 +39876,9 @@
 	pixel_x = 8;
 	pixel_y = -5
 	},
-/turf/simulated/floor/red/side,
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
 /area/station/security/main)
 "fYn" = (
 /obj/cable{
@@ -41240,6 +41243,10 @@
 /obj/item/pen{
 	pixel_y = 5;
 	pixel_x = 4
+	},
+/obj/machinery/light/lamp/black{
+	pixel_y = 9;
+	pixel_x = -2
 	},
 /turf/simulated/floor/red,
 /area/station/security/evidence)
@@ -47565,10 +47572,6 @@
 /area/station/hallway/primary/south)
 "lTt" = (
 /obj/table/auto,
-/obj/machinery/light/lamp/black{
-	pixel_y = 9;
-	pixel_x = -2
-	},
 /obj/item/item_box/postit{
 	pixel_y = 3;
 	pixel_x = -5
@@ -48234,10 +48237,10 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/small{
 	dir = 1;
-	status = 2
+	pixel_y = 21
 	},
 /turf/simulated/floor/redblack{
-	dir = 10
+	dir = 9
 	},
 /area/station/security/evidence)
 "msz" = (
@@ -49705,10 +49708,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
-"nrT" = (
-/obj/machinery/light/small,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/evidence)
 "nst" = (
 /obj/machinery/conveyor/WE{
 	id = "qmin"
@@ -52255,10 +52254,11 @@
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "pff" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/storage/secure/closet/brig,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -57601,7 +57601,6 @@
 /area/station/maintenance/inner/central)
 "tdb" = (
 /obj/storage/secure/closet/brig,
-/obj/machinery/light/small,
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "tdf" = (
@@ -57617,6 +57616,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -99064,7 +99069,7 @@ aAE
 aAE
 aAE
 tdb
-nrT
+uFn
 auw
 oYj
 awT
