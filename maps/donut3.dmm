@@ -13415,6 +13415,10 @@
 /obj/machinery/sleeper,
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
