@@ -202,7 +202,6 @@ TYPEINFO(/mob)
 
 	var/last_cubed = 0
 
-	var/datum/movement_controller/override_movement_controller = null
 	var/list/movement_controller_list = list()
 
 	var/dir_locked = FALSE
@@ -1238,7 +1237,6 @@ TYPEINFO(/mob)
 	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	// stop piloting pods or whatever
-	src.override_movement_controller = null
 	src.movement_controller_list = list()
 	// stop pulling shit!!
 	src.remove_pulling()
@@ -3519,24 +3517,19 @@ TYPEINFO(/mob)
 	return FALSE
 
 /mob/proc/add_movement_controller(datum/movement_controller/movement_controller)
-	override_movement_controller = movement_controller
-	movement_controller_list.Add(movement_controller)
+	src.movement_controller_list.Add(movement_controller)
 
 /mob/proc/remove_movement_controller(datum/movement_controller/movement_controller = null)
 	if (!movement_controller)
-		movement_controller_list = list()
-		override_movement_controller = null
+		src.movement_controller_list = list()
 		return
 
-	movement_controller_list.Remove(movement_controller)
+	src.movement_controller_list.Remove(movement_controller)
 
-	if (override_movement_controller != movement_controller)
-		return
-
-	if (movement_controller_list.len)
-		override_movement_controller = movement_controller_list[movement_controller_list.len]
-	else
-		override_movement_controller = null
+/mob/proc/get_active_movement_controller()
+	if (!length(src.movement_controller_list))
+		return null
+	return src.movement_controller_list[length(src.movement_controller_list)]
 
 
 
