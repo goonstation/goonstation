@@ -393,11 +393,3 @@ proc/params2complexlist(params)
 	L.Cut(length(L) - end_amt + 1); \
 	L.Cut(1, start_amt + 1) \
 	} while (0)
-
-/// Remove every matching value from the list
-#define remove_all_list(L, x) \
-	do { \
-	for(var/remove_index in length(L) to 1 step -1) \
-		if(x == L[remove_index]) \
-			L.Cut(remove_index, remove_index+1) \
-	} while (0)

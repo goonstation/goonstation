@@ -209,7 +209,7 @@
 				if(findtext(input_bunches[input_index], "_")) // (-...A...-) or (...A...B...)
 					// Not efficient to split the input bunch every time, but should be fine
 					var/list/input_bunch_split = splittext(input_bunches[input_index], "_")
-					remove_all_list(input_bunch_split, "")
+					input_bunch_split.RemoveAll("")
 					if(length(input_empty) == 1)
 						// Check the whole fingerprint rather than individual bunches
 						if(findtextEx_ordered(record_prints[i], input_bunch_split))
