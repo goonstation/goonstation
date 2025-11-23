@@ -87,16 +87,25 @@
 		 *
 		 * 	Required: sweatReagent - the chemical you're sweating
 		 *  targetTurf should be left default
+		 *  Turning sweatpools on causes sweat chempools instead of cleanables
 		 */
-	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner))
+	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner), var/sweatpools = FALSE)
+		if (!prob(sweatChance))
+			return
 		var/datum/reagents/tempHolder = new
-		if (prob(sweatChance))
+		if (sweatpools)
 			tempHolder.add_reagent(sweatReagent, sweatAmount)
 			targetTurf.fluid_react_single(sweatReagent,sweatAmount)
 			tempHolder.reaction(targetTurf, TOUCH)
-		return
-
-
+		else
+			var/datum/reagent/sweatinput = global.reagents_cache[sweatReagent]
+			var/obj/decal/cleanable/water/sweat = make_cleanable(/obj/decal/cleanable/water, targetTurf)
+			sweat.color = rgb(sweatinput.fluid_r, sweatinput.fluid_g, sweatinput.fluid_b)
+			sweat.alpha = sweatinput.transparency
+			sweat.sample_reagent = sweatReagent
+			sweat.name = "sweat"
+			sweat.desc = "A bunch of sweat on the floor. Ew!"
+			sweat.dry_time = 60
 
 	/**
 		* Called when the status is changed using setStatus. Called after duration is updated etc.

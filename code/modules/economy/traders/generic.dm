@@ -5,7 +5,7 @@
 	chance_leave = 45
 	chance_arrive = 66
 
-	base_goods_buy = list(
+	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/generic/anyore,
 			/datum/commodity/trader/generic/herbs,
@@ -21,7 +21,7 @@
 		TRADER_RARITY_RARE = list()
 	)
 
-	base_goods_sell = list(
+	base_goods_sell = alist(
 		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/generic/sheetmetal,
 			/datum/commodity/trader/generic/fabric,
