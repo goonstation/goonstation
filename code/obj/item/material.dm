@@ -432,7 +432,7 @@
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
 				var/last_ckey = src.get_last_ckey()
-				logTheThing(LOG_BOMBING, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [replace_if_null(last_ckey, "None")]")
+				logTheThing(LOG_BOMBING, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [replace_if_false(last_ckey, "None")]")
 				if (last_ckey && !istype(get_area(bombturf), /area/mining/magnet))
 					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(last_ckey)]")
 
@@ -448,7 +448,7 @@
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
 			var/last_ckey = src.get_last_ckey()
-			logTheThing(LOG_BOMBING, null, "Erebite detonated by heat in [bombarea]. Last touched by: [replace_if_null(last_ckey, "None")]")
+			logTheThing(LOG_BOMBING, null, "Erebite detonated by heat in [bombarea]. Last touched by: [replace_if_false(last_ckey, "None")]")
 			if(last_ckey && !istype(get_area(bombturf), /area/mining/magnet))
 				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(last_ckey)]")
 

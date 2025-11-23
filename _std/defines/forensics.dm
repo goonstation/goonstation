@@ -36,6 +36,7 @@
 #define FORENSIC_VALUE_MAX 4
 #define FORENSIC_VALUE_MIN 5
 
+// Chose 16 letters that look distinct and sort of fingerprinty with curves and such
 #define FORENSIC_CHARS_FINGERPRINTS list("a","b","c","d","e","g","n","o","p","q","s","u","v","x","y","z")
 #define FORENSIC_CHARS_HEX list("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
 

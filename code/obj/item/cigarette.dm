@@ -356,7 +356,7 @@
 			logTheThing(LOG_BOMBING, null, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
 		else
 			var/last_ckey = src.get_last_ckey()
-			logTheThing(LOG_BOMBING, last_ckey, "A trick cigarette explodes at [log_loc(src)]. Last touched by [replace_if_null(last_ckey, "None")].")
+			logTheThing(LOG_BOMBING, last_ckey, "A trick cigarette explodes at [log_loc(src)]. Last touched by [replace_if_false(last_ckey, "None")].")
 
 		if (istype(src.loc,/obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = src.loc

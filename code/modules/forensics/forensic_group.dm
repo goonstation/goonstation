@@ -242,7 +242,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		var/aprint_text = ""
 		for(var/datum/forensic_data/adminprint/print in src.print_list)
 			aprint_text += "<li>[print.get_text()]</li>"
-		aprint_text += "<li><b>Last touched by:</b> [replace_if_null(src.get_last_ckey(), "None")].</li>"
+		aprint_text += "<li><b>Last touched by:</b> [replace_if_false(src.get_last_ckey(), "None")].</li>"
 		return aprint_text
 
 	copy_to(var/datum/forensic_holder/other)

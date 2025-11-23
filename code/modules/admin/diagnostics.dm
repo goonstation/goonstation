@@ -942,7 +942,7 @@ proc/debug_map_apc_count(delim,zlim)
 				var/last_ckey = A.get_last_ckey()
 				if(!last_ckey)
 					continue
-				lines += "[A.name]: [replace_if_null(last_ckey, "None")]"
+				lines += "[A.name]: [replace_if_false(last_ckey, "None")]"
 			if(lines.len == 0)
 				lines += "None"
 				img.app.color = "#FF0000"

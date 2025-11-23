@@ -2305,7 +2305,7 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 	return jointext(.,"")
 
 /// Replace a value with another if the original is null. Otherwise returns the original.
-proc/replace_if_null(var/original, var/replacement)
+proc/replace_if_false(var/original, var/replacement)
 	if(original)
 		return original
 	else

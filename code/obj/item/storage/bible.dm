@@ -192,7 +192,7 @@
 
 	proc/smite(mob/M)
 		M.visible_message(SPAN_ALERT("[M] farts on the bible.<br><b>A mysterious force smites [M]!</b>"))
-		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[replace_if_null(src.get_last_ckey(), "None")]</b>.")
+		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[replace_if_false(src.get_last_ckey(), "None")]</b>.")
 		M.smite_gib()
 
 /obj/item/bible/evil
@@ -221,7 +221,7 @@
 			return TRUE
 
 		user.visible_message(SPAN_ALERT("[user] farts on the bible.<br><b>A mysterious force smites [user]!</b>"))
-		logTheThing(LOG_COMBAT, user, "farted on [src] at [log_loc(src)] last touched by <b>[replace_if_null(src.get_last_ckey(), "None")]</b>.")
+		logTheThing(LOG_COMBAT, user, "farted on [src] at [log_loc(src)] last touched by <b>[replace_if_false(src.get_last_ckey(), "None")]</b>.")
 		smite(user)
 		return TRUE
 

@@ -94,7 +94,7 @@ TYPEINFO(/obj/item/gun/energy)
 			return
 
 		if (!(src in processing_items))
-			logTheThing(LOG_DEBUG, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [replace_if_null(src.get_last_ckey(), "None")]")
+			logTheThing(LOG_DEBUG, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 			processing_items.Add(src)
 			return
 		if (!src.cell)
