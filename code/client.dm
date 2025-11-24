@@ -334,7 +334,7 @@
 			Z_LOG_DEBUG("Client/New", "[src.ckey] - new player crap")
 
 			if (!loaded_savefile)
-				#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+				#ifdef LIVE_SERVER
 				preferences.ShowChoices(src.mob)
 				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
 				boutput(src, SPAN_ALERT("Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!"))

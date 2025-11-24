@@ -1,4 +1,59 @@
 
+(t)fri nov 21 25
+(u)CalliopeSoups
+(p)25215
+(e)💅⏰🍝|C-QoL, A-Status-Effects, A-Catering
+(+)Sweating is now less extreme for most foods.
+(u)Smallsandman
+(p)25058
+(e)🆕🗺👮|C-Feature, A-Mapping, A-Security
+(*)Added an evidence room to Cogmap 2.
+(u)Smallsandman
+(p)25068
+(e)🆕🗺👮|C-Feature, A-Mapping, A-Security
+(*)Added an evidence room to Donut2.
+(u)Smallsandman
+(p)25067
+(e)🆕🗺👮|C-Feature, A-Mapping, A-Security
+(*)Added an evidence room to Oshan Labs.
+(u)Skotcher
+(p)24993
+(e)🗺|A-Mapping
+(*)Created a contraband processing room in Kondaru.
+(u)Egregorious
+(p)25052
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)The 'butt' accent has received some minor improvements to preserve tone.
+(u)Smallsandman
+(p)25047
+(e)🗺|A-Mapping
+(*)Added an evidence room to Nadir's security.
+(u)Smallsandman
+(p)25011
+(e)🗺⚖👮|A-Mapping, C-Balance, A-Security
+(*)Added a new evidence room and second solitary brig to donut 3.
+(u)Smallsandman
+(p)25065
+(e)🆕🗺👮|C-Feature, A-Mapping, A-Security
+(*)Added an evidence room to Clarion.
+(u)Smallsandman
+(p)25057
+(e)🆕🗺👮|C-Feature, A-Mapping, A-Security
+(*)Added an evidence room to Cogmap 1.
+(t)wed nov 19 25
+(u)SnugglyCactus
+(p)25173
+(e)🎨|C-Sprites
+(*)Hallucinations have been resprited to be 4-directional. Rejoice!
+(t)fri nov 14 25
+(u)LeahTheTech
+(+)Changeling transformation now includes traits.
+(t)wed nov 12 25
+(u)Studenterhue
+(p)25156
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Book4u now has a book of three-sentence horror stories from the Goonstation Fall 2025 Seasonal Contest. Congratulations to Cropsey, Nautical-eX, FlameArrow57, Solenoid, Munien, Xenonia, and Asterion0!
+(+)Frank_Stein, sunkiisu, and Whele didn't win, but their stories were so good that they were included anyway.
 (t)tue nov 11 25
 (u)LeahTheTech
 (p)25167
