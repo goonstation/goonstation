@@ -1,4 +1,9 @@
 
+(t)mon nov 24 25
+(u)lyzmat
+(p)25199
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Traitor .38 Special variants are no longer locked to Detective operatives.
 (t)fri nov 21 25
 (u)CalliopeSoups
 (p)25215
