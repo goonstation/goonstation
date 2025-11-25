@@ -19,7 +19,7 @@
 */
 ABSTRACT_TYPE(/datum/recipe)
 /datum/recipe
-	VAR_PROTECTED/list/ingredients /// An associative list of [paths = amounts] representing the required ingredients for this recipe
+	VAR_PROTECTED/ingredients /// An associative list of [paths = amounts] representing the required ingredients for this recipe
 	VAR_PROTECTED/output = null /// what you get from this recipe. This can be a path, a list of paths, or an associative list of [paths = amounts]
 	var/category = "Unsorted" /// category for sorting, use null to hide
 	VAR_PROTECTED/list/variants = null
@@ -204,6 +204,15 @@ ABSTRACT_TYPE(/datum/recipe)
 			for(var/key in recipe_output)
 				return key
 		return recipe_output
+
+
+/// Made to work with machines that deal with a list of ingredients one at a time, instead of as a batch. These recipes are intended to be
+/// dedicated single-inputs, but can potentially be extended to consider the input list as a whole, within reason. (e.g. catalyst behaviour)
+ABSTRACT_TYPE(/datum/recipe/sequential)
+/datum/recipe/sequential
+
+	can_cook_recipe(var/list/input_list)
+		return istype(input_list[1], src.ingredients)
 
 
 /// recipe instructions are the machine-specific portions of a recipe. They might include cooking times, or special interactions such as
