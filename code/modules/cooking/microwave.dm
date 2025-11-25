@@ -217,18 +217,36 @@ TYPEINFO(/obj/machinery/microwave)
 		ui.open()
 
 /obj/machinery/microwave/ui_data(mob/user)
-	. = list(
+	var/list/contents = list()
+	var/index = 1
+	for(var/obj/item/I in src.contents)
+		contents.Add(list(list(
+            "index" = index,
+            "name" = I.name,
+            "iconData" = src.get_item_icon(I)
+        )))
+		index++
+	var/list/thing = list(
 		"broken" = src.microwave_state > 0,
 		"operating" = src.operating,
-		"dirty" = src.dirty,
-		"eggs" = 0,
-		"flour" = 0,
-		"monkey_meat" = 0,
-		"synth_meat" = 0,
-		"donk_pockets" = 0,
-		"other_meat" = 0,
-		"unclassified_item" = null
+		"dirty" = 0,
+		"maxItems" = 4,
+		"items" = contents
 		)
+	return thing
+
+/obj/machinery/microwave/proc/get_item_icon(var/obj/item/target)
+	var/static/base64_preview_cache = list()
+	var/original_name = initial(target.name)
+	. = base64_preview_cache[original_name]
+
+	if(isnull(.))
+		var/icon/result = getFlatIcon(target, no_anim=TRUE)
+		if(result)
+			. = icon2base64(result)
+		else
+			. = ""
+		base64_preview_cache[original_name] = .
 
 /obj/machinery/microwave/ui_act(action, params)
 	. = ..()
