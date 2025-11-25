@@ -22250,10 +22250,6 @@
 "bsw" = (
 /obj/disposalpipe/segment/ejection,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/simulated/floor/red/corner{
 	dir = 8
 	},
