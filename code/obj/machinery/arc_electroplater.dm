@@ -107,6 +107,9 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		if (src.target_item)
 			boutput(user, SPAN_ALERT("There is already something in [src]!"))
 			return
+		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure) || W.anchored)
+			boutput(user, SPAN_ALERT("There is no way that could fit!"))
+			return
 		if (istype(W, /obj/item/grab))
 			boutput(user, SPAN_ALERT("That wouldn't possibly fit!"))
 			return
@@ -123,10 +126,6 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			return
 		if(W.material && W.material.getID() != W.default_material)
 			boutput(user, SPAN_ALERT("You can't plate something that already has a non-standard material!"))
-			return
-
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure) || W.anchored)
-			boutput(user, SPAN_ALERT("There is no way that could fit!"))
 			return
 
 		if(W.amount > 1)
