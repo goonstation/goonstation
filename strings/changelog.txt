@@ -1,4 +1,6 @@
-
+(t)wed nov 26 25
+(u)LeahTheTech
+(+).38 Ricochet rounds now do bonus damage per bounce and throw the victim if they've bounced at least twice.
 (t)mon nov 24 25
 (u)lyzmat
 (p)25199
