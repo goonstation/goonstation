@@ -24,7 +24,7 @@
 		if (!istype(AST))
 			return 1
 
-	proc/onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+	proc/onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user = null)
 		if (!istype(AST))
 			return 1
 

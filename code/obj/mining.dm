@@ -934,7 +934,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 					AddOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
-		destroy_asteroid(dropOre)
+		destroy_asteroid(dropOre, var/mob/user)
 			ClearSpecificOverlays("glow_algae")
 			remove_medium_light("glow_algae")
 			var/list/turf/neighbors = getNeighbors(src, alldirs)
@@ -1076,7 +1076,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			AddOverlays(algea, "glow_algae")
 			add_medium_light("glow_algae", color_vals)
 
-		destroy_asteroid(dropOre)
+		destroy_asteroid(dropOre, var/mob/user)
 			ClearSpecificOverlays("glow_algae")
 			remove_medium_light("glow_algae")
 			var/list/turf/neighbors = getNeighbors(src, alldirs)
@@ -1321,7 +1321,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				dig_feedback = "You can't even make a dent! You need a stronger tool."
 
 		if (prob(dig_chance))
-			destroy_asteroid()
+			destroy_asteroid(user = user)
 		else
 			if (dig_feedback)
 				boutput(user, SPAN_ALERT("[dig_feedback]"))
@@ -1360,7 +1360,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		return
 
-	proc/destroy_asteroid(var/dropOre=1)
+	proc/destroy_asteroid(var/dropOre=1, var/mob/user)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 
@@ -1371,12 +1371,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (E)
 			if (E.excavation_string)
 				src.visible_message(SPAN_ALERT("[E.excavation_string]"))
-			E.onExcavate(src)
+			E.onExcavate(src, user)
 		var/ore_to_create = src.default_ore
 		if (ispath(ore_to_create) && dropOre)
 			if (O)
 				ore_to_create = O.output
-				O.onExcavate(src)
+				O.onExcavate(src, user)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
 				new ore_to_create(src)

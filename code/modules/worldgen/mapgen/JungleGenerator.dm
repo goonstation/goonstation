@@ -91,7 +91,7 @@
 	default_ore = null
 	replace_type = /turf/unsimulated/floor/plating/asteroid/mountain
 
-	destroy_asteroid(var/dropOre=1)
+	destroy_asteroid(var/dropOre=1, var/mob/user)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 

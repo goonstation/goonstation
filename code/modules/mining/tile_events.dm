@@ -29,9 +29,14 @@
 			return 1
 		gem_type = pick(parent.gems)
 
-	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user)
 		if (..())
 			return
+		if (user)
+			// this spawn desyncs the sound and the mining-tool sfx, which gives a better sense of cause and effect
+			SPAWN(0.2 SECONDS)
+				// played locally because it's intended to be associated with specifically you getting something valuable, not someone else
+				user.playsound_local(user, 'sound/effects/gem_drop.ogg', 50, 1)
 		var/obj/item/I = new gem_type
 		I.set_loc(AST)
 
