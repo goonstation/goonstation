@@ -5,7 +5,7 @@
 	stamina_crit_chance = 0
 
 	var/uses = 12 // Amount of telecrystals.
-	var/list/datum/syndicate_buylist/items_general = list() // See setup().
+	var/list/datum/syndicate_buylist/items_general = list() // See setup() and validate_spawn().
 	var/list/datum/syndicate_buylist/items_job = list()
 	var/list/datum/syndicate_buylist/items_objective = list()
 	var/list/datum/syndicate_buylist/items_telecrystal = list()
@@ -370,6 +370,10 @@
 
 		for(var/S in items_telecrystal)
 			if(SB == items_telecrystal[S])
+				return 1
+
+		for(var/S in items_ammo)
+			if (SB == items_ammo[S])
 				return 1
 
 		return 0
