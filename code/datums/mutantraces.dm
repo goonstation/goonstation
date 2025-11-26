@@ -1364,6 +1364,59 @@ TYPEINFO(/datum/mutantrace/abomination)
 /datum/mutantrace/abomination/admin/weak //This also does not get any of the OnLife effects
 	ruff_tuff_and_ultrabuff = 0
 
+/datum/mutantrace/grinch
+	name = "the real grinch"
+	icon_state = "grinch"
+	human_compatible = 0
+	jerk = TRUE
+	override_attack = 0
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/left
+	ignore_missing_limbs = 1 // I think I can live without splitting the grinch icon into parts...
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
+	can_walk_on_shards = TRUE
+	head_offset = 1
+
+	on_attach()
+		..()
+		if (ishuman(src.mob))
+			src.mob.AddComponent(/datum/component/consume/organheal)
+			src.mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1)
+			src.mob.add_stam_mod_max("grinch", 40)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "grinch", 9)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "grinch", 40)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "grinch", 40)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "grinch", 100)
+			src.mob.max_health += 50
+			health_update_queue |= src.mob
+			src.mob.name = "grinch"
+			src.mob.real_name = "Real Grinch"
+			src.mob.UpdateName()
+
+			src.mob.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)
+
+	disposing()
+		if (ishuman(src.mob))
+			var/datum/component/C = src.mob.GetComponent(/datum/component/consume/organheal)
+			C?.RemoveComponent(/datum/component/consume/organheal)
+			var/datum/component/D = src.mob.GetComponent(/datum/component/consume/can_eat_inedible_organs)
+			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
+			src.mob.remove_stam_mod_max("grinch")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "grinch")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "grinch")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "grinch")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "grinch")
+			src.mob.max_health -= 50
+			health_update_queue |= src.mob
+			src.mob.bioHolder.RemoveEffect("regenerator_wolf")
+
+			UnregisterSignal(src.mob, COMSIG_ATTACKHAND)
+
+
+		. = ..()
+
 /// Probability someone gets bit when patting a werewolf
 #define SNAP_PROB 50
 TYPEINFO(/datum/mutantrace/werewolf)
@@ -1386,7 +1439,7 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/left
 	ignore_missing_limbs = 1 // heck it, just regenerate your limbs, you shambling dogbomination
 	var/old_client_color = null
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)

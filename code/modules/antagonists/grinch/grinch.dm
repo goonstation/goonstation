@@ -12,22 +12,31 @@
 		return isliving(mind.current)
 
 	give_equipment()
-		var/datum/abilityHolder/grinch/A = src.owner.current.get_ability_holder(/datum/abilityHolder/grinch)
+		var/mob/living/carbon/human/H
+		if (!ishuman(src.owner.current))
+			return FALSE
+		else
+			H = src.owner.current
+		var/datum/abilityHolder/grinch/A = H.get_ability_holder(/datum/abilityHolder/grinch)
 		if (!A)
-			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/grinch)
+			src.ability_holder = H.add_ability_holder(/datum/abilityHolder/grinch)
 		else
 			src.ability_holder = A
+
+		H.equip_if_possible(new /obj/item/clothing/under/shirt_pants_b(H), SLOT_W_UNIFORM)
 
 		src.ability_holder.addAbility(/datum/targetable/grinch/vandalism)
 		src.ability_holder.addAbility(/datum/targetable/grinch/poison)
 		src.ability_holder.addAbility(/datum/targetable/grinch/instakill)
 		src.ability_holder.addAbility(/datum/targetable/grinch/grinch_cloak)
+		src.ability_holder.addAbility(/datum/targetable/grinch/grinch_transform)
 
 	remove_equipment()
 		src.ability_holder.removeAbility(/datum/targetable/grinch/vandalism)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/poison)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/instakill)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/grinch_cloak)
+		src.ability_holder.removeAbility(/datum/targetable/grinch/grinch_transform)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/grinch)
 
 	add_to_image_groups()

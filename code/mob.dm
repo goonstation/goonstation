@@ -1002,7 +1002,7 @@ TYPEINFO(/mob)
 		boutput(src, SPAN_ALERT("DNR status set!"))
 #endif
 
-/mob/proc/unequip_all(var/delete_stuff=0, atom/drop_loc = null)
+/mob/proc/unequip_all(var/delete_stuff=0, atom/drop_loc = null, var/throw_stuff=FALSE)
 	var/list/obj/item/to_unequip = src.get_unequippable()
 	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
@@ -1011,6 +1011,8 @@ TYPEINFO(/mob)
 				W.set_loc(drop_loc || src.loc)
 				W.dropped(src)
 				W.layer = initial(W.layer)
+				if (throw_stuff)
+					ThrowRandom(W, 1)
 			if(delete_stuff)
 				qdel(W)
 

@@ -890,6 +890,7 @@
 #include "code\modules\antagonists\grinch\grinch.dm"
 #include "code\modules\antagonists\grinch\abilities\_grinch_ability_holder.dm"
 #include "code\modules\antagonists\grinch\abilities\grinch_cloak.dm"
+#include "code\modules\antagonists\grinch\abilities\grinch_transform.dm"
 #include "code\modules\antagonists\grinch\abilities\murder.dm"
 #include "code\modules\antagonists\grinch\abilities\poison.dm"
 #include "code\modules\antagonists\grinch\abilities\vandalism.dm"
