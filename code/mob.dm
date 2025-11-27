@@ -3367,7 +3367,7 @@ TYPEINFO(/mob)
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as null|anything in items
+		var/atom/A = tgui_input_list(src, "What do you want to pick up?", "", items, start_with_search = TRUE)
 		if (A)
 			src.client?.Click(A, get_turf(A))
 
