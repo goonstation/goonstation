@@ -78,7 +78,8 @@
 	if (issimulatedturf(src))
 		var/turf/simulated/self = src
 		self.processing = TRUE
-		air_master.active_singletons[src] = null
+		if (!self.parent)
+			air_master.active_singletons[src] = null
 		if(self.parent?.group_processing)
 			self.parent.suspend_group_processing()
 	return hotspot
