@@ -36791,6 +36791,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
+"dUk" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/security/evidence)
 "dUB" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -40223,6 +40234,9 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "gkd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -41247,6 +41261,9 @@
 /obj/machinery/light/lamp/black{
 	pixel_y = 9;
 	pixel_x = -2
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
 /area/station/security/evidence)
@@ -56403,7 +56420,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/red,
 /area/station/security/evidence)
 "siu" = (
 /obj/landmark/start/job/miner,
@@ -61119,6 +61136,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -61307,6 +61327,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"vLE" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/security/evidence)
 "vLL" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -99061,7 +99089,7 @@ vcz
 tQs
 irS
 xVF
-uFn
+vLE
 lTt
 jzm
 jRq
@@ -99363,7 +99391,7 @@ qPD
 djG
 nBu
 kOq
-uFn
+dUk
 gZC
 gkd
 vDW
@@ -99664,7 +99692,7 @@ gQO
 mQe
 auN
 aca
-air
+aca
 uFn
 uFn
 uFn
