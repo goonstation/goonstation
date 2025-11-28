@@ -647,7 +647,7 @@
 	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms
 
 /client/proc/can_play_whitelisted_roles()
-	return NT.Find(src.ckey) || (IS_IT_FRIDAY && src.is_mentor())
+	return NT.Find(src.ckey) || (IS_IT_FRIDAY && src.is_mentor()) || isadmin(src)
 
 var/global/curr_year = null
 var/global/curr_month = null
