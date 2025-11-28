@@ -27,15 +27,9 @@ interface Item {
 
 export const Microwave = () => {
   const { act, data } = useBackend<MicrowaveData>();
-  const {
-    broken,
-    operating,
-    maxItems,
-    items,
-  } = data;
+  const { broken, operating, maxItems, items } = data;
 
-
-    return (
+  return (
     <Window title="Microwave Controls" width={290} height={310}>
       <Window.Content>
         <Stack vertical fill>
@@ -89,7 +83,10 @@ export const Microwave = () => {
   );
 };
 
-export const MicrowaveItem = (props: { item: Item; operating: BooleanLike }) => {
+export const MicrowaveItem = (props: {
+  item: Item;
+  operating: BooleanLike;
+}) => {
   const { act } = useBackend();
 
   const { item, operating } = props;
@@ -102,13 +99,15 @@ export const MicrowaveItem = (props: { item: Item; operating: BooleanLike }) => 
         width="30px"
         src={`data:image/png;base64,${item.iconData}`}
       />
-      <div style={{
-        flex: '1',
-        minWidth: 0,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-      }}>
+      <div
+        style={{
+          flex: '1',
+          minWidth: 0,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
         {item.name}
       </div>
       <Button
@@ -121,4 +120,3 @@ export const MicrowaveItem = (props: { item: Item; operating: BooleanLike }) => 
     </Stack>
   );
 };
-
