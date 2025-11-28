@@ -10,6 +10,9 @@
 #define IDLE_POWER_USAGE 5
 #define ACTIVE_POWER_USAGE 80
 
+// The temperature in kelvin that the microwave exposes its items to. The only reason for this value is that it's hot enough to warm up donk pockets.
+#define MW_HEAT 500
+
 
 TYPEINFO(/obj/machinery/microwave)
 	mats = 12
@@ -21,22 +24,24 @@ TYPEINFO(/obj/machinery/microwave)
 	icon_state = "mw"
 	density = 1
 	anchored = ANCHORED
+	object_flags = NO_BLOCK_TABLE
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
+	var/emagged = FALSE
 	/// Microwave is currently running
 	var/operating = FALSE
 	/// If dirty the microwave cannot be used until cleaned
 	var/dirty = MW_CLEAN
 	/// Microwave damage, cannot be used until repaired
 	var/microwave_state = MW_STATE_WORKING
-	/// List of the recipes the microwave will check
-	var/list/available_recipes = list()
-	var/list/single_input_recipes = list()
+	/// List of the recipes the microwave will check first
+	var/static/list/available_recipes
+	/// List of recipes the microwave will check when heating contents in sequence, after previous recipe check fails
+	var/static/list/single_input_recipes
 	/// The default cooking instructions used during regular batch cooking when no unique instruction is given by the recipe
-	var/datum/recipe_instructions/microwave/default_instructions
+	var/static/datum/recipe_instructions/microwave/default_instructions
 	/// The default cooking instructions used when heating up (sequential cooking) when no unique instruction is given by the recipe
-	var/datum/recipe_instructions/microwave/default_heat_up/default_instructions_sequential
-	object_flags = NO_BLOCK_TABLE
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/emagged = FALSE
+	var/static/datum/recipe_instructions/microwave/default_heat_up/default_instructions_sequential
+	/// value is at least enough for all the recipes, but is otherwise arbitrary
 	var/maximum_contents = 4
 	/// Temporary holder for items meant to be deleted during cooking. Should be processed if cooking is interrupted.
 	// the reason this isn't a local variable is that the full input list is kept around for the whole cooking process, for the purposes flexibility,
@@ -371,6 +376,8 @@ TYPEINFO(/obj/machinery/microwave)
 
 /// warm up the contents
 /obj/machinery/microwave/proc/heat_up(var/datum/recipe_instructions/microwave/instructions)
+	// it seems fairly feasible to make the microwave heat up the contents of containers, but it would have to take into account where the
+	// outputs are meant to go, whether they go back in the container or not, what the size of the container is, and I just can't be arsed
 	var/list/src_contents = src.contents.Copy()
 	var/list/output = list()
 	var/cook_delay = (instructions.cook_time / (length(src.contents) + 1))
@@ -413,19 +420,19 @@ TYPEINFO(/obj/machinery/microwave)
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.stop_cooking()
 
-/// Do the microwave effects on all the things created
+/// Do the microwave effects on each output object
 /obj/machinery/microwave/proc/affect_thing(var/atom/thing, var/datum/recipe_instructions/microwave/instructions = null)
-	if (istype(thing, /atom/movable))
-		var/atom/movable/movablething = thing
-		movablething.set_loc(src)
-	if (thing.reagents)
-		thing.reagents.temperature_reagents(4000,400)
 	if(prob(1))
 		thing.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 	if (src.emagged)
 		thing.reagents?.add_reagent("radium", 25)
-	if(src.dirty != MW_CLEAN)
+	if(src.dirty != MW_CLEAN) // a dirty microwave contaminates the food
 		thing.reagents?.add_reagent("yuck", 5)
+	thing.temperature_expose(null, MW_HEAT, 400)
+	if (istype(thing, /atom/movable))
+		var/atom/movable/movablething = thing
+		movablething.set_loc(src)
+
 
 /* //TODO implement end-of-cooking effects into cooking_instructions
 /obj/machinery/microwave/proc/affect_thing_end(var/thing)
@@ -438,3 +445,5 @@ TYPEINFO(/obj/machinery/microwave)
 
 #undef IDLE_POWER_USAGE
 #undef ACTIVE_POWER_USAGE
+
+#undef MW_HEAT
