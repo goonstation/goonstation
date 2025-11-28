@@ -81,15 +81,35 @@ TYPEINFO(/obj/machinery/microwave)
 /// After making the recipe in datums\recipes.dm, add it in here!
 /obj/machinery/microwave/New()
 	..()
-	src.available_recipes += new /datum/recipe/porridge(src)
-	src.available_recipes += new /datum/recipe/burger/meat(src)
-	src.default_instructions =  new /datum/recipe_instructions/microwave/default_cook()
-	src.default_instructions_sequential =  new /datum/recipe_instructions/microwave/default_heat_up()
-	//src.single_input_recipes += new /datum/recipe/single_input/test()
-	src.single_input_recipes += new /datum/recipe/sequential/microwaved_egg
-	src.single_input_recipes += new /datum/recipe/sequential/microwaved_skeleton_head
-	src.single_input_recipes += new /datum/recipe/sequential/microwaved_dice
-	src.single_input_recipes += new /datum/recipe/sequential/cooked_slug
+	if (!available_recipes)
+		// really need a global recipe cache
+		available_recipes = list(
+			new /datum/recipe/waffles(),
+			new /datum/recipe/donut(),
+			new /datum/recipe/donkpocket(),
+			new /datum/recipe/burger/roburger(),
+			new /datum/recipe/burger/meat(),
+			new /datum/recipe/burger/buttburger(),
+			new /datum/recipe/burger/butterburger(),
+			new /datum/recipe/burger/heartburger(),
+			new /datum/recipe/burger/brainburger(),
+			new /datum/recipe/pie_custard_mw()
+		)
+
+	if (!single_input_recipes)
+		single_input_recipes = list(
+			new /datum/recipe/sequential/microwaved_egg(),
+			new /datum/recipe/sequential/microwaved_skeleton_head(),
+			new /datum/recipe/sequential/microwaved_dice(),
+			new /datum/recipe/sequential/cooked_slug(),
+			new /datum/recipe/sequential/popcorn()
+		)
+
+	if (!default_instructions)
+		default_instructions = new /datum/recipe_instructions/microwave/default_cook()
+	if (!default_instructions_sequential)
+		default_instructions_sequential = new /datum/recipe_instructions/microwave/default_heat_up()
+
 	UnsubscribeProcess()
 
 /**
