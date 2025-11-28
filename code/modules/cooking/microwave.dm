@@ -10,7 +10,8 @@
 #define IDLE_POWER_USAGE 5
 #define ACTIVE_POWER_USAGE 80
 
-// The temperature in kelvin that the microwave exposes its items to. The only reason for this value is that it's hot enough to warm up donk pockets.
+// The temperature in kelvin that the microwave exposes its contents to.
+// The only reasoning for this value is that it's hot enough to warm up donk pockets.
 #define MW_HEAT 500
 
 

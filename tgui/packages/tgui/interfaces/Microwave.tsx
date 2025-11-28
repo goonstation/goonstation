@@ -6,11 +6,10 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { Box, Button, Image, Section, Stack } from 'tgui-core/components';
+import { Button, Image, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { useEffect, useState } from 'react';
 
 interface MicrowaveData {
   broken: BooleanLike;
