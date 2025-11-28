@@ -107,7 +107,7 @@ export const MicrowaveItem = (props: { item: Item; operating: BooleanLike }) => 
         minWidth: 0,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap'
+        whiteSpace: 'nowrap',
       }}>
         {item.name}
       </div>
