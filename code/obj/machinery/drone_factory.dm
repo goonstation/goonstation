@@ -105,6 +105,8 @@ TYPEINFO(/obj/machinery/ghost_catcher)
 		return FALSE
 
 	if (G.client.player)
+		if (G.client.player.joined_observer)
+			return FALSE
 		var/round_num = G.client.player.get_rounds_participated()
 		if (!isnull(round_num) && round_num < 20)
 			boutput(G, SPAN_ALERT("You only have [round_num] rounds played. You need 20 rounds to play this role."))

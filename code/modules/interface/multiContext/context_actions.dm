@@ -213,6 +213,9 @@
 	icon_state = "respawn-animal"
 	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
+	checkRequirements(atom/target, mob/user)
+		. = !user.client.player.joined_observer
+
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
@@ -257,6 +260,9 @@
 	desc = "Step on the ghost catcher and be added to the ghost drone queue"
 	icon_state = "ghost-drone"
 	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
+
+	checkRequirements(atom/target, mob/user)
+		. = assess_ghostdrone_eligibility(user?.mind)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
