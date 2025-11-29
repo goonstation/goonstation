@@ -572,7 +572,7 @@ TYPEINFO(/obj/item/heat_dowsing)
 				speak_count = 0
 				var/val = 0 //my friend valerie
 				var/true_center = 0
-				var/pinnable_spot
+				var/pinnable_spot = FALSE
 				for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(src.loc))
 					var/turf/center = H.center.turf()
 					if (src.loc == center)
