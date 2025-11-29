@@ -1561,6 +1561,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 #ifdef UNDERWATER_MAP
 	fullbright = 0
 	luminosity = 3
+	special_volume_override = 0.62 // without this, the rock floors in the trench attenuate incorrectly and become very loud
 #else
 	luminosity = 1
 #endif
