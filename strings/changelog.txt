@@ -1,4 +1,9 @@
 
+(t)sat nov 29 25
+(u)Valtsu0
+(p)25124
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)Triage tags can now be found in medical apparel vendors and medical borg modules.
 (t)wed nov 26 25
 (u)Albassort
 (p)25159
