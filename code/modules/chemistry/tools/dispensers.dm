@@ -141,7 +141,7 @@
 		return
 
 	proc/burn_ants(mob/user, obj/item/P)
-		boutput(user, SPAN_NOTICE("You burn the ants to a crisp.</i>"))
+		boutput(user, SPAN_NOTICE("You burn the ants to a crisp."))
 		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, TRUE)
 		animate_little_spark(src)
 		make_cleanable(/obj/decal/cleanable/ash, src.loc)
