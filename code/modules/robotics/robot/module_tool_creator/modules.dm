@@ -166,6 +166,7 @@
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/dropper,
+		/obj/item/triage_tagger,
 	)
 
 // miner. quartermaster.
