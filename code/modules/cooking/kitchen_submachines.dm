@@ -527,12 +527,12 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 		for(var/I in possible.ingredients)
 			var/atom/item_path = I
-			src.possible_recipe_icons += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			src.output_icon = icon2base64(getFlatIcon(item_path, no_anim=TRUE), "chef_oven-\ref[src]")
 			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
 
 		if (ispath(possible.output))
 			var/atom/item_path = getVariant(possible)
-			src.output_icon = icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			src.output_icon = icon2base64(getFlatIcon(item_path, no_anim=TRUE), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
 
 		if (possible.cookbonus < 10)

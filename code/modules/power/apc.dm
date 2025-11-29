@@ -232,6 +232,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/disposing()
 	STOP_TRACKING
+	if(src.area?.area_apc == src)
+		src.area.area_apc = null
 	cell = null
 	terminal?.master = null
 	terminal = null

@@ -180,7 +180,7 @@
 		src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
 
 		// Use ore sprites if available
-		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium")
+		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium","veranium")
 		if(!rock_list.Find(src.material.getID()))
 			return
 		src.icon = file("icons/obj/items/materials/[src.material.getID()].dmi")

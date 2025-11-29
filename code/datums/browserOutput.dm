@@ -33,7 +33,7 @@ var/global
 	// like "[LEVEL_MOD]" = FOOBAR_SHITFUCK_FUCKFACE
 	// The byond object tree output gets completely fucked in the ass and generates
 	// broken xml
-	list/contextFlags = list(1 = 0,2 = cFlagsMod,3 = cFlagsSa,4 = 0,5 = 0,6 = cFlagsShitguy,7 = 0,8 = 0)
+	list/contextFlags = list(0,cFlagsMod,cFlagsSa,0,0,cFlagsShitguy,0,0)
 
 	/*
 	8 = LEVEL_HOST
