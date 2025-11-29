@@ -40,9 +40,9 @@
 	// e.g. (poison_damage_2_deal -= (damage_we_dealt_rn * this_depletion_rate))
 	var/poison_depletion = 0.75 //! Multiplier for how much poison is depleted per poison damage taken
 	var/fire_coefficient = 1 //! Fire armor for blobs. 1 is full damage, 0 is invincibity.
-	var/ideal_temp = 310 KELVIN //! What temperature the blob is safe at. higher values factor in tolerance and heat divisors
+	var/ideal_temp = 37 + T0C //! What temperature the blob is safe at. higher values factor in tolerance and heat divisors
 	var/heat_divisor = 15 //! Divisor for temperature, controls scaling for atmos heat damage. Blob takes 1/heat_divisor more/less damage with this
-	var/temp_tolerance = 40 KELVIN //! How much temperature (kelvin) we tolerate above our ideal temperature, factored in *before* the divisor.
+	var/temp_tolerance = 100 KELVIN //! How much temperature (kelvin) we tolerate above our ideal temperature, factored in *before* the divisor.
 	var/runOnLife = FALSE //! Should this obj run Life? (organ tiles that normally do things get TRUE'd)
 	var/processed_on_killed = FALSE //! Whether onKilled already ran
 	var/surrounded = 0 //! Bitfield of dirs we have other blob tiles around us on

@@ -63,10 +63,8 @@
 			H.changeStatus("knockdown", 5 SECONDS)
 		if (C)
 			C.points = max(C.points - 15, 0)
-			var/D = pick(C.absorbed_dna)
-			H.real_name = D
-			H.UpdateName()
-			H.bioHolder.CopyOther(C.absorbed_dna[D])
+			var/datum/absorbedIdentity/face = pick(C.absorbed_dna)
+			face.apply_to(src)
 		H.update_face()
 		H.update_body()
 		H.update_clothing()
