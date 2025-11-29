@@ -724,7 +724,6 @@ TYPEINFO(/mob/new_player)
 			if(!src.mind) src.mind = new(src)
 			ticker.minds |= src.mind
 			src.mind.get_player()?.joined_observer = TRUE
-			src.mind.get_player()?.dnr = TRUE
 			src.mind.transfer_to(observer)
 			if(observer?.client)
 				observer.client.loadResources()
