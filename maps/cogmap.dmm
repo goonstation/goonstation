@@ -39887,9 +39887,7 @@
 	pixel_x = 8;
 	pixel_y = -5
 	},
-/turf/simulated/floor/red/side{
-	dir = 10
-	},
+/turf/simulated/floor/red/side,
 /area/station/security/main)
 "fYn" = (
 /obj/cable{
