@@ -578,10 +578,8 @@ TYPEINFO(/obj/item/heat_dowsing)
 					if (src.loc == center)
 						true_center += 1
 
-					if (BOUNDS_DIST(src, H.center.turf()) == 0) //variable for determining wether to play a sound if turf is able to be pinned
+					if (BOUNDS_DIST(src, H.center.turf()) == 0) //variable for determining whether to play a sound if turf is able to be pinned
 						pinnable_spot = TRUE
-					else
-						pinnable_spot = FALSE
 
 					var/d = GET_DIST(src.loc,center)
 					if (d < dist_last)
