@@ -258,9 +258,6 @@
 	icon_state = "ghost-drone"
 	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
-	checkRequirements(atom/target, mob/user)
-		. = assess_ghostdrone_eligibility(user?.mind)
-
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
