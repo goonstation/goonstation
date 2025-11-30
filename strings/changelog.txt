@@ -1,4 +1,10 @@
 
+(t)sun nov 30 25
+(u)Phoi
+(p)25198
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adds sound notification to dowsing rod when placed on a pinnable turf
+(+)Adds text onto the pre-existing message when dowsing rod is placed on a pinnable turf
 (t)sat nov 29 25
 (u)Valtsu0
 (p)25124
