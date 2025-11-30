@@ -3,4 +3,5 @@
 /obj/item/decoration/virvase
 /obj/item/reagent_containers/food/drinks/flask/taskumatti
 /obj/item/device/light/glowstick/virva_on
+/obj/item/bat/bonk
 /obj/critter/domestic_bee/virvatulbee
