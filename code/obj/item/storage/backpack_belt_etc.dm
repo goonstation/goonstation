@@ -258,6 +258,14 @@
 	item_state = "bp_studded"
 	satchel_variant = /obj/item/storage/backpack/satchel/studdedblack
 
+/obj/item/storage/backpack/empty/studdedblack
+	name = "studded backpack"
+	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "bp_studded"
+	item_state = "bp_studded"
+	satchel_variant = /obj/item/storage/backpack/satchel/studdedblack
+	spawn_contents = list()
+
 /obj/item/storage/backpack/itabag
 	name = "pink itabag"
 	desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Heisenbee!"
@@ -603,6 +611,13 @@
 	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
 	icon_state = "sat_studded"
 	item_state = "sat_studded"
+
+/obj/item/storage/backpack/satchel/empty/studdedblack
+	name = "studded satchel"
+	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "sat_studded"
+	item_state = "sat_studded"
+	spawn_contents = list()
 
 /obj/item/storage/backpack/satchel/studdedwhite
 	name = "white studded satchel"

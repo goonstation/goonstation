@@ -463,16 +463,20 @@
 		/datum/manufacture/backpack_red,
 		/datum/manufacture/backpack_green,
 		/datum/manufacture/backpack_blue,
+		/datum/manufacture/backpack_brown,
 		/datum/manufacture/satchel,
 		/datum/manufacture/satchel_red,
 		/datum/manufacture/satchel_green,
 		/datum/manufacture/satchel_blue,
+		/datum/manufacture/satchel_brown,
 		/datum/manufacture/handkerchief)
 
 	hidden = list(/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
 		/datum/manufacture/tricolor,
+		/datum/manufacture/backpack_studded,
+		/datum/manufacture/satchel_studded,
 		/datum/manufacture/hat_ltophat)
 
 /// cogwerks - a gas extractor for the engine
