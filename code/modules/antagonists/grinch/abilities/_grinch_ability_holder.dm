@@ -129,3 +129,30 @@
 		. = ..()
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
+
+//////////////////////////////////////////// Content for abilities /////////////////////////////////////////
+
+/obj/effects/grinch_hand
+	name = ""
+	anchored = ANCHORED
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "grinch_slap"
+	layer = EFFECTS_LAYER_4
+	plane = PLANE_NOSHADOW_ABOVE
+	flags = KEEP_TOGETHER
+
+	New()
+		..()
+		SPAWN(0)
+			switch(src.dir)
+				if (WEST)
+					src.pixel_x = -40
+				if (EAST)
+					src.pixel_x = 25
+				if (NORTH)
+					src.pixel_y = 10
+				if (SOUTH)
+					src.pixel_y = -10
+
+
+

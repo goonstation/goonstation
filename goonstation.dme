@@ -893,6 +893,7 @@
 #include "code\modules\antagonists\grinch\abilities\grinch_transform.dm"
 #include "code\modules\antagonists\grinch\abilities\murder.dm"
 #include "code\modules\antagonists\grinch\abilities\poison.dm"
+#include "code\modules\antagonists\grinch\abilities\slap.dm"
 #include "code\modules\antagonists\grinch\abilities\vandalism.dm"
 #include "code\modules\antagonists\hunter\hunter.dm"
 #include "code\modules\antagonists\hunter\abilities\hunter_checkobjective.dm"
