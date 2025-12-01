@@ -2737,7 +2737,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 
 /datum/manufacture/satchel_studded
 	name = "Studded Satchel"
-	item_requirements = list("fabric" = 8
+	item_requirements = list("fabric" = 8,
 							 "metal" = 1)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/studdedblack)
 	create = 1
