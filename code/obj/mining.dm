@@ -1369,9 +1369,15 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (src.invincible)
 			return
 		if (E)
-			if (E.excavation_string)
+			var/user_has_mining_alert = (user && HAS_ATOM_PROPERTY(user, PROP_MOB_MINING_ALERTS))
+			if (user_has_mining_alert && E.mining_alert_string)
+				src.tri_message(user, E.excavation_string ? SPAN_ALERT("[E.excavation_string]") : null, null, "IMA says, \"[E.mining_alert_string]\"")
+			else if (E.excavation_string)
 				src.visible_message(SPAN_ALERT("[E.excavation_string]"))
-			E.onExcavate(src, user)
+			if (user_has_mining_alert && E.excavation_alert_sound)
+				SPAWN(0.2 SECONDS) // this spawn desyncs the alert sound and the mining-tool sfx, which gives a better sense of cause and effect
+					user.playsound_local(user, E.excavation_alert_sound, 50, 1)
+			E.onExcavate(src)
 		var/ore_to_create = src.default_ore
 		if (ispath(ore_to_create) && dropOre)
 			if (O)
