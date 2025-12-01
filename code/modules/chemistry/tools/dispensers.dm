@@ -134,14 +134,6 @@
 					qdel(src)
 		return
 
-	attackby(obj/item/P, mob/user, silent = FALSE)
-		if (istype(P, /obj/item/magnifying_glass))
-			boutput(user, SPAN_NOTICE("You angle the light through the magnifying glass towards the ants."))
-			sleep(3 SECONDS)
-			boutput(user, "You burn the ants to a crisp.</i>")
-			make_cleanable(/obj/decal/cleanable/ash,src.loc)
-			qdel(src)
-
 /obj/reagent_dispensers/cleanable/spiders
 	name = "spiders"
 	desc = "A bunch of spiders."
