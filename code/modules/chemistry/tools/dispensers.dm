@@ -126,18 +126,17 @@
 	get_desc(dist, mob/user)
 		return null
 
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user, silent = FALSE)
+		if (istype(W, /obj/item/magnifying_glass))
+			boutput(user, SPAN_NOTICE("You angle the light through the magnifying glass towards the ants."))
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(burn_ants), list(user, W), W.icon, W.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			return
+
 		..(W, user)
 		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
-		return
-
-	attackby(obj/item/P, mob/user, silent = FALSE)
-		if (istype(P, /obj/item/magnifying_glass))
-			boutput(user, SPAN_NOTICE("You angle the light through the magnifying glass towards the ants."))
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(burn_ants), list(user, P), P.icon, P.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		return
 
 	proc/burn_ants(mob/user, obj/item/P)
