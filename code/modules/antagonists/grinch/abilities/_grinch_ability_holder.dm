@@ -149,10 +149,11 @@
 					src.pixel_x = -40
 				if (EAST)
 					src.pixel_x = 25
-				if (NORTH)
-					src.pixel_y = 10
-				if (SOUTH)
-					src.pixel_y = -10
+				if (NORTH, NORTHEAST, NORTHWEST)
+					src.pixel_y = 20
+					src.pixel_x = -5
+				if (SOUTH, SOUTHEAST, SOUTHWEST)
+					src.pixel_y = -40
 
 
 

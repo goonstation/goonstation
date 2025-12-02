@@ -11,6 +11,7 @@
 	pointCost = 0
 	when_stunned = 1
 	not_when_handcuffed = 1
+	grinch_only = 1
 
 	cast(mob/target)
 		if (!holder)
@@ -57,7 +58,6 @@
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "stall")
 			SPAWN(2.1 SECONDS)
 				qdel(hand)
-				M.anchored = 0
 
 		else
 			boutput(M, SPAN_ALERT("You can't slap the target here!"))
