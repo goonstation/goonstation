@@ -31,6 +31,7 @@ var/global/list/mapNames = list(
 	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 	"Oshan Laboratory" = 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
+	"Destiny" =				list("id" = "DESTINY",		"settings" = "destiny",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
 	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
 
 	"Crash" = 				list("id" = "CRASH",		"settings" = "crash",			"playerPickable" = FALSE),
@@ -999,6 +1000,57 @@ var/global/list/mapNames = list(
 		"the mining staff room" = list(/area/station/mining/staff_room),
 		"the toxins lab" = list(/area/station/science/lab))
 
+
+/datum/map_settings/destiny
+	name = "DESTINY"
+	display_name = "NSS Destiny"
+	style = "ship"
+	default_gamemode = "extended"
+	goonhub_map = "/maps/destiny"
+	arrivals_type = MAP_SPAWN_CRYO
+	dir_fore = NORTH
+
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1/south,
+		/atom/movable/screen/parallax_render_source/space_2/south,
+		)
+
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	airlock_style = "pyro"
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	escape_dir = NORTH
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
+	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
+		"the central research sector hub" = list(/area/station/science/lobby),
+		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the thermo-electric generator room" = list(/area/station/engine/core),
+		//"the refinery (arc smelter)" = list(/area/station/mining/refinery),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
+		"the bar" = list(/area/station/crew_quarters/bar),
+		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		"the artifact lab" = list(/area/station/science/artifact),
+		"the robotics lab" = list(/area/station/medical/robotics),
+		"the escape shuttle dock" = list(/area/station/hallway/secondary/exit),
+		"the kitchen" = list(/area/station/crew_quarters/kitchen))
 
 /area/shuttle/merchant_shuttle/left_centcom
 	icon_state = "shuttle_merch_l"
