@@ -57,3 +57,30 @@
 
 	assign_objectives()
 		new /datum/objective_set/grinch(src.owner, src)
+
+	on_death()
+		. = ..()
+		var/obj/respawn = locate(/obj/grinch_respawn_point) in world
+		var/mob/player = src.owner.current
+		var/job = pick("Clown", "Chef", "Botanist", "Rancher", "Janitor", "Engineer", "Miner", "Quartermaster", "Medical Doctor", "Geneticist", "Roboticist", "Scientist")
+		player.add_filter("death fx", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "canister_pop"), size=0, y=8))
+		animate(player.get_filter("death fx"), size=50, time=2 SECONDS, easing=SINE_EASING)
+		var/mob/living/carbon/human/new_grinch = new /mob/living/carbon/human/normal (get_turf(respawn))
+		new_grinch.JobEquipSpawned(job)
+		SPAWN(2 SECONDS)
+			player.gib()
+		SPAWN(4 SECONDS)
+			src.owner.current.mind.transfer_to(new_grinch)
+			src.owner.current.changeStatus("unconscious", 60 SECONDS)
+
+/obj/fakeobject/grinchrock
+	name = "rock"
+	anchored = ANCHORED
+	density = 1
+	icon = 'icons/misc/lunar.dmi'
+	icon_state = "moonrock"
+
+/obj/grinch_respawn_point
+	name = "grinch respawn"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "strange-g"
