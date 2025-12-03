@@ -1,5 +1,9 @@
 
 (t)wed dec 03 25
+(u)CalliopeSoups
+(p)25161
+(e)⛔📦🍝|C-Removal, A-Game-Objects, A-Catering
+(+)Slug eyestalks are obtained from cooking a slug, instead of the horrors.
 (u)Egregorious
 (p)25247
 (e)🆕💅🔊📨|C-Feature, C-QoL, C-Sound, A-Logistics
