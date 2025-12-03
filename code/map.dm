@@ -31,7 +31,7 @@ var/global/list/mapNames = list(
 	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 	"Oshan Laboratory" = 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
-	"Destiny" =				list("id" = "DESTINY",		"settings" = "destiny",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
+	"Destiny" =				list("id" = "DESTINY",		"settings" = "destiny",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
 
 	"Crash" = 				list("id" = "CRASH",		"settings" = "crash",			"playerPickable" = FALSE),
@@ -1005,7 +1005,6 @@ var/global/list/mapNames = list(
 	name = "DESTINY"
 	display_name = "NSS Destiny"
 	style = "ship"
-	default_gamemode = "extended"
 	goonhub_map = "/maps/destiny"
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
