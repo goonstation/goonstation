@@ -1,5 +1,9 @@
 
 (t)wed dec 03 25
+(u)Egregorious
+(p)25247
+(e)🆕💅🔊📨|C-Feature, C-QoL, C-Sound, A-Logistics
+(+)Added an AI assistant to mining helmets which plays sound alerts for certain mining events.
 (u)bag_o_cheese
 (p)25277
 (e)🎨|C-Sprites
