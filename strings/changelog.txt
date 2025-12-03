@@ -1,5 +1,9 @@
 
 (t)wed dec 03 25
+(u)bag_o_cheese
+(p)25277
+(e)🎨|C-Sprites
+(+)Resprited the Detective reward, Aerostatic Jacket.
 (u)AMMIGGO
 (p)25280
 (e)|
