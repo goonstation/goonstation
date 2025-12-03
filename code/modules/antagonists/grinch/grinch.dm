@@ -30,6 +30,7 @@
 		src.ability_holder.addAbility(/datum/targetable/grinch/instakill)
 		src.ability_holder.addAbility(/datum/targetable/grinch/grinch_cloak)
 		src.ability_holder.addAbility(/datum/targetable/grinch/slap)
+		src.ability_holder.addAbility(/datum/targetable/grinch/evil_grin)
 		src.ability_holder.addAbility(/datum/targetable/grinch/grinch_transform)
 
 	remove_equipment()
@@ -38,6 +39,7 @@
 		src.ability_holder.removeAbility(/datum/targetable/grinch/instakill)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/grinch_cloak)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/slap)
+		src.ability_holder.removeAbility(/datum/targetable/grinch/evil_grin)
 		src.ability_holder.removeAbility(/datum/targetable/grinch/grinch_transform)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/grinch)
 

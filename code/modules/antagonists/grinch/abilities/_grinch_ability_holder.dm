@@ -139,7 +139,6 @@
 	icon_state = "grinch_slap"
 	layer = EFFECTS_LAYER_4
 	plane = PLANE_NOSHADOW_ABOVE
-	flags = KEEP_TOGETHER
 
 	New()
 		..()
@@ -154,6 +153,29 @@
 					src.pixel_x = -5
 				if (SOUTH, SOUTHEAST, SOUTHWEST)
 					src.pixel_y = -40
+
+/obj/effects/grinch_grin
+	name = "THE GRINNER!!!"
+	anchored = ANCHORED
+	icon = 'icons/effects/128x128.dmi'
+	icon_state = "grinch_grin"
+	layer = EFFECTS_LAYER_4
+	plane = PLANE_NOSHADOW_ABOVE
+
+	New()
+		..()
+		src.pixel_y -= 40
+		src.pixel_x -= 48
+		src.transform = matrix(0.2, MATRIX_SCALE)
+		SPAWN(0)
+			animate(src, 0.3 SECONDS, transform = matrix(1, MATRIX_SCALE))
+		SPAWN(0.5 SECONDS)
+			animate(src, 0.4 SECONDS, transform = matrix(0, MATRIX_SCALE))
+			SPAWN(0.2 SECONDS)
+				animate (src, 0.3 SECONDS, alpha=0)
+				SPAWN(0.4 SECONDS)
+					qdel(src)
+
 
 
 

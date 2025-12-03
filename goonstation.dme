@@ -889,6 +889,7 @@
 #include "code\modules\antagonists\gang\abilities\_gang_leader_ability_holder.dm"
 #include "code\modules\antagonists\grinch\grinch.dm"
 #include "code\modules\antagonists\grinch\abilities\_grinch_ability_holder.dm"
+#include "code\modules\antagonists\grinch\abilities\evil_grin.dm"
 #include "code\modules\antagonists\grinch\abilities\grinch_cloak.dm"
 #include "code\modules\antagonists\grinch\abilities\grinch_transform.dm"
 #include "code\modules\antagonists\grinch\abilities\murder.dm"
