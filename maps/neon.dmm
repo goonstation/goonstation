@@ -4901,6 +4901,17 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
+"dGq" = (
+/obj/table/auto,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown,
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/clown)
 "dGY" = (
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -11622,6 +11633,15 @@
 	},
 /turf/space/fluid,
 /area/space)
+"irz" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/east,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "irF" = (
 /obj/machinery/vending/standard,
 /obj/machinery/light_switch/north,
@@ -16856,15 +16876,6 @@
 "mbv" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/radiostation/bedroom)
-"mbR" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/disposal/small/east,
-/obj/disposalpipe/trunk/east,
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
 "mbU" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -23956,16 +23967,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
-"roz" = (
-/obj/table/auto,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown,
-/obj/machinery/light/incandescent/warm,
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/clown)
 "roG" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0;
@@ -73926,7 +73927,7 @@ qWt
 cRZ
 eGz
 gag
-mbR
+irz
 ilY
 wsa
 uGf
@@ -82093,7 +82094,7 @@ fIn
 uoS
 tUd
 lna
-roz
+dGq
 kEy
 ean
 qpn
