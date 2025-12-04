@@ -3906,3 +3906,24 @@
 	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
 	icon_state = "therapy_zone"
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/grinch_respawn
+	id = "grinch_respawn"
+	name = "Grinch Reforming"
+	desc = "You've been reduced to a larval stage and must wait a little bit before grinching out once more."
+	icon_state = "grinch"
+
+	onRemove()
+		..()
+		var/mob/M = src.owner
+		var/turf/targetT = get_turf(M)
+		var/job = pick("Clown", "Chef", "Botanist", "Rancher", "Janitor", "Engineer", "Miner", "Quartermaster", "Medical Doctor", "Geneticist", "Roboticist", "Scientist")
+		var/mob/living/carbon/human/new_grinch = new /mob/living/carbon/human/normal (targetT)
+		new_grinch.JobEquipSpawned(job)
+		M.mind.transfer_to(new_grinch)
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(targetT)
+		playsound(targetT, 'sound/effects/poff.ogg', 50, TRUE)
+		qdel(M)
+
+
