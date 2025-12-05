@@ -3918,12 +3918,15 @@
 		var/mob/M = src.owner
 		var/turf/targetT = get_turf(M)
 		var/job = pick("Clown", "Chef", "Botanist", "Rancher", "Janitor", "Engineer", "Miner", "Quartermaster", "Medical Doctor", "Geneticist", "Roboticist", "Scientist")
-		var/mob/living/carbon/human/new_grinch = new /mob/living/carbon/human/normal (targetT)
-		new_grinch.JobEquipSpawned(job)
-		M.mind.transfer_to(new_grinch)
 		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
 		poof.setup(targetT)
-		playsound(targetT, 'sound/effects/poff.ogg', 50, TRUE)
-		qdel(M)
+		SPAWN(0.3 SECONDS)
+			var/mob/living/carbon/human/new_grinch = new /mob/living/carbon/human/normal (targetT)
+			new_grinch.JobEquipSpawned(job)
+			M.mind.transfer_to(new_grinch)
+			var/datum/antagonist/antag = M.mind.get_antagonist(ROLE_GRINCH)
+			antag.give_equipment()
+			playsound(targetT, 'sound/effects/poff.ogg', 50, TRUE)
+			qdel(M)
 
 
