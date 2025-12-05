@@ -1438,7 +1438,7 @@ proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
 		desc = "A massive clamping arm from an ancient lifter construct."
 		icon_state = "r_arm-ancient3"
 		appearanceString = "ancient3"
-		max_health = 300
+		max_health = 350
 		weight = 0.5
 		handlistPart = "armR-heavy"
 		add_to_tools = TRUE

@@ -16862,7 +16862,7 @@
 	},
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/east,
-/obj/storage/closet/radiation,
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "mbU" = (

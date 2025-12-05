@@ -10,7 +10,7 @@
 /mob/var/movement_last_progress = 0 //! The progress of the move the mob was at when it was last modified. between 0-1
 
 /mob/hotkey(name)
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		return controller.hotkey(src, name)
 	return ..()
@@ -42,7 +42,7 @@
 				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
 				hover_tag?.show_images(src.client, FALSE, FALSE)
 
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		controller.keys_changed(src, keys, changed)
 		return
@@ -103,7 +103,7 @@
 
 /mob/proc/process_move(keys)
 	set waitfor = 0
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		return controller.process_move(src, keys)
 
