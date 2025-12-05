@@ -380,6 +380,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	UnregisterFromParent()
 		UnregisterSignal(src.parent, COMSIG_ITEM_PICKUP)
 		UnregisterSignal(src.parent, COMSIG_ITEM_DROPPED)
+		src.viewer_client.images -= src.current_image
 
 	proc/on_pickup_drop()
 		SPAWN(0)
