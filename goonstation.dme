@@ -1622,6 +1622,7 @@
 #include "code\modules\medical\medicaldiagnosis.dm"
 #include "code\modules\medical\surgery_procs.dm"
 #include "code\modules\medical\surgery_tools.dm"
+#include "code\modules\medical\triage.dm"
 #include "code\modules\medical\disabilities\badvision.dm"
 #include "code\modules\medical\disabilities\blind.dm"
 #include "code\modules\medical\disabilities\clumsy.dm"

@@ -66,6 +66,10 @@
 			light_dir.light_target = src.loc
 		light_dir.update(0)
 
+	setupProperties()
+		..()
+		setProperty("mining_alerts")
+
 	attack_self(mob/user)
 		src.flashlight_toggle(user, activated_inhand = TRUE)
 		return
@@ -947,6 +951,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
 		setProperty("space_movespeed", 0.2)
+		setProperty("mining_alerts")
 
 	attack_self(var/mob/user)
 		if(src.has_visor)

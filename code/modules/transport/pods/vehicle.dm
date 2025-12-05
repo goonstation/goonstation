@@ -945,7 +945,7 @@
 	if (ejectee.client)
 		ejectee.detach_hud(myhud)
 
-	ejectee.override_movement_controller = null
+	ejectee.remove_movement_controller(src.movement_controller)
 
 	src.passengers--
 
@@ -1060,7 +1060,7 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
-	M.override_movement_controller = src.movement_controller
+	M.add_movement_controller(src.movement_controller)
 	M.reset_keymap()
 	M.recheck_keys()
 	if(!src.pilot && (!ismobcritter(boarder) || (isadmin(boarder) && !M.client.player_mode)))
