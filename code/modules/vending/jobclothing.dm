@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/genetics, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/pathologist, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/pathology, 1)
-
+		product_list += new/datum/data/vending_product(/obj/item/triage_tagger, 10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/medical/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/medical/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/roboticist/april_fools, 1, hidden=1)

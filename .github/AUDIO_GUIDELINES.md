@@ -8,7 +8,7 @@ Have a gun that needs to go bang? A pen that needs a satisfying clicking sound? 
 
 ## Your audio workstation
 
-Whether you're using sounds already made or you'd like to create your own effects, the first thing you'll need is an editing program! No, you don't need to go buy a professional-level digital audio workstation, there are many open-source programs like [Dark Audacity](https://github.com/JamesCrook/audacity/tree/darkaudacity) and [Ardour](https://github.com/Ardour/ardour) that you can use. As long as the the software can do the things you want (recording, editing, producing) and export your project as an .ogg file with different quality settings, you should be fine. Get to know your program of choice, learn the hotkeys and layout so you know what it's capable of.
+Whether you're using sounds already made or you'd like to create your own effects, the first thing you'll need is an editing program! No, you don't need to go buy a professional-level digital audio workstation, there are many open-source programs like [Tenacity](https://tenacityaudio.org) and [Ardour](https://ardour.org) that you can use. As long as the the software can do the things you want (recording, editing, producing) and export your project as an .ogg file with different quality settings, you should be fine. Get to know your program of choice, learn the hotkeys and layout so you know what it's capable of.
 
 ## Where do I get sound files?
 
