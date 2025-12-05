@@ -93,4 +93,6 @@
 		..()
 		src.setStatus("grinch_respawn", 30 SECONDS)
 
+/datum/objective_set/grinch
+
 
