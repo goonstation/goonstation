@@ -8,6 +8,7 @@
 	force = 10
 	throwforce = 15
 	throw_range = 3
+	can_arcplate = FALSE
 
 	var/static/list/rocko_is
 	var/smile = TRUE

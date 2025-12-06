@@ -60,6 +60,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	default_material = "steel"
+	can_arcplate = FALSE
 	///the material id string (lowercase) of the starting reinforcement
 	var/default_reinforcement = null
 	uses_default_material_appearance = TRUE
@@ -606,6 +607,7 @@ MATERIAL
 	inventory_counter_enabled = 1
 	material_amt = 0.05
 	uses_default_material_appearance = TRUE
+	can_arcplate = FALSE
 
 	New()
 		..()
@@ -965,6 +967,7 @@ MATERIAL
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
 	material_amt = 0.025
+	can_arcplate = FALSE
 
 	New(make_amount = 0)
 		..()

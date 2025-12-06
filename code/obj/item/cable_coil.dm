@@ -34,6 +34,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	special_grab = /obj/item/grab
 	inventory_counter_enabled = 1
 	material_amt = 1 / 30
+	can_arcplate = FALSE
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
