@@ -1113,6 +1113,14 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/brick
+	name = "Brick"
+	item_requirements = list("rock" = 100)
+	item_outputs = list(/obj/item/brick)
+	create = 1
+	time = 10 SECONDS
+	category = null
+
 /******************** Medical **************************/
 
 /datum/manufacture/scalpel

@@ -82,7 +82,8 @@
 		/datum/manufacture/stapler,
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/fiddle,
-		/datum/manufacture/whistle)
+		/datum/manufacture/whistle,
+		/datum/manufacture/brick)
 
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
