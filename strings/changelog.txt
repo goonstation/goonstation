@@ -1,4 +1,9 @@
 
+(t)sat dec 06 25
+(u)JORJ949
+(p)25201
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Antagonist scaling in the Changeling, Vampire and Arcfiend gamemodes has been increased to be the same as Intrigue.
 (t)wed dec 03 25
 (u)CalliopeSoups
 (p)25161
