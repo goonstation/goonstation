@@ -36791,6 +36791,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
+"dUk" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/security/evidence)
 "dUB" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -37734,7 +37745,8 @@
 /area/station/hallway/primary/south)
 "eAo" = (
 /obj/machinery/light/small{
-	dir = 4
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -40220,6 +40232,9 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "gkd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -41240,6 +41255,13 @@
 /obj/item/pen{
 	pixel_y = 5;
 	pixel_x = 4
+	},
+/obj/machinery/light/lamp/black{
+	pixel_y = 9;
+	pixel_x = -2
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
 /area/station/security/evidence)
@@ -47565,10 +47587,6 @@
 /area/station/hallway/primary/south)
 "lTt" = (
 /obj/table/auto,
-/obj/machinery/light/lamp/black{
-	pixel_y = 9;
-	pixel_x = -2
-	},
 /obj/item/item_box/postit{
 	pixel_y = 3;
 	pixel_x = -5
@@ -48234,10 +48252,10 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/small{
 	dir = 1;
-	status = 2
+	pixel_y = 21
 	},
 /turf/simulated/floor/redblack{
-	dir = 10
+	dir = 9
 	},
 /area/station/security/evidence)
 "msz" = (
@@ -49705,10 +49723,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
-"nrT" = (
-/obj/machinery/light/small,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/evidence)
 "nst" = (
 /obj/machinery/conveyor/WE{
 	id = "qmin"
@@ -51284,9 +51298,6 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "ozG" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/storage/closet/fire,
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -52255,10 +52266,11 @@
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "pff" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/storage/secure/closet/brig,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -56406,7 +56418,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/red,
 /area/station/security/evidence)
 "siu" = (
 /obj/landmark/start/job/miner,
@@ -57601,7 +57613,6 @@
 /area/station/maintenance/inner/central)
 "tdb" = (
 /obj/storage/secure/closet/brig,
-/obj/machinery/light/small,
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "tdf" = (
@@ -57617,6 +57628,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -59951,6 +59968,11 @@
 /area/station/engine/monitoring)
 "uHp" = (
 /obj/machinery/vending/coffee,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -61112,6 +61134,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -61300,6 +61325,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"vLE" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/security/evidence)
 "vLL" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -99054,7 +99087,7 @@ vcz
 tQs
 irS
 xVF
-uFn
+vLE
 lTt
 jzm
 jRq
@@ -99064,7 +99097,7 @@ aAE
 aAE
 aAE
 tdb
-nrT
+uFn
 auw
 oYj
 awT
@@ -99356,7 +99389,7 @@ qPD
 djG
 nBu
 kOq
-uFn
+dUk
 gZC
 gkd
 vDW
@@ -99657,7 +99690,7 @@ gQO
 mQe
 auN
 aca
-air
+aca
 uFn
 uFn
 uFn
