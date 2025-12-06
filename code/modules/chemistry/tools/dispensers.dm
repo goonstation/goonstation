@@ -126,13 +126,25 @@
 	get_desc(dist, mob/user)
 		return null
 
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user, silent = FALSE)
+		if (istype(W, /obj/item/magnifying_glass))
+			boutput(user, SPAN_NOTICE("You angle the light through the magnifying glass towards the ants."))
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(burn_ants), list(user, W), W.icon, W.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			return
+
 		..(W, user)
 		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
+
+	proc/burn_ants(mob/user, obj/item/P)
+		boutput(user, SPAN_NOTICE("You burn the ants to a crisp."))
+		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, TRUE)
+		animate_little_spark(src)
+		make_cleanable(/obj/decal/cleanable/ash, src.loc)
+		qdel(src)
 
 /obj/reagent_dispensers/cleanable/spiders
 	name = "spiders"
