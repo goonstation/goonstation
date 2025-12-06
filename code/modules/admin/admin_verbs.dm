@@ -1,7 +1,7 @@
 var/list/admin_verbs = list(
 
 
-	1 = list(
+	list(
 		// LEVEL_BABBY, goat fart, ayn rand's armpit
 		/client/proc/cmd_admin_say,
 		/client/proc/cmd_admin_gib_self,
@@ -9,7 +9,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	2 = list(
+	list(
 		// LEVEL_MOD, moderator
 		/client/proc/admin_changes,
 		/client/proc/admin_play,
@@ -78,7 +78,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	3 = list(
+	list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
 		/datum/admins/proc/pixelexplosion,
@@ -211,7 +211,7 @@ var/list/admin_verbs = list(
 		/client/proc/deelectrify_all_airlocks
 		),
 
-	4 = list(
+	list(
 		// LEVEL_IA, admin
 		/*
 		/client/proc/noclip,
@@ -228,7 +228,7 @@ var/list/admin_verbs = list(
 		*/
 		),
 
-	5 = list(
+	list(
 		// LEVEL_PA, primary administrator
 		/datum/admins/proc/togglesuicide,
 		/datum/admins/proc/pixelexplosion,
@@ -270,7 +270,6 @@ var/list/admin_verbs = list(
 		/client/proc/edit_module,
 		// /client/proc/modify_organs,
 		/client/proc/toggle_atom_verbs,
-		/client/proc/toggle_camera_network_reciprocity,
 		///client/proc/generate_poster,
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
@@ -325,7 +324,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	6 = list(
+	list(
 		// LEVEL_ADMIN, Administrator
 		/datum/admins/proc/togglesoundwaiting,
 		/client/proc/debug_variables,
@@ -388,6 +387,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_caviewer,
 		/client/proc/cmd_paraviewer,
 		/client/proc/cmd_ambient_viewer,
+		/client/proc/cmd_animviewer,
+
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
@@ -441,8 +442,9 @@ var/list/admin_verbs = list(
 		/client/proc/transfer_abcu_blueprints,
 		),
 
-	7 = list(
+	list(
 		// LEVEL_CODER, coder
+		/client/proc/open_colorblind_test,
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/debug_global_variable,
@@ -464,7 +466,6 @@ var/list/admin_verbs = list(
 		/client/proc/debug_reagents_cache,
 		///client/proc/debug_check_possible_reactions,
 		/client/proc/set_admin_level,
-		/client/proc/show_camera_paths,
 		///client/proc/dbg_itemspecial,
 		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
@@ -517,7 +518,7 @@ var/list/admin_verbs = list(
 #endif
 		),
 
-	8 = list(
+	list(
 		// LEVEL_HOST, host
 		/datum/admins/proc/toggle_soundpref_override
 		),

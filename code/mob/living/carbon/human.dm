@@ -2016,6 +2016,23 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	else
 		src.show_text("You're not done eating the last piece yet.", "red")
 
+/mob/living/carbon/human/verb/swap_clothing()
+	set name = "Swap Clothing Styles"
+	set desc = "Toggle mutantrace-specific clothing distorts on/off."
+	set category = "Local"
+
+	if (isfrog(src))
+		var/datum/mutantrace/amphibian/amphibian_datum = src.mutantrace
+		amphibian_datum.clothes_filters_active = !amphibian_datum.clothes_filters_active
+		boutput(src, SPAN_ALERT("Amphibian filters toggled."))
+
+	if (iscow(src))
+		var/datum/mutantrace/cow/cow_datum = src.mutantrace
+		cow_datum.clothes_filters_active = !cow_datum.clothes_filters_active
+		boutput(src, SPAN_ALERT("Cow filters toggled."))
+
+	src.update_clothing()
+
 /mob/living/carbon/human/verb/numbers()
 	set name = "7848(2)9(1)"
 	set hidden = 1
@@ -2486,7 +2503,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 /mob/living/carbon/human/hand_attack(atom/target, params, location, control)
 	if (src.lying && src.buckled != target) //lol we need to allow unbuckling here i guess...
 		return
-
 	if (mutantrace?.override_attack)
 		if(mutantrace.custom_attack(target))
 			return

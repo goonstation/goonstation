@@ -3043,6 +3043,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_pet = 2
 	player_can_spawn_with_pet = FALSE
 
+/* -------------------- Splinter --------------------- */
+
+/mob/living/critter/small_animal/bat/splinter //for Kyle's office
+	name = "Splinter"
+	desc = "Some say that bats are just rats with wings. If only they knew how right they were..."
+	icon_state = "batdoctor"
+	icon_state_dead = "batdoctor-dead"
+	health_brute = 30
+	health_burn = 30
+	is_pet = FALSE
+	player_can_spawn_with_pet = FALSE
+	ai_type = /datum/aiHolder/empty
+
 /* ------------------ Tiny Bat Rina ------------------ */
 
 /mob/living/critter/small_animal/bat/rina //for Jan's office
@@ -3283,7 +3296,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "It doesn't have any arms or legs so it's kind of like a snake, but it's gross and unthreatening instead of cool and dangerous."
 	icon_state = "slug"
 	icon_state_dead = "slug-dead"
-	blood_id = "hemolymph"
+	blood_id = "slime"
 	speech_verb_say = "blorps"
 	speech_verb_exclaim = "bloops"
 	speech_verb_ask = "burbles"
@@ -3322,7 +3335,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "It's basically just a slug with a shell on it. This makes it less gross."
 	icon_state = "snail"
 	icon_state_dead = "snail-dead"
-	blood_id = "hemolymph"
+	blood_id = "slime"
 	health_brute = 10
 	health_burn = 10
 	slime_chance = 11
@@ -3333,7 +3346,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "It's Snaily Softserve! She's a bit slimy and slow, but she means well."
 	icon_state = "snail"
 	icon_state_dead = "snail-dead"
-	blood_id = "hemolymph"
+	blood_id = "slime"
 	health_brute = 30
 	health_burn = 30
 	slime_chance = 25
@@ -3344,15 +3357,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	voice_name = "Snaily Softserve"
 	memory = "i love being a snail..."
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
-	dir_locked = 1
 	player_can_spawn_with_pet = FALSE
 
 	New()
 		..()
 		var/image/bow = image('icons/obj/clothing/item_hats.dmi', "hbow-mint")
 		bow.appearance_flags = KEEP_TOGETHER
-		bow.pixel_y= 3
-		bow.pixel_x= -9
+		bow.pixel_y = 7
+		bow.pixel_x = 1
 		bow.loc = src
 		bow.layer= src.layer +0.1
 		src.overlays += bow

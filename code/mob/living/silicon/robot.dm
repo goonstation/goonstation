@@ -600,6 +600,20 @@ TYPEINFO(/mob/living/silicon/robot)
 					maptext_out = "<I>flexes [his_or_her(src)] arms</I>"
 					m_type = 1
 
+			if ("raisehand")
+				if (!src.restrained())
+					var/obj/item/thing = src.equipped()
+					if (thing)
+						message = "<b>[used_name]</b> raises [thing]."
+						maptext_out = "<I>raises [thing]</I>"
+					else
+						message = "<b>[used_name]</b> raises [his_or_her(src)] distinct lack of hands."
+						maptext_out = "<I>raises [his_or_her(src)] lack of hands</I>"
+				else
+					message = "<b>[used_name]</b> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
+
 			if ("fart")
 				if (farting_allowed && src.emote_check(voluntary))
 					m_type = 2
@@ -1992,6 +2006,8 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.internal_pda.alertgroups = RM.alertgroups
 
 			src.update_radio(RM.radio_type)
+		for(var/datum/objectProperty/equipment/prop in RM.properties)
+			prop.onEquipped(RM, src, RM.properties[prop])
 
 	proc/remove_module()
 		if(!istype(src.module))
@@ -1999,6 +2015,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		var/obj/item/robot_module/RM = src.module
 		RM.icon_state = initial(RM.icon_state)
 		src.show_text("Your module was removed!", "red")
+		for(var/datum/objectProperty/equipment/prop in RM.properties)
+			prop.onUnequipped(RM, src, RM.properties[prop])
 		uneq_all()
 		src.module = null
 		hud.module_removed()

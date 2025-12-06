@@ -86,7 +86,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						if(BLEND_MULTIPLY) icon_mode = ICON_MULTIPLY
 						if(BLEND_INSET_OVERLAY) icon_mode = ICON_OVERLAY
 
-					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.getTexture()), icon_mode)
+					var/icon/tex = GetTexturedIcon(src.cap_icon, mat1.getTexture())
+					src.cap_icon.Blend(tex, icon_mode)
 
 				if(length(setcolor) > 4) //ie, if it's a color matrix
 					src.cap_icon.MapColors(arglist(setcolor))
@@ -100,7 +101,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		src.name = "melted "+src.name
 		src.icon_state_cap += "_melted_[rand(1,4)]"
 		src.setMaterial(src.material, TRUE, FALSE, FALSE)
-		var/obj/machinery/atmospherics/binary/nuclear_reactor/parent = src.loc
+		var/obj/machinery/nuclear_reactor/parent = src.loc
 		if(istype(parent))
 			parent.MarkGridForUpdate()
 			parent.UpdateIcon()
@@ -133,7 +134,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			RC.material_trigger_on_temp(RC.temperature)
 			src.material_trigger_on_temp(src.temperature)
 		//heat transfer with reactor vessel
-		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
+		var/obj/machinery/nuclear_reactor/holder = src.loc
 		if(istype(holder))
 			var/deltaT = src.temperature - holder.temperature
 			var/k = calculateHeatTransferCoefficient(holder.material,src.material)

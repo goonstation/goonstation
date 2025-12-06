@@ -504,8 +504,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
-		if (!isturf(location))
-			animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, 1)
 		return
 
@@ -515,11 +513,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate(location)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
-		return
-
-/datum/materialProc/erebite_flash
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#FF7711",-1,10)
 		return
 
 /datum/materialProc/erebite_temp
@@ -633,62 +626,26 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate_levitate(owner)
 		return
 
-// Apply HSL colorspace filter. Typically used for turning everything into a single color while still having some grayscale remaining.
+// Apply a secondary HSL colorspace matrix.
+// Typically used for turning all non-grayscale colors into a single color, or having a secondary highlight color.
 /datum/materialProc/add_color_hsl
-	max_generations = 0 // No need to apply the same single-color visuals to the subtypes
-	var/list/color_matrix = null
-
 	execute(var/atom/owner)
 		var/added_mat_id = owner.material.getID()
+		if(!owner.material.hsl_color)
+			return
 		if(!owner.mat_changeappearance)
 			return
 		if(endswith(owner.icon_state, "$$[added_mat_id]")) // Ignore if it is a material version of a sprite
 			return
 		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
 			return
-		var/color_filter = color_matrix_filter(color_matrix, FILTER_COLOR_HSL)
-		owner.add_filter("[added_mat_id]_color", 5, color_filter)
+		var/color_filter = color_matrix_filter(owner.material.hsl_color, FILTER_COLOR_HSL)
+		owner.add_filter("[added_mat_id]_hsl_color", 5, color_filter)
 		return
-
-	bohrum
-		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
-							0.00, 0.60, 0.00, 0.00,\
-							0.00, 0.00, 1.00, 0.00,\
-							0.00, 0.00, 0.00, 1.00,\
-							0.33, 0.10, 0.00, 0.00)
-
-	claretine
-		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
-							0.00, 0.60, 0.00, 0.00,\
-							0.00, 0.00, 1.00, 0.00,\
-							0.00, 0.00, 0.00, 1.00,\
-							0.00, 0.10, 0.00, 0.00)
-
-	cerenkite
-		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
-							0.00, 0.40, 0.00, 0.00,\
-							0.00, 0.00, 1.00, 0.00,\
-							0.00, 0.00, 0.00, 1.00,\
-							0.60, 0.10, 0.00, 0.00)
-
-	mauxite
-		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
-							0.00, 0.35, 0.00, 0.00,\
-							0.00, 0.00, 0.90, 0.00,\
-							0.00, 0.00, 0.00, 1.00,\
-							0.00, 0.05, -0.10, 0.00)
-
-	soulsteel
-		color_matrix = list(0.00, 0.00, 0.00, 0.00,\
-							0.00, 0.80, 0.00, 0.00,\
-							0.00, 0.00, 1.00, 0.00,\
-							0.00, 0.00, 0.00, 1.00,\
-							0.00, 0.20, 0.00, 0.00)
 
 /datum/materialProc/remove_color_hsl
 	execute(atom/owner)
-		var/removed_mat_id = owner.material.getID()
-		owner.remove_filter("[removed_mat_id]_color")
+		owner.remove_filter("[owner.material.getID()]_hsl_color")
 
 /datum/materialProc/spacelag_add
 	execute(atom/owner)
@@ -713,20 +670,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(!isturf(location))
 			offset = rand()
 		var/wave_filter = wave_filter(16, 16, 1, offset, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
-		location.add_filter("honey_wave", 20, wave_filter)
-
-		var/list/honey_matrix = list(0.00, 0.00, 0.00, 0.00,\
-									0.00, 0.30, 0.00, 0.00,\
-									0.00, 0.00, 1.00, 0.00,\
-									0.00, 0.00, 0.00, 1.00,\
-									0.10, 0.70, 0.00, 0.00)
-		var/color_filter = color_matrix_filter(honey_matrix, FILTER_COLOR_HSL)
-		location.add_filter("honey_color", 21, color_filter)
+		location.add_filter("honey_wave", 4, wave_filter)
 		return
 
 /datum/materialProc/honey_remove
 	execute(var/atom/location)
-		location.remove_filter("honey_color")
 		location.remove_filter("honey_wave")
 		return
 
@@ -738,7 +686,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		SPAWN(1 SECOND)
 			if(location?.material?.getID() == "miracle")
 				location.visible_message(SPAN_NOTICE("[location] bends and twists, changing colors rapidly."))
-				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
+				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "negativematter",prob(6); "ectoplasm")
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)
 		return
 
@@ -922,8 +870,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(mob/living/L, obj/item/I, mult)
 		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
 			return
-		if (istype(L))
-			L.shock(I, src.wattage, "All", 1, FALSE)
+		if (!istype(L))
+			return
+
+		if(istype(I, /obj/item/raw_material/veranium))
+			var/obj/item/raw_material/veranium/ore = I
+			FLICK("ore[ore.icon_stack_value]_shock$$veranium", ore)
+		else if(istype(I, /obj/item/rocko))
+			var/obj/item/rocko/rocko = I
+			var/flick_state = replacetextEx(rocko.icon_state, "$$veranium", "shock$$veranium")
+			FLICK(flick_state, rocko)
+		L.shock(I, src.wattage, "All", 1, FALSE)
 
 /datum/materialProc/arcflash_life
 	var/cd_min

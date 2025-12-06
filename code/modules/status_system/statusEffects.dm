@@ -87,16 +87,25 @@
 		 *
 		 * 	Required: sweatReagent - the chemical you're sweating
 		 *  targetTurf should be left default
+		 *  Turning sweatpools on causes sweat chempools instead of cleanables
 		 */
-	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner))
+	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner), var/sweatpools = FALSE)
+		if (!prob(sweatChance))
+			return
 		var/datum/reagents/tempHolder = new
-		if (prob(sweatChance))
+		if (sweatpools)
 			tempHolder.add_reagent(sweatReagent, sweatAmount)
 			targetTurf.fluid_react_single(sweatReagent,sweatAmount)
 			tempHolder.reaction(targetTurf, TOUCH)
-		return
-
-
+		else
+			var/datum/reagent/sweatinput = global.reagents_cache[sweatReagent]
+			var/obj/decal/cleanable/water/sweat = make_cleanable(/obj/decal/cleanable/water, targetTurf)
+			sweat.color = rgb(sweatinput.fluid_r, sweatinput.fluid_g, sweatinput.fluid_b)
+			sweat.alpha = sweatinput.transparency
+			sweat.sample_reagent = sweatReagent
+			sweat.name = "sweat"
+			sweat.desc = "A bunch of sweat on the floor. Ew!"
+			sweat.dry_time = 60
 
 	/**
 		* Called when the status is changed using setStatus. Called after duration is updated etc.
@@ -1020,6 +1029,38 @@
 		onRemove()
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			. = ..()
+
+	humiliated
+		id = "humiliated"
+		name = "Humiliated"
+		desc = "Your crushing loss has humiliated you!<br>Slowed slightly, unable to sprint, unable to suicide, recieve triple damage from attacks."
+		unique = 1
+		icon_state = "-"
+		duration = INFINITE_STATUS
+		movement_modifier = /datum/movement_modifier/humiliation
+		effect_quality = STATUS_QUALITY_NEGATIVE
+
+		onAdd(optional=null)
+			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			. = ..()
+
+	victorious
+		id = "victorious"
+		name = "Victorious"
+		desc = "Your glorious win has filled you with pride!<br>Sped slightly."
+		icon_state = "janktank"
+		duration = INFINITE_STATUS
+		unique = 1
+		movement_modifier = /datum/movement_modifier/victorious
+		effect_quality = STATUS_QUALITY_POSITIVE
 
 	blocking
 		id = "blocking"
@@ -3212,7 +3253,7 @@
 	nightmare
 		id = "art_nightmare_curse"
 		name = "Nightmare Curse"
-		extra_desc = "You're being haunted by nightmares! Kill them 7 of them or perish."
+		extra_desc = "You're being haunted by nightmares! Kill 7 of them or perish."
 		removal_msg = "The nightmare ends, along with the creatures..."
 		var/list/created_creatures = list()
 		var/creatures_to_kill = 7

@@ -947,6 +947,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, D, user)
 			qdel(W)
 			qdel(src)
 
@@ -1010,6 +1011,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			var/obj/item/reagent_containers/food/snacks/spaghetti/spicy/D = new/obj/item/reagent_containers/food/snacks/spaghetti/spicy(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, D, user)
 			qdel(W)
 			qdel(src)
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/pizza))
@@ -1020,6 +1022,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			D.food_effects += src.food_effects
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, D, user)
 			qdel(W)
 			qdel(src)
 		else return ..()
@@ -1311,6 +1314,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
 			qdel(W)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, D, user)
 			qdel(src)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon))
 			boutput(user, SPAN_NOTICE("You top the bagel with tasty, salty lox!"))
@@ -1318,6 +1322,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
 			qdel(W)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, D, user)
 			qdel(src)
 
 	creamcheese
@@ -1444,7 +1449,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		desc = "A hotdog inside a fried banana bread shell.  Is that even possible?"
 		icon_state = "corndogb"
 		heal_amt = 20
-		food_effects = list("food_sweaty_big")
 
 	brain
 		name = "brain-corndog"
@@ -1514,7 +1518,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				src.desc = "A hotdog...in a banana bread bun.  What."
 				src.heal_amt += 8
 				src.name = "bananadog"
-				food_effects = list("food_sweaty_big","food_all")
+				food_effects = list("food_sweaty","food_all")
 				if(src.herb)
 					src.name = "herbal " + src.name
 			else if (istype(W, /obj/item/reagent_containers/food/snacks/breadslice/brain))
@@ -1611,7 +1615,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			if(src.herb)
 				newdog.name = replacetext(newdog.name, "corn","herb")
 				newdog.desc = replacetext(newdog.desc, "hotdog","sausage")
-
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newdog, user)
 			qdel(src)
 
 		else if (istype(W,/obj/item/plant/herb) && !src.herb)
@@ -1644,6 +1648,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				src.set_loc(user)
 				l.set_loc(hotloc)
 				r.set_loc(hotloc)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, list(l, r), user)
 			qdel(src)
 
 		else
@@ -1704,14 +1709,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 						if(inplayer)
 							user.u_equip(src)
 						src.set_loc(user)
+						var/list/chunks = list()
 						for(var/i=1,i<=4,i++)
 							var/obj/item/reagent_containers/food/snacks/hotdog_chunk/c = new /obj/item/reagent_containers/food/snacks/hotdog_chunk
+							chunks.Add(c)
 							c.pixel_y = rand(-8,8)
 							c.pixel_x = rand(-8,8)
 							if(inplayer)
 								c.set_loc(get_turf(user))
 							else
 								c.set_loc(halfloc)
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, chunks, user)
 						qdel(src)
 					if("octopus")
 						var/obj/item/reagent_containers/food/snacks/hotdog_octo/o = new /obj/item/reagent_containers/food/snacks/hotdog_octo
@@ -1721,6 +1729,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 							user.put_in_hand_or_drop(o)
 						else
 							o.set_loc(halfloc)
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, o, user)
 						qdel(src)
 			else
 				..()
@@ -1916,12 +1925,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 			boutput(user, "<span class='notice'>You carve [src] for serving!</span>")
 			var/turf/T = get_turf(src)
+			var/list/newitems = list()
 			for (var/i in 1 to 2)
-				new /obj/item/reagent_containers/food/snacks/turkey_drum(T)
+				newitems.Add(new /obj/item/reagent_containers/food/snacks/turkey_drum(T))
 			for (var/i in 1 to 3)
-				new /obj/item/reagent_containers/food/snacks/turkey_slice(T)
+				newitems.Add(new /obj/item/reagent_containers/food/snacks/turkey_slice(T))
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitems, user)
 			qdel(src)
 		else ..()
 
@@ -2258,6 +2269,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 1
 	initial_reagents = list("juice_pickle"=5)
+	mat_changename = "pickle"
+	default_material = "pickle"
 
 	trash
 		name = "trash pickle"
@@ -2387,7 +2400,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/seaweed))
 			boutput(user, "You wrap the seaweed around the rice ball. A good decision.")
-			new /obj/item/reagent_containers/food/snacks/rice_ball/onigiri(get_turf(user))
+			var/onigiri = new /obj/item/reagent_containers/food/snacks/rice_ball/onigiri(get_turf(user))
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, onigiri, user)
 			qdel(src)
 		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice))
 			var/spawnloc = get_turf(src)
@@ -2417,6 +2431,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				user.put_in_hand_or_drop(nigiri)
 			else
 				nigiri.set_loc(spawnloc)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, nigiri, user)
 			qdel(src)
 		else if(istype(W, /obj/item/reagent_containers/food/snacks/shrimp))
 			var/spawnloc = get_turf(src)
@@ -2434,6 +2449,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				user.put_in_hand_or_drop(nigiri)
 			else
 				nigiri.set_loc(spawnloc)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, nigiri, user)
 			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/rice_ball/onigiri

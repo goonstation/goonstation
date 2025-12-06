@@ -104,11 +104,6 @@ TYPEINFO(/obj/item/storage/toilet)
 
 	for(var/mob/M in src.loc)
 		if (M.buckled)
-			if (M != user)
-				user.visible_message(SPAN_NOTICE("[M] is zipped up by [user]. That's... that's honestly pretty creepy."))
-			else
-				user.visible_message(SPAN_NOTICE("[M] zips up."), SPAN_NOTICE("You zip up."))
-//			boutput(world, "[M] is no longer buckled to [src]")
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)

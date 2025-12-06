@@ -10,7 +10,7 @@
 /mob/var/movement_last_progress = 0 //! The progress of the move the mob was at when it was last modified. between 0-1
 
 /mob/hotkey(name)
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		return controller.hotkey(src, name)
 	return ..()
@@ -42,7 +42,7 @@
 				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
 				hover_tag?.show_images(src.client, FALSE, FALSE)
 
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		controller.keys_changed(src, keys, changed)
 		return
@@ -103,7 +103,7 @@
 
 /mob/proc/process_move(keys)
 	set waitfor = 0
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		return controller.process_move(src, keys)
 
@@ -305,43 +305,9 @@
 								src.emote("wheeze")
 								boutput(src, SPAN_ALERT("You flop over, too winded to continue running!"))
 
-						var/list/pulling = list()
-						if (src.pulling)
-							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
-								src.remove_pulling()
-							else
-								var/can_pull = TRUE
-								if (ismob(src.pulling))
-									var/mob/M = src.pulling
-									for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
-										if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > GRAB_PASSIVE)
-											can_pull = FALSE
-											src.remove_pulling()
-											break
-								if (can_pull)
-									pulling += src.pulling
-						for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-							var/can_pull = TRUE
-							if (G.affecting)
-								for(var/obj/item/grab/grab_grabbed_by in G.affecting.grabbed_by)
-									if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > G.state)
-										can_pull = FALSE
-										break
-								if (can_pull)
-									pulling += G.affecting
-
-						for (var/atom/movable/A in pulling)
-							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
-								continue
-							if (A == src || A == pushing)
-								continue
-							if (!isturf(A.loc) || A.anchored)
-								continue // whoops
-							A.animate_movement = SYNC_STEPS
-							A.glide_size = glide
-							step(A, get_dir(A, old_loc))
-							A.glide_size = glide
-							A.OnMove(src)
+						var/list/chain = list()
+						chain.Add(src)
+						src.do_pulling(old_loc, glide, chain)
 			else
 				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
 					src.set_dir(move_dir)
@@ -362,3 +328,49 @@
 						return
 					src.last_resist = world.time + 20
 					G.do_resist()
+
+/mob/proc/do_pulling(var/turf/old_loc, var/glide, var/list/chain)
+	var/list/pulling = list()
+	if (src.pulling)
+		if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+			src.remove_pulling()
+		else
+			var/can_pull = TRUE
+			if (ismob(src.pulling))
+				var/mob/M = src.pulling
+				for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
+					if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > GRAB_PASSIVE)
+						can_pull = FALSE
+						src.remove_pulling()
+						break
+			if (can_pull)
+				pulling += src.pulling
+	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+		var/can_pull = TRUE
+		if (G.affecting)
+			for(var/obj/item/grab/grab_grabbed_by in G.affecting.grabbed_by)
+				if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > G.state)
+					can_pull = FALSE
+					break
+			if (can_pull)
+				pulling += G.affecting
+
+	for (var/atom/movable/A in pulling)
+		if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+			continue
+		if (A == src || A == pushing)
+			continue
+		if (!isturf(A.loc) || A.anchored)
+			continue // whoops
+		if (chain.Find(A))
+			continue // no loops
+		A.animate_movement = SLIDE_STEPS
+		A.glide_size = glide
+		var/turf/pulled_old_loc = A.loc
+		step(A, get_dir(A, old_loc))
+		A.OnMove(src)
+		if (istype(A, /mob/))
+			chain.Add(A)
+			var/mob/M = A
+			M.pushing = null
+			M.do_pulling(pulled_old_loc, glide, chain)
