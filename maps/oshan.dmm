@@ -31926,6 +31926,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/drink_rack/mug{
+	pixel_x = -28;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "eZS" = (
