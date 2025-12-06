@@ -1,5 +1,9 @@
 
 (t)sat dec 06 25
+(u)Munien
+(p)25259
+(e)⚖👮|C-Balance, A-Security
+(+)Removed the Forensic Scan program from several PDA cartridges (Security Officer, Captain, Generic Head) and limited the availability of Forensic PDAs.
 (u)JORJ949
 (p)25201
 (e)⚖🧛|C-Balance, A-Gamemodes
