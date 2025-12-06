@@ -289,3 +289,16 @@ SET_UP_DIRECTIONALS(/obj/noticeboard/persistent/security_foyer, OFFSETS_NOTICEBO
 	persistent_id = "wizard"
 
 SET_UP_DIRECTIONALS(/obj/noticeboard/persistent/wizard, OFFSETS_NOTICEBOARD)
+
+/obj/noticeboard/persistent/conspiracy
+	name = "Conspiracy Den persistent notice board"
+	persistent_id = "conspiracy"
+
+	desc = "This looks incredibly stupid."
+
+	examine(mob/user)
+		. = ..()
+		if (user.traitHolder.hasTrait("conspiracytheorist"))
+			user.visible_message("To an idiot! To your astute mind this is a work of art and a wellspring of truth.")
+
+SET_UP_DIRECTIONALS(/obj/noticeboard/persistent/conspiracy, OFFSETS_NOTICEBOARD)
