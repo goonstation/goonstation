@@ -748,8 +748,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	invisibility = INVIS_INFRA
 	font_color = "#D20040"
 
-/obj/decal/cleanable/writing/postit
-	name = "sticky note"
+/obj/decal/cleanable/writing/postit  //None of this is real, legacy code from before 11/2022, only accessible by Admins/Devs
+	name = "old sticky note"
 	desc = "Someone's stuck a little note here."
 	icon_state = "postit"
 	random_icon_states = list()
