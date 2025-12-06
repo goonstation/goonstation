@@ -1,26 +1,30 @@
 proc/BeginSpacePush(var/atom/movable/A)
 	if (!(A.temp_flags & SPACE_PUSHING))
-		var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-		controller.space_controller.push_list += A
-		A.temp_flags |= SPACE_PUSHING
+		var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
+		if(controller)
+			controller.space_controller.push_list += A
+			A.temp_flags |= SPACE_PUSHING
 
 proc/EndSpacePush(var/atom/movable/A)
 	if(ismob(A))
 		var/mob/M = A
 		M.inertia_dir = 0
-	var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-	controller.space_controller.push_list -= A
-	A.temp_flags &= ~SPACE_PUSHING
+	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
+	if(controller)
+		controller.space_controller.push_list -= A
+		A.temp_flags &= ~SPACE_PUSHING
 
 proc/BeginOceanPush(atom/movable/AM, dir = SOUTH)
-	var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-	controller.ocean_controller.addAtom(AM, dir)
+	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
+	if(controller)
+		controller.ocean_controller.addAtom(AM, dir)
 
 proc/EndOceanPush(atom/movable/AM)
 	if (!global.processScheduler) //grumble grumble race conditions
 		return
-	var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-	controller.ocean_controller.removeAtom(AM)
+	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
+	if(controller)
+		controller.ocean_controller.removeAtom(AM)
 
 /// Controls forced movements
 /datum/controller/process/fMove
@@ -67,7 +71,7 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 				continue
 
 			var/turf/T = M.loc
-			if (!istype(T) || (!(istype(T, /turf/space) || T.throw_unlimited) || T != M.loc) && !M.no_gravity)
+			if (!M.should_drift())
 				EndSpacePush(M)
 				continue
 
@@ -77,7 +81,7 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 					EndSpacePush(M)
 					continue
 
-				if (istype(T, /turf/space) || M.no_gravity)
+				if (M.should_drift())
 					var/prob_slip = 5
 
 					if (tmob.hasStatus("handcuffed"))
@@ -87,7 +91,7 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 						prob_slip = 100
 
 					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
+						if (AA.stops_space_move && (!M.should_drift() || !isfloor(AA)))
 							if (!( tmob.l_hand ))
 								prob_slip -= 3
 							else if (tmob.l_hand.w_class <= W_CLASS_SMALL)
@@ -114,7 +118,7 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 				else
 					var/end = 0
 					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
+						if (AA.stops_space_move && (!M.should_drift()) || !isfloor(AA))
 							end = 1
 							break
 					if (end)

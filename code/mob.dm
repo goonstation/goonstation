@@ -2996,7 +2996,7 @@ TYPEINFO(/mob)
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
-		if ((istype(src.loc, /turf/space) || src.no_gravity) && ismob(source))
+		if (src.should_drift() && ismob(source))
 			var/mob/M = source
 			src.inertia_dir = M.inertia_dir
 	else
