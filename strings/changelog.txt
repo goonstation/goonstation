@@ -1,4 +1,57 @@
 
+(t)sat dec 06 25
+(u)CelineTheYeen
+(p)25222
+(e)🗺|A-Mapping
+(+)The North West maintenance tunnels on Oshan have been redesigned
+(u)Munien
+(p)25259
+(e)⚖👮|C-Balance, A-Security
+(+)Removed the Forensic Scan program from several PDA cartridges (Security Officer, Captain, Generic Head) and limited the availability of Forensic PDAs.
+(u)JORJ949
+(p)25201
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Antagonist scaling in the Changeling, Vampire and Arcfiend gamemodes has been increased to be the same as Intrigue.
+(t)wed dec 03 25
+(u)CalliopeSoups
+(p)25161
+(e)⛔📦🍝|C-Removal, A-Game-Objects, A-Catering
+(+)Slug eyestalks are obtained from cooking a slug, instead of the horrors.
+(u)Egregorious
+(p)25247
+(e)🆕💅🔊📨|C-Feature, C-QoL, C-Sound, A-Logistics
+(+)Added an AI assistant to mining helmets which plays sound alerts for certain mining events.
+(u)bag_o_cheese
+(p)25277
+(e)🎨|C-Sprites
+(+)Resprited the Detective reward, Aerostatic Jacket.
+(u)AMMIGGO
+(p)25280
+(e)|
+(+)Off-brand cola is now cheaper than regular cola
+(t)sun nov 30 25
+(u)Phoi
+(p)25198
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adds sound notification to dowsing rod when placed on a pinnable turf
+(+)Adds text onto the pre-existing message when dowsing rod is placed on a pinnable turf
+(t)sat nov 29 25
+(u)Valtsu0
+(p)25124
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)Triage tags can now be found in medical apparel vendors and medical borg modules.
+(t)wed nov 26 25
+(u)Albassort
+(p)25159
+(e)|
+(*)Updated the pickup verb (default hotkey: p) to use TGUI. Now you can fuzzy search items!
+(u)LeahTheTech
+(+).38 Ricochet rounds now do bonus damage per bounce and throw the victim if they've bounced at least twice.
+(t)mon nov 24 25
+(u)lyzmat
+(p)25199
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Traitor .38 Special variants are no longer locked to Detective operatives.
 (t)fri nov 21 25
 (u)CalliopeSoups
 (p)25215

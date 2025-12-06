@@ -444,6 +444,7 @@ var/list/admin_verbs = list(
 
 	list(
 		// LEVEL_CODER, coder
+		/client/proc/open_colorblind_test,
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/debug_global_variable,

@@ -644,5 +644,20 @@ to say if there's demand for that.
 		return "Negates fluid speed penalties.<br>+[propVal] movement delay on dry land."
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
+/datum/objectProperty/equipment/mining_alerts
+	name = "Integrated Mining Assistant"
+	id = "mining_alerts"
+	desc = "IMA is an integrated sensor and alert system that provides notifications for unearthed minerals and hazards."
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "online"
+
+	// no ASSOCIATE_ATOM_PROPERTY because this one is simple, valueless
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_MINING_ALERTS, owner)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MINING_ALERTS, owner)
 
 #undef ASSOCIATE_ATOM_PROPERTY
