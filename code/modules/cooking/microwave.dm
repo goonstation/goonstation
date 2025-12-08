@@ -138,7 +138,7 @@ TYPEINFO(/obj/machinery/microwave)
 			src.visible_message(SPAN_NOTICE("[user] starts to fix part of [src]."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/wrench.dmi', "wrench", "", null)
 		else
-			boutput(user, "It's broken! It could be fixed with some common tools.")
+			boutput(user, SPAN_ALERT("It's broken! It could be fixed with some common tools."))
 		return
 	if (O.cant_drop) //For borg held items, if the microwave is clean and functioning
 		boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
@@ -153,7 +153,6 @@ TYPEINFO(/obj/machinery/microwave)
 			return
 		user.u_equip(O)
 		O.set_loc(src)
-		src.visible_message(SPAN_NOTICE("[user] adds [O] to [src].(with the)"))
 		src.visible_message(SPAN_NOTICE("[user] adds [O] to [src]."))
 		tgui_process.update_uis(src)
 	else
@@ -290,12 +289,24 @@ TYPEINFO(/obj/machinery/microwave)
 				return TRUE
 			if (!length(src.contents))
 				return FALSE
-			boutput(usr, "You empty the contents out of the microwave.")
+			boutput(usr, SPAN_NOTICE("You empty the contents out of the microwave."))
 			for(var/atom/movable/thing as anything in src.contents)
 				thing.set_loc(get_turf(src))
 			return TRUE
+		if ("eject_single")
+			var/index = params["index"]
+			var/atom/movable/target = src.contents[index]
+			if (BOUNDS_DIST(usr, src) == 0)
+				usr.put_in_hand_or_drop(target)
+			else
+				target.set_loc(src.loc)
+			tgui_process.update_uis(src)
+			boutput(usr, SPAN_NOTICE("You eject the [target.name] from [src]."))
 
 /obj/machinery/microwave/attack_hand(mob/user)
+	if (src.microwave_state)
+		boutput(user, SPAN_ALERT("It's broken! It could be fixed with some common tools."))
+		return
 	if (isghostdrone(user))
 		boutput(user, SPAN_ALERT("\The [src] refuses to interface with you, as you are not a properly trained chef!"))
 		return
@@ -305,26 +316,18 @@ TYPEINFO(/obj/machinery/microwave)
 	if (src.microwave_state)
 		src.icon_state = "mwb"
 		return
-	if (src.operating)
-		switch(src.dirty)
-			if (MW_CLEAN)
-				src.icon_state = "mw1"
-			if (MW_DIRTY)
-				src.icon_state = "mwbloody1"
-			if (MW_DIRTY_SLIME)
-				src.icon_state = "mwbloody2"
-			if (MW_DIRTY_EGG)
-				src.icon_state = "mweggexplode1"
-	else
-		switch(src.dirty)
-			if (MW_CLEAN)
-				src.icon_state = "mw"
-			if (MW_DIRTY)
-				src.icon_state = "mwbloody"
-			if (MW_DIRTY_SLIME)
-				src.icon_state = "mwbloodyS"
-			if (MW_DIRTY_EGG)
-				src.icon_state = "mweggexplode"
+
+	switch(src.dirty)
+		if (MW_CLEAN)
+			src.icon_state = src.operating ? "mw1" : "mw"
+		if (MW_DIRTY)
+			src.icon_state = src.operating ? "mwbloody1" : "mwbloody"
+		if (MW_DIRTY_SLIME)
+			src.icon_state = src.operating ? "mwbloody2" : "mwbloodyS"
+		if (MW_DIRTY_EGG)
+			src.icon_state = src.operating ? "mweggexplode1" : "mweggexplode"
+		else
+			src.icon_state = "mw"
 
 /obj/machinery/microwave/proc/set_dirtiness(var/value)
 	src.dirty = value
