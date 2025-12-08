@@ -32,7 +32,6 @@
 	icon_state = "skeleton"
 	custom_gib_handler = /proc/bonegibs
 	hand_count = 2
-	void_mindswappable = TRUE
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE

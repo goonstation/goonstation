@@ -23,7 +23,6 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	void_mindswappable = TRUE
 
 	var/transmute_mat = "jean"
 
