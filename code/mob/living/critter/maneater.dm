@@ -44,6 +44,7 @@
 	can_grab = TRUE
 	can_disarm = TRUE
 	is_npc = TRUE
+	void_mindswappable = TRUE
 	ai_type = /datum/aiHolder/maneater
 	//if someone is really annoying and an ally, give them a smack to put them in their place
 	ai_retaliates = TRUE

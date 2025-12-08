@@ -17,6 +17,7 @@
 	speech_verb_stammer = "states"
 	speech_verb_exclaim = "declares"
 	speech_verb_ask = "queries"
+	void_mindswappable = TRUE
 	faction = list(FACTION_DERELICT)
 
 	setup_healths()

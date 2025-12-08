@@ -30,6 +30,7 @@
 	custom_gib_handler = /proc/tomatogibs
 	hand_count = 1
 	can_throw = 0
+	void_mindswappable = TRUE
 	blood_id = "juice_tomato"
 	add_abilities = list(/datum/targetable/critter/bite/tomato_bite, /datum/targetable/critter/slam/polymorph)
 

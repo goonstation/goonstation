@@ -11,6 +11,7 @@
 	can_throw = 0
 	can_grab = 0
 	can_disarm = 0
+	void_mindswappable = TRUE
 	blood_id = "oil"
 	var/dying = 0
 	speech_verb_say = "states"

@@ -21,6 +21,7 @@ TYPEINFO(/mob/living/critter/changeling)
 	table_hide = 0
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
 	butcherable = BUTCHER_ALLOWED
+	void_mindswappable = TRUE // not the smartest idea
 	default_speech_output_channel = null
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""

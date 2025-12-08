@@ -15,6 +15,7 @@ TYPEINFO(/mob/living/critter/hastur)
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
+	void_mindswappable = TRUE
 	see_invisible = INVIS_ADVENTURE
 	stat = STAT_DEAD
 	stepsound = 'sound/misc/hastur/tentacle_walk.ogg'

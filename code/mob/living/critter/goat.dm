@@ -21,6 +21,7 @@
 	speech_verb_ask = "baas"
 	health_brute = 35
 	health_burn = 35
+	void_mindswappable = TRUE
 	ai_type = /datum/aiHolder/goat
 	is_npc = TRUE
 	ai_retaliate_patience = 1 //they hardly need an excuse

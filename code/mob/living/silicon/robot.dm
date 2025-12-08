@@ -24,6 +24,7 @@ TYPEINFO(/mob/living/silicon/robot)
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
 	say_language = LANGUAGE_ENGLISH
+	void_mindswappable = TRUE
 	var/datum/hud/silicon/robot/hud
 
 // Pieces and parts

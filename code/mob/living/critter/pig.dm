@@ -9,6 +9,7 @@
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	name_the_meat = FALSE
 	var/feral = FALSE
+	void_mindswappable = TRUE
 
 	ai_type = /datum/aiHolder/pig // Worry not they will only attack mice
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP

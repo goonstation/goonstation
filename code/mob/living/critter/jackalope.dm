@@ -21,6 +21,7 @@
 	speech_verb_ask = "squeals"
 	health_brute = 8
 	health_burn = 8
+	void_mindswappable = TRUE
 	ai_type = /datum/aiHolder/wanderer
 	is_npc = TRUE
 	can_lie = FALSE

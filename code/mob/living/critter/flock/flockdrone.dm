@@ -8,6 +8,7 @@
 	can_grab = TRUE
 	can_disarm = TRUE
 	can_help = TRUE
+	void_mindswappable = TRUE
 	compute = FLOCK_DRONE_COMPUTE
 	death_text = "%src% clatters into a heap of fragments."
 	pet_text = list("taps", "pats", "drums on", "ruffles", "touches", "pokes", "prods")
