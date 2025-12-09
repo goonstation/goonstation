@@ -26,7 +26,6 @@ TYPEINFO(/mob/living/critter/crunched)
 	health_brute_vuln = 1
 	health_burn = 25
 	health_burn_vuln = 1
-	void_mindswappable = TRUE //feels more like a punishment
 	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
@@ -131,7 +130,6 @@ TYPEINFO(/mob/living/critter/shade)
 	health_brute_vuln = 0.5
 	health_burn = 10
 	health_burn_vuln = 0
-	void_mindswappable = TRUE
 	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
