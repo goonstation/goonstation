@@ -1,4 +1,9 @@
 
+(t)wed dec 10 25
+(u)JORJ949
+(p)24984
+(e)🔎🔨|C-Code-Quality, A-Player-Actions
+(+)The Midas Touch gene is now a targetable ability, meaning you cannot turn anything you can't click on gold (e.g. your internal organs)
 (t)sat dec 06 25
 (u)CelineTheYeen
 (p)25222
