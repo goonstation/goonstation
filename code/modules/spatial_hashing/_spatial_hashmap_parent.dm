@@ -10,21 +10,33 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  */
 /datum/spatial_hashmap
 	/**
-	 *	A 3D grid of lists representing each cell of the hashmap, indexed by their 3D spatial axes. \
+	 *	A 3D grid of associative lists representing each cell of the hashmap, indexed by their 3D spatial axes. \
 	 *	The hashmap is defined in the following way:
-	 *	> `hashmap[z][y][x] = list(E₁, E₂, ..., Eᵢ)`
+	 *	> `hashmap[z][y][x] = alist(E₁, E₂, ..., Eᵢ)`
 	 *
 	 *	Where `{E₁, E₂, ..., Eᵢ}` are the hashmap entries contained within the grid cell at `(x, y, z)`.
 	 *	Note that these coordinates are in grid space, not world space.
+	 *
+	 *	Grid cells are represented by associative lists so to prevent accidental entry duplication. Each hashmap entry is
+	 *	associated with a null value.
 	 */
-	VAR_PROTECTED/list/list/list/list/datum/hashmap = null
+	VAR_PROTECTED/list/list/list/alist/hashmap = null
 
-	/// An associative list of atoms being using to represent physical positions, and their associated signal subscription count.
-	VAR_PROTECTED/list/atom/tracked_atoms_with_subcount = null
-	/// An associative list of atoms, indexed by the hashmap entry using them to represent a physical position.
-	VAR_PROTECTED/list/atom/atoms_by_entry = null
-	/// An associative list of lists of hashmap entries, indexed by the atom being used to represent a physical position.
-	VAR_PROTECTED/list/list/atom/entries_by_atom = null
+	/**
+	 *	An associative list of atoms being using to represent physical positions, and their associated signal subscription count. \
+	 *	Type structure: `/alist</atom, int>`
+	 */
+	VAR_PROTECTED/alist/tracked_atoms_with_subcount = null
+	/**
+	 *	An associative list of atoms, indexed by the hashmap entry using them to represent a physical position. \
+	 *	Type structure: `/alist</datum, /atom>`
+	 */
+	VAR_PROTECTED/alist/atoms_by_entry = null
+	/**
+	 *	An associative list of lists of hashmap entries, indexed by the atom being used to represent a physical position. \
+	 *	Type structure: `/alist</atom, /list/datum>`
+	 */
+	VAR_PROTECTED/alist/entries_by_atom = null
 
 	/// The size of each cell in the hashmap. For example, a cell size of 30 would result in a 300x300 map being reduced to a 10x10 hashmap.
 	VAR_PROTECTED/cell_size = 30
@@ -50,11 +62,15 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	src.y_order = ceil(height / src.cell_size)
 	src.z_order = depth
 
-	src.hashmap = new /list(src.z_order, src.y_order, src.x_order, 0)
+	src.hashmap = new /list(src.z_order, src.y_order, src.x_order)
+	for (var/z in 1 to src.z_order)
+		for (var/y in 1 to src.y_order)
+			for (var/x in 1 to src.x_order)
+				src.hashmap[z][y][x] = alist()
 
-	src.tracked_atoms_with_subcount = list()
-	src.atoms_by_entry = list()
-	src.entries_by_atom = list()
+	src.tracked_atoms_with_subcount = alist()
+	src.atoms_by_entry = alist()
+	src.entries_by_atom = alist()
 
 /datum/spatial_hashmap/disposing()
 	for (var/datum/entry as anything in src.atoms_by_entry)
@@ -75,14 +91,14 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	Termed "fast" because it only considers ranges less than or equal to that of the hashmap's cell size.
  */
 /datum/spatial_hashmap/proc/fast_manhattan(turf/T, range = 30)
-	RETURN_TYPE(/list/datum)
-	. = list()
+	RETURN_TYPE(/alist)
+	. = alist()
 
 	if (!T?.z || (T.z > src.z_order))
 		return
 
-	var/list/list/datum/cells = list()
-	var/list/list/list/datum/hashmap_slice = src.hashmap[T.z]
+	var/alist/cells = alist()
+	var/list/list/alist/hashmap_slice = src.hashmap[T.z]
 
 	// If the range is greater than the cell size, the some cells may be jumped over by the code below.
 	range = min(range, src.cell_size)
@@ -114,7 +130,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	cells[hashmap_slice[max_scaled_y][min_scaled_x]] = null // Northwest
 
 	// Concatenate the contents of each cell into a single list.
-	for (var/list/datum/cell as anything in cells)
+	for (var/alist/cell as anything in cells)
 		. += cell
 
 /**
@@ -122,13 +138,13 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	contents of the cells that contain points within that square.
  */
 /datum/spatial_hashmap/proc/supremum(turf/T, range = 30)
-	RETURN_TYPE(/list/datum)
-	. = list()
+	RETURN_TYPE(/alist)
+	. = alist()
 
 	if (!T?.z || (T.z > src.z_order))
 		return
 
-	var/list/list/list/datum/hashmap_slice = src.hashmap[T.z]
+	var/list/list/alist/hashmap_slice = src.hashmap[T.z]
 
 	// Locate any cells that contain points within `range` of the point `(T.x, T.y, T.z)`.
 	var/min_x = max(ceil((T.x - range) / src.cell_size), 1)
@@ -147,8 +163,8 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	If present, takes into consideration the vistarget of the turf for range calculations.
  */
 /datum/spatial_hashmap/proc/vistarget_supremum(turf/T, range = 30)
-	RETURN_TYPE(/list/datum)
-	. = list()
+	RETURN_TYPE(/alist)
+	. = alist()
 
 	if (!T)
 		return
@@ -156,11 +172,11 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	if (!T.vistarget)
 		return src.supremum(T, range)
 
-	var/list/list/datum/cells = list()
+	var/alist/cells = alist()
 
 	// Locate any cells that contain points within `range` of the point `(T.x, T.y, T.z)`.
 	if (T.z && (T.z <= src.z_order))
-		var/list/list/list/datum/hashmap_slice = src.hashmap[T.z]
+		var/list/list/alist/hashmap_slice = src.hashmap[T.z]
 
 		var/min_x = max(ceil((T.x - range) / src.cell_size), 1)
 		var/max_x = min(ceil((T.x + range) / src.cell_size), src.x_order)
@@ -174,7 +190,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	// Locate any cells that contain points within `range` of the point `(T.vistarget.x, T.vistarget.y, T.vistarget.z)`.
 	T = T.vistarget
 	if (T.z && (T.z <= src.z_order))
-		var/list/list/list/datum/hashmap_slice = src.hashmap[T.z]
+		var/list/list/alist/hashmap_slice = src.hashmap[T.z]
 
 		var/min_x = max(ceil((T.x - range) / src.cell_size), 1)
 		var/max_x = min(ceil((T.x + range) / src.cell_size), src.x_order)
@@ -186,7 +202,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 				cells[hashmap_slice[i][j]] = null
 
 	// Concatenate the contents of each cell into a single list.
-	for (var/list/datum/cell as anything in cells)
+	for (var/alist/cell as anything in cells)
 		. += cell
 
 /**
@@ -194,7 +210,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	entries within that square.
  */
 /datum/spatial_hashmap/proc/exact_supremum(turf/T, range = 30)
-	RETURN_TYPE(/list/datum)
+	RETURN_TYPE(/alist)
 	. = src.supremum(T, range)
 
 	// Iterate through each entry and cull any entries that exist outside of the range.
@@ -236,7 +252,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		var/y = ceil(T.y / src.cell_size)
 		var/z = T.z
 		if (z && (z <= src.z_order))
-			src.hashmap[z][y][x][entry] = null
+			src.hashmap[z][y][x] += entry
 
 /**
  *	Removes an entry from the hashmap.
@@ -291,8 +307,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		if (old_turf.z && (old_turf.z <= src.z_order))
 			src.hashmap[old_turf.z][old_y][old_x] -= src.entries_by_atom[component.parent]
 		if (new_turf.z && (new_turf.z <= src.z_order))
-			for (var/datum/entry as anything in src.entries_by_atom[component.parent])
-				src.hashmap[new_turf.z][new_y][new_x][entry] = null
+			src.hashmap[new_turf.z][new_y][new_x] += src.entries_by_atom[component.parent]
 
 	else if (old_turf?.z && (old_turf.z <= src.z_order))
 		var/old_x = ceil(old_turf.x / src.cell_size)
@@ -302,5 +317,4 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	else if (new_turf?.z && (new_turf.z <= src.z_order))
 		var/new_x = ceil(new_turf.x / src.cell_size)
 		var/new_y = ceil(new_turf.y / src.cell_size)
-		for (var/datum/entry as anything in src.entries_by_atom[component.parent])
-			src.hashmap[new_turf.z][new_y][new_x][entry] = null
+		src.hashmap[new_turf.z][new_y][new_x] += src.entries_by_atom[component.parent]

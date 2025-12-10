@@ -17,7 +17,7 @@
 	var/y = ceil(T.y / src.cell_size)
 	var/z = T.z
 	if (z && (z <= src.z_order))
-		src.hashmap[z][y][x][entry] = null
+		src.hashmap[z][y][x] += entry
 
 /datum/spatial_hashmap/manual/unregister_hashmap_entry(datum/entry)
 	var/turf/T = src.atoms_by_entry[entry]
