@@ -1,5 +1,9 @@
 
 (t)wed dec 10 25
+(u)LorrMaster
+(p)25196
+(e)🪲🎨🧱|C-Bug, C-Sprites, A-Materials
+(+)A number of custom items from the nanofabricator have been given new sprites.
 (u)JORJ949
 (p)24984
 (e)🔎🔨|C-Code-Quality, A-Player-Actions
