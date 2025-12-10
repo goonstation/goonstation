@@ -55,8 +55,8 @@
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	icon_state = "white"
-	item_state = "white"
+	icon_state = "custom"
+	item_state = "custom"
 
 // Colors
 

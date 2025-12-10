@@ -28165,7 +28165,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/mob/living/critter/small_animal/turtle/sylvester,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "dkL" = (

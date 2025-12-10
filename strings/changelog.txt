@@ -1,4 +1,26 @@
 
+(t)wed dec 10 25
+(u)LorrMaster
+(p)25196
+(e)🪲🎨🧱|C-Bug, C-Sprites, A-Materials
+(+)A number of custom items from the nanofabricator have been given new sprites.
+(u)JORJ949
+(p)24984
+(e)🔎🔨|C-Code-Quality, A-Player-Actions
+(+)The Midas Touch gene is now a targetable ability, meaning you cannot turn anything you can't click on gold (e.g. your internal organs)
+(t)sat dec 06 25
+(u)CelineTheYeen
+(p)25222
+(e)🗺|A-Mapping
+(+)The North West maintenance tunnels on Oshan have been redesigned
+(u)Munien
+(p)25259
+(e)⚖👮|C-Balance, A-Security
+(+)Removed the Forensic Scan program from several PDA cartridges (Security Officer, Captain, Generic Head) and limited the availability of Forensic PDAs.
+(u)JORJ949
+(p)25201
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Antagonist scaling in the Changeling, Vampire and Arcfiend gamemodes has been increased to be the same as Intrigue.
 (t)wed dec 03 25
 (u)CalliopeSoups
 (p)25161
