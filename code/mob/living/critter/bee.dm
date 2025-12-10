@@ -35,7 +35,6 @@
 	health_burn = 25
 	health_burn_vuln = 0.5
 	metabolizes = 0 // for now?
-	void_mindswappable = TRUE // A dream for some people.
 	butcherable = BUTCHER_YOU_MONSTER
 	player_can_spawn_with_pet = FALSE // That's what beestfriend is for nerd
 	flags = TABLEPASS
