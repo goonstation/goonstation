@@ -2160,6 +2160,34 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/tea_party_dress)
 	icon_state = "tea_party_dress-yellow"
 	item_state = "tea_party_dress-yellow"
 
+// Hawaiian shirts
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/hawaiian_shirt)
+/obj/item/clothing/under/misc/hawaiian_shirt
+	name = "hawaiian shirt"
+	desc = "You're ready to party! Just kidding, you work here. You don't get invited to parties."
+	icon_state = "floral-red"
+	item_state = "floral-red"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/red
+	name = "red hawaiian shirt"
+	icon_state = "floral-red"
+	item_state = "floral-red"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/yellow
+	name = "yellow hawaiian shirt"
+	icon_state = "floral-yellow"
+	item_state = "floral-yellow"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/black
+	name = "black hawaiian shirt"
+	icon_state = "floral-black"
+	item_state = "floral-black"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/pink
+	name = "pink hawaiian shirt"
+	icon_state = "floral-pink"
+	item_state = "floral-pink"
+
 // New chaplain stuff
 
 /obj/item/clothing/under/gimmick/weirdo
