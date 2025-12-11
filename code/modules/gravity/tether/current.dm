@@ -26,6 +26,9 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 	if (new_intensity > 0)
 		src.anchored = ANCHORED
 	. = ..()
+	// if we failed starting the change, and we are at zero intensity, unanchor
+	if (!src.changing_gravity && src.intensity <= 0)
+		src.anchored = UNANCHORED
 
 // if the gravity is 0 then let it be moved
 /obj/machinery/gravity_tether/current_area/change_intensity(new_intensity)
