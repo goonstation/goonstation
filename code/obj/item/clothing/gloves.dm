@@ -316,8 +316,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 /obj/item/clothing/gloves/crafted
 	name = "gloves"
-	icon_state = "latex"
-	item_state = "lgloves"
+	icon_state = "custom"
+	item_state = "custom_gloves"
 	desc = "Custom made gloves."
 	scramble_prints = 1
 
@@ -342,8 +342,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				src.setProperty("heatprot", thermal_insul * 2)
 
 	armored
-		icon_state = "black"
-		item_state = "swat_gl"
+		icon_state = "custom_armored"
+		item_state = "custom_armored"
 
 		onMaterialChanged()
 			..()

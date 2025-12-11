@@ -2006,6 +2006,8 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.internal_pda.alertgroups = RM.alertgroups
 
 			src.update_radio(RM.radio_type)
+		for(var/datum/objectProperty/equipment/prop in RM.properties)
+			prop.onEquipped(RM, src, RM.properties[prop])
 
 	proc/remove_module()
 		if(!istype(src.module))
@@ -2013,6 +2015,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		var/obj/item/robot_module/RM = src.module
 		RM.icon_state = initial(RM.icon_state)
 		src.show_text("Your module was removed!", "red")
+		for(var/datum/objectProperty/equipment/prop in RM.properties)
+			prop.onUnequipped(RM, src, RM.properties[prop])
 		uneq_all()
 		src.module = null
 		hud.module_removed()
