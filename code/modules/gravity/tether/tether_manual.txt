@@ -1,5 +1,6 @@
 <h1>Gravi-Tonne Tether Operator's Manual</h1>
 <p><i>Draft Edition</i></p>
+<hr>
 <p>The Terra Nivium Gravi-Tonne wide-area gravity tether binds connected surfaces to a desired level of gravity.</p>
 <p>This manual will show you how to operate the Gravi-Tonne tether and interpret its displays.</p>
 
@@ -37,39 +38,28 @@ If green, the system is unlocked and the tether can be operated. If yellow, the 
 </p>
 
 <h3>Intensity Indicator</h3>
-<p>The lighting along the left side of the unit displays the current intensity level.
-
+<p>The lighting along the left side of the unit displays the current intensity level.</p>
 
 <h3>Histogram</h3>
-<p></p>
+<p>Across the middle of the front panel is a histogram that tracks local gravitational stability. A smooth curve indicates a stable gravitational field, while jagged marks may indicate gravitational distortion.</p>
 
 <h4>Disruption Alert</h4>
 When a local gravitational distortion is detected, the Gravi-Tonne Tether will play an alert sound.
-<h3>Dial Indicators</h3>
-<p></p>
 
 <h2>Maintenance</h2>
 
 <p><i>If you're unsure how or unable to service your Gravi-Tonne Tether, be sure to schedule an appointment with an Officially Licensed Gravi-Tonne Tether Technician today!</i></p>
 
-<p>The Gravi-Tonne tether comes with a hinged, detachable front panel for ease of access to internal components.
+<p>The Gravi-Tonne tether comes with a hinged, detachable front panel for ease of access to internal components. The tamper-resist security grate in the maintenance panel is automatically withdrawn when the system is placed in Unlocked Mode.</p>
 
-The tamper-resist security grate in the maintenance panel is automatically withdrawn when the system is placed in Unlocked Mode.
+<h3>Power Cell Replacement</h3>
+<p>To replace the battery, first open the maintenance panel with a crowbar, then use a wrench to remove the internal power cell. Only replace with official TerraNivium Gravi-Tonne TM Unit Battery Replacent Cells</p>
 
-<h4>System Repair</h4>
-<p></p>
-To repair your Gravi-Tonne Tether, first undo the maintnance panel
+<p>* <b>WARNING</b>:  Usage of unstable batteries may result in damage to the Gravi-Tonne Tether</p>
 
+<h3>System Repair</h3>
+<p>To repair your Gravi-Tonne Tether,  first remove the internal power cell as above. Then, cut out any damaged wiring and replace with fresh cables. You will need to re-calibrate the tether to the desired gravity level after it has been repaired.</p>
 
-<h3>Battery Replacement</h3>
-<p></p>
-Before replacing the battery, ensure that the Gravi-Tonne Tether has an alternate means of power and tbat it is unlocked.
-
-WARNING: Usage of unstable batteries may result in damage to the Graviton Tether. Only replace with official TerraNivium Gravi-Tonne TM Unit Battery Replacent Cells, available in both Extended and SuperExtended editions!
-
-<h3>Equipment Faults</h3>
-
-
-
+<br><br><hr>
 <p><i>The Terra Nivium Gravi-Tonne TM Tether, keeps you and your crops planted!<br>
 Reproduction of training and operating materials strictly prohibited by law.</i></p>
