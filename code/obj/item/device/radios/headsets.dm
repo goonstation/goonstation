@@ -114,7 +114,7 @@
 		"h" = R_FREQ_COMMAND,
 		)
 
-/obj/item/device/radio/headset/command/nt/commander;
+/obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NanoTrasen Commander headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
 	icon_tooltip = "NanoTrasen Commander"
