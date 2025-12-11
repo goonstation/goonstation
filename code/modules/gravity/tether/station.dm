@@ -230,7 +230,7 @@
 	. = ..()
 
 /obj/machinery/gravity_tether/station/begin_gravity_change(new_intensity)
-	// emagging or a nearby signal-blocker
+	// emagging or a nearby signal-blocker stops the announcement
 	if (!src.emagged && !check_for_radio_jammers(src))
 		command_alert("The [station_or_ship()]-wide gravity tether is shifting to [new_intensity]G. Brace for sudden gravity shift within [src.cooldown] seconds.", "Gravity Tether Warning", alert_origin = ALERT_STATION)
 	. = ..()

@@ -339,11 +339,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/attack_hand(mob/user)
 	if(..())
-		// we might be running on battery power
-		if (src?.cell || src.cell.charge <= 0)
-			return
-	if(!in_interact_range(src, user))
-		boutput(user, "You are too far away to reach the controls.")
 		return
 	if (src.locked && !src.emagged)
 		src.say("Controls locked.")

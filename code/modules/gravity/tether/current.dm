@@ -23,6 +23,8 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 	var/area/A = get_area(src)
 	if (!A || !A.area_apc)
 		return FALSE
+	if (new_intensity > 0)
+		src.anchored = ANCHORED
 	. = ..()
 
 // if the gravity is 0 then let it be moved
@@ -34,7 +36,7 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 	for (var/mob/M in A)
 		if (M.client)
 			shake_camera(M, 5, 32, 0.2)
-	if (src.intensity == 0)
+	if (src.intensity <= 0)
 		src.anchored = UNANCHORED
 	else
 		src.anchored = ANCHORED
