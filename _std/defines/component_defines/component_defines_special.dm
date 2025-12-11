@@ -190,3 +190,7 @@
 #define COMSIG_EXTRADIMENSIONAL_PREFAB_ENTERED "extradimensional_prefab_entered"
 /// When an `/atom/movable` attempts to leave a dimensional locker. (sender, atom_movable, old_loc)
 #define COMSIG_EXTRADIMENSIONAL_PREFAB_EXIT "extradimensional_prefab_exit"
+
+// ---- Gravity Signals ----
+/// When something causes a major gravity disturbance on the station Z-level
+#define COMSIG_GRAVITY_DISTURBANCE "gravity_disturbace"

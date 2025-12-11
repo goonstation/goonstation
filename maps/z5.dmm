@@ -2812,6 +2812,11 @@
 /obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
+"AA" = (
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/power)
 "AB" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -4488,6 +4493,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
+"LI" = (
+/obj/machinery/gravity_tether/multi_area/mining_outpost,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/power)
 "LJ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -5318,6 +5329,17 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/mining/magnet_control)
+"RE" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Mineral Magnet"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/power)
 "RJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -56238,7 +56260,7 @@ RK
 Kc
 Tn
 Tn
-Tn
+RE
 Tn
 Tn
 Tn
@@ -56538,10 +56560,10 @@ ex
 Kc
 RK
 Kc
-Kc
-Kc
-Kc
-Kc
+Tn
+AA
+AA
+Tn
 Kc
 Kc
 Kc
@@ -56840,10 +56862,10 @@ aY
 Kc
 RK
 Kc
-Kc
-Kc
-Kc
-Kc
+Tn
+LI
+AA
+Tn
 Kc
 Kc
 Kv
@@ -57142,10 +57164,10 @@ cA
 Kc
 RK
 Kc
-Kc
-Kc
-Kc
-Kc
+Tn
+Tn
+Tn
+Tn
 Kc
 Kc
 Kv

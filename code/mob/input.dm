@@ -193,13 +193,11 @@
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 				var/spacemove = 0
-				if (src.should_drift())
+				if (!src.has_traction())
 
 					spacemove = 1
-					for (var/atom/A in oview(1,src))
-						if (A.stops_space_move && (!src.should_drift() || !isfloor(A)))
-							spacemove = 0
-							break
+					if (src.has_grip())
+						spacemove = 0
 
 				if (spacemove)
 					if (istype(src.back, /obj/item/tank/jetpack))

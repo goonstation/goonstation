@@ -106,9 +106,6 @@ TYPEINFO(/area)
 		*/
 	var/do_not_irradiate = TRUE
 
-	/// How many gravity tethers are currently affecting this area
-	var/gravity_tether_count = 0
-
 	/// gang that owns this area in gang mode
 	var/datum/gang/gang_owners = null
 
@@ -522,11 +519,6 @@ TYPEINFO(/area)
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 	do_not_irradiate = FALSE
-	#ifdef UNDERWATER_MAP
-	has_gravity = TRUE
-	#else
-	has_gravity = FALSE
-	#endif
 
 // zewaka - adventure/technical/admin areas below //
 
@@ -2836,6 +2828,10 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Control Room"
 	icon_state = "engine_control"
 
+/area/station/engine/gravity
+	name = "Engineering Gravity Tether"
+	icon_state = "engineering"
+
 TYPEINFO(/area/station/engine/singcore)
 	valid_bounty_area = FALSE
 /area/station/engine/singcore
@@ -4144,8 +4140,7 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Plasma Reef"
 	icon_state = "purple"
 	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
-	requires_power = FALSE // TODO: find out where the fuck the check is later and change this so plasma reef doesn't have free power
-	has_gravity = TRUE
+	requires_power = FALSE // find out where the fuck the check is later and change this so plasma reef doesn't have free power
 
 // // // // // // // // // // // //
 
@@ -4207,7 +4202,6 @@ ABSTRACT_TYPE(/area/mining)
 	power_light = 0
 	power_environ = 0
 	expandable = FALSE
-	has_gravity = FALSE
 
 	proc/propagate_zone(var/turf/target_turf)
 		if(target_turf.transfer_evaluation)
@@ -4270,7 +4264,6 @@ ABSTRACT_TYPE(/area/mining)
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
-	has_gravity = FALSE
 
 	proc/SetName(var/name)
 		src.name = name

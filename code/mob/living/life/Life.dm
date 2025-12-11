@@ -60,7 +60,7 @@
 	var/last_stam_change = 0
 	var/life_context = "begin"
 
-	var/last_drift = FALSE
+	var/last_traction = TRUE
 
 	proc/add_lifeprocess(type,...)
 		var/datum/lifeprocess/L = null
@@ -261,14 +261,13 @@
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
-			var/new_drift = src.should_drift()
-
-			if (last_drift != new_drift)
-				if(new_drift)
-					animate_drift(src)
+			var/next_traction = src.has_traction()
+			if (last_traction != next_traction)
+				if(!next_traction)
+					animate_drift(src, -1, 10, 1)
 				else
 					animate(src, transform = matrix(), time = 1)
-				last_drift = new_drift
+				last_traction = next_traction
 
 		clamp_values()
 

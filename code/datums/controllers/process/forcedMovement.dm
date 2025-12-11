@@ -20,8 +20,6 @@ proc/BeginOceanPush(atom/movable/AM, dir = SOUTH)
 		controller.ocean_controller.addAtom(AM, dir)
 
 proc/EndOceanPush(atom/movable/AM)
-	if (!global.processScheduler) //grumble grumble race conditions
-		return
 	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
 	if(controller)
 		controller.ocean_controller.removeAtom(AM)
@@ -71,7 +69,9 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 				continue
 
 			var/turf/T = M.loc
-			if (!M.should_drift())
+
+			// inside something or it has traction on the ground
+			if (!istype(T) || M.has_traction())
 				EndSpacePush(M)
 				continue
 
@@ -81,50 +81,32 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 					EndSpacePush(M)
 					continue
 
-				if (M.should_drift())
-					var/prob_slip = 5
+				var/prob_slip = 5
 
-					if (tmob.hasStatus("handcuffed"))
-						prob_slip = 100
+				if (tmob.restrained() || !tmob.canmove)
+					prob_slip = 100
 
-					if (!tmob.canmove)
-						prob_slip = 100
+				if (M.has_grip())
+					if (!( tmob.l_hand ))
+						prob_slip -= 3
+					else if (tmob.l_hand.w_class <= W_CLASS_SMALL)
+						prob_slip -= 1
 
-					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move && (!M.should_drift() || !isfloor(AA)))
-							if (!( tmob.l_hand ))
-								prob_slip -= 3
-							else if (tmob.l_hand.w_class <= W_CLASS_SMALL)
-								prob_slip -= 1
+					if (!( tmob.r_hand ))
+						prob_slip -= 2
+					else if (tmob.r_hand.w_class <= W_CLASS_SMALL)
+						prob_slip -= 1
 
-							if (!( tmob.r_hand ))
-								prob_slip -= 2
-							else if (tmob.r_hand.w_class <= W_CLASS_SMALL)
-								prob_slip -= 1
-
-							break
-
-					prob_slip = round(prob_slip)
-					if (prob_slip < 5) //next to something, but they might slip off
-						if (prob(prob_slip) )
-							boutput(tmob, SPAN_NOTICE("<B>You slipped!</B>"))
-							tmob.inertia_dir = tmob.last_move
-							step(tmob, tmob.inertia_dir)
-							continue
-						else
-							EndSpacePush(M)
-							continue
-
-				else
-					var/end = 0
-					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move && (!M.should_drift()) || !isfloor(AA))
-							end = 1
-							break
-					if (end)
+				prob_slip = round(prob_slip)
+				if (prob_slip < 5) //next to something, but they might slip off
+					if (prob(prob_slip) )
+						boutput(tmob, SPAN_NOTICE("<B>You slipped!</B>"))
+						tmob.inertia_dir = tmob.last_move
+						step(tmob, tmob.inertia_dir)
+						continue
+					else
 						EndSpacePush(M)
 						continue
-
 
 				if (M && !( M.anchored ) && !(M.flags & NODRIFT))
 					if (! (TIME > (tmob.l_move_time + src.interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!

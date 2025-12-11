@@ -217,7 +217,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				FLICK(flick_state, src)
 
-		if(..() && user.should_drift())
+		if(..() && !user.has_traction())
 			user.inertia_dir = get_dir_accurate(target, user)
 			step(user, user.inertia_dir) // Propel user in opposite direction
 

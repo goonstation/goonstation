@@ -9,6 +9,7 @@
 	var/dy
 	var/dist_x
 	var/dist_y
+	var/momentum //TODO: incorperate w_class into momentum conservation
 	var/range
 	var/target_x
 	var/target_y
@@ -38,6 +39,7 @@
 		src.dist_x = dist_x
 		src.dist_y = dist_y
 		src.range = range
+		src.momentum = range
 		src.target_x = target_x
 		src.target_y = target_y
 		src.transform_original = transform_original
@@ -97,9 +99,8 @@ var/global/datum/controller/throwing/throwing_controller = new
 						(
 							(
 								(thr.target_x != thing.x || thr.target_y != thing.y ) && \
-								thr.dist_travelled < thr.range
+								thr.momentum > 0
 							) || \
-							T?.throw_unlimited || \
 							thing.throw_unlimited
 						)
 					))
@@ -148,6 +149,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			var/hit_thing = ( thr.throw_type & THROW_NO_CLIP ) ? null : thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
+			thr.momentum -= T.effective_gravity
 			if(!thing.throwing || hit_thing)
 				end_throwing = TRUE
 				break

@@ -545,7 +545,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/slippery_attack
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
-		if (isitem(owner) && prob(20) && (owner in attacker.equipped_list()))
+		if (isitem(owner) && prob(20) && (owner in attacker?.equipped_list()))
 			var/obj/item/handled_item = owner
 			boutput(attacker, SPAN_ALERT("[handled_item] slips right out of your hand!"))
 			handled_item.set_loc(attacker.loc)
@@ -624,6 +624,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.no_gravity = 1
 			I.AddComponent(/datum/component/loctargeting/no_gravity)
 			animate_levitate(owner)
+		else if (isfloor(owner))
+			var/turf/T = owner
+			T.update_gravity()
 		return
 
 // Apply a secondary HSL colorspace matrix.

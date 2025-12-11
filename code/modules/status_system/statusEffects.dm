@@ -1030,11 +1030,6 @@
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			. = ..()
 
-		gravity
-			id = "staggered_gravity"
-			desc = "You have been staggered by high gravity.<br>Slowed slightly, unable to sprint."
-			maxDuration = 20 SECONDS
-
 	humiliated
 		id = "humiliated"
 		name = "Humiliated"
@@ -1310,6 +1305,12 @@
 			. = ..()
 			if (ishuman(owner))
 				H = owner
+			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE, src)
+
+		onRemove()
+			. = ..()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE, src)
+
 
 	possessing
 		id = "possessing"

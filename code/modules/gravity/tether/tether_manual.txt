@@ -1,0 +1,75 @@
+<h1>Gravi-Tonne Tether Operator's Manual</h1>
+<p><i>Draft Edition</i></p>
+<p>The Terra Nivium Gravi-Tonne wide-area gravity tether binds connected surfaces to a desired level of gravity.</p>
+<p>This manual will show you how to operate the Gravi-Tonne tether and interpret its displays.</p>
+
+<h2>Operation</h2>
+
+<p>
+First, unlock the unit by sliding your employee badge across the designated area by the keyboard.
+Then use the keypad to enter your desired intensity* of gravity.
+The values are relative to Earth gravity, so an entry of 0.5 would cause the tether to focus at half of Earth's gravity.
+</p>
+
+<p>After selecting the value, the internal capacitor will discharge and enable the gravity tether to </p>
+
+<p>* <b>WARNING</b>: Fractional gravitational values can result in uncomfortable conditions, and may introduce gravity tremors.</p>
+
+<h2>Indicators</h2>
+<p>The front side of the Gravi-Tonne Tether has several indicators that allow for quick visual confirmation of the system status.</p>
+
+<h3>Status Indicator</h3>
+<p>The status indicators are located in the top-left area of the main front panel. The indicators can be one of four colors:</p>
+<ul>
+	<li><b>Green</b> indicates the system is providing gravity.</li>
+	<li><b>Yellow</b> indicates the system is not providing gravity.</li>
+	<li><b>Red</b> indicates the system is malfunctioning.</li>
+	<li><b>Blue</b> indicates the tether is currently processing a shift in gravity.</li>
+</ul>
+
+<h3>Charge Indicator</h3>
+<p>The charging lights are located in the top-right area of the main front panel.</p>
+
+<h3>Lock Indicator</h3>
+<p>
+The main input screen on the bottom-right area of the front main panel is the <b>system lock indicator</b>.
+If green, the system is unlocked and the tether can be operated. If yellow, the system is locked and no input will be accepted.
+</p>
+
+<h3>Intensity Indicator</h3>
+<p>The lighting along the left side of the unit displays the current intensity level.
+
+
+<h3>Histogram</h3>
+<p></p>
+
+<h4>Disruption Alert</h4>
+When a local gravitational distortion is detected, the Gravi-Tonne Tether will play an alert sound.
+<h3>Dial Indicators</h3>
+<p></p>
+
+<h2>Maintenance</h2>
+
+<p><i>If you're unsure how or unable to service your Gravi-Tonne Tether, be sure to schedule an appointment with an Officially Licensed Gravi-Tonne Tether Technician today!</i></p>
+
+<p>The Gravi-Tonne tether comes with a hinged, detachable front panel for ease of access to internal components.
+
+The tamper-resist security grate in the maintenance panel is automatically withdrawn when the system is placed in Unlocked Mode.
+
+<h4>System Repair</h4>
+<p></p>
+To repair your Gravi-Tonne Tether, first undo the maintnance panel
+
+
+<h3>Battery Replacement</h3>
+<p></p>
+Before replacing the battery, ensure that the Gravi-Tonne Tether has an alternate means of power and tbat it is unlocked.
+
+WARNING: Usage of unstable batteries may result in damage to the Graviton Tether. Only replace with official TerraNivium Gravi-Tonne TM Unit Battery Replacent Cells, available in both Extended and SuperExtended editions!
+
+<h3>Equipment Faults</h3>
+
+
+
+<p><i>The Terra Nivium Gravi-Tonne TM Tether, keeps you and your crops planted!<br>
+Reproduction of training and operating materials strictly prohibited by law.</i></p>

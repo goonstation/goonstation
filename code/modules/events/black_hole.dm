@@ -49,6 +49,8 @@
 				feedings_required = rand(12,24)
 				lifespan = lifespan * 1.2
 				break
+		if (src.z == Z_LEVEL_STATION)
+			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE, src)
 
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
