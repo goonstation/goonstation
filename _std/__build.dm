@@ -35,15 +35,15 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
 
 //#define SKIP_FEA_SETUP // Skip setting up atmospheric system
-#define SKIP_Z5_SETUP // Skip generation of mining level
-#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
-#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
-#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
-#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
+//#define SKIP_Z5_SETUP // Skip generation of mining level
+//#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
+//#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
+//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
+//#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DISABLE_DEVFILE // Don't load things defined in '__build.local.dm'. Use if you have some breaking changes in there or whatnot
-#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define I_MEAN_ALL_ACCESS // Captain level ID's have EVERY access
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
@@ -55,24 +55,24 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define STOP_DISTRACTING_ME //All of the below
 
-#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
-#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
-#define BAD_MONKEY_NO_BANANA // Prevents landmark monkeys from spawning- monkeys can still be vended etc
-#define CLONING_IS_A_SIN // Don't prebake clones
+//#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
+//#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
+//#define BAD_MONKEY_NO_BANANA // Prevents landmark monkeys from spawning- monkeys can still be vended etc
+//#define CLONING_IS_A_SIN // Don't prebake clones
 //#define CLONING_IS_INSTANT //Clonepods fully heal the clone instantly
 //#define LOW_SECURITY // Deletes turrets
-#define NO_CRITTERS // Deletes mob critters
+//#define NO_CRITTERS // Deletes mob critters
 //#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
-#define NO_RANDOM_EVENTS // Don't spawn random events
+//#define NO_RANDOM_EVENTS // Don't spawn random events
 //#define NO_SHUTTLE_CALLS // Don't autocall the shuttle
 //#define I_AM_HACKERMAN // Lets you varedit things you normally couldn't (admin holders, server config)
 //#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
-#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
-#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
-#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
-#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT // Stops lights from breaking or burning out when spawning or turning on/off
-#define NO_ANTAG_POPUPS_I_DONT_CARE // Stops antag popups from coming up at the start of every game
+//#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
+//#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
+//#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
+//#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT // Stops lights from breaking or burning out when spawning or turning on/off
+//#define NO_ANTAG_POPUPS_I_DONT_CARE // Stops antag popups from coming up at the start of every game
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -140,7 +140,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2      // Cogmap2, by Dr. Cogwerks
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
-#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
+//#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
