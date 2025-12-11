@@ -35,6 +35,11 @@
 	if (global.map_setting == "DONUT3") // donut3 has an indoor escape area
 		src.target_area_refs += /area/shuttle/escape/station
 
+	var/area/A = get_area(src)
+	if (!istype (A, /area/station))
+		src.intensity = 0
+		src.target_intensity = 0
+
 	. = ..()
 
 /obj/machinery/gravity_tether/station/disposing()
@@ -217,6 +222,12 @@
 
 	src.light.set_color(color_r/255, color_g/255, color_b/255)
 	src.light.enable()
+
+/obj/machinery/gravity_tether/station/attempt_gravity_change(new_intensity)
+	var/area/A = get_area(src)
+	if (!istype (A, /area/station))
+		return
+	. = ..()
 
 /obj/machinery/gravity_tether/station/begin_gravity_change(new_intensity)
 	// emagging or a nearby signal-blocker
