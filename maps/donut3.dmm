@@ -32144,12 +32144,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/podbay)
-"jVV" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/turf/simulated/wall/auto/jen/blue,
-/area/station/medical/asylum/bathroom)
 "jWd" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -37985,9 +37979,6 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
@@ -64493,6 +64484,12 @@
 	dir = 10
 	},
 /area/station/hallway/secondary/entry)
+"tVx" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/bathroom)
 "tVB" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -70631,9 +70628,6 @@
 /area/station/science/lab)
 "vOh" = (
 /obj/machinery/gravity_tether/multi_area/medical_asylum,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "vOl" = (
@@ -148947,7 +148941,7 @@ yly
 yly
 hqi
 wrk
-jVV
+jPH
 vOh
 xMX
 fDe
@@ -149246,7 +149240,7 @@ rdj
 rdj
 rdj
 yly
-wGD
+tVx
 wGD
 fZX
 jPH
