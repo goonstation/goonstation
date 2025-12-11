@@ -479,8 +479,8 @@
 	icon_state = "thorn"
 	targeted = 1
 	target_anything = 1
-	cooldown = 15 SECONDS
-	pointCost = 30
+	cooldown = 10 SECONDS
+	pointCost = 20
 	var/current_projectile
 
 	New()
