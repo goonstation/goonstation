@@ -592,6 +592,7 @@ var/global/list/mapNames = list(
 	dir_fore = NORTH
 	var/event = TRUE
 
+
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1/west,
 		/atom/movable/screen/parallax_render_source/space_2/west,

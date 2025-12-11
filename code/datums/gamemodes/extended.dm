@@ -25,11 +25,11 @@
 /datum/game_mode/extended/post_setup()
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-	SPAWN(1 MINUTES)
+	SPAWN(10 MINUTES)
 		santa_flyover(2, 186, 1, 130)
-	SPAWN(3 MINUTES)
+	SPAWN(30 MINUTES)
 		santa_flyover(299, 205, 3, 90, WEST)
-	SPAWN(5 MINUTES)
+	SPAWN(2 MINUTES)
 		santa_flyover(1, 180, 4, 50, grinched = TRUE)
 
 /obj/sleigh
@@ -67,25 +67,43 @@
 	pilot.dir = direction
 	animate(pilot, 2 SECONDS, alpha=alpha_input)
 	while (pilot.loc)
+		if (pilot.x >= 170 && grinched)
+			break
 		move_forward(pilot, direction, speed)
-		if (!grinched)
-			sleep(speed)
-		else
-			if (pilot.x >= 170)
-				break
-			else
-				sleep(speed)
+		sleep(speed)
 	if (!grinched)
 		qdel(pilot)
 		return
-	animate(pilot, alpha = 0, time = 2 SECONDS)
+
+	get_grinched(pilot, direction)
+
+/datum/game_mode/extended/proc/get_grinched(var/mob/dummy_pilot/pilot, var/direction)
+	animate(pilot, alpha = 0, time = 4 SECONDS)
 	var/turf/T = get_turf(locate(179, 185, 1))
-	playsound(T, "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
+	playsound(locate(T), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
 	var/obj/effects/explosion/boom = /obj/effects/explosion
 	new boom (T)
-	for (var/i=0,i<=3,i++)
-		move_forward(pilot, SOUTHEAST, 4)
-		sleep(4)
+	SPAWN(0.6 SECONDS)
+		playsound(locate(183, 183, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
+		new boom (locate(183, 183, 1))
+	SPAWN(1.1 SECONDS)
+		playsound(locate(181, 183, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
+		new boom (locate(181, 183, 1))
+	SPAWN(2 SECONDS)
+		playsound(locate(185, 173, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
+		new boom (locate(185, 173, 1))
+	SPAWN(3 SECONDS)
+		playsound(locate(184, 179, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
+		new boom (locate(184, 179, 1))
+	for (var/i=0,i<=2,i++)
+		for(var/t=0,t<=2,t++)
+			move_forward(pilot, SOUTHEAST, 4)
+			sleep(4)
+			move_forward(pilot, SOUTHEAST, 4)
+			sleep(4)
+		for(var/o=0,o<=2,o++)
+			move_forward(pilot, SOUTHWEST, 4)
+			sleep(4)
 	SPAWN (3 SECONDS)
 		qdel(pilot)
 
