@@ -590,6 +590,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "/maps/atlas"
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
+	var/event = TRUE
 
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1/west,
@@ -630,8 +631,8 @@ var/global/list/mapNames = list(
 /datum/map_settings/atlas/init()
 	. = ..()
 	if(!station_repair.station_generator && prob(66))
-		if( !mapSwitcher.thisMapWasVotedFor )
-			logTheThing(LOG_DEBUG, null, "Automatic Atlas Terrainify skipped due to unvoted map change")
+		if(event)
+			logTheThing(LOG_DEBUG, null, "Automatic Atlas Terrainify skipped cause we already on a planet!!")
 			for_by_tcl(spawner, /obj/eva_suit_spawner)
 				spawner.spawn_gear()
 			return

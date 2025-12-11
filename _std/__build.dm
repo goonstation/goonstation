@@ -30,15 +30,15 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ OPTIONS TO GO FAST ------------//
 
-#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
 
-#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
 
-//#define SKIP_FEA_SETUP // Skip setting up atmospheric system
-//#define SKIP_Z5_SETUP // Skip generation of mining level
-//#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
-//#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
-//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
+#define SKIP_FEA_SETUP // Skip setting up atmospheric system
+#define SKIP_Z5_SETUP // Skip generation of mining level
+#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
+#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
+#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
@@ -124,7 +124,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define DISPOSE_IS_QDEL
 
 // Toggle this to enable perspective wall icons in .dmm-compatible map editors. By default, icons in the editor will be flat.
-//#define USE_PERSPECTIVE_EDITOR_WALLS
+#define USE_PERSPECTIVE_EDITOR_WALLS
 
 //------------- MAP OVERRIDES -------------//
 
@@ -148,7 +148,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_NEON					// Neon by Sord
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
+#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
@@ -167,7 +167,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define RP_MODE 1
 //#define HALLOWEEN 1
-//#define SEASON_WINTER 1
+#define SEASON_WINTER 1
 //#define SEASON_SPRING 1
 //#define SEASON_SUMMER 1
 //#define SEASON_AUTUMN 1
