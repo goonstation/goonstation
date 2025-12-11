@@ -15,13 +15,17 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 	intensity = 0
 	target_intensity = 0
 
-// TODO: Anchoring/Unanchoring/Re-assigning area?
 /obj/machinery/gravity_tether/current_area/New()
 	src.target_area_refs = list(get_area(src))
 	. = ..()
 
-// if the gravity is 0 then let it be moved
+/obj/machinery/gravity_tether/current_area/attempt_gravity_change(new_intensity)
+	var/area/A = get_area(src)
+	if (!A || !A.area_apc)
+		return FALSE
+	. = ..()
 
+// if the gravity is 0 then let it be moved
 /obj/machinery/gravity_tether/current_area/change_intensity(new_intensity)
 	. = ..()
 	if (.)
