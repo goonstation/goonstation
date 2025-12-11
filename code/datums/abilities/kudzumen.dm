@@ -289,6 +289,9 @@
 	cast(atom/target)
 		if (..())
 			return 1
+		if (!(target.hasStatus("kudzuwalk") || iskudzuman(target)))
+			boutput(holder.owner, SPAN_ALERT("[target] is not attuned to the kudzu!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		if (target == holder.owner)
 			heal_coef = round(heal_coef/2)
