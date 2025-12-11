@@ -30101,7 +30101,6 @@
 /area/station/crew_quarters/cafeteria)
 "dqr" = (
 /obj/table/folding,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy,
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry{
 	pixel_x = -6;
 	pixel_y = 6
@@ -30110,6 +30109,7 @@
 	pixel_y = 9;
 	pixel_x = 3
 	},
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "dqG" = (
@@ -31246,7 +31246,9 @@
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "ewX" = (
-/obj/random_item_spawner/gross/one_or_zero,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib2"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "exn" = (
@@ -34202,6 +34204,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"hIW" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib2"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "hJI" = (
 /obj/storage/crate,
 /obj/item/sheet/steel/fullstack,
@@ -35060,6 +35071,9 @@
 /area/station/maintenance/inner/central)
 "iQY" = (
 /obj/machinery/light/small/sticky/broken,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib2"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "iSf" = (
@@ -35576,7 +35590,6 @@
 /turf/simulated/grimycarpet,
 /area/station/maintenance/inner/central)
 "jxz" = (
-/obj/random_item_spawner/gross/one_or_zero,
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
@@ -42080,8 +42093,13 @@
 /area/station/turret_protected/Zeta)
 "qPf" = (
 /obj/decal/cleanable/blood/drip/high,
-/obj/random_item_spawner/gross/one_or_zero,
 /obj/item/furniture_parts/table/desk,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid2"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib6"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "qPg" = (
@@ -47567,6 +47585,9 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibtorso"
 	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "xFU" = (
@@ -48109,7 +48130,6 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid2"
 	},
-/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "yhA" = (
@@ -90906,7 +90926,7 @@ aAL
 aAS
 atw
 iQY
-aDr
+hIW
 bsz
 vAP
 aDr
