@@ -1,4 +1,9 @@
 
+(t)thu dec 11 25
+(u)Munien
+(p)25260
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Ants can now be burned with magnifying glasses.
 (t)wed dec 10 25
 (u)LorrMaster
 (p)25196
