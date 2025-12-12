@@ -16281,6 +16281,7 @@
 /area/space)
 "dGr" = (
 /obj/machinery/light/small/sticky/frostedred,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "dGY" = (
@@ -18491,6 +18492,10 @@
 /obj/npc/trader/robot/robuddy/drugs,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
+"jkv" = (
+/obj/storage/cart/trash,
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "jkD" = (
 /obj/map/light/yellowbright,
 /turf/unsimulated/floor/honeyblocks/border{
@@ -19950,6 +19955,7 @@
 /area/diner/jucer_trader)
 "mys" = (
 /obj/storage/closet,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "mCH" = (
@@ -79247,7 +79253,7 @@ aaa
 apU
 mys
 wqS
-wqS
+jkv
 rdx
 jyD
 aoU
