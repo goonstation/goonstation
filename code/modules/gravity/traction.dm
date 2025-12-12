@@ -24,6 +24,11 @@
 			return TRUE
 	. = ..()
 
+/obj/critter/has_traction()
+	if (src.flying)
+		return TRUE
+	. = ..()
+
 /// Check if an atom has "grip" with something on a nearby tile, such as a wall or table
 /atom/movable/proc/has_grip()
 	for (var/atom/A in oview(1, src))
