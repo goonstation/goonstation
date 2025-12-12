@@ -58,10 +58,18 @@ global.z_level_station_gravity = 1
 /turf/simulated/floor/plating/airless/asteroid/set_gravity(gforce)
 	if (src.z == Z_LEVEL_STATION)
 		gforce += global.z_level_station_gravity
+	#ifdef UNDERWATER_MAP
+	gforce = max(gforce, 1)
+	#else
 	gforce = max(gforce, 0.2)
+	#endif
 	src.effective_gravity = gforce
 /turf/simulated/wall/auto/asteroid/set_gravity(gforce)
 	if (src.z == Z_LEVEL_STATION)
 		gforce += global.z_level_station_gravity
+	#ifdef UNDERWATER_MAP
+	gforce = max(gforce, 1)
+	#else
 	gforce = max(gforce, 0.2)
+	#endif
 	src.effective_gravity = gforce
