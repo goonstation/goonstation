@@ -631,6 +631,12 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/atlas/init()
 	. = ..()
+	var/datum/daynight_controller/earth/daylight = daynight_controllers[AMBIENT_LIGHT_SRC_EARTH]
+	if(istype(daylight))
+		daylight.initialize("#d8d8d8", "#d8d8d8")
+		daylight.time = 10000
+		daylight.active = FALSE
+
 	if(!station_repair.station_generator && prob(66))
 		if(event)
 			logTheThing(LOG_DEBUG, null, "Automatic Atlas Terrainify skipped cause we already on a planet!!")

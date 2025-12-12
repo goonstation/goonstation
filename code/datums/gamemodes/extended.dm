@@ -23,13 +23,18 @@
 	boutput(world, "<B>Just have fun!</B>")
 
 /datum/game_mode/extended/post_setup()
+	var/datum/daynight_controller/earth/daylight = daynight_controllers[AMBIENT_LIGHT_SRC_EARTH]
+	if(istype(daylight))
+		daylight.initialize("#d8d8d8", "#d8d8d8")
+		daylight.time = 10000
+		daylight.active = FALSE
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 	SPAWN(10 MINUTES)
 		santa_flyover(2, 186, 1, 130)
 	SPAWN(30 MINUTES)
 		santa_flyover(299, 205, 3, 90, WEST)
-	SPAWN(2 MINUTES)
+	SPAWN(2 MINUTES) // "hohoho I tapped into your fuckin communications come by the tree for my final pass!"
 		santa_flyover(1, 180, 4, 50, grinched = TRUE)
 
 /obj/sleigh
@@ -44,13 +49,19 @@
 	density = 0
 	nodamage = 1
 	layer = 104 // AAAAAAAAA
+	bound_width = 1229
+	bound_height = 410
 	plane = 6
 	flags = KEEP_TOGETHER
 	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	var/audiocheck = TRUE
+	var/sound/sleigh
 
 	New()
 		..()
 		SPAWN(1 SECONDS)
+			src.sleigh = sound('sound/effects/santa.ogg', 1, 1, 802)
+			world << src.sleigh
 			while (src.loc)
 				var/turf/targetT = src.loc
 				var/Ty = targetT.y + 4
@@ -62,13 +73,23 @@
 				ThrowRandom(X, rand(1,8), throw_type=THROW_NO_CLIP)
 				sleep(rand(3, 30))
 
+	disposing()
+		..()
+		var/sound/stopsound = sound(null, wait = 0, channel = 802)
+		world << stopsound
+
 /datum/game_mode/extended/proc/santa_flyover(var/x_input, var/y_input, var/speed = 1, var/alpha_input = 130, var/direction = EAST, var/grinched = FALSE)
 	var/mob/dummy_pilot/pilot = new /mob/dummy_pilot (locate(x_input, y_input, 1))
 	pilot.dir = direction
 	animate(pilot, 2 SECONDS, alpha=alpha_input)
 	while (pilot.loc)
-		if (pilot.x >= 170 && grinched)
-			break
+		if (grinched)
+			if (pilot.x >= 170)
+				break
+			else if (pilot.audiocheck && pilot.x >= 135)
+				pilot.audiocheck = FALSE
+				var/sound/santafalls = sound('sound/effects/santa_death.ogg', 0, 0)
+				world << santafalls
 		move_forward(pilot, direction, speed)
 		sleep(speed)
 	if (!grinched)
@@ -79,6 +100,8 @@
 
 /datum/game_mode/extended/proc/get_grinched(var/mob/dummy_pilot/pilot, var/direction)
 	animate(pilot, alpha = 0, time = 4 SECONDS)
+	SPAWN (4 SECONDS)
+		qdel(pilot)
 	var/turf/T = get_turf(locate(179, 185, 1))
 	playsound(locate(T), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
 	var/obj/effects/explosion/boom = /obj/effects/explosion
@@ -104,8 +127,6 @@
 		for(var/o=0,o<=2,o++)
 			move_forward(pilot, SOUTHWEST, 4)
 			sleep(4)
-	SPAWN (3 SECONDS)
-		qdel(pilot)
 
 /datum/game_mode/extended/proc/move_forward(var/mob/dummy_pilot/pilot, var/direction, var/speed = 1)
 	var/glide = 0
