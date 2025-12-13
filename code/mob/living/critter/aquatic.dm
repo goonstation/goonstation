@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	can_disarm = 1
 	can_help = 1
 	butcherable = BUTCHER_ALLOWED
+	void_mindswappable = TRUE
 
 	is_npc = 1
 

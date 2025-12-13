@@ -28,6 +28,7 @@ TYPEINFO(/mob/living/critter/martian)
 	health_brute_vuln = 0.5
 	health_burn = 50
 	health_burn_vuln = 1.5
+	void_mindswappable = TRUE
 
 	speech_verb_say = "burbles"
 	speech_verb_exclaim = "screeches"

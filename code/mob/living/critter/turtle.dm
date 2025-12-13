@@ -17,6 +17,7 @@
 	player_can_spawn_with_pet = TRUE
 	density = FALSE
 	drop_contents_on_death = FALSE
+	void_mindswappable = TRUE
 
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
 	var/rigged = FALSE

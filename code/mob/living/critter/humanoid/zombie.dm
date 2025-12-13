@@ -23,6 +23,7 @@
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_attacks_per_ability = 5
+	void_mindswappable = TRUE //Awesome for antagonists
 
 	var/infection_type = EATS_BRAINS
 	var/moan_sounds = list("sound/voice/Zgroan1.ogg", "sound/voice/Zgroan2.ogg", "sound/voice/Zgroan3.ogg", "sound/voice/Zgroan4.ogg")

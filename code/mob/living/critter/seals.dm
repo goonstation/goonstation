@@ -14,6 +14,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal/seal_arctic)
 	hand_count = 2
 	random_name = FALSE
 	butcherable = BUTCHER_YOU_MONSTER
+	void_mindswappable = TRUE
 	var/sealnoise = null
 
 	New(loc)

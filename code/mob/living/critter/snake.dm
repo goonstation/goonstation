@@ -22,6 +22,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD //angry snek kills you
+	void_mindswappable = TRUE
 
 	//Special behaviour vars
 	var/double = 0
