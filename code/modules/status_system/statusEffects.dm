@@ -3916,6 +3916,8 @@
 	onRemove()
 		..()
 		var/mob/M = src.owner
+		if (isdead(M))
+			return
 		var/turf/targetT = get_turf(M)
 		var/job = pick("Clown", "Chef", "Botanist", "Rancher", "Janitor", "Engineer", "Miner", "Quartermaster", "Medical Doctor", "Geneticist", "Roboticist", "Scientist")
 		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof

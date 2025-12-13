@@ -795,6 +795,37 @@ proc/compare_ornament_score(list/a, list/b)
 		modify_christmas_cheer(-30)
 		..()
 
+/datum/targetable/santa/returnelf_to_santa
+	name = "Return to Santa"
+	desc = "Your job is done here."
+	icon = 'icons/mob/santa_abilities.dmi'
+	icon_state = "santa-template"
+
+	cast()
+		. = ..()
+		var/mob/living/carbon/human/elf/M = holder.owner
+		animate(M, 3 SECONDS, alpha=0)
+		SPAWN(3.1 SECONDS)
+			if (M.santa)
+				M.mind.transfer_to(M.santa)
+			else
+				M.visible_message("Can't find Santa, call an admin!")
+			qdel(M)
+
+/mob/living/carbon/human/elf
+	name = "Elf"
+	real_name = "Elf Monkey"
+	desc = "A faithful elf called in by Santa himself. You should take its words as Santa's!"
+	var/mob/santa
+
+	New()
+		..()
+		src.set_mutantrace(/datum/mutantrace/monkey)
+		src.equip_new_if_possible(/obj/item/clothing/mask/monkey_translator, SLOT_WEAR_MASK)
+		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
+		HS.addAbility(/datum/targetable/santa/gifts)
+		HS.addAbility(/datum/targetable/santa/returnelf_to_santa)
+
 // Krampus Stuff
 
 /datum/mutantrace/krampus

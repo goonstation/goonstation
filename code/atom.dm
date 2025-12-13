@@ -990,7 +990,7 @@ TYPEINFO(/atom/movable)
 			return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
-	if (isAIeye(usr) || (isobserver(usr) && src != usr))
+	if (isAIeye(usr) || (isobserver(usr) && src != usr) || istype(usr, /mob/living/intangible/santa_target))
 		return // Stops AI eyes from click-dragging anything, and observers from click-dragging anything that isn't themselves (ugh)
 
 	// converting params to a list here enables it to be used for communicating between mousedrop() and MouseDrop_T()

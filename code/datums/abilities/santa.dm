@@ -211,46 +211,87 @@
 			if (M.bioHolder && !M.bioHolder.HasOneOfTheseEffects("fire_resist", "cold_resist", "thermal_resist"))
 				M.bioHolder.AddEffect("cold_resist", 0, 60) // this will wipe `thermal_vuln` still vOv
 
+/datum/targetable/deploy
+	name = "Deploy Elf"
+	desc = ""
+	icon = 'icons/mob/santa_abilities.dmi'
+	icon_state = "santa-template"
+
+	cast()
+		. = ..()
+		var/turf/T
+		T = get_turf(holder.owner)
+		new/obj/effect/supplymarker/safe(T, 3 SECONDS, /mob/living/carbon/human/elf, TRUE)
+		SPAWN (7 SECONDS)
+			var/mob/living/intangible/santa_target/reticle = holder.owner
+			var/mob/living/carbon/human/elf/elf = locate(/mob/living/carbon/human/elf) in view(3, T)
+			if (elf)
+				elf.santa = reticle.santa
+				holder.owner.mind.transfer_to(elf)
+				playsound(T, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
+			else
+				if (reticle.santa)
+					holder.owner.mind.transfer_to(reticle.santa) // if code fails get sent back to santa
+				else
+					holder.owner.visible_message("Couldn't find an elf or santa to return to. Call an admin!")
+			qdel(reticle)
+
+/datum/targetable/return_to_santa
+	name = "Cancel Deployment"
+	desc = ""
+	icon = 'icons/mob/santa_abilities.dmi'
+	icon_state = "santa-template"
+
+	cast()
+		. = ..()
+		var/mob/living/intangible/santa_target/reticle = holder.owner
+		if (reticle.santa)
+			holder.owner.mind.transfer_to(reticle.santa)
+			qdel(reticle)
+		else
+			holder.owner.visible_message("Santa not found, call an admin!")
+
+/mob/living/intangible/santa_target
+	name = ""
+	desc = ""
+	icon = 'icons/effects/128x128.dmi'
+	icon_state = "reticle_small"
+	nodamage = 0
+	density = 0
+	layer = 101
+	can_lie = FALSE
+	can_bleed = FALSE
+	metabolizes = FALSE
+	blood_id = null
+	use_stamina = FALSE
+	var/mob/santa
+
+	New()
+		..()
+		pixel_y -= 48
+		pixel_x -= 48
+		see_invisible = INVIS_AI_EYE
+		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_AI_EYE)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
+		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
+		HS.addAbility(/datum/targetable/deploy)
+		HS.addAbility(/datum/targetable/return_to_santa)
+
 /datum/targetable/santa/teleport
-	name = "Spacemas Warp"
-	desc = "Warp to somewhere else via the power of Christmas."
+	name = "Call in Elf Support"
+	desc = "Call in a faithful elf monkey to relay messages and gifts to the crew!"
 	icon_state = "warp"
 	targeted = 0
 	cooldown = 80 SECONDS
 
 	cast()
 		. = ..()
-		var/list/tele_areas = get_teleareas()
-		var/A = tgui_input_list(src.holder.owner, "Area to jump to", "Teleportation", tele_areas)
-		if (isnull(A))
-			boutput(src.holder.owner, SPAN_ALERT("Invalid area selected."))
-			return 1
-		var/area/thearea = get_telearea(A)
-		if(thearea.teleport_blocked && !istype(thearea, /area/wizard_station))
-			boutput(src.holder.owner, SPAN_ALERT("That area is blocked from teleportation."))
-			return 1
-
-		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] poofs away in a puff of cold, snowy air!</B>"))
-
-		playsound(src.holder.owner.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
-		playsound(src.holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(1, 0, src.holder.owner.loc)
-		smoke.attach(src.holder.owner.loc)
-		smoke.start()
-		var/list/L = list()
-		for(var/turf/T in get_area_turfs(thearea.type))
-			if(!T.density)
-				var/clear = 1
-				for(var/obj/O in T)
-					if(O.density)
-						clear = 0
-						break
-				if(clear)
-					L+=T
-		var/turf/destination = pick(L)
-		logTheThing(LOG_COMBAT, holder.owner, "teleported from [log_loc(holder.owner)] to [log_loc(destination)].")
-		holder.owner.set_loc(destination)
+		var/mob/living/intangible/santa_target/reticle = new /mob/living/intangible/santa_target (get_turf(holder.owner))
+		reticle.santa = holder.owner
+		holder.owner.mind.transfer_to(reticle)
 
 /datum/targetable/santa/banish
 	name = "Banish Krampus"
