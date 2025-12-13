@@ -23,18 +23,18 @@
 	boutput(world, "<B>Just have fun!</B>")
 
 /datum/game_mode/extended/post_setup()
-	var/datum/daynight_controller/earth/daylight = daynight_controllers[AMBIENT_LIGHT_SRC_EARTH]
+	var/datum/daynight_controller/earth/daylight = new
 	if(istype(daylight))
-		daylight.initialize("#d8d8d8", "#d8d8d8")
 		daylight.time = 10000
 		daylight.active = FALSE
+		daylight.initialize("#d8d8d8", "#1f1f1f")
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-	SPAWN(10 MINUTES)
+	SPAWN(3 MINUTES)
 		santa_flyover(2, 186, 1, 130)
-	SPAWN(30 MINUTES)
+	SPAWN(10 MINUTES)
 		santa_flyover(299, 205, 3, 90, WEST)
-	SPAWN(2 MINUTES) // "hohoho I tapped into your fuckin communications come by the tree for my final pass!"
+	SPAWN(17 MINUTES) // "hohoho I tapped into your fuckin communications come by the tree for my final pass!"
 		santa_flyover(1, 180, 4, 50, grinched = TRUE)
 
 /obj/sleigh
