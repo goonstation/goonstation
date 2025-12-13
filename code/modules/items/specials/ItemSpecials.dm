@@ -1377,6 +1377,21 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "syndiebarrier"
 
+/datum/item_special/barrier/void
+	image = "voidbarrier"
+	name = "Eldritch Projection"
+	desc = "Deploy a temporary barrier that reflects and amplifies projectiles. The barrier can be easily broken by any attack or a sustained push."
+	barrier_type = /obj/itemspecialeffect/barrier/void
+
+/obj/itemspecialeffect/barrier/void
+	name = "eldritch barrier"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "void-barrier"
+
+	bullet_act(var/obj/projectile/P)
+		P.power = P.power * 2
+		..()
+
 /datum/item_special/flame
 	cooldown = 0
 	moveDelay = 5
