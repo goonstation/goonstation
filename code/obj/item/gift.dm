@@ -124,6 +124,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/random_icons = TRUE
+	var/mob/trapped_player
 
 	New()
 		. = ..()
@@ -131,12 +132,16 @@
 			src.icon_state = "[(prob(1) && prob(1)) ? "strange" : "gift[rand(1,3)]"]-[pick("r", "rs", "g", "gs")]"
 
 /obj/item/gift/attack_self(mob/user as mob)
-	if(!src.gift)
+	if(!src.gift && !src.contents)
 		boutput(user, SPAN_NOTICE("The gift was empty!"))
 		qdel(src)
 		return
 
 	user.u_equip(src)
+	if (src.trapped_player)
+		src.trapped_player.set_loc(get_turf(user))
+		src.gift.contents -= src.trapped_player
+		src.trapped_player = null
 	user.put_in_hand_or_drop(src.gift)
 	if (SEND_SIGNAL(src.gift, COMSIG_ITEM_STORAGE_INTERACTION, user))
 		modify_christmas_cheer(-4)
