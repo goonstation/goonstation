@@ -28,74 +28,95 @@
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
-		if (!iscarbon(target))
-			boutput(M, SPAN_ALERT("[target] is immune to the disease."))
+		if (!ishuman(target))
+			boutput(M, SPAN_ALERT("[target] is immune to the grab."))
 			return 1
 		. = ..()
-		src.active = TRUE
-		var/mob/living/T = target
 
 		if (isalive(holder.owner) && !holder.owner.transforming)
-			if (ishuman(T))
-				if (T.lying)
-					T.lying = 0
-					T.remove_stuns()
-					T.set_clothing_icon_dirty()
-				T.transforming = 1
-				holder.owner.transforming = 1
-				holder.owner.set_dir(get_dir(holder.owner, T))
-				T.set_dir(get_dir(T, holder.owner))
-				holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] menacingly grabs [T] by the chest!</B>"))
-				var/dir_offset = get_dir(holder.owner, T)
-				switch(dir_offset)
-					if (NORTH)
-						T.pixel_y = -24
-						T.layer = holder.owner.layer - 1
-					if (SOUTH)
-						T.pixel_y = 24
-						T.layer = holder.owner.layer + 1
-					if (EAST)
-						T.pixel_x = -24
-						T.layer = holder.owner.layer - 1
-					if (WEST)
-						T.pixel_x = 24
-						T.layer = holder.owner.layer - 1
-				for (var/i = 0, i < 5, i++)
-					T.pixel_y += 2
-					sleep(0.3 SECONDS)
+			var/mob/living/carbon/human/targetH
+			for (var/obj/item/grab/G in holder.owner)
+				if (ishuman(G.affecting))
+					targetH = G.affecting
 
-				sleep(0.5 SECONDS)
-				var/mob/living/carbon/human/HU = T
-				holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] begins snapping [HU]'s body!</B>"))
-				var/number_of_snaps = 5
-				var/i
-				for(i = 0; i < number_of_snaps; i++)
-					playsound(HU.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
-					HU.emote("scream")
-					take_bleeding_damage(HU, holder.owner, 2, DAMAGE_STAB)
-					HU.Scale(1 + (rand(-30, 20) * 0.01), 1 + (rand(-20, 30) * 0.01))
-					HU.Turn(rand(-60, 90))
-					HU.bioHolder.age += 10
-					sleep(1 SECOND)
+			if (targetH)
+				crunch(targetH, holder.owner)
+			else
+				crunch(target, holder.owner, TRUE)
 
-				playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
-				var/obj/item/gift/victimbox = new /obj/item/gift(HU.loc)
-				HU.visible_message(SPAN_ALERT("<B>[holder.owner]</B> rudely shoves [HU] inside a Spacemas present!"))
-				var/obj/item/card/id/id = get_id_card(HU.wear_id)
-				if (id)
-					victimbox.name = "Wrapped [id.assignment]"
-				else
-					victimbox.name = "Wrapped Employee"
-				victimbox.desc = "There's muffled yelling coming from inside..."
-				var/list/organs = list("left_eye", "right_eye", "liver", "appendix", "left_kidney", "right_kidney", "butt", "stomach")
-				var/obj/item/organ/O = pick(organs)
-				var/obj/item/org = HU.organHolder.drop_organ(O, victimbox)
-				victimbox.gift = org
-				victimbox.contents += org
-				HU.set_loc(victimbox)
-				victimbox.trapped_player = HU
-				victimbox.contents += HU
-				HU.transform = null
-				holder.owner.transforming = 0
-		src.active = FALSE
+/datum/targetable/grinch/instakill/proc/crunch(var/mob/living/carbon/human/T, var/mob/living/player, var/forcegrab=FALSE)
+	src.active = TRUE
+	T.transforming = 1
+	holder.owner.transforming = 1
+	if (forcegrab)
+		var/obj/item/grab/G = new /obj/item/grab(player, player, T)
+		player.put_in_hand(G, player.hand)
+		G.state = GRAB_AGGRESSIVE
+		G.UpdateIcon()
+		player.set_dir(get_dir(player, T))
+		playsound(holder.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 65, 1)
+	if (T.lying)
+		T.lying = 0
+		T.remove_stuns()
+		T.set_clothing_icon_dirty()
+	player.set_dir(get_dir(player, T))
+	T.set_dir(get_dir(T, player))
+	player.visible_message(SPAN_ALERT("<B>[player] menacingly grabs [T] by the chest!</B>"))
+	T.loc = player.loc
+	var/dir_offset = get_dir(player, T)
+	switch(dir_offset)
+		if (NORTH)
+			T.pixel_y = -24
+			T.layer = player.layer - 1
+		if (SOUTH)
+			T.pixel_y = 24
+			T.layer = player.layer + 1
+		if (EAST)
+			T.pixel_x = -24
+			T.layer = player.layer - 1
+		if (WEST)
+			T.pixel_x = 24
+			T.layer = player.layer - 1
+	for (var/i = 0, i < 5, i++)
+		T.pixel_y += 2
+		sleep(0.3 SECONDS)
+
+	sleep(0.5 SECONDS)
+	var/mob/living/carbon/human/HU = T
+	player.visible_message(SPAN_ALERT("<B>[player] begins snapping [HU]'s body!</B>"))
+	var/number_of_snaps = 3
+	var/i
+	for(i = 0; i < number_of_snaps; i++)
+		playsound(HU.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
+		HU.emote("scream")
+		take_bleeding_damage(HU, player, 2, DAMAGE_STAB)
+		HU.Scale(1 + (rand(-30, 20) * 0.01), 1 + (rand(-20, 30) * 0.01))
+		HU.Turn(rand(-60, 90))
+		HU.bioHolder.age += 10
+		sleep(1 SECOND)
+
+	playsound(player.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
+	var/obj/item/gift/victimbox = new /obj/item/gift(HU.loc)
+	HU.visible_message(SPAN_ALERT("<B>[player]</B> rudely shoves [HU] inside a Spacemas present!"))
+	var/obj/item/card/id/id = get_id_card(HU.wear_id)
+	if (id)
+		victimbox.name = "Wrapped [id.assignment]"
+	else
+		victimbox.name = "Wrapped Employee"
+	victimbox.desc = "There's muffled yelling coming from inside..."
+	var/list/organs = list("left_eye", "right_eye", "liver", "appendix", "left_kidney", "right_kidney", "butt", "stomach")
+	var/obj/item/organ/O = pick(organs)
+	var/obj/item/org = HU.organHolder.drop_organ(O, victimbox)
+	victimbox.gift = org
+	victimbox.contents += org
+	for(var/obj/item/grab/GR in player)
+		qdel(GR)
+	HU.set_loc(victimbox)
+	victimbox.trapped_player = HU
+	victimbox.contents += HU
+	HU.transform = null
+	player.transforming = 0
+	T.transforming = 0
+	src.active = FALSE
+
 
