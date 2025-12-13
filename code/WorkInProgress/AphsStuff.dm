@@ -54,6 +54,7 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	pixel_x = -32
 	pixel_y = -32 // TO DO: Make these link to the AI and accept tapes
+	stops_space_move = TRUE
 	var/loaded = 0
 	var/obj/machinery/derelict_aiboss/ai/ai
 	var/obj/item/aiboss_tape/tape
@@ -129,6 +130,7 @@ TYPEINFO(/obj/machinery/derelict_aiboss/ai)
 	layer = EFFECTS_LAYER_UNDER_1
 	pixel_x = -32
 	pixel_y = -32
+	stops_space_move = TRUE
 
 	speech_verb_say = "beeps"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD

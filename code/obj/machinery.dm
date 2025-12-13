@@ -178,7 +178,7 @@
 
 /obj/machinery/attack_hand(mob/user)
 	. = ..()
-	if(status & (NOPOWER|BROKEN))
+	if(src.is_disabled())
 		return 1
 	if(user && (user.lying || user.stat) && !user.client?.holder?.ghost_interaction)
 		return 1

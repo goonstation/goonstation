@@ -8977,12 +8977,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"cHs" = (
-/obj/machinery/abcu,
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/engine/ptl)
 "cJf" = (
 /obj/cable/yellow{
 	icon_state = "2-4"
@@ -10012,22 +10006,6 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
-"ekH" = (
-/obj/storage/crate/abcumarker,
-/obj/item/sheet/glass{
-	amount = 50;
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/sheet/steel{
-	amount = 50;
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/engine/ptl)
 "emb" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -17938,6 +17916,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/hangar/engine)
 "pSW" = (
+/obj/machinery/abcu,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "pTd" = (
@@ -19588,7 +19567,6 @@
 	},
 /area/station/security/main)
 "sLS" = (
-/obj/machinery/abcu,
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
@@ -19698,9 +19676,6 @@
 	dir = 10
 	},
 /area/station/security/main)
-"sUI" = (
-/turf/space,
-/area/station/quartermaster/office)
 "sUL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20627,6 +20602,17 @@
 /obj/cable/blue{
 	icon_state = "1-4"
 	},
+/obj/storage/crate/abcumarker,
+/obj/item/sheet/steel{
+	amount = 50;
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/sheet/glass{
+	amount = 50;
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "ucd" = (
@@ -21432,6 +21418,10 @@
 	dir = 10
 	},
 /area/station/engine/elect)
+"vkb" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/black,
+/area/station/engine/ptl)
 "vkO" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass,
@@ -23288,6 +23278,22 @@
 /obj/table/reinforced/auto,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = -5;
+	pixel_x = -6
+	},
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5;
+	pixel_x = 7
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 10
@@ -57281,7 +57287,7 @@ aaa
 aaa
 aaa
 mqX
-ekH
+rId
 bDh
 jPf
 xqv
@@ -57583,8 +57589,8 @@ aaa
 aaa
 aaa
 mqX
-cHs
-bDh
+rId
+vkb
 gbH
 kxi
 bDh
@@ -63311,7 +63317,7 @@ aaa
 aaa
 aaa
 aaa
-sUI
+aaa
 aaa
 aaa
 aaa

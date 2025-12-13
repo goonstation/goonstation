@@ -2828,6 +2828,10 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Control Room"
 	icon_state = "engine_control"
 
+/area/station/engine/gravity
+	name = "Engineering Gravity Tether"
+	icon_state = "engineering"
+
 TYPEINFO(/area/station/engine/singcore)
 	valid_bounty_area = FALSE
 /area/station/engine/singcore

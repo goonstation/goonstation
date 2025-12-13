@@ -563,7 +563,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
+		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED) && T.effective_gravity > 0)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -638,6 +638,9 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
+	if (!user.has_traction())
+		return 0
+
 	if (!G.can_pin)
 		return 0
 
@@ -656,6 +659,9 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
+	if (!user.has_traction())
+		return 0
+
 	if (!G.can_pin)
 		return 0
 
@@ -672,6 +678,9 @@
 		return 0
 
 	if (BOUNDS_DIST(src, M) > 0)
+		return 0
+
+	if (!user.has_traction())
 		return 0
 
 	if (!G.can_pin)

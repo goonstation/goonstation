@@ -13,6 +13,7 @@
 	// Related to overlay application in break/burn_tile() only
 	can_burn = TRUE
 	can_break = TRUE
+	stops_space_move = FALSE
 
 /turf/unsimulated/floor/attackby(obj/item/C, mob/user, params)
 

@@ -147,6 +147,8 @@ client/proc/replace_space_exclusive()
 		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
+		global.z_level_station_gravity = 1
+		global.recalculate_world_gravity()
 
 
 client/proc/dereplace_space()
@@ -182,3 +184,5 @@ client/proc/dereplace_space()
 
 		message_admins("Finished space dereplace!")
 		map_currently_underwater = 0
+		global.z_level_station_gravity = 0
+		global.recalculate_world_gravity()

@@ -7496,8 +7496,12 @@
 /turf/simulated/floor,
 /area/h7/computer_core)
 "aMw" = (
+/obj/machinery/gravity_tether/multi_area/derelict_ai_sat,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
@@ -14109,14 +14113,6 @@
 /obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
 	dir = 10;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
@@ -14155,6 +14151,15 @@
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
 	},
 /turf/simulated/floor,
 /area/radiostation/serverroom)
@@ -16274,6 +16279,10 @@
 	},
 /turf/space,
 /area/space)
+"dGr" = (
+/obj/machinery/light/small/sticky/frostedred,
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "dGY" = (
 /obj/table/wood/auto,
 /obj/machinery/light{
@@ -16905,6 +16914,10 @@
 	pixel_x = 6;
 	pixel_y = 3
 	},
+/obj/item/paper/motel_noise_complaint{
+	pixel_y = -1;
+	pixel_x = -14
+	},
 /turf/simulated/floor/arrival,
 /area/diner/hallway)
 "fAR" = (
@@ -16987,6 +17000,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
+"fNG" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/structure/woodwall,
+/turf/simulated/floor/plating,
+/area/diner/motel)
 "fQg" = (
 /obj/fakeobject/shuttleengine{
 	dir = 8;
@@ -18120,6 +18138,10 @@
 	dir = 4
 	},
 /area/diner/solar)
+"ixQ" = (
+/obj/machinery/gravity_tether/multi_area/space_diner,
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "izd" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -19679,6 +19701,13 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor/damaged2,
 /area/diner/hallway)
+"lUt" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Check-In"
+	},
+/obj/mapping_helper/airlock/bolter,
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "lXO" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -19919,6 +19948,10 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
+"mys" = (
+/obj/storage/closet,
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "mCH" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -21130,6 +21163,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"psB" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/gravity_tether/multi_area/radio_ship,
+/turf/simulated/floor/plating,
+/area/radiostation/serverroom)
 "psV" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -24329,6 +24367,10 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
+"wZs" = (
+/obj/machinery/gravity_tether/multi_area/hermera,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "xbB" = (
 /obj/cable,
 /obj/cable{
@@ -41195,7 +41237,7 @@ aZq
 aGz
 biE
 aFX
-aLL
+wZs
 aMv
 aOd
 aOE
@@ -78597,11 +78639,11 @@ aaK
 aaK
 aaK
 aaK
-aaK
-aaK
-aaK
-aaK
 boO
+apU
+apU
+apU
+apU
 apU
 akd
 aoS
@@ -78899,12 +78941,12 @@ aaK
 aaK
 aaK
 aaK
-aaK
-aaK
-aaK
-aaK
 boP
-skq
+apU
+ixQ
+dGr
+wqS
+lUt
 ake
 aoT
 crC
@@ -79202,10 +79244,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+apU
+mys
+wqS
+wqS
 rdx
 jyD
 aoU
@@ -79505,7 +79547,7 @@ pTb
 aod
 aod
 aod
-pTb
+fNG
 aod
 aod
 apU
@@ -108185,8 +108227,8 @@ adg
 agb
 aon
 ato
-aHE
-aHE
+psB
+bjf
 bjd
 jZV
 bjD
