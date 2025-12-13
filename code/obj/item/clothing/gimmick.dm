@@ -1244,13 +1244,15 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	icon_state = "ring"
 	item_state = "ring"
 	material_prints = "sharp scratches"
-	hide_prints = 0
 	rand_pos = 1
 	which_hands = GLOVE_HAS_LEFT
 
 	setupProperties()
 		..()
 		setProperty("conductivity", 1)
+
+	get_fiber_mask()
+		return FORENSIC_GLOVE_MASK_FINGERLESS
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)) || prob(1)) // honk
@@ -1811,7 +1813,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "This is some sort of hand-mounted computer. Or it would be if it wasn't made out of cheap plastic and LEDs."
 	icon_state = "handcomp"
 	item_state = "handcomp"
-	hide_prints = 0
 	which_hands = GLOVE_HAS_RIGHT
 
 	setupProperties()
