@@ -748,7 +748,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/crafted
 	name = "shoes"
 	desc = "A custom pair of shoes"
-	icon_state = "white"
+	icon_state = "custom"
 
 	onMaterialChanged()
 		..()
