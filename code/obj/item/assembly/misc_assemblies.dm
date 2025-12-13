@@ -61,6 +61,7 @@ Contains:
 	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
+	can_arcplate = FALSE
 
 /obj/item/assembly/New(var/new_location)
 	src.additional_components = list()

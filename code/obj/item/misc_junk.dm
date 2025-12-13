@@ -636,6 +636,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon_state = "waste"
 	default_material = "slag"
 	var/datum/gas_mixture/leak_gas = new
+	can_arcplate = FALSE
 
 	New()
 		. = ..()
