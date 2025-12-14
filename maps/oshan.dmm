@@ -26198,6 +26198,9 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bYh" = (
@@ -32041,6 +32044,12 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"ffI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "ffV" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -34930,6 +34939,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/spacehabitat/owlery)
+"iJQ" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/disposal)
 "iKU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36074,7 +36089,10 @@
 	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
 	name = "Old Beret"
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "kao" = (
@@ -46662,6 +46680,10 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/medbay/psychiatrist)
+"xbP" = (
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "xbU" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
@@ -47036,6 +47058,9 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "xyD" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "xAQ" = (
@@ -87762,7 +87787,7 @@ toC
 deW
 bXy
 cMY
-xyD
+xbP
 qdF
 cMY
 cMY
@@ -88669,7 +88694,7 @@ bXV
 bXV
 oPx
 bWB
-rhf
+ffI
 rhf
 bSx
 aqn
@@ -88971,7 +88996,7 @@ bWB
 bWB
 bWB
 bYd
-bWB
+iJQ
 rhf
 bSx
 aqn
