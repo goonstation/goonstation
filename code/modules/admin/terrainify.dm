@@ -335,7 +335,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 		if (src.generates_solid_ground)
 			global.is_map_on_ground_terrain = TRUE
-			global.set_zlevel_gforce(Z_LEVEL_STATION, 1, TRUE)
+			if (length(global.zlevels))
+				global.set_zlevel_gforce(Z_LEVEL_STATION, 1, TRUE)
 
 		log_terrainify(user, "has turned space and the station into [src.name].")
 
