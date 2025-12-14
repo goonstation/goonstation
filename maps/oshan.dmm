@@ -24429,9 +24429,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/window_blinds/cog2/left{
-	dir = 4
-	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-4"
@@ -24441,6 +24438,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/evidence)
@@ -43201,10 +43201,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "sAY" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
 /obj/mapping_helper/access/security,
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	id = "eng_bathroom"
+	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "sBo" = (
