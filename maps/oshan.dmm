@@ -31918,11 +31918,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"fel" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/random,
-/area/station/medical/medbay/lobby)
 "ffV" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -92960,7 +92955,7 @@ ayA
 azA
 aAM
 iHJ
-fel
+gvl
 aqn
 aqn
 chd
