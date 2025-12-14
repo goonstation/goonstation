@@ -59,7 +59,7 @@ proc/initialize_area_gravity()
 		A.set_turf_gravity(A.gforce_tether) // need to force updates for 0 turf oofies
 
 proc/set_zlevel_gforce(z_level, gforce, update_tethers=FALSE)
-	global.zlevels[z_level]?.gforce = gforce
+	global.zlevels[z_level].gforce = gforce
 	if (update_tethers)
 		for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
 			if (tether.z == z_level)
