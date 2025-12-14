@@ -23868,6 +23868,9 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
+	},
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -24767,9 +24770,6 @@
 /obj/item/stamp{
 	pixel_y = -9;
 	pixel_x = 6
-	},
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -33513,6 +33513,9 @@
 /obj/item/folder{
 	pixel_y = 4;
 	pixel_x = -4
+	},
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
 	},
 /turf/simulated/floor/redblack{
 	dir = 10
