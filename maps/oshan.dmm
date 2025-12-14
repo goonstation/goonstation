@@ -25694,7 +25694,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "bWk" = (
-/turf/unsimulated/floor/red/redblackchecker,
+/turf/simulated/floor/red/redblackchecker,
 /area/station/security/interrogation)
 "bWl" = (
 /obj/filing_cabinet,
@@ -36194,7 +36194,7 @@
 	dir = 4;
 	id = "interrogation_door"
 	},
-/turf/unsimulated/floor/red/redblackchecker,
+/turf/simulated/floor/red/redblackchecker,
 /area/station/security/interrogation)
 "kjC" = (
 /obj/disposalpipe/segment{
@@ -41250,7 +41250,7 @@
 /area/evilreaver)
 "qcy" = (
 /obj/machinery/light/incandescent/warm,
-/turf/unsimulated/floor/red/redblackchecker,
+/turf/simulated/floor/red/redblackchecker,
 /area/station/security/interrogation)
 "qcB" = (
 /obj/rack,
