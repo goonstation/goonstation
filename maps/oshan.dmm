@@ -7106,9 +7106,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "azH" = (
@@ -8151,14 +8148,6 @@
 	name = "reinforced plating"
 	},
 /area/station/maintenance/disposal)
-"aDp" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/blue/checker{
-	dir = 8
-	},
-/area/station/medical/medbay/lobby)
 "aDr" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -30089,11 +30078,6 @@
 "dpE" = (
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
-"dpZ" = (
-/obj/sea_plant_manta/seaweed,
-/obj/machinery/light/incandescent/netural,
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "dqh" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue,
@@ -30312,10 +30296,6 @@
 	dir = 4
 	},
 /area/station/medical/research)
-"dzB" = (
-/obj/sea_plant/coralfingers,
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "dzE" = (
 /obj/machinery/atmospherics/unary/vent{
 	dir = 8
@@ -30951,6 +30931,12 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"eho" = (
+/obj/table/round/auto,
+/turf/simulated/floor/blue/checker{
+	dir = 8
+	},
+/area/station/medical/medbay/lobby)
 "ehU" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Sauna"
@@ -31026,10 +31012,6 @@
 /mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"elP" = (
-/obj/machinery/light/incandescent/netural,
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "elX" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -31334,6 +31316,10 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
+"eEm" = (
+/mob/living/critter/aquatic/fish/angel,
+/turf/space/fluid,
+/area/space)
 "eFs" = (
 /obj/machinery/dispenser,
 /turf/simulated/floor/yellow/side,
@@ -31933,8 +31919,9 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "fel" = (
-/obj/sea_plant_manta/kelp,
-/turf/space/fluid,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/random,
 /area/station/medical/medbay/lobby)
 "ffV" = (
 /obj/table/reinforced/auto,
@@ -32237,12 +32224,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/tools)
-"fxg" = (
-/mob/living/critter/small_animal/crab{
-	name = "Larry"
-	},
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "fxl" = (
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/west,
@@ -33151,6 +33132,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
+"gvl" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/random,
+/area/station/medical/medbay/lobby)
 "gvW" = (
 /obj/table/wood,
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
@@ -33753,15 +33738,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"haW" = (
-/obj/rack,
-/obj/item/tank/air,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/engineer/diving/civilian,
-/obj/item/clothing/suit/space/diving/civilian,
-/obj/machinery/light/small/sticky/blueish,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "hbh" = (
 /turf/simulated/floor/escape/corner{
 	dir = 8
@@ -34286,11 +34262,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
-"hNu" = (
-/obj/machinery/conveyor/WN/carousel,
-/obj/lattice,
-/turf/space/fluid,
-/area/space)
 "hNy" = (
 /obj/item/device/radio/intercom/medical{
 	dir = 1
@@ -34493,10 +34464,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/eva)
-"ije" = (
-/obj/item/material_piece/coral,
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "ijW" = (
 /obj/item/clothing/suit/space/engineer,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -34936,8 +34903,10 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "iHJ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating/random,
+/obj/stool/bench/blue,
+/turf/simulated/floor/blue/checker{
+	dir = 8
+	},
 /area/station/medical/medbay/lobby)
 "iHN" = (
 /obj/table/reinforced/auto,
@@ -36362,16 +36331,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/research)
-"krC" = (
-/obj/machinery/conveyor/EW/carousel,
-/obj/strip_door{
-	dir = 8
-	},
-/obj/forcefield/energyshield/perma{
-	dir = 8
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "krS" = (
 /obj/disposalpipe/trunk/south{
 	pixel_z = 1
@@ -36660,12 +36619,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
-"kHK" = (
-/mob/living/critter/small_animal/crab{
-	name = "Rosemary"
-	},
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "kIF" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 8;
@@ -36733,6 +36686,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"kNe" = (
+/mob/living/critter/aquatic/fish/clown,
+/turf/space/fluid,
+/area/space)
 "kPi" = (
 /obj/stocking,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -36941,10 +36898,6 @@
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"lcc" = (
-/mob/living/critter/aquatic/fish/jellyfish,
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "lcr" = (
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
@@ -38392,11 +38345,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"mFS" = (
-/obj/machinery/conveyor/SW/carousel,
-/obj/lattice,
-/turf/space/fluid,
-/area/space)
 "mGi" = (
 /obj/lattice,
 /turf/simulated/floor/martian,
@@ -38519,7 +38467,7 @@
 "mJS" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint";
+	cycle_id = "innermaint3";
 	enter_id = "outer";
 	name = "Central Inner Maintenance"
 	},
@@ -38790,8 +38738,8 @@
 "mYg" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint";
-	enter_id = "outer";
+	cycle_id = "innermaint3";
+	enter_id = "inner";
 	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/plating/random,
@@ -40049,12 +39997,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"ozl" = (
-/mob/living/critter/small_animal/crab{
-	name = "Barry"
-	},
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "ozO" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40794,8 +40736,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "pqG" = (
+/mob/living/critter/aquatic/fish/gamma,
 /turf/space/fluid,
-/area/station/medical/medbay/lobby)
+/area/space)
 "prv" = (
 /obj/table/auto,
 /obj/item/sheet/steel/reinforced{
@@ -41697,6 +41640,14 @@
 /obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"qsD" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/blue/checker{
+	dir = 8
+	},
+/area/station/medical/medbay/lobby)
 "qsH" = (
 /obj/item/raw_material/uqill,
 /obj/item/raw_material/uqill,
@@ -42014,12 +41965,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"qLD" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 8
-	},
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "qLJ" = (
 /obj/machinery/computer/arcade{
 	desc = "The VR representation of a popular computer game."
@@ -42420,12 +42365,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/hangar/medical)
-"rko" = (
-/mob/living/critter/small_animal/crab{
-	name = "Harry"
-	},
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "rkz" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -43008,13 +42947,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
-"sah" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating/random,
-/area/station/medical/medbay/lobby)
 "sak" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
@@ -43027,12 +42959,6 @@
 /obj/forcefield/energyshield/perma/vehicle,
 /turf/simulated/floor/martian,
 /area/evilreaver)
-"saQ" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 4
-	},
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "sbK" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -43757,8 +43683,11 @@
 /turf/simulated/floor/stairs/wood/wide,
 /area/station/ranch)
 "sRz" = (
-/obj/machinery/drainage/big,
-/obj/machinery/drainage/big,
+/obj/rack,
+/obj/item/clothing/suit/space/diving/civilian,
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
 	},
@@ -44794,7 +44723,8 @@
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "innermaint2";
-	name = "Central Inner Maintenance"
+	name = "Central Inner Maintenance";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
@@ -45055,7 +44985,8 @@
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "innermaint2";
-	name = "Central Inner Maintenance"
+	name = "Central Inner Maintenance";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -45121,6 +45052,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"uDz" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/blue/checker{
+	dir = 8
+	},
+/area/station/medical/medbay/lobby)
 "uDI" = (
 /obj/machinery/atmospherics/unary/vent,
 /obj/lattice{
@@ -45539,6 +45478,10 @@
 	dir = 6
 	},
 /area/space)
+"viy" = (
+/obj/machinery/conveyor/SW/carousel,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "viI" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -45568,13 +45511,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"vkE" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space/fluid,
-/area/space)
 "vlw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45894,10 +45830,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
-"vMM" = (
-/mob/living/critter/aquatic/fish/clown,
-/turf/space/fluid,
-/area/station/medical/medbay/lobby)
 "vMW" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -47250,16 +47182,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"xjZ" = (
-/obj/machinery/conveyor/WE/carousel,
-/obj/strip_door{
-	dir = 8
-	},
-/obj/forcefield/energyshield/perma{
-	dir = 8
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "xkB" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/drinks/bottle/soda,
@@ -88823,16 +88745,16 @@ aDr
 aDr
 aDr
 aDr
-cjD
-aDr
-aDr
-aDr
-aDr
-aDr
-aDr
-aDr
-aDr
-ckw
+viy
+cga
+cga
+cga
+cga
+cga
+cga
+cga
+cga
+cga
 cga
 cga
 ckS
@@ -89125,7 +89047,7 @@ gMN
 aDr
 aDr
 aDr
-cjD
+aDr
 aDr
 lyJ
 iQS
@@ -89134,7 +89056,7 @@ dKi
 aXj
 iQS
 aDr
-aig
+aDr
 aCD
 tiS
 sxW
@@ -89427,7 +89349,7 @@ chd
 xPw
 chd
 aCD
-krC
+aCD
 aCD
 aCD
 aCD
@@ -89436,7 +89358,7 @@ ems
 ems
 aCD
 aCD
-xjZ
+aCD
 aCD
 xte
 qQg
@@ -89729,16 +89651,16 @@ aDr
 aDr
 nLF
 aCD
-mFS
-cke
-cke
-cke
-cke
-cke
-cke
-cke
-cke
-hNu
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
 aCD
 aCD
 aCD
@@ -90031,16 +89953,16 @@ aDr
 aDr
 ggo
 aCD
-chm
-ckf
-ckf
-ckf
-ckf
-ckf
-ckf
-ckf
-ckf
-vkE
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -91831,8 +91753,8 @@ azA
 aAM
 atw
 atw
-atw
-atw
+chd
+chd
 aqV
 aDr
 aDr
@@ -92132,10 +92054,10 @@ ciu
 jQU
 aCA
 atw
-ije
-qLD
-atw
-atw
+aqn
+aqn
+chd
+chd
 aDr
 aDr
 aDr
@@ -92433,11 +92355,11 @@ atx
 mIS
 pMV
 qen
-atw
+gvl
+aqn
+aqn
 pqG
-pqG
-pqG
-atw
+chd
 xPw
 chd
 aDr
@@ -92735,11 +92657,11 @@ awe
 ayA
 azA
 aAM
-iHJ
-pqG
-kHK
-lcc
-atw
+gvl
+gvl
+aqn
+aqn
+chd
 aDr
 chd
 jSE
@@ -93039,9 +92961,9 @@ azA
 aAM
 iHJ
 fel
-pqG
-pqG
-atw
+aqn
+aqn
+chd
 aDr
 iQS
 chd
@@ -93339,11 +93261,11 @@ dfZ
 ayB
 azA
 aAM
-iHJ
-pqG
-pqG
-ozl
-atw
+eho
+gvl
+aqn
+aqn
+chd
 cDa
 xZk
 chd
@@ -93642,10 +93564,10 @@ ayA
 azA
 aAM
 iHJ
-pqG
-pqG
-dpZ
-atw
+gvl
+aqn
+aqn
+chd
 gMN
 xZk
 chd
@@ -93942,12 +93864,12 @@ akQ
 wUd
 ayA
 azB
-aCA
-iHJ
-rko
-pqG
-pqG
-atw
+aAM
+qsD
+gvl
+kNe
+aqn
+chd
 ggo
 xZk
 chd
@@ -94245,11 +94167,11 @@ sHN
 ciu
 igv
 aAM
-iHJ
-pqG
-lcc
-pqG
 atw
+atw
+aqn
+aqn
+chd
 aDr
 chd
 chd
@@ -94547,11 +94469,11 @@ mUm
 ayD
 azD
 aAM
-iHJ
-dzB
-vMM
-pqG
 atw
+atw
+aqn
+aqn
+chd
 xPw
 chd
 aDr
@@ -94848,21 +94770,21 @@ cUp
 pIL
 awe
 azA
-aCA
-iHJ
-pqG
-pqG
-pqG
-atw
+aAM
+uDz
+gvl
+aqn
+aqn
+chd
 aDr
 aDr
 aDr
 aig
 aDr
 aDr
-mYg
+aCD
 sRz
-mJS
+aCD
 aqn
 aqn
 aqn
@@ -95152,10 +95074,10 @@ atx
 ben
 aAQ
 iHJ
-pqG
-fel
-elP
-atw
+gvl
+aqn
+aqn
+chd
 aDr
 aDr
 ckw
@@ -95453,17 +95375,17 @@ vfo
 ayE
 yeE
 aAM
-iHJ
-lcc
-fxg
-pqG
-atw
+eho
+gvl
+aqn
+aqn
+chd
 aDr
 aDr
 aig
 aDr
 aDr
-haW
+gMN
 aCD
 aCD
 aCD
@@ -95756,10 +95678,10 @@ atx
 azE
 aAR
 iHJ
-pqG
-pqG
-pqG
-atw
+gvl
+aqn
+aqn
+chd
 aDr
 aDr
 aig
@@ -96056,12 +95978,12 @@ aty
 aty
 aty
 azG
-aDp
-sah
-pqG
-ije
-pqG
-atw
+aAT
+gvl
+gvl
+aqn
+aqn
+chd
 aDr
 aDr
 aig
@@ -96359,11 +96281,11 @@ awe
 ayF
 azA
 vzl
-atw
-pqG
-pqG
-pqG
-atw
+gvl
+aqn
+eEm
+aqn
+chd
 aDr
 aDr
 aig
@@ -96662,10 +96584,10 @@ ayG
 azH
 nrW
 atw
-pqG
-saQ
-atw
-atw
+aqn
+aqn
+chd
+chd
 aDr
 aDr
 aig
@@ -96964,9 +96886,9 @@ axv
 azA
 aAT
 atw
-atw
-atw
-atw
+chd
+chd
+chd
 aDr
 aKl
 aDr
@@ -99700,9 +99622,9 @@ biD
 bjl
 bjl
 gBS
-bjl
-bjl
 cjN
+aDr
+aDr
 aCD
 pUF
 ucu
@@ -100001,10 +99923,10 @@ qkP
 cjD
 aDr
 aDr
-aDr
 ggo
-oCN
 aig
+oCN
+aDr
 aCD
 tlH
 iox
@@ -100304,9 +100226,9 @@ nbO
 aDr
 sjM
 gca
-aDr
-oCN
 aig
+oCN
+aDr
 aCD
 pUF
 uys
@@ -100606,9 +100528,9 @@ cjD
 aDr
 ckw
 cga
-cga
-cga
 ckS
+aDr
+aDr
 sjM
 aDr
 aDr
