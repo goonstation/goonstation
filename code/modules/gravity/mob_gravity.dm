@@ -1,17 +1,25 @@
-#define GRAVITY_EFFECT_NONE 0
-#define GRAVITY_EFFECT_LOW 1
-#define GRAVITY_EFFECT_NORMAL 2
-#define GRAVITY_EFFECT_HIGH 3
-#define GRAVITY_EFFECT_EXTREME 4
+/// Reset mob area based on turf gravity
+/mob/proc/reset_gravity()
+	return
 
-/mob/proc/update_gravity(new_gravity)
+/// Set mob gravity. Also updates traction
+/mob/proc/set_gravity(new_gravity)
+	return
+
+/// The last gforce value applied to mob
+/mob/living/var/last_gravity = 1
+
+/mob/living/reset_gravity()
+	var/turf/T = get_turf(src)
+	if (istype(T))
+		src.set_gravity(T.effective_gforce)
+
+/mob/living/set_gravity(new_gravity)
 	src.update_traction()
 	if (src.traction)
 		src.inertia_dir = 0
 
-/// The last gravity
-/mob/living/var/last_gravity = 1
-/mob/living/update_gravity(new_gravity)
+/mob/living/set_gravity(new_gravity)
 	. = ..()
 	if (new_gravity == src.last_gravity)
 		return
@@ -32,11 +40,11 @@
 		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
 			src.setStatus("gravity", INFINITE_STATUS, optional=GRAVITY_EFFECT_EXTREME)
 
-/mob/living/intangible/update_gravity(new_gravity)
+/mob/living/intangible/set_gravity(new_gravity)
 	return
 
-// This is a gross hack where we're combining a few different status effects into one
-// It's done to minimize status effect shuffling for something that will collectively change 1000s of times in a round
+// This is a gross hack where we're combining a few different status effects into one o minimize status effect shuffling
+// this is ostensibly a lifeprocess but we want the updates to feel snappier
 /datum/statusEffect/gravity
 	id = "gravity"
 	icon_state = "person"
@@ -70,35 +78,42 @@
 			src.name = "No Gravity"
 			src.desc = "You feel floaty.<br>But that's OK."
 			src.icon_state = "gravity-no"
+			animate_drift(src.owner, -1, 10, 1)
 
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, "gravity")
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_FLOATING, "gravity")
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
 		else
+			animate(src.owner, transform = matrix(), time = 1)
 			switch(new_state)
 				if(GRAVITY_EFFECT_LOW)
 					src.visible = TRUE
 					src.name = "Low Gravity"
-					src.desc = "You feel a little floaty.<br>Easier to slip, may cause space nausea."
+					src.desc = "You feel a little floaty.<br>Unable to sprint, may cause space nausea."
 					src.icon_state = "gravity-low"
+					APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, "gravity")
 
 				if(GRAVITY_EFFECT_NORMAL)
 					src.visible = FALSE
 					src.name = "Normal Gravity"
 					src.desc = "You feel like you're on Earth.<br>No special effects."
 					src.icon_state = "person"
+					REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, "gravity")
 
 				if(GRAVITY_EFFECT_HIGH)
 					src.visible = TRUE
 					src.name = "High Gravity"
 					src.icon_state = "gravity-high"
 					src.desc = "You feel heavy.<br>Movement speed reduced."
+					REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, "gravity")
 
 				if(GRAVITY_EFFECT_EXTREME)
 					src.visible = TRUE
 					src.name = "Extreme Gravity"
 					src.icon_state = "gravity-extreme"
 					src.desc = "You feel exteremely heavy.<br>Health issues may occur."
+					REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, "gravity")
 
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_FLOATING, "gravity")
@@ -107,6 +122,8 @@
 
 	onUpdate(timePassed)
 		. = ..()
+		var/mob/living/M = src.owner
+
 		if (HAS_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE))
 			return
 
@@ -130,7 +147,6 @@
 				;
 
 			if (GRAVITY_EFFECT_EXTREME)
-				var/mob/living/M = src.owner
 				if (prob(M.last_gravity))
 					if (!ON_COOLDOWN(M, "x_grav", 10 SECONDS))
 						if (ishuman(M))
@@ -159,7 +175,7 @@
 							var/mob/living/silicon/S = M
 							boutput(S, SPAN_COMBAT("The extreme gravity strains your frame!"))
 							S.playsound_local(S, "sound/effects/creaking_metal[rand(1,2)].ogg", 40, TRUE)
-							S.TakeDamage("Chest", rand(2,5), damage_type=DAMAGE_CRUSH)
+							S.TakeDamage("chest", rand(2,5), damage_type=DAMAGE_CRUSH)
 						// TODO: Mob critters
 					else
 						boutput(src.owner, SPAN_NOTICE("Extreme gravity severely impedes your movement!"), "x_grav")
@@ -169,10 +185,11 @@
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_FLOATING, "gravity")
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, "gravity")
 
 /datum/movement_modifier/gravity
 	ask_proc = TRUE
 
+// high gforce adds multiplicative slowdown
 /datum/movement_modifier/gravity/modifiers(mob/user, turf/move_target, running)
-	// list(additive_slowdown, multiplactive_slowdown)
-	return list(0, move_target.effective_gravity > 1 ? move_target.effective_gravity : 1)
+	return list(0, move_target.effective_gforce > 1 ? move_target.effective_gforce : 1)

@@ -10,20 +10,18 @@ ABSTRACT_TYPE(/datum/tether_fault/minor)
 /datum/tether_fault/minor/zero_gravity/effect(area/A, obj/machinery/gravity_tether/tether)
 	. = ..()
 	logTheThing(LOG_STATION, tether, "fault zeroed the gravity in [A] for one minute.")
-	var/current_gforce = A.gravity_force
 	A.set_turf_gravity(0)
 	SPAWN (60 SECONDS)
-		A.set_turf_gravity(current_gforce)
+		A.reset_all_turf_gravity()
 
 
 /datum/tether_fault/minor/random_gravity/effect(area/A, obj/machinery/gravity_tether/tether)
 	. = ..()
 	var/new_intensity = randfloat(0, tether.maximum_intensity)
 	logTheThing(LOG_STATION, tether, "fault changed the gravity in [A] to randomly selected [new_intensity] for one minute.")
-	var/current_gforce = A.gravity_force
 	A.set_turf_gravity(new_intensity)
 	SPAWN (60 SECONDS)
-		A.set_turf_gravity(current_gforce)
+		A.reset_all_turf_gravity()
 
 // taken from artifact gravity well
 /datum/tether_fault/minor/push_objects/effect(area/A, obj/machinery/gravity_tether/tether)

@@ -14,23 +14,25 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 	passive_wattage_per_g = 10 WATTS
 	intensity = 0
 	target_intensity = 0
-
-/obj/machinery/gravity_tether/current_area/New()
-	src.target_area_refs = list(get_area(src))
-	. = ..()
+	anchored = UNANCHORED
+	always_slow_pull = TRUE
+	p_class = 10
 
 /obj/machinery/gravity_tether/current_area/attempt_gravity_change(new_intensity)
 	var/area/A = get_area(src)
 	if (!A || !A.area_apc)
 		return FALSE
-	if (new_intensity > 0)
-		src.anchored = ANCHORED
-	. = ..()
-	// if we failed starting the change, and we are at zero intensity, unanchor
-	if (!src.changing_gravity && src.intensity <= 0)
-		src.anchored = UNANCHORED
 
-// if the gravity is 0 then let it be moved
+	if (src.intensity == 0 && new_intensity > 0)
+		src.anchored = ANCHORED
+		src.target_area_refs = list(A)
+		A.register_tether(src)
+	. = ..()
+	if (!src.changing_gravity)
+		src.anchored = UNANCHORED
+		src.target_area_refs = list()
+		A.unregister_tether(src)
+
 /obj/machinery/gravity_tether/current_area/change_intensity(new_intensity)
 	. = ..()
 	if (.)
@@ -41,5 +43,11 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 			shake_camera(M, 5, 32, 0.2)
 	if (src.intensity <= 0)
 		src.anchored = UNANCHORED
+		for (var/area/target_area in src.target_area_refs)
+			target_area.unregister_tether(src)
+		src.target_area_refs = list()
+
 	else
 		src.anchored = ANCHORED
+		src.target_area_refs = list(A)
+		A.register_tether(src)

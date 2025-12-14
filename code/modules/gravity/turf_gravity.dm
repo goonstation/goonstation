@@ -1,75 +1,77 @@
-/// Amount of gravity on the station Z-level
-var/global/z_level_station_gravity = 0
+/// Gravity force on this turf
+/turf/var/effective_gforce = 1
+/turf/space/effective_gforce = 0
+/turf/space/fluid/effective_gforce = 1
 
-#ifdef UNDERWATER_NAP
-global.z_level_station_gravity = 1
-#endif
 
-/// Amount of gravity on this specific turf
-/turf/var/effective_gravity = 1
-
-/turf/space/effective_gravity = 0
-/turf/space/fluid/effective_gravity = 1
-
+// update gravity on simulated turf spawn
 /turf/simulated/New()
 	. = ..()
-	src.update_gravity()
+	src.reset_gravity()
 
-/// Reset turf gravity based on area and composition
-/turf/proc/update_gravity()
-	if (contains_negative_matter(src))
-		src.set_gravity(0)
-		return
+/// Recalculate the turf gravity based on area levels
+/turf/proc/reset_gravity()
+	var/area/A = src.loc
+	src.set_gravity(A.gforce_minimum, A.gforce_tether)
 
-	var/area/A = get_area(src)
-	if (istype(A))
-		src.set_gravity(A.gravity_force)
+/turf/space/reset_gravity()
+	src.effective_gforce = 0
 
-/// Set gravity gforce on a turf and update mobs inside
-/turf/proc/set_gravity(gforce)
-	if (src.z == Z_LEVEL_STATION)
-		gforce += global.z_level_station_gravity
-	if (gforce != src.effective_gravity)
-		src.effective_gravity = gforce
-		for (var/mob/living/M in get_all_mobs_in(src))
-			M.update_gravity(src.effective_gravity)
+/turf/space/fluid/reset_gravity()
+	var/area/A = src.loc
+	src.set_gravity(A.gforce_minimum, A.gforce_tether)
 
-// space cannot have gravity
-/turf/space/set_gravity(gforce)
+/turf/unsimulated/reset_gravity()
+	src.effective_gforce = 1
+
+/// Set gravity on a turf
+/turf/proc/set_gravity(area_gravity, tether_gravity)
 	return
 
-// inheritance skip
-/turf/space/fluid/set_gravity(gforce)
-	if (src.z == Z_LEVEL_STATION)
-		gforce += global.z_level_station_gravity
-	src.effective_gravity = gforce
+/turf/unsimulated/set_gravity(area_gravity, tether_gravity)
+	return
 
-// airbridges on station Z get station tether gravity applied
-/turf/simulated/floor/airbridge/set_gravity(gforce)
-	if (src.z == Z_LEVEL_STATION)
-		gforce += global.get_station_gravity()
-	. = ..(gforce)
-/turf/simulated/wall/airbridge/set_gravity(gforce)
-	if (src.z == Z_LEVEL_STATION)
-		gforce += global.get_station_gravity()
-	. = ..(gforce)
+/turf/simulated/set_gravity(area_gravity, tether_gravity)
+	if (contains_negative_matter(src))
+		src.effective_gforce = 0
+		return
+	src.effective_gforce = src.get_gforce_minimum(area_gravity) + tether_gravity
 
-// asteroids always have a little gravity
-/turf/simulated/floor/plating/airless/asteroid/set_gravity(gforce)
+/turf/space/fluid/set_gravity(area_gravity, tether_gravity)
+	src.effective_gforce = src.get_gforce_minimum(area_gravity) + tether_gravity
+
+/// Get the minimum gforces to apply to this turf
+/turf/proc/get_gforce_minimum(area_gforce_minimum=null)
+	if (isnull(area_gforce_minimum))
+		var/area/A = src.loc
+		area_gforce_minimum = A.gforce_minimum
+	. = max(global.zlevels[src.z]?.gforce, area_gforce_minimum, 0)
+
+/turf/space/get_gforce_minimum(area_gforce_minimum=null)
+	return 0
+
+/turf/unsimulated/get_gforce_minimum(area_gforce_minimum=null)
+	return 1
+
+/turf/space/fluid/get_gforce_minimum(area_gforce_minimum=null)
+	if (isnull(area_gforce_minimum))
+		var/area/A = src.loc
+		area_gforce_minimum = A.gforce_minimum
+	. = max(global.zlevels[src.z]?.gforce, area_gforce_minimum, 0)
+
+// asteroid turfs have enough gravity to move
+/turf/simulated/floor/plating/airless/asteroid/get_gforce_minimum(area_gforce_minimum=null)
+	return max(..(area_gforce_minimum), GRAVITY_MOB_MOVEMENT_THRESHOLD)
+/turf/simulated/wall/auto/asteroid/get_gforce_minimum(area_gforce_minimum=null)
+	return max(..(area_gforce_minimum), GRAVITY_MOB_MOVEMENT_THRESHOLD)
+
+// airbridges on station Z get station tether gravity
+/turf/simulated/floor/airbridge/get_gforce_minimum(area_gforce_minimum=null)
 	if (src.z == Z_LEVEL_STATION)
-		gforce += global.z_level_station_gravity
-	#ifdef UNDERWATER_MAP
-	gforce = max(gforce, 1)
-	#else
-	gforce = max(gforce, 0.2)
-	#endif
-	src.effective_gravity = gforce
-/turf/simulated/wall/auto/asteroid/set_gravity(gforce)
+		return max(..(area_gforce_minimum), global.station_tether_gforce)
+	return ..(area_gforce_minimum)
+
+/turf/simulated/wall/airbridge/get_gforce_minimum(area_gforce_minimum=null)
 	if (src.z == Z_LEVEL_STATION)
-		gforce += global.z_level_station_gravity
-	#ifdef UNDERWATER_MAP
-	gforce = max(gforce, 1)
-	#else
-	gforce = max(gforce, 0.2)
-	#endif
-	src.effective_gravity = gforce
+		return max(..(area_gforce_minimum), global.station_tether_gforce)
+	return ..(area_gforce_minimum)

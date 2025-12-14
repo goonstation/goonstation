@@ -16,6 +16,8 @@ var/global/list/datum/zlevel/zlevels = null
 	var/path
 	/// Z coordinate of this z-level
 	var/z
+	/// gforce applied to all non-space tiles on this zlevel
+	var/gforce = 1
 
 	New(path, z)
 		..()
@@ -46,3 +48,9 @@ proc/init_zlevel_datums()
 	global.zlevels = list()
 	for(var/path in helper.get_zlevels())
 		global.zlevels += new /datum/zlevel(path, length(global.zlevels) + 1)
+
+	#ifndef UNDERWATER_MAP
+	global.set_zlevel_gforce(Z_LEVEL_STATION, 0)
+	global.set_zlevel_gforce(Z_LEVEL_DEBRIS, 0)
+	global.set_zlevel_gforce(Z_LEVEL_MINING, 0)
+	#endif

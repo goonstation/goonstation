@@ -149,7 +149,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			var/hit_thing = ( thr.throw_type & THROW_NO_CLIP ) ? null : thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
-			thr.momentum -= T.effective_gravity
+			thr.momentum -= T.effective_gforce
 			if(!thing.throwing || hit_thing)
 				end_throwing = TRUE
 				break

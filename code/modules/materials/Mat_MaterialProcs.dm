@@ -626,7 +626,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate_levitate(owner)
 		else if (isfloor(owner))
 			var/turf/T = owner
-			T.update_gravity()
+			T.reset_gravity()
 		return
 
 // Apply a secondary HSL colorspace matrix.

@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "area_tether"
 	density = TRUE
-	anchored = ANCHORED_ALWAYS
+	anchored = ANCHORED
 
 	layer = EFFECTS_LAYER_BASE // covers people who walk behind it
 	status = REQ_PHYSICAL_ACCESS
@@ -75,7 +75,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if (istype(src, /obj/machinery/gravity_tether/station))
 		src.light.attach(src, 1, 1)
 	else
-
 		src.light.attach(src, 0.5, 1)
 	src.light.set_brightness(1)
 
@@ -87,6 +86,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/disposing()
 	STOP_TRACKING_CAT(TR_CAT_GRAVITY_TETHERS)
+	src.intensity = 0
 	for (var/area/A in src.target_area_refs)
 		A.unregister_tether(src)
 	src.target_area_refs.len = 0
@@ -282,6 +282,21 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			src.power_change()
 	else
 		src.use_cell_wrapper(battery_usage)
+
+/obj/machinery/gravity_tether/receive_silicon_hotkey(var/mob/user)
+	if (..())
+		return
+	if (!src.allowed(user))
+		return
+	if (user.client.check_key(KEY_BOLT))
+		. = 1
+		src.say("Interface [!src.locked ? "locked" : "unlocked"].")
+		if (!src.emagged)
+			src.locked = !src.locked
+			if (!src.locked)
+				logTheThing(LOG_STATION, user, "unlocked gravity tether at at [log_loc(src)].")
+			src.UpdateIcon()
+		return
 
 /// Wrapper for using the internal cell, needed to interrupt the default rigged effect
 /obj/machinery/gravity_tether/proc/use_cell_wrapper(amount)
@@ -886,7 +901,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return TRUE
 	src.intensity = new_intensity
 	for (var/area/A in src.target_area_refs)
-		A.update_gravity()
+		A.recalc_tether_gforce()
 	src.UpdateIcon()
 
 /// Picks a random major or minor fault from all faults, based on the given probability.

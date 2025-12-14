@@ -14849,6 +14849,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor,
 /area/station/engine/inner)
 "cbE" = (

@@ -4,13 +4,11 @@
 		return FALSE
 
 	var/turf/T = get_turf(src)
-	if (T.effective_gravity >= GRAVITY_MOB_REGULAR_THRESHOLD)
+	if (T.effective_gforce >= GRAVITY_MOB_MOVEMENT_THRESHOLD)
 		return TRUE
 	// in partial gravity, slime/glue will give you effective traction
-	if (T.effective_gravity > 0)
+	if (T.effective_gforce > 0)
 		if (T.wet < 0)
-			return TRUE
-		if (prob(T.effective_gravity*100))
 			return TRUE
 
 	return FALSE

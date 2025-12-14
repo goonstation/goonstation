@@ -1,11 +1,20 @@
 // mob gravity thresholds
 // arbitrary thresholds, allow for people to handle some minor gravity variance
+
+/// Minimum gravity to grant traction
+#define GRAVITY_MOB_MOVEMENT_THRESHOLD 0.2
 /// minimum gravity for people to act as normal
 #define GRAVITY_MOB_REGULAR_THRESHOLD 0.8
 /// minimum gravity after which people feel heavier than normal
 #define GRAVITY_MOB_HIGH_THRESHOLD 1.2
 /// gravity after this level is considered extreme, with additional penalties to users
 #define GRAVITY_MOB_EXTREME_THRESHOLD 2.4
+
+#define GRAVITY_EFFECT_NONE 0
+#define GRAVITY_EFFECT_LOW 1
+#define GRAVITY_EFFECT_NORMAL 2
+#define GRAVITY_EFFECT_HIGH 3
+#define GRAVITY_EFFECT_EXTREME 4
 
 // gravity tethers
 
@@ -34,3 +43,4 @@
 #define TETHER_WIRES_CUT 3
 
 #define TETHER_COOLDOWN_ID "change_intensity"
+

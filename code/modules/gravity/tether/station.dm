@@ -1,3 +1,19 @@
+/// Combined value of all station gravity tether gforces
+var/global/station_tether_gforce = 0
+
+/// Recalculates the station tether gforce from all active station tethers
+proc/recalculate_station_tether_gforce()
+	var/new_grav = 0
+	for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
+		if (istype(tether, /obj/machinery/gravity_tether/station))
+			if (tether.has_no_power())
+				continue
+			new_grav += tether.intensity
+	global.station_tether_gforce = new_grav
+	for_by_tcl(airbridge, /obj/airbridge_controller)
+		for (var/turf/T in airbridge.maintaining_turfs)
+			T.reset_gravity()
+
 /obj/machinery/gravity_tether/station
 	name = "\improper Gravi-Tonne wide-area gravity tether"
 	icon = 'icons/obj/machines/tether_64x64.dmi'
@@ -41,10 +57,12 @@
 		src.target_intensity = 0
 
 	. = ..()
+	global.recalculate_station_tether_gforce()
 
 /obj/machinery/gravity_tether/station/disposing()
 	src.UnregisterSignal(src, COMSIG_GRAVITY_DISTURBANCE)
 	. = ..()
+	global.recalculate_station_tether_gforce()
 
 /obj/machinery/gravity_tether/station/update_icon()
 	src.ClearAllOverlays(TRUE)
@@ -242,9 +260,7 @@
 		var/mob/M = C.mob
 		if(M?.z == src.z)
 			shake_camera(M, 5, 32, 0.2)
-	for_by_tcl(airbridge, /obj/airbridge_controller)
-		for (var/turf/T in airbridge.maintaining_turfs)
-			T.update_gravity()
+	global.recalculate_station_tether_gforce()
 
 /obj/machinery/gravity_tether/station/cell_rig_effect()
 	. = ..()

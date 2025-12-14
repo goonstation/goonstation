@@ -537,7 +537,7 @@ proc/generate_space_color()
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
 	if(ismob(M))
 		var/mob/tmob = M
-		tmob.update_gravity(src.effective_gravity)
+		tmob.set_gravity(src.effective_gforce)
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)

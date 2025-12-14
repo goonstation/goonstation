@@ -261,13 +261,6 @@
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
-			var/next_traction = src.has_traction()
-			if (last_traction != next_traction)
-				if(!next_traction)
-					animate_drift(src, -1, 10, 1)
-				else
-					animate(src, transform = matrix(), time = 1)
-				last_traction = next_traction
 
 		clamp_values()
 

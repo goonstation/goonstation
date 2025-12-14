@@ -83,6 +83,8 @@ client/proc/replace_space()
 			var/turf/orig = locate(S.x, S.y, S.z)
 			orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
 		message_admins("Finished space replace!")
+
+		global.set_zlevel_gforce(Z_LEVEL_STATION, 1, TRUE)
 		map_currently_underwater = 1
 
 client/proc/replace_space_exclusive()
@@ -118,6 +120,8 @@ client/proc/replace_space_exclusive()
 		ocean_color = R.get_average_color().to_rgb()
 		qdel(R)
 
+		global.set_zlevel_gforce(Z_LEVEL_STATION, 1, TRUE)
+
 		map_currently_underwater = 1
 		for(var/turf/space/S in world)
 			if (S.z != 1 || istype(S, /turf/space/fluid/warp_z5)) continue
@@ -147,8 +151,6 @@ client/proc/replace_space_exclusive()
 		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
-		global.z_level_station_gravity = 1
-		global.recalculate_world_gravity()
 
 
 client/proc/dereplace_space()
@@ -166,23 +168,26 @@ client/proc/dereplace_space()
 	SPAWN(0)
 		map_currently_underwater = 0
 
+
+
 		if (answer == "Yes")
 			for(var/turf/space/fluid/F in world)
 				if (F.z == 1)
 					var/turf/orig = locate(F.x, F.y, F.z)
 					orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			global.set_zlevel_gforce(Z_LEVEL_STATION, 0, TRUE)
 			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 		else
 			for(var/turf/space/fluid/F in world)
 				var/turf/orig = locate(F.x, F.y, F.z)
 				orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			global.set_zlevel_gforce(Z_LEVEL_STATION, 0, TRUE)
+			global.set_zlevel_gforce(Z_LEVEL_MINING, 0, TRUE)
 			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_DEBRIS)
 			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_MINING)
 
 		message_admins("Finished space dereplace!")
 		map_currently_underwater = 0
-		global.z_level_station_gravity = 0
-		global.recalculate_world_gravity()
