@@ -49,8 +49,11 @@ proc/init_zlevel_datums()
 	for(var/path in helper.get_zlevels())
 		global.zlevels += new /datum/zlevel(path, length(global.zlevels) + 1)
 
-	#ifndef UNDERWATER_MAP
+	#if !defined(UNDERWATER_MAP)
 	global.set_zlevel_gforce(Z_LEVEL_STATION, 0)
+	#endif
+
+	#if !defined(UNDERWATER_MAP) && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 	global.set_zlevel_gforce(Z_LEVEL_DEBRIS, 0)
 	global.set_zlevel_gforce(Z_LEVEL_MINING, 0)
 	#endif
