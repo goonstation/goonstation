@@ -61,6 +61,7 @@ proc/initialize_area_gravity()
 proc/set_zlevel_gforce(z_level, gforce, update_tethers=FALSE)
 	global.zlevels[z_level].gforce = gforce
 	if (update_tethers)
+		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE)
 		for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
 			if (tether.z == z_level)
 				tether.say("Major gravity shift detected.")

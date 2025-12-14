@@ -5330,7 +5330,7 @@
 		on_reaction(datum/reagents/holder, created_volume)
 			. = ..()
 			if (!caused_gravity_disturbance && holder.my_atom.z == Z_LEVEL_STATION)
-				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE, src)
+				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE)
 				caused_gravity_disturbance = TRUE
 
 	flubber

@@ -903,7 +903,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)
 
 		if (src.z == Z_LEVEL_STATION)
-			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE, src)
+			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE)
 
 		processing_items |= src
 
