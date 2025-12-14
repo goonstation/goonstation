@@ -141,7 +141,6 @@
 /obj/item/device/radio/headset/command/nt/special_operative
 	name = "\improper NanoTrasen Operative headset"
 	icon_tooltip = "NanoTrasen Special Operative"
-	icon_override = "nt_sec"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
