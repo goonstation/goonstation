@@ -754,6 +754,44 @@ proc/compare_ornament_score(list/a, list/b)
 
 // Santa Stuff
 
+/obj/item/clothing/under/santa_shirt
+	name = "santa's suspenders"
+	desc = "Those buckles aren't gold."
+	icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+	icon_state = "santa_shirt"
+	item_state = "santa_shirt"
+
+/obj/item/clothing/suit/santa_coat
+	name = "santa's coat"
+	desc = "Has enough room for the belly, hopefully."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "santa_coat"
+	item_state = "santa_coat"
+
+/obj/item/clothing/under/elf_shirt
+	name = "elf uniform"
+	desc = "Designed to withstand planet fall, neat!"
+	icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+	icon_state = "elf_shirt"
+	item_state = "elf_shirt"
+
+/obj/item/clothing/shoes/elf_shoes
+	name = "elf shoes"
+	desc = "Not as jingly as the on-brands, but Santa's a cheepskate."
+	icon = 'icons/obj/clothing/item_shoes.dmi'
+	wear_image_icon = 'icons/mob/clothing/feet.dmi'
+	icon_state = "elf"
+	item_state = "elf"
+
+/obj/item/clothing/head/elf_hat
+	name = "elf hat"
+	desc = "Itchy."
+	icon_state = "elf_hat"
+	item_state = "elf_hat"
+
 /mob/living/carbon/human/santa
 	New()
 		..()
@@ -761,8 +799,8 @@ proc/compare_ornament_score(list/a, list/b)
 		desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
 		gender = "male"
 
-		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, SLOT_W_UNIFORM)
-		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/under/santa_shirt, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/santa_coat, SLOT_WEAR_SUIT)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
 		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, SLOT_HEAD)
@@ -822,6 +860,9 @@ proc/compare_ornament_score(list/a, list/b)
 		..()
 		src.set_mutantrace(/datum/mutantrace/monkey)
 		src.equip_new_if_possible(/obj/item/clothing/mask/monkey_translator, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/elf_shoes, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/elf_shirt, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/head/elf_hat, SLOT_HEAD)
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/gifts)
 		HS.addAbility(/datum/targetable/santa/returnelf_to_santa)
