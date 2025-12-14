@@ -336,7 +336,10 @@
 		if (!(src.flags & SAYFLAG_NO_MAPTEXT))
 			src.maptext_css_values["color"] ||= living_maptext_color(src.speaker.name)
 			src.message_origin.maptext_manager ||= new /atom/movable/maptext_manager(src.message_origin)
-			src.message_origin.maptext_manager.add_maptext(mob_listener.client, NEW_MAPTEXT(/image/maptext/message, src))
+			if (src.flags & SAYFLAG_ASIDE)
+				src.message_origin.maptext_manager.add_maptext(mob_listener.client, NEW_MAPTEXT(/image/maptext/aside, src))
+			else
+				src.message_origin.maptext_manager.add_maptext(mob_listener.client, NEW_MAPTEXT(/image/maptext/message, src))
 
 		// Handle hear sounds.
 		if (src.hear_sound && !src.received_module.say_channel.suppress_hear_sound)

@@ -8,5 +8,6 @@
 	if (!istype(mob_speaker))
 		return
 
+	message.flags |= SAYFLAG_ASIDE
 	message.message_origin = mob_speaker.target
 	message.speaker_to_display = "Congealed [mob_speaker]"

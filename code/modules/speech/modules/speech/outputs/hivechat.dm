@@ -39,6 +39,8 @@
 
 /datum/speech_module/output/bundled/hivemind/member/process(datum/say_message/message)
 	src.role = ""
+	message.flags &= ~SAYFLAG_NO_MAPTEXT
+	message.flags |= SAYFLAG_ASIDE
 
 	if (!ismob(message.speaker))
 		return

@@ -38,3 +38,5 @@
 #define SAYFLAG_DO_NOT_PASS_TO_EQUIPPED_MODULES (1 << 16)
 /// This message should not be passed to a tree's message importing trees.
 #define SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES (1 << 17)
+/// This message is an aside, displayed with smaller offset maptext
+#define SAYFLAG_ASIDE (1 << 18)
