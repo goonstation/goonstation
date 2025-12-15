@@ -211,7 +211,7 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 				W.spray_at(my_target, R, try_connect_fluid = 1)
 
 		// Propel user in opposite direction
-		if (!user.has_traction())
+		if (!user.traction)
 			user.inertia_dir = get_dir_accurate(target, user)
 			step(user, user.inertia_dir)
 		else if( user.buckled && !user.buckled.anchored )

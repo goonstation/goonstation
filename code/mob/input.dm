@@ -193,7 +193,7 @@
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 				var/spacemove = 0
-				if (!src.has_traction())
+				if (!src.traction)
 
 					spacemove = 1
 					if (src.has_grip())

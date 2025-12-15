@@ -638,7 +638,7 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
-	if (!user.has_traction())
+	if (!user.traction)
 		return 0
 
 	if (!G.can_pin)
@@ -659,7 +659,7 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
-	if (!user.has_traction())
+	if (!user.traction)
 		return 0
 
 	if (!G.can_pin)
@@ -680,7 +680,7 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
-	if (!user.has_traction())
+	if (!user.traction)
 		return 0
 
 	if (!G.can_pin)

@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 			var/turf/T = M.loc
 
 			// inside something or it has traction on the ground
-			if (!istype(T) || M.has_traction())
+			if (!istype(T) || M.traction)
 				EndSpacePush(M)
 				continue
 

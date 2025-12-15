@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.UpdateOverlays(booster_image, "booster_image")
 		else
 			src.ClearSpecificOverlays("booster_image")
-			if (!src.has_traction())
+			if (!user.traction)
 				return
 
 		// Next, we do some simple math to adjust the vehicle's glide_size based on its speed and to compensate for lag
@@ -2340,7 +2340,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	if (broken)
 		return
 
-	if(!src.has_traction() && !src.booster_upgrade)
+	if(!src.traction && !src.booster_upgrade)
 		return
 
 	//forklift
@@ -2348,7 +2348,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		src.dir = user.dir
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 		if (!src.booster_upgrade)
-			if(!src.has_traction())
+			if(!src.traction)
 				return
 		src.glide_size = (32 / td) * world.tick_lag
 		for(var/mob/M in src)
