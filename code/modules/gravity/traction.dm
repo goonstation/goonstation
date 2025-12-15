@@ -13,6 +13,9 @@
 
 	return FALSE
 
+/obj/machinery/vehicle/has_traction()
+	return TRUE
+
 /mob/has_traction()
 	if (src.is_spacefaring())
 		return TRUE
