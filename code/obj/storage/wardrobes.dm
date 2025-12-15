@@ -15,6 +15,9 @@ TYPEINFO(/obj/storage/closet/dresser)
 	weld_image_offset_X = -6
 	weld_image_offset_Y = 2
 
+/obj/storage/closet/dresser/hollow //Has a transparent back for hidden shit
+	icon_opened = "dresser-open-hollow"
+
 /obj/storage/closet/wardrobe
 	name = "wardrobe"
 	desc = "It's a wardrobe closet! This one can be opened AND closed. Comes prestocked with some changes of clothes."

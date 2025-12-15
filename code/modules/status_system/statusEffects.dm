@@ -3334,23 +3334,28 @@
 		id = "art_displacement_curse"
 		var/mob/living/carbon/human/original_body
 		var/mob/living/intangible/art_curser_displaced_soul/soul
+		var/cursetype = "art_curser_displaced_soul"
+		var/gene = FALSE // For the gene that uses this
 		outputs_desc = FALSE
 
 		onAdd()
 			..()
-			src.soul = new(get_turf(src.owner), src.owner)
+			src.soul = new src.soul(get_turf(src.owner), src.owner)
 			var/mob/living/carbon/human/H = src.owner
 			H.mind.transfer_to(soul)
 			src.original_body = H
-			src.soul.setStatus("art_curser_displaced_soul", src.duration, src.original_body)
+			src.soul.setStatus(cursetype, src.duration, src.original_body)
 
 		onUpdate()
 			..()
 			if (QDELETED(src.original_body) || isdead(src.original_body))
-				src.remove_self()
+				if(!gene)
+					src.remove_self()
+				else
+					owner.delStatus(src.id)
 
 		onRemove()
-			src.soul.delStatus("art_curser_displaced_soul")
+			src.soul.delStatus(cursetype)
 			if (QDELETED(src.original_body) || isdead(src.original_body))
 				boutput(src.soul, SPAN_ALERT("<b>Your body has died!</b>"))
 			if (!QDELETED(src.original_body))
@@ -3358,6 +3363,14 @@
 			QDEL_NULL(src.soul)
 			src.original_body = null
 			..()
+
+		gene
+			id = "ghost_walk_effect"
+			duration = 30
+			cursetype = "ghost_walk_soul"
+			desc = "Your body is vacant with the soul wandering." // Shouldn't be seen by the user, but ghosts could I guess.
+			soul = /mob/living/intangible/art_curser_displaced_soul/gene
+			gene = TRUE
 
 	displaced_soul
 		id = "art_curser_displaced_soul"
@@ -3380,6 +3393,14 @@
 				src.outputs_removal_msg = FALSE
 			src.original_body = null
 			..()
+
+		gene
+			id = "ghost_walk_soul"
+			name = "Spectral Walker"
+			desc = "You've ascended to the spectral plane for a short duration. Use the ability to return early."
+			extra_desc = null
+			removal_msg = "You reanchor your soul."
+
 
 	light
 		id = "art_light_curse"
