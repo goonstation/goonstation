@@ -137,7 +137,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot)
 	/// Propel user in opposite direction
 	proc/propel_bot(var/turf/target)
 		var/mob/bot = holder.owner
-		if (istype(bot.loc, /turf/space))
+		if (!bot.has_traction())
 			bot.inertia_dir = get_dir_accurate(target, bot)
 			step(bot, bot.inertia_dir)
 		else if(bot.buckled && !bot.buckled.anchored )
