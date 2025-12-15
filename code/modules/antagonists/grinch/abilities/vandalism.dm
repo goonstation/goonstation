@@ -11,6 +11,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
+	grinch_only = FALSE
 
 	cast(mob/target)
 		if (!holder)

@@ -104,6 +104,10 @@
 
 		var/mob/living/M = holder.owner
 
+		if (src.grinch_only && !isgrinch(M))
+			boutput(M, SPAN_ALERT("You need to Grinch out to use that!"))
+			return 0
+
 		if (!M)
 			return 0
 
