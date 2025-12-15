@@ -1590,7 +1590,6 @@
 #include "code\modules\maptext\maptext_images\_maptext_parent.dm"
 #include "code\modules\maptext\maptext_images\alert.dm"
 #include "code\modules\maptext\maptext_images\appraisal.dm"
-#include "code\modules\maptext\maptext_images\aside.dm"
 #include "code\modules\maptext\maptext_images\emote.dm"
 #include "code\modules\maptext\maptext_images\flock_tutorial.dm"
 #include "code\modules\maptext\maptext_images\gang_score.dm"

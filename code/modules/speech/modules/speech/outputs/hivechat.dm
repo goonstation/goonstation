@@ -5,8 +5,6 @@
 	var/role = ""
 
 /datum/speech_module/output/bundled/hivemind/process(datum/say_message/message)
-	message.flags |= SAYFLAG_NO_MAPTEXT
-
 	var/mind_ref = ""
 	if (ismob(message.speaker))
 		var/mob/mob_speaker = message.speaker
@@ -39,8 +37,6 @@
 
 /datum/speech_module/output/bundled/hivemind/member/process(datum/say_message/message)
 	src.role = ""
-	message.flags &= ~SAYFLAG_NO_MAPTEXT
-	message.flags |= SAYFLAG_ASIDE
 
 	if (!ismob(message.speaker))
 		return
@@ -63,6 +59,11 @@
 
 		else if (mob_speaker == changeling_ability_holder.master)
 			src.role = " (MASTER)"
+
+	message.maptext_css_values["color"] = "#e2a059"
+	message.maptext_css_values["font-size"] = "5px"
+	message.maptext_variables["maptext_x"] += prob(50) ? 28 : -28
+	message.maptext_variables["maptext_y"] -= rand(24, 32)
 
 	if (isabomination(changeling_ability_holder.owner) && istype(message.speaker, /mob/dead/target_observer/hivemind_observer))
 		message.speaker.say(message.content, message_params = list("output_module_override" = SPEECH_OUTPUT_SPOKEN_HIVEMIND))
@@ -94,12 +95,15 @@
 	channel = SAY_CHANNEL_GLOBAL_HIVEMIND
 
 /datum/speech_module/output/global_hivemind/process(datum/say_message/message)
-	message.flags |= SAYFLAG_NO_MAPTEXT
 
 	var/mind_ref = ""
 	if (ismob(message.speaker))
 		var/mob/mob_speaker = message.speaker
 		mind_ref = "\ref[mob_speaker.mind]"
+
+	message.maptext_css_values["font-size"] = "5px"
+	message.maptext_variables["maptext_x"] += prob(50) ? 28 : -28
+	message.maptext_variables["maptext_y"] -= rand(24, 32)
 
 	message.format_speaker_prefix = {"\
 		<span class='game hivesay'>\
