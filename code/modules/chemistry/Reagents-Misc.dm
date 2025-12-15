@@ -3436,37 +3436,6 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.health_change += 0.66
-			// compost now actually tastes like shit
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				. = ..()
-				if (method == INGEST)
-					boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
-					SPAWN(1 SECOND)
-						if(!isdead(M) && volume >= 1)
-							var/vomit_message = SPAN_ALERT("[M] pukes violently!")
-							M.vomit(0, null, vomit_message)
-				else
-					boutput(M, SPAN_ALERT("Oh god! It smells horrific! What the fuck IS this?!"))
-					if (prob(50))
-						boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
-						var/amt = min(volume/100,1)
-						src.holder.remove_reagent("poo",amt)
-						M.reagents.add_reagent("poo",amt)
-						src.reaction_mob(M,INGEST,amt,null,amt)
-				return
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if (!M) M = holder.my_atom
-				if(prob(20))
-					if(isliving(M) && probmult(15))
-						var/mob/living/L = M
-						L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
-				if (prob(7))
-					M.emote(pick("twitch","drool","moan"))
-					M.take_toxin_damage(1 * mult)
-					M.nauseate(2)
-				..()
-				return
 
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"
