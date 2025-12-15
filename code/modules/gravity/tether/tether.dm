@@ -693,10 +693,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
 	if(src.emagged)
-		boutput(user, "It looks like [src] is already glitching out...")
+		boutput(user, "The g-force limiter on [src] is already glitching out...")
 		return
 	logTheThing(LOG_STATION, src, "was emagged by [user] at [log_loc(src)].")
-	boutput(user, "You slide [E] across [src]'s ID reader.")
+	boutput(user, "You slide [E] across [src]'s ID reader, breaking the g-force limiter.")
 	src.locked = FALSE
 	if (src.wire_state == TETHER_WIRES_INTACT)
 		src.wire_state = TETHER_WIRES_BURNED
