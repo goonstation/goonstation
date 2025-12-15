@@ -3455,6 +3455,19 @@ datum
 						src.reaction_mob(M,INGEST,amt,null,amt)
 				return
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if(prob(20))
+					if(isliving(M) && probmult(15))
+						var/mob/living/L = M
+						L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+				if (prob(7))
+					M.emote(pick("twitch","drool","moan"))
+					M.take_toxin_damage(1 * mult)
+					M.nauseate(2)
+				..()
+				return
+
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"
 			id = "big_bang_precursor"
