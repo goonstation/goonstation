@@ -112,7 +112,7 @@
 					src.visible = TRUE
 					src.name = "Extreme Gravity"
 					src.icon_state = "gravity-extreme"
-					src.desc = "You feel exteremely heavy.<br>Health issues may occur."
+					src.desc = "You feel extremely heavy.<br>Health issues may occur."
 					REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, "gravity")
 
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
