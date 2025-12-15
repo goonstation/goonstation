@@ -231,6 +231,7 @@ var/global/list/soundCache = list(
  	"sound/effects/flame.ogg" = 'sound/effects/flame.ogg',\
  	"sound/effects/flameswoosh.ogg" = 'sound/effects/flameswoosh.ogg',\
  	"sound/effects/flip.ogg" = 'sound/effects/flip.ogg',\
+ 	"sound/effects/gem_drop.ogg" = 'sound/effects/gem_drop.ogg',\
  	"sound/effects/ghost.ogg" = 'sound/effects/ghost.ogg',\
  	"sound/effects/ghost2.ogg" = 'sound/effects/ghost2.ogg',\
  	"sound/effects/ghostambi1.ogg" = 'sound/effects/ghostambi1.ogg',\
