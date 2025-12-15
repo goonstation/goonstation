@@ -697,7 +697,7 @@ TYPEINFO(/mob/new_player)
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(tgui_alert(src, "Join the round as an observer? You will be unable to respawn for the duration of the round.", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -728,7 +728,7 @@ TYPEINFO(/mob/new_player)
 			if(observer?.client)
 				observer.client.loadResources()
 
-			respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
+			respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
 
 			qdel(src)
 
