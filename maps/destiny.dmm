@@ -1118,7 +1118,7 @@
 	opacity = 0
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/engineering/alt{
+/obj/machinery/door/airlock/gannets/engineering/alt{
 	dir = 4;
 	name = "Engine Room"
 	},
@@ -2287,7 +2287,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "akS" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -4043,7 +4043,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "atn" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	dir = 4;
 	name = "Cargo"
 	},
@@ -4549,7 +4549,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 1;
 	name = "Medbay"
 	},
@@ -6110,7 +6110,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "aDt" = (
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	dir = 4;
 	name = "Guardbot Depot"
 	},
@@ -8905,7 +8905,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	dir = 8;
 	name = "Engineering"
 	},
@@ -9406,7 +9406,7 @@
 	},
 /area/station/bridge/captain)
 "aUX" = (
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	dir = 4;
 	name = "Monkeydome"
 	},
@@ -10178,7 +10178,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -10356,7 +10356,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/security/alt,
+/obj/machinery/door/airlock/gannets/glass/security/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /turf/simulated/floor,
@@ -10461,7 +10461,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/bridge/customs)
 "bbD" = (
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	name = "Guardbot Depot"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -10544,7 +10544,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Control Center"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -10994,7 +10994,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	dir = 4;
 	name = "Research"
 	},
@@ -11184,7 +11184,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Ranch"
 	},
@@ -11920,7 +11920,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -12394,7 +12394,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/engineering/alt{
+/obj/machinery/door/airlock/gannets/engineering/alt{
 	dir = 4;
 	name = "West SMES"
 	},
@@ -12572,7 +12572,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "bsq" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	name = "Shower";
 	id = "crew_shower1"
 	},
@@ -13323,7 +13323,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/gannets/glass/security{
 	name = "Security";
 	req_access = null
 	},
@@ -14001,7 +14001,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -14425,7 +14425,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	name = "Toilets"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -14677,7 +14677,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge)
 "cbq" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 4;
 	name = "shower"
 	},
@@ -14884,7 +14884,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	dir = 1;
 	name = "AI Core"
 	},
@@ -15049,7 +15049,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Pod Bay Storage"
 	},
@@ -15121,7 +15121,7 @@
 	mail_tag = "pharmacy";
 	name = "pharmacy mail router"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
@@ -15132,7 +15132,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge)
 "clK" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Courtroom"
 	},
@@ -15191,7 +15191,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -15245,7 +15245,7 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "cnH" = (
-/obj/machinery/door/airlock/pyro/glass/toxins{
+/obj/machinery/door/airlock/gannets/glass/toxins{
 	name = "Toxins"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -15253,7 +15253,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/lab)
 "coc" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Crew Lounge"
 	},
@@ -15483,7 +15483,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	id = "hallway_door";
 	name = "Psychiatrist's Office"
 	},
@@ -15584,7 +15584,7 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/medical{
+/obj/machinery/door/airlock/gannets/medical{
 	name = "Teleporter Control Room";
 	req_access = null;
 	req_access_txt = null
@@ -15612,7 +15612,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Engine Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -15708,7 +15708,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	dir = 4;
 	id = "medbay_door";
 	name = "Medbay"
@@ -15785,7 +15785,7 @@
 	name = "Test Chamber Blast Shield";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/toxins_alt{
+/obj/machinery/door/airlock/gannets/toxins/alt{
 	name = "Test Chamber"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -15812,7 +15812,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/medical/morgue{
+/obj/machinery/door/airlock/gannets/morgue{
 	dir = 4;
 	name = "Morgue"
 	},
@@ -15824,7 +15824,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	id = "Cloning";
 	name = "Cloning"
@@ -15843,7 +15843,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Crew Lounge"
 	},
@@ -16062,7 +16062,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "cEJ" = (
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Hydroponics"
 	},
@@ -16192,7 +16192,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Arcade"
 	},
@@ -16327,7 +16327,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Teleporter Pad";
 	req_access_txt = null
@@ -16471,7 +16471,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Community Center"
 	},
@@ -16605,7 +16605,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -17004,7 +17004,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "cYy" = (
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 4
 	},
 /obj/mapping_helper/access/head_of_personnel,
@@ -17050,7 +17050,7 @@
 	},
 /area/station/security/hos)
 "cZO" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -17654,7 +17654,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	dir = 4;
 	name = "Monkeydome"
 	},
@@ -17762,7 +17762,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
 "dup" = (
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -18050,7 +18050,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Observation Room"
 	},
@@ -18342,7 +18342,7 @@
 	},
 /area/station/bridge)
 "dHO" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/security{
@@ -18376,7 +18376,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
@@ -18396,7 +18396,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
@@ -18870,7 +18870,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -18907,7 +18907,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -19283,7 +19283,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
 "efl" = (
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Ranch"
 	},
@@ -19591,7 +19591,7 @@
 /turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "eoP" = (
-/obj/machinery/door/airlock/pyro/glass/command,
+/obj/machinery/door/airlock/gannets/glass/command,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -19874,7 +19874,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	dir = 4;
 	name = "Research"
 	},
@@ -20169,7 +20169,7 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/gannets/glass/engineering/alt{
 	name = "Mining"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -20427,7 +20427,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/security/alt{
+/obj/machinery/door/airlock/gannets/glass/security/alt{
 	dir = 4;
 	name = "Processing room"
 	},
@@ -20533,7 +20533,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/medical/alt{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	name = "Genetics"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -21165,7 +21165,7 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/toxins_alt{
+/obj/machinery/door/airlock/gannets/toxins/alt{
 	dir = 8;
 	name = "Test Chamber"
 	},
@@ -21655,7 +21655,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	dir = 4;
 	id = "medbay_door";
 	name = "Medbay"
@@ -21909,7 +21909,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/gannets/glass/security{
 	dir = 4;
 	name = "glass airlock-'Cell #1"
 	},
@@ -22048,7 +22048,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/gannets/glass/engineering/alt{
 	dir = 1;
 	name = "Refinery"
 	},
@@ -22398,7 +22398,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	dir = 4;
 	name = "Research"
 	},
@@ -22511,7 +22511,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 1;
 	name = "Ranch"
 	},
@@ -22520,7 +22520,7 @@
 /turf/simulated/floor,
 /area/station/ranch)
 "fxp" = (
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/gannets/security{
 	name = "West Podbay"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -22573,7 +22573,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -23010,7 +23010,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "fLg" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 1;
 	name = "Pod Bay Storage"
 	},
@@ -23326,7 +23326,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 4;
 	id = "hallway_door";
 	name = "Medbay"
@@ -23833,7 +23833,7 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Hydroponics"
 	},
@@ -24007,7 +24007,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -24378,7 +24378,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/toxins_alt{
+/obj/machinery/door/airlock/gannets/toxins/alt{
 	name = "Toxins"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -24406,7 +24406,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/medical/morgue{
+/obj/machinery/door/airlock/gannets/morgue{
 	name = "Chaplain's Office"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -24548,7 +24548,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/toxins{
+/obj/machinery/door/airlock/gannets/glass/toxins{
 	name = "Toxins"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -24607,7 +24607,7 @@
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/engineering/alt{
+/obj/machinery/door/airlock/gannets/engineering/alt{
 	dir = 4;
 	name = "Engine Room"
 	},
@@ -24712,7 +24712,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -24758,7 +24758,7 @@
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
 "gDu" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/turretid{
@@ -24848,7 +24848,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "gFa" = (
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	name = "Captain's Office"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -24951,7 +24951,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 4;
 	name = "Toilets"
 	},
@@ -25163,7 +25163,7 @@
 /area/station/medical/medbay)
 "gPq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/door/airlock/pyro/toxins_alt{
+/obj/machinery/door/airlock/gannets/toxins/alt{
 	dir = 8;
 	name = "Toxins"
 	},
@@ -25192,7 +25192,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -25280,7 +25280,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	dir = 4;
 	name = "Head of Security's Office";
 	req_access = null
@@ -25726,7 +25726,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "hcq" = (
-/obj/machinery/door/airlock/pyro/sci_alt{
+/obj/machinery/door/airlock/gannets/chemistry/alt{
 	dir = 4;
 	name = "Chemistry"
 	},
@@ -25865,7 +25865,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/hop)
 "hfW" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -25964,7 +25964,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 4;
 	name = "Bartender's Room"
 	},
@@ -26021,7 +26021,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/food,
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -26151,7 +26151,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 1;
 	name = "Captain's Nest"
 	},
@@ -26292,7 +26292,7 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	dir = 8;
 	name = "Gas Storage";
 	req_access = null
@@ -26449,7 +26449,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/toxins_alt{
+/obj/machinery/door/airlock/gannets/toxins/alt{
 	name = "Toxins"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -26714,7 +26714,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 4;
 	name = "Medbay Checkpoint"
 	},
@@ -26995,7 +26995,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "hKB" = (
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 8;
 	name = "Captain's Nest"
 	},
@@ -27154,14 +27154,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/lab)
 "hOL" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	name = "Shower";
 	id = "crew_shower2"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "hOT" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Community Center"
 	},
@@ -27180,7 +27180,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Control Center"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -27267,7 +27267,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Atmospherics"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -27370,7 +27370,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	name = "Operating Theater"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -27444,7 +27444,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/gannets/security{
 	dir = 4;
 	name = "West Podbay"
 	},
@@ -27459,7 +27459,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/sci_alt{
+/obj/machinery/door/airlock/gannets/chemistry/alt{
 	dir = 4;
 	name = "Research"
 	},
@@ -27522,7 +27522,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "hZH" = (
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	name = "Operating Theater"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -27836,7 +27836,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 1;
 	name = "Medbay"
 	},
@@ -27848,7 +27848,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	name = "Head of Personnel's Office";
 	req_access = null
 	},
@@ -28054,7 +28054,7 @@
 /area/station/engine/core)
 "irE" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/gannets/security{
 	name = "Detective's Room";
 	req_access = null
 	},
@@ -28214,7 +28214,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Cloning"
 	},
@@ -28243,7 +28243,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "ivm" = (
-/obj/machinery/door/airlock/pyro/medical/morgue{
+/obj/machinery/door/airlock/gannets/morgue{
 	name = "Chapel"
 	},
 /obj/mapping_helper/access/chapel_office,
@@ -28326,7 +28326,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/gannets/glass/engineering/alt{
 	dir = 4;
 	name = "Refinery"
 	},
@@ -28526,7 +28526,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	name = "Aviary"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -28613,7 +28613,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Community Center"
 	},
@@ -28646,7 +28646,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Pod Bay Storage"
 	},
@@ -28740,7 +28740,7 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 4;
 	name = "Cold Storage Control"
 	},
@@ -28859,7 +28859,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
@@ -28890,7 +28890,7 @@
 /area/station/maintenance/south)
 "iPa" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Engine Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -29044,7 +29044,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "iSE" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 1;
 	name = "laundry"
 	},
@@ -29062,7 +29062,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/medical/morgue{
+/obj/machinery/door/airlock/gannets/morgue{
 	name = "Morgue"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -29080,7 +29080,7 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/medical{
+/obj/machinery/door/airlock/gannets/medical{
 	name = "Teleporter Control Room";
 	req_access = null;
 	req_access_txt = null
@@ -29304,7 +29304,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "jbV" = (
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 8;
 	name = "Chief Engineer's Office"
 	},
@@ -29660,7 +29660,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	dir = 4;
 	name = "Medbay"
 	},
@@ -29851,7 +29851,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/toxins_alt{
+/obj/machinery/door/airlock/gannets/toxins/alt{
 	name = "Pathology"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -30279,7 +30279,7 @@
 	},
 /area/station/atmos/highcap_storage)
 "jzO" = (
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	name = "Research Director's Office"
 	},
 /obj/disposalpipe/segment,
@@ -30426,7 +30426,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 4;
 	name = "Tool Storage";
 	req_access_txt = null
@@ -30844,7 +30844,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/bar,
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
@@ -30960,7 +30960,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
@@ -30992,7 +30992,7 @@
 	},
 /area/mining/magnet)
 "jSo" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	dir = 4;
 	name = "Cargo"
 	},
@@ -31167,7 +31167,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Escape"
 	},
@@ -31295,7 +31295,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 1;
 	name = "Medbay"
 	},
@@ -31322,7 +31322,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 1;
 	name = "Hydroponics"
 	},
@@ -31836,7 +31836,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -31883,7 +31883,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "kuT" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -32457,7 +32457,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "kKU" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -32586,7 +32586,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/medical/medbay/lobby)
 "kNp" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -32777,7 +32777,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/mining{
+/obj/machinery/door/airlock/gannets/engineering/alt{
 	name = "Cargo"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -33068,7 +33068,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/gannets/glass/engineering/alt{
 	dir = 4;
 	name = "Mining"
 	},
@@ -33132,7 +33132,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	name = "Bridge"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -33348,7 +33348,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	dir = 1;
 	name = "Research"
 	},
@@ -33486,7 +33486,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4
 	},
 /obj/cable{
@@ -33506,7 +33506,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/atmos/highcap_storage)
 "lls" = (
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -33686,7 +33686,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	name = "Community Center"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -34086,7 +34086,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -34171,7 +34171,7 @@
 	},
 /area/station/crew_quarters/quartersB)
 "lEF" = (
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/gannets/alt{
 	dir = 1;
 	name = "Janitor's Closet"
 	},
@@ -34209,7 +34209,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 4;
 	name = "Research Director's Office"
 	},
@@ -34337,7 +34337,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	dir = 4;
 	name = "Medbay"
 	},
@@ -34396,7 +34396,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -34406,7 +34406,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 4;
 	req_access = null
 	},
@@ -34615,7 +34615,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/toxins_alt{
+/obj/machinery/door/airlock/gannets/toxins/alt{
 	dir = 4;
 	name = "Pathology"
 	},
@@ -34766,7 +34766,7 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "lRW" = (
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	name = "AI Upload";
 	req_access = null
 	},
@@ -34816,7 +34816,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "lTo" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	name = "Restroom"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -35396,7 +35396,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	name = "Pharmacy"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -35459,7 +35459,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	name = "Kitchen"
 	},
 /obj/mapping_helper/access/kitchen,
@@ -35725,7 +35725,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -35812,7 +35812,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Observatory"
 	},
@@ -36050,7 +36050,7 @@
 	name = "East Central Maintenance"
 	})
 "mzh" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	name = "Chapel"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -36876,7 +36876,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Cloning"
 	},
@@ -36995,7 +36995,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/medical/morgue{
+/obj/machinery/door/airlock/gannets/morgue{
 	dir = 4;
 	name = "Morgue"
 	},
@@ -37026,7 +37026,7 @@
 /obj/forcefield/energyshield/perma{
 	dir = 8
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Crew Lounge"
 	},
@@ -37323,7 +37323,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	name = "Pool"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -37487,7 +37487,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Crew Lounge"
 	},
@@ -37547,7 +37547,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/toxins{
+/obj/machinery/door/airlock/gannets/glass/toxins{
 	dir = 4;
 	name = "Quarantine"
 	},
@@ -37700,7 +37700,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass/security/alt{
+/obj/machinery/door/airlock/gannets/glass/security/alt{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -37710,7 +37710,7 @@
 	name = "Security Checkpoint"
 	})
 "nrd" = (
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -37789,7 +37789,7 @@
 /area/station/chapel/office)
 "ntr" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/sci_alt{
+/obj/machinery/door/airlock/gannets/chemistry/alt{
 	name = "Artifact Lab"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -37841,7 +37841,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	dir = 4;
 	name = "Cargo"
 	},
@@ -37930,7 +37930,7 @@
 	name = "Crew Quarters P02"
 	})
 "nwe" = (
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -38024,7 +38024,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	dir = 4;
 	name = "Cargo"
 	},
@@ -38601,7 +38601,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Genetics"
 	},
@@ -38624,7 +38624,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
+/obj/machinery/door/airlock/gannets/engineering{
 	dir = 4;
 	name = "Mechanic's Lab";
 	req_access = null
@@ -39548,7 +39548,7 @@
 /turf/space,
 /area/station/engine/core)
 "osG" = (
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	name = "Computer Core"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -39813,7 +39813,7 @@
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
+/obj/machinery/door/airlock/gannets/engineering{
 	dir = 4;
 	name = "Construction Room"
 	},
@@ -39824,7 +39824,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/gannets/glass/engineering/alt{
 	dir = 4;
 	name = "Mining"
 	},
@@ -39951,7 +39951,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	name = "Operating Theater"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -40264,7 +40264,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 1;
 	id = "medirecdoor";
 	name = "Medical Director's Office"
@@ -40327,7 +40327,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Cargo"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -40419,7 +40419,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -40639,7 +40639,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	id = "hallway_door";
 	name = "Medbay"
 	},
@@ -41147,7 +41147,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	name = "Tech Storage";
 	req_access = null;
 	req_access_txt = null
@@ -41199,7 +41199,7 @@
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
 "pmn" = (
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/gannets/glass/engineering/alt{
 	dir = 4;
 	name = "Mining"
 	},
@@ -41357,7 +41357,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	dir = 4;
 	name = "Cargo"
 	},
@@ -41394,7 +41394,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -41682,7 +41682,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -41742,7 +41742,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -41887,7 +41887,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 4;
 	name = "Operating Theater"
 	},
@@ -41899,7 +41899,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/pyro/engineering/alt{
+/obj/machinery/door/airlock/gannets/engineering/alt{
 	dir = 4;
 	name = "West SMES"
 	},
@@ -42137,7 +42137,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/gannets/security{
 	dir = 1;
 	name = "Detective's Office";
 	req_access = null
@@ -42289,7 +42289,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "pOl" = (
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/gannets/security{
 	dir = 4;
 	name = "Interrogation Room";
 	req_access_txt = null
@@ -42424,7 +42424,7 @@
 /turf/simulated/floor,
 /area/station/engine/gas)
 "pSM" = (
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 1;
 	name = "Customs"
 	},
@@ -42484,7 +42484,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -42884,7 +42884,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "qen" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 8;
 	name = "Restroom"
 	},
@@ -42912,7 +42912,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "qew" = (
-/obj/machinery/door/airlock/pyro/medical/morgue{
+/obj/machinery/door/airlock/gannets/morgue{
 	dir = 4;
 	name = "Chaplain's Office"
 	},
@@ -42952,7 +42952,7 @@
 	dir = 4;
 	pixel_x = 28
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -43057,7 +43057,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/bot_storage)
 "qiK" = (
-/obj/machinery/door/airlock/pyro/sci_alt{
+/obj/machinery/door/airlock/gannets/chemistry/alt{
 	name = "Artifact Lab"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -43103,7 +43103,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 4;
 	name = "Blood Storage"
 	},
@@ -43633,7 +43633,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -43691,7 +43691,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/sci_alt{
+/obj/machinery/door/airlock/gannets/chemistry/alt{
 	dir = 1;
 	name = "Chemistry"
 	},
@@ -43971,7 +43971,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 4;
 	id = "hallway_door";
 	name = "Medbay"
@@ -44713,7 +44713,7 @@
 /area/station/science/artifact)
 "rbQ" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	name = "Chapel"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -44729,7 +44729,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 4;
 	name = "Morgue"
 	},
@@ -44934,7 +44934,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 4;
 	name = "Janitor's Office"
 	},
@@ -45107,7 +45107,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Engine Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -45509,7 +45509,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 8;
 	name = "laundry"
 	},
@@ -45521,7 +45521,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	name = "Computer Core"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -45534,7 +45534,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "ryx" = (
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	dir = 1;
 	name = "Artifact Flusher"
 	},
@@ -45544,7 +45544,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Courtroom"
 	},
@@ -45589,7 +45589,7 @@
 /area/station/engine/core)
 "rzO" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/gannets/alt{
 	dir = 4;
 	name = "Showers"
 	},
@@ -45882,7 +45882,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/mining{
+/obj/machinery/door/airlock/gannets/engineering/alt{
 	dir = 4;
 	name = "Cargo"
 	},
@@ -46096,7 +46096,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/gannets/glass/security{
 	dir = 4;
 	req_access = null
 	},
@@ -46134,7 +46134,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/mining{
+/obj/machinery/door/airlock/gannets/engineering/alt{
 	dir = 4;
 	name = "Cargo"
 	},
@@ -46360,7 +46360,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "rUy" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Meat Locker";
 	req_access_txt = null
@@ -46485,7 +46485,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Bar"
 	},
@@ -46558,7 +46558,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Teleporter Pad";
 	req_access_txt = null
@@ -46819,7 +46819,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	name = "Computer Core"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -46842,7 +46842,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 1;
 	name = "Medbay"
 	},
@@ -46932,7 +46932,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Central Warehouse"
 	},
@@ -46966,7 +46966,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 1;
 	name = "Medbay"
 	},
@@ -47087,7 +47087,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/gannets/alt{
 	name = "Showers"
 	},
 /turf/simulated/floor/white/grime,
@@ -47190,7 +47190,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
+/obj/machinery/door/airlock/gannets/engineering{
 	dir = 4;
 	name = "Construction Room"
 	},
@@ -47311,7 +47311,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/hos)
 "sul" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 4;
 	name = "Toilet";
 	id = "crew_toilet2"
@@ -47322,7 +47322,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -47454,7 +47454,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "sBX" = (
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -47505,7 +47505,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Hydroponics"
 	},
@@ -47557,7 +47557,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/command{
+/obj/machinery/door/airlock/gannets/glass/command{
 	dir = 1;
 	name = "EVA Storage"
 	},
@@ -47752,7 +47752,7 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment/mineral,
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Cargo"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -47802,7 +47802,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	dir = 4;
 	name = "Medbay"
 	},
@@ -48188,7 +48188,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/security,
+/obj/machinery/door/airlock/gannets/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/plating/random,
@@ -48643,7 +48643,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Pod Bay Storage"
 	},
@@ -48729,7 +48729,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/gannets/alt{
 	dir = 4;
 	name = "Janitor's Closet"
 	},
@@ -48876,7 +48876,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -48884,7 +48884,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/toxins_alt{
+/obj/machinery/door/airlock/gannets/toxins/alt{
 	name = "Toxins"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -49213,7 +49213,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Community Center"
 	},
@@ -49323,7 +49323,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	name = "Community Center"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -49370,7 +49370,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	dir = 4;
 	name = "Teleporter"
 	},
@@ -49430,7 +49430,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	name = "Monkeydome"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -49515,7 +49515,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -49852,7 +49852,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	dir = 8;
 	name = "Engineering"
 	},
@@ -50145,7 +50145,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	dir = 1;
 	name = "Robotics"
 	},
@@ -50395,7 +50395,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "Engine Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -50479,7 +50479,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -50849,7 +50849,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	dir = 4;
 	name = "Computer Core"
 	},
@@ -51209,7 +51209,7 @@
 	},
 /area/station/science/lobby)
 "uyf" = (
-/obj/machinery/door/airlock/pyro/sci_alt{
+/obj/machinery/door/airlock/gannets/chemistry/alt{
 	dir = 1;
 	name = "Chemistry"
 	},
@@ -51313,7 +51313,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -51342,7 +51342,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	name = "Head of Security's Office";
 	req_access = null
 	},
@@ -52208,7 +52208,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "uTN" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 4;
 	name = "Cold Storage"
 	},
@@ -52396,7 +52396,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/gannets/security{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -52418,7 +52418,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
+/obj/machinery/door/airlock/gannets/engineering{
 	dir = 4;
 	name = "Construction Room"
 	},
@@ -52667,7 +52667,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/gannets/glass/security{
 	name = "Brig";
 	req_access = null
 	},
@@ -52737,7 +52737,7 @@
 /area/station/security/main)
 "vfv" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/glass/med{
+/obj/machinery/door/airlock/gannets/glass/medical{
 	id = "hallway_door";
 	name = "Medbay"
 	},
@@ -52843,7 +52843,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -53066,7 +53066,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 1;
 	name = "Medbay"
 	},
@@ -53493,7 +53493,7 @@
 	dir = 10;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/gannets/glass/engineering/alt{
 	dir = 1;
 	name = "Refinery"
 	},
@@ -53523,7 +53523,7 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/medical/morgue{
+/obj/machinery/door/airlock/gannets/morgue{
 	name = "Morgue"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -53651,7 +53651,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/toxins{
+/obj/machinery/door/airlock/gannets/glass/toxins{
 	name = "Toxins"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -53706,7 +53706,7 @@
 	dir = 6;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/gannets/glass/chemistry{
 	dir = 4;
 	name = "Research"
 	},
@@ -53897,7 +53897,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/gannets/security{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -53988,7 +53988,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/gannets/command{
 	dir = 4;
 	name = "Captain's Office";
 	req_access = null
@@ -54010,7 +54010,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Crew Quarters"
 	},
@@ -54248,7 +54248,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/toxins{
+/obj/machinery/door/airlock/gannets/glass/toxins{
 	dir = 4;
 	name = "Toxins"
 	},
@@ -54491,7 +54491,7 @@
 	dir = 8;
 	pixel_x = -13
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -54709,7 +54709,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -54717,7 +54717,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "wgG" = (
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/gannets/maintenance{
 	dir = 4;
 	req_access = null
 	},
@@ -54931,7 +54931,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 8;
 	name = "Escape"
 	},
@@ -55656,7 +55656,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "wDY" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/gannets{
 	dir = 4;
 	name = "Toilet";
 	id = "crew_toilet1"
@@ -55721,7 +55721,7 @@
 /area/station/science/teleporter)
 "wFt" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -55956,7 +55956,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -56444,7 +56444,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/gannets/alt{
 	dir = 4;
 	name = "Janitor's Closet"
 	},
@@ -56583,7 +56583,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -56836,7 +56836,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/hallway/secondary/exit)
 "xjh" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -57418,7 +57418,7 @@
 /area/station/medical/medbay)
 "xze" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/security/alt{
+/obj/machinery/door/airlock/gannets/glass/security/alt{
 	dir = 4;
 	name = "Processing room"
 	},
@@ -57502,7 +57502,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/command/alt{
+/obj/machinery/door/airlock/gannets/command/alt{
 	dir = 4;
 	name = "Chief Engineer's Office"
 	},
@@ -57514,12 +57514,11 @@
 	},
 /area/station/engine/core)
 "xAb" = (
-/obj/machinery/door/airlock/pyro/glass/toxins{
-	dir = 4;
-	name = "Toxins"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
+/obj/machinery/door/airlock/gannets/glass/toxins/alt{
+	dir = 4
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "xAA" = (
@@ -57562,7 +57561,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/gannets/security{
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -58028,7 +58027,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/gannets/glass/security{
 	dir = 4;
 	name = "glass airlock-'Cell #1"
 	},
@@ -58099,7 +58098,7 @@
 	dir = 10;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/gannets/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -58131,7 +58130,7 @@
 /obj/disposalpipe/junction{
 	dir = 2
 	},
-/obj/machinery/door/airlock/pyro/medical/alt2{
+/obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 1;
 	name = "Medbay"
 	},
@@ -58367,7 +58366,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/botany{
+/obj/machinery/door/airlock/gannets/glass{
 	name = "Genetics"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -58668,7 +58667,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/gannets/glass{
 	dir = 4;
 	name = "Crew Lounge"
 	},

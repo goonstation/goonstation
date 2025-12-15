@@ -1017,7 +1017,7 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	airlock_style = "pyro"
+	airlock_style = "gannets"
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
