@@ -841,14 +841,7 @@ proc/compare_ornament_score(list/a, list/b)
 
 	cast()
 		. = ..()
-		var/mob/living/carbon/human/elf/M = holder.owner
-		animate(M, 3 SECONDS, alpha=0)
-		SPAWN(3.1 SECONDS)
-			if (M.santa)
-				M.mind.transfer_to(M.santa)
-			else
-				M.visible_message("Can't find Santa, call an admin!")
-			qdel(M)
+		holder.owner.death()
 
 /mob/living/carbon/human/elf
 	name = "Elf"
@@ -866,6 +859,18 @@ proc/compare_ornament_score(list/a, list/b)
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/gifts)
 		HS.addAbility(/datum/targetable/santa/returnelf_to_santa)
+
+	death()
+		var/mob/living/carbon/human/elf/elf = src
+		var/datum/mind/elfmind = elf.mind
+		..()
+		animate(elf, 3 SECONDS, alpha=0)
+		SPAWN(3.1 SECONDS)
+			if (elf.santa)
+				elfmind.transfer_to(elf.santa)
+			else
+				elf.visible_message("Can't find Santa, call an admin!")
+			qdel(elf)
 
 // Krampus Stuff
 
