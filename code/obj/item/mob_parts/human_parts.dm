@@ -1760,6 +1760,30 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
+
+/obj/item/parts/human_parts/arm/mutant/grinch/left
+	name = "left grinch arm"
+	desc = "Grinchy."
+	limb_type = /datum/limb/abomination/werewolf
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+/obj/item/parts/human_parts/arm/mutant/grinch/right
+	name = "right grinch arm"
+	desc = "Grinchy."
+	limb_type = /datum/limb/abomination/werewolf
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
 //// VAMPIRE ZOMBIE LIMBS ////
 ///// PARENT /////
 

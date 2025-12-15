@@ -40,7 +40,7 @@
 
 		var/mob/living/carbon/human/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") || !transform || !istype(M.mutantrace, /datum/mutantrace/grinch))
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") || !transform || istype(M.mutantrace, /datum/mutantrace/grinch))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

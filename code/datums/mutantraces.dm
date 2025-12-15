@@ -1370,8 +1370,8 @@ TYPEINFO(/datum/mutantrace/abomination)
 	human_compatible = 0
 	jerk = TRUE
 	override_attack = 0
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/grinch/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/grinch/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/left
 	ignore_missing_limbs = 1 // I think I can live without splitting the grinch icon into parts...
