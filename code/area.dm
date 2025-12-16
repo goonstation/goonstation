@@ -1500,6 +1500,10 @@ TYPEINFO(/area/diner)
 	name = "Pasiphae Command Center"
 	icon_state = "blue"
 
+/area/grinchcave
+	name = "Grinch Cave"
+	icon_state = "green"
+
 // Gore's Z5 Space generation areas //
 ABSTRACT_TYPE(/area/prefab)
 /area/prefab

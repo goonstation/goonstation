@@ -77,6 +77,29 @@
 	density = 1
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "moonrock"
+	var/in_cave = FALSE
+
+	attack_hand(mob/user)
+		if (isgrinchmind(user) && src.in_cave)
+			var/list/rocks = list()
+			for (var/obj/fakeobject/grinchrock/G_rock in world)
+				if (!G_rock.in_cave)
+					rocks += G_rock
+			if (rocks)
+				src.send_grinch(user, pick(rocks))
+
+	proc/send_grinch(var/mob/grinch, var/obj/rock)
+		var/timer1 = rand(2, 5)
+		APPLY_ATOM_PROPERTY(grinch, PROP_MOB_CANTMOVE, "stall")
+		boutput(grinch, "You dig under the rock to the tunnels below!")
+		animate(grinch, timer1 SECONDS, alpha = 0)
+		SPAWN(timer1 SECONDS)
+			grinch.set_loc(get_turf(rock))
+			var/timer2 = rand(2, 5)
+			animate(grinch, timer2 SECONDS, alpha = 255)
+			rock.visible_message(SPAN_ALERT("<b>[grinch]</b> appears from under the earth!"))
+			SPAWN(timer2 SECONDS)
+				REMOVE_ATOM_PROPERTY(grinch, PROP_MOB_CANTMOVE, "stall")
 
 /obj/grinch_respawn_point
 	name = "grinch respawn"
