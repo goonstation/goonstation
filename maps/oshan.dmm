@@ -34863,11 +34863,10 @@
 /obj/strip_door{
 	dir = 8
 	},
-/obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
 	},
-/obj/mapping_helper/access/security,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "iPV" = (
@@ -35412,6 +35411,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "juK" = (
@@ -35840,6 +35842,9 @@
 "jPe" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
 "jPr" = (
@@ -37421,6 +37426,12 @@
 "lCB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/left,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
 "lCI" = (
@@ -38698,6 +38709,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -40968,10 +40980,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"pAG" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/random,
-/area/station/security/beepsky)
 "pBi" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -43596,6 +43604,7 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	id = "eng_bathroom"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "sBo" = (
@@ -47045,11 +47054,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade)
 "wOt" = (
-/obj/machinery/door_control{
-	pixel_y = 26;
-	id = "court_door";
-	name = "Courtroom Door Control"
-	},
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "wOv" = (
@@ -47784,6 +47789,7 @@
 	name = "Courtroom Door Control";
 	id = "court_door"
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "xDr" = (
@@ -88200,7 +88206,7 @@ bWB
 rJB
 bUT
 nIp
-pAG
+bQu
 hUU
 cMY
 cMY
@@ -88502,7 +88508,7 @@ phK
 toC
 deW
 bXy
-cMY
+bQu
 xbP
 qdF
 cMY
@@ -88804,7 +88810,7 @@ phK
 gkw
 bYu
 qIK
-cMY
+bQu
 jZV
 xyD
 ltN
