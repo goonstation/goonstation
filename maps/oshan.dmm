@@ -2086,7 +2086,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northmaint2";
+	cycle_id = "northmaint3";
 	name = "North Maintenance"
 	},
 /turf/simulated/floor/plating/random,
@@ -40158,11 +40158,7 @@
 /turf/space/fluid,
 /area/space)
 "oGm" = (
-/obj/machinery/conveyor/WE{
-	id = "east";
-	move_lag = 10;
-	operating = 1
-	},
+/obj/machinery/conveyor/WE/carousel,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "oHT" = (
@@ -41564,7 +41560,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northmaint2";
+	cycle_id = "northmaint3";
 	name = "North Maintenance"
 	},
 /obj/mapping_helper/access/maint,
@@ -100542,7 +100538,7 @@ aDr
 aDr
 aDr
 aDr
-nmZ
+aig
 aCD
 cjD
 aCD
@@ -100844,7 +100840,7 @@ chd
 chd
 aDr
 aDr
-nmZ
+aig
 beW
 klC
 aCD
