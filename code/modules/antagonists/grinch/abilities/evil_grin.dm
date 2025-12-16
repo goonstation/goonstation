@@ -3,7 +3,7 @@
 	name = "Grinch Grin"
 	desc = "Charge up and unleash your dastardly Grinch Grin!"
 	icon_state = "grinchcloak"
-	cooldown = 10 SECONDS
+	cooldown = 12 SECONDS
 	grinch_only = 1
 
 	cast(atom/target)
@@ -13,12 +13,14 @@
 /datum/action/bar/private/evil_grin
 	duration = 0.75 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ACT
-	var/list/people_used_on
+	var/list/people_used_on = list()
 
 	onEnd()
 		. = ..()
-		playsound(src.owner, 'sound/effects/grunch.ogg', 100)
-		LAZYLISTADD(src.people_used_on, src.owner)
+		src.people_used_on += src.owner
+		for (var/mob/living/carbon/human/person in view(6, src.owner))
+			if (isgrinch(person))
+				src.people_used_on += person
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_CANTMOVE, "stall")
 		var/obj/effects/grinch_grin/grin = /obj/effects/grinch_grin
 		new grin (get_turf(owner))
@@ -40,8 +42,8 @@
 				continue
 			else
 				H.throw_at(targetTurf, 2, 2)
-				LAZYLISTADD(src.people_used_on, H)
-				random_brute_damage(H, 12, 0)
+				src.people_used_on += H
+				random_brute_damage(H, 15, 0)
 				H.changeStatus("unconscious", 2 SECONDS)
 				H.changeStatus("knockdown", 3 SECONDS)
 				H.force_laydown_standup()
