@@ -101,6 +101,31 @@
 			SPAWN(timer2 SECONDS)
 				REMOVE_ATOM_PROPERTY(grinch, PROP_MOB_CANTMOVE, "stall")
 
+/obj/item/mining_tools/pick/santa
+	name = "Santa's Own Pickaxe"
+	desc = "It's beautiful. By god, it even has festive lights."
+	icon_state = "santa"
+	icon_state = "pickaxe"
+	item_state = "pick"
+
+/turf/unsimulated/wall/auto/adventure/grinchwall
+	name = "furred wall"
+	desc = "This wall is covered in strange fur... It looks breakable, but not with any tools you know of."
+	icon = 'icons/turf/walls/overgrown.dmi'
+	icon_state = "root-0"
+	mod = "root-"
+	var/hits = 0
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/mining_tools/pick/santa))
+			playsound(user, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			shake_camera(user, 4, 8, 0.5)
+			src.hits += 1
+			if (src.hits >= 3)
+				var/turf/targetT = get_turf(src)
+				qdel(src)
+				new /turf/unsimulated/floor/cave (targetT)
+
 /obj/grinch_respawn_point
 	name = "grinch respawn"
 	icon = 'icons/obj/items/items.dmi'

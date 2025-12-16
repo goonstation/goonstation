@@ -212,6 +212,14 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "beams"
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/mining_tools/pick/santa))
+			playsound(user, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			shake_camera(user, 4, 8, 0.5)
+			src.hits += 1
+			if (src.hits >= 12)
+				qdel(src)
+
 	meteorhit()
 		return
 
