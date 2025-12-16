@@ -98,9 +98,9 @@ ABSTRACT_TYPE(/obj/item/device/key)
 		if (findtext(name, "ghost") || findtext(name, "crystal") || findtext(name, "void") || findtext(name, "ethereal")) alpha = 150
 
 		if (findtext(name, "float"))
-			animate_float(src, -1, rand(10, 40))
+			ANIMATE.float(src, -1, rand(10, 40))
 		else if (findtext(name, "eldritch") || findtext(name, "wizard") || findtext(name, "magic"))
-			animate_flash_color_fill(src,rgb(rand(0, 255), rand(0, 255), rand(0, 255)),-1, rand(10, 100))
+			ANIMATE.flash_color_fill(src,rgb(rand(0, 255), rand(0, 255), rand(0, 255)),-1, rand(10, 100))
 		else if (prob(50))
 			src.Turn(rand(0, 359))
 

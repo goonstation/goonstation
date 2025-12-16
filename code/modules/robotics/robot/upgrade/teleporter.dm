@@ -72,5 +72,5 @@
 		return
 
 	user.cell.use(src.cell_drain_per_teleport)
-	showswirl_out(user, TRUE)
+	ANIMATE.showswirl_out(user, TRUE)
 	do_teleport(user, L[desc], 0)

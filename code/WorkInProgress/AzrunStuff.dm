@@ -547,7 +547,7 @@
 			var/turf/oldLoc = get_turf(expansion.turret)
 			expansion.turret.popDown()
 			if (oldLoc.intact)
-				animate_slide(oldLoc, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+				ANIMATE.slide(oldLoc, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 
 				sleep(0.4 SECONDS)
 
@@ -564,7 +564,7 @@
 					expansion.turret.cover.plane = PLANE_FLOOR
 
 				if(oldLoc?.intact)
-					animate_slide(oldLoc, 0, 0, 4)
+					ANIMATE.slide(oldLoc, 0, 0, 4)
 			sleep(1.0 SECONDS)
 			expansion.turret.set_loc(expansion)
 			expansion.turret.cover.set_loc(expansion)
@@ -578,7 +578,7 @@
 		expansion.turret.cover.set_loc(floorturf)
 		icon_state = "turret_undeploy"
 		if (floorturf.intact)
-			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			ANIMATE.slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			sleep(0.4 SECONDS)
 			expansion.turret.set_density(1)
 			expansion.turret.cover.set_density(1)
@@ -588,7 +588,7 @@
 			expansion.turret.cover.plane = PLANE_DEFAULT
 
 		if(floorturf?.intact)
-			animate_slide(floorturf, 0, 0, 4)
+			ANIMATE.slide(floorturf, 0, 0, 4)
 
 		if(expansion.turret.target)
 			if(GET_DIST(expansion.turret, expansion.turret.target) > 10)
@@ -1224,7 +1224,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		SafeScale(0.1,0.1)
 		SafeScaleAnim((10/1.4), (10/1.4), anim_time=2 SECONDS, anim_easing=ELASTIC_EASING)
 		SPAWN(2 SECONDS)
-			animate_wave(src, waves=5)
+			ANIMATE.wave(src, waves=5)
 		playsound(get_turf(src), sound, 25, 1, -1, pitch)
 
 	check_movable(atom/movable/AM, crossed)

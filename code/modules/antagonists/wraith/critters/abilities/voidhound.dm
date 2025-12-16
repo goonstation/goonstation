@@ -90,7 +90,7 @@
 			M.setStatus("unconscious", 3 SECONDS)
 			M.setStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[M.loc]</b> emits a loud thump and rattles a bit."))
-			animate_storage_thump(container)
+			ANIMATE.storage_thump(container)
 			if (prob(25))
 				if (istype(container, /obj/storage))
 					var/obj/storage/C = container

@@ -454,7 +454,7 @@
 			SPAN_NOTICE("You run [src] over [user == target ? "yourself" : target]..."), \
 			SPAN_NOTICE("[user] waves [src] at you. You feel [pick("funny", "weird", "odd", "strange", "off")].")
 		)
-		animate_scanning(target, "#FFFF00")
+		ANIMATE.scanning(target, "#FFFF00")
 
 ////////////////////////////////////////////////////////////////no
 /obj/machinery/rkit

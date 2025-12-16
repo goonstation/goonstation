@@ -1683,7 +1683,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 		src.fade_away((10-(weather_severity*3)) * 10 DECI SECONDS)
 
 	proc/fade_away(time)
-		animate_buff_out_time(src, time)
+		ANIMATE.buff_out_time(src, time)
 		SPAWN(time)
 			qdel(src)
 

@@ -68,9 +68,9 @@
 		//consumes 100 units of charge (50,000 joules) per tile protected
 		for_by_tcl(IX, /obj/machinery/interdictor)
 			if (IX.expend_interdict(100,T,1))
-				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				ANIMATE.flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
-		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
+		ANIMATE.flash_color_fill_inherit(T,"#00FF00",1,5)
 		if (rand(0,1000) < 5 && istype(T, /turf/simulated/floor))
 			Artifact_Spawn(T)
 		for (var/mob/M in T.contents)
@@ -126,9 +126,9 @@
 		//consumes 150 units of charge (75,000 joules) per tile protected
 		for_by_tcl(IX, /obj/machinery/interdictor)
 			if (IX.expend_interdict(150,T,1))
-				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				ANIMATE.flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
-		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
+		ANIMATE.flash_color_fill_inherit(T,"#0084ff",1,5)
 		if(!istype_exact(T, /turf/space))
 			T.AddComponent(/datum/component/radioactive, 25, TRUE, FALSE, 1)
 		if (rand(0,1000) < 5 && istype(T, /turf/simulated/floor))

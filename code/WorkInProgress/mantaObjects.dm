@@ -644,7 +644,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		busy = 1
 		FLICK("englrt-act", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
-		animate_teleport(user)
+		ANIMATE.teleport(user)
 		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
@@ -658,7 +658,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					S.recharging = 1
 					src.recharging = 1
 					user.set_loc(S.loc)
-					showswirl(user.loc)
+					ANIMATE.showswirl(user.loc)
 					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0

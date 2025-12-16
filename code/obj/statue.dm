@@ -138,7 +138,7 @@
 
 			if (prob(dig_chance))
 				src.changeHealth(-digstr)
-			hit_twitch(src)
+			ANIMATE.hit_twitch(src)
 			boutput(user, SPAN_ALERT("[dig_feedback]"))
 
 	Exited(atom/movable/AM, atom/newloc)

@@ -45,7 +45,7 @@
 			if (H)
 				holder.owner.set_dir(get_dir(holder.owner, H))
 				H.set_dir(get_dir(H, holder.owner))
-				animate_flip(H, 3)
+				ANIMATE.flip(H, 3)
 				/*
 				var/icon/composite = icon(H.icon, H.icon_state, null, 1)
 				composite.Turn(180)

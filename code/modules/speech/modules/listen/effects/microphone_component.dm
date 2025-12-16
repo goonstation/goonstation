@@ -24,4 +24,4 @@
 		microphone.light_up_housing()
 
 	SEND_SIGNAL(microphone, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, content)
-	global.animate_flash_color_fill(microphone, "#00FF00", 2, 2)
+	ANIMATE.flash_color_fill(microphone, "#00FF00", 2, 2)

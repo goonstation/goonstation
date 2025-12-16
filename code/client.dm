@@ -344,7 +344,7 @@
 				preferences.sanitize_name()
 
 			if (noir)
-				animate_fade_grayscale(src, 50)
+				ANIMATE.fade_grayscale(src, 50)
 
 			#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
@@ -355,7 +355,7 @@
 			#endif
 		else
 			if (noir)
-				animate_fade_grayscale(src, 1)
+				ANIMATE.fade_grayscale(src, 1)
 
 		if (winget(src, null, "hwmode") != "true")
 			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")

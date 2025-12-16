@@ -35,7 +35,7 @@
 			src.administer_CPR(M)
 		else
 			src.visible_message(SPAN_NOTICE("[src] shakes [M], trying to wake [him_or_her(M)] up!"))
-			hit_twitch(M)
+			ANIMATE.hit_twitch(M)
 	else if (M.is_bleeding())
 		src.staunch_bleeding(M)
 	else if (src.health > 0)
@@ -147,7 +147,7 @@
 				C.on_pet(src)
 			else
 				src.visible_message(SPAN_NOTICE("[src] shakes [target], trying to grab [his_or_her(target)] attention!"))
-	hit_twitch(target)
+	ANIMATE.hit_twitch(target)
 
 /mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/projectile/body_visible/dart)
 	dart.on_remove(src)
@@ -199,7 +199,7 @@
 			src.visible_message(SPAN_ALERT("[src] starts blocking!"))
 			SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
 			src.setStatus("blocking", duration = INFINITE_STATUS)
-			block_begin(src)
+			ANIMATE.MOB.block_begin(src)
 		else
 			qdel(G)
 
@@ -225,7 +225,7 @@
 		src.visible_message(SPAN_ALERT("[src] starts blocking with [I]!"))
 		SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
-		block_begin(src)
+		ANIMATE.MOB.block_begin(src)
 		src.next_click = world.time + src.combat_click_delay
 
 
@@ -299,7 +299,7 @@
 	if (!src || !ismob(src) || !target || !ismob(target))
 		return
 
-	hit_twitch(target)
+	ANIMATE.hit_twitch(target)
 
 	if (!isnum(extra_damage))
 		extra_damage = 0
@@ -333,7 +333,7 @@
 	if(prob(target.get_deflection())) //chance to deflect disarm attempts entirely
 		msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 		msgs.base_attack_message = SPAN_COMBAT("<b>[src] shoves at [target][DISARM_WITH_ITEM_TEXT]!</B>")
-		fuckup_attack_particle(src)
+		ANIMATE.MOB.fuckup_attack_particle(src)
 		return msgs
 
 	if (target.lying == 1) //roll lying bodies
@@ -478,13 +478,13 @@
 			src.playsound_local(src, 'sound/effects/graffiti_hit.ogg', 40, pitch = 0.8)
 		add_stamina(STAMINA_FLIP_COST * 0.25) //Refunds some stamina if you successfully dodge.
 		stamina_stun()
-		fuckup_attack_particle(attacker)
+		ANIMATE.MOB.fuckup_attack_particle(attacker)
 		return 1
 	else if (prob(src.get_passive_block()))
 		if (show_msg)
 			visible_message(SPAN_COMBAT("<b>[src] blocks [attacker]'s attack!"))
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE, 1)
-		fuckup_attack_particle(attacker)
+		ANIMATE.MOB.fuckup_attack_particle(attacker)
 		return 1
 	return ..()
 
@@ -645,10 +645,10 @@
 		damage -= armor_mod
 		//effects for armor reducing most/all of damage
 		if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
-			block_spark(target,armor=1)
+			ANIMATE.MOB.block_spark(target,armor=1)
 			playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1,pitch=1.5)
 			if(damage <= 0)
-				fuckup_attack_particle(src)
+				ANIMATE.MOB.fuckup_attack_particle(src)
 
 
 	if(do_stam)

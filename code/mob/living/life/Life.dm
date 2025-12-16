@@ -265,7 +265,7 @@
 
 			if (last_no_gravity != src.no_gravity)
 				if(src.no_gravity)
-					animate_levitate(src, -1, 10, 1)
+					ANIMATE.levitate(src, -1, 10, 1)
 				else
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)

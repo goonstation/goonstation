@@ -94,8 +94,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			var/damage = B.force
 			if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 				user.lastattacked = get_weakref(src)
-				attack_particle(user,src)
-				hit_twitch(src)
+				ANIMATE.MOB.attack_particle(user,src)
+				ANIMATE.hit_twitch(src)
 				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
 				src.take_damage(damage)
 				user.visible_message(SPAN_ALERT("<b>[user] bashes [src] with [B]!</b>"))

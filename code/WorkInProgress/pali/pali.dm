@@ -556,7 +556,7 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 	var/living_mob_counter = 0
 
 	proc/animate_self()
-		animate_lag(src, magnitude=5, step_time_low=0.5 SECONDS, step_time_high=1 SECOND)
+		ANIMATE.lag(src, magnitude=5, step_time_low=0.5 SECONDS, step_time_high=1 SECOND)
 
 	New()
 		. = ..()

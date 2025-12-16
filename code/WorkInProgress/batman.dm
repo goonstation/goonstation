@@ -80,7 +80,7 @@
 /proc/batman_pow(atom/target_location)
 	var/pow_type = pick(/obj/decal/batman_pow, /obj/decal/batman_pow/wham)
 	var/obj/decal/batman_pow/pow = new pow_type(target_location)
-	animate_portal_appear(pow)
+	ANIMATE.portal_appear(pow)
 	SPAWN(1 SECOND) qdel(pow)
 
 /mob/proc/batsmoke()

@@ -171,7 +171,7 @@
 	var/turf/destination = pick(L)
 	logTheThing(LOG_COMBAT, src, "teleported from [log_loc(src)] to [log_loc(destination)].")
 	if (effect)
-		animate_teleport_wiz(src)
+		ANIMATE.teleport_wiz(src)
 		sleep(2 SECONDS) // Animation.
 		playsound(src.loc, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 		sleep(2 SECONDS) // Animation.

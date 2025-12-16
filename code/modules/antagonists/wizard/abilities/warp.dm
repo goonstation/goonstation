@@ -61,7 +61,7 @@
 			if(istype(T, /turf/space) || T.density) continue
 			randomturfs.Add(T)
 		boutput(target, SPAN_NOTICE("You are caught in a magical warp field!"))
-		animate_blink(target)
+		ANIMATE.blink(target)
 		target.visible_message(SPAN_ALERT("[target] is warped away!"))
 		playsound(target.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 		var/turf/destination = pick(randomturfs)

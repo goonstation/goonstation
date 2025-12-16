@@ -123,7 +123,7 @@ TYPEINFO(/mob/living/carbon/cube)
 							src.changeStatus("knockdown", 3 SECONDS)
 							container.visible_message(SPAN_ALERT("<b>[container]</b> emits a loud thump and rattles a bit."))
 							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
-							animate_shake(container)
+							ANIMATE.shake(container)
 							if (prob(33))
 								if (istype(container, /obj/storage))
 									var/obj/storage/C = container
@@ -132,7 +132,7 @@ TYPEINFO(/mob/living/carbon/cube)
 										C.bust_out()
 						else
 							message = "<B>[src]</b> squishes down, pops up, and does a flip! Gross!"
-							animate_spin(src, "R", 1, 0)
+							ANIMATE.spin(src, "R", 1, 0)
 				if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 					// basic visible single-word emotes
 					if(src.emote_check(voluntary, 10))

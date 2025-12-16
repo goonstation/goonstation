@@ -36,7 +36,7 @@
 			var/y_coeff = !x_coeff // or vertically but not both - it looks weird
 			var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
-			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			ANIMATE.slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)
 				actions.start(new/datum/action/bar/icon/steal_shoes(usr, target_human, floorturf) , usr)
 		else
@@ -110,7 +110,7 @@
 				boutput(source, SPAN_ALERT("You fail to remove [shoes] from [target]."))
 			SPAWN(0.4 SECONDS)
 				if(floorturf)
-					animate_slide(floorturf, 0, 0, 4)
+					ANIMATE.slide(floorturf, 0, 0, 4)
 
 	onUpdate()
 		..()
@@ -126,7 +126,7 @@
 		..()
 
 		if(floorturf)
-			animate_slide(floorturf, 0, 0, 4)
+			ANIMATE.slide(floorturf, 0, 0, 4)
 
 /obj/item/shoethief_bag
 	name = "Bottomless bag of shoes"

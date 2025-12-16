@@ -252,7 +252,7 @@
 				if ("beepsky")
 					var/sound/sound = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg', 'sound/machines/siren_police.ogg')
 					playsound(get_turf(src), sound, 50, FALSE)
-					animate_bouncy(src)
+					ANIMATE.bouncy(src)
 					SPAWN(2 SECONDS)
 						qdel(src)
 				if ("down_arrow", "up_arrow", "left_arrow", "right_arrow")

@@ -509,7 +509,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 							if (FG && FG.my_group && src.total_volume <= 0) //also evaporate safety here
 								FG.my_group.evaporate()
 						C.on_reaction(src, created_volume)
-						chemistry_particle(src, C)
+						ANIMATE.chemistry_particle(src, C)
 						covered_cache = 0
 						continue
 					if (C.stateful)
@@ -575,7 +575,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			if (C.result)
 				src.add_reagent(C.result, speed,, src.total_temperature, chemical_reaction=TRUE)
 			covered_cache = 0
-			chemistry_particle(src, C)
+			ANIMATE.chemistry_particle(src, C)
 
 			if(my_atom?.loc) //We might be inside a thing, let's tell it we updated our reagents.
 				my_atom.loc.handle_event("reagent_holder_update", src)

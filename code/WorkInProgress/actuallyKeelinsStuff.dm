@@ -1727,7 +1727,7 @@ Returns:
 				P.color = color
 				P.layer = 15
 				if(explode)
-					animate_explode_pixel(P)
+					ANIMATE.explode_pixel(P)
 				pixels += P
 
 	qdel(A)
@@ -2030,7 +2030,7 @@ Returns:
 			var/obj/beam_dummy/B = showLine(get_turf(user), current, "lght", 5)
 			var/list/affected = B.affected
 			for(var/turf/T in affected)
-				animate_flash_color_fill(T,"#aaddff",1,5)
+				ANIMATE.flash_color_fill(T,"#aaddff",1,5)
 				for(var/mob/M in T)
 					M.changeStatus("knockdown", 2 SECONDS)
 					random_burn_damage(M, 10)

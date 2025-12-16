@@ -361,7 +361,7 @@
 					if (ismob(A))
 						var/mob/M = A
 						M.show_text("Uh oh! Everything's going all wiggly! NOW YOU KNOW TRUE HOOOORROOOOR!!!!!","#8218A8")
-					animate_wiggle_then_reset(A,5,50)
+					ANIMATE.wiggle_then_reset(A,5,50)
 			if("FERAL TOFU GAPS") // Anagram: PLAGUE OF FARTS
 				for (var/mob/living/carbon/C in range(4,user))
 					if (C.reagents)

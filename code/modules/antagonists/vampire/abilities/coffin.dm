@@ -32,7 +32,7 @@
 	attackby(obj/item/I, mob/user)
 		user.lastattacked = get_weakref(src)
 		_health -= I.force
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 		playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1, pitch = 1.1)
 
 		if (_health <= 0)
@@ -116,7 +116,7 @@
 
 		. = ..()
 		var/obj/storage/closet/coffin/vampire/coffin = new(spawnturf)
-		animate_buff_in(coffin)
+		ANIMATE.buff_in(coffin)
 
 		V.the_coffin = coffin
 

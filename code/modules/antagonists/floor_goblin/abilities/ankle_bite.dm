@@ -33,7 +33,7 @@
 		var/turf/floorturf = get_turf(holder.owner)
 
 		if(holder.owner.layer == BETWEEN_FLOORS_LAYER)
-			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			ANIMATE.slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 			SPAWN(0.4 SECONDS)
 				if(holder.owner && target_human && (BOUNDS_DIST(holder.owner, target) == 0))
@@ -48,7 +48,7 @@
 					REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 				sleep(0.4 SECONDS)
 				if(floorturf)
-					animate_slide(floorturf, 0, 0, 4)
+					ANIMATE.slide(floorturf, 0, 0, 4)
 		else
 			playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE, pitch = 1.3)
 			target_human.changeStatus("knockdown", 2 SECONDS)

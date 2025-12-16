@@ -566,7 +566,7 @@
 		logTheThing(LOG_DIARY, usr, "deleted [O] at ([log_loc(O)])", "admin")
 		message_admins("[key_name(usr)] deleted [O] at ([log_loc(O)])")
 		if (flourish)
-			leaving_animation(O)
+			ANIMATE.leaving_animation(O)
 		qdel(O)
 		O=null
 

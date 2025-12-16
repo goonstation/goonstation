@@ -239,7 +239,7 @@ TYPEINFO(/mob/living/intangible/flock)
 			if (src.emote_check(voluntary, 50))
 				message = SPAN_EMOTE("<b>[src]</B> does a flip!")
 				m_type = 1
-				animate_spin(src, pick("L", "R"), 1, 0)
+				ANIMATE.spin(src, pick("L", "R"), 1, 0)
 		if ("scream", "caw")
 			if (src.emote_check(voluntary, 50))
 				message = SPAN_EMOTE("<b>[src]</B> caws!")

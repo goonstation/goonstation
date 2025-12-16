@@ -16,7 +16,7 @@ TYPEINFO(/datum/component/gauntlet_critter)
 /datum/component/gauntlet_critter/proc/gauntlet_death()
 	global.gauntlet_controller.decreaseCritters(parent)
 	SPAWN(1 SECOND)
-		showswirl(get_turf(parent))
+		ANIMATE.showswirl(get_turf(parent))
 		qdel(parent)
 
 /datum/component/gauntlet_critter/UnregisterFromParent()

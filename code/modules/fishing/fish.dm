@@ -651,7 +651,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 			SPAWN(2 SECONDS)
 				src.remove_hologram_effect()
 		else if (prob(40))
-			animate_lag(src, magnitude = 10, loopnum = 1, steps = rand(2, 4))
+			ANIMATE.lag(src, magnitude = 10, loopnum = 1, steps = rand(2, 4))
 
 	get_scent_color()
 		return null

@@ -33,7 +33,7 @@
 		qdel(src)
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
-		animate_shake(src, severity, severity)
+		ANIMATE.shake(src, severity, severity)
 
 /obj/flock_structure/egg/proc/spawn_contents()
 	new /mob/living/critter/flock/drone(get_turf(src), src.flock)

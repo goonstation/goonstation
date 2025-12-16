@@ -18,7 +18,7 @@
 		var/mob/living/critter/wraith/skeleton_commander/S = new /mob/living/critter/wraith/skeleton_commander(get_turf(holder.owner), W)
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
-		animate_buff_in(S)
+		ANIMATE.buff_in(S)
 		qdel(N)
 
 	onAttach(datum/abilityHolder/holder)
@@ -49,7 +49,7 @@
 		boutput(holder.owner, SPAN_ALERT("<b>You become a voidhound! Stay in the shadows or cloak to heal and regain stamina!</b>"))
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
-		animate_buff_in(S)
+		ANIMATE.buff_in(S)
 		qdel(N)
 
 	onAttach(datum/abilityHolder/holder)
@@ -80,7 +80,7 @@
 		boutput(holder.owner, SPAN_ALERT("<b>You become a tentacle fiend! Use your hook to bring people to you and lash at them, or shuffle away from danger!</b>"))
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
-		animate_buff_in(S)
+		ANIMATE.buff_in(S)
 		qdel(N)
 
 	onAttach(datum/abilityHolder/holder)

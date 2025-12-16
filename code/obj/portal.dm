@@ -18,7 +18,7 @@
 	light.attach(src)
 	light.enable()
 	SPAWN(0)
-		animate_portal_appear(src)
+		ANIMATE.portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 
 /obj/portal/Bumped(mob/M as mob|obj)
@@ -68,7 +68,7 @@
 	if (isAIeye(M))
 		return
 	if (istype(M, /atom/movable))
-		animate_portal_tele(src)
+		ANIMATE.portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
 		if (!isturf(target))
 			var/turf/destination = get_turf(src.target) // Beacons and tracking implant might have been moved.

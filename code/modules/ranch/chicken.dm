@@ -1348,7 +1348,7 @@ All other chickens in this file are non-secret. Please be respectful.
 	Move(NewLoc, direct)
 		. = ..()
 		if(src.aquabreath_process.water_need && prob(20 * src.aquabreath_process.water_need))
-			hit_twitch(src)
+			ANIMATE.hit_twitch(src)
 			src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
 
 	grow_up()

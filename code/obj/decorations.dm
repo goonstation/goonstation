@@ -18,14 +18,14 @@
 			if (src.float_anim)
 				for (var/atom/movable/A in src.loc)
 					if (!A.anchored)
-						animate_bumble(A, floatspeed = 8, Y1 = 3, Y2 = 0)
+						ANIMATE.bumble(A, floatspeed = 8, Y1 = 3, Y2 = 0)
 
 	Crossed(atom/movable/A)
 		if (src.float_anim)
 			if (istype(A, /atom/movable) && !isobserver(A) && !istype(A, /mob/living/critter/small_animal/bee) && !istype(A, /obj/critter/domestic_bee))
 				var/atom/movable/AM = A
 				if (!AM.anchored)
-					animate_bumble(AM, floatspeed = 8, Y1 = 3, Y2 = 0)
+					ANIMATE.bumble(AM, floatspeed = 8, Y1 = 3, Y2 = 0)
 		if (isliving(A))
 			var/mob/living/L = A
 			L.update_burning(-30)
@@ -320,7 +320,7 @@
 					if (2)
 						L.changeStatus("stunned", 2 SECONDS)
 
-		interact_particle(user,src)
+		ANIMATE.MOB.interact_particle(user,src)
 
 	Crossed(atom/movable/AM)
 		. = ..()
@@ -334,8 +334,8 @@
 
 	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = get_weakref(src)
-		hit_twitch(src)
-		attack_particle(user,src)
+		ANIMATE.hit_twitch(src)
+		ANIMATE.MOB.attack_particle(user,src)
 		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, 0)
 		src.take_damage(W.force)
 		user.visible_message(SPAN_ALERT("<b>[user] hacks at [src] with [W]!</b>"))
@@ -354,7 +354,7 @@
 			destroy()
 
 	proc/graze(mob/living/carbon/human/user)
-		eat_twitch(user)
+		ANIMATE.eat_twitch(user)
 		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
 		if (is_plastic)
@@ -1094,7 +1094,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 				dummy.vis_contents += overlay
 				src.vis_contents += dummy
 				src.light_overlay_dummies += dummy
-				animate_orbit(dummy, radius = 64, time = 4 SECONDS)
+				ANIMATE.orbit(dummy, radius = 64, time = 4 SECONDS)
 
 				sleep(0.5 SECONDS)
 				if (!src.on)

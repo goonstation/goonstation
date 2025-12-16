@@ -984,7 +984,7 @@
 
 	//actually throw it!
 	if (I)
-		attack_twitch(src)
+		ANIMATE.attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
 		var/yeet_change_mod = yeet_chance
@@ -2622,7 +2622,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
 	thing.layer = initial(thing.layer)
 	src.juggle_dummy.vis_contents -= thing
-	animate_spin(thing, parallel = FALSE, looping = 0)
+	ANIMATE.spin(thing, parallel = FALSE, looping = 0)
 	thing.pixel_x = initial(thing.pixel_x)
 	thing.pixel_y = initial(thing.pixel_y)
 	thing.layer = initial(thing.layer)
@@ -2660,7 +2660,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.vis_contents += src.juggle_dummy
 	src.juggle_dummy.vis_contents += thing
 	thing.layer = src.layer + 0.1
-	animate_juggle(thing)
+	ANIMATE.juggle(thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_juggle)) //there are so many ways juggled things can be stolen I'm just doing this
 	JOB_XP(src, "Clown", 1)
 	if (isitem(thing))

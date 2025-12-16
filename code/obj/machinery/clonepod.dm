@@ -145,7 +145,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
 	attack_hand(mob/user)
-		interact_particle(user, src)
+		ANIMATE.MOB.interact_particle(user, src)
 		src.examine(user)
 
 	get_desc(dist, mob/user)
@@ -890,10 +890,10 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	proc/look_busy(var/big = 0)
 		if (big)
-			animate_shake(src,5,rand(3,8),rand(3,8))
+			ANIMATE.shake(src,5,rand(3,8),rand(3,8))
 			playsound(src.loc, pick(src.sounds_function), 50, 2)
 		else
-			animate_shake(src,3,rand(1,4),rand(1,4))
+			ANIMATE.shake(src,3,rand(1,4),rand(1,4))
 
 	proc/get_progress()
 		if (!src.occupant)
@@ -1058,7 +1058,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return 1
 
 	attack_hand(mob/user)
-		interact_particle(user,src)
+		ANIMATE.MOB.interact_particle(user,src)
 		if (src.status & (BROKEN | NOPOWER))
 			boutput(user, SPAN_ALERT("The [src.name] is not functioning!"))
 			return

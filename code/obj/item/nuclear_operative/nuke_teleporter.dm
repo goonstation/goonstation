@@ -38,9 +38,9 @@
 			break
 
 /obj/item/remote/nuke_summon_remote/proc/tele_the_bomb(mob/user as mob)
-	showswirl(the_bomb)
+	ANIMATE.showswirl(the_bomb)
 	the_bomb.set_loc(get_turf(src))
-	showswirl(src)
+	ANIMATE.showswirl(src)
 	src.visible_message(SPAN_ALERT("[user] has summoned the [the_bomb]!"))
 	src.charges -= 1
 	playsound(src.loc, use_sound, 70, 1)

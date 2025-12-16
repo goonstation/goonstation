@@ -18,9 +18,9 @@
 
 	attackby(obj/item/P, mob/living/user)
 		src._health -= P.force
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 		user.lastattacked = get_weakref(src)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(prob(20))
 			playsound(src.loc, 'sound/voice/animal/mouse_squeak.ogg', 60, 1)

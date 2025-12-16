@@ -250,7 +250,7 @@
 			if ("glitch","malfunction")
 				playsound(src.loc, pick(glitchy_noise), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message(SPAN_ALERT("<B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!"))
-				animate_glitchy_freakout(src)
+				ANIMATE.glitchy_freakout(src)
 				return
 
 		if (emote_sound)

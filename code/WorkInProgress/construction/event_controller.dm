@@ -298,7 +298,7 @@
 							current_attack_force_size++
 							current_delay = spawn_delay
 							if (method == METHOD_TELEPORT)
-								showswirl(target)
+								ANIMATE.showswirl(target)
 					else if (method == METHOD_EDGE_WANDER)
 						var/valid = 0
 						while (!valid)

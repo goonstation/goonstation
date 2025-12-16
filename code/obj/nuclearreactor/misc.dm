@@ -29,5 +29,5 @@
 				src.desc += " Maybe someone should do something about that..."
 
 	attack_hand(mob/user)
-		interact_particle(user, src)
+		ANIMATE.MOB.interact_particle(user, src)
 		user.examine_verb(src)

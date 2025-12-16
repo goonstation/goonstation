@@ -684,7 +684,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		our_console = new /obj/machinery/sleep_console/compact/portable (src)
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
-		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		ANIMATE.bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
@@ -696,12 +696,12 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
-		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		ANIMATE.bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
 	attack_hand(mob/user)
 		if (our_console)
 			our_console.Attackhand(user)
-			interact_particle(user,src)
+			ANIMATE.MOB.interact_particle(user,src)
 
 	examine()
 		. = ..()
@@ -781,4 +781,4 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	attack_hand(mob/user)
 		if (our_console)
 			our_console.Attackhand(user)
-			interact_particle(user,src)
+			ANIMATE.MOB.interact_particle(user,src)

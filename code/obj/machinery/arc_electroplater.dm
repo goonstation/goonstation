@@ -194,7 +194,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 
 	proc/eject_contents(successful)
 		if(!successful && (src.my_bar || src.target_item))
-			animate_shake(src, 3, rand(2,5), rand(2,5))
+			ANIMATE.shake(src, 3, rand(2,5), rand(2,5))
 			if (status & NOPOWER)
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100)
 				src.visible_message(SPAN_ALERT("[src] buzzes as it spits out everything inside it, and completely runs out of power."))

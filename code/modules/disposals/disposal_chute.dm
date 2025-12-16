@@ -146,8 +146,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		else
 			damage = I.force
 		user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src]! [damage_text]"))
-		attack_particle(user,src)
-		hit_twitch(src)
+		ANIMATE.MOB.attack_particle(user,src)
+		ANIMATE.hit_twitch(src)
 		src.take_damage(clamp(damage, 1, 20), user, I, null)
 		playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
 

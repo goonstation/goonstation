@@ -584,7 +584,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	if(status & BROKEN) return
 
-	interact_particle(user,src)
+	ANIMATE.MOB.interact_particle(user,src)
 
 	if(opened && !isAIeye(user) && !issilicon(user))
 		if(cell)

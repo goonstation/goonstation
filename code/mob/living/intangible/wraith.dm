@@ -103,7 +103,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 		valid_locations = get_accessible_station_areas()
 		next_area_change = world.time + (5 SECONDS)
 		#ifdef APRIL_FOOLS
-		animate_levitate(src)
+		ANIMATE.levitate(src)
 		#endif
 
 		if (!movement_controller)
@@ -163,7 +163,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 		transmute_random_stuff(getMaterial("jean"))
 		if(prob(1))
 			animate(src)
-			animate_levitate(src)
+			ANIMATE.levitate(src)
 		#endif
 
 		if (!src.abilityHolder)

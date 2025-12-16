@@ -115,7 +115,7 @@
 				// If they're pulling something and the door would open anyway,
 				// just let the door open instead.
 				return 0
-			animate_door_squeeze(mover)
+			ANIMATE.door_squeeze(mover)
 			return 1 // they can pass through a closed door
 		return !density
 	else
@@ -140,7 +140,7 @@
 				. = FALSE
 				UNCROSS_BUMP_CHECK(mover)
 				return
-			animate_door_squeeze(mover)
+			ANIMATE.door_squeeze(mover)
 			return TRUE // they can pass through a closed door
 		. = !density
 	else

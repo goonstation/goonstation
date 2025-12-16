@@ -404,8 +404,8 @@
 		var/mob/M = src.target_mob
 		src.target_mob = null
 		SPAWN(4 SECONDS)
-			animate_teleport(M)
-			showswirl_out(M)
+			ANIMATE.teleport(M)
+			ANIMATE.showswirl_out(M)
 			if (length(M.grabbed_by))
 				for(var/obj/item/grab/G in M.grabbed_by)
 					qdel(G)
@@ -489,8 +489,8 @@
 		var/mob/M = src.target_mob
 		src.target_mob = null
 		SPAWN(4 SECONDS)
-			animate_teleport(M)
-			showswirl_out(M)
+			ANIMATE.teleport(M)
+			ANIMATE.showswirl_out(M)
 			if (length(M.grabbed_by))
 				for(var/obj/item/grab/G in M.grabbed_by)
 					qdel(G)
@@ -573,8 +573,8 @@
 		var/mob/M = src.target_mob
 		src.target_mob = null
 		SPAWN(4 SECONDS)
-			animate_teleport(M)
-			showswirl_out(M)
+			ANIMATE.teleport(M)
+			ANIMATE.showswirl_out(M)
 			if (length(M.grabbed_by))
 				for(var/obj/item/grab/G in M.grabbed_by)
 					qdel(G)
@@ -668,8 +668,8 @@
 		var/mob/M = src.target_mob
 		src.target_mob = null
 		SPAWN(4 SECONDS)
-			animate_teleport(M)
-			showswirl_out(M)
+			ANIMATE.teleport(M)
+			ANIMATE.showswirl_out(M)
 			if (length(M.grabbed_by))
 				for(var/obj/item/grab/G in M.grabbed_by)
 					qdel(G)

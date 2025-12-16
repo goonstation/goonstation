@@ -15,7 +15,7 @@
 
 		var/mob/ow = holder.owner
 
-		animate_stomp(holder.owner)
+		ANIMATE.stomp(holder.owner)
 
 		SPAWN(1)
 			playsound(ow.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)

@@ -70,11 +70,11 @@
 
 	New()
 		..()
-		animate_rainbow_glow(src)
+		ANIMATE.rainbow_glow(src)
 
 	equipped(mob/user, slot)
 		. = ..()
-		animate_rainbow_glow(user.client)
+		ANIMATE.rainbow_glow(user.client)
 
 	unequipped(mob/user)
 		. = ..()

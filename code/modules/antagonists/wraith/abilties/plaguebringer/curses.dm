@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				active = FALSE
 				return
 			if (!isdead(H))
-				hit_twitch(H)
+				ANIMATE.hit_twitch(H)
 				random_brute_damage(H, (cycles / 3))
 				cycles ++
 				if (prob(6))

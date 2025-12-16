@@ -818,13 +818,13 @@ TYPEINFO(/obj/item/clothing/glasses/noir)
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_GLASSES)
 			if(H.client)
-				animate_fade_grayscale(H.client, 5)
+				ANIMATE.fade_grayscale(H.client, 5)
 	unequipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			if (H.client)
-				animate_fade_from_grayscale(H.client, 5)
+				ANIMATE.fade_from_grayscale(H.client, 5)
 
 TYPEINFO(/obj/item/clothing/glasses/nightvision)
 	mats = 8

@@ -82,7 +82,7 @@
 						user.u_equip(S)
 						S.dropped(user)
 						qdel( S )
-						animate_storage_rustle(src)
+						ANIMATE.storage_rustle(src)
 						playsound(src.loc, 'sound/machines/ping.ogg', 75)
 						SPAWN(1 SECOND)
 							playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
@@ -96,7 +96,7 @@
 		if (istype(P) && !istype(P, /obj/item/paper/book))
 			src.visible_message("<span>[user] casts a worthless ballot into [src.name] and it emits a buzzing sound.</span>")
 			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 50, 1)
-			animate_storage_rustle(src)
+			ANIMATE.storage_rustle(src)
 			user.u_equip(P)
 			qdel(P)
 			return

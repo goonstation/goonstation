@@ -183,7 +183,7 @@
 			user.visible_message(SPAN_ALERT("[user] farts on the bible."))
 			user:unkillable = 0
 			user.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
-			heavenly_spawn(user)
+			ANIMATE.heavenly_spawn(user)
 			user?.gib()
 			return TRUE
 		else

@@ -111,7 +111,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 	if (!ispryingtool(C))
 		if (src.density)
 			user.lastattacked = get_weakref(src)
-			attack_particle(user,src)
+			ANIMATE.MOB.attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 			if (C)
 				src.take_damage(C.force) //TODO: FOR MBC, WILL RUNTIME IF ATTACKED WITH BARE HAND, C IS NULL. ADD LIMB INTERACTIONS

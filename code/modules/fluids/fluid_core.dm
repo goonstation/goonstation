@@ -204,7 +204,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			if (istype(A, /atom/movable) && !isobserver(A) && !istype(A, /mob/living/critter/small_animal/bee) && !istype(A, /obj/critter/domestic_bee))
 				var/atom/movable/AM = A
 				if (!AM.anchored)
-					animate_bumble(AM, floatspeed = 8, Y1 = 3, Y2 = 0)
+					ANIMATE.bumble(AM, floatspeed = 8, Y1 = 3, Y2 = 0)
 					src.floated_atoms += AM*/
 
 		if (A.event_handler_flags & USE_FLUID_ENTER)

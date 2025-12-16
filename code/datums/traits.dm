@@ -1230,7 +1230,7 @@ TYPEINFO(/datum/trait/partyanimal)
 			H.visible_message(SPAN_ALERT("[H]'s body convulses for a moment as it rejects the cybernetic augments!"))
 			elecflash(H, exclude_center=FALSE)
 			H.force_laydown_standup()
-			violent_standup_twitch(H) // duping vamp fx on purpose to increase vampire ambiguity
+			ANIMATE.violent_standup_twitch(H) // duping vamp fx on purpose to increase vampire ambiguity
 			playsound(H.loc, 'sound/effects/bones_break.ogg', 60, 1)
 
 /datum/trait/survivalist

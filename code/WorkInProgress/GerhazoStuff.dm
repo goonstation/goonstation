@@ -1040,7 +1040,7 @@
 			if(world.time > last_bumped_object_timestamp + 0.2 SECONDS)
 				FLICK("mach_hit_wall", src)
 				last_bumped_object_timestamp = world.time
-				animate_storage_thump(A)
+				ANIMATE.storage_thump(A)
 		if (ismob(AM) && momentum >= machrun_animation_min_momentum)
 			last_combo_time = world.time
 			combo_counter++;
@@ -1051,7 +1051,7 @@
 			AM.throw_at(get_edge_cheap(src.loc, throw_dir),  20, 3)
 			var/obj/decal/batman_pow/pow = new /obj/decal/batman_pow/wham(AM.loc)
 			src.momentum = max(src.momentum - 0.15, 0)
-			animate_portal_appear(pow)
+			ANIMATE.portal_appear(pow)
 			animate(pow, pixel_x = rand(-24,24), pixel_y = rand(4,28), easing = LINEAR_EASING, time = 10, flags = ANIMATION_PARALLEL)
 			SPAWN(1 SECOND) qdel(pow)
 
@@ -1184,9 +1184,9 @@
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					if(prob(50))
-						attack_twitch(src)
+						ANIMATE.attack_twitch(src)
 					else
-						animate_buff_in(src)
+						ANIMATE.buff_in(src)
 					FLICK("taunt_[rand(1,10)]", src)
 					playsound(src.loc, '+secret/sound/misc/peppino_taunt.ogg', 75)
 					return null

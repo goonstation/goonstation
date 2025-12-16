@@ -196,7 +196,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 
 //kinda copy paste from shuttle auth :)
 /obj/machinery/computer/riotgear/attackby(var/obj/item/W, var/mob/user)
-	interact_particle(user,src)
+	ANIMATE.MOB.interact_particle(user,src)
 	if(status & (BROKEN|NOPOWER))
 		return
 	if (!user)

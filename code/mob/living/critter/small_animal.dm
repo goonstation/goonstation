@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		return src.fur_color || ..()
 
 	animate_lying(lying)
-		animate_180_rest(src, !lying)
+		ANIMATE.rest_180(src, !lying)
 
 	proc/randomize_name()
 		src.name = pick_string_autokey(name_list)
@@ -1771,7 +1771,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return SPAN_EMOTE("<b>[src]</b> chirps!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
-					animate_bouncy(src)
+					ANIMATE.bouncy(src)
 					return SPAN_EMOTE("<b>[src]</b> hops about with joy!")
 		return null
 
@@ -2323,7 +2323,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					sleep(0.2 SECONDS)
 
 			if (prob(5))
-				animate_spin(src, pick("L","R"))
+				ANIMATE.spin(src, pick("L","R"))
 
 			if (prob(10))
 				src.visible_message("[src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles")]!")
@@ -3164,7 +3164,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("dance")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
 					SPAWN(1 SECOND)
-						animate_bumble(src)
+						ANIMATE.bumble(src)
 					return SPAN_EMOTE("<b>[src]</b> bumbles menacingly!")
 			if ("scream","buzz")
 				if (src.emote_check(voluntary, 30))
@@ -3833,7 +3833,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return SPAN_EMOTE("<b>[src]</b> farts!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
-					animate_bouncy(src)
+					ANIMATE.bouncy(src)
 					return SPAN_EMOTE("<b>[src]</b> dances!")
 		return ..()
 
@@ -4089,7 +4089,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return SPAN_EMOTE("<b>[src]</b> toots helpfully!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
-					animate_bouncy(src) // bouncy!
+					ANIMATE.bouncy(src) // bouncy!
 					return SPAN_EMOTE("<b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!")
 		return ..()
 
@@ -4121,7 +4121,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		. = ..()
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with [his_or_her(M)] body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
-		animate_bouncy(src)
+		ANIMATE.bouncy(src)
 		animate(M, alpha=0, time=disappearance_time)
 		SPAWN(disappearance_time)
 			M.ghostize()
@@ -4367,7 +4367,7 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 		src.add_stam_mod_max("trilobite", -(STAMINA_MAX-10))
 		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
 		SPAWN(1 SECOND)
-			animate_bumble(src)
+			ANIMATE.bumble(src)
 
 	setup_hands()
 		..()
@@ -4509,7 +4509,7 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 		src.add_stam_mod_max("pikaia", -(STAMINA_MAX-140))
 		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
 		SPAWN(1 SECOND)
-			animate_bumble(src)
+			ANIMATE.bumble(src)
 
 	is_hulk()
 		.= 1
@@ -4547,7 +4547,7 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 					continue
 				if (!G.affecting)
 					continue
-				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+				ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 				if (G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
 					logTheThing(LOG_COMBAT, src, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
@@ -4879,7 +4879,7 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 					continue
 				if (!G.affecting)
 					continue
-				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+				ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 				if (G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
 					logTheThing(LOG_COMBAT, src, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")

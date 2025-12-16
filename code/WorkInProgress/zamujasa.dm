@@ -668,7 +668,7 @@ TYPEINFO(/obj/item/device/speechtotext)
 	process()
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
-			animate_storage_rustle(src)
+			ANIMATE.storage_rustle(src)
 			playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[runtime_count]</span>\nruntimes</span>"
 			src.maptext_x = -100
@@ -688,7 +688,7 @@ TYPEINFO(/obj/item/device/speechtotext)
 	process()
 		if (src.last_count != harddel_count)
 			src.last_count = harddel_count
-			animate_storage_rustle(src)
+			ANIMATE.storage_rustle(src)
 			playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[harddel_count]</span>\nharddels</span>"
 			src.maptext_x = -100

@@ -33,7 +33,7 @@
 		M.delStatus("drowsy")
 
 		if (message_type == 3)
-			violent_standup_twitch(M)
+			ANIMATE.violent_standup_twitch(M)
 			M.visible_message(SPAN_ALERT("<B>[M] contorts [his_or_her(M)] body and judders upright!</B>"))
 			playsound(M.loc, 'sound/effects/bones_break.ogg', 60, 1)
 		else if (message_type == 2)

@@ -130,7 +130,7 @@
 /obj/warp_portal/New()
 	..()
 	SPAWN(0)
-		// animate_portal_appear(src)
+		// ANIMATE.portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 		sleep(30 SECONDS)
 		qdel(src)
@@ -175,7 +175,7 @@
 	else if (istype(M, /atom/movable))
 		logTheThing(LOG_COMBAT, M, "([M.type]) entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 	if (istype(M, /atom/movable))
-		animate_portal_tele(src)
+		ANIMATE.portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
 		do_teleport(M, src.target, 1, !bypass_tele_block) ///You will appear adjacent to the beacon
 

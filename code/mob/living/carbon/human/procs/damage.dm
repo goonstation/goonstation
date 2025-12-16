@@ -316,7 +316,7 @@
 /mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, var/bypass_reversal = FALSE)
 	if (src.nodamage || QDELETED(src)) return
 
-	hit_twitch(src)
+	ANIMATE.hit_twitch(src)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal") && !bypass_reversal)
 		src.HealDamage(zone, brute, burn, tox, TRUE)

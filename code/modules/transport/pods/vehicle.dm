@@ -190,9 +190,9 @@
 		if (W.force)
 			ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 		playsound(src.loc, W.hitsound, 50, 1, -1)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
@@ -446,7 +446,7 @@
 	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1, num_shots = 1)
 		var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
 		if (main_weapon?.muzzle_flash && src.allow_muzzle_flash)
-			muzzle_flash_any(src, dir_to_angle(shoot_dir), main_weapon.muzzle_flash)
+			ANIMATE.muzzle_flash_any(src, dir_to_angle(shoot_dir), main_weapon.muzzle_flash)
 
 		src.create_projectile(src, user, PROJ, shoot_dir, spread)
 

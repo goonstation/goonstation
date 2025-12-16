@@ -281,11 +281,11 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 
 	proc/tumble(mob/user)
 		user.show_text(SPAN_ALERT("You weren't able to keep up with [src]!"))
-		animate_spin(user, was_running == WEST ? "L" : "R", 1, 0)
+		ANIMATE.spin(user, was_running == WEST ? "L" : "R", 1, 0)
 		user.changeStatus("unconscious", 2 SECONDS)
 		user.changeStatus("knockdown", 2 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user]</b> loses their footing and tumbles inside of [src]."))
-		animate_storage_thump(src)
+		ANIMATE.storage_thump(src)
 		return TRUE
 
 	proc/animate_occupant(mob/user, delay, running)

@@ -118,7 +118,7 @@
 		for(var/i in S.data) //Normalize the text before we sanitize it again with list2params
 			S.data[i] = html_decode(S.data[i])
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, list2params(S.data), S.data_file?.copy_file())
-		animate_flash_color_fill(src,"#00AA00",1, 1)
+		ANIMATE.flash_color_fill(src,"#00AA00",1, 1)
 		return
 
 	proc/resetConnection()

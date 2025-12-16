@@ -287,7 +287,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			W.set_loc(src)
 			src.disk = W
 			src.det_time += timer_modifier
-			attack_particle(user,src)
+			ANIMATE.MOB.attack_particle(user,src)
 			return
 
 		if (istype(W, /obj/item/record))
@@ -313,7 +313,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 							R.recharging = 1
 							S.recharging = 1
 							src.set_loc(R.loc)
-							showswirl(src.loc)
+							ANIMATE.showswirl(src.loc)
 							SPAWN(S.recharge)
 								S.recharging = 0
 							SPAWN(R.recharge)
@@ -353,7 +353,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 			logTheThing(LOG_COMBAT, user, "attacks [src] with [W] at [log_loc(src)].")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
-			attack_particle(user,src)
+			ANIMATE.MOB.attack_particle(user,src)
 
 		return
 

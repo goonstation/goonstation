@@ -192,7 +192,7 @@
 				return 1
 
 		src.add_fingerprint(user)
-		interact_particle(user,src)
+		ANIMATE.MOB.interact_particle(user,src)
 	return 0
 
 /obj/machinery/ui_state(mob/user)
