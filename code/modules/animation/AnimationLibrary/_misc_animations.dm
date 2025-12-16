@@ -1,5 +1,5 @@
 /**
- *	Global Animation Library
+ *	Global Animation Namespace
  *
  *	Contains various generic animation sequences used throughout the codebase.
  */
