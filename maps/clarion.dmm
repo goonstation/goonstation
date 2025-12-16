@@ -10063,7 +10063,7 @@
 	pixel_y = -6;
 	info = "fuck my stupid grinch life. I'll be one with the 'nog soon"
 	},
-/turf/simulated/floor/stone,
+/turf/unsimulated/floor/dojo/stone,
 /area/space)
 "cdl" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -11598,7 +11598,7 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
-/turf/simulated/floor/stone,
+/turf/unsimulated/floor/dojo/stone,
 /area/space)
 "dgU" = (
 /obj/machinery/navbeacon{
@@ -13850,7 +13850,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "eHg" = (
-/turf/simulated/floor/stairs/wood{
+/turf/unsimulated/floor/stairs/wood{
 	dir = 8
 	},
 /area/space)
@@ -14723,7 +14723,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "fqn" = (
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/space)
 "fqq" = (
 /obj/cable{
@@ -14825,7 +14825,7 @@
 /obj/decal/tile_edge{
 	dir = 8
 	},
-/turf/simulated/floor/stone,
+/turf/unsimulated/floor/dojo/stone,
 /area/space)
 "fsr" = (
 /obj/machinery/light{
@@ -18081,7 +18081,7 @@
 /area/space)
 "hDo" = (
 /obj/decal/woodclutter,
-/turf/simulated/floor/stone,
+/turf/unsimulated/floor/dojo/stone,
 /area/space)
 "hDw" = (
 /obj/fakeobject/grinchrock,
@@ -18347,7 +18347,7 @@
 /obj/decal/tile_edge{
 	dir = 10
 	},
-/turf/simulated/floor/stone,
+/turf/unsimulated/floor/dojo/stone,
 /area/space)
 "hMl" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -25090,7 +25090,7 @@
 /obj/machinery/door/unpowered/wood{
 	dir = 8
 	},
-/turf/simulated/floor/wood/five,
+/turf/unsimulated/floor/wood/five,
 /area/space)
 "mcR" = (
 /obj/machinery/light/small{
@@ -28059,7 +28059,7 @@
 /obj/decal/tile_edge{
 	dir = 9
 	},
-/turf/simulated/floor/stone,
+/turf/unsimulated/floor/dojo/stone,
 /area/space)
 "occ" = (
 /obj/cable{
@@ -31575,6 +31575,13 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
+"qyu" = (
+/obj/fluid_spawner{
+	amount = 5000;
+	reagent_id = "eggnog"
+	},
+/turf/unsimulated/floor/dojo/stone,
+/area/space)
 "qyE" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -34955,12 +34962,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"sOr" = (
-/obj/fluid_spawner{
-	amount = 2000
-	},
-/turf/simulated/floor/stone,
-/area/space)
 "sOt" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -37195,7 +37196,7 @@
 /area/space)
 "ujv" = (
 /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
-/turf/simulated/floor/stone,
+/turf/unsimulated/floor/dojo/stone,
 /area/space)
 "ujN" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -37903,7 +37904,7 @@
 /turf/unsimulated/floor/auto/snow,
 /area/station/engine/substation/east)
 "uDy" = (
-/turf/simulated/floor/stone,
+/turf/unsimulated/floor/dojo/stone,
 /area/space)
 "uDC" = (
 /obj/mesh/catwalk,
@@ -115291,11 +115292,11 @@ olW
 olW
 dbA
 uDy
-uDy
+qyu
 ujv
-sOr
 uDy
 uDy
+qyu
 uDy
 dbA
 aaa

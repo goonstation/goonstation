@@ -211,6 +211,7 @@
 	opacity = 1
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "beams"
+	var/hits = 0
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/mining_tools/pick/santa))
