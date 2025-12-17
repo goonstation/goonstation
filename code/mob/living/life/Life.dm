@@ -60,8 +60,6 @@
 	var/last_stam_change = 0
 	var/life_context = "begin"
 
-	var/last_traction = TRUE
-
 	proc/add_lifeprocess(type,...)
 		var/datum/lifeprocess/L = null
 		if (length(args) > 1)
@@ -155,6 +153,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
+	add_lifeprocess(/datum/lifeprocess/gravity)
 
 /mob/living/carbon/human/restore_life_processes()
 	..()
@@ -174,6 +173,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 	add_lifeprocess(/datum/lifeprocess/faith)
+	add_lifeprocess(/datum/lifeprocess/gravity)
 
 /mob/living/carbon/cube/restore_life_processes()
 	..()
@@ -203,7 +203,6 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/hivebot_signal)
 
-
 /mob/living/silicon/robot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -214,6 +213,7 @@
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/faith)
+	add_lifeprocess(/datum/lifeprocess/gravity)
 
 
 /mob/living/silicon/drone/restore_life_processes()

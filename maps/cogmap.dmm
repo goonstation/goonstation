@@ -14973,10 +14973,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/light/small{
-	dir = 1;
-	status = 2
-	},
 /obj/item/clothing/under/misc/syndicate{
 	desc = "Non-descript, slightly suspicious jazzy clothing.";
 	name = "Jazzy Turtleneck"
@@ -62446,6 +62442,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/gravity)
 "wwh" = (

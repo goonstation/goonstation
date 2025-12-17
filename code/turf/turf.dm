@@ -40,7 +40,6 @@
 	/// an associative list of gangs to gang claims, representing who has a claim to, or other ownership on this tile
 	var/list/datum/gangtileclaim/controlling_gangs
 	var/wet = 0
-	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0
 	var/step_priority = 0 //compare vs. shoe for step sounds
@@ -588,20 +587,6 @@ proc/generate_space_color()
 
 	if (!(A.last_move))
 		return
-
-	//if(!(src in A.locs))
-	//	return
-
-//	if (locate(/obj/movable, src))
-//		return 1
-
-	//if (!istype(src,/turf/space/fluid))//ignore inertia if we're in the ocean
-	if (src.throw_unlimited)//ignore inertia if we're in the ocean (faster but kind of dumb check)
-		if ((ismob(A) && src.x > 2 && src.x < (world.maxx - 1))) //fuck?
-			var/mob/M = A
-			if((M.client && M.client.flying) || (ismob(M) && HAS_ATOM_PROPERTY(M, PROP_MOB_NOCLIP)))
-				return//aaaaa
-			BeginSpacePush(M)
 
 	if (src.x <= 1)
 		edge_step(A, world.maxx- 2, 0)

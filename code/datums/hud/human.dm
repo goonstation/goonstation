@@ -35,6 +35,7 @@
 		fire
 		toxin
 		rad
+		gravity
 		ability_toggle
 		stats
 		legend
@@ -247,7 +248,7 @@
 		health_tox = create_screen("mtox","Toxin Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 		health_oxy = create_screen("moxy","Oxygen Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 
-		bleeding = create_screen("bleeding","Bleed Warning", src.icon_hud, "blood0", "EAST-3, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
+		bleeding = create_screen("bleeding","Bleed Warning", src.icon_hud, "blood0", "EAST-4, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 		bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
 		stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltip_options = list("theme" = "stamina"))
@@ -259,16 +260,19 @@
 		bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltip_options = list("theme" = "tempInd0"))
 		bodytemp.desc = "The temperature feels fine."
 
-		oxygen = create_screen("oxygen","Suffocation Warning", src.icon_hud, "oxy0", "EAST-4, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusOxy"))
+		gravity = create_screen("gravity", "Gravity", src.icon_hud, "gravity2", "EAST-3, NORTH", HUD_LAYER, tooltip_options = list("theme" = "gravInd02"))
+		gravity.desc = "You feel like you're on Earth.<br>No special effects."
+
+		oxygen = create_screen("oxygen","Suffocation Warning", src.icon_hud, "oxy0", "EAST-5, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusOxy"))
 		oxygen.desc = "This indicator warns that you are currently suffocating. You will take oxygen damage until the situation is remedied."
 
-		fire = create_screen("fire","Fire Warning", src.icon_hud, "fire0", "EAST-5, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusFire"))
+		fire = create_screen("fire","Fire Warning", src.icon_hud, "fire0", "EAST-6, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusFire"))
 		fire.desc = "This indicator warns that you are either on fire, or too hot. You will take burn damage until the situation is remedied."
 
-		toxin = create_screen("toxin","Toxic Warning",src.icon_hud, "toxin0", "EAST-6, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusToxin"))
+		toxin = create_screen("toxin","Toxic Warning",src.icon_hud, "toxin0", "EAST-7, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusToxin"))
 		toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
-		rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-7, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusRad"))
+		rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-8, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusRad"))
 		rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 		ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
@@ -854,6 +858,7 @@
 
 	proc/update_indicators()
 		update_health_indicator()
+		update_gravity_indicator()
 		update_blood_indicator()
 		update_temp_indicator()
 
@@ -1001,6 +1006,32 @@
 
 		health.icon_state = "[healthicon][stage]"
 		health.tooltip_options = list("theme" = "healthDam[stage]")
+
+	proc/update_gravity_indicator()
+		if (!src.gravity)
+			return
+		var/stage
+		switch(master.gforce)
+			if (GRAVITY_MOB_REGULAR_THRESHOLD to 1)
+				stage = 2
+				src.gravity.desc = "You feel like you're on Earth.<br>No special effects."
+			if (-INFINITY to 0)
+				stage = 0
+				src.gravity.desc = "You feel floaty.<br>But that's OK."
+			if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
+				stage = 1
+				src.gravity.desc = "You feel a little floaty.<br>Unable to sprint, may cause space nausea."
+			if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
+				stage = 4
+				src.gravity.desc = "You feel extremely heavy.<br>Health issues may occur."
+			if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
+				stage = 3
+				src.gravity.desc = "You feel heavy.<br>Movement speed reduced."
+			if (1 to GRAVITY_MOB_HIGH_THRESHOLD)
+				stage = 2
+				src.gravity.desc = "You feel like you're on Earth.<br>No special effects."
+		src.gravity.icon_state = "gravity[stage]"
+		src.gravity.tooltip_options = list("theme" = "gravInd[stage]")
 
 	proc/update_blood_indicator()
 		if (!src.bleeding) return //doesn't have a hud element to update

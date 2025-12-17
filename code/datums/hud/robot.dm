@@ -33,6 +33,7 @@
 		health
 		oxy
 		temp
+		gravity
 
 		pda
 		eyecam
@@ -257,6 +258,8 @@
 
 		oxy = create_screen("oxy", "Oxygen", icon_hud, "oxy0", "EAST, NORTH-1")
 		temp = create_screen("temp", "Temperature", icon_hud, "temp0", "EAST, NORTH-2")
+		gravity = create_screen("gravity", "Gravity", src.icon_hud, "gravity2", "EAST, NORTH-3", HUD_LAYER, tooltip_options = list("theme" = "gravInd02"))
+		gravity.desc = "Gravity matches Earth-like levels.<br>No special effects."
 
 		if (master.module_active)
 			set_active_tool(master.module_states.Find(master.module_active))
@@ -592,6 +595,32 @@
 						temp.icon_state = "temp0"
 					else
 						temp.icon_state = "temp-1"
+
+		update_gravity_indicator()
+			if (!src.gravity)
+				return
+			var/stage
+			switch(master.gforce)
+				if (GRAVITY_MOB_REGULAR_THRESHOLD to 1)
+					stage = 2
+					src.gravity.desc = "Gravity matches Earth-like levels.<br>No special effects."
+				if (-INFINITY to 0)
+					stage = 0
+					src.gravity.desc = "No local gravity field detected.<br>Unable to gain traction."
+				if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
+					stage = 1
+					src.gravity.desc = "Microgravity detected."
+				if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
+					stage = 4
+					src.gravity.desc = "Extreme gforce hazard!<br>Frame damage likely."
+				if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
+					stage = 3
+					src.gravity.desc = "Intensified gravity.<br>Movement speed reduced."
+				if (1 to GRAVITY_MOB_HIGH_THRESHOLD)
+					stage = 2
+					src.gravity.desc = "Gravity matches Earth-like levels.<br>No special effects."
+			src.gravity.icon_state = "gravity[stage]"
+			src.gravity.tooltip_options = list("theme" = "gravInd[stage]")
 
 		update_upgrades()
 			var/startx = 5 - master.max_upgrades

@@ -430,6 +430,26 @@ img {
   --theme-primary: #540000;
 }
 
+[data-theme='gravInd0'] .tt-content {
+  --theme-primary: #1a35cf;
+}
+
+[data-theme='gravInd1'] .tt-content {
+  --theme-primary: #349ace;
+}
+
+[data-theme='gravInd2'] .tt-content {
+  --theme-primary: #59cc00;
+}
+
+[data-theme='gravInd3'] .tt-content {
+  --theme-primary: #f79800;
+}
+
+[data-theme='gravInd4'] .tt-content {
+  --theme-primary: #ad0000;
+}
+
 [data-theme='statusOxy'] .tt-content {
   --theme-highlight: #fbfe00;
   --theme-secondary: #3e090d;

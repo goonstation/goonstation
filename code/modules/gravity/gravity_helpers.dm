@@ -58,6 +58,7 @@ proc/initialize_area_gravity()
 		A.gforce_minimum = 0 // set directly to avoid wasted gravity recalc
 		A.set_turf_gravity(A.gforce_tether) // need to force updates for 0 turf oofies
 
+/// Set a minimum gforce across an entire Z-Level
 proc/set_zlevel_gforce(z_level, gforce, update_tethers=FALSE)
 	global.zlevels[z_level].gforce = gforce
 	if (update_tethers)

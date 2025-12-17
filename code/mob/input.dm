@@ -193,12 +193,8 @@
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 				var/spacemove = 0
-				if (!src.traction)
-
+				if (!src.traction && !src.has_grip())
 					spacemove = 1
-					if (src.has_grip())
-						spacemove = 0
-
 				if (spacemove)
 					if (istype(src.back, /obj/item/tank/jetpack))
 						var/obj/item/tank/jetpack/J = src.back

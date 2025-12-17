@@ -365,6 +365,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return
 
 	var/new_intensity = tgui_input_number(user, "[src] is currently set to [src.intensity]G. Change intensity?", "Tether Intensity", src.intensity, src.maximum_intensity, round_input=FALSE)
+	new_intensity = round(new_intensity, 0.01)
+
 	if (isnull(new_intensity))
 		return
 	if (new_intensity == src.intensity)
@@ -375,8 +377,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		if (tgui_alert(user, "Really set [src] to [new_intensity]G?", "Tether Confirmation", list("Yes", "No")) != "Yes")
 			return
 
-	src.attempt_gravity_change(new_intensity)
-
+	if (in_interact_range(src, user))
+		src.attempt_gravity_change(new_intensity)
 	src.UpdateIcon()
 
 /obj/machinery/gravity_tether/attackby(obj/item/I, mob/user)
@@ -897,6 +899,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /// Directly changes the tether intensity and updates all relevant areas
 /obj/machinery/gravity_tether/proc/change_intensity(new_intensity)
+	new_intensity = round(new_intensity, 0.01)
 	if (src.intensity == new_intensity)
 		return TRUE
 	src.intensity = new_intensity

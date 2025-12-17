@@ -9,7 +9,7 @@
 	var/dy
 	var/dist_x
 	var/dist_y
-	var/momentum //TODO: incorperate w_class into momentum conservation
+	var/momentum
 	var/range
 	var/target_x
 	var/target_y
@@ -39,7 +39,7 @@
 		src.dist_x = dist_x
 		src.dist_y = dist_y
 		src.range = range
-		src.momentum = range
+		src.momentum = max(min(range, GET_EUCLIDEAN_DIST(thing, target)),0)
 		src.target_x = target_x
 		src.target_y = target_y
 		src.transform_original = transform_original
@@ -95,15 +95,13 @@ var/global/datum/controller/throwing/throwing_controller = new
 				break
 			var/turf/T = thing.loc
 			if( !(
-					thr.target && thing.throwing && isturf(T) && \
-						(
-							(
-								(thr.target_x != thing.x || thr.target_y != thing.y ) && \
-								thr.momentum > 0
-							) || \
-							thing.throw_unlimited
-						)
-					))
+				thr.target && thing.throwing && isturf(T) && \
+					(
+						thr.momentum > 0 || \
+						T?.effective_gforce == 0 || \
+						thing.throw_unlimited
+					)
+				))
 				end_throwing = TRUE
 				break
 			var/choose_x = thr.error > 0
