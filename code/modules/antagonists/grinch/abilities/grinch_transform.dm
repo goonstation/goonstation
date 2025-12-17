@@ -16,7 +16,10 @@
 			return TRUE
 
 		var/mob/living/M = holder.owner
-
+		var/datum/game_mode/gamemode = ticker.mode
+		if (!gamemode.grinches_active)
+			boutput(M, "You must wait until we have Santa!")
+			return TRUE
 		if (!M)
 			return TRUE
 
@@ -37,9 +40,12 @@
 
 	onStart()
 		..()
-
-		var/mob/living/carbon/human/M = owner
-
+		var/mob/living/carbon/human/M
+		if(ishuman(owner))
+			M = owner
+		else
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") || !transform || istype(M.mutantrace, /datum/mutantrace/grinch))
 			interrupt(INTERRUPT_ALWAYS)
 			return

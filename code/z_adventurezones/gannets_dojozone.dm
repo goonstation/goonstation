@@ -780,6 +780,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	name = "stone"
 	icon = 'icons/turf/dojo.dmi'
 	icon_state = "stone"
+	can_replace_with_stuff = TRUE
 
 /turf/unsimulated/floor/dojo/stonestair
 	name = "stone stairs"

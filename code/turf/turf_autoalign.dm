@@ -1068,6 +1068,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital)
 	icon = 'icons/turf/walls/asteroid_dark.dmi'
 	mod = "exterior-"
 	icon_state = "exterior-0"
+	can_replace_with_stuff = TRUE
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/hospital/interior)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital/interior)

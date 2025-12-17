@@ -788,6 +788,7 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 TYPEINFO(/turf/unsimulated/floor/wood)
 	mat_appearances_to_ignore = list("wood")
 /turf/unsimulated/floor/wood
+	can_replace_with_stuff = TRUE
 	icon_state = "wooden-2"
 	default_material = "wood"
 
@@ -868,6 +869,7 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 
 /turf/unsimulated/floor/stairs/wood
 	icon_state = "wood_stairs"
+	can_replace_with_stuff = TRUE
 
 /turf/unsimulated/floor/stairs/wood/wide
 	icon_state = "wood_stairs2"
@@ -1234,6 +1236,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 	can_dig = TRUE
+	can_replace_with_stuff = TRUE
 
 /turf/unsimulated/floor/auto/sand
 	name = "sand"
@@ -1298,8 +1301,7 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-	default_material = "ice"
-	mat_changename = FALSE
+	can_replace_with_stuff = TRUE
 
 /turf/unsimulated/floor/auto/water/ice/rough
 	name = "ice"
@@ -1347,6 +1349,7 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	step_priority = STEP_PRIORITY_MED
 	turf_flags = MOB_STEP
 	can_dig = TRUE
+	can_replace_with_stuff = TRUE
 
 	New()
 		. = ..()

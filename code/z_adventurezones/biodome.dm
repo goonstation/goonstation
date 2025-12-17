@@ -86,6 +86,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "cave floor"
 	icon_state = "cave-medium"
 	fullbright = 0
+	can_replace_with_stuff = TRUE
 
 /turf/unsimulated/wall/cave
 	name = "cave wall"

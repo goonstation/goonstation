@@ -20,6 +20,7 @@
 #define PLANE_BLACKNESS 0 // black tiles outisde of your vision render here
 #define PLANE_MOB_OVERLAY 5
 #define PLANE_ABOVE_BLACKNESS 7
+#define PLANE_SANTA_SLEIGH 6
 #define PLANE_MASTER_GAME 10
 #define PLANE_FLOCKVISION 22
 #define PLANE_OVERLAY_EFFECTS 25

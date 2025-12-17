@@ -44,45 +44,45 @@
 			else
 				crunch(target, holder.owner, TRUE)
 
-/datum/targetable/grinch/instakill/proc/crunch(var/mob/living/carbon/human/T, var/mob/living/player, var/forcegrab=FALSE)
+/datum/targetable/grinch/instakill/proc/crunch(var/mob/living/carbon/human/Target, var/mob/living/player, var/forcegrab=FALSE)
 	src.active = TRUE
-	T.transforming = 1
+	Target.transforming = 1
 	holder.owner.transforming = 1
 	if (forcegrab)
-		var/obj/item/grab/G = new /obj/item/grab(player, player, T)
+		var/obj/item/grab/G = new /obj/item/grab(player, player, Target)
 		player.put_in_hand(G, player.hand)
 		G.state = GRAB_AGGRESSIVE
 		G.UpdateIcon()
-		player.set_dir(get_dir(player, T))
+		player.set_dir(get_dir(player, Target))
 		playsound(holder.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 65, 1)
-	if (T.lying)
-		T.lying = 0
-		T.remove_stuns()
-		T.set_clothing_icon_dirty()
-	player.set_dir(get_dir(player, T))
-	T.set_dir(get_dir(T, player))
-	player.visible_message(SPAN_ALERT("<B>[player] menacingly grabs [T] by the chest!</B>"))
-	T.loc = player.loc
-	var/dir_offset = get_dir(player, T)
+	if (Target.lying)
+		Target.lying = 0
+		Target.remove_stuns()
+		Target.set_clothing_icon_dirty()
+	player.set_dir(get_dir(player, Target))
+	Target.set_dir(get_dir(Target, player))
+	player.visible_message(SPAN_ALERT("<B>[player] menacingly grabs [Target] by the chest!</B>"))
+	Target.loc = player.loc
+	var/dir_offset = get_dir(player, Target)
 	switch(dir_offset)
 		if (NORTH)
-			T.pixel_y = -24
-			T.layer = player.layer - 1
+			Target.pixel_y = -24
+			Target.layer = player.layer - 1
 		if (SOUTH)
-			T.pixel_y = 24
-			T.layer = player.layer + 1
+			Target.pixel_y = 24
+			Target.layer = player.layer + 1
 		if (EAST)
-			T.pixel_x = -24
-			T.layer = player.layer - 1
+			Target.pixel_x = -24
+			Target.layer = player.layer - 1
 		if (WEST)
-			T.pixel_x = 24
-			T.layer = player.layer - 1
+			Target.pixel_x = 24
+			Target.layer = player.layer - 1
 	for (var/i = 0, i < 5, i++)
-		T.pixel_y += 2
+		Target.pixel_y += 2
 		sleep(0.3 SECONDS)
 
 	sleep(0.5 SECONDS)
-	var/mob/living/carbon/human/HU = T
+	var/mob/living/carbon/human/HU = Target
 	player.visible_message(SPAN_ALERT("<B>[player] begins snapping [HU]'s body!</B>"))
 	var/number_of_snaps = 3
 	var/i
@@ -116,7 +116,7 @@
 	victimbox.contents += HU
 	HU.transform = null
 	player.transforming = 0
-	T.transforming = 0
+	Target.transforming = 0
 	src.active = FALSE
 
 

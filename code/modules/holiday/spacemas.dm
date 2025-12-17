@@ -869,7 +869,7 @@ proc/compare_ornament_score(list/a, list/b)
 			if (elf.santa)
 				elfmind.transfer_to(elf.santa)
 			else
-				elf.visible_message("Can't find Santa, call an admin!")
+				boutput(elf, "Can't find Santa, call an admin!")
 			qdel(elf)
 
 // Krampus Stuff

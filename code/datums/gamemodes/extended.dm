@@ -9,6 +9,8 @@
 
 /datum/game_mode/extended/pre_setup()
 	. = ..()
+	map_settings.space_turf_replacement = /turf/simulated/floor/auto/dirt
+	map_settings.shuttle_map_turf = /turf/simulated/floor/auto/dirt
 #ifdef LIVE_SERVER
 	if (!global.game_force_started && global.ticker.roundstart_player_count(FALSE) < 20)
 		return FALSE
@@ -23,11 +25,6 @@
 	boutput(world, "<B>Just have fun!</B>")
 
 /datum/game_mode/extended/post_setup()
-	var/datum/daynight_controller/earth/daylight = new
-	if(istype(daylight))
-		daylight.time = 10000
-		daylight.active = FALSE
-		daylight.initialize("#d8d8d8", "#1f1f1f")
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 	SPAWN(3 MINUTES)
@@ -51,7 +48,7 @@
 	layer = 104 // AAAAAAAAA
 	bound_width = 1229
 	bound_height = 410
-	plane = 6
+	plane = PLANE_SANTA_SLEIGH
 	flags = KEEP_TOGETHER
 	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	var/audiocheck = TRUE
@@ -127,6 +124,7 @@
 		for(var/o=0,o<=2,o++)
 			move_forward(pilot, SOUTHWEST, 4)
 			sleep(4)
+	src.grinches_active = TRUE
 
 /datum/game_mode/extended/proc/move_forward(var/mob/dummy_pilot/pilot, var/direction, var/speed = 1)
 	var/glide = 0

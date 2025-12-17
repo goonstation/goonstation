@@ -79,10 +79,18 @@
 	icon_state = "moonrock"
 	var/in_cave = FALSE
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 	attack_hand(mob/user)
 		if (isgrinchmind(user) && src.in_cave)
 			var/list/rocks = list()
-			for (var/obj/fakeobject/grinchrock/G_rock in world)
+			for_by_tcl(G_rock, /obj/fakeobject/grinchrock)
 				if (!G_rock.in_cave)
 					rocks += G_rock
 			if (rocks)
@@ -105,8 +113,7 @@
 	name = "Santa's Own Pickaxe"
 	desc = "It's beautiful. By god, it even has festive lights."
 	icon_state = "santa"
-	icon_state = "pickaxe"
-	item_state = "pick"
+	item_state = "santa"
 
 /turf/unsimulated/wall/auto/adventure/grinchwall
 	name = "furred wall"
@@ -114,6 +121,7 @@
 	icon = 'icons/turf/walls/overgrown.dmi'
 	icon_state = "root-0"
 	mod = "root-"
+	can_replace_with_stuff = TRUE
 	var/hits = 0
 
 	attackby(obj/item/W, mob/user)
@@ -122,9 +130,7 @@
 			shake_camera(user, 4, 8, 0.5)
 			src.hits += 1
 			if (src.hits >= 3)
-				var/turf/targetT = get_turf(src)
-				qdel(src)
-				new /turf/unsimulated/floor/cave (targetT)
+				src.ReplaceWith(global.map_settings.space_turf_replacement)
 
 /obj/grinch_respawn_point
 	name = "grinch respawn"
