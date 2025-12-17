@@ -1,4 +1,24 @@
 
+(t)mon dec 15 25
+(u)glowbold
+(p)25258
+(e)⛔🎭🐣|C-Removal, A-RP, A-Respawning
+(*)Joining a round as an observer disables your respawn timer.
+(t)sun dec 14 25
+(u)JORJ949
+(p)25010
+(e)🆕📦🧑‍✈️|C-Feature, A-Game-Objects, A-Command
+(*)The AccessPro can now edit the access of secure crates and lockers.
+(t)sat dec 13 25
+(u)Driftered
+(p)25283
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Cable coils can now be unstacked by hand.
+(t)thu dec 11 25
+(u)Munien
+(p)25260
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Ants can now be burned with magnifying glasses.
 (t)wed dec 10 25
 (u)LorrMaster
 (p)25196
