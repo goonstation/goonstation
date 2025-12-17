@@ -67,6 +67,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	speech_verb_say = "beeps"
+	stops_space_move = TRUE
 
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
@@ -1012,7 +1013,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.layer < victim.layer)
 			src.layer = victim.layer+1
 		src.set_loc(vicTurf)
-		random_brute_damage(victim, rand(20,40),1)
+		random_brute_damage(victim, rand(20,40)*vicTurf.effective_gforce,1)
 	else
 		src.visible_message("<b>[SPAN_ALERT("[src.name] tips over!")]</b>")
 
