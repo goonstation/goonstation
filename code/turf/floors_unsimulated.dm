@@ -1286,6 +1286,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	icon_state = "swamp0"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
 	icon_state_edge = "swampedge"
+	can_replace_with_stuff = TRUE
 
 	New()
 		. = ..()
@@ -1301,7 +1302,6 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-	can_replace_with_stuff = TRUE
 
 /turf/unsimulated/floor/auto/water/ice/rough
 	name = "ice"
