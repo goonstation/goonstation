@@ -54835,7 +54835,7 @@
 "fRJ" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /obj/disposalpipe/segment/mail/vertical,
-/turf/space,
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "fSi" = (
 /obj/machinery/optable,
