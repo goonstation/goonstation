@@ -125,11 +125,27 @@
 	stamina_crit_chance = 0
 	var/random_icons = TRUE
 	var/mob/trapped_player
+	var/boxhealth
 
 	New()
 		. = ..()
+		src.boxhealth = rand(100, 300)
 		if (src.random_icons)
 			src.icon_state = "[(prob(1) && prob(1)) ? "strange" : "gift[rand(1,3)]"]-[pick("r", "rs", "g", "gs")]"
+
+
+/obj/item/gift/mob_flip_inside(mob/user as mob)
+	..()
+	src.boxhealth -= rand(10, 25)
+	if (src.boxhealth <= 0)
+		src.gift.contents -= user
+		var/turf/targetT = get_turf(src.gift)
+		user.set_loc(targetT)
+		if (src.gift)
+			src.gift.set_loc(targetT)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, src.gift, user)
+		qdel(src)
+		modify_christmas_cheer(-10)
 
 /obj/item/gift/attack_self(mob/user as mob)
 	if(!src.gift && !src.contents)
@@ -142,11 +158,8 @@
 		src.trapped_player.set_loc(get_turf(user))
 		src.gift.contents -= src.trapped_player
 		src.trapped_player = null
+		modify_christmas_cheer(-10)
 	user.put_in_hand_or_drop(src.gift)
-	if (SEND_SIGNAL(src.gift, COMSIG_ITEM_STORAGE_INTERACTION, user))
-		modify_christmas_cheer(-4)
-
-
 	modify_christmas_cheer(2)
 	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, src.gift, user)
 	qdel(src)

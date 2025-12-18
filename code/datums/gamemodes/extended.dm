@@ -27,7 +27,7 @@
 /datum/game_mode/extended/post_setup()
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-	SPAWN(3 MINUTES)
+	SPAWN(1 MINUTES)
 		santa_flyover(2, 186, 1, 130)
 	SPAWN(10 MINUTES)
 		santa_flyover(299, 205, 3, 90, WEST)
@@ -56,13 +56,15 @@
 
 	New()
 		..()
+		src.pixel_x -=  608
+		src.pixel_y -= 128
 		SPAWN(1 SECONDS)
 			src.sleigh = sound('sound/effects/santa.ogg', 1, 1, 802)
 			world << src.sleigh
 			while (src.loc)
 				var/turf/targetT = src.loc
 				var/Ty = targetT.y + 4
-				var/Tx = targetT.x + 3
+				var/Tx = targetT.x - 16
 				if (src.dir != EAST)
 					Tx = Tx + 20
 				targetT = locate(Tx, Ty, 1)

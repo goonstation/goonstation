@@ -12034,15 +12034,15 @@
 /area/station/turret_protected/ai_upload)
 "dwW" = (
 /obj/item/clothing/head/flower/rose{
-	pixel_x = 12;
+	pixel_x = 22;
 	pixel_y = -6
 	},
 /obj/item/clothing/head/flower/rose{
 	burning = 0;
 	desc = "By any other name, would smell just as sweet. This one likes to be called Lily. Or ";
 	name = "extra-beautiful rose";
-	pixel_x = -7;
-	pixel_y = 7
+	pixel_x = -13;
+	pixel_y = 14
 	},
 /obj/tombstone{
 	desc = "Seems one of the researchers was buried here.";
@@ -19313,12 +19313,12 @@
 /area/station/crew_quarters/kitchen)
 "ioo" = (
 /obj/item/clothing/head/flower/hydrangea/blue{
-	pixel_x = 37;
-	pixel_y = 4
+	pixel_x = 44;
+	pixel_y = 16
 	},
 /obj/item/clothing/head/flower/hydrangea/blue{
-	pixel_x = 19;
-	pixel_y = -1
+	pixel_x = 9;
+	pixel_y = 2
 	},
 /turf/unsimulated/floor/auto/dirt,
 /area/space)
@@ -39019,6 +39019,12 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/plating,
 /area/station/security/equipment)
+"vsi" = (
+/obj/critter/domestic_bee/santa,
+/turf/unsimulated/floor/green/side{
+	dir = 4
+	},
+/area/space)
 "vsu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -97562,7 +97568,7 @@ jwU
 bhY
 kje
 bhY
-bhY
+vsi
 bhY
 faO
 uvF
