@@ -1,20 +1,20 @@
 // Tethers for groups of areas that want gravity managed together
 ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 /obj/machinery/gravity_tether/multi_area
-
 	// people can scan these to get single-area tethers
 	mechanics_type_override = /obj/machinery/gravity_tether/current_area
 	// TODO: Power balancing
 	passive_wattage_per_g = 10 WATTS
 
-	/// Base area typepath. Target should all share the same base area.
+	/// Base area typepath. Target should probably all share the same base area.
 	var/base_area_typepath = null
 	/// base area subtypes that this tether will not control
 	var/list/base_area_exceptions = list()
-	/// Additional area types
+	/// Additional area types, for outliers
 	var/list/additional_area_types = list()
 
 /obj/machinery/gravity_tether/multi_area/New()
+	src.desc = " This one controls a decently sized area."
 	for (var/area/A in get_areas(src.base_area_typepath))
 		var/valid = TRUE
 		for (var/area_typepath in src.base_area_exceptions)
@@ -28,6 +28,12 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 		if (istype(area_to_add))
 			src.target_area_refs += area_to_add
 	. = ..()
+
+/obj/machinery/gravity_tether/proc/shake_affected()
+	for (var/area/A in src.target_area_refs)
+		for (var/mob/M in A)
+			if (M.client)
+				shake_camera(M, 5, 32, 0.2)
 
 // near-station
 

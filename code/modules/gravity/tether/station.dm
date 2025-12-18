@@ -26,7 +26,6 @@ proc/recalculate_station_tether_gforce()
 	req_access = list(access_engineering_chief)
 	active_wattage_per_g = 1 MEGA WATT
 	passive_wattage_per_g = 10 KILO WATTS
-	cooldown = 60 SECONDS
 	locked = TRUE
 	replacable_cell = TRUE
 
@@ -64,6 +63,31 @@ proc/recalculate_station_tether_gforce()
 	. = ..()
 	global.recalculate_station_tether_gforce()
 
+/obj/machinery/gravity_tether/station/get_desc(dist, mob/user)
+	. = ..()
+	switch (src.door_state)
+		if (TETHER_DOOR_OPEN, TETHER_DOOR_MISSING)
+			if (src.door_state == TETHER_DOOR_MISSING)
+				. += "<br>The maintenance door is missing completely!"
+			if (src.locked)
+				if (src.tamper_intact)
+					. += "<br>The tamper-resist grate is down."
+				else
+					. += "<br>The tamper-resist grate has been sliced through!"
+			if (src.cell)
+				. += "<br>The internal capacitor cell is installed and is at [round(src.cell.percent())]% charge."
+			else
+				. += "<br>There is no internal capcaitor cell installed, "
+				switch (src.wire_state)
+					if (TETHER_WIRES_INTACT)
+						. += " but the wiring looks intact."
+					if (TETHER_WIRES_BURNED)
+						. += " and the wiring is melted together!"
+					if (TETHER_WIRES_CUT)
+						. += " and the wiring has been cut out!"
+		if (TETHER_DOOR_WELDED)
+			. += "<br>The maintenance door is welded shut!"
+
 /obj/machinery/gravity_tether/station/update_icon()
 	src.ClearAllOverlays(TRUE)
 
@@ -96,7 +120,6 @@ proc/recalculate_station_tether_gforce()
 					else
 						battery_charge_overlay.icon_state = "cell-o1"
 						src.AddOverlays(battery_charge_overlay, "charge_indicator")
-
 
 			else // wire overlay is completely hidden by the battery
 				switch (src.wire_state)
@@ -248,18 +271,24 @@ proc/recalculate_station_tether_gforce()
 	. = ..()
 
 /obj/machinery/gravity_tether/station/begin_gravity_change(new_intensity)
-	// emagging or a nearby signal-blocker stops the announcement
-	if (!src.emagged && !check_for_radio_jammers(src))
-		command_alert("The [station_or_ship()]-wide gravity tether is shifting to [new_intensity]G. Brace for sudden gravity shift within [src.cooldown] seconds.", "Gravity Tether Warning", alert_origin = ALERT_STATION)
 	. = ..()
 
-/obj/machinery/gravity_tether/station/change_intensity(new_intensity)
-	if (..())
-		return TRUE
+	// emagging or a nearby signal-blocker stops the announcement
+	if (!src.emagged && !global.check_for_radio_jammers(src)) // TODO: Make this a real packet to the announcement computer
+		var/time_remaining = src.start_change_at - TIME / 10
+		if (global.gravity_tether_gradual_intensity_change)
+			time_remaining = abs(src.target_intensity - src.intensity) / src.intensity_change_rate * MACHINE_PROC_INTERVAL
+		command_alert("The [station_or_ship()]-wide gravity tether will begin shifting to [new_intensity]G in [time_remaining] seconds.", "Gravity Tether Warning", alert_origin = ALERT_STATION)
+
+/obj/machinery/gravity_tether/station/shake_affected()
 	for(var/client/C in clients)
 		var/mob/M = C.mob
 		if(M?.z == src.z)
 			shake_camera(M, 5, 32, 0.2)
+
+/obj/machinery/gravity_tether/station/change_intensity(new_intensity)
+	if (..())
+		return TRUE
 	global.recalculate_station_tether_gforce()
 
 /obj/machinery/gravity_tether/station/cell_rig_effect()
@@ -288,3 +317,20 @@ proc/recalculate_station_tether_gforce()
 		playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
 		src.say("Gravity disturbance detected.")
 		src.UpdateIcon()
+
+// from /particles/rack_spark
+/particles/station_tether_spark
+	icon = 'icons/effects/lines.dmi'
+	icon_state = list("lght")
+	color = "#ffffff"
+	spawning = 0.1
+	count = 20
+	lifespan = generator("num", 1, 3, UNIFORM_RAND)
+	fade = 0
+	position = generator("box", list(-10,-20,0), list(40,20,0), UNIFORM_RAND)
+	velocity = list(0, 0, 0)
+	gravity = list(0, 0, 0)
+	scale = generator("box", list(0.1,0.1,1), list(0.3,0.3,1), UNIFORM_RAND)
+	rotation = generator("num", 0, 360, UNIFORM_RAND)
+	grow = list(0.01, 0)
+	fadein = 0

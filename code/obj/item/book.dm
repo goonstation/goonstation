@@ -160,7 +160,7 @@ Custom Books
 	name = "Gravi-Tonne Tether Manual"
 	icon_state = "tether_book"
 	desc = "An in-depth guide to the monitoring and operation of a Gravity Tether."
-	file_path = "code/modules/gravity/tether/tether_manual.txt"
+	file_path = "strings/books/tether_manual.txt"
 
 /****Civilian Guides****/
 

@@ -1,68 +1,58 @@
+/// If TRUE, gravity tethers will gradually change towards target intensity at the tether's intensity_change_rate
+///
+/// If FALSE, gravity tethers will instantly change to the target intensity after the change delay
+var/global/gravity_tether_gradual_intensity_change = FALSE
+
 ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether
-	processing_tier = 5
 	name = "gravity tether"
 	desc = "A rather delicate piece of machinery that normalizes gravity to Earth-like levels."
-	icon = 'icons/obj/large/32x48.dmi'
+	icon = 'icons/obj/machines/tether_32x48.dmi'
 	icon_state = "area_tether"
 	density = TRUE
-	anchored = ANCHORED
-
+	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE // covers people who walk behind it
 	status = REQ_PHYSICAL_ACCESS
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+
 	speech_verb_say = list("bleeps", "bloops", "drones", "beeps", "boops", "emits")
 	voice_sound_override = 'sound/misc/talk/bottalk_3.ogg'
 
+	HELP_MESSAGE_OVERRIDE(null)
+
 	var/obj/item/cell/cell = null //!Internal capacitor
-	var/datum/light/light = null
+	var/cell_type_path = /obj/item/cell/charged //! type-path of the cell to install by default
+	var/datum/light/light = null // star light, star bright, first star i see tonight
+	var/list/area/target_area_refs = list() //! List of references to areas this tether targets
 
-	/// List of references to areas this tether targets
-	var/list/area/target_area_refs = list()
+	var/active_wattage_per_g = 500 WATTS //! Wattage charge per G of intensity changed
+	var/passive_wattage_per_g = 100 WATTS //! Wattage charge per machine process
+	var/last_charge_level = 0 //! Last cell charge level, used for tracking charge state
 
-	/// State of the internal cell charger
-	var/charge_state = TETHER_CHARGE_IDLE
-	/// State of the maintenance panel door
-	var/door_state = TETHER_DOOR_CLOSED
-	/// State of the set of wires behind the cell
-	var/wire_state = TETHER_WIRES_INTACT
-
-	/// Wattage charge per G of intensity changed
-	var/active_wattage_per_g = 500 WATTS
-	/// Wattage charge per machine process
-	var/passive_wattage_per_g = 100 WATTS
-	/// Last cell charge level, used for tracking charge state
-	var/last_charge_level = 0
-
-	/// Whether the cell tamper grate is intact
-	var/tamper_intact = TRUE
-	/// Cell is replacable
-	var/replacable_cell = FALSE
+	var/locked = FALSE //! Is the tether ID-locked?
+	var/emagged = FALSE //! Is this machine emagged
+	var/replacable_cell = FALSE //! Cell is replacable
+	var/tamper_intact = TRUE //! Whether the cell tamper grate is intact
 
 	/// **Do not change directly!** Intensity of the generated gravity, in G.
 	///
 	///  Use `proc/change_intensity(new_intensity)` to change values.
 	var/intensity = 1
-	/// Current intensity setting (used when changing intensities)
-	var/target_intensity = 1
-	/// Maxmimum intensity of this tether (emag changes this) (or badmins)
-	var/maximum_intensity = 1.5
+	var/target_intensity = 1 //! Current intensity setting (used when changing intensities)
+	var/maximum_intensity = TETHER_INTENSITY_MAX_DEFAULT //! Maxmimum intensity of this tether (emag changes this)
+	var/intensity_change_delay = 30 SECONDS //! Delay between lock-in and shift start
+	var/start_change_at = null //! butt !
+	var/changing_gravity = FALSE //! Is this tether currently doing a gravity change
 
-	/// Can someone toggle us currently
-	var/locked = FALSE
+	/// Only used if `global.gravity_tether_gradual_intensity_change` is TRUE
+	///
+	/// How much G the tether shifts per machine process tick
+	var/intensity_change_rate = 0.05
 
-	/// Is this currently doing a gravity change
-	var/changing_gravity = FALSE
-	/// How quickly are people allowed to change states
-	var/cooldown = 15 SECONDS
-	/// Delay between attempting to toggle and the effect atually changing
-	var/delay = 10 SECONDS // needs to be shorter than cooldown
-	/// Is this machine emagged
-	var/emagged = FALSE
-	/// type-path of the cell to install by default
-	var/cell_type_path = /obj/item/cell/charged
-	/// timer to track gravity disturbance indicator
-	var/gravity_disturbed_until = null
+	var/charge_state = TETHER_CHARGE_IDLE //! State of the internal cell charger
+	var/door_state = TETHER_DOOR_CLOSED //! State of the maintenance panel door
+	var/wire_state = TETHER_WIRES_INTACT //! State of the set of wires behind the cell
+	var/gravity_disturbed_until = null //! timer to track gravity disturbance indicator
 
 /obj/machinery/gravity_tether/New()
 	. = ..()
@@ -108,6 +98,62 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	. = ..()
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH
 
+/obj/machinery/gravity_tether/get_desc(dist, mob/user)
+	if (src.powered())
+		if (src.changing_gravity)
+			. += "It is changing intensity."
+		else if (src.is_broken())
+			. += "It doesn't seem to be working right."
+		else if (src.intensity == 0)
+			. += "It is online, but not active."
+		else
+			. += "It is operating at [src.intensity]G."
+	else
+		. += "It doesn't seem powered on."
+	. = ..()
+
+/obj/machinery/gravity_tether/get_help_message(dist, mob/user)
+	. = ..()
+	if (src.locked)
+		. += "Unlock with an appropriate <b>ID Card</b>."
+		if (istrainedsyndie(x) || isspythief(x))
+			. += "<br>Break the access lock with an <b>Electromagnetic Card</b>."
+	else if (length(src.req_access))
+		. += "Lock with an appropriate <b>ID Card</b>."
+	else
+		. += "Has no access lock."
+	if (isarcfiend(user))
+		. += "<br>Can overload with <b>Discharge</b>."
+	if (src.replacable_cell)
+		switch(src.door_state)
+			if (TETHER_DOOR_WELDED)
+				. += "<br>Unseal the door with a <b>welding</b> tool."
+			if (TETHER_DOOR_CLOSED)
+				. += "<br>Seal the door with a <b>welding</b> tool."
+				. += "<br>Open the door with a <b>prying</b> tool."
+			if (TETHER_DOOR_OPEN, TETHER_DOOR_MISSING)
+				if (src.door_state == TETHER_DOOR_OPEN)
+					. += "<br>Close the door with a <b>prying</b> tool."
+				else if (src.door_state == TETHER_DOOR_MISSING)
+					. += "<br>Replace the door with <b>sheet metal</b>."
+				var/show_cell = TRUE
+				if (src.locked)
+					if (src.tamper_intact)
+						show_cell = FALSE
+						. += "<br>Destroy the grate with a <b>sawing</b> tool. "
+					else
+						. += "<br>Repair the grate with a <b>metal rod</b>."
+				if (show_cell)
+					if (src.cell)
+						. += "<br>Remove the cell with a <b>wrenching</b> tool."
+					else
+						. += "<br>Replace the internal <b>power cell</b>."
+						switch(src.wire_state)
+							if (TETHER_WIRES_INTACT, TETHER_WIRES_BURNED)
+								. += "<br>Cut out the wiring with a <b>snipping</b> tool."
+							if (TETHER_WIRES_CUT)
+								. += "<br>Repair the wiring with <b>cables</b>."
+
 /obj/machinery/gravity_tether/update_icon()
 	src.ClearAllOverlays(TRUE)
 
@@ -121,27 +167,27 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 	// gravity ball
 	if (src.is_broken())
-		src.UpdateOverlays(SafeGetOverlayImage("graviton", 'icons/obj/large/32x48.dmi', "area_tether-broken"), "graviton")
+		src.UpdateOverlays(SafeGetOverlayImage("graviton", 'icons/obj/machines/tether_32x48.dmi', "area_tether-broken"), "graviton")
 		color_r += 150
 		color_b += 50
 	else if (src.intensity == 0)
-		src.UpdateOverlays(SafeGetOverlayImage("graviton", 'icons/obj/large/32x48.dmi', "area_tether-disabled"), "graviton")
+		src.UpdateOverlays(SafeGetOverlayImage("graviton", 'icons/obj/machines/tether_32x48.dmi', "area_tether-disabled"), "graviton")
 		color_r += 100
 		color_b += 50
 		color_g += 50
 	else
-		src.UpdateOverlays(SafeGetOverlayImage("graviton", 'icons/obj/large/32x48.dmi', "area_tether-enabled"), "graviton")
+		src.UpdateOverlays(SafeGetOverlayImage("graviton", 'icons/obj/machines/tether_32x48.dmi', "area_tether-enabled"), "graviton")
 		color_r += 50
 		color_b += 50
 		color_g += 100
 
 	// computer screen
 	if (src.locked)
-		src.AddOverlays(SafeGetOverlayImage("screen", 'icons/obj/large/32x48.dmi',"area_tether-locked"), "screen")
+		src.AddOverlays(SafeGetOverlayImage("screen", 'icons/obj/machines/tether_32x48.dmi',"area_tether-locked"), "screen")
 		color_r += 10
 		color_g += 10
 	else
-		src.AddOverlays(SafeGetOverlayImage("screen", 'icons/obj/large/32x48.dmi',"area_tether-unlocked"), "screen")
+		src.AddOverlays(SafeGetOverlayImage("screen", 'icons/obj/machines/tether_32x48.dmi',"area_tether-unlocked"), "screen")
 		color_g += 20
 
 	src.light.set_color(color_r/255, color_g/255, color_b/255)
@@ -150,49 +196,62 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/process(mult)
 	. = ..()
 
-	src.handle_power_cycle()
-
-	if (src.has_no_power())
-		src.changing_gravity = FALSE
+	if (!istype(src.loc, /turf/simulated))
+		if(src.changing_gravity)
+			src.finish_gravity_change()
+		if (src.intensity != 0)
+			src.change_intensity(0)
 		return
 
-	if (prob(3))
-		SPAWN(1 DECI SECOND)
-			playsound(src.loc, pick(
-				"sound/ambience/station/Underwater/sub_ambi2.ogg",
-				"sound/ambience/station/Underwater/sub_ambi3.ogg",
-				"sound/ambience/station/Underwater/sub_ambi4.ogg",
-				"sound/ambience/station/Underwater/sub_ambi6.ogg",
-				"sound/ambience/station/Underwater/sub_ambi8.ogg",
-			), 50, 1)
+	src.handle_power_cycle()
+
+	if (src.changing_gravity && src.has_no_power())
+		src.finish_gravity_change()
+		return
 
 	if (src.is_broken())
-		var/malf_chance = src.calculate_malfunction()
-		if (prob(malf_chance) && !ON_COOLDOWN(src, "passive_malfunction", 50 SECONDS + rand(1, 20) SECONDS))
-			// fault intensity chance increases as fault chance goes up
-			src.random_fault(malf_chance)
+		if (src.replacable_cell && src.wire_state == TETHER_WIRES_INTACT)
+			src.set_fixed()
+			return
 
-	var/do_update_icon = FALSE
+		var/malf_chance = src.calculate_malfunction()
+		if (prob(malf_chance) && !ON_COOLDOWN(src, "passive_malfunction", rand(50, 70) SECONDS))
+			// fault severity chance increases as fault chance goes up
+			src.random_fault(malf_chance)
 
 	if (src.gravity_disturbed_until && TIME > src.gravity_disturbed_until)
 		src.gravity_disturbed_until = null
-		do_update_icon = TRUE
+		src.UpdateIcon()
 
 	if (src.changing_gravity)
-		// TODO: integrate gravity change over time (too perf heavy rn)
-		// change `src.changing_gravity` into a gravity step value, and have it stop when it hits the target G
-		var/cooldown_timer = GET_COOLDOWN(src, TETHER_COOLDOWN_ID)
-		if (cooldown_timer <= 0)
-			playsound(src.loc, 'sound/machines/shieldgen_shutoff.ogg', 50, 1)
-			src.changing_gravity = FALSE
-			src.change_intensity(src.target_intensity)
-			do_update_icon = TRUE
+		if (TIME > src.start_change_at)
+			var/intensity_diff = src.target_intensity - src.intensity
+			if (intensity_diff == 0)
+				src.finish_gravity_change()
+				return
+			if (global.gravity_tether_gradual_intensity_change)
+				if (abs(intensity_diff) < src.intensity_change_rate)
+					src.change_intensity(src.target_intensity)
+					src.finish_gravity_change()
+					return
+				if (intensity_diff > 0)
+					src.change_intensity(src.intensity + src.intensity_change_rate)
+				else
+					src.change_intensity(src.intensity - src.intensity_change_rate)
+			else
+				src.change_intensity(src.target_intensity)
+				src.finish_gravity_change()
+			playsound(src.loc, 'sound/machines/sweep.ogg', 40, pitch=(0.5 + (src.intensity/2)))
 		else
-			// TODO: Better looping sound?
-			playsound(src.loc, 'sound/machines/found.ogg', 80, 0)
-
-	if (do_update_icon)
-		src.UpdateIcon()
+			playsound(src.loc, 'sound/machines/found.ogg', 60, 0)
+	else if (prob(3))
+		playsound(src.loc, pick(
+			"sound/ambience/station/Underwater/sub_ambi2.ogg",
+			"sound/ambience/station/Underwater/sub_ambi3.ogg",
+			"sound/ambience/station/Underwater/sub_ambi4.ogg",
+			"sound/ambience/station/Underwater/sub_ambi6.ogg",
+			"sound/ambience/station/Underwater/sub_ambi8.ogg",
+		), 50, 1)
 
 /obj/machinery/gravity_tether/powered()
 	if (istype(src.loc, /obj/item/electronics/frame)) //if in a frame, we are never powered
@@ -205,7 +264,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 ///
 /// uses area power until 40%, then internal cell, then area power
 /obj/machinery/gravity_tether/proc/handle_power_cycle()
-	var/passive_wattage_needed = src.passive_wattage_per_g * src.intensity
+	var/area/A = get_area(src)
+	var/passive_wattage_needed = src.passive_wattage_per_g * src.intensity * (min(length(A.registered_tethers), 1))
 	var/recharge_wattage_needed = 0
 
 	if (src.cell)
@@ -223,7 +283,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 					passive_wattage_needed = 0
 
 	if (passive_wattage_needed || recharge_wattage_needed)
-		var/area/A = get_area(src)
 		if (A.powered(EQUIP))
 			var/obj/machinery/power/apc/area_apc = A?.area_apc
 			if (istype(area_apc) && area_apc.cell?.charge)
@@ -347,30 +406,46 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	var/epicenter = get_turf(src)
 	playsound(epicenter, "explosion", 90, 1)
 
+	var/turf/T = get_turf(src)
+	for (var/mob/M in view(min(5, 2*src.intensity), T))
+		if (M.invisibility >= INVIS_AI_EYE) continue
+		arcFlash(src, M, src.cell.charge)
+
 	SPAWN(0)
 		qdel(src.cell)
 		src.cell = null
 		src.UpdateIcon()
 
+/obj/machinery/gravity_tether
+
 /obj/machinery/gravity_tether/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.locked && !src.emagged)
-		src.say("Controls locked.")
+		src.say("[get_access_desc(src.req_access[1])] access required to [src.locked ? "un" : ""]lock.")
 		return
 
-	var/cooldown_timer = GET_COOLDOWN(src, TETHER_COOLDOWN_ID)
 	if (src.changing_gravity)
-		src.say("Processing existing gravity shift. [TO_SECONDS(cooldown_timer)] seconds remaining.")
+		var/time_remaining = src.start_change_at - TIME / 10
+		if (global.gravity_tether_gradual_intensity_change)
+			time_remaining = abs(src.target_intensity - src.intensity) / src.intensity_change_rate * MACHINE_PROC_INTERVAL
+		var/time_string
+		if (time_remaining > 60)
+			time_string = "[(time_remaining / 60) % 60]:[add_zero(num2text(time_remaining % 60), 2)]"
+		else
+			time_string = "[time_remaining] seconds"
+
+		src.say("Processing shift. [time_string] remaining.")
 		return
 
-	var/new_intensity = tgui_input_number(user, "[src] is currently set to [src.intensity]G. Change intensity?", "Tether Intensity", src.intensity, src.maximum_intensity, round_input=FALSE)
-	new_intensity = round(new_intensity, 0.01)
-
+	var/new_intensity = tgui_input_number(user, "Running at [src.intensity]G. Change intensity?", "Gravity Tether", src.intensity, src.maximum_intensity, round_input=FALSE)
 	if (isnull(new_intensity))
 		return
+	new_intensity = round(new_intensity, 0.01)
+	if (src.is_broken())
+		new_intensity += round((prob(50) ? 1 : -1) * randfloat(0.2, 0.4), 0.01)
 	if (new_intensity == src.intensity)
-		src.say("Current configuration is already [new_intensity]G!")
+		src.say("Tether already set to [new_intensity]G!")
 		return
 
 	if (!src.emagged)
@@ -383,6 +458,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/attackby(obj/item/I, mob/user)
 	user.lastattacked = get_weakref(src)
+	var/handy = FALSE
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		handy = H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer")
 	if (src.replacable_cell)
 		if (ispryingtool(I))
 			src.add_fingerprint(user)
@@ -408,13 +487,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 					src.UpdateIcon()
 				if (TETHER_DOOR_CLOSED)
 					if (src.locked)
-						var/duration = 2 SECONDS
-						if (ishuman(user))
-							var/mob/living/carbon/human/H = user
-							if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-								duration = duration / 2
+						var/duration = 2 SECONDS / (handy ? 2 : 1)
 						playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
-						SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/machinery/gravity_tether/proc/door_force_open, list(I, user), \
+						SETUP_GENERIC_ACTIONBAR_WIDE(user, src, duration, /obj/machinery/gravity_tether/proc/door_force_open, list(I, user), \
 						I.icon, I.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 					else
 						user.visible_message(
@@ -438,42 +513,35 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 					boutput(user, SPAN_NOTICE("There's no door on [src] to weld!"))
 					return
 
-			var/positions = src.get_welding_positions()
-			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/gravity_tether/proc/weld_action, \
-							list(user), "[user] finishes using [his_or_her(user)] [I.name] on [src].", positions[1], positions[2]),user)
+			if(I:try_weld(user, 1, burn_eyes = 1))
+				var/positions = src.get_welding_positions()
+				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/gravity_tether/proc/weld_action, \
+								list(user), "[user] finishes using [his_or_her(user)] [I.name] on [src].", positions[1], positions[2]),user)
 			return
 
 		if (src.door_state == TETHER_DOOR_OPEN || src.door_state == TETHER_DOOR_MISSING)
 
 			// tamper repair grate
 			if (istype(I, /obj/item/rods) && src.locked && !src.tamper_intact)
-				var/duration = 5 SECONDS
-				if (ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-						duration = duration / 2
+				var/duration = 5 SECONDS / (handy ? 2 : 1)
 				user.visible_message(
 					SPAN_NOTICE("[user] begins repairing [src]'s tamper-resist security grate."),
 					SPAN_NOTICE("You begin repairing the tamper-resist security grate on [src]."),
 				)
-				SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/machinery/gravity_tether/proc/tamper_repair, list(I, user), \
+				SETUP_GENERIC_ACTIONBAR_WIDE(user, src, duration, /obj/machinery/gravity_tether/proc/tamper_repair, list(I, user), \
 				I.icon, I.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 				return
 
 			// destroy tamper grate
 			if ((issawingtool(I)) && src.locked && src.tamper_intact)
-				var/duration = 20 SECONDS
-				if (ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-						duration = duration / 2
+				var/duration = 20 SECONDS / (handy ? 2 : 1)
 				playsound(src.loc, 'sound/items/mining_drill.ogg', 50, 1, extrarange=1)
 				user.visible_message(
 					SPAN_COMBAT("[user] begins cutting into [src]'s tamper-resist security grate!"),
 					SPAN_COMBAT("You begin cutting into [src]'s tamper-resist security grate!"),
 					SPAN_COMBAT("You hear the awful sound of metal grinding on metal."),
 				)
-				SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/machinery/gravity_tether/proc/tamper_destroy, list(I, user), \
+				SETUP_GENERIC_ACTIONBAR_WIDE(user, src, duration, /obj/machinery/gravity_tether/proc/tamper_destroy, list(I, user), \
 				I.icon, I.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 				return
 
@@ -482,52 +550,40 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 				if (src.cell)
 					// take cell
 					if (iswrenchingtool(I))
-						var/duration = 5 SECONDS
-						if (ishuman(user))
-							var/mob/living/carbon/human/H = user
-							if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-								duration = duration / 2
+						var/duration = 5 SECONDS / (handy ? 2 : 1)
 						playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 						user.visible_message(
 							SPAN_ALERT("[user] begins removing the interal cell from [src]!"),
 							SPAN_ALERT("You begin removing the interal battery from [src]!"),
 							SPAN_ALERT("You hear the loosening of heavy-duty bolts.")
 						)
-						SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/machinery/gravity_tether/proc/cell_remove, list(I, user), \
+						SETUP_GENERIC_ACTIONBAR_WIDE(user, src, duration, /obj/machinery/gravity_tether/proc/cell_remove, list(I, user), \
 						I.icon, I.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 						return
 				else
 					// give cell
 					if (istype(I, /obj/item/cell))
-						var/duration = 5 SECONDS
-						if (ishuman(user))
-							var/mob/living/carbon/human/H = user
-							if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-								duration = duration / 2
+						var/duration = 5 SECONDS / (handy ? 2 : 1)
 						user.visible_message(
 							SPAN_NOTICE("[user] begins installing [I] into [src]."),
 							SPAN_NOTICE("You begin installing [I] into [src]."),
 						)
-						SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/machinery/gravity_tether/proc/cell_install, list(I, user), \
+						SETUP_GENERIC_ACTIONBAR_WIDE(user, src, duration, /obj/machinery/gravity_tether/proc/cell_install, list(I, user), \
 						I.icon, I.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 						return
 
 					// cut out wires
 					if(src.wire_state != TETHER_WIRES_CUT && (iscuttingtool(I) || issnippingtool(I)))
-						var/shockdmg = user.shock(src, src.power_usage, user.hand == LEFT_HAND ? "l_arm": "r_arm")
+						var/shockdmg = user.shock(src, src.intensity * (src.changing_gravity ? src.active_wattage_per_g : src.passive_wattage_per_g), user.hand == LEFT_HAND ? "l_arm": "r_arm")
 						if (prob(min(shockdmg, 100)))
 							return
-						var/duration = 8 SECONDS
-						if (ishuman(user))
-							var/mob/living/carbon/human/H = user
-							if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-								duration = duration / 2
+						var/duration = 8 SECONDS / (handy ? 2 : 1)
 						user.visible_message(
-							SPAN_ALERT("[user] begins cutting the wires out of [src]."),
-							SPAN_ALERT("You begin cutting the wires out of [src]."),
+							SPAN_ALERT("[user] begins cutting some important wires out of [src]."),
+							SPAN_ALERT("You begin cutting some important wires out of [src]."),
 						)
 						playsound(src.loc, 'sound/items/Scissor.ogg', 60, TRUE)
-						SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/machinery/gravity_tether/proc/wire_snip, list(I, user), \
+						SETUP_GENERIC_ACTIONBAR_WIDE(user, src, duration, /obj/machinery/gravity_tether/proc/wire_snip, list(I, user), \
 						I.icon, I.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 						return
 
@@ -536,17 +592,13 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 						if (I.amount < TETHER_WIRE_REPAIR_CABLE_COST)
 							boutput(user, SPAN_NOTICE("You need [TETHER_WIRE_REPAIR_CABLE_COST] lengths of cable to fix the wiring on [src]."))
 							return
-						var/duration = 10 SECONDS
-						if (ishuman(user))
-							var/mob/living/carbon/human/H = user
-							if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-								duration = duration / 2
+						var/duration = 10 SECONDS / (handy ? 2 : 1)
 						user.visible_message(
 							SPAN_NOTICE("[user] begins repairing the wiring in [src]."),
 							SPAN_NOTICE("You begin repairing the wiring in [src]."),
 						)
 						playsound(src.loc, 'sound/items/penclick.ogg', 60, TRUE)
-						SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/machinery/gravity_tether/proc/wire_repair, list(I, user), \
+						SETUP_GENERIC_ACTIONBAR_WIDE(user, src, duration, /obj/machinery/gravity_tether/proc/wire_repair, list(I, user), \
 						I.icon, I.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 						return
 
@@ -574,7 +626,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 				if (!src.locked)
 					logTheThing(LOG_STATION, user, "unlocked gravity tether at at [log_loc(src)].")
 		else
-			src.say("Access denied.")
+			src.say("[get_access_desc(src.req_access[1])] access required to unlock.")
 		src.UpdateIcon()
 	. = ..()
 
@@ -653,10 +705,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		SPAN_NOTICE("The wires inside [src] are repaired out by [user]."),
 		SPAN_NOTICE("You repair the wires inside [src]."),
 	)
-	src.wire_state = TETHER_WIRES_INTACT
-	if (src.is_broken())
-		src.status &= ~BROKEN
-	src.UpdateIcon()
+	src.set_fixed()
 
 /obj/machinery/gravity_tether/proc/cell_remove(obj/item/I, mob/user)
 	if (!user || !I || (user.equipped() != I))
@@ -692,6 +741,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /// * disables gravity change announcement
 /// * increases maximum intensity
 /// * burns out wires (greater chance to trigger random faults)
+/// * increases intensity change rate (if dynamic )
 /obj/machinery/gravity_tether/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
 	if(src.emagged)
@@ -703,13 +753,17 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if (src.wire_state == TETHER_WIRES_INTACT)
 		src.wire_state = TETHER_WIRES_BURNED
 	src.emagged = TRUE
-	src.maximum_intensity = 4 // wireless 4G
+	src.intensity_change_rate = 0.1
+	src.maximum_intensity = TETHER_INTENSITY_MAX_EMAG // wireless 4G
 	src.UpdateIcon()
 
 /obj/machinery/gravity_tether/demag(mob/user)
 	. = ..()
 	src.emagged = FALSE
-	src.maximum_intensity = initial(src.maximum_intensity)
+	src.maximum_intensity = TETHER_INTENSITY_MAX_DEFAULT
+	src.intensity_change_rate = initial(src.intensity_change_rate)
+	if (src.intensity > src.maximum_intensity)
+		src.change_intensity(src.maximum_intensity)
 
 /obj/machinery/gravity_tether/ex_act(severity)
 	switch(severity)
@@ -805,10 +859,24 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	return FALSE
 
 /obj/machinery/gravity_tether/set_broken()
+	. = ..()
+	if (.)
+		return .
 	if (src.replacable_cell && src.wire_state == TETHER_WIRES_INTACT)
 		src.wire_state = TETHER_WIRES_BURNED
 	src.random_fault(src.calculate_malfunction(50))
-	. = ..()
+	src.UpdateParticles(new/particles/rack_smoke, "broken_smoke")
+	if (istype(src,  /obj/machinery/gravity_tether/station))
+		src.UpdateParticles(new/particles/station_tether_spark, "broken_spark")
+	else
+		src.UpdateParticles(new/particles/rack_spark, "broken_spark")
+
+// Fix the machine
+/obj/machinery/gravity_tether/proc/set_fixed()
+	src.wire_state = TETHER_WIRES_INTACT
+	src.status &= ~BROKEN
+	src.ClearAllParticles()
+	src.power_change()
 
 /// Generate oods of a malfunction from 0-100 based on tether state
 /obj/machinery/gravity_tether/proc/calculate_malfunction(start_value=0)
@@ -828,17 +896,29 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/proc/begin_gravity_change(new_intensity)
 	playsound(src.loc, 'sound/machines/shieldgen_startup.ogg', 50, 1)
 	src.changing_gravity = TRUE
+	src.start_change_at = TIME + src.intensity_change_delay
 	src.target_intensity = new_intensity
 	src.say("Recalculating gravity matrix for [src.target_intensity]G.")
+
+/// Called when the tether reaches its target intensity
+/obj/machinery/gravity_tether/proc/finish_gravity_change()
+	src.changing_gravity = FALSE
+	src.start_change_at = null
+	src.shake_affected()
+	playsound(src.loc, 'sound/machines/shieldgen_shutoff.ogg', 50, 1)
 
 /// Run through some checks before starting gravity change
 /obj/machinery/gravity_tether/proc/attempt_gravity_change(new_intensity)
 	if (!src.powered())
 		return
-	var/cooldown = GET_COOLDOWN(src, TETHER_COOLDOWN_ID)
-	if (cooldown > 0)
+	if (src.changing_gravity)
+		src.say("Currently changing gravity.")
+		return
+	if (!istype(src.loc, /turf/simulated))
+		src.say("No direct path to ground!")
 		return
 
+	new_intensity = round(new_intensity, 0.01)
 	var/cost = abs(src.intensity - new_intensity) * src.active_wattage_per_g
 
 	var/charge_avail = 0 // in cell units
@@ -855,7 +935,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			src.random_fault()
 
 		src.use_power(cost, EQUIP)
-		OVERRIDE_COOLDOWN(src, TETHER_COOLDOWN_ID, src.cooldown)
 		src.begin_gravity_change(new_intensity)
 	else
 		src.say("Not enough available power to process gravity shift.")
@@ -912,15 +991,19 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /// Will automatically target a random area this tether controls unless given an area refere
 /obj/machinery/gravity_tether/proc/random_fault(major_prob=0, area/target_area=null)
 	if (!istype(target_area))
+		if (!length(src.target_area_refs))
+			return
 		target_area = pick(src.target_area_refs)
 	if (!istype(target_area))
 		return
 
-	var/fault_type
-	if (prob(major_prob))
-		fault_type = pick(concrete_typesof(/datum/tether_fault/major))
-	else
-		fault_type = pick(concrete_typesof(/datum/tether_fault/minor))
+	var/list/turfs = get_area_turfs(target_area, TRUE)
+	if (!length(turfs))
+		turfs = get_area_turfs(target_area, FALSE)
+		if (!length(turfs))
+			return
 
-	var/datum/tether_fault/fault = new fault_type
-	fault?.effect(target_area, src)
+	if (prob(major_prob))
+		new /obj/anomaly/gravitational/major(pick(turfs), source_tether=src)
+	else
+		new /obj/anomaly/gravitational/minor(pick(turfs), source_tether=src)
