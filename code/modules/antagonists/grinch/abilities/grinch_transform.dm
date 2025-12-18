@@ -1,7 +1,7 @@
 /datum/targetable/grinch/grinch_transform
 	name = "Transform"
 	desc = "Reveal your Grinchy self, this is permanant until you die."
-	icon_state = "grinchcloak"  // No custom sprites yet.
+	icon_state = "grinchtransform"
 	targeted = FALSE
 	target_nodamage_check = FALSE
 	max_range = 0

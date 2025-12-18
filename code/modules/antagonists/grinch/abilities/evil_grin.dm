@@ -2,7 +2,7 @@
 /datum/targetable/grinch/evil_grin
 	name = "Grinch Grin"
 	desc = "Charge up and unleash your dastardly Grinch Grin!"
-	icon_state = "grinchcloak"
+	icon_state = "grinchgrin"
 	cooldown = 12 SECONDS
 	grinch_only = 1
 

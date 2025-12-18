@@ -1,7 +1,7 @@
 /datum/targetable/grinch/slap
 	name = "Slap"
 	desc = "Slap a creature away with your mighty grinch hand."
-	icon_state = "grinchcloak"
+	icon_state = "grinchslap"
 	targeted = 1
 	target_anything = 0
 	target_selection_check = 1
