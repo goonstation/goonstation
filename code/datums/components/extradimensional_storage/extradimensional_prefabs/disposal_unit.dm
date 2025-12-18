@@ -33,8 +33,10 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 	return
 
 /obj/machinery/disposal/extradimensional/ex_act(severity)
-	src.set_broken()
-	return
+	if(severity == 1)
+		src.set_broken()
+	else
+		. = ..()
 
 
 // ------------ ENTRANCE ------------ //
@@ -48,27 +50,17 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 	dimension_component.exit = src
 
 /obj/machinery/disposal/extradimensional/host/disposing()
-	//Violently eject everything inside!
+	//Oh no, time to collapse the pocket dimension!
 	var/turf/my_turf = get_turf(src)
 	var/list/ignored_types = list(/obj/machinery/light, /obj/machinery/door, /obj/mesh, /obj/window, /obj/item/device/radio/intercom)
+	var/obj/machinery/disposal/extradimensional/exit/exit_chute = locate() in REGION_TILES(src.dimension_component.region)
+	var/turf/exit_chute_turf = get_turf(exit_chute)
 	for(var/atom/movable/AM in REGION_TILES(src.dimension_component.region))
-		if(istypes(AM, ignored_types))
+		if(istypes(AM, ignored_types) || IS_OVERLAY_OR_EFFECT(AM))
 			continue
-		if(ismob(AM) || isobj(AM))
-			AM.set_loc(my_turf)
-			//Following stolen from white holes
-			var/turf_search_dist = 64
-			var/angle = rand(0, 360)
-			var/turf/T = null
-			while(isnull(T) && turf_search_dist >= 0)
-				T = locate(
-					round(my_turf.x + cos(angle) * turf_search_dist),
-					round(my_turf.y + sin(angle) * turf_search_dist),
-					my_turf.z
-				)
-				turf_search_dist -= 4
-			AM.throw_at(T, rand(5, 30), randfloat(1, 3), allow_anchored=TRUE, throw_type = THROW_PHASE)
-	src.visible_message(SPAN_ALERT("<b>[src] violently ejects everything inside as the pocket dimension collapses!</b>"))
+		//Place nearby the host chute relative to where it was to the exit chute inside
+		AM.set_loc(get_offset_target_turf(my_turf, AM.x - exit_chute_turf.x, AM.y - exit_chute_turf.y))
+	src.visible_message(SPAN_ALERT("<b>[src]'s pocket dimension collapses!</b>"))
 	. = ..()
 
 /obj/machinery/disposal/extradimensional/host/on_flushed(atom/movable/AM)
