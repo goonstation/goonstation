@@ -27,12 +27,12 @@
 /datum/game_mode/extended/post_setup()
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-	SPAWN(1 MINUTES)
-		santa_flyover(2, 186, 1, 130)
+	SPAWN(30 MINUTES)
+		santa_flyover(2, 170, 1, 130)
 	SPAWN(10 MINUTES)
 		santa_flyover(299, 205, 3, 90, WEST)
-	SPAWN(17 MINUTES) // "hohoho I tapped into your fuckin communications come by the tree for my final pass!"
-		santa_flyover(1, 180, 4, 50, grinched = TRUE)
+	SPAWN(1 MINUTES) // "hohoho I tapped into your fuckin communications come by the tree for my final pass!"
+		santa_flyover(1, 185, 4, 50, grinched = TRUE)
 
 /obj/sleigh
 
@@ -77,15 +77,32 @@
 		var/sound/stopsound = sound(null, wait = 0, channel = 802)
 		world << stopsound
 
+	proc/explode(var/norand = FALSE)
+		var/obj/effects/explosion/boom = /obj/effects/explosion
+		var/Tx = src.x
+		var/Ty = src.y
+		if (norand)
+			Tx = 179
+			Ty = 185
+		else
+			Tx += rand(-10, 10)
+			Ty += rand(-10, 10)
+		playsound(locate(Tx, Ty, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
+		new boom (locate(Tx, Ty, 1))
+
+		Tx += rand(-5, 5)
+		Ty += rand(-5, 5)
+		robogibs(locate(Tx, Ty, 1))
+
 /datum/game_mode/extended/proc/santa_flyover(var/x_input, var/y_input, var/speed = 1, var/alpha_input = 130, var/direction = EAST, var/grinched = FALSE)
 	var/mob/dummy_pilot/pilot = new /mob/dummy_pilot (locate(x_input, y_input, 1))
 	pilot.dir = direction
 	animate(pilot, 2 SECONDS, alpha=alpha_input)
 	while (pilot.loc)
 		if (grinched)
-			if (pilot.x >= 170)
+			if (pilot.x >= 184)
 				break
-			else if (pilot.audiocheck && pilot.x >= 135)
+			else if (pilot.audiocheck && pilot.x >= 149)
 				pilot.audiocheck = FALSE
 				var/sound/santafalls = sound('sound/effects/santa_death.ogg', 0, 0)
 				world << santafalls
@@ -103,20 +120,17 @@
 		qdel(pilot)
 	var/turf/T = get_turf(locate(179, 185, 1))
 	playsound(locate(T), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
-	var/obj/effects/explosion/boom = /obj/effects/explosion
-	new boom (T)
+	pilot.explode(TRUE) // guarentee a central explosion for the first one
 	SPAWN(0.6 SECONDS)
-		playsound(locate(183, 183, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
-		new boom (locate(183, 183, 1))
+		pilot.explode()
 	SPAWN(1.1 SECONDS)
-		playsound(locate(181, 183, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
-		new boom (locate(181, 183, 1))
+		pilot.explode()
 	SPAWN(2 SECONDS)
-		playsound(locate(185, 173, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
-		new boom (locate(185, 173, 1))
+		pilot.explode()
+	SPAWN(2.4 SECONDS)
+		pilot.explode()
 	SPAWN(3 SECONDS)
-		playsound(locate(184, 179, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
-		new boom (locate(184, 179, 1))
+		pilot.explode()
 	for (var/i=0,i<=2,i++)
 		for(var/t=0,t<=2,t++)
 			move_forward(pilot, SOUTHEAST, 4)
