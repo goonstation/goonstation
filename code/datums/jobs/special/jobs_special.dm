@@ -410,6 +410,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
+	job_category = JOB_DAILY
 	request_limit = 2
 	request_cost = PAY_DOCTORATE*4
 	var/day = ""

@@ -10,7 +10,7 @@
 	chance_arrive = 25
 	asshole = 1
 
-	base_goods_buy = list(
+	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/pianzi/herbs,
 			/datum/commodity/trader/pianzi/crystalglass,
@@ -22,7 +22,7 @@
 		TRADER_RARITY_RARE = list()
 	)
 
-	base_goods_sell = list(
+	base_goods_sell = alist(
 		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/pianzi/metal,
 			/datum/commodity/trader/pianzi/bees,

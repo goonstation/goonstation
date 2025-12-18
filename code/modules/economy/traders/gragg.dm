@@ -9,7 +9,7 @@
 	chance_leave = 10
 	chance_arrive = 33
 
-	base_goods_buy = list(
+	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(/datum/commodity/trader/gragg/rock,
 			/datum/commodity/trader/gragg/mauxite,
 			/datum/commodity/trader/gragg/bohrum,
@@ -20,7 +20,7 @@
 		TRADER_RARITY_RARE = list(/datum/commodity/trader/gragg/starstone)
 	)
 
-	base_goods_sell = list(
+	base_goods_sell = alist(
 		TRADER_RARITY_COMMON = list(/datum/commodity/trader/gragg/char,
 			/datum/commodity/trader/gragg/erebite,
 			/datum/commodity/trader/gragg/cerenkite,

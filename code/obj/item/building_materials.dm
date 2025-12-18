@@ -68,6 +68,7 @@ MATERIAL
 		..()
 		if (src.default_reinforcement)
 			src.set_reinforcement(getMaterial(src.default_reinforcement))
+		src.item_state = src.icon_state_base
 		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
@@ -109,6 +110,7 @@ MATERIAL
 			if (reinforcement)
 				src.name = "[reinforcement]-reinforced " + src.name
 				src.icon_state_base += "-r"
+			src.item_state = src.icon_state_base
 			src.color = src.material.getColor()
 			src.alpha = src.material.getAlpha()
 		inventory_counter?.update_number(amount)
@@ -513,20 +515,20 @@ MATERIAL
 /obj/item/sheet/steel
 	item_state = "sheet-metal"
 	default_material = "steel"
-	color = "#8C8C8C"
 
 	reinforced
 		icon_state = "sheet-m-r_5"
+		item_state = "sheet-m-r"
 		default_reinforcement = "steel"
 
 /obj/item/sheet/glass
 	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
 	item_state = "sheet-glass"
 	default_material = "glass"
-	color = "#A3DCFF"
 
 	reinforced
 		icon_state = "sheet-g-r_5"
+		item_state = "sheet-g-r"
 		default_reinforcement = "steel"
 
 	crystal

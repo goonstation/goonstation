@@ -508,8 +508,13 @@
 			handcuff_img.alpha = src.handcuffs.alpha
 			handcuff_img.filters = src.handcuffs.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.handcuffs)
 		src.AddOverlays(handcuff_img, "handcuffs")
+		if (src.handcuffs.worn_material_texture_image)
+			src.handcuffs.worn_material_texture_image.layer = src.handcuffs.wear_image.layer + 0.1
+			src.AddOverlays(src.handcuffs.worn_material_texture_image, "material_handcuffs")
+		else
+			src.ClearSpecificOverlays("material_handcuffs")
 	else
-		src.ClearSpecificOverlays("handcuffs")
+		src.ClearSpecificOverlays("handcuffs", "material_handcuffs")
 
 /mob/living/carbon/human/proc/update_implants()
 	for (var/I in implant_images)
@@ -524,7 +529,7 @@
 #undef wear_sanity_check
 #undef inhand_sanity_check
 
-/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state, var/obj/tail_clothing)
+/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state, var/obj/item/tail_clothing)
 	src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
 	src.tail_standing.overlays.len = 0
 	src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
@@ -542,6 +547,12 @@
 				human_tail_image.filters = tail_clothing.filters.Copy() + src.mutantrace?.apply_clothing_filters(tail_clothing)
 			src.tail_standing.overlays += human_tail_image
 			src.tail_standing_oversuit.overlays += human_tail_image
+			if(tail_clothing.worn_material_texture_image)
+				// If the original object has a material texture, apply it
+				var/icon/masked_tail_tex = GetTexturedIcon(human_tail_image.icon, tail_clothing.material.getTexture())
+				var/image/tail_tex_image = image(masked_tail_tex, icon_state)
+				tail_tex_image.layer = human_tail_image.layer + 0.1
+				src.tail_standing_oversuit.overlays += tail_tex_image
 			src.update_tail_overlays()
 			return
 

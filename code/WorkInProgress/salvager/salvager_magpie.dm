@@ -275,12 +275,12 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
 	var/list/targets = list()
 
 	proc/reroll_commodity()
-		if(length(targets))
-			comtype = pick(targets)
-			targets -= comtype
-			var/obj/object_type = comtype
-			comname = initial(object_type.name)
-			var/value = targets[comtype]
+		if(length(src.targets))
+			src.comtype = pick(src.targets)
+			var/value = src.targets[src.comtype]
+			src.targets -= src.comtype
+			var/obj/object_type = src.comtype
+			src.comname = initial(object_type.name)
 			price = value
 			baseprice = value
 			upperfluc = value * 0.10

@@ -16,9 +16,7 @@
 	New(var/mob/living/M)
 		..()
 		if (M)
-			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
-			originalBHolder.CopyOther(M.bioHolder)
-			absorbed_dna = list("[M.name]" = originalBHolder)
+			absorbed_dna = list("[M.name]" = new /datum/absorbedIdentity(M))
 
 	onAttach(mob/to_whom)
 		. = ..()
@@ -61,9 +59,7 @@
 			tailsnake, strangles people and attaches themselves to peoples butts and makes it hard to do stuff */
 
 		else
-			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
-			originalBHolder.CopyOther(M.bioHolder)
-			src.absorbed_dna[M.real_name] = originalBHolder
+			src.absorbed_dna[M.real_name] = new /datum/absorbedIdentity(M)
 
 			if (headspider_override != 1)
 				src.points += M.dna_to_absorb
@@ -210,6 +206,43 @@
 		..()
 		for(var/mob/dead/target_observer/hivemind_observer/HO in hivemind)
 			src.insert_into_hivemind(HO)
+
+///A stored representation of an absorbed victim, we load their traits as well as their bioholder now
+/datum/absorbedIdentity
+	var/name
+	var/datum/bioHolder/bioHolder
+	var/datum/traitHolder/traitHolder
+
+	New(mob/M)
+		if (M)
+			src.set_up_from(M)
+		. = ..()
+
+	proc/set_up_from(mob/living/carbon/human/victim)
+		//lol this is so nonstandardized I want to cry
+		src.bioHolder = new /datum/bioHolder(victim)
+		src.bioHolder.CopyOther(victim.bioHolder)
+
+		src.traitHolder = new /datum/traitHolder(victim)
+		victim.traitHolder.copy_to(src.traitHolder)
+
+		src.name = victim.real_name
+		victim.UpdateName()
+
+	proc/apply_to(mob/living/carbon/human/human)
+		human.bioHolder.CopyOther(src.bioHolder)
+		src.traitHolder.copy_to(human.traitHolder)
+
+		human.bioHolder.RemoveEffect("husk")
+		human.real_name = src.name
+		human.organHolder.head.UpdateIcon()
+		if (human.bioHolder?.mobAppearance?.mutant_race)
+			human.set_mutantrace(human.bioHolder.mobAppearance.mutant_race.type)
+		else
+			human.set_mutantrace(null)
+		human.update_face()
+		human.update_body()
+		human.update_clothing()
 
 // ----------------------------------------
 // Generic abilities that critters may have

@@ -544,6 +544,13 @@ toxic - poisons
 			shot_volume = 0
 			shoot_reflected_bounce(proj, hit, 4, PROJ_NO_HEADON_BOUNCE)
 			shot_volume = 100
+		else if (proj.reflectcount > 1)
+			var/mob/M = hit
+			var/turf/target = get_edge_target_turf(M, dirflag)
+			M.throw_at(target, 4, 2, throw_type = THROW_GUNIMPACT)
+
+	get_power(obj/projectile/P, atom/A)
+		return P.power + P.reflectcount * 7
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
 	name = "stun bullet"

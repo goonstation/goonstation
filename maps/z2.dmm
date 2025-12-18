@@ -49073,6 +49073,12 @@
 	},
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
+"dBW" = (
+/obj/effects/precipitation/snow/grey/tile,
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "dCb" = (
 /obj/overlay{
 	density = 1;
@@ -50761,7 +50767,9 @@
 	dir = 8;
 	icon_state = "fpurple1"
 	},
-/area/centcom/lounge)
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "dIy" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
@@ -55367,6 +55375,17 @@
 	},
 /turf/unsimulated/floor/darkblueblack,
 /area/centcom/offices/jorj)
+"eGk" = (
+/obj/effects/precipitation/snow/grey/tile,
+/obj/tree{
+	icon_state = "snowtree";
+	pixel_x = -18;
+	pixel_y = -1
+	},
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "eGn" = (
 /obj/adventurepuzzle/triggerable/light/gauntlet,
 /turf/unsimulated/floor/plating,
@@ -56695,6 +56714,30 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/aloe)
+"fLB" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/paper/book/from_file/DNDrulebook{
+	pixel_x = 8;
+	pixel_y = 18
+	},
+/obj/item/paper/book/from_file/pocketguide/medical{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4;
+	pixel_x = -6
+	},
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
+/area/centcom/offices/virvatuli)
 "fLD" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -57553,6 +57596,12 @@
 /obj/machinery/navbeacon/lunar/tour6,
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"guT" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "gve" = (
 /obj/fakeobject/pipe/heat{
 	dir = 4
@@ -57937,6 +57986,18 @@
 	},
 /turf/unsimulated/floor/engine/caution/south,
 /area/centcom/offices/bilo)
+"gGk" = (
+/obj/item/clothing/ears/earmuffs{
+	anchored = 1;
+	desc = "Overpriced, but damn do they sound good.";
+	icon_state = "radio";
+	name = "EarbleedDynamic 5p355 Studio Headphones";
+	pixel_x = -11;
+	pixel_y = 4
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
@@ -61944,6 +62005,47 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"jKK" = (
+/obj/storage/secure/closet/fridge{
+	name = "incredible closetfridge"
+	},
+/obj/item/device/light/glowstick/virva_on,
+/obj/item/storage/ntsc_pouch{
+	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
+	name = "stained tacticool pouch";
+	pixel_x = 5;
+	pixel_y = -5;
+	spawn_contents = list(/obj/item/handcuffs=1,/obj/item/old_grenade/energy_concussion=1,/obj/item/ammo/power_cell/self_charging/potato=1,/obj/item/reagent_containers/food/snacks/donut/custom/robust=1,/obj/item/reagent_containers/food/snacks/candy/candyheart)
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	desc = "Incredibly stinky.";
+	name = "foul-smelling mystery meat";
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
+	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
+	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20);
+	name = "mystical fun guy";
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/mime{
+	desc = "A mangled mime mask. SUBROSA is written in purple crayon on the reverse side.";
+	name = "chewed-up mime mask";
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/jacket/plastic/random_color{
+	pixel_y = -5;
+	pixel_x = 5
+	},
+/obj/item/clothing/under/misc/virvaoutfit1{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "jLf" = (
 /obj/machinery/light/small,
 /obj/decoration/ntcratesmall,
@@ -62811,6 +62913,17 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"ksw" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/obj/adventurepuzzle/triggerer/trigger{
+	id = "virva_trigger"
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "ktH" = (
 /obj/machinery/door/unpowered/wood,
 /obj/decal/stripe_delivery,
@@ -63005,6 +63118,18 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"kzk" = (
+/obj/admin_plaque{
+	desc = "<< sound not welcome";
+	name = "Virvatuli's Studio";
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 1
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "kzI" = (
 /obj/decal/glow{
 	anchored = 1;
@@ -64290,6 +64415,13 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"lwR" = (
+/obj/effects/precipitation/snow/grey/tile,
+/obj/stone/snow/random,
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "lxy" = (
 /obj/fakeobject{
 	icon = 'icons/turf/walls/ancient_smooth.dmi';
@@ -64606,6 +64738,15 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
+"lNi" = (
+/obj/item/reagent_containers/food/drinks/flask/taskumatti{
+	pixel_x = 13;
+	pixel_y = 4
+	},
+/obj/table/wood/auto,
+/obj/item/bat/bonk,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "lNy" = (
 /obj/item/assembly/mousetrap_cleaner,
 /obj/item/tile/steel,
@@ -66811,6 +66952,9 @@
 	dir = 8
 	},
 /area/precursor)
+"nCY" = (
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "nDg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-13"
@@ -71545,6 +71689,13 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"rdF" = (
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/obj/critter/domestic_bee/virvatulbee,
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
+/area/centcom/offices/virvatuli)
 "rei" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/se,
 /area/centcom/offices{
@@ -73071,6 +73222,9 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"sgC" = (
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
+/area/centcom/offices/virvatuli)
 "sgR" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
@@ -74265,6 +74419,11 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/drone/office)
+"tig" = (
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "tiD" = (
 /obj/fakeobject/skeleton{
 	desc = "The remains of a human. How'd they get out there?";
@@ -75447,6 +75606,20 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"uox" = (
+/obj/effects/precipitation/snow/grey/tile,
+/obj/decoration/syndcorpse10{
+	desc = "... but where is the rest?";
+	name = "pair of legs";
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/map/light/white,
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "uoE" = (
 /obj/shrub{
 	dir = 1
@@ -77913,6 +78086,18 @@
 	},
 /turf/space,
 /area/watchful_eye_sensor)
+"vZt" = (
+/obj/adventurepuzzle/element_link{
+	act_type = "on";
+	triggerable_id = "virva_light";
+	triggerer_id = "virva_trigger"
+	},
+/obj/item/decoration/virvase{
+	pixel_y = 11
+	},
+/obj/table/clothred/auto,
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "vZx" = (
 /obj/decal/cleanable/oil/streak,
 /turf/unsimulated/floor/plating,
@@ -79764,6 +79949,19 @@
 	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
+"xqy" = (
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 7
+	},
+/obj/adventurepuzzle/triggerable/light{
+	id = "virva_light";
+	on_brig = 1.2;
+	on_cgreen = 0.4;
+	on_cred = 0
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "xqB" = (
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin,
 /turf/unsimulated/floor/grey/side{
@@ -80575,6 +80773,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"xQn" = (
+/obj/shrub/snow/random{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "xQs" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -80760,6 +80967,13 @@
 "xWi" = (
 /turf/space/shuttle_transit/safe,
 /area/shuttle_transit_space/west)
+"xWp" = (
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "xWw" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/gangzone)
@@ -155303,17 +155517,17 @@ aES
 aES
 ruY
 aES
-aES
-aES
-aES
-aES
 wel
-dvW
-dvW
-dvW
-xXm
+dBW
+eGk
+tig
+guT
+lNi
+sgC
+xWp
+vZt
 wel
-sJH
+kzk
 vij
 wel
 dxO
@@ -155605,16 +155819,16 @@ aES
 aES
 aES
 aES
-aES
-aES
-gmA
-aES
-kUW
-dvW
-dvW
-dvW
-dvW
-rUz
+wel
+dBW
+uox
+tig
+guT
+xqy
+rdF
+nCY
+nCY
+ksw
 sJH
 vij
 wel
@@ -155907,15 +156121,15 @@ aES
 aES
 kpg
 aES
-aES
-aES
-aES
-aES
 wel
-dvW
-dvW
-dvW
-dvW
+lwR
+dBW
+xQn
+guT
+gGk
+fLB
+nCY
+jKK
 wel
 sJH
 vij
@@ -156209,10 +156423,10 @@ aES
 aES
 aES
 aES
-aES
-aES
-aES
-aES
+wel
+wel
+wel
+wel
 wel
 wel
 wel

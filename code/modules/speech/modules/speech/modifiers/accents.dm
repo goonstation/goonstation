@@ -260,42 +260,72 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 		"#FF00FF",
 	)
 
+ABSTRACT_TYPE(/datum/speech_module/modifier/accent/word_replacement)
+/datum/speech_module/modifier/accent/word_replacement
+	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
+	var/guaranteed_replacements = 1 // The minimum number of words to replace per message
 
-/datum/speech_module/modifier/accent/butt
+	proc/replace_words(string)
+		var/list/speech_list = splittext(string, " ")
+		var/list_length = length(speech_list)
+
+		if (list_length <= 0)
+			return
+
+		// this will capture leading punctuation, the word itself(or at least the first part of it), and then any trailing punctuation or
+		// multi-barrelled parts
+		var/regex/punct_regex = regex("^(\\W*)(\[^\\s\\W\]+)(.*)$")
+		var/max_replacements = min(6, ceil(list_length / 2))
+
+		var/list/indices = list()
+
+		for(var/i = 1 to list_length)
+			indices += i
+
+		var/replacements = 0
+
+		var/number_of_attempts = 0
+		while (length(indices) > 0 && number_of_attempts < max_replacements)
+			var/word_index = pick(indices)
+			indices -= word_index
+			var/old_word = speech_list[word_index]
+			if(!punct_regex.Find(old_word))
+				// If the word doesn't match the regex it's probably all punctuation, so skip it
+				continue
+			// force replacements if we're running out of attempts and haven't hit the guaranteed replacement count yet. This affects the
+			// distribution less than just replacing the first N words, I *think*
+			else if((replacements < src.guaranteed_replacements && (max_replacements - number_of_attempts) <= src.guaranteed_replacements) || prob(50))
+				var/replacement_word = src.get_preserved_word(punct_regex.group[2], src.get_replacement_word())
+				speech_list[word_index] = "[punct_regex.group[1]][replacement_word][punct_regex.group[3]]" //preserve leading and trailing punctuation
+				replacements++
+			number_of_attempts++
+
+		return jointext(speech_list, " ")
+
+	/// Returns the replacement word with caps preservation.
+	proc/get_preserved_word(var/old_word, var/replacement_word)
+		if(uppertext(old_word) == old_word) //preserve all-caps
+			replacement_word = uppertext(replacement_word)
+		else
+			var/ascii_val = text2ascii(copytext(old_word, 1, 2))//preserve capitalisation
+			if(ascii_val >= 65 && ascii_val <= 90)
+				replacement_word = capitalize(replacement_word)
+		return replacement_word
+
+	proc/get_replacement_word()
+		return ""
+
+/datum/speech_module/modifier/accent/word_replacement/butt
 	id = SPEECH_MODIFIER_ACCENT_BUTT
-	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
 
-/datum/speech_module/modifier/accent/butt/proc/replace_words(string)
-	var/list/speech_list = splittext(string, " ")
-	var/list_length = length(speech_list)
+	get_replacement_word()
+		return "butt"
 
-	if (!list_length)
-		return
-
-	var/number_of_butts = rand(1, min(4, (list_length / 2)))
-	for (var/i in 1 to number_of_butts)
-		speech_list[rand(1, list_length)] = "butt"
-
-	return jointext(speech_list, " ")
-
-
-/datum/speech_module/modifier/accent/clack
+/datum/speech_module/modifier/accent/word_replacement/clack
 	id = SPEECH_MODIFIER_ACCENT_CLACK
-	accent_proc = CALLBACK(SRC_PROC, PROC_REF(replace_words))
 
-/datum/speech_module/modifier/accent/clack/proc/replace_words(string)
-	var/list/speech_list = splittext(string, " ")
-	var/list_length = length(speech_list)
-
-	if (!list_length)
-		return
-
-	var/number_of_clacks = rand(1, min(4, (list_length / 2)))
-	for (var/i in 1 to number_of_clacks)
-		speech_list[rand(1, list_length)] = "clack"
-
-	return jointext(speech_list, " ")
-
+	get_replacement_word()
+		return "clack"
 
 /datum/speech_module/modifier/accent/cluwne
 	id = SPEECH_MODIFIER_ACCENT_CLUWNE

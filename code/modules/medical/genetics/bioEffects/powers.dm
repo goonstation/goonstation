@@ -74,52 +74,50 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	targeted = TRUE
 	target_anything = TRUE
 
-	cast(atom/target)
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
+		src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> points at [target]!"))
+		playsound(src.owner.loc, 'sound/effects/bamf.ogg', 50, 0)
+		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(src.owner),"8x8snowflake","#88FFFF"))
+
+		if (misfire) cast_mis(target)
+		return cast_reg(target)
+
+	proc/cast_reg(atom/target)
 		var/turf/T = get_turf(target)
 
-		target.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(target, 'sound/effects/bamf.ogg', 50, 0)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(target),"8x8snowflake","#88FFFF"))
-
 		var/obj/decal/icefloor/B
-		for (var/turf/TF in range(linked_power.power - 1,T))
+		for (var/turf/TF in range(src.linked_power.power - 1,T))
 			B = new /obj/decal/icefloor(TF)
 			SPAWN(80 SECONDS)
 				B.dispose()
 
 		for (var/mob/living/L in T.contents)
-			if (L == owner && linked_power.safety)
+			if (L == src.owner && src.linked_power.safety)
 				continue
 			boutput(L, SPAN_NOTICE("You are struck by a burst of ice cold air!"))
 			if(L.getStatusDuration("burning"))
 				L.delStatus("burning")
 			L.bodytemperature = 100
-			if (linked_power.power > 1)
+			if (src.linked_power.power > 1)
 				new /obj/icecube(get_turf(L), L)
 
-		return
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire(atom/target)
-		if (..())
-			return 1
-
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(owner.loc, 'sound/effects/bamf.ogg', 50, 0)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(owner),"8x8snowflake","#88FFFF"))
-
-		if (!linked_power.safety)
-			boutput(owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
-			if(owner.getStatusDuration("burning"))
-				owner.delStatus("burning")
-			owner.bodytemperature = 100
-			new /obj/icecube(get_turf(owner), owner)
+	proc/cast_mis(atom/target)
+		if (!src.linked_power.safety)
+			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
+			if(src.owner.getStatusDuration("burning"))
+				src.owner.delStatus("burning")
+			src.owner.bodytemperature = 100
+			new /obj/icecube(get_turf(src.owner), src.owner)
 		else
-			boutput(owner, SPAN_ALERT("Your cryokinesis misfires!"))
-			if(owner.getStatusDuration("burning"))
-				owner.delStatus("burning")
+			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires!"))
+			if(src.owner.getStatusDuration("burning"))
+				src.owner.delStatus("burning")
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1327,98 +1325,51 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Midas Touch"
 	desc = "Transmute an object to gold by touching it."
 	icon_state = "midas"
-	targeted = FALSE
+	targeted = TRUE
+	target_anything = TRUE
+	target_in_inventory = TRUE
+	var/targetable_types = /obj/item
+	var/material_override
 
 	cast(atom/target)
 		if (..())
 			return TRUE
-		if(linked_power.using)
-			return TRUE
+		return src.transmute_target(target, src.get_default_material_id())
 
-		var/obj/the_object = target
-
-		var/base_path = /obj/item
-		if (linked_power.power > 1)
-			base_path = /obj
-
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-
-		if(target)
-			if (!(target in items))
-				return TRUE
-		else
-			if (!items.len)
-				boutput(usr, SPAN_ALERT("You can't find anything nearby to touch."))
-				return TRUE
-
-			linked_power.using = 1
-			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-			if (!the_object)
-				last_cast = 0
-				linked_power.using = 0
-				return TRUE
-
-		if(isitem(the_object))
-			var/obj/item/the_item = the_object
-			if(the_item.amount > 1)
-				var/obj/item/split_item = the_item.split_stack(1)
-				split_item.set_loc(get_turf(the_item))
-				the_object = split_item
-
-		if (!linked_power)
-			owner.visible_message("[owner] touches [the_object].")
-		else
-			if (istype(linked_power,/datum/bioEffect/power/midas))
-				var/datum/bioEffect/power/midas/linked = linked_power
-				logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into [linked.transmute_material] at [log_loc(owner)].")
-				owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to [linked.transmute_material]!"))
-				the_object.setMaterial(getMaterial(linked.transmute_material))
-			else
-				logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into gold at [log_loc(owner)].")
-				owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to gold!"))
-				the_object.setMaterial(getMaterial("gold"))
-		linked_power.using = 0
-
-	cast_misfire()
+	cast_misfire(atom/target)
 		if (..())
-			return 1
-		if(linked_power.using)
-			return 1
-
-		var/base_path = /obj/item
-		if (linked_power.power > 1)
-			base_path = /obj
-
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to touch.")
-			return 1
-
-		linked_power.using = 1
-		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			linked_power.using = 0
-			return 1
-
-		if(isitem(the_object))
-			var/obj/item/the_item = the_object
-			if(the_item.amount > 1)
-				var/obj/item/split_item = the_item.split_stack(1)
-				split_item.set_loc(get_turf(the_item))
-				the_object = split_item
-
-		if (!linked_power)
-			owner.visible_message("[owner] touches [the_object].")
-		else
-			owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to flesh!"))
-			logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into flesh at [log_loc(owner)].")
-			the_object.setMaterial(getMaterial("flesh"))
-		linked_power.using = 0
-		return
+			return TRUE
+		return src.transmute_target(target, "flesh")
 
 	logCast(atom/target)
 		return
+
+	proc/get_default_material_id()
+		if(src.material_override)
+			return src.material_override
+		if(src.linked_power)
+			var/datum/bioEffect/power/midas/linked = linked_power
+			return linked.transmute_material
+		return "gold"
+
+	proc/transmute_target(atom/target, material_id)
+		if(BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
+			boutput(owner, SPAN_ALERT("You are too far from [target] to do that!"))
+			return 1
+		if(linked_power?.power > 1 && (src.targetable_types == /obj/item))
+			src.targetable_types = /obj
+		if(!istype(target, src.targetable_types))
+			boutput(owner, SPAN_ALERT("You cannot transmute [target]!"))
+			return 1
+		if(isitem(target))
+			var/obj/item/the_item = target
+			if(the_item.amount > 1)
+				var/obj/item/split_item = the_item.split_stack(1)
+				split_item.set_loc(get_turf(the_item))
+				target = split_item
+		logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(target)] into [material_id] at [log_loc(owner)].")
+		src.owner.visible_message(SPAN_ALERT("[src.owner] touches [target], turning it to [material_id]!"))
+		target.setMaterial(getMaterial(material_id))
 
 /datum/bioEffect/power/midas/pickle
 	name = "Pickle Touch"

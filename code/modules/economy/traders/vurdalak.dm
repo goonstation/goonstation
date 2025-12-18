@@ -11,7 +11,7 @@
 
 	business_card = /obj/item/paper/businesscard/vurdulak
 
-	base_goods_buy = list(
+	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/vurdalak/meat,
 			/datum/commodity/trader/vurdalak/brains,
@@ -28,7 +28,7 @@
 		)
 	)
 
-	base_goods_sell = list(
+	base_goods_sell = alist(
 		TRADER_RARITY_COMMON = list(),
 		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list(/datum/commodity/trader/vurdalak/artifact)

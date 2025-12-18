@@ -1449,7 +1449,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		desc = "A hotdog inside a fried banana bread shell.  Is that even possible?"
 		icon_state = "corndogb"
 		heal_amt = 20
-		food_effects = list("food_sweaty_big")
 
 	brain
 		name = "brain-corndog"
@@ -1519,7 +1518,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				src.desc = "A hotdog...in a banana bread bun.  What."
 				src.heal_amt += 8
 				src.name = "bananadog"
-				food_effects = list("food_sweaty_big","food_all")
+				food_effects = list("food_sweaty","food_all")
 				if(src.herb)
 					src.name = "herbal " + src.name
 			else if (istype(W, /obj/item/reagent_containers/food/snacks/breadslice/brain))

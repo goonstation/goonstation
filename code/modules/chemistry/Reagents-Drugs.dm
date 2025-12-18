@@ -312,6 +312,7 @@ datum
 				new /image('icons/effects/hallucinations.dmi', "dragon"),
 				new /image('icons/effects/hallucinations.dmi', "pig"),
 				new /image('icons/effects/hallucinations.dmi', "slime"),
+				new /image('icons/effects/hallucinations.dmi', "shambler"),
 				new /image('icons/misc/critter.dmi', "martianW"),
 			)
 			var/static/list/monkey_names = strings("names/monkey.txt")

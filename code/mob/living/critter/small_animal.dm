@@ -3357,7 +3357,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	voice_name = "Snaily Softserve"
 	memory = "i love being a snail..."
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
-	dir_locked = 1
 	player_can_spawn_with_pet = FALSE
 
 	New()

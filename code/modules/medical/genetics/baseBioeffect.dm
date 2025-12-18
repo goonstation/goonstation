@@ -297,12 +297,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "template"
 	last_cast = 0
-	targeted = 1
-	target_anything = 1
-	var/has_misfire = 1
+	targeted = TRUE
+	target_anything = TRUE
+	var/has_misfire = TRUE
 	var/success_prob_min_cap = 30
-	var/can_act_check = 1
-	var/needs_hands = 1
+	var/can_act_check = TRUE
+	var/needs_hands = TRUE
 	var/datum/bioEffect/power/linked_power = null
 	var/mob/living/owner = null
 
@@ -329,28 +329,44 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			src.cooldown = src.linked_power.cooldown
 		..()
 
-	cast(atom/target)
-		if (!has_misfire)
-			return ..(target)
-		var/success_prob = 100
-		success_prob = src.linked_power.holder.genetic_stability
-		success_prob = lerp(clamp(success_prob, 0, 100), 100, success_prob_min_cap/100)
-		if (prob(success_prob))
-			return ..(target)
-		else
+	/// To account for misfires without cast_genetics(), check for the 'misfire' key in params.
+	cast(atom/target, params)
+		var/genetics_return
+		if (!src.has_misfire)
+			. = ..(target)
+			genetics_return = cast_genetics(target, FALSE, params)
+			if (genetics_return != null)
+				return genetics_return
+			else
+				return
+		var/is_misfire = !prob(get_success_prob())
+		if (is_misfire)
+			LAZYLISTADDASSOC(params, "misfire", TRUE)
+		. = ..(target)
+		genetics_return = cast_genetics(target, is_misfire, params)
+		if (genetics_return != null)
+			return genetics_return
+		if (is_misfire)
 			return cast_misfire(target)
 
-	logCast(atom/target)
+
+	logCast(atom/target, params)
+		var/fired_text = LAZYLISTACCESSASSOC(params, "misfire") ? "misfired" : "used"
 		if (target)
-			logTheThing(LOG_COMBAT, src.holder?.owner, "used the [linked_power.name] power on [constructTarget(target,"combat")] at [log_loc(target)].")
+			logTheThing(LOG_COMBAT, src.owner, "[fired_text] the [linked_power.name] power on [constructTarget(target,"combat")] at [log_loc(target)].")
 		else if (!linked_power.ability_path:targeted)
-			logTheThing(LOG_COMBAT, src.holder?.owner, "used the [linked_power.name] power at [log_loc(src.holder?.owner)].")
+			logTheThing(LOG_COMBAT, src.owner, "[fired_text] the [linked_power.name] power at [log_loc(src.owner)].")
+
+	/// Called by cast(). Override this instead of cast() to more easily account for misfires.
+	proc/cast_genetics(atom/target, misfire, params)
+		return null
+
+	/// Calculates and returns the current probability to not misfire
+	proc/get_success_prob()
+		var/success_prob = src.linked_power.holder.genetic_stability
+		return lerp(clamp(success_prob, 0, 100), 100, success_prob_min_cap/100)
 
 	proc/cast_misfire(atom/target)
-		if (target)
-			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [constructTarget(target,"combat")] at [log_loc(target)].")
-		else
-			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power at [log_loc(owner)].")
 		return 0
 
 

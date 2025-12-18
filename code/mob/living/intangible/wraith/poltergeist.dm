@@ -200,11 +200,11 @@ TYPEINFO(/mob/living/intangible/wraith/poltergeist)
 	//wraith shit
 	if (iswraith(src.loc))	//&& src.loc == src.master
 		var/mob/living/intangible/wraith/W = src.loc
-		src.override_movement_controller = W.movement_controller
+		src.add_movement_controller(W.movement_controller)
 		//Remove this shit after testing --kyle
 		src.following_master = 1
 	else
-		override_movement_controller = null
+		src.remove_movement_controller()
 		src.following_master = 0
 
 /////////////////abilities////////////////////////

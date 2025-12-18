@@ -54,6 +54,8 @@
 #define JOB_NANOTRASEN "nanotrasen"
 #define JOB_SYNDICATE "syndicate"
 #define JOB_HALLOWEEN "halloween"
+#define JOB_RANDOM "random"
+#define JOB_DAILY "daily"
 
 // Job categories
 #define STAPLE_JOBS (1<<0)

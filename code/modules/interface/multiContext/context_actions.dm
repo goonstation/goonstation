@@ -2457,3 +2457,60 @@
 		phrase = SPEECH_PRO_SAY_SP
 		speech_text = "I am using a Speech Pro."
 		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+
+/datum/contextAction/triage_tag
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	desc = ""
+	icon_state = "hey"
+	var/level = -1
+
+	execute(var/obj/item/O, var/mob/user)
+		if (istype(O, /obj/item/sticker/postit/triage))
+			var/obj/item/sticker/postit/triage/tag = O
+			tag.set_level(src.level)
+		else if (istype(O, /obj/item/triage_tagger))
+			var/obj/item/triage_tagger/tag = O
+			tag.set_level(src.level)
+
+	checkRequirements(var/obj/O, var/mob/user)
+		if(!can_act(user))
+			return FALSE
+		if(BOUNDS_DIST(O, user) > 0)
+			return FALSE
+		return TRUE
+
+	remove
+		name = "Remove"
+		icon_state = "close"
+		level = TRIAGE_REMOVE
+	minor
+		name = "Minor"
+		icon_state = "letter_m"
+		desc = "Patient has minor injuries."
+		background_color = "#009a08"
+		level = TRIAGE_MINOR
+	delayed
+		name = "Delayed"
+		icon_state = "letter_d_dark"
+		desc = "Patient has non-life-threatening injuries."
+		background_color = "#ffe800"
+		level = TRIAGE_DELAYED
+	immediate
+		name = "Immediate"
+		icon_state = "letter_i"
+		desc = "Patient has life-threatening injuries."
+		background_color = "#ff1414"
+		level = TRIAGE_IMMEDIATE
+	deceased
+		name = "Deceased/Expectant"
+		icon_state = "letter_e"
+		desc = "Patient is deceased or is expected to die even with medical assistance."
+		background_color = "#050504"
+		level = TRIAGE_DECEASED
+	unrevivable
+		name = "Unrevivable"
+		icon_state = "letter_u"
+		desc = "Patient is deceased and cannot be cloned."
+		background_color = "#ab00e3"
+		level = TRIAGE_UNREVIVABLE
