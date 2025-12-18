@@ -1,8 +1,8 @@
 ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 /obj/machinery/disposal/extradimensional
 	deconstruct_flags = DECON_NONE
-	_health = INFINITY // TODO: figure out what happens when these are destroyed so they don't need to be immortal
-	_max_health = INFINITY
+	_health = 500
+	_max_health = 500
 	SYNDICATE_STEALTH_DESCRIPTION("You can't see the bottom.", null)
 
 /obj/machinery/disposal/extradimensional/flush()
@@ -32,6 +32,11 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 /obj/machinery/disposal/extradimensional/proc/on_flushed(atom/movable/AM)
 	return
 
+/obj/machinery/disposal/extradimensional/ex_act(severity)
+	src.set_broken()
+	return
+
+
 // ------------ ENTRANCE ------------ //
 /obj/machinery/disposal/extradimensional/host
 	var/prefab_path = /datum/mapPrefab/allocated/syndicate_hideout
@@ -59,4 +64,18 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 	AM.set_loc(src)
 
 /obj/machinery/disposal/extradimensional/exit/proc/on_prefab_exit(atom/movable/AM, atom/exit)
+	if(!exit)
+		var/list/potential_exits = list()
+		for_by_tcl(chute, /obj/machinery/disposal)
+			if(get_z(chute) == Z_LEVEL_STATION && istype(get_area(chute), /area/station))
+				potential_exits |= chute
+		exit = pick(potential_exits)
+	if(!exit) //Enjoy your pocket dimension for eternity.
+		src.go_out(AM)
+		if(ismob(AM))
+			boutput(AM, SPAN_ALERT("The chute couldn't find an exit, you're trapped inside forever..."))
+		return
 	AM.set_loc(exit)
+
+/obj/machinery/disposal/extradimensional/exit/ex_act(severity)
+	return
