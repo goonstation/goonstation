@@ -40,15 +40,39 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 // ------------ ENTRANCE ------------ //
 /obj/machinery/disposal/extradimensional/host
 	var/prefab_path = /datum/mapPrefab/allocated/syndicate_hideout
+	var/datum/component/extradimensional_storage/dimension_component
 
 /obj/machinery/disposal/extradimensional/host/New()
 	. = ..()
-	var/datum/component/extradimensional_storage/dimension_component = src.AddComponent(/datum/component/extradimensional_storage/prefab, src.prefab_path)
+	src.dimension_component = src.AddComponent(/datum/component/extradimensional_storage/prefab, src.prefab_path)
 	dimension_component.exit = src
 
+/obj/machinery/disposal/extradimensional/host/disposing()
+	//Violently eject everything inside!
+	var/turf/my_turf = get_turf(src)
+	var/list/ignored_types = list(/obj/machinery/light, /obj/machinery/door, /obj/mesh, /obj/window, /obj/item/device/radio/intercom)
+	for(var/atom/movable/AM in REGION_TILES(src.dimension_component.region))
+		if(istypes(AM, ignored_types))
+			continue
+		if(ismob(AM) || isobj(AM))
+			AM.set_loc(my_turf)
+			//Following stolen from white holes
+			var/turf_search_dist = 64
+			var/angle = rand(0, 360)
+			var/turf/T = null
+			while(isnull(T) && turf_search_dist >= 0)
+				T = locate(
+					round(my_turf.x + cos(angle) * turf_search_dist),
+					round(my_turf.y + sin(angle) * turf_search_dist),
+					my_turf.z
+				)
+				turf_search_dist -= 4
+			AM.throw_at(T, rand(5, 30), randfloat(1, 3), allow_anchored=TRUE, throw_type = THROW_PHASE)
+	src.visible_message(SPAN_ALERT("<b>[src] violently ejects everything inside as the pocket dimension collapses!</b>"))
+	. = ..()
+
 /obj/machinery/disposal/extradimensional/host/on_flushed(atom/movable/AM)
-	var/datum/component/extradimensional_storage/dimension_component = src.GetComponent(/datum/component/extradimensional_storage)
-	dimension_component.on_entered(AM)
+	src.dimension_component.on_entered(AM)
 
 // ------------ EXIT ------------ //
 
@@ -64,7 +88,7 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 	AM.set_loc(src)
 
 /obj/machinery/disposal/extradimensional/exit/proc/on_prefab_exit(atom/movable/AM, atom/exit)
-	if(!exit)
+	if(!exit || QDELETED(exit))
 		var/list/potential_exits = list()
 		for_by_tcl(chute, /obj/machinery/disposal)
 			if(get_z(chute) == Z_LEVEL_STATION && istype(get_area(chute), /area/station))
@@ -79,3 +103,77 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 
 /obj/machinery/disposal/extradimensional/exit/ex_act(severity)
 	return
+
+// ------------ CONVERTER ------------ //
+/obj/item/device/disposals_hijacker
+	name = "disposals hijacker"
+	desc = "A highly experimental piece of syndicate tech capable of manifesting an entire pocket dimension inside of a disposals unit."
+	icon_state = "disposals_hijacker"
+	var/obj/machinery/disposal/extradimensional/host/dimension_host
+
+	pickup(mob/user)
+		. = ..()
+		if (src.dimension_host)
+			user.AddComponent(/datum/component/tracker_hud, src.dimension_host, "#b22c20")
+
+	dropped(mob/user)
+		. = ..()
+		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		arrow?.RemoveComponent()
+
+	afterattack(atom/target, mob/user)
+		if(!istype(target, /obj/machinery/disposal))
+			return ..()
+		if(src.dimension_host)
+			boutput(user, SPAN_ALERT("[src] can only maintain one pocket dimension at a time!"))
+			return
+		var/obj/machinery/disposal/target_chute = target
+		if(istype(target, /obj/machinery/disposal/extradimensional))
+			boutput(user, SPAN_ALERT("[src] detects existing dimensional energies in the target chute, and refuses to install a pocket dimension."))
+			return
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, TRUE, 0, 0.6)
+		actions.start(new/datum/action/bar/icon/disposals_hijack(src,target_chute), user)
+
+	proc/replace_chute(var/obj/machinery/disposal/target_chute, var/mob/user)
+		src.dimension_host = new(target_chute.loc)
+		user.AddComponent(/datum/component/tracker_hud, src.dimension_host, "#b22c20")
+		for(var/atom/movable/AM in target_chute)
+			AM.set_loc(src.dimension_host)
+		src.dimension_host.appearance = target_chute.appearance
+		src.dimension_host.dir = target_chute.dir
+		src.dimension_host.icon_style = target_chute.icon_style
+		src.dimension_host.light_style = target_chute.light_style
+		qdel(target_chute)
+
+/datum/action/bar/icon/disposals_hijack
+	duration = 4 SECONDS
+	interrupt_flags = INTERRUPT_MOVE  | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
+	var/obj/machinery/disposal/chute
+	var/obj/item/device/disposals_hijacker/hijacker
+
+	New(hijacker, chute)
+		src.hijacker = hijacker
+		src.chute = chute
+		src.icon = src.hijacker.icon
+		src.icon_state = src.hijacker.icon_state
+		..()
+
+	onUpdate()
+		..()
+		var/mob/mob_owner = src.owner
+		if(BOUNDS_DIST(mob_owner, src.chute) > 0 || src.chute == null || mob_owner == null || mob_owner.equipped() != src.hijacker)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		var/mob/mob_owner = src.owner
+		if(BOUNDS_DIST(mob_owner, src.chute) > 0 || src.chute == null || mob_owner == null || mob_owner.equipped() != src.hijacker)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		var/mob/mob_owner = src.owner
+		if(src.owner && istype(src.chute) && mob_owner.equipped() == src.hijacker)
+			src.hijacker.replace_chute(src.chute, src.owner)
