@@ -87,6 +87,7 @@
 		else
 			Tx += rand(-10, 10)
 			Ty += rand(-10, 10)
+
 		playsound(locate(Tx, Ty, 1), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
 		new boom (locate(Tx, Ty, 1))
 

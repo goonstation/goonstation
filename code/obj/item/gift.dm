@@ -126,6 +126,7 @@
 	var/random_icons = TRUE
 	var/mob/trapped_player
 	var/boxhealth
+	var/go_boom = FALSE
 
 	New()
 		. = ..()
@@ -133,6 +134,27 @@
 		if (src.random_icons)
 			src.icon_state = "[(prob(1) && prob(1)) ? "strange" : "gift[rand(1,3)]"]-[pick("r", "rs", "g", "gs")]"
 
+/obj/item/gift/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
+	. = ..()
+	if (isgrinch(thrown_by))
+		src.go_boom = TRUE
+
+/obj/item/gift/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+	. = ..()
+	if (src.go_boom)
+		explosion(thr, get_turf(hit_atom), 0, 0.75, 1.5, 3)
+		new/obj/effects/explosion/tiny_baby(get_turf(hit_atom))
+		for (var/atom/movable/thing in src.contents)
+			src.contents -= thing
+			thing.set_loc(get_turf(src))
+		qdel(src)
+
+/obj/item/gift/throw_end(list/params, turf/thrown_from)
+	. = ..()
+	if (QDELETED(src))
+		return
+	if (src.go_boom)
+		src.go_boom = FALSE
 
 /obj/item/gift/mob_flip_inside(mob/user as mob)
 	..()

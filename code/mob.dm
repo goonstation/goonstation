@@ -1006,6 +1006,8 @@ TYPEINFO(/mob)
 	var/list/obj/item/to_unequip = src.get_unequippable()
 	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
+			if (throw_stuff && istype(W, /obj/item/storage/backpack)) // do this a different way if ever adding true grinches to the actual game
+				return
 			src.remove_item(W)
 			if (W)
 				W.set_loc(drop_loc || src.loc)

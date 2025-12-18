@@ -17,6 +17,8 @@
 			return FALSE
 		else
 			H = src.owner.current
+		var/obj/item/heart = H.organHolder.get_organ("heart")
+		heart.transform = matrix(heart.transform, 3, MATRIX_SCALE)
 		var/datum/abilityHolder/grinch/A = H.get_ability_holder(/datum/abilityHolder/grinch)
 		if (!A)
 			src.ability_holder = H.add_ability_holder(/datum/abilityHolder/grinch)
