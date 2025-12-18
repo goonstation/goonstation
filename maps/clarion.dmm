@@ -30977,10 +30977,6 @@
 /obj/machinery/vending/monkey/research,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
-"qcB" = (
-/obj/tree/snow_random,
-/turf/unsimulated/floor/auto/dirt,
-/area/space)
 "qcL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -91005,7 +91001,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ker
 aaa
 aaa
 aaa
@@ -91911,7 +91907,7 @@ aaa
 aaa
 aaa
 olW
-qcB
+olW
 olW
 olW
 olW

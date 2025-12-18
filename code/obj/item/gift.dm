@@ -201,6 +201,7 @@
 	pressure_resistance = 70
 	var/random_icons = 1
 	var/list/giftpaths = null
+	var/go_boom = FALSE
 
 	New()
 		..()
@@ -237,6 +238,21 @@
 			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + questionable_generic_gift_paths
 			..()
+
+/obj/item/a_gift/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
+	. = ..()
+	if (isgrinch(thrown_by))
+		src.go_boom = TRUE
+
+/obj/item/a_gift/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+	. = ..()
+	if (src.go_boom)
+		explosion(thr, get_turf(hit_atom), 0, 0.75, 1.5, 3)
+		new/obj/effects/explosion/tiny_baby(get_turf(hit_atom))
+		for (var/atom/movable/thing in src.contents)
+			src.contents -= thing
+			thing.set_loc(get_turf(src))
+		qdel(src)
 
 /obj/item/a_gift/attack_self(mob/M as mob)
 	if (!islist(giftpaths) || !length(giftpaths))
