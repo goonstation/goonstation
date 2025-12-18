@@ -657,17 +657,19 @@ proc/compare_ornament_score(list/a, list/b)
 		else return ..()
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
-		if (ismob(A))
-           			var/mob/living/carbon/human/H
-			if (ishuman(A))
-				H = A
+		var/mob/living/carbon/human/H
+		if (!ismob(A))
+			return
+
+		if (ishuman(A))
+			H = A
 			if(isgrinch(H))
 				random_brute_damage(H, 12)
+				modify_christmas_cheer(5)
 				boutput(H, SPAN_ALERT("You're pelted by a snowball, damaging your soul itself with the spacemas cheer!"))
 				if (prob(5))
 					H.changeStatus("unconscious", 2 SECONDS)
 					H.changeStatus("knockdown", 2 SECONDS)
-				modify_christmas_cheer(5)
 			src.hit(A)
 		if (src.bites_left <= 0)
 			src.visible_message("[src] collapses into a poof of snow!")
