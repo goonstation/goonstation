@@ -29,7 +29,7 @@
 
 		if (istype(customised_reagents))
 			LAZYLISTADDUNIQUE(src.faction, FACTION_WIZARD)
-			src.desc = "An elemental entity composed mainly of [src.reagents.get_master_reagent_name()], conjured by a wizard."
+			src.desc = "An elemental entity composed mainly of [customised_reagents.get_master_reagent_name()], conjured by a wizard."
 			CustomizeGolem(customised_reagents)
 		else
 			CustomizeGolem(src.reagents)
