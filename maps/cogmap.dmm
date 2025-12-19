@@ -36686,9 +36686,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
 /obj/table/auto,
 /obj/item/disk/data/floppy/read_only/network_progs{
 	pixel_x = -7;
@@ -61749,6 +61746,9 @@
 /obj/item/circuitboard/robotics{
 	pixel_x = -2;
 	pixel_y = 8
+	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
