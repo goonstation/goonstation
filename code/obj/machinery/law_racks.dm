@@ -239,7 +239,7 @@
 		damage = damage - min(damage,3) //bullet resist
 		if (damage < 1)
 			return
-		if (istype(P.proj_data,/datum/projectile/laser/heavy/law_safe))
+		if (P.proj_data.law_rack_safe)
 			src.visible_message(SPAN_ALERT("The [src]'s shielding absorbs \the [P]!"))
 			return
 
