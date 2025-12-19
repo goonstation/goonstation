@@ -8,6 +8,7 @@
 
 	cast(atom/target)
 		. = ..()
+		src.holder.owner.emote("laugh")
 		actions.start(new/datum/action/bar/private/evil_grin(), src.holder.owner)
 
 /datum/action/bar/private/evil_grin
@@ -17,6 +18,7 @@
 
 	onEnd()
 		. = ..()
+		playsound(src.owner, "sound/effects/grunch_[pick(1, 2, 3)].ogg", 120, 1)
 		src.people_used_on += src.owner
 		for (var/mob/living/carbon/human/person in view(6, src.owner))
 			if (isgrinch(person))

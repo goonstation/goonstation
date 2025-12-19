@@ -24,11 +24,12 @@
 			return TRUE
 
 		. = ..()
+		M.emote("scream")
 		actions.start(new/datum/action/bar/private/icon/grinch_transform(src), M)
 		return FALSE
 
 /datum/action/bar/private/icon/grinch_transform
-	duration = 5 SECONDS
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
@@ -66,6 +67,7 @@
 
 		var/mob/living/carbon/human/M = owner
 		var/obj/effects/explosion/explo = /obj/effects/explosion/
+		playsound(M, 'sound/impact_sounds/Flesh_Break_2.ogg', 15, 1)
 		new explo (get_turf(M))
 		M.set_mutantrace(/datum/mutantrace/grinch)
 		M.unequip_all(throw_stuff=TRUE)
