@@ -84,9 +84,7 @@
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_FLOATING, "gravity")
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
-			animate(src.owner, transform = matrix(), time = 1)
-			SPAWN (11) // HACK: 1 longer than animate_drift SPAWN timer :/
-				animate(src.owner, transform = matrix(), time = 1)
+			animate(src.owner, flags=ANIMATION_END_LOOP, tag="grav_drift")
 		if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
 			;
 		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)

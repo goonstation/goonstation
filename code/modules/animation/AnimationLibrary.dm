@@ -885,7 +885,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (A)
 			var/matrix/M = matrix(A.transform)
 			var/initial_y = A.pixel_y
-			animate(A, pixel_y = initial_y + 4, time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+			animate(A, pixel_y = initial_y + 4, time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL, tag="grav_drift")
 			animate(pixel_y = initial_y, transform = M, time = floatspeed, loop = loopnum, easing = QUAD_EASING)
 	return
 
