@@ -125,6 +125,22 @@
 	mod = "root-"
 	can_replace_with_stuff = TRUE
 	var/hits = 0
+	var/entrance = TRUE
+
+	attack_hand(mob/user)
+		if (isgrinchmind(user))
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "stall")
+			user.visible_message("<b>[user]</b> vanishes through the dense Grinchian wall felt!")
+			animate(user, 2 SECONDS, alpha = 0)
+			SPAWN(2 SECONDS)
+				if (entrance)
+					user.set_loc(get_turf(locate(268, 93, 1)))
+				else
+					user.set_loc(get_turf(locate(265, 93, 1)))
+				animate(user, 2 SECONDS, alpha = 255)
+				user.visible_message("<b>[user]</b> appears from under the earth!")
+				SPAWN(2 SECONDS)
+					REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "stall")
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/mining_tools/pick/santa))

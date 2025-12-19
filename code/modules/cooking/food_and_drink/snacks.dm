@@ -361,6 +361,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = list("refried_beans"=30)
 	food_effects = list("food_deep_fart", "food_space_farts")
 
+	canned
+		name = "canned beans"
+		desc = "This must be... The finest that soviet cuisine has to offer!!!"
+		icon_state = "cannedbeans"
+		food_color = "#964830"
+		initial_reagents = list()
+
 /obj/item/reagent_containers/food/snacks/soup/chili
 	name = "chili con carne"
 	desc = "Meat pieces in a spicy pepper sauce. Delicious."

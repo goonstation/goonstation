@@ -827,6 +827,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 	light_mod = "wall-"
 	mod = "norn-R-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
+	can_replace_with_stuff = TRUE
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/supernorn/wood)
