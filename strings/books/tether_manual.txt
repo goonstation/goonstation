@@ -39,9 +39,9 @@
 <h3>INDICATOR LIGHTS</h3>
 <p><i>The Gravi-Tonne™ Tether uses multiple indicators for quick visual checks of system operation.</i></p>
 <ul>
-	<li>Battery Charge Indicator: top-right light set</li>
-	<li>Lock Indicator: Yellow if locked, Green if unlocked</li>
-	<li>Intensity Indicator:Left-side arc lights</li>
+	<li>Battery Charge Indicator: top-right light group</li>
+	<li>Lock Indicator: Main screen is yellow if locked</li>
+	<li>Intensity Indicator: Lights on the left edge </li>
 </ul>
 
 <h3>STATUS INDICATOR</h3>
