@@ -261,7 +261,7 @@
 		bodytemp.desc = "The temperature feels fine."
 
 		gravity = create_screen("gravity", "Gravity", src.icon_hud, "gravity2", "EAST-3, NORTH", HUD_LAYER, tooltip_options = list("theme" = "gravInd02"))
-		gravity.desc = "You feel like you're on Earth.<br>No special effects."
+		gravity.desc = GRAVITY_DESC_NORMAL
 
 		oxygen = create_screen("oxygen","Suffocation Warning", src.icon_hud, "oxy0", "EAST-5, NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusOxy"))
 		oxygen.desc = "This indicator warns that you are currently suffocating. You will take oxygen damage until the situation is remedied."
@@ -1014,22 +1014,22 @@
 		switch(master.gforce)
 			if (GRAVITY_MOB_REGULAR_THRESHOLD to 1)
 				stage = 2
-				src.gravity.desc = "You feel like you're on Earth.<br>No special effects."
+				src.gravity.desc = GRAVITY_DESC_NORMAL
 			if (-INFINITY to 0)
 				stage = 0
-				src.gravity.desc = "You feel floaty.<br>But that's OK."
+				src.gravity.desc = GRAVITY_DESC_NONE
 			if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
 				stage = 1
-				src.gravity.desc = "You feel a little floaty.<br>Unable to sprint, may cause space nausea."
+				src.gravity.desc = GRAVITY_DESC_LOW
 			if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
 				stage = 4
-				src.gravity.desc = "You feel extremely heavy.<br>Health issues may occur."
+				src.gravity.desc = GRAVITY_DESC_EXTREME
 			if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
 				stage = 3
-				src.gravity.desc = "You feel heavy.<br>Movement speed reduced."
+				src.gravity.desc = GRAVITY_DESC_HIGH
 			if (1 to GRAVITY_MOB_HIGH_THRESHOLD)
 				stage = 2
-				src.gravity.desc = "You feel like you're on Earth.<br>No special effects."
+				src.gravity.desc = GRAVITY_DESC_NORMAL
 		src.gravity.icon_state = "gravity[stage]"
 		src.gravity.tooltip_options = list("theme" = "gravInd[stage]")
 

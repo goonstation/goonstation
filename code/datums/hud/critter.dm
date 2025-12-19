@@ -472,22 +472,22 @@
 	switch(master.gforce)
 		if (GRAVITY_MOB_REGULAR_THRESHOLD to 1)
 			stage = 2
-			src.gravity.desc = "You feel like you're on Earth.<br>No special effects."
+			src.gravity.desc = GRAVITY_DESC_NORMAL
 		if (-INFINITY to 0)
 			stage = 0
-			src.gravity.desc = "You feel floaty.<br>But that's OK."
+			src.gravity.desc = GRAVITY_DESC_NONE
 		if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
 			stage = 1
-			src.gravity.desc = "You feel a little floaty.<br>Unable to sprint, may cause space nausea."
+			src.gravity.desc = GRAVITY_DESC_LOW
 		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
 			stage = 4
-			src.gravity.desc = "You feel extremely heavy.<br>Health issues may occur."
+			src.gravity.desc = GRAVITY_DESC_EXTREME
 		if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
 			stage = 3
-			src.gravity.desc = "You feel heavy.<br>Movement speed reduced."
+			src.gravity.desc = GRAVITY_DESC_HIGH
 		if (1 to GRAVITY_MOB_HIGH_THRESHOLD)
 			stage = 2
-			src.gravity.desc = "You feel like you're on Earth.<br>No special effects."
+			src.gravity.desc = GRAVITY_DESC_NORMAL
 	src.gravity.icon_state = "gravity[stage]"
 	src.gravity.tooltip_options = list("theme" = "gravInd[stage]")
 

@@ -16,6 +16,11 @@
 #define GRAVITY_EFFECT_HIGH 3
 #define GRAVITY_EFFECT_EXTREME 4
 
+#define GRAVITY_DESC_NONE "You feel floaty, but that's OK."
+#define GRAVITY_DESC_LOW "You feel lighter than usual."
+#define GRAVITY_DESC_NORMAL "You feel like you're on Earth."
+#define GRAVITY_DESC_HIGH "You feel heavier than usual."
+#define GRAVITY_DESC_EXTREME "You feel extremely heavy."
 // gravity tethers
 
 // balance defines
