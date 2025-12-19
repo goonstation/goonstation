@@ -22,19 +22,18 @@
 
 /datum/game_mode/extended/announce()
 	boutput(world, "<B>The current game mode is - Extended!</B>")
-	boutput(world, "<B>Just have fun!</B>")
+	boutput(world, "<B>Just have fun........</B>")
 
 /datum/game_mode/extended/post_setup()
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-	SPAWN(30 MINUTES)
+	SPAWN(3 MINUTES)
 		santa_flyover(2, 170, 1, 130)
 	SPAWN(10 MINUTES)
 		santa_flyover(299, 205, 3, 90, WEST)
-	SPAWN(1 MINUTES) // "hohoho I tapped into your fuckin communications come by the tree for my final pass!"
+	SPAWN(20 MINUTES) // "hohoho I tapped into your fuckin communications come by the tree for my final pass!"
+		command_alert("Ho Ho Hoo, I've tapped into your communications! I'll be making one FINAL fly over, so gather under the Spacemas tree right away!", "Final Flyover", 'sound/misc/announcement_1.ogg', alert_origin = ALERT_SANTA)
 		santa_flyover(1, 185, 4, 50, grinched = TRUE)
-
-/obj/sleigh
 
 /mob/dummy_pilot
 	name = ""
@@ -141,7 +140,9 @@
 		for(var/o=0,o<=2,o++)
 			move_forward(pilot, SOUTHWEST, 4)
 			sleep(4)
-	src.grinches_active = TRUE
+	SPAWN (10 SECONDS)
+		command_alert("Is this thing on? BEWARE, beware you damned Whos. We've taken your most precious Santy Claus... AND his food!! You'll NEVER find him, now Spacemas will be ours! End communications. End. END.(Rapid button slamming can be heard.)", "Grinchian Declaration", 'sound/misc/announcement_1.ogg', alert_origin = ALERT_SANTA)
+		src.grinches_active = TRUE
 
 /datum/game_mode/extended/proc/move_forward(var/mob/dummy_pilot/pilot, var/direction, var/speed = 1)
 	var/glide = 0

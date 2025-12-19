@@ -1500,9 +1500,29 @@ TYPEINFO(/area/diner)
 	name = "Pasiphae Command Center"
 	icon_state = "blue"
 
-/area/grinchcave
+/area/grinchmap
+	name = "Grinchmaparea"
+	icon_state = "orange"
+	requires_power = FALSE
+
+/area/grinchmap/grinchcave
 	name = "Grinch Cave"
 	icon_state = "green"
+
+/area/grinchmap/wintersauna
+	name = "Small Sauna"
+	icon_state = "blue"
+
+/area/grinchmap/fisherhut
+	name = "Ice Fisher's Hut"
+	icon_state = "red"
+
+/area/grinchmap/treefarm
+	name = "Tree Farm Booth"
+	icon_state = "green"
+
+/area/grinchmap/catering
+	name = "Catering Complex"
 
 // Gore's Z5 Space generation areas //
 ABSTRACT_TYPE(/area/prefab)

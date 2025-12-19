@@ -10,6 +10,7 @@
 #endif
 #define ALERT_GENERAL "Frontier Authority Update"
 #define ALERT_STATION "Automated Mainframe Alert"
+#define ALERT_SANTA "Sleigh Announcement"
 
 // used to style player-made announcements; the titles don't actually show in-game
 #define ALERT_DEPARTMENT "Department Announcement"
