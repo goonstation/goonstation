@@ -273,12 +273,10 @@ proc/recalculate_station_tether_gforce()
 /obj/machinery/gravity_tether/station/begin_gravity_change(new_intensity)
 	. = ..()
 
+	// TODO: Make this a real packet to the announcement computer
 	// emagging or a nearby signal-blocker stops the announcement
-	if (!src.emagged && !global.check_for_radio_jammers(src)) // TODO: Make this a real packet to the announcement computer
-		var/time_remaining = src.start_change_at - TIME / 10
-		if (global.gravity_tether_gradual_intensity_change)
-			time_remaining = abs(src.target_intensity - src.intensity) / src.intensity_change_rate * MACHINE_PROC_INTERVAL
-		command_alert("The [station_or_ship()]-wide gravity tether will begin shifting to [new_intensity]G in [time_remaining] seconds.", "Gravity Tether Warning", alert_origin = ALERT_STATION)
+	if (!src.emagged && !global.check_for_radio_jammers(src))
+		command_alert("The [station_or_ship()]-wide gravity tether will begin shifting to [new_intensity]G within [src.get_time_left_string()].", "Gravity Change Warning", alert_origin = ALERT_STATION)
 
 /obj/machinery/gravity_tether/station/shake_affected()
 	for(var/client/C in clients)

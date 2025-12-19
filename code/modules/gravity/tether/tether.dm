@@ -416,7 +416,14 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		src.cell = null
 		src.UpdateIcon()
 
-/obj/machinery/gravity_tether
+/obj/machinery/gravity_tether/proc/get_time_left_string()
+	var/time_remaining = round((src.start_change_at - TIME) / 10)
+	if (global.gravity_tether_gradual_intensity_change)
+		time_remaining = abs(src.target_intensity - src.intensity) / src.intensity_change_rate * MACHINE_PROC_INTERVAL
+	if (time_remaining > 60)
+		. = "[(time_remaining / 60) % 60]:[add_zero(num2text(time_remaining % 60), 2)]"
+	else
+		. = "[time_remaining] seconds"
 
 /obj/machinery/gravity_tether/attack_hand(mob/user)
 	if(..())
@@ -426,16 +433,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return
 
 	if (src.changing_gravity)
-		var/time_remaining = src.start_change_at - TIME / 10
-		if (global.gravity_tether_gradual_intensity_change)
-			time_remaining = abs(src.target_intensity - src.intensity) / src.intensity_change_rate * MACHINE_PROC_INTERVAL
-		var/time_string
-		if (time_remaining > 60)
-			time_string = "[(time_remaining / 60) % 60]:[add_zero(num2text(time_remaining % 60), 2)]"
-		else
-			time_string = "[time_remaining] seconds"
-
-		src.say("Processing shift. [time_string] remaining.")
+		src.say("Processing shift, [src.get_time_left_string()] remaining.")
 		return
 
 	var/new_intensity = tgui_input_number(user, "Running at [src.intensity]G. Change intensity?", "Gravity Tether", src.intensity, src.maximum_intensity, round_input=FALSE)
