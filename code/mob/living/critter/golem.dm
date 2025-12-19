@@ -21,21 +21,19 @@
 	is_npc = TRUE
 	var/reagent_id = null
 
-	New()
-		..()
+	New(newLoc, var/datum/reagents/customised_reagents)
+		..(newLoc)
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/golem, src) // Slow strong golems
 		src.add_stam_mod_max("golem", 100)
 		src.create_reagents(1000)
-		SPAWN(0) // Needed for wizard AAAAAAAAA
-			if (src.reagents && !src.reagents.total_volume)
-				if (length(all_functional_reagent_ids) > 0)
-					src.reagent_id = pick(all_functional_reagent_ids)
-				else
-					src.reagent_id = "water"
-				src.reagents.add_reagent(src.reagent_id, 10)
-			src.color = src.reagents?.get_master_color()
-			src.name = "[capitalize(src.reagents?.get_master_reagent_name())] Golem"
-			src.real_name = src.name
+
+		if (customised_reagents)
+			LAZYLISTADDUNIQUE(src.faction, FACTION_WIZARD)
+			src.desc = "An elemental entity composed mainly of [src.reagents.get_master_reagent_name()], conjured by a wizard."
+			CustomizeGolem(customised_reagents)
+		else
+			CustomizeGolem(src.reagents)
+
 		var/image/eyes = SafeGetOverlayImage("golem_eyes", 'icons/mob/critter/humanoid/golem.dmi', "golem-eyes", MOB_OVERLAY_BASE)
 		eyes.plane = PLANE_SELFILLUM
 		eyes.appearance_flags |= RESET_COLOR
@@ -68,13 +66,27 @@
 				return FALSE
 		return ..()
 
-	proc/CustomizeGolem(var/datum/reagents/CR) //customise it with the reagents in a container
-		for (var/current_id in CR.reagent_list)
-			var/datum/reagent/R = CR.reagent_list[current_id]
+	proc/CustomizeGolem(var/datum/reagents/custom_reagents) //customise it with the reagents in a container
+		if (!custom_reagents)
+			return
+
+		if (src.reagents?.total_volume)
+			src.reagents.clear_reagents()
+
+		if (!custom_reagents.total_volume)
+			if (length(all_functional_reagent_ids) > 0)
+				src.reagent_id = pick(all_functional_reagent_ids)
+			else
+				src.reagent_id = "water"
+			custom_reagents.add_reagent(src.reagent_id, 10)
+		src.color = custom_reagents?.get_master_color()
+		src.name = "[capitalize(custom_reagents?.get_master_reagent_name())] Golem"
+		src.real_name = src.name
+
+		for (var/current_id in custom_reagents.reagent_list)
+			var/datum/reagent/R = custom_reagents.reagent_list[current_id]
 			src.reagents.add_reagent(current_id, min(R.volume * 5, 50))
 
-		LAZYLISTADDUNIQUE(src.faction, FACTION_WIZARD)
-		src.desc = "An elemental entity composed mainly of [src.reagents.get_master_reagent_name()], conjured by a wizard."
 
 	death(var/gibbed)
 		..()
