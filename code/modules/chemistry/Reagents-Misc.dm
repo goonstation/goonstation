@@ -1687,6 +1687,16 @@ datum
 						M.reagents.add_reagent("sewage",amt)
 						src.reaction_mob(M,INGEST,amt,null,amt)
 				return
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (prob(7))
+					M.emote(pick("twitch","drool","moan"))
+					M.take_toxin_damage(1 * mult)
+					M.nauseate(2)
+				..()
+				return
+
 		ants
 			name = "ants"
 			id = "ants"
