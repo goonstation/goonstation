@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 
 	// Decrement a tracked atom's signal subscription count.
 	src.tracked_atoms_with_subcount[tracked_atom] -= 1
-	if (!length(src.tracked_atoms_with_subcount[tracked_atom]))
+	if (!src.tracked_atoms_with_subcount[tracked_atom])
 		src.tracked_atoms_with_subcount -= tracked_atom
 		src.UnregisterSignal(tracked_atom, XSIG_MOVABLE_TURF_CHANGED)
 
