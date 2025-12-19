@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
+	stops_space_move = TRUE
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
