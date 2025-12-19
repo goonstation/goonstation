@@ -1471,11 +1471,13 @@ proc/debug_map_apc_count(delim,zlim)
 		help = "Displays the amount of objects in certain range in a selected hashmap on each turf"
 
 		var/datum/spatial_hashmap/hashmap = null
+		var/norm = null
 		var/range = null
 
 		OnEnabled(var/client/C)
 			usr = C.mob
 			src.hashmap = global.tgui_input_list(C, "Which spatial hashmap do you wish to view?", "Select Spatial Hashmap", global.by_type[/datum/spatial_hashmap])
+			src.norm = global.tgui_input_list(C, "Select a norm to use", "Norm Selection", list("Manhattan", "Supremum", "Exact Supremum"))
 			src.range = global.tgui_input_number(C, "Enter a range", "Range Selection", 5, 100, 1)
 
 		GetInfo(turf/theTurf, image/debugoverlay/img)
@@ -1483,7 +1485,15 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.alpha = 0
 				return
 
-			var/count = length(src.hashmap.fast_manhattan(theTurf, src.range))
+			var/count = 0
+			switch (src.norm)
+				if ("Manhattan")
+					count = length(src.hashmap.fast_manhattan(theTurf, src.range))
+				if ("Supremum")
+					count = length(src.hashmap.supremum(theTurf, src.range))
+				if ("Exact Supremum")
+					count = length(src.hashmap.exact_supremum(theTurf, src.range))
+
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))

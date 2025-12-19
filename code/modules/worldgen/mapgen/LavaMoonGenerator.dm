@@ -137,7 +137,7 @@
 		return
 
 	if (!src.near_station && turfs[1].z == Z_LEVEL_STATION)
-		src.near_station = new(cell_size = 10)
+		src.near_station = new(cell_size = 10, name = "Near-Station Turfs")
 
 		var/list/area/station_areas = global.get_accessible_station_areas()
 		var/list/turf/station_turfs = null

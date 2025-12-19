@@ -22,9 +22,9 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 /datum/biome/New()
 	. = ..()
 	if (src.minimum_fauna_distance)
-		src.fauna_hashmap = new(cell_size = src.minimum_fauna_distance)
+		src.fauna_hashmap = new(cell_size = src.minimum_fauna_distance, name = "Biome Fauna ([src.type])")
 	if (src.minimum_flora_distance)
-		src.flora_hashmap = new(cell_size = src.minimum_flora_distance)
+		src.flora_hashmap = new(cell_size = src.minimum_flora_distance, name = "Biome Flora ([src.type])")
 
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(var/turf/gen_turf, flags=0)

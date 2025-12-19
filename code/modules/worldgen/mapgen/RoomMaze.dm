@@ -62,7 +62,7 @@
 			LAGCHECK(LAG_MED)
 
 	proc/connect_nodes_by_spatial_distance(datum/bsp_tree/tree)
-		var/datum/spatial_hashmap/manual/spatial_map = new(depth = 1, cell_size = src.room_size * 2)
+		var/datum/spatial_hashmap/manual/spatial_map = new(depth = 1, cell_size = src.room_size * 2, name = "Room Maze Nodes")
 
 		var/center_x
 		var/center_y

@@ -9,6 +9,9 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	position.
  */
 /datum/spatial_hashmap
+	/// The debug name of this spatial hashmap.
+	var/name = null
+
 	/**
 	 *	A 3D grid of associative lists representing each cell of the hashmap, indexed by their 3D spatial axes. \
 	 *	The hashmap is defined in the following way:
@@ -47,7 +50,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	/// The z-component of the order of the hashmap, i.e. the number of cells in the z-direction.
 	VAR_PROTECTED/z_order = null
 
-/datum/spatial_hashmap/New(width = world.maxx, height = world.maxy, depth = world.maxz, cell_size)
+/datum/spatial_hashmap/New(width = world.maxx, height = world.maxy, depth = world.maxz, cell_size, name)
 	. = ..()
 	START_TRACKING
 
@@ -61,6 +64,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	src.x_order = ceil(width / src.cell_size)
 	src.y_order = ceil(height / src.cell_size)
 	src.z_order = depth
+	src.name = name
 
 	src.hashmap = new /list(src.z_order, src.y_order, src.x_order)
 	for (var/z in 1 to src.z_order)
