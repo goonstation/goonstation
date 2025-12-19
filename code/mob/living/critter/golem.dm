@@ -27,7 +27,7 @@
 		src.add_stam_mod_max("golem", 100)
 		src.create_reagents(1000)
 
-		if (customised_reagents)
+		if (istype(customised_reagents))
 			LAZYLISTADDUNIQUE(src.faction, FACTION_WIZARD)
 			src.desc = "An elemental entity composed mainly of [src.reagents.get_master_reagent_name()], conjured by a wizard."
 			CustomizeGolem(customised_reagents)
