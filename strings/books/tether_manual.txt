@@ -16,7 +16,7 @@
 <p>The Gravi-Tonne™ Tether has a front access door that holds the internal power capacitor. The tamper-resist security grate is withdrawn when the system is unlocked.</p>
 
 <h3>INTERNAL CELL REPLACEMENT</h3>
-<p>To replace the incernal capacitor:</p>
+<p>To replace the internal capacitor:</p>
 <ol>
 	<li>Unlock the machine with an <b>authorized ID</b>.</li>
 	<li>Carefully open the maintenance panel by <b>prying</b> it open.</li>
