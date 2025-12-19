@@ -60018,9 +60018,25 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/space_heater,
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/table/reinforced/auto,
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = -5;
+	pixel_x = -6
+	},
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5;
+	pixel_x = 7
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
@@ -64539,6 +64555,11 @@
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"ybb" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/space_heater,
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "ybw" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/secure/closet/security/forensics,
@@ -112462,7 +112483,7 @@ ljM
 aZs
 bpQ
 hxI
-hbl
+ybb
 hbl
 oeX
 mzL
