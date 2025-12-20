@@ -9477,7 +9477,7 @@
 /area/station/medical/medbay)
 "bLW" = (
 /obj/landmark/map{
-	name = "ATLAS"
+	name = "CLARION"
 	},
 /turf/unsimulated/wall/auto/adventure/hospital,
 /area/space)
