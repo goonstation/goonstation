@@ -3,7 +3,7 @@
 /// The last gforce value applied to mob
 /mob/var/gforce = 1
 
-/// Reset mob gforces  based on turf gravity
+/// Reset mob gforce based on turf gravity
 /mob/proc/reset_gravity()
 	return
 
