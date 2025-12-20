@@ -215,7 +215,7 @@
 	name = "Deploy Elf"
 	desc = ""
 	icon = 'icons/mob/santa_abilities.dmi'
-	icon_state = "santa-template"
+	icon_state = "santa_elf"
 
 	cast()
 		. = ..()
@@ -240,7 +240,7 @@
 	name = "Cancel Deployment"
 	desc = ""
 	icon = 'icons/mob/santa_abilities.dmi'
-	icon_state = "santa-template"
+	icon_state = "santa-return"
 
 	cast()
 		. = ..()
