@@ -3446,35 +3446,66 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.health_change += 0.66
-			// compost now actually tastes like shit
+			// Compost now actually tastes like shit! Ew!
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == INGEST)
-					boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
-					SPAWN(1 SECOND)
-						if(!isdead(M) && volume >= 1)
-							var/vomit_message = SPAN_ALERT("[M] pukes violently!")
-							M.vomit(0, null, vomit_message)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						// People with synth leg can absorb shit with no consequences. Disgusting.
+						if(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT)
+							boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened absorving this!")))
+						else
+							// if not synth leg
+							boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
+							SPAWN(1 SECOND)
+							if(!isdead(M) && volume >= 1)
+								var/vomit_message = SPAN_ALERT("[M] pukes violently!")
+								M.vomit(0, null, vomit_message)
+					else
+						// if not leg or human (definitely could get less reused code here)
+						boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
+						SPAWN(1 SECOND)
+							if(!isdead(M) && volume >= 1)
+								var/vomit_message = SPAN_ALERT("[M] pukes violently!")
+								M.vomit(0, null, vomit_message)
 				else
-					boutput(M, SPAN_ALERT("Oh god! It smells horrific! What the fuck IS this?!"))
-					if (prob(50))
-						boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
-						var/amt = min(volume/100,1)
-						src.holder.remove_reagent("poo",amt)
-						M.reagents.add_reagent("poo",amt)
-						src.reaction_mob(M,INGEST,amt,null,amt)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						// nothing bad happens with synthlegs
+						if(!(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT))
+							boutput(M, SPAN_ALERT("Oh god! It smells horrific! What the fuck IS this?!"))
+							if (prob(50))
+								boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
+								var/amt = min(volume/100,1)
+								src.holder.remove_reagent("poo",amt)
+								M.reagents.add_reagent("poo",amt)
+								src.reaction_mob(M,INGEST,amt,null,amt)
+					else
+						boutput(M, SPAN_ALERT("Oh god! It smells horrific! What the fuck IS this?!"))
+						if (prob(50))
+							boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
+							var/amt = min(volume/100,1)
+							src.holder.remove_reagent("poo",amt)
+							M.reagents.add_reagent("poo",amt)
+							src.reaction_mob(M,INGEST,amt,null,amt)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if(prob(20))
-					if(isliving(M) && probmult(15))
-						var/mob/living/L = M
-						L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
-				if (prob(7))
-					M.emote(pick("twitch","drool","moan"))
-					M.take_toxin_damage(1 * mult)
-					M.nauseate(2)
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT)
+						M.take_toxin_damage(-0.25 * mult)
+				else
+					if(prob(20))
+						if(isliving(M) && probmult(15))
+							var/mob/living/L = M
+							L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+					if (prob(7))
+						M.emote(pick("twitch","drool","moan"))
+						M.take_toxin_damage(1 * mult)
+						M.nauseate(2)
 				..()
 				return
 
