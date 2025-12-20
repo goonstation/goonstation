@@ -205,23 +205,23 @@ var/global/list/mapNames = list(
 			src.load_shuttle()
 
 	proc/load_shuttle(path=null, transit_path=null, load_loc_override=null)
-		if(isnull(path))
-			path = src.get_shuttle_path()
+		// if(isnull(path))
+		// 	path = src.get_shuttle_path()
 
-		var/datum/mapPrefab/shuttle/shuttlePrefab = null
-		if(istype(path, /datum/mapPrefab/shuttle))
-			shuttlePrefab = path
-		else
-			shuttlePrefab = new(path, path, escape_dir, FALSE)
+		// var/datum/mapPrefab/shuttle/shuttlePrefab = null
+		// if(istype(path, /datum/mapPrefab/shuttle))
+		// 	shuttlePrefab = path
+		// else
+		// 	shuttlePrefab = new(path, path, escape_dir, FALSE)
 
 		if(isnull(transit_path))
 			transit_path = src.get_shuttle_transit_path()
 
-		var/turf/start = load_loc_override || pick_landmark(LANDMARK_SHUTTLE_CENTCOM)
-		if(!start)
-			return FALSE
+		// var/turf/start = load_loc_override || pick_landmark(LANDMARK_SHUTTLE_CENTCOM)
+		// if(!start)
+		// 	return FALSE
 
-		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
+		// shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
 
 		var/dmm_suite/dmm_suite = new(debug_id="shuttle [transit_path]")
 		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
