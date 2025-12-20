@@ -929,8 +929,7 @@
 		var/target_dir = get_dir(user,target)
 		if(!target_dir)
 			target_dir = user.dir
-		if (!istype(T, /turf/space) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir &&!isghostcritter(user))
-
+		if (T.effective_gforce > 0 && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir &&!isghostcritter(user))
 			user.changeStatus("knockdown", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
 			var/turf/target_turf = get_step(user, target_dir)
