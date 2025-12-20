@@ -162,6 +162,15 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "strange-g"
 
+	disposing()
+		var/obj/effects/explosion/boom = /obj/effects/explosion
+		playsound(get_turf(src), "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
+		new boom (get_turf(src))
+		animate(src, time=2 SECONDS, alpha = 0)
+		. = ..()
+		SPAWN(10 SECONDS)
+			command_alert("Crew of the Clarion, we've just confirmed that the mother grinch has been destroyed. I repeat, the source of the Grinch's power is no more. We sent you here for this very purpose ALL ALONG and you shall all receive a bonus to your pay of four credits. Merry Spacemas!", "Spacemas is saved!", 'sound/misc/announcement_1.ogg', alert_origin = ALERT_GENERAL)
+
 /mob/living/critter/small_animal/grinch_larvae
 	name = "grinch larvae"
 	icon = 'icons/misc/critter.dmi'
