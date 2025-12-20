@@ -1010,6 +1010,9 @@ TYPEINFO(/mob)
 				continue
 			src.remove_item(W)
 			if (W)
+				if (ishuman(src) && istype(W, /obj/item/device/radio/headset))
+					var/mob/living/carbon/human/grinch = src
+					grinch.force_equip(new /obj/item/device/radio/headset/grinch(src), SLOT_EARS)
 				W.set_loc(drop_loc || src.loc)
 				W.dropped(src)
 				W.layer = initial(W.layer)

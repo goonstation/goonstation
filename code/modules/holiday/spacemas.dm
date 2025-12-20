@@ -270,6 +270,13 @@ TYPEINFO(/obj/machinery/bot/guardbot/xmas)
 	on_hit(atom/hit)
 		if (!iscarbon(hit))
 			return
+		if(isgrinch(hit))
+			random_brute_damage(hit, 8)
+			modify_christmas_cheer(5)
+			boutput(hit, SPAN_ALERT("You're pelted by a snowball, damaging your soul itself with the spacemas cheer!"))
+			if (prob(5))
+				hit.changeStatus("unconscious", 2 SECONDS)
+				hit.changeStatus("knockdown", 2 SECONDS)
 
 		var/mob/living/carbon/O = hit
 		if (!O.lying)
@@ -664,7 +671,7 @@ proc/compare_ornament_score(list/a, list/b)
 		if (ishuman(A))
 			H = A
 			if(isgrinch(H))
-				random_brute_damage(H, 12)
+				random_brute_damage(H, 16)
 				modify_christmas_cheer(5)
 				boutput(H, SPAN_ALERT("You're pelted by a snowball, damaging your soul itself with the spacemas cheer!"))
 				if (prob(5))

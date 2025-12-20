@@ -12,6 +12,7 @@
 #define RADIOC_SYNDICATE "#962121"
 #define RADIOC_SALVAGER "#A18146"
 #define RADIOC_OTHER "#800080"
+#define RADIOC_GRINCH "#70d35c"
 
 // Radio (headset etc) css classes.
 #define RADIOCL_STANDARD "rstandard"
@@ -28,6 +29,7 @@
 #define RADIOCL_SALVAGER "rsalvager"
 #define RADIOCL_INTERCOM_AI "rintercomai"
 #define RADIOCL_OTHER "rother"
+#define RADIOCL_GRINCH "rgrinch"
 
 // Frequency defines for headsets & intercoms (Convair880).
 /// Minimum "selectable" freq
@@ -61,6 +63,8 @@
 #define R_FREQ_INTERCOM_BRIDGE 1442
 #define R_FREQ_INTERCOM_MINING 1456
 
+#define R_FREQ_GRINCH 1486
+
 // let's start putting adventure zone factions in here
 #define R_FREQ_WIZARD 1089 // magic number, used in many magic tricks
 #define R_FREQ_INTERCOM_WIZARD 1089
@@ -73,7 +77,7 @@
 #define R_FREQ_BLACKLIST list(R_FREQ_DEFAULT, R_FREQ_NANOTRASEN, R_FREQ_COMMAND, R_FREQ_SECURITY, R_FREQ_DETECTIVE, R_FREQ_ENGINEERING, R_FREQ_RESEARCH, R_FREQ_MEDICAL,\
 R_FREQ_CIVILIAN, R_FREQ_SYNDICATE, R_FREQ_SALVAGER, R_FREQ_PIRATE, R_FREQ_GANG, R_FREQ_MULTI, R_FREQ_INTERCOM_MEDICAL, R_FREQ_INTERCOM_SECURITY, R_FREQ_INTERCOM_BRIG,\
 R_FREQ_INTERCOM_RESEARCH, R_FREQ_INTERCOM_ENGINEERING, R_FREQ_INTERCOM_CARGO, R_FREQ_INTERCOM_CATERING, R_FREQ_INTERCOM_AI, R_FREQ_INTERCOM_BRIDGE,\
-R_FREQ_INTERCOM_MINING, R_FREQ_WIZARD)
+R_FREQ_INTERCOM_MINING, R_FREQ_WIZARD, R_FREQ_GRINCH)
 
 proc/default_frequency_color(freq)
 	switch(freq)
@@ -123,6 +127,8 @@ proc/default_frequency_color(freq)
 			return RADIOC_COMMAND
 		if(R_FREQ_INTERCOM_BRIDGE)
 			return RADIOC_COMMAND
+		if(R_FREQ_GRINCH)
+			return RADIOC_GRINCH
 
 /proc/default_frequency_class(freq)
 	var/alist/frequencies_to_classes = alist(
@@ -143,6 +149,7 @@ proc/default_frequency_color(freq)
 		R_FREQ_PIRATE = RADIOCL_SYNDICATE,
 		R_FREQ_WIZARD = RADIOCL_CIVILIAN,
 		R_FREQ_GANG = RADIOCL_SYNDICATE,
+		R_FREQ_GRINCH = RADIOCL_GRINCH,
 	)
 	return frequencies_to_classes[freq] || RADIOCL_OTHER
 

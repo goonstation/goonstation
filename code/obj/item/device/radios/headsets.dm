@@ -70,6 +70,22 @@
 			src.secure_connections.Remove(sayToken)
 		src.set_secure_frequencies()
 
+/obj/item/device/radio/headset/grinch
+	name = "headset"
+	desc = "There's green fur stuck in the gaps of the plastic. Ugh."
+	icon_state = "grinch headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		"j" = R_FREQ_GRINCH,
+		)
+	icon_override = "grinch"
+	icon_tooltip = "grinch"
+
 /obj/item/device/radio/headset/wizard
 	name = "wizard headset"
 	desc = "A headset reversed engineered by only the highest of archmages for use by wizards. Immune to EMPs."

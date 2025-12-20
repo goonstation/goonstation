@@ -1356,10 +1356,6 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 		if(src.type == /turf/unsimulated/floor/auto/snow && prob(10))
 			src.icon_state = "snow[rand(1,5)]"
 
-	Uncrossed(atom/movable/AM)
-		. = ..()
-		src.snow_prints(AM)
-
 /turf/unsimulated/floor/auto/snow/rough
 	name = "snow"
 	desc = "some piled snow."

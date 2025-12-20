@@ -19,6 +19,8 @@
 	var/list/prodoc_icons = null
 	var/image/arrestIcon = null
 
+	var/grinchnumber = null
+
 	var/pin = null
 	var/obj/item/clothing/suit/wear_suit = null
 	var/obj/item/clothing/under/w_uniform = null

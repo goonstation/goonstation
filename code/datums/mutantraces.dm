@@ -1365,7 +1365,7 @@ TYPEINFO(/datum/mutantrace/abomination)
 	ruff_tuff_and_ultrabuff = 0
 
 /datum/mutantrace/grinch
-	name = "the real grinch"
+	name = "true grinch"
 	icon_state = "grinch"
 	human_compatible = 0
 	jerk = TRUE
@@ -1382,17 +1382,18 @@ TYPEINFO(/datum/mutantrace/abomination)
 	on_attach()
 		..()
 		if (ishuman(src.mob))
+			src.mob.name = "true grinch #[src.mob.grinchnumber]"
 			src.mob.AddComponent(/datum/component/consume/organheal)
 			src.mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1)
 			src.mob.add_stam_mod_max("grinch", 40)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "grinch", 9)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "grinch", 40)
-			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "grinch", 40)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "grinch", 80)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "grinch", 100)
 			src.mob.max_health += 50
 			health_update_queue |= src.mob
 			src.mob.name = "grinch"
-			src.mob.real_name = "Real Grinch"
+			src.mob.real_name = "Real Grinch #[src.mob.grinchnumber]"
 			src.mob.UpdateName()
 
 			src.mob.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)

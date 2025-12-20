@@ -87,6 +87,7 @@
 		"[R_FREQ_CIVILIAN]" = "Civilian",
 		"[R_FREQ_DEFAULT]" = "General",
 		"[R_FREQ_INTERCOM_AI]" = "AI Intercom",
+		"[R_FREQ_GRINCH]" = "Grinch"
 		)
 
 	UPDATE_TITLE_STATUS("Starting processes")

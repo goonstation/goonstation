@@ -2218,6 +2218,14 @@
 /area/station/chapel/office{
 	name = "Chaplain's Office"
 	})
+"avc" = (
+/obj/item_dispenser/latex_gloves{
+	name = "grinch headset dispenser";
+	deposit_type = /obj/item/device/radio/headset/grinch;
+	desc = "Seems magic..."
+	},
+/turf/unsimulated/floor/cave,
+/area/grinchmap/grinchcave)
 "avf" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/vending/cola/red,
@@ -124735,7 +124743,7 @@ pCZ
 pCZ
 pCZ
 pCZ
-oHT
+avc
 oHT
 oHT
 pCZ

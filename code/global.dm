@@ -304,6 +304,7 @@ var/global
 	radio_audio_enabled = 1
 	remote_music_announcements = 0
 
+	grinches = 0
 
 	outpost_destroyed = 0
 	signal_loss = 0
