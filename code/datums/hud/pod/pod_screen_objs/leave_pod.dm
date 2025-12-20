@@ -5,7 +5,7 @@
 	tooltip_options = list("theme" = "pod-alt", "align" = TOOLTIP_TOP | TOOLTIP_RIGHT)
 
 // short-circuit ghostcritter pod interaction ban
-/atom/movable/screen/hud/pod/clicked(list/params)
+/atom/movable/screen/hud/pod/leave_pod/clicked(list/params)
 	var/mob/user = usr
 	if (isghostcritter(user))
 		src.on_click(user)
