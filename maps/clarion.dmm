@@ -5533,6 +5533,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"aUm" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/mapping_helper/access/hydro,
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor,
+/area/grinchmap/catering)
 "aUq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5864,11 +5872,6 @@
 /area/centcom/outside)
 "aXQ" = (
 /obj/submachine/chef_oven,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
 /turf/simulated/floor/white/side,
 /area/grinchmap/catering)
 "aXT" = (
@@ -11797,10 +11800,10 @@
 /turf/simulated/floor/grime,
 /area/station/mining/staff_room)
 "deJ" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -12996,12 +12999,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
-"dTr" = (
-/obj/storage/secure/closet/fridge/kitchen,
-/turf/simulated/floor/white/side{
-	dir = 8
-	},
-/area/grinchmap/catering)
 "dTW" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -15078,7 +15075,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "fmN" = (
-/obj/machinery/deep_fryer,
 /turf/simulated/floor/white/corner{
 	dir = 8
 	},
@@ -16425,6 +16421,23 @@
 	dir = 9
 	},
 /area/station/hydroponics/bay)
+"fZf" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/mixer{
+	pixel_y = 4;
+	pixel_x = -4;
+	name = "KitchenHelper #2"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/white/side,
+/area/grinchmap/catering)
 "fZq" = (
 /obj/table/wood/round/auto,
 /obj/item/clothing/suit/cultist/nerd{
@@ -16821,6 +16834,7 @@
 /area/station/medical/morgue)
 "gjB" = (
 /obj/machinery/firealarm/directional/west,
+/obj/table/auto,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/grinchmap/catering)
 "gkk" = (
@@ -18454,6 +18468,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/storage/secure/closet/fridge/kitchen,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/grinchmap/catering)
 "huq" = (
@@ -19308,6 +19323,7 @@
 	},
 /obj/mapping_helper/access/bar,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/kitchen,
 /turf/unsimulated/grimycarpet,
 /area/grinchmap/catering)
 "hST" = (
@@ -23012,10 +23028,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "klw" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
+/obj/machinery/deep_fryer,
 /turf/simulated/floor/white/side,
 /area/grinchmap/catering)
 "klF" = (
@@ -23494,6 +23507,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"kBY" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/bar,
+/turf/unsimulated/floor,
+/area/grinchmap/catering)
 "kCT" = (
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
@@ -30465,7 +30485,6 @@
 /turf/unsimulated/floor/wood/two,
 /area/grinchmap/catering)
 "oPH" = (
-/obj/table/auto,
 /turf/unsimulated/floor/white/corner,
 /area/grinchmap/catering)
 "oPZ" = (
@@ -37142,15 +37161,15 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "tgP" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/table/reinforced/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /obj/mapping_helper/access/bar,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/kitchen,
 /turf/unsimulated/floor/twotone/black,
 /area/grinchmap/catering)
 "tgY" = (
@@ -37226,6 +37245,15 @@
 /obj/machinery/light,
 /turf/simulated/floor/bluegreen/side,
 /area/station/hallway/secondary/exit)
+"thZ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Kitchen";
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/kitchen,
+/turf/simulated/floor/white,
+/area/grinchmap/catering)
 "tij" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38843,18 +38871,6 @@
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/bridge/customs)
-"uiU" = (
-/obj/machinery/mixer{
-	pixel_y = 4;
-	pixel_x = -4;
-	name = "KitchenHelper #2"
-	},
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/turf/simulated/floor/white/side,
-/area/grinchmap/catering)
 "ujv" = (
 /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
 /turf/unsimulated/floor/dojo/stone,
@@ -39840,6 +39856,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/unsimulated/dirt,
 /area/grinchmap/catering)
 "uMA" = (
@@ -43724,6 +43741,7 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -45132,6 +45150,11 @@
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/white/side,
 /area/grinchmap/catering)
@@ -96867,7 +96890,7 @@ xmT
 gJO
 deJ
 ntD
-trB
+kBY
 pHq
 pHq
 qOq
@@ -97461,7 +97484,7 @@ ehb
 gKj
 nPx
 rdb
-jwU
+trB
 ymg
 pIF
 dsk
@@ -97763,7 +97786,7 @@ amG
 dWr
 jmG
 kHg
-trB
+jwU
 aXQ
 uVD
 fst
@@ -98065,7 +98088,7 @@ trB
 tGD
 qhU
 lMC
-trB
+jwU
 klw
 pIF
 fst
@@ -98368,7 +98391,7 @@ trB
 dDL
 pYF
 trB
-klw
+fZf
 pIF
 fst
 nwn
@@ -98669,8 +98692,8 @@ hHg
 liA
 cKr
 uvF
-trB
-aXQ
+aUm
+vCE
 pIF
 fst
 uad
@@ -98971,8 +98994,8 @@ hOc
 hOc
 ydN
 uvF
-jwU
-uiU
+aUm
+vCE
 pIF
 bWh
 ajL
@@ -99273,7 +99296,7 @@ lXp
 lXp
 gCK
 hjM
-trB
+aUm
 fmN
 uEs
 pIF
@@ -99583,7 +99606,7 @@ jTn
 uMk
 ihH
 uxc
-dTr
+tDq
 vPV
 vqU
 pHq
@@ -99885,7 +99908,7 @@ trB
 trB
 trB
 trB
-trB
+thZ
 gsr
 vqU
 pHq
