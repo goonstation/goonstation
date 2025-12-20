@@ -1098,7 +1098,7 @@
 		ON_COOLDOWN(src, "limb_cooldown", 20)
 
 /datum/limb/brullbar/king
-	log_name = "king brullbar limbs"
+	log_name = "fucked up claws"
 	quality = 1.4
 	king = TRUE
 

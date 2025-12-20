@@ -179,7 +179,7 @@
 
 	New()
 		..()
-		src.setStatus("grinch_respawn", 30 SECONDS)
+		src.setStatus("grinch_respawn", rand(60, 140) SECONDS)
 
 /mob/living/critter/brullbar/max
 	name = "Max"

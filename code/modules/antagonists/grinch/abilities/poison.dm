@@ -11,7 +11,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
-	grinch_only = TRUE
+	grinch_only = FALSE
 	var/list/the_poison = list("coniine", "toxin", "curare")
 	var/amount_per_poison = 7
 

@@ -6435,6 +6435,7 @@
 	dir = 4;
 	tag = "icon-generic2_closed (EAST)"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/plating,
 /area/grinchmap/catering)
 "bdC" = (
@@ -9666,6 +9667,13 @@
 	icon_state = "12"
 	},
 /area/shuttle/escape/centcom)
+"bOi" = (
+/obj/item/a_gift/festive{
+	pixel_x = -26;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/auto/snow,
+/area/space)
 "bOS" = (
 /obj/item/storage/wall/emergency{
 	dir = 8
@@ -9794,7 +9802,9 @@
 /area/station/medical/medbay)
 "bSK" = (
 /mob/living/critter/brullbar/max{
-	is_king = 1
+	is_king = 1;
+	health_brute = 150;
+	health_burn = 150
 	},
 /turf/unsimulated/floor/cave,
 /area/grinchmap/grinchcave)
@@ -9807,6 +9817,10 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
+"bSS" = (
+/obj/machinery/firealarm/directional/south,
+/turf/unsimulated/floor,
+/area/grinchmap/catering)
 "bSU" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 10
@@ -10575,6 +10589,10 @@
 /area/centcom/outside)
 "cos" = (
 /obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
 /turf/unsimulated/grimycarpet,
 /area/grinchmap/catering)
 "coE" = (
@@ -11131,6 +11149,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/grass,
 /area/grinchmap/catering)
 "cGO" = (
@@ -12101,8 +12120,7 @@
 /area/station/quartermaster/refinery)
 "dqq" = (
 /obj/swingsign{
-	anchored = 1;
-	message = "Merry Spacemas! Head outside and east to the Nanotrasen Portable Catering Complex!"
+	message = "Catering Complex: East then north!"
 	},
 /turf/unsimulated/floor/auto/snow,
 /area/space)
@@ -12525,6 +12543,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/unsimulated/floor,
 /area/grinchmap/catering)
 "dEi" = (
@@ -13142,6 +13162,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/grinchmap/catering)
 "dYG" = (
@@ -13257,9 +13279,10 @@
 /area/station/engine/core/nuclear)
 "ebV" = (
 /obj/disposalpipe/segment,
-/turf/unsimulated/floor/stairs/wood{
-	dir = 1
-	},
+/obj/mapping_helper/access/hydro,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor/wood/two,
 /area/grinchmap/catering)
 "ebW" = (
 /obj/mapping_helper/firedoor_spawn,
@@ -14969,6 +14992,10 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
+"flb" = (
+/obj/item/a_gift/festive,
+/turf/unsimulated/floor/auto/snow/rough,
+/area/space)
 "flo" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -16792,6 +16819,10 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"gjB" = (
+/obj/machinery/firealarm/directional/west,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/grinchmap/catering)
 "gkk" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/decal/stripe_caution,
@@ -17020,6 +17051,8 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/grinchmap/catering)
 "gsw" = (
@@ -17573,6 +17606,13 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"gPJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/dirt,
+/area/grinchmap/catering)
 "gQp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19248,6 +19288,10 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"hRy" = (
+/obj/item/a_gift/festive,
+/turf/unsimulated/floor/dojo/stone,
+/area/space)
 "hSi" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -19262,6 +19306,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/grimycarpet,
 /area/grinchmap/catering)
 "hST" = (
@@ -21703,6 +21749,17 @@
 	name = "very reinforced wall"
 	},
 /area/station/engine/inner)
+"jxX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/turf/unsimulated/grimycarpet,
+/area/grinchmap/catering)
 "jyw" = (
 /obj/machinery/light_switch/north,
 /obj/spawner/clone_rack,
@@ -22614,6 +22671,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"jZQ" = (
+/obj/item/a_gift/festive{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/auto/snow,
+/area/space)
 "kad" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -26302,6 +26366,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"mmz" = (
+/obj/item/a_gift/festive{
+	pixel_x = 6;
+	pixel_y = 22
+	},
+/turf/unsimulated/floor/auto/snow,
+/area/space)
 "mne" = (
 /obj/stool/chair/dining/wood,
 /turf/unsimulated/floor/carpet/red/fancy/edge/ne,
@@ -26492,6 +26563,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/grasstodirt{
 	dir = 8
 	},
@@ -28711,6 +28783,13 @@
 	dir = 1
 	},
 /area/station/medical/medbay/surgery)
+"nPW" = (
+/obj/item/a_gift/festive{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/auto/snow,
+/area/space)
 "nQh" = (
 /obj/item/device/radio/intercom/science,
 /obj/disposalpipe/segment/mail{
@@ -29428,6 +29507,8 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0
 	},
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/grinchmap/catering)
 "ojf" = (
@@ -32043,6 +32124,11 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/access/rancher,
 /turf/unsimulated/floor,
 /area/grinchmap/catering)
 "pYG" = (
@@ -32643,6 +32729,8 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/grimycarpet,
 /area/grinchmap/catering)
 "qqJ" = (
@@ -33343,6 +33431,7 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/plating,
 /area/grinchmap/catering)
 "qVa" = (
@@ -33484,6 +33573,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"raJ" = (
+/obj/landmark/start/job/botanist,
+/obj/machinery/light,
+/turf/unsimulated/floor,
+/area/grinchmap/catering)
 "raL" = (
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/hallway/primary/south)
@@ -33786,6 +33880,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/grasstodirt{
 	dir = 4
 	},
@@ -34172,9 +34267,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor/stairs/wood{
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
 	dir = 1
 	},
+/obj/mapping_helper/access/hydro,
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor/wood/two,
 /area/grinchmap/catering)
 "rwq" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -35161,9 +35261,6 @@
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/hallway/secondary/exit)
 "sbF" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10
-	},
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/fish/salmon,
@@ -35694,6 +35791,8 @@
 	dir = 4;
 	name = "kitchen freezer pipe"
 	},
+/obj/mapping_helper/access/hydro,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/grinchmap/catering)
 "snd" = (
@@ -35712,6 +35811,18 @@
 "sns" = (
 /obj/decal/cleanable/cobweb2{
 	icon_state = "cobweb"
+	},
+/obj/item/a_gift/festive{
+	pixel_x = 9;
+	pixel_y = 15
+	},
+/obj/item/a_gift/festive{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/a_gift/festive{
+	pixel_x = 9;
+	pixel_y = -2
 	},
 /turf/unsimulated/floor/cave,
 /area/grinchmap/grinchcave)
@@ -35740,6 +35851,10 @@
 	dir = 1
 	},
 /area/station/crew_quarters/market)
+"spd" = (
+/obj/item/a_gift/festive,
+/turf/unsimulated/floor/cave,
+/area/space)
 "sph" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -37034,6 +37149,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/twotone/black,
 /area/grinchmap/catering)
 "tgY" = (
@@ -37188,6 +37305,8 @@
 	dir = 4;
 	name = "kitchen freezer pipe"
 	},
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/grinchmap/catering)
 "tlS" = (
@@ -37339,6 +37458,10 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
+"tqk" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/grass,
+/area/grinchmap/catering)
 "tqQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37722,6 +37845,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"tCA" = (
+/obj/machinery/firealarm/directional/west,
+/turf/unsimulated/floor/wood/two,
+/area/grinchmap/catering)
 "tDh" = (
 /obj/fluid_spawner{
 	amount = 2100
@@ -38454,6 +38581,12 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"ubw" = (
+/obj/decal/stalagmite{
+	icon_state = "iostal2"
+	},
+/turf/unsimulated/floor/plating/asteroid/cave,
+/area/space)
 "ubX" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38743,9 +38876,14 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
 "uki" = (
-/turf/unsimulated/floor/stairs/wood{
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
 	dir = 1
 	},
+/obj/mapping_helper/access/hydro,
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor/wood/two,
 /area/grinchmap/catering)
 "ukt" = (
 /obj/cable{
@@ -40965,6 +41103,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"vAM" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/unsimulated/floor/twotone/black,
+/area/grinchmap/catering)
 "vAR" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -41435,6 +41583,11 @@
 /turf/unsimulated/floor/white/corner{
 	dir = 8
 	},
+/area/grinchmap/catering)
+"vVf" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor/wood/two,
 /area/grinchmap/catering)
 "vVq" = (
 /obj/cable{
@@ -41977,6 +42130,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/unsimulated/floor,
 /area/grinchmap/catering)
 "woT" = (
@@ -43169,6 +43324,18 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
+"xbK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "kitchen freezer pipe"
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/unsimulated/floor/white/side{
+	dir = 8
+	},
+/area/grinchmap/catering)
 "xbO" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -43569,12 +43736,6 @@
 	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/crew_quarters/bar)
-"xpm" = (
-/obj/item/paper/rippednote{
-	info = "If you find this place, well hey there. I'm sorry I couldn't provide you with a suspicious skeleton, that would surely prompt intruige about my little home here, but I am not dead. This place is bad bad bad so I've moved to the bottom of the ocean. If you know me, tell my wife I'm sorry."
-	},
-/turf/unsimulated/floor/wood/five,
-/area/grinchmap/fisherhut)
 "xpw" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
@@ -49440,7 +49601,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDS
 aaa
 aaa
 aaa
@@ -49451,7 +49612,7 @@ aaa
 aaa
 aaa
 ioy
-ioy
+aaa
 ioy
 aaa
 aaa
@@ -49635,7 +49796,7 @@ fXN
 fXN
 fXN
 fXN
-fXN
+flb
 fXN
 fXN
 fXN
@@ -51649,8 +51810,8 @@ fXN
 fXN
 fXN
 fXN
-fXN
-fXN
+flb
+flb
 fXN
 fXN
 fXN
@@ -51952,7 +52113,7 @@ fXN
 fXN
 fXN
 fXN
-fXN
+flb
 fXN
 fXN
 fXN
@@ -55018,7 +55179,7 @@ fXN
 fXN
 fXN
 fXN
-fXN
+flb
 fXN
 fXN
 xxq
@@ -56765,7 +56926,7 @@ aaa
 aaa
 gZs
 fWX
-xpm
+nLK
 nLK
 nLK
 fZT
@@ -79377,7 +79538,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDS
 aaa
 aaa
 aaa
@@ -80246,7 +80407,7 @@ aaa
 aaa
 aaa
 ioy
-ioy
+aaa
 ioy
 aaa
 aaa
@@ -82166,7 +82327,7 @@ fXN
 fXN
 fXN
 fXN
-fXN
+flb
 fXN
 fXN
 fXN
@@ -84315,7 +84476,7 @@ fXN
 rna
 fXN
 fXN
-fXN
+flb
 fXN
 fXN
 fXN
@@ -94595,7 +94756,7 @@ lVy
 sZB
 kkp
 mSV
-ckm
+vAM
 ckm
 vVq
 fEq
@@ -95788,7 +95949,7 @@ mtu
 ttl
 amG
 pGc
-kSC
+gPJ
 sfI
 ifK
 amG
@@ -96097,7 +96258,7 @@ amG
 etW
 trB
 goz
-pLb
+jxX
 pLb
 hSP
 dXY
@@ -97930,7 +98091,7 @@ bXl
 bXl
 xuN
 jwU
-pHq
+tCA
 trB
 jwU
 olW
@@ -98536,7 +98697,7 @@ pHq
 dYi
 pHq
 pHq
-cYH
+vVf
 olW
 olW
 olW
@@ -99140,7 +99301,7 @@ pHq
 dYi
 jQS
 pHq
-cYH
+vVf
 olW
 olW
 olW
@@ -99413,7 +99574,7 @@ vsi
 bhY
 faO
 uvF
-exT
+bSS
 trB
 jwU
 eeb
@@ -99712,7 +99873,7 @@ euO
 sUw
 dDd
 otz
-otz
+tqk
 lQd
 qef
 faO
@@ -100024,7 +100185,7 @@ trB
 iGM
 pVd
 htk
-mNL
+gjB
 trB
 oPH
 sZy
@@ -100084,7 +100245,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDS
 aaa
 aaa
 aaa
@@ -100563,7 +100724,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+mmz
 aaa
 aaa
 aaa
@@ -100618,7 +100779,7 @@ rCb
 gbC
 otz
 otz
-otz
+tqk
 qmy
 sMy
 qqJ
@@ -100864,8 +101025,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+bDS
+jZQ
 aaa
 aaa
 aaa
@@ -101166,7 +101327,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+nPW
 aaa
 aaa
 aaa
@@ -101468,7 +101629,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bOi
 aaa
 aaa
 aaa
@@ -102437,7 +102598,7 @@ oXv
 vGj
 rtP
 ygv
-txo
+raJ
 trB
 eCk
 voQ
@@ -103050,7 +103211,7 @@ trB
 trB
 vUw
 rxu
-fky
+xbK
 fky
 fky
 fky
@@ -109210,7 +109371,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDS
 aaa
 aaa
 aaa
@@ -111158,7 +111319,7 @@ fXN
 fXN
 fXN
 fXN
-fXN
+flb
 fXN
 fXN
 fXN
@@ -113501,7 +113662,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDS
 aaa
 aaa
 aaa
@@ -117705,7 +117866,7 @@ aaa
 aaa
 aaa
 dbA
-uDy
+hRy
 uDy
 uDy
 uDy
@@ -118553,7 +118714,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDS
 aaa
 aaa
 aaa
@@ -118805,7 +118966,7 @@ aaa
 aaa
 aaa
 aaa
-fXN
+flb
 fXN
 fXN
 aaa
@@ -122641,7 +122802,7 @@ fXN
 fXN
 fXN
 fXN
-fXN
+flb
 fXN
 fXN
 fXN
@@ -126537,7 +126698,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDS
 aaa
 aaa
 aaa
@@ -126833,7 +126994,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDS
 aaa
 aaa
 aaa
@@ -127089,7 +127250,7 @@ pCZ
 pCZ
 pCZ
 pCZ
-pCZ
+eCf
 aab
 aab
 aab
@@ -128898,7 +129059,7 @@ pCZ
 pCZ
 pCZ
 pCZ
-pCZ
+ghu
 nLi
 nLi
 nLi
@@ -129006,7 +129167,7 @@ pCZ
 pCZ
 pCZ
 fAO
-fQJ
+spd
 pCZ
 pCZ
 pCZ
@@ -130108,7 +130269,7 @@ pCZ
 pCZ
 unu
 nLi
-nLi
+ubw
 nLi
 nLi
 pCZ
@@ -130710,7 +130871,7 @@ pCZ
 pCZ
 pCZ
 pCZ
-pCZ
+ghu
 nLi
 nLi
 nLi

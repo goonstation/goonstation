@@ -11,6 +11,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 0
+	grinch_only = FALSE
 	var/cloak_duration = 30 SECONDS
 
 	cast(mob/target)
