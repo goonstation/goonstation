@@ -631,11 +631,6 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/atlas/init()
 	. = ..()
-	var/datum/daynight_controller/earth/daylight = daynight_controllers[AMBIENT_LIGHT_SRC_EARTH]
-	if(istype(daylight))
-		daylight.initialize("#d8d8d8", "#d8d8d8")
-		daylight.time = 10000
-		daylight.active = FALSE
 
 	if(!station_repair.station_generator && prob(66))
 		if(event)
@@ -717,6 +712,14 @@ var/global/list/mapNames = list(
 		"the aviary" = list(/area/station/garden/aviary)
 		//"the robotics lab" = list(/area/station/medical/robotics))
 	)
+
+	init()
+		.=..()
+		var/datum/daynight_controller/earth/daylight = daynight_controllers[AMBIENT_LIGHT_SRC_EARTH]
+		if(istype(daylight))
+			daylight.initialize("#d8d8d8", "#d8d8d8")
+			daylight.time = 10000
+			daylight.active = FALSE
 
 /datum/map_settings/oshan
 	name = "OSHAN"

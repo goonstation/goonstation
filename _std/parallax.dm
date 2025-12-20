@@ -1,5 +1,5 @@
 /// Whether parallax has been enabled or disabled globally.
-var/parallax_enabled = TRUE
+var/parallax_enabled = FALSE
 
 /// An associative list of each z-level define and its corresponding parallax layer render source group. See `code\map\map_settings.dm` for the default parallax render sources for each z-level.
 var/list/z_level_parallax_render_source_groups = list()

@@ -883,6 +883,10 @@ client/proc/toggle_ghost_respawns()
 	set desc = "Toggles parallax on or off globally. Toggling on respects client preferences in regard to parallax."
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
+
+	if (tgui_alert(usr, "Are you sure you'd like to [parallax_enabled ? "disable" : "enable"] parallax?", "Lag everyone out?", list("Activate lag!", "Cancel")) != "Activate lag!")
+		return
+
 	parallax_enabled = !parallax_enabled
 
 	for (var/client/client in clients)
