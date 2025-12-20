@@ -2238,7 +2238,8 @@
 	name = "grinch headset dispenser";
 	deposit_type = /obj/item/device/radio/headset/grinch;
 	desc = "Seems magic...";
-	withdraw_type = /obj/item/device/radio/headset/grinch
+	withdraw_type = /obj/item/device/radio/headset/grinch;
+	amount = 40
 	},
 /turf/unsimulated/floor/cave,
 /area/grinchmap/grinchcave)
