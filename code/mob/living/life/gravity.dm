@@ -18,59 +18,46 @@
 			// lower the gravity, higher the probability, ~1 to ~10%
 			if (probmult(round((1 - src.owner.gforce) * 10)))
 				if (human_owner)
-					switch(rand(1, 3))
-						if (1)
-							if (!human_owner.traitHolder?.hasTrait("training_miner"))
-								human_owner.nauseate(1)
-						if (2)
+					switch(rand(1, 2))
+						if (1) // nausea
+							human_owner.nauseate(1)
+						if (2) // stamina sap
 							if (isalive(human_owner))
 								boutput(human_owner, SPAN_NOTICE("You [pick("struggle", "exert")] to keep yourself [pick("oriented", "angled properly", "from spinning")] in low-gravity."))
-								human_owner.remove_stamina(5)
-						if (3)
-							boutput(human_owner, SPAN_REGULAR("The low gravity feels a little [pick("disorienting", "odd", "offsetting")]."), "grav_notice")
-				else if (robot_owner)
-					boutput(human_owner, SPAN_REGULAR("Low gravity  [pick("disorienting", "odd", "offsetting")]."), "grav_notice")
-				else if (critter_owner)
-					boutput(human_owner, SPAN_REGULAR("The low gravity feels a little [pick("disorienting", "odd", "offsetting")]."), "grav_notice")
+								human_owner.remove_stamina(15)
 		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
 			// ~19.2+% minimum
 			if (probmult(src.owner.gforce * 8))
 				if (human_owner)
-					switch(rand(1, 4))
-						if(1)
+					switch(rand(1, 3))
+						if(1) // drop item
 							var/obj/item/I = human_owner.equipped()
 							if (istype(I))
 								boutput(human_owner, SPAN_NOTICE("The extreme gravity [pick("yanks", "tears", "pulls")] [I] from your grip!"))
 								human_owner.drop_item(I)
 							return
-						if (2)
+						if (2) // fall over
 							boutput(human_owner, SPAN_NOTICE("The extreme gravity [pick("forces", "pulls")] you to the ground!"))
 							human_owner.changeStatus("knockdown", 1 SECOND)
 							human_owner.force_laydown_standup()
 							return
-						if (3)
-							var/damage = rand(3, 5)
+						if (3) // crinkle bones
+							var/damage = randfloat(GRAVITY_MOB_EXTREME_THRESHOLD, src.owner.gforce)
 							if (istype(human_owner.mutantrace, /datum/mutantrace/skeleton))
 								damage *= 2
-								boutput(human_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] <b>all</b> your bones!"), "grav_notice")
+								boutput(human_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] <b>all</b> your bones!"))
 							else
-								boutput(human_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] your skeleton!"), "grav_notice")
-							human_owner.TakeDamage("All", damage, damage_type=DAMAGE_CRUSH)
+								boutput(human_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] your skeleton!"))
+							human_owner.TakeDamage("All", round(damage), damage_type=DAMAGE_CRUSH)
 							human_owner.playsound_local(human_owner, 'sound/effects/bones_break.ogg', 40, TRUE)
 							return
-						if (4)
-							boutput(src.owner, SPAN_REGULAR("Extreme gravity severely impedes your movement!"), "grav_notice")
 				else if (robot_owner)
+					// switch (rand(1, 2))
+					// 	if(1) // strain frame
 					boutput(robot_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] your frame!"))
 					robot_owner.playsound_local(robot_owner, "sound/effects/creaking_metal[rand(1,2)].ogg", 40, TRUE)
-					robot_owner.TakeDamage("chest", rand(2,5), damage_type=DAMAGE_CRUSH)
-				else if (critter_owner)
-					boutput(src.owner, SPAN_REGULAR("Extreme gravity severely impedes your movement!"), "grav_notice")
+					robot_owner.TakeDamage("chest", rand(GRAVITY_MOB_EXTREME_THRESHOLD, src.owner.gforce), damage_type=DAMAGE_CRUSH)
 
-		// if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
-		// 	;
-		// if (1 to GRAVITY_MOB_HIGH_THRESHOLD)
-		// 	;
 
 /// Handle atom properties and whatnot that only need to change when gravity changes thresholds
 ///
