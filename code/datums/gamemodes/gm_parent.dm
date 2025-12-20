@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	var/do_random_events = 1
 	var/escape_possible = 1		//for determining if players lose their held spacebux item on round end if they are able to "escape" in this mode.
 
-	var/grinches_active = TRUE // this is set true when santa is shot down
+	var/grinches_active = FALSE // this is set true when santa is shot down
 
 /datum/game_mode/proc/announce()
 	boutput(world, "<B>[src] did not define announce()</B>")
