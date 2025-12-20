@@ -3443,6 +3443,7 @@ datum
 			hygiene_value = -5
 			viscosity = 0.5
 			fluid_flags = FLUID_STACKING_BANNED
+			taste = "dirty"
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.health_change += 0.66
@@ -3454,7 +3455,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						// People with synth leg can absorb shit with no consequences. Disgusting.
 						if(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT)
-							boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened absorving this!")))
+							boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened!","You feel good.")))
 						else
 							// if not synth leg
 							boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
@@ -3474,7 +3475,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						// nothing bad happens with synthlegs
 						if(!(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT))
-							boutput(M, SPAN_ALERT("Oh god! It smells horrific! What the fuck IS this?!"))
+							boutput(M, SPAN_ALERT("This smells like shit! What the fuck?!"))
 							if (prob(50))
 								boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
 								var/amt = min(volume/100,1)
@@ -3482,7 +3483,7 @@ datum
 								M.reagents.add_reagent("poo",amt)
 								src.reaction_mob(M,INGEST,amt,null,amt)
 					else
-						boutput(M, SPAN_ALERT("Oh god! It smells horrific! What the fuck IS this?!"))
+						boutput(M, SPAN_ALERT("This smells like shit! What the fuck?!"))
 						if (prob(50))
 							boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
 							var/amt = min(volume/100,1)
