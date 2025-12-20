@@ -74,6 +74,8 @@
 		animate(player.get_filter("death fx"), size=50, time=2 SECONDS, easing=SINE_EASING)
 		SPAWN(2 SECONDS)
 			player.gib()
+		if(!respawn || QDELETED(respawn))
+			return
 		SPAWN(4 SECONDS)
 			var/mob/living/critter/small_animal/grinch_larvae/larvae = new /mob/living/critter/small_animal/grinch_larvae (get_turf(respawn))
 			src.owner.current.mind.transfer_to(larvae)
