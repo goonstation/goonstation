@@ -856,7 +856,7 @@ proc/compare_ornament_score(list/a, list/b)
 	name = "Return to Santa"
 	desc = "Your job is done here."
 	icon = 'icons/mob/santa_abilities.dmi'
-	icon_state = "santa-template"
+	icon_state = "santa_return"
 
 	cast()
 		. = ..()

@@ -114,6 +114,7 @@
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	valid_target(mob/living/C)
+		if (isgrinchmind(C) || istype(C, /mob/living/carbon/human/santa) || istype(C, /mob/living/critter/small_animal/grinch_larvae)) return FALSE
 		if (istype(C, /mob/living/critter/brullbar)) return FALSE //don't kill other brullbars
 		if (ishuman(C))
 			var/mob/living/carbon/human/H = C
@@ -175,7 +176,10 @@
 	can_critter_attack()
 		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(src.frenzypath)
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		return ..() && (!frenzy.disabled && !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
+		if (fadeout)
+			return ..() && (!frenzy.disabled && !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
+		else
+			return ..() && (!frenzy.disabled)
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
 		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_cyborg", 30 SECONDS))
@@ -197,6 +201,8 @@
 
 	proc/go_invis()
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
+		if (!fadeout)
+			return
 		if (!fadeout.disabled && fadeout.cooldowncheck())
 			fadeout.handleCast(src)
 

@@ -9709,6 +9709,12 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"bSK" = (
+/mob/living/critter/brullbar/max{
+	is_king = 1
+	},
+/turf/unsimulated/floor/cave,
+/area/grinchmap/grinchcave)
 "bSR" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -125950,7 +125956,7 @@ oHT
 oHT
 emG
 oHT
-oHT
+bSK
 aHS
 bVJ
 bVJ

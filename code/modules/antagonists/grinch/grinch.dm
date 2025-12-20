@@ -170,6 +170,15 @@
 		..()
 		src.setStatus("grinch_respawn", 30 SECONDS)
 
+/mob/living/critter/brullbar/max
+	name = "Max"
+	real_name = "Max"
+	desc = "He has served Grinchkind since the original's death. So loyal. So powerful."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "illegal"
+	icon_state_dead = "illegal-lying"
+	add_abilities = list(/datum/targetable/critter/tackle, /datum/targetable/critter/frenzy)
+
 /datum/objective_set/grinch
 
 

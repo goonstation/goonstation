@@ -240,7 +240,7 @@
 	name = "Cancel Deployment"
 	desc = ""
 	icon = 'icons/mob/santa_abilities.dmi'
-	icon_state = "santa-return"
+	icon_state = "santa_return"
 
 	cast()
 		. = ..()

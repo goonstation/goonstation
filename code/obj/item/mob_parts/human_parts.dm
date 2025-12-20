@@ -794,7 +794,7 @@
 		..()
 
 /obj/item/parts/human_parts/arm/left/brullbar/king
-	name = "left king brullbar arm"
+	name = "terrible claws"
 	icon_state = "arm_left_brullbar"
 	limb_type = /datum/limb/brullbar/king
 
@@ -820,7 +820,7 @@
 		..()
 
 /obj/item/parts/human_parts/arm/right/brullbar/king
-	name = "right king brullbar arm"
+	name = "terrible claws"
 	icon_state = "arm_right_brullbar"
 	limb_type = /datum/limb/brullbar/king
 

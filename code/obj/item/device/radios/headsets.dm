@@ -86,6 +86,13 @@
 	icon_override = "grinch"
 	icon_tooltip = "grinch"
 
+	pick_up_by(mob/M)
+		. = ..()
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(M)
+		M.visible_message("The [src] crumbles in [M]'s hands! Cheap...")
+		qdel(src)
+
 /obj/item/device/radio/headset/wizard
 	name = "wizard headset"
 	desc = "A headset reversed engineered by only the highest of archmages for use by wizards. Immune to EMPs."
