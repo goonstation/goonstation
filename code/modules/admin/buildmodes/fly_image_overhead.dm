@@ -214,5 +214,6 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		..()
 
 	proc/play()
-		src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
-		world << src.attached_sound
+		if (src.loc && !QDELETED(src))
+			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
+			world << src.attached_sound
