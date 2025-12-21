@@ -41633,8 +41633,15 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "qmh" = (
-/obj/item/device/light/floodlight,
 /obj/rack,
+/obj/item/wrench{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/device/light/floodlight{
+	pixel_y = -2;
+	pixel_x = 5
+	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "qmD" = (
@@ -42227,6 +42234,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/stairs,
 /area/station/chapel/office)
+"qWx" = (
+/obj/item/storage/wall/office{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/interrogation)
 "qWU" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -99395,7 +99410,7 @@ bRS
 qpY
 adq
 jFa
-nxQ
+qWx
 nxQ
 qcy
 bRS
