@@ -1344,10 +1344,12 @@ TYPEINFO(/obj/item/swords/katana)
 
 	crafted
 		name = "handcrafted katana"
-		delimb_prob = 2
+		delimb_prob = 20
 
 		force = 12
 		contraband = 5
+		HELP_MESSAGE_OVERRIDE({"Hit someone while aiming at a specific limb for a chance to slice off the targeted limb. If both arms and legs are sliced off, you can decapitate your target by aiming for the head.\n
+								While on any intent other than <span class='help'>help</span>, click a tile away from you to quickly dash forward to it's location, slicing those in the way."})
 
 	New()
 		..()
