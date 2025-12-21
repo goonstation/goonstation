@@ -165,7 +165,7 @@
 							dir = text2dir(dir)
 
 							if (ishuman(twitch_mob))
-								if (istype(twitch_mob.loc, /turf/space) || twitch_mob.no_gravity) //they're in space, move em one space in the opposite direction
+								if (!twitch_mob.traction && !twitch_mob.has_grip()) //they're floating, move em one space in the opposite direction
 									twitch_mob.inertia_dir = turn(dir, 180)
 									step(twitch_mob, twitch_mob.inertia_dir)
 
