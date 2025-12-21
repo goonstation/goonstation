@@ -70,7 +70,7 @@ TYPEINFO(/datum/component/contraband)
 	src.contraband_logic(owner, user, slot_mult)
 
 /datum/component/contraband/proc/removed(obj/item/owner, mob/user)
-	if(user != null)
+	if(user)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_GUNS, src)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_CONTRABAND, src)
 
