@@ -29620,6 +29620,12 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/medbay/psychiatrist)
+"dod" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
 "doh" = (
 /obj/overlay{
 	density = 1;
@@ -30535,6 +30541,9 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade)
 "eeK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -33471,6 +33480,15 @@
 	dir = 5
 	},
 /area/station/security/evidence)
+"gZV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
 "haa" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/decoration/ashtray,
@@ -35579,6 +35597,9 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "jEl" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -35831,11 +35852,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "jPe" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
 "jPr" = (
@@ -36155,12 +36176,12 @@
 /turf/simulated/floor/wood/two,
 /area/station/ranch)
 "khE" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/security,
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4;
 	id = "interrogation_door"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/interrogation)
 "kjq" = (
@@ -37398,7 +37419,6 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
 "lCB" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/left,
 /obj/cable{
 	icon_state = "0-2"
@@ -37406,6 +37426,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
 "lCI" = (
@@ -43555,12 +43576,11 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "sAY" = (
-/obj/mapping_helper/access/security,
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	id = "eng_bathroom"
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
 	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/red,
+/turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "sBo" = (
 /obj/disposaloutlet{
@@ -44885,6 +44905,9 @@
 	pixel_y = 6
 	},
 /obj/machinery/camera/directional/east,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -98167,7 +98190,7 @@ jVe
 sCq
 moF
 xtc
-sAY
+bRS
 bLr
 htA
 nAQ
@@ -98464,8 +98487,8 @@ bLj
 bLj
 bRS
 wOt
-adq
-bUd
+gZV
+dod
 tYc
 eeK
 jEl
@@ -98770,7 +98793,7 @@ adq
 gfJ
 bRS
 khE
-bRS
+sAY
 bRS
 htA
 htA
@@ -99072,11 +99095,11 @@ adq
 jFa
 nxQ
 nxQ
+nxQ
 bRS
 htA
 htA
-htA
-hhe
+nAQ
 dou
 aqn
 aqn
@@ -99373,12 +99396,12 @@ qpY
 adq
 jFa
 nxQ
+nxQ
 qcy
 bRS
 htA
 htA
-tIR
-htA
+hhe
 dou
 aqn
 aqn
@@ -99677,10 +99700,10 @@ lCI
 bRS
 bRS
 bRS
+bRS
 htA
 tIR
 htA
-dou
 dou
 aqn
 aqn
@@ -99979,11 +100002,11 @@ qLl
 qLl
 qLl
 qLl
+qLl
 rtZ
 htA
 dou
 dou
-aqn
 aqn
 aqn
 aqn
@@ -100282,9 +100305,9 @@ htA
 htA
 htA
 htA
+htA
 dou
 dou
-aqn
 aqn
 aqn
 aqn
@@ -100585,7 +100608,7 @@ dou
 dou
 dou
 dou
-aqn
+dou
 aqn
 aqn
 aqn
