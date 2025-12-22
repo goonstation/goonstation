@@ -554,7 +554,7 @@
 
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 		if (!can_act(usr) || !in_interact_range(usr, src) || !in_interact_range(usr, over_location) || !in_interact_range(over_location, src) || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
-				return ..()
+			return ..()
 
 		if ((istype(over_object, /obj/table) || \
 					(isturf(over_object) && total_density(over_location) < 1)) && \
