@@ -1,4 +1,6 @@
-
+(t)mon dec 22 25
+(u)glowbold
+(+)Dead vampires can be brought back just to the cusp of life via coffins.
 (t)fri dec 19 25
 (u)bork
 (p)25342
