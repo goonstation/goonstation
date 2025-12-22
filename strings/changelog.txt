@@ -1,5 +1,9 @@
 
 (t)mon dec 22 25
+(u)Ribbie
+(p)25373
+(e)|
+(+)Fixes the broken floodlight sprite.
 (u)JORJ949
 (p)25343
 (e)⚖🤖|C-Balance, A-Silicons
