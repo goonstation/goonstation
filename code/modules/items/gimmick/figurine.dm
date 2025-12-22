@@ -1125,10 +1125,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Rocky Roach"
 		icon_state = "rockyroach"
 		ckey = "haikuart"
-	war_sometimes_change
+	war_sometimes_changes
 		name = "\improper Alice Dawn"
 		icon_state = "alicedawn"
-		ckey = "war_sometimes_change" //check?? i'm pretty sure there's a typo
+		ckey = "war_sometimes_changes"
 	annmageddon
 		name = "\improper Charlotte Chirtte"
 		icon_state = "charlottechirtte"
@@ -1136,7 +1136,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	literallily
 		name = "\improper Amanita Clearwater"
 		icon_state = "amanitaclearwater"
-		ckey = "literallily" //check again
+		ckey = "literallily"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
