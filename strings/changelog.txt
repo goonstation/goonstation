@@ -5,7 +5,9 @@
 (e)⚖🤖|C-Balance, A-Silicons
 (*)Emitters can no longer damage the AI law rack.
 (u)glowbold
-(+)Dead vampires can be brought back just to the cusp of life via coffins.
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Dead vampires can be brought back just to the cusp of life via coffins.
+(+)RP vampires no longer come back to life with full thirst and hunger meters.
 (t)fri dec 19 25
 (u)bork
 (p)25342
