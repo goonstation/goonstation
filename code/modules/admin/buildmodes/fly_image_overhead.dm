@@ -10,6 +10,7 @@ Shift + Right Mouse Button             = Set direction and speed<br>
 Shift + Left Mouse Button              = Spawn flying object<br>
 ***********************************************************"}
 	// settings. behold my vars
+	icon_state = "flyoverhead"
 	var/move_delay = 1
 	var/icon/image
 	var/atom/icon_from_thing
