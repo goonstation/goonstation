@@ -1,4 +1,9 @@
+
 (t)mon dec 22 25
+(u)JORJ949
+(p)25343
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Emitters can no longer damage the AI law rack.
 (u)glowbold
 (+)Dead vampires can be brought back just to the cusp of life via coffins.
 (t)fri dec 19 25
