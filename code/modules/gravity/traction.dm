@@ -48,10 +48,7 @@
 
 /obj/item/has_traction()
 	var/turf/T = get_turf(src)
-	// items have less ability to traction than mobs
-	if (T.effective_gforce >= GRAVITY_MOB_REGULAR_THRESHOLD)
-		return TRUE
-	// in partial gravity, slime/glue has a chance to stick to stuff
+	// in partial gravity, items have a chance to stick to glue/slime
 	if (T.effective_gforce > 0)
 		if (T.wet < 0 && prob(src.w_class * 10))
 			return TRUE
