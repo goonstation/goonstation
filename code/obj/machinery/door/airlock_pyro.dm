@@ -33,6 +33,13 @@
 	health = 800
 	health_max = 800
 
+/obj/machinery/door/airlock/pyro/command/alt
+	icon_state = "com2_closed"
+	icon_base = "com2"
+	panel_icon_state = "2_panel_open"
+	welded_icon_state = "2_welded"
+
+// -------- Centcom
 TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
 	mats = 0
 
@@ -44,12 +51,13 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
 
-/obj/machinery/door/airlock/pyro/command/alt
-	icon_state = "com2_closed"
-	icon_base = "com2"
-	panel_icon_state = "2_panel_open"
-	welded_icon_state = "2_welded"
+/obj/machinery/door/airlock/pyro/command/centcom/meteorhit()
+	return
 
+/obj/machinery/door/airlock/pyro/command/centcom/ex_act()
+	return
+
+// -------- Syndicate Command
 TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	mats = 0
 
