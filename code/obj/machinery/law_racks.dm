@@ -237,7 +237,10 @@
 
 		damage = round((0.15*P.power*P.proj_data.ks_ratio), 1.0)
 		damage = damage - min(damage,3) //bullet resist
-		if (damage < 1 || istype(P.proj_data,/datum/projectile/laser/heavy/law_safe))
+		if (damage < 1)
+			return
+		if (P.proj_data.law_rack_safe)
+			src.visible_message(SPAN_ALERT("The [src]'s shielding absorbs \the [P]!"))
 			return
 
 		src.material_trigger_on_bullet(src, P)

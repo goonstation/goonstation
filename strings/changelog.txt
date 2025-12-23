@@ -1,4 +1,21 @@
 
+(t)mon dec 22 25
+(u)JORJ949
+(p)25314
+(e)💅📦🧑‍✈️|C-QoL, A-Game-Objects, A-Command
+(*)NT Engineers and Medics now have unique headset icons with the colour of their relevant department.
+(u)Ribbie
+(p)25373
+(e)|
+(+)Fixes the broken floodlight sprite.
+(u)JORJ949
+(p)25343
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Emitters can no longer damage the AI law rack.
+(u)glowbold
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Dead vampires can be brought back just to the cusp of life via coffins.
+(+)RP vampires no longer come back to life with full thirst and hunger meters.
 (t)fri dec 19 25
 (u)bork
 (p)25342
