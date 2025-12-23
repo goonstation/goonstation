@@ -36,9 +36,13 @@
 		src.effective_gforce = 0
 		return
 	src.effective_gforce = src.get_gforce_minimum(area_gravity) + tether_gravity
+	for (var/atom/movable/AM as anything in src)
+		AM.set_gravity(src.effective_gforce)
 
 /turf/space/fluid/set_gravity(area_gravity, tether_gravity)
 	src.effective_gforce = src.get_gforce_minimum(area_gravity) + tether_gravity
+	for (var/atom/movable/AM as anything in src)
+		AM.set_gravity(src.effective_gforce)
 
 /// Get the minimum gforces to apply to this turf
 /turf/proc/get_gforce_minimum(area_gforce_minimum=null)
