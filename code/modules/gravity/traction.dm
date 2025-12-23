@@ -64,6 +64,20 @@
 
 	. = ..()
 
+// intangibles never effected by gravity
+/mob/living/intangible/has_traction()
+	return TRUE
+
+// active hivebots hover
+/mob/living/silicon/hivebot/eyebot/has_traction()
+	if (src.client)
+		return TRUE
+	. = ..()
+
+// ghostdrones hover
+/mob/living/silicon/ghostdrone/has_traction()
+	return TRUE
+
 /// Check if an atom has "grip" with something on a nearby tile, such as a wall or table
 /atom/movable/proc/has_grip()
 	for (var/atom/A in oview(1, src))

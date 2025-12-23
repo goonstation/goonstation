@@ -26,21 +26,9 @@
 	if (src.traction)
 		src.inertia_dir = 0
 
-
-// mob gravity exceptions
-
-// eyebots hover, ignoring local gravity
-/mob/living/silicon/hivebot/eyebot/set_gravity(new_gravity)
-	. = ..(1)
-
-// ghostdrones hover, ignoring local gravity
-/mob/living/silicon/ghostdrone/set_gravity(new_gravity)
-	. = ..(1)
-
 // intangibles never effected by gravity
 /mob/living/intangible/set_gravity(new_gravity)
 	return
-
 
 // Force snappier HUD updates
 
