@@ -1,8 +1,19 @@
+
+/// Minimum gravity to grant partial traction
+#define TRACTION_GFORCE_PARTIAL 0.2
+/// Minimum gravity to grant full traction
+#define TRACTION_GFORCE_FULL 0.8
+
+/// AM has no traction
+#define TRACTION_NONE 0
+/// AM has partial friction - mob force-moved until
+#define TRACTION_PARTIAL 1
+/// AM has full traction - mob not forced moved
+#define TRACTION_FULL 2
+
 // mob gravity thresholds
 // arbitrary thresholds, allow for people to handle some minor gravity variance
 
-/// Minimum gravity to grant traction
-#define GRAVITY_MOB_MOVEMENT_THRESHOLD 0.2
 /// minimum gravity for people to act as normal
 #define GRAVITY_MOB_REGULAR_THRESHOLD 0.8
 /// minimum gravity after which people feel heavier than normal
