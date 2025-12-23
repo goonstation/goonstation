@@ -23,8 +23,6 @@
 		new_gravity = 0
 	src.gforce = new_gravity
 	src.update_traction()
-	if (src.traction)
-		src.inertia_dir = 0
 
 // intangibles never effected by gravity
 /mob/living/intangible/set_gravity(new_gravity)

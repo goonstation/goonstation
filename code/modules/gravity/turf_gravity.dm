@@ -59,11 +59,11 @@
 		area_gforce_minimum = A.gforce_minimum
 	. = max(global.zlevels[src.z]?.gforce, area_gforce_minimum, 0)
 
-// asteroid turfs have enough gravity to move
+// asteroid turfs always have enough gravity for partial traction
 /turf/simulated/floor/plating/airless/asteroid/get_gforce_minimum(area_gforce_minimum=null)
-	return max(..(area_gforce_minimum), GRAVITY_MOB_MOVEMENT_THRESHOLD)
+	return max(..(area_gforce_minimum), TRACTION_GFORCE_PARTIAL)
 /turf/simulated/wall/auto/asteroid/get_gforce_minimum(area_gforce_minimum=null)
-	return max(..(area_gforce_minimum), GRAVITY_MOB_MOVEMENT_THRESHOLD)
+	return max(..(area_gforce_minimum), TRACTION_GFORCE_PARTIAL)
 
 // airbridges on station Z get station tether gravity
 /turf/simulated/floor/airbridge/get_gforce_minimum(area_gforce_minimum=null)

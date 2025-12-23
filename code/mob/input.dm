@@ -290,8 +290,8 @@
 
 						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
 							if (!src?.client?.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
-								//just fall over in place when in no-gravity (to prevent zooming)
-								if (src.gforce <= GRAVITY_MOB_MOVEMENT_THRESHOLD)
+								//just fall over in place without traction (to prevent zooming)
+								if (src.traction != TRACTION_NONE)
 									src.throw_at(get_step(src, move_dir), 1, 1)
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()

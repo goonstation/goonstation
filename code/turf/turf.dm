@@ -547,8 +547,8 @@ proc/generate_space_color()
 			if (isitem(M))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
-
-	if(!M.traction)
+	M.update_traction()
+	if(M.traction != TRACTION_FULL)
 		BeginSpacePush(M)
 
 #ifdef NON_EUCLIDEAN

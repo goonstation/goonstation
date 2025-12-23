@@ -1011,10 +1011,12 @@
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
 		if (!src.traction) //they're floating, move em one space in the opposite direction
 			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
+			src.inertia_value = 1
 			step(src, inertia_dir)
 		if (ismob(I) && !I.traction)
 			var/mob/M = I
 			M.inertia_dir = throw_dir
+			M.inertia_value = 1
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 

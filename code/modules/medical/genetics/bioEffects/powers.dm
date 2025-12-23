@@ -335,7 +335,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 1 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
-			if (!owner.traction && !owner.has_grip())
+			if (owner.traction == TRACTION_NONE && !owner.has_grip())
 				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
 				return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> takes a huge leap!"))
@@ -385,7 +385,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 0.5 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
-			if (!owner.traction && !owner.has_grip())
+			if (owner.traction == TRACTION_NONE && !owner.has_grip())
 				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
 				return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> leaps far too high and comes crashing down hard!"))

@@ -213,6 +213,7 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 		// Propel user in opposite direction
 		if (!user.traction)
 			user.inertia_dir = get_dir_accurate(target, user)
+			user.inertia_value = 1
 			step(user, user.inertia_dir)
 		else if( user.buckled && !user.buckled.anchored )
 			var/wooshdir = get_dir_accurate( target, user )

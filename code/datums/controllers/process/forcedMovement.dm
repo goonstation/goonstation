@@ -3,6 +3,7 @@ proc/BeginSpacePush(var/atom/movable/A)
 		var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
 		if(controller)
 			controller.space_controller.push_list += A
+			A.inertia_value = 1
 			A.temp_flags |= SPACE_PUSHING
 
 proc/EndSpacePush(var/atom/movable/A)
@@ -70,8 +71,11 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 
 			var/turf/T = M.loc
 
+			if (M.traction >= TRACTION_PARTIAL)
+				M.inertia_value -= T.effective_gforce
+
 			// inside something or it has traction on the ground
-			if (!istype(T) || M.traction)
+			if (!istype(T) || M.traction == TRACTION_FULL || M.inertia_value <= 0)
 				EndSpacePush(M)
 				continue
 
