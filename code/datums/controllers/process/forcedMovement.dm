@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 
 			var/turf/T = M.loc
 
-			if (M.traction >= TRACTION_PARTIAL)
+			if (M.traction >= TRACTION_PARTIAL && istype(T))
 				M.inertia_value -= T.effective_gforce
 
 			// inside something or it has traction on the ground
