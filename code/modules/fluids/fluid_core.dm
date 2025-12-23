@@ -549,7 +549,9 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 				var/turf/simulated/T = get_step(src, dir)
 				if (T && T.active_liquid && T.active_liquid.group == src.group)
 					dirs |= dir
-			icon_state = num2text(dirs)
+
+			var/turf/simulated/my_turf = get_turf(src)
+			icon_state = "[num2text(dirs)][my_turf?.effective_gforce < TRACTION_GFORCE_PARTIAL ? "ng" : ""]"
 
 			if (src.overlay_refs && length(src.overlay_refs))
 				src.clear_overlay()
@@ -684,7 +686,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			I.alpha = F.finalalpha
 		src.show_submerged_image(F.my_depth_level)
 
-	if (F.my_depth_level == 1 && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING) && !src.throwing)
+	if (F.my_depth_level == 1 && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING) && !src.throwing && src.traction != TRACTION_NONE)
 		new /obj/decal/puddle_ripple(null, F)
 
 	..()
@@ -811,7 +813,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 	var/do_reagent_reaction = 1
 
-	if (F.my_depth_level == 1)
+	if (F.my_depth_level == 1 && src.traction != TRACTION_NONE)
 		if(!src.lying && src.shoes && src.shoes.hasProperty ("chemprot") && (src.shoes.getProperty("chemprot") >= 5)) //sandals do not help
 			do_reagent_reaction = 0
 			if (!src.wear_suit || !(src.wear_suit.c_flags & SPACEWEAR)) // suits can go over shoes

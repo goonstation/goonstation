@@ -574,7 +574,9 @@
 						var/turf/simulated/T = get_step(F, dir)
 						if (T && T.active_liquid && T.active_liquid.group == F.group)
 							dirs |= dir
-					fluid_ma.icon_state = num2text(dirs)
+
+					var/turf/simulated/my_turf = get_turf(F)
+					fluid_ma.icon_state = "[num2text(dirs)][my_turf?.effective_gforce < TRACTION_GFORCE_PARTIAL ? "ng" : ""]"
 
 					if (F.overlay_refs && length(F.overlay_refs))
 						if (F)
