@@ -44555,7 +44555,7 @@
 	icon_state = "4-8-thick"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/space/fluid,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "tGH" = (
 /turf/simulated/floor/black,
