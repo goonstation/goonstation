@@ -475,8 +475,6 @@
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
 		/datum/manufacture/tricolor,
-		/datum/manufacture/backpack_studded,
-		/datum/manufacture/satchel_studded,
 		/datum/manufacture/hat_ltophat)
 
 /// cogwerks - a gas extractor for the engine

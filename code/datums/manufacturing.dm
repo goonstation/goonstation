@@ -2686,15 +2686,6 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 10 SECONDS
 	category = "Clothing"
 
-/datum/manufacture/backpack_studded
-	name = "Studded Backpack"
-	item_requirements = list("fabric" = 8,
-							 "metal" = 1)
-	item_outputs = list(/obj/item/storage/backpack/empty/studdedblack)
-	create = 1
-	time = 10 SECONDS
-	category = "Clothing"
-
 /datum/manufacture/satchel
 	name = "Satchel"
 	item_requirements = list("fabric" = 8)
@@ -2731,15 +2722,6 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	name = "Brown Satchel"
 	item_requirements = list("fabric" = 8)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/brown)
-	create = 1
-	time = 10 SECONDS
-	category = "Clothing"
-
-/datum/manufacture/satchel_studded
-	name = "Studded Satchel"
-	item_requirements = list("fabric" = 8,
-							 "metal" = 1)
-	item_outputs = list(/obj/item/storage/backpack/satchel/empty/studdedblack)
 	create = 1
 	time = 10 SECONDS
 	category = "Clothing"
