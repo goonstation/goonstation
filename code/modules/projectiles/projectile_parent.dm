@@ -212,7 +212,7 @@
 			return
 
 		//determine where exactly the bullet hit the atom and spawn particles
-		calculate_impact_particles(src, A)
+		calculate_impact_particles(src, A, ground_hit=FALSE)
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_OBJ_PROJ_COLLIDE, A)
 		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src, src.impact_x, src.impact_y)
 		if(QDELETED(src)) //maybe a signal proc QDELETED(src) us
@@ -450,6 +450,16 @@
 			return
 
 		var/turf/curr_turf = loc
+		var/grav_mult = 1
+		var/kinetic_particles = TRUE
+		var/energy_particle_types = list(D_ENERGY, D_BURNING, D_RADIOACTIVE, D_TOXIC)
+		for (var/type in energy_particle_types)
+			if (src.proj_data.damage_type == type)
+				kinetic_particles = FALSE
+				break
+		if (istype(curr_turf) && kinetic_particles)
+			grav_mult = curr_turf.effective_gforce
+
 		//delta wx, how far in pixels(?) the projectile should move this step
 		var/dwx
 		var/dwy
@@ -457,15 +467,17 @@
 			dwx = src.internal_speed * src.xo
 			dwy = src.internal_speed * src.yo
 			curr_t++
-			src.travelled += src.internal_speed
+			src.travelled += src.internal_speed * grav_mult
 		else
 			dwx = src.proj_data.projectile_speed * src.xo
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
-			src.travelled += src.proj_data.projectile_speed
+			src.travelled += src.proj_data.projectile_speed * grav_mult
 
 		// The bullet would be expired/decayed.
 		if (src.travelled >= src.max_range * 32)
+			if (isfloor(curr_turf))
+				calculate_impact_particles(src, curr_turf, ground_hit=TRUE)
 			proj_data.on_max_range_die(src)
 			die()
 			return
@@ -590,7 +602,7 @@
 			return GM
 		..()
 
-	proc/calculate_impact_particles(obj/projectile/shot, atom/hit)
+	proc/calculate_impact_particles(obj/projectile/shot, atom/hit, ground_hit=FALSE)
 		var/datum/projectile/shotdata = shot.proj_data
 
 		// Apply offset based on dir. The side we want to put holes on is opposite the dir of the bullet
@@ -639,7 +651,7 @@
 		var/new_x = (impact_offset_x + x_distance)*abs(sin(impact_normal)) + (16-impact_final_height)*cos(impact_normal)
 		var/new_y = (impact_offset_y + y_distance)*abs(cos(impact_normal)) + (16-impact_final_height)*sin(impact_normal)
 
-		shotdata.spawn_impact_particles(hit, shot, new_x, new_y)
+		shotdata.spawn_impact_particles(hit, shot, new_x, new_y, ground_hit)
 		src.impact_x = new_x
 		src.impact_y = new_y
 		return
@@ -873,7 +885,7 @@ ABSTRACT_TYPE(/datum/projectile)
 			src.impact_image_state = P.impact_image_state
 
 		// Spawn some particles if we hit something solid that isnt a human or a silicon
-		spawn_impact_particles(atom/hit, var/obj/projectile/O, x, y)
+		spawn_impact_particles(atom/hit, var/obj/projectile/O, x, y, ground_hit=FALSE)
 			if (!src.has_impact_particles || ismob(hit))
 				return
 			if (effect_amount >= 200)
@@ -897,27 +909,32 @@ ABSTRACT_TYPE(/datum/projectile)
 				if (T?.active_liquid)
 					if(T.active_liquid.last_depth_level > 3)
 						underwater = TRUE
+			var/impact_dir_x = -O.xo
+			var/impact_dir_y = -O.yo
+			if (ground_hit)
+				impact_dir_x = 0
+				impact_dir_y = 0.5
 			if (kinetic_particles && !src.energy_particles_override)
 				var/new_impact_icon = hit.impact_icon
 				var/new_impact_icon_state = hit.impact_icon_state
 				//Bullet impacts create dust of the color of the hit thing
 				var/avrg_color = hit.get_average_color(TRUE)
-				new /obj/effects/impact_gunshot/dust(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
+				new /obj/effects/impact_gunshot/dust(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage, avrg_color, new_impact_icon, new_impact_icon_state)
 				if (underwater)
-					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 				else
-					new /obj/effects/impact_gunshot/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
-					new /obj/effects/impact_gunshot/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_gunshot/sparks(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
+					new /obj/effects/impact_gunshot/smoke(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 			else
 				//Energy impacts create sparks of the color of the projectile
 				var/avrg_color = O.get_average_color(TRUE)
-				new /obj/effects/impact_energy/projectile_sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color)
+				new /obj/effects/impact_energy/projectile_sparks(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage, avrg_color)
 				if (underwater)
-					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 				else
-					new /obj/effects/impact_energy/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_energy/sparks(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 					if (damage >= 30)
-						new /obj/effects/impact_energy/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+						new /obj/effects/impact_energy/smoke(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
