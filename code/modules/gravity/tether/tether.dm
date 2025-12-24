@@ -99,18 +99,18 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH
 
 /obj/machinery/gravity_tether/get_desc(dist, mob/user)
+	. = ..()
 	if (src.powered())
 		if (src.changing_gravity)
-			. += "It is changing intensity."
+			. += " It is changing intensity."
 		else if (src.is_broken())
-			. += "It doesn't seem to be working right."
+			. += " It doesn't seem to be working right."
 		else if (src.intensity == 0)
-			. += "It is online, but not active."
+			. += " It is online, but not active."
 		else
-			. += "It is operating at [src.intensity]G."
+			. += " It is operating at [src.intensity]G."
 	else
-		. += "It doesn't seem powered on."
-	. = ..()
+		. += " It doesn't seem powered on."
 
 /obj/machinery/gravity_tether/get_help_message(dist, mob/user)
 	. = ..()
