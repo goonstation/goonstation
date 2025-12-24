@@ -115,11 +115,19 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/get_help_message(dist, mob/user)
 	. = ..()
 	if (src.locked)
-		. += "Unlock with an appropriate <b>ID Card</b>."
+		if (isAI(user) || isrobot(user))
+			var/datum/keymap/keymap = user.client.keymap
+			. += "Unlock using <b>[keymap ? keymap.action_to_keybind(KEY_BOLT) : "SHIFT"]</b>+<b>Click</b>."
+		else
+			. += "Unlock with an appropriate <b>ID Card</b>."
 		if (istrainedsyndie(x) || isspythief(x))
 			. += "<br>Break the access lock with an <b>Electromagnetic Card</b>."
 	else if (length(src.req_access))
-		. += "Lock with an appropriate <b>ID Card</b>."
+		if (isAI(user) || isrobot(user))
+			var/datum/keymap/keymap = user.client.keymap
+			. += "Lock using <b>[keymap ? keymap.action_to_keybind(KEY_BOLT) : "SHIFT"]</b>+<b>Click</b>."
+		else
+			. += "Lock with an appropriate <b>ID Card</b>."
 	else
 		. += "Has no access lock."
 	if (isarcfiend(user))
@@ -346,6 +354,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if (..())
 		return
 	if (!src.allowed(user))
+		return
+	if (!length(src.req_access))
 		return
 	if (user.client.check_key(KEY_BOLT))
 		. = 1
