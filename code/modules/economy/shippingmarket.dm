@@ -712,7 +712,7 @@
 					if (P && !P.density)
 						P.close()
 
-		shipped_thing.throw_at(target, src.launch_distance, 1)
+		shipped_thing.throw_at(target, 1, 1)
 #endif
 
 	proc/get_path_to_market()
