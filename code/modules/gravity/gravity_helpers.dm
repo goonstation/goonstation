@@ -56,7 +56,7 @@ proc/initialize_area_gravity()
 
 	for (var/area/A in areas_to_zero)
 		A.gforce_minimum = 0 // set directly to avoid wasted gravity recalc
-		A.set_turf_gravity(A.gforce_tether) // need to force updates for 0 turf oofies
+		A.set_turf_gravity(A.gforce_tether) // now force updates
 
 /// Set a minimum gforce across an entire Z-Level
 proc/set_zlevel_gforce(z_level, gforce, update_tethers=FALSE)
@@ -75,7 +75,7 @@ proc/set_zlevel_gforce(z_level, gforce, update_tethers=FALSE)
 
 /datum/infooverlay/gravity_area
 	name = "gravity area"
-	help = {"Colors group mob gravity thresholds. Number is gforce, parenthesis is base gravity."}
+	help = {"Colors group mob gravity thresholds. Number is area gforce, parenthesis is tether force."}
 
 	GetInfo(turf/theTurf, image/debugoverlay/img)
 		var/area/A = get_area(theTurf)
