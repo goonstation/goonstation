@@ -18,10 +18,17 @@
 	src.gforce = new_gforce
 	src.update_traction()
 
-// intangibles never effected by gravity
+
+// gravity interactions
+
+// fluid icons change in low-g
+/obj/fluid/set_gravity(new_gforce)
+	. = ..()
+	src.UpdateIcon()
+
+// intangibles/dead never effected by gravity
 /mob/living/intangible/set_gravity(new_gforce)
 	return
-
 /mob/dead/set_gravity(new_gforce)
 	return
 
