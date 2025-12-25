@@ -41633,15 +41633,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "qmh" = (
-/obj/rack,
-/obj/item/wrench{
-	pixel_y = 2;
-	pixel_x = -6
-	},
-/obj/item/device/light/floodlight{
-	pixel_y = -2;
-	pixel_x = 5
-	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "qmD" = (
@@ -46086,6 +46078,18 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"vEW" = (
+/obj/item/device/light/floodlight{
+	pixel_y = -2;
+	pixel_x = 5
+	},
+/obj/item/wrench{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "vGl" = (
 /obj/machinery/firealarm/directional/west,
 /obj/decal/tile_edge/line/black{
@@ -47826,7 +47830,6 @@
 	name = "Courtroom Door Control";
 	id = "court_door"
 	},
-/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "xDr" = (
@@ -99718,7 +99721,7 @@ bRS
 bRS
 htA
 tIR
-htA
+vEW
 dou
 aqn
 aqn
