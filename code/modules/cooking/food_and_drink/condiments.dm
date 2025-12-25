@@ -283,3 +283,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		stuff = "mustard"
 		myVerb = "squirt"
 
+	barbecue
+		name = "barbecue sauce bottle"
+		desc = "A little bottle for putting condiments on stuff. It has some barbecue sauce in it."
+		icon_state = "bottle-barbecue"
+		stuff = "barbecue_sauce"
+		myVerb = "squirt"

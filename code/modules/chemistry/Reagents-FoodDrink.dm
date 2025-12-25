@@ -3348,6 +3348,18 @@ datum
 				if(probmult(16))
 					M.emote("fart")
 
+		fooddrink/barbecue_sauce
+			name = "barbecue sauce"
+			id = "barbecue_sauce"
+			taste = "smoky"
+			description = "A wonderful sauce that finds its home on many different kinds of food. Sometimes made with worcestershire sauce, although this appears not to have been."
+			reagent_state = SOLID
+			fluid_r = 125
+			fluid_g = 64
+			fluid_b = 15
+			transparency = 255
+			depletion_rate = 0.4
+
 		fooddrink/beff
 			name = "beff"
 			id = "beff"
