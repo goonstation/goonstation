@@ -3358,6 +3358,7 @@ datum
 			fluid_g = 64
 			fluid_b = 15
 			transparency = 255
+			viscoity = 0.7
 			depletion_rate = 0.4
 
 		fooddrink/beff
