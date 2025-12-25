@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/meateggdairy
 	name = "Catering: Meat, Eggs and Dairy Crate"
-	desc = "x25 Assorted Cooking Ingredients"
+	desc = "x25+ Assorted Cooking Ingredients"
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/hotdog = 4,
 					/obj/item/reagent_containers/food/snacks/ingredient/cheese = 4,
@@ -221,6 +221,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white,
+					/obj/item/item_box/anchovy,
 					/obj/item/kitchen/egg_box = 3,
 					/obj/item/storage/box/bacon_kit = 2)
 	cost = PAY_TRADESMAN*5
