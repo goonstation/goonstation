@@ -4318,9 +4318,9 @@ datum
 
 				return
 
-		fooddrink/temp_bioeffect/worcestershire_sauce
-			name = "Worcestershire sauce"
-			id = "worcestershire_sauce"
+		fooddrink/temp_bioeffect/yorkshire_sauce
+			name = "yorkshire sauce"
+			id = "yorkshire_sauce"
 			description = "Just looking at this substance makes you want to break for Tea."
 			fluid_r = 119
 			fluid_g = 51
