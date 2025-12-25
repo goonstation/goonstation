@@ -1,7 +1,7 @@
 (t)thu dec 25 25
 (u)Emily
 (*)Added Barbecue Sauce
-(+)Barbecue Sauce Recipe: Capsaicin, Pepper, Ketchup, Grease, Mustard, Lemonade
+(+)Barbecue Sauce Recipe: Capsaicin, Pepper, Ketchup, Grease/Soybean Oil, Mustard, Lemonade
 (t)wed dec 24 25
 (u)Microoowaaave
 (p)25279
