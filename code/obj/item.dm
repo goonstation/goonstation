@@ -1874,7 +1874,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/should_suppress_attack(var/object, mob/user, params)
 	return flags & SUPPRESSATTACK
 
-/obj/item/proc/getTexturedWornImage(var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)
+/obj/item/proc/getTexturedWornImage(var/texture, var/blendMode = BLEND_MULTIPLY)
 	if (!src.wear_image || !texture)
 		return null
 	var/icon/mask = GetTexturedIcon(icon(src.wear_image.icon, src.wear_image.icon_state), texture)

@@ -45479,13 +45479,6 @@
 /obj/machinery/light/traffic_light/trader_left/delay4,
 /turf/space/fluid,
 /area/space)
-"uJM" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
 "uKS" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -104488,7 +104481,7 @@ aIn
 goh
 aLw
 aIn
-uJM
+aIn
 aIn
 beS
 aIn
