@@ -9,7 +9,7 @@
 	else
 		BeginSpacePush(src)
 
-/mob/update_traction()
+/mob/update_traction(turf/T)
 	if (src.traction == TRACTION_FULL)
 		src.inertia_dir = 0
 	. = ..()
@@ -43,16 +43,16 @@
 				return TRACTION_FULL
 			return TRACTION_PARTIAL
 
-/obj/item/sticker/calculate_traction()
+/obj/item/sticker/calculate_traction(turf/T)
 	if (src.attached) // they're sticky
 		return TRACTION_FULL
 	return ..()
 
 // TODO: integrate pod drift/RCS behavior
-/obj/machinery/vehicle/calculate_traction()
+/obj/machinery/vehicle/calculate_traction(turf/T)
 	return TRACTION_FULL
 
-/mob/calculate_traction()
+/mob/calculate_traction(turf/T)
 	// admin noclip
 	if (src.client?.flying || HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP))
 		return TRACTION_FULL
@@ -60,23 +60,23 @@
 		return TRACTION_FULL
 	. = ..()
 
-/obj/critter/calculate_traction()
+/obj/critter/calculate_traction(turf/T)
 	if (src.flying)
 		return TRACTION_FULL
 	. = ..()
 
 // intangibles always have traction, they spookey
-/mob/living/intangible/calculate_traction()
+/mob/living/intangible/calculate_traction(turf/T)
 	return TRACTION_FULL
 
 // active hivebots hover
-/mob/living/silicon/hivebot/eyebot/calculate_traction()
+/mob/living/silicon/hivebot/eyebot/calculate_traction(turf/T)
 	if (src.client)
 		return TRACTION_FULL
 	. = ..()
 
 // ghostdrones hover
-/mob/living/silicon/ghostdrone/calculate_traction()
+/mob/living/silicon/ghostdrone/calculate_traction(turf/T)
 	return TRACTION_FULL
 
 /// Check if an atom has "grip" with something on a nearby tile, such as a wall or table

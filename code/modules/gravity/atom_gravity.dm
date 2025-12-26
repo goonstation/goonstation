@@ -7,15 +7,15 @@
 /atom/movable/var/floating_anim = FALSE
 
 /// Reset gforce based on turf gravity
-/atom/movable/proc/reset_gravity()
+/atom/movable/proc/reset_gravity(force_update=FALSE)
 	var/turf/T = get_turf(src)
 	if (istype(T))
-		src.set_gravity(T)
+		src.set_gravity(T, force_update)
 
 /// set the gforce applied to the AM and update traction
 ///
 /// returns TRUE if no change
-/atom/movable/proc/set_gravity(turf/T)
+/atom/movable/proc/set_gravity(turf/T, force_update=FALSE)
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
 		return TRUE
 	if (!istype(T))
@@ -26,7 +26,7 @@
 	var/new_gforce = T.effective_gforce
 	if (src.no_gravity)
 		new_gforce = 0
-	if (src.gforce == new_gforce)
+	if (src.gforce == new_gforce && !force_update)
 		return TRUE
 	src.gforce = new_gforce
 	src.update_traction(T)
@@ -35,7 +35,7 @@
 // gravity interactions
 
 // fluid icons change in low-g
-/obj/fluid/set_gravity(turf/T)
+/obj/fluid/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
 	if (.)
 		return TRUE
@@ -43,7 +43,7 @@
 
 // some things float in zero-G
 
-/mob/living/carbon/human/set_gravity(turf/T)
+/mob/living/carbon/human/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
 	if (.)
 		return TRUE
@@ -57,7 +57,7 @@
 			src.floating_anim = TRUE
 	src.hud?.update_gravity_indicator() // snappy HUD updates
 
-/mob/living/critter/set_gravity(turf/T)
+/mob/living/critter/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
 	if (.)
 		return TRUE
@@ -71,7 +71,7 @@
 			src.floating_anim = TRUE
 	src.hud?.update_gravity_indicator()
 
-/mob/living/silicon/robot/set_gravity(turf/T)
+/mob/living/silicon/robot/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
 	if (.)
 		return TRUE
@@ -85,7 +85,7 @@
 			src.floating_anim = TRUE
 	src.hud?.update_gravity_indicator()
 
-/mob/living/silicon/ai/set_gravity(turf/T)
+/mob/living/silicon/ai/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
 	if (.)
 		return TRUE
@@ -98,7 +98,7 @@
 			animate_drift(src, -1, GRAVITY_LIVING_ZEROG_ANIM_TIME)
 			src.floating_anim = TRUE
 
-/obj/fake_attacker/set_gravity(turf/T)
+/obj/fake_attacker/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
 	if (.)
 		return TRUE
@@ -111,7 +111,7 @@
 			animate_drift(src, -1, GRAVITY_LIVING_ZEROG_ANIM_TIME)
 			src.floating_anim = TRUE
 
-/obj/critter/set_gravity(turf/T)
+/obj/critter/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
 	if (.)
 		return TRUE
@@ -125,7 +125,7 @@
 			src.floating_anim = TRUE
 
 // TODO: Using animate() for potentially thousands of items isn't performant enough at this time
-// /obj/item/set_gravity(turf/T)
+// /obj/item/set_gravity(turf/T, force_update=FALSE)
 // 	. = ..()
 // if (.)
 // 		return
