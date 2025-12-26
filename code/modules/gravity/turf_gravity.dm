@@ -7,21 +7,21 @@
 // update gravity on simulated turf spawn
 /turf/simulated/New()
 	. = ..()
-	src.reset_gravity()
+	src.reset_effective_gforce()
 
 /// Recalculate the turf gravity based on area levels
-/turf/proc/reset_gravity()
+/turf/proc/reset_effective_gforce()
 	var/area/A = src.loc
 	src.calculate_effective_gforce(A.gforce_minimum, A.gforce_tether)
 
-/turf/space/reset_gravity()
+/turf/space/reset_effective_gforce()
 	src.effective_gforce = 0
 
-/turf/space/fluid/reset_gravity()
+/turf/space/fluid/reset_effective_gforce()
 	var/area/A = src.loc
 	src.calculate_effective_gforce(A.gforce_minimum, A.gforce_tether)
 
-/turf/unsimulated/reset_gravity()
+/turf/unsimulated/reset_effective_gforce()
 	src.effective_gforce = 1
 
 /// Set gravity on a turf
@@ -37,12 +37,12 @@
 		return
 	src.effective_gforce = src.get_gforce_minimum(area_gravity) + tether_gravity
 	for (var/atom/movable/AM as anything in src)
-		AM.set_gravity(src.effective_gforce)
+		AM.set_gravity(src)
 
 /turf/space/fluid/calculate_effective_gforce(area_gravity, tether_gravity)
 	src.effective_gforce = src.get_gforce_minimum(area_gravity) + tether_gravity
 	for (var/atom/movable/AM as anything in src)
-		AM.set_gravity(src.effective_gforce)
+		AM.set_gravity(src)
 
 /// Get the minimum gforces to apply to this turf
 /turf/proc/get_gforce_minimum(area_gforce_minimum=null)

@@ -70,7 +70,7 @@ proc/set_zlevel_gforce(z_level, gforce, update_tethers=FALSE)
 					tether.begin_gravity_change(gforce ? 0 : 1)
 	for (var/turf/T in world)
 		if (T.z == z_level)
-			T.reset_gravity()
+			T.reset_effective_gforce()
 
 
 /datum/infooverlay/gravity_area

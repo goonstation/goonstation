@@ -12,7 +12,7 @@ proc/recalculate_station_tether_gforce()
 	global.station_tether_gforce = new_grav
 	for_by_tcl(airbridge, /obj/airbridge_controller)
 		for (var/turf/T in airbridge.maintaining_turfs)
-			T.reset_gravity()
+			T.reset_effective_gforce()
 
 /obj/machinery/gravity_tether/station
 	name = "\improper Gravi-Tonne wide-area gravity tether"
