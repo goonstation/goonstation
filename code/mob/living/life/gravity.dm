@@ -69,7 +69,6 @@
 			; // quick no-op for most common gravity
 		if (-INFINITY to 0)
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_FLOATING, "gravity")
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
 		if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
 			;
@@ -86,7 +85,6 @@
 			; // quick no-op for most common gravity
 		if (-INFINITY to 0)
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
-			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_FLOATING, "gravity")
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
 		// if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
 		// 	;
