@@ -28,9 +28,6 @@
 /turf/proc/calculate_effective_gforce(area_gravity, tether_gravity)
 	return
 
-/turf/unsimulated/calculate_effective_gforce(area_gravity, tether_gravity)
-	return
-
 /turf/simulated/calculate_effective_gforce(area_gravity, tether_gravity)
 	if (contains_negative_matter(src))
 		src.effective_gforce = 0
