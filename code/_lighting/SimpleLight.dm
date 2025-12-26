@@ -8,12 +8,12 @@
 	pixel_y = -32
 	text = ""
 
-/atom/var/list/simple_light_rgbas = null
+/atom/var/alist/simple_light_rgbas = null
 /atom/var/atom/movable/light/simple_light/simple_light = null
 
 /atom/proc/add_simple_light(var/id, var/list/rgba)
 	if (!simple_light_rgbas)
-		simple_light_rgbas = list()
+		simple_light_rgbas = alist()
 
 	simple_light_rgbas[id] = rgba
 
@@ -46,8 +46,7 @@
 	var/avg_b = 0
 	var/sum_a = 0
 
-	for (var/id in simple_light_rgbas) //waiting for 516 so i can change this shit to be associative weh
-		var/list/L = simple_light_rgbas[id]
+	for (var/id, L in simple_light_rgbas)
 		avg_r += L[1]
 		avg_g += L[2]
 		avg_b += L[3]
@@ -106,7 +105,7 @@
 			if(0)
 				icon_state = "medium_center"
 
-/atom/var/list/medium_light_rgbas = null
+/atom/var/alist/medium_light_rgbas = null
 /atom/var/list/atom/movable/light/simple_light/medium/medium_lights
 /atom/var/static/list/medium_light_dirs = list(0, NORTH, SOUTH, EAST, WEST)
 
@@ -114,7 +113,7 @@
 // the upper limit is 510 but some stuff will look a bit weird
 /atom/proc/add_medium_light(var/id, var/list/rgba)
 	if (!medium_light_rgbas)
-		medium_light_rgbas = list()
+		medium_light_rgbas = alist()
 
 	medium_light_rgbas[id] = rgba
 
@@ -155,8 +154,7 @@
 	var/avg_b = 0
 	var/sum_a = 0
 
-	for (var/id in medium_light_rgbas)
-		var/list/L = medium_light_rgbas[id]
+	for (var/id,L in medium_light_rgbas)
 		avg_r += L[1]
 		avg_g += L[2]
 		avg_b += L[3]
@@ -168,7 +166,7 @@
 	avg_b /= length
 	var/list/unscaled = list(avg_r, avg_g, avg_b, min(255, sum_a))
 	var/list/scaled = list(avg_r, avg_g, avg_b, min(255, sum_a / 2)) // divided by two because the directional sprites are brighter
-	for(var/atom/movable/light/simple_light/medium/medium_light in src.medium_lights)
+	for(var/atom/movable/light/simple_light/medium/medium_light as anything in src.medium_lights)
 		if(medium_light.icon_state == "medium_center")
 			medium_light.color = unscaled
 		else
@@ -227,7 +225,7 @@
 	var/dist = 0
 
 
-/atom/var/list/mdir_light_rgbas = null
+/atom/var/alist/mdir_light_rgbas = null
 /atom/var/list/atom/movable/light/simple_light/medium/directional/mdir_lights
 /atom/var/static/list/mdir_light_dists = list(0, 2.5, 5)
 
@@ -235,7 +233,7 @@
 // the upper limit is 510 but some stuff will look a bit weird
 /atom/proc/add_mdir_light(var/id, var/list/rgba)
 	if (!mdir_light_rgbas)
-		mdir_light_rgbas = list()
+		mdir_light_rgbas = alist()
 
 	mdir_light_rgbas[id] = rgba
 
@@ -277,8 +275,7 @@
 	var/avg_b = 0
 	var/sum_a = 0
 
-	for (var/id in medium_light_rgbas)
-		var/list/L = mdir_light_rgbas[id]
+	for (var/id, L in medium_light_rgbas)
 		avg_r += L[1]
 		avg_g += L[2]
 		avg_b += L[3]
