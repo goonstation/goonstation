@@ -1125,10 +1125,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Rocky Roach"
 		icon_state = "rockyroach"
 		ckey = "haikuart"
-	war_sometimes_changes
+	warsometimeschanges
 		name = "\improper Alice Dawn"
 		icon_state = "alicedawn"
-		ckey = "war_sometimes_changes"
+		ckey = "warsometimeschanges"
 	annmageddon
 		name = "\improper Charlotte Chirtte"
 		icon_state = "charlottechirtte"
