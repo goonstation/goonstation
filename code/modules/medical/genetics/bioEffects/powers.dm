@@ -606,24 +606,25 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Transmit psychic messages to others."
 	icon_state = "telepathy"
 	needs_hands = FALSE
-	targeted = 1
+	targeted = TRUE
+	do_logs = FALSE //Handle logs ourselves
 
-	cast(atom/target)
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (istype(target, /obj/item/reagent_containers/food/snacks/pancake))
 			dothepixelthing(target)
 			src.holder.owner.visible_message(SPAN_ALERT(SPAN_BOLD("[src.holder.owner] blows up the pancakes with their mind!")), SPAN_ALERT("You blow up the pancakes with your mind!"))
 			src.holder.owner.bioHolder?.RemoveEffect("telepathy")
-			return
+			return CAST_ATTEMPT_SUCCESS
 
 		var/mob/living/carbon/recipient = null
 		if (iscarbon(target))
 			recipient = target
 		else if (ismob(target) && !iscarbon(target))
 			boutput(owner, SPAN_ALERT("You can't transmit to [target] as they are too different from you mentally!"))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		else
 			var/turf/T = get_turf(target)
 			for (var/mob/living/carbon/C in T.contents)
@@ -632,76 +633,41 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		if (!recipient)
 			boutput(owner, SPAN_ALERT("There's nobody there to transmit a message to."))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (recipient.bioHolder.HasEffect("psy_resist"))
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind at all!"))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if(isghostcritter(owner))
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind with your spectral brain!"))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if(!recipient.client || recipient.stat)
 			boutput(owner, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
 		if (!msg)
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		phrase_log.log_phrase("telepathy", msg)
 
 		var/psyname = "A psychic voice"
 		if (recipient.bioHolder.HasOneOfTheseEffects("telepathy","empath"))
 			psyname = "[owner.name]"
 
+		if (misfire)
+			msg = uppertext(msg)
+			owner.visible_message(SPAN_ALERT("<b>[owner]</b> puts [his_or_her(owner)] fingers to [his_or_her(owner)] temples and stares at [target] really hard."))
+			owner.say(msg)
+			logTheThing(LOG_TELEPATHY, owner, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
+
 		boutput(recipient, "<span style='color: #BD33D9'><b>[psyname]</b> echoes, \"<i>[msg]</i>\"</span>")
 		boutput(owner, "<span style='color: #BD33D9'>You echo \"<i>[msg]</i>\" to <b>[recipient.name]</b>.</span>")
 
 		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY to [constructTarget(recipient,"telepathy")]: [msg]")
 
-		return
-
-	cast_misfire(atom/target)
-		if (..())
-			return 1
-
-		var/mob/living/carbon/recipient = null
-		if (iscarbon(target))
-			recipient = target
-		else if (ismob(target) && !iscarbon(target))
-			boutput(owner, SPAN_ALERT("You can't transmit to [target] as they are too different from you mentally!"))
-			return 1
-		else
-			var/turf/T = get_turf(target)
-			for (var/mob/living/carbon/C in T.contents)
-				recipient = C
-				break
-
-		if (!recipient)
-			boutput(owner, SPAN_ALERT("There's nobody there to transmit a message to."))
-			return 1
-
-		if (recipient.bioHolder.HasEffect("psy_resist"))
-			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind at all!"))
-			return 1
-
-		if(!recipient.client || recipient.stat)
-			boutput(recipient, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
-			return 1
-
-		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
-		if (!msg)
-			return 1
-		phrase_log.log_phrase("telepathy", msg)
-		msg = uppertext(msg)
-
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> puts [his_or_her(owner)] fingers to [his_or_her(owner)] temples and stares at [target] really hard."))
-		owner.say(msg)
-
-		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
-
-		return
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
