@@ -3889,7 +3889,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 5;
 	id = "chapel_dock_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -5557,7 +5558,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 5;
 	id = "chapel_dock_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "chapel_dock_down";
@@ -6705,7 +6707,8 @@
 	dir = 1;
 	drive_range = 7;
 	id = "chapel_dock_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "chapel_dock_up";
@@ -7020,7 +7023,8 @@
 	dir = 1;
 	drive_range = 7;
 	id = "chapel_dock_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -7809,7 +7813,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 7;
 	id = "garden_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -8153,7 +8158,8 @@
 	dir = 1;
 	drive_range = 5;
 	id = "garden_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -10572,7 +10578,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 7;
 	id = "garden_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "garden_down";
@@ -12399,7 +12406,8 @@
 	dir = 1;
 	drive_range = 5;
 	id = "garden_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "garden_up";
@@ -14410,7 +14418,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 5;
 	id = "owlery_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -15600,7 +15609,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 5;
 	id = "owlery_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "owlery_down";
@@ -17084,7 +17094,8 @@
 	dir = 1;
 	drive_range = 5;
 	id = "owlery_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "owlery_up";
@@ -17175,7 +17186,8 @@
 	dir = 1;
 	drive_range = 5;
 	id = "owlery_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -22729,7 +22741,8 @@
 	dir = 4;
 	drive_range = 5;
 	id = "security_in";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -22738,7 +22751,8 @@
 	dir = 4;
 	drive_range = 4;
 	id = "security_in";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 4
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -25581,7 +25595,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 8;
 	id = "router_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -26196,7 +26211,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 8;
 	id = "router_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "router_down";
@@ -28788,7 +28804,8 @@
 	dir = 1;
 	drive_range = 8;
 	id = "router_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "router_up";
@@ -29289,7 +29306,8 @@
 	dir = 1;
 	drive_range = 8;
 	id = "router_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
@@ -34938,9 +34956,10 @@
 /area/station/maintenance/disposal)
 "cgX" = (
 /obj/machinery/mass_driver{
-	drive_range = 15;
+	drive_range = 11;
 	id = "disposals_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 11
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -35176,9 +35195,10 @@
 /area/station/maintenance/disposal)
 "chT" = (
 /obj/machinery/mass_driver{
-	drive_range = 15;
+	drive_range = 10;
 	id = "disposals_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 10
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "disposals_down";
@@ -37687,7 +37707,8 @@
 	dir = 1;
 	drive_range = 8;
 	id = "market_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -39617,7 +39638,8 @@
 	dir = 1;
 	drive_range = 9;
 	id = "disposals_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 9
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "disposals_up";
@@ -40202,7 +40224,8 @@
 	dir = 1;
 	drive_range = 10;
 	id = "disposals_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -41134,7 +41157,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 8;
 	id = "market_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -41651,7 +41675,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 8;
 	id = "market_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 4
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "market_down";
@@ -43523,7 +43548,8 @@
 	dir = 1;
 	drive_range = 8;
 	id = "market_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 4
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "market_up";
@@ -43942,7 +43968,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 8;
 	id = "cargo_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -44894,7 +44921,8 @@
 /obj/machinery/mass_driver{
 	drive_range = 8;
 	id = "cargo_down";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 4
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "cargo_down";
@@ -46101,7 +46129,8 @@
 	dir = 1;
 	drive_range = 8;
 	id = "cargo_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 4
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "cargo_up";
@@ -46122,7 +46151,8 @@
 	dir = 1;
 	drive_range = 8;
 	id = "cargo_up";
-	name = "cargo driver"
+	name = "cargo driver";
+	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -46448,6 +46478,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cSO" = (
@@ -46512,6 +46543,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cSZ" = (
@@ -46521,6 +46553,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/light_switch/north,
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cTa" = (
@@ -69751,10 +69784,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
-"tkp" = (
-/obj/mesh/catwalk,
-/turf/simulated/floor/plating/airless,
-/area/space)
 "tkA" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grass{
@@ -104120,7 +104149,7 @@ aah
 aah
 aaE
 aal
-kmb
+aal
 aal
 aal
 rZr
@@ -104422,7 +104451,7 @@ aaa
 kiN
 kiN
 aar
-kKN
+aal
 quW
 quW
 rZr
@@ -123145,7 +123174,7 @@ aaa
 aaa
 aaa
 aao
-aaa
+kTY
 aao
 aaa
 aao
@@ -123749,8 +123778,8 @@ aaa
 aaa
 aaa
 aam
+kiN
 kTY
-aaF
 aaa
 aam
 dhH
@@ -124051,9 +124080,9 @@ aah
 aah
 aah
 aal
+aal
 kTY
-aan
-aan
+aal
 aan
 dhI
 aal
@@ -124651,9 +124680,9 @@ aah
 aah
 aah
 aah
-aah
-aaF
-aaF
+aaS
+aal
+aal
 aal
 kTY
 aan
@@ -124953,8 +124982,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-kiN
+kTY
+aal
 kiN
 kiN
 dhe
@@ -125255,9 +125284,9 @@ aah
 aah
 aah
 aah
-aah
-aah
-aah
+kiN
+kiN
+rZr
 aal
 aar
 aan
@@ -125557,10 +125586,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aam
+aal
+aaF
+aaF
+aaF
 dhf
 aaF
 rZr
@@ -125859,9 +125888,9 @@ aah
 aah
 aah
 aah
-aah
-aah
-aah
+aaB
+aaB
+aaB
 aal
 dhg
 aaE
@@ -137793,7 +137822,7 @@ aaa
 aaa
 aam
 kTY
-nBK
+aal
 aaP
 hAd
 hAd
@@ -138095,8 +138124,8 @@ aaa
 aaa
 aal
 kTY
-tkp
-tkp
+aal
+aal
 aaE
 aaF
 aah
@@ -138849,7 +138878,7 @@ aaa
 aaa
 aam
 aaE
-quW
+aal
 gBr
 rZr
 aal

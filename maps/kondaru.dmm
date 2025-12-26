@@ -34896,7 +34896,8 @@
 /obj/machinery/mass_driver{
 	dir = 1;
 	drive_range = 16;
-	id = "kd_scinorth"
+	id = "kd_scinorth";
+	bonus_range = 4
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/southwest)
@@ -37466,7 +37467,8 @@
 "jtR" = (
 /obj/machinery/mass_driver{
 	drive_range = 17;
-	id = "kd_medsouth"
+	id = "kd_medsouth";
+	bonus_range = 5
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
@@ -58272,7 +58274,8 @@
 "xLe" = (
 /obj/machinery/mass_driver{
 	drive_range = 16;
-	id = "kd_medsouth"
+	id = "kd_medsouth";
+	bonus_range = 4
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
@@ -58952,7 +58955,8 @@
 /obj/machinery/mass_driver{
 	dir = 1;
 	drive_range = 17;
-	id = "kd_scinorth"
+	id = "kd_scinorth";
+	bonus_range = 5
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/southwest)

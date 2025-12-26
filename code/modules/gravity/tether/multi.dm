@@ -126,6 +126,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	base_area_typepath = /area/derelict_ai_sat
 	base_area_exceptions = list(/area/derelict_ai_sat/solar)
 
+	New()
+		. = ..()
+		src.cell.charge = 0
+
 // Hemera wreck
 /obj/machinery/gravity_tether/multi_area/hermera
 	name = "H7 gravity tether"

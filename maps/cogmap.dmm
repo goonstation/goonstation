@@ -24370,9 +24370,6 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/airbridge)
-"bQb" = (
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/Zeta)
 "bQc" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -24380,8 +24377,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/Zeta)
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "bQi" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -45046,8 +45046,11 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/Zeta)
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "jRc" = (
 /obj/shrub,
 /turf/simulated/floor/green/side{
@@ -49361,8 +49364,8 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/Zeta)
+/turf/space,
+/area/space)
 "nhj" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -55939,14 +55942,13 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "rVw" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
+	},
+/obj/lattice{
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area/space)
@@ -105564,8 +105566,8 @@ aaw
 aaw
 aaw
 aap
-aaw
-aaw
+aar
+aar
 bEU
 bUu
 bVO
@@ -105866,8 +105868,8 @@ bCh
 bCh
 bCh
 bCh
-bQb
-bQb
+adC
+adC
 sDQ
 bUv
 bVP
@@ -106471,7 +106473,7 @@ bCh
 bCh
 bCh
 ngW
-bQb
+adC
 sDQ
 bUw
 bVO
@@ -106773,7 +106775,7 @@ eDF
 eDF
 lXc
 rVw
-aaq
+aar
 bEU
 bUB
 bVO
