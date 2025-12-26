@@ -534,9 +534,7 @@ proc/generate_space_color()
 	return ..(Obj, newloc)
 
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
-	if(ismob(M))
-		var/mob/tmob = M
-		tmob.set_gravity(src.effective_gforce)
+	M.set_gravity(src.effective_gforce)
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
@@ -547,9 +545,6 @@ proc/generate_space_color()
 			if (isitem(M))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
-	M.update_traction()
-	if(M.traction != TRACTION_FULL)
-		BeginSpacePush(M)
 
 #ifdef NON_EUCLIDEAN
 	if(warptarget)

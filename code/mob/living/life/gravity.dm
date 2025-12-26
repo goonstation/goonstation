@@ -71,7 +71,6 @@
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_FLOATING, "gravity")
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
-			animate(src.owner, flags=ANIMATION_END_LOOP, tag="grav_drift")
 		if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
 			;
 		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
@@ -89,7 +88,6 @@
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_FLOATING, "gravity")
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
-			animate_drift(src.owner, -1, 10, 1)
 		// if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
 		// 	;
 		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)

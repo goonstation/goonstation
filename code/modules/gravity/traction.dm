@@ -6,11 +6,13 @@
 	src.traction = src.calculate_traction()
 	if (src.traction == TRACTION_FULL)
 		src.inertia_value = 0
+	else
+		BeginSpacePush(src)
 
 /mob/update_traction()
-	. = ..()
 	if (src.traction == TRACTION_FULL)
 		src.inertia_dir = 0
+	. = ..()
 
 /// Check if an atom has traction with the ground due to gravity
 /atom/movable/proc/calculate_traction()
@@ -36,6 +38,11 @@
 			return TRACTION_FULL
 		return TRACTION_PARTIAL
 	return TRACTION_NONE
+
+/obj/item/sticker/calculate_traction()
+	if (src.attached) // they're sticky
+		return TRACTION_FULL
+	return ..()
 
 // TODO: integrate pod drift/RCS behavior
 /obj/machinery/vehicle/calculate_traction()
