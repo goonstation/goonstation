@@ -12,26 +12,26 @@
 /// Recalculate the turf gravity based on area levels
 /turf/proc/reset_gravity()
 	var/area/A = src.loc
-	src.set_gravity(A.gforce_minimum, A.gforce_tether)
+	src.calculate_effective_gforce(A.gforce_minimum, A.gforce_tether)
 
 /turf/space/reset_gravity()
 	src.effective_gforce = 0
 
 /turf/space/fluid/reset_gravity()
 	var/area/A = src.loc
-	src.set_gravity(A.gforce_minimum, A.gforce_tether)
+	src.calculate_effective_gforce(A.gforce_minimum, A.gforce_tether)
 
 /turf/unsimulated/reset_gravity()
 	src.effective_gforce = 1
 
 /// Set gravity on a turf
-/turf/proc/set_gravity(area_gravity, tether_gravity)
+/turf/proc/calculate_effective_gforce(area_gravity, tether_gravity)
 	return
 
-/turf/unsimulated/set_gravity(area_gravity, tether_gravity)
+/turf/unsimulated/calculate_effective_gforce(area_gravity, tether_gravity)
 	return
 
-/turf/simulated/set_gravity(area_gravity, tether_gravity)
+/turf/simulated/calculate_effective_gforce(area_gravity, tether_gravity)
 	if (contains_negative_matter(src))
 		src.effective_gforce = 0
 		return
@@ -39,7 +39,7 @@
 	for (var/atom/movable/AM as anything in src)
 		AM.set_gravity(src.effective_gforce)
 
-/turf/space/fluid/set_gravity(area_gravity, tether_gravity)
+/turf/space/fluid/calculate_effective_gforce(area_gravity, tether_gravity)
 	src.effective_gforce = src.get_gforce_minimum(area_gravity) + tether_gravity
 	for (var/atom/movable/AM as anything in src)
 		AM.set_gravity(src.effective_gforce)

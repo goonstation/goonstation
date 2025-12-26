@@ -31,7 +31,7 @@
 
 /area/proc/set_turf_gravity(gforce)
 	for (var/turf/T in src)
-		T.set_gravity(src.gforce_minimum, gforce)
+		T.calculate_effective_gforce(src.gforce_minimum, gforce)
 
 /area/proc/register_tether(obj/machinery/gravity_tether/tether)
 	src.registered_tethers |= tether
