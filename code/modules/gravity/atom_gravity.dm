@@ -17,6 +17,11 @@
 /atom/movable/proc/set_gravity(turf/T)
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
 		return TRUE
+	if (!istype(T))
+		var/turf/my_turf = get_turf(src)
+		if (!istype(my_turf))
+			return TRUE// nullspace?
+		T = my_turf
 	var/new_gforce = T.effective_gforce
 	if (src.no_gravity)
 		new_gforce = 0
