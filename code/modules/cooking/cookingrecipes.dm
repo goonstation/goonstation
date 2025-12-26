@@ -646,7 +646,7 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 			customSandwich.name = "toast"
 			customSandwich.desc = "A slice of toast between two slices of bread. Apparently this counts as a sandwich?"
 			extraSlices--
-			customSandwich.reagents.add_reagent("worcestershire_sauce", 25)
+			customSandwich.reagents.add_reagent("yorkshire_sauce", 25)
 		else if (!fillings.len)
 			customSandwich.name = "wish"
 			customSandwich.desc = "So named because you 'wish' you had something to put between the slices of bread. Ha.  ha.  Ha..."
@@ -1068,7 +1068,8 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/steak/synth,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = /obj/item/reagent_containers/food/snacks/steak/monkey,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep = /obj/item/reagent_containers/food/snacks/steak/sheep,
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/fish_fingers)
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/fish_fingers,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug = /obj/item/cocktail_stuff/eyestalk)
 
 /datum/recipe/steak_ling
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/steak_ling)

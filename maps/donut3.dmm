@@ -3512,7 +3512,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/airless/red,
+/turf/simulated/floor/red,
 /area/station/security/quarters)
 "aYM" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -13415,6 +13415,10 @@
 /obj/machinery/sleeper,
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -25012,7 +25016,7 @@
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
-/area/station/security/quarters)
+/area/station/bridge)
 "hKY" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -38115,7 +38119,9 @@
 	},
 /area/station/hallway/primary/west)
 "lOG" = (
-/turf/simulated/floor/airless/redwhite/corner,
+/turf/simulated/floor/redwhite/corner{
+	dir = 2
+	},
 /area/station/security/quarters)
 "lOJ" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
@@ -73672,7 +73678,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/redwhite/corner,
+/turf/simulated/floor/redwhite/corner,
 /area/station/security/quarters)
 "wIe" = (
 /obj/cable{

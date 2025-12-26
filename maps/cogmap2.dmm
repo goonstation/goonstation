@@ -22251,10 +22251,6 @@
 "bsw" = (
 /obj/disposalpipe/segment/ejection,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/simulated/floor/red/corner{
 	dir = 8
 	},
@@ -54839,7 +54835,7 @@
 "fRJ" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /obj/disposalpipe/segment/mail/vertical,
-/turf/space,
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "fSi" = (
 /obj/machinery/optable,

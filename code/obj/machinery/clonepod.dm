@@ -341,7 +341,8 @@ TYPEINFO(/obj/machinery/clonepod)
 			boutput(src.occupant, "[SPAN_NOTICE("<b>Clone generation process initi&mdash;</b>")][SPAN_ALERT(" oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b>")]")
 		else
 			boutput(src.occupant, SPAN_NOTICE("<b>Clone generation process initiated.</b> This might take a moment, please hold."))
-
+		if (!clonename)
+			clonename = oldholder?.ownerName
 		if (clonename)
 			if (!src.perfect_clone && prob(15))
 				src.occupant.real_name = "[pick("Almost", "Sorta", "Mostly", "Kinda", "Nearly", "Pretty Much", "Roughly", "Not Quite", "Just About", "Something Resembling", "Somewhat")] [clonename]"

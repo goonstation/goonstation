@@ -9197,6 +9197,9 @@
 /area/station/hallway/primary/southwest)
 "bEi" = (
 /obj/machinery/light,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/east)
 "bEo" = (
@@ -10292,6 +10295,9 @@
 "bZs" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/east)
@@ -13712,9 +13718,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/stool/chair/yellow{
 	anchored = 0;
 	dir = 4
@@ -15855,9 +15858,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "gcM" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/cable/orange{
 	icon_state = "1-8"
 	},
@@ -28339,9 +28339,6 @@
 /area/station/engine/substation/west)
 "pay" = (
 /obj/landmark/pest,
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
@@ -28675,7 +28672,7 @@
 /obj/landmark/antagonist/blob,
 /obj/landmark/gps_waypoint,
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
@@ -32678,6 +32675,9 @@
 /obj/item/extinguisher,
 /obj/item/crowbar,
 /obj/item/device/light/flashlight,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "skV" = (
@@ -88576,7 +88576,7 @@ tDS
 tPU
 gcM
 rvQ
-qum
+gxZ
 agl
 iZn
 laq
