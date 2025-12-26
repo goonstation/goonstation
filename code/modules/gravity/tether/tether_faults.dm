@@ -123,15 +123,6 @@ ABSTRACT_TYPE(/datum/tether_fault/major)
 	new /obj/whitehole(pick(turfs))
 	return TRUE
 
-/datum/tether_fault/major/random_turfs/effect(area/A, fault_source=null)
-	. = ..()
-	var/max_intensity = src.get_maximum_intensity(fault_source)
-	src.log_fault(fault_source, "randomized individual turf gravity between 0 and [max_intensity]G in [A].")
-	for (var/turf/simulated/T in global.get_area_turfs(A))
-		T.set_gravity(A.gforce_minimum, randfloat(0, max_intensity))
-	SPAWN (120 SECONDS)
-		A?.reset_all_turf_gravity()
-
 // TODO: 3-4 More major faults
 
 /// Spawns gravity fault effects

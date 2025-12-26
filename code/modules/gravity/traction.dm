@@ -2,8 +2,8 @@
 /atom/movable/var/traction = TRACTION_FULL
 /atom/movable/var/inertia_value = 0
 
-/atom/movable/proc/update_traction()
-	src.traction = src.calculate_traction()
+/atom/movable/proc/update_traction(turf/T)
+	src.traction = src.calculate_traction(T)
 	if (src.traction == TRACTION_FULL)
 		src.inertia_value = 0
 	else
@@ -15,7 +15,10 @@
 	. = ..()
 
 /// Check if an atom has traction with the ground due to gravity
-/atom/movable/proc/calculate_traction()
+/atom/movable/proc/calculate_traction(turf/T)
+	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
+		return TRACTION_FULL
+
 	if (src.no_gravity)
 		return TRACTION_NONE
 
@@ -23,21 +26,22 @@
 		if (isfloor(src.loc) || iswall(src.loc))
 			return TRACTION_FULL
 
-	//TODO: give turfs an inherent traction value so we can have ice physics
-	var/turf/T = get_turf(src)
-	if (T.effective_gforce >= TRACTION_GFORCE_FULL)
-		if (T.wet >= 2) // lube / superlube
+	//TODO: turfs could have an inherent traction value so we can have ice physics
+	switch (src.gforce)
+		if (TRACTION_GFORCE_FULL to INFINITY)
+			if (T.wet >= 2) // lube / superlube
+				return TRACTION_PARTIAL
+			return TRACTION_FULL
+		if (-INFINITY to TRACTION_GFORCE_PARTIAL)
+			if (T.wet <= -1) // slime
+				if (T.wet <= -2) // glue
+					return TRACTION_FULL
+				return TRACTION_PARTIAL
+			return TRACTION_NONE
+		if (TRACTION_GFORCE_PARTIAL to TRACTION_GFORCE_FULL)
+			if (T.wet <= -1) // slime/glue
+				return TRACTION_FULL
 			return TRACTION_PARTIAL
-		return TRACTION_FULL
-	if (T.effective_gforce >= TRACTION_GFORCE_PARTIAL)
-		if (T.wet <= -1) // slime/glue
-			return TRACTION_FULL
-		return TRACTION_PARTIAL
-	if (T.wet <= -1) // slime
-		if (T.wet <= -2) // glue
-			return TRACTION_FULL
-		return TRACTION_PARTIAL
-	return TRACTION_NONE
 
 /obj/item/sticker/calculate_traction()
 	if (src.attached) // they're sticky

@@ -9,28 +9,38 @@
 /atom/movable/proc/reset_gravity()
 	var/turf/T = get_turf(src)
 	if (istype(T))
-		src.set_gravity(T.effective_gforce)
+		src.set_gravity(T)
 
 /// set the gforce applied to the AM and update traction
-/atom/movable/proc/set_gravity(new_gforce)
+///
+/// returns TRUE if no change
+/atom/movable/proc/set_gravity(turf/T)
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
-		return
+		return TRUE
+	var/new_gforce = T.effective_gforce
 	if (src.no_gravity)
 		new_gforce = 0
+	if (src.gforce == new_gforce)
+		return TRUE
 	src.gforce = new_gforce
-	src.update_traction()
+	src.update_traction(T)
+	return FALSE
 
 // gravity interactions
 
 // fluid icons change in low-g
-/obj/fluid/set_gravity(new_gforce)
+/obj/fluid/set_gravity(turf/T)
 	. = ..()
+	if (.)
+		return TRUE
 	src.UpdateIcon()
 
 // some things float in zero-G
 
-/mob/living/carbon/human/set_gravity(new_gforce)
+/mob/living/carbon/human/set_gravity(turf/T)
 	. = ..()
+	if (.)
+		return TRUE
 	if (src.floating_anim)
 		if (src.traction == TRACTION_FULL)
 			animate(src, flags=ANIMATION_END_LOOP, tag="grav_drift")
@@ -41,8 +51,10 @@
 			src.floating_anim = TRUE
 	src.hud?.update_gravity_indicator() // snappy HUD updates
 
-/mob/living/critter/set_gravity(new_gforce)
+/mob/living/critter/set_gravity(turf/T)
 	. = ..()
+	if (.)
+		return TRUE
 	if (src.floating_anim)
 		if (src.traction == TRACTION_FULL)
 			animate(src, flags=ANIMATION_END_LOOP, tag="grav_drift")
@@ -53,8 +65,10 @@
 			src.floating_anim = TRUE
 	src.hud?.update_gravity_indicator()
 
-/mob/living/silicon/robot/set_gravity(new_gforce)
+/mob/living/silicon/robot/set_gravity(turf/T)
 	. = ..()
+	if (.)
+		return TRUE
 	if (src.floating_anim)
 		if (src.traction == TRACTION_FULL)
 			animate(src, flags=ANIMATION_END_LOOP, tag="grav_drift")
@@ -65,8 +79,10 @@
 			src.floating_anim = TRUE
 	src.hud?.update_gravity_indicator()
 
-/mob/living/silicon/ai/set_gravity(new_gforce)
+/mob/living/silicon/ai/set_gravity(turf/T)
 	. = ..()
+	if (.)
+		return TRUE
 	if (src.floating_anim)
 		if (src.traction == TRACTION_FULL)
 			animate(src, flags=ANIMATION_END_LOOP, tag="grav_drift")
@@ -76,9 +92,10 @@
 			animate_drift(src, -1, GRAVITY_LIVING_FLOAT_ANIM_TIME)
 			src.floating_anim = TRUE
 
-// hopefuly this does not break anything ( :
-/obj/fake_attacker/set_gravity(new_gforce)
+/obj/fake_attacker/set_gravity(turf/T)
 	. = ..()
+	if (.)
+		return TRUE
 	if (src.floating_anim)
 		if (src.traction == TRACTION_FULL)
 			animate(src, flags=ANIMATION_END_LOOP, tag="grav_drift")
@@ -88,8 +105,10 @@
 			animate_drift(src, -1, GRAVITY_LIVING_FLOAT_ANIM_TIME)
 			src.floating_anim = TRUE
 
-/obj/critter/set_gravity(new_gforce)
+/obj/critter/set_gravity(turf/T)
 	. = ..()
+	if (.)
+		return TRUE
 	if (src.floating_anim)
 		if (src.traction == TRACTION_FULL)
 			animate(src, flags=ANIMATION_END_LOOP, tag="grav_drift")
@@ -100,8 +119,10 @@
 			src.floating_anim = TRUE
 
 // TODO: Using animate() for potentially thousands of items isn't performant enough at this time
-// /obj/item/set_gravity(new_gforce)
+// /obj/item/set_gravity(turf/T)
 // 	. = ..()
+// if (.)
+// 		return
 // 	if (src.floating_anim)
 // 		if (src.traction >= TRACTION_PARTIAL)
 // 			// src.remove_filter("grav_drift")
