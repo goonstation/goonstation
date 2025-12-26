@@ -553,11 +553,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Swap the colors of your hair around."
 	icon_state = "polymorphism"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		var/mob/living/carbon/human/H
 		if (ishuman(owner))
@@ -583,6 +583,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 			H.visible_message(SPAN_NOTICE("<b>[H.name]</b>'s hair changes colors!"))
 			H.update_colorful_parts()
+		return CAST_ATTEMPT_SUCCESS
 
 /* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
 /* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
