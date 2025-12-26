@@ -55,7 +55,6 @@
 		if (src.traction != TRACTION_FULL && src.gforce < 1)
 			animate_drift(src, -1, GRAVITY_LIVING_ZEROG_ANIM_TIME)
 			src.floating_anim = TRUE
-	src.hud?.update_gravity_indicator() // snappy HUD updates
 
 /mob/living/critter/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
@@ -69,7 +68,6 @@
 		if (src.traction != TRACTION_FULL && src.gforce < 1)
 			animate_drift(src, -1, GRAVITY_LIVING_ZEROG_ANIM_TIME)
 			src.floating_anim = TRUE
-	src.hud?.update_gravity_indicator()
 
 /mob/living/silicon/robot/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
@@ -83,7 +81,6 @@
 		if (src.traction != TRACTION_FULL && src.gforce < 1)
 			animate_drift(src, -1, GRAVITY_LIVING_ZEROG_ANIM_TIME)
 			src.floating_anim = TRUE
-	src.hud?.update_gravity_indicator()
 
 /mob/living/silicon/ai/set_gravity(turf/T, force_update=FALSE)
 	. = ..()
