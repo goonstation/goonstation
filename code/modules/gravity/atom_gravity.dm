@@ -27,12 +27,6 @@
 	. = ..()
 	src.UpdateIcon()
 
-// intangibles/dead never affected by gravity
-/mob/living/intangible/set_gravity(new_gforce)
-	return
-/mob/dead/set_gravity(new_gforce)
-	return
-
 // some things float in zero-G
 
 /mob/living/carbon/human/set_gravity(new_gforce)
