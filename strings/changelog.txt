@@ -1,4 +1,18 @@
 
+(t)wed dec 24 25
+(u)Microoowaaave
+(p)25279
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added brown satchels/backpacks to uniform manufacturers.
+(t)tue dec 23 25
+(u)Ribbie
+(p)25383
+(e)|
+(+)Fixes juggling paper with multiple items.
+(u)Ribbie
+(p)25382
+(e)|
+(+)Fixes monkey suit costumes disappearing when someone gets aggressive grabbed while wearing them.
 (t)mon dec 22 25
 (u)JORJ949
 (p)25314

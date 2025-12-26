@@ -463,10 +463,12 @@
 		/datum/manufacture/backpack_red,
 		/datum/manufacture/backpack_green,
 		/datum/manufacture/backpack_blue,
+		/datum/manufacture/backpack_brown,
 		/datum/manufacture/satchel,
 		/datum/manufacture/satchel_red,
 		/datum/manufacture/satchel_green,
 		/datum/manufacture/satchel_blue,
+		/datum/manufacture/satchel_brown,
 		/datum/manufacture/handkerchief)
 
 	hidden = list(/datum/manufacture/breathmask,
