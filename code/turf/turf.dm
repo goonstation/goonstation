@@ -534,7 +534,7 @@ proc/generate_space_color()
 	return ..(Obj, newloc)
 
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
-	M.set_gravity(src.effective_gforce)
+	M.set_gravity(src)
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
