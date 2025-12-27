@@ -7,6 +7,11 @@
 /turf/unsimulated/wall/grip_atom_count = 1
 // walls always grippable
 
+//TODO: Remove compatibilty patch
+/atom/var/stops_space_move = FALSE
+/turf/simulated/floor/stops_space_move = TRUE
+/turf/simulated/wall/stops_space_move = TRUE
+
 /// Get a live count of the number of grippable objects
 /turf/proc/calculate_grippy_objects()
 	. = 0
