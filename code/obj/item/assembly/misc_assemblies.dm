@@ -59,6 +59,7 @@ Contains:
 	var/mob/last_armer = null //! for tracking/logging of who armed the assembly
 	var/obj/item/chargeable_component = null //! if one of the components of the assembly can be charged, it will be referenced here. Use this if you want the assembly to be reachargeable.
 	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
+	var/cabinet_wrenched_in = FALSE //! is this wrenched in a cabinet frame?
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 
@@ -367,6 +368,8 @@ Contains:
 	src.last_armer = null
 	src.chargeable_component = null
 	src.attacking_component = null
+	src.anchored = UNANCHORED
+	src.cabinet_wrenched_in = FALSE
 	..()
 
 /obj/item/assembly/attack_self(mob/user)
@@ -450,6 +453,10 @@ Contains:
 	for (var/obj/item/checked_item in list(src.target, src.applier, src.trigger))
 		. += checked_item.assembly_get_part_examine_message(user, src)
 
+/obj/item/assembly/attack_hand(mob/user)
+	if(src.cabinet_wrenched_in) return
+	..()
+
 
 /obj/item/assembly/attackby(obj/item/used_object, mob/user)
 	if (isghostcritter(user))
@@ -459,15 +466,34 @@ Contains:
 		//if we have a chargeable component in the assembly and hit it with a cell, then try to swap the cells
 		SEND_SIGNAL(src.chargeable_component, COMSIG_CELL_TRY_SWAP, used_object, user)
 		return
-	if (iswrenchingtool(used_object) && !src.secured)
-		if (src.target)
-			boutput(user, SPAN_NOTICE("You remove the [src.target.name] from the assembly."))
-			src.remove_until_minimum_components()
+	if (iswrenchingtool(used_object))
+		if(!src.secured)
+			if (src.target)
+				boutput(user, SPAN_NOTICE("You remove the [src.target.name] from the assembly."))
+				src.remove_until_minimum_components()
+			else
+				boutput(user, SPAN_NOTICE("You disassemble the [src.name]."))
+				src.tear_apart()
+			return
 		else
-			boutput(user, SPAN_NOTICE("You disassemble the [src.name]."))
-			src.tear_apart()
-		return
+			if(src.cabinet_wrenched_in)
+				boutput(user, "You detach the [src] from the housing.")
+				logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the housing at [log_loc(src)].")
+				src.cabinet_wrenched_in = FALSE
+				src.anchored = UNANCHORED
+				return
+
+			else
+				if(istype(src.stored?.linked_item,/obj/item/storage/mechanics))
+					boutput(user, "You attach the [src] to the housing.")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the housing  at [log_loc(src)].")
+					src.cabinet_wrenched_in = TRUE
+					src.anchored = ANCHORED
+					return
 	if (isscrewingtool(used_object))
+		if(src.cabinet_wrenched_in)
+			boutput(user, "You need to detach [src] from the housing first.")
+			return
 		src.secured = !(src.secured)
 		boutput(user, SPAN_NOTICE("[src.name] is now [src.secured ? "secured" : "unsecured"]."))
 		src.add_fingerprint(user)
@@ -520,6 +546,8 @@ Contains:
 	src.target_item_prefix = null
 	src.chargeable_component = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
+	src.anchored = UNANCHORED
+	src.cabinet_wrenched_in = FALSE
 	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
 	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
@@ -555,6 +583,8 @@ Contains:
 	src.target = null
 	src.remove_attacking_component()
 	src.chargeable_component = null
+	src.anchored = UNANCHORED
+	src.cabinet_wrenched_in = FALSE
 	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, items_removed)
 	qdel(src)
 

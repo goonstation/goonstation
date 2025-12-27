@@ -246,6 +246,7 @@ TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
 		w_class = W_CLASS_GIGANTIC //Shouldn't be stored in a backpack
+		can_hold=list(/obj/item/mechanics, /obj/item/device/gps, /obj/item/assembly)
 		throwforce = 10
 		num_f_icons=3
 		density=1
