@@ -339,7 +339,13 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
 /area/station/solar/small_backup2)
 "abz" = (
 /obj/cable{
@@ -1313,13 +1319,25 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
 /area/station/solar/small_backup2)
 "aeJ" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
 /area/station/solar/small_backup2)
 "aeK" = (
 /obj/machinery/light/small{
@@ -1513,12 +1531,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"afv" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/damaged3,
-/area/station/solar/small_backup2)
 "afw" = (
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup2)
@@ -1848,7 +1860,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
 /area/station/solar/small_backup2)
 "agu" = (
 /obj/machinery/mass_driver{
@@ -2420,7 +2438,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
 /area/station/solar/small_backup2)
 "aiu" = (
 /obj/table/auto,
@@ -30267,7 +30291,7 @@
 "bQX" = (
 /obj/sea_plant/anemone/lit,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/hallway/primary/east)
 "bQY" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -30546,7 +30570,7 @@
 "bRM" = (
 /obj/machinery/light/small/floor/blueish,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/hallway/primary/east)
 "bRN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -31408,7 +31432,7 @@
 "bUm" = (
 /obj/sea_plant/kelp,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/hallway/primary/east)
 "bUn" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 1
@@ -31924,7 +31948,7 @@
 "bVS" = (
 /obj/sea_plant/seaweed,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/hallway/primary/east)
 "bVT" = (
 /obj/table/wood/round/auto,
 /obj/item/kitchen/food_box/donut_box{
@@ -32036,7 +32060,7 @@
 	amount = 2000
 	},
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/hallway/primary/east)
 "bWk" = (
 /obj/machinery/teleport/portal_ring,
 /obj/decal/stripe_delivery,
@@ -32350,7 +32374,7 @@
 	name = "Bessie"
 	},
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/hallway/primary/east)
 "bXo" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
@@ -33434,7 +33458,7 @@
 	name = "Ruffles"
 	},
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/hallway/primary/east)
 "cby" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 1
@@ -48000,12 +48024,6 @@
 "cYv" = (
 /turf/space,
 /area/mining/magnet)
-"cYz" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/damaged3,
-/area/station/mining/magnet)
 "cYA" = (
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
@@ -48587,7 +48605,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
 /area/station/mining/magnet)
 "daw" = (
 /obj/table/reinforced/auto,
@@ -48828,7 +48850,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
 /area/station/mining/magnet)
 "dbr" = (
 /obj/table/reinforced/auto,
@@ -53782,7 +53808,10 @@
 	dir = 6
 	},
 /obj/item/device/radio/intercom/mining,
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
 /area/station/mining/magnet)
 "fjy" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -55006,6 +55035,16 @@
 	dir = 1
 	},
 /area/station/ranch)
+"gtZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "guo" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -59663,7 +59702,10 @@
 /obj/mesh/catwalk{
 	dir = 6
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
 /area/station/mining/magnet)
 "kiT" = (
 /obj/mesh/catwalk{
@@ -63328,7 +63370,11 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
 /area/station/mining/magnet)
 "nsk" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -71666,6 +71712,13 @@
 /obj/item/reagent_containers/syringe/krokodil,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/south)
+"uZl" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "uZB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/southwest)
@@ -72795,6 +72848,18 @@
 	},
 /turf/space,
 /area/space)
+"wiN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/small_backup2)
 "wjG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5;
@@ -135239,8 +135304,8 @@ cTk
 ttT
 cVV
 lYD
-cYz
-cYz
+dbq
+dbq
 dav
 dbq
 nrh
@@ -135426,8 +135491,8 @@ evs
 aeI
 aby
 agt
-afv
-afv
+ait
+ait
 ait
 ait
 iqW
@@ -135541,11 +135606,11 @@ iMs
 jfK
 cVW
 nnk
-cYA
-cYA
-cYA
-cYA
-lfp
+uZl
+uZl
+uZl
+uZl
+gtZ
 dwN
 lIC
 cGZ
@@ -135726,12 +135791,12 @@ wwk
 oic
 oic
 aeJ
-txe
-afw
-afw
-afw
-afw
-afw
+wiN
+oic
+oic
+oic
+oic
+oic
 oic
 oic
 hez
