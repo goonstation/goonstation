@@ -32,7 +32,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 /// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
 /obj/item/reagent_containers/food/snacks/pie/proc/assembly_check(var/manipulated_pie, var/obj/item/second_part, var/mob/user)
-	if (src.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
+	if (src.w_class > W_CLASS_SMALL)
 		boutput(user, SPAN_NOTICE("[src] is way too large. You can't find any way to balance it on the arm."))
 		return TRUE
 
