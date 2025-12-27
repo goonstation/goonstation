@@ -96,7 +96,7 @@
 	)
 	/// A list of colours for the maptext to oscillate through. Use the "start_colour" value to determine the colour to animate from to `maptext_css_values["color"]`.
 	var/list/maptext_animation_colours = null
-	/// A list of callback datums to be invoked with the message itself as the first argument and any maptext images created by this message as the second argument.
+	/// A list of callback datums to be invoked, with the message itself as the first argument and the maptext image created by this message as the second argument.
 	var/list/datum/callback/maptext_callbacks = null
 	/// A prefix that should only be displayed on the maptext.
 	var/maptext_prefix = null
