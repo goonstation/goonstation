@@ -14,7 +14,7 @@
 	dir = SOUTH
 	custom_suicide = 1
 	material_amt = 0.1
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	var/broken = 0
 	var/is_reinforced = 0
 	var/can_reinforce = TRUE

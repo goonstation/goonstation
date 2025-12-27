@@ -1,7 +1,11 @@
 /// Does this atom have traction against the ground?
 /atom/movable/var/traction = TRACTION_FULL
+/// The floating scalar component of inertia for the item.
+///
+/// Things will lay at rest if this drops to 0
 /atom/movable/var/inertia_value = 0
 
+/// Update the atom's traction against the ground
 /atom/movable/proc/update_traction(turf/T)
 	src.traction = src.calculate_traction(T)
 	if (src.traction == TRACTION_FULL)
@@ -26,7 +30,6 @@
 		if (isfloor(src.loc) || iswall(src.loc))
 			return TRACTION_FULL
 
-	//TODO: turfs could have an inherent traction value so we can have ice physics
 	switch (src.gforce)
 		if (TRACTION_GFORCE_FULL to INFINITY)
 			if (T.wet >= 2) // lube / superlube
@@ -78,9 +81,3 @@
 // ghostdrones hover
 /mob/living/silicon/ghostdrone/calculate_traction(turf/T)
 	return TRACTION_FULL
-
-/// Check if an atom has "grip" with something on a nearby tile, such as a wall or table
-/atom/movable/proc/has_grip()
-	for (var/atom/A in oview(1, src))
-		if (A.stops_space_move)
-			return TRUE

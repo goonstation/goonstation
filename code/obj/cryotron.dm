@@ -10,7 +10,7 @@
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	event_handler_flags = IMMUNE_SINGULARITY
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	pass_unstable = FALSE
 	bound_width = 96
 	bound_x = -32

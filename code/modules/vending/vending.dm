@@ -67,7 +67,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	speech_verb_say = "beeps"
-	stops_space_move = TRUE
+	provides_grip = TRUE
 
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
@@ -1019,6 +1019,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	src.power_change()
 	src.anchored = UNANCHORED
+	src.provides_grip = 0
+	vicTurf.grip_atom_count -= 1
 	return
 
 /obj/machinery/vending/set_broken()

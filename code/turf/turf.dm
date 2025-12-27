@@ -696,6 +696,7 @@ var/global/in_replace_with = 0
 	var/old_cameras = src.cameras
 	var/old_camera_coverage_emitters = src.camera_coverage_emitters
 	var/old_pass_unstable = src.pass_unstable
+	var/old_grip_atom_count = src.grip_atom_count - src.provides_grip
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -798,6 +799,7 @@ var/global/in_replace_with = 0
 
 	new_turf.opaque_atom_count = old_opaque_atom_count
 	new_turf.pass_unstable += old_pass_unstable
+	new_turf.grip_atom_count += old_grip_atom_count
 
 	new_turf.blocked_dirs = old_blocked_dirs
 
@@ -1026,7 +1028,7 @@ TYPEINFO(/turf/simulated)
 /turf/simulated
 	name = "station"
 	allows_vehicles = 0
-	stops_space_move = 1
+	provides_grip = 1
 	var/mutable_appearance/wet_overlay = null
 	/// default melt chance from fire
 	var/default_melt_chance = 30
@@ -1116,7 +1118,7 @@ TYPEINFO(/turf/simulated)
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
-	stops_space_move = 1
+	provides_grip = 1
 	text = "<font color=#aaa>."
 
 /turf/unsimulated/wall

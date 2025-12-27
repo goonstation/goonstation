@@ -73,7 +73,7 @@
 	bound_height = 96
 	bound_width = 96
 	density = 1
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	layer = FLOOR_EQUIP_LAYER1
 
 	var/datum/light/light
