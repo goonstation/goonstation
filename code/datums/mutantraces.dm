@@ -2135,6 +2135,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 		/datum/targetable/kudzu/seed,
 		/datum/targetable/kudzu/heal_other,
 		/datum/targetable/kudzu/stealth,
+		/datum/targetable/kudzu/thorn_shot,
 		/datum/targetable/kudzu/vine_appendage
 	)
 
