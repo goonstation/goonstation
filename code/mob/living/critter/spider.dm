@@ -27,6 +27,7 @@
 	health_burn = 50
 	health_burn_vuln = 0.65
 	reagent_capacity = 100
+	void_mindswappable = TRUE
 
 	can_help = 1
 	can_throw = 1
