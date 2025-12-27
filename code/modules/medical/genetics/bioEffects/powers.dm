@@ -460,76 +460,62 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Polymorphism"
 	desc = "Mimic the appearance of others."
 	icon_state = "polymorphism"
-	targeted = 1
+	targeted = TRUE
 
-	cast(atom/target)
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (target == owner)
-			boutput(owner, SPAN_ALERT("While \"be yourself\" is pretty good advice, that would be taking it a bit too literally."))
-			return 1
-		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
-			boutput(owner, SPAN_ALERT("You must be within touching distance of [target] for this to work."))
-			return 1
+		if (target == src.owner)
+			boutput(src.owner, SPAN_ALERT("While \"be yourself\" is pretty good advice, that would be taking it a bit too literally."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (BOUNDS_DIST(target, src.owner) > 0 && !src.owner.bioHolder.HasEffect("telekinesis"))
+			boutput(src.owner, SPAN_ALERT("You must be within touching distance of [target] for this to work."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (!ishuman(target))
-			boutput(owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
-			return 1
+			boutput(src.owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/living/carbon/human/H = target
 		if (!H.bioHolder || H.mutantrace?.dna_mutagen_banned)
-			boutput(owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
-			return 1
+			boutput(src.owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (!ishuman(owner))
-			boutput(owner, SPAN_ALERT("Your body doesn't seem to be compatible with this ability."))
-			return 1
+		if (!ishuman(src.owner))
+			boutput(src.owner, SPAN_ALERT("Your body doesn't seem to be compatible with this ability."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/living/carbon/human/H2= target
 		if (!H2.bioHolder || H2.mutantrace?.dna_mutagen_banned)
-			boutput(owner, SPAN_ALERT("Your body doesn't seem to be compatible with this ability."))
-			return 1
+			boutput(src.owner, SPAN_ALERT("Your body doesn't seem to be compatible with this ability."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		playsound(owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> touches [target], then begins to shifts and contort!"))
+		if (misfire)
+			playsound(src.owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
+			src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> touches [target]... and nothing happens. Huh."))
+			return CAST_ATTEMPT_SUCCESS
+
+		playsound(src.owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
+		src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> touches [target], then begins to shifts and contort!"))
 
 		SPAWN(1 SECOND)
-			if(H && owner)
-				playsound(owner.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
-				owner.real_name = H.real_name
-				owner.name = H.name
-				if(owner.bioHolder?.mobAppearance?.mutant_race)
-					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race.type)
-				else
-					owner.set_mutantrace(null)
-				if(ishuman(owner))
-					var/mob/living/carbon/human/O = owner
-					O.update_colorful_parts()
-		return
+			polymorph(H)
 
-	cast_misfire(atom/target)
-		if (..())
-			return 1
+		return CAST_ATTEMPT_SUCCESS
 
-		if (!ishuman(target))
-			boutput(owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
-			return 1
-		if (target == owner)
-			boutput(owner, SPAN_ALERT("While \"be yourself\" is pretty good advice, that would be taking it a bit too literally."))
-			return 1
-		var/mob/living/carbon/human/H = target
-		if (!H.bioHolder)
-			boutput(owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
-			return 1
-
-		if (BOUNDS_DIST(H, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
-			boutput(owner, SPAN_ALERT("You must be within touching distance of [target] for this to work."))
-			return 1
-
-		playsound(owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> touches [target]... and nothing happens. Huh."))
-
-		return
+	proc/polymorph(var/mob/living/carbon/human/target)
+		if(!target || !src.owner)
+			return
+		playsound(owner.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+		src.owner.bioHolder.CopyOther(target.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
+		src.owner.real_name = target.real_name
+		src.owner.name = target.name
+		if(src.owner.bioHolder?.mobAppearance?.mutant_race)
+			src.owner.set_mutantrace(src.owner.bioHolder.mobAppearance.mutant_race.type)
+		else
+			src.owner.set_mutantrace(null)
+		if(ishuman(src.owner))
+			var/mob/living/carbon/human/O = src.owner
+			O.update_colorful_parts()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*  / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /  */
