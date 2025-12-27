@@ -575,6 +575,7 @@
 	})
 "acz" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/podbay,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "acB" = (
@@ -8082,6 +8083,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/engineering,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "aHE" = (
@@ -11996,6 +11998,7 @@
 /obj/machinery/mass_driver{
 	id = "manualshipping"
 	},
+/obj/machinery/arrivalnotifier/export,
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "bae" = (
@@ -22712,6 +22715,7 @@
 /area/station/maintenance/southwest)
 "bXa" = (
 /obj/machinery/light,
+/obj/machinery/arrivalnotifier/research,
 /turf/simulated/floor/grey,
 /area/station/routing/medsci{
 	name = "Research Router"
@@ -23577,6 +23581,7 @@
 /area/station/quartermaster/office)
 "cbN" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/security,
 /turf/simulated/floor,
 /area/station/routing/security)
 "cbS" = (
@@ -24603,6 +24608,7 @@
 /area/station/hangar/medical)
 "cge" = (
 /obj/machinery/light/small,
+/obj/machinery/arrivalnotifier/medbay,
 /turf/simulated/floor/caution/north,
 /area/station/hangar/medical)
 "cgf" = (
@@ -28850,6 +28856,14 @@
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/orange/side,
 /area/station/storage/hydroponics)
+"dHy" = (
+/obj/machinery/conveyor/EW{
+	id = "garbage";
+	operating = 1
+	},
+/obj/machinery/arrivalnotifier/disposal,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/disposal)
 "dHJ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -30145,6 +30159,7 @@
 /area/station/hallway/primary/west)
 "evz" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/catering,
 /turf/simulated/floor,
 /area/station/storage/hydroponics)
 "evN" = (
@@ -46424,6 +46439,11 @@
 	dir = 8
 	},
 /area/station/science/testchamber)
+"pLn" = (
+/obj/machinery/arrivalnotifier/qm,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "pLp" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -59359,7 +59379,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cnq
 "}
 (2,1,1) = {"
 aaa
@@ -59660,7 +59680,7 @@ aaa
 aaa
 aaa
 aaa
-cnq
+aaa
 aaa
 "}
 (3,1,1) = {"
@@ -94244,7 +94264,7 @@ axJ
 azF
 axJ
 azF
-xMb
+dHy
 axJ
 mGJ
 aLA
@@ -106990,7 +107010,7 @@ bJy
 wrs
 nKX
 nem
-hzL
+pLn
 hzL
 ovz
 uBo

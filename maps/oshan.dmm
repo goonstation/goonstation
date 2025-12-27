@@ -34142,6 +34142,7 @@
 /area/station/medical/medbay/cloner)
 "hHe" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/carousel/west,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "hHG" = (
@@ -36372,6 +36373,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/machinery/arrivalnotifier/carousel/east,
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
 "kuQ" = (
@@ -41936,6 +41938,7 @@
 	dir = 4
 	},
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/carousel/south,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -45096,6 +45099,7 @@
 /area/station/crew_quarters/market)
 "uES" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/carousel/north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "uEW" = (
