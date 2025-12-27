@@ -35795,6 +35795,23 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"jLx" = (
+/obj/machinery/door_control{
+	dir = 8;
+	pixel_y = -6;
+	pixel_x = -24;
+	name = "Interrogation Door Control";
+	id = "interrogation_door"
+	},
+/obj/machinery/door_control{
+	dir = 8;
+	pixel_y = 6;
+	pixel_x = -24;
+	name = "Courtroom Door Control";
+	id = "court_door"
+	},
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
 "jLH" = (
 /obj/machinery/door/airlock/pyro/alt{
 	id = "eng_bathroom"
@@ -41632,10 +41649,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
-"qmh" = (
-/obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/red,
-/area/station/security/interrogation)
 "qmD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43914,6 +43927,10 @@
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"sSv" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/red,
+/area/station/security/interrogation)
 "sSK" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -45471,13 +45488,6 @@
 /obj/machinery/light/traffic_light/trader_left/delay4,
 /turf/space/fluid,
 /area/space)
-"uJM" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
 "uKS" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -47815,23 +47825,6 @@
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
-"xDn" = (
-/obj/machinery/door_control{
-	dir = 8;
-	pixel_y = -6;
-	pixel_x = -24;
-	name = "Interrogation Door Control";
-	id = "interrogation_door"
-	},
-/obj/machinery/door_control{
-	dir = 8;
-	pixel_y = 6;
-	pixel_x = -24;
-	name = "Courtroom Door Control";
-	id = "court_door"
-	},
-/turf/simulated/floor/black,
-/area/station/security/interrogation)
 "xDr" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -97902,7 +97895,7 @@ bLj
 lCB
 juf
 dSl
-xDn
+jLx
 vib
 cFV
 hal
@@ -98202,7 +98195,7 @@ bMv
 bMv
 bLj
 jPe
-qmh
+sSv
 adq
 jVe
 sCq
@@ -104491,7 +104484,7 @@ aIn
 goh
 aLw
 aIn
-uJM
+aIn
 aIn
 beS
 aIn

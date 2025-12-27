@@ -1,4 +1,47 @@
-
+(t)thu dec 25 25
+(u)Emily
+(*)Added Barbecue Sauce
+(+)Barbecue Sauce Recipe: Capsaicin, Pepper, Ketchup, Grease/Soybean Oil, Mustard, Lemonade
+(+)Added some extra fish to the cargo meat/dairy crate
+(t)wed dec 24 25
+(u)Microoowaaave
+(p)25279
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added brown satchels/backpacks to uniform manufacturers.
+(t)tue dec 23 25
+(u)Ribbie
+(p)25383
+(e)|
+(+)Fixes juggling paper with multiple items.
+(u)Ribbie
+(p)25382
+(e)|
+(+)Fixes monkey suit costumes disappearing when someone gets aggressive grabbed while wearing them.
+(t)mon dec 22 25
+(u)JORJ949
+(p)25314
+(e)💅📦🧑‍✈️|C-QoL, A-Game-Objects, A-Command
+(*)NT Engineers and Medics now have unique headset icons with the colour of their relevant department.
+(u)Ribbie
+(p)25373
+(e)|
+(+)Fixes the broken floodlight sprite.
+(u)JORJ949
+(p)25343
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Emitters can no longer damage the AI law rack.
+(u)glowbold
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Dead vampires can be brought back just to the cusp of life via coffins.
+(+)RP vampires no longer come back to life with full thirst and hunger meters.
+(t)fri dec 19 25
+(u)bork
+(p)25342
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Lotto tickets now have their own sprite! Let's go gambling !!!
+(t)wed dec 17 25
+(u)Sord
+(+)Neon now has ghost drone rechargers on the main station.
 (t)tue dec 16 25
 (u)CelineTheYeen
 (p)25312
