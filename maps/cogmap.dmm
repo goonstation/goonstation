@@ -916,7 +916,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/hallway/secondary/entry)
 "aem" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/west)
@@ -934,7 +934,7 @@
 	pixel_x = 18
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/hallway/secondary/entry)
 "aes" = (
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = 10
@@ -943,7 +943,7 @@
 	pixel_x = -2
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/hallway/secondary/entry)
 "aet" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quartersA)
@@ -13736,10 +13736,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/locker)
-"aXl" = (
-/obj/disposalpipe/segment,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/jazz)
 "aXn" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -14476,19 +14472,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
-"aZu" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
 "aZv" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -14505,14 +14498,20 @@
 	invisibility = 101;
 	name = "glow - YELLOW"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred6"
 	},
 /area/station/crew_quarters/jazz)
 "aZx" = (
 /obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -14728,6 +14727,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/crew_quarters/jazz)
 "bas" = (
@@ -14952,12 +14952,10 @@
 /turf/space,
 /area/station/com_dish/auxdish)
 "bbq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir-b"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
 	},
 /turf/space,
 /area/space)
@@ -14970,22 +14968,22 @@
 /area/space)
 "bbs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "bbt" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	status = 2
 	},
 /obj/item/clothing/under/misc/syndicate{
 	desc = "Non-descript, slightly suspicious jazzy clothing.";
 	name = "Jazzy Turtleneck"
 	},
 /obj/item/clothing/head/flatcap,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "bbu" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
@@ -14993,22 +14991,15 @@
 	output = 10000
 	},
 /obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
 	icon_state = "0-8"
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "bbv" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/plating,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "bbx" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -15236,12 +15227,8 @@
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "bcx" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "bcy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15476,14 +15463,14 @@
 	name = "Danger: High Voltage"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "bdw" = (
 /obj/securearea{
 	name = "ENGINEERING ACCESS";
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "bdx" = (
 /obj/machinery/vending/cigarette,
 /obj/disposalpipe/segment{
@@ -15541,8 +15528,12 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "bdG" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/janitor/office)
@@ -21635,12 +21626,10 @@
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
 "bEP" = (
-/obj/stool,
 /turf/simulated/floor/green,
 /area/station/turret_protected/Zeta)
 "bEQ" = (
-/obj/table/auto,
-/obj/item/storage/box/diskbox,
+/obj/machinery/gravity_tether/multi_area/ai_sat,
 /turf/simulated/floor/green,
 /area/station/turret_protected/Zeta)
 "bEU" = (
@@ -24381,9 +24370,6 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/airbridge)
-"bQb" = (
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/Zeta)
 "bQc" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -24391,8 +24377,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/Zeta)
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "bQi" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -29682,6 +29671,16 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
+"ciD" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
 "ciH" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -35801,6 +35800,7 @@
 	pixel_x = 7;
 	pixel_y = -2
 	},
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/green,
 /area/station/turret_protected/Zeta)
 "dpk" = (
@@ -35850,7 +35850,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "dpZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36685,9 +36685,6 @@
 "dRQ" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
 	},
 /obj/table/auto,
 /obj/item/disk/data/floppy/read_only/network_progs{
@@ -39280,7 +39277,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
+	dir = 8;
 	icon_state = "catwalk_cross"
 	},
 /area/space)
@@ -40833,10 +40830,6 @@
 /obj/landmark/observer,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"gKC" = (
-/obj/lattice,
-/turf/space,
-/area/station/quartermaster/office)
 "gKO" = (
 /obj/cable,
 /obj/cable{
@@ -43337,6 +43330,16 @@
 	dir = 4
 	},
 /area/station/engine/engineering/ce)
+"iyf" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "iyk" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -45043,8 +45046,11 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/Zeta)
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "jRc" = (
 /obj/shrub,
 /turf/simulated/floor/green/side{
@@ -46907,6 +46913,12 @@
 /mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
+"lnu" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/space,
+/area/space)
 "lnZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/yellow,
@@ -48222,15 +48234,15 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "mrY" = (
 /obj/stool/chair/office/red{
 	dir = 1
@@ -49352,8 +49364,8 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/Zeta)
+/turf/space,
+/area/space)
 "nhj" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -50386,7 +50398,6 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Electrical Substation"
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -50396,8 +50407,9 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
-/area/station/engine/substation/pylon)
+/area/station/engine/gravity)
 "nRD" = (
 /obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red/side{
@@ -55801,6 +55813,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/routing/eva)
+"rQQ" = (
+/obj/stool,
+/turf/simulated/floor/green/side{
+	dir = 6
+	},
+/area/station/turret_protected/Zeta)
 "rRa" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -55924,14 +55942,13 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "rVw" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
+	},
+/obj/lattice{
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area/space)
@@ -60000,9 +60017,25 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/space_heater,
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/table/reinforced/auto,
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = -5;
+	pixel_x = -6
+	},
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5;
+	pixel_x = 7
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
@@ -61716,6 +61749,9 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "vZa" = (
@@ -62419,6 +62455,17 @@
 /obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
+"wvM" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/gravity)
 "wwh" = (
 /obj/lattice{
 	dir = 8;
@@ -63611,7 +63658,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
+	dir = 4;
 	icon_state = "catwalk_cross"
 	},
 /area/space)
@@ -64510,6 +64557,11 @@
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"ybb" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/space_heater,
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "ybw" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/secure/closet/security/forensics,
@@ -105514,8 +105566,8 @@ aaw
 aaw
 aaw
 aap
-aaw
-aaw
+aar
+aar
 bEU
 bUu
 bVO
@@ -105816,8 +105868,8 @@ bCh
 bCh
 bCh
 bCh
-bQb
-bQb
+adC
+adC
 sDQ
 bUv
 bVP
@@ -106421,7 +106473,7 @@ bCh
 bCh
 bCh
 ngW
-bQb
+adC
 sDQ
 bUw
 bVO
@@ -106723,7 +106775,7 @@ eDF
 eDF
 lXc
 rVw
-aaq
+aar
 bEU
 bUB
 bVO
@@ -107013,7 +107065,7 @@ bZv
 bCh
 bxy
 dBH
-bEe
+rQQ
 bEP
 bFz
 bGv
@@ -111205,7 +111257,7 @@ xFh
 aVU
 aZs
 baq
-bbq
+ciD
 adC
 adC
 aag
@@ -111509,7 +111561,7 @@ aWc
 aWc
 bbr
 bbq
-adC
+lnu
 aag
 uwm
 aap
@@ -111808,10 +111860,10 @@ aYK
 aXq
 oAI
 aZt
-aWc
-aWc
-bbr
-baq
+aSq
+bbs
+bbs
+iyf
 bep
 uwm
 aaG
@@ -112109,9 +112161,9 @@ aUE
 aVX
 aXr
 aYw
-aZu
+aUE
 aSq
-bbs
+wvM
 bbs
 bbs
 beq
@@ -112433,7 +112485,7 @@ ljM
 aZs
 bpQ
 hxI
-hbl
+ybb
 hbl
 oeX
 mzL
@@ -113016,7 +113068,7 @@ aWa
 aXu
 veJ
 aZx
-aXl
+aSq
 bbv
 bcx
 bdw
@@ -113319,7 +113371,7 @@ aXv
 aYA
 aZy
 aSq
-bbs
+bcx
 bbs
 bbs
 aaq
@@ -113620,9 +113672,9 @@ aWb
 aXw
 aWb
 aZz
-aWc
-aWc
-adC
+aSq
+bbs
+bbs
 adC
 adC
 adC
@@ -119689,7 +119741,7 @@ aaq
 aaq
 aaq
 aaq
-gKC
+aap
 aaq
 aaq
 cpT

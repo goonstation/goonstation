@@ -198,6 +198,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
 		step_lots = TRUE
+		M.reset_gravity(force_update=TRUE)
 		playsound(M.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 		RegisterSignal(M, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_move))
 		return TRUE
@@ -208,21 +209,23 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
 		step_lots = FALSE
+		M.reset_gravity(force_update=TRUE)
 		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
 
 	unequipped(mob/user)
 		. = ..()
+		user.reset_gravity(force_update=TRUE)
 		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
 		//is the turf we're on solid?
-		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid) || T.throw_unlimited))
+		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid)))
 			return FALSE
 		//this is kind of expensive to put on Move BUT in my defense it will only happen for magboots wearers standing on a space tile
 		//what are the chances they're also next to botany's server lag weed pile at the same time?
 		for (var/atom/A in oview(1,T))
-			if (A.stops_space_move)
+			if (A.provides_grip)
 				if (!quiet && iswall(A) && prob(30)) //occasionally play a clonk for the people inside to hear
 					playsound(A, src.step_sound, 50, 1, extrarange = global.footstep_extrarange)
 				return FALSE

@@ -16,6 +16,7 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
 	var/has_material = TRUE

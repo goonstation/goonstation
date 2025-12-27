@@ -270,9 +270,11 @@
 							if (istype(T, /turf/space))
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
+									src.inertia_value = 1
 									step(src, inertia_dir)
 									SPAWN(1 DECI SECOND)
 										src.inertia_dir = src.dir
+										src.inertia_value = 1
 										step(src, inertia_dir)
 							else
 								if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc

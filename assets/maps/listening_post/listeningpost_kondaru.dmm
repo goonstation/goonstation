@@ -773,6 +773,10 @@
 	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
+"Oi" = (
+/obj/machinery/gravity_tether/multi_area/listening_post,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "Om" = (
 /obj/machinery/light_switch/north,
 /obj/machinery/computer/camera_viewer,
@@ -1534,7 +1538,7 @@ tz
 tz
 WC
 pj
-pj
+Oi
 Fl
 ik
 pj

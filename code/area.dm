@@ -2828,6 +2828,10 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Control Room"
 	icon_state = "engine_control"
 
+/area/station/engine/gravity
+	name = "Engineering Gravity Tether"
+	icon_state = "engineering"
+
 TYPEINFO(/area/station/engine/singcore)
 	valid_bounty_area = FALSE
 /area/station/engine/singcore
@@ -4306,6 +4310,30 @@ ABSTRACT_TYPE(/area/mining)
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"
+
+	gravity_traction_partial
+		gforce_minimum = TRACTION_GFORCE_PARTIAL
+
+	gravity_traction_full
+		gforce_minimum = TRACTION_GFORCE_FULL
+
+	gravity_gforce_none
+		gforce_minimum = 0
+
+	gravity_gforce_half
+		gforce_minimum = 0.5
+	gravity_gforce_normal
+		gforce_minimum = 1
+	gravity_gforce_high
+		gforce_minimum = GRAVITY_MOB_HIGH_THRESHOLD
+	gravity_gforce_extreme
+		gforce_minimum = GRAVITY_MOB_EXTREME_THRESHOLD
+
+	gravity_tether_max
+		gforce_minimum = TETHER_INTENSITY_MAX_DEFAULT
+
+	gravity_tether_emag
+		gforce_minimum = TETHER_INTENSITY_MAX_EMAG
 
 /* ================================================== */
 

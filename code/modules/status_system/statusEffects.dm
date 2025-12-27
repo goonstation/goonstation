@@ -1305,6 +1305,12 @@
 			. = ..()
 			if (ishuman(owner))
 				H = owner
+			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE, src)
+
+		onRemove()
+			. = ..()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE, src)
+
 
 	possessing
 		id = "possessing"

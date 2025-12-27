@@ -24,12 +24,12 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (iswrenchingtool(W) && isturf(loc) && !istype(loc, /turf/space))
+		if (iswrenchingtool(W) && isturf(loc))
 			if(secured)
 				boutput(user, SPAN_ALERT("You unsecure the generator."))
 				secured = 0
 				playsound(src, 'sound/items/Ratchet.ogg', 60, TRUE)
-			else
+			else if (!istype(loc, /turf/space))
 				boutput(user, SPAN_ALERT("You secure the generator."))
 				secured = 1
 				playsound(src, 'sound/items/Ratchet.ogg', 60, TRUE)

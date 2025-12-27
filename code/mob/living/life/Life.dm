@@ -60,9 +60,6 @@
 	var/last_stam_change = 0
 	var/life_context = "begin"
 
-
-	var/last_no_gravity = 0
-
 	proc/add_lifeprocess(type,...)
 		var/datum/lifeprocess/L = null
 		if (length(args) > 1)
@@ -156,6 +153,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
+	add_lifeprocess(/datum/lifeprocess/gravity)
 
 /mob/living/carbon/human/restore_life_processes()
 	..()
@@ -175,6 +173,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 	add_lifeprocess(/datum/lifeprocess/faith)
+	add_lifeprocess(/datum/lifeprocess/gravity)
 
 /mob/living/carbon/cube/restore_life_processes()
 	..()
@@ -204,7 +203,6 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/hivebot_signal)
 
-
 /mob/living/silicon/robot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -215,6 +213,7 @@
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/faith)
+	add_lifeprocess(/datum/lifeprocess/gravity)
 
 
 /mob/living/silicon/drone/restore_life_processes()
@@ -262,14 +261,6 @@
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
-
-			if (last_no_gravity != src.no_gravity)
-				if(src.no_gravity)
-					animate_levitate(src, -1, 10, 1)
-				else
-					src.no_gravity = 0
-					animate(src, transform = matrix(), time = 1)
-				last_no_gravity = src.no_gravity
 
 		clamp_values()
 
