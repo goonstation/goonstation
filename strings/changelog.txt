@@ -1,4 +1,9 @@
 
+(t)sat dec 27 25
+(u)JORJ949
+(p)25363
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Radio frequencies before radio messages will now always be highlighted in that frequency's default colour.
 (t)fri dec 26 25
 (u)QuiteLiterallyAnything
 (p)25400
