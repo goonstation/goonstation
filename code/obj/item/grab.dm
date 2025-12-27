@@ -20,6 +20,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 	var/irresistible = 0
+	can_arcplate = FALSE
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
