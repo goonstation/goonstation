@@ -136,7 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			for (var/obj/item/grab/G in M.equipped_list(check_for_magtractor = 0))
 				if (G.state >= GRAB_STRONG)
 					return 0
-		animate_door_squeeze(mover)
+		ANIMATE.door_squeeze(mover)
 		return 1 // they can pass through a closed door
 
 	if (density && next_timeofday_opened)
@@ -217,7 +217,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	return src.Attackhand(user)
 
 /obj/machinery/door/attack_hand(mob/user)
-	interact_particle(user,src)
+	ANIMATE.MOB.interact_particle(user,src)
 	return src.Attackby(null, user)
 
 /obj/machinery/door/proc/tear_apart(mob/user as mob)
@@ -317,7 +317,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			else
 				src.take_damage(I.force, user)
 			user.lastattacked = get_weakref(src)
-			attack_particle(user,src)
+			ANIMATE.MOB.attack_particle(user,src)
 			playsound(src, src.hitsound , 50, 1, pitch = 1.6)
 			..()
 
@@ -363,7 +363,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (I.tool_flags & TOOL_CHOPPING)
 			resolvedForce *= 4
 		user.lastattacked = get_weakref(src)
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
 		src.take_damage(resolvedForce, user)
 		return ..(I,user) // only call parent if force > 5; no material hit or attack message otherwise
@@ -680,7 +680,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 		playsound(src, src.knocksound, 100, 1) //knock knock
 
 /obj/machinery/door/proc/checkForMultipleDoors()

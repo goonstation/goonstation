@@ -92,7 +92,7 @@
 	boutput(user, "This valve is manually controlled.")
 
 /obj/machinery/atmospherics/binary/valve/attack_hand(mob/user)
-	interact_particle(user,src)
+	ANIMATE.MOB.interact_particle(user,src)
 	UpdateIcon(1)
 	sleep(1 SECOND)
 	logTheThing(LOG_STATION, user, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")

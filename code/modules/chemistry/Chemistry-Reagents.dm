@@ -161,7 +161,7 @@ datum
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (H.mutantrace?.aquaphobic && istype(src, /datum/reagent/water))
-							animate_shake(H)
+							ANIMATE.shake(H)
 							if (prob(50))
 								H.emote("scream")
 							else

@@ -300,7 +300,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	src.exploding = 1
 	var/oldtransform = src.transform
 	src.visible_message(SPAN_ALERT("<b>[src]</b>'s exhaust port clogs!"))
-	violent_standup_twitch(src)
+	ANIMATE.violent_standup_twitch(src)
 	playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 	SPAWN(2 SECONDS)
 		var/jitters = 30

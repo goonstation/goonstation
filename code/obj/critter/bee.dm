@@ -86,7 +86,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 		SPAWN(1 DECI SECOND)
 			src.UpdateIcon()
 			if (src.alive && !src.sleeping)
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 /*
 		if(src.icon_body == "petbee" && prob(5))
 			src.icon_body = "sonicbee"
@@ -203,9 +203,9 @@ TYPEINFO(/obj/critter/domestic_bee)
 		return
 
 	CritterAttack(mob/M)
-		SPAWN(0.8 SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
+		SPAWN(0.8 SECONDS) // ANIMATE.hit_twitch() or ANIMATE.hit_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 			if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 		src.attacking = 1
 		if (istype(M, /obj/machinery/plantpot))
 			var/obj/machinery/plantpot/planter = M
@@ -300,13 +300,13 @@ TYPEINFO(/obj/critter/domestic_bee)
 		SPAWN(1 DECI SECOND)
 			src.UpdateIcon()
 			if (src.alive)
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 
 	on_revive()
 		..()
 		SPAWN(1 DECI SECOND)
 			src.UpdateIcon()
-			animate_bumble(src)
+			ANIMATE.bumble(src)
 
 	CritterDeath()
 		..()
@@ -564,10 +564,10 @@ TYPEINFO(/obj/critter/domestic_bee)
 		//DEBUG_MESSAGE("[src] initial sleep time [sleep_time], animation time [time_time]")
 
 		sleep(sleep_time)
-		animate_beespin(src, dir_choice, time_time, 1)
+		ANIMATE.beespin(src, dir_choice, time_time, 1)
 
 		sleep(time_time * 8)
-		animate_bumble(src)
+		ANIMATE.bumble(src)
 		src.is_dancing = 0
 
 	proc/puke_honey()
@@ -634,7 +634,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (src.alive && !src.sleeping)
-			animate_bumble(src) // please keep bumbling tia
+			ANIMATE.bumble(src) // please keep bumbling tia
 
 /obj/critter/domestic_bee/proc/do_reagentStuff(mob/M)
 	if (M.reagents.get_reagent_amount("histamine") < 10)
@@ -700,9 +700,9 @@ TYPEINFO(/obj/critter/domestic_bee)
 		if (!istype(M))
 			return ..()
 
-		SPAWN(0.8 SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
+		SPAWN(0.8 SECONDS) // ANIMATE.hit_twitch() or ANIMATE.hit_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 			if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 		if ((M.loc != src) && ((issilicon(M) && prob(20)) || prob(5)))
 			src.visible_message(SPAN_ALERT("<B>[src]</B> swallows [M] whole!"))
 			M.set_loc(src)
@@ -975,7 +975,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 
 			SPAWN(rand(10,20))
 				src.visible_message(SPAN_ALERT("<b>[src] begins to move at unpredicable speeds!</b>"))
-				animate_bumble(src, floatspeed = 3)
+				ANIMATE.bumble(src, floatspeed = 3)
 				sleep(rand(30,50))
 				src.visible_message(SPAN_ALERT("[W] goes flying!"))
 				if (W)
@@ -983,7 +983,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 					var/edge = get_edge_target_turf(src, pick(alldirs))
 					W.throw_at(edge, 25, 4)
 
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 				src.visible_message("<b>[src]</b> gives off a dizzy buzz.")
 
 		else if (istype(W, /obj/item/photo/heisenbee))
@@ -1025,9 +1025,9 @@ TYPEINFO(/obj/critter/domestic_bee)
 		if (!istype(M))
 			return ..(M)
 
-		SPAWN(0.8 SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
+		SPAWN(0.8 SECONDS) // ANIMATE.hit_twitch() or ANIMATE.hit_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 			if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 		src.visible_message(SPAN_ALERT("<B>[src]</B> shanks [M] with its [pick("tiny","eeny-weeny","minute","little")] switchblade!"))
 		random_brute_damage(M, 20)//get shivved - no armor for this
 		if (isliving(M))
@@ -1093,7 +1093,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 		//DEBUG_MESSAGE("[src] initial sleep time [sleep_time], animation time [time_time]")
 
 		sleep(sleep_time)
-		animate_beespin(src, dir_choice, time_time, 1)
+		ANIMATE.beespin(src, dir_choice, time_time, 1)
 
 		sleep(time_time * 8)
 		src.icon_state = "bubsbee-8I"
@@ -1140,9 +1140,9 @@ TYPEINFO(/obj/critter/domestic_bee)
 		if (!istype(M))
 			return ..()
 
-		SPAWN(0.8 SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
+		SPAWN(0.8 SECONDS) // ANIMATE.hit_twitch() or ANIMATE.hit_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 			if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 
 		if (attacking)
 			return

@@ -281,7 +281,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 		if(GET_DIST(src, target) > world.view)
 			boutput(user, SPAN_ALERT("[target] is too far away."))
 			return
-		animate_scanning(target, "#597B6D")
+		ANIMATE.scanning(target, "#597B6D")
 		var/atom/W = target
 		if(!W.material)
 			boutput(user, SPAN_ALERT("No significant material found in \the [target]."))

@@ -33,7 +33,7 @@
 		if (!user.literate)
 			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
 			return 1
-		interact_particle(user,src)
+		ANIMATE.MOB.interact_particle(user,src)
 
 	attack_ai(mob/user as mob)
 		src.Attackhand(user)

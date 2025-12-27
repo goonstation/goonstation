@@ -4,7 +4,7 @@
  */
 /datum/proc_ownership_cache
 	/// A list of every type and its associated procs. This specifically refers to procs overridden or defined on that type, rather than inherited.
-	var/list/list/procs_by_type
+	var/list/list/procs_by_type = null
 
 /datum/proc_ownership_cache/New()
 	. = ..()

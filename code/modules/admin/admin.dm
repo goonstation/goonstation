@@ -929,9 +929,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_BABBY)
 				var/mob/M = locate(href_list["target"])
 				if (ismob(M))
-					var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", global.animations)
+					var/list/animation_procs = ANIMATE._get_namespace_procs()
+					var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", animation_procs, capitalize = FALSE)
 					if (animationpick)
-						call(animationpick)(M)
+						call(animation_procs[animationpick])(M)
 
 		if ("prison")
 			if (src.level >= LEVEL_MOD)
@@ -1277,7 +1278,7 @@ var/global/noir = 0
 			if(src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (tgui_alert(usr, "Are you sure you want to rapture [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-					heavenly_spawn(M, reverse = TRUE)
+					ANIMATE.heavenly_spawn(M, reverse = TRUE)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to rapture a dude.")
 		if("smite")
@@ -2888,10 +2889,11 @@ var/global/noir = 0
 							if (!M)
 								return
 
-							var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", global.animations)
+							var/list/animation_procs = ANIMATE._get_namespace_procs()
+							var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", animation_procs, capitalize = FALSE)
 							if (!animationpick)
 								return
-							call(animationpick)(M)
+							call(animation_procs[animationpick])(M)
 
 							message_admins("[key_name(usr)] added animation [animationpick] to [M].")
 							logTheThing(LOG_ADMIN, usr, "added animation [animationpick] to [M].")
@@ -2903,13 +2905,14 @@ var/global/noir = 0
 					if ("animate_all")
 						if (src.level >= LEVEL_PA)
 
-							var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", global.animations)
+							var/list/animation_procs = ANIMATE._get_namespace_procs()
+							var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", animation_procs, capitalize = FALSE)
 							if (!animationpick)
 								return
 
 							for(var/mob/living/carbon/human/M in mobs)
 								SPAWN(0)
-									call(animationpick)(M)
+									call(animation_procs[animationpick])(M)
 
 							message_admins("[key_name(usr)] added animation [animationpick] to everyone.")
 							logTheThing(LOG_ADMIN, usr, "added animation [animationpick] to everyone.")
@@ -3242,7 +3245,7 @@ var/global/noir = 0
 									noir = 0
 									for (var/mob/M in mobs)
 										if (M.client)
-											animate_fade_from_grayscale(M.client, 50)
+											ANIMATE.fade_from_grayscale(M.client, 50)
 									message_admins("[key_name(usr)] undid placing the station in noir mode.")
 									logTheThing(LOG_ADMIN, usr, "used the Noir secret to remove noir")
 									logTheThing(LOG_DIARY, usr, "used the Noir secret to remove noir", "admin")
@@ -3250,7 +3253,7 @@ var/global/noir = 0
 								noir = 1
 								for (var/mob/M in mobs)
 									if (M.client)
-										animate_fade_grayscale(M.client, 50)
+										ANIMATE.fade_grayscale(M.client, 50)
 									LAGCHECK(LAG_LOW)
 								message_admins("[key_name(usr)] placed the station in noir mode.")
 								logTheThing(LOG_ADMIN, usr, "used the Noir secret")
@@ -4206,7 +4209,7 @@ var/global/noir = 0
 					var/obj/O = A
 					O.initialize(TRUE)
 				if (client.flourish)
-					spawn_animation1(A)
+					ANIMATE.spawn_animation1(A)
 			logTheThing(LOG_ADMIN, usr, "spawned [chosen] at ([log_loc(usr)])")
 			logTheThing(LOG_DIARY, usr, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
@@ -4233,7 +4236,7 @@ var/global/noir = 0
 			else
 				A = new /obj/item/toy/figure(get_turf(usr), new chosen)
 			if (client.flourish)
-				spawn_animation1(A)
+				ANIMATE.spawn_animation1(A)
 			logTheThing(LOG_ADMIN, usr, "spawned figurine [chosen] at ([log_loc(usr)])")
 			logTheThing(LOG_DIARY, usr, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
@@ -4254,7 +4257,7 @@ var/global/noir = 0
 			var/obj/A = new chosen()
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
-			heavenly_spawn(A)
+			ANIMATE.heavenly_spawn(A)
 			logTheThing(LOG_ADMIN, usr, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing(LOG_DIARY, usr, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
@@ -4295,7 +4298,7 @@ var/global/noir = 0
 			var/obj/A = new chosen()
 			var/turf/T = get_turf(usr)
 			A.set_loc(T)
-			demonic_spawn(A)
+			ANIMATE.demonic_spawn(A)
 			logTheThing(LOG_ADMIN, usr, "spawned [chosen] at ([log_loc(T)])")
 			logTheThing(LOG_DIARY, usr, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 

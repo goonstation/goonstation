@@ -992,7 +992,7 @@ TYPEINFO(/obj/critter/parrot)
 				src.pixel_y = 0
 
 			if (prob(5))
-				animate_spin(src, pick("L","R"), 1, 0)
+				ANIMATE.spin(src, pick("L","R"), 1, 0)
 
 			if (prob(10))
 				src.visible_message("\The [src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles","dooks")]!")

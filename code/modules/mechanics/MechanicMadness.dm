@@ -1720,7 +1720,7 @@ TYPEINFO(/obj/item/mechanics)
 			return
 		LIGHT_UP_HOUSING
 		var/sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
+		if(sent) ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 	//This will get called from the component-datum when a device is being linked
 	proc/addFilter(var/comsig_target, atom/receiver, mob/user)
@@ -2100,7 +2100,7 @@ TYPEINFO(/obj/item/mechanics)
 		LIGHT_UP_HOUSING
 		input.data_file = src.stored_file.copy_file()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
-		animate_flash_color_fill(src,"#00FF00",2, 2)
+		ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/addandsendfile(var/datum/mechanicsMessage/input)
 		if (level == OVERFLOOR || !src.stored_file)
@@ -2108,7 +2108,7 @@ TYPEINFO(/obj/item/mechanics)
 		LIGHT_UP_HOUSING
 		input.data_file = src.stored_file.copy_file()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-		animate_flash_color_fill(src,"#00FF00",2, 2)
+		ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/storefile(var/datum/mechanicsMessage/input)
 		if (level == OVERFLOOR || !input.data_file)
@@ -2116,7 +2116,7 @@ TYPEINFO(/obj/item/mechanics)
 		LIGHT_UP_HOUSING
 		src.stored_file = input.data_file.copy_file()
 		tooltip_rebuild = TRUE
-		animate_flash_color_fill(src,"#00FF00",2, 2)
+		ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/deletefile(var/datum/mechanicsMessage/input)
 		if (level == OVERFLOOR || !src.stored_file)
@@ -2124,7 +2124,7 @@ TYPEINFO(/obj/item/mechanics)
 		LIGHT_UP_HOUSING
 		src.stored_file = null
 		tooltip_rebuild = TRUE
-		animate_flash_color_fill(src,"#00FF00",2, 2)
+		ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_file"
@@ -2257,7 +2257,7 @@ TYPEINFO(/obj/item/mechanics)
 					src.noise_enabled = TRUE
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
 
-		animate_flash_color_fill(src,"#FF0000",2, 2)
+		ANIMATE.flash_color_fill(src,"#FF0000",2, 2)
 
 	receive_signal(datum/signal/signal)
 		if(!signal || level == OVERFLOOR)
@@ -2287,7 +2287,7 @@ TYPEINFO(/obj/item/mechanics)
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
-				animate_flash_color_fill(src,"#ff0000",2, 2)
+				ANIMATE.flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(signal.encryption)
@@ -2295,28 +2295,28 @@ TYPEINFO(/obj/item/mechanics)
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("[signal.encryption]" + stars(packets, signal.encryption_obfuscation))), null)
-				animate_flash_color_fill(src,"#ff0000",2, 2)
+				ANIMATE.flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(forward_all)
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
-				animate_flash_color_fill(src,"#00FF00",2, 2)
+				ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 				return
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["data"])), signal.data_file?.copy_file())
-				animate_flash_color_fill(src,"#00FF00",2, 2)
+				ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["message"])), null)
-				animate_flash_color_fill(src,"#00FF00",2, 2)
+				ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
 				var/newfreq = text2num_safe(signal.data["data"])
 				if(!newfreq)
 					return
 				set_frequency(newfreq)
-				animate_flash_color_fill(src,"#00FF00",2, 2)
+				ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 
 	proc/set_frequency(new_frequency)
@@ -2966,7 +2966,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 
 		LIGHT_UP_HOUSING
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.content]")
-		animate_flash_color_fill(src, "#00FF00", 2, 2)
+		ANIMATE.flash_color_fill(src, "#00FF00", 2, 2)
 
 	update_icon()
 		icon_state = "[under_floor ? "u" : ""]comp_radioscanner"
@@ -3907,7 +3907,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 				LIGHT_UP_HOUSING
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
-				animate_flash_color_fill(src,"#00FF00",1, 2)
+				ANIMATE.flash_color_fill(src,"#00FF00",1, 2)
 				sleep(intervalLength)
 
 			// if/when we break out of the loop, we're done forever
@@ -4051,7 +4051,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				added = 1
 
 		if (added)
-			animate_flash_color_fill(src,"#00FF00",2, 2)
+			ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 			tooltip_rebuild = TRUE
 
 	proc/removeItem(var/datum/mechanicsMessage/input)
@@ -4061,7 +4061,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (isnull(map[input.signal]))
 			return
 		map.Remove(input.signal)
-		animate_flash_color_fill(src,"#00FF00",2, 2)
+		ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 		tooltip_rebuild = TRUE
 
 	proc/sendValue(var/datum/mechanicsMessage/input)
@@ -4072,7 +4072,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return
 		input.signal = map[input.signal]
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
-		animate_flash_color_fill(src,"#00FF00",2, 2)
+		ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/sendMapAsSignal(var/datum/mechanicsMessage/input)
 		if (level == OVERFLOOR || !input)
@@ -4080,7 +4080,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		LIGHT_UP_HOUSING
 		input.signal = list2params(src.map)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
-		animate_flash_color_fill(src,"#00FF00",2, 2)
+		ANIMATE.flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/setMode(obj/item/W as obj, mob/user as mob)
 		var/input = input(user, "Set mode", "Association Component") in list("Mutable", "Immutable", "List", "*CANCEL*")

@@ -501,19 +501,19 @@ TYPEINFO(/obj/machinery/networked/telepad)
 						break
 				if (!target) //we didnt find a turf to send to
 					return 0
-				leaveresidual(target)
+				ANIMATE.leaveresidual(target)
 				sleep(0.5 SECONDS)
 
-				showswirl_out(src.loc, FALSE)
+				ANIMATE.showswirl_out(src.loc, FALSE)
 				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
-				leaveresidual(src.loc)
-				showswirl(target)
+				ANIMATE.leaveresidual(src.loc)
+				ANIMATE.showswirl(target)
 				use_power(1500)
 
 				for(var/atom/movable/M in src.loc)
 					if(M.anchored)
 						continue
-					animate_teleport(M)
+					ANIMATE.teleport(M)
 					if(ismob(M))
 						var/mob/O = M
 						O.changeStatus("stunned", 2 SECONDS)
@@ -537,18 +537,18 @@ TYPEINFO(/obj/machinery/networked/telepad)
 						break
 				if (!target) //we didnt find a turf to send to
 					return 0
-				leaveresidual(target)
+				ANIMATE.leaveresidual(target)
 				sleep(0.5 SECONDS)
 
-				showswirl(src.loc, FALSE)
+				ANIMATE.showswirl(src.loc, FALSE)
 				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
-				leaveresidual(src.loc)
-				showswirl_out(target)
+				ANIMATE.leaveresidual(src.loc)
+				ANIMATE.showswirl_out(target)
 				use_power(1500)
 				for(var/atom/movable/M in target)
 					if(M.anchored)
 						continue
-					animate_teleport(M)
+					ANIMATE.teleport(M)
 					if(ismob(M))
 						var/mob/O = M
 						O.changeStatus("stunned", 2 SECONDS)
@@ -591,9 +591,9 @@ TYPEINFO(/obj/machinery/networked/telepad)
 						logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
 					do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 
-				showswirl(src.loc, FALSE)
+				ANIMATE.showswirl(src.loc, FALSE)
 				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
-				showswirl(target)
+				ANIMATE.showswirl(target)
 				use_power(400000)
 				start_portal = makeportal(src.loc, target)
 				if (start_portal)
@@ -605,7 +605,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		if (!target)
 			return 1
 
-		leaveresidual(target)
+		ANIMATE.leaveresidual(target)
 		sleep(0.5 SECONDS)
 
 		var/list/stuff = list()
@@ -622,9 +622,9 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			// teleblock checks should already be done
 			do_teleport(which,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 
-		showswirl_out(src.loc)
-		leaveresidual(src.loc)
-		showswirl(target)
+		ANIMATE.showswirl_out(src.loc)
+		ANIMATE.leaveresidual(src.loc)
+		ANIMATE.showswirl(target)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
@@ -641,7 +641,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			//boutput(usr, "Unknown interference prevents teleportation from that location!")
 			return 1
 
-		leaveresidual(receiveturf)
+		ANIMATE.leaveresidual(receiveturf)
 		sleep(0.5 SECONDS)
 
 		var/list/stuff = list()
@@ -655,9 +655,9 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			else
 				logTheThing(LOG_STATION, usr, "received [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			do_teleport(which,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
-		showswirl(src.loc)
-		leaveresidual(src.loc)
-		showswirl_out(receiveturf)
+		ANIMATE.showswirl(src.loc)
+		ANIMATE.leaveresidual(src.loc)
+		ANIMATE.showswirl_out(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
@@ -690,8 +690,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if(ismob(O))
 				logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
 			do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
-		showswirl(src.loc)
-		showswirl(target)
+		ANIMATE.showswirl(src.loc)
+		ANIMATE.showswirl(target)
 		use_power(400000)
 		if(prob(2))
 			src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
@@ -714,7 +714,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		return P
 
 	proc/badsend()
-		showswirl_error(src.loc)
+		ANIMATE.showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(90)) //MINOR EFFECTS
@@ -727,7 +727,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		processbadeffect(effect)
 
 	proc/badreceive()
-		showswirl_error(src.loc)
+		ANIMATE.showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(80)) //MINOR EFFECTS

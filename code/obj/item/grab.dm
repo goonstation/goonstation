@@ -228,7 +228,7 @@
 					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material_piece/cloth))
 						SPAWN(0.3 SECONDS) //wait for them to move in
 							if (!QDELETED(src))
-								attack_particle(src.assailant, src.affecting)
+								ANIMATE.MOB.attack_particle(src.assailant, src.affecting)
 						var/obj/item/cloth = src.loc
 						if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
 							logTheThing(LOG_COMBAT, src.assailant, "tries to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
@@ -378,7 +378,7 @@
 				icon_state = "pin"
 
 	proc/do_resist()
-		hit_twitch(src.assailant)
+		ANIMATE.hit_twitch(src.assailant)
 		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
@@ -645,7 +645,7 @@
 		G.affecting:was_harmed(G.assailant)
 
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
-	attack_particle(user,src)
+	ANIMATE.MOB.attack_particle(user,src)
 
 /turf/unsimulated/floor/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting
@@ -663,7 +663,7 @@
 		G.affecting:was_harmed(G.assailant)
 
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
-	attack_particle(user,src)
+	ANIMATE.MOB.attack_particle(user,src)
 
 /obj/decal/cleanable/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting
@@ -681,7 +681,7 @@
 		G.affecting:was_harmed(G.assailant)
 
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
-	attack_particle(user,src)
+	ANIMATE.MOB.attack_particle(user,src)
 
 ///////////////////////
 //SPECIAL GRABS BELOW//
@@ -899,8 +899,8 @@
 		var/ret = list(.)
 		SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED, hit_type, ret)
 		. = ret[1]
-		block_spark(src.assailant)
-		fuckup_attack_particle()
+		ANIMATE.MOB.block_spark(src.assailant)
+		ANIMATE.MOB.fuckup_attack_particle()
 
 
 /obj/item/grab/block/proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)

@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/obj/space_phoenix_ice_wall)
 		icon_state = "moon-1"
 
 	attack_hand(mob/user)
-		attack_particle(user, src)
+		ANIMATE.MOB.attack_particle(user, src)
 		user.lastattacked = get_weakref(src)
 
 		if (istype(user, /mob/living/critter/space_phoenix))
@@ -438,7 +438,7 @@ ABSTRACT_TYPE(/obj/space_phoenix_ice_wall)
 		boutput(user, SPAN_ALERT("Unfortunately, the snow is a little too compacted to be destroyed by hand."))
 
 	attackby(obj/item/I, mob/user)
-		attack_particle(user, src)
+		ANIMATE.MOB.attack_particle(user, src)
 		user.lastattacked = get_weakref(src)
 		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 

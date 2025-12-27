@@ -105,7 +105,7 @@
 				var/target_direction = pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 				var/target_distance = rand(tumbling_distance_min, tumbling_distance_max)
 				var/turf/target_turf = get_ranged_target_turf(get_turf(src), target_direction, target_distance * 32)
-				animate_spin(src, pick( "R" , "L"), tumbling_flip_duration, 2)
+				ANIMATE.spin(src, pick( "R" , "L"), tumbling_flip_duration, 2)
 				src.throw_at(target_turf, target_distance, tumbling_speed)
 	else
 		if (prob(plantpot_damage_chance))

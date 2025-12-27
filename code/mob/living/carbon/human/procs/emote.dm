@@ -683,7 +683,7 @@
 							SEND_SIGNAL(thing, COMSIG_ITEM_TWIRLED, src, thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
-							animate_spin(thing, prob(50) ? "L" : "R", 1, 0)
+							ANIMATE.spin(thing, prob(50) ? "L" : "R", 1, 0)
 						else
 							message = "<B>[used_name]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
@@ -753,7 +753,7 @@
 					hat.pixel_x = 0
 					hat.pixel_y = -16
 
-					animate_stomp(src)
+					ANIMATE.stomp(src)
 
 					SPAWN(0.5 SECONDS)
 						if (hat_or_beret == "beret")
@@ -1561,7 +1561,7 @@
 					else if (src.r_hand)
 						thing = src.r_hand
 				if (thing)
-					animate_spin(thing, prob(50) ? "L" : "R", 3, 0)
+					ANIMATE.spin(thing, prob(50) ? "L" : "R", 3, 0)
 					message = "<b>[used_name]</b> turns [thing] over in [his_or_her(src)] hand, slowly examining it."
 					maptext_out = "<I>turns [thing] over in [his_or_her(src)] hand, slowly examining it</I>"
 					m_type = 1
@@ -1712,8 +1712,8 @@
 								),
 							)
 							src.say("GHEIT DAUN!", message_params = message_params)
-							animate_flash_color_fill(src,"#5C0E80", 1, 10)
-							animate_levitate(src, 1, 10)
+							ANIMATE.flash_color_fill(src,"#5C0E80", 1, 10)
+							ANIMATE.levitate(src, 1, 10)
 							SPAWN(0) // some movement to make it look cooler
 								for (var/i in 0 to 9)
 									src.set_dir(turn(src.dir, 90))
@@ -1928,7 +1928,7 @@
 							else
 								message = "<b>[used_name]</b> does a flip!"
 							if (!src.reagents.has_reagent("fliptonium"))
-								animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+								ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 							//TACTICOOL FLOPOUT
 							if (src.traitHolder.hasTrait("matrixflopout") && src.stance != "dodge")
 								src.remove_stamina(STAMINA_FLIP_COST * 2)
@@ -2412,7 +2412,7 @@
 	var/used_name = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src
 	G.affecting.set_loc(newloc)
 	if (!G.affecting.reagents?.has_reagent("fliptonium"))
-		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+		ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 
 	if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 		src.remove_stamina(STAMINA_FLIP_COST)

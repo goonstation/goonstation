@@ -1235,7 +1235,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			if (src.muzzle_flash)
 				if (isturf(user.loc))
 					var/turf/origin = user.loc
-					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
+					ANIMATE.muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 			var/turf/T = get_turf(src)
 			var/chosen_bling// = pick(60;/obj/item/currency/spacecash,20;/obj/item/coin,10;/obj/item/raw_material/gemstone,10;/obj/item/raw_material/gold)

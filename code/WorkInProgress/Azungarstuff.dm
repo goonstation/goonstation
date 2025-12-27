@@ -912,7 +912,7 @@
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
-		showswirl(user.loc)
+		ANIMATE.showswirl(user.loc)
 		playsound(src, 'sound/effects/teleport.ogg', 60, TRUE)
 		SPAWN(1 SECOND)
 		teleport(user)
@@ -927,7 +927,7 @@
 					S.recharging = 1
 					src.recharging = 1
 					user.set_loc(S.loc)
-					showswirl(user.loc)
+					ANIMATE.showswirl(user.loc)
 					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0
@@ -1050,7 +1050,7 @@ TYPEINFO(/obj/item/rpcargotele)
 	onEnd()
 		..()
 		owner.visible_message(SPAN_ALERT("[owner] has successfully teleported the NT vital supplies somewhere else!"))
-		showswirl(thecrate.loc)
+		ANIMATE.showswirl(thecrate.loc)
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, SPAN_NOTICE("You have successfully teleported one of the supply crates to the Syndicate."))

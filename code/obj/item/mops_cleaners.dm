@@ -354,7 +354,7 @@ TRASH BAG
 			var/size = 1
 			if (src.total_volume > 0)
 				size += (src.total_volume / src.maximum_volume) * 0.6
-			sponge_size(S, size)
+			ANIMATE.sponge_size(S, size)
 		return 0
 
 #define SPONGE_SOAK "Soak up"
@@ -536,7 +536,7 @@ TRASH BAG
 			target.remove_filter(list("paint_color", "paint_pattern"))
 			playsound(src, 'sound/items/sponge.ogg', 20, TRUE)
 			if (ismob(target))
-				animate_smush(target)
+				ANIMATE.smush(target)
 
 		if (SPONGE_WRING)
 			if (target.reagents)
@@ -1257,9 +1257,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			return
 		SPAWN(1.3 SECONDS)
 			playsound(start, 'sound/machines/windup.ogg', 80, FALSE, -10)
-			eat_twitch(src)
+			ANIMATE.eat_twitch(src)
 			sleep(0.4 SECONDS)
-			eat_twitch(src)
+			ANIMATE.eat_twitch(src)
 
 	alter_projectile(obj/projectile/P)
 		if(!P.reagents)

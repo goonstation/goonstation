@@ -282,7 +282,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		num_absorbed++
 		if(src.spaget_count < 25 && !katamari_mode)
 			src.spaget_count++
-			animate_spaghettification(A, src, 15 SECONDS, right_spinning)
+			ANIMATE.spaghettification(A, src, 15 SECONDS, right_spinning)
 			SPAWN(16 SECONDS)
 				src.spaget_count-- //this is fine, it doesn't need to be tick perfect
 		else if(katamari_mode)

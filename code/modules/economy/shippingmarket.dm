@@ -660,7 +660,7 @@
 			var/turf/T = get_turf(toRecv) || get_turf(pick_landmark(LANDMARK_LATEJOIN)) //AAAAA
 			shipped_thing.set_loc(T)
 			if(get_turf(toRecv))
-				showswirl(get_turf(toRecv))
+				ANIMATE.showswirl(get_turf(toRecv))
 
 
 

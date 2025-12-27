@@ -566,9 +566,9 @@ TYPEINFO(/mob/living/silicon/robot)
 							playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							message = "<B>[used_name]</B> beep-bops!"
 							if (prob(50))
-								animate_spin(src, "R", 1, 0)
+								ANIMATE.spin(src, "R", 1, 0)
 							else
-								animate_spin(src, "L", 1, 0)
+								ANIMATE.spin(src, "L", 1, 0)
 
 							for (var/mob/living/M in viewers(1, null))
 								if (M == src)

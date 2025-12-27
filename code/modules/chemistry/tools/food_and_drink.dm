@@ -548,7 +548,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				current_mask = desired_mask
 				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
-		eat_twitch(eater)
+		ANIMATE.eat_twitch(eater)
 		eater.on_eat(src, feeder)
 
 	proc/on_finish(mob/eater)
@@ -761,7 +761,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
 
 		playsound(consumer.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		eat_twitch(consumer)
+		ANIMATE.eat_twitch(consumer)
 
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
 	// still copy paste btw
@@ -1596,7 +1596,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			glass.reagents.reaction(target, INGEST, clamp(glass.reagents.total_volume, CHEM_EPSILON, min(glass.gulp_size, (target.reagents?.maximum_volume - target.reagents?.total_volume))))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
 			playsound(target.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			eat_twitch(target)
+			ANIMATE.eat_twitch(target)
 
 		if(glass.reagents.total_volume <= 0)
 			..()

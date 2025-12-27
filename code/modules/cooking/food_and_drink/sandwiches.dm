@@ -548,7 +548,7 @@
 			playsound(get_turf(feeder), pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 			random_brute_damage(consumer, rand(5, 15), FALSE)
 			take_bleeding_damage(consumer, null, rand(5, 15), DAMAGE_BLUNT)
-			hit_twitch(consumer)
+			ANIMATE.hit_twitch(consumer)
 		else
 			return ..()
 

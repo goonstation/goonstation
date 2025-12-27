@@ -232,7 +232,7 @@
 
 		holder.owner.say("See you in hell.")
 		H.mind?.damned = 1
-		animate_blink(H)
+		ANIMATE.blink(H)
 		sleep(0.5 SECONDS)
 		H.implode()
 
@@ -339,19 +339,19 @@
 			REMOVE_ATOM_PROPERTY(usr, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
 			REMOVE_ATOM_PROPERTY(usr, PROP_ATOM_NEVER_DENSE, "floorswitching")
 			usr.set_density(initial(usr.density))
-			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			ANIMATE.slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)
 				if(usr)
 					usr.plane = PLANE_DEFAULT
 					usr.layer = 4
 					REMOVE_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 				if(floorturf)
-					animate_slide(floorturf, 0, 0, 4)
+					ANIMATE.slide(floorturf, 0, 0, 4)
 
 		else
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_HIDE_ICONS, "underfloor")
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
-			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			ANIMATE.slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)
 				if(usr)
 					REMOVE_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
@@ -362,7 +362,7 @@
 					usr.layer = 4
 					usr.plane = PLANE_UNDERFLOOR
 				if(floorturf)
-					animate_slide(floorturf, 0, 0, 4)
+					ANIMATE.slide(floorturf, 0, 0, 4)
 
 /datum/targetable/gimmick/movefloor
 	icon_state = "pandemonium"
@@ -380,7 +380,7 @@
 		var/movedistX = input(usr,"How far would you like to move the floor tile.","How far to move left or right.","4") as num
 		var/movedistY = input(usr,"How far would you like to move the floor tile.","How far to move up or down.","4") as num
 		var/movetime = input(usr,"How fast would you like to move it.","How long it takes to move it.","4") as num
-		animate_slide(get_turf(usr), movedistX, movedistY, movetime)
+		ANIMATE.slide(get_turf(usr), movedistX, movedistY, movetime)
 
 /datum/targetable/gimmick/floorgrab
 	icon_state = "clownrevenge"

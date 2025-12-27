@@ -79,7 +79,7 @@
 				human_idiot.organHolder.stomach.take_damage(30)
 				human_idiot.TakeDamage("all", 10)
 				human_idiot.changeStatus("knockdown", 3 SECONDS)
-				hit_twitch(human_idiot)
+				ANIMATE.hit_twitch(human_idiot)
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)

@@ -126,9 +126,9 @@
 			for(var/mob/AM in T)
 				if(isobserver(AM))
 					continue
-				showswirl(AM)
+				ANIMATE.showswirl(AM)
 				AM.set_loc(pick_landmark(LANDMARK_LATEJOIN, locate(150, 150, 1)))
-				showswirl(AM)
+				ANIMATE.showswirl(AM)
 			for (var/obj/O in T)
 				get_hiding_jerk(O)
 

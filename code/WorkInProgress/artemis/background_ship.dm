@@ -66,7 +66,7 @@
 			animate = 1
 			src.stars_pan(G.vel_mag,G.vel_angle)
 		if(animate)
-			animate_stars()
+			ANIMATE.stars()
 			animate = 0
 			//sleep(animation_speed)
 		return
@@ -77,7 +77,7 @@
 		if((mag_pan || mag_rot || G.vel_mag) && !start)
 			src.stars_start()
 
-	animate_stars()
+	ANIMATE.stars()
 		if(!src)
 			return
 

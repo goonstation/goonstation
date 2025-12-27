@@ -309,15 +309,15 @@
 			src.reagents.remove_reagent("spaceglue", 1)
 			src.generator.grump += 25
 			src.visible_message(SPAN_ALERT("<b>[src] [pick("shakes", "vibrates")] [pick("dangerously", "strangely", "grumpily")]!</b>"))
-			animate_shake(src, rand(5,7), rand(3,8), rand(3,8) )
-			violent_twitch(src)
+			ANIMATE.shake(src, rand(5,7), rand(3,8), rand(3,8) )
+			ANIMATE.violent_twitch(src)
 
 		if( src.reagents.has_reagent("graphene_compound"))
 			src.reagents.remove_reagent("graphene_compound", 1)
 			src.generator.grump += 10
 			src.explosion_resistance += 0.5
 			src.generator?.explosion_resistance += 0.2
-			violent_twitch(src)
+			ANIMATE.violent_twitch(src)
 
 		// Interactions with transferred gas
 		if(gas_passed)
@@ -1108,7 +1108,7 @@ datum/pump_ui/circulator_ui
 
 							for (var/obj/item/I in T)
 								if ( probmult(T_effect_prob) )
-									animate_float(I, 1, 3)
+									ANIMATE.float(I, 1, 3)
 
 				if (probmult(33)) // lowered because all the DEL procs related to zap are stacking up in the profiler
 					zapStuff()

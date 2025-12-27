@@ -428,7 +428,7 @@
 			if (prob(melt_prob))
 				A.ex_act(2)
 			if (A.density && melt_prob) //turfs keep refs so this will be the new turf if it does get replaced in ex_act
-				animate_meltspark(A)
+				ANIMATE.meltspark(A)
 		else
 			melt_prob = (abs(output)) / (0.5 MEGA WATTS)
 			if (istype(A, /obj/blob))

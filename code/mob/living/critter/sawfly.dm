@@ -52,7 +52,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(name == initial(name))
 			name = "sawfly [pick(sawflynames)]-[rand(1,999)]"
 
-		animate_bumble(src) // gotta get the float goin' on
+		ANIMATE.bumble(src) // gotta get the float goin' on
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 

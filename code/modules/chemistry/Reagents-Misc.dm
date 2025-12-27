@@ -457,7 +457,7 @@ datum
 					return
 				var/atom/A = holder.my_atom
 				if (A)
-					animate_flash_color_fill(A,"#5C0E80",-1, 10)
+					ANIMATE.flash_color_fill(A,"#5C0E80",-1, 10)
 
 				if (hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/anima)
@@ -470,7 +470,7 @@ datum
 			on_remove()
 				var/atom/A = holder.my_atom
 				if (A)
-					animate_flash_color_fill(A,"#5C0E80", 1, 10)
+					ANIMATE.flash_color_fill(A,"#5C0E80", 1, 10)
 
 				if (hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/anima)
@@ -2355,7 +2355,7 @@ datum
 							//while we are overdosing, we don't fully break down the OD-ticks. Gotta get under the OD-limit
 							src.OD_ticks = max(0, src.OD_ticks - 1)
 						if(prob(10) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
-							animate_flubber(M)
+							ANIMATE.flubber(M)
 							boutput(M, SPAN_ALERT("You feel [pick("like you're bending out of shape", "a jiggling sensation", "like something is wrong")]."))
 							//your body becoming rubber should hurt. We start at 6 damage and scale up to 8 damage before hitting the really dangerous OD-limit
 							random_brute_damage(M, 8 * (holder.get_reagent_amount(src.id) / src.overdose)  * mult)
@@ -2370,19 +2370,19 @@ datum
 						switch(src.OD_ticks)
 							if (1 to 10)
 								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
-									animate_flubber(M)
+									ANIMATE.flubber(M)
 									boutput(M, SPAN_ALERT(pick("Something feels seriously off.","You can swear you have seen your back just a second ago...", "It felt like your stomach shifted upwards for a second, odd...")))
 									random_brute_damage(M, 8 * mult)
 							if (11 to 22)
 								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 6 SECONDS))
-									animate_flubber(M, 6, 10, 3, 2)
+									ANIMATE.flubber(M, 6, 10, 3, 2)
 									boutput(M, SPAN_ALERT(pick("Your body cannot stop jiggling.","Your knees twist in an unsettling direction.", "Your eyes bounce inside your skull for a moment, holy fuck...")))
 									random_brute_damage(M, 10 * mult)
 							if (23 to INFINITY)
 								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 6 SECONDS))
 									boutput(M, SPAN_ALERT("<B>[pick("Your body stretches to an unreasonable degree, FUCK!","You cannot control your form! MAKE. IT. STOP!", "You feel your organs jiggling into each other... IT HURTS!")]</B>"))
 									M.setStatusMin("stunned", 2 SECONDS * mult)
-									animate_flubber(M, 4, 8, 4, 2.5)
+									ANIMATE.flubber(M, 4, 8, 4, 2.5)
 									random_brute_damage(M, 12 * mult)
 
 
@@ -2453,7 +2453,7 @@ datum
 					dir_lock = 1
 
 				if (!anim_lock)
-					animate_spin(M, direction, speed)
+					ANIMATE.spin(M, direction, speed)
 					anim_lock = 1
 
 				M.make_jittery(2)
@@ -2465,14 +2465,14 @@ datum
 				. = ..()
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(1,6)].[rand(0,9)]")
-				animate_spin(M, dir_temp, speed_temp)
+				ANIMATE.spin(M, dir_temp, speed_temp)
 				DEBUG_MESSAGE(SPAN_NOTICE("<b>Spun [M]: [dir_temp], [speed_temp]</b>")) // <- What's this?
 
 /*			reaction_obj(var/obj/O, var/volume)
 				if (volume >= 10)
 					var/dir_temp = pick("L", "R")
 					var/speed_temp = text2num("[rand(1,6)].[rand(0,9)]")
-					animate_spin(O, dir_temp, speed_temp)
+					ANIMATE.spin(O, dir_temp, speed_temp)
 					DEBUG_MESSAGE(SPAN_NOTICE("<b>Spun [O]: [dir_temp], [speed_temp]</b>"))
 */
 
@@ -2589,7 +2589,7 @@ datum
 					dir_lock = 1
 
 				if (!anim_lock)
-					animate_spin(M, direction, speed)
+					ANIMATE.spin(M, direction, speed)
 					anim_lock = 1
 
 				M.make_jittery(4)
@@ -2603,14 +2603,14 @@ datum
 					return
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
-				animate_spin(M, dir_temp, speed_temp)
+				ANIMATE.spin(M, dir_temp, speed_temp)
 
 			reaction_obj(var/obj/O)
 				if(!O.mouse_opacity)
 					return
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
-				animate_spin(O, dir_temp, speed_temp)
+				ANIMATE.spin(O, dir_temp, speed_temp)
 
 
 		diluted_fliptonium
@@ -4266,7 +4266,7 @@ datum
 					O.show_message(SPAN_ALERT("<B>[src]</B> flips up, over and behind [deathtarget] and punches [him_or_her(deathtarget)] in the groin before rolling under the floortiles!"), 1)
 
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
-				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+				ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 				sleep(1 SECOND)
 				playsound(src.loc, pick(sounds_punch), 50, 1, -1)
 				deathtarget.emote("scream")
@@ -4274,9 +4274,9 @@ datum
 				deathtarget.setStatusMin("knockdown", 5 SECONDS)
 				deathtarget.unlock_medal("OW! MY BALLS!", 1)
 				var/deathturf = get_turf(src)
-				animate_slide(deathturf, 0, -24, 25)
+				ANIMATE.slide(deathturf, 0, -24, 25)
 				sleep(2 SECONDS)
-				animate_slide(deathturf, 0, 0, 15)
+				ANIMATE.slide(deathturf, 0, 0, 15)
 				qdel(src)
 				deathtarget.deathhunted = 0
 				return

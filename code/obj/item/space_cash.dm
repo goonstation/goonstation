@@ -280,12 +280,12 @@
 		animate(src, transform = null, time = 1, easing = SINE_EASING, flags = ANIMATION_END_NOW)
 		switch (src.amount)
 			if (1000000 to INFINITY)
-				animate_spin(src, "L", 1, -1)
-				animate_rainbow_glow(src)
+				ANIMATE.spin(src, "L", 1, -1)
+				ANIMATE.rainbow_glow(src)
 				src.color = null	// god DAMN
 			if (250000 to INFINITY)
 				src.color = null	// jesus fuckin christ
-				animate_rainbow_glow(src)
+				ANIMATE.rainbow_glow(src)
 			if (50000 to 250000)
 				src.color = "#e5e4e2"	// platinum-ish
 			if (10000 to 50000)

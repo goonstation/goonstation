@@ -201,9 +201,9 @@ TYPEINFO(/obj/submachine/chef_sink)
 			return
 		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 		if(prob(50))
-			animate_door_squeeze(victim)
+			ANIMATE.door_squeeze(victim)
 		else
-			animate_smush(victim, 0.65)
+			ANIMATE.smush(victim, 0.65)
 
 
 	onEnd()

@@ -659,7 +659,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	canSpawnWith = 0
 
 	DoSpecialThing(var/index)
-		animate_shockwave(src.holder)
+		ANIMATE.shockwave(src.holder)
 		if(index == 6) return
 		var/turf/T = get_turf(src.holder)
 		playsound_global(T?.z, 'sound/effects/explosionfar.ogg', vol=50)
@@ -721,7 +721,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 			for(var/i in 1 to timesToDoIt)
 				sleep(howQuicklyToDoIt)
 				MakeSoundPlay(index)
-				animate_shockwave(src.holder)
+				ANIMATE.shockwave(src.holder)
 				if(prob(1))
 					src.holder?.bust_speaker()
 
@@ -758,7 +758,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	var/list/ringListFemale = list('sound/weapons/female_cswordattack1.ogg', 'sound/weapons/female_cswordattack2.ogg')
 
 	DoSpecialThing(index)
-		animate_shockwave(src.holder)
+		ANIMATE.shockwave(src.holder)
 		if(prob(5))
 			src.holder.bust_speaker()
 

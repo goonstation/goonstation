@@ -695,7 +695,7 @@ TYPEINFO(/obj/supply_pad/outgoing)
 							C.consume()
 							wagesystem.shipping_budget -= P.cost
 							P.create(T)
-							showswirl(T)
+							ANIMATE.showswirl(T)
 							message = "<span class='good'>Purchase complete. Cost: [P.cost] credits.</span>"
 						else
 							message = "<span class='bad'>Insufficient funds in budget to purchase that item.</span>"
@@ -737,7 +737,7 @@ TYPEINFO(/obj/supply_pad/outgoing)
 						profit += do_sell(CR)
 						message = "<span class='good'>Sold [CR] from outgoing pad. Profit: [profit] credits</span>"
 						qdel(CR)
-						showswirl(get_turf(out_target))
+						ANIMATE.showswirl(get_turf(out_target))
 						out_target.used()
 		else if (href_list["mode"])
 			mode = text2num_safe(href_list["mode"])

@@ -114,7 +114,7 @@
 
 		var/turf/pda_turf = get_turf(hostpda)
 		playsound(pda_turf, "warp", 15, 1, 0.2, 1.2)
-		animate_portal_tele(hostpda)
+		ANIMATE.portal_tele(hostpda)
 
 		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
 		if (length(reward.items) > 0)

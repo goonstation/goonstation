@@ -294,7 +294,7 @@
 			dir = turn(src.dir, 180)
 		if (!src.shaft.network.try_move(dir))
 			src.visible_message(SPAN_ALERT("[src] makes a protesting grinding noise."))
-			animate_storage_thump(src)
+			ANIMATE.storage_thump(src)
 			return
 		src.shaft = locate() in get_turf(src)
 		playsound(src, 'sound/machines/button.ogg', 50, 1)

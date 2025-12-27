@@ -1166,7 +1166,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 				the_mob.changeStatus("knockdown", 5 SECONDS)
 				container.visible_message(SPAN_ALERT("<b>[the_mob.loc]</b> emits a loud thump and rattles a bit."))
 				playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
-				animate_storage_thump(container)
+				ANIMATE.storage_thump(container)
 		else
 			var/cooldown_in_seconds = GET_COOLDOWN(src, "stomp") / 10
 			boutput(the_mob, SPAN_ALERT("The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>."))

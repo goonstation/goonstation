@@ -91,7 +91,7 @@
 			params = params2list(params)
 		if(params["ctrl"])
 			if (src.pulling)
-				unpull_particle(src,pulling)
+				ANIMATE.MOB.unpull_particle(src,pulling)
 			src.remove_pulling()
 
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
@@ -145,7 +145,7 @@
 			src.admin_interact_verb()
 		if ("stop_pull")
 			if (src.pulling)
-				unpull_particle(src,pulling)
+				ANIMATE.MOB.unpull_particle(src,pulling)
 			src.remove_pulling()
 
 /**

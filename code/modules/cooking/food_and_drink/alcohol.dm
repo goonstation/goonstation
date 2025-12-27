@@ -442,7 +442,7 @@
 		if (target_reagents?.total_volume)
 			target_reagents.reaction(user, INGEST, clamp(target_reagents.total_volume, CHEM_EPSILON, min(src.slurp_size, (user.reagents?.maximum_volume - user.reagents?.total_volume))))
 			target_reagents.trans_to(user, min(target_reagents.total_volume, src.slurp_size))
-			eat_twitch(user)
+			ANIMATE.eat_twitch(user)
 			boutput(user, msg)
 			playsound(user.loc,'sound/items/drink.ogg', rand(30,70), vary = TRUE)
 		else

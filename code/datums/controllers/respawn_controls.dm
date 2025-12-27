@@ -196,7 +196,7 @@ var/datum/respawn_controls/respawn_controller
 				var/mob/living/oldmob = usr
 				SPAWN(1)
 					// if you're in the afterlife your mob is raptured
-					heavenly_spawn(oldmob, reverse = TRUE)
+					ANIMATE.heavenly_spawn(oldmob, reverse = TRUE)
 		logTheThing(LOG_DEBUG, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].")
 		logTheThing(LOG_DIARY, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].", "game")
 

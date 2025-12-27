@@ -24,7 +24,7 @@
 		var/turf/prev = first
 		for(var/i = 0, i < 40, i++)
 			var/turf/curr = holder.owner.loc
-			animate_bullspellground(curr, "#aaddff")
+			ANIMATE.bullspellground(curr, "#aaddff")
 			if(prev != curr)
 				path += curr
 				prev = curr
@@ -37,7 +37,7 @@
 		for(var/turf/T in path)
 			B.set_dir(get_dir(B, T))
 			B.set_loc(T)
-			animate_bullspellground(T, "#5599ff")
+			ANIMATE.bullspellground(T, "#5599ff")
 			for (var/atom/movable/M in T)
 				if (M.anchored || affected.Find(M) || M == holder.owner)
 					continue

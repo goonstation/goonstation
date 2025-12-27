@@ -954,7 +954,7 @@ TYPEINFO(/mob/living)
 		SEND_SIGNAL(src, COMSIG_MOB_LAYDOWN_STANDUP, src.lying)
 
 /mob/living/proc/animate_lying(lying)
-	animate_rest(src, !lying)
+	ANIMATE.rest(src, !lying)
 
 
 /mob/living/attack_hand(mob/living/M, params, location, control)
@@ -963,7 +963,7 @@ TYPEINFO(/mob/living)
 
 	M.lastattacked = get_weakref(src)
 
-	attack_particle(M,src)
+	ANIMATE.MOB.attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
 		actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -1020,7 +1020,7 @@ TYPEINFO(/mob/living)
 				return
 
 			if (M != src)
-				attack_twitch(M)
+				ANIMATE.attack_twitch(M)
 			M.violate_hippocratic_oath()
 			message_admin_on_attack(M, "punches")
 			/*
@@ -1052,16 +1052,16 @@ TYPEINFO(/mob/living)
 		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
 			if(move_dir & last_move_dir)
 				if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
-					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
+					ANIMATE.MOB.sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.5)
 				sustained_moves += steps
 			else
 				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
-					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+					ANIMATE.MOB.sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.8)
 				else if (move_dir == turn(last_move_dir,180) && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 					if(!HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
-						sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+						ANIMATE.MOB.sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.9)
 					if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
 						var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
@@ -1086,7 +1086,7 @@ TYPEINFO(/mob/living)
 	. = ..()
 	if (. && move_dir && !(direct & move_dir) && src.use_stamina)
 		if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
-			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+			ANIMATE.MOB.sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 			playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.8)
 		sustained_moves = 0
 
@@ -1268,7 +1268,7 @@ TYPEINFO(/mob/living)
 			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
 			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
-				sprint_particle(src, last)
+				ANIMATE.MOB.sprint_particle(src, last)
 				if (!HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
 

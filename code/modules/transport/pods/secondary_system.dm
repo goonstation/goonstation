@@ -825,7 +825,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		var/mob/target = input(user, "Choose Who to Abduct", "Choose Target")  as mob in view(ship.loc)
 		if(target)
 			boutput(target, SPAN_ALERT("<B>You have been abducted!</B>"))
-			showswirl(get_turf(target))
+			ANIMATE.showswirl(get_turf(target))
 			target.set_loc(ship)
 		return
 
@@ -851,7 +851,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 					var/list/turfs = get_area_turfs(/area/shuttle/arrival, 1)
 					if (length(turfs))
 						M.set_loc(pick(turfs))
-						showswirl(get_turf(M))
+						ANIMATE.showswirl(get_turf(M))
 		opencomputer(usr)
 		return
 

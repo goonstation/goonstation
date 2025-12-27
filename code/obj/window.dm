@@ -396,7 +396,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	attack_hand(mob/user)
 		user.lastattacked = get_weakref(src)
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches the window."))
@@ -473,7 +473,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				time = 2 SECONDS
 			SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, SPAN_NOTICE(" [user] repairs \the [src] with \the [W] "), null)
 		else
-			attack_particle(user,src)
+			ANIMATE.MOB.attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
 			if (ischoppingtool(W))
 				src.damage_blunt(W.force*4)

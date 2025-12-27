@@ -90,4 +90,4 @@
 		..()
 		src.flags |= TABLEPASS
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		animate_bumble(src)
+		ANIMATE.bumble(src)

@@ -454,7 +454,7 @@
 	if(isflockmob(mover))
 		return TRUE
 	else if (istype(mover, /obj/flock_structure/cage))
-		animate_flock_passthrough(src)
+		ANIMATE.flock_passthrough(src)
 		return TRUE
 	else
 		return ..()
@@ -660,7 +660,7 @@
 		for(var/obj/item/grab/grab_grabbed_by in src.grabbed_by)
 			if (!istype(grab_grabbed_by, /obj/item/grab/block))
 				qdel(grab_grabbed_by)
-	animate_flock_floorrun_start(src)
+	ANIMATE.flock_floorrun_start(src)
 
 /mob/living/critter/flock/drone/proc/end_floorrunning(check_lights = FALSE)
 	if(!src.floorrunning)
@@ -679,7 +679,7 @@
 			var/turf/simulated/wall/auto/feather/wall = src.loc
 			if (wall.on)
 				wall.off()
-	animate_flock_floorrun_end(src)
+	ANIMATE.flock_floorrun_end(src)
 	if (flock_is_blocked_turf(get_turf(src.loc)))
 		for(var/turf/T in getneighbours(src.loc))
 			if(!flock_is_blocked_turf(T))
@@ -899,7 +899,7 @@
 			candidate_turfs -= n
 	candidate_turfs += T //ensure there's always at least the turf we're stood on
 
-	animate_flock_drone_split(src)
+	ANIMATE.flock_drone_split(src)
 
 	var/mob/living/critter/flock/bit/B
 	for(var/i=1 to num_bits)
@@ -1293,7 +1293,7 @@
 	item.inventory_counter?.show_count()
 
 	holder.visible_message(SPAN_ALERT("[holder] starts absorbing [item]!"), SPAN_NOTICE("You place [item] into [src.name] and begin breaking it down."))
-	animate_flockdrone_item_absorb(item)
+	ANIMATE.flockdrone_item_absorb(item)
 	src.holder.changeStatus("flock_absorbing", item.health/F.health_absorb_rate SECONDS)
 
 /datum/equipmentHolder/flockAbsorption/on_unequip()

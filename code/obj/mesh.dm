@@ -197,7 +197,7 @@ TYPEINFO(/obj/mesh)
 
 /obj/mesh/attackby(obj/item/I, mob/user)
 	user.lastattacked = get_weakref(src)
-	attack_particle(user, src)
+	ANIMATE.MOB.attack_particle(user, src)
 	src.visible_message(SPAN_ALERT("<b>[user]</b> attacks [src] with [I]."))
 	playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 
@@ -619,7 +619,7 @@ TYPEINFO(/obj/mesh/flock/barricade)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = AM
 	if(istype(drone) && !drone.floorrunning)
-		animate_flock_passthrough(AM)
+		ANIMATE.flock_passthrough(AM)
 		. = TRUE
 	else if(istype(AM,/mob/living/critter/flock))
 		. = TRUE

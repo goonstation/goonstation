@@ -59,7 +59,7 @@
 
 				for(var/atom/movable/M in src.loc)
 					if(M.anchored) continue
-					animate_teleport(M)
+					ANIMATE.teleport(M)
 					SPAWN(0.6 SECONDS)
 						M.set_loc(target)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
@@ -77,7 +77,7 @@
 				playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				for(var/atom/movable/M in target)
 					if(M.anchored) continue
-					animate_teleport(M)
+					ANIMATE.teleport(M)
 					SPAWN(0.6 SECONDS) M.set_loc(src.loc)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
 				SPAWN(1 SECOND)
@@ -154,7 +154,7 @@
 			playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)
 				if(M.anchored) continue
-				animate_teleport(M)
+				ANIMATE.teleport(M)
 				SPAWN(0.6 SECONDS)
 					M.set_loc(my_teleporter.loc)
 			var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)

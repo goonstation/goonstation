@@ -186,7 +186,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	set waitfor = FALSE
 	src.has_brick = TRUE
 	while (src.cycle == WASH || src.cycle == DRY)
-		animate_storage_thump(src, 11)
+		ANIMATE.storage_thump(src, 11)
 		if (prob(50))
 			var/dir = pick(cardinal)
 			for (var/mob/living/M in get_step(src, dir))

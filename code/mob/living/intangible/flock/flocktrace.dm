@@ -165,7 +165,7 @@ TYPEINFO(/mob/living/intangible/flock/trace)
 	O.icon = src.icon
 	O.icon_state = "flocktrace-ghost"
 	O.pixel_y = initial(O.pixel_y) // WHY DO I NEED TO DO THIS TOO I DON'T EVEN ANIMATE THE PIXEL_Y
-	animate_bumble(O)
+	ANIMATE.bumble(O)
 	O.alpha = 160
 	return O
 

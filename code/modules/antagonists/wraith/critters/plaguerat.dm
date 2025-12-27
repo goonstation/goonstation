@@ -118,7 +118,7 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		return ..()
 
 	animate_lying(lying)
-		animate_180_rest(src, !lying)
+		ANIMATE.rest_180(src, !lying)
 
 	death(var/gibbed)
 		if (src.master && istype(src.master, /mob/living/intangible/wraith))
@@ -156,7 +156,7 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 			var/mob/living/critter/wraith/plaguerat/new_rat = new adultpath(get_turf(src), master)
 			var/mob/living/critter/wraith/plaguerat/old_rat = src
 			src.mind.transfer_to(new_rat)
-			animate_buff_in(new_rat)
+			ANIMATE.buff_in(new_rat)
 			qdel(old_rat)
 
 /mob/living/critter/wraith/plaguerat/young

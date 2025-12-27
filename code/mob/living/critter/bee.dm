@@ -63,14 +63,14 @@
 			src.UpdateIcon()
 
 			if (!isdead(src))
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("flip")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
 					SPAWN(1 SECOND)
-						// animate_bumble(src)
+						// ANIMATE.bumble(src)
 						// either stays put or bumbles
 						src.animate_lying(src.lying)
 					return null
@@ -148,7 +148,7 @@
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (!isdead(src))
-			animate_bumble(src) // please keep bumbling tia
+			ANIMATE.bumble(src) // please keep bumbling tia
 
 	on_pet(mob/user)
 		if (..())
@@ -173,7 +173,7 @@
 			// stop the bumbling animation
 			animate(src, pixel_y = -4, time = 1)
 		else
-			animate_bumble(src)
+			ANIMATE.bumble(src)
 
 
 	on_sleep()
@@ -292,11 +292,11 @@
 		var/time_time = (rand(15,20) / 10)
 
 		sleep(sleep_time)
-		animate_beespin(src, dir_choice, time_time, 1)
+		ANIMATE.beespin(src, dir_choice, time_time, 1)
 
 		sleep(time_time * 8)
 		src.animate_lying(src.lying)
-		// animate_bumble(src)
+		// ANIMATE.bumble(src)
 		src.is_dancing = 0
 
 	update_icon()
@@ -650,7 +650,7 @@
 
 			SPAWN(rand(10,20))
 				src.visible_message(SPAN_ALERT("<b>[src] begins to move at unpredicable speeds!</b>"))
-				animate_bumble(src, floatspeed = 3)
+				ANIMATE.bumble(src, floatspeed = 3)
 				sleep(rand(30,50))
 				src.visible_message(SPAN_ALERT("[W] goes flying!"))
 				if (W)
@@ -658,7 +658,7 @@
 					var/edge = get_edge_target_turf(src, pick(alldirs))
 					W.throw_at(edge, 25, 4)
 
-				animate_bumble(src)
+				ANIMATE.bumble(src)
 				src.visible_message("<b>[src]</b> gives off a dizzy buzz.")
 
 		else if (istype(W, /obj/item/photo/heisenbee))
@@ -966,7 +966,7 @@
 		var/time_time = (rand(15,20) / 10)
 
 		sleep(sleep_time)
-		animate_beespin(src, dir_choice, time_time, 1)
+		ANIMATE.beespin(src, dir_choice, time_time, 1)
 
 		sleep(time_time * 8)
 		src.icon_state = "bubsbee-8I"

@@ -741,7 +741,7 @@ TRAYS
 
 	/// Used to smash the plate over someone's head
 	proc/unique_attack_garbage_fuck(mob/M, mob/user)
-		attack_particle(user,M)
+		ANIMATE.MOB.attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 
 		if(src.cant_drop == TRUE)

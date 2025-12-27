@@ -255,11 +255,11 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		src.macho_arena_turfs = null
 		for (var/obj/decal/boxingrope/F in arena_turfs_to_cleanup)
 			SPAWN(0)
-				leaving_animation(F)
+				ANIMATE.leaving_animation(F)
 				qdel(F)
 		for (var/obj/stool/chair/boxingrope_corner/F in arena_turfs_to_cleanup)
 			SPAWN(0)
-				leaving_animation(F)
+				ANIMATE.leaving_animation(F)
 				qdel(F)
 
 	verb/macho_slimjim_snap()

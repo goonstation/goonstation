@@ -164,20 +164,20 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					if(abs(i) == tunnel_width) // wall
 						curr = get_steps(T, turn(dir, 90),i)
-						animate_turf_slideout(curr, src.wall_turf, dir, slide_delay)
+						ANIMATE.turf_slideout(curr, src.wall_turf, dir, slide_delay)
 					else // floor
 						curr = get_steps(T, turn(dir, 90),i)
-						animate_turf_slideout(curr, src.floor_turf, dir, slide_delay)
+						ANIMATE.turf_slideout(curr, src.floor_turf, dir, slide_delay)
 					curr.set_dir(dir)
 					maintaining_turfs.Add(curr)
 				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
-					animate_turf_slideout_cleanup(curr)
+					ANIMATE.turf_slideout_cleanup(curr)
 
 			for(var/obj/light in my_lights)
-				animate_open_from_floor(light, time=1 SECOND, self_contained=0)
+				ANIMATE.open_from_floor(light, time=1 SECOND, self_contained=0)
 				light.alpha = 255
 			sleep(1 SECOND)
 			for(var/obj/light in my_lights)
@@ -217,7 +217,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 			var/list/path_reverse = reverse_list_range(path)
 
 			for(var/obj/light in src.my_lights)
-				animate_close_into_floor(light, time=1 SECOND, self_contained=0)
+				ANIMATE.close_into_floor(light, time=1 SECOND, self_contained=0)
 			sleep(1 SECOND)
 			for(var/obj/light in my_lights)
 				light.remove_filter("alpha white")
@@ -230,12 +230,12 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 				var/opdir = turn(dir, 180)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
-					animate_turf_slidein(curr, src.original_turf, opdir, slide_delay)
+					ANIMATE.turf_slidein(curr, src.original_turf, opdir, slide_delay)
 				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
-					animate_turf_slidein_cleanup(curr)
+					ANIMATE.turf_slidein_cleanup(curr)
 
 			for(var/obj/light in src.my_lights)
 				light.set_loc(src)

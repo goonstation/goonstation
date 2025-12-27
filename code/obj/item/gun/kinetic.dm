@@ -1220,7 +1220,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	proc/fan_the_hammer(mob/user)
 		if (!ON_COOLDOWN(src, "twirl_spam", 2 SECONDS))
 			src.on_spin_emote(user)
-			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+			ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 			locked_shut = TRUE
 			shoot_delay = 2
 			spread_angle = 15

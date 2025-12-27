@@ -1013,14 +1013,14 @@ proc/get_default_flock()
 			T.ReplaceWith(/turf/simulated/wall/auto/feather/tutorial, FALSE, force=force)
 		else
 			T.ReplaceWith(/turf/simulated/wall/auto/feather, FALSE, force=force)
-		animate_flock_convert_complete(T)
+		ANIMATE.flock_convert_complete(T)
 		if(force)
 			for(var/obj/indestructible/shuttle_corner/C in T)
 				qdel(C)
 
 	if(istype(T, /turf/simulated/floor) || force && istype(T, /turf/unsimulated/floor))
 		T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
-		animate_flock_convert_complete(T)
+		ANIMATE.flock_convert_complete(T)
 
 	// regular and flock lattices
 	var/obj/lattice/lat = locate(/obj/lattice) in T
@@ -1028,7 +1028,7 @@ proc/get_default_flock()
 		if(istype(lat, /obj/lattice/flock) || !fancy)
 			qdel(lat)
 			T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
-			animate_flock_convert_complete(T)
+			ANIMATE.flock_convert_complete(T)
 		else
 			qdel(lat)
 			new /obj/lattice/flock(T)
@@ -1037,7 +1037,7 @@ proc/get_default_flock()
 	if(catw)
 		qdel(catw)
 		T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
-		animate_flock_convert_complete(T)
+		ANIMATE.flock_convert_complete(T)
 
 	if(istype(T, /turf/space))
 		var/obj/lattice/flock/FL = locate(/obj/lattice/flock) in T
@@ -1088,7 +1088,7 @@ proc/get_default_flock()
 				M.set_loc(converted)
 			qdel(O)
 			converted.set_dir(dir)
-			animate_flock_convert_complete(converted)
+			ANIMATE.flock_convert_complete(converted)
 			success = TRUE
 			break
 		if(!success && fancy)

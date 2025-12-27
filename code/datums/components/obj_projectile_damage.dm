@@ -26,7 +26,7 @@ TYPEINFO(/datum/component/obj_projectile_damage)
 				gib = make_cleanable(src.gib_type, O.loc)
 			if (gib && src.do_streak)
 				gib.streak_cleanable()
-		hit_twitch(O)
+		ANIMATE.hit_twitch(O)
 		O.changeHealth(-round(((P.power/2)*P.proj_data.ks_ratio), 1.0))
 
 /datum/component/obj_projectile_damage/proc/examine(mob/owner, mob/examiner, list/lines)

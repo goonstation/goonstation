@@ -146,7 +146,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	if(user.stat || status & (NOPOWER|BROKEN) || ON_COOLDOWN(src, "toggle", 1 SECOND))
 		return
 
-	interact_particle(user,src)
+	ANIMATE.MOB.interact_particle(user,src)
 
 	if (!alarm_active)
 		src.alarm()

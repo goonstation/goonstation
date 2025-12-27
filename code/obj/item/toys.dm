@@ -391,7 +391,7 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 			return ..(location,control,params)
 
 	proc/speak(message)
-		animate_float(src, 1, 5, 1)
+		ANIMATE.float(src, 1, 5, 1)
 		if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
 			var/area/AR = get_area(src)
 			for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])

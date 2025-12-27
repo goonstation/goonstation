@@ -155,7 +155,7 @@
 							U.update_value()
 							add_screen(U)
 							pos_x -= spacing
-							animate_buff_in(U)
+							ANIMATE.buff_in(U)
 			return
 
 /mob/living/silicon/drone

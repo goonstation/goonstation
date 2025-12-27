@@ -85,7 +85,7 @@ TYPEINFO(/obj/npc/trader/salvager)
 
 		. = appraise_text(I)
 
-		animate_scanning(user, . ? "#FFFF00" : "#ff4400", scan_time)
+		ANIMATE.scanning(user, . ? "#FFFF00" : "#ff4400", scan_time)
 		sleep(scan_time)
 		src.say(.)
 

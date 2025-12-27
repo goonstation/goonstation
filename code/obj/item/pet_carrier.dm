@@ -167,7 +167,7 @@
 	mob_resist_inside(mob/user)
 		if (ON_COOLDOWN(src, "resist_damage", 3 SECONDS))
 			return
-		animate_storage_thump(src)
+		ANIMATE.storage_thump(src)
 		if (!src.can_break_out)
 			boutput(user, SPAN_ALERT("It's no use! You can't leave [src]!"))
 			return
@@ -177,7 +177,7 @@
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (length(src.carrier_occupants))
-			animate_storage_thump(src)
+			ANIMATE.storage_thump(src)
 		for (var/mob/occupant in src.carrier_occupants)
 			occupant.throw_impact(hit_atom, thr)
 		if (length(src.carrier_occupants))

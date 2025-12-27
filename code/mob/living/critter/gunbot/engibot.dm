@@ -89,7 +89,7 @@
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = get_weakref(target)
-		attack_twitch(user)
+		ANIMATE.attack_twitch(user)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 /datum/targetable/critter/nano_repair
@@ -147,7 +147,7 @@
 			return
 		var/sound = pick('sound/effects/elec_bzzz.ogg', 'sound/items/Welder.ogg', 'sound/items/mining_drill.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Clang_3.ogg')
 		user.set_dir(get_dir(user, target))
-		attack_twitch(user)
+		ANIMATE.attack_twitch(user)
 		playsound(user.loc, sound, 50, TRUE)
 
 	onStart()

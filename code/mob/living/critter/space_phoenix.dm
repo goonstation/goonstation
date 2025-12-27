@@ -94,12 +94,12 @@ TYPEINFO(/mob)
 		var/area/phoenix_nest/A = get_area(src.nest_location)
 		A.owning_phoenix = null
 		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).remove_mob(src)
-		animate_180_rest(src)
+		ANIMATE.rest_180(src)
 		..()
 
 	full_heal()
 		if (isdead(src))
-			animate_180_rest(src, TRUE)
+			ANIMATE.rest_180(src, TRUE)
 		..()
 
 	setup_healths()
@@ -377,7 +377,7 @@ TYPEINFO(/mob)
 	var/health = 200
 
 	attack_hand(mob/user)
-		attack_particle(user, src)
+		ANIMATE.MOB.attack_particle(user, src)
 		user.lastattacked = get_weakref(src)
 		boutput(user, SPAN_NOTICE("It's really cold!"))
 		if (!ON_COOLDOWN(src, "hit_impact_sound", 2 SECONDS))
@@ -386,13 +386,13 @@ TYPEINFO(/mob)
 
 	attackby(obj/item/I, mob/user)
 		..()
-		attack_particle(user, src)
+		ANIMATE.MOB.attack_particle(user, src)
 		user.lastattacked = get_weakref(src)
 
 		if (!I.force)
 			return
 
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 		src.health -= I.force
 
 		if (I.firesource)
@@ -409,7 +409,7 @@ TYPEINFO(/mob)
 		if (istype(P.proj_data, /datum/projectile/bullet/space_phoenix_icicle))
 			return
 		if (P.proj_data.ks_ratio >= 1)
-			hit_twitch(src)
+			ANIMATE.hit_twitch(src)
 			src.health -= P.power
 
 			if (P.proj_data.damage_type == D_BURNING)

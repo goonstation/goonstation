@@ -67,7 +67,7 @@ Fibre wire
 		src.set_loc(H.loc)
 		src.layer = EFFECTS_LAYER_4
 		playsound(src.loc, 'sound/ambience/spooky/Void_Calls.ogg', 40, 1)
-		SPAWN(0) animate_levitate(src, -1)
+		SPAWN(0) ANIMATE.levitate(src, -1)
 		H.emote("scream")
 
 		H.changeStatus("knockdown", 10 SECONDS)
@@ -712,7 +712,7 @@ proc/Create_Tommyname()
 		else if (tdir & SOUTH)
 			npy = -32
 
-	animate_slide(O, npx, npy, animtime)
+	ANIMATE.slide(O, npx, npy, animtime)
 	sleep(animtime)
 	if(istype(O, /obj/movedummy))
 		qdel(O)
@@ -768,7 +768,7 @@ proc/Create_Tommyname()
 			if(setdir)
 				O.set_dir(setdir)
 			O.set_loc(T)
-			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
+			ANIMATE.slide(O, 0, 0, animtime, LINEAR_EASING)
 
 	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 	sleep(animtime)
@@ -1005,7 +1005,7 @@ proc/Create_Tommyname()
 		src.try_upgrade_grab()
 	else
 		if (src.attempt_grab(user, target)) //if we successfully grab someone then do an attack twitch
-			attack_twitch(user)
+			ANIMATE.attack_twitch(user)
 
 /datum/action/bar/private/icon/garrote_target
 	duration = 10

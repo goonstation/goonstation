@@ -74,7 +74,7 @@
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 40, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
-					animate_spin(src, pick("L", "R"), 1, 0)
+					ANIMATE.spin(src, pick("L", "R"), 1, 0)
 					return "<b>[src]</b> does a flip!"
 
 		return null

@@ -44,7 +44,7 @@ TYPEINFO(/obj/table/flock)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(istype(drone) && !drone.floorrunning)
-		animate_flock_passthrough(mover)
+		ANIMATE.flock_passthrough(mover)
 		. = TRUE
 	else if(istype(mover,/mob/living/critter/flock))
 		. = TRUE
@@ -187,7 +187,7 @@ TYPEINFO(/obj/storage/closet/flock)
 				return
 			var/force = W.force
 			user.lastattacked = get_weakref(src)
-			attack_particle(user, src)
+			ANIMATE.MOB.attack_particle(user, src)
 			playsound(src.loc, src.hitsound, 50, 1, pitch = 1.6)
 			src.take_damage(force, user)
 	else
@@ -214,7 +214,7 @@ TYPEINFO(/obj/storage/closet/flock)
 	if (BOUNDS_DIST(user, src) > 0)
 		return
 
-	interact_particle(user,src)
+	ANIMATE.MOB.interact_particle(user,src)
 	add_fingerprint(user)
 
 	if(isflockmob(user))
@@ -236,7 +236,7 @@ TYPEINFO(/obj/storage/closet/flock)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(!src.open && istype(drone) && !drone.floorrunning)
-		animate_flock_passthrough(mover)
+		ANIMATE.flock_passthrough(mover)
 		. = TRUE
 	else if(istype(mover,/mob/living/critter/flock))
 		. = TRUE
