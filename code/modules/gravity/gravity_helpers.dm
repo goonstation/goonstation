@@ -64,10 +64,15 @@ proc/set_zlevel_gforce(z_level, gforce, update_tethers=FALSE)
 	if (update_tethers)
 		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE)
 		for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
-			if (tether.z == z_level)
-				tether.say("Major gravity shift detected.")
-				SPAWN(rand(3,5) SECONDS)
-					tether.begin_gravity_change(gforce ? 0 : 1)
+			if (tether.z == z_level && !tether.has_no_power())
+				var/new_gravity = 0
+				if (gforce > 1)
+					new_gravity = 0
+				else // boost to 1G
+					new_gravity = clamp(1 - gforce, 0, 1)
+
+				SPAWN(rand(3,7) SECONDS)
+					tether.begin_gravity_change(new_gravity)
 	for (var/turf/T in world)
 		if (T.z == z_level)
 			T.reset_effective_gforce()
